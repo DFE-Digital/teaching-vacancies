@@ -68,6 +68,11 @@ GEM
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    govuk_frontend_toolkit (7.0.1)
+      railties (>= 3.1.0)
+      sass (>= 3.2.0)
+    govuk_template (0.22.3)
+      rails (>= 3.1)
     haml (5.0.2)
       temple (>= 0.8.0)
       tilt
@@ -216,6 +221,8 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   database_cleaner
+  govuk_frontend_toolkit
+  govuk_template
   haml-rails
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)

@@ -1,10 +1,34 @@
-!!!
-%html
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Teacher Vacancy Service
-    = csrf_meta_tags
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-  %body
+- content_for :head do
+  = stylesheet_link_tag 'application', media: 'all'
+  = javascript_include_tag 'application'
+  = csrf_meta_tags
+
+- content_for :header_class do
+  with-proposition
+
+- content_for :page_title do
+  Teacher Vacancy Service
+
+- content_for :proposition_header do
+  .header-proposition
+    .content
+      %a.js-header-toggle.menu{ href: '#proposition-links' }
+        Menu
+
+      %nav#proposition-menu
+        %a#proposition-name{ href: '/' }
+          Teacher Vacancy Service
+        %ul#proposition-links
+
+- content_for :content do
+  %main#content{ role: 'main', tabindex: -1 }
+    .phase-banner
+      %p
+        %strong.phase-tag
+          ALPHA
+        %span
+          This is a new service – your feedback will help us to improve it.
+
     = yield
+
+= render file: 'layouts/govuk_template'
