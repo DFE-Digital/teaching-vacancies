@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830110404) do
+ActiveRecord::Schema.define(version: 20170830110410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,40 @@ ActiveRecord::Schema.define(version: 20170830110404) do
 
   create_table "subjects", force: :cascade do |t|
     t.string "name", null: false
+  end
+
+  create_table "vacancies", force: :cascade do |t|
+    t.string "job_title", null: false
+    t.string "slug", null: false
+    t.string "headline", null: false
+    t.text "job_description", null: false
+    t.integer "minimum_salary", null: false
+    t.integer "maximum_salary"
+    t.text "benefits"
+    t.integer "working_pattern"
+    t.float "full_time_equivalent"
+    t.integer "weekly_hours"
+    t.date "starts_on"
+    t.date "ends_on"
+    t.bigint "subject_id"
+    t.bigint "pay_scale_id"
+    t.bigint "leadership_id"
+    t.text "essential_requirements", null: false
+    t.text "education"
+    t.text "qualifications"
+    t.text "experience"
+    t.string "contact_email"
+    t.string "reference"
+    t.integer "status"
+    t.date "expires_on"
+    t.date "publish_on"
+    t.bigint "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
+    t.index ["pay_scale_id"], name: "index_vacancies_on_pay_scale_id"
+    t.index ["school_id"], name: "index_vacancies_on_school_id"
+    t.index ["subject_id"], name: "index_vacancies_on_subject_id"
   end
 
 end
