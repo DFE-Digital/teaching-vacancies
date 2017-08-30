@@ -1,0 +1,2 @@
+class Leadership < ApplicationRecord
+end
