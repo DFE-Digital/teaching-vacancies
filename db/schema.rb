@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830110364) do
+ActiveRecord::Schema.define(version: 20170830110404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,26 @@ ActiveRecord::Schema.define(version: 20170830110364) do
 
   create_table "school_types", force: :cascade do |t|
     t.string "label", null: false
+  end
+
+  create_table "schools", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "urn", null: false
+    t.string "address", null: false
+    t.string "town", null: false
+    t.string "county", null: false
+    t.string "postcode", null: false
+    t.integer "phase"
+    t.string "url"
+    t.integer "minimum_age"
+    t.integer "maximum_age"
+    t.bigint "school_type_id"
+    t.bigint "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["region_id"], name: "index_schools_on_region_id"
+    t.index ["school_type_id"], name: "index_schools_on_school_type_id"
   end
 
   create_table "subjects", force: :cascade do |t|
