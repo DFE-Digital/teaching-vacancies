@@ -14,9 +14,9 @@ class CreateVacancies < ActiveRecord::Migration[5.1]
       t.integer :weekly_hours
       t.date :starts_on
       t.date :ends_on
-      t.references :subject, index: true
-      t.references :pay_scale, index: true
-      t.references :leadership, index: true
+      t.belongs_to :subject, index: true
+      t.belongs_to :pay_scale, index: true
+      t.belongs_to :leadership, index: true
       # Candidate specification
       t.text :essential_requirements, null: false
       t.text :education
@@ -28,7 +28,7 @@ class CreateVacancies < ActiveRecord::Migration[5.1]
       t.integer :status
       t.date :expires_on
       t.date :publish_on
-      t.references :school, index: true
+      t.belongs_to :school, index: true
 
       t.timestamps
     end

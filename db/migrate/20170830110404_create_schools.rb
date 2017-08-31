@@ -13,8 +13,8 @@ class CreateSchools < ActiveRecord::Migration[5.1]
       t.integer :minimum_age
       t.integer :maximum_age
 
-      t.references :school_type, index: true
-      t.references :region, index: true
+      t.belongs_to :school_type, index: true
+      t.belongs_to :region, index: true
 
       t.timestamps
     end
