@@ -43,4 +43,20 @@ RSpec.feature 'Viewing vacancies' do
 
     expect(page).to have_link('2')
   end
+
+  scenario 'Vacancies should contain JobPosting schema.org mark up' do
+    valid_vacancy = create(:vacancy)
+
+    visit vacancies_path
+
+    within '.vacancies' do
+      expect(page).to have_selector('li[itemscope][itemtype="http://schema.org/JobPosting"]')
+
+      within 'li[itemscope][itemtype="http://schema.org/JobPosting"]' do
+        expect(page).to have_selector('meta[itemprop="title"][content="'+valid_vacancy.job_title+'"]')
+        expect(page).to have_selector('meta[itemprop="description"][content="'+valid_vacancy.headline+'"]')
+        expect(page).to have_selector('meta[itemprop="responsibilities"][content="'+valid_vacancy.job_description+'"]')
+      end
+    end
+  end
 end

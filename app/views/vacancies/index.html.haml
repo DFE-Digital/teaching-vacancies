@@ -2,7 +2,7 @@
   Vacancies
 %ul.vacancies
   - @vacancies.each do |vacancy|
-    %li.vacancy
+    %li.vacancy{itemscope: '', itemtype: 'http://schema.org/JobPosting'}
       %h2= vacancy.job_title
       %p= vacancy.location
       %dl
@@ -18,5 +18,26 @@
         %dd= vacancy.working_pattern&.titleize
         %dt Job ref
         %dd= vacancy.reference
+      %meta{itemprop: 'title', content: vacancy.job_title}
+      %meta{itemprop: 'industry', content: 'Education'}
+      %meta{itemprop: 'description', content: vacancy.headline}
+      %meta{itemprop: 'responsibilities', content: vacancy.job_description}
+      %meta{itemprop: 'employmentType', content: vacancy.working_pattern&.titleize}
+      %meta{itemprop: 'url', content: vacancies_url(vacancy)}
+      %span{itemprop: 'jobLocation', itemscope: '', itemtype: 'http://schema.org/Place'}
+        %span{itemprop: 'address', itemscope: '', itemtype: 'http://schema.org/PostalAddress'}
+          - if vacancy.school.address
+            %meta{itemprop: 'streetAddress', content: vacancy.school.address}
+          - if vacancy.school.postcode
+            %meta{itemprop: 'postalCode', content: vacancy.school.postcode}
+          - if vacancy.school.town
+            %meta{itemprop: 'addressLocality', content: vacancy.school.town}
+          - if vacancy.school.county
+            %meta{itemprop: 'addressRegion', content: vacancy.school.county}
+      %meta{itemprop: 'hiringOrganization', content: vacancy.school.name}
+      %meta{itemprop: 'datePosted', content: format_date(vacancy.publish_on, '%Y-%m-%d')}
+      %meta{itemprop: 'validThrough', content: format_date(vacancy.expires_on, '%Y-%m-%d')}
+      - if vacancy.weekly_hours
+        %meta{itemprop: 'workHours', content: vacancy.weekly_hours}
 
 = paginate @vacancies
