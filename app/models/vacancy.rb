@@ -11,6 +11,8 @@ class Vacancy < ApplicationRecord
 
   scope :applicable, -> { where('expires_on >= ?', Time.zone.today) }
 
+  paginates_per 10
+
   validates :job_title, :job_description, :headline, \
     :minimum_salary, :essential_requirements, :working_pattern, \
     :publish_on, :expires_on, :slug, \
