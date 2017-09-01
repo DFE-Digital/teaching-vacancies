@@ -1,2 +1,20 @@
-%h1
+%h1.heading-large
   Vacancies
+%ul.vacancies
+  - @vacancies.each do |vacancy|
+    %li.vacancy
+      %h2= vacancy.job_title
+      %p= vacancy.location
+      %dl
+        %dt Salary
+        %dd.double
+          = vacancy.salary_range
+          per annum
+        %dt Closing date
+        %dd= format_date(vacancy.expires_on)
+        %dt Posted on
+        %dd= format_date(vacancy.publish_on)
+        %dt Contract
+        %dd= vacancy.working_pattern&.titleize
+        %dt Job ref
+        %dd= vacancy.reference

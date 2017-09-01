@@ -1,3 +1,4 @@
 class School < ApplicationRecord
-  belongs_to :type, class_name: 'SchoolType', required: true
+  belongs_to :school_type, required: true
+  belongs_to :region
 end

@@ -21,6 +21,10 @@ FactoryGirl.define do
       status { :draft }
     end
 
+    trait :trashed do
+      status { :trashed }
+    end
+
     trait :expired do
       expires_on { Faker::Time.backward(7) }
     end

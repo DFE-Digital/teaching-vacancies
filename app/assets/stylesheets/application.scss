@@ -10,7 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  */
 @import 'colours';
@@ -26,12 +25,27 @@
 @import 'design-patterns/buttons';
 @import 'design-patterns/breadcrumbs';
 
+// From GDS's alphagov/govuk_elements
+@import 'elements/helpers';
+@import 'elements/reset';
+@import 'elements/elements-typography';
+@import 'elements/buttons';
+@import 'elements/lists';
+//@import 'elements/tables';
+//@import 'elements/details';
+//@import 'elements/panels';
+//@import 'elements/forms';
+//@import 'elements/forms/form-date';
+//@import 'elements/forms/form-validation';
+//@import 'elements/breadcrumbs';
+@import 'elements/phase-banner';
+//@import 'elements/components';
+
+@import 'components/vacancies';
+
 main#content {
   @extend %site-width-container;
   &:focus {
     outline: none;
   }
-}
-.phase-banner  {
-  @include phase-banner();
 }
