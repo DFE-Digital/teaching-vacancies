@@ -1,7 +1,7 @@
 class CreateSchoolTypes < ActiveRecord::Migration[5.1]
   def change
     create_table :school_types, id: :uuid do |t|
-      t.string :label, null: false
+      t.string :label, null: false, unique: true
     end
   end
 end
