@@ -12,19 +12,19 @@
   li {
     border-bottom: 1px solid $grey-3;
     dl {
-      font-size: 90%;
+      font-size: $small-font-size;
     }
     dt, dd {
       display: inline-block;
     }
     dt {
-      width:20%;
+      width: 20%;
       color: $secondary-text-colour;
     }
     dd {
-      width:25%;
+      width: 25%;
       &.double {
-        width:70%;
+        width: 70%;
       }
     }
   }
