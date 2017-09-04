@@ -1,0 +1,30 @@
+AllCops:
+    TargetRubyVersion: 2.3
+    Exclude:
+      - 'db/migrate/**/*'
+      - 'db/schema.rb'
+      - 'bin/**/*'
+
+Rails:
+    Enabled: true
+
+Style/Alias:
+    Enabled: false
+
+Style/FrozenStringLiteralComment:
+    Enabled: false
+
+Style/NumericLiterals:
+    Enabled: false
+
+Style/TrailingBlankLines:
+    Enabled: false
+
+Style/TrailingCommaInLiteral:
+    EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+    Enabled: false
+
+Style/Documentation:
+    Enabled: false
