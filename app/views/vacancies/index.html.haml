@@ -35,8 +35,8 @@
           - if vacancy.school.county
             %meta{itemprop: 'addressRegion', content: vacancy.school.county}
       %meta{itemprop: 'hiringOrganization', content: vacancy.school.name}
-      %meta{itemprop: 'datePosted', content: format_date(vacancy.publish_on, '%Y-%m-%d')}
-      %meta{itemprop: 'validThrough', content: format_date(vacancy.expires_on, '%Y-%m-%d')}
+      %meta{itemprop: 'datePosted', content: format_date(vacancy.publish_on, :db)}
+      %meta{itemprop: 'validThrough', content: format_date(vacancy.expires_on, :db)}
       - if vacancy.weekly_hours
         %meta{itemprop: 'workHours', content: vacancy.weekly_hours}
 
