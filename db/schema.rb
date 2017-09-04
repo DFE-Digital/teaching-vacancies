@@ -14,24 +14,25 @@ ActiveRecord::Schema.define(version: 20170830110410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
 
-  create_table "leaderships", force: :cascade do |t|
+  create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
   end
 
-  create_table "pay_scales", force: :cascade do |t|
+  create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
   end
 
-  create_table "regions", force: :cascade do |t|
+  create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
   end
 
-  create_table "school_types", force: :cascade do |t|
+  create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
   end
 
-  create_table "schools", force: :cascade do |t|
+  create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
     t.string "urn", null: false
@@ -43,19 +44,19 @@ ActiveRecord::Schema.define(version: 20170830110410) do
     t.string "url"
     t.integer "minimum_age"
     t.integer "maximum_age"
-    t.bigint "school_type_id"
-    t.bigint "region_id"
+    t.uuid "school_type_id"
+    t.uuid "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
   end
 
-  create_table "subjects", force: :cascade do |t|
+  create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
   end
 
-  create_table "vacancies", force: :cascade do |t|
+  create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title", null: false
     t.string "slug", null: false
     t.string "headline", null: false
@@ -68,9 +69,9 @@ ActiveRecord::Schema.define(version: 20170830110410) do
     t.integer "weekly_hours"
     t.date "starts_on"
     t.date "ends_on"
-    t.bigint "subject_id"
-    t.bigint "pay_scale_id"
-    t.bigint "leadership_id"
+    t.uuid "subject_id"
+    t.uuid "pay_scale_id"
+    t.uuid "leadership_id"
     t.text "essential_requirements", null: false
     t.text "education"
     t.text "qualifications"
@@ -80,9 +81,10 @@ ActiveRecord::Schema.define(version: 20170830110410) do
     t.integer "status"
     t.date "expires_on"
     t.date "publish_on"
-    t.bigint "school_id"
+    t.uuid "school_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["pay_scale_id"], name: "index_vacancies_on_pay_scale_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"

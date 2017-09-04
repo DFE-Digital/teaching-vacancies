@@ -1,6 +1,6 @@
 class CreateVacancies < ActiveRecord::Migration[5.1]
   def change
-    create_table :vacancies do |t|
+    create_table :vacancies, id: :uuid do |t|
       # Job specification
       t.string :job_title, null: false
       t.string :slug, null: false
@@ -14,9 +14,9 @@ class CreateVacancies < ActiveRecord::Migration[5.1]
       t.integer :weekly_hours
       t.date :starts_on
       t.date :ends_on
-      t.belongs_to :subject, index: true
-      t.belongs_to :pay_scale, index: true
-      t.belongs_to :leadership, index: true
+      t.uuid :subject_id, index: true
+      t.uuid :pay_scale_id, index: true
+      t.uuid :leadership_id, index: true
       # Candidate specification
       t.text :essential_requirements, null: false
       t.text :education
@@ -26,9 +26,9 @@ class CreateVacancies < ActiveRecord::Migration[5.1]
       t.string :contact_email
       t.string :reference
       t.integer :status
-      t.date :expires_on
+      t.date :expires_on, index: true
       t.date :publish_on
-      t.belongs_to :school, index: true
+      t.uuid :school_id, index: true, null: false
 
       t.timestamps
     end

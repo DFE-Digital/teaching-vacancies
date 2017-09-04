@@ -1,6 +1,6 @@
 class CreateSchools < ActiveRecord::Migration[5.1]
   def change
-    create_table :schools do |t|
+    create_table :schools, id: :uuid do |t|
       t.string :name, null: false
       t.text :description, null: false
       t.string :urn, null: false
@@ -13,8 +13,8 @@ class CreateSchools < ActiveRecord::Migration[5.1]
       t.integer :minimum_age
       t.integer :maximum_age
 
-      t.belongs_to :school_type, index: true
-      t.belongs_to :region, index: true
+      t.uuid :school_type_id, index: true
+      t.uuid :region_id, index: true
 
       t.timestamps
     end
