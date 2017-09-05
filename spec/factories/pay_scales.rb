@@ -10,7 +10,7 @@ FactoryGirl.define do
         'Main pay range 6',
         'Upper pay range 1',
         'Upper pay range 2',
-        'Upper pay range 3'
+        'Upper pay range 3',
       ].sample
     end
   end

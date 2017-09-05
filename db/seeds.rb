@@ -48,20 +48,18 @@ Subject.create(name: 'Music')
 Subject.create(name: 'Physical education')
 
 school = FactoryGirl.create(:school,
-  name: 'Acme Secondary School',
-  school_type: academy,
-  urn: 1234567890,
-  address: '22 High Street',
-  town: 'Ealing',
-  county: 'Middlesex',
-  postcode: 'EA1 1NG',
-  region: london
-)
+                            name: 'Acme Secondary School',
+                            school_type: academy,
+                            urn: 1234567890,
+                            address: '22 High Street',
+                            town: 'Ealing',
+                            county: 'Middlesex',
+                            postcode: 'EA1 1NG',
+                            region: london)
 
 FactoryGirl.create(:vacancy,
-  job_title: 'Physics Teacher',
-  subject: science,
-  school: school,
-  minimum_salary: 25000,
-  maximum_salary: 30000
-)
+                   job_title: 'Physics Teacher',
+                   subject: science,
+                   school: school,
+                   minimum_salary: 25000,
+                   maximum_salary: 30000)
