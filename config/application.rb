@@ -21,6 +21,7 @@ module TeacherVacancyService
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+    config.time_zone = 'Europe/London'
 
     # Automatically add `id: uuid` on any generated migrations
     config.generators do |g|
