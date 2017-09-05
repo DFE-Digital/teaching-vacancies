@@ -15,7 +15,7 @@ RSpec.describe DateHelper, type: :helper do
     end
 
     it 'raises an error if an invalid format is given' do
-      expect { helper.format_date(Date.new(2017, 10, 7), :invalid) }.to raise_error(RuntimeError)
+      expect { helper.format_date(Date.new(2017, 10, 7), :invalid) }.to raise_error(DateHelper::FormatDateError)
     end
   end
 end
