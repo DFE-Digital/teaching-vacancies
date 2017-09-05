@@ -17,3 +17,6 @@
 /yarn-error.log
 
 .byebug_history
+
+# Ignore examples persistence file
+/spec/examples.txt

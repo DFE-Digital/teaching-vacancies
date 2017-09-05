@@ -1,0 +1,31 @@
+.vacancies {
+  margin: $gutter 0;
+  padding: 0;
+  list-style: none;
+  h2 {
+    font-weight: 700;
+    font-size: 22px;
+  }
+  p {
+    margin-bottom: $gutter-half;
+  }
+  li {
+    border-bottom: 1px solid $grey-3;
+    dl {
+      font-size: $small-font-size;
+    }
+    dt, dd {
+      display: inline-block;
+    }
+    dt {
+      width: 20%;
+      color: $secondary-text-colour;
+    }
+    dd {
+      width: 25%;
+      &.double {
+        width: 70%;
+      }
+    }
+  }
+}
