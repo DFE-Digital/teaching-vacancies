@@ -37,4 +37,15 @@ RSpec.feature 'Viewing a single published vacancy' do
     expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school')
     expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school-greenway-mars')
   end
+
+  scenario 'Expired vacancies display a warning message' do
+    current_vacancy = create(:vacancy)
+    expired_vacancy = create(:vacancy, :expired)
+
+    visit vacancy_path(current_vacancy)
+    expect(page).to have_no_content('This vacancy has expired')
+
+    visit vacancy_path(expired_vacancy)
+    expect(page).to have_content('This vacancy has expired')
+  end
 end

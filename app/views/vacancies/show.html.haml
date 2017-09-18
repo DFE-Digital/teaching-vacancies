@@ -1,21 +1,7 @@
-%h1.heading-large
-  = @vacancy.job_title
-  %span.heading-secondary
-    = @vacancy.location
-
-%dl
-  %dt Salary
-  %dd.double
-    = @vacancy.salary_range
-    per annum
-  %dt Closing date
-  %dd= format_date(@vacancy.expires_on)
-  %dt Posted on
-  %dd= format_date(@vacancy.publish_on)
-  %dt Contract
-  %dd= @vacancy.working_pattern&.titleize
-  %dt Job ref
-  %dd= @vacancy.reference
+.vacancy.grid-row
+  - if @vacancy.expired?
+    .column-full
+      .banner-warning This vacancy has expired
 
   .column-two-thirds
     %h1.heading-large

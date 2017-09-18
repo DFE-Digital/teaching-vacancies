@@ -41,4 +41,8 @@ class Vacancy < ApplicationRecord
       %i[job_title location],
     ]
   end
+
+  def expired?
+    expires_on < Time.zone.today
+  end
 end

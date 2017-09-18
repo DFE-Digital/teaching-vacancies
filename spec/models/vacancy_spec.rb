@@ -63,4 +63,21 @@ RSpec.describe Vacancy, type: :model do
       end
     end
   end
+
+  describe '#expired?' do
+    it 'returns true when the vacancy has expired' do
+      vacancy = build(:vacancy, expires_on: 4.days.ago)
+      expect(vacancy).to be_expired
+    end
+
+    it 'returns false when the vacancy expires today' do
+      vacancy = build(:vacancy, expires_on: Time.zone.today)
+      expect(vacancy).not_to be_expired
+    end
+
+    it 'returns false when the vacancy has yet to expire' do
+      vacancy = build(:vacancy, expires_on: 6.days.from_now)
+      expect(vacancy).not_to be_expired
+    end
+  end
 end
