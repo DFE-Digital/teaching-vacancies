@@ -1,3 +1,7 @@
+- content_for :page_title do
+  = @vacancy.job_title
+  = @vacancy.school_name
+
 .vacancy.grid-row
   - if @vacancy.expired?
     .column-full
