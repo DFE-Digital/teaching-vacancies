@@ -1,0 +1,16 @@
+.filter-vacancies {
+  padding: $gutter-half;
+  background-color: $panel-colour;
+  h3 {
+    margin: 0 0 $gutter-half 0;
+  }
+  .form-group {
+    margin-bottom: $gutter-half;
+  }
+  .form-control {
+    border-color: $grey-1;
+  }
+  .button {
+    margin-top: $gutter-half;
+  }
+}

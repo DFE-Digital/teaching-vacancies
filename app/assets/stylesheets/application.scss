@@ -35,14 +35,16 @@
 //@import 'elements/tables';
 //@import 'elements/details';
 //@import 'elements/panels';
-//@import 'elements/forms';
-//@import 'elements/forms/form-date';
-//@import 'elements/forms/form-validation';
+@import 'elements/forms';
+@import 'elements/forms/form-date';
+@import 'elements/forms/form-validation';
 //@import 'elements/breadcrumbs';
 @import 'elements/phase-banner';
 //@import 'elements/components';
 
 @import 'global/variables';
+@import 'global/helpers';
+@import 'components/filter_vacancies';
 @import 'components/vacancies';
 @import 'components/vacancy';
 @import 'components/banners';
@@ -53,4 +55,8 @@ main#content {
   &:focus {
     outline: none;
   }
+}
+
+input[type="search"] {
+  box-sizing: border-box;
 }
