@@ -1,5 +1,10 @@
+require 'elasticsearch/model'
+
 class Vacancy < ApplicationRecord
   include ApplicationHelper
+
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
