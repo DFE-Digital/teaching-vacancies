@@ -11,6 +11,8 @@
   }
   li {
     border-bottom: 1px solid $grey-3;
+    padding-bottom: $gutter-half;
+    margin-bottom: $gutter-half;
     dl {
       font-size: $small-font-size;
     }

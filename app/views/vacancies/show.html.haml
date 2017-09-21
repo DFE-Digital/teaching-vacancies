@@ -1,0 +1,104 @@
+- content_for :page_title do
+  = @vacancy.job_title
+  = @vacancy.school_name
+
+.vacancy.grid-row
+  - if @vacancy.expired?
+    .column-full
+      .banner-warning This vacancy has expired
+
+  .column-two-thirds
+    %h1.heading-large
+      = @vacancy.job_title
+      %span.heading-secondary
+        = @vacancy.location
+
+    %p.lede
+      = @vacancy.headline
+
+    %h3.heading-medium Job description
+    %p= @vacancy.job_description
+
+    %h3.heading-medium Essential requirements
+    %p= @vacancy.essential_requirements
+
+    - if @vacancy.education
+      %h3.heading-medium Education
+      %p= @vacancy.education
+
+    - if @vacancy.qualifications
+      %h3.heading-medium Qualifications
+      %p= @vacancy.qualifications
+
+    - if @vacancy.experience
+      %h3.heading-medium Experience
+      %p= @vacancy.experience
+
+    - if @vacancy.benefits
+      %h3.heading-medium Benefits
+      %p= @vacancy.benefits
+
+    %hr
+    %h3.heading-medium
+      About
+      = @vacancy.school.name
+
+    %p= @vacancy.school.description
+
+    %dl.school--details
+      %dt Address
+      %dd= @vacancy.school.full_address
+
+      - if @vacancy.school.phase.present?
+        %dt Phase
+        %dd= @vacancy.school.phase&.titleize
+
+      - if @vacancy.school.school_type.present?
+        %dt Type
+        %dd= @vacancy.school.school_type.label
+
+      - if @vacancy.school.url.present?
+        %dt Website
+        %dd= @vacancy.school.url
+
+  .column-one-third
+    %aside.vacancy--metadata
+      %dl
+        %dt Annual pay
+        %dd= @vacancy.salary_range
+
+        %dt Working pattern
+        %dd= @vacancy.working_pattern&.titleize
+
+        - if @vacancy.part_time?
+          %dt Weekly hours
+          %dd= @vacancy.weekly_hours
+
+        %dt Closing date
+        %dd= format_date(@vacancy.expires_on)
+
+        - if @vacancy.starts_on.present?
+          %dt Start date
+          %dd= format_date(@vacancy.starts_on)
+
+        - if @vacancy.ends_on.present?
+          %dt End date
+          %dd= format_date(@vacancy.ends_on)
+
+        %dt Posted on
+        %dd= format_date(@vacancy.publish_on)
+
+        %dt Reference number
+        %dd= @vacancy.reference
+
+        - if @vacancy.subject.present?
+          %dt Main subject
+          %dd= @vacancy.subject.name
+
+        - if @vacancy.pay_scale.present?
+          %dt Pay scale
+          %dd= @vacancy.pay_scale.label
+
+        - if @vacancy.leadership.present?
+          %dt Leadership level
+          %dd= @vacancy.leadership.title

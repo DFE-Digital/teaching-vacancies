@@ -3,7 +3,7 @@
 %ul.vacancies
   - @vacancies.each do |vacancy|
     %li.vacancy{itemscope: '', itemtype: 'http://schema.org/JobPosting'}
-      %h2= vacancy.job_title
+      %h2= link_to vacancy.job_title, vacancy_path(vacancy)
       %p= vacancy.location
       %dl
         %dt Salary
@@ -23,7 +23,7 @@
       %meta{itemprop: 'description', content: vacancy.headline}
       %meta{itemprop: 'responsibilities', content: vacancy.job_description}
       %meta{itemprop: 'employmentType', content: vacancy.working_pattern&.titleize}
-      %meta{itemprop: 'url', content: vacancies_url(vacancy)}
+      %meta{itemprop: 'url', content: vacancy_url(vacancy)}
       %span{itemprop: 'jobLocation', itemscope: '', itemtype: 'http://schema.org/Place'}
         %span{itemprop: 'address', itemscope: '', itemtype: 'http://schema.org/PostalAddress'}
           - if vacancy.school.address

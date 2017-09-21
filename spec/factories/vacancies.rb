@@ -8,7 +8,6 @@ FactoryGirl.define do
     job_title { Faker::Job.title }
     headline { Faker::Lorem.sentence }
     working_pattern { :full_time }
-    sequence(:slug) { |n| [job_title.downcase.parameterize, n].join('-') }
     job_description { Faker::Lorem.paragraph(4) }
     essential_requirements { Faker::Lorem.paragraph(4) }
     status { :published }
@@ -16,6 +15,7 @@ FactoryGirl.define do
     publish_on { Faker::Time.backward(2) }
     minimum_salary { Faker::Number.number(5) }
     maximum_salary { Faker::Number.number(5) }
+    reference { Faker::Crypto.md5[0..10] }
 
     trait :draft do
       status { :draft }
@@ -23,6 +23,10 @@ FactoryGirl.define do
 
     trait :trashed do
       status { :trashed }
+    end
+
+    trait :published do
+      status { :published }
     end
 
     trait :expired do

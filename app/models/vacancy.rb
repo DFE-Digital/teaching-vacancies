@@ -1,6 +1,9 @@
 class Vacancy < ApplicationRecord
   include ApplicationHelper
 
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time]
 
@@ -8,6 +11,8 @@ class Vacancy < ApplicationRecord
   belongs_to :subject
   belongs_to :pay_scale
   belongs_to :leadership
+
+  delegate :name, to: :school, prefix: true, allow_nil: false
 
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
 
@@ -27,5 +32,17 @@ class Vacancy < ApplicationRecord
     number_to_currency(minimum_salary) +
       ' - ' +
       number_to_currency(maximum_salary)
+  end
+
+  private def slug_candidates
+    [
+      :job_title,
+      %i[job_title school_name],
+      %i[job_title location],
+    ]
+  end
+
+  def expired?
+    expires_on < Time.zone.today
   end
 end

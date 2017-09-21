@@ -26,6 +26,7 @@
 @import 'design-patterns/breadcrumbs';
 
 // From GDS's alphagov/govuk_elements
+@import 'elements/layout';
 @import 'elements/helpers';
 @import 'elements/reset';
 @import 'elements/elements-typography';
@@ -43,6 +44,9 @@
 
 @import 'global/variables';
 @import 'components/vacancies';
+@import 'components/vacancy';
+@import 'components/banners';
+@import 'components/school';
 
 main#content {
   @extend %site-width-container;

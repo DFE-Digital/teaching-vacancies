@@ -78,6 +78,8 @@ GEM
     faker (1.7.3)
       i18n (~> 0.5)
     ffi (1.9.18)
+    friendly_id (5.2.1)
+      activerecord (>= 4.0.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     govuk_elements_rails (3.1.0)
@@ -276,6 +278,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   faker
+  friendly_id
   govuk_elements_rails
   govuk_frontend_toolkit
   govuk_template

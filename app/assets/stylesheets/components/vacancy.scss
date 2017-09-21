@@ -1,0 +1,22 @@
+.vacancy {
+  &--metadata {
+    background-color: $panel-colour;
+    padding: $gutter-half;
+    margin-top: $gutter*3;
+    @media screen and (max-width: $small-screen) {
+      margin-top: $gutter;
+    }
+
+    dl {
+      dt {
+        font-weight: $bold-font-weight;
+      }
+      dd {
+        margin-bottom: $gutter-half;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

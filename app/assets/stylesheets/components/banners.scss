@@ -1,0 +1,14 @@
+%banner {
+  font-size: $large-font-size;
+  padding: $gutter-half;
+  margin-top: $gutter-half;
+  border: $thick-border solid;
+  font-weight: $bold-font-weight;
+}
+.banner {
+  &-warning {
+    @extend %banner;
+    color: $warning-color;
+    border-color: $warning-color;
+  }
+}
