@@ -5,6 +5,7 @@ class Vacancy < ApplicationRecord
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  index_name [Rails.env, model_name.collection.gsub(%r{/}, '-')].join('_')
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -49,5 +50,10 @@ class Vacancy < ApplicationRecord
 
   def expired?
     expires_on < Time.zone.today
+  end
+
+  def self.public_search(filters:, sort:)
+    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
+    ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
   end
 end
