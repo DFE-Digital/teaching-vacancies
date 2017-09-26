@@ -10,5 +10,14 @@ FactoryGirl.define do
     town { Faker::Address.city }
     county { Faker::Address.state_abbr }
     postcode { Faker::Address.postcode }
+    phase { :secondary }
+
+    trait :primary do
+      phase { :primary }
+    end
+
+    trait :secondary do
+      phase { :secondary }
+    end
   end
 end

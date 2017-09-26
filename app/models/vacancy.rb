@@ -7,6 +7,22 @@ class Vacancy < ApplicationRecord
   include Elasticsearch::Model::Callbacks
   index_name [Rails.env, model_name.collection.gsub(%r{/}, '-')].join('_')
 
+  mappings dynamic: 'false' do
+    indexes :job_title, analyzer: 'english'
+    indexes :headline, analyzer: 'english'
+    indexes :job_description, analyzer: 'english'
+
+    indexes :school do
+      indexes :phase, type: :keyword
+    end
+
+    indexes :expires_on, type: :date
+    indexes :starts_on, type: :date
+    indexes :updated_at, type: :date
+    indexes :status, type: :keyword
+    indexes :working_pattern, type: :keyword
+  end
+
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
@@ -55,5 +71,9 @@ class Vacancy < ApplicationRecord
   def self.public_search(filters:, sort:)
     query = VacancySearchBuilder.new(filters: filters, sort: sort).call
     ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
+  end
+
+  def as_indexed_json(_ = {})
+    as_json(include: { school: { only: [:phase] } })
   end
 end

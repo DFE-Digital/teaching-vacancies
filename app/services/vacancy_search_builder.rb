@@ -1,6 +1,10 @@
 class VacancySearchBuilder
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
+    @working_pattern = filters.working_pattern
+    @phase = filters.phase
+    @minimum_salary = filters.minimum_salary
+    @maximum_salary = filters.maximum_salary
     @sort = sort
     @expired = expired
     @status = status
@@ -8,11 +12,23 @@ class VacancySearchBuilder
 
   def call
     keyword_query = keyword_build
+    working_pattern_query = working_pattern_build
+    phase_query = phase_build
+    minimum_salary_query = minimum_salary_build
+    maximum_salary_query = maximum_salary_build
     expired_query = expired_build
     status_query = status_build
     sort_query = sort_build
 
-    joined_query = [keyword_query, expired_query, status_query].compact
+    joined_query = [
+      keyword_query,
+      working_pattern_query,
+      phase_query,
+      minimum_salary_query,
+      maximum_salary_query,
+      expired_query,
+      status_query,
+    ].compact
 
     query = {
       bool: {
@@ -59,6 +75,54 @@ class VacancySearchBuilder
           terms: {
             status: [@status.to_s],
           },
+        },
+      },
+    }
+  end
+
+  def working_pattern_build
+    return if @working_pattern.blank?
+    {
+      bool: {
+        filter: {
+          terms: {
+            working_pattern: [@working_pattern.to_s],
+          },
+        },
+      },
+    }
+  end
+
+  def phase_build
+    return if @phase.blank?
+    {
+      bool: {
+        filter: {
+          terms: {
+            'school.phase': [@phase.to_s],
+          },
+        },
+      },
+    }
+  end
+
+  def minimum_salary_build
+    return if @minimum_salary.blank?
+    {
+      range: {
+        'minimum_salary': {
+          'gte': @minimum_salary.to_i,
+        },
+      },
+    }
+  end
+
+  def maximum_salary_build
+    return if @maximum_salary.blank?
+    {
+      range: {
+        'maximum_salary': {
+          'lt': @maximum_salary.to_i,
         },
       },
     }
