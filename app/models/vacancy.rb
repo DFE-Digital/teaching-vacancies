@@ -19,6 +19,7 @@ class Vacancy < ApplicationRecord
     indexes :expires_on, type: :date
     indexes :starts_on, type: :date
     indexes :updated_at, type: :date
+    indexes :publish_on, type: :date
     indexes :status, type: :keyword
     indexes :working_pattern, type: :keyword
   end

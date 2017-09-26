@@ -1,10 +1,16 @@
 %h1.heading-large
-  Vacancies
+  There are
+  = pluralize @vacancies.count, 'vacancy'
+  matching your search
 .grid-row
   .column-one-third
     = render 'filters'
   .column-two-thirds
     - if @vacancies.any?
+      %div.sortable-links
+        Sort by:
+        = link_to_sort_by  'Closing date', column: 'expires_on', order: 'asc', sort: @sort
+        = link_to_sort_by  'Published date', column: 'publish_on', order: 'desc', sort: @sort
       %ul.vacancies
         - @vacancies.each do |vacancy|
           %li.vacancy{itemscope: '', itemtype: 'http://schema.org/JobPosting'}

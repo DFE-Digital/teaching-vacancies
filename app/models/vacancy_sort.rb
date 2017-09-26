@@ -14,4 +14,8 @@ class VacancySort
     @order = VALID_SORT_ORDERS.include?(order) ? order : @order
     self
   end
+
+  def reverse_order
+    @order == 'asc' ? 'desc' : 'asc'
+  end
 end

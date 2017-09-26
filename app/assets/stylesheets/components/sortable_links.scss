@@ -1,0 +1,17 @@
+.sortable-links {
+  @extend .font-xsmall;
+  margin-bottom: $gutter;
+  a {
+    margin: 0 4px;
+    &.active {
+      font-weight: $bold-font-weight;
+      text-decoration: none;
+      &.sortby--asc:after {
+        content: ' \25B4';
+      }
+      &.sortby--desc:after {
+        content: ' \25BE';
+      }
+    }
+  }
+}

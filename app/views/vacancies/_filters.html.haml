@@ -22,4 +22,7 @@
       = label_tag 'phase', 'Education Phase', class: 'form-label'
       = select_tag 'phase', options_for_select(school_phase_options, params[:phase]), class: 'form-control form-control-block', include_blank: 'Any'
 
+    = hidden_field_tag :sort_column, params[:sort_column]
+    = hidden_field_tag :sort_order, params[:sort_order]
+
     = submit_tag 'Apply filters', class: 'button'

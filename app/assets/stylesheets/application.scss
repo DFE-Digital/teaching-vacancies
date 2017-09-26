@@ -49,6 +49,7 @@
 @import 'components/vacancy';
 @import 'components/banners';
 @import 'components/school';
+@import 'components/sortable_links';
 
 main#content {
   @extend %site-width-container;
