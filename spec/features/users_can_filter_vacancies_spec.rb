@@ -66,7 +66,6 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   scenario 'Filterable by minimum salary', elasticsearch: true do
-    pending 'TODO: Need to find out why this is failing'
     lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
     higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
 
@@ -83,7 +82,6 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   scenario 'Filterable by maximum salary', elasticsearch: true do
-    pending 'TODO: Need to find out why this is failing'
     lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
     higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
 

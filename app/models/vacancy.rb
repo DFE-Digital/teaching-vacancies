@@ -5,7 +5,7 @@ class Vacancy < ApplicationRecord
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-  index_name [Rails.env, model_name.collection.gsub(%r{/}, '-')].join('_')
+  index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
 
   mappings dynamic: 'false' do
     indexes :job_title, analyzer: 'english'
@@ -27,6 +27,8 @@ class Vacancy < ApplicationRecord
     indexes :publish_on, type: :date
     indexes :status, type: :keyword
     indexes :working_pattern, type: :keyword
+    indexes :minimum_salary, type: :integer
+    indexes :maximum_salary, type: :integer
   end
 
   extend FriendlyId
