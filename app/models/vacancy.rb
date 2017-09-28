@@ -13,7 +13,12 @@ class Vacancy < ApplicationRecord
     indexes :job_description, analyzer: 'english'
 
     indexes :school do
+      indexes :name, analyzer: 'english'
       indexes :phase, type: :keyword
+      indexes :postcode, type: :string
+      indexes :town, type: :string
+      indexes :county, type: :string
+      indexes :address, type: :string
     end
 
     indexes :expires_on, type: :date
@@ -75,6 +80,6 @@ class Vacancy < ApplicationRecord
   end
 
   def as_indexed_json(_ = {})
-    as_json(include: { school: { only: [:phase] } })
+    as_json(include: { school: { only: %i[phase postcode name town county address] } })
   end
 end

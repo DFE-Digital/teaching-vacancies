@@ -1,6 +1,7 @@
 class VacancySearchBuilder
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
+    @location = filters.location.to_s.strip
     @working_pattern = filters.working_pattern
     @phase = filters.phase
     @minimum_salary = filters.minimum_salary
@@ -12,6 +13,7 @@ class VacancySearchBuilder
 
   def call
     keyword_query = keyword_build
+    location_query = location_build
     working_pattern_query = working_pattern_build
     phase_query = phase_build
     minimum_salary_query = minimum_salary_build
@@ -22,6 +24,7 @@ class VacancySearchBuilder
 
     joined_query = [
       keyword_query,
+      location_query,
       working_pattern_query,
       phase_query,
       minimum_salary_query,
@@ -54,6 +57,17 @@ class VacancySearchBuilder
         },
       }
     end
+  end
+
+  def location_build
+    return if @location.empty?
+    {
+      multi_match: {
+        query: @location,
+        fields: %w[school.postcode^5 school.name^2 school.town school.county school.address],
+        operator: 'and',
+      },
+    }
   end
 
   def expired_build

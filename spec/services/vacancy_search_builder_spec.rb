@@ -1,6 +1,6 @@
 RSpec.describe VacancySearchBuilder do
   describe '#call' do
-    it 'returns the default search query with no parameters' do
+    it 'returns the default keyword query with no parameters' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
@@ -22,6 +22,23 @@ RSpec.describe VacancySearchBuilder do
         multi_match: {
           query: 'german',
           fields: %w[job_title^5 headline^2 job_description],
+          operator: 'and',
+        },
+      }
+
+      expect(builder).to be_a(Hash)
+      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
+    end
+
+    it 'builds a location query when a location is provided' do
+      sort = OpenStruct.new(column: :expires_on, order: :desc)
+      filters = OpenStruct.new(location: 'Devon')
+      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+
+      expected_hash = {
+        multi_match: {
+          query: 'Devon',
+          fields: %w[school.postcode^5 school.name^2 school.town school.county school.address],
           operator: 'and',
         },
       }
@@ -75,8 +92,8 @@ RSpec.describe VacancySearchBuilder do
 
       expected_hash = {
         range: {
-          'minimum_salary': {
-            'gte': 20000,
+          minimum_salary: {
+            gte: 20000,
           },
         },
       }
@@ -92,8 +109,8 @@ RSpec.describe VacancySearchBuilder do
 
       expected_hash = {
         range: {
-          'maximum_salary': {
-            'lt': 20000,
+          maximum_salary: {
+            lt: 20000,
           },
         },
       }

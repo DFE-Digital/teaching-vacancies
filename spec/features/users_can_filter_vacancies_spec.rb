@@ -17,6 +17,22 @@ RSpec.feature 'Filtering vacancies' do
     expect(page).not_to have_content(languages_teacher.job_title)
   end
 
+  scenario 'Filterable by location', elasticsearch: true do
+    enfield_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School', town: 'Enfield'))
+    penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School', town: 'Penzance'))
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit vacancies_path
+
+    within '.filters-form' do
+      fill_in 'location', with: 'enfield'
+      page.find('.button[type=submit]').click
+    end
+
+    expect(page).to have_content(enfield_vacancy.job_title)
+    expect(page).not_to have_content(penzance_vacancy.job_title)
+  end
+
   scenario 'Filterable by working pattern', elasticsearch: true do
     part_time_vacancy = create(:vacancy, :published, working_pattern: :part_time)
     full_time_vacancy = create(:vacancy, :published, working_pattern: :full_time)
