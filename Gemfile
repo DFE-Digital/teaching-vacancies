@@ -39,6 +39,7 @@ gem 'govuk_template'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'roadie-rails'
+gem 'simple_form'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and
