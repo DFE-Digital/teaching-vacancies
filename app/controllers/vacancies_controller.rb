@@ -10,8 +10,23 @@ class VacanciesController < ApplicationController
   def show
     @vacancy = Vacancy.published.friendly.find(params[:id])
   end
+  def new
+    @publish_vacancy_form = publish_vacancy_form
+    @current_stage = params[:stage] ? params[:stage].to_sym : @publish_vacancy_form.default_stage
+    not_found unless @publish_vacancy_form.stages.keys.include?(@current_stage)
+    @vacancy = Vacancy.new
+  end
 
   private
+
+  def publish_vacancy_form
+    PublishVacancyForm.new(
+      job_specification:        JobSpecificationForm,
+      candidate_specification:  CandidateSpecificationForm,
+      vacancy_specification:    VacancySpecificationForm,
+    )
+  end
+
 
   def sort_column
     params[:sort_column]

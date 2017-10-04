@@ -1,0 +1,2 @@
+class VacancySpecificationForm
+end

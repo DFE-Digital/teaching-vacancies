@@ -1,0 +1,9 @@
+%h1.heading-large
+  Publish a vacancy
+  %span.heading-secondary
+    Step
+    = @publish_vacancy_form.step(@current_stage)
+    of
+    = @publish_vacancy_form.stages.count
+
+= render @current_stage.to_s
