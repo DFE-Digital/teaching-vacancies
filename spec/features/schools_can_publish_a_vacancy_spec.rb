@@ -5,24 +5,21 @@ RSpec.feature 'Creating a vacancy' do
     visit new_vacancy_path
 
     expect(page).to have_content('Publish a vacancy')
-    expect(page).to have_content('Step 1 of 3')
   end
 
-  scenario 'Users can view the stages of the form directly' do
-    visit new_vacancy_path(stage: 'job_specification')
-    expect(page).to have_content('Publish a vacancy')
-    expect(page).to have_content('Step 1 of 3')
+  scenario 'Users can see validation errors when they dont fill in all required fields' do
+    create(:school)
 
-    visit new_vacancy_path(stage: 'candidate_specification')
-    expect(page).to have_content('Publish a vacancy')
-    expect(page).to have_content('Step 2 of 3')
-
-    visit new_vacancy_path(stage: 'vacancy_specification')
-    expect(page).to have_content('Publish a vacancy')
-    expect(page).to have_content('Step 3 of 3')
-
-    visit new_vacancy_path(stage: 'unknown_stage')
-    expect(page).not_to have_content('Publish a vacancy')
-    expect(page).to have_content('Page not found')
+    visit new_vacancy_path
+    # fill form
+    fill_in 'vacancy[job_title]', with: ''
+    fill_in 'vacancy[headline]', with: 'Headline'
+    fill_in 'vacancy[job_description]', with: 'Job description'
+    select 'Full time', from: 'vacancy[working_pattern]'
+    fill_in 'vacancy[minimum_salary]', with: '25000'
+    # submit form
+    click_button 'Save and continue'
+    expect(page).to have_content('error')
+    expect(page).to have_content('Job title can\'t be blank')
   end
 end

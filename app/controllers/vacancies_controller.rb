@@ -11,20 +11,27 @@ class VacanciesController < ApplicationController
     @vacancy = Vacancy.published.friendly.find(params[:id])
   end
   def new
-    @publish_vacancy_form = publish_vacancy_form
-    @current_stage = params[:stage] ? params[:stage].to_sym : @publish_vacancy_form.default_stage
-    not_found unless @publish_vacancy_form.stages.keys.include?(@current_stage)
     @vacancy = Vacancy.new
+  end
+
+  def create
+    @vacancy = CreateVacancy.new(School.first).call(vacancy_params)
+    if @vacancy.valid?
+      # Check answers & submit
+    else
+      render :new
+    end
   end
 
   private
 
-  def publish_vacancy_form
-    PublishVacancyForm.new(
-      job_specification:        JobSpecificationForm,
-      candidate_specification:  CandidateSpecificationForm,
-      vacancy_specification:    VacancySpecificationForm,
-    )
+  def vacancy_params
+    params.require(:vacancy).permit(:job_title, :headline, :job_description,
+                                    :starts_on, :ends_on, :weekly_hours,
+                                    :pay_scale_id, :leadership_id, :subject_id,
+                                    :benefits, :essential_requirements, :education,
+                                    :qualifications, :publish_on, :working_pattern,
+                                    :expires_on, :minimum_salary, :maximum_salary)
   end
 
 

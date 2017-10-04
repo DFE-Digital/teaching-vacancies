@@ -45,8 +45,8 @@ SimpleForm.setup do |config|
     ## Inputs
     b.use :label, class: 'form-label form-label-bold'
     b.use :hint, wrap_with: { tag: 'div', class: 'form-hint' }
+    b.use :error, wrap_with: { tag: 'div', class: 'error-message' }
     b.use :input, class: 'form-control'
-    b.use :error, wrap_with: { tag: 'span', class: 'form-error' }
 
     ## full_messages_for
     # If you want to display the full error message for the attribute, you can

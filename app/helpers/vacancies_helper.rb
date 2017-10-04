@@ -1,4 +1,5 @@
 module VacanciesHelper
+
   def salary_options
     (20000..70000).step(10000).map { |num| [number_to_currency(num), num] }.to_h
   end
@@ -32,4 +33,9 @@ module VacanciesHelper
   def vacancy_params(overwrite = {})
     params.merge(overwrite).permit(vacancy_params_whitelist)
   end
+
+  def working_pattern_options
+    Vacancy.working_patterns.keys.map { |key| [key.humanize, key] }
+  end
+
 end
