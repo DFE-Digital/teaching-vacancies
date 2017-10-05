@@ -1,67 +1,64 @@
 %h2.heading-medium
   Job specification
 
-= simple_form_for @vacancy do |f|
-  = f.input :job_title,
-            hint: 'Must indicate subject to be taught (secondary school) or level of seniority',
-            required: true
-  = f.input :headline,
-            as: :text,
-            hint: 'Single sentence, summing up the job on offer, to appear at top of the listing',
-            input_html: {rows: 5},
-            required: true
-  = f.input :job_description,
-            as: :text,
-            hint: 'A description of the job, and the duties involved, and competencies and attitudes expected to be shown by the jobholder',
-            input_html: {rows: 10},
-            required: true
-  = f.input :benefits,
-            as: :text,
-            input_html: {rows: 5},
-            required: false
-  = f.association :subject,
-                  hint: 'The main subject to be taught by teacher',
-                  collection: Subject.order(:name),
-                  required: false
-  = f.association :pay_scale,
-                  hint: 'The pay scale on which the salary of the job falls',
-                  collection: PayScale.order(:label),
-                  label_method: :label,
-                  required: false
-  = f.input :weekly_hours,
-            as: :integer,
-            hint: 'Number of hours to be worked each week',
-            required: false
-  = f.association :leadership,
-                  label: 'Leadership level',
-                  collection: Leadership.order(:title),
-                  required: false
-  = f.input :starts_on,
-            as: :date,
-            label: 'Start date',
-            hint: 'Expected start date of the job',
-            order: %i[day month year],
-            start_year: Date.today.year,
-            include_blank: true,
-            required: false
-  = f.input :ends_on,
-            as: :date,
-            label: 'End date',
-            hint: 'Expected end date of the job',
-            order: %i[day month year],
-            start_year: Date.today.year,
-            include_blank: true,
-            required: false
-  = f.input :working_pattern,
-            collection: working_pattern_options,
-            required: true
-  = f.input :minimum_salary,
-            as: :integer,
-            hint: 'Minimum annual pay before tax (£)',
-            required: true
-  = f.input :maximum_salary,
-            as: :integer,
-            hint: 'Maximum annual pay before tax (£)',
-            required: false
-
-  = f.button :submit, 'Save and continue'
+= f.input :job_title,
+          hint: 'Must indicate subject to be taught (secondary school) or level of seniority',
+          required: true
+= f.input :headline,
+          as: :text,
+          hint: 'Single sentence, summing up the job on offer, to appear at top of the listing',
+          input_html: {rows: 5},
+          required: true
+= f.input :job_description,
+          as: :text,
+          hint: 'A description of the job, and the duties involved, and competencies and attitudes expected to be shown by the jobholder',
+          input_html: {rows: 10},
+          required: true
+= f.input :benefits,
+          as: :text,
+          input_html: {rows: 5},
+          required: false
+= f.association :subject,
+                hint: 'The main subject to be taught by teacher',
+                collection: Subject.order(:name),
+                required: false
+= f.association :pay_scale,
+                hint: 'The pay scale on which the salary of the job falls',
+                collection: PayScale.order(:label),
+                label_method: :label,
+                required: false
+= f.input :weekly_hours,
+          as: :integer,
+          hint: 'Number of hours to be worked each week',
+          required: false
+= f.association :leadership,
+                label: 'Leadership level',
+                collection: Leadership.order(:title),
+                required: false
+= f.input :starts_on,
+          as: :date,
+          label: 'Start date',
+          hint: 'Expected start date of the job',
+          order: %i[day month year],
+          start_year: Date.today.year,
+          include_blank: true,
+          required: false
+= f.input :ends_on,
+          as: :date,
+          label: 'End date',
+          hint: 'Expected end date of the job',
+          order: %i[day month year],
+          start_year: Date.today.year,
+          include_blank: true,
+          required: false
+= f.input :working_pattern,
+          collection: working_pattern_options,
+          required: true
+= f.input :minimum_salary,
+          as: :integer,
+          hint: 'Minimum annual pay before tax (£)',
+          required: true
+= f.input :maximum_salary,
+          as: :integer,
+          hint: 'Maximum annual pay before tax (£)',
+          required: false

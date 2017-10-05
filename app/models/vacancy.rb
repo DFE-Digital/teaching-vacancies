@@ -38,9 +38,9 @@ class Vacancy < ApplicationRecord
   enum working_pattern: %i[full_time part_time]
 
   belongs_to :school, required: true
-  belongs_to :subject
-  belongs_to :pay_scale
-  belongs_to :leadership
+  belongs_to :subject, required: false
+  belongs_to :pay_scale, required: false
+  belongs_to :leadership, required: false
 
   delegate :name, to: :school, prefix: true, allow_nil: false
 

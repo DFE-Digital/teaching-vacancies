@@ -17,10 +17,13 @@ class VacanciesController < ApplicationController
   def create
     @vacancy = CreateVacancy.new(School.first).call(vacancy_params)
     if @vacancy.valid?
-      # Check answers & submit
+      redirect_to publish_vacancy_path(@vacancy)
     else
       render :new
     end
+  end
+
+  def publish
   end
 
   private

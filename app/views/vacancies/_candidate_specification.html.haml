@@ -1,0 +1,23 @@
+%h2.heading-medium
+  Job specification
+
+= f.input :essential_requirements,
+          as: :text,
+          hint: 'Qualifications, experience, and/or professional registrations',
+          input_html: {rows: 10},
+          required: true
+= f.input :education,
+          as: :text,
+          hint: 'Educational background needed for the position',
+          input_html: {rows: 5},
+          required: false
+= f.input :qualifications,
+          as: :text,
+          hint: 'Specific qualifications required for this role',
+          input_html: {rows: 5},
+          required: false
+= f.input :experience,
+          as: :text,
+          hint: 'Expected teaching or other experience',
+          input_html: {rows: 5},
+          required: false

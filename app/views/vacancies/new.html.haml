@@ -8,7 +8,9 @@
     %ul
       - @vacancy.errors.full_messages.each do |message|
         %li= message
+= simple_form_for @vacancy do |f|
+  = render partial: 'job_specification', locals: { f: f }
+  = render partial: 'candidate_specification', locals: { f: f }
+  = render partial: 'vacancy_details', locals: { f: f }
 
-= render 'job_specification'
-= render 'candidate_specification'
-= render 'vacancy_details'
+  = f.button :submit, 'Save and continue'
