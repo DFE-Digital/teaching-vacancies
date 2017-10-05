@@ -24,6 +24,11 @@ class VacanciesController < ApplicationController
   end
 
   def publish
+    @vacancy = Vacancy.friendly.find(params[:id])
+  end
+
+  def edit
+    @vacancy = Vacancy.friendly.find(params[:id])
   end
 
   private

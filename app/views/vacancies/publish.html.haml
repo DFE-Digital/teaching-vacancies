@@ -1,0 +1,139 @@
+%h1.heading-large
+  Publish a vacancy
+  %span.heading-secondary
+    Confirm details before you submit
+
+%dl.govuk-check-your-answers.cya-questions-short
+  %div
+    %dt.cya-question
+      Job title
+    %dd.cya-answer
+      = @vacancy.job_title
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Headline
+    %dd.cya-answer
+      = @vacancy.headline
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Job description
+    %dd.cya-answer
+      = @vacancy.job_description
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Benefits
+    %dd.cya-answer
+      = @vacancy.benefits
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Subject
+    %dd.cya-answer
+      = @vacancy.subject.name
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Pay scale
+    %dd.cya-answer
+      = @vacancy.pay_scale.label
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Weekly hours
+    %dd.cya-answer
+      = @vacancy.weekly_hours
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Leadership level
+    %dd.cya-answer
+      = @vacancy.leadership.title
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Start date
+    %dd.cya-answer
+      = format_date @vacancy.starts_on
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      End date
+    %dd.cya-answer
+      = format_date @vacancy.ends_on
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Working pattern
+    %dd.cya-answer
+      = @vacancy.working_pattern.humanize
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Minimum salary
+    %dd.cya-answer
+      = number_to_currency @vacancy.minimum_salary
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Maximum salary
+    %dd.cya-answer
+      = number_to_currency @vacancy.maximum_salary
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Essential requirements
+    %dd.cya-answer
+      = @vacancy.essential_requirements
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Education
+    %dd.cya-answer
+      = @vacancy.education
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Qualifications
+    %dd.cya-answer
+      = @vacancy.qualifications
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Experience
+    %dd.cya-answer
+      = @vacancy.experience
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Vacancy deadline date
+    %dd.cya-answer
+      = format_date @vacancy.expires_on
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)
+  %div
+    %dt.cya-question
+      Vacancy publish date
+    %dd.cya-answer
+      = format_date @vacancy.publish_on
+    %dd.cya-change
+      = link_to 'Change', edit_vacancy_path(@vacancy)

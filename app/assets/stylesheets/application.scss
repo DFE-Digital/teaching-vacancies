@@ -32,15 +32,15 @@
 @import 'elements/elements-typography';
 @import 'elements/buttons';
 @import 'elements/lists';
-//@import 'elements/tables';
-//@import 'elements/details';
-//@import 'elements/panels';
+@import 'elements/tables';
+@import 'elements/details';
+@import 'elements/panels';
 @import 'elements/forms';
 @import 'elements/forms/form-date';
 @import 'elements/forms/form-validation';
 //@import 'elements/breadcrumbs';
 @import 'elements/phase-banner';
-//@import 'elements/components';
+@import 'elements/components';
 
 @import 'global/variables';
 @import 'global/helpers';
@@ -62,5 +62,6 @@ input[type="search"] {
   box-sizing: border-box;
 }
 
+@import 'components/check_your_answers';
 @import 'base/layout';
 @import 'base/forms';
