@@ -1,10 +1,9 @@
 RSpec.configure do |config|
-  config.around :each, elasticsearch: true do |example|
+  config.before :each, elasticsearch: true do
     [Vacancy].each do |model|
       model.__elasticsearch__.create_index!(force: true, index: model.index_name)
       model.__elasticsearch__.refresh_index! index: model.index_name
     end
-    example.run
   end
 
   config.expect_with :rspec do |expectations|
