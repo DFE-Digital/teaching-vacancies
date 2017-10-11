@@ -1,14 +1,18 @@
 class VacanciesController < ApplicationController
   def index
+
     @filters = VacancyFilters.new(params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
     @query = Vacancy.public_search(filters: @filters, sort: @sort)
-    @vacancies = @query.page(params[:page]).records
+    vacancies = @query.page(params[:page]).records
+
+    @vacancies = VacanciesPresenter.new(vacancies)
   end
 
   def show
-    @vacancy = Vacancy.published.friendly.find(params[:id])
+    vacancy = Vacancy.published.friendly.find(params[:id])
+    @vacancy = VacancyPresenter.new(vacancy)
   end
   def new
     @vacancy = Vacancy.new
@@ -24,7 +28,8 @@ class VacanciesController < ApplicationController
   end
 
   def publish
-    @vacancy = Vacancy.friendly.find(params[:id])
+    vacancy = Vacancy.friendly.find(params[:id])
+    @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def edit

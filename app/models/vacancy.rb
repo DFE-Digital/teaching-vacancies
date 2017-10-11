@@ -57,12 +57,6 @@ class Vacancy < ApplicationRecord
     [school.name, school.town, school.county].reject(&:blank?).join(', ')
   end
 
-  def salary_range(del="-")
-    maximum_salary.blank? ?
-      number_to_currency(minimum_salary) :
-      "#{number_to_currency(minimum_salary)} #{del} #{number_to_currency(maximum_salary)}"
-  end
-
   private def slug_candidates
     [
       :job_title,

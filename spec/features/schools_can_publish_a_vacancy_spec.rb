@@ -28,15 +28,10 @@ RSpec.feature 'Creating a vacancy' do
 
     fill_vacancy_fields(vacancy)
 
-
     expect(page).to have_content("Confirm details before you submit")
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.headline)
-    expect(page).to have_content(salary_range(vacancy.minimum_salary, vacancy.maximum_salary))
+    expect(page).to have_content(vacancy_salary_range(vacancy.minimum_salary, vacancy.maximum_salary))
     expect(page).to have_content(vacancy.essential_requirements)
   end
-end
-
-def salary_range(min, max)
-  "#{number_to_currency(min, precision: 0)} to #{number_to_currency(max, precision: 0)}"
 end

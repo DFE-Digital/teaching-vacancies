@@ -14,4 +14,8 @@ module VacancyHelpers
 
     click_button 'Save and continue'
   end
+
+  def vacancy_salary_range(min, max, del="to")
+    "#{number_to_currency(min, precision: 0)} #{del} #{number_to_currency(max, precision: 0)}"
+  end
 end

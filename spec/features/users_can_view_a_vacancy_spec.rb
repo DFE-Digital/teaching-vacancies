@@ -9,7 +9,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     expect(page).to have_content(published_vacancy.job_title)
     expect(page).to have_content(published_vacancy.headline)
     expect(page).to have_content(published_vacancy.job_description)
-    expect(page).to have_content(published_vacancy.salary_range)
+    expect(page).to have_content(VacancyPresenter.new(published_vacancy).salary_range)
     expect(page).to have_content(published_vacancy.reference)
   end
 

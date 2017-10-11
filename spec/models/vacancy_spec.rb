@@ -50,26 +50,6 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe '#salary_range' do
-    it 'return the formatted minimum to maximum salary' do
-      vacancy = create(:vacancy, minimum_salary: 30000, maximum_salary: 40000)
-      expect(vacancy.salary_range).to eq('£30,000 - £40,000')
-    end
-
-    it 'returns the formatted minumym to maximum salary with the specified delimiter' do
-      vacancy = create(:vacancy, minimum_salary: 30000, maximum_salary: 40000)
-      expect(vacancy.salary_range("to")).to eq('£30,000 to £40,000')
-    end
-
-    context 'when no maximum salary is set' do
-      it 'should just return the minimum salary' do
-        vacancy = create(:vacancy, minimum_salary: 20000, maximum_salary: nil)
-        expect(vacancy.salary_range).to eq('£20,000')
-      end
-    end
-
-  end
-
   describe '#expired?' do
     it 'returns true when the vacancy has expired' do
       vacancy = build(:vacancy, expires_on: 4.days.ago)
