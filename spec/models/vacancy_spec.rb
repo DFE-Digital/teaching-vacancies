@@ -45,36 +45,4 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe '#location' do
-    it 'should return a comma separated location of the school' do
-      school = create(:school, name: 'Acme School', town: 'Acme', county: 'Kent')
-      vacancy = create(:vacancy, school: school)
-      expect(vacancy.location).to eq('Acme School, Acme, Kent')
-    end
-
-    context 'when one of the properties is empty' do
-      it 'should not include that property' do
-        school = create(:school, name: 'Acme School', town: '', county: 'Kent')
-        vacancy = create(:vacancy, school: school)
-        expect(vacancy.location).to eq('Acme School, Kent')
-      end
-    end
-  end
-
-  describe '#expired?' do
-    it 'returns true when the vacancy has expired' do
-      vacancy = build(:vacancy, expires_on: 4.days.ago)
-      expect(vacancy).to be_expired
-    end
-
-    it 'returns false when the vacancy expires today' do
-      vacancy = build(:vacancy, expires_on: Time.zone.today)
-      expect(vacancy).not_to be_expired
-    end
-
-    it 'returns false when the vacancy has yet to expire' do
-      vacancy = build(:vacancy, expires_on: 6.days.from_now)
-      expect(vacancy).not_to be_expired
-    end
-  end
 end

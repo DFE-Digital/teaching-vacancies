@@ -57,19 +57,17 @@ class Vacancy < ApplicationRecord
   validate :minimum_salary_lower_than_maximum
 
   def location
-    [school.name, school.town, school.county].reject(&:blank?).join(', ')
+    @location ||= SchoolPresenter.new(school).location
   end
 
-  private def slug_candidates
+  private
+
+  def slug_candidates
     [
       :job_title,
       %i[job_title school_name],
       %i[job_title location],
     ]
-  end
-
-  def expired?
-    expires_on < Time.zone.today
   end
 
   def self.public_search(filters:, sort:)

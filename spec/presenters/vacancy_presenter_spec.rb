@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe VacancyPresenter do
@@ -19,6 +18,24 @@ RSpec.describe VacancyPresenter do
         vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 20000, maximum_salary: nil))
         expect(vacancy.salary_range).to eq('£20,000')
       end
+    end
+  end
+
+  describe '#expired?' do
+    it 'returns true when the vacancy has expired' do
+
+      vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 4.days.ago))
+      expect(vacancy).to be_expired
+    end
+
+    it 'returns false when the vacancy expires today' do
+      vacancy = VacancyPresenter.new(build(:vacancy, expires_on: Time.zone.today))
+      expect(vacancy).not_to be_expired
+    end
+
+    it 'returns false when the vacancy has yet to expire' do
+      vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 6.days.from_now))
+      expect(vacancy).not_to be_expired
     end
   end
 end
