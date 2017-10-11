@@ -13,7 +13,7 @@ FactoryGirl.define do
     status { :published }
     expires_on { Faker::Time.forward(14) }
     publish_on { Faker::Time.backward(2) }
-    minimum_salary { Faker::Number.number(5) }
+    minimum_salary { Faker::Number.number(4) }
     maximum_salary { Faker::Number.number(5) }
     reference { Faker::Crypto.md5[0..10] }
 

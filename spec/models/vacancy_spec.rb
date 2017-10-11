@@ -12,6 +12,17 @@ RSpec.describe Vacancy, type: :model do
   it { should validate_presence_of(:publish_on) }
   it { should validate_presence_of(:expires_on) }
 
+  describe "validations", wip: true do
+    describe "#minimum_salary_lower_than_maximum" do
+      it "the minimum salary should be less than the maximum salary" do
+        vacancy = build(:vacancy, minimum_salary: 20, maximum_salary: 10)
+
+        expect(vacancy.valid?).to be false
+        expect(vacancy.errors.messages[:minimum_salary][0]).to eq("must be lower than the maximum salary")
+      end
+    end
+  end
+
   describe 'applicable scope' do
     it 'should only find current vacancies' do
       expired = create(:vacancy, expires_on: 1.day.ago)

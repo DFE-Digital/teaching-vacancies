@@ -32,6 +32,7 @@ class Vacancy < ApplicationRecord
   end
 
   extend FriendlyId
+
   friendly_id :slug_candidates, use: :slugged
 
   enum status: %i[published draft trashed]
@@ -52,6 +53,8 @@ class Vacancy < ApplicationRecord
             :minimum_salary, :essential_requirements, :working_pattern, \
             :publish_on, :expires_on, :slug, \
             presence: true
+
+  validate :minimum_salary_lower_than_maximum
 
   def location
     [school.name, school.town, school.county].reject(&:blank?).join(', ')
@@ -76,5 +79,11 @@ class Vacancy < ApplicationRecord
 
   def as_indexed_json(_ = {})
     as_json(include: { school: { only: %i[phase postcode name town county address] } })
+  end
+
+  def minimum_salary_lower_than_maximum
+    if maximum_salary and minimum_salary > maximum_salary
+      errors.add(:minimum_salary,"must be lower than the maximum salary")
+    end
   end
 end
