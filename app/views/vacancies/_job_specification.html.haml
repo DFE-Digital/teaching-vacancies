@@ -19,14 +19,27 @@
           input_html: {rows: 5},
           required: false
 = f.association :subject,
+                label: "Main Subject",
                 hint: 'The main subject to be taught by teacher',
                 collection: Subject.order(:name),
                 required: false
+= f.input :minimum_salary,
+          as: :integer,
+          hint: 'Minimum annual pay before tax (£)',
+          required: true
+= f.input :maximum_salary,
+          as: :integer,
+          hint: 'Maximum annual pay before tax (£)',
+          required: false
+
 = f.association :pay_scale,
                 hint: 'The pay scale on which the salary of the job falls',
                 collection: PayScale.order(:label),
                 label_method: :label,
                 required: false
+= f.input :working_pattern,
+          collection: working_pattern_options,
+          required: true
 = f.input :weekly_hours,
           as: :integer,
           hint: 'Number of hours to be worked each week',
@@ -50,15 +63,4 @@
           order: %i[day month year],
           start_year: Date.today.year,
           include_blank: true,
-          required: false
-= f.input :working_pattern,
-          collection: working_pattern_options,
-          required: true
-= f.input :minimum_salary,
-          as: :integer,
-          hint: 'Minimum annual pay before tax (£)',
-          required: true
-= f.input :maximum_salary,
-          as: :integer,
-          hint: 'Maximum annual pay before tax (£)',
           required: false
