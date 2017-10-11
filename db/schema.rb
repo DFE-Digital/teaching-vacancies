@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830110410) do
+ActiveRecord::Schema.define(version: 20171011175441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20170830110410) do
     t.text "benefits"
     t.integer "working_pattern"
     t.float "full_time_equivalent"
-    t.integer "weekly_hours"
+    t.string "weekly_hours"
     t.date "starts_on"
     t.date "ends_on"
     t.uuid "subject_id"

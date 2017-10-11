@@ -54,7 +54,7 @@ class Vacancy < ApplicationRecord
             :publish_on, :expires_on, :slug, \
             presence: true
 
-  validate :minimum_salary_lower_than_maximum
+  validate :minimum_salary_lower_than_maximum, :working_hours
 
   def location
     @location ||= SchoolPresenter.new(school).location
@@ -82,6 +82,13 @@ class Vacancy < ApplicationRecord
   def minimum_salary_lower_than_maximum
     if maximum_salary and minimum_salary > maximum_salary
       errors.add(:minimum_salary,"must be lower than the maximum salary")
+    end
+  end
+
+  def working_hours
+    if weekly_hours.present?
+      !!BigDecimal.new(weekly_hours) rescue errors.add(:weekly_hours, "must be a valid number") and return
+      errors.add(:weekly_hours, "cannot be negative") if BigDecimal.new(weekly_hours) < 0
     end
   end
 end

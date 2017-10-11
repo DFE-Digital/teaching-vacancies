@@ -12,13 +12,36 @@ RSpec.describe Vacancy, type: :model do
   it { should validate_presence_of(:publish_on) }
   it { should validate_presence_of(:expires_on) }
 
-  describe "validations", wip: true do
+  describe "validations" do
     describe "#minimum_salary_lower_than_maximum" do
       it "the minimum salary should be less than the maximum salary" do
         vacancy = build(:vacancy, minimum_salary: 20, maximum_salary: 10)
 
         expect(vacancy.valid?).to be false
         expect(vacancy.errors.messages[:minimum_salary][0]).to eq("must be lower than the maximum salary")
+      end
+    end
+
+    describe "#working_hours_validation" do
+      it "can not accept non-numeric values" do
+        vacancy = build(:vacancy, weekly_hours: "eight and a half")
+
+        expect(vacancy.valid?).to be(false)
+        expect(vacancy.errors.messages[:weekly_hours][0]).to eq("must be a valid number")
+      end
+
+      it "can accept decimal values" do
+        vacancy = build(:vacancy, weekly_hours: "0.5")
+
+        expect(vacancy.valid?).to be true
+        expect(vacancy.weekly_hours).to eq("0.5")
+      end
+
+      it "must not have a negative value" do
+        vacancy = build(:vacancy, weekly_hours: "-5")
+
+        expect(vacancy.valid?).to be false
+        expect(vacancy.errors.messages[:weekly_hours][0]).to eq("cannot be negative")
       end
     end
   end
