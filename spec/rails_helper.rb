@@ -43,8 +43,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  # Factory Girl
   config.include FactoryGirl::Syntax::Methods
+  config.include ActionView::Helpers::NumberHelper
 end
 
 Shoulda::Matchers.configure do |config|

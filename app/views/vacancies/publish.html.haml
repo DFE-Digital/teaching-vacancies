@@ -36,14 +36,16 @@
     %dt.cya-question
       Subject
     %dd.cya-answer
-      = @vacancy.subject.name
+      - if @vacancy.subject
+        = @vacancy.subject.name
     %dd.cya-change
       = link_to 'Change', edit_vacancy_path(@vacancy)
   %div
     %dt.cya-question
       Pay scale
     %dd.cya-answer
-      = @vacancy.pay_scale.label
+      -if @vacancy.pay_scale
+        = @vacancy.pay_scale.label
     %dd.cya-change
       = link_to 'Change', edit_vacancy_path(@vacancy)
   %div
@@ -57,7 +59,8 @@
     %dt.cya-question
       Leadership level
     %dd.cya-answer
-      = @vacancy.leadership.title
+      - if @vacancy.leadership
+        = @vacancy.leadership.title
     %dd.cya-change
       = link_to 'Change', edit_vacancy_path(@vacancy)
   %div
