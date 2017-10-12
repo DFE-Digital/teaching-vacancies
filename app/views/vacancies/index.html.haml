@@ -55,4 +55,14 @@
       %div.empty
         No vacancies found. Try expanding your search.
 
+      %span{itemprop: 'baseSalary', itemscope: '', itemtype: 'http://schema.org/MonetaryAmount'}
+        %meta{itemprop: 'currency', content: 'GBP'}
+        %meta{itemprop: 'minValue', content: vacancy.minimum_salary}
+        - if vacancy.maximum_salary
+          %meta{itemprop: 'maxValue', content: vacancy.maximum_salary}
+
+      %meta{itemprop: 'educationRequirements', content: vacancy.education}
+      %meta{itemprop: 'experienceRequirements', content: vacancy.essential_requirements}
+      %meta{itemprop: 'jobBenefits', content: vacancy.benefits}
+
 = paginate @vacancies
