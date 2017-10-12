@@ -15,7 +15,6 @@ FactoryGirl.define do
     publish_on { Faker::Time.backward(2) }
     minimum_salary { Faker::Number.number(4) }
     maximum_salary { Faker::Number.number(5) }
-    reference { Faker::Crypto.md5[0..10] }
 
     trait :draft do
       status { :draft }

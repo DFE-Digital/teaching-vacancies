@@ -21,7 +21,7 @@ class VacanciesController < ApplicationController
   def create
     @vacancy = CreateVacancy.new(School.first).call(vacancy_params)
     if @vacancy.valid?
-      redirect_to publish_vacancy_path(@vacancy)
+      redirect_to review_vacancy_path(@vacancy)
     else
       render :new
     end
@@ -29,11 +29,18 @@ class VacanciesController < ApplicationController
 
   def publish
     vacancy = Vacancy.friendly.find(params[:id])
+    vacancy.update_attribute(:status, :published)
+
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def edit
     @vacancy = Vacancy.friendly.find(params[:id])
+  end
+
+  def review
+    vacancy = Vacancy.friendly.find(params[:id])
+    @vacancy = VacancyPresenter.new(vacancy)
   end
 
   private

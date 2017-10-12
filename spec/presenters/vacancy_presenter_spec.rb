@@ -23,7 +23,6 @@ RSpec.describe VacancyPresenter do
 
   describe '#expired?' do
     it 'returns true when the vacancy has expired' do
-
       vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 4.days.ago))
       expect(vacancy).to be_expired
     end
@@ -36,6 +35,32 @@ RSpec.describe VacancyPresenter do
     it 'returns false when the vacancy has yet to expire' do
       vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 6.days.from_now))
       expect(vacancy).not_to be_expired
+    end
+  end
+
+  describe "#location" do
+    it 'returns the school location' do
+      vacancy = VacancyPresenter.new(build(:vacancy))
+      school = SchoolPresenter.new(vacancy.school)
+
+      expect(vacancy).to receive(:school).and_return(school)
+      expect(school).to receive(:location)
+
+      vacancy.location
+    end
+  end
+
+  describe "#main_subject" do
+    it 'returns the subject name' do
+      vacancy = VacancyPresenter.new(build(:vacancy))
+      expect(vacancy.main_subject).to eq(vacancy.subject.name)
+    end
+  end
+
+  describe "#pay_scale" do
+    it 'returns payscale' do
+      vacancy = VacancyPresenter.new(build(:vacancy))
+      expect(vacancy.main_subject).to eq(vacancy.subject.name)
     end
   end
 end

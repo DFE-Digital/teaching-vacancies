@@ -12,4 +12,5 @@ class VacanciesPresenter < BasePresenter
   def each(&block)
     decorated_collection.each(&block)
   end
+
 end

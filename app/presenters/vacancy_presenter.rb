@@ -11,7 +11,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def location
-    school.location
+    @location ||= school.location
   end
 
   def expired?
@@ -20,5 +20,13 @@ class VacancyPresenter < BasePresenter
 
   def school
     @school ||= SchoolPresenter.new(model.school)
+  end
+
+  def main_subject
+    @main_subject ||= model.subject ? model.subject.name : ""
+  end
+
+  def pay_scale
+    @pay_scale ||= model.pay_scale ? model.pay_scale.label : ""
   end
 end

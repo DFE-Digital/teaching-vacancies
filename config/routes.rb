@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'vacancies#index'
 
   resources :vacancies, only: %i[index show new create edit] do
+    get 'review', on: :member
     get 'publish', on: :member
   end
 
