@@ -1,5 +1,35 @@
+require 'elasticsearch/model'
+
 class Vacancy < ApplicationRecord
   include ApplicationHelper
+
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  index_name [Rails.env, model_name.collection.gsub(/\//, '-')].join('_')
+
+  mappings dynamic: 'false' do
+    indexes :job_title, analyzer: 'english'
+    indexes :headline, analyzer: 'english'
+    indexes :job_description, analyzer: 'english'
+
+    indexes :school do
+      indexes :name, analyzer: 'english'
+      indexes :phase, type: :keyword
+      indexes :postcode, type: :string
+      indexes :town, type: :string
+      indexes :county, type: :string
+      indexes :address, type: :string
+    end
+
+    indexes :expires_on, type: :date
+    indexes :starts_on, type: :date
+    indexes :updated_at, type: :date
+    indexes :publish_on, type: :date
+    indexes :status, type: :keyword
+    indexes :working_pattern, type: :keyword
+    indexes :minimum_salary, type: :integer
+    indexes :maximum_salary, type: :integer
+  end
 
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -44,5 +74,14 @@ class Vacancy < ApplicationRecord
 
   def expired?
     expires_on < Time.zone.today
+  end
+
+  def self.public_search(filters:, sort:)
+    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
+    ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
+  end
+
+  def as_indexed_json(_ = {})
+    as_json(include: { school: { only: %i[phase postcode name town county address] } })
   end
 end

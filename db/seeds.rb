@@ -35,7 +35,7 @@ SchoolType.create(label: 'LA Maintained School')
 SchoolType.create(label: 'Special School')
 
 Subject.create(name: 'English')
-Subject.create(name: 'Mathematics')
+maths = Subject.create(name: 'Mathematics')
 science = Subject.create(name: 'Science')
 Subject.create(name: 'Art and design')
 Subject.create(name: 'Citizenship')
@@ -47,19 +47,37 @@ Subject.create(name: 'Languages')
 Subject.create(name: 'Music')
 Subject.create(name: 'Physical education')
 
-school = FactoryGirl.create(:school,
-                            name: 'Acme Secondary School',
-                            school_type: academy,
-                            urn: 1234567890,
-                            address: '22 High Street',
-                            town: 'Ealing',
-                            county: 'Middlesex',
-                            postcode: 'EA1 1NG',
-                            region: london)
+ealing_school = FactoryGirl.create(:school,
+                                   name: 'Acme Secondary School',
+                                   school_type: academy,
+                                   urn: 1234567890,
+                                   address: '22 High Street',
+                                   town: 'Ealing',
+                                   county: 'Middlesex',
+                                   postcode: 'EA1 1NG',
+                                   region: london)
+
+bromley_school = FactoryGirl.create(:school,
+                                    name: 'Bromley High School',
+                                    school_type: academy,
+                                    urn: 1234567890,
+                                    address: '8 London Road',
+                                    town: 'Bromley',
+                                    county: 'London Borough of Bromley',
+                                    postcode: 'BR1 9EY',
+                                    region: london)
 
 FactoryGirl.create(:vacancy,
                    job_title: 'Physics Teacher',
                    subject: science,
-                   school: school,
-                   minimum_salary: 25000,
-                   maximum_salary: 30000)
+                   school: ealing_school,
+                   minimum_salary: 40000,
+                   maximum_salary: 45000)
+
+FactoryGirl.create(:vacancy,
+                   job_title: 'Maths Teacher',
+                   subject: maths,
+                   school: bromley_school,
+                   working_pattern: :part_time,
+                   minimum_salary: 30000,
+                   maximum_salary: 35000)
