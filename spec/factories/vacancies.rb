@@ -31,5 +31,11 @@ FactoryGirl.define do
     trait :expired do
       expires_on { Faker::Time.backward(7) }
     end
+
+    trait :job_schema do
+      weekly_hours  "8.5"
+      education { Faker::Lorem.paragraph }
+      benefits { Faker::Lorem.sentence }
+    end
   end
 end
