@@ -34,8 +34,4 @@ module VacanciesHelper
     params.merge(overwrite).permit(vacancy_params_whitelist)
   end
 
-  def working_pattern_options
-    Vacancy.working_patterns.keys.map { |key| [key.humanize, key] }
-  end
-
 end
