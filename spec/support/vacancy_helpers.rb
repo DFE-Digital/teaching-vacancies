@@ -11,6 +11,7 @@ module VacancyHelpers
     select Faker::Business.credit_card_expiry_date.day, from: 'vacancy[expires_on(3i)]'
     select Faker::Business.credit_card_expiry_date.strftime("%B"), from: 'vacancy[expires_on(2i)]'
     select Faker::Business.credit_card_expiry_date.year, from: 'vacancy[expires_on(1i)]'
+    fill_in 'vacancy[contact_email]', with: vacancy.contact_email
 
     click_button 'Save and continue'
   end

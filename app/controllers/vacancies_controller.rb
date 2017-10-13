@@ -51,7 +51,8 @@ class VacanciesController < ApplicationController
                                     :pay_scale_id, :leadership_id, :subject_id,
                                     :benefits, :essential_requirements, :education,
                                     :qualifications, :publish_on, :working_pattern,
-                                    :expires_on, :minimum_salary, :maximum_salary)
+                                    :expires_on, :minimum_salary, :maximum_salary,
+                                    :contact_email)
   end
 
 

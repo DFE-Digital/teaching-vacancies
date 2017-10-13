@@ -51,7 +51,7 @@ class Vacancy < ApplicationRecord
 
   validates :job_title, :job_description, :headline, \
             :minimum_salary, :essential_requirements, :working_pattern, \
-            :publish_on, :expires_on, :slug, \
+            :publish_on, :expires_on, :slug, :contact_email,  \
             presence: true
 
   validate :minimum_salary_lower_than_maximum, :working_hours, :validity_of_publish_on

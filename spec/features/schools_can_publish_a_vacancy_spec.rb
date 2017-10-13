@@ -33,6 +33,7 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content(vacancy.headline)
     expect(page).to have_content(vacancy_salary_range(vacancy.minimum_salary, vacancy.maximum_salary))
     expect(page).to have_content(vacancy.essential_requirements)
+    expect(page).to have_content(vacancy.contact_email)
   end
 
   context 'A user can publish a vacancy' do

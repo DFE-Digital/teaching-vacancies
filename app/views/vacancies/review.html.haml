@@ -129,6 +129,13 @@
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
+          Vacancy contact email
+        %dd.cya-answer
+          = @vacancy.contact_email
+        %dd.cya-change
+          = link_to 'Change', edit_vacancy_path(@vacancy)
+      %div
+        %dt.cya-question
           Vacancy deadline date
         %dd.cya-answer
           = format_date @vacancy.expires_on

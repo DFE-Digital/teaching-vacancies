@@ -15,6 +15,7 @@ FactoryGirl.define do
     publish_on { Time.zone.today }
     minimum_salary { Faker::Number.number(4) }
     maximum_salary { Faker::Number.number(5) }
+    contact_email { Faker::Internet.email }
 
     trait :draft do
       status { :draft }
