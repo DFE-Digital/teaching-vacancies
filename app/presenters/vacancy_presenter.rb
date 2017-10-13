@@ -29,4 +29,8 @@ class VacancyPresenter < BasePresenter
   def pay_scale
     @pay_scale ||= model.pay_scale ? model.pay_scale.label : ""
   end
+
+  def publish_today?
+    model.publish_on == Time.zone.today
+  end
 end

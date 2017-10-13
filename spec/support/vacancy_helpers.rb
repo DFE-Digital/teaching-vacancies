@@ -22,4 +22,8 @@ module VacancyHelpers
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
   end
+
+  def skip_vacancy_publish_on_validation
+    allow_any_instance_of(Vacancy).to receive(:validity_of_publish_on).and_return(true)
+  end
 end

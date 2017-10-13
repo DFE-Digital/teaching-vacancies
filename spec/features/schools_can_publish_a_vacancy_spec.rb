@@ -35,14 +35,26 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content(vacancy.essential_requirements)
   end
 
-  scenario 'A user can publish a vacancy' do
+  context 'A user can publish a vacancy' do
 
-    vacancy = create(:vacancy)
+    scenario 'on submission' do
+      vacancy = create(:vacancy)
 
-    visit review_vacancy_path(vacancy)
-    click_on "Confirm and submit vacancy"
+      visit review_vacancy_path(vacancy)
+      click_on "Confirm and submit vacancy"
 
-    expect(page).to have_content("Vacancy submitted")
-    expect(page).to have_content("The system reference number is #{vacancy.reference}")
+      expect(page).to have_content("The system reference number is #{vacancy.reference}")
+      expect(page).to have_content("The vacancy has been posted, you can view it here:")
+    end
+
+    scenario 'at a later date' do
+      vacancy = create(:vacancy, publish_on: Time.zone.tomorrow)
+
+      visit review_vacancy_path(vacancy)
+      click_on "Confirm and submit vacancy"
+
+      expect(page).to have_content("The system reference number is #{vacancy.reference}")
+      expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
+    end
   end
 end

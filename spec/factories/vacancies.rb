@@ -12,7 +12,7 @@ FactoryGirl.define do
     essential_requirements { Faker::Lorem.paragraph(4) }
     status { :published }
     expires_on { Faker::Time.forward(14) }
-    publish_on { Faker::Time.backward(2) }
+    publish_on { Time.zone.today }
     minimum_salary { Faker::Number.number(4) }
     maximum_salary { Faker::Number.number(5) }
 

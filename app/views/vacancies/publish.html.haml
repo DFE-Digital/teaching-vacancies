@@ -8,7 +8,13 @@
         %br
         %strong.heading-medium=@vacancy.reference
 
-    %p
-      The vacancy has been posted, you can view it here:
-    %p
-      = link_to vacancy_url(@vacancy), vacancy_path(@vacancy)
+    - if @vacancy.publish_today?
+      %p
+        The vacancy has been posted, you can view it here:
+      %p
+        = link_to vacancy_url(@vacancy), vacancy_path(@vacancy)
+    - else
+      %p
+        The vacancy will be posted on #{@vacancy.publish_on}, you can preview it here:
+      %p
+        = link_to vacancy_url(@vacancy), vacancy_path(@vacancy)

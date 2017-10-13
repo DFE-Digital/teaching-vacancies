@@ -63,4 +63,12 @@ RSpec.describe VacancyPresenter do
       expect(vacancy.main_subject).to eq(vacancy.subject.name)
     end
   end
+
+  describe "#publish_today?", wip: true do
+    it 'verifies that the publish_on is set to today' do
+      vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Date.today))
+
+      expect(vacancy.publish_today?).to eq(true)
+    end
+  end
 end
