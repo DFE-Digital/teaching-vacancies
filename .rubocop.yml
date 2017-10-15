@@ -1,10 +1,11 @@
 inherit_from: .rubocop_todo.yml
 AllCops:
-    TargetRubyVersion: 2.3
+    TargetRubyVersion: 2.4
     Exclude:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
       - 'bin/**/*'
+      - 'lib/tasks/*.rake'
 
 Rails:
     Enabled: true
@@ -29,3 +30,27 @@ Style/TrailingCommaInArguments:
 
 Style/Documentation:
     Enabled: false
+
+Style/MultilineTernaryOperator:
+    Enabled: false
+
+Style/RegexpLiteral:
+    Enabled: false
+
+Metrics/ClassLength:
+    Enabled: false
+
+Metrics/MethodLength:
+    Max: 10
+    Exclude:
+      - 'spec/**/*'
+
+Metrics/LineLength:
+    Max: 99
+    Exclude:
+      - 'spec/**/*'
+      - 'config/initializers/simple_form.rb'
+
+Metrics/BlockLength:
+    Exclude:
+      - 'spec/**/*'
