@@ -11,6 +11,7 @@ class VacancySearchBuilder
     @status = status
   end
 
+  # rubocop:disable Metrics/MethodLength
   def call
     keyword_query = keyword_build
     location_query = location_build
@@ -40,6 +41,7 @@ class VacancySearchBuilder
     }
     { search_query: query, search_sort: sort_query }
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
