@@ -3,5 +3,8 @@
 # available to Rake.
 
 require_relative 'config/application'
-
 Rails.application.load_tasks
+
+desc 'Execute rubocop and spec tasks'
+
+task default: %i[rubocop spec]
