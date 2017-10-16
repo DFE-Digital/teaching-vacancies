@@ -49,7 +49,7 @@ class VacancySearchBuilder
     if @keyword.empty?
       match_all_hash
     else
-      multi_match_hash(@keyword)
+      keyword_multi_match(@keyword)
     end
   end
 
@@ -151,7 +151,7 @@ class VacancySearchBuilder
     }
   end
 
-  def multi_match_hash(keyword)
+  def keyword_multi_match(keyword)
     {
       multi_match: {
         query: keyword,
