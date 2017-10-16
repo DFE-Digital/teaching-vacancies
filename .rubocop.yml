@@ -30,9 +30,6 @@ Style/TrailingCommaInArguments:
 Style/Documentation:
     Enabled: false
 
-Style/RegexpLiteral:
-    Enabled: false
-
 Metrics/ClassLength:
     Enabled: false
 
