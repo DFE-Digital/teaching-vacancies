@@ -1,11 +1,4 @@
 RSpec.configure do |config|
-  config.before :each, elasticsearch: true do
-    [Vacancy].each do |model|
-      model.__elasticsearch__.create_index!(force: true, index: model.index_name)
-      model.__elasticsearch__.refresh_index! index: model.index_name
-    end
-  end
-
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
