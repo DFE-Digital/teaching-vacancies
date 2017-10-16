@@ -11,6 +11,7 @@ class VacancySearchBuilder
     @status = status
   end
 
+  # rubocop:disable Metrics/MethodLength
   def call
     keyword_query = keyword_build
     location_query = location_build
@@ -40,31 +41,29 @@ class VacancySearchBuilder
     }
     { search_query: query, search_sort: sort_query }
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
   def keyword_build
     if @keyword.empty?
-      {
-        match_all: {},
-      }
+      match_all_hash
     else
-      {
-        multi_match: {
-          query: @keyword,
-          fields: %w[job_title^5 headline^2 job_description],
-          operator: 'and',
-        },
-      }
+      keyword_multi_match(@keyword)
     end
   end
 
   def location_build
-    return if @location.empty?
+    location_multi_match(@location) if @location.present?
+  end
+
+  def location_multi_match(location)
     {
       multi_match: {
-        query: @location,
-        fields: %w[school.postcode^5 school.name^2 school.town school.county school.address],
+        query: location,
+        fields: %w[school.postcode^5 school.name^2
+                   school.town school.county
+                   school.address],
         operator: 'and',
       },
     }
@@ -144,5 +143,21 @@ class VacancySearchBuilder
 
   def sort_build
     [{ @sort.column.to_sym => { order: @sort.order.to_sym } }]
+  end
+
+  def match_all_hash
+    {
+      match_all: {},
+    }
+  end
+
+  def keyword_multi_match(keyword)
+    {
+      multi_match: {
+        query: keyword,
+        fields: %w[job_title^5 headline^2 job_description],
+        operator: 'and',
+      },
+    }
   end
 end

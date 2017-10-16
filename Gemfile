@@ -46,6 +46,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_girl_rails'
   gem 'pry'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -55,9 +56,10 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the
   # background. Read more: https://github.com/rails/spring
-  gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'rubocop'
 end
 
 group :test do
@@ -66,7 +68,6 @@ group :test do
   gem 'faker'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
-  gem 'rspec-rails'
   gem 'shoulda-matchers',
       git: 'https://github.com/thoughtbot/shoulda-matchers.git',
       branch: 'rails-5'

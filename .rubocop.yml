@@ -1,6 +1,6 @@
 inherit_from: .rubocop_todo.yml
 AllCops:
-    TargetRubyVersion: 2.3
+    TargetRubyVersion: 2.4
     Exclude:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
@@ -29,3 +29,20 @@ Style/TrailingCommaInArguments:
 
 Style/Documentation:
     Enabled: false
+
+Metrics/ClassLength:
+    Enabled: false
+
+Metrics/MethodLength:
+    Max: 10
+    Exclude:
+      - 'spec/**/*'
+
+Metrics/LineLength:
+    Max: 120
+    Exclude:
+      - 'config/initializers/simple_form.rb'
+
+Metrics/BlockLength:
+    Exclude:
+      - 'spec/**/*'

@@ -35,7 +35,8 @@ RSpec.describe VacanciesHelper, type: :helper do
       it 'should output an active class and the reverse order of the sort object' do
         sort = OpenStruct.new(column: 'starts_on', reverse_order: 'desc')
         result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
-        expect(result).to eq('<a class="sortby--desc active" href="/vacancies?sort_column=starts_on&amp;sort_order=desc">foo</a>')
+        expect(result)
+          .to eq('<a class="sortby--desc active" href="/vacancies?sort_column=starts_on&amp;sort_order=desc">foo</a>')
       end
     end
   end

@@ -8,5 +8,5 @@ Requires Ruby 2.4.0
 - ElasticSearch
 - PhantomJS
 
-## Running tests
-Run `rspec spec`
+## Run tests and rubocop
+`bundle exec rake`

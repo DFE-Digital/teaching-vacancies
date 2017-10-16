@@ -16,13 +16,17 @@ module VacanciesHelper
       order = sort.reverse_order
       active_class = ' active'
     end
-    link_to title, vacancies_path(vacancy_params(sort_column: column, sort_order: order)), class: "sortby--#{order}#{active_class || ''}"
+    link_to title,
+            vacancies_path(vacancy_params(sort_column: column,
+                                          sort_order: order)),
+            class: "sortby--#{order}#{active_class || ''}"
   end
 
   private
 
   def vacancy_params_whitelist
-    %i[sort_column sort_order location keyword minimum_salary maximum_salary working_pattern phase page]
+    %i[sort_column sort_order location keyword minimum_salary
+       maximum_salary working_pattern phase page]
   end
 
   def vacancy_params(overwrite = {})
