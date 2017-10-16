@@ -30,9 +30,6 @@ Style/TrailingCommaInArguments:
 Style/Documentation:
     Enabled: false
 
-Style/MultilineTernaryOperator:
-    Enabled: false
-
 Style/RegexpLiteral:
     Enabled: false
 
