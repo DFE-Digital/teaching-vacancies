@@ -60,6 +60,15 @@ class Vacancy < ApplicationRecord
     @location ||= SchoolPresenter.new(school).location
   end
 
+  def self.public_search(filters:, sort:)
+    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
+    ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
+  end
+
+  def as_indexed_json(_ = {})
+    as_json(include: { school: { only: %i[phase postcode name town county address] } })
+  end
+
   private
 
   def slug_candidates
@@ -68,15 +77,6 @@ class Vacancy < ApplicationRecord
       %i[job_title school_name],
       %i[job_title location],
     ]
-  end
-
-  def self.public_search(filters:, sort:)
-    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
-    ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
-  end
-
-  def as_indexed_json(_ = {})
-    as_json(include: { school: { only: %i[phase postcode name town county address] } })
   end
 
   def minimum_salary_lower_than_maximum
