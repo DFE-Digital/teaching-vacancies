@@ -5,7 +5,6 @@ AllCops:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
       - 'bin/**/*'
-      - 'lib/tasks/*.rake'
 
 Rails:
     Enabled: true
