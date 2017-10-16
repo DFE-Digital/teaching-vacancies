@@ -39,9 +39,8 @@ Metrics/MethodLength:
       - 'spec/**/*'
 
 Metrics/LineLength:
-    Max: 99
+    Max: 120
     Exclude:
-      - 'spec/**/*'
       - 'config/initializers/simple_form.rb'
 
 Metrics/BlockLength:

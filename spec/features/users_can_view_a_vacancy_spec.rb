@@ -23,10 +23,16 @@ RSpec.feature 'Viewing a single published vacancy' do
   end
 
   scenario 'Vacancy slugs are not duplicated' do
-    first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: build(:school, name: 'Blue School'))
-    second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: build(:school, name: 'Green school'))
-    third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: build(:school, name: 'Green school', town: 'Greenway', county: 'Mars'))
-    fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: build(:school, name: 'Green school', town: 'Greenway', county: 'Mars'))
+    first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+                                                       school: build(:school, name: 'Blue School'))
+    second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+                                                        school: build(:school, name: 'Green school'))
+    third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+                                                       school: build(:school, name: 'Green school',
+                                                                              town: 'Greenway', county: 'Mars'))
+    fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+                                                        school: build(:school, name: 'Green school',
+                                                                               town: 'Greenway', county: 'Mars'))
 
     expect(first_maths_teacher.slug).to eq('maths-teacher')
     expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
