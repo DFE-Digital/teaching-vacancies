@@ -1,6 +1,5 @@
 class VacanciesController < ApplicationController
   def index
-
     @filters = VacancyFilters.new(params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
@@ -14,6 +13,7 @@ class VacanciesController < ApplicationController
     vacancy = Vacancy.published.friendly.find(params[:id])
     @vacancy = VacancyPresenter.new(vacancy)
   end
+
   def new
     @vacancy = Vacancy.new
   end
@@ -29,7 +29,7 @@ class VacanciesController < ApplicationController
 
   def publish
     vacancy = Vacancy.friendly.find(params[:id])
-    vacancy.update_attribute(:status, :published)
+    vacancy.update_attributes(status: :published)
 
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -54,7 +54,6 @@ class VacanciesController < ApplicationController
                                     :expires_on, :minimum_salary, :maximum_salary,
                                     :contact_email)
   end
-
 
   def sort_column
     params[:sort_column]

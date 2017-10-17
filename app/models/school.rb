@@ -3,5 +3,4 @@ class School < ApplicationRecord
   belongs_to :region
 
   enum phase: %i[primary secondary]
-
 end

@@ -1,7 +1,5 @@
 require 'rails_helper'
-
 RSpec.describe VacancyPresenter do
-
   describe '#salary_range' do
     it 'return the formatted minimum to maximum salary' do
       vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000))
@@ -10,7 +8,7 @@ RSpec.describe VacancyPresenter do
 
     it 'returns the formatted minumum to maximum salary with the specified delimiter' do
       vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000))
-      expect(vacancy.salary_range("to")).to eq('£30,000 to £40,000')
+      expect(vacancy.salary_range('to')).to eq('£30,000 to £40,000')
     end
 
     context 'when no maximum salary is set' do
@@ -38,7 +36,7 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#location" do
+  describe '#location' do
     it 'returns the school location' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       school = SchoolPresenter.new(vacancy.school)
@@ -50,23 +48,23 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe "#main_subject" do
+  describe '#main_subject' do
     it 'returns the subject name' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       expect(vacancy.main_subject).to eq(vacancy.subject.name)
     end
   end
 
-  describe "#pay_scale" do
+  describe '#pay_scale' do
     it 'returns payscale' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       expect(vacancy.main_subject).to eq(vacancy.subject.name)
     end
   end
 
-  describe "#publish_today?", wip: true do
+  describe '#publish_today?' do
     it 'verifies that the publish_on is set to today' do
-      vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Date.today))
+      vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Time.zone.today))
 
       expect(vacancy.publish_today?).to eq(true)
     end

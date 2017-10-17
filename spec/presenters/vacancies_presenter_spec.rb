@@ -1,9 +1,6 @@
 require 'rails_helper'
-
 RSpec.describe VacanciesPresenter do
-
   describe '#each' do
-
     it 'is delegated to the decorated collection' do
       vacancies = 3.times.map { create(:vacancy) }
 

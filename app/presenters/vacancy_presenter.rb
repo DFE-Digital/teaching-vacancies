@@ -1,13 +1,9 @@
 class VacancyPresenter < BasePresenter
+  delegate :total_pages, to: :model
 
-  def total_pages
-    model.total_pages
-  end
-
-  def salary_range(del="-")
-    model.maximum_salary.blank? ?
-      number_to_currency(model.minimum_salary) :
-      "#{number_to_currency(model.minimum_salary)} #{del} #{number_to_currency(model.maximum_salary)}"
+  def salary_range(del = '-')
+    return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
+    "#{number_to_currency(model.minimum_salary)} #{del} #{number_to_currency(model.maximum_salary)}"
   end
 
   def location
@@ -23,11 +19,11 @@ class VacancyPresenter < BasePresenter
   end
 
   def main_subject
-    @main_subject ||= model.subject ? model.subject.name : ""
+    @main_subject ||= model.subject ? model.subject.name : ''
   end
 
   def pay_scale
-    @pay_scale ||= model.pay_scale ? model.pay_scale.label : ""
+    @pay_scale ||= model.pay_scale ? model.pay_scale.label : ''
   end
 
   def publish_today?

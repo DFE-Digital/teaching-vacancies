@@ -34,7 +34,7 @@ FactoryGirl.define do
     end
 
     trait :job_schema do
-      weekly_hours  "8.5"
+      weekly_hours '8.5'
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
     end

@@ -80,19 +80,20 @@ class Vacancy < ApplicationRecord
   end
 
   def minimum_salary_lower_than_maximum
-    if maximum_salary and minimum_salary > maximum_salary
-      errors.add(:minimum_salary,"must be lower than the maximum salary")
-    end
+    errors.add(:minimum_salary, 'must be lower than the maximum salary') if maximum_salary_invalid?
   end
 
   def working_hours
-    if weekly_hours.present?
-      !!BigDecimal.new(weekly_hours) rescue errors.add(:weekly_hours, "must be a valid number") and return
-      errors.add(:weekly_hours, "cannot be negative") if BigDecimal.new(weekly_hours) < 0
-    end
+    return if weekly_hours.blank?
+    !!BigDecimal.new(weekly_hours) rescue errors.add(:weekly_hours, 'must be a valid number') && return
+    errors.add(:weekly_hours, 'cannot be negative') if BigDecimal.new(weekly_hours).negative?
   end
 
   def validity_of_publish_on
-    errors.add(:publish_on, "can't be before today") if publish_on and publish_on < Time.zone.today
+    errors.add(:publish_on, /can''t be before today/) if publish_on && publish_on < Time.zone.today
+  end
+
+  def maximum_salary_invalid?
+    maximum_salary && minimum_salary > maximum_salary
   end
 end
