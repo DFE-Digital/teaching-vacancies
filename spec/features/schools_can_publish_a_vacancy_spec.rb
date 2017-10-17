@@ -10,7 +10,7 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content('Publish a vacancy')
   end
 
-  scenario 'Users can see validation errors when they dont fill in all required fields' do
+  scenario 'Users can see validation errors when they don\'t fill in all required fields' do
     vacancy = build(:vacancy, job_title: '')
 
     visit new_vacancy_path
