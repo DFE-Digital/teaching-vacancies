@@ -46,13 +46,24 @@ class VacanciesController < ApplicationController
   private
 
   def vacancy_params
-    params.require(:vacancy).permit(:job_title, :headline, :job_description,
-                                    :starts_on, :ends_on, :weekly_hours,
-                                    :pay_scale_id, :leadership_id, :subject_id,
-                                    :benefits, :essential_requirements, :education,
-                                    :qualifications, :publish_on, :working_pattern,
-                                    :expires_on, :minimum_salary, :maximum_salary,
-                                    :contact_email)
+    params.require(:vacancy).permit(job_spec_params +
+                                    candidate_params +
+                                    vacancy_detail_params)
+  end
+
+  def job_spec_params
+    %i[job_title headline job_description
+       benefits subject minimum_salary
+       maximum_salary pay_scale_id working_pattern
+       weekly_hours leadership starts_on ends_on]
+  end
+
+  def candidate_params
+    %i[essential_requirements education qualifications experience]
+  end
+
+  def vacancy_detail_params
+    %i[contact_email expires_on publish_on]
   end
 
   def sort_column
