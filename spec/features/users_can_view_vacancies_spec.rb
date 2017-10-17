@@ -15,7 +15,7 @@ RSpec.feature 'Viewing vacancies' do
 
   scenario 'Vacancies should not paginate when under per-page limit', elasticsearch: true do
     allow(Vacancy).to receive(:default_per_page).and_return(2)
-    vacancies = 2.times.map { create(:vacancy) }
+    vacancies = create_list(:vacancy, 2)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
