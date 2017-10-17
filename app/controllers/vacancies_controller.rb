@@ -19,7 +19,7 @@ class VacanciesController < ApplicationController
   end
 
   def create
-    @vacancy = CreateVacancy.new(School.first).call(vacancy_params)
+    @vacancy = CreateVacancy.new(school: School.first).call(vacancy_params)
     if @vacancy.valid?
       redirect_to review_vacancy_path(@vacancy)
     else

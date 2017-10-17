@@ -1,5 +1,5 @@
 class CreateVacancy
-  def initialize(school)
+  def initialize(school:)
     @school = school
   end
 
