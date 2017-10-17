@@ -30,6 +30,9 @@ Style/TrailingCommaInArguments:
 Style/Documentation:
     Enabled: false
 
+Style/DoubleNegation:
+    Enabled: false
+
 Metrics/ClassLength:
     Enabled: false
 
