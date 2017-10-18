@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   resources :vacancies, only: %i[index show new create edit] do
     get 'review', on: :member
-    get 'publish', on: :member
+    put 'publish', on: :member
+    get 'published', on: :member
   end
 
   match '*path', to: 'application#not_found', via: %i[get post patch put delete]

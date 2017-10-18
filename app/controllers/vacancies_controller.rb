@@ -29,8 +29,15 @@ class VacanciesController < ApplicationController
 
   def publish
     vacancy = Vacancy.friendly.find(params[:id])
-    vacancy.update_attributes(status: :published)
+    if PublishVacancy.new(vacancy: vacancy).call
+      redirect_to published_vacancy_path(vacancy)
+    else
+      redirect_to review_vacancy_path(vacancy), notice: "Unable to publish vacancy. Try again!"
+    end
+  end
 
+  def published
+    vacancy = Vacancy.published.friendly.find(params[:id])
     @vacancy = VacancyPresenter.new(vacancy)
   end
 

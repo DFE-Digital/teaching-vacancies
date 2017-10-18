@@ -153,4 +153,4 @@
     %p You can preview your vacancy to see how it will look for potential applicants.
     %p By submitting you are confirming that, to the best of your knowledge, the details you are providing are correct.
 
-    = link_to "Confirm and submit vacancy", publish_vacancy_path(@vacancy), class: "button"
+    = link_to "Confirm and submit vacancy", publish_vacancy_path(@vacancy), method: :put, class: "button"
