@@ -1,14 +1,14 @@
 require 'rails_helper'
 RSpec.feature 'Viewing a single published vacancy' do
   scenario 'Published vacancies are viewable' do
-    published_vacancy = create(:vacancy, :published)
+    published_vacancy = VacancyPresenter.new(create(:vacancy, :published))
 
     visit vacancy_path(published_vacancy)
 
     expect(page).to have_content(published_vacancy.job_title)
     expect(page).to have_content(published_vacancy.headline)
     expect(page).to have_content(published_vacancy.job_description)
-    expect(page).to have_content(VacancyPresenter.new(published_vacancy).salary_range)
+    expect(page).to have_content(published_vacancy.salary_range)
     expect(page).to have_content(published_vacancy.reference)
   end
 
