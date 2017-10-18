@@ -74,6 +74,9 @@
           %dt Weekly hours
           %dd= @vacancy.weekly_hours
 
+        %dt Reference number
+        %dd= @vacancy.reference
+
         %dt Closing date
         %dd= format_date(@vacancy.expires_on)
 
@@ -88,16 +91,13 @@
         %dt Posted on
         %dd= format_date(@vacancy.publish_on)
 
-        %dt Reference number
-        %dd= @vacancy.reference
-
-        - if @vacancy.subject.present?
+        - if @vacancy.main_subject.present?
           %dt Main subject
-          %dd= @vacancy.subject.name
+          %dd= @vacancy.main_subject
 
         - if @vacancy.pay_scale.present?
           %dt Pay scale
-          %dd= @vacancy.pay_scale.label
+          %dd= @vacancy.pay_scale
 
         - if @vacancy.leadership.present?
           %dt Leadership level

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830110410) do
+ActiveRecord::Schema.define(version: 20171011205208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20170830110410) do
     t.text "benefits"
     t.integer "working_pattern"
     t.float "full_time_equivalent"
-    t.integer "weekly_hours"
+    t.string "weekly_hours"
     t.date "starts_on"
     t.date "ends_on"
     t.uuid "subject_id"
@@ -77,13 +77,13 @@ ActiveRecord::Schema.define(version: 20170830110410) do
     t.text "qualifications"
     t.text "experience"
     t.string "contact_email"
-    t.string "reference"
     t.integer "status"
     t.date "expires_on"
     t.date "publish_on"
     t.uuid "school_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["pay_scale_id"], name: "index_vacancies_on_pay_scale_id"

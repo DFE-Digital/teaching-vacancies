@@ -32,15 +32,16 @@ class Vacancy < ApplicationRecord
   end
 
   extend FriendlyId
+
   friendly_id :slug_candidates, use: :slugged
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time]
 
   belongs_to :school, required: true
-  belongs_to :subject
-  belongs_to :pay_scale
-  belongs_to :leadership
+  belongs_to :subject, required: false
+  belongs_to :pay_scale, required: false
+  belongs_to :leadership, required: false
 
   delegate :name, to: :school, prefix: true, allow_nil: false
 
@@ -50,30 +51,13 @@ class Vacancy < ApplicationRecord
 
   validates :job_title, :job_description, :headline, \
             :minimum_salary, :essential_requirements, :working_pattern, \
-            :publish_on, :expires_on, :slug, \
+            :publish_on, :expires_on, :slug, :contact_email,  \
             presence: true
 
+  validate :minimum_salary_lower_than_maximum, :working_hours, :validity_of_publish_on
+
   def location
-    [school.name, school.town, school.county].reject(&:blank?).join(', ')
-  end
-
-  def salary_range
-    return number_to_currency(minimum_salary) if maximum_salary.blank?
-    number_to_currency(minimum_salary) +
-      ' - ' +
-      number_to_currency(maximum_salary)
-  end
-
-  private def slug_candidates
-    [
-      :job_title,
-      %i[job_title school_name],
-      %i[job_title location],
-    ]
-  end
-
-  def expired?
-    expires_on < Time.zone.today
+    @location ||= SchoolPresenter.new(school).location
   end
 
   def self.public_search(filters:, sort:)
@@ -83,5 +67,33 @@ class Vacancy < ApplicationRecord
 
   def as_indexed_json(_ = {})
     as_json(include: { school: { only: %i[phase postcode name town county address] } })
+  end
+
+  private
+
+  def slug_candidates
+    [
+      :job_title,
+      %i[job_title school_name],
+      %i[job_title location],
+    ]
+  end
+
+  def minimum_salary_lower_than_maximum
+    errors.add(:minimum_salary, 'must be lower than the maximum salary') if minimum_higher_than_maximum_salary
+  end
+
+  def minimum_higher_than_maximum_salary
+    maximum_salary && minimum_salary > maximum_salary
+  end
+
+  def working_hours
+    return if weekly_hours.blank?
+    !!BigDecimal.new(weekly_hours) rescue errors.add(:weekly_hours, 'must be a valid number') && return
+    errors.add(:weekly_hours, 'cannot be negative') if BigDecimal.new(weekly_hours).negative?
+  end
+
+  def validity_of_publish_on
+    errors.add(:publish_on, /can''t be before today/) if publish_on && publish_on < Time.zone.today
   end
 end

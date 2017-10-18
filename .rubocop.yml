@@ -5,6 +5,7 @@ AllCops:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
       - 'bin/**/*'
+      - 'config/initializers/simple_form.rb'
 
 Rails:
     Enabled: true
@@ -30,6 +31,9 @@ Style/TrailingCommaInArguments:
 Style/Documentation:
     Enabled: false
 
+Style/DoubleNegation:
+    Enabled: false
+
 Metrics/ClassLength:
     Enabled: false
 
@@ -40,8 +44,6 @@ Metrics/MethodLength:
 
 Metrics/LineLength:
     Max: 120
-    Exclude:
-      - 'config/initializers/simple_form.rb'
 
 Metrics/BlockLength:
     Exclude:

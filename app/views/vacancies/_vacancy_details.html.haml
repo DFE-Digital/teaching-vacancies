@@ -1,0 +1,22 @@
+%h2.heading-medium
+  Vacancy details
+
+= f.input :contact_email,
+          as: :email,
+          label: 'Vacancy contact email',
+          required: true
+= f.input :expires_on,
+          as: :date,
+          label: 'Vacancy deadline date',
+          hint: 'The deadline for receiving applications',
+          order: %i[day month year],
+          start_year: Date.today.year,
+          include_blank: true,
+          required: true
+= f.input :publish_on,
+          as: :date,
+          label: 'Vacancy publication date',
+          hint: 'The date the job vacancy should go live. Defaults to today',
+          order: %i[day month year],
+          start_year: Date.today.year,
+          required: true

@@ -9,7 +9,7 @@ require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'factory_girl_rails'
 
-# Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, phantomjs_options: ['--load-images=false'])
@@ -43,8 +43,9 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  # Factory Girl
   config.include FactoryGirl::Syntax::Methods
+  config.include ActionView::Helpers::NumberHelper
+  config.include VacancyHelpers, type: :feature
 end
 
 Shoulda::Matchers.configure do |config|
