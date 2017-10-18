@@ -32,7 +32,7 @@ class VacanciesController < ApplicationController
     if PublishVacancy.new(vacancy: vacancy).call
       redirect_to published_vacancy_path(vacancy)
     else
-      redirect_to review_vacancy_path(vacancy), notice: "Unable to publish vacancy. Try again!"
+      redirect_to review_vacancy_path(vacancy), notice: 'Unable to publish vacancy. Try again!'
     end
   end
 
@@ -47,7 +47,7 @@ class VacanciesController < ApplicationController
 
   def review
     vacancy = Vacancy.friendly.find(params[:id])
-    redirect_to vacancy_path(vacancy), notice: "This vacancy has already been published" if vacancy.published?
+    redirect_to vacancy_path(vacancy), notice: 'This vacancy has already been published' if vacancy.published?
 
     @vacancy = VacancyPresenter.new(vacancy)
   end

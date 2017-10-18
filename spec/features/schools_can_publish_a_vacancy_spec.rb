@@ -20,7 +20,7 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content('Job title can\'t be blank')
   end
 
-  context "Reviewing a vacancy" do
+  context 'Reviewing a vacancy' do
     scenario 'A user can review the vacancy they just posted' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       visit new_vacancy_path
@@ -35,7 +35,6 @@ RSpec.feature 'Creating a vacancy' do
       expect(page).to have_content(vacancy.contact_email)
     end
 
-
     scenario 'A user cannot review a vacancy that has already been published' do
       vacancy = create(:vacancy, :published)
 
@@ -47,7 +46,7 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'A user can publish a vacancy' do
     scenario 'on submission' do
-      vacancy = create(:vacancy)
+      vacancy = create(:vacancy, :draft)
 
       visit review_vacancy_path(vacancy)
       click_on 'Confirm and submit vacancy'
@@ -57,7 +56,7 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'at a later date' do
-      vacancy = create(:vacancy, publish_on: Time.zone.tomorrow)
+      vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
 
       visit review_vacancy_path(vacancy)
       click_on 'Confirm and submit vacancy'
