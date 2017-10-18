@@ -17,10 +17,6 @@ module VacancyHelpers
   end
   # rubocop:enable Metrics/AbcSize
 
-  def vacancy_salary_range(min, max, del = 'to')
-    "#{number_to_currency(min, precision: 0)} #{del} #{number_to_currency(max, precision: 0)}"
-  end
-
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
   end

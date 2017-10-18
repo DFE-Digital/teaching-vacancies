@@ -20,18 +20,29 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content('Job title can\'t be blank')
   end
 
-  scenario 'A user can review the vacancy they just posted' do
-    vacancy = build(:vacancy)
-    visit new_vacancy_path
+  context "Reviewing a vacancy" do
+    scenario 'A user can review the vacancy they just posted' do
+      vacancy = VacancyPresenter.new(build(:vacancy))
+      visit new_vacancy_path
 
-    fill_vacancy_fields(vacancy)
+      fill_vacancy_fields(vacancy)
 
-    expect(page).to have_content('Confirm details before you submit')
-    expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.headline)
-    expect(page).to have_content(vacancy_salary_range(vacancy.minimum_salary, vacancy.maximum_salary))
-    expect(page).to have_content(vacancy.essential_requirements)
-    expect(page).to have_content(vacancy.contact_email)
+      expect(page).to have_content('Confirm details before you submit')
+      expect(page).to have_content(vacancy.job_title)
+      expect(page).to have_content(vacancy.headline)
+      expect(page).to have_content(vacancy.salary_range('to'))
+      expect(page).to have_content(vacancy.essential_requirements)
+      expect(page).to have_content(vacancy.contact_email)
+    end
+
+
+    scenario 'A user cannot review a vacancy that has already been published' do
+      vacancy = create(:vacancy, :published)
+
+      visit review_vacancy_path(vacancy)
+
+      expect(page).to have_current_path(vacancy_path(vacancy))
+    end
   end
 
   context 'A user can publish a vacancy' do

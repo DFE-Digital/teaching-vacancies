@@ -47,6 +47,8 @@ class VacanciesController < ApplicationController
 
   def review
     vacancy = Vacancy.friendly.find(params[:id])
+    redirect_to vacancy_path(vacancy), notice: "This vacancy has already been published" if vacancy.published?
+
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
