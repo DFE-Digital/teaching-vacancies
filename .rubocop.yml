@@ -10,6 +10,9 @@ AllCops:
 Rails:
     Enabled: true
 
+Bundler/OrderedGems:
+    Enabled: false
+
 Style/Alias:
     Enabled: false
 
@@ -48,3 +51,4 @@ Metrics/LineLength:
 Metrics/BlockLength:
     Exclude:
       - 'spec/**/*'
+
