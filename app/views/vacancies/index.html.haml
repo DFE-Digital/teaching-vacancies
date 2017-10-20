@@ -14,7 +14,7 @@
 
       %ul.vacancies
         - @vacancies.each do |vacancy|
-          %li.vacancy{itemscope: '', itemtype: 'http://schema.org/JobPosting'}
+          %li.vacancy
             %h2= link_to vacancy.job_title, vacancy_path(vacancy)
             %p= vacancy.location
             %dl
@@ -30,7 +30,6 @@
               %dd= vacancy.working_pattern&.titleize
               %dt Job ref
               %dd= vacancy.reference
-            =render partial: 'job_schema_properties', locals: { vacancy: vacancy }
 
     - else
       %div.empty
