@@ -24,4 +24,42 @@ module VacancyHelpers
   def skip_vacancy_publish_on_validation
     allow_any_instance_of(Vacancy).to receive(:validity_of_publish_on).and_return(true)
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def vacancy_json_ld(vacancy)
+    {
+      '@context': 'http://schema.org',
+      '@type': 'JobPosting',
+      'jobBenefits': vacancy.benefits,
+      'datePosted': vacancy.publish_on.to_s(:db),
+      'description': vacancy.headline,
+      'educationRequirements': vacancy.education,
+      'employmentType': vacancy.working_pattern&.titleize,
+      'experienceRequirements': vacancy.essential_requirements,
+      'industry': 'Education',
+      'jobLocation': {
+        '@type': 'Place',
+        'address': {
+          '@type': 'PostalAddress',
+          'addressLocality': vacancy.school.town,
+          'addressRegion': vacancy.school.county,
+          'address': vacancy.school.address,
+          'postalCode': vacancy.school.postcode,
+        },
+      },
+      'responsibilities': vacancy.job_description,
+      'title': vacancy.job_title,
+      'url': vacancy_url(vacancy),
+      'baseSalary': {
+        '@type': 'MonetaryAmount',
+        'minValue': vacancy.minimum_salary,
+        'maxValue': vacancy.maximum_salary,
+        'currency': 'GBP',
+      },
+      'hiringOrganization': vacancy.school.name,
+      'validThrough': vacancy.expires_on.to_s(:db),
+      'workHours': vacancy.weekly_hours,
+    }
+    # rubocop:enable Metrics/AbcSize
+  end
 end
