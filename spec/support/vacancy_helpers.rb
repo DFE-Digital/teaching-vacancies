@@ -56,7 +56,10 @@ module VacancyHelpers
         'maxValue': vacancy.maximum_salary,
         'currency': 'GBP',
       },
-      'hiringOrganization': vacancy.school.name,
+      'hiringOrganization': {
+        '@type': 'Organization',
+        'name': vacancy.school.name,
+      },
       'validThrough': vacancy.expires_on.to_s(:db),
       'workHours': vacancy.weekly_hours,
     }

@@ -29,6 +29,10 @@ json.baseSalary do
   json.currency 'GBP'
 end
 
-json.hiringOrganization vacancy.school.name
+json.hiringOrganization do
+  json.set! '@type', 'Organization'
+  json.name vacancy.school.name
+end
+
 json.validThrough vacancy.expires_on.to_s(:db)
 json.workHours vacancy.weekly_hours
