@@ -1,4 +1,4 @@
-if Rails.env.development?
+if Rails.env.development? || Rails.env.test?
   require 'rubocop/rake_task'
 
   desc 'Run rubocop - configure in .rubocop.yml'
