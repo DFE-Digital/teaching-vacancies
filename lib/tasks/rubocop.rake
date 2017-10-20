@@ -7,6 +7,7 @@ if Rails.env.development? || Rails.env.test?
       t.options = ['--display-cop-names']
     end
   end
-  desc 'Run rubocop checks'
-  task(:default).enhance(%i[rubocop])
+
+  task(:default).clear.enhance(%i[rubocop spec])
+  task(:default).comment = 'Run rubocop checks'
 end
