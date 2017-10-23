@@ -28,16 +28,21 @@ gem 'kaminari'
 gem 'roadie-rails'
 gem 'simple_form'
 
+group :test, :development, :staging do
+  gem 'faker'
+  gem 'factory_girl_rails'
+end
+
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'web-console', '>= 3.3.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'elasticsearch-extensions'
-  gem 'factory_girl_rails'
   gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop'
@@ -46,7 +51,6 @@ end
 group :test do
   gem 'capybara', '~> 2.13'
   gem 'database_cleaner'
-  gem 'faker'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
   gem 'shoulda-matchers',

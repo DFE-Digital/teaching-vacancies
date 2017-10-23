@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171011205208) do
+ActiveRecord::Schema.define(version: 20171023124209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,18 +18,22 @@ ActiveRecord::Schema.define(version: 20171011205208) do
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
+    t.index ["title"], name: "index_leaderships_on_title", unique: true
   end
 
   create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
+    t.index ["label"], name: "index_pay_scales_on_label", unique: true
   end
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
+    t.index ["name"], name: "index_regions_on_name", unique: true
   end
 
   create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
+    t.index ["label"], name: "index_school_types_on_label", unique: true
   end
 
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -54,6 +58,7 @@ ActiveRecord::Schema.define(version: 20171011205208) do
 
   create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
+    t.index ["name"], name: "index_subjects_on_name", unique: true
   end
 
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
