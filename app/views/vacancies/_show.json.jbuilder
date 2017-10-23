@@ -4,6 +4,7 @@ json.jobBenefits vacancy.benefits
 json.datePosted vacancy.publish_on.to_s(:db)
 json.description vacancy.headline
 json.educationRequirements vacancy.education
+json.qualifications vacancy.qualifications
 json.employmentType vacancy.working_pattern&.titleize
 json.experienceRequirements vacancy.essential_requirements
 json.industry 'Education'
@@ -13,7 +14,7 @@ json.jobLocation do
     json.set! '@type', 'PostalAddress'
     json.addressLocality vacancy.school.town
     json.addressRegion vacancy.school.county
-    json.address vacancy.school.address
+    json.streetAddress vacancy.school.address
     json.postalCode vacancy.school.postcode
   end
 end
