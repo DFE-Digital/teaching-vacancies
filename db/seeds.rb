@@ -12,7 +12,7 @@ Region.create(name: 'West Midlands')
 Region.create(name: 'East Midlands')
 Region.create(name: 'North East England')
 
-PayScale.create(label: 'Main pay range 1')
+payscale = PayScale.create(label: 'Main pay range 1')
 PayScale.create(label: 'Main pay range 2')
 PayScale.create(label: 'Main pay range 3')
 PayScale.create(label: 'Main pay range 4')
@@ -23,7 +23,7 @@ PayScale.create(label: 'Upper pay range 2')
 PayScale.create(label: 'Upper pay range 3')
 
 Leadership.create(title: 'Middle Leader')
-Leadership.create(title: 'Senior Leader')
+leadership = Leadership.create(title: 'Senior Leader')
 Leadership.create(title: 'Headteacher')
 Leadership.create(title: 'Executive Head')
 Leadership.create(title: 'Multi-Academy Trust')
@@ -72,7 +72,9 @@ FactoryGirl.create(:vacancy,
                    subject: science,
                    school: ealing_school,
                    minimum_salary: 40000,
-                   maximum_salary: 45000)
+                   maximum_salary: 45000,
+                   pay_scale: payscale,
+                   leadership: leadership)
 
 FactoryGirl.create(:vacancy,
                    job_title: 'Maths Teacher',
@@ -80,4 +82,6 @@ FactoryGirl.create(:vacancy,
                    school: bromley_school,
                    working_pattern: :part_time,
                    minimum_salary: 30000,
-                   maximum_salary: 35000)
+                   maximum_salary: 35000,
+                   pay_scale: payscale,
+                   leadership: leadership)
