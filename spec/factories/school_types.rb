@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :school_type do
-    label { Faker::Lorem.sentence }
+    label { Faker::Lorem.unique.sentence }
   end
 end
