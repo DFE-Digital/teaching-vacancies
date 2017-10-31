@@ -102,3 +102,6 @@
         - if @vacancy.leadership.present?
           %dt Leadership level
           %dd= @vacancy.leadership.title
+
+%script.jobref{type: 'application/ld+json'}
+  = raw(render partial: 'show.json.jbuilder', locals: {vacancy: @vacancy})

@@ -45,7 +45,8 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include ActionView::Helpers::NumberHelper
-  config.include VacancyHelpers, type: :feature
+  config.include ApplicationHelpers
+  config.include VacancyHelpers
 end
 
 Shoulda::Matchers.configure do |config|
