@@ -103,7 +103,5 @@
           %dt Leadership level
           %dd= @vacancy.leadership.title
 
-.jobref
-  <script type="application/ld+json">
+%script.jobref{type: 'application/ld+json'}
   = raw(render partial: 'show.json.jbuilder', locals: {vacancy: @vacancy})
-  </script>
