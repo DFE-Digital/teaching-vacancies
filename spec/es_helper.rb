@@ -22,7 +22,7 @@ RSpec.configure do |config|
   # Don't start up any clusters on codeship - ES already running
 
   unless ENV['CI'] && ENV['CI_NAME'] == 'codeship'
-    config.before :all do
+    config.before :all, elasticsearch: true do
       if test_cluster_offline?
         Elasticsearch::Model.client = Elasticsearch::Client.new(host: 'localhost:9250')
         Elasticsearch::Extensions::Test::Cluster.start(port: 9250, nodes: 1, timeout: 120)
@@ -30,7 +30,7 @@ RSpec.configure do |config|
     end
 
     config.after :suite do
-      if Elasticsearch::Extensions::Test::Cluster.running?(on: 9250)
+      unless test_cluster_offline?
         Elasticsearch::Extensions::Test::Cluster.stop(port: 9250)
       end
     end

@@ -20,3 +20,6 @@
 
 # Ignore examples persistence file
 /spec/examples.txt
+
+# Ignore application configuration
+/config/application.yml
