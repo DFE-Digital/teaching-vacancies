@@ -3,20 +3,11 @@ require 'elasticsearch/extensions/test/cluster/tasks'
 
 RSpec.configure do |config|
   config.around :each, elasticsearch: true do |example|
-    ActiveRecord::Base.descendants.each do |model|
-      if model.respond_to?(:__elasticsearch__)
-        model.__elasticsearch__.create_index!(force: true, index: model.index_name)
-        model.__elasticsearch__.refresh_index! index: model.index_name
-      end
-    end
+    # Re-create the Elasticsearch index for vacancies (force: true removes any
+    # data leftover from previous tests)
+    Vacancy.__elasticsearch__.create_index!(force: true, index: Vacancy.index_name)
 
     example.run
-
-    ActiveRecord::Base.descendants.each do |model|
-      if model.respond_to?(:__elasticsearch__)
-        model.__elasticsearch__.delete_index!
-      end
-    end
   end
 
   # Don't start up any clusters on codeship - ES already running
