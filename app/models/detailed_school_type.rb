@@ -1,0 +1,2 @@
+class DetailedSchoolType < ApplicationRecord
+end

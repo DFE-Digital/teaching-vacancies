@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023124209) do
+ActiveRecord::Schema.define(version: 20171108121747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "code"
+    t.string "integer"
+    t.text "label"
+    t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
+  end
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
@@ -28,21 +35,25 @@ ActiveRecord::Schema.define(version: 20171023124209) do
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
+    t.text "code"
+    t.index ["code"], name: "index_regions_on_code", unique: true
     t.index ["name"], name: "index_regions_on_name", unique: true
   end
 
   create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
+    t.text "code"
+    t.index ["code"], name: "index_school_types_on_code", unique: true
     t.index ["label"], name: "index_school_types_on_label", unique: true
   end
 
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.text "description", null: false
+    t.text "description"
     t.string "urn", null: false
     t.string "address", null: false
     t.string "town", null: false
-    t.string "county", null: false
+    t.string "county"
     t.string "postcode", null: false
     t.integer "phase"
     t.string "url"
@@ -52,6 +63,9 @@ ActiveRecord::Schema.define(version: 20171023124209) do
     t.uuid "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "locality"
+    t.text "address3"
+    t.uuid "detailed_school_type_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
   end
@@ -96,4 +110,5 @@ ActiveRecord::Schema.define(version: 20171023124209) do
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
   end
 
+  add_foreign_key "schools", "detailed_school_types"
 end
