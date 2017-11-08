@@ -11,7 +11,6 @@ class School < ApplicationRecord
     secondary: 4,
     middle_deemed_secondary: 5,
     sixteen_plus: 6,
-    all_through: 7
+    all_through: 7,
   }
-
 end

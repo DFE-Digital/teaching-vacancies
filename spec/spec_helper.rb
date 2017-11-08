@@ -1,6 +1,5 @@
 require 'webmock/rspec'
 RSpec.configure do |config|
-
   WebMock.allow_net_connect!
 
   config.expect_with :rspec do |expectations|

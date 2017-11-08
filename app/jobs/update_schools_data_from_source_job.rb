@@ -4,9 +4,8 @@ require 'open-uri'
 class UpdateSchoolsDataFromSourceJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-
-    datestring = Time.zone.now.strftime("%Y%m%d")
+  def perform
+    datestring = Time.zone.now.strftime('%Y%m%d')
     url = "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv"
 
     file = open(url).read
@@ -27,19 +26,17 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
 
       school = School.find_or_initialize_by(urn: row['URN'])
       school.name = row['EstablishmentName']
-
       school.address = row['Street']
       school.locality = row['Locality'].presence
       school.address3 = row['Address3'].presence
       school.town = row['Town']
       school.county = row['County (name)'].presence
       school.postcode = row['Postcode']
-
       school.minimum_age = row['StatutoryLowAge']
       school.maximum_age = row['StatutoryHighAge']
 
       website = row['SchoolWebsite']
-      website = "http://#{website}" unless website.start_with? "http"
+      website = "http://#{website}" unless website.start_with? 'http'
 
       school.url = website.presence
 
@@ -49,8 +46,6 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
       school.detailed_school_type = detailed_school_type
       school.region = region
       school.save!
-
     end
-
   end
 end
