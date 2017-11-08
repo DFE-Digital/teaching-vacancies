@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20171108121747) do
 
   create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code"
-    t.string "integer"
     t.text "label"
     t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
   end

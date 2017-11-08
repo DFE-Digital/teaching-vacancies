@@ -2,7 +2,6 @@ class CreateDetailedSchoolTypes < ActiveRecord::Migration[5.1]
   def change
     create_table :detailed_school_types, id: :uuid do |t|
       t.string :code
-      t.string :integer
       t.text :label
     end
 
