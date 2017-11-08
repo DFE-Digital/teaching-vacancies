@@ -7,7 +7,7 @@ RSpec.describe VacanciesController, type: :controller do
     request.accept = 'application/json'
   end
 
-  describe 'GET /vacancies' do
+  describe 'GET /vacancies', elasticsearch: true do
     render_views
 
     it 'retrieves all available vacancies' do
@@ -22,7 +22,7 @@ RSpec.describe VacanciesController, type: :controller do
     end
   end
 
-  describe 'GET /vacancies/:id' do
+  describe 'GET /vacancies/:id', elasticsearch: true do
     render_views
     it 'retrieves a specific vacancy' do
       vacancy = create(:vacancy)
