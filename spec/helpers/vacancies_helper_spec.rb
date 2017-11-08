@@ -20,7 +20,18 @@ RSpec.describe VacanciesHelper, type: :helper do
 
   describe '#school_phase_options' do
     it 'returns an array of school phase patterns' do
-      expect(helper.school_phase_options).to eq([['Not applicable', 'not_applicable'], ['Nursery', 'nursery'], ['Primary', 'primary'], ['Middle deemed primary', 'middle_deemed_primary'], ['Secondary', 'secondary'], ['Middle deemed secondary', 'middle_deemed_secondary'], ['Sixteen plus', 'sixteen_plus'], ['All through', 'all_through']])
+      expect(helper.school_phase_options).to eq(
+        [
+          ['Not applicable', 'not_applicable'],
+          ['Nursery', 'nursery'],
+          ['Primary', 'primary'],
+          ['Middle deemed primary', 'middle_deemed_primary'],
+          ['Secondary', 'secondary'],
+          ['Middle deemed secondary', 'middle_deemed_secondary'],
+          ['Sixteen plus', 'sixteen_plus'],
+          ['All through', 'all_through']
+        ]
+      )
     end
   end
 

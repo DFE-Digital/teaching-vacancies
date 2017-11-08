@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'open-uri'
 
 RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
-
   before do
     # Associated records that already exist
     @la_maintained_school_type = SchoolType.create!(label: 'LA maintained school', code: '4')

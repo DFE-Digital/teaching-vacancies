@@ -4,6 +4,7 @@ require 'open-uri'
 class UpdateSchoolsDataFromSourceJob < ApplicationJob
   queue_as :default
 
+  # rubocop:disable Metrics/AbcSize
   def perform
     datestring = Time.zone.now.strftime('%Y%m%d')
     url = "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv"
@@ -11,7 +12,6 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
     file = open(url).read
 
     CSV.parse(file, headers: true).each do |row|
-
       school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
       school_type.label ||= row['EstablishmentTypeGroup (name)']
       school_type.save!
@@ -47,5 +47,6 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
       school.region = region
       school.save!
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end
