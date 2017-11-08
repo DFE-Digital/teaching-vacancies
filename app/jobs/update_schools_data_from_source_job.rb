@@ -6,7 +6,7 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
 
   def perform(*args)
 
-    datestring = Time.now.strftime("%Y%m%d")
+    datestring = Time.zone.now.strftime("%Y%m%d")
     url = "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv"
 
     file = open(url).read

@@ -16,7 +16,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
 
     before do
 
-      datestring = Time.now.strftime("%Y%m%d")
+      datestring = Time.zone.now.strftime("%Y%m%d")
       stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv").to_return(body: 'Not Found', status: 404)
 
     end
@@ -31,7 +31,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
   context "when the CSV is available" do
 
     before do
-      datestring = Time.now.strftime("%Y%m%d")
+      datestring = Time.zone.now.strftime("%Y%m%d")
 
       csv = File.read("#{Rails.root}/spec/fixtures/example_schools_data.csv")
       stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv").to_return(body: csv)
