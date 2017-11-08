@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'webmock/rspec'
 require 'open-uri'
 
 RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
