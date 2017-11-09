@@ -1,0 +1,24 @@
+<h1 class="heading-large">Edit description for <%= @school.name %></h1>
+
+<%= form_for @school do |form| %>
+
+  <% if @school.errors.any? %>
+    <div class="error-summary" role="alert" aria-labelledby="school-error-heading" tabindex="-1">
+      <h2 class="heading-medium error-summary-heading" id="school-error-heading">
+        There was an error saving the description
+      </h2>
+
+    </div>
+  <% end %>
+
+  <div class="form-group <%= 'form-group-error' if @school.errors[:description].any? %>">
+    <%= form.label :description, class: 'form-label' do %>
+      Description
+      <%= content_tag 'span', @school.errors[:description].join(', '), class: 'error-message' if @school.errors[:description].any? %>
+    <% end %>
+    <%= form.text_area :description, class: 'form-control form-control-3-4', rows: 5 %>
+  </div>
+
+
+  <button class="button" type="submit">Save</button>
+<% end %>
