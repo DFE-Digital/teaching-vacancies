@@ -29,7 +29,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         .to_return(body:
           'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
           'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-          'Town,Postcode\n' \
+          "Town,Postcode\n" \
           "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
 
       @school = School.create!(
