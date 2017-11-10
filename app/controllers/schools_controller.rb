@@ -6,7 +6,7 @@ class SchoolsController < ApplicationController
   def edit
     @school = School.find_by!(urn: params[:id])
 
-    return if params[:description].blank?
+    return if params[:description].nil?
 
     @school.description = params[:description].presence
     @school.valid?
