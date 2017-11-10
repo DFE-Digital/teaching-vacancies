@@ -1,0 +1,45 @@
+%h1.heading-large
+  = @school.name
+
+%dl.govuk-check-your-answers.cya-questions-short
+  %div
+    %dt.cya-question
+      Description
+    %dd.cya-answer
+      = @school.description.presence || 'Not provided'
+    %dd.cya-change
+      = link_to edit_school_path(@school) do
+        Change
+        %span.visually-hidden
+        description
+
+  %div
+    %dt.cya-question
+      Address
+    %dd.cya-answer
+      = @school.full_address
+    %dd.cya-change
+
+  %div
+    %dt.cya-question
+      School age
+    %dd.cya-answer
+      = @school.minimum_age
+      to
+      = @school.maximum_age
+    %dd.cya-change
+
+  %div
+    %dt.cya-question
+      Type
+    %dd.cya-answer
+      = @school.school_type.label
+    %dd.cya-change
+
+  - if @school.url.present?
+    %div
+      %dt.cya-question
+        Website
+      %dd.cya-answer
+        = link_to @school.url, @school.url
+      %dd.cya-change
