@@ -25,9 +25,12 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
     before do
       datestring = Time.zone.now.strftime('%Y%m%d')
 
-      csv = File.read(Rails.root.join('spec', 'fixtures', 'example_schools_data.csv'))
       stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body: "URN,EstablishmentName,EstablishmentTypeGroup (code),TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,Town,Postcode\n100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
+        .to_return(body:
+          'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+          'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
+          'Town,Postcode\n' \
+          "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
 
       @school = School.create!(
         urn: '100000',
@@ -48,7 +51,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
       )
     end
 
-    it "should correct convert the file to UTF-8" do
+    it 'should correct convert the file to UTF-8' do
       UpdateSchoolsDataFromSourceJob.new.perform
 
       @school.reload

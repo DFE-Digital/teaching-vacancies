@@ -12,7 +12,7 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
     file = open(url).read
 
     # Convert from Windows-1251 encoding to UTF-8
-    file.encode!("UTF-8", "windows-1251", invalid: :replace)
+    file.encode!('UTF-8', 'windows-1251', invalid: :replace)
 
     CSV.parse(file, headers: true).each do |row|
       school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
