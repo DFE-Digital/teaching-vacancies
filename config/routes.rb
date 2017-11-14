@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root 'vacancies#index'
 
-  resources :schools, only: %i[show edit update]
 
   resources :vacancies, only: %i[index show new create edit] do
     get 'review', on: :member
@@ -12,6 +11,9 @@ Rails.application.routes.draw do
   resources :schools, only: [:index] do
     get 'search', on: :collection
   end
+
+  resources :schools, only: %i[show edit update]
+
 
   match '*path', to: 'application#not_found', via: %i[get post patch put delete]
 end
