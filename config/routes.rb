@@ -11,5 +11,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
   end
 
+  resources :schools, only: %i[show edit update]
+
   match '*path', to: 'application#not_found', via: %i[get post patch put delete]
 end

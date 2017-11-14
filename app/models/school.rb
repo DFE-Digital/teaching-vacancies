@@ -15,4 +15,8 @@ class School < ApplicationRecord
     sixteen_plus: 6,
     all_through: 7,
   }
+
+  def to_param
+    urn
+  end
 end
