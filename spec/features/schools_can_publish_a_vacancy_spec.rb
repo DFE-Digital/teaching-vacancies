@@ -4,16 +4,41 @@ RSpec.feature 'Creating a vacancy' do
     create(:school)
   end
 
-  scenario 'Users can view a vacancy creation form' do
-    visit new_vacancy_path
+  scenario 'Searching for a school by name' do
+    create(
+      :school,
+      name: 'Salisbury School',
+      address: '495 High Street North',
+      town: 'London',
+      postcode: 'E12 6TH'
+    )
+    create(:school, name: 'Canterbury School')
 
-    expect(page).to have_content('Publish a vacancy')
+    visit schools_path
+    fill_in 'School name:', with: 'salisbury school'
+    click_on 'Find'
+
+    expect(page).to have_content('Salisbury School')
+    expect(page).to have_content('495 High Street North, London, E12 6TH')
+    expect(page).not_to have_content('Canterbury School')
+
+    click_on 'Salisbury School'
+
+    expect(page).to have_content('Publish a vacancy for Salisbury School')
+  end
+
+  scenario 'Users can view a vacancy creation form' do
+    school = create(:school, name: 'Salisbury School')
+    visit new_vacancy_path(school_id: school.id)
+
+    expect(page).to have_content('Publish a vacancy for Salisbury School')
   end
 
   scenario 'Users can see validation errors when they don\'t fill in all required fields' do
+    school = create(:school)
     vacancy = build(:vacancy, job_title: '')
 
-    visit new_vacancy_path
+    visit new_vacancy_path(school_id: school.id)
     fill_vacancy_fields(vacancy)
 
     expect(page).to have_content('error')
@@ -22,8 +47,9 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'Reviewing a vacancy' do
     scenario 'A user can review the vacancy they just posted' do
+      school = create(:school)
       vacancy = VacancyPresenter.new(build(:vacancy))
-      visit new_vacancy_path
+      visit new_vacancy_path(school_id: school.id)
 
       fill_vacancy_fields(vacancy)
 

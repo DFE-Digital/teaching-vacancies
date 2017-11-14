@@ -1,0 +1,15 @@
+
+= render 'search_form', name: params[:name]
+
+%h1.heading-large
+  = pluralize(@schools.size, 'school')
+  = "matching “#{params[:name]}”"
+
+%ul.school-search
+  - @schools.each do |school|
+    %li.school
+      = link_to new_vacancy_path(school_id: school.id) do
+        %h2.heading-small.school-name
+          = school.name
+        %p.school-address
+          = [school.address, school.town, school.postcode].keep_if(&:present?).join(', ')

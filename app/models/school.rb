@@ -3,6 +3,8 @@ class School < ApplicationRecord
   belongs_to :detailed_school_type, optional: true
   belongs_to :region
 
+  has_many :vacancies
+
   enum phase: {
     not_applicable: 0,
     nursery: 1,

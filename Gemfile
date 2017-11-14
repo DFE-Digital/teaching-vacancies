@@ -32,6 +32,7 @@ gem 'simple_form'
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.2'
 end
 
 group :development do
