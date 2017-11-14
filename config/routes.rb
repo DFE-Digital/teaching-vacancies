@@ -9,5 +9,9 @@ Rails.application.routes.draw do
     get 'published', on: :member
   end
 
+  resources :schools, only: [:index] do
+    get 'search', on: :collection
+  end
+
   match '*path', to: 'application#not_found', via: %i[get post patch put delete]
 end

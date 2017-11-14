@@ -15,11 +15,13 @@ class VacanciesController < ApplicationController
   end
 
   def new
-    @vacancy = Vacancy.new
+    @school = School.find(params[:school_id])
+    @vacancy = @school.vacancies.new
   end
 
   def create
-    @vacancy = CreateVacancy.new(school: School.first).call(vacancy_params)
+    @school = School.find(params[:vacancy][:school_id])
+    @vacancy = CreateVacancy.new(school: @school).call(vacancy_params)
     if @vacancy.valid?
       redirect_to review_vacancy_path(@vacancy)
     else

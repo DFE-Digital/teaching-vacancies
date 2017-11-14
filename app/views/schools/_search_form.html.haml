@@ -1,0 +1,6 @@
+= form_tag search_schools_path, method: :get do
+
+  %div
+    = label_tag :name, 'School name:'
+    = search_field_tag :name, name, class: 'form-control'
+    = button_tag "Find", class: 'button', type: 'submit'

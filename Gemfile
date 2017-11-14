@@ -32,6 +32,7 @@ gem 'simple_form'
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.2'
 end
 
 group :development do
@@ -54,6 +55,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
+  gem 'webmock', '~> 2.1'
   gem 'shoulda-matchers',
       git: 'https://github.com/thoughtbot/shoulda-matchers.git',
       branch: 'rails-5'

@@ -22,4 +22,13 @@ class SchoolsController < ApplicationController
       redirect_to edit_school_path(school, description: school.description)
     end
   end
+
+  def index
+    # Nothing to do here yet
+  end
+
+  def search
+    @schools = School.where(['name ILIKE ?', "%#{params[:name]}%"])
+    render 'search_results'
+  end
 end
