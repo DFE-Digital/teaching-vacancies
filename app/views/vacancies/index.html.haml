@@ -7,6 +7,42 @@
     = render 'filters'
   .column-two-thirds
     - if @vacancies.any?
+
+
+      %div#map
+      :javascript
+
+        var vacancies = #{render(partial: 'vacancies_for_map.json', locals: {vacancies: @vacancies}).html_safe};
+
+        function initMap() {
+          var bounds = new google.maps.LatLngBounds();
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8
+          });
+          var infos = [];
+          var markers = [];
+          var infoWindow = new google.maps.InfoWindow();
+          for (var x in vacancies) {
+            var vacancy = vacancies[x]
+            infos[x] = '<h3><a href="'+vacancy.link+'">'+vacancy.job_title+'</a></h3><p><strong>'+vacancy.school+'</strong></p>';
+            markers[x] = new google.maps.Marker({
+              position: {lat: vacancy.lat, lng: vacancy.lng},
+              map: map,
+              title: vacancy.job_title
+            });
+            bounds.extend(markers[x].position);
+            google.maps.event.addListener(markers[x], 'click', (function(marker, x) {
+              return function() {
+                infoWindow.setContent(infos[x]);
+                infoWindow.open(map, marker);
+              }
+            })(markers[x], x));
+          }
+          map.fitBounds(bounds);
+        }
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_MAPS_API_KEY')}&callback=initMap"}
+
+
       %div.sortable-links
         Sort by:
         = link_to_sort_by  'Closing date', column: 'expires_on', order: 'asc', sort: @sort

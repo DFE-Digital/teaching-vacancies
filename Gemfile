@@ -21,6 +21,8 @@ gem 'turbolinks', '~> 5'
 
 gem 'jbuilder', '~> 2.5'
 
+gem 'breasal', '~> 0.0.1'
+
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit'
 gem 'govuk_template'

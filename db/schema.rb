@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108121747) do
+ActiveRecord::Schema.define(version: 20171110113132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20171108121747) do
 
   create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code"
+    t.string "integer"
     t.text "label"
     t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
   end
@@ -65,6 +66,9 @@ ActiveRecord::Schema.define(version: 20171108121747) do
     t.text "locality"
     t.text "address3"
     t.uuid "detailed_school_type_id"
+    t.text "easting"
+    t.text "northing"
+    t.point "geolocation"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
   end

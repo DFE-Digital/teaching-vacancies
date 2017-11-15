@@ -88,6 +88,10 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         expect(school.detailed_school_type).to eql(@voluntary_aided_school)
         expect(school.region).to eql(@london)
         expect(school.phase).to eql('primary')
+        expect(school.easting).to eql('533498')
+        expect(school.northing).to eql('181201')
+        expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51396894535262)
+        expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.07751626505544208)
 
         school = School.find_by(urn: '100001')
         expect(school.name).to eql('City of London School for Girls')
@@ -106,6 +110,10 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         expect(school.detailed_school_type.code).to eql('11')
         expect(school.region).to eql(@london)
         expect(school.phase).to eql('not_applicable')
+        expect(school.easting).to eql('532301')
+        expect(school.northing).to eql('181746')
+        expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51914791336013)
+        expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.09455174037405477)
 
         expect(School.find_by(urn: '100002')).to be_present
         expect(School.find_by(urn: '100003')).to be_present

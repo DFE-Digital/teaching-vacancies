@@ -1,3 +1,4 @@
+require 'breasal'
 class School < ApplicationRecord
   belongs_to :school_type, required: true
   belongs_to :detailed_school_type, optional: true
@@ -18,5 +19,31 @@ class School < ApplicationRecord
 
   def to_param
     urn
+  end
+
+  def easting=(easting)
+    self[:easting] = easting
+    set_geolocation_from_easting_and_northing
+  end
+
+  def northing=(northing)
+    self[:northing] = northing
+    set_geolocation_from_easting_and_northing
+  end
+
+  private
+
+  def set_geolocation_from_easting_and_northing
+    if easting && northing
+      wgs84 = Breasal::EastingNorthing.new(
+        easting: easting.to_i,
+        northing: northing.to_i,
+        type: :gb
+      ).to_wgs84
+
+      geolocation = [wgs84[:latitude], wgs84[:longitude]]
+    end
+
+    self.geolocation = geolocation
   end
 end

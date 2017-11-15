@@ -52,6 +52,7 @@ GEM
     arel (8.0.0)
     ast (2.3.0)
     bindex (0.5.0)
+    breasal (0.0.1)
     builder (3.2.3)
     byebug (9.1.0)
     capybara (2.15.1)
@@ -315,6 +316,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  breasal (~> 0.0.1)
   byebug
   capybara (~> 2.13)
   database_cleaner

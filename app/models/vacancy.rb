@@ -44,6 +44,7 @@ class Vacancy < ApplicationRecord
   belongs_to :leadership, required: false
 
   delegate :name, to: :school, prefix: true, allow_nil: false
+  delegate :geolocation, to: :school, prefix: true, allow_nil: true
 
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
 

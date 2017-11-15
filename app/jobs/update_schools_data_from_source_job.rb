@@ -38,6 +38,9 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
       school.minimum_age = row['StatutoryLowAge']
       school.maximum_age = row['StatutoryHighAge']
 
+      school.easting = row['Easting']
+      school.northing = row['Northing']
+
       website = row['SchoolWebsite']
       website = "http://#{website}" unless website.start_with? 'http'
 
