@@ -8,9 +8,12 @@ module VacancyHelpers
     fill_in 'vacancy[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'vacancy[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'vacancy[essential_requirements]', with: vacancy.essential_requirements
-    select Faker::Business.credit_card_expiry_date.day, from: 'vacancy[expires_on(3i)]'
-    select Faker::Business.credit_card_expiry_date.strftime('%B'), from: 'vacancy[expires_on(2i)]'
-    select Faker::Business.credit_card_expiry_date.year, from: 'vacancy[expires_on(1i)]'
+    fill_in 'vacancy[expires_on_dd]', with: Faker::Business.credit_card_expiry_date.day
+    fill_in 'vacancy[expires_on_mm]', with: Faker::Business.credit_card_expiry_date.strftime('%m')
+    fill_in 'vacancy[expires_on_yyyy]', with: Faker::Business.credit_card_expiry_date.year
+    fill_in 'vacancy[publish_on_dd]', with: Date.today.day
+    fill_in 'vacancy[publish_on_mm]', with: Date.today.strftime('%m')
+    fill_in 'vacancy[publish_on_yyyy]', with: Date.today.year
     fill_in 'vacancy[contact_email]', with: vacancy.contact_email
 
     click_button 'Save and continue'
