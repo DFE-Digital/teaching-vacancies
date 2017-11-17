@@ -66,7 +66,8 @@ class VacanciesController < ApplicationController
     %i[job_title headline job_description
        benefits subject minimum_salary
        maximum_salary pay_scale_id working_pattern
-       weekly_hours leadership starts_on ends_on]
+       weekly_hours leadership starts_on_dd starts_on_mm starts_on_yyyy
+       ends_on_dd ends_on_mm ends_on_yyyy]
   end
 
   def candidate_params
@@ -74,7 +75,7 @@ class VacanciesController < ApplicationController
   end
 
   def vacancy_detail_params
-    %i[contact_email expires_on publish_on]
+    %i[contact_email expires_on_mm expires_on_dd expires_on_yyyy publish_on_mm publish_on_dd publish_on_yyyy]
   end
 
   def sort_column
