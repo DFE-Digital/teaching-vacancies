@@ -46,6 +46,8 @@ class Vacancy < ApplicationRecord
   delegate :name, to: :school, prefix: true, allow_nil: false
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
 
+  acts_as_gov_uk_date :starts_on, :ends_on, :publish_on, :expires_on
+
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
 
   paginates_per 10

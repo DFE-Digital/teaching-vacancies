@@ -31,6 +31,8 @@ gem 'kaminari'
 gem 'roadie-rails'
 gem 'simple_form'
 
+gem 'gov_uk_date_fields', '~> 2.0', '>= 2.0.3'
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_girl_rails'

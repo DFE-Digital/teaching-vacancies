@@ -48,19 +48,9 @@
                 label: 'Leadership level',
                 collection: Leadership.order(:title),
                 required: false
-= f.input :starts_on,
-          as: :date,
-          label: 'Start date',
-          hint: 'Expected start date of the job',
-          order: %i[day month year],
-          start_year: Date.today.year,
-          include_blank: true,
-          required: false
-= f.input :ends_on,
-          as: :date,
-          label: 'End date',
-          hint: 'Expected end date of the job',
-          order: %i[day month year],
-          start_year: Date.today.year,
-          include_blank: true,
-          required: false
+
+%div.form-group
+  = f.gov_uk_date_field :starts_on, legend_text: 'Expected start date (optional)', legend_class: 'form-label-bold', form_hint_text: 'For example, 31 9 2018'
+
+%div.form-group
+  = f.gov_uk_date_field :ends_on, legend_text: 'Expected end date (optional)', legend_class: 'form-label-bold', form_hint_text: 'For example, 31 2 2019'
