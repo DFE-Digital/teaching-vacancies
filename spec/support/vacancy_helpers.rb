@@ -11,9 +11,9 @@ module VacancyHelpers
     fill_in 'vacancy[expires_on_dd]', with: Faker::Business.credit_card_expiry_date.day
     fill_in 'vacancy[expires_on_mm]', with: Faker::Business.credit_card_expiry_date.strftime('%m')
     fill_in 'vacancy[expires_on_yyyy]', with: Faker::Business.credit_card_expiry_date.year
-    fill_in 'vacancy[publish_on_dd]', with: Date.today.day
-    fill_in 'vacancy[publish_on_mm]', with: Date.today.strftime('%m')
-    fill_in 'vacancy[publish_on_yyyy]', with: Date.today.year
+    fill_in 'vacancy[publish_on_dd]', with: Time.zone.today.day
+    fill_in 'vacancy[publish_on_mm]', with: Time.zone.today.strftime('%m')
+    fill_in 'vacancy[publish_on_yyyy]', with: Time.zone.today.year
     fill_in 'vacancy[contact_email]', with: vacancy.contact_email
 
     click_button 'Save and continue'
