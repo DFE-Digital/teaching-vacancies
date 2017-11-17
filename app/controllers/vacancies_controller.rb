@@ -21,8 +21,10 @@ class VacanciesController < ApplicationController
 
   def create
     @school = School.find(params[:vacancy][:school_id])
-    @vacancy = CreateVacancy.new(school: @school).call(vacancy_params)
-    if @vacancy.valid?
+
+    @vacancy = @school.vacancies.new(vacancy_params)
+    @vacancy.status = :draft
+    if @vacancy.save
       redirect_to review_vacancy_path(@vacancy)
     else
       render :new
