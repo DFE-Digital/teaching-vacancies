@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171110113132) do
+ActiveRecord::Schema.define(version: 20171117140917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
   enable_extension "pgcrypto"
 
   create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code"
-    t.string "integer"
     t.text "label"
     t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
   end
@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(version: 20171110113132) do
     t.index ["name"], name: "index_subjects_on_name", unique: true
   end
 
+  create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "method", null: false
+    t.string "email"
+    t.string "phone_number"
+    t.integer "minimum_salary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title", null: false
     t.string "slug", null: false
@@ -94,7 +103,7 @@ ActiveRecord::Schema.define(version: 20171110113132) do
     t.uuid "subject_id"
     t.uuid "pay_scale_id"
     t.uuid "leadership_id"
-    t.text "essential_requirements", null: false
+    t.text "essential_requirements"
     t.text "education"
     t.text "qualifications"
     t.text "experience"

@@ -2,7 +2,7 @@
   Publish a vacancy for
   = @vacancy.school.name
   %span.heading-secondary
-    Step 1 of 3
+    Step 3 of 3
 - if @vacancy.errors.any?
   .error-summary{role: 'alert', tabindex: '-1'}
     %h2.heading-medium.error-summary-heading
@@ -12,9 +12,8 @@
       - @vacancy.errors.full_messages.each do |message|
         %li= message
 = simple_form_for @vacancy do |f|
-  = hidden_field_tag :from, :job_specification
-  = hidden_field_tag :next, (params[:next] || :candidate_specification)
-  = render partial: 'job_specification', locals: { f: f }
+  = hidden_field_tag :from, :application_details
+  = hidden_field_tag :next, :review
+  = render partial: 'vacancy_details', locals: { f: f }
 
-  = f.input :school_id, as: :hidden, if: :new_record?
   = f.button :submit, 'Save and continue'

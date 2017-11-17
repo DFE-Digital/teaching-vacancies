@@ -39,7 +39,7 @@ RSpec.feature 'Creating a vacancy' do
     vacancy = build(:vacancy, job_title: '')
 
     visit new_vacancy_path(school_id: school.id)
-    fill_vacancy_fields(vacancy)
+    fill_in_job_spec_fields(vacancy)
 
     expect(page).to have_content('error')
     expect(page).to have_content('Job title can\'t be blank')
@@ -51,7 +51,16 @@ RSpec.feature 'Creating a vacancy' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       visit new_vacancy_path(school_id: school.id)
 
-      fill_vacancy_fields(vacancy)
+      expect(page).to have_content('Job specification')
+      fill_in_job_spec_fields(vacancy)
+
+      expect(page).to have_content('Candidate specification')
+      fill_in_candidate_specification_fields(vacancy)
+      click_button 'Save and continue'
+
+      expect(page).to have_content('Application details')
+      fill_in_application_details_fields(vacancy)
+      click_button 'Save and continue'
 
       expect(page).to have_content('Confirm details before you submit')
       expect(page).to have_content(vacancy.job_title)

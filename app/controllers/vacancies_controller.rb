@@ -25,9 +25,32 @@ class VacanciesController < ApplicationController
     @vacancy = @school.vacancies.new(vacancy_params)
     @vacancy.status = :draft
     if @vacancy.save
-      redirect_to review_vacancy_path(@vacancy)
+      redirect_to vacancy_candidate_specification_path(@vacancy)
     else
       render :new
+    end
+  end
+
+  def job_specification
+    @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
+    render 'new'
+  end
+
+  def candidate_specification
+    @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
+  end
+
+  def application_details
+    @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
+  end
+
+  def update
+    @vacancy = Vacancy.find_by!(slug: params[:id])
+
+    if @vacancy.update_attributes(vacancy_params)
+      redirect_to next_path(params[:next])
+    else
+      render view_for_from(params[:from])
     end
   end
 
@@ -57,6 +80,30 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  def view_for_from(from_param)
+    case from_param
+    when 'job_specification'
+      :new
+    when 'candidate_specification'
+      :candidate_specification
+    when 'application_details'
+      :application_details
+    else
+      raise 'Unsure where to redirect to...'
+    end
+  end
+
+  def next_path(next_param)
+    case next_param
+    when 'candidate_specification'
+      vacancy_candidate_specification_path(@vacancy)
+    when 'application_details'
+      vacancy_application_details_path(@vacancy)
+    else
+      review_vacancy_path(@vacancy)
+    end
+  end
 
   def vacancy_params
     params.require(:vacancy).permit(job_spec_params +
