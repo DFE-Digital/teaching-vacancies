@@ -17,6 +17,7 @@ class VacanciesController < ApplicationController
   def new
     @school = School.find(params[:school_id])
     @vacancy = @school.vacancies.new
+    render :job_specification
   end
 
   def create
@@ -27,13 +28,12 @@ class VacanciesController < ApplicationController
     if @vacancy.save
       redirect_to vacancy_candidate_specification_path(@vacancy)
     else
-      render :new
+      render :job_specification
     end
   end
 
   def job_specification
     @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
-    render 'new'
   end
 
   def candidate_specification
