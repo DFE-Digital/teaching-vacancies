@@ -6,7 +6,6 @@ module VacancyHelpers
     select vacancy.working_pattern.humanize, from: 'vacancy[working_pattern]'
     fill_in 'vacancy[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'vacancy[maximum_salary]', with: vacancy.maximum_salary
-
     click_button 'Save and continue'
   end
 
