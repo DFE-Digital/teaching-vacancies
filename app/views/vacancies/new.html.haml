@@ -3,14 +3,7 @@
   = @vacancy.school.name
   %span.heading-secondary
     Step 1 of 3
-- if @vacancy.errors.any?
-  .error-summary{role: 'alert', tabindex: '-1'}
-    %h2.heading-medium.error-summary-heading
-      = pluralize(@vacancy.errors.count, 'error')
-      prevented this vacancy from being saved:
-    %ul
-      - @vacancy.errors.full_messages.each do |message|
-        %li= message
+= render 'error_messages', errors: @vacancy.errors
 = simple_form_for @vacancy do |f|
   = hidden_field_tag :from, :job_specification
   = hidden_field_tag :next, (params[:next] || :candidate_specification)
