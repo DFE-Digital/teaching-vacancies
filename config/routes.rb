@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   root 'vacancies#index'
 
-  resources :vacancies, only: %i[index show new create edit] do
+  resources :vacancies, only: %i[index show new create update] do
     get 'review', on: :member
+    resource :job_specification, only: :show, controller: :vacancies, action: :job_specification
+    resource :candidate_specification, only: :show, controller: :vacancies, action: :candidate_specification
+    resource :application_details, only: :show, controller: :vacancies, action: :application_details
+
     put 'publish', on: :member
     get 'published', on: :member
   end
