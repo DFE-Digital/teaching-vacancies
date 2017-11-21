@@ -84,7 +84,7 @@ class VacanciesController < ApplicationController
   def view_for_from(from_param)
     case from_param
     when 'job_specification'
-      :new
+      :job_specification
     when 'candidate_specification'
       :candidate_specification
     when 'application_details'
