@@ -48,6 +48,7 @@ class VacanciesController < ApplicationController
     @vacancy = Vacancy.find_by!(slug: params[:id])
 
     if @vacancy.update_attributes(vacancy_params)
+      redirect_to next_path(params[:next])
     else
       render view_for_from(params[:from])
     end
