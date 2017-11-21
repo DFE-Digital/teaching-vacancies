@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 20171117140917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "unaccent"
   enable_extension "pgcrypto"
 
   create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -76,15 +75,6 @@ ActiveRecord::Schema.define(version: 20171117140917) do
   create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.index ["name"], name: "index_subjects_on_name", unique: true
-  end
-
-  create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "method", null: false
-    t.string "email"
-    t.string "phone_number"
-    t.integer "minimum_salary"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
