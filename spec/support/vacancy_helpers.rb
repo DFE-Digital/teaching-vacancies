@@ -1,13 +1,20 @@
 module VacancyHelpers
-  # rubocop:disable Metrics/AbcSize
-  def fill_vacancy_fields(vacancy)
+  def fill_in_job_spec_fields(vacancy)
     fill_in 'vacancy[job_title]', with: vacancy.job_title
     fill_in 'vacancy[headline]', with: vacancy.headline
     fill_in 'vacancy[job_description]', with: vacancy.job_description
     select vacancy.working_pattern.humanize, from: 'vacancy[working_pattern]'
     fill_in 'vacancy[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'vacancy[maximum_salary]', with: vacancy.maximum_salary
+    click_button 'Save and continue'
+  end
+
+  def fill_in_candidate_specification_fields(vacancy)
     fill_in 'vacancy[essential_requirements]', with: vacancy.essential_requirements
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def fill_in_application_details_fields(vacancy)
     fill_in 'vacancy[expires_on_dd]', with: Faker::Business.credit_card_expiry_date.day
     fill_in 'vacancy[expires_on_mm]', with: Faker::Business.credit_card_expiry_date.strftime('%m')
     fill_in 'vacancy[expires_on_yyyy]', with: Faker::Business.credit_card_expiry_date.year
@@ -15,8 +22,6 @@ module VacancyHelpers
     fill_in 'vacancy[publish_on_mm]', with: Time.zone.today.strftime('%m')
     fill_in 'vacancy[publish_on_yyyy]', with: Time.zone.today.year
     fill_in 'vacancy[contact_email]', with: vacancy.contact_email
-
-    click_button 'Save and continue'
   end
   # rubocop:enable Metrics/AbcSize
 

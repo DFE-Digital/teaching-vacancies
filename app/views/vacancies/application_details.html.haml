@@ -1,0 +1,24 @@
+%h1.heading-large
+  Publish a vacancy for
+  = @vacancy.school.name
+  %span.heading-secondary
+    Step 3 of 3
+= render 'error_messages', errors: @vacancy.errors
+= simple_form_for @vacancy do |f|
+  = hidden_field_tag :from, :application_details
+  = hidden_field_tag :next, :review
+  %h2.heading-medium
+    Application details
+
+  = f.input :contact_email,
+            as: :email,
+            label: 'Vacancy contact email',
+            required: true
+
+  %div.form-group
+    = f.gov_uk_date_field :expires_on, legend_text: 'Vacancy deadline date', legend_class: 'form-label-bold', form_hint_text: 'For example, 31 11 2017'
+
+  %div.form-group
+    = f.gov_uk_date_field :publish_on, legend_text: 'Vacancy publication date', legend_class: 'form-label-bold', form_hint_text: 'For example, 31 10 2017'
+
+  = f.button :submit, 'Save and continue'
