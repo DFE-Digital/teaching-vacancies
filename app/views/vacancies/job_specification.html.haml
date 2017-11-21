@@ -32,14 +32,26 @@
                   hint: 'The main subject to be taught by teacher',
                   collection: Subject.order(:name),
                   required: false
-  = f.input :minimum_salary,
-            as: :integer,
-            hint: 'Minimum annual pay before tax (£)',
-            required: true
-  = f.input :maximum_salary,
-            as: :integer,
-            hint: 'Maximum annual pay before tax (£)',
-            required: false
+  %fieldset.form-group
+    %legend
+      %div Salary range
+      %span.form-hint Annual pay before tax (£)
+
+    = f.input :minimum_salary,
+              as: :integer,
+              required: true,
+              wrapper: false,
+              label: false,
+              input_html: {class: 'form-control-1-8'}
+
+    to
+
+    = f.input :maximum_salary,
+              as: :integer,
+              wrapper: false,
+              required: true,
+              label: false,
+              input_html: {class: 'form-control-1-8'}
 
   = f.association :pay_scale,
                   hint: 'The pay scale on which the salary of the job falls',
