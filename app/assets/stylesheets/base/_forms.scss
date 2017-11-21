@@ -6,3 +6,7 @@ select.date {
     @extend .form-control-error
   }
 }
+
+fieldset legend {
+  font-weight: bold;
+}
