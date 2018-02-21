@@ -4,6 +4,8 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+.DS_Store
+
 # Ignore bundler config.
 /.bundle
 
@@ -23,3 +25,13 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/environment
+terraform.tfplan
+terraform.tfstate
+./*.tfstate
+.terraform/
+.terraform.tfstate.lock.info
