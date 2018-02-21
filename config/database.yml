@@ -10,14 +10,9 @@ development:
   <<: *default
   database: dfe-beta_development
 
-
 test:
   <<: *default
   database: dfe-beta_test
 
-
 production:
-  <<: *default
-  database: teacher-vacancy-service_production
-  username: teacher-vacancy-service
-  password: <%= ENV['TEACHER-VACANCY-SERVICE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
