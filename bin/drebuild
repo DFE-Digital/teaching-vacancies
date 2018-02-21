@@ -4,4 +4,5 @@ docker-compose stop
 docker-compose rm -f
 bin/drake db:drop
 bin/dsetup
+docker-compose stop
 echo "Rebuild completed. You can now start up TVS"

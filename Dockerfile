@@ -1,6 +1,6 @@
 FROM ruby:2.4.0
 
-MAINTAINER DXW <support@dxw.com>
+MAINTAINER DXW <rails@dxw.com>
 
 
 RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client-9.4 --fix-missing --no-install-recommends
