@@ -11,6 +11,8 @@ services:
       - elasticsearch
     env_file:
       - docker-compose.env
+    tty: true
+    stdin_open: true
     restart: on-failure
 
   db:
