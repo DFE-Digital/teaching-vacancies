@@ -1,5 +1,11 @@
 # Example file
 
+# Basic auth
 HTTP_USER: user
 HTTP_PASS: password
+
+# External dependencies
+ELASTIC_SEARCH_ENDPOINT: 'localhost:9200'
+
+# Integrations
 GOOGLE_MAPS_API_KEY: '123'
