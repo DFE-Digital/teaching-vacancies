@@ -1,12 +1,21 @@
 # Teacher Vacancy Service (TVS)
 
-## Ruby version
-Requires Ruby 2.4.0
+### Prerequisites
+ - [Docker](https://docs.docker.com/docker-for-mac)
 
-## System dependencies
-- Postgres
-- ElasticSearch
-- PhantomJS
 
-## Run tests and rubocop
-`bundle exec rake`
+### Setting up the project
+
+Build the docker container and set up the database
+
+`bin/drebuild`
+
+
+Start the application
+
+`bin/dstart`
+
+## Testing
+
+You can run the specs using `bin/dspec`.
+When no arguments are specified, the default rake task is executed.

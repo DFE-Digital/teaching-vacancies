@@ -1,0 +1,43 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      args:
+        RAILS_ENV: development
+    command: bundle exec rails s -b 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - elasticsearch
+    environment:
+      - POSTGRES_URL=http://pg_data:5432
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    env_file:
+      - docker-compose.env
+    restart: on-failure
+
+  db:
+    image: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data/:cached
+    restart: on-failure
+
+  elasticsearch:
+    image: elasticsearch
+    depends_on:
+      - db
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - network.host=0.0.0.0
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+
+volumes:
+  pg_data:
+    external: false
+  elasticsearch: {}

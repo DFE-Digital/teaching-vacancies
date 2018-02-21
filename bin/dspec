@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+if [ $# -eq 0 ]
+then
+  echo "No arguments supplied. Defaults to 'rake default'"
+  docker-compose run --rm -e RAILS_ENV=${RAILS_ENV:=test} web rake default
+else
+  echo "Testing: $@"
+  docker-compose run --rm -e RAILS_ENV=${RAILS_ENV:=test} web rspec $@
+fi

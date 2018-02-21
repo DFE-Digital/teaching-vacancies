@@ -1,0 +1,4 @@
+#!/bin/sh
+
+bin/dbuild
+bin/drake db:create db:migrate db:seed
