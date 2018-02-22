@@ -78,7 +78,7 @@
             title: '#{@vacancy.school.name}'
           });
         }
-      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_MAPS_API_KEY')}&callback=initMap"}
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{Figaro.env.GOOGLE_MAPS_API_KEY!}&callback=initMap"}
 
   .column-one-third
     %aside.vacancy--metadata
