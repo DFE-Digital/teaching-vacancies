@@ -10,7 +10,7 @@ services:
       - db
       - elasticsearch
     env_file:
-      - docker-compose.env
+      - docker-compose.dev.env
     tty: true
     stdin_open: true
     restart: on-failure
@@ -30,7 +30,6 @@ services:
       - "9300:9300"
     environment:
       - discovery.type=single-node
-      - network.host=0.0.0.0
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
 

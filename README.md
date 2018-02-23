@@ -6,6 +6,12 @@
 
 ### Setting up the project
 
+Copy the docker environment variables and fill in any missing secrets:
+
+```
+$ cp docker-compose.dev.env.example docker-compose.dev.env
+```
+
 Build the docker container and set up the database
 
 `bin/drebuild`
