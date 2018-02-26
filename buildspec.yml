@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - echo Build started on `date`
+      - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - REPOSITORY_URI=${aws_account_id}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/${image_repo_name}
+      - echo Building the Docker image...
+      - docker build --build-arg RAILS_ENV=production -t ${image_repo_name}:latest .
+      - docker run --rm -e RAILS_ENV=test ${image_repo_name}:latest /bin/bash -c "bundle install --with test --retry 3 --jobs 20 && bundle exec rspec --tag focus --tag "~focus" -b -f documentation --no-colour"
+      - docker tag ${image_repo_name}:latest $REPOSITORY_URI:latest
+      - docker tag ${image_repo_name}:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"web","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json

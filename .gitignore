@@ -35,3 +35,4 @@ terraform.tfstate
 ./*.tfstate
 .terraform/
 .terraform.tfstate.lock.info
+workspace-variables/staging.tfvars
