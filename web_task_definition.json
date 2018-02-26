@@ -1,0 +1,56 @@
+[
+  {
+    "name": "web",
+    "image": "${image}:latest",
+    "portMappings": [
+      {
+        "containerPort": 3000,
+        "hostPort": 0
+      }
+    ],
+    "memory": 128,
+    "networkMode": "bridge",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${project_name}-${environment}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "web"
+      }
+    },
+    "environment": [
+      {
+        "name": "RAILS_ENV",
+        "value": "${environment}"
+      },
+      {
+        "name": "HTTP_USER",
+        "value": "${http_user}"
+      },
+      {
+        "name": "HTTP_PASS",
+        "value": "${http_pass}"
+      },
+      {
+        "name": "GOOGLE_MAPS_API_KEY",
+        "value": "${google_maps_api_key}"
+      },
+      {
+        "name": "SCHEDULING_SECRET_KEY_BASE",
+        "value": "${secret_key_base}"
+      },
+      {
+        "name": "RAILS_LOG_TO_STDOUT",
+        "value": "true"
+      },
+      {
+        "name": "RAILS_SERVE_STATIC_FILES",
+        "value": "true"
+      },
+      {
+        "name": "DATABASE_URL",
+        "value": "${database_url}"
+      }
+    ]
+  }
+]
