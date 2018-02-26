@@ -19,6 +19,11 @@ COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
 RUN gem install bundler
+
+# set rails environment
+ARG RAILS_ENV
+ENV RAILS_ENV=${RAILS_ENV:-production}
+
 RUN bundle install
 COPY . $INSTALL_PATH
 

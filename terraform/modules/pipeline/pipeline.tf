@@ -101,7 +101,7 @@ resource "aws_codepipeline" "pipeline" {
       configuration {
         Owner      = "dxw"
         Repo       = "teacher-vacancy-service"
-        Branch     = "${terraform.workspace == "production" ? "master" : "develop"}"
+        Branch     = "${terraform.workspace == "production" ? "master" : "feature/infrastructure-with-terraform-2"}"
         OAuthToken = "${var.github_token}"
       }
     }
