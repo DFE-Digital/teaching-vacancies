@@ -49,7 +49,7 @@
       },
       {
         "name": "DATABASE_URL",
-        "value": "${database_url}"
+        "value": "postgres://${database_url}:5432/tvs_production?template=template0&pool=5&encoding=unicode"
       }
     ]
   }
