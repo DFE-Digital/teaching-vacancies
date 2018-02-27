@@ -56,7 +56,7 @@ data "template_file" "web_task" {
 }
 
 resource "aws_ecs_task_definition" "web" {
-  family                   = "${var.environment}_web"
+  family                   = "${var.ecs_service_task_name}"
   container_definitions    = "${data.template_file.web_task.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
