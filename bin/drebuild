@@ -1,8 +1,8 @@
 #!/bin/sh
 
-docker-compose stop
-docker-compose rm -f -v
-bin/drake db:drop
-bin/dsetup
-docker-compose stop
+docker-compose --project-name "tvs" down
+docker-compose --project-name "tvs" rm -f -v
+docker-compose --project-name "tvs" run server rake db:drop
+docker-compose --project-name "tvs" run server rake db:setup
+docker-compose --project-name "tvs" down
 echo "Rebuild completed. You can now start up TVS"

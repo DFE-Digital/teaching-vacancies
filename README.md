@@ -23,5 +23,17 @@ Start the application
 
 ## Testing
 
-You can run the specs using `bin/dspec`.
-When no arguments are specified, the default rake task is executed.
+There are two ways that you can run the tests.
+
+Using spring. This requires a running test server.
+
+Get the test server up and running
+`bin/dtest-server`
+
+Run the specs. When no arguments are specified, the default rake task is executed.
+`bin/dspec <args>`
+
+
+Rebuild test server, run all tests and cleanup.
+
+`bin/dtests`

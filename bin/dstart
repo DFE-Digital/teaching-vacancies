@@ -2,6 +2,21 @@
 
 set -e
 
-docker-compose up -d $@
 
-docker attach teachervacancyservice_web_1
+function cleanup {
+  # capture exit code
+  code=$?
+  echo "cleaning up"
+
+  # ignore errors
+  set +e
+  docker-compose --project-name "tvs" down
+
+  exit $code
+}
+
+trap cleanup EXIT
+
+docker-compose --project-name "tvs" up server
+
+docker attach tvs_server_run_1

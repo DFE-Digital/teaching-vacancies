@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+docker-compose --project-name ${PROJECT_NAME} up --build spring
