@@ -14,6 +14,7 @@ resource "aws_db_instance" "default" {
   db_subnet_group_name      = "${aws_db_subnet_group.default.name}"
   skip_final_snapshot       = false
   final_snapshot_identifier = "${var.project_name}-${var.environment}-final-snapshot"
+  backup_retention_period   = 14
   maintenance_window        = "Sun:00:00-Sun:03:00"
   multi_az                  = "${terraform.workspace == "production" ? "true" : "false"}"
 
