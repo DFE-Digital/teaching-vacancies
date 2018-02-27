@@ -12,8 +12,7 @@ phases:
       - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
       - REPOSITORY_URI=${aws_account_id}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/${image_repo_name}
       - echo Building the Docker image...
-      - docker build -t ${image_repo_name}:latest .
-      - echo Running the tests
+      - docker build --build-arg RAILS_ENV=${environment} -t ${image_repo_name}:latest .
       - echo Tagging the successfully tested image as latest
       - docker tag ${image_repo_name}:latest $REPOSITORY_URI:latest
       - docker tag ${image_repo_name}:latest $REPOSITORY_URI:$IMAGE_TAG
