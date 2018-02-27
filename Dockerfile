@@ -1,6 +1,6 @@
 FROM ruby:2.4.0
 
-MAINTAINER DXW <rails@dxw.com>
+MAINTAINER dxw <rails@dxw.com>
 
 RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev --fix-missing --no-install-recommends
 
@@ -20,11 +20,11 @@ COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
 RUN gem install bundler
 
-# set rails environment
 ARG RAILS_ENV
 ENV RAILS_ENV=${RAILS_ENV:-production}
 
-RUN bundle install
+RUN bundle install --without development test
+
 COPY . $INSTALL_PATH
 
 EXPOSE 3000

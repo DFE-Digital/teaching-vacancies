@@ -14,5 +14,8 @@ test:
   <<: *default
   database: dfe-tvs_test
 
+staging:
+  url: <%= ENV['DATABASE_URL'] %>
+
 production:
   url: <%= ENV['DATABASE_URL'] %>
