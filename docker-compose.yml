@@ -26,8 +26,8 @@ services:
      <<: *web
      environment:
        RAILS_ENV: "test"
-       ELASTICSEARCH_URL: http://elasticsearch-test:9200
-       GOOGLE_MAPS_API_KEY: ""
+     env_file:
+      - docker-compose.test.env
      depends_on:
        - db
        - elasticsearch-test

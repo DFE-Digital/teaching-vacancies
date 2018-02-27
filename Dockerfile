@@ -15,10 +15,9 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
+RUN gem install bundler
 RUN bundle install
 COPY . $INSTALL_PATH
-
-VOLUME ["/elasticsearch-test", "/elasticsearch"]
 
 EXPOSE 3000
 CMD ["bundle", "exec", "rails s -b0"]
