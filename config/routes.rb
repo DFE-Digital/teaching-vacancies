@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'vacancies#index'
 
+  get 'check' => 'application#check'
+
   resources :vacancies, only: %i[index show new create update] do
     get 'review', on: :member
     resource :job_specification, only: :show, controller: :vacancies, action: :job_specification
