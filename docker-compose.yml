@@ -31,6 +31,7 @@ services:
      depends_on:
        - db
        - elasticsearch-test
+     command: ["bundle", "exec", "./bin/dsetup && rake"]
 
   db: &db
     image: postgres

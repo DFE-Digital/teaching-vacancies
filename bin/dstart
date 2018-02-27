@@ -19,4 +19,4 @@ trap cleanup EXIT
 
 docker-compose --project-name "tvs" up server
 
-docker attach tvs_server_run_1
+docker attach tvs_server_1

@@ -18,5 +18,5 @@ function cleanup {
 trap cleanup EXIT
 
 docker-compose --project-name 'all_checks' build test
-docker-compose --project-name 'all_checks' run test bundle exec "bin/dsetup && rake"
+docker-compose --project-name 'all_checks' run test
 docker-compose --project-name 'all_checks' down -v
