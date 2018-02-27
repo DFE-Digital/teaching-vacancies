@@ -162,6 +162,13 @@ resource "aws_security_group" "ecs" {
   vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    cidr_blocks     = "${var.trusted_ips}"
+  }
+
+  ingress {
     from_port       = 32768
     to_port         = 65535
     protocol        = "6"
