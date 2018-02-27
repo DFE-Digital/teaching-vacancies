@@ -8,7 +8,7 @@
         "hostPort": 0
       }
     ],
-    "memory": 128,
+    "memory": 256,
     "networkMode": "bridge",
     "logConfiguration": {
       "logDriver": "awslogs",
