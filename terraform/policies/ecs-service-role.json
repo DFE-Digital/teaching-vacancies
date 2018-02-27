@@ -5,6 +5,7 @@
       "Effect": "Allow",
       "Action": [
         "elasticloadbalancing:Describe*",
+        "elasticloadbalancing:DeregisterTargets",
         "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
         "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
         "ec2:Describe*",
