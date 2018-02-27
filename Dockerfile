@@ -1,6 +1,6 @@
 FROM ruby:2.4.0
 
-MAINTAINER DXW <rails@dxw.com>
+MAINTAINER dxw <rails@dxw.com>
 
 
 RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client-9.4 --fix-missing --no-install-recommends
@@ -15,11 +15,7 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
-# set rails environment
-ARG RAILS_ENV
-ENV RAILS_ENV=${RAILS_ENV:-production}
-
-RUN bundle install
+RUN bundle install --without development test
 COPY . $INSTALL_PATH
 
 EXPOSE 3000
