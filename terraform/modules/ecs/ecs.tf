@@ -58,8 +58,8 @@ resource "aws_ecs_task_definition" "web" {
   container_definitions    = "${data.template_file.web_task.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
-  cpu                      = "128"
-  memory                   = "128"
+  cpu                      = "256"
+  memory                   = "256"
   execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
