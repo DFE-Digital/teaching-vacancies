@@ -3,7 +3,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :authenticate
+  before_action :authenticate, except: :check
+
+  def check
+    render json: { status: 'OK' }, status: 200
+  end
 
   def not_found
     respond_to do |format|
