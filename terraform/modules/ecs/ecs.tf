@@ -46,6 +46,8 @@ data "template_file" "web_task" {
     google_maps_api_key = "${var.google_maps_api_key}"
     secret_key_base     = "${var.secret_key_base}"
     project_name        = "${var.project_name}"
+    task_name           = "${var.ecs_service_task_name}"
+    task_port           = "${var.ecs_service_task_port}"
     environment         = "${var.environment}"
     region              = "${var.region}"
     log_group           = "${var.aws_cloudwatch_log_group_name}"
