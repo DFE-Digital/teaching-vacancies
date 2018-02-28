@@ -2,14 +2,17 @@ FROM ruby:2.4.0
 
 MAINTAINER DXW <rails@dxw.com>
 
+RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev --fix-missing --no-install-recommends
 
-RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client-9.4 --fix-missing --no-install-recommends
+ENV PHANTOM_JS="phantomjs-2.1.1-linux-x86_64"
+RUN curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
+RUN tar xvjf $PHANTOM_JS.tar.bz2
+RUN mv $PHANTOM_JS/bin/phantomjs /usr/local/bin/phantomjs
+RUN rm -rf $PHANTOM_JS
 
-ENV INSTALL_PATH /srv/dfe-beta
-
+ENV INSTALL_PATH /srv/dfe-tvs
 RUN mkdir -p $INSTALL_PATH
 
-# set context of where commands will be ran
 WORKDIR $INSTALL_PATH
 
 COPY Gemfile $INSTALL_PATH/Gemfile

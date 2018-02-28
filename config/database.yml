@@ -8,11 +8,11 @@ default: &default
 
 development:
   <<: *default
-  database: dfe-beta_development
+  database: dfe-tvs_development
 
 test:
   <<: *default
-  database: dfe-beta_test
+  database: dfe-tvs_test
 
 production:
   url: <%= ENV['DATABASE_URL'] %>
