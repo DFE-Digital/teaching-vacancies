@@ -21,11 +21,13 @@ Start the application
 
 `bin/dstart`
 
-## Testing
+## Running the tests
 
 There are two ways that you can run the tests.
 
-Using spring. This requires a running test server.
+### In development
+
+Because the setup and teardown introduces quite some latency, we use the spring service to start up all dependencies in a docker container. This makes the test run faster.
 
 Get the test server up and running
 `bin/dtest-server`
@@ -33,7 +35,11 @@ Get the test server up and running
 Run the specs. When no arguments are specified, the default rake task is executed.
 `bin/dspec <args>`
 
+Run the javascript tests
+`bin/dteaspoon
 
-Rebuild test server, run all tests and cleanup.
+### Full run (before you push to github)
+
+Rebuilds the test server, runs rubocop checks, all tests (both specs and javascript) and cleans up.
 
 `bin/dtests`
