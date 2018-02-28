@@ -55,7 +55,8 @@ ealing_school = FactoryGirl.create(:school,
                                    town: 'Ealing',
                                    county: 'Middlesex',
                                    postcode: 'EA1 1NG',
-                                   region: london)
+                                   region: london,
+                                   geolocation: '(51.395261, 0.056949)')
 
 bromley_school = FactoryGirl.create(:school,
                                     name: 'Bromley High School',
@@ -65,7 +66,8 @@ bromley_school = FactoryGirl.create(:school,
                                     town: 'Bromley',
                                     county: 'London Borough of Bromley',
                                     postcode: 'BR1 9EY',
-                                    region: london)
+                                    region: london,
+                                    geolocation: '(51.395261, 0.056949)')
 
 FactoryGirl.create(:vacancy,
                    job_title: 'Physics Teacher',
