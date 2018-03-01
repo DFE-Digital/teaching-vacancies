@@ -110,6 +110,18 @@ variable "rds_instance_type" {
   default = "db.t2.micro"
 }
 
+# Elastic search
+variable "es_version" {
+  description = "Amazon Elasticsearch Service currently supports Elasticsearch versions 6.0, 5.5, 5.3, 5.1, 2.3, and 1.5."
+  default = "6.0"
+}
+variable "es_instance_count" {
+  default = 2
+}
+variable "es_instance_type" {
+  default = "t2.small.elasticsearch"
+}
+
 # Make sure this AWS AMI is valid for the chosen region.
 variable "image_id" {
   default = "ami-67cbd003"

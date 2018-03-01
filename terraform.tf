@@ -67,6 +67,7 @@ module "ecs" {
   rds_username                          = "${var.rds_username}"
   rds_password                          = "${var.rds_password}"
   rds_address                           = "${module.rds.rds_address}"
+  es_address                            = "${module.es.es_address}"
 }
 
 module "logs" {
@@ -96,11 +97,24 @@ module "rds" {
   environment                           = "${terraform.workspace}"
   project_name                          = "${var.project_name}"
   rds_storage_gb                        = "${var.rds_storage_gb}"
-  rds_instance                          = "${var.rds_instance}"
+  rds_instance_type                          = "${var.rds_instance_type}"
   rds_engine                            = "${var.rds_engine}"
   rds_engine_version                    = "${var.rds_engine_version[var.rds_engine]}"
   rds_username                          = "${var.rds_username}"
   rds_password                          = "${var.rds_password}"
+
+  vpc_id                                = "${module.core.vpc_id}"
+  default_security_group_id             = "${module.core.default_security_group_id}"
+}
+
+module "es" {
+  source                                = "./terraform/modules/es"
+
+  environment                           = "${terraform.workspace}"
+  project_name                          = "${var.project_name}"
+  instance_count                        = "${var.es_instance_count}"
+  instance_type                         = "${var.es_instance_type}"
+  es_version                            = "${var.es_version}"
 
   vpc_id                                = "${module.core.vpc_id}"
   default_security_group_id             = "${module.core.default_security_group_id}"
