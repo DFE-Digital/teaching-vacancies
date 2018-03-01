@@ -52,7 +52,7 @@
         "value": "postgres://${database_user}:${database_password}@${database_url}:5432/${project_name}_${environment}?template=template0&pool=5&encoding=unicode"
       },
       {
-        "name": "SEARCHBOX_URL",
+        "name": "ELASTICSEARCH_URL",
         "value": "https://${elastic_search_url}:443"
       }
     ]
