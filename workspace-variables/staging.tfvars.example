@@ -3,6 +3,7 @@ aws_account_id =
 github_token =
 trusted_ips =
 region = "eu-west-2"
+availability_zones = ["eu-west-2a","eu-west-2b"]
 project_name = "tvs"
 ecs_cluster_name = "tvs-cluster"
 ecs_key_pair_name =
