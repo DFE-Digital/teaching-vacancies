@@ -6,6 +6,8 @@ services:
     tty: true
     stdin_open: true
     restart: on-failure
+    volumes:
+      - .:/srv/dfe-tvs:cached
 
   development: &development
      <<: *web
