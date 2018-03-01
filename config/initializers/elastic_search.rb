@@ -1,1 +1,1 @@
-Elasticsearch::Model.client = Elasticsearch::Client.new(host: Figaro.env.elasticsearch_url!)
+Elasticsearch::Model.client = Elasticsearch::Client.new(host: ENV['ELASTICSEARCH_URL'])
