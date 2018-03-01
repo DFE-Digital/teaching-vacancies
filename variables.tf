@@ -137,6 +137,10 @@ variable "ecs_key_pair_name" {
 }
 
 variable "rails_env"            {}
+
+variable "cloudfront_certificate_arn"    {}
+variable "cloudfront_aliases"            { type = "list" }
+
 variable "http_pass"            {}
 variable "http_user"            {}
 variable "google_maps_api_key"  {}
