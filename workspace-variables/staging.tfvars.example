@@ -15,7 +15,7 @@ ecs_service_task_port = 3000
 rds_storage_gb = 10
 rds_username = "dxw"
 rds_password = "mice long tail keep trap cheese"
-rds_instance = "db.t2.small"
+rds_instance_type = "db.t2.small"
 
 # Application
 load_balancer_check_path = "/"

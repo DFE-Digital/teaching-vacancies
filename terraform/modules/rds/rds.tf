@@ -6,7 +6,7 @@ resource "aws_db_instance" "default" {
   storage_encrypted         = "true"
   engine                    = "${var.rds_engine}"
   engine_version            = "${var.rds_engine_version}"
-  instance_class            = "${var.rds_instance}"
+  instance_class            = "${var.rds_instance_type}"
   name                      = "${var.project_name}${var.environment}" # alphanumeric only
   username                  = "${var.rds_username}"
   password                  = "${var.rds_password}"
