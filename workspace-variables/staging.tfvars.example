@@ -5,6 +5,7 @@ trusted_ips =
 region = "eu-west-2"
 availability_zones = ["eu-west-2a","eu-west-2b"]
 project_name = "tvs"
+ecs_service_name = "tvs2-service"
 ecs_cluster_name = "tvs-cluster"
 ecs_key_pair_name =
 instance_type = "t2.micro"
