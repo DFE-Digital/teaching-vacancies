@@ -5,6 +5,7 @@ trusted_ips =
 region = "eu-west-2"
 project_name = "tvs"
 ecs_cluster_name = "tvs-cluster"
+ecs_key_pair_name =
 instance_type = "t2.micro"
 
 # Autoscaling of EC2 instances

@@ -122,18 +122,16 @@ variable "es_instance_type" {
   default = "t2.small.elasticsearch"
 }
 
-# Make sure this AWS AMI is valid for the chosen region.
+# EC2
+variable "ecs_key_pair_name"    {}
+
 variable "image_id" {
-  default = "ami-67cbd003"
+  default = "ami-67cbd003" # Make sure this AWS AMI is valid for the chosen region.
 }
 
 variable "instance_type" {
   description = "The size of the EC2 instances to use"
   default = "t2.micro"
-}
-
-variable "ecs_key_pair_name" {
-  default = "hippers-fatrascal"
 }
 
 variable "rails_env"            {}
