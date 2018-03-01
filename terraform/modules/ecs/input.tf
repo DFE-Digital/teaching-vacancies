@@ -18,3 +18,4 @@ variable "secret_key_base"             {}
 variable "rds_username"                {}
 variable "rds_password"                {}
 variable "rds_address"                 {}
+variable "es_address"                  {}
