@@ -22,6 +22,8 @@ COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 RUN bundle install --without development test
 COPY . $INSTALL_PATH
 
+RUN bundle exec rake --quiet assets:precompile
+
 # bundle ruby gems based on the current environment, default to production
 RUN \
   if [ "$RAILS_ENV" = "production" ]; then \
