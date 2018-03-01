@@ -53,7 +53,7 @@
       },
       {
         "name": "SEARCHBOX_URL",
-        "value": "${elastic_search_url}"
+        "value": "https://${elastic_search_url}:443"
       }
     ]
   }
