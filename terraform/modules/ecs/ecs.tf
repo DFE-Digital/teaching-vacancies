@@ -88,25 +88,10 @@ resource "aws_iam_role" "ecs_role" {
   assume_role_policy = "${data.aws_iam_policy_document.ecs_service_role.json}"
 }
 
-data "aws_iam_policy_document" "ecs_service_policy" {
-  statement {
-    effect = "Allow"
-    resources = ["*"]
-    actions = [
-      "elasticloadbalancing:Describe*",
-      "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
-      "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
-      "elasticloadbalancing:RegisterTargets",
-      "ec2:Describe*",
-      "ec2:AuthorizeSecurityGroupIngress"
-    ]
-  }
-}
-
 /* ecs service scheduler role */
 resource "aws_iam_role_policy" "ecs_service_role_policy" {
   name   = "${var.project_name}_${var.environment}_ecs_service_role_policy"
-  policy = "${data.aws_iam_policy_document.ecs_service_policy.json}"
+  policy = "${file("./terraform/policies/ecs-service-role-policy.json")}"
   role   = "${aws_iam_role.ecs_role.id}"
 }
 
