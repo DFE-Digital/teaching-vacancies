@@ -37,11 +37,30 @@ resource "aws_elasticsearch_domain" "default" {
   }
 }
 
-# resource "aws_elasticsearch_domain_policy" "es_management_access" {
-#   domain_name     = "${var.project_name}-${var.environment}-es"
-#   access_policies = "${data.aws_iam_policy_document.es_management_access.json}"
-# }
+resource "aws_elasticsearch_domain_policy" "default" {
+  domain_name     = "${var.project_name}-${var.environment}-default"
+  access_policies = "${data.aws_iam_policy_document.es.json}"
+}
 
+data "aws_iam_policy_document" "es" {
+  statement {
+    actions = [
+      "es:*",
+    ]
+
+    resources = [
+      "${aws_elasticsearch_domain.default.arn}/*",
+    ]
+
+    principals {
+     type = "AWS"
+     identifiers = ["*"]
+    }
+  }
+}
+
+# Incase we want to access this through the browser this config may come in handy
+#
 # data "aws_iam_policy_document" "es_management_access" {
 #   count = "${length(var.vpc_options["subnet_ids"]) > 0 ? 0 : 1}"
 #   statement {
