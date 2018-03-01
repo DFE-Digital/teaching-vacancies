@@ -19,10 +19,7 @@ ENV RACK_ENV=${RAILS_ENV:-production}
 COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
-RUN bundle install --without development test
 COPY . $INSTALL_PATH
-
-RUN bundle exec rake --quiet assets:precompile
 
 # bundle ruby gems based on the current environment, default to production
 RUN \
@@ -31,6 +28,8 @@ RUN \
   else \
     bundle install --retry 10; \
   fi
+
+RUN bundle exec rake --quiet assets:precompile
 
 EXPOSE 3000
 CMD ["bundle", "exec", "rails s"]
