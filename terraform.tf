@@ -115,7 +115,7 @@ module "es" {
   instance_count                        = "${var.es_instance_count}"
   instance_type                         = "${var.es_instance_type}"
   es_version                            = "${var.es_version}"
-  es_domain_name                        = "${var.project_name}-${var.environment}-default"
+  es_domain_name                        = "${var.project_name}-${terraform.workspace}-default"
 
   vpc_id                                = "${module.core.vpc_id}"
   default_security_group_id             = "${module.core.default_security_group_id}"
