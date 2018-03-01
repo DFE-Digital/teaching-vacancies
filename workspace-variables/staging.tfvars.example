@@ -5,19 +5,31 @@ trusted_ips =
 region = "eu-west-2"
 project_name = "scheduling"
 ecs_cluster_name = "scheduling-cluster"
+instance_type = "t2.micro"
+
+# Autoscaling of EC2 instances
 asg_max_size = 2
 asg_min_size = 2
 asg_desired_size = 2
-instance_type = "t2.micro"
+
+# Containers
 ecs_service_task_name = "web"
 ecs_service_task_count = 1
 ecs_service_task_port = 3000
+
+# RDS
 rds_storage_gb = 10
 rds_username = "dxw"
 rds_password = "mice long tail keep trap cheese"
 rds_instance_type = "db.t2.small"
 
+# Elastic search
+es_instance_type = "t2.small.elasticsearch"
+es_instance_count = 2
+es_version = "6.0"
+
 # Application
+rails_env =
 load_balancer_check_path = "/"
 secret_key_base =
 http_user = "user"

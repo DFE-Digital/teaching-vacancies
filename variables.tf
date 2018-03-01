@@ -136,6 +136,7 @@ variable "ecs_key_pair_name" {
   default = "hippers-fatrascal"
 }
 
+variable "rails_env"            {}
 variable "http_pass"            {}
 variable "http_user"            {}
 variable "google_maps_api_key"  {}

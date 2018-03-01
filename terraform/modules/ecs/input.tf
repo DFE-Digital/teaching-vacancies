@@ -11,6 +11,7 @@ variable "aws_alb_target_group_arn"    {}
 variable "ecs_service_task_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
+variable "rails_env"                   {}
 variable "http_pass"                   {}
 variable "http_user"                   {}
 variable "google_maps_api_key"         {}
