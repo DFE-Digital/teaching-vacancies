@@ -130,7 +130,7 @@ resource "aws_security_group" "default" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = "${var.trusted_ips}"
+    cidr_blocks = ["0.0.0.0/0"] # CloudFront changes IP so requires this to allow any IP
   }
 
   ingress {

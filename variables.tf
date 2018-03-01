@@ -132,6 +132,10 @@ variable "es_instance_type" {
   default = "t2.small.elasticsearch"
 }
 
+# CloudFront
+variable "cloudfront_certificate_arn"    {}
+variable "cloudfront_aliases"            { type = "list" }
+
 # Application
 variable "rails_env"            {}
 variable "http_pass"            {}

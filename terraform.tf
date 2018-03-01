@@ -121,3 +121,14 @@ module "es" {
   vpc_id                                = "${module.core.vpc_id}"
   default_security_group_id             = "${module.core.default_security_group_id}"
 }
+
+module "cloudfront" {
+  source                                = "./terraform/modules/cloudfront"
+
+  environment                           = "${terraform.workspace}"
+  project_name                          = "${var.project_name}"
+  cloudfront_origin_domain_name         = "${module.core.alb_dns_name}"
+  cloudfront_aliases                    = "${var.cloudfront_aliases}"
+  cloudfront_certificate_arn            = "${var.cloudfront_certificate_arn}"
+  
+}
