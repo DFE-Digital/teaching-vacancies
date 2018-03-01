@@ -106,7 +106,7 @@ variable "rds_engine_version" {
 variable "rds_storage_gb" {}
 variable "rds_username" {}
 variable "rds_password" {}
-variable "rds_instance" {
+variable "rds_instance_type" {
   default = "db.t2.micro"
 }
 
