@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+if [ $# -eq 0 ]
+then
+  echo "No arguments supplied. Defaults to 'rake default'"
+  docker-compose exec spring rake default $@
+else
+  echo "Testing: $@"
+  docker-compose exec spring rspec $@
+fi

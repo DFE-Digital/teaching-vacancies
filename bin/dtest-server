@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+function cleanup {
+  # capture exit code
+  code=$?
+  echo "cleaning up"
+
+  # ignore errors
+  set +e
+  docker-compose down --remove-orphans
+
+  # exit with original exit code
+  exit $code
+}
+
+# run cleanup when the script exits
+trap cleanup EXIT
+
+docker-compose up --build spring

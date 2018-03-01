@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+function cleanup {
+  # capture exit code
+  code=$?
+  echo "cleaning up"
+
+  # ignore errors
+  set +e
+  docker-compose --project-name 'all_checks' down -v
+
+  # exit with original exit code
+  exit $code
+}
+
+# run cleanup when the script exits
+trap cleanup EXIT
+
+docker-compose --project-name 'all_checks' build test
+docker-compose --project-name 'all_checks' run test
+docker-compose --project-name 'all_checks' down -v

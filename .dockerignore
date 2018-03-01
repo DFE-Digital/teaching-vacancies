@@ -1,0 +1,4 @@
+.git
+.env
+.dockerignore
+config/application.yml
