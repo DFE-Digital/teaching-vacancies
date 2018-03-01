@@ -3,8 +3,8 @@ aws_account_id =
 github_token =
 trusted_ips =
 region = "eu-west-2"
-project_name = "scheduling"
-ecs_cluster_name = "scheduling-cluster"
+project_name = "tvs"
+ecs_cluster_name = "tvs-cluster"
 instance_type = "t2.micro"
 
 # Autoscaling of EC2 instances
@@ -30,7 +30,7 @@ es_version = "6.0"
 
 # Application
 rails_env =
-load_balancer_check_path = "/"
+load_balancer_check_path = "/check"
 secret_key_base =
 http_user = "user"
 http_pass = "password"
