@@ -2,3 +2,11 @@
 .env
 .dockerignore
 config/application.yml
+*.tfstate
+*.tfstate.backup
+.terraform/environment
+terraform.tfplan
+terraform.tfstate
+./*.tfstate
+.terraform/
+.terraform.tfstate.lock.info
