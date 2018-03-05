@@ -6,8 +6,9 @@ variable "github_token" {
   description = "GitHub auth token that can read from the GitHub repository"
 }
 
-# Alphanumeric characters only as some resources like RDS require it
-variable "project_name" {}
+variable "project_name" {
+  description = "This name will be used to identify all AWS resources. The workspace name will be suffixed. Alphanumeric characters only due to RDS."
+}
 
 # Network
 variable "vpc_cidr" {
@@ -37,7 +38,10 @@ variable "region" {
 variable "availability_zones"    {
   default = ["eu-west-2a", "eu-west-2b"]
 }
-variable "ecs_key_pair_name"    {}
+
+variable "ecs_key_pair_name"    {
+  description = "This key will be placed onto the machines by Terraform to allow SSH"
+}
 
 variable "image_id" {
   default = "ami-67cbd003" # Make sure this AWS AMI is valid for the chosen region.
@@ -83,15 +87,17 @@ variable "ecs_service_task_count" {
 }
 
 variable "ecs_service_task_port" {
-  description = "The port for this service to expose"
+  description = "The port this application is listening on (ALB will map these with ephemeral port numbers)"
   default = 3000
 }
 
 variable "ecs_service_task_definition_file_path" {
+  description = "Containers running on ECS will be executed based on the configuration of this file"
   default = "./web_task_definition.json"
 }
 
 variable "buildspec_location" {
+  description = "AWS Codebuild will look for this file to tell it how to build this project"
   default = "./buildspec.yml"
 }
 
@@ -134,8 +140,13 @@ variable "es_instance_type" {
 }
 
 # CloudFront
-variable "cloudfront_certificate_arn"    {}
-variable "cloudfront_aliases"            { type = "list" }
+variable "cloudfront_certificate_arn" {
+  description = "Create and verify a certificate through AWS Certificate Manager to acquire this"
+}
+variable "cloudfront_aliases" {
+  description = "Match this value to the alias associated with the cloudfront_certificate_arn, eg. tvs.staging.dxw.net"
+  type = "list"
+}
 
 # Application
 variable "rails_env"            {}
