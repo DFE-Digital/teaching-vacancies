@@ -2,11 +2,6 @@ variable "aws_account_id" {
   description = "AWS account ID"
 }
 
-variable "repository_url" {
-  description = "GitHub repository"
-  default     = "https://github.com/dxw/terraform-10000ft-scheduling-dashboard.git"
-}
-
 variable "github_token" {
   description = "GitHub auth token that can read from the GitHub repository"
 }
