@@ -19,6 +19,8 @@ Resources included:
 
 1. Create a certificate
 
+Request an SSL certificate with AWS, in both the 'N. Virginia (us-east-1)' region (For CloudFront) and the region in which you are launching the infrastructure (For the ALB).
+
 2. Find or create the Bucket that will store Terraform it's state in. Go to S3 and create a bucket with a globally unique name:
 
 Ensure the bucket has the following policy, adding more or less users as required:
