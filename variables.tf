@@ -27,7 +27,8 @@ variable "private_subnets_cidr" {
   default = ["10.0.10.0/24", "10.0.20.0/24"]
 }
 
-variable "trusted_ips" {
+variable "ssh_ips" {
+  description = "IPs with a degree of trust "
   type = "list"
 }
 

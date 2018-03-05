@@ -4,7 +4,7 @@ variable "vpc_cidr"               {}
 variable "availability_zones"     { type = "list" }
 variable "public_subnets_cidr"    { type = "list" }
 variable "private_subnets_cidr"   { type = "list" }
-variable "trusted_ips"            { type = "list" }
+variable "ssh_ips"                { type = "list" }
 
 variable "region"                      {}
 variable "image_id"                    {}

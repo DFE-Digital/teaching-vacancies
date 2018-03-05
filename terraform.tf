@@ -25,7 +25,7 @@ module "core" {
   public_subnets_cidr                   = "${var.public_subnets_cidr}"
   private_subnets_cidr                  = "${var.private_subnets_cidr}"
   availability_zones                    = "${var.availability_zones}"
-  trusted_ips                           = "${var.trusted_ips}"
+  ssh_ips                               = "${var.ssh_ips}"
 
   region                                = "${var.region}"
   load_balancer_check_path              = "${var.load_balancer_check_path}"

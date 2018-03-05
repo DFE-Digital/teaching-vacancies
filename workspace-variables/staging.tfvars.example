@@ -2,7 +2,7 @@
 aws_account_id =
 github_token =
 git_branch_to_track = "develop"
-trusted_ips =
+ssh_ips = []
 region = "eu-west-2"
 availability_zones = ["eu-west-2a","eu-west-2b"]
 project_name = "tvs"
