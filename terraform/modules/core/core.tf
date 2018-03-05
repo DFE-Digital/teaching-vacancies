@@ -192,7 +192,7 @@ resource "random_id" "target_group_sufix" {
 
 resource "aws_alb" "alb_default" {
   name            = "${var.project_name}-alb-${var.environment}"
-  subnets         = ["${element(aws_subnet.public_subnet.*.id, 0)}", "${element(aws_subnet.public_subnet.*.id, 1)}"]
+  subnets         = ["${aws_subnet.public_subnet.*.id}"]
   security_groups = ["${aws_security_group.web_inbound_sg.id}"]
 
   tags {
@@ -292,7 +292,7 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   max_size                    = "${var.asg_max_size}"
   min_size                    = "${var.asg_min_size}"
   desired_capacity            = "${var.asg_desired_size}"
-  vpc_zone_identifier         = ["${element(aws_subnet.public_subnet.*.id, 0)}", "${element(aws_subnet.public_subnet.*.id, 1)}"]
+  vpc_zone_identifier         = ["${aws_subnet.public_subnet.*.id}"]
   launch_configuration        = "${aws_launch_configuration.ecs-launch-configuration.name}"
   health_check_type           = "ELB"
 
