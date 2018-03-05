@@ -1,16 +1,3 @@
 #!/bin/sh
-set -e
-function cleanup {
-  # capture exit code
-  code=$?
-  echo "cleaning up"
-
-  # ignore errors
-  set +e
-  docker-compose --project-name "tvs" down
-
-  exit $code
-}
-trap cleanup EXIT
-
+set +e
 docker-compose --project-name "tvs" run --rm server rake $@
