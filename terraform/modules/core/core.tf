@@ -127,13 +127,6 @@ resource "aws_security_group" "default" {
   vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # CloudFront changes IP so requires this to allow any IP
-  }
-
-  ingress {
     from_port = "0"
     to_port   = "0"
     protocol  = "-1"
@@ -255,21 +248,14 @@ resource "aws_security_group" "web_inbound_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = "${var.trusted_ips}"
+    cidr_blocks = ["0.0.0.0/0"] # CloudFront changes IP so requires this to allow any IP
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = "${var.trusted_ips}"
-  }
-
-  ingress {
-    from_port   = 8
-    to_port     = 0
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] # CloudFront changes IP so requires this to allow any IP
   }
 
   egress {

@@ -130,5 +130,5 @@ module "cloudfront" {
   cloudfront_origin_domain_name         = "${module.core.alb_dns_name}"
   cloudfront_aliases                    = "${var.cloudfront_aliases}"
   cloudfront_certificate_arn            = "${var.cloudfront_certificate_arn}"
-  
+
 }

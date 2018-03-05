@@ -1,24 +1,21 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
+  host: localhost
   username: postgres
   password:
   pool: 5
 
 development:
-  <<: *default
-  database: dfe-tvs_development
+  url: <%= ENV['DATABASE_URL'] %>
 
 test:
-  <<: *default
-  database: dfe-tvs_test
+  url: <%= ENV['DATABASE_URL'] %>
 
 staging:
   url: <%= ENV['DATABASE_URL'] %>
 
 staging:
-  <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
 production:
