@@ -186,10 +186,6 @@ resource "aws_security_group" "ecs" {
 /*====
 Load balancer definitions
 ======*/
-resource "random_id" "target_group_sufix" {
-  byte_length = 2
-}
-
 resource "aws_alb" "alb_default" {
   name            = "${var.project_name}-alb-${var.environment}"
   subnets         = ["${aws_subnet.public_subnet.*.id}"]
