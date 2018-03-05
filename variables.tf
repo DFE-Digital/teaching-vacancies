@@ -99,6 +99,11 @@ variable "buildspec_location" {
   default = "./buildspec.yml"
 }
 
+variable "git_branch_to_track" {
+  description = "Git branch to listen for code changes on and auto deploy"
+  default = "master"
+}
+
 # RDS
 variable "rds_engine" {
   default     = "postgres"

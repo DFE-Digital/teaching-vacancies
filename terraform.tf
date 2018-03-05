@@ -86,6 +86,7 @@ module "pipeline" {
   aws_account_id                        = "${var.aws_account_id}"
   github_token                          = "${var.github_token}"
   buildspec_location                    = "${var.buildspec_location}"
+  git_branch_to_track                   = "${var.git_branch_to_track}"
 
   registry_name                         = "${module.ecs.registry_name}"
   ecs_cluster_name                      = "${module.ecs.cluster_name}"
@@ -130,5 +131,4 @@ module "cloudfront" {
   cloudfront_origin_domain_name         = "${module.core.alb_dns_name}"
   cloudfront_aliases                    = "${var.cloudfront_aliases}"
   cloudfront_certificate_arn            = "${var.cloudfront_certificate_arn}"
-
 }
