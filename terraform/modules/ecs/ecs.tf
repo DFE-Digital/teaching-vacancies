@@ -57,6 +57,7 @@ data "template_file" "web_task" {
     database_password   = "${var.rds_password}"
     database_url        = "${var.rds_address}"
     elastic_search_url  = "${var.es_address}"
+    origin_url          = "${var.origin_url}"
   }
 }
 

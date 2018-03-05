@@ -32,5 +32,15 @@ module TeacherVacancyService
     # specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    if ENV['ORIGIN_URL'].present?
+      host_uri = URI(ENV['ORIGIN_URL'])
+
+      config.action_controller.default_url_options = {
+        host: host_uri.hostname,
+        port: host_uri.port,
+        protocol: host_uri.scheme,
+      }
+    end
   end
 end

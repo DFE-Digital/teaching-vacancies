@@ -69,6 +69,7 @@ module "ecs" {
   rds_password                          = "${var.rds_password}"
   rds_address                           = "${module.rds.rds_address}"
   es_address                            = "${module.es.es_address}"
+  origin_url                            = "${var.origin_url}"
 }
 
 module "logs" {
