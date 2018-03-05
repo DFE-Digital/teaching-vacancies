@@ -14,6 +14,6 @@ output "registry_name" {
   value = "${aws_ecr_repository.default.name}"
 }
 
-output "aws_iam_instance_profile_name" {
+output "aws_iam_ecs_instance_profile_name" {
   value = "${aws_iam_instance_profile.ecs-instance-profile.name}"
 }

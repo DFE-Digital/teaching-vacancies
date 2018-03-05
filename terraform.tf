@@ -30,7 +30,7 @@ module "core" {
   region                                = "${var.region}"
   load_balancer_check_path              = "${var.load_balancer_check_path}"
   image_id                              = "${var.image_id}"
-  instance_type                         = "${var.instance_type}"
+  instance_type                         = "${var.ecs_instance_type}"
   ecs_key_pair_name                     = "${var.ecs_key_pair_name}"
 
   asg_name                              = "${var.asg_name}"
@@ -40,7 +40,7 @@ module "core" {
 
   ecs_cluster_name                      = "${module.ecs.cluster_name}"
   ecs_service_name                      = "${module.ecs.service_name}"
-  aws_iam_instance_profile_name         = "${module.ecs.aws_iam_instance_profile_name}"
+  aws_iam_ecs_instance_profile_name         = "${module.ecs.aws_iam_ecs_instance_profile_name}"
 }
 
 module "ecs" {
@@ -99,7 +99,7 @@ module "rds" {
   environment                           = "${terraform.workspace}"
   project_name                          = "${var.project_name}"
   rds_storage_gb                        = "${var.rds_storage_gb}"
-  rds_instance_type                          = "${var.rds_instance_type}"
+  rds_instance_type                     = "${var.rds_instance_type}"
   rds_engine                            = "${var.rds_engine}"
   rds_engine_version                    = "${var.rds_engine_version[var.rds_engine]}"
   rds_username                          = "${var.rds_username}"
