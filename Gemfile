@@ -12,6 +12,7 @@ gem 'rails', '~> 5.1.4'
 gem 'puma', '~> 3.7'
 gem 'pg', '~> 0.18'
 gem 'elasticsearch-model'
+gem 'faraday_middleware-aws-signers-v4'
 gem 'friendly_id'
 gem 'figaro'
 
