@@ -161,4 +161,3 @@ variable "secret_key_base"      {}
 variable "load_balancer_check_path" {
   default = "/"
 }
-variable "origin_url"           {}

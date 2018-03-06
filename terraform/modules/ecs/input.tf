@@ -20,4 +20,3 @@ variable "rds_username"                {}
 variable "rds_password"                {}
 variable "rds_address"                 {}
 variable "es_address"                  {}
-variable "origin_url"                  {}

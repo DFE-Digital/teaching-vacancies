@@ -54,10 +54,6 @@
       {
         "name": "ELASTICSEARCH_URL",
         "value": "https://${elastic_search_url}:443"
-      },
-      {
-        "name": "ORIGIN_URL",
-        "value": "${origin_url}"
       }
     ]
   }
