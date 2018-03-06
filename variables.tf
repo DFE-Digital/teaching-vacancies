@@ -71,6 +71,10 @@ variable "asg_desired_size" {
   default = 1
 }
 
+variable "alb_certificate_arn" {
+  description = "The certificate ARN to attach to the ALB's HTTPS listener"
+}
+
 # ECS
 variable "ecs_cluster_name" {}
 variable "ecs_service_name" {

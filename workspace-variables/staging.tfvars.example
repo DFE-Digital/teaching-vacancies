@@ -11,6 +11,9 @@ ecs_cluster_name = "tvs-cluster"
 ecs_key_pair_name =
 instance_type = "t2.micro"
 
+# ALB
+alb_certificate_arn =
+
 # Autoscaling of EC2 instances
 asg_max_size = 2
 asg_min_size = 2
