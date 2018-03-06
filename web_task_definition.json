@@ -54,6 +54,18 @@
       {
         "name": "ELASTICSEARCH_URL",
         "value": "https://${elastic_search_url}:443"
+      },
+      {
+        "name": "AWS_ELASTICSEARCH_REGION",
+        "value": "${aws_elasticsearch_region}"
+      },
+      {
+        "name": "AWS_ELASTICSEARCH_KEY",
+        "value": "${aws_elasticsearch_key}"
+      },
+      {
+        "name": "AWS_ELASTICSEARCH_SECRET",
+        "value": "${aws_elasticsearch_secret}"
       }
     ]
   }

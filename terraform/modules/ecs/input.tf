@@ -20,3 +20,6 @@ variable "rds_username"                {}
 variable "rds_password"                {}
 variable "rds_address"                 {}
 variable "es_address"                  {}
+variable "aws_elasticsearch_region"    {}
+variable "aws_elasticsearch_key"       {}
+variable "aws_elasticsearch_secret"    {}

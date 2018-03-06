@@ -70,6 +70,9 @@ module "ecs" {
   rds_password                          = "${var.rds_password}"
   rds_address                           = "${module.rds.rds_address}"
   es_address                            = "${module.es.es_address}"
+  aws_elasticsearch_region              = "${var.region}"
+  aws_elasticsearch_key                 = "${module.es.es_user_access_key_id}"
+  aws_elasticsearch_secret              = "${module.es.es_user_access_key_secret}"
 }
 
 module "logs" {
