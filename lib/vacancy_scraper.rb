@@ -21,7 +21,8 @@ module VacancyScraper
     end
 
     def subject
-      job_title[/Teacher of (.*)/, 1]
+      subjects = Subject.pluck(:name).join("|")
+      job_title[/(#{subjects})/, 1]
     end
 
     def school_name
