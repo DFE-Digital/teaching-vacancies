@@ -56,6 +56,10 @@
         "value": "https://${elastic_search_url}:443"
       },
       {
+        "name": "ELASTICSEARCH_AWS_SIGNING",
+        "value": "true"
+      },
+      {
         "name": "AWS_ELASTICSEARCH_REGION",
         "value": "${aws_elasticsearch_region}"
       },
