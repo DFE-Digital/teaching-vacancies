@@ -37,8 +37,13 @@ module VacancyScraper
     end
 
     def working_pattern
+      pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip.downcase
+      pattern[/(\D*)/,1]
+    end
+
+    def work_hours
       pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip
-      pattern.downcase.gsub("-", "_").to_sym
+      pattern[/(\d*.\d*)/,1]
     end
 
     def salary
@@ -46,11 +51,12 @@ module VacancyScraper
     end
 
     def max_salary
-      salary[/UPS .(\d*.\d*)/,1]
+      max_salary = salary.scan(/\d*.?(\d\d+,\d{3})/)
+      max_salary.empty? ? nil : max_salary[1][0]
     end
 
     def min_salary
-      salary[/MPS .(\d*.\d*)/,1]
+      salary[/(\d\d+.?\d{3})/,1]
     end
 
     def pay_scale
