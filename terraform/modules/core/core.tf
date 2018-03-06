@@ -210,6 +210,21 @@ resource "aws_alb_listener" "default" {
   depends_on        = ["aws_alb_target_group.alb_target_group"]
 }
 
+resource "aws_alb_listener" "default_https" {
+  load_balancer_arn = "${aws_alb.alb_default.arn}"
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  certificate_arn   = "${var.alb_certificate_arn}"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.alb_target_group.arn}"
+    type             = "forward"
+  }
+
+  depends_on        = ["aws_alb_target_group.alb_target_group"]
+}
+
 resource "aws_alb_target_group" "alb_target_group" {
   name     = "${var.project_name}-${var.environment}-alb-tg"
   port     = 80

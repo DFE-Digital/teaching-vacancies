@@ -29,6 +29,7 @@ module "core" {
 
   region                                = "${var.region}"
   load_balancer_check_path              = "${var.load_balancer_check_path}"
+  alb_certificate_arn                   = "${var.alb_certificate_arn}"
   image_id                              = "${var.image_id}"
   instance_type                         = "${var.ecs_instance_type}"
   ecs_key_pair_name                     = "${var.ecs_key_pair_name}"
