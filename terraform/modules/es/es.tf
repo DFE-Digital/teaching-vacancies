@@ -42,6 +42,14 @@ resource "aws_elasticsearch_domain_policy" "default" {
   access_policies = "${data.aws_iam_policy_document.es.json}"
 }
 
+resource "aws_iam_user" "es_user" {
+  name = "${var.project_name}-${var.environment}-es"
+}
+
+resource "aws_iam_access_key" "es_user_access_key" {
+  user = "${aws_iam_user.es_user.name}"
+}
+
 data "aws_iam_policy_document" "es" {
   statement {
     actions = [
@@ -54,7 +62,7 @@ data "aws_iam_policy_document" "es" {
 
     principals {
      type = "AWS"
-     identifiers = ["*"]
+     identifiers = ["${aws_iam_user.es_user.arn}"]
     }
   }
 }
