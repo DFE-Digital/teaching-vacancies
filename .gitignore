@@ -26,6 +26,9 @@
 # Ignore application configuration
 /config/application.yml
 
+# Docker
+docker-compose.env
+
 # Terraform
 *.tfstate
 *.tfstate.backup
@@ -35,3 +38,4 @@ terraform.tfstate
 ./*.tfstate
 .terraform/
 .terraform.tfstate.lock.info
+workspace-variables/staging.tfvars

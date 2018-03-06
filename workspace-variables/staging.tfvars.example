@@ -1,0 +1,48 @@
+# Platform
+aws_account_id =
+github_token =
+git_branch_to_track = "develop"
+ssh_ips = []
+region = "eu-west-2"
+availability_zones = ["eu-west-2a","eu-west-2b"]
+project_name = "tvs"
+ecs_service_name = "tvs2-service"
+ecs_cluster_name = "tvs-cluster"
+ecs_key_pair_name =
+instance_type = "t2.micro"
+
+# ALB
+alb_certificate_arn =
+
+# Autoscaling of EC2 instances
+asg_max_size = 2
+asg_min_size = 2
+asg_desired_size = 2
+
+# Containers
+ecs_service_task_name = "web"
+ecs_service_task_count = 1
+ecs_service_task_port = 3000
+
+# RDS
+rds_storage_gb = 10
+rds_username = "dxw"
+rds_password = "mice long tail keep trap cheese"
+rds_instance_type = "db.t2.small"
+
+# Elastic search
+es_instance_type = "t2.small.elasticsearch"
+es_instance_count = 2
+es_version = "6.0"
+
+# CloudFront
+cloudfront_certificate_arn =
+cloudfront_aliases =
+
+# Application
+rails_env =
+load_balancer_check_path = "/check"
+secret_key_base =
+http_user = "user"
+http_pass = "password"
+google_maps_api_key =
