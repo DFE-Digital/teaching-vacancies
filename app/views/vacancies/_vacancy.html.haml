@@ -1,0 +1,16 @@
+%li.vacancy
+  %h2= link_to vacancy.job_title, vacancy_path(vacancy)
+  %p= vacancy.location
+  %dl
+    %dt Salary
+    %dd.double
+      = vacancy.salary_range
+      per annum
+    %dt Posted on
+    %dd= format_date(vacancy.publish_on)
+    %dt Closing date
+    %dd= format_date(vacancy.expires_on)
+    %dt Contract
+    %dd= vacancy.working_pattern&.titleize
+    %dt Start date
+    %dd= format_date(vacancy.starts_on)
