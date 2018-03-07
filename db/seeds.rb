@@ -34,18 +34,9 @@ SchoolType.create(label: 'Free School', code: '11')
 SchoolType.create(label: 'LA Maintained School', code: '4')
 SchoolType.create(label: 'Special School', code: '5')
 
-Subject.create(name: 'English')
-maths = Subject.create(name: 'Mathematics')
-science = Subject.create(name: 'Science')
-Subject.create(name: 'Art and design')
-Subject.create(name: 'Citizenship')
-Subject.create(name: 'Computing')
-Subject.create(name: 'Design and technology')
-Subject.create(name: 'Geography')
-Subject.create(name: 'History')
-Subject.create(name: 'Languages')
-Subject.create(name: 'Music')
-Subject.create(name: 'Physical education')
+['Chemistry', 'Economics', 'General Science', 'History', 'Maths', 'Other', 'Primary', 'Spanish', 'Art', 'Classics', 'English Language', 'Geography', 'ICT', 'Media Studies', 'Physical Education', 'Psychology', 'Statistics', 'Biology', 'Design Technology', 'English Literature', 'German', 'Latin', 'Music', 'Physics', 'Religious Studies', 'Business Studies', 'Drama', 'French', 'Health and Social care', 'Law', 'Politics', 'Sociology'].each do |subject|
+  Subject.create(name: subject)
+end
 
 ealing_school = FactoryGirl.create(:school,
                                    name: 'Acme Secondary School',
@@ -71,7 +62,7 @@ bromley_school = FactoryGirl.create(:school,
 
 FactoryGirl.create(:vacancy,
                    job_title: 'Physics Teacher',
-                   subject: science,
+                   subject: Subject.first,
                    school: ealing_school,
                    minimum_salary: 40000,
                    maximum_salary: 45000,
@@ -80,7 +71,7 @@ FactoryGirl.create(:vacancy,
 
 FactoryGirl.create(:vacancy,
                    job_title: 'Maths Teacher',
-                   subject: maths,
+                   subject: Subject.last,
                    school: bromley_school,
                    working_pattern: :part_time,
                    minimum_salary: 30000,
