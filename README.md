@@ -36,7 +36,7 @@ Run the specs. When no arguments are specified, the default rake task is execute
 `bin/dspec <args>`
 
 Run the javascript tests
-`bin/dteaspoon
+`bin/dteaspoon`
 
 ### Full run (before you push to github)
 
