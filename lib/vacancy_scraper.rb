@@ -37,8 +37,8 @@ module VacancyScraper
     end
 
     def working_pattern
-      pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip.downcase
-      pattern[/(\D*)/,1]
+      pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip
+      pattern[/(full.time|part.time)/i,1]
     end
 
     def work_hours
@@ -60,6 +60,7 @@ module VacancyScraper
     end
 
     def pay_scale
+      salary[/(\w)PS/,1]
     end
 
     def leadership
@@ -74,6 +75,5 @@ module VacancyScraper
     def ends_on
       page.xpath('//p[strong[contains(text(), "Closing date:")]]').children.last.text.strip
     end
-
   end
 end

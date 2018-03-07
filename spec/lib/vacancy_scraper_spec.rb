@@ -7,7 +7,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
   let(:psychology_teacher_url) { 'https://www.jobsinschoolsnortheast.com/job/teacher-of-psychology-2/' }
 
   before do
-    ['Mathematics', 'Psychology'].each {|s| Subject.create(name: s) }
+    ['Mathematics', 'Psychology', 'English'].each {|s| Subject.create(name: s) }
   end
 
   context 'Scraping NorthEastSchool vacancies' do
@@ -36,7 +36,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
       end
 
       it '#working_pattern' do
-        expect(scraper.working_pattern).to eq("full time")
+        expect(scraper.working_pattern).to eq("Full Time")
       end
 
       it '#salary' do
@@ -77,7 +77,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
       end
 
       it '#working_pattern' do
-        expect(scraper.working_pattern).to eq("")
+        expect(scraper.working_pattern).to eq(nil)
       end
 
       it '#work_hours' do
@@ -123,7 +123,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
       end
 
       it '#working_pattern' do
-        expect(scraper.working_pattern).to eq("full time")
+        expect(scraper.working_pattern).to eq("Full Time")
       end
 
       it '#salary' do
@@ -136,6 +136,90 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
       it '#min_salary' do
         expect(scraper.min_salary).to eq("23,375")
+      end
+    end
+
+    context 'English teacher' do
+      let(:url) { 'https://www.jobsinschoolsnortheast.com/job/teacher-of-english-45/' }
+      let(:scraper) { VacancyScraper::NorthEastSchools.new(url) }
+
+      before do
+        teacher = File.read(Rails.root.join('spec', 'fixtures', 'english-teacher.html'))
+        stub_request(:get, url).to_return(body: teacher, status: 200)
+      end
+
+      it '#job_title' do
+        expect(scraper.job_title).to eq('Teacher of English')
+      end
+
+      it '#subject' do
+        expect(scraper.subject).to eq('English')
+      end
+
+      it '#school_name' do
+        expect(scraper.school_name).to eq('Astley Community High School')
+      end
+
+      it '#contract' do
+        expect(scraper.contract).to eq('Permanent')
+      end
+
+      it '#working_pattern' do
+        expect(scraper.working_pattern).to eq("Full Time")
+      end
+
+      it '#salary' do
+        expect(scraper.salary).to eq("NQT /Main/Upper Pay Ranges: £22,917 - £38,633 per annum")
+      end
+
+      it '#max_salary' do
+        expect(scraper.max_salary).to eq("38,633")
+      end
+
+      it '#min_salary' do
+        expect(scraper.min_salary).to eq("22,917")
+      end
+    end
+
+    context 'Leadership Role' do
+      let(:url) { 'https://www.jobsinschoolsnortheast.com/job/teacher-of-english-45/' }
+      let(:scraper) { VacancyScraper::NorthEastSchools.new(url) }
+
+      before do
+        teacher = File.read(Rails.root.join('spec', 'fixtures', 'english-teacher.html'))
+        stub_request(:get, url).to_return(body: teacher, status: 200)
+      end
+
+      it '#job_title' do
+        expect(scraper.job_title).to eq('Teacher of English')
+      end
+
+      it '#subject' do
+        expect(scraper.subject).to eq('English')
+      end
+
+      it '#school_name' do
+        expect(scraper.school_name).to eq('Astley Community High School')
+      end
+
+      it '#contract' do
+        expect(scraper.contract).to eq('Permanent')
+      end
+
+      it '#working_pattern' do
+        expect(scraper.working_pattern).to eq("Full Time")
+      end
+
+      it '#salary' do
+        expect(scraper.salary).to eq("NQT /Main/Upper Pay Ranges: £22,917 - £38,633 per annum")
+      end
+
+      it '#max_salary' do
+        expect(scraper.max_salary).to eq("38,633")
+      end
+
+      it '#min_salary' do
+        expect(scraper.min_salary).to eq("22,917")
       end
     end
   end
