@@ -28,6 +28,7 @@ RUN gem install bundler
 COPY . $INSTALL_PATH
 
 # bundle ruby gems based on the current environment, default to production
+RUN echo $RAILS_ENV
 RUN \
   if [ "$RAILS_ENV" = "production" ]; then \
     bundle install --without development test --retry 10; \

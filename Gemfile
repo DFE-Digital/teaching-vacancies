@@ -34,6 +34,8 @@ gem 'simple_form'
 
 gem 'gov_uk_date_fields', '~> 2.0', '>= 2.0.3'
 
+gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_girl_rails'
@@ -52,7 +54,6 @@ group :development, :test do
   gem 'elasticsearch-extensions'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rubocop'
   gem 'teaspoon-mocha'
   gem 'coffee-rails'
 end

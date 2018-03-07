@@ -1,7 +1,5 @@
 #!/bin/sh
-
-docker-compose --project-name "tvs" down
-docker-compose --project-name "tvs" rm -f -v
+docker-compose --project-name "tvs" down --rmi all -v
 docker-compose --project-name "tvs" run server rake db:drop
 docker-compose --project-name "tvs" run server rake db:setup
 docker-compose --project-name "tvs" down
