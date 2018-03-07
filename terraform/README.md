@@ -15,13 +15,13 @@ Resources included:
 - EC2 instances
 - Autoscaling configuration
 
-## Setup
+## Setup an environment
 
-1. Create a certificate
+1. Create 2 certificates:
+    1. CloudFront: Request an SSL certificate with AWS Certificate Manager in the 'N. Virginia (us-east-1)' region.
+    2. ALB: Request an SSL certificate with AWS Certificate Manager in the region in which you are launching the infrastructure. eg eu-west-2
 
-Request an SSL certificate with AWS, in both the 'N. Virginia (us-east-1)' region (For CloudFront) and the region in which you are launching the infrastructure (For the ALB).
-
-2. Find or create the Bucket that will store Terraform it's state in. Go to S3 and create a bucket with a globally unique name:
+2. Find or create the Bucket that will store the state of Terraform. Go to S3 and create a bucket with a globally unique name:
 
 Ensure the bucket has the following policy, adding more or less users as required:
 ```
@@ -87,3 +87,26 @@ $ terraform plan -var-file=workspace-variables/staging.tfvars
 ```
 $ terraform apply -var-file=workspace-variables/staging.tfvars
 ```
+
+## Setup a testing pipeline
+
+To enable CI to give us test feedback on our GitHub pull requests we can do a small piece of manual set up:  
+
+1. Create a new CodeBuild project in AWS
+2. Name it eg. `tvs2-pull-requests`. You can call it anything you like but bear in mind it is not environment or workspace related, there's one per repository
+3. Connect it to your GitHub repository
+4. Set Git clone depth to `1`
+5. Ensure `Rebuild every time a code change is pushed to this repository` is ticked
+6. Tick `Use an image managed by AWS CodeBuild`
+7. Select `Ubuntu` for OS
+8. Select `Docker` for Runtime
+9. Tick `Enable this flag if you want to build Docker images or want your builds to get elevated privileges.`
+10. Select `Use the buildspec.yml in the source code root directory`
+11. Provide the file name for what the CodeBuild process should run, ours is in `testspec.yml` and is a subset of `buildspec.yml`
+12. Select `Do not install any certificate`
+13. Select `No artifacts` from the drop down
+14. Select `No cache` from the drop down
+15. Select `Create a service role in your account`
+16. Select `No VPC`
+17. Open advanaced settings
+18. Lower the build timeout from 1 hour to 15 minutes
