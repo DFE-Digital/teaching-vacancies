@@ -2,7 +2,7 @@ module DateHelper
   class FormatDateError < RuntimeError; end
 
   def format_date(date, format = :default)
-    return if date.nil?
+    return 'No date given' if date.nil?
     date_formats = Date::DATE_FORMATS.keys.join(' ')
     unless Date::DATE_FORMATS.include?(format)
       raise FormatDateError, date_format_error_message(format, date_formats)

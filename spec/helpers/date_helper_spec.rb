@@ -11,7 +11,7 @@ RSpec.describe DateHelper, type: :helper do
     end
 
     it 'returns if nil date is given' do
-      expect(helper.format_date(nil)).to be_nil
+      expect(helper.format_date(nil)).to eq 'No date given'
     end
 
     it 'raises an error if an invalid format is given' do
