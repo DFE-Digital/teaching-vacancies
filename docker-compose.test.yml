@@ -1,6 +1,6 @@
 version: '3'
 services:
-  test:
+  test: &test
     build:
       context: .
       args:
@@ -44,9 +44,9 @@ services:
     networks:
       - tests
 
-  # spring:
-  #   <<: *test
-  #   command: ["bundle", "exec", "./bin/dsetup && spring server"]
+  spring:
+    <<: *test
+    command: ["bundle", "exec", "./bin/dsetup && spring server"]
 
 networks:
   tests:
