@@ -1,3 +1,3 @@
 #!/bin/sh
 set +e
-docker-compose --project-name "tvs" run --rm --entrypoint="rake $@" server
+docker-compose --project-name "tvs" run --rm --entrypoint="rake $@" web
