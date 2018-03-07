@@ -4,8 +4,8 @@ set -e
 if [ $# -eq 0 ]
 then
   echo "No arguments supplied. Defaults to 'rake default'"
-  docker-compose exec spring rake default $@
+  docker exec teachervacancyservicestatic_spring_1 rake default $@
 else
   echo "Testing: $@"
-  docker-compose exec spring rspec $@
+  docker exec teachervacancyservicestatic_spring_1 rspec $@
 fi

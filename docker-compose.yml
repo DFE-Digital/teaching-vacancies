@@ -1,10 +1,11 @@
 version: '3'
 services:
-  web: &web
+  web:
     build:
       context: .
       args:
         RAILS_ENV: "development"
+    ports: ["3000:3000"]
     environment:
       RAILS_ENV: "development"
     env_file:
@@ -17,36 +18,15 @@ services:
     restart: on-failure
     volumes:
       - .:/srv/dfe-tvs:cached
+    entrypoint: ["bash","-c","'rm -f tmp/pids/server.pid && rails s'"]
 
-  server: &server
-    <<: *web
-    command: ["-b", "0.0.0.0"]
-    ports: ["3000:3000"]
-
-  test: &test
-    <<: *web
-    build:
-      context: .
-      args:
-        RAILS_ENV: "test"
-    environment:
-      RAILS_ENV: "test"
-      DATABASE_URL: "postgres://postgres@db:5432/tvs_test?template=template0&pool=5&encoding=unicode"
-    env_file:
-      - docker-compose.env
-    depends_on:
-      - db
-      - elasticsearch-test
-    entrypoint: ["bundle", "exec", "./bin/dsetup", "&&", "rake"]
-
-  db: &db
+  db:
     image: postgres
     volumes:
       - pg_data:/var/lib/postgresql/data/:cached
     restart: on-failure
 
-
-  elasticsearch: &elasticsearch
+  elasticsearch:
     image: elasticsearch
     depends_on:
       - db
@@ -58,27 +38,6 @@ services:
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
 
-  elasticsearch-test:
-    image: elasticsearch
-    depends_on:
-      - db
-    ports:
-      - "9201:9200"
-    environment:
-      - discovery.type=single-node
-      - cluster.name=docker=docker-test-cluster
-    # place elasticsearch data on tmpfs for performance
-    tmpfs: /usr/share/elasticsearch/test/data
-    volumes:
-      - elasticsearch-test:/usr/share/elasticsearch/data
-      #- ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-
-  spring:
-    <<: *test
-    entrypoint: ["bundle", "exec", "./bin/dsetup", "&&", "spring", "server"]
-
-
 volumes:
   pg_data: {}
   elasticsearch: {}
-  elasticsearch-test: {}

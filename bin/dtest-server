@@ -1,20 +1,7 @@
 #!/bin/bash
 set -e
 
-function cleanup {
-  # capture exit code
-  code=$?
-  echo "cleaning up"
-
-  # ignore errors
-  set +e
-  docker-compose down --remove-orphans
-
-  # exit with original exit code
-  exit $code
-}
-
-# run cleanup when the script exits
-trap cleanup EXIT
-
-docker-compose up --build spring
+docker-compose --project-name 'teachervacancyservice_static' down
+docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml up -d db-test
+docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml up -d elasticsearch-test
+docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml up -d spring
