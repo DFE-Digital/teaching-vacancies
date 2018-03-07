@@ -1,6 +1,6 @@
 #!/bin/sh
 docker-compose --project-name "tvs" down --rmi all -v
-docker-compose --project-name "tvs" run server rake db:drop
-docker-compose --project-name "tvs" run server rake db:setup
+docker-compose --project-name "tvs" run --entrypoint="rake db:drop" server
+docker-compose --project-name "tvs" run --entrypoint="rake db:setup" server
 docker-compose --project-name "tvs" down
 echo "Rebuild completed. You can now start up TVS"

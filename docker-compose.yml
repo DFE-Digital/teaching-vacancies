@@ -20,7 +20,7 @@ services:
 
   server: &server
     <<: *web
-    command: ["bundle", "exec", "rails server -b 0.0.0.0"]
+    command: ["-b", "0.0.0.0"]
     ports: ["3000:3000"]
 
   test: &test
@@ -37,7 +37,7 @@ services:
     depends_on:
       - db
       - elasticsearch-test
-    command: ["bundle", "exec", "./bin/dsetup && rake"]
+    entrypoint: ["bundle", "exec", "./bin/dsetup", "&&", "rake"]
 
   db: &db
     image: postgres
@@ -75,7 +75,7 @@ services:
 
   spring:
     <<: *test
-    command: ["bundle", "exec", "./bin/dsetup && spring server"]
+    entrypoint: ["bundle", "exec", "./bin/dsetup", "&&", "spring", "server"]
 
 
 volumes:

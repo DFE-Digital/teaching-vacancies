@@ -39,4 +39,4 @@ RUN \
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
 EXPOSE 3000
-CMD ["bundle", "exec", "rails s"]
+ENTRYPOINT ["bundle", "exec", "rails","s"]
