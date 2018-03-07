@@ -17,6 +17,6 @@ function cleanup {
 
 trap cleanup EXIT
 
-docker-compose up
+docker-compose up -d
 
 docker attach teachervacancyservice_web_1
