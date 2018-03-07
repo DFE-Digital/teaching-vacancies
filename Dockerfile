@@ -25,8 +25,6 @@ COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
 RUN gem install bundler
 
-COPY . $INSTALL_PATH
-
 # bundle ruby gems based on the current environment, default to production
 RUN echo $RAILS_ENV
 RUN \
@@ -35,6 +33,8 @@ RUN \
   else \
     bundle install --retry 10; \
   fi
+
+COPY . $INSTALL_PATH
 
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
