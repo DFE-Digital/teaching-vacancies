@@ -10,13 +10,13 @@ function cleanup {
 
   # ignore errors
   set +e
-  docker-compose --project-name "tvs" down
+  docker-compose down
 
   exit $code
 }
 
 trap cleanup EXIT
 
-docker-compose --project-name "tvs" up server
+docker-compose up -d
 
-docker attach tvs_server_1
+docker attach teachervacancyservice_web_1

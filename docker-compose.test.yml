@@ -1,0 +1,56 @@
+version: '3'
+services:
+  test: &test
+    build:
+      context: .
+      args:
+        RAILS_ENV: "test"
+    environment:
+      RAILS_ENV: "test"
+      DATABASE_URL: "postgres://postgres@db-test:5432/tvs_test?template=template0&pool=5&encoding=unicode"
+      ELASTICSEARCH_URL: "http://elasticsearch-test:9200"
+    env_file:
+      - docker-compose.env
+    volumes:
+      - .:/srv/dfe-tvs:cached
+    depends_on:
+      - db-test
+      - elasticsearch-test
+    command: ["bundle", "exec", "./bin/dsetup && rake"]
+    networks:
+      - tests
+
+  db-test:
+    image: postgres
+    volumes:
+      - pg_test_data:/var/lib/postgresql/data/:cached
+    networks:
+      - tests
+
+  elasticsearch-test:
+    image: elasticsearch
+    depends_on:
+      - db-test
+    ports:
+      - "9201:9200"
+    environment:
+      - discovery.type=single-node
+      - cluster.name=docker=docker-test-cluster
+    # place elasticsearch data on tmpfs for performance
+    tmpfs: /usr/share/elasticsearch/test/data
+    volumes:
+      - elasticsearch_test:/usr/share/elasticsearch/data
+      #- ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - tests
+
+  spring:
+    <<: *test
+    command: ["bundle", "exec", "./bin/dsetup && spring server"]
+
+networks:
+  tests:
+
+volumes:
+  pg_test_data: {}
+  elasticsearch_test: {}
