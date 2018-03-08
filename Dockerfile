@@ -36,8 +36,6 @@ RUN \
 
 COPY . $INSTALL_PATH
 
-RUN chmod +x ./bin/dprodsetup
-
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
 EXPOSE 3000
