@@ -39,4 +39,4 @@ COPY . $INSTALL_PATH
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
 EXPOSE 3000
-ENTRYPOINT ["bash","-c","rm -f tmp/pids/server.pid && rake db:setup && rails s"]
+ENTRYPOINT ["bash","-c","rm -f tmp/pids/server.pid && ./bin/dprodsetup && rails s"]
