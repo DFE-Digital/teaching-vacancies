@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :subject do
-    name { Faker::Educator.unique.course }
+    name { Faker::Educator.course }
   end
 end
