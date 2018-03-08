@@ -8,9 +8,9 @@
   .column-two-thirds
     - if @vacancies.any?
       %div.sortable-links
-        Sort by:
-        = link_to_sort_by  'Closing date', column: 'expires_on', order: 'asc', sort: @sort
-        = link_to_sort_by  'Published date', column: 'publish_on', order: 'desc', sort: @sort
+        = t('vacancies.sort_by')
+        = link_to_sort_by t('vacancies.expires_on'), column: 'expires_on', order: 'asc', sort: @sort
+        = link_to_sort_by t('vacancies.publish_on'), column: 'publish_on', order: 'desc', sort: @sort
 
       %ul.vacancies
         - @vacancies.each do |vacancy|
@@ -18,7 +18,6 @@
 
     - else
       %div.empty
-        No vacancies found. Try expanding your search.
-
+        = t('vacancies.no_vacancies')
 
 = paginate @vacancies

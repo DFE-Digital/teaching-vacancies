@@ -1,157 +1,155 @@
 %h1.heading-large
-  Publish a vacancy for
-  = @vacancy.school.name
+  = t('vacancies.publish_heading', school: @vacancy.school.name)
   %span.heading-secondary
-    Confirm details before you submit
+    = t('vacancies.confirm')
 
 .vacancy.grid-row
   .column-two-thirds
 
-    %h2.heading-medium Job specification
+    %h2.heading-medium= t('vacancies.job_specification')
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          Job title
+          = t('vacancies.job_title')
         %dd.cya-answer
           = @vacancy.job_title
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Headline
+          = t('vacancies.headline')
         %dd.cya-answer
           = @vacancy.headline
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Job description
+          = t('vacancies.description')
         %dd.cya-answer
           = @vacancy.job_description
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Main Subject
+          = t('vacancies.main_subject')
         %dd.cya-answer
           = @vacancy.main_subject
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Salary range
+          = t('vacancies.salary_range')
         %dd.cya-answer
           = @vacancy.salary_range("to")
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Working pattern
+          = t('vacancies.working_pattern')
         %dd.cya-answer
           = @vacancy.working_pattern.humanize
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Benefits
+          = t('vacancies.benefits')
         %dd.cya-answer
           = @vacancy.benefits
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Pay scale
+          = t('vacancies.pay_scale')
         %dd.cya-answer
           =@vacancy.pay_scale
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Weekly hours
+          = t('vacancies.weekly_hours')
         %dd.cya-answer
           = @vacancy.weekly_hours
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Start date
+          = t('vacancies.starts_on')
         %dd.cya-answer
           = format_date @vacancy.starts_on
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          End date
+          = t('vacancies.ends_on')
         %dd.cya-answer
           = format_date @vacancy.ends_on
         %dd.cya-change
-          = link_to 'Change', vacancy_job_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_job_specification_path(@vacancy, next: :review)
 
-    %h2.heading-medium Candidate specification
+    %h2.heading-medium= t('vacancies.candidate_specification')
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          Essential requirements
+          = t('vacancies.essential_requirements')
         %dd.cya-answer
           = @vacancy.essential_requirements
         %dd.cya-change
-          = link_to 'Change', vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Education
+          = t('vacancies.education')
         %dd.cya-answer
           = @vacancy.education
         %dd.cya-change
-          = link_to 'Change', vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Qualifications
+          = t('vacancies.qualifications')
         %dd.cya-answer
           = @vacancy.qualifications
         %dd.cya-change
-          = link_to 'Change', vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Experience
+          = t('vacancies.experience')
         %dd.cya-answer
           = @vacancy.experience
         %dd.cya-change
-          = link_to 'Change', vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Leadership level
+          = t('vacancies.leadership_level')
         %dd.cya-answer
           - if @vacancy.leadership
             = @vacancy.leadership.title
         %dd.cya-change
-          = link_to 'Change', vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
 
-    %h2.heading-medium Application details
+    %h2.heading-medium= t('vacancies.application_details')
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          Vacancy contact email
+          = t('vacancies.contact_email')
         %dd.cya-answer
           = @vacancy.contact_email
         %dd.cya-change
-          = link_to 'Change', vacancy_application_details_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_application_details_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Vacancy deadline date
+          = t('vacancies.deadline_date')
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
-          = link_to 'Change', vacancy_application_details_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_application_details_path(@vacancy, next: :review)
       %div
         %dt.cya-question
-          Vacancy publication date
+          = t('vacancies.publication_date')
         %dd.cya-answer
           = format_date @vacancy.publish_on
         %dd.cya-change
-          = link_to 'Change', vacancy_application_details_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), vacancy_application_details_path(@vacancy, next: :review)
 
     %h2.heading-medium Now submit your vacancy
-    %p You can preview your vacancy to see how it will look for potential applicants.
-    %p By submitting you are confirming that, to the best of your knowledge, the details you are providing are correct.
+    %p= t('vacancies.confirmation_summary')
 
-    = link_to "Confirm and submit vacancy", publish_vacancy_path(@vacancy), method: :put, class: "button"
+    = link_to t('vacancies.submit'), publish_vacancy_path(@vacancy), method: :put, class: "button"

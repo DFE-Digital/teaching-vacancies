@@ -1,6 +1,5 @@
 %h1.heading-large
-  Publish a vacancy for
-  = @vacancy.school.name
+  = t('vacancies.publish_heading', school: @vacancy.school.name)
   %span.heading-secondary
     Step 2 of 3
 = render 'error_messages', errors: @vacancy.errors
@@ -8,30 +7,34 @@
   = hidden_field_tag :from, :candidate_specification
   = hidden_field_tag :next, (params[:next] || :application_details)
   %h2.heading-medium
-    Candidate specification
+    = t('vacancies.candidate_specification')
 
   .grid-row
     .column-one-half
       = f.input :essential_requirements,
+                label: t('vacancies.essential_requirements'),
                 as: :text,
-                hint: 'Qualifications, experience, and/or professional registrations',
+                hint: t('vacancies.form_hints.essential_requirements'),
                 input_html: {rows: 10},
                 required: true
       = f.input :education,
+                label: t('vacancies.education'),
                 as: :text,
-                hint: 'Educational background needed for the position',
+                hint: t('vacancies.form_hints.education'),
                 input_html: {rows: 5},
                 required: false
       = f.input :qualifications,
+                label: t('vacancies.qualification'),
                 as: :text,
-                hint: 'Specific qualifications required for this role',
+                hint: t('vacancies.form_hints.qualifications'),
                 input_html: {rows: 5},
                 required: false
       = f.input :experience,
+                label: t('vacancies.experience'),
                 as: :text,
-                hint: 'Expected teaching or other experience',
+                hint: t('vacancies.form_hints.experience'),
                 input_html: {rows: 5},
                 required: false
 
       = f.input :school_id, as: :hidden
-      = f.button :submit, 'Save and continue'
+      = f.button :submit, t('buttons.save_and_continue')
