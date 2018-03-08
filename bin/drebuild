@@ -4,7 +4,7 @@ docker-compose down -v
 docker-compose build
 docker-compose up -d elasticsearch
 sleep 10 # ElasticSearch is slow to get ready
-docker-compose --project-name "tvs" run --entrypoint="rake db:setup" web
+docker-compose run --entrypoint="rake db:setup" web
 docker-compose down
 
 echo "Rebuild completed. You can now start up TVS"
