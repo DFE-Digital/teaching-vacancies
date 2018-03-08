@@ -155,6 +155,7 @@ class VacancySearchBuilder
         query: keyword,
         fields: %w[job_title^5 headline^2 job_description],
         operator: 'and',
+        fuzziness: 1,
       },
     }
   end
