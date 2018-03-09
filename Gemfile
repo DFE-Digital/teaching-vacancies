@@ -34,6 +34,8 @@ gem 'simple_form'
 
 gem 'gov_uk_date_fields', '~> 2.0', '>= 2.0.3'
 
+gem 'rollbar'
+
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
 group :test, :development, :staging do
