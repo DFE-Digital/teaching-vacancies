@@ -47,3 +47,4 @@ http_user = "user"
 http_pass = "password"
 google_maps_api_key =
 google_analytics =
+rollbar_access_token =
