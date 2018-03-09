@@ -100,6 +100,11 @@ variable "ecs_service_task_definition_file_path" {
   default = "./web_task_definition.json"
 }
 
+variable "ecs_import_schools_task_definition_file_path" {
+  description = "Task definition to import schools"
+  default = "./import_schools_task_definition.json"
+}
+
 variable "buildspec_location" {
   description = "AWS Codebuild will look for this file to tell it how to build this project"
   default = "./buildspec.yml"
@@ -108,6 +113,11 @@ variable "buildspec_location" {
 variable "git_branch_to_track" {
   description = "Git branch to listen for code changes on and auto deploy"
   default = "master"
+}
+
+variable "import_schools_entrypoint" {
+  description = "The Entrypoint for the import_schools task"
+  default = ["rake","data:schools:import"]
 }
 
 # RDS
