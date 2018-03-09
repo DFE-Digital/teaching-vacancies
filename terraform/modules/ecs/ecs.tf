@@ -46,6 +46,7 @@ data "template_file" "web_task" {
     http_pass           = "${var.http_pass}"
     http_user           = "${var.http_user}"
     google_maps_api_key = "${var.google_maps_api_key}"
+    google_analytics    = "${var.google_analytics}"
     secret_key_base     = "${var.secret_key_base}"
     project_name        = "${var.project_name}"
     task_name           = "${var.ecs_service_task_name}"

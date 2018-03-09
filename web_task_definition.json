@@ -36,6 +36,10 @@
         "value": "${google_maps_api_key}"
       },
       {
+        "name": "GOOGLE_ANALYTICS",
+        "value": "${google_analytics}"
+      },
+      {
         "name": "SECRET_KEY_BASE",
         "value": "${secret_key_base}"
       },
