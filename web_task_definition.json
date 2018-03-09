@@ -21,7 +21,7 @@
     "environment": [
       {
         "name": "RAILS_ENV",
-        "value": "${environment}"
+        "value": "${rails_env}"
       },
       {
         "name": "HTTP_USER",

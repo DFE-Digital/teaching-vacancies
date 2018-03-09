@@ -53,6 +53,7 @@ data "template_file" "web_task" {
     task_name                 = "${var.ecs_service_task_name}"
     task_port                 = "${var.ecs_service_task_port}"
     environment               = "${var.environment}"
+    rails_env                 = "${var.rails_env}"
     region                    = "${var.region}"
     log_group                 = "${var.aws_cloudwatch_log_group_name}"
     database_user             = "${var.rds_username}"
