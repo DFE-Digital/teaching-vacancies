@@ -16,7 +16,7 @@ services:
     depends_on:
       - db-test
       - elasticsearch-test
-    command: ["bundle", "exec", "./bin/dsetup && rake"]
+    entrypoint: ["bundle", "exec", "./bin/dsetup && rake"]
     networks:
       - tests
 
@@ -46,7 +46,7 @@ services:
 
   spring:
     <<: *test
-    command: ["bundle", "exec", "./bin/dsetup && spring server"]
+    entrypoint: ["bundle", "exec", "./bin/dsetup && spring server"]
 
 networks:
   tests:

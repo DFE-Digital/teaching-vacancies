@@ -18,7 +18,6 @@ services:
     restart: on-failure
     volumes:
       - .:/srv/dfe-tvs:cached
-    command: bash -c "rm -f tmp/pids/server.pid && rails s"
 
   db:
     image: postgres
