@@ -36,7 +36,9 @@ RUN \
 
 COPY . $INSTALL_PATH
 
+RUN chmod +x ./bin/dprodsetup
+
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
 EXPOSE 3000
-CMD ["bundle", "exec", "rails s"]
+ENTRYPOINT ["bash","-c","rm -f tmp/pids/server.pid && ./bin/dprodsetup && rails s"]

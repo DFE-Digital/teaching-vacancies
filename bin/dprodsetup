@@ -1,0 +1,6 @@
+#!/bin/bash
+if rake db:migrate:status &> /dev/null; then
+  rake db:migrate
+else
+  rake db:create db:schema:load
+fi
