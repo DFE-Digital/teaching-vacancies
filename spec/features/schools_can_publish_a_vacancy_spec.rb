@@ -15,7 +15,7 @@ RSpec.feature 'Creating a vacancy' do
     create(:school, name: 'Canterbury School')
 
     visit schools_path
-    fill_in 'School name:', with: 'salisbury school'
+    fill_in 'School name', with: 'salisbury school'
     click_on 'Find'
 
     expect(page).to have_content('Salisbury School')

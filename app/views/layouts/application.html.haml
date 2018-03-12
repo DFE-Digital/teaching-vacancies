@@ -8,17 +8,17 @@
   with-proposition
 
 - content_for :page_title do
-  Teacher Vacancy Service
+  = t('app.title')
 
 - content_for :proposition_header do
   .header-proposition
     .content
       %a.js-header-toggle.menu{ href: '#proposition-links' }
-        Menu
+        = t('app.menu')
 
       %nav#proposition-menu
         %a#proposition-name{ href: '/' }
-          Teacher Vacancy Service
+          = t('app.title')
         %ul#proposition-links
 
 - content_for :content do

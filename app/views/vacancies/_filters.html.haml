@@ -1,28 +1,28 @@
 %aside.filter-vacancies
   %h2.heading-medium
-    Filter vacancies
+    =t('vacancies.filters.title')
 
   = form_tag vacancies_path, class: 'filters-form', method: :get do
     .form-group
-      = label_tag 'location', 'Location', class: 'form-label'
+      = label_tag 'location', t('vacancies.filters.location'), class: 'form-label'
       = search_field_tag :location, params[:location], class: 'form-control form-control-block', placeholder: 'Town, postcode or region'
     .form-group
-      = label_tag 'keyword', 'Keyword', class: 'form-label'
+      = label_tag 'keyword', t('vacancies.filters.keyword'), class: 'form-label'
       = search_field_tag :keyword, params[:keyword], class: 'form-control form-control-block', placeholder: 'eg. role or subject'
     .form-group
-      = label_tag 'minimum_salary', 'Minimum salary', class: 'form-label'
+      = label_tag 'minimum_salary', t('vacancies.filters.minimum_salary'), class: 'form-label'
       = select_tag 'minimum_salary', options_for_select(salary_options, params[:minimum_salary]), class: 'form-control form-control-block', include_blank: 'None'
     .form-group
-      = label_tag 'maximum_salary', 'Maximum salary', class: 'form-label'
+      = label_tag 'maximum_salary', t('vacancies.filters.maximum_salary'), class: 'form-label'
       = select_tag 'maximum_salary', options_for_select(salary_options, params[:maximum_salary]), class: 'form-control form-control-block', include_blank: 'None'
     .form-group
-      = label_tag 'working_pattern', 'Working pattern', class: 'form-label'
+      = label_tag 'working_pattern', t('vacancies.filters.working_pattern'), class: 'form-label'
       = select_tag 'working_pattern', options_for_select(working_pattern_options, params[:working_pattern]), class: 'form-control form-control-block', include_blank: 'Any'
     .form-group
-      = label_tag 'phase', 'Education Phase', class: 'form-label'
+      = label_tag 'phase', t('vacancies.filters.education_phase'), class: 'form-label'
       = select_tag 'phase', options_for_select(school_phase_options, params[:phase]), class: 'form-control form-control-block', include_blank: 'Any'
 
     = hidden_field_tag :sort_column, params[:sort_column]
     = hidden_field_tag :sort_order, params[:sort_order]
 
-    = submit_tag 'Apply filters', class: 'button'
+    = submit_tag t('buttons.apply_filters'), class: 'button'

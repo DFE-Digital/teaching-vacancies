@@ -5,7 +5,8 @@
 .vacancy.grid-row
   - if @vacancy.expired?
     .column-full
-      .banner-warning This vacancy has expired
+      .banner-warning 
+        = t('vacancies.expired')
 
   .column-two-thirds
     %h1.heading-large
@@ -16,49 +17,49 @@
     %p.lede
       = @vacancy.headline
 
-    %h3.heading-medium Job description
+    %h3.heading-medium= t('vacancies.description')
     %p= @vacancy.job_description
 
-    %h3.heading-medium Essential requirements
+    %h3.heading-medium= t('vacancies.requirements')
     %p= @vacancy.essential_requirements
 
     - if @vacancy.education
-      %h3.heading-medium Education
+      %h3.heading-medium= t('vacancies.education')
       %p= @vacancy.education
 
     - if @vacancy.qualifications
-      %h3.heading-medium Qualifications
+      %h3.heading-medium= t('vacancies.qualifications')
       %p= @vacancy.qualifications
 
     - if @vacancy.experience
-      %h3.heading-medium Experience
+      %h3.heading-medium= t('vacancies.experience')
       %p= @vacancy.experience
 
     - if @vacancy.benefits
-      %h3.heading-medium Benefits
+      %h3.heading-medium= t('vacancies.benefits')
       %p= @vacancy.benefits
 
     %hr
     %h3.heading-medium
-      About
+      = t('schools.about')
       = @vacancy.school.name
 
     %p= @vacancy.school.description
 
     %dl.school--details
-      %dt Address
+      %dt= t('schools.address')
       %dd= @vacancy.school.full_address
 
       - if @vacancy.school.phase.present?
-        %dt Phase
+        %dt= t('schools.phase')
         %dd= @vacancy.school.phase&.titleize
 
       - if @vacancy.school.school_type.present?
-        %dt Type
+        %dt= t('schools.type')
         %dd= @vacancy.school.school_type.label
 
       - if @vacancy.school.url.present?
-        %dt Website
+        %dt= t('schools.website')
         %dd= @vacancy.school.url
 
     - if @vacancy.school.geolocation
@@ -83,43 +84,43 @@
   .column-one-third
     %aside.vacancy--metadata
       %dl
-        %dt Annual pay
+        %dt= t('vacancies.salary')
         %dd= @vacancy.salary_range
 
-        %dt Working pattern
+        %dt= t('vacancies.working_pattern')
         %dd= @vacancy.working_pattern&.titleize
 
         - if @vacancy.part_time?
-          %dt Weekly hours
+          %dt= t('vacancies.weekly_hours')
           %dd= @vacancy.weekly_hours
 
-        %dt Reference number
+        %dt= t('vacancies.ref_no')
         %dd= @vacancy.reference
 
-        %dt Closing date
+        %dt= t('vacancies.expires_on')
         %dd= format_date(@vacancy.expires_on)
 
         - if @vacancy.starts_on.present?
-          %dt Start date
+          %dt= t('vacancies.starts_on')
           %dd= format_date(@vacancy.starts_on)
 
         - if @vacancy.ends_on.present?
-          %dt End date
+          %dt= t('vacancies.ends_on')
           %dd= format_date(@vacancy.ends_on)
 
-        %dt Posted on
+        %dt= t('vacancies.publish_on')
         %dd= format_date(@vacancy.publish_on)
 
         - if @vacancy.main_subject.present?
-          %dt Main subject
+          %dt= t('vacancies.main_subject')
           %dd= @vacancy.main_subject
 
         - if @vacancy.pay_scale.present?
-          %dt Pay scale
+          %dt= t('vacancies.pay_scale')
           %dd= @vacancy.pay_scale
 
         - if @vacancy.leadership.present?
-          %dt Leadership level
+          %dt= t('vacancies.leadership_level')
           %dd= @vacancy.leadership.title
 
 %script.jobref{type: 'application/ld+json'}
