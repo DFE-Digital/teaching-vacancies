@@ -42,7 +42,7 @@
       {
         "name": "ROLLBAR_ACCESS_TOKEN",
         "value": "${rollbar_access_token}"
-      }
+      },
       {
         "name": "SECRET_KEY_BASE",
         "value": "${secret_key_base}"
