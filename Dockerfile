@@ -36,10 +36,10 @@ RUN \
 
 COPY . $INSTALL_PATH
 
-RUN chmod +x ./bin/dprodsetup
-
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
+COPY ./docker-entrypoint.sh /
 EXPOSE 3000
 
-ENTRYPOINT ["bash","-c","rm -f tmp/pids/server.pid && ./bin/dprodsetup && rails s"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["rails", "server"]
