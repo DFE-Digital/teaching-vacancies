@@ -57,6 +57,8 @@ en:
     main_subject: 'Main subject'
     pay_scale: 'Pay scale'
     leadership_level: 'Leadership level'
+    vacancy_count: 'There is %{count} vacancy that matches your search.'
+    vacancy_count_plural: 'There are %{count} vacancies that match your search.'
     no_vacancies: 'No vacancies found. Try expanding your search.'
     job_title: 'Job title'
     headline: 'Headline'
