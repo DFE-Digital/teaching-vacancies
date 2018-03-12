@@ -1,21 +1,16 @@
 require 'csv'
 require 'open-uri'
+require 'httparty'
 
 class UpdateSchoolsDataFromSourceJob < ApplicationJob
   queue_as :default
 
   # rubocop:disable Metrics/AbcSize
   def perform
-    datestring = Time.zone.now.strftime('%Y%m%d')
-    url = "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv"
+    save_csv_file
 
-    file = open(url).read
-
-    # Convert from Windows-1251 encoding to UTF-8
-    file.encode!('UTF-8', 'windows-1251', invalid: :replace)
-
-    School.transaction do
-      CSV.parse(file, headers: true).each do |row|
+    CSV.foreach(csv_file_location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
+      School.transaction do
         school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
         school_type.label = row['EstablishmentTypeGroup (name)']
 
@@ -51,9 +46,37 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
       end
     end
     # rubocop:enable Metrics/AbcSize
+
+    File.delete(csv_file_location)
   end
 
   private
+
+  def datestring
+    Time.zone.now.strftime('%Y%m%d')
+  end
+
+  def csv_file_location
+    "./tmp/import/#{datestring}-schools-data.csv"
+  end
+
+  def save_csv_file(location: csv_file_location)
+    File.open(location, 'wb') do |f|
+      request = HTTParty.get(csv_url)
+
+      if request.code == 200
+        f.write request.body
+      elsif request.code == 404
+        raise HTTParty::ResponseError, 'School CSV file not found.'
+      else
+        raise HTTParty::ResponseError, 'Unexpected problem downloading School CSV file.'
+      end
+    end
+  end
+
+  def csv_url
+    "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv"
+  end
 
   def valid_website(url)
     url.match?(/^http/) ? url : "http://#{url}"

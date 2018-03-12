@@ -2,6 +2,14 @@ require 'rails_helper'
 require 'open-uri'
 
 RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
+  let(:test_file_path) { Rails.root.join('spec', 'fixtures', 'example_schools_data.csv') }
+  before(:each) do
+    temp_file_path = Rails.root.join('spec', 'fixtures', 'temp_schools_data.csv')
+    allow_any_instance_of(UpdateSchoolsDataFromSourceJob)
+      .to receive(:csv_file_location)
+      .and_return(temp_file_path)
+  end
+
   let(:datestring) { Time.zone.now.strftime('%Y%m%d') }
   let!(:school) do
     School.create!(urn: '100000',
@@ -33,7 +41,24 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
     end
 
     it 'should raise an HTTP error' do
-      expect { UpdateSchoolsDataFromSourceJob.new.perform }.to raise_error(OpenURI::HTTPError)
+      # rubocop:disable AmbiguousBlockAssociation
+      expect { UpdateSchoolsDataFromSourceJob.new.perform }
+        .to raise_error { HTTParty::ResponseError.new('School CSV file not found.') }
+      # rubocop:enable AmbiguousBlockAssociation
+    end
+  end
+
+  context 'When the edubase returns an unexpected (not 200 or 404) status code' do
+    before do
+      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
+        .to_return(body: 'Not Found', status: 500)
+    end
+
+    it 'should raise an HTTP error' do
+      # rubocop:disable AmbiguousBlockAssociation
+      expect { UpdateSchoolsDataFromSourceJob.new.perform }
+        .to raise_error { HTTParty::ResponseError.new('Unexpected problem downloading School CSV file.') }
+      # rubocop:enable AmbiguousBlockAssociation
     end
   end
 
@@ -58,7 +83,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
 
   context 'when the CSV is available' do
     before do
-      csv = File.read(Rails.root.join('spec', 'fixtures', 'example_schools_data.csv'))
+      csv = File.read(test_file_path)
       stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
         .to_return(body: csv)
     end
