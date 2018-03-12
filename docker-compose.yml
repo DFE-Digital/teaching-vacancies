@@ -37,6 +37,7 @@ services:
       - cluster.name=docker=docker-cluster
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
+    restart: on-failure
 
 volumes:
   pg_data: {}
