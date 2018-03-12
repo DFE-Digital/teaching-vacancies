@@ -1,0 +1,11 @@
+// Track when someone submits the search form
+$(document).on('submit', 'form.filters-form', function() {
+    gtag('event', 'search_form_complete');
+  }
+);
+
+// Track when someone views a vacancy from a list of results
+$(document).on('click', '.view-vacancy-link', function() {
+    gtag('event', 'vacancy_visited');
+  }
+);
