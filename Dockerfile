@@ -38,5 +38,8 @@ COPY . $INSTALL_PATH
 
 RUN bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
 
+COPY ./docker-entrypoint.sh /
 EXPOSE 3000
-CMD ["bundle", "exec", "rails s"]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["rails", "server"]
