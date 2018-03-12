@@ -75,7 +75,7 @@ data "template_file" "import_schools_task" {
     google_maps_api_key = "${var.google_maps_api_key}"
     secret_key_base     = "${var.secret_key_base}"
     project_name        = "${var.project_name}"
-    task_name           = "${var.ecs_service_task_name}_run_something"
+    task_name           = "${var.ecs_service_task_name}_import_schools"
     environment         = "${var.environment}"
     rails_env           = "${var.rails_env}"
     region              = "${var.region}"
