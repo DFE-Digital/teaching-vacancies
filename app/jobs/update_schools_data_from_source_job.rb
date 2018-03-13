@@ -57,7 +57,7 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
   end
 
   def csv_file_location
-    "./tmp/import/#{datestring}-schools-data.csv"
+    "./tmp/#{datestring}-schools-data.csv"
   end
 
   def save_csv_file(location: csv_file_location)
