@@ -1,5 +1,4 @@
 module VacancyScraper::NorthEastSchools
-
   class ListManager
     ALTTEACHER = BASE_URL +
       '/search-results/?schooltype=82+96+87+84+80+74+81+73+85+76+72+75+91+83&jobrole=11&subject=&area='

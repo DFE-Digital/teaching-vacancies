@@ -17,7 +17,7 @@ module VacancyScraper::NorthEastSchools
       school = School.where('levenshtein(name, ?) <= 3', school_name).first
       school = School.where('url like ?', "#{url}%").first if school.nil?
       if school.nil?
-        puts "Unable to find #{school_name}"
+        Rails.logger.debug("Unable to find school: #{school_name}")
         return
       end
 
@@ -33,16 +33,16 @@ module VacancyScraper::NorthEastSchools
       vacancy.minimum_salary = min_salary
       vacancy.maximum_salary = max_salary
       vacancy.expires_on = ends_on
-      vacancy.status = :draft
-      vacancy.publish_on = Date.today
+      vacancy.status =  min_salary > 0 ? :published ? :draft
+      vacancy.publish_on = Time.zone.today
 
       if vacancy.valid?
         vacancy.save
       else
-        Rails.logger.debug ("Invalid vacancy: #{vacancy.errors}") unless vacancy.valid?
+        Rails.logger.debug("Invalid vacancy: #{vacancy.errors}") unless vacancy.valid?
       end
     rescue Exception => e
-      Rails.logger.debug ("Unable to save scraped vacancy: #{e.inspect}")
+      Rails.logger.debug("Unable to save scraped vacancy: #{e.inspect}")
     end
 
     def vacancy
@@ -109,11 +109,11 @@ module VacancyScraper::NorthEastSchools
 
     def pay_scale
       payscale = salary[/(\wPS\d*)/, 1]
-      return payscale if payscale.present? and (PayScale::MPS.keys.include?(payscale.to_sym) ||
+      return payscale if payscale.present? && (PayScale::MPS.keys.include?(payscale.to_sym) ||
                                                 PayScale::UPS.keys.include?(payscale.to_sym))
 
       payscale = salary.scan(/(L)\w*\s*(P)\w*\s*(S)\w*\s*(\d*)/)
-      return payscale.join('') if payscale.present? and PayScale::LPS.keys.include?(payscale.join('').to_sym)
+      return payscale.join('') if payscale.present? && PayScale::LPS.keys.include?(payscale.join('').to_sym)
 
       return PayScale::MPS.key(min_salary.to_i).to_s if PayScale::MPS.value?(min_salary.to_i)
       return PayScale::UPS.key(min_salary.to_i).to_s if PayScale::UPS.value?(min_salary.to_i)
