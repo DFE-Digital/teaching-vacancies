@@ -53,6 +53,7 @@ data "template_file" "buildspec" {
     aws_account_id  = "${var.aws_account_id}"
     image_repo_name = "${var.registry_name}"
     environment     = "${var.environment}"
+    task_name       = "${var.project_name}_${var.environment}_web"
   }
 }
 
