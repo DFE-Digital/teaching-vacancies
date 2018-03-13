@@ -1,10 +1,15 @@
 #!/bin/sh
 
-docker-compose down -v
-docker-compose build
-docker-compose up -d elasticsearch
-sleep 10 # ElasticSearch is slow to get ready
-docker-compose run web rake db:drop db:setup
-docker-compose down
+# Test server
+echo "Rebuiling the test server…"
+docker-compose --file=docker-compose.test.yml down --rmi=all -v --remove-orphans
+docker-compose --file=docker-compose.test.yml build
+bin/dtest-server
+echo "Rebuilt and started the testing server for TVS."
 
-echo "Rebuild completed. You can now start up TVS"
+# Web server
+echo "Rebuiling the web server…"
+docker-compose down -v --rmi=all --remove-orphans
+docker-compose build
+echo "Rebuilt and starting the web server for TVS."
+bin/dstart
