@@ -64,6 +64,7 @@ en:
     headline: 'Headline'
     benefits: 'Benefits'
     salary_range: 'Salary range'
+    per_year: 'per year'
     publish_heading: 'Publish a vacancy for %{school}'
     job_specification: 'Job specification'
     essential_requirements: 'Essential requirements'
