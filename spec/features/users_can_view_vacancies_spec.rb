@@ -39,4 +39,24 @@ RSpec.feature 'Viewing vacancies' do
 
     expect(page).to have_link('2')
   end
+
+  scenario 'Should correctly singularize when one vacancy is returned by a search' do
+    vacancies = create_list(:vacancy, 1)
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit vacancies_path
+    expect(page).to have_content(I18n.t('vacancies.vacancy_count', count: vacancies.count))
+  end
+
+  scenario 'Should correctly pluralize the number of vacancies returned by a search' do
+    vacancies = create_list(:vacancy, 3)
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit vacancies_path
+    expect(page).to have_content(I18n.t('vacancies.vacancy_count_plural', count: vacancies.count))
+  end
+
+  scenario 'Should advise users to widen their search when no results are returned' do
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit vacancies_path
+    expect(page).to have_content(I18n.t('vacancies.no_vacancies'))
+  end
 end
