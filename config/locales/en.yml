@@ -70,9 +70,9 @@ en:
     essential_requirements: 'Professional requirements'
     candidate_specification: 'Candidate specification'
     application_details: 'Application details'
-    contact_email: 'Vacancy contact email'
-    deadline_date: 'Vacancy deadline date'
-    publication_date: 'Vacancy publication date'
+    contact_email: 'Contact email for applications'
+    deadline_date: 'Application deadline'
+    publication_date: 'Date role will be posted'
     confirm: 'Confirm details before you submit'
     confirmation_summary: 
       >
