@@ -99,7 +99,7 @@ en:
       deadline_date: 'For example, 31 11 2017'
       publication_date: 'For example, 31 10 2017'
     filters:
-      title: 'Filter vacancies'
+      title: 'Search vacancies'
       location: 'Location'
       keyword: 'Keyword'
       minimum_salary: 'Minimum salary'
