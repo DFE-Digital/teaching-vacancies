@@ -29,4 +29,8 @@ class VacancyPresenter < BasePresenter
   def publish_today?
     model.publish_on == Time.zone.today
   end
+
+  def working_pattern
+    model.working_pattern.sub('_', ' ').humanize
+  end
 end
