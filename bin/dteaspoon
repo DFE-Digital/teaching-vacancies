@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-docker-compose exec spring rake teaspoon $@
+docker-compose exec test rake teaspoon $@
