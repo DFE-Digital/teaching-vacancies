@@ -86,6 +86,18 @@ module "logs" {
   project_name                          = "${var.project_name}"
 }
 
+module "cloudwatch" {
+  source                                = "./terraform/modules/cloudwatch"
+
+  environment                           = "${terraform.workspace}"
+  project_name                          = "${var.project_name}"
+  slack_hook_url                        = "${var.cloudwatch_slack_hook_url}"
+  slack_channel                         = "${var.cloudwatch_slack_channel}"
+  ops_genie_api_key                     = "${var.cloudwatch_ops_genie_api_key}"
+  autoscaling_group_name                = "${module.core.ecs_autoscaling_group_name}"
+
+}
+
 module "pipeline" {
   source                                = "./terraform/modules/pipeline"
 
