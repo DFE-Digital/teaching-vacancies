@@ -57,7 +57,10 @@ module "ecs" {
   ecs_service_task_port                 = "${var.ecs_service_task_port}"
   ecs_service_task_definition_file_path = "${var.ecs_service_task_definition_file_path}"
   ecs_import_schools_task_definition_file_path = "${var.ecs_import_schools_task_definition_file_path}"
+  ecs_vacancies_scrape_task_definition_file_path = "${var.ecs_vacancies_scrape_task_definition_file_path}"
   import_schools_entrypoint              = "${var.import_schools_entrypoint}"
+  vacancies_scrape_entrypoint            = "${var.vacancies_scrape_entrypoint}"
+  vacancies_scrape_schedule_expression   = "${var.vacancies_scrape_schedule_expression}"
 
   aws_alb_target_group_arn              = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name         = "${module.logs.aws_cloudwatch_log_group_name}"
