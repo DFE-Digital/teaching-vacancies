@@ -117,7 +117,8 @@ en:
     search_label: 'School name'
     description: 'Description'
     school_age: 'School age'
-    search_heading: 'Which school is your vacancy for?'
+    search_heading: 'Publish a vacancy'
+    search_subheading: 'Which school is the job vacancy for?'
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'

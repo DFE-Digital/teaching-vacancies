@@ -1,7 +1,9 @@
+%h1.heading-large
+  = t('schools.search_heading')
 
 = render 'search_form', name: params[:name]
 
-%h1.heading-large
+%h2.heading-medium
   = pluralize(@schools.size, 'school')
   = "matching “#{params[:name]}”"
 
