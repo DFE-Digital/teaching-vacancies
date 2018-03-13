@@ -74,6 +74,13 @@ resource "aws_iam_role_policy" "scheduled_task_policy" {
       "Resource": [
         "*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": [
+        "${aws_iam_role.ecs_execution_role.arn}"
+      ]
     }
   ]
 }
