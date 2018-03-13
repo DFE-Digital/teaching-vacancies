@@ -101,7 +101,9 @@ en:
     filters:
       title: 'Search vacancies'
       location: 'Location'
+      location_hint: 'Town, postcode or region'
       keyword: 'Keyword'
+      keyword_hint: 'Role or subject, for example'
       minimum_salary: 'Minimum salary'
       maximum_salary: 'Maximum salary'
       working_pattern: 'Working pattern'
