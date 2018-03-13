@@ -48,8 +48,7 @@ SchoolType.create(label: 'Special School', code: '5')
    Subject.create(name: subject)
  end
 
- ealing_school = FactoryGirl.create(:school,
-                                    name: 'Acme Secondary School',
+ ealing_school = FactoryGirl.create(:school, name: 'Acme Secondary School',
                                     school_type: academy,
                                     urn: 1234567890,
                                     address: '22 High Street',

@@ -13,15 +13,16 @@ RSpec.describe VacancyScraper::NorthEastSchools do
     context 'Retrieving the listed vacancy urls' do
       let(:list_manager) { VacancyScraper::NorthEastSchools::ListManager.new }
 
-        before do
-          vacancies = File.read(Rails.root.join('spec', 'fixtures', 'vacancies-1.html'))
-          stub_request(:get, 'https://www.jobsinschoolsnortheast.com/search-results/?schooltype=82+96+87+84+80+74+81+73+85+76+72+75+91+83&jobrole=11&subject=&area=').to_return(body: vacancies, status: 200)
-        end
+      before do
+        vacancies = File.read(Rails.root.join('spec', 'fixtures', 'vacancies-1.html'))
+        stub_request(:get, 'https://www.jobsinschoolsnortheast.com/search-results/?schooltype=82+96+87+84+80+74+81+73+85+76+72+75+91+83&jobrole=11&subject=&area=')
+          .to_return(body: vacancies, status: 200)
+      end
 
       it 'search_results' do
         expect(list_manager.search_results.count).to eq(5)
-        expect(list_manager.search_results.first).to eq("https://www.jobsinschoolsnortheast.com/job/teacher-year-5-3/")
-        expect(list_manager.search_results.last).to eq("https://www.jobsinschoolsnortheast.com/job/teachers-mathematics-2-posts-ups-mps/")
+        expect(list_manager.search_results.first).to eq('https://www.jobsinschoolsnortheast.com/job/teacher-year-5-3/')
+        expect(list_manager.search_results.last).to eq('https://www.jobsinschoolsnortheast.com/job/teachers-mathematics-2-posts-ups-mps/')
       end
 
       it 'next_page' do
@@ -76,7 +77,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq("MPS")
+          expect(scraper.pay_scale).to eq('MPS')
         end
 
         it '#max_salary' do
@@ -93,11 +94,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
       end
 
       context 'Math teacher sample' do
-        let(:math_teacher_url) { 'https://www.jobsinschoolsnortheast.com/job/assistant-curriculum-leader-mathematics-2/' }
-        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(math_teacher_url) }
+        let(:vacancy_url) { 'https://www.jobsinschoolsnortheast.com/job/assistant-curriculum-leader-mathematics-2/' }
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(vacancy_url) }
         before do
           math_teacher = File.read(Rails.root.join('spec', 'fixtures', 'math-teacher.html'))
-          stub_request(:get, math_teacher_url).to_return(body: math_teacher, status: 200)
+          stub_request(:get, vacancy_url).to_return(body: math_teacher, status: 200)
         end
 
         it '#job_title' do
@@ -129,7 +130,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq("MPS")
+          expect(scraper.pay_scale).to eq('MPS')
         end
 
         it '#max_salary' do
@@ -229,7 +230,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq("MPS")
+          expect(scraper.pay_scale).to eq('MPS')
         end
 
         it '#max_salary' do
@@ -279,7 +280,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq("LPS5")
+          expect(scraper.pay_scale).to eq('LPS5')
         end
 
         it '#max_salary' do

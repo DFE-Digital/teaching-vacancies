@@ -7,12 +7,12 @@ class PayScale < ApplicationRecord
           "MPS3": 26716,
           "MPS4": 28772,
           "MPS5": 31029,
-          "MPS6": 33824}
+          "MPS6": 33824 }.freeze
 
   UPS = { "UPS": 38633,
           "UPS1": 35927,
           "UPS2": 37258,
-          "UPS3": 38633}
+          "UPS3": 38633 }.freeze
 
   LPS = { "LPS": 39374,
           "LPS1": 40360,
@@ -31,6 +31,5 @@ class PayScale < ApplicationRecord
           "LPS15": 55600,
           "LPS16": 57077,
           "LPS17": 58389,
-          "LPS18": 59857 }
-
+          "LPS18": 59857 }.freeze
 end
