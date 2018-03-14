@@ -1,6 +1,6 @@
 = form_tag search_schools_path, method: :get do
 
-  %div
-    = label_tag :name, t('schools.search_label')
+  .form-group
+    = label_tag :name, t('schools.search_label'), class: 'form-label'
     = search_field_tag :name, name, class: 'form-control'
-    = button_tag t('buttons.find'), class: 'button', type: 'submit'
+  = button_tag t('buttons.find'), class: 'button', type: 'submit'
