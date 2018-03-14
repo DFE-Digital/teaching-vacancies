@@ -17,30 +17,30 @@
     %p.lede
       = @vacancy.headline
 
-    %h3.heading-medium= t('vacancies.description')
+    %h2.heading-medium= t('vacancies.description')
     %p= @vacancy.job_description
 
-    %h3.heading-medium= t('vacancies.requirements')
+    %h2.heading-medium= t('vacancies.requirements')
     %p= @vacancy.essential_requirements
 
     - if @vacancy.education
-      %h3.heading-medium= t('vacancies.education')
+      %h2.heading-medium= t('vacancies.education')
       %p= @vacancy.education
 
     - if @vacancy.qualifications
-      %h3.heading-medium= t('vacancies.qualifications')
+      %h2.heading-medium= t('vacancies.qualifications')
       %p= @vacancy.qualifications
 
     - if @vacancy.experience
-      %h3.heading-medium= t('vacancies.experience')
+      %h2.heading-medium= t('vacancies.experience')
       %p= @vacancy.experience
 
     - if @vacancy.benefits
-      %h3.heading-medium= t('vacancies.benefits')
+      %h2.heading-medium= t('vacancies.benefits')
       %p= @vacancy.benefits
 
     %hr
-    %h3.heading-medium
+    %h2.heading-medium
       = t('schools.about')
       = @vacancy.school.name
 
