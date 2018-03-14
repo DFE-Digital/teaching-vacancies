@@ -18,55 +18,21 @@ resource "aws_cloudwatch_log_group" "cloudwatch_lambda_log_group" {
 
 resource "aws_iam_role" "slack_lambda_role" {
   name = "${var.project_name}-${var.environment}-slack-lambda-role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
+  assume_role_policy = "${file("./terraform/policies/cloudwatch-slack-lambda-role.json")}"
 }
-EOF
+
+data "template_file" "slack_lambda_policy" {
+  template = "${file("./terraform/policies/cloudwatch-slack-lambda-policy.json")}"
+  vars {
+    cloudwatch_lambda_log_group_arn = "${aws_cloudwatch_log_group.cloudwatch_lambda_log_group.arn}"
+    cloudwatch_lambda_kms_key_arn   = "${aws_kms_key.cloudwatch_lambda.arn}"
+  }
 }
 
 resource "aws_iam_role_policy" "slack_lambda_policy" {
-  name = "${var.project_name}-${var.environment}-slack-lambda-policy"
-  role = "${aws_iam_role.slack_lambda_role.id}"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Action": [
-        "kms:Decrypt"
-      ],
-      "Resource": [
-        "${aws_kms_key.cloudwatch_lambda.arn}"
-      ]
-    },
-    {
-        "Effect": "Allow",
-        "Action": [
-            "logs:CreateLogStream",
-            "logs:PutLogEvents"
-        ],
-        "Resource": [
-            "${aws_cloudwatch_log_group.cloudwatch_lambda_log_group.arn}"
-        ]
-    }
-  ]
-}
-EOF
+  name   = "${var.project_name}-${var.environment}-slack-lambda-policy"
+  role   = "${aws_iam_role.slack_lambda_role.id}"
+  policy = "${data.template_file.slack_lambda_policy.rendered}"
 }
 
 resource "aws_lambda_function" "cloudwatch_to_slack" {
