@@ -1,5 +1,5 @@
 .vacancy.grid-row
-  .column-two-thirds
+  .column-full
     .govuk-box-highlight.margin-bottom-large
       %h1.heading-large.margin-top
         = t('vacancies.submitted')
@@ -8,6 +8,7 @@
         %br
         %strong.heading-medium=@vacancy.reference
 
+  .column-two-thirds
     - if @vacancy.publish_today?
       %p
         = t('vacancies.view_posted_vacancy')
