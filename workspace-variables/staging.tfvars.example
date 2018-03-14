@@ -23,6 +23,7 @@ asg_desired_size = 2
 ecs_service_task_name = "web"
 ecs_service_task_count = 1
 ecs_service_task_port = 3000
+vacancies_scrape_schedule_expression = "rate(60 minutes)"
 
 # RDS
 rds_storage_gb = 10
