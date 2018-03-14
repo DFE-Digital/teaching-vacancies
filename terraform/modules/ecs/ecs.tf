@@ -182,9 +182,9 @@ resource "aws_cloudwatch_event_rule" "vacancies_scrape_task_cron" {
 
 resource "aws_cloudwatch_event_target" "vacancies_scrape_task_cron_event" {
   target_id          = "${var.ecs_service_task_name}_vacancies_scrape"
-  rule          = "${aws_cloudwatch_event_rule.vacancies_scrape_task_cron.name}"
-  arn           = "${aws_ecs_cluster.cluster.arn}"
-  role_arn      = "${aws_iam_role.scheduled_task_role.arn}"
+  rule               = "${aws_cloudwatch_event_rule.vacancies_scrape_task_cron.name}"
+  arn                = "${aws_ecs_cluster.cluster.arn}"
+  role_arn           = "${aws_iam_role.scheduled_task_role.arn}"
   ecs_target { 
     task_count             = "1"
     task_definition_arn    = "${aws_ecs_task_definition.vacancies_scrape.arn}"
