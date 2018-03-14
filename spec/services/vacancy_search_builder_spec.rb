@@ -21,7 +21,7 @@ RSpec.describe VacancySearchBuilder do
       expected_hash = {
         multi_match: {
           query: 'german',
-          fields: %w[job_title^5 headline^2 job_description],
+          fields: %w[job_title^5 subject.name^3 headline^2 job_description],
           operator: 'and',
           fuzziness: 1
         },
