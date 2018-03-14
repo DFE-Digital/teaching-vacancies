@@ -111,7 +111,7 @@ variable "ecs_vacancies_scrape_task_definition_file_path" {
 }
 
 variable "vacancies_scrape_schedule_expression" {
-  description = "vacancies_scrape schedule expression"
+  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default = "rate(60 minutes)"
 }
 
