@@ -8,6 +8,9 @@ RSpec.describe VacancyScraper::NorthEastSchools do
       ['Math', 'Mathematics', 'Psychology', 'English', 'Physics'].each do |name|
         Subject.create(name: name)
       end
+      create(:pay_scale, code: 'MPS1', salary: 22917)
+      create(:pay_scale, code: 'UPS3', salary: 38633)
+      create(:pay_scale, code: 'LPS5', salary: 44544)
     end
 
     context 'Retrieving the listed vacancy urls' do
@@ -77,7 +80,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq('MPS')
+          expect(scraper.pay_scale).to eq('MPS1')
         end
 
         it '#max_salary' do
@@ -106,7 +109,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#subject' do
-          expect(scraper.subject).to eq('Mathematics')
+          expect(scraper.subject).to eq('Math')
         end
 
         it '#school_name' do
@@ -130,15 +133,15 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq('MPS')
+          expect(scraper.pay_scale).to eq('MPS1')
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq(38633)
+          expect(scraper.max_salary).to eq('38633')
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq(22917)
+          expect(scraper.min_salary).to eq('22917')
         end
 
         it '#ends_on' do
@@ -230,7 +233,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#pay_scale' do
-          expect(scraper.pay_scale).to eq('MPS')
+          expect(scraper.pay_scale).to eq('MPS1')
         end
 
         it '#max_salary' do
@@ -288,7 +291,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq(44544)
+          expect(scraper.min_salary).to eq('44544')
         end
 
         it '#ends_on' do

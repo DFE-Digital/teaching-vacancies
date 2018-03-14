@@ -16,10 +16,7 @@ module VacancyScraper::NorthEastSchools
     def map!
       school = School.where('levenshtein(name, ?) <= 3', school_name).first
       school = School.where('url like ?', "#{url}%").first if school.nil?
-      if school.nil?
-        Rails.logger.debug("Unable to find school: #{school_name}")
-        return
-      end
+      return Rails.logger.debug("Unable to find school: #{school_name}") if school.nil?
 
       vacancy = Vacancy.new
       vacancy.job_title = job_title
@@ -27,21 +24,19 @@ module VacancyScraper::NorthEastSchools
       vacancy.subject = Subject.find_by(name: subject)
       vacancy.school = school
 
-      vacancy.job_description = body
+      vacancy.job_description = Nokogiri::HTML(body).text
       vacancy.working_pattern = working_pattern
       vacancy.weekly_hours = work_hours
       vacancy.minimum_salary = min_salary
       vacancy.maximum_salary = max_salary
+      vacancy.pay_scale = PayScale.where(code: pay_scale).first
       vacancy.expires_on = ends_on
-      vacancy.status =  min_salary > 0 ? :published ? :draft
+      vacancy.status = min_salary.to_i.positive? ? :published : :draft
       vacancy.publish_on = Time.zone.today
 
-      if vacancy.valid?
-        vacancy.save
-      else
-        Rails.logger.debug("Invalid vacancy: #{vacancy.errors}") unless vacancy.valid?
-      end
-    rescue Exception => e
+      return vacancy.save if vacancy.valid?
+      Rails.logger.debug("Invalid vacancy: #{vacancy.errors.inspect}")
+    rescue StandardError => e
       Rails.logger.debug("Unable to save scraped vacancy: #{e.inspect}")
     end
 
@@ -90,35 +85,39 @@ module VacancyScraper::NorthEastSchools
       max_salary = salary.scan(/\d*.?(\d\d+),(\d{3})/)
       return max_salary[1].join('') if max_salary.present?
 
-      payscale = salary[/(UPS\d*)/, 1]
-      payscale.present? ? PayScale::UPS[payscale.to_sym] : nil
+      code = salary[/(UPS\d*)/, 1]
+      code = 'UPS3' if code == 'UPS'
+      pay_scale = PayScale.find_by(code: code)
+      pay_scale.present? ? pay_scale.salary : nil
     end
 
     def min_salary
       min_salary = salary.scan(/(\d\d+),(\d{3})/)
       return min_salary.first.join('') if min_salary.present?
 
-      payscale = salary[/(MPS\d*)/, 1]
-      return PayScale::MPS[payscale.to_sym] if payscale.present?
+      code = salary[/(MPS\d*)/, 1]
+      code = 'MPS1' if code == 'MPS'
+      payscale = PayScale.find_by(code: code)
 
-      payscale = salary.scan(/(L)\w*\s*(P)\w*\s*(S)\w*\s*(\d*)/)
-      return PayScale::LPS[payscale.join('').to_sym] if payscale.present?
+      return payscale.salary if payscale.present?
 
-      0
+      code = salary.scan(/(L)\w*\s*(P)\w*\s*(S)\w*\s*(\d*)/)
+      payscale = PayScale.find_by(code: code.join("")) if code.present?
+
+      payscale.present? ?  payscale.salary : 0
     end
 
     def pay_scale
       payscale = salary[/(\wPS\d*)/, 1]
-      return payscale if payscale.present? && (PayScale::MPS.keys.include?(payscale.to_sym) ||
-                                                PayScale::UPS.keys.include?(payscale.to_sym))
+      payscale = 'MPS1' if payscale == 'MPS'
+      payscale = 'UPS3' if payscale == 'UPS'
+      return payscale if payscale.present? && PayScale.exists?(code: payscale)
 
       payscale = salary.scan(/(L)\w*\s*(P)\w*\s*(S)\w*\s*(\d*)/)
-      return payscale.join('') if payscale.present? && PayScale::LPS.keys.include?(payscale.join('').to_sym)
+      return payscale.join('') if payscale.present? && PayScale.exists?(code: payscale)
 
-      return PayScale::MPS.key(min_salary.to_i).to_s if PayScale::MPS.value?(min_salary.to_i)
-      return PayScale::UPS.key(min_salary.to_i).to_s if PayScale::UPS.value?(min_salary.to_i)
-      return PayScale::LPS.key(min_salary.to_i).to_s if PayScale::LPS.value?(min_salary.to_i)
-      nil
+      pay_scale = PayScale.find_by(salary: min_salary)
+      pay_scale.present? ? pay_scale.code : nil
     end
 
     def leadership; end
@@ -128,7 +127,8 @@ module VacancyScraper::NorthEastSchools
     def starts_on; end
 
     def body
-      xpath = '//div[@class="job-list-mobile"]/following-sibling::*[not(self::div[@id="schoolinfo"]) and not(self::div[@id="apply"]) and not(self::div[@class="supporting-documents"])]'
+      xpath = '//div[@class="job-list-mobile"]/following-sibling::*[not(self::div[@id="schoolinfo"])' \
+        'and not(self::div[@id="apply"]) and not(self::div[@class="supporting-documents"])]'
       @body ||= vacancy.xpath(xpath).to_html
     end
 
