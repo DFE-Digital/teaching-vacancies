@@ -88,3 +88,35 @@ resource "aws_cloudwatch_metric_alarm" "cpu" {
   }
 
 }
+
+resource "aws_cloudwatch_event_rule" "code_pipeline_fail" {
+  name        = "${var.project_name}-${var.environment}-code-pipeline-fail"
+  description = "Notify on CodePipeline Failures"
+
+  event_pattern = <<PATTERN
+{
+  "source": [
+    "aws.codepipeline"
+  ],
+  "detail-type": [
+    "CodePipeline Pipeline Execution State Change"
+  ],
+  "detail": {
+    "state": [
+      "FAILED"
+    ],
+    "pipeline": [
+      "${var.pipeline_name}"
+    ]
+  }
+}
+PATTERN
+}
+
+resource "aws_cloudwatch_event_target" "code_pipeline_fail_sns_target" {
+  rule      = "${aws_cloudwatch_event_rule.code_pipeline_fail.name}"
+  target_id = "CodePipeLineFail"
+  arn       = "${aws_sns_topic.cloudwatch_alerts.arn}"
+  input     = "{\"AlarmName\": \"Failed Pipeline\",\"NewStateValue\": \"ALARM\",\"NewStateReason\": \"Pipeline ${var.pipeline_name} has failed\"}"
+}
+

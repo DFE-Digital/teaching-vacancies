@@ -95,6 +95,7 @@ module "cloudwatch" {
   slack_channel                         = "${var.cloudwatch_slack_channel}"
   ops_genie_api_key                     = "${var.cloudwatch_ops_genie_api_key}"
   autoscaling_group_name                = "${module.core.ecs_autoscaling_group_name}"
+  pipeline_name                         = "${module.pipeline.pipeline_name}"
 
 }
 
