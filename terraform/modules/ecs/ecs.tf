@@ -41,50 +41,22 @@ ECS task definitions
 resource "aws_iam_role" "scheduled_task_role" {
   name = "${var.project_name}-${var.environment}-scheduled-task-role"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "events.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
+  assume_role_policy = "${file("./terraform/policies/ecs-scheduled-task-role.json")}"
 }
 
 /* scheduled task policy */
+data "template_file" "scheduled_task_policy" {
+  template = "${file("./terraform/policies/ecs-scheduled-task-policy.json")}"
+
+  vars {
+    task_execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  }
+
+}
 resource "aws_iam_role_policy" "scheduled_task_policy" {
   name        = "${var.project_name}-${var.environment}-scheduled-task-policy"
   role        = "${aws_iam_role.scheduled_task_role.id}"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecs:RunTask"
-      ],
-      "Resource": [
-        "*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": "iam:PassRole",
-      "Resource": [
-        "${aws_iam_role.ecs_execution_role.arn}"
-      ]
-    }
-  ]
-}
-EOF
+  policy      = "${data.template_file.scheduled_task_policy.rendered}"
 }
 
 /* the task definition for the web service */
