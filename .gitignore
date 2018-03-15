@@ -26,6 +26,8 @@
 # Ignore application configuration
 /config/application.yml
 
+/spec/fixtures/temp_schools_data.csv
+
 # Docker
 docker-compose.env
 
