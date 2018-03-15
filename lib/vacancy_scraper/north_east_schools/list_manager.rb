@@ -1,7 +1,7 @@
 module VacancyScraper::NorthEastSchools
   class ListManager
-    SEARCH_PATH = "#{ROOT_URL}//search-results/?schooltype&" \
-                  'jobrole=8%2012%209%2088%2013%2010%2021%2011&subject&area'.freeze
+    SEARCH_PATH = "#{ROOT_URL}/search-results/?schooltype&jobrole=8+12+9+88+13+10+21+11&" \
+                              'subject&area'.freeze
 
     def initialize(root = SEARCH_PATH)
       @root = root

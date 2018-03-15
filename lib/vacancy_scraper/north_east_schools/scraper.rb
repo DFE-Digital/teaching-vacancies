@@ -82,9 +82,18 @@ module VacancyScraper::NorthEastSchools
       max_salary = salary.scan(/\d*.?(\d\d+),(\d{3})/)
       return max_salary[1].join('') if max_salary.present?
 
-      code = salary[/(UPS\d*)/, 1]
+      code = salary[/(UPS\d*)/, 1] || salary[/(U\d{1})/, 1]
       code = 'UPS3' if code == 'UPS'
+      code = code.present? ? code.gsub(/(\w{1,3})(\d)/, 'UPS\2') : nil
+
       pay_scale = PayScale.find_by(code: code)
+      return pay_scale.salary if pay_scale.present?
+
+      code = salary.scan(/Leader[\W\w]*(L)\d+\W+(\d+)/).join('')
+      code = salary[/L\d+\W+(L\d+)/, 1] if code.empty?
+      code = code.present? ? code.gsub(/(L)(\d+)/, 'LPS\2') : nil
+      pay_scale = PayScale.find_by(code: code) if code.present?
+
       pay_scale.present? ? pay_scale.salary : nil
     end
 
@@ -93,14 +102,24 @@ module VacancyScraper::NorthEastSchools
       min_salary = salary.scan(/(\d\d+),(\d{3})/)
       return min_salary.first.join('') if min_salary.present?
 
-      code = salary[/(MPS\d*)/, 1]
-      code = 'MPS1' if code == 'MPS'
-      payscale = PayScale.find_by(code: code)
+      code = salary[/(MPS\d*)/, 1] || salary[/(M\d{1})/, 1]
+      code = 'MPS1' if code == 'M1' || code == 'MPS'
+      code = code.present? ? code.gsub(/(\w{1,3})(\d)/, 'MPS\2') : nil
 
+      payscale = code.present? ? PayScale.find_by(code: code) : nil
       return payscale.salary if payscale.present?
 
       code = salary.scan(/(L)\w*\s*(P)\w*\s*(S)\w*\s*(\d*)/)
       payscale = PayScale.find_by(code: code.join('')) if code.present?
+
+      return payscale.salary if payscale.present?
+
+      code = salary.scan(/Leader[\W\w]*(L)(\d+)\W+\d+/).join('')
+      code = salary[/(L\d+)\W+L\d+/, 1] if code.empty?
+      code = code.present? ? code.gsub(/(L)(\d+)/, 'LPS\2') : nil
+
+      payscale = PayScale.find_by(code: code) if code.present?
+      return payscale.salary if payscale.present?
 
       payscale.present? ? payscale.salary : 0
     end
@@ -108,7 +127,8 @@ module VacancyScraper::NorthEastSchools
 
     # # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
     def pay_scale
-      payscale = salary[/(\wPS\d*)/, 1]
+      payscale_pattern = salary[/(\wPS\d*)/, 1] || salary[/([MU]\d+)/, 1]
+      payscale = payscale_pattern.present? ? payscale_pattern.gsub(/\W*(\w{1})(\d+)/, '\1PS\3') : nil
       payscale = 'MPS1' if payscale == 'MPS'
       payscale = 'UPS3' if payscale == 'UPS'
       return payscale if payscale.present? && PayScale.exists?(code: payscale)

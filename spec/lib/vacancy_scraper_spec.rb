@@ -11,6 +11,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
       create(:pay_scale, code: 'MPS1', salary: 22917)
       create(:pay_scale, code: 'UPS3', salary: 38633)
       create(:pay_scale, code: 'LPS5', salary: 44544)
+      create(:pay_scale, code: 'LPS12', salary: 51639)
+      create(:pay_scale, code: 'LPS16', salary: 59857)
+      create(:pay_scale, code: 'LPS29', salary: 159857)
+      create(:pay_scale, code: 'LPS35', salary: 189857)
     end
 
     context 'Retrieving the listed vacancy urls' do
@@ -18,7 +22,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
       before do
         vacancies = File.read(Rails.root.join('spec', 'fixtures', 'vacancies-1.html'))
-        stub_request(:get, 'https://www.jobsinschoolsnortheast.com/search-results/?schooltype=82+96+87+84+80+74+81+73+85+76+72+75+91+83&jobrole=11&subject=&area=')
+        stub_request(:get, VacancyScraper::NorthEastSchools::ListManager::SEARCH_PATH)
           .to_return(body: vacancies, status: 200)
       end
 
@@ -125,7 +129,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#working_pattern' do
-          expect(scraper.working_pattern).to eq(:full_time)
+          expect(scraper.working_pattern).to eq(nil)
         end
 
         it '#work_hours' do
@@ -318,6 +322,84 @@ RSpec.describe VacancyScraper::NorthEastSchools do
           expect(scraper.supporting_documents[0]).to eq('https://www.jobsinschoolsnortheast.com/wp-content/uploads/2018/02/Teacher-Application-Form-2017.doc')
           expect(scraper.supporting_documents[1]).to eq('https://www.jobsinschoolsnortheast.com/wp-content/uploads/2018/02/Lead-Practitioner-Physics-JD.doc')
           expect(scraper.supporting_documents[2]).to eq('https://www.jobsinschoolsnortheast.com/wp-content/uploads/2018/02/Lead-Practioner-Physics-PS.docx')
+        end
+      end
+
+      context 'Curriculum Geography  Role' do
+        let(:url) { 'https://www.jobsinschoolsnortheast.com/job/curriculum-leader-geography/' }
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(url) }
+
+        before do
+          teacher = File.read(Rails.root.join('spec', 'fixtures', 'geography-leader.html'))
+          stub_request(:get, url).to_return(body: teacher, status: 200)
+        end
+
+        it '#salary' do
+          expect(scraper.salary).to eq('M1 - U3 plus TLR2c')
+        end
+
+        it '#pay_scale' do
+          expect(scraper.pay_scale).to eq('MPS1')
+        end
+
+        it '#max_salary' do
+          expect(scraper.max_salary).to eq('38633')
+        end
+
+        it '#min_salary' do
+          expect(scraper.min_salary).to eq('22917')
+        end
+      end
+
+      context 'Assistant head teacher' do
+        let(:url) { 'https://www.jobsinschoolsnortheast.com/job/assistant-headteacher-9/' }
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(url) }
+
+        before do
+          teacher = File.read(Rails.root.join('spec', 'fixtures', 'assistant-headteacher.html'))
+          stub_request(:get, url).to_return(body: teacher, status: 200)
+        end
+
+        it '#salary' do
+          expect(scraper.salary).to eq('Leadership Scale L12-16')
+        end
+
+        it '#pay_scale' do
+          expect(scraper.pay_scale).to eq('LPS12')
+        end
+
+        it '#max_salary' do
+          expect(scraper.max_salary).to eq('59857')
+        end
+
+        it '#min_salary' do
+          expect(scraper.min_salary).to eq('51639')
+        end
+      end
+
+      context 'Headteacher' do
+        let(:url) { 'https://www.jobsinschoolsnortheast.com/job/prudhoe-community-high-school-headteacher/' }
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(url) }
+
+        before do
+          teacher = File.read(Rails.root.join('spec', 'fixtures', 'headteacher.html'))
+          stub_request(:get, url).to_return(body: teacher, status: 200)
+        end
+
+        it '#salary' do
+          expect(scraper.salary).to eq('L29 - L35')
+        end
+
+        it '#pay_scale' do
+          expect(scraper.pay_scale).to eq('LPS29')
+        end
+
+        it '#max_salary' do
+          expect(scraper.max_salary).to eq('189857')
+        end
+
+        it '#min_salary' do
+          expect(scraper.min_salary).to eq('159857')
         end
       end
     end
