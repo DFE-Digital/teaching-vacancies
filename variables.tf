@@ -105,6 +105,16 @@ variable "ecs_import_schools_task_definition_file_path" {
   default = "./import_schools_task_definition.json"
 }
 
+variable "ecs_vacancies_scrape_task_definition_file_path" {
+  description = "Task definition to scrape vacancies"
+  default = "./vacancies_scrape_task_definition.json"
+}
+
+variable "vacancies_scrape_schedule_expression" {
+  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default = "rate(60 minutes)"
+}
+
 variable "buildspec_location" {
   description = "AWS Codebuild will look for this file to tell it how to build this project"
   default = "./buildspec.yml"
@@ -118,6 +128,11 @@ variable "git_branch_to_track" {
 variable "import_schools_entrypoint" {
   description = "The Entrypoint for the import_schools task"
   default = ["rake","data:schools:import"]
+}
+
+variable "vacancies_scrape_entrypoint" {
+  description = "The Entrypoint for the vacancies_scrape task"
+  default = ["rake","vacancies:data:scrape"]
 }
 
 # RDS
