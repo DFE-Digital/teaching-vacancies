@@ -9,5 +9,3 @@ require 'vacancy_scraper/north_east_schools'
 require 'vacancy_scraper/north_east_schools/list_manager'
 require 'vacancy_scraper/north_east_schools/scraper'
 require 'vacancy_scraper/north_east_schools/processor'
-require 'vacancy_scraper'
-

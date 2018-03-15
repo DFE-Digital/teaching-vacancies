@@ -1,10 +1,9 @@
 module VacancyScraper::NorthEastSchools
   class ListManager
-    SEARCH_PATH = '/search-results/?schooltype=82+96+87+84+80+74+81+73+85+76+72+75+91+83' \
-                                    '&jobrole=11&subject=&area='.freeze
-    ALTTEACHER = "#{BASE_URL}#{SEARCH_PATH}".freeze
+    SEARCH_PATH = "#{ROOT_URL}//search-results/?schooltype&" \
+                  'jobrole=8%2012%209%2088%2013%2010%2021%2011&subject&area'.freeze
 
-    def initialize(root = ALTTEACHER)
+    def initialize(root = SEARCH_PATH)
       @root = root
       @page = Nokogiri::HTML(open(root))
     end
@@ -18,7 +17,7 @@ module VacancyScraper::NorthEastSchools
 
     def next_page
       paginate_next = pagination.xpath('//a[i[contains(@class, "icon-angle-right")]]')
-      @next_page = paginate_next.present? ? URI.join(BASE_URL, paginate_next.attr('href')).to_s : nil
+      @next_page = paginate_next.present? ? URI.join(ROOT_URL, paginate_next.attr('href')).to_s : nil
     end
 
     private

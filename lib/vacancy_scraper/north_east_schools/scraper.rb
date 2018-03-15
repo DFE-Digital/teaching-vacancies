@@ -3,7 +3,7 @@ require 'nokogiri'
 
 module VacancyScraper::NorthEastSchools
   class Scraper
-    def initialize(url = 'https://www.jobsinschoolsnortheast.com/job/teacher-of-psychology-2/')
+    def initialize(url)
       @vacancy_url = url
     end
 
@@ -23,7 +23,6 @@ module VacancyScraper::NorthEastSchools
       vacancy.headline = job_title
       vacancy.subject = Subject.find_by(name: subject)
       vacancy.school = school
-
       vacancy.job_description = Nokogiri::HTML(body.to_html).text
       vacancy.working_pattern = working_pattern
       vacancy.weekly_hours = work_hours
@@ -66,17 +65,13 @@ module VacancyScraper::NorthEastSchools
 
     def working_pattern
       pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip
-      working_pattern = pattern[/(full.time|part.time)/i, 1]
-      working_pattern.downcase.starts_with?('f') ? :full_time : :part_time
-    rescue
-      :full_time
+      working_pattern = pattern.scan(/(full|part).(time)/i).join('_').downcase
+      return working_pattern.to_sym unless working_pattern.empty?
     end
 
     def work_hours
-      pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip
-      pattern[/(\d+.\d+)/, 1]
-    rescue
-      nil
+      hours_string = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]')
+      hours_string.children.any? ? hours_string.children.last.text[/(\d+.\d+)/, 1] : nil
     end
 
     def salary
