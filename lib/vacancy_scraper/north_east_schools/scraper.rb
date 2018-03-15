@@ -15,6 +15,8 @@ module VacancyScraper::NorthEastSchools
 
     # rubocop:disable Metrics/AbcSize
     def map!
+      return if vacancy_scraped?
+
       school = School.where('levenshtein(name, ?) <= 3 or url like ?', school_name, "#{url}%").first
       return Rails.logger.debug("Unable to find school: #{school_name}") if school.nil?
 
@@ -33,6 +35,7 @@ module VacancyScraper::NorthEastSchools
       vacancy.expires_on = ends_on
       vacancy.status = min_salary.to_i.positive? ? :published : :draft
       vacancy.publish_on = Time.zone.today
+      vacancy.application_link = "#{@vacancy_url}#apply"
 
       return vacancy.save if vacancy.valid?
       Rails.logger.debug("Invalid vacancy: #{vacancy.errors.inspect}")
@@ -66,7 +69,7 @@ module VacancyScraper::NorthEastSchools
     def working_pattern
       pattern = vacancy.xpath('//li[strong[contains(text(), "Hours:")]]').children.last.text.strip
       working_pattern = pattern.scan(/(full|part).(time)/i).join('_').downcase
-      return working_pattern.to_sym unless working_pattern.empty?
+      working_pattern.empty? ? :full_time : working_pattern.to_sym
     end
 
     def work_hours
@@ -188,6 +191,12 @@ module VacancyScraper::NorthEastSchools
       date.present? ? Date.parse(date) : date
     rescue
       nil
+    end
+
+    private
+
+    def vacancy_scraped?
+      Vacancy.where('application_link like ?', "#{@vacancy_url}%").exists?
     end
   end
 end

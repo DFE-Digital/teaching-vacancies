@@ -129,7 +129,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#working_pattern' do
-          expect(scraper.working_pattern).to eq(nil)
+          expect(scraper.working_pattern).to eq(:full_time)
         end
 
         it '#work_hours' do
