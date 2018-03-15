@@ -162,6 +162,17 @@ variable "cloudfront_aliases" {
   type = "list"
 }
 
+# Cloudwatch
+variable "cloudwatch_slack_hook_url" {
+  description = "The slack hook that cloudwatch alarms are sent to"
+}
+variable "cloudwatch_slack_channel" {
+  description = "The slack channel that cloudwatch alarms are sent to"
+}
+variable "cloudwatch_ops_genie_api_key" {
+  description = "The ops genie api key for sending alerts to ops genie"
+}
+
 # Application
 variable "rails_env"            {}
 variable "http_pass"            {}

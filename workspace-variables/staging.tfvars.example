@@ -39,6 +39,11 @@ es_version = "6.0"
 cloudfront_certificate_arn =
 cloudfront_aliases =
 
+# CloudWatch
+cloudwatch_slack_hook_url =
+cloudwatch_slack_channel =
+cloudwatch_ops_genie_api_key =
+
 # Application
 rails_env =
 load_balancer_check_path = "/check"

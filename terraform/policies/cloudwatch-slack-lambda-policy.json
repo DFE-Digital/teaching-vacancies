@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Action": [
+        "kms:Decrypt"
+      ],
+      "Resource": [
+        "${cloudwatch_lambda_kms_key_arn}"
+      ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+        ],
+        "Resource": [
+            "${cloudwatch_lambda_log_group_arn}"
+        ]
+    }
+  ]
+}
