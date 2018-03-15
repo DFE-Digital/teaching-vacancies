@@ -4,6 +4,7 @@ AllCops:
     Exclude:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
+      - 'db/seeds.rb'
       - 'bin/**/*'
       - 'config/initializers/simple_form.rb'
 
@@ -38,6 +39,9 @@ Style/DoubleNegation:
     Enabled: false
 
 Style/WordArray:
+    Enabled: false
+
+Style/ClassAndModuleChildren:
     Enabled: false
 
 Metrics/ClassLength:
