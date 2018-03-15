@@ -13,9 +13,9 @@ module VacancyScraper::NorthEastSchools
       @page
     end
 
+    # rubocop:disable Metrics/AbcSize
     def map!
-      school = School.where('levenshtein(name, ?) <= 3', school_name).first
-      school = School.where('url like ?', "#{url}%").first if school.nil?
+      school = School.where('levenshtein(name, ?) <= 3 or url like ?', school_name, "#{url}%").first
       return Rails.logger.debug("Unable to find school: #{school_name}") if school.nil?
 
       vacancy = Vacancy.new
@@ -24,12 +24,13 @@ module VacancyScraper::NorthEastSchools
       vacancy.subject = Subject.find_by(name: subject)
       vacancy.school = school
 
-      vacancy.job_description = Nokogiri::HTML(body).text
+      vacancy.job_description = Nokogiri::HTML(body.to_html).text
       vacancy.working_pattern = working_pattern
       vacancy.weekly_hours = work_hours
       vacancy.minimum_salary = min_salary
       vacancy.maximum_salary = max_salary
       vacancy.pay_scale = PayScale.where(code: pay_scale).first
+      vacancy.starts_on = starts_on
       vacancy.expires_on = ends_on
       vacancy.status = min_salary.to_i.positive? ? :published : :draft
       vacancy.publish_on = Time.zone.today
@@ -39,6 +40,7 @@ module VacancyScraper::NorthEastSchools
     rescue StandardError => e
       Rails.logger.debug("Unable to save scraped vacancy: #{e.inspect}")
     end
+    # rubocop:enable Metrics/AbcSize
 
     def vacancy
       @vacancy ||= page.css('article.featured-vacancies').first
@@ -91,6 +93,7 @@ module VacancyScraper::NorthEastSchools
       pay_scale.present? ? pay_scale.salary : nil
     end
 
+    # rubocop:disable Metrics/AbcSize
     def min_salary
       min_salary = salary.scan(/(\d\d+),(\d{3})/)
       return min_salary.first.join('') if min_salary.present?
@@ -102,11 +105,13 @@ module VacancyScraper::NorthEastSchools
       return payscale.salary if payscale.present?
 
       code = salary.scan(/(L)\w*\s*(P)\w*\s*(S)\w*\s*(\d*)/)
-      payscale = PayScale.find_by(code: code.join("")) if code.present?
+      payscale = PayScale.find_by(code: code.join('')) if code.present?
 
-      payscale.present? ?  payscale.salary : 0
+      payscale.present? ? payscale.salary : 0
     end
+    # rubocop:enable Metrics/AbcSize
 
+    # # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
     def pay_scale
       payscale = salary[/(\wPS\d*)/, 1]
       payscale = 'MPS1' if payscale == 'MPS'
@@ -119,17 +124,25 @@ module VacancyScraper::NorthEastSchools
       pay_scale = PayScale.find_by(salary: min_salary)
       pay_scale.present? ? pay_scale.code : nil
     end
+    # rubocop:enable
 
     def leadership; end
 
     def benefits; end
 
-    def starts_on; end
-
     def body
       xpath = '//div[@class="job-list-mobile"]/following-sibling::*[not(self::div[@id="schoolinfo"])' \
         'and not(self::div[@id="apply"]) and not(self::div[@class="supporting-documents"])]'
-      @body ||= vacancy.xpath(xpath).to_html
+      @body ||= vacancy.xpath(xpath)
+    end
+
+    def starts_on
+      starts_on_string = vacancy.xpath('//*[text()[contains(.,"Required for") or' \
+                                       ' contains(.,"Start Date") or contains(.,"start in")]]').text
+      starts_on = starts_on_string[/(\w+ \d{4})/, 1]
+      Date.parse(starts_on)
+    rescue
+      nil
     end
 
     def supporting_documents

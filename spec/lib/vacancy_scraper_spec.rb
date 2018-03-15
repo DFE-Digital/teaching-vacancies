@@ -91,6 +91,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
           expect(scraper.min_salary).to eq('22917')
         end
 
+        it '#starts_on' do
+          expect(scraper.starts_on).to eq(Date.new(2018, 9, 1))
+        end
+
         it '#ends_on' do
           expect(scraper.ends_on).to eq(Date.new(2018, 3, 22))
         end
@@ -184,6 +188,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#pay_scale' do
           expect(scraper.pay_scale).to eq(nil)
+        end
+
+        it '#starts_on' do
+          expect(scraper.starts_on).to eq(Date.new(2018, 9, 1))
         end
 
         it '#max_salary' do
@@ -299,7 +307,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#body' do
-          expect(scraper.body).to include('Salary on Lead Practitioner Scale 5 points to be negotiated')
+          expect(scraper.body.to_html).to include('Salary on Lead Practitioner Scale 5 points to be negotiated')
         end
 
         it '#application' do
