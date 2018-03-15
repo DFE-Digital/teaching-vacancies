@@ -78,6 +78,7 @@ module VacancyScraper::NorthEastSchools
       @salary ||= vacancy.xpath('//li[strong[contains(text(), "Salary:")]]').children.last.text.strip
     end
 
+    # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     def max_salary
       max_salary = salary.scan(/\d*.?(\d\d+),(\d{3})/)
       return max_salary[1].join('') if max_salary.present?
@@ -96,8 +97,9 @@ module VacancyScraper::NorthEastSchools
 
       pay_scale.present? ? pay_scale.salary : nil
     end
+    # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     def min_salary
       min_salary = salary.scan(/(\d\d+),(\d{3})/)
       return min_salary.first.join('') if min_salary.present?
@@ -123,7 +125,7 @@ module VacancyScraper::NorthEastSchools
 
       payscale.present? ? payscale.salary : 0
     end
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
     # # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
     def pay_scale
