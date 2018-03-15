@@ -1,15 +1,14 @@
 #!/bin/sh
 
-# Test server
 echo "Rebuiling the test server…"
-docker-compose --file=docker-compose.test.yml down --rmi=all -v --remove-orphans
+docker-compose --file=docker-compose.test.yml down -v --remove-orphans
 docker-compose --file=docker-compose.test.yml build
 bin/dtest-server
 echo "Rebuilt and started the testing server for TVS."
 
-# Web server
 echo "Rebuiling the web server…"
-docker-compose down -v --rmi=all --remove-orphans
+docker-compose down --remove-orphans
 docker-compose build
+docker-compose run --rm web rake db:seed
 echo "Rebuilt and starting the web server for TVS."
 bin/dstart

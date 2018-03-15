@@ -16,7 +16,7 @@ services:
     depends_on:
       - db-test
       - elasticsearch-test
-    command: ["bundle", "exec", "./bin/dsetup && rake"]
+    command: ["bundle", "exec", "./bin/dsetup && spring server"]
     networks:
       - tests
 
@@ -43,10 +43,6 @@ services:
       #- ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - tests
-
-  spring:
-    <<: *test
-    command: ["bundle", "exec", "./bin/dsetup && spring server"]
 
 networks:
   tests:

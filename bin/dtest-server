@@ -3,25 +3,25 @@ set -e
 
 start_test_server()
 {
-  docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml up -d db-test
-  docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml up -d elasticsearch-test
-  docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml up -d spring
+  docker-compose --file docker-compose.test.yml up -d db-test
+  docker-compose --file docker-compose.test.yml up -d elasticsearch-test
+  docker-compose --file docker-compose.test.yml up -d test
 }
 
 
 if [[ $# -eq 0 ]]
 then
-  docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml down
+  docker-compose --file docker-compose.test.yml down
   start_test_server
 fi
 
 if [[ $1 == "up" ]]
 then
-  docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml down
+  docker-compose --file docker-compose.test.yml down
   start_test_server
 fi
 
 if [[ $1 == "down" ]]
 then
-  docker-compose --project-name 'teachervacancyservice_static' --file docker-compose.test.yml down
+  docker-compose --file docker-compose.test.yml down
 fi
