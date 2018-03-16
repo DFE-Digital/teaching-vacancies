@@ -67,6 +67,33 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
       end
     end
+
+    scenario 'on the second page' do
+      school = create(:school)
+
+      visit new_vacancy_path(school_id: school.id)
+
+      fill_in 'vacancy[job_title]', with: 'title'
+      fill_in 'vacancy[headline]', with: 'headline'
+      fill_in 'vacancy[job_description]', with: 'description'
+      select 'Full time', from: 'vacancy[working_pattern]'
+      fill_in 'vacancy[minimum_salary]', with: 0
+      fill_in 'vacancy[maximum_salary]', with: 1
+      click_button 'Save and continue'
+
+      expect(page).to have_content('Step 2 of 3')
+
+      # Don't fill in any information to force all errors to show
+      click_button 'Save and continue'
+
+      within('.error-summary') do
+        expect(page).to have_content('1 error prevented this vacancy from being saved:')
+      end
+
+      within_row_for(text: I18n.t('vacancies.essential_requirements')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+      end
+    end
   end
 
   context 'Reviewing a vacancy' do

@@ -14,3 +14,5 @@ en:
               blank: can't be blank
             working_pattern:
               blank: can't be blank
+            essential_requirements:
+              blank: can't be blank
