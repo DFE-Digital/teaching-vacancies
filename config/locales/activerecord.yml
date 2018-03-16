@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    errors:
+      models:
+        vacancy:
+          attributes:
+            job_title:
+              blank: can't be blank
+            headline:
+              blank: can't be blank
+            job_description:
+              blank: can't be blank
+            minimum_salary:
+              blank: can't be blank
+            working_pattern:
+              blank: can't be blank

@@ -34,15 +34,39 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content('Publish a vacancy for Salisbury School')
   end
 
-  scenario 'Users can see validation errors when they don\'t fill in all required fields' do
-    school = create(:school)
-    vacancy = build(:vacancy, job_title: '')
+  context 'Users can see validation errors when they don\'t fill in all required fields' do
+    scenario 'on the first page' do
+      school = create(:school)
 
-    visit new_vacancy_path(school_id: school.id)
-    fill_in_job_spec_fields(vacancy)
+      visit new_vacancy_path(school_id: school.id)
 
-    expect(page).to have_content('error')
-    expect(page).to have_content('Job title can\'t be blank')
+      # Don't fill in any information to force all errors to show
+      click_button 'Save and continue'
+
+      within('.error-summary') do
+        expect(page).to have_content('5 errors prevented this vacancy from being saved:')
+      end
+
+      within_row_for(text: I18n.t('vacancies.job_title')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
+      end
+
+      within_row_for(text: I18n.t('vacancies.headline')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.headline.blank'))
+      end
+
+      within_row_for(text: I18n.t('vacancies.description')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
+      end
+
+      within_row_for(text: I18n.t('vacancies.salary_range')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
+      end
+
+      within_row_for(text: I18n.t('vacancies.working_pattern')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+      end
+    end
   end
 
   context 'Reviewing a vacancy' do
@@ -99,5 +123,10 @@ RSpec.feature 'Creating a vacancy' do
       expect(page).to have_content("The system reference number is #{vacancy.reference}")
       expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
     end
+  end
+
+  def within_row_for(text:, &block)
+    element = page.find('label', text: text).find(:xpath, '..')
+    within(element, &block)
   end
 end
