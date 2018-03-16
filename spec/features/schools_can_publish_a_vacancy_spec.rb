@@ -94,6 +94,72 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
       end
     end
+
+    scenario 'on the third page' do
+      school = create(:school)
+
+      visit new_vacancy_path(school_id: school.id)
+
+      fill_in 'vacancy[job_title]', with: 'title'
+      fill_in 'vacancy[headline]', with: 'headline'
+      fill_in 'vacancy[job_description]', with: 'description'
+      select 'Full time', from: 'vacancy[working_pattern]'
+      fill_in 'vacancy[minimum_salary]', with: 0
+      fill_in 'vacancy[maximum_salary]', with: 1
+      click_button 'Save and continue'
+
+      expect(page).to have_content('Step 2 of 3')
+
+      fill_in 'vacancy[essential_requirements]', with: 'essential requirements'
+      click_button 'Save and continue'
+
+      expect(page).to have_content('Step 3 of 3')
+
+      # Don't fill in any information to force all errors to show
+      click_button 'Save and continue'
+
+      within('.error-summary') do
+        expect(page).to have_content('3 errors prevented this vacancy from being saved:')
+      end
+
+      within_row_for(text: I18n.t('vacancies.contact_email')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
+      end
+
+      within_row_for(element: 'legend', text: I18n.t('vacancies.deadline_date')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
+      end
+
+      within_row_for(element: 'legend', text: I18n.t('vacancies.publication_date')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
+      end
+
+      # Fill in a date in the past
+      fill_in 'vacancy[publish_on_dd]', with: '01'
+      fill_in 'vacancy[publish_on_mm]', with: '01'
+      fill_in 'vacancy[publish_on_yyyy]', with: '2001'
+
+      click_button 'Save and continue'
+
+      within_row_for(element: 'legend', text: I18n.t('vacancies.publication_date')) do
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
+      end
+
+      # Fill in valid information
+      fill_in 'vacancy[contact_email]', with: 'foo@bar.com'
+
+      fill_in 'vacancy[expires_on_dd]', with: '01'
+      fill_in 'vacancy[expires_on_mm]', with: '01'
+      fill_in 'vacancy[expires_on_yyyy]', with: '2999'
+
+      fill_in 'vacancy[publish_on_dd]', with: '01'
+      fill_in 'vacancy[publish_on_mm]', with: '01'
+      fill_in 'vacancy[publish_on_yyyy]', with: '2999'
+
+      click_button 'Save and continue'
+
+      expect(page).to have_content('Confirm details before you submit')
+    end
   end
 
   context 'Reviewing a vacancy' do
@@ -152,8 +218,8 @@ RSpec.feature 'Creating a vacancy' do
     end
   end
 
-  def within_row_for(text:, &block)
-    element = page.find('label', text: text).find(:xpath, '..')
+  def within_row_for(element: 'label', text:, &block)
+    element = page.find(element, text: text).find(:xpath, '..')
     within(element, &block)
   end
 end

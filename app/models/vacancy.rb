@@ -110,6 +110,7 @@ class Vacancy < ApplicationRecord
   end
 
   def validity_of_publish_on
-    errors.add(:publish_on, /can''t be before today/) if publish_on && publish_on < Time.zone.today
+    error_message = I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today')
+    errors.add(:publish_on, error_message) if publish_on && publish_on < Time.zone.today
   end
 end
