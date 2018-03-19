@@ -426,6 +426,31 @@ RSpec.describe VacancyScraper::NorthEastSchools do
           expect(scraper.min_salary).to eq('22917')
         end
       end
+
+      context 'Main scale teacher' do
+        let(:vacancy_url) { 'https://www.jobsinschoolsnortheast.com/job/english-ks4-co-ordinator/' }
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(vacancy_url) }
+        before do
+          math_teacher = File.read(Rails.root.join('spec', 'fixtures', 'mainscale-teacher.html'))
+          stub_request(:get, vacancy_url).to_return(body: math_teacher, status: 200)
+        end
+
+        it '#salary' do
+          expect(scraper.salary).to eq('Main / Upper Payscale plus £1,938 - £3,921 (dependent on experience)')
+        end
+
+        it '#pay_scale' do
+          expect(scraper.pay_scale).to eq('MPS1')
+        end
+
+        it '#max_salary' do
+          expect(scraper.max_salary).to eq('38633')
+        end
+
+        it '#min_salary' do
+          expect(scraper.min_salary).to eq('22917')
+        end
+      end
     end
   end
 end
