@@ -51,4 +51,27 @@ RSpec.describe VacanciesHelper, type: :helper do
       end
     end
   end
+
+  describe '#pluralize_vacancy_count' do
+    context 'when the count is 1' do
+      it 'returns a singular count message' do
+        result = helper.pluralize_vacancy_count(1, 'vacancies.vacancy_count')
+        expect(result).to eql('There is 1 vacancy that matches your search.')
+      end
+    end
+
+    context 'when the count is 0' do
+      it 'returns an empty count message' do
+        result = helper.pluralize_vacancy_count(0, 'vacancies.vacancy_count')
+        expect(result).to eql('There are 0 vacancies that match your search.')
+      end
+    end
+
+    context 'when the count is larger than 1' do
+      it 'returns a plural count message' do
+        result = helper.pluralize_vacancy_count(2, 'vacancies.vacancy_count')
+        expect(result).to eql('There are 2 vacancies that match your search.')
+      end
+    end
+  end
 end

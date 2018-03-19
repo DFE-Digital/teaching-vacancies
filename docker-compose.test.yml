@@ -17,6 +17,7 @@ services:
       - db-test
       - elasticsearch-test
     command: ["bundle", "exec", "./bin/dsetup && spring server"]
+    restart: on-failure
     networks:
       - tests
 
@@ -26,6 +27,7 @@ services:
       - pg_test_data:/var/lib/postgresql/data/:cached
     networks:
       - tests
+    restart: on-failure
 
   elasticsearch-test:
     image: elasticsearch
@@ -43,6 +45,7 @@ services:
       #- ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - tests
+    restart: on-failure
 
 networks:
   tests:

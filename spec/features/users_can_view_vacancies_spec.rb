@@ -1,5 +1,16 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
+  scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
+    vacancy_count = Vacancy.default_per_page + 1 # must be larger than the default page limit
+    vacancy_count.times { FactoryGirl.create(:vacancy) }
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit vacancies_path
+
+    expect(page).to have_content("There are #{vacancy_count} vacancies that match your search.")
+    expect(page).to have_selector('.vacancy', count: Vacancy.default_per_page)
+  end
+
   scenario 'Only published, non-expired vacancies are visible in the list', elasticsearch: true do
     valid_vacancy = create(:vacancy)
 
