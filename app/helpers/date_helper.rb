@@ -7,7 +7,7 @@ module DateHelper
     unless Date::DATE_FORMATS.include?(format)
       raise FormatDateError, date_format_error_message(format, date_formats)
     end
-    date.to_s(format)
+    date.to_s(format).lstrip
   end
 
   def date_format_error_message(format, date_formats)

@@ -88,9 +88,9 @@
         %dd= @vacancy.salary_range
 
         %dt= t('vacancies.working_pattern')
-        %dd= @vacancy.working_pattern&.titleize
+        %dd= @vacancy.working_pattern
 
-        - if @vacancy.part_time?
+        - if @vacancy.part_time? && @vacancy.weekly_hours
           %dt= t('vacancies.weekly_hours')
           %dd= @vacancy.weekly_hours
 

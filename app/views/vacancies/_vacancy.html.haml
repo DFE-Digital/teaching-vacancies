@@ -5,12 +5,12 @@
     %dt= t('vacancies.salary')
     %dd.double
       = vacancy.salary_range
-      per annum
+      = t('vacancies.per_year')
     %dt= t('vacancies.publish_on')
     %dd= format_date(vacancy.publish_on)
     %dt= t('vacancies.expires_on')
     %dd= format_date(vacancy.expires_on)
     %dt= t('vacancies.working_pattern')
-    %dd= vacancy.working_pattern&.titleize
+    %dd= vacancy.working_pattern
     %dt= t('vacancies.starts_on')
     %dd= format_date(vacancy.starts_on)
