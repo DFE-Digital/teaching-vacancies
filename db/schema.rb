@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117140917) do
+ActiveRecord::Schema.define(version: 20180315170418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "fuzzystrmatch"
 
   create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code"
@@ -29,6 +30,10 @@ ActiveRecord::Schema.define(version: 20171117140917) do
 
   create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
+    t.string "code"
+    t.string "salary"
+    t.date "expires_at"
+    t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at", unique: true
     t.index ["label"], name: "index_pay_scales_on_label", unique: true
   end
 
@@ -105,6 +110,7 @@ ActiveRecord::Schema.define(version: 20171117140917) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
+    t.string "application_link"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["pay_scale_id"], name: "index_vacancies_on_pay_scale_id"
