@@ -17,12 +17,13 @@ resource "aws_cloudwatch_log_group" "cloudwatch_lambda_log_group" {
 }
 
 resource "aws_iam_role" "slack_lambda_role" {
-  name = "${var.project_name}-${var.environment}-slack-lambda-role"
+  name               = "${var.project_name}-${var.environment}-slack-lambda-role"
   assume_role_policy = "${file("./terraform/policies/cloudwatch-slack-lambda-role.json")}"
 }
 
 data "template_file" "slack_lambda_policy" {
   template = "${file("./terraform/policies/cloudwatch-slack-lambda-policy.json")}"
+
   vars {
     cloudwatch_lambda_log_group_arn = "${aws_cloudwatch_log_group.cloudwatch_lambda_log_group.arn}"
     cloudwatch_lambda_kms_key_arn   = "${aws_kms_key.cloudwatch_lambda.arn}"
@@ -61,32 +62,30 @@ resource "aws_sns_topic_subscription" "cloudwatch_to_slack_lambda_subscription" 
 }
 
 resource "aws_lambda_permission" "with_sns" {
-    statement_id = "AllowExecutionFromSNS"
-    action = "lambda:InvokeFunction"
-    function_name = "${aws_lambda_function.cloudwatch_to_slack.arn}"
-    principal = "sns.amazonaws.com"
-    source_arn = "${aws_sns_topic.cloudwatch_alerts.arn}"
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.cloudwatch_to_slack.arn}"
+  principal     = "sns.amazonaws.com"
+  source_arn    = "${aws_sns_topic.cloudwatch_alerts.arn}"
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu" {
+  alarm_name          = "${var.project_name}-${var.environment}-cpu"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "80"
 
-  alarm_name                = "${var.project_name}-${var.environment}-cpu"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/EC2"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = "80"
-
-  alarm_description         = "This metric monitors ec2 cpu utilization within the autoscaling group ${var.autoscaling_group_name}"
-  alarm_actions             = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
-  ok_actions                = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
+  alarm_description = "This metric monitors ec2 cpu utilization within the autoscaling group ${var.autoscaling_group_name}"
+  alarm_actions     = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
+  ok_actions        = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
 
   dimensions {
-    AutoScalingGroupName    = "${var.autoscaling_group_name}"
+    AutoScalingGroupName = "${var.autoscaling_group_name}"
   }
-
 }
 
 resource "aws_cloudwatch_event_rule" "code_pipeline_fail" {
@@ -119,4 +118,3 @@ resource "aws_cloudwatch_event_target" "code_pipeline_fail_sns_target" {
   arn       = "${aws_sns_topic.cloudwatch_alerts.arn}"
   input     = "{\"AlarmName\": \"Failed Pipeline\",\"NewStateValue\": \"ALARM\",\"NewStateReason\": \"Pipeline ${var.pipeline_name} has failed\"}"
 }
-

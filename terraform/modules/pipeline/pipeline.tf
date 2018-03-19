@@ -41,9 +41,9 @@ data "template_file" "codebuild_policy" {
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
-  name        = "${var.project_name}-${var.environment}-codebuild-policy"
-  role        = "${aws_iam_role.codebuild_role.id}"
-  policy      = "${data.template_file.codebuild_policy.rendered}"
+  name   = "${var.project_name}-${var.environment}-codebuild-policy"
+  role   = "${aws_iam_role.codebuild_role.id}"
+  policy = "${data.template_file.codebuild_policy.rendered}"
 }
 
 data "template_file" "buildspec" {
@@ -63,7 +63,7 @@ resource "aws_codebuild_project" "tvs_build" {
   service_role  = "${aws_iam_role.codebuild_role.arn}"
 
   artifacts {
-    type      = "CODEPIPELINE"
+    type = "CODEPIPELINE"
   }
 
   environment {

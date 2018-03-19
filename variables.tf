@@ -25,7 +25,7 @@ variable "private_subnets_cidr" {
 
 variable "ssh_ips" {
   description = "IPs with a degree of trust "
-  type = "list"
+  type        = "list"
 }
 
 # EC2
@@ -35,11 +35,11 @@ variable "region" {
 }
 
 # EC2
-variable "availability_zones"    {
+variable "availability_zones" {
   default = ["eu-west-2a", "eu-west-2b"]
 }
 
-variable "ecs_key_pair_name"    {
+variable "ecs_key_pair_name" {
   description = "This key will be placed onto the machines by Terraform to allow SSH"
 }
 
@@ -49,7 +49,7 @@ variable "image_id" {
 
 variable "ecs_instance_type" {
   description = "The size of the EC2 instances to use"
-  default = "t2.micro"
+  default     = "t2.micro"
 }
 
 variable "asg_name" {
@@ -58,17 +58,17 @@ variable "asg_name" {
 
 variable "asg_max_size" {
   description = "The maximum EC2 count for the default autoscaling group policy"
-  default = 1
+  default     = 1
 }
 
 variable "asg_min_size" {
   description = "The minimum EC2 count for the default autoscaling group policy"
-  default = 1
+  default     = 1
 }
 
 variable "asg_desired_size" {
   description = "The prefferd EC2 count for the default autoscaling group policy"
-  default = 1
+  default     = 1
 }
 
 variable "alb_certificate_arn" {
@@ -77,6 +77,7 @@ variable "alb_certificate_arn" {
 
 # ECS
 variable "ecs_cluster_name" {}
+
 variable "ecs_service_name" {
   default = "default-web"
 }
@@ -87,52 +88,52 @@ variable "ecs_service_task_name" {
 
 variable "ecs_service_task_count" {
   description = "The number of containers to run for this service"
-  default = 1
+  default     = 1
 }
 
 variable "ecs_service_task_port" {
   description = "The port this application is listening on (ALB will map these with ephemeral port numbers)"
-  default = 3000
+  default     = 3000
 }
 
 variable "ecs_service_task_definition_file_path" {
   description = "Containers running on ECS will be executed based on the configuration of this file"
-  default = "./web_task_definition.json"
+  default     = "./web_task_definition.json"
 }
 
 variable "ecs_import_schools_task_definition_file_path" {
   description = "Task definition to import schools"
-  default = "./import_schools_task_definition.json"
+  default     = "./import_schools_task_definition.json"
 }
 
 variable "ecs_vacancies_scrape_task_definition_file_path" {
   description = "Task definition to scrape vacancies"
-  default = "./vacancies_scrape_task_definition.json"
+  default     = "./vacancies_scrape_task_definition.json"
 }
 
 variable "vacancies_scrape_schedule_expression" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default = "rate(60 minutes)"
+  default     = "rate(60 minutes)"
 }
 
 variable "buildspec_location" {
   description = "AWS Codebuild will look for this file to tell it how to build this project"
-  default = "./buildspec.yml"
+  default     = "./buildspec.yml"
 }
 
 variable "git_branch_to_track" {
   description = "Git branch to listen for code changes on and auto deploy"
-  default = "master"
+  default     = "master"
 }
 
 variable "import_schools_entrypoint" {
   description = "The Entrypoint for the import_schools task"
-  default = ["rake","data:schools:import"]
+  default     = ["rake", "data:schools:import"]
 }
 
 variable "vacancies_scrape_entrypoint" {
   description = "The Entrypoint for the vacancies_scrape task"
-  default = ["rake","vacancies:data:scrape"]
+  default     = ["rake", "vacancies:data:scrape"]
 }
 
 # RDS
@@ -149,9 +150,11 @@ variable "rds_engine_version" {
     postgres = "9.6.6"
   }
 }
+
 variable "rds_storage_gb" {}
 variable "rds_username" {}
 variable "rds_password" {}
+
 variable "rds_instance_type" {
   default = "db.t2.micro"
 }
@@ -159,11 +162,13 @@ variable "rds_instance_type" {
 # Elastic search
 variable "es_version" {
   description = "Amazon Elasticsearch Service currently supports Elasticsearch versions 6.0, 5.5, 5.3, 5.1, 2.3, and 1.5."
-  default = "6.0"
+  default     = "6.0"
 }
+
 variable "es_instance_count" {
   default = 2
 }
+
 variable "es_instance_type" {
   default = "t2.small.elasticsearch"
 }
@@ -172,30 +177,36 @@ variable "es_instance_type" {
 variable "cloudfront_certificate_arn" {
   description = "Create and verify a certificate through AWS Certificate Manager to acquire this"
 }
+
 variable "cloudfront_aliases" {
   description = "Match this value to the alias associated with the cloudfront_certificate_arn, eg. tvs.staging.dxw.net"
-  type = "list"
+  type        = "list"
 }
 
 # Cloudwatch
 variable "cloudwatch_slack_hook_url" {
   description = "The slack hook that cloudwatch alarms are sent to"
 }
+
 variable "cloudwatch_slack_channel" {
   description = "The slack channel that cloudwatch alarms are sent to"
 }
+
 variable "cloudwatch_ops_genie_api_key" {
   description = "The ops genie api key for sending alerts to ops genie"
 }
 
 # Application
-variable "rails_env"            {}
-variable "http_pass"            {}
-variable "http_user"            {}
-variable "google_maps_api_key"  {}
-variable "google_analytics"     {}
-variable "secret_key_base"      {}
+variable "rails_env" {}
+
+variable "http_pass" {}
+variable "http_user" {}
+variable "google_maps_api_key" {}
+variable "google_analytics" {}
+variable "secret_key_base" {}
+
 variable "load_balancer_check_path" {
   default = "/"
 }
+
 variable "rollbar_access_token" {}

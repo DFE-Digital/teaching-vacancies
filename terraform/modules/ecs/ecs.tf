@@ -25,9 +25,9 @@ resource "aws_ecs_service" "web" {
   deployment_minimum_healthy_percent = 50
 
   load_balancer {
-    target_group_arn  = "${var.aws_alb_target_group_arn}"
-    container_name    = "${var.ecs_service_task_name}"
-    container_port    = "${var.ecs_service_task_port}"
+    target_group_arn = "${var.aws_alb_target_group_arn}"
+    container_name   = "${var.ecs_service_task_name}"
+    container_port   = "${var.ecs_service_task_port}"
   }
 
   depends_on = ["aws_iam_role.ecs_role"]
@@ -51,12 +51,12 @@ data "template_file" "scheduled_task_policy" {
   vars {
     task_execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   }
-
 }
+
 resource "aws_iam_role_policy" "scheduled_task_policy" {
-  name        = "${var.project_name}-${var.environment}-scheduled-task-policy"
-  role        = "${aws_iam_role.scheduled_task_role.id}"
-  policy      = "${data.template_file.scheduled_task_policy.rendered}"
+  name   = "${var.project_name}-${var.environment}-scheduled-task-policy"
+  role   = "${aws_iam_role.scheduled_task_role.id}"
+  policy = "${data.template_file.scheduled_task_policy.rendered}"
 }
 
 /* the task definition for the web service */
@@ -64,27 +64,27 @@ data "template_file" "web_task" {
   template = "${file(var.ecs_service_task_definition_file_path)}"
 
   vars {
-    image                     = "${aws_ecr_repository.default.repository_url}"
-    http_pass                 = "${var.http_pass}"
-    http_user                 = "${var.http_user}"
-    google_maps_api_key       = "${var.google_maps_api_key}"
-    google_analytics          = "${var.google_analytics}"
-    rollbar_access_token      = "${var.rollbar_access_token}"
-    secret_key_base           = "${var.secret_key_base}"
-    project_name              = "${var.project_name}"
-    task_name                 = "${var.ecs_service_task_name}"
-    task_port                 = "${var.ecs_service_task_port}"
-    environment               = "${var.environment}"
-    rails_env                 = "${var.rails_env}"
-    region                    = "${var.region}"
-    log_group                 = "${var.aws_cloudwatch_log_group_name}"
-    database_user             = "${var.rds_username}"
-    database_password         = "${var.rds_password}"
-    database_url              = "${var.rds_address}"
-    elastic_search_url        = "${var.es_address}"
-    aws_elasticsearch_region  = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key     = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret  = "${var.aws_elasticsearch_secret}"
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    http_pass                = "${var.http_pass}"
+    http_user                = "${var.http_user}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    google_analytics         = "${var.google_analytics}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}"
+    task_port                = "${var.ecs_service_task_port}"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
   }
 }
 
@@ -93,25 +93,24 @@ data "template_file" "import_schools_task" {
   template = "${file(var.ecs_import_schools_task_definition_file_path)}"
 
   vars {
-    image               = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key = "${var.google_maps_api_key}"
-    secret_key_base     = "${var.secret_key_base}"
-    project_name        = "${var.project_name}"
-    task_name           = "${var.ecs_service_task_name}_import_schools"
-    environment         = "${var.environment}"
-    rails_env           = "${var.rails_env}"
-    region              = "${var.region}"
-    log_group           = "${var.aws_cloudwatch_log_group_name}"
-    database_user       = "${var.rds_username}"
-    database_password   = "${var.rds_password}"
-    database_url        = "${var.rds_address}"
-    elastic_search_url  = "${var.es_address}"
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_import_schools"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint          = "${jsonencode(var.import_schools_entrypoint)}"
+    entrypoint               = "${jsonencode(var.import_schools_entrypoint)}"
   }
-
 }
 
 /* vacancies_scrape task definition*/
@@ -119,27 +118,25 @@ data "template_file" "vacancies_scrape_task" {
   template = "${file(var.ecs_vacancies_scrape_task_definition_file_path)}"
 
   vars {
-    image               = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key = "${var.google_maps_api_key}"
-    secret_key_base     = "${var.secret_key_base}"
-    project_name        = "${var.project_name}"
-    task_name           = "${var.ecs_service_task_name}_vacancies_scrape"
-    environment         = "${var.environment}"
-    rails_env           = "${var.rails_env}"
-    region              = "${var.region}"
-    log_group           = "${var.aws_cloudwatch_log_group_name}"
-    database_user       = "${var.rds_username}"
-    database_password   = "${var.rds_password}"
-    database_url        = "${var.rds_address}"
-    elastic_search_url  = "${var.es_address}"
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_vacancies_scrape"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint          = "${jsonencode(var.vacancies_scrape_entrypoint)}"
+    entrypoint               = "${jsonencode(var.vacancies_scrape_entrypoint)}"
   }
-
 }
-
 
 resource "aws_ecs_task_definition" "web" {
   family                   = "${var.ecs_service_task_name}"
@@ -181,13 +178,14 @@ resource "aws_cloudwatch_event_rule" "vacancies_scrape_task_cron" {
 }
 
 resource "aws_cloudwatch_event_target" "vacancies_scrape_task_cron_event" {
-  target_id          = "${var.ecs_service_task_name}_vacancies_scrape"
-  rule               = "${aws_cloudwatch_event_rule.vacancies_scrape_task_cron.name}"
-  arn                = "${aws_ecs_cluster.cluster.arn}"
-  role_arn           = "${aws_iam_role.scheduled_task_role.arn}"
-  ecs_target { 
-    task_count             = "1"
-    task_definition_arn    = "${aws_ecs_task_definition.vacancies_scrape.arn}"
+  target_id = "${var.ecs_service_task_name}_vacancies_scrape"
+  rule      = "${aws_cloudwatch_event_rule.vacancies_scrape_task_cron.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.vacancies_scrape.arn}"
   }
 }
 
@@ -196,10 +194,11 @@ IAM service role
 ======*/
 data "aws_iam_policy_document" "ecs_service_role" {
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = ["sts:AssumeRole"]
+
     principals {
-      type = "Service"
+      type        = "Service"
       identifiers = ["ecs.amazonaws.com"]
     }
   }
@@ -239,9 +238,9 @@ resource "aws_iam_instance_profile" "ecs-instance-profile" {
 ECS SERVICE ROLE
 ======*/
 resource "aws_iam_role" "ecs-instance-role" {
-  name                = "${var.project_name}-${var.environment}-ecs-instance-role"
-  path                = "/"
-  assume_role_policy  = "${data.aws_iam_policy_document.ecs-instance-policy.json}"
+  name               = "${var.project_name}-${var.environment}-ecs-instance-role"
+  path               = "/"
+  assume_role_policy = "${data.aws_iam_policy_document.ecs-instance-policy.json}"
 }
 
 data "aws_iam_policy_document" "ecs-instance-policy" {
