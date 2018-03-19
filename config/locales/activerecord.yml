@@ -1,0 +1,25 @@
+en:
+  activerecord:
+    errors:
+      models:
+        vacancy:
+          attributes:
+            job_title:
+              blank: can't be blank
+            headline:
+              blank: can't be blank
+            job_description:
+              blank: can't be blank
+            minimum_salary:
+              blank: can't be blank
+            working_pattern:
+              blank: can't be blank
+            essential_requirements:
+              blank: can't be blank
+            contact_email:
+              blank: can't be blank
+            expires_on:
+              blank: can't be blank
+            publish_on:
+              blank: can't be blank
+              before_today: can't be before today
