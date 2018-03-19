@@ -4,9 +4,10 @@ class VacanciesController < ApplicationController
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
     @query = Vacancy.public_search(filters: @filters, sort: @sort)
-    vacancies = @query.page(params[:page]).records
+    records = @query.records
 
-    @vacancies = VacanciesPresenter.new(vacancies)
+    @vacancy_count = records.count
+    @vacancies = VacanciesPresenter.new(records.page(params[:page]))
   end
 
   def show

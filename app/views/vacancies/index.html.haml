@@ -1,5 +1,5 @@
 %h1.heading-large
-  = pluralize_vacancy_count(@vacancies.count, 'vacancies.vacancy_count')
+  = pluralize_vacancy_count(@vacancy_count, 'vacancies.vacancy_count')
 .grid-row
   .column-one-third
     = render 'filters'
