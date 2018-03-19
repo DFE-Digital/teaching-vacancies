@@ -25,7 +25,7 @@ module VacancyScraper::NorthEastSchools
       vacancy.headline = job_title
       vacancy.subject = Subject.find_by(name: subject)
       vacancy.school = school
-      vacancy.job_description = Nokogiri::HTML(body.to_html).text
+      vacancy.job_description = job_description
       vacancy.working_pattern = working_pattern
       vacancy.weekly_hours = work_hours
       vacancy.minimum_salary = min_salary
@@ -50,6 +50,10 @@ module VacancyScraper::NorthEastSchools
 
     def job_title
       vacancy.css('.page-title').text
+    end
+
+    def job_description
+      Nokogiri::HTML(body.to_html).text
     end
 
     def subject
