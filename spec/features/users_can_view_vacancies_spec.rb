@@ -64,15 +64,15 @@ RSpec.feature 'Viewing vacancies' do
     scenario 'Shows the weekly hours if there are weekly_hours' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: '5')
       Vacancy.__elasticsearch__.client.indices.flush
-      visit vacancies_path
+      visit vacancy_path(vacancy)
+      expect(page).to have_content(I18n.t('vacancies.weekly_hours'))
       expect(page).to have_content(vacancy.weekly_hours)
     end
-
     scenario 'Does not show if there are not the weekly_hours' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: nil)
       Vacancy.__elasticsearch__.client.indices.flush
-      visit vacancies_path
-      expect(page).to have_content(vacancy.weekly_hours)
+      visit vacancy_path(vacancy)
+      expect(page).not_to have_content(I18n.t('vacancies.weekly_hours'))
     end
   end
 end
