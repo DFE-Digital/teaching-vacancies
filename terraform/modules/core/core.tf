@@ -113,9 +113,9 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table_association" "private" {
-  count           = "${length(var.private_subnets_cidr)}"
-  subnet_id       = "${element(aws_subnet.private_subnet.*.id, count.index)}"
-  route_table_id  = "${aws_route_table.private.id}"
+  count          = "${length(var.private_subnets_cidr)}"
+  subnet_id      = "${element(aws_subnet.private_subnet.*.id, count.index)}"
+  route_table_id = "${aws_route_table.private.id}"
 }
 
 /*====
@@ -145,7 +145,7 @@ resource "aws_security_group" "default" {
     Environment = "${var.environment}"
   }
 
-  depends_on  = ["aws_vpc.vpc"]
+  depends_on = ["aws_vpc.vpc"]
 }
 
 /* ECS agents need to communicate with AWS to register to the cluster */
@@ -155,10 +155,10 @@ resource "aws_security_group" "ecs" {
   vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    cidr_blocks     = "${var.ssh_ips}"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = "${var.ssh_ips}"
   }
 
   ingress {
@@ -169,10 +169,10 @@ resource "aws_security_group" "ecs" {
   }
 
   egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags {
@@ -180,7 +180,7 @@ resource "aws_security_group" "ecs" {
     Environment = "${var.environment}"
   }
 
-  depends_on  = ["aws_vpc.vpc"]
+  depends_on = ["aws_vpc.vpc"]
 }
 
 /*====
@@ -207,7 +207,7 @@ resource "aws_alb_listener" "default" {
     type             = "forward"
   }
 
-  depends_on        = ["aws_alb_target_group.alb_target_group"]
+  depends_on = ["aws_alb_target_group.alb_target_group"]
 }
 
 resource "aws_alb_listener" "default_https" {
@@ -222,7 +222,7 @@ resource "aws_alb_listener" "default_https" {
     type             = "forward"
   }
 
-  depends_on        = ["aws_alb_target_group.alb_target_group"]
+  depends_on = ["aws_alb_target_group.alb_target_group"]
 }
 
 resource "aws_alb_target_group" "alb_target_group" {
@@ -298,21 +298,21 @@ resource "aws_iam_role_policy" "ecs_autoscale_role_policy" {
 
 resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   # Naming important to tie it to launch configuration: https://github.com/hashicorp/terraform/issues/532#issuecomment-272263827
-  name                        = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
-  availability_zones          = "${var.availability_zones}"
-  max_size                    = "${var.asg_max_size}"
-  min_size                    = "${var.asg_min_size}"
-  desired_capacity            = "${var.asg_desired_size}"
-  vpc_zone_identifier         = ["${aws_subnet.public_subnet.*.id}"]
-  launch_configuration        = "${aws_launch_configuration.ecs-launch-configuration.name}"
-  health_check_type           = "ELB"
+  name                 = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
+  availability_zones   = "${var.availability_zones}"
+  max_size             = "${var.asg_max_size}"
+  min_size             = "${var.asg_min_size}"
+  desired_capacity     = "${var.asg_desired_size}"
+  vpc_zone_identifier  = ["${aws_subnet.public_subnet.*.id}"]
+  launch_configuration = "${aws_launch_configuration.ecs-launch-configuration.name}"
+  health_check_type    = "ELB"
 
   tags = [
     {
       key                 = "Name"
       value               = "${var.project_name}-${var.environment}"
       propagate_at_launch = true
-    }
+    },
   ]
 
   depends_on = ["aws_vpc.vpc", "aws_launch_configuration.ecs-launch-configuration", "aws_security_group.default", "aws_security_group.ecs"]
@@ -328,11 +328,10 @@ resource "aws_appautoscaling_target" "target" {
 }
 
 resource "aws_appautoscaling_policy" "up" {
-  name                    = "${var.project_name}_${var.environment}_scale_up"
-  service_namespace       = "ecs"
-  resource_id             = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
-  scalable_dimension      = "ecs:service:DesiredCount"
-
+  name               = "${var.project_name}_${var.environment}_scale_up"
+  service_namespace  = "ecs"
+  resource_id        = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
+  scalable_dimension = "ecs:service:DesiredCount"
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
@@ -341,7 +340,7 @@ resource "aws_appautoscaling_policy" "up" {
 
     step_adjustment {
       metric_interval_lower_bound = 0
-      scaling_adjustment = 1
+      scaling_adjustment          = 1
     }
   }
 
@@ -349,11 +348,10 @@ resource "aws_appautoscaling_policy" "up" {
 }
 
 resource "aws_appautoscaling_policy" "down" {
-  name                    = "${var.project_name}_${var.environment}_scale_down"
-  service_namespace       = "ecs"
-  resource_id             = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
-  scalable_dimension      = "ecs:service:DesiredCount"
-
+  name               = "${var.project_name}_${var.environment}_scale_down"
+  service_namespace  = "ecs"
+  resource_id        = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
+  scalable_dimension = "ecs:service:DesiredCount"
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
@@ -362,7 +360,7 @@ resource "aws_appautoscaling_policy" "down" {
 
     step_adjustment {
       metric_interval_upper_bound = 0
-      scaling_adjustment = -1
+      scaling_adjustment          = -1
     }
   }
 
