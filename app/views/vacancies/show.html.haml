@@ -5,7 +5,7 @@
 .vacancy.grid-row
   - if @vacancy.expired?
     .column-full
-      .banner-warning 
+      .banner-warning
         = t('vacancies.expired')
 
   .column-two-thirds
@@ -93,9 +93,6 @@
         - if @vacancy.part_time?
           %dt= t('vacancies.weekly_hours')
           %dd= @vacancy.weekly_hours
-
-        %dt= t('vacancies.ref_no')
-        %dd= @vacancy.reference
 
         %dt= t('vacancies.expires_on')
         %dd= format_date(@vacancy.expires_on)
