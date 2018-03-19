@@ -86,7 +86,7 @@ module VacancyScraper::NorthEastSchools
       max_salary = salary.scan(/\d*.?(\d\d+),(\d{3})/)
       return max_salary[1].join('') if max_salary.present?
 
-      code = salary[/(UP[SR]\d*)/, 1] || salary[/(Upper).*Payscale/, 1] || salary[/(U\d{1})/, 1]
+      code = salary[/(UP[SR]\d*)/, 1] || salary[/(Upper).*[Ss]cale/, 1] || salary[/(U\d{1})/, 1]
       code = 'UPS3' if ['UPS', 'UPR', 'Upper'].include?(code)
       code = code.present? ? code.gsub(/(\w{1,3})(\d)/, 'UPS\2') : nil
 
@@ -107,7 +107,7 @@ module VacancyScraper::NorthEastSchools
       min_salary = salary.scan(/(\d\d+),(\d{3})/)
       return min_salary.first.join('') if min_salary.present?
 
-      code = salary[/(MP[SR]\d*)/, 1] || salary[/(Main).*Payscale/, 1] || salary[/(M\d{1})/, 1]
+      code = salary[/(MP[SR]\d*)/, 1] || salary[/(Main).*[Ss]cale/, 1] || salary[/(M\d{1})/, 1]
 
       code = 'MPS1' if ['M1', 'MPS', 'MPR', 'Main'].include?(code)
       code = code.present? ? code.gsub(/(\w{1,3})(\d)/, 'MPS\2') : nil
