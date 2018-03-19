@@ -28,22 +28,15 @@ RSpec.describe Vacancy, type: :model do
 
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
-      subject do
-        Vacancy.create(
-          school: create(:school),
-          job_title: 'Primary teacher',
-          headline: 'We are looking for a great teacher',
-          job_description: 'Teach a primary class.',
-          minimum_salary: 20_000,
-          working_pattern: :full_time,
-          essential_requirements: 'PGCE or equivalent'
-        )
-      end
+
+      subject { build(:vacancy) }
       before { subject.contact_email = '' }
+
       it 'should validate presence of contact email' do
         expect(subject.valid?).to be_falsy
         expect(subject.errors.messages[:contact_email]).not_to eql([])
       end
+
       it { should validate_presence_of(:publish_on) }
       it { should validate_presence_of(:expires_on) }
     end
