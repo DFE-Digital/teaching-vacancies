@@ -16,6 +16,7 @@ FactoryGirl.define do
     minimum_salary { Faker::Number.number(4) }
     maximum_salary { Faker::Number.number(5) }
     contact_email { Faker::Internet.email }
+    application_link { Faker::Internet.url }
 
     trait :draft do
       status { :draft }

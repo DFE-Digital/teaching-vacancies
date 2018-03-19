@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-docker-compose exec test rake teaspoon $@
+docker-compose --file docker-compose.test.yml run test teaspoon $@

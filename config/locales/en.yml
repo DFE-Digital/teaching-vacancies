@@ -70,15 +70,19 @@ en:
     essential_requirements: 'Professional requirements'
     candidate_specification: 'Candidate specification'
     application_details: 'Application details'
-    contact_email: 'Contact email for applications'
-    deadline_date: 'Application deadline'
-    publication_date: 'Date role will be posted'
-    confirm: 'Review the vacancy details and make any necessary changes before submitting it for publication below.'
-    confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
+    contact_email: 'Vacancy contact email'
+    deadline_date: 'Vacancy deadline date'
+    publication_date: 'Vacancy publication date'
+    confirm: 'Confirm details before you submit'
+    confirmation_summary:
+      >
+        You can preview your vacancy to see how it will look for potential applicants.
+        By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.
     submit: 'Confirm and submit vacancy'
     submitted: 'Vacancy submitted'
     view_posted_vacancy: 'The vacancy has been posted, you can view it here:'
     preview_posted_vacancy: 'The vacancy will be posted on %{date}, you can preview it here:'
+    application_link: 'Apply for this job'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
       headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'

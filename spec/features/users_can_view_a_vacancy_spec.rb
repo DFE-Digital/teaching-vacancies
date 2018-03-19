@@ -20,28 +20,6 @@ RSpec.feature 'Viewing a single published vacancy' do
     expect(page).to_not have_content(draft_vacancy.job_title)
   end
 
-  scenario 'Vacancy slugs are not duplicated' do
-    first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-                                                       school: build(:school, name: 'Blue School'))
-    second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-                                                        school: build(:school, name: 'Green school'))
-    third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-                                                       school: build(:school, name: 'Green school',
-                                                                              town: 'Greenway', county: 'Mars'))
-    fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-                                                        school: build(:school, name: 'Green school',
-                                                                               town: 'Greenway', county: 'Mars'))
-
-    expect(first_maths_teacher.slug).to eq('maths-teacher')
-    expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
-    expect(third_maths_teacher.slug).to eq('maths-teacher-green-school-greenway-mars')
-
-    expect(fourth_maths_teacher.slug).to have_content('maths-teacher')
-    expect(fourth_maths_teacher.slug).not_to eq('maths-teacher')
-    expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school')
-    expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school-greenway-mars')
-  end
-
   scenario 'Expired vacancies display a warning message' do
     current_vacancy = create(:vacancy)
     expired_vacancy = create(:vacancy, :expired)
@@ -53,12 +31,22 @@ RSpec.feature 'Viewing a single published vacancy' do
     expect(page).to have_content('This vacancy has expired')
   end
 
-  scenario 'A single vacancy must  contain JobPosting schema.org mark up', elasticsearch: true do
+  scenario 'A single vacancy must contain JobPosting schema.org mark up', elasticsearch: true do
     vacancy = create(:vacancy, :job_schema)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancy_path(vacancy)
 
     expect(script_tag_content(wrapper_class: '.jobref')).to eq(vacancy_json_ld(vacancy).to_json)
+  end
+
+  context 'A user viewing a vacancy' do
+    scenario 'can click on the application link when there is one set' do
+      vacancy = create(:vacancy, :job_schema)
+      visit vacancy_path(vacancy)
+      click_on I18n.t('vacancies.application_link')
+
+      expect(page.current_url).to eq vacancy.application_link
+    end
   end
 end

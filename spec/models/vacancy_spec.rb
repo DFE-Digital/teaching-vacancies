@@ -28,22 +28,15 @@ RSpec.describe Vacancy, type: :model do
 
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
-      subject do
-        Vacancy.create(
-          school: create(:school),
-          job_title: 'Primary teacher',
-          headline: 'We are looking for a great teacher',
-          job_description: 'Teach a primary class.',
-          minimum_salary: 20_000,
-          working_pattern: :full_time,
-          essential_requirements: 'PGCE or equivalent'
-        )
-      end
+
+      subject { build(:vacancy) }
       before { subject.contact_email = '' }
+
       it 'should validate presence of contact email' do
         expect(subject.valid?).to be_falsy
         expect(subject.errors.messages[:contact_email]).not_to eql([])
       end
+
       it { should validate_presence_of(:publish_on) }
       it { should validate_presence_of(:expires_on) }
     end
@@ -78,6 +71,26 @@ RSpec.describe Vacancy, type: :model do
         expect(vacancy.valid?).to be false
         expect(vacancy.errors.messages[:weekly_hours][0]).to eq('cannot be negative')
       end
+    end
+  end
+
+  describe '#slug' do
+    it 'a vacancy slug is not duplicate' do
+      green_school = build(:school, name: 'Green school', town: 'Greenway', county: 'Mars')
+      blue_school = build(:school, name: 'Blue school')
+      first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: blue_school)
+      second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+      third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+      fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+
+      expect(first_maths_teacher.slug).to eq('maths-teacher')
+      expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
+      expect(third_maths_teacher.slug).to eq('maths-teacher-green-school-greenway-mars')
+
+      expect(fourth_maths_teacher.slug).to include('maths-teacher')
+      expect(fourth_maths_teacher.slug).not_to eq('maths-teacher')
+      expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school')
+      expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school-greenway-mars')
     end
   end
 

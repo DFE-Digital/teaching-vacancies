@@ -120,5 +120,9 @@
           %dt= t('vacancies.leadership_level')
           %dd= @vacancy.leadership.title
 
+    - if @vacancy.application_link.present?
+      %br
+      = link_to t('vacancies.application_link'), @vacancy.application_link, target: '_blank', class: 'button'
+
 %script.jobref{type: 'application/ld+json'}
   = raw(render partial: 'show.json.jbuilder', locals: {vacancy: @vacancy})
