@@ -7,7 +7,7 @@ resource "aws_db_instance" "default" {
   engine                    = "${var.rds_engine}"
   engine_version            = "${var.rds_engine_version}"
   instance_class            = "${var.rds_instance_type}"
-  name                      = "${var.project_name}${var.environment}" # alphanumeric only
+  name                      = "${var.project_name}${var.environment}"                     # alphanumeric only
   username                  = "${var.rds_username}"
   password                  = "${var.rds_password}"
   vpc_security_group_ids    = ["${var.default_security_group_id}"]
@@ -25,12 +25,13 @@ resource "aws_db_instance" "default" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name        = "${var.project_name}-${var.environment}"
-  subnet_ids  = ["${data.aws_subnet_ids.private.ids}"]
+  name       = "${var.project_name}-${var.environment}"
+  subnet_ids = ["${data.aws_subnet_ids.private.ids}"]
 }
 
 data "aws_subnet_ids" "private" {
   vpc_id = "${var.vpc_id}"
+
   tags {
     Tier = "Private"
   }

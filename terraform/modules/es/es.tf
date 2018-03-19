@@ -1,6 +1,7 @@
 # Elasticsearch domain
 data "aws_subnet_ids" "private" {
   vpc_id = "${var.vpc_id}"
+
   tags {
     Tier = "Private"
   }
@@ -27,11 +28,9 @@ resource "aws_elasticsearch_domain" "default" {
     volume_size = "${terraform.workspace == "production" ? 35 : 10}"
     volume_type = "gp2"
   }
-
   snapshot_options {
     automated_snapshot_start_hour = "02"
   }
-
   tags {
     Domain = "${var.project_name}-${var.environment}-es"
   }
@@ -61,8 +60,8 @@ data "aws_iam_policy_document" "es" {
     ]
 
     principals {
-     type = "AWS"
-     identifiers = ["${aws_iam_user.es_user.arn}"]
+      type        = "AWS"
+      identifiers = ["${aws_iam_user.es_user.arn}"]
     }
   }
 }
@@ -95,3 +94,4 @@ data "aws_iam_policy_document" "es" {
 #     }
 #   }
 # }
+
