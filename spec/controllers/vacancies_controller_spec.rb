@@ -37,27 +37,4 @@ RSpec.describe VacanciesController, type: :controller do
       end
     end
   end
-
-  describe 'GET /vacancies/new' do
-    context 'with a valid school id' do
-      before do
-        @school = create(:school)
-        get :new, params: { school_id: @school.id }
-      end
-
-      it 'should be successful' do
-        expect(response.status).to eql(200)
-      end
-    end
-
-    context 'without a valid school id' do
-      before do
-        get :new, params: { school_id: 'XXXX' }
-      end
-
-      it 'should be not found' do
-        expect(response.status).to eql(404)
-      end
-    end
-  end
 end

@@ -1,8 +1,6 @@
 require 'rails_helper'
 RSpec.feature 'Creating a vacancy' do
-  before do
-    create(:school)
-  end
+  let(:school) { create(:school) }
 
   scenario 'Searching for a school by name' do
     create(
@@ -29,16 +27,14 @@ RSpec.feature 'Creating a vacancy' do
 
   scenario 'Users can view a vacancy creation form' do
     school = create(:school, name: 'Salisbury School')
-    visit new_vacancy_path(school_id: school.id)
+    visit new_school_vacancy_path(school.id)
 
     expect(page).to have_content('Publish a vacancy for Salisbury School')
   end
 
   context 'Users can see validation errors when they don\'t fill in all required fields' do
     scenario 'on the first page' do
-      school = create(:school)
-
-      visit new_vacancy_path(school_id: school.id)
+      visit new_school_vacancy_path(school.id)
 
       # Don't fill in any information to force all errors to show
       click_button 'Save and continue'
@@ -69,9 +65,7 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'on the second page' do
-      school = create(:school)
-
-      visit new_vacancy_path(school_id: school.id)
+      visit new_school_vacancy_path(school.id)
 
       fill_in 'vacancy[job_title]', with: 'title'
       fill_in 'vacancy[headline]', with: 'headline'
@@ -96,9 +90,7 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'on the third page' do
-      school = create(:school)
-
-      visit new_vacancy_path(school_id: school.id)
+      visit new_school_vacancy_path(school.id)
 
       fill_in 'vacancy[job_title]', with: 'title'
       fill_in 'vacancy[headline]', with: 'headline'
@@ -164,9 +156,8 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'Reviewing a vacancy' do
     scenario 'A user can review the vacancy they just posted' do
-      school = create(:school)
       vacancy = VacancyPresenter.new(build(:vacancy))
-      visit new_vacancy_path(school_id: school.id)
+      visit new_school_vacancy_path(school.id)
 
       expect(page).to have_content('Job specification')
       fill_in_job_spec_fields(vacancy)
@@ -190,9 +181,9 @@ RSpec.feature 'Creating a vacancy' do
     scenario 'A user cannot review a vacancy that has already been published' do
       vacancy = create(:vacancy, :published)
 
-      visit review_vacancy_path(vacancy)
+      visit review_school_vacancy_path(school.id, vacancy)
 
-      expect(page).to have_current_path(vacancy_path(vacancy))
+      expect(page).to have_current_path(school_vacancy_path(school.id, vacancy))
     end
   end
 
@@ -200,7 +191,7 @@ RSpec.feature 'Creating a vacancy' do
     scenario 'on submission' do
       vacancy = create(:vacancy, :draft)
 
-      visit review_vacancy_path(vacancy)
+      visit review_school_vacancy_path(school.id, vacancy)
       click_on 'Confirm and submit vacancy'
 
       expect(page).to have_content("The system reference number is #{vacancy.reference}")
@@ -210,7 +201,7 @@ RSpec.feature 'Creating a vacancy' do
     scenario 'at a later date' do
       vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
 
-      visit review_vacancy_path(vacancy)
+      visit review_school_vacancy_path(school.id, vacancy)
       click_on 'Confirm and submit vacancy'
 
       expect(page).to have_content("The system reference number is #{vacancy.reference}")

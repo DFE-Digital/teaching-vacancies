@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'requires basic auth' do |path|
+RSpec.shared_examples 'basic auth is required' do |path|
   let(:path) { path.present? ? path : '/' }
 
   it 'asks for the basic auth credentials' do
@@ -37,10 +37,10 @@ RSpec.shared_examples 'requires basic auth' do |path|
     it 'returns a 401' do
       fake_env = double.as_null_object
       allow(Figaro).to receive(:env).and_return(fake_env)
-      allow(fake_env).to receive(:http_user?).and_return(true)
-      allow(fake_env).to receive(:http_pass?).and_return(true)
-      allow(fake_env).to receive(:http_user).and_return('correct-user')
-      allow(fake_env).to receive(:http_pass).and_return('correct-password')
+      allow(fake_env).to receive(:http_user?).and_return(false)
+      allow(fake_env).to receive(:http_pass?).and_return(false)
+      allow(fake_env).to receive(:http_user).and_return(nil)
+      allow(fake_env).to receive(:http_pass).and_return(nil)
 
       encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('wrong-user', 'password')
       get path, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
@@ -77,45 +77,17 @@ RSpec.describe 'basic auth', type: :request do
   context 'when in staging' do
     before(:each) { stub_env_based_authentication }
 
-    it_behaves_like 'requires basic auth'
+    it_behaves_like 'basic auth is required'
   end
 
   context 'when in production' do
     before(:each) { stub_env_based_authentication }
 
-    it_behaves_like 'requires basic auth'
+    it_behaves_like 'basic auth is required'
   end
 
   def stub_env_based_authentication
     allow_any_instance_of(ApplicationController)
-      .to receive(:authenticate?)
-      .and_return(true)
-  end
-end
-
-RSpec.describe 'hiring staff basic auth', type: :request do
-  context 'when in development' do
-    it_behaves_like 'does not require basic auth', '/schools'
-  end
-
-  context 'when in test' do
-    it_behaves_like 'does not require basic auth', '/schools'
-  end
-
-  context 'when in staging' do
-    before(:each) { stub_env_based_authentication }
-
-    it_behaves_like 'requires basic auth', '/schools'
-  end
-
-  context 'when in production' do
-    before(:each) { stub_env_based_authentication }
-
-    it_behaves_like 'requires basic auth', '/schools'
-  end
-
-  def stub_env_based_authentication
-    allow_any_instance_of(HiringStaff::BaseController)
       .to receive(:authenticate?)
       .and_return(true)
   end
