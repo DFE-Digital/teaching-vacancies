@@ -17,6 +17,12 @@ Rails.application.routes.draw do
                action: :candidate_specification
       resource :application_details, only: :show, controller: 'hiring_staff/vacancies', action: :application_details
     end
+    resource :vacancies, only: %i[new create], controller: 'schools/vacancies' do
+      get 'step_1', to: 'schools/vacancies#step_1'
+      post 'submit_step_1', to: 'schools/vacancies#submit_step_1'
+      get 'step_2', to: 'schools/vacancies#step_2'
+      post 'submit_step_2', to: 'schools/vacancies#submit_step_2'
+    end
   end
 
   match '*path', to: 'application#not_found', via: %i[get post patch put destroy]
