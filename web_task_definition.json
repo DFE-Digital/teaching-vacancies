@@ -10,6 +10,7 @@
     ],
     "memory": 512,
     "networkMode": "bridge",
+    "entryPoint": ${entrypoint},
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {

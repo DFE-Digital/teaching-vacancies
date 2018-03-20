@@ -22,6 +22,7 @@ resource "aws_ecs_service" "web" {
   task_definition = "${aws_ecs_task_definition.web.arn}"
   desired_count   = "${var.ecs_service_task_count}"
 
+  health_check_grace_period_seconds = 180
   deployment_minimum_healthy_percent = 50
 
   load_balancer {
@@ -71,6 +72,7 @@ data "template_file" "web_task" {
     google_analytics         = "${var.google_analytics}"
     rollbar_access_token     = "${var.rollbar_access_token}"
     secret_key_base          = "${var.secret_key_base}"
+    entrypoint               = "${jsonencode(var.web_service_entrypoint)}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}"
     task_port                = "${var.ecs_service_task_port}"
