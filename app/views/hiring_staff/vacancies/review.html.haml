@@ -95,28 +95,28 @@
         %dd.cya-answer
           = @vacancy.essential_requirements
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_candidate_specification_path(@school.id, @vacancy, next: :review)
       %div
         %dt.cya-question
           = t('vacancies.education')
         %dd.cya-answer
           = @vacancy.education
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_candidate_specification_path(@school.id, @vacancy, next: :review)
       %div
         %dt.cya-question
           = t('vacancies.qualifications')
         %dd.cya-answer
           = @vacancy.qualifications
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_candidate_specification_path(@school.id, @vacancy, next: :review)
       %div
         %dt.cya-question
           = t('vacancies.experience')
         %dd.cya-answer
           = @vacancy.experience
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_candidate_specification_path(@school.id, @vacancy, next: :review)
       %div
         %dt.cya-question
           = t('vacancies.leadership_level')
@@ -124,7 +124,7 @@
           - if @vacancy.leadership
             = @vacancy.leadership.title
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_candidate_specification_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_candidate_specification_path(@school.id, @vacancy, next: :review)
 
     %h2.heading-medium= t('vacancies.application_details')
     %dl.govuk-check-your-answers.cya-questions-short
@@ -134,21 +134,21 @@
         %dd.cya-answer
           = @vacancy.contact_email
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_application_details_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_application_details_path(@school.id, @vacancy, next: :review)
       %div
         %dt.cya-question
           = t('vacancies.deadline_date')
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_application_details_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_application_details_path(@school.id, @vacancy, next: :review)
       %div
         %dt.cya-question
           = t('vacancies.publication_date')
         %dd.cya-answer
           = format_date @vacancy.publish_on
         %dd.cya-change
-          = link_to t('buttons.change'), vacancy_application_details_path(@vacancy, next: :review)
+          = link_to t('buttons.change'), school_vacancy_application_details_path(@school.id, @vacancy, next: :review)
 
     %h2.heading-medium Now submit your vacancy
     %p= t('vacancies.confirmation_summary')

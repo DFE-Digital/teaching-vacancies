@@ -10,7 +10,7 @@
 %ul.school-search
   - @schools.each do |school|
     %li.school
-      = link_to new_vacancy_path(school_id: school.id) do
+      = link_to new_school_vacancy_path(school_id: school.id) do
         %h2.heading-small.school-name
           = school.name
         %p.school-address

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchoolsController, type: :controller do
+RSpec.describe HiringStaff::SchoolsController, type: :controller do
   describe 'index' do
     before { get :index }
 

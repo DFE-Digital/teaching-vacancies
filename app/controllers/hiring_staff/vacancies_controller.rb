@@ -1,4 +1,4 @@
-class Schools::VacanciesController < Schools::BaseController
+class HiringStaff::VacanciesController < HiringStaff::BaseController
   def show
     @school = School.find(school_id)
     vacancy = Vacancy.friendly.find(params[:id])

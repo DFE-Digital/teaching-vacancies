@@ -1,4 +1,4 @@
-class SchoolsController < ApplicationController
+class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
     @school = SchoolPresenter.new(School.find_by!(urn: params[:id]))
   end

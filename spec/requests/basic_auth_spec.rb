@@ -92,3 +92,31 @@ RSpec.describe 'basic auth', type: :request do
       .and_return(true)
   end
 end
+
+RSpec.describe 'hiring staff basic auth', type: :request do
+  context 'when in development' do
+    it_behaves_like 'does not require basic auth', '/schools'
+  end
+
+  context 'when in test' do
+    it_behaves_like 'does not require basic auth', '/schools'
+  end
+
+  context 'when in staging' do
+    before(:each) { stub_env_based_authentication }
+
+    it_behaves_like 'requires basic auth', '/schools'
+  end
+
+  context 'when in production' do
+    before(:each) { stub_env_based_authentication }
+
+    it_behaves_like 'requires basic auth', '/schools'
+  end
+
+  def stub_env_based_authentication
+    allow_any_instance_of(HiringStaff::BaseController)
+      .to receive(:authenticate?)
+      .and_return(true)
+  end
+end
