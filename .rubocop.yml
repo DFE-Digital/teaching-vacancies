@@ -52,6 +52,11 @@ Metrics/MethodLength:
     Exclude:
       - 'spec/**/*'
 
+Metrics/AbcSize:
+    Max: 20
+    Exclude:
+      - 'spec/**/*'
+
 Metrics/LineLength:
     Max: 120
 
@@ -59,4 +64,3 @@ Metrics/BlockLength:
     Max: 40
     Exclude:
       - 'spec/**/*'
-
