@@ -13,19 +13,19 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   private def http_user
-    if Figaro.env.http_user?
-      Figaro.env.http_user
+    if Figaro.env.hiring_staff_http_user?
+      Figaro.env.hiring_staff_http_user
     else
-      Rails.logger.warn('Basic auth failed: ENV["HTTP_USER"] expected but not found.')
+      Rails.logger.warn('Basic auth failed: ENV["hiring_staff_http_user"] expected but not found.')
       nil
     end
   end
 
   private def http_pass
-    if Figaro.env.http_pass?
-      Figaro.env.http_pass
+    if Figaro.env.hiring_staff_http_pass?
+      Figaro.env.hiring_staff_http_pass
     else
-      Rails.logger.warn('Basic auth failed: ENV["HTTP_PASS"] expected but not found.')
+      Rails.logger.warn('Basic auth failed: ENV["hiring_staff_http_pass"] expected but not found.')
       nil
     end
   end
