@@ -68,19 +68,6 @@ module "ecs" {
 
   # Application variables
   rails_env                = "${var.rails_env}"
-  http_pass                = "${var.http_pass}"
-  http_user                = "${var.http_user}"
-  google_maps_api_key      = "${var.google_maps_api_key}"
-  google_analytics         = "${var.google_analytics}"
-  rollbar_access_token     = "${var.rollbar_access_token}"
-  secret_key_base          = "${var.secret_key_base}"
-  rds_username             = "${var.rds_username}"
-  rds_password             = "${var.rds_password}"
-  rds_address              = "${module.rds.rds_address}"
-  es_address               = "${module.es.es_address}"
-  aws_elasticsearch_region = "${var.region}"
-  aws_elasticsearch_key    = "${module.es.es_user_access_key_id}"
-  aws_elasticsearch_secret = "${module.es.es_user_access_key_secret}"
 }
 
 module "logs" {
@@ -155,4 +142,39 @@ module "cloudfront" {
   cloudfront_origin_domain_name = "${module.core.alb_dns_name}"
   cloudfront_aliases            = "${var.cloudfront_aliases}"
   cloudfront_certificate_arn    = "${var.cloudfront_certificate_arn}"
+}
+
+module "container_bootstrap" {
+  source               = "./terraform/modules/container_bootstrap"
+
+  environment          = "${terraform.workspace}"
+  project_name         = "${var.project_name}"
+  region               = "${var.region}"
+  parameter_store_path = "/${var.project_name}_${terraform.workspace}/envars"
+  dotenv_user          = "${var.container_bootstrap_dotenv_user}"
+  ecs_task_role_id     = "${module.ecs.execution_role_id}"
+}
+
+module "parameter_store" {
+  source                   = "./terraform/modules/parameter_store"
+  namespace                = "/${var.project_name}_${terraform.workspace}/envars"
+  kms_key_alias            = "${module.container_bootstrap.parameter_store_kms_key_alias}"
+  string_parameters        = [
+                               "AWS_ELASTICSEARCH_REGION=${var.region}",
+                               "ELASTICSEARCH_AWS_SIGNING=true",
+                               "GOOGLE_ANALYTICS=${var.google_analytics}",
+                               "HTTP_USER=${var.http_user}",
+                               "RAILS_LOG_TO_STDOUT=true",
+                               "RAILS_SERVE_STATIC_FILES=true"
+                             ]
+  secure_string_parameters = [
+                               "GOOGLE_MAPS_API_KEY=${var.google_maps_api_key}",
+                               "HTTP_PASS=${var.http_pass}",
+                               "ROLLBAR_ACCESS_TOKEN=${var.rollbar_access_token}",
+                               "SECRET_KEY_BASE=${var.secret_key_base}",
+                               "ELASTICSEARCH_URL=https://${module.es.es_address}:443",
+                               "AWS_ELASTICSEARCH_KEY=${module.es.es_user_access_key_id}",
+                               "AWS_ELASTICSEARCH_SECRET=${module.es.es_user_access_key_secret}",
+                               "DATABASE_URL=postgres://${var.rds_username}:${var.rds_password}@${module.rds.rds_address}:5432/${var.project_name}_${terraform.workspace}?template=template0&pool=5&encoding=unicode"
+                             ]
 }
