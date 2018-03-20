@@ -18,7 +18,7 @@ class Schools::VacanciesController < Schools::BaseController
     @vacancy = @school.vacancies.new(vacancy_params)
     @vacancy.status = :draft
     if @vacancy.save
-      redirect_to school_vacancy_candidate_specification_path(@school.id, @vacancy.slug)
+      redirect_to school_vacancy_candidate_specification_path(@school.id, @vacancy)
     else
       render :job_specification
     end

@@ -15,6 +15,15 @@ Rails.application.routes.draw do
 
   resources :schools, only: [:index] do
     get 'search', on: :collection
+    resources :vacancies, only: %i[new create update edit delete show], controller: 'schools/vacancies' do
+      # Legacy form routing copied over
+      get 'review', on: :member
+      put 'publish', on: :member
+      get 'published', on: :member
+      resource :job_specification, only: :show, controller: 'schools/vacancies', action: :job_specificatio
+      resource :candidate_specification, only: :show, controller: 'schools/vacancies', action: :candidate_specification
+      resource :application_details, only: :show, controller: 'schools/vacancies', action: :application_details
+    end
   end
 
   resources :schools, only: %i[show edit update]

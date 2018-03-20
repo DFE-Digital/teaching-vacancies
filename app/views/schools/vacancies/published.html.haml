@@ -1,0 +1,21 @@
+.vacancy.grid-row
+  .column-full
+    .govuk-box-highlight.margin-bottom-large
+      %h1.heading-large.margin-top
+        = t('vacancies.submitted')
+      %p
+        The system reference number is
+        %br
+        %strong.heading-medium=@vacancy.reference
+
+  .column-two-thirds
+    - if @vacancy.publish_today?
+      %p
+        = t('vacancies.view_posted_vacancy')
+      %p
+        = link_to school_vacancy_url(@school.id, @vacancy), school_vacancy_path(@school.id, @vacancy)
+    - else
+      %p
+        = t('vacancies.preview_posted_vacancy', date: @vacancy.publish_on)
+      %p
+        = link_to school_vacancy_url(@school.id, @vacancy), school_vacancy_path(@school.id, @vacancy)
