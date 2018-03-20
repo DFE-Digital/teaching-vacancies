@@ -66,12 +66,6 @@ data "template_file" "web_task" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    http_pass                = "${var.http_pass}"
-    http_user                = "${var.http_user}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
-    google_analytics         = "${var.google_analytics}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    secret_key_base          = "${var.secret_key_base}"
     entrypoint               = "${jsonencode(var.web_service_entrypoint)}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}"
@@ -80,13 +74,6 @@ data "template_file" "web_task" {
     rails_env                = "${var.rails_env}"
     region                   = "${var.region}"
     log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
   }
 }
 
@@ -96,21 +83,12 @@ data "template_file" "import_schools_task" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
-    secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_import_schools"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
     region                   = "${var.region}"
     log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     entrypoint               = "${jsonencode(var.import_schools_entrypoint)}"
   }
 }
@@ -121,21 +99,12 @@ data "template_file" "vacancies_scrape_task" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
-    secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_vacancies_scrape"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
     region                   = "${var.region}"
     log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     entrypoint               = "${jsonencode(var.vacancies_scrape_entrypoint)}"
   }
 }
