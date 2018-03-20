@@ -37,3 +37,4 @@ variable "vacancies_scrape_entrypoint" {
 }
 
 variable "vacancies_scrape_schedule_expression" {}
+variable "web_service_entrypoint"                 { type = "list"}

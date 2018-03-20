@@ -126,14 +126,19 @@ variable "git_branch_to_track" {
   default     = "master"
 }
 
+variable "web_service_entrypoint" {
+  description = "Web service entrypoint"
+  default = "/docker-entrypoint.sh rails server"
+}
+
 variable "import_schools_entrypoint" {
   description = "The Entrypoint for the import_schools task"
-  default     = ["rake", "data:schools:import"]
+  default     = "rake data:schools:import"
 }
 
 variable "vacancies_scrape_entrypoint" {
   description = "The Entrypoint for the vacancies_scrape task"
-  default     = ["rake", "vacancies:data:scrape"]
+  default     = "rake vacancies:data:scrape"
 }
 
 # RDS
@@ -210,3 +215,9 @@ variable "load_balancer_check_path" {
 }
 
 variable "rollbar_access_token" {}
+
+# Container Bootstrap
+variable "container_bootstrap_dotenv_user" {
+  description = "The user that will be given read access to .env"
+  default = "www-data"
+}
