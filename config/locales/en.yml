@@ -69,6 +69,7 @@ en:
       deadline_date: 'For example, 31 11 2017'
       publication_date: 'For example, 31 10 2017'
       benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
+      contact_email: 'This will appear in the public listing'
     filters:
       title: 'Search vacancies'
       location: 'Location'
