@@ -27,6 +27,7 @@
                 required: true
       = f.input :benefits,
                 label: t('vacancies.benefits'),
+                hint: t('vacancies.form_hints.benefits'),
                 input_html: {rows: 5},
                 required: false
       = f.association :subject,
@@ -78,6 +79,6 @@
         = f.gov_uk_date_field :starts_on, legend_text: "#{t('vacancies.starts_on')} (optional)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.start_date')
 
       %div.form-group
-        = f.gov_uk_date_field :ends_on, legend_text: "#{t('vacancies.ends_on')} (optional)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.end_date')
+        = f.gov_uk_date_field :ends_on, legend_text: "#{t('vacancies.ends_on')} (include if role is fixed term)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.end_date')
 
       = f.button :submit, t('buttons.save_and_continue')
