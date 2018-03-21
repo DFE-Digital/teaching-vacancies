@@ -1,19 +1,19 @@
 class HiringStaff::VacanciesController < HiringStaff::BaseController
   def show
-    @school = School.find(school_id)
-    vacancy = Vacancy.friendly.find(params[:id])
+    @school = find_school_from_params
+    vacancy = find_vacancy_from_params
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def new
-    @school = School.find(school_id)
+    @school = find_school_from_params
     @vacancy = @school.vacancies.new
 
     render :job_specification
   end
 
   def create
-    @school = School.find(school_id)
+    @school = find_school_from_params
 
     @vacancy = @school.vacancies.new(vacancy_params)
     @vacancy.status = :draft
@@ -24,28 +24,24 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
     end
   end
 
-  def school_id
-    params.require(:school_id)
-  end
-
   def job_specification
-    @school = School.find(school_id)
+    @school = find_school_from_params
     @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
   end
 
   def candidate_specification
-    @school = School.find(school_id)
+    @school = find_school_from_params
     @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
   end
 
   def application_details
-    @school = School.find(school_id)
+    @school = find_school_from_params
     @vacancy = Vacancy.find_by!(slug: params[:vacancy_id])
   end
 
   def update
-    @school = School.find(school_id)
-    @vacancy = Vacancy.find_by!(slug: params[:id])
+    @school = find_school_from_params
+    @vacancy = find_vacancy_from_params
 
     if @vacancy.update_attributes(vacancy_params)
       redirect_to next_path(params[:next])
@@ -55,8 +51,8 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
   end
 
   def publish
-    @school = School.find(school_id)
-    vacancy = Vacancy.friendly.find(params[:id])
+    @school = find_school_from_params
+    vacancy = find_vacancy_from_params
 
     if PublishVacancy.new(vacancy: vacancy).call
       redirect_to published_school_vacancy_path(@school.id, vacancy.slug)
@@ -66,18 +62,18 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
   end
 
   def published
-    @school = School.find(school_id)
-    vacancy = Vacancy.friendly.find(params[:id])
+    @school = find_school_from_params
+    vacancy = find_vacancy_from_params
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def edit
-    @vacancy = Vacancy.friendly.find(params[:id])
+    @vacancy = find_vacancy_from_params
   end
 
   def review
-    @school = School.find(school_id)
-    vacancy = Vacancy.friendly.find(params[:id])
+    @school = find_school_from_params
+    vacancy = find_vacancy_from_params
     if vacancy.published?
       redirect_to school_vacancy_path(@school.id, vacancy), notice: 'This vacancy has already been published'
     end
@@ -86,6 +82,22 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
   end
 
   private
+
+  def vacancy_id
+    params.require(:id)
+  end
+
+  def find_vacancy_from_params
+    @vacancy ||= Vacancy.friendly.find(vacancy_id)
+  end
+
+  def school_id
+    params.require(:school_id)
+  end
+
+  def find_school_from_params
+    @school ||= School.find(school_id)
+  end
 
   def view_for_from(from_param)
     case from_param
@@ -101,7 +113,7 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
   end
 
   def next_path(next_param)
-    @school = School.find(school_id)
+    @school = find_school_from_params
     case next_param
     when 'candidate_specification'
       school_vacancy_candidate_specification_path(@school.id, @vacancy)
