@@ -35,6 +35,7 @@ en:
     salary_range: 'Salary range'
     per_year: 'per year'
     publish_heading: 'Publish a vacancy for %{school}'
+    review_heading: 'Review the vacancy for %{school}'
     job_specification: 'Job specification'
     essential_requirements: 'Professional requirements'
     candidate_specification: 'Candidate specification'
