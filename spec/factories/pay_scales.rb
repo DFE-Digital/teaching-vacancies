@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :pay_scale do
-    label { Faker::Lorem.unique.words(2) }
+    label { Faker::Lorem.unique.words(2).join(' ') }
     code { Faker::Code.asin }
     salary { Faker::Number.number(5) }
   end

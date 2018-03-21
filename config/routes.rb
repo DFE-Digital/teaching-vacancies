@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       get 'step_3', to: 'schools/vacancies#step_3'
       post 'submit_step_3', to: 'schools/vacancies#submit_step_3'
     end
+
+    resources :vacancies, only: [:show] do
+      get 'review', to: 'schools/vacancies#review'
+      post 'publish', to: 'schools/vacancies#publish'
+    end
   end
 
   match '*path', to: 'application#not_found', via: %i[get post patch put destroy]

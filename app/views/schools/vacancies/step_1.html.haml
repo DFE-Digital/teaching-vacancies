@@ -29,7 +29,7 @@
                 label: t('vacancies.benefits'),
                 input_html: {rows: 5},
                 required: false
-      = f.input :subject,
+      = f.input :subject_id,
                 label: t('vacancies.main_subject'),
                 hint: t('vacancies.form_hints.main_subject'),
                 collection: Subject.order(:name),
@@ -55,7 +55,7 @@
                   label: false,
                   input_html: {class: 'form-control-1-8'}
 
-      = f.input :pay_scale,
+      = f.input :pay_scale_id,
                   label: t('vacancies.pay_scale'),
                   hint: t('vacancies.form_hints.pay_scale'),
                   collection: PayScale.order(:label),
@@ -70,7 +70,7 @@
                 as: :decimal,
                 hint: t('vacancies.form_hints.weekly_hours'),
                 required: false
-      = f.input :leadership,
+      = f.input :leadership_id,
                       label: t('vacancies.leadership_level'),
                       collection: Leadership.order(:title),
                       required: false

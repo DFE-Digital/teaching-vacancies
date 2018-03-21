@@ -1,6 +1,6 @@
 class ApplicationDetailsForm < VacancyForm
-  validates :contact_email, :publish_on, :expires_on, presence: true
-  validates :contact_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+  validates :publish_on, :expires_on, presence: true
+  validates :contact_email, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   validate :validity_of_publish_on, :validity_of_expires_on
 
