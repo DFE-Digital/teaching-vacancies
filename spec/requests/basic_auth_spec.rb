@@ -98,7 +98,7 @@ RSpec.describe 'authentication', type: :request do
         path = school_vacancies_path(school.id)
         post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
-        expect(response.status).to eq(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end
@@ -142,7 +142,7 @@ RSpec.describe 'authentication', type: :request do
         path = school_vacancies_path(school.id)
         post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
-        expect(response.status).to eq(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

@@ -13,8 +13,9 @@ RSpec.feature 'Users cannot manage vacancies' do
 
   scenario 'An unauthenticated user tries to create a vacancy' do
     school = create(:school)
+    path = new_school_vacancy_path(school.id)
 
-    visit "/schools/#{school.id}/vacancies/new"
+    visit path
 
     expect(page).to have_content('HTTP Basic: Access denied.')
   end
@@ -22,8 +23,9 @@ RSpec.feature 'Users cannot manage vacancies' do
   scenario 'An unauthenticated user tries to update a vacancy' do
     school = create(:school)
     vacancy = create(:vacancy, school: school)
+    path = school_vacancy_path(school.id, vacancy)
 
-    visit "/schools/#{school.id}/vacancies/#{vacancy.slug}"
+    visit path
 
     expect(page).to have_content('HTTP Basic: Access denied.')
   end
