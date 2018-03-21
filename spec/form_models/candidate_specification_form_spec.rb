@@ -4,6 +4,5 @@ RSpec.describe CandidateSpecificationForm, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:essential_requirements) }
-
   end
 end

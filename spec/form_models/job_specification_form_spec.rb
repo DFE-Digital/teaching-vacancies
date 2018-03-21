@@ -33,16 +33,16 @@ RSpec.describe JobSpecificationForm, type: :model do
 
     it 'a JobSpecificationForm can be converted to a vacancy' do
       job_specification_form = JobSpecificationForm.new(headline: 'headline', job_title: 'job title',
-                               job_description: 'description', working_pattern: :full_time,
-                               minimum_salary: 20, maximum_salary: 40, benefits: 'benefits',
-                               subject_id: main_subject.id, pay_scale_id: payscale.id,
-                               leadership_id: leadership.id)
+                                                        job_description: 'description', working_pattern: :full_time,
+                                                        minimum_salary: 20, maximum_salary: 40, benefits: 'benefits',
+                                                        subject_id: main_subject.id, pay_scale_id: payscale.id,
+                                                        leadership_id: leadership.id)
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('job title')
       expect(job_specification_form.vacancy.job_description).to eq('description')
       expect(job_specification_form.vacancy.headline).to eq('headline')
-      expect(job_specification_form.vacancy.working_pattern).to eq("full_time")
+      expect(job_specification_form.vacancy.working_pattern).to eq('full_time')
       expect(job_specification_form.vacancy.minimum_salary).to eq(20)
       expect(job_specification_form.vacancy.maximum_salary).to eq(40)
       expect(job_specification_form.vacancy.benefits).to eq('benefits')

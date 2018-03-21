@@ -20,8 +20,8 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
     describe '#expires_on' do
       let(:application_details) do
-        ApplicationDetailsForm.new(publish_on: Date.tomorrow,
-                                   expires_on: Date.today)
+        ApplicationDetailsForm.new(publish_on: Time.zone.tomorrow,
+                                   expires_on: Time.zone.today)
       end
 
       it 'the expiry date must be greater than the publish date' do
@@ -32,7 +32,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
     end
 
     describe '#publish_on' do
-      let(:application_details) { ApplicationDetailsForm.new(publish_on: Date.yesterday) }
+      let(:application_details) { ApplicationDetailsForm.new(publish_on: Time.zone.yesterday) }
 
       it 'the publish date date must be present' do
         expect(application_details.valid?).to be false
@@ -45,12 +45,12 @@ RSpec.describe ApplicationDetailsForm, type: :model do
   context 'when all attributes are valid' do
     it 'can correctly be converted to a vacancy' do
       application_details = ApplicationDetailsForm.new(contact_email: 'some@email.com',
-                                                       expires_on: Time.zone.today+1.week,
+                                                       expires_on: Time.zone.today + 1.week,
                                                        publish_on: Time.zone.today)
 
       expect(application_details.valid?).to be true
       expect(application_details.vacancy.contact_email).to eq('some@email.com')
-      expect(application_details.vacancy.expires_on).to eq(Time.zone.today+1.week)
+      expect(application_details.vacancy.expires_on).to eq(Time.zone.today + 1.week)
       expect(application_details.vacancy.publish_on).to eq(Time.zone.today)
     end
   end
