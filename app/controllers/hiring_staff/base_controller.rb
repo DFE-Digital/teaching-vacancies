@@ -2,13 +2,13 @@ class HiringStaff::BaseController < ApplicationController
   before_action :authenticate
 
   def authenticate
-    return unless authenticate?
-    authenticate_or_request_with_http_basic do |name, password|
+    return unless authenticate_hiring_staff?
+    authenticate_or_request_with_http_basic('Hiring Staff') do |name, password|
       name == http_user && password == http_pass
     end
   end
 
-  def authenticate?
+  def authenticate_hiring_staff?
     !(Rails.env.development? || Rails.env.test?)
   end
 

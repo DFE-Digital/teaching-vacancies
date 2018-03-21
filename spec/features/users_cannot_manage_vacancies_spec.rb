@@ -2,13 +2,11 @@ require 'rails_helper'
 RSpec.feature 'Users cannot manage vacancies' do
   before(:each) do
     expect_any_instance_of(HiringStaff::BaseController)
-      .to receive(:authenticate?)
+      .to receive(:authenticate_hiring_staff?)
       .and_return(true)
 
     fake_env = double.as_null_object
     allow(Figaro).to receive(:env).and_return(fake_env)
-    allow(fake_env).to receive(:http_user?).and_return(false)
-    allow(fake_env).to receive(:http_pass?).and_return(false)
     allow(fake_env).to receive(:http_user).and_return(nil)
     allow(fake_env).to receive(:http_pass).and_return(nil)
   end
