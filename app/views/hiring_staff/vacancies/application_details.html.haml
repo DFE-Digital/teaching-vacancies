@@ -17,9 +17,9 @@
                 required: true
 
       %div.form-group
-        = f.gov_uk_date_field :expires_on, legend_text: t('vacancies.deadline_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.deadline_date')
+        = f.gov_uk_date_field :publish_on, legend_text: t('vacancies.publication_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.publication_date')
 
       %div.form-group
-        = f.gov_uk_date_field :publish_on, legend_text: t('vacancies.publication_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.publication_date')
+        = f.gov_uk_date_field :expires_on, legend_text: t('vacancies.deadline_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.deadline_date')
 
       = f.button :submit, t('buttons.save_and_continue')
