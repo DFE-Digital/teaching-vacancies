@@ -32,6 +32,14 @@
         "value": "${http_pass}"
       },
       {
+        "name": "HIRING_STAFF_HTTP_USER",
+        "value": "${hiring_staff_http_user}"
+      },
+      {
+        "name": "HIRING_STAFF_HTTP_PASS",
+        "value": "${hiring_staff_http_pass}"
+      },
+      {
         "name": "GOOGLE_MAPS_API_KEY",
         "value": "${google_maps_api_key}"
       },

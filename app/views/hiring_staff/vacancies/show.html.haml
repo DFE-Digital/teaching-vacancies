@@ -1,0 +1,125 @@
+- content_for :page_title do
+  = @vacancy.job_title
+  = @vacancy.school_name
+
+.vacancy.grid-row
+  - if @vacancy.expired?
+    .column-full
+      .banner-warning
+        = t('vacancies.expired')
+
+  .column-two-thirds
+    %h1.heading-large
+      = @vacancy.job_title
+      %span.heading-secondary
+        = @vacancy.location
+
+    %p.lede
+      = @vacancy.headline
+
+    %h2.heading-medium= t('vacancies.description')
+    %p= @vacancy.job_description
+
+    %h2.heading-medium= t('vacancies.requirements')
+    %p= @vacancy.essential_requirements
+
+    - if @vacancy.education
+      %h2.heading-medium= t('vacancies.education')
+      %p= @vacancy.education
+
+    - if @vacancy.qualifications
+      %h2.heading-medium= t('vacancies.qualifications')
+      %p= @vacancy.qualifications
+
+    - if @vacancy.experience
+      %h2.heading-medium= t('vacancies.experience')
+      %p= @vacancy.experience
+
+    - if @vacancy.benefits
+      %h2.heading-medium= t('vacancies.benefits')
+      %p= @vacancy.benefits
+
+    %hr
+    %h2.heading-medium
+      = t('schools.about')
+      = @vacancy.school.name
+
+    %p= @vacancy.school.description
+
+    %dl.school--details
+      %dt= t('schools.address')
+      %dd= @vacancy.school.full_address
+
+      - if @vacancy.school.phase.present?
+        %dt= t('schools.phase')
+        %dd= @vacancy.school.phase&.titleize
+
+      - if @vacancy.school.school_type.present?
+        %dt= t('schools.type')
+        %dd= @vacancy.school.school_type.label
+
+      - if @vacancy.school.url.present?
+        %dt= t('schools.website')
+        %dd= @vacancy.school.url
+
+    - if @vacancy.school.geolocation
+      %div#map_zoom
+      :javascript
+        function initMap() {
+          var myLatLng = {lat: #{@vacancy.school.geolocation.x}, lng: #{@vacancy.school.geolocation.y }};
+
+          var map = new google.maps.Map(document.getElementById('map_zoom'), {
+            zoom: 17,
+            center: myLatLng
+          });
+
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: '#{@vacancy.school.name}'
+          });
+        }
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+
+  .column-one-third
+    %aside.vacancy--metadata
+      %dl
+        %dt= t('vacancies.salary')
+        %dd= @vacancy.salary_range
+
+        %dt= t('vacancies.working_pattern')
+        %dd= @vacancy.working_pattern
+
+        - if @vacancy.part_time? && @vacancy.weekly_hours
+          %dt= t('vacancies.weekly_hours')
+          %dd= @vacancy.weekly_hours
+
+        %dt= t('vacancies.expires_on')
+        %dd= format_date(@vacancy.expires_on)
+
+        - if @vacancy.starts_on.present?
+          %dt= t('vacancies.starts_on')
+          %dd= format_date(@vacancy.starts_on)
+
+        - if @vacancy.ends_on.present?
+          %dt= t('vacancies.ends_on')
+          %dd= format_date(@vacancy.ends_on)
+
+        %dt= t('vacancies.publish_on')
+        %dd= format_date(@vacancy.publish_on)
+
+        - if @vacancy.main_subject.present?
+          %dt= t('vacancies.main_subject')
+          %dd= @vacancy.main_subject
+
+        - if @vacancy.pay_scale.present?
+          %dt= t('vacancies.pay_scale')
+          %dd= @vacancy.pay_scale
+
+        - if @vacancy.leadership.present?
+          %dt= t('vacancies.leadership_level')
+          %dd= @vacancy.leadership.title
+
+    - if @vacancy.application_link.present?
+      %br
+      = link_to t('vacancies.application_link'), @vacancy.application_link, target: '_blank', class: 'button'

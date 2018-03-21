@@ -1,9 +1,9 @@
 %h1.heading-large
-  = t('vacancies.publish_heading', school: @vacancy.school.name)
+  = t('vacancies.publish_heading', school: @school.name)
   %span.heading-secondary
     Step 1 of 3
 = render 'error_messages', errors: @vacancy.errors
-= simple_form_for @vacancy, html: { class: 'vacancy-form' } do |f|
+= simple_form_for [@school, @vacancy], url: school_vacancies_path(@school.id), html: { class: 'vacancy-form' } do |f|
   = hidden_field_tag :from, :job_specification
   = hidden_field_tag :next, (params[:next] || :candidate_specification)
   %h2.heading-medium
@@ -80,5 +80,4 @@
       %div.form-group
         = f.gov_uk_date_field :ends_on, legend_text: "#{t('vacancies.ends_on')} (optional)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.end_date')
 
-      = f.input :school_id, as: :hidden, if: :new_record?
       = f.button :submit, t('buttons.save_and_continue')

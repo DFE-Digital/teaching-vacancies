@@ -1,9 +1,9 @@
 %h1.heading-large
-  = t('vacancies.publish_heading', school: @vacancy.school.name)
+  = t('vacancies.publish_heading', school: @school.name)
   %span.heading-secondary
     Step 2 of 3
 = render 'error_messages', errors: @vacancy.errors
-= simple_form_for @vacancy, html: { class: 'vacancy-form' } do |f|
+= simple_form_for [@school, @vacancy], url: school_vacancy_path(@school.id, @vacancy), html: { class: 'vacancy-form' } do |f|
   = hidden_field_tag :from, :candidate_specification
   = hidden_field_tag :next, (params[:next] || :application_details)
   %h2.heading-medium

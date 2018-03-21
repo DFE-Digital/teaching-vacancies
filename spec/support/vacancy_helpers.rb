@@ -13,7 +13,6 @@ module VacancyHelpers
     fill_in 'vacancy[essential_requirements]', with: vacancy.essential_requirements
   end
 
-  # rubocop:disable Metrics/AbcSize
   def fill_in_application_details_fields(vacancy)
     fill_in 'vacancy[expires_on_dd]', with: Faker::Business.credit_card_expiry_date.day
     fill_in 'vacancy[expires_on_mm]', with: Faker::Business.credit_card_expiry_date.strftime('%m')
@@ -23,7 +22,6 @@ module VacancyHelpers
     fill_in 'vacancy[publish_on_yyyy]', with: Time.zone.today.year
     fill_in 'vacancy[contact_email]', with: vacancy.contact_email
   end
-  # rubocop:enable Metrics/AbcSize
 
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
@@ -33,7 +31,6 @@ module VacancyHelpers
     allow_any_instance_of(Vacancy).to receive(:validity_of_publish_on).and_return(true)
   end
 
-  # rubocop:disable Metrics/AbcSize
   def vacancy_json_ld(vacancy)
     {
       '@context': 'http://schema.org',
@@ -72,6 +69,5 @@ module VacancyHelpers
       'validThrough': vacancy.expires_on.to_s(:db),
       'workHours': vacancy.weekly_hours,
     }
-    # rubocop:enable Metrics/AbcSize
   end
 end
