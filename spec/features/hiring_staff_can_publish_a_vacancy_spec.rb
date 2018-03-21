@@ -150,7 +150,7 @@ RSpec.feature 'Creating a vacancy' do
 
       click_button 'Save and continue'
 
-      expect(page).to have_content('Confirm details before you submit')
+      expect(page).to have_content(I18n.t('vacancies.review'))
     end
   end
 
@@ -170,7 +170,7 @@ RSpec.feature 'Creating a vacancy' do
       fill_in_application_details_fields(vacancy)
       click_button 'Save and continue'
 
-      expect(page).to have_content(I18n.t('vacancies.confirm'))
+      expect(page).to have_content(I18n.t('vacancies.review'))
       expect(page).to have_content(vacancy.job_title)
       expect(page).to have_content(vacancy.headline)
       expect(page).to have_content(vacancy.salary_range('to'))
