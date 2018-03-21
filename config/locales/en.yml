@@ -16,7 +16,7 @@ en:
     ends_on: 'End date'
     expired: 'This vacancy has expired'
     description: 'Job description'
-    requirements: 'Essential requirements'
+    requirements: 'Professional requirements'
     education: 'Educational requirement'
     qualifications: 'Qualifications'
     experience: 'Experience'

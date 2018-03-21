@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       post 'submit_step_1', to: 'schools/vacancies#submit_step_1'
       get 'step_2', to: 'schools/vacancies#step_2'
       post 'submit_step_2', to: 'schools/vacancies#submit_step_2'
+      get 'step_3', to: 'schools/vacancies#step_3'
+      post 'submit_step_3', to: 'schools/vacancies#submit_step_3'
     end
   end
 
