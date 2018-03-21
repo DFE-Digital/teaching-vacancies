@@ -68,6 +68,7 @@ en:
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, 31 11 2017'
       publication_date: 'For example, 31 10 2017'
+      benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
     filters:
       title: 'Search vacancies'
       location: 'Location'
