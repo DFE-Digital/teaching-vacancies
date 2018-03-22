@@ -14,14 +14,14 @@ RSpec.feature 'A school publishing a vacancy' do
 
 
     it 'redirected to step 1, the job specification' do
-      visit new_school_vacancies_path(school_id: school.id)
+      visit new_school_vacancy_path(school_id: school.id)
 
       expect(page).to have_content("Publish a vacancy for #{school.name}")
       expect(page).to have_content('Step 1 of 3')
     end
 
     it 'must fill in all the mandatory job specification fields' do
-      visit new_school_vacancies_path(school_id: school.id)
+      visit new_school_vacancy_path(school_id: school.id)
 
       click_on 'Save and continue'
       expect(page).to have_content('Job title can\'t be blank')
@@ -32,7 +32,7 @@ RSpec.feature 'A school publishing a vacancy' do
     end
 
     it 'when all mandatory fields are submitted then the school is redirected to the candidate profile' do
-      visit new_school_vacancies_path(school_id: school.id)
+      visit new_school_vacancy_path(school_id: school.id)
 
       fill_in_job_specification_form_fields(vacancy)
       click_on 'Save and continue'
@@ -42,7 +42,7 @@ RSpec.feature 'A school publishing a vacancy' do
 
     context 'candidate profile' do
       it 'all mandatory fields must be submitted' do
-        visit new_school_vacancies_path(school_id: school.id)
+        visit new_school_vacancy_path(school_id: school.id)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue' # step 1
@@ -53,7 +53,7 @@ RSpec.feature 'A school publishing a vacancy' do
       end
 
       it 'when the mandatory fields are submitted it redirects to the next step' do
-        visit new_school_vacancies_path(school_id: school.id)
+        visit new_school_vacancy_path(school_id: school.id)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -66,7 +66,7 @@ RSpec.feature 'A school publishing a vacancy' do
 
     context 'application details' do
       it 'all mandatory fields must be submitted' do
-        visit new_school_vacancies_path(school_id: school.id)
+        visit new_school_vacancy_path(school_id: school.id)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -80,7 +80,7 @@ RSpec.feature 'A school publishing a vacancy' do
       end
 
       it 'when all mandatory fields are submitted it redirects to the review page' do
-        visit new_school_vacancies_path(school_id: school.id)
+        visit new_school_vacancy_path(school_id: school.id)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -97,8 +97,28 @@ RSpec.feature 'A school publishing a vacancy' do
     end
 
     context 'reviewing a vacancy' do
-      it 'a published vacancy cannot be edited' do
-        visit new_school_vacancies_path(school_id: school.id)
+      scenario 'can be published on submission' do
+        vacancy = create(:vacancy, :draft)
+
+        visit review_vacancy_path(vacancy)
+        click_on 'Confirm and submit vacancy'
+
+        expect(page).to have_content("The system reference number is #{vacancy.reference}")
+        expect(page).to have_content('The vacancy has been posted, you can view it here:')
+      end
+
+      scenario 'can be published at a later date' do
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+
+        visit review_vacancy_path(vacancy)
+        click_on 'Confirm and submit vacancy'
+
+        expect(page).to have_content("The system reference number is #{vacancy.reference}")
+        expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
+      end
+
+      scenario 'a published vacancy cannot be edited' do
+        visit new_school_vacancy_path(school_id: school.id)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'

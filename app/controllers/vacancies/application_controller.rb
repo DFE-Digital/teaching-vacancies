@@ -11,6 +11,7 @@ class Vacancies::ApplicationController < ApplicationController
 
   def save_vacancy_without_validation
     @job_specification_form.vacancy.send :set_slug
+    @job_specification_form.vacancy.status = :draft
     @job_specification_form.vacancy.save(validate: false)
   end
 

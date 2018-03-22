@@ -22,11 +22,11 @@ class Schools::VacanciesController < ApplicationController
   private
 
   def school
-    @school ||= School.find_by(id: school_id)
+    @school ||= School.find_by!(id: school_id)
   end
 
   def school_id
-    params.permit![:school_id]
+    params.permit(:school_id)[:school_id]
   end
 
   def vacancy_id
