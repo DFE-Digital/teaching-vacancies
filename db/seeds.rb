@@ -118,3 +118,24 @@ FactoryGirl.create(:vacancy,
                    maximum_salary: 35000,
                    pay_scale: payscale,
                    leadership: leadership)
+
+FactoryGirl.create(:vacancy,
+                   job_title: 'PE Teacher',
+                   subject: Subject.last,
+                   school: ealing_school,
+                   working_pattern: :part_time,
+                   minimum_salary: 30000,
+                   maximum_salary: 35000,
+                   pay_scale: payscale,
+                   leadership: leadership)
+
+FactoryGirl.create(:vacancy,
+                   job_title: 'Geography Teacher',
+                   subject: Subject.last,
+                   school: ealing_school,
+                   working_pattern: :part_time,
+                   minimum_salary: 30000,
+                   maximum_salary: 35000,
+                   pay_scale: payscale,
+                   status: 1,
+                   leadership: leadership)

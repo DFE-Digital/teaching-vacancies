@@ -1,0 +1,27 @@
+$notice: $light-blue;
+$success: $green;
+$error: $error-colour;
+$alert: $yellow;
+
+@mixin flash($name) {
+  background-color: tint($name, 80%);
+  color: shade($name, 50%);
+  border: 1px solid shade($name, 50%);
+}
+
+.flash {
+  margin-top: $gutter/2;
+  padding: 14px 15px 10px 15px;
+  &.notice {
+    @include flash($notice);
+  }
+  &.success {
+    @include flash($success);
+  }
+  &.error {
+    @include flash($error);
+  }
+  &.alert {
+    @include flash($alert);
+  }
+}

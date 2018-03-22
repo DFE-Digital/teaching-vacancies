@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :schools, only: %i[index show edit update], controller: 'hiring_staff/schools' do
     get 'search', on: :collection
-    resources :vacancies, only: %i[new create update edit delete show], controller: 'hiring_staff/vacancies' do
+    resources :vacancies, only: %i[index new create update edit destroy show], controller: 'hiring_staff/vacancies' do
       # Legacy form routing copied over
       get 'review', on: :member
       put 'publish', on: :member
@@ -20,5 +20,5 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*path', to: 'application#not_found', via: %i[get post patch put delete]
+  match '*path', to: 'application#not_found', via: %i[get post patch put destroy]
 end
