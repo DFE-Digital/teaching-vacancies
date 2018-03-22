@@ -27,10 +27,6 @@ RSpec.shared_context 'when authenticated as a member of hiring staff' do |creden
   let(:password) { credentials[:password] }
 
   background do
-    stub_access_basic_auth_env(env_field_for_username: :hiring_staff_http_user,
-                               env_field_for_password: :hiring_staff_http_pass,
-                               env_value_for_username: username,
-                               env_value_for_password: password,)
     authenticate(username, password)
   end
 
