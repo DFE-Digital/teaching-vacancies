@@ -4,19 +4,15 @@ class Schools::VacanciesController < ApplicationController
   end
 
   def review
-    vacancy  = school.vacancies.find(vacancy_id)
+    vacancy = school.vacancies.find(vacancy_id)
+    redirect_to vacancy_path(vacancy), notice: 'This vacancy has already been published' if vacancy.published?
+
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
-  def publish
-    vacancy = Vacancy.find(vacancy_id)
-    if PublishVacancy.new(vacancy: vacancy).call
-      session[:vacancy_attributes] = nil
-      redirect_to vacancy_path(vacancy), notice: 'The vacancy is now available'
-    else
-      redirect_to review_school_vacancy_path(school_id: school.id, vacancy_id: vacancy.id),
-                  notice: 'We were unable to publish your vacancy. Please try again.'
-    end
+  def show
+    vacancy = school.vacancies.published.find(params[:id])
+    @vacancy = VacancyPresenter.new(vacancy)
   end
 
   private
@@ -26,10 +22,14 @@ class Schools::VacanciesController < ApplicationController
   end
 
   def school_id
-    params.permit(:school_id)[:school_id]
+    vacancy_params[:school_id]
+  end
+
+  def vacancy_params
+    params.permit(:school_id, :vacancy_id)
   end
 
   def vacancy_id
-    params.permit![:vacancy_id]
+    vacancy_params[:vacancy_id]
   end
 end

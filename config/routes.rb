@@ -29,9 +29,12 @@ Rails.application.routes.draw do
       post :application_details, to: 'vacancies/application_details#create'
     end
 
-    resources :vacancies, only: [:new], controller: 'schools/vacancies' do
+    resources :vacancy, only: [:show], controller: 'schools/vacancies' do
       get 'review', to: 'schools/vacancies#review'
-      post 'publish', to: 'schools/vacancies#publish'
+      post :publish, to: 'vacancies/publish#create'
+    end
+
+    resources :vacancies, only: [:new], controller: 'schools/vacancies' do
     end
   end
 

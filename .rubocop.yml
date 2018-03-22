@@ -56,6 +56,9 @@ Metrics/AbcSize:
     Max: 20
     Exclude:
       - 'spec/**/*'
+Metrics/ModuleLength:
+    Exclude:
+      - 'spec/support/vacancy_helpers.rb'
 
 Metrics/LineLength:
     Max: 120

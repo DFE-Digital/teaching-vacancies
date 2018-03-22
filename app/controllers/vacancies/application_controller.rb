@@ -25,7 +25,7 @@ class Vacancies::ApplicationController < ApplicationController
   end
 
   def update_vacancy(attributes)
-    vacancy = @school.vacancies.find(session_vacancy_id)
+    vacancy = school.vacancies.find(session_vacancy_id)
     vacancy.update_attributes(attributes)
     vacancy
   end

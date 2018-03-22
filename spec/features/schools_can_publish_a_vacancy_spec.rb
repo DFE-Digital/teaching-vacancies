@@ -68,19 +68,21 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'A user cannot review a vacancy that has already been published' do
-      vacancy = create(:vacancy, :published)
+      school = create(:school)
+      vacancy = create(:vacancy, :published, school_id: school.id)
 
-      visit review_vacancy_path(vacancy)
+      visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
 
       expect(page).to have_current_path(vacancy_path(vacancy))
     end
   end
 
   context 'A user can publish a vacancy' do
+    let(:school) { create(:school) }
     scenario 'on submission' do
-      vacancy = create(:vacancy, :draft)
+      vacancy = create(:vacancy, :draft, school_id: school.id)
 
-      visit review_vacancy_path(vacancy)
+      visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
       click_on 'Confirm and submit vacancy'
 
       expect(page).to have_content("The system reference number is #{vacancy.reference}")
@@ -88,9 +90,8 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'at a later date' do
-      vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
-
-      visit review_vacancy_path(vacancy)
+      vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow, school_id: school.id)
+      visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
       click_on 'Confirm and submit vacancy'
 
       expect(page).to have_content("The system reference number is #{vacancy.reference}")

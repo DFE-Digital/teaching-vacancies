@@ -28,5 +28,4 @@ class Vacancies::CandidateSpecificationController < Vacancies::ApplicationContro
     params.require(:candidate_specification_form).permit(:essential_requirements, :education,
                                                          :qualifications, :experience)
   end
-
 end
