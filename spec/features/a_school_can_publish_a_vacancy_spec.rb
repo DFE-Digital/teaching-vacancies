@@ -109,7 +109,7 @@ RSpec.feature 'A school publishing a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath,"//div[dt[contains(text(), 'Job title')]]").find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
 
           expect(page).to have_content('Step 1 of 3')
 
@@ -123,7 +123,7 @@ RSpec.feature 'A school publishing a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath,"//div[dt[contains(text(), 'Job title')]]").find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
 
           fill_in 'job_specification_form[job_title]', with: ''
           click_on 'Save and continue'
@@ -142,7 +142,7 @@ RSpec.feature 'A school publishing a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath,"//div[dt[contains(text(), 'Qualifications')]]").find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Qualifications")]]').find('a').click
 
           expect(page).to have_content('Step 2 of 3')
 
@@ -156,7 +156,7 @@ RSpec.feature 'A school publishing a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath,"//div[dt[contains(text(), 'Professional requirements')]]").find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Professional requirements")]]').find('a').click
 
           expect(page).to have_content('Step 2 of 3')
 
@@ -177,7 +177,7 @@ RSpec.feature 'A school publishing a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath,"//div[dt[contains(text(), 'Vacancy contact email')]]").find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Vacancy contact email")]]').find('a').click
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -196,7 +196,7 @@ RSpec.feature 'A school publishing a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath,"//div[dt[contains(text(), 'Vacancy contact email')]]").find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Vacancy contact email")]]').find('a').click
 
           expect(page).to have_content('Step 3 of 3')
 

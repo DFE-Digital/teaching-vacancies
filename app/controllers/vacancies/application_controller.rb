@@ -24,9 +24,13 @@ class Vacancies::ApplicationController < ApplicationController
     vacancy
   end
 
-  def redirect_to_next(vacancy)
+  def redirect_to_next_step(vacancy)
     next_path = session[:current_step].eql?('review') ? review_path(vacancy) : next_step
     redirect_to next_path
+  end
+
+  def reset_session_vacancy!
+    session[:vacancy_attributes] = nil
   end
 
   def review_path(vacancy)

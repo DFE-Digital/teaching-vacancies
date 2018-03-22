@@ -1,7 +1,7 @@
 class Vacancies::JobSpecificationController < Vacancies::ApplicationController
   def new
     @job_specification_form = JobSpecificationForm.new(school_id: school.id)
-    return unless session[:current_step].present?
+    return if session[:current_step].blank?
 
     @job_specification_form = JobSpecificationForm.new(session[:vacancy_attributes])
     @job_specification_form.valid?
@@ -15,9 +15,9 @@ class Vacancies::JobSpecificationController < Vacancies::ApplicationController
       vacancy = session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
 
-      redirect_to_next(vacancy)
+      redirect_to_next_step(vacancy)
     else
-      session[:current_step] = :step_1 unless session[:current_step].present?
+      session[:current_step] = :step_1 if session[:current_step].blank?
       redirect_to job_specification_school_vacancy_path(school_id: school.id)
     end
   end

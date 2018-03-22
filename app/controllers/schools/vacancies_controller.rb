@@ -1,5 +1,6 @@
 class Schools::VacanciesController < Vacancies::ApplicationController
   def new
+    reset_session_vacancy!
     redirect_to job_specification_school_vacancy_path(school_id: school.id)
   end
 

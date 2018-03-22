@@ -14,11 +14,11 @@ class Vacancies::CandidateSpecificationController < Vacancies::ApplicationContro
 
     if @candidate_specification_form.valid?
       vacancy = update_vacancy(candidate_specification_form)
-      redirect_to_next(vacancy)
-    else
-      session[:current_step] = :step_2 unless session[:current_step].eql?('review')
-      redirect_to candidate_specification_school_vacancy_path(school_id: @school.id)
+      return redirect_to_next_step(vacancy)
     end
+
+    session[:current_step] = :step_2 unless session[:current_step].eql?('review')
+    redirect_to candidate_specification_school_vacancy_path(school_id: @school.id)
   end
 
   private
