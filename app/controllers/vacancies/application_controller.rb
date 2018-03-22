@@ -9,12 +9,6 @@ class Vacancies::ApplicationController < ApplicationController
     params.permit![:school_id]
   end
 
-  def save_vacancy_without_validation
-    @job_specification_form.vacancy.send :set_slug
-    @job_specification_form.vacancy.status = :draft
-    @job_specification_form.vacancy.save(validate: false)
-  end
-
   def session_vacancy_id
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
   end
@@ -28,5 +22,14 @@ class Vacancies::ApplicationController < ApplicationController
     vacancy = school.vacancies.find(session_vacancy_id)
     vacancy.update_attributes(attributes)
     vacancy
+  end
+
+  def redirect_to_next(vacancy)
+    next_path = session[:current_step].eql?('review') ? review_path(vacancy) : next_step
+    redirect_to next_path
+  end
+
+  def review_path(vacancy)
+    school_vacancy_review_path(school_id: @school.id, vacancy_id: vacancy.id)
   end
 end

@@ -105,6 +105,109 @@ RSpec.feature 'A school publishing a vacancy' do
         verify_all_vacancy_details(vacancy)
       end
 
+      context 'edit job_specification_details' do
+        scenario 'updates the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath,"//div[dt[contains(text(), 'Job title')]]").find('a').click
+
+          expect(page).to have_content('Step 1 of 3')
+
+          fill_in 'job_specification_form[job_title]', with: 'An edited job title'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content('An edited job title')
+        end
+
+        scenario 'fails validation until values are set correctly' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath,"//div[dt[contains(text(), 'Job title')]]").find('a').click
+
+          fill_in 'job_specification_form[job_title]', with: ''
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Job title can\'t be blank')
+
+          fill_in 'job_specification_form[job_title]', with: 'A new job title'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content('A new job title')
+        end
+      end
+
+      context 'editing the candidate_specification_details' do
+        scenario 'updates the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath,"//div[dt[contains(text(), 'Qualifications')]]").find('a').click
+
+          expect(page).to have_content('Step 2 of 3')
+
+          fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content('Teaching diploma')
+        end
+
+        scenario 'fails validation until values are set correctly' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath,"//div[dt[contains(text(), 'Professional requirements')]]").find('a').click
+
+          expect(page).to have_content('Step 2 of 3')
+
+          fill_in 'candidate_specification_form[essential_requirements]', with: ''
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Essential requirements can\'t be blank')
+
+          fill_in 'candidate_specification_form[essential_requirements]', with: 'essential requirements'
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Confirm details before you submit')
+          expect(page).to have_content('essential requirements')
+        end
+      end
+
+      context 'editing the application_details' do
+        scenario 'fails validation until values are set correctly' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath,"//div[dt[contains(text(), 'Vacancy contact email')]]").find('a').click
+
+          expect(page).to have_content('Step 3 of 3')
+
+          fill_in 'application_details_form[contact_email]', with: 'not a valid email'
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Contact email is invalid')
+
+          fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content('a@valid.email')
+        end
+
+        scenario 'updates the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath,"//div[dt[contains(text(), 'Vacancy contact email')]]").find('a').click
+
+          expect(page).to have_content('Step 3 of 3')
+
+          fill_in 'application_details_form[contact_email]', with: 'an@email.com'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content('an@email.com')
+        end
+      end
+
       scenario 'redirects to the school vacancy page when published' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
@@ -143,7 +246,6 @@ RSpec.feature 'A school publishing a vacancy' do
         visit application_details_school_vacancy_path(school_id: school.id)
         expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
       end
-
     end
   end
 end

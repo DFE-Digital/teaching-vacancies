@@ -1,4 +1,4 @@
-class Schools::VacanciesController < ApplicationController
+class Schools::VacanciesController < Vacancies::ApplicationController
   def new
     redirect_to job_specification_school_vacancy_path(school_id: school.id)
   end
@@ -6,6 +6,9 @@ class Schools::VacanciesController < ApplicationController
   def review
     vacancy = school.vacancies.find(vacancy_id)
     redirect_to vacancy_path(vacancy), notice: 'This vacancy has already been published' if vacancy.published?
+
+    session[:current_step] = :review
+    store_vacancy_attributes(vacancy.attributes.compact)
 
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -17,16 +20,8 @@ class Schools::VacanciesController < ApplicationController
 
   private
 
-  def school
-    @school ||= School.find_by!(id: school_id)
-  end
-
-  def school_id
-    vacancy_params[:school_id]
-  end
-
   def vacancy_params
-    params.permit(:school_id, :vacancy_id)
+    params.permit(:vacancy_id)
   end
 
   def vacancy_id

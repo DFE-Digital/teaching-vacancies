@@ -5,7 +5,7 @@ class Vacancies::CandidateSpecificationController < Vacancies::ApplicationContro
     redirect_to job_specification_school_vacancy_path(school_id: school.id) unless session_vacancy_id
 
     @candidate_specification_form = ::CandidateSpecificationForm.new(session[:vacancy_attributes])
-    @candidate_specification_form.valid? if session[:current_step].eql?('step_2')
+    @candidate_specification_form.valid? if ['step_2', 'review'].include?(session[:current_step])
   end
 
   def create
@@ -13,11 +13,10 @@ class Vacancies::CandidateSpecificationController < Vacancies::ApplicationContro
     store_vacancy_attributes(@candidate_specification_form.vacancy.attributes.compact!)
 
     if @candidate_specification_form.valid?
-      update_vacancy(candidate_specification_form)
-
-      redirect_to application_details_school_vacancy_path(school_id: @school.id)
+      vacancy = update_vacancy(candidate_specification_form)
+      redirect_to_next(vacancy)
     else
-      session[:current_step] = :step_2
+      session[:current_step] = :step_2 unless session[:current_step].eql?('review')
       redirect_to candidate_specification_school_vacancy_path(school_id: @school.id)
     end
   end
@@ -27,5 +26,9 @@ class Vacancies::CandidateSpecificationController < Vacancies::ApplicationContro
   def candidate_specification_form
     params.require(:candidate_specification_form).permit(:essential_requirements, :education,
                                                          :qualifications, :experience)
+  end
+
+  def next_step
+    application_details_school_vacancy_path(school_id: school.id)
   end
 end
