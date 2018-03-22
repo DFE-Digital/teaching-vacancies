@@ -1,14 +1,15 @@
 require 'rails_helper'
 RSpec.feature 'Editing a School’s description' do
-  before do
-    @school = create(:school, name: 'Salisbury school', description: 'We are a good school')
-  end
+  include_context 'when authenticated as a member of hiring staff',
+                  stub_basic_auth_env: true
+
+  let(:school) { create(:school, urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN) }
 
   scenario 'updating a description' do
-    visit school_path(@school.urn)
+    visit school_path(school.urn)
 
-    expect(page).to have_content('Salisbury school')
-    expect(page).to have_content('We are a good school')
+    expect(page).to have_content(school.name)
+    expect(page).to have_content(school.description)
 
     click_on 'Change description'
     fill_in 'Description', with: 'Our school prides itself on excellence.'
@@ -18,10 +19,10 @@ RSpec.feature 'Editing a School’s description' do
   end
 
   scenario 'removing a description' do
-    visit school_path(@school.urn)
+    visit school_path(school.urn)
 
-    expect(page).to have_content('Salisbury school')
-    expect(page).to have_content('We are a good school')
+    expect(page).to have_content(school.name)
+    expect(page).to have_content(school.description)
 
     click_on 'Change description'
     fill_in 'Description', with: ''

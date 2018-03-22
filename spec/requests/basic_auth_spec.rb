@@ -90,15 +90,19 @@ RSpec.describe 'authentication', type: :request do
                                    env_value_for_password: password)
       end
 
-      it_behaves_like 'basic auth is required', '/schools', :hiring_staff_http_user, :hiring_staff_http_pass
+      context 'and they try to visit publishing for a school' do
+        it_behaves_like 'basic auth is required',
+                        '/schools',
+                        :hiring_staff_http_user,
+                        :hiring_staff_http_pass
 
-      it 'posting to the create vacancy endpoint still requires the hiring staff basic auth' do
-        school = create(:school)
+        it 'posting to the create vacancy endpoint still requires the hiring staff basic auth' do
+          school = create(:school)
+          path = school_vacancies_path(school.id)
+          post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
-        path = school_vacancies_path(school.id)
-        post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
-
-        expect(response).to have_http_status(:unauthorized)
+          expect(response).to have_http_status(:unauthorized)
+        end
       end
     end
   end

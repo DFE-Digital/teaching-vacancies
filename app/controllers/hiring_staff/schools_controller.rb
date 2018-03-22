@@ -1,6 +1,6 @@
 class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
-    @school = SchoolPresenter.new(School.find_by!(urn: params[:id]))
+    @school = SchoolPresenter.new(current_school)
   end
 
   def edit

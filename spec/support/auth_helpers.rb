@@ -23,11 +23,19 @@ module AuthHelpers
 end
 
 RSpec.shared_context 'when authenticated as a member of hiring staff' do |credentials|
-  let(:username) { credentials[:username] }
-  let(:password) { credentials[:password] }
+  let(:username) { credentials[:username] || 'foo' }
+  let(:password) { credentials[:password] || 'bar' }
 
   background do
+    stub_basic_auth_env if credentials[:stub_basic_auth_env] == true
     authenticate(username, password)
+  end
+
+  def stub_basic_auth_env
+    stub_access_basic_auth_env(env_field_for_username: :hiring_staff_http_user,
+                               env_field_for_password: :hiring_staff_http_pass,
+                               env_value_for_username: username,
+                               env_value_for_password: password)
   end
 
   def authenticate(username, password)

@@ -2,34 +2,27 @@ require 'rails_helper'
 RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
 
-  scenario 'Searching for a school by name' do
-    create(
-      :school,
-      name: 'Salisbury School',
-      address: '495 High Street North',
-      town: 'London',
-      postcode: 'E12 6TH'
-    )
+  include_context 'when authenticated as a member of hiring staff',
+                  username: 'foo',
+                  password: 'bar',
+                  stub_basic_auth_env: true
+
+  scenario 'Visiting the school page' do
+    school = create(:school,
+                    name: 'Salisbury School',
+                    urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN)
     create(:school, name: 'Canterbury School')
 
-    visit schools_path
-    fill_in 'School name', with: 'salisbury school'
-    click_on 'Find'
+    visit school_path(school.id)
 
     expect(page).to have_content('Salisbury School')
-    expect(page).to have_content('495 High Street North, London, E12 6TH')
+    expect(page).to have_content(/#{school.address}/)
+    expect(page).to have_content(/#{school.town}/)
     expect(page).not_to have_content('Canterbury School')
 
-    click_on 'Salisbury School'
+    click_link 'Publish a vacancy'
 
-    expect(page).to have_content('Publish a vacancy for Salisbury School')
-  end
-
-  scenario 'Users can view a vacancy creation form' do
-    school = create(:school, name: 'Salisbury School')
-    visit new_school_vacancy_path(school.id)
-
-    expect(page).to have_content('Publish a vacancy for Salisbury School')
+    expect(page).to have_content('Step 1 of 3')
   end
 
   context 'Users can see validation errors when they don\'t fill in all required fields' do
