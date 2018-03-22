@@ -71,6 +71,8 @@ module "ecs" {
   http_user                = "${var.http_user}"
   hiring_staff_http_user   = "${var.hiring_staff_http_user}"
   hiring_staff_http_pass   = "${var.hiring_staff_http_pass}"
+  benwick_http_user        = "${var.benwick_http_user}"
+  benwick_http_pass        = "${var.benwick_http_pass}"
   google_maps_api_key      = "${var.google_maps_api_key}"
   google_analytics         = "${var.google_analytics}"
   rollbar_access_token     = "${var.rollbar_access_token}"
