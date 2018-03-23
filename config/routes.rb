@@ -17,21 +17,21 @@ Rails.application.routes.draw do
                action: :candidate_specification
       resource :application_details, only: :show, controller: 'hiring_staff/vacancies', action: :application_details
     end
-    resource :vacancies, only: %i[new create], controller: 'schools/vacancies' do
+    resource :vacancies, only: %i[new create], controller: 'hiring_staff/vacancies' do
     end
 
     resource :vacancy, only: [] do
-      get :job_specification, to: 'vacancies/job_specification#new'
-      post :job_specification, to: 'vacancies/job_specification#create'
-      get :candidate_specification, to: 'vacancies/candidate_specification#new'
-      post :candidate_specification, to: 'vacancies/candidate_specification#create'
-      get :application_details, to: 'vacancies/application_details#new'
-      post :application_details, to: 'vacancies/application_details#create'
+      get :job_specification, to: 'hiring_staff/vacancies/job_specification#new'
+      post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'
+      get :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#new'
+      post :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#create'
+      get :application_details, to: 'hiring_staff/vacancies/application_details#new'
+      post :application_details, to: 'hiring_staff/vacancies/application_details#create'
     end
 
     resources :vacancy, only: [:show], controller: 'schools/vacancies' do
-      get 'review', to: 'schools/vacancies#review'
-      post :publish, to: 'vacancies/publish#create'
+      get 'review', to: 'hiring_staff/vacancies#review'
+      post :publish, to: 'hiring_staff/vacancies/publish#create'
     end
 
     resources :vacancies, only: [:new], controller: 'schools/vacancies' do

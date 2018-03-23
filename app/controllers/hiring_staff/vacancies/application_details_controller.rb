@@ -1,4 +1,4 @@
-class Vacancies::ApplicationDetailsController < Vacancies::ApplicationController
+class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
   before_action :school
 
   def new

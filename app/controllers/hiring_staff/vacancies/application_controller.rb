@@ -1,4 +1,4 @@
-class Vacancies::ApplicationController < ApplicationController
+class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
   private
 
   def school
@@ -31,9 +31,10 @@ class Vacancies::ApplicationController < ApplicationController
 
   def reset_session_vacancy!
     session[:vacancy_attributes] = nil
+    session[:current_step] = nil
   end
 
   def review_path(vacancy)
-    school_vacancy_review_path(school_id: @school.id, vacancy_id: vacancy.id)
+    school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
   end
 end

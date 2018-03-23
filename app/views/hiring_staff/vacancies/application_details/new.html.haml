@@ -2,7 +2,7 @@
   = t('vacancies.publish_heading', school: @application_details_form.school.name)
   %span.heading-secondary
     Step 3 of 3
-= render 'vacancies/error_messages', errors: @application_details_form.errors
+= render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
 = simple_form_for @application_details_form, html: { class: 'vacancy-form' }, action: :post, url: application_details_school_vacancy_path(school_id: @school.id) do |f|
   = hidden_field_tag :from, :application_details
   = hidden_field_tag :next, :review

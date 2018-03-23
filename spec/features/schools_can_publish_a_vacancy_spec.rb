@@ -62,7 +62,7 @@ RSpec.feature 'Creating a vacancy' do
       fill_in_application_details_form_fields(vacancy)
       click_button 'Save and continue'
 
-      expect(page).to have_content(I18n.t('vacancies.confirm'))
+      expect(page).to have_content(I18n.t('vacancies.review'))
 
       verify_all_vacancy_details(vacancy)
     end
@@ -73,7 +73,7 @@ RSpec.feature 'Creating a vacancy' do
 
       visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
 
-      expect(page).to have_current_path(vacancy_path(vacancy))
+      expect(page).to have_current_path(school_vacancy_path(school_id: school.id, id: vacancy.id))
     end
   end
 

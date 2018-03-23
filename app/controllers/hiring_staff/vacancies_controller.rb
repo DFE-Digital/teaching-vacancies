@@ -6,15 +6,13 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
 
   def show
     @school = find_school_from_params
-    vacancy = find_vacancy_from_params
+    vacancy = @school.vacancies.published.find(params[:id])
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def new
-    @school = find_school_from_params
-    @vacancy = @school.vacancies.new
-
-    render :job_specification
+    reset_session_vacancy!
+    redirect_to job_specification_school_vacancy_path(school_id: school.id)
   end
 
   def create
@@ -46,7 +44,7 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
 
   def update
     @school = find_school_from_params
-    @vacancy = find_vacancy_from_params
+    @vacancy = find_vacancy_from_params(@school)
 
     if @vacancy.update_attributes(vacancy_params)
       redirect_to next_path(params[:next])
@@ -57,7 +55,7 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
 
   def publish
     @school = find_school_from_params
-    vacancy = find_vacancy_from_params
+    vacancy = find_vacancy_from_params(@school)
 
     if PublishVacancy.new(vacancy: vacancy).call
       redirect_to published_school_vacancy_path(@school.id, vacancy.slug)
@@ -68,20 +66,20 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
 
   def published
     @school = find_school_from_params
-    vacancy = find_vacancy_from_params
+    vacancy = find_vacancy_from_params(@school)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def edit
-    @vacancy = find_vacancy_from_params
+    @vacancy = find_vacancy_from_params(@school)
   end
 
   def review
-    @school = find_school_from_params
-    vacancy = find_vacancy_from_params
-    if vacancy.published?
-      redirect_to school_vacancy_path(@school.id, vacancy), notice: 'This vacancy has already been published'
-    end
+    vacancy = school.vacancies.find(vacancy_id)
+    redirect_to school_vacancy_path(school_id: school.id, id: vacancy.id), notice: 'This vacancy has already been published' if vacancy.published?
+
+    session[:current_step] = :review
+    store_vacancy_attributes(vacancy.attributes.compact)
 
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -97,11 +95,11 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
   private
 
   def vacancy_id
-    params.require(:id)
+    params.require(:vacancy_id)
   end
 
-  def find_vacancy_from_params
-    @vacancy ||= Vacancy.friendly.find(vacancy_id)
+  def find_vacancy_from_params(school)
+    @vacancy ||= school.vacancies.find(vacancy_id)
   end
 
   def school_id

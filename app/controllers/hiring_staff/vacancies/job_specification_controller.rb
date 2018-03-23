@@ -1,4 +1,4 @@
-class Vacancies::JobSpecificationController < Vacancies::ApplicationController
+class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   def new
     @job_specification_form = JobSpecificationForm.new(school_id: school.id)
     return if session[:current_step].blank?
@@ -33,6 +33,7 @@ class Vacancies::JobSpecificationController < Vacancies::ApplicationController
   end
 
   def save_vacancy_without_validation
+    @job_specification_form.vacancy.school_id = school.id
     @job_specification_form.vacancy.send :set_slug
     @job_specification_form.vacancy.status = :draft
     @job_specification_form.vacancy.save(validate: false)

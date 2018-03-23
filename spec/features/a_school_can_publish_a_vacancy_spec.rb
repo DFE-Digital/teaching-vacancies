@@ -91,7 +91,7 @@ RSpec.feature 'A school publishing a vacancy' do
         click_on 'Save and continue'
 
         expect(page).to_not have_content('Step 3 of 3')
-        expect(page).to have_content("Publish a vacancy for #{school.name}")
+        expect(page).to have_content("Review the vacancy for #{school.name}")
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.feature 'A school publishing a vacancy' do
         vacancy = VacancyPresenter.new(create(:vacancy, :draft, school_id: school.id))
         visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
 
-        expect(page).to have_content("Publish a vacancy for #{school.name}")
+        expect(page).to have_content("Review the vacancy for #{school.name}")
 
         verify_all_vacancy_details(vacancy)
       end
@@ -116,7 +116,7 @@ RSpec.feature 'A school publishing a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('An edited job title')
         end
 
@@ -133,7 +133,7 @@ RSpec.feature 'A school publishing a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('A new job title')
         end
       end
@@ -149,14 +149,14 @@ RSpec.feature 'A school publishing a vacancy' do
           fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('Teaching diploma')
         end
 
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Professional requirements")]]').find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Essential requirements")]]').find('a').click
 
           expect(page).to have_content('Step 2 of 3')
 
@@ -168,7 +168,7 @@ RSpec.feature 'A school publishing a vacancy' do
           fill_in 'candidate_specification_form[essential_requirements]', with: 'essential requirements'
           click_on 'Save and continue'
 
-          expect(page).to have_content('Confirm details before you submit')
+          expect(page).to have_content('Confirm and submit vacancy')
           expect(page).to have_content('essential requirements')
         end
       end
@@ -189,7 +189,7 @@ RSpec.feature 'A school publishing a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('a@valid.email')
         end
 
@@ -203,7 +203,7 @@ RSpec.feature 'A school publishing a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Publish a vacancy for #{school.name}")
+          expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('an@email.com')
         end
       end
