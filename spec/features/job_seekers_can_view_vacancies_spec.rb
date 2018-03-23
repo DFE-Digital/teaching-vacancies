@@ -14,8 +14,11 @@ RSpec.feature 'Viewing vacancies' do
   scenario 'Only published, non-expired vacancies are visible in the list', elasticsearch: true do
     valid_vacancy = create(:vacancy)
 
-    [:trashed, :draft, :expired,
-     %i[expired trashed], %i[expired draft]].each { |args| create(:vacancy, *args) }
+    expired = build(:vacancy, :expired)
+    expired.send :set_slug
+    expired.save(validete: false)
+    [:trashed, :draft,
+     %i[trashed], %i[draft]].each { |args| create(:vacancy, *args) }
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path

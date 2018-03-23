@@ -1,3 +1,3 @@
 class CandidateSpecificationForm < VacancyForm
-  validates :essential_requirements, presence: true
+  include VacancyCandidateSpecificationValidations
 end

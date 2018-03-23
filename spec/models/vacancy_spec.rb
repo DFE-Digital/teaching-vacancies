@@ -96,7 +96,9 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'applicable scope' do
     it 'should only find current vacancies' do
-      expired = create(:vacancy, expires_on: 1.day.ago)
+      expired = build(:vacancy, :expired)
+      expired.send :set_slug
+      expired.save(validete: false)
       expires_today = create(:vacancy, expires_on: Time.zone.today)
       expires_future = create(:vacancy, expires_on: 3.months.from_now)
 

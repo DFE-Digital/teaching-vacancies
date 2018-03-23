@@ -20,7 +20,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def update_vacancy(attributes)
     vacancy = school.vacancies.find(session_vacancy_id)
-    vacancy.update_attributes(attributes)
+    vacancy.assign_attributes(attributes)
+    vacancy.save(validate: false)
     vacancy
   end
 
@@ -36,5 +37,9 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def review_path(vacancy)
     school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+  end
+
+  def redirect_unless_vacancy_session_id
+    redirect_to job_specification_school_vacancy_path(school_id: school.id) unless session_vacancy_id
   end
 end

@@ -40,6 +40,7 @@ FactoryGirl.define do
     end
 
     trait :expired do
+      publish_on { Faker::Time.backward(14) }
       expires_on { Faker::Time.backward(7) }
     end
 

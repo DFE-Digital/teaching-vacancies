@@ -68,15 +68,6 @@ RSpec.describe 'authentication', type: :request do
 
     it_behaves_like 'basic auth is required', '/', :http_user, :http_pass
 
-    it 'posting to the create vacancy endpoint requires basic auth' do
-      school = create(:school)
-
-      path = school_vacancies_path(school.id)
-      post path, params: { vacancy: { foo: :bar } }
-
-      expect(response.status).to eq(401)
-    end
-
     context 'and valid global basic auth has been provided' do
       let(:username) { 'username' }
       let(:password) { 'foobar' }
@@ -115,15 +106,6 @@ RSpec.describe 'authentication', type: :request do
 
     it_behaves_like 'basic auth is required', '/', :http_user, :http_pass
 
-    it 'posting to the create vacancy endpoint requires basic auth' do
-      school = create(:school)
-
-      path = school_vacancies_path(school.id)
-      post path, params: { vacancy: { foo: :bar } }
-
-      expect(response.status).to eq(401)
-    end
-
     context 'and valid global basic auth has been provided' do
       let(:username) { 'username' }
       let(:password) { 'foobar' }
@@ -139,15 +121,6 @@ RSpec.describe 'authentication', type: :request do
       end
 
       it_behaves_like 'basic auth is required', '/schools', :hiring_staff_http_user, :hiring_staff_http_pass
-
-      it 'posting to the create vacancy endpoint still requires the hiring staff basic auth' do
-        school = create(:school)
-
-        path = school_vacancies_path(school.id)
-        post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
-
-        expect(response).to have_http_status(:unauthorized)
-      end
     end
   end
 end

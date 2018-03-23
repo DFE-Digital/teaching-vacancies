@@ -1,5 +1,5 @@
 class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Vacancies::ApplicationController
-  before_action :school
+  before_action :school, :redirect_unless_vacancy_session_id
 
   def new
     redirect_to job_specification_school_vacancy_path(school_id: school.id) unless session_vacancy_id
