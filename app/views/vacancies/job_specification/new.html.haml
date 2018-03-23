@@ -3,7 +3,7 @@
   %span.heading-secondary
     Step 1 of 3
 = render 'vacancies/error_messages', errors: @job_specification_form.errors
-= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: submit_step_1_school_vacancies_path(school_id: @school.id) do |f|
+= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_vacancy_path(school_id: @school.id) do |f|
   = hidden_field_tag :from, :job_specification_form
   = hidden_field_tag :next, (params[:next] || :candidate_specification)
   %h2.heading-medium

@@ -2,34 +2,11 @@ class Schools::VacanciesController < ApplicationController
   before_action :set_school
 
   def new
-    redirect_to step_1_school_vacancies_path(school_id: @school.id)
-  end
-
-  def step_1
-    @job_specification_form = JobSpecificationForm.new(school_id: @school.id)
-    return unless session[:current_step].eql?('step_1')
-
-    @job_specification_form = JobSpecificationForm.new(session[:vacancy_attributes])
-    @job_specification_form.valid?
-  end
-
-  def submit_step_1
-    @job_specification_form = JobSpecificationForm.new(job_specification_form)
-    store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
-
-    if @job_specification_form.valid?
-      session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
-      store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
-
-      redirect_to step_2_school_vacancies_path(school_id: @school.id)
-    else
-      session[:current_step] = :step_1
-      redirect_to step_1_school_vacancies_path(school_id: @school.id)
-    end
+    redirect_to job_specification_school_vacancy_path(school_id: @school.id)
   end
 
   def step_2
-    redirect_to step_1_school_vacancies_path(school_id: @school.id) unless session_vacancy_id
+    redirect_to job_specification_school_vacancy_path(school_id: @school.id) unless session_vacancy_id
 
     @candidate_specification_form = ::CandidateSpecificationForm.new(session[:vacancy_attributes])
     @candidate_specification_form.valid? if session[:current_step].eql?('step_2')
@@ -50,14 +27,14 @@ class Schools::VacanciesController < ApplicationController
   end
 
   def step_3
-    redirect_to step_1_school_vacancies_path(school_id: @school.id) unless session_vacancy_id
+    redirect_to job_specification_school_vacancy_path(school_id: @school.id) unless session_vacancy_id
 
     @application_details_form = ApplicationDetailsForm.new(session[:vacancy_attributes])
     @application_details_form.valid? if session[:current_step].eql?('step_3')
   end
 
   def submit_step_3
-    redirect_to step_1_school_vacancies_path(school_id: @school.id) unless session_vacancy_id
+    redirect_to job_specification_school_vacancy_path(school_id: @school.id) unless session_vacancy_id
 
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
     store_vacancy_attributes(@application_details_form.vacancy.attributes.compact!)
@@ -129,11 +106,6 @@ class Schools::VacanciesController < ApplicationController
 
   def session_vacancy_id
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
-  end
-
-  def save_vacancy_without_validation
-    @job_specification_form.vacancy.send :set_slug
-    @job_specification_form.vacancy.save(validate: false)
   end
 
   def update_vacancy(attributes)

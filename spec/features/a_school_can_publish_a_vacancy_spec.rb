@@ -129,10 +129,10 @@ RSpec.feature 'A school publishing a vacancy' do
         click_on 'Confirm and submit vacancy'
 
         visit step_2_school_vacancies_path(school_id: school.id)
-        expect(page.current_path).to eq(step_1_school_vacancies_path(school_id: school.id))
+        expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
 
         visit step_3_school_vacancies_path(school_id: school.id)
-        expect(page.current_path).to eq(step_1_school_vacancies_path(school_id: school.id))
+        expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
       end
     end
   end
