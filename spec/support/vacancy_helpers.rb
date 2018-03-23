@@ -62,6 +62,32 @@ module VacancyHelpers
   end
   # rubocop:enable Metrics/AbcSize
 
+  # rubocop:disable Metrics/AbcSize
+  def verify_all_vacancy_details(vacancy)
+    expect(page).to have_content(vacancy.job_title)
+    expect(page).to have_content(vacancy.headline)
+    expect(page).to have_content(vacancy.job_description)
+    expect(page).to have_content(vacancy.subject.name)
+    expect(page).to have_content(vacancy.salary_range)
+    expect(page).to have_content(vacancy.working_pattern)
+    expect(page).to have_content(vacancy.benefits)
+    expect(page).to have_content(vacancy.pay_scale)
+    expect(page).to have_content(vacancy.weekly_hours)
+    expect(page).to have_content(vacancy.starts_on)
+    expect(page).to have_content(vacancy.ends_on)
+
+    expect(page).to have_content(vacancy.essential_requirements)
+    expect(page).to have_content(vacancy.education)
+    expect(page).to have_content(vacancy.qualifications)
+    expect(page).to have_content(vacancy.experience)
+    expect(page).to have_content(vacancy.leadership.title)
+
+    expect(page).to have_content(vacancy.contact_email)
+    expect(page).to have_content(vacancy.expires_on)
+    expect(page).to have_content(vacancy.publish_on)
+  end
+  # rubocop:enable Metrics/AbcSize
+
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
   end
