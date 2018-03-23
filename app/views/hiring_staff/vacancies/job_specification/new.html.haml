@@ -35,9 +35,8 @@
                 collection: Subject.order(:name),
                 required: false
       %fieldset.form-group
-        %legend
-          %div Salary range
-          %span.form-hint= t('vacancies.form_hints.salary_range')
+        %label= t('vacancies.salary_range')
+        %span.form-hint= t('vacancies.form_hints.salary_range')
 
         = f.input :minimum_salary,
                   as: :integer,

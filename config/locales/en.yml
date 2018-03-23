@@ -52,6 +52,7 @@ en:
     application_link: 'Apply for this job'
     actions: 'Actions'
     status: 'Status'
+    already_published: 'This vacancy has already been published'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
       headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'
