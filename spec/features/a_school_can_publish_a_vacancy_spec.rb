@@ -111,7 +111,7 @@ RSpec.feature 'A school publishing a vacancy' do
         visit candidate_specification_school_vacancy_path(school_id: school.id)
         expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
 
-        visit step_3_school_vacancies_path(school_id: school.id)
+        visit application_details_school_vacancy_path(school_id: school.id)
         expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
       end
     end

@@ -15,7 +15,7 @@ class Vacancies::CandidateSpecificationController < Vacancies::ApplicationContro
     if @candidate_specification_form.valid?
       update_vacancy(candidate_specification_form)
 
-      redirect_to step_3_school_vacancies_path(school_id: @school.id)
+      redirect_to application_details_school_vacancy_path(school_id: @school.id)
     else
       session[:current_step] = :step_2
       redirect_to candidate_specification_school_vacancy_path(school_id: @school.id)
