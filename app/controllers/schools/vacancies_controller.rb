@@ -5,27 +5,6 @@ class Schools::VacanciesController < ApplicationController
     redirect_to job_specification_school_vacancy_path(school_id: @school.id)
   end
 
-  def step_2
-    redirect_to job_specification_school_vacancy_path(school_id: @school.id) unless session_vacancy_id
-
-    @candidate_specification_form = ::CandidateSpecificationForm.new(session[:vacancy_attributes])
-    @candidate_specification_form.valid? if session[:current_step].eql?('step_2')
-  end
-
-  def submit_step_2
-    @candidate_specification_form = CandidateSpecificationForm.new(candidate_specification_form)
-    store_vacancy_attributes(@candidate_specification_form.vacancy.attributes.compact!)
-
-    if @candidate_specification_form.valid?
-      update_vacancy(candidate_specification_form)
-
-      redirect_to step_3_school_vacancies_path(school_id: @school.id)
-    else
-      session[:current_step] = :step_2
-      redirect_to step_2_school_vacancies_path(school_id: @school.id)
-    end
-  end
-
   def step_3
     redirect_to job_specification_school_vacancy_path(school_id: @school.id) unless session_vacancy_id
 
@@ -79,19 +58,6 @@ class Schools::VacanciesController < ApplicationController
   def store_vacancy_attributes(vacancy_attributes)
     session[:vacancy_attributes] ||= {}
     session[:vacancy_attributes].merge!(vacancy_attributes)
-  end
-
-  def job_specification_form
-    params.require(:job_specification_form).permit(:job_title, :job_description, :headline,
-                                                   :minimum_salary, :maximum_salary, :working_pattern,
-                                                   :school_id, :subject_id, :pay_scale_id, :leadership_id,
-                                                   :starts_on_dd, :starts_on_mm, :starts_on_yyyy,
-                                                   :ends_on_dd, :ends_on_mm, :ends_on_yyyy)
-  end
-
-  def candidate_specification_form
-    params.require(:candidate_specification_form).permit(:essential_requirements, :education,
-                                                         :qualifications, :experience)
   end
 
   def application_details_form

@@ -18,8 +18,6 @@ Rails.application.routes.draw do
       resource :application_details, only: :show, controller: 'hiring_staff/vacancies', action: :application_details
     end
     resource :vacancies, only: %i[new create], controller: 'schools/vacancies' do
-      get 'step_2', to: 'schools/vacancies#step_2'
-      post 'submit_step_2', to: 'schools/vacancies#submit_step_2'
       get 'step_3', to: 'schools/vacancies#step_3'
       post 'submit_step_3', to: 'schools/vacancies#submit_step_3'
     end
@@ -27,6 +25,8 @@ Rails.application.routes.draw do
     resource :vacancy, only: [] do
       get :job_specification, to: 'vacancies/job_specification#new'
       post :job_specification, to: 'vacancies/job_specification#create'
+      get :candidate_specification, to: 'vacancies/candidate_specification#new'
+      post :candidate_specification, to: 'vacancies/candidate_specification#create'
     end
 
     resources :vacancies, only: [:show] do

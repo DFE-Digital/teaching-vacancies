@@ -22,4 +22,10 @@ class Vacancies::ApplicationController < ApplicationController
     session[:vacancy_attributes] ||= {}
     session[:vacancy_attributes].merge!(vacancy_attributes)
   end
+
+  def update_vacancy(attributes)
+    vacancy = @school.vacancies.find(session_vacancy_id)
+    vacancy.update_attributes(attributes)
+    vacancy
+  end
 end

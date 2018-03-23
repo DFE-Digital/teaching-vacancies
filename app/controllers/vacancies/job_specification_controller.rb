@@ -15,7 +15,7 @@ class Vacancies::JobSpecificationController < Vacancies::ApplicationController
       session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
 
-      redirect_to step_2_school_vacancies_path(school_id: school.id)
+      redirect_to candidate_specification_school_vacancy_path(school_id: school.id)
     else
       session[:current_step] = :step_1
       redirect_to job_specification_school_vacancy_path(school_id: school.id)
