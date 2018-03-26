@@ -10,6 +10,7 @@ RSpec.shared_examples 'basic auth is required' do |path, http_user, http_pass|
 
   context 'when the correct basic auth credentials are given' do
     it 'returns a 200' do
+      create(:school)
       username = 'username'
       password = 'foobar'
 
@@ -26,6 +27,7 @@ RSpec.shared_examples 'basic auth is required' do |path, http_user, http_pass|
 
   context 'when the incorrect basic auth credentials are given' do
     it 'returns a 401' do
+      create(:school)
       stub_access_basic_auth_env(env_field_for_username: http_user,
                                  env_field_for_password: http_pass,
                                  env_value_for_username: nil,

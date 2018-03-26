@@ -8,7 +8,7 @@ RSpec.feature 'Hiring staff can only see their school' do
                     stub_basic_auth_env: true
 
     scenario 'school page can be viewed' do
-      school = create(:school, urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN)
+      school = create(:school)
 
       visit school_path(school.id)
 
@@ -18,7 +18,7 @@ RSpec.feature 'Hiring staff can only see their school' do
 
   context 'when the log in is NOT connected to a Benwick school' do
     scenario 'returns the basic auth error' do
-      create(:school, urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN)
+      create(:school)
 
       visit school_path(school.id)
 

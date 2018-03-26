@@ -3,7 +3,7 @@ RSpec.feature 'Editing a School’s description' do
   include_context 'when authenticated as a member of hiring staff',
                   stub_basic_auth_env: true
 
-  let(:school) { create(:school, urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN) }
+  let(:school) { create(:school) }
 
   scenario 'updating a description' do
     visit school_path(school.urn)

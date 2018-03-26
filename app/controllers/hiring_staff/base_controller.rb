@@ -1,6 +1,5 @@
 class HiringStaff::BaseController < ApplicationController
   before_action :authenticate
-  DEFAULT_SCHOOL_URN = '140181'.freeze
 
   def authenticate
     authenticate_or_request_with_http_basic('Hiring Staff') do |name, password|
@@ -8,7 +7,7 @@ class HiringStaff::BaseController < ApplicationController
         session[:urn] = '110627'
         true
       elsif name == http_user && password == http_pass
-        session[:urn] = DEFAULT_SCHOOL_URN # Enables the product team to access publishing and the test suite a default
+        session[:urn] = School.first.urn # Enables the product team to access publishing and the test suite a default
         true
       end
     end

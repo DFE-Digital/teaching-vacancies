@@ -3,22 +3,16 @@ RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
 
   include_context 'when authenticated as a member of hiring staff',
-                  username: 'foo',
-                  password: 'bar',
                   stub_basic_auth_env: true
 
   scenario 'Visiting the school page' do
-    school = create(:school,
-                    name: 'Salisbury School',
-                    urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN)
-    create(:school, name: 'Canterbury School')
+    school = create(:school, name: 'Salisbury School')
 
     visit school_path(school.id)
 
     expect(page).to have_content('Salisbury School')
     expect(page).to have_content(/#{school.address}/)
     expect(page).to have_content(/#{school.town}/)
-    expect(page).not_to have_content('Canterbury School')
 
     click_link 'Publish a vacancy'
 

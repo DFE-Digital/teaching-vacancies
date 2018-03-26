@@ -4,7 +4,7 @@ RSpec.feature 'School deleting vacancies' do
                   stub_basic_auth_env: true
 
   scenario 'Hiring staff should see a delete button for a vacancy' do
-    school = FactoryGirl.create(:school, urn: HiringStaff::BaseController::DEFAULT_SCHOOL_URN)
+    school = FactoryGirl.create(:school)
     vacancy = FactoryGirl.create(:vacancy, school: school)
 
     visit school_vacancies_path(school.id)
