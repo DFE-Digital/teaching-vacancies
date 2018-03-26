@@ -33,6 +33,11 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     redirect_to school_vacancies_path, notice: 'Your vacancy was deleted.'
   end
 
+  def summary
+    vacancy = school.vacancies.published.find(id)
+    @vacancy = VacancyPresenter.new(vacancy)
+  end
+
   private
 
   def id

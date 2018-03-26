@@ -291,6 +291,8 @@ RSpec.feature 'Creating a vacancy' do
 
         expect(page).to have_content("The system reference number is #{vacancy.reference}")
         expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
+        visit vacancy_url(vacancy)
+        expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
       end
 
       scenario 'a published vacancy cannot be edited' do

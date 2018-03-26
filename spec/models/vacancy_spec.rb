@@ -69,7 +69,7 @@ RSpec.describe Vacancy, type: :model do
         vacancy = build(:vacancy, weekly_hours: '-5')
 
         expect(vacancy.valid?).to be false
-        expect(vacancy.errors.messages[:weekly_hours][0]).to eq('cannot be negative')
+        expect(vacancy.errors.messages[:weekly_hours][0]).to eq('can\'t be negative')
       end
     end
   end

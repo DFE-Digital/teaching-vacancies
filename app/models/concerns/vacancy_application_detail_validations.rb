@@ -11,17 +11,11 @@ module VacancyApplicationDetailValidations
   end
 
   def validity_of_publish_on
-    if publish_on_after_today?
-      errors.add(:publish_on,
-                 I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
-    end
+    errors.add(:publish_on, publish_on_before_today_error) if publish_on_after_today?
   end
 
   def validity_of_expires_on
-    if expiry_date_less_than_publish_date?
-      errors.add(:expires_on,
-                 I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date'))
-    end
+    errors.add(:expires_on, expires_on_before_publish_on_error) if expiry_date_less_than_publish_date?
   end
 
   private
@@ -32,5 +26,13 @@ module VacancyApplicationDetailValidations
 
   def publish_on_after_today?
     publish_on && publish_on < Time.zone.today
+  end
+
+  def publish_on_before_today_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today')
+  end
+
+  def expires_on_before_publish_on_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date')
   end
 end

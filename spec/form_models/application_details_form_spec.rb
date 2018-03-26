@@ -11,7 +11,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
     describe '#contact_email' do
       let(:application_details) { ApplicationDetailsForm.new(contact_email: 'Some string') }
 
-      it 'checkes for a valid email format' do
+      it 'checks for a valid email format' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:contact_email][0])
           .to eq('is invalid')

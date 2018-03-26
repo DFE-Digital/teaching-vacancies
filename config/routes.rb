@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     resources :vacancies, only: %i[new index destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'
+      get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
     end
 
