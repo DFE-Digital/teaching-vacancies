@@ -198,7 +198,7 @@ variable "cloudwatch_ops_genie_api_key" {
 
 # Application
 variable "rails_env" {}
-
+variable "default_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
 variable "hiring_staff_http_user" {}

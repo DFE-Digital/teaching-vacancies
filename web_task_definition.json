@@ -24,6 +24,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "DEFAULT_SCHOOL_URN",
+        "value": "${default_school_urn}"
+      },
+      {
         "name": "HTTP_USER",
         "value": "${http_user}"
       },

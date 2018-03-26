@@ -14,6 +14,7 @@ variable "ecs_vacancies_scrape_task_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}
+variable "default_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
 variable "hiring_staff_http_user" {}

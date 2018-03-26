@@ -7,7 +7,7 @@ class HiringStaff::BaseController < ApplicationController
         session[:urn] = '110627'
         true
       elsif name == http_user && password == http_pass
-        session[:urn] = School.first.urn # Enables the product team to access publishing and the test suite a default
+        session[:urn] = ENV.fetch('DEFAULT_SCHOOL_URN') { School.first.urn }
         true
       end
     end

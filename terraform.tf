@@ -67,6 +67,7 @@ module "ecs" {
 
   # Application variables
   rails_env                = "${var.rails_env}"
+  default_school_urn       = "${var.default_school_urn}"
   http_pass                = "${var.http_pass}"
   http_user                = "${var.http_user}"
   hiring_staff_http_user   = "${var.hiring_staff_http_user}"
