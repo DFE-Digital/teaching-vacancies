@@ -2,7 +2,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   private
 
   def school
-    @school ||= School.find_by(id: school_id)
+    @school ||= School.find_by!(id: school_id)
   end
 
   def school_id

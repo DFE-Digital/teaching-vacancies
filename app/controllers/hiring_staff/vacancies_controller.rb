@@ -1,12 +1,10 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
   def index
-    @school = find_school_from_params
-    @vacancies = @school.vacancies.all
+    @vacancies = school.vacancies.all
   end
 
   def show
-    @school = find_school_from_params
-    vacancy = @school.vacancies.published.find(params[:id])
+    vacancy = school.vacancies.published.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -29,8 +27,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def destroy
-    @school = find_school_from_params
-    @vacancy = find_vacancy_from_params
+    @vacancy = school.vacancies.find(id)
     @vacancy.destroy
 
     redirect_to school_vacancies_path, notice: 'Your vacancy was deleted.'
@@ -38,15 +35,11 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   private
 
+  def id
+    params.require(:id)
+  end
+
   def vacancy_id
     params.require(:vacancy_id)
-  end
-
-  def find_vacancy_from_params(school)
-    @vacancy ||= school.vacancies.find(vacancy_id)
-  end
-
-  def find_school_from_params
-    @school ||= School.find(school_id)
   end
 end
