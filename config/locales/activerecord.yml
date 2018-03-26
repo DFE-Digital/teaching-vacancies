@@ -20,6 +20,7 @@ en:
               blank: can't be blank
             expires_on:
               blank: can't be blank
+              before_publish_date: can't be before the publish date
             publish_on:
               blank: can't be blank
               before_today: can't be before today
