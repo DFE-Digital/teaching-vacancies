@@ -23,7 +23,9 @@ RSpec.describe Vacancy, type: :model do
           working_pattern: :full_time
         )
       end
-      it { should validate_presence_of(:essential_requirements) }
+      it { should validate_presence_of(:education) }
+      it { should validate_presence_of(:qualifications) }
+      it { should validate_presence_of(:experience) }
     end
 
     context 'a record saved with job spec and candidate spec details, ' \

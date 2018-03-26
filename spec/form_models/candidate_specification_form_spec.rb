@@ -3,6 +3,8 @@ RSpec.describe CandidateSpecificationForm, type: :model do
   subject { CandidateSpecificationForm.new({}) }
 
   describe 'validations' do
-    it { should validate_presence_of(:essential_requirements) }
+    it { should validate_presence_of(:education) }
+    it { should validate_presence_of(:qualifications) }
+    it { should validate_presence_of(:experience) }
   end
 end

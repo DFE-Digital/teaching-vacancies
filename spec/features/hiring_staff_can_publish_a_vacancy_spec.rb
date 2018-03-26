@@ -89,11 +89,18 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue' # submit empty form
 
         within('.error-summary') do
-          expect(page).to have_content('1 error prevented this vacancy from being saved:')
+          expect(page).to have_content('3 errors prevented this vacancy from being saved:')
         end
 
-        within_row_for(text: I18n.t('vacancies.essential_requirements')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+        within_row_for(text: I18n.t('vacancies.education')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.education.blank'))
+        end
+
+        within_row_for(text: I18n.t('vacancies.qualifications')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.blank'))
+        end
+        within_row_for(text: I18n.t('vacancies.experience')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.experience.blank'))
         end
       end
 
@@ -224,12 +231,12 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content('Step 2 of 3')
 
-          fill_in 'candidate_specification_form[essential_requirements]', with: ''
+          fill_in 'candidate_specification_form[education]', with: ''
           click_on 'Save and continue'
 
-          expect(page).to have_content('Essential requirements can\'t be blank')
+          expect(page).to have_content('Education can\'t be blank')
 
-          fill_in 'candidate_specification_form[essential_requirements]', with: 'essential requirements'
+          fill_in 'candidate_specification_form[education]', with: 'essential requirements'
           click_on 'Save and continue'
 
           expect(page).to have_content('Confirm and submit vacancy')
