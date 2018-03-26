@@ -28,6 +28,10 @@
         "value": "${default_school_urn}"
       },
       {
+        "name": "ROLLBAR_ENV",
+        "value": "${environment}"
+      },
+      {
         "name": "HTTP_USER",
         "value": "${http_user}"
       },
