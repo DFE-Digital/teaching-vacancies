@@ -3,6 +3,10 @@ require 'elasticsearch/model'
 class Vacancy < ApplicationRecord
   include ApplicationHelper
 
+  include VacancyJobSpecificationValidations
+  include VacancyCandidateSpecificationValidations
+  include VacancyApplicationDetailValidations
+
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
@@ -56,16 +60,7 @@ class Vacancy < ApplicationRecord
 
   paginates_per 10
 
-  validates :job_title, :job_description, :headline, \
-            :minimum_salary, :working_pattern, \
-            :slug,  \
-            presence: true
-
-  validates :essential_requirements, presence: true, unless: :new_record?
-
-  validates :publish_on, :expires_on, :contact_email, presence: true, if: :contact_email
-
-  validate :minimum_salary_lower_than_maximum, :working_hours, :validity_of_publish_on
+  validates :slug, presence: true
 
   def location
     @location ||= SchoolPresenter.new(school).location
@@ -93,24 +88,5 @@ class Vacancy < ApplicationRecord
       %i[job_title school_name],
       %i[job_title location],
     ]
-  end
-
-  def minimum_salary_lower_than_maximum
-    errors.add(:minimum_salary, 'must be lower than the maximum salary') if minimum_higher_than_maximum_salary
-  end
-
-  def minimum_higher_than_maximum_salary
-    maximum_salary && minimum_salary > maximum_salary
-  end
-
-  def working_hours
-    return if weekly_hours.blank?
-    !!BigDecimal.new(weekly_hours) rescue errors.add(:weekly_hours, 'must be a valid number') && return
-    errors.add(:weekly_hours, 'cannot be negative') if BigDecimal.new(weekly_hours).negative?
-  end
-
-  def validity_of_publish_on
-    error_message = I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today')
-    errors.add(:publish_on, error_message) if publish_on && publish_on < Time.zone.today
   end
 end

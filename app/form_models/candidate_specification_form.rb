@@ -1,0 +1,3 @@
+class CandidateSpecificationForm < VacancyForm
+  include VacancyCandidateSpecificationValidations
+end

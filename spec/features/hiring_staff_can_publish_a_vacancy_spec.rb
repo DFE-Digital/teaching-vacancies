@@ -19,180 +19,300 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content('Step 1 of 3')
   end
 
-  context 'Users can see validation errors when they don\'t fill in all required fields' do
-    scenario 'on the first page' do
-      visit new_school_vacancy_path(school.id)
+  context 'creating a new vacancy' do
+    let!(:pay_scales) { create_list(:pay_scale, 3) }
+    let!(:subjects) { create_list(:subject, 3) }
+    let!(:leaderships) { create_list(:leadership, 3) }
+    let(:vacancy) do
+      VacancyPresenter.new(build(:vacancy, :complete,
+                                 pay_scale: pay_scales.sample,
+                                 subject: subjects.sample,
+                                 leadership: leaderships.sample))
+    end
 
-      # Don't fill in any information to force all errors to show
-      click_button 'Save and continue'
+    scenario 'redirects to step 1, job specification' do
+      visit new_school_vacancy_path(school_id: school.id)
 
-      within('.error-summary') do
-        expect(page).to have_content('5 errors prevented this vacancy from being saved:')
+      expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
+      expect(page).to have_content("Publish a vacancy for #{school.name}")
+      expect(page).to have_content('Step 1 of 3')
+    end
+
+    context '#job_specification' do
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_vacancy_path(school_id: school.id)
+
+        click_on 'Save and continue'
+
+        within('.error-summary') do
+          expect(page).to have_content('5 errors prevented this vacancy from being saved:')
+        end
+
+        within_row_for(text: I18n.t('vacancies.job_title')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
+        end
+
+        within_row_for(text: I18n.t('vacancies.headline')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.headline.blank'))
+        end
+
+        within_row_for(text: I18n.t('vacancies.description')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
+        end
+
+        within_row_for(text: I18n.t('vacancies.salary_range')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
+        end
+
+        within_row_for(text: I18n.t('vacancies.working_pattern')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+        end
       end
 
-      within_row_for(text: I18n.t('vacancies.job_title')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
-      end
+      scenario 'redirects to step 2, candidate profile, when submitted succesfuly' do
+        visit new_school_vacancy_path(school_id: school.id)
 
-      within_row_for(text: I18n.t('vacancies.headline')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.headline.blank'))
-      end
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
 
-      within_row_for(text: I18n.t('vacancies.description')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
-      end
-
-      within_row_for(text: I18n.t('vacancies.salary_range')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
-      end
-
-      within_row_for(text: I18n.t('vacancies.working_pattern')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+        expect(page).to have_content('Step 2 of 3')
       end
     end
 
-    scenario 'on the second page' do
-      visit new_school_vacancy_path(school.id)
+    context '#candidate_profile' do
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_vacancy_path(school_id: school.id)
 
-      fill_in 'vacancy[job_title]', with: 'title'
-      fill_in 'vacancy[headline]', with: 'headline'
-      fill_in 'vacancy[job_description]', with: 'description'
-      select 'Full time', from: 'vacancy[working_pattern]'
-      fill_in 'vacancy[minimum_salary]', with: 0
-      fill_in 'vacancy[maximum_salary]', with: 1
-      click_button 'Save and continue'
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
 
-      expect(page).to have_content('Step 2 of 3')
+        click_on 'Save and continue' # submit empty form
 
-      # Don't fill in any information to force all errors to show
-      click_button 'Save and continue'
+        within('.error-summary') do
+          expect(page).to have_content('1 error prevented this vacancy from being saved:')
+        end
 
-      within('.error-summary') do
-        expect(page).to have_content('1 error prevented this vacancy from being saved:')
+        within_row_for(text: I18n.t('vacancies.essential_requirements')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+        end
       end
 
-      within_row_for(text: I18n.t('vacancies.essential_requirements')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+      scenario 'redirects to step 3, application_details profile, when submitted succesfuly' do
+        visit new_school_vacancy_path(school_id: school.id)
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        fill_in_candidate_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        expect(page).to have_content('Step 3 of 3')
       end
     end
 
-    scenario 'on the third page' do
-      visit new_school_vacancy_path(school.id)
+    context '#application_details' do
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_vacancy_path(school_id: school.id)
 
-      fill_in 'vacancy[job_title]', with: 'title'
-      fill_in 'vacancy[headline]', with: 'headline'
-      fill_in 'vacancy[job_description]', with: 'description'
-      select 'Full time', from: 'vacancy[working_pattern]'
-      fill_in 'vacancy[minimum_salary]', with: 0
-      fill_in 'vacancy[maximum_salary]', with: 1
-      click_button 'Save and continue'
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        fill_in_candidate_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        click_on 'Save and continue'
 
-      expect(page).to have_content('Step 2 of 3')
+        within('.error-summary') do
+          expect(page).to have_content('3 errors prevented this vacancy from being saved:')
+        end
 
-      fill_in 'vacancy[essential_requirements]', with: 'essential requirements'
-      click_button 'Save and continue'
+        within_row_for(text: I18n.t('vacancies.contact_email')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
+        end
 
-      expect(page).to have_content('Step 3 of 3')
+        within_row_for(element: 'legend', text: I18n.t('vacancies.deadline_date')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
+        end
 
-      # Don't fill in any information to force all errors to show
-      click_button 'Save and continue'
-
-      within('.error-summary') do
-        expect(page).to have_content('3 errors prevented this vacancy from being saved:')
+        within_row_for(element: 'legend', text: I18n.t('vacancies.publication_date')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
+        end
       end
 
-      within_row_for(text: I18n.t('vacancies.contact_email')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
+      scenario 'redirects to the vacancy review page when submitted succesfuly' do
+        visit new_school_vacancy_path(school_id: school.id)
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        fill_in_candidate_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        fill_in_application_details_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        expect(page).to_not have_content('Step 3 of 3')
+        expect(page).to have_content(I18n.t('vacancies.review'))
       end
-
-      within_row_for(element: 'legend', text: I18n.t('vacancies.deadline_date')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
-      end
-
-      within_row_for(element: 'legend', text: I18n.t('vacancies.publication_date')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
-      end
-
-      # Fill in a date in the past
-      fill_in 'vacancy[publish_on_dd]', with: '01'
-      fill_in 'vacancy[publish_on_mm]', with: '01'
-      fill_in 'vacancy[publish_on_yyyy]', with: '2001'
-
-      click_button 'Save and continue'
-
-      within_row_for(element: 'legend', text: I18n.t('vacancies.publication_date')) do
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
-      end
-
-      # Fill in valid information
-      fill_in 'vacancy[contact_email]', with: 'foo@bar.com'
-
-      fill_in 'vacancy[expires_on_dd]', with: '01'
-      fill_in 'vacancy[expires_on_mm]', with: '01'
-      fill_in 'vacancy[expires_on_yyyy]', with: '2999'
-
-      fill_in 'vacancy[publish_on_dd]', with: '01'
-      fill_in 'vacancy[publish_on_mm]', with: '01'
-      fill_in 'vacancy[publish_on_yyyy]', with: '2999'
-
-      click_button 'Save and continue'
-
-      expect(page).to have_content(I18n.t('vacancies.review'))
-    end
-  end
-
-  context 'Reviewing a vacancy' do
-    scenario 'A user can review the vacancy they just posted' do
-      vacancy = VacancyPresenter.new(build(:vacancy))
-      visit new_school_vacancy_path(school.id)
-
-      expect(page).to have_content('Job specification')
-      fill_in_job_spec_fields(vacancy)
-
-      expect(page).to have_content('Candidate specification')
-      fill_in_candidate_specification_fields(vacancy)
-      click_button 'Save and continue'
-
-      expect(page).to have_content('Application details')
-      fill_in_application_details_fields(vacancy)
-      click_button 'Save and continue'
-
-      expect(page).to have_content(I18n.t('vacancies.review'))
-      expect(page).to have_content(vacancy.job_title)
-      expect(page).to have_content(vacancy.headline)
-      expect(page).to have_content(vacancy.salary_range('to'))
-      expect(page).to have_content(vacancy.essential_requirements)
-      expect(page).to have_content(vacancy.contact_email)
     end
 
-    scenario 'A user cannot review a vacancy that has already been published' do
-      vacancy = create(:vacancy, :published)
+    context '#review' do
+      scenario 'is not available for published vacancies' do
+        vacancy = create(:vacancy, :published, school_id: school.id)
 
-      visit review_school_vacancy_path(school.id, vacancy)
+        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
 
-      expect(page).to have_current_path(school_vacancy_path(school.id, vacancy))
+        expect(page).to have_current_path(school_vacancy_path(school_id: school.id, id: vacancy.id))
+      end
+
+      scenario 'lists all the vacancy details correctly' do
+        vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
+        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+
+        expect(page).to have_content("Review the vacancy for #{school.name}")
+
+        verify_all_vacancy_details(vacancy)
+      end
+
+      context 'edit job_specification_details' do
+        scenario 'updates the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
+
+          expect(page).to have_content('Step 1 of 3')
+
+          fill_in 'job_specification_form[job_title]', with: 'An edited job title'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content('An edited job title')
+        end
+
+        scenario 'fails validation until values are set correctly' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
+
+          fill_in 'job_specification_form[job_title]', with: ''
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Job title can\'t be blank')
+
+          fill_in 'job_specification_form[job_title]', with: 'A new job title'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content('A new job title')
+        end
+      end
+
+      context 'editing the candidate_specification_details' do
+        scenario 'updates the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath, '//div[dt[contains(text(), "Qualifications")]]').find('a').click
+
+          expect(page).to have_content('Step 2 of 3')
+
+          fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content('Teaching diploma')
+        end
+
+        scenario 'fails validation until values are set correctly' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath, '//div[dt[contains(text(), "Essential requirements")]]').find('a').click
+
+          expect(page).to have_content('Step 2 of 3')
+
+          fill_in 'candidate_specification_form[essential_requirements]', with: ''
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Essential requirements can\'t be blank')
+
+          fill_in 'candidate_specification_form[essential_requirements]', with: 'essential requirements'
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Confirm and submit vacancy')
+          expect(page).to have_content('essential requirements')
+        end
+      end
+
+      context 'editing the application_details' do
+        scenario 'fails validation until values are set correctly' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath, '//div[dt[contains(text(), "Vacancy contact email")]]').find('a').click
+
+          expect(page).to have_content('Step 3 of 3')
+
+          fill_in 'application_details_form[contact_email]', with: 'not a valid email'
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Contact email is invalid')
+
+          fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content('a@valid.email')
+        end
+
+        scenario 'updates the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          find(:xpath, '//div[dt[contains(text(), "Vacancy contact email")]]').find('a').click
+
+          expect(page).to have_content('Step 3 of 3')
+
+          fill_in 'application_details_form[contact_email]', with: 'an@email.com'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content('an@email.com')
+        end
+      end
+
+      scenario 'redirects to the school vacancy page when published' do
+        vacancy = create(:vacancy, :draft, school_id: school.id)
+        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        click_on 'Confirm and submit vacancy'
+
+        expect(page).to have_content("The system reference number is #{vacancy.reference}")
+        expect(page).to have_content('The vacancy has been posted, you can view it here:')
+      end
     end
-  end
 
-  context 'A user can publish a vacancy' do
-    scenario 'on submission' do
-      vacancy = create(:vacancy, :draft)
+    context '#publish' do
+      scenario 'can be published at a later date' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
-      visit review_school_vacancy_path(school.id, vacancy)
-      click_on 'Confirm and submit vacancy'
+        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        click_on 'Confirm and submit vacancy'
 
-      expect(page).to have_content("The system reference number is #{vacancy.reference}")
-      expect(page).to have_content('The vacancy has been posted, you can view it here:')
-    end
+        expect(page).to have_content("The system reference number is #{vacancy.reference}")
+        expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
+        visit vacancy_url(vacancy)
+        expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
+      end
 
-    scenario 'at a later date' do
-      vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+      scenario 'a published vacancy cannot be edited' do
+        visit new_school_vacancy_path(school_id: school.id)
 
-      visit review_school_vacancy_path(school.id, vacancy)
-      click_on 'Confirm and submit vacancy'
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        fill_in_candidate_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+        fill_in_application_details_form_fields(vacancy)
+        click_on 'Save and continue'
+        click_on 'Confirm and submit vacancy'
+        expect(page).to have_content('The vacancy has been posted, you can view it here:')
 
-      expect(page).to have_content("The system reference number is #{vacancy.reference}")
-      expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
+        visit candidate_specification_school_vacancy_path(school_id: school.id)
+        expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
+
+        visit application_details_school_vacancy_path(school_id: school.id)
+        expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
+      end
     end
   end
 

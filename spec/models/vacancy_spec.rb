@@ -69,7 +69,7 @@ RSpec.describe Vacancy, type: :model do
         vacancy = build(:vacancy, weekly_hours: '-5')
 
         expect(vacancy.valid?).to be false
-        expect(vacancy.errors.messages[:weekly_hours][0]).to eq('cannot be negative')
+        expect(vacancy.errors.messages[:weekly_hours][0]).to eq('can\'t be negative')
       end
     end
   end
@@ -96,7 +96,9 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'applicable scope' do
     it 'should only find current vacancies' do
-      expired = create(:vacancy, expires_on: 1.day.ago)
+      expired = build(:vacancy, :expired)
+      expired.send :set_slug
+      expired.save(validete: false)
       expires_today = create(:vacancy, expires_on: Time.zone.today)
       expires_future = create(:vacancy, expires_on: 3.months.from_now)
 

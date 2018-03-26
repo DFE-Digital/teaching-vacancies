@@ -4,7 +4,6 @@ class PublishVacancy
   end
 
   def call
-    @vacancy.status = :published
-    @vacancy.save
+    @vacancy.update_attribute(:status, :published)
   end
 end

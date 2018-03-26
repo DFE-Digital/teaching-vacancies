@@ -18,6 +18,15 @@ FactoryGirl.define do
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
 
+    trait :complete do
+      qualifications { Faker::Lorem.sentence }
+      education { Faker::Lorem.sentence }
+      experience { Faker::Lorem.sentence }
+
+      starts_on { Faker::Time.forward(30) }
+      ends_on { Faker::Time.forward(60) }
+    end
+
     trait :draft do
       status { :draft }
     end
@@ -31,6 +40,7 @@ FactoryGirl.define do
     end
 
     trait :expired do
+      publish_on { Faker::Time.backward(14) }
       expires_on { Faker::Time.backward(7) }
     end
 

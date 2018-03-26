@@ -2,9 +2,9 @@
   = t('vacancies.publish_heading', school: @school.name)
   %span.heading-secondary
     Step 1 of 3
-= render 'error_messages', errors: @vacancy.errors
-= simple_form_for [@school, @vacancy], url: school_vacancies_path(@school.id), html: { class: 'vacancy-form' } do |f|
-  = hidden_field_tag :from, :job_specification
+= render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
+= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_vacancy_path(school_id: @school.id) do |f|
+  = hidden_field_tag :from, :job_specification_form
   = hidden_field_tag :next, (params[:next] || :candidate_specification)
   %h2.heading-medium
     = t('vacancies.job_specification')
@@ -27,14 +27,13 @@
                 required: true
       = f.input :benefits,
                 label: t('vacancies.benefits'),
-                hint: t('vacancies.form_hints.benefits'),
                 input_html: {rows: 5},
                 required: false
-      = f.association :subject,
-                      label: t('vacancies.main_subject'),
-                      hint: t('vacancies.form_hints.main_subject'),
-                      collection: Subject.order(:name),
-                      required: false
+      = f.input :subject_id,
+                label: t('vacancies.main_subject'),
+                hint: t('vacancies.form_hints.main_subject'),
+                collection: Subject.order(:name),
+                required: false
       %fieldset.form-group
         %label= t('vacancies.salary_range')
         %span.form-hint= t('vacancies.form_hints.salary_range')
@@ -55,12 +54,12 @@
                   label: false,
                   input_html: {class: 'form-control-1-8'}
 
-      = f.association :pay_scale,
-                      label: t('vacancies.pay_scale'),
-                      hint: t('vacancies.form_hints.pay_scale'),
-                      collection: PayScale.order(:label),
-                      label_method: :label,
-                      required: false
+      = f.input :pay_scale_id,
+                  label: t('vacancies.pay_scale'),
+                  hint: t('vacancies.form_hints.pay_scale'),
+                  collection: PayScale.order(:label),
+                  label_method: :label,
+                  required: false
       = f.input :working_pattern,
                 label: t('vacancies.working_pattern'),
                 collection: working_pattern_options,
@@ -70,7 +69,7 @@
                 as: :decimal,
                 hint: t('vacancies.form_hints.weekly_hours'),
                 required: false
-      = f.association :leadership,
+      = f.input :leadership_id,
                       label: t('vacancies.leadership_level'),
                       collection: Leadership.order(:title),
                       required: false
@@ -79,6 +78,7 @@
         = f.gov_uk_date_field :starts_on, legend_text: "#{t('vacancies.starts_on')} (optional)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.start_date')
 
       %div.form-group
-        = f.gov_uk_date_field :ends_on, legend_text: "#{t('vacancies.ends_on')} (include if role is fixed term)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.end_date')
+        = f.gov_uk_date_field :ends_on, legend_text: "#{t('vacancies.ends_on')} (include if role is fixed term))", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.end_date')
 
+      = f.input :school_id, as: :hidden, if: :new_record?
       = f.button :submit, t('buttons.save_and_continue')

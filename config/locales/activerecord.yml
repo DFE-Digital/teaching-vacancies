@@ -12,6 +12,7 @@ en:
               blank: can't be blank
             minimum_salary:
               blank: can't be blank
+              greater_than_maximum_salary: must be lower than the maximum salary
             working_pattern:
               blank: can't be blank
             essential_requirements:
@@ -20,6 +21,10 @@ en:
               blank: can't be blank
             expires_on:
               blank: can't be blank
+              before_publish_date: can't be before the publish date
             publish_on:
               blank: can't be blank
               before_today: can't be before today
+            weekly_hours:
+              negative: can't be negative
+              invalid: must be a valid number

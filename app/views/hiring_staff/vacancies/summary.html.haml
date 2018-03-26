@@ -13,9 +13,9 @@
       %p
         = t('vacancies.view_posted_vacancy')
       %p
-        = link_to school_vacancy_url(@school.id, @vacancy), school_vacancy_path(@school.id, @vacancy)
+        = link_to vacancy_url(@vacancy), vacancy_path(@vacancy)
     - else
       %p
         = t('vacancies.preview_posted_vacancy', date: @vacancy.publish_on)
       %p
-        = link_to school_vacancy_url(@school.id, @vacancy), school_vacancy_path(@school.id, @vacancy)
+        = link_to school_vacancy_url(school_id: @school.id, id: @vacancy.id), school_vacancy_path(school_id: @school.id, id: @vacancy.id)
