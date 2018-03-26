@@ -62,7 +62,6 @@ RSpec.describe 'authentication', type: :request do
   context 'when in staging' do
     before(:each) do
       stub_authenticate(return_value: true)
-      stub_authenticate_hiring_staff(return_value: true)
     end
 
     it_behaves_like 'basic auth is required', '/', :http_user, :http_pass
@@ -110,7 +109,6 @@ RSpec.describe 'authentication', type: :request do
   context 'when in production' do
     before(:each) do
       stub_authenticate(return_value: true)
-      stub_authenticate_hiring_staff(return_value: true)
     end
 
     it_behaves_like 'basic auth is required', '/', :http_user, :http_pass

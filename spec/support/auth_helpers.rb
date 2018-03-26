@@ -5,12 +5,6 @@ module AuthHelpers
       .and_return(return_value)
   end
 
-  def stub_authenticate_hiring_staff(return_value: true)
-    allow_any_instance_of(HiringStaff::BaseController)
-      .to receive(:authenticate_hiring_staff?)
-      .and_return(return_value)
-  end
-
   def stub_access_basic_auth_env(env_field_for_username: :http_user,
                                  env_field_for_password: :http_pass,
                                  env_value_for_username: 'foo',

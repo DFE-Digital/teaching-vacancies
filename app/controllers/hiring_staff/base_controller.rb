@@ -3,7 +3,6 @@ class HiringStaff::BaseController < ApplicationController
   DEFAULT_SCHOOL_URN = '140181'.freeze
 
   def authenticate
-    return unless authenticate_hiring_staff?
     authenticate_or_request_with_http_basic('Hiring Staff') do |name, password|
       if name == benwick_http_user && password == benwick_http_pass
         session[:urn] = '110627'
@@ -19,10 +18,6 @@ class HiringStaff::BaseController < ApplicationController
     @current_school ||= School.find_by! urn: session[:urn]
   rescue ActiveRecord::RecordNotFound
     not_found
-  end
-
-  def authenticate_hiring_staff?
-    true
   end
 
   private def http_user

@@ -1,7 +1,6 @@
 require 'rails_helper'
 RSpec.feature 'Job seekers cannot manage vacancies' do
   before(:each) do
-    stub_authenticate_hiring_staff(return_value: true)
     stub_access_basic_auth_env(env_field_for_username: :http_user,
                                env_field_for_password: :http_pass,
                                env_value_for_username: nil,
