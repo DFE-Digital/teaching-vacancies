@@ -1,0 +1,13 @@
+%h1.heading-large
+  = t('schools.vacancies.index', school: @school.name)
+
+.grid-row
+  .column-full
+    %table.vacancies
+      %th= t('vacancies.job_title')
+      %th= t('vacancies.publish_on')
+      %th= t('vacancies.expires_on')
+      %th= t('vacancies.status')
+      %th= t('vacancies.actions')
+      - @vacancies.each do |vacancy|
+        = render partial: 'vacancy', locals: { vacancy: vacancy, school: @school }

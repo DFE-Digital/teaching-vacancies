@@ -1,4 +1,9 @@
 class HiringStaff::VacanciesController < HiringStaff::BaseController
+  def index
+    @school = find_school_from_params
+    @vacancies = @school.vacancies.all
+  end
+
   def show
     @school = find_school_from_params
     vacancy = find_vacancy_from_params
@@ -79,6 +84,14 @@ class HiringStaff::VacanciesController < HiringStaff::BaseController
     end
 
     @vacancy = VacancyPresenter.new(vacancy)
+  end
+
+  def destroy
+    @school = find_school_from_params
+    @vacancy = find_vacancy_from_params
+    @vacancy.destroy
+
+    redirect_to school_vacancies_path, notice: 'Your vacancy was deleted.'
   end
 
   private

@@ -1,0 +1,7 @@
+%tr.vacancy[vacancy]
+  %td= link_to vacancy.job_title, school_vacancy_path(school.id, vacancy), class: 'view-vacancy-link'
+  %td= format_date(vacancy.publish_on)
+  %td= format_date(vacancy.expires_on)
+  %td= vacancy.status.titleize
+  %td= link_to 'Delete', school_vacancy_path(school.id, vacancy), method: :delete, data: { confirm: "Are you sure you want to delete the '#{vacancy.job_title}' vacancy?" }
+

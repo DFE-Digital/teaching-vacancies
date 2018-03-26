@@ -21,6 +21,8 @@
 @import 'typography';
 @import 'shims';
 
+@import 'base/mixins';
+
 @import 'govuk_date_fields';
 
 @import 'design-patterns/alpha-beta';
@@ -53,6 +55,7 @@
 @import 'components/banners';
 @import 'components/school';
 @import 'components/sortable_links';
+@import 'components/flashes';
 
 main#content {
   @extend %site-width-container;

@@ -50,6 +50,8 @@ en:
     view_posted_vacancy: 'The vacancy has been posted, you can view it here:'
     preview_posted_vacancy: 'The vacancy will be posted on %{date}, you can preview it here:'
     application_link: 'Apply for this job'
+    actions: 'Actions'
+    status: 'Status'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
       headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'
@@ -89,7 +91,10 @@ en:
     school_age: 'School age'
     search_heading: 'Publish a vacancy'
     search_subheading: 'Which school is the job vacancy for?'
+    vacancies:
+      index: 'Vacancies at %{school}'
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'
     find: 'Find'
+    delete: 'Delete'
