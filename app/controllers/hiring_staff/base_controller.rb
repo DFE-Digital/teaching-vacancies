@@ -2,31 +2,36 @@ class HiringStaff::BaseController < ApplicationController
   before_action :authenticate
 
   def authenticate
-    return unless authenticate_hiring_staff?
     authenticate_or_request_with_http_basic('Hiring Staff') do |name, password|
-      name == http_user && password == http_pass
+      if name == benwick_http_user && password == benwick_http_pass
+        session[:urn] = '110627'
+        true
+      elsif name == http_user && password == http_pass
+        session[:urn] = ENV.fetch('DEFAULT_SCHOOL_URN') { School.first.urn }
+        true
+      end
     end
   end
 
-  def authenticate_hiring_staff?
-    !(Rails.env.development? || Rails.env.test?)
+  def current_school
+    @current_school ||= School.find_by! urn: session[:urn]
+  rescue ActiveRecord::RecordNotFound
+    not_found
   end
 
   private def http_user
-    if Figaro.env.hiring_staff_http_user?
-      Figaro.env.hiring_staff_http_user
-    else
-      Rails.logger.warn('Basic auth failed: ENV["hiring_staff_http_user"] expected but not found.')
-      nil
-    end
+    Figaro.env.hiring_staff_http_user if Figaro.env.hiring_staff_http_user?
   end
 
   private def http_pass
-    if Figaro.env.hiring_staff_http_pass?
-      Figaro.env.hiring_staff_http_pass
-    else
-      Rails.logger.warn('Basic auth failed: ENV["hiring_staff_http_pass"] expected but not found.')
-      nil
-    end
+    Figaro.env.hiring_staff_http_pass if Figaro.env.hiring_staff_http_pass?
+  end
+
+  private def benwick_http_user
+    Figaro.env.benwick_http_user if Figaro.env.benwick_http_user?
+  end
+
+  private def benwick_http_pass
+    Figaro.env.benwick_http_pass if Figaro.env.benwick_http_pass?
   end
 end

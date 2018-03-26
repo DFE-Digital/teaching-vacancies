@@ -65,10 +65,13 @@ data "template_file" "web_task" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
+    default_school_urn       = "${var.default_school_urn}"
     http_user                = "${var.http_user}"
     http_pass                = "${var.http_pass}"
     hiring_staff_http_user   = "${var.hiring_staff_http_user}"
     hiring_staff_http_pass   = "${var.hiring_staff_http_pass}"
+    benwick_http_user        = "${var.benwick_http_user}"
+    benwick_http_pass        = "${var.benwick_http_pass}"
     google_maps_api_key      = "${var.google_maps_api_key}"
     google_analytics         = "${var.google_analytics}"
     rollbar_access_token     = "${var.rollbar_access_token}"

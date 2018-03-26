@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.feature 'Viewing a single published vacancy' do
   scenario 'Published vacancies are viewable' do
     published_vacancy = VacancyPresenter.new(create(:vacancy, :published))

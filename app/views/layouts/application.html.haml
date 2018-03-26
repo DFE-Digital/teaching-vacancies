@@ -20,6 +20,8 @@
         %a#proposition-name{ href: '/' }
           = t('app.title')
         %ul#proposition-links
+          %li
+            = link_to "School sign in", new_sessions_path
 
 - content_for :content do
   %main#content{ role: 'main', tabindex: -1 }

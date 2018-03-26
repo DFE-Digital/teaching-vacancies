@@ -1,4 +1,6 @@
 require 'webmock/rspec'
+require 'rack_session_access/capybara'
+
 RSpec.configure do |config|
   WebMock.allow_net_connect!
 

@@ -1,6 +1,6 @@
 class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
-    @school = SchoolPresenter.new(School.find_by!(urn: params[:id]))
+    @school = SchoolPresenter.new(current_school)
   end
 
   def edit
@@ -25,10 +25,5 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
 
   def index
     # Nothing to do here yet
-  end
-
-  def search
-    @schools = School.where(['name ILIKE ?', "%#{params[:name]}%"])
-    render 'search_results'
   end
 end

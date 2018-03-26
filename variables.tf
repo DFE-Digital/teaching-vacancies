@@ -198,11 +198,13 @@ variable "cloudwatch_ops_genie_api_key" {
 
 # Application
 variable "rails_env" {}
-
+variable "default_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
 variable "hiring_staff_http_user" {}
 variable "hiring_staff_http_pass" {}
+variable "benwick_http_user" {}
+variable "benwick_http_pass" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "secret_key_base" {}

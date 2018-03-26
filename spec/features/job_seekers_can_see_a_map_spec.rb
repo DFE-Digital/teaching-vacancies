@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.feature 'Viewing a vacancy' do
   scenario 'should display a map when a school has geocoding' do
     school = FactoryGirl.create(:school,

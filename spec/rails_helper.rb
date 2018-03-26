@@ -47,6 +47,7 @@ RSpec.configure do |config|
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
   config.include VacancyHelpers
+  config.include AuthHelpers
 end
 
 Shoulda::Matchers.configure do |config|

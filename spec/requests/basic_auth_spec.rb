@@ -3,20 +3,21 @@ require 'rails_helper'
 RSpec.shared_examples 'basic auth is required' do |path, http_user, http_pass|
   let(:path) { path.present? ? path : '/' }
 
-  it 'asks for the basic auth credentials' do
+  it 'returns 401 and asks for the basic auth credentials' do
     get path
     expect(response).to have_http_status(401)
   end
 
   context 'when the correct basic auth credentials are given' do
     it 'returns a 200' do
+      create(:school)
       username = 'username'
       password = 'foobar'
 
-      fake_env = double.as_null_object
-      allow(Figaro).to receive(:env).and_return(fake_env)
-      allow(fake_env).to receive(http_user.to_sym).and_return(username)
-      allow(fake_env).to receive(http_pass.to_sym).and_return(password)
+      stub_access_basic_auth_env(env_field_for_username: http_user,
+                                 env_field_for_password: http_pass,
+                                 env_value_for_username: username,
+                                 env_value_for_password: password)
 
       encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
       get path, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
@@ -26,10 +27,11 @@ RSpec.shared_examples 'basic auth is required' do |path, http_user, http_pass|
 
   context 'when the incorrect basic auth credentials are given' do
     it 'returns a 401' do
-      fake_env = double.as_null_object
-      allow(Figaro).to receive(:env).and_return(fake_env)
-      allow(fake_env).to receive(http_user.to_sym).and_return(nil)
-      allow(fake_env).to receive(http_pass.to_sym).and_return(nil)
+      create(:school)
+      stub_access_basic_auth_env(env_field_for_username: http_user,
+                                 env_field_for_password: http_pass,
+                                 env_value_for_username: nil,
+                                 env_value_for_password: nil)
 
       encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('wrong-user', 'password')
       get path, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
@@ -39,11 +41,11 @@ RSpec.shared_examples 'basic auth is required' do |path, http_user, http_pass|
 end
 
 RSpec.shared_examples 'does not require basic auth' do |path, http_user, http_pass|
-  it 'does not ask for the basic auth credentials' do
-    fake_env = double.as_null_object
-    allow(Figaro).to receive(:env).and_return(fake_env)
-    allow(fake_env).to receive(http_user.to_sym).and_return(nil)
-    allow(fake_env).to receive(http_pass.to_sym).and_return(nil)
+  it 'returns a 200' do
+    stub_access_basic_auth_env(env_field_for_username: http_user,
+                               env_field_for_password: http_pass,
+                               env_value_for_username: nil,
+                               env_value_for_password: nil)
 
     get path
     expect(response).to have_http_status(200)
@@ -62,7 +64,6 @@ RSpec.describe 'authentication', type: :request do
   context 'when in staging' do
     before(:each) do
       stub_authenticate(return_value: true)
-      stub_authenticate_hiring_staff(return_value: true)
     end
 
     it_behaves_like 'basic auth is required', '/', :http_user, :http_pass
@@ -84,21 +85,25 @@ RSpec.describe 'authentication', type: :request do
       end
 
       before(:each) do
-        fake_env = double.as_null_object
-        allow(Figaro).to receive(:env).and_return(fake_env)
-        allow(fake_env).to receive(:http_user).and_return(username)
-        allow(fake_env).to receive(:http_pass).and_return(password)
+        stub_access_basic_auth_env(env_field_for_username: :http_user,
+                                   env_field_for_password: :http_pass,
+                                   env_value_for_username: username,
+                                   env_value_for_password: password)
       end
 
-      it_behaves_like 'basic auth is required', '/schools', :hiring_staff_http_user, :hiring_staff_http_pass
+      context 'and they try to visit publishing for a school' do
+        it_behaves_like 'basic auth is required',
+                        '/schools',
+                        :hiring_staff_http_user,
+                        :hiring_staff_http_pass
 
-      it 'posting to the create vacancy endpoint still requires the hiring staff basic auth' do
-        school = create(:school)
+        it 'posting to the create vacancy endpoint still requires the hiring staff basic auth' do
+          school = create(:school)
+          path = school_vacancies_path(school.id)
+          post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
-        path = school_vacancies_path(school.id)
-        post path, params: { vacancy: { foo: :bar } }, env: { 'HTTP_AUTHORIZATION': encoded_credentials }
-
-        expect(response).to have_http_status(:unauthorized)
+          expect(response).to have_http_status(:unauthorized)
+        end
       end
     end
   end
@@ -106,7 +111,6 @@ RSpec.describe 'authentication', type: :request do
   context 'when in production' do
     before(:each) do
       stub_authenticate(return_value: true)
-      stub_authenticate_hiring_staff(return_value: true)
     end
 
     it_behaves_like 'basic auth is required', '/', :http_user, :http_pass
@@ -128,10 +132,10 @@ RSpec.describe 'authentication', type: :request do
       end
 
       before(:each) do
-        fake_env = double.as_null_object
-        allow(Figaro).to receive(:env).and_return(fake_env)
-        allow(fake_env).to receive(:http_user).and_return(username)
-        allow(fake_env).to receive(:http_pass).and_return(password)
+        stub_access_basic_auth_env(env_field_for_username: :http_user,
+                                   env_field_for_password: :http_pass,
+                                   env_value_for_username: username,
+                                   env_value_for_password: password)
       end
 
       it_behaves_like 'basic auth is required', '/schools', :hiring_staff_http_user, :hiring_staff_http_pass
@@ -145,17 +149,5 @@ RSpec.describe 'authentication', type: :request do
         expect(response).to have_http_status(:unauthorized)
       end
     end
-  end
-
-  def stub_authenticate(return_value: true)
-    allow_any_instance_of(ApplicationController)
-      .to receive(:authenticate?)
-      .and_return(return_value)
-  end
-
-  def stub_authenticate_hiring_staff(return_value: true)
-    allow_any_instance_of(HiringStaff::BaseController)
-      .to receive(:authenticate_hiring_staff?)
-      .and_return(return_value)
   end
 end

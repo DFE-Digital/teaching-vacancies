@@ -1,14 +1,10 @@
 require 'rails_helper'
-RSpec.feature 'Users cannot manage vacancies' do
+RSpec.feature 'Job seekers cannot manage vacancies' do
   before(:each) do
-    expect_any_instance_of(HiringStaff::BaseController)
-      .to receive(:authenticate_hiring_staff?)
-      .and_return(true)
-
-    fake_env = double.as_null_object
-    allow(Figaro).to receive(:env).and_return(fake_env)
-    allow(fake_env).to receive(:http_user).and_return(nil)
-    allow(fake_env).to receive(:http_pass).and_return(nil)
+    stub_access_basic_auth_env(env_field_for_username: :http_user,
+                               env_field_for_password: :http_pass,
+                               env_value_for_username: nil,
+                               env_value_for_password: nil)
   end
 
   scenario 'An unauthenticated user tries to create a vacancy' do

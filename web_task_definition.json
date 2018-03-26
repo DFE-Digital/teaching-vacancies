@@ -24,6 +24,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "DEFAULT_SCHOOL_URN",
+        "value": "${default_school_urn}"
+      },
+      {
         "name": "HTTP_USER",
         "value": "${http_user}"
       },
@@ -38,6 +42,14 @@
       {
         "name": "HIRING_STAFF_HTTP_PASS",
         "value": "${hiring_staff_http_pass}"
+      },
+      {
+        "name": "BENWICK_HTTP_USER",
+        "value": "${benwick_http_user}"
+      },
+      {
+        "name": "BENWICK_HTTP_PASS",
+        "value": "${benwick_http_pass}"
       },
       {
         "name": "GOOGLE_MAPS_API_KEY",
