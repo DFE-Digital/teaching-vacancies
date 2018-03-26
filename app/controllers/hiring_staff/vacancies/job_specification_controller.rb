@@ -7,6 +7,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form.valid?
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     @job_specification_form = JobSpecificationForm.new(job_specification_form)
     store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
@@ -21,6 +22,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       redirect_to job_specification_school_vacancy_path(school_id: school.id)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
