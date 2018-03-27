@@ -1,5 +1,5 @@
 %tr.vacancy[vacancy]
-  %td= link_to vacancy.job_title, school_vacancy_path(school.id, vacancy), class: 'view-vacancy-link'
+  %td= link_to vacancy.job_title, school_vacancy_path(school.id, vacancy.id), class: 'view-vacancy-link'
   %td= format_date(vacancy.publish_on)
   %td= format_date(vacancy.expires_on)
   %td= vacancy.status.titleize

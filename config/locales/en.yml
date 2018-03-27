@@ -89,8 +89,10 @@ en:
     search_label: 'School name'
     description: 'Description'
     school_age: 'School age'
+    not_given: 'Not given'
     search_heading: 'Publish a vacancy'
     search_subheading: 'Which school is the job vacancy for?'
+    info: 'About %{school}'
     vacancies:
       index: 'Vacancies at %{school}'
   buttons:

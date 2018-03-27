@@ -1,7 +1,27 @@
 .school.grid-row
-  .column-two-thirds
+  .column-full
     %h1.heading-large
-      = @school.name
+      = t('schools.vacancies.index', school: @school.name)
+
+.grid-row
+  .column-full
+    %table.vacancies
+      %th= t('vacancies.job_title')
+      %th= t('vacancies.publish_on')
+      %th= t('vacancies.expires_on')
+      %th= t('vacancies.status')
+      %th= t('vacancies.actions')
+      - @school.vacancies.each do |vacancy|
+        = render partial: 'vacancy', locals: { vacancy: vacancy, school: @school }
+
+  .column-full
+    .form-group.mt1
+      = link_to 'Publish a vacancy', new_school_vacancy_path(school_id: @school.id), class: 'button'
+
+.grid-row
+  .column-full
+    %h2.heading-medium
+      = t('schools.info', school: @school.name)
 
     %dl.govuk-check-your-answers.cya-questions-short
       %div
@@ -26,9 +46,7 @@
         %dt.cya-question
           = t('schools.school_age')
         %dd.cya-answer
-          = @school.minimum_age
-          to
-          = @school.maximum_age
+          = @school.age_range
         %dd.cya-change
 
       %div
@@ -45,7 +63,3 @@
           %dd.cya-answer
             = link_to @school.url, @school.url
           %dd.cya-change
-
-  .column-third
-    %aside.school--metadata
-      = link_to 'Publish a vacancy', new_school_vacancy_path(school_id: @school.id), class: 'button'
