@@ -74,6 +74,14 @@
           = link_to t('buttons.change'), job_specification_school_vacancy_path(schoold_id: @school.id)
       %div
         %dt.cya-question
+          = t('vacancies.leadership_level')
+        %dd.cya-answer
+          - if @vacancy.leadership
+            = @vacancy.leadership.title
+        %dd.cya-change
+          = link_to t('buttons.change'), job_specification_school_vacancy_path(schoold_id: @school.id)
+      %div
+        %dt.cya-question
           = t('vacancies.starts_on')
         %dd.cya-answer
           = format_date @vacancy.starts_on
@@ -108,14 +116,6 @@
           = t('vacancies.experience')
         %dd.cya-answer
           = @vacancy.experience
-        %dd.cya-change
-          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
-      %div
-        %dt.cya-question
-          = t('vacancies.leadership_level')
-        %dd.cya-answer
-          - if @vacancy.leadership
-            = @vacancy.leadership.title
         %dd.cya-change
           = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
 
