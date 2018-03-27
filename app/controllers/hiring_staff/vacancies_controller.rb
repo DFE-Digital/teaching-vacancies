@@ -1,6 +1,6 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
   def show
-    vacancy = school.vacancies.published.find(id)
+    vacancy = school.vacancies.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
