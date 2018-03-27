@@ -227,7 +227,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Essential requirements")]]').find('a').click
+          find(:xpath, '//div[dt[contains(text(), "Educational requirements")]]').find('a').click
 
           expect(page).to have_content('Step 2 of 3')
 

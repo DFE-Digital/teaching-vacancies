@@ -46,7 +46,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
 
-    expect(page).to have_content(vacancy.essential_requirements)
     expect(page).to have_content(vacancy.education)
     expect(page).to have_content(vacancy.qualifications)
     expect(page).to have_content(vacancy.experience)

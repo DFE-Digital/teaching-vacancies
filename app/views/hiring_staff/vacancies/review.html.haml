@@ -91,13 +91,6 @@
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          = t('vacancies.essential_requirements')
-        %dd.cya-answer
-          = @vacancy.essential_requirements
-        %dd.cya-change
-          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
-      %div
-        %dt.cya-question
           = t('vacancies.education')
         %dd.cya-answer
           = @vacancy.education
