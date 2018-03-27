@@ -130,6 +130,13 @@
           = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
       %div
         %dt.cya-question
+          = t('vacancies.application_link')
+        %dd.cya-answer
+          = @vacancy.application_link
+        %dd.cya-change
+          = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
+      %div
+        %dt.cya-question
           = t('vacancies.deadline_date')
         %dd.cya-answer
           = format_date @vacancy.expires_on

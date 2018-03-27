@@ -25,6 +25,7 @@ module VacancyHelpers
 
   def fill_in_application_details_form_fields(vacancy)
     fill_in 'application_details_form[contact_email]', with: vacancy.contact_email
+    fill_in 'application_details_form[application_link]', with: vacancy.application_link
     fill_in 'application_details_form[expires_on_dd]', with: vacancy.expires_on.day
     fill_in 'application_details_form[expires_on_mm]', with: vacancy.expires_on.strftime('%m')
     fill_in 'application_details_form[expires_on_yyyy]', with: vacancy.expires_on.year
@@ -52,6 +53,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_content(vacancy.contact_email)
+    expect(page).to have_content(vacancy.application_link)
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
   end

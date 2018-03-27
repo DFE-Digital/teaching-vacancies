@@ -127,7 +127,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.error-summary') do
-          expect(page).to have_content('3 errors prevented this vacancy from being saved:')
+          expect(page).to have_content('4 errors prevented this vacancy from being saved:')
         end
 
         within_row_for(text: I18n.t('vacancies.contact_email')) do

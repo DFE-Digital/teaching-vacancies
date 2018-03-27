@@ -16,6 +16,12 @@
                 as: :email,
                 required: true
 
+      = f.input :application_link,
+                legend_text: t('vacancies.application_link'),
+                legend_class: 'form-label-bold',
+                form_hint_text: t('vacancies.form_hints.application_link'),
+                required: true
+
       %div.form-group
         = f.gov_uk_date_field :expires_on, legend_text: t('vacancies.deadline_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.deadline_date')
 
