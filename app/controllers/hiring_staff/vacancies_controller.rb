@@ -1,8 +1,4 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
-  def index
-    @vacancies = school.vacancies.all
-  end
-
   def show
     vacancy = school.vacancies.published.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
