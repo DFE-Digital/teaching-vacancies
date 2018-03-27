@@ -3,7 +3,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   def new
     @application_details_form = ApplicationDetailsForm.new(session[:vacancy_attributes])
-    @application_details_form.valid? if ['step_3', 'review'].include?(session[:current_step])
+    @application_details_form.valid? if %i[step_3 review].include?(session[:current_step])
   end
 
   def create
@@ -14,7 +14,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
       vacancy = update_vacancy(application_details_form)
       redirect_to next_step(vacancy)
     else
-      session[:current_step] = :step_3 unless session[:current_step].eql?('review')
+      session[:current_step] = :step_3 unless session[:current_step].eql?(:review)
       redirect_to application_details_school_vacancy_path(school_id: @school.id)
     end
   end

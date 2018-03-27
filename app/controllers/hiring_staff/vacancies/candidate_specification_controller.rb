@@ -5,7 +5,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
     redirect_to job_specification_school_vacancy_path(school_id: school.id) unless session_vacancy_id
 
     @candidate_specification_form = ::CandidateSpecificationForm.new(session[:vacancy_attributes])
-    @candidate_specification_form.valid? if ['step_2', 'review'].include?(session[:current_step])
+    @candidate_specification_form.valid? if %i[step_2 review].include?(session[:current_step])
   end
 
   def create
@@ -17,7 +17,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
       return redirect_to_next_step(vacancy)
     end
 
-    session[:current_step] = :step_2 unless session[:current_step].eql?('review')
+    session[:current_step] = :step_2 unless session[:current_step].eql?(:review)
     redirect_to candidate_specification_school_vacancy_path(school_id: @school.id)
   end
 

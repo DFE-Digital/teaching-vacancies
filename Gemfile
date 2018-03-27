@@ -40,6 +40,8 @@ gem 'rollbar'
 
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
+gem 'activerecord-session_store'
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_girl_rails'
