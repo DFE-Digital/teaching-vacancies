@@ -8,7 +8,7 @@ RSpec.feature 'School viewing vacancies' do
     school = FactoryGirl.create(:school)
     vacancy1 = FactoryGirl.create(:vacancy, school: school)
     vacancy2 = FactoryGirl.create(:vacancy, school: school)
-    visit school_vacancies_path(school.id)
+    visit school_path(school.id)
 
     expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
     expect(page).to have_content(vacancy1.job_title)
