@@ -11,30 +11,24 @@
 
   .grid-row
     .column-one-half
-      = f.input :essential_requirements,
-                label: t('vacancies.essential_requirements'),
-                as: :text,
-                hint: t('vacancies.form_hints.essential_requirements'),
-                input_html: {rows: 10},
-                required: true
       = f.input :education,
                 label: t('vacancies.education'),
                 as: :text,
                 hint: t('vacancies.form_hints.education'),
                 input_html: {rows: 5},
-                required: false
+                required: true
       = f.input :qualifications,
                 label: t('vacancies.qualifications'),
                 as: :text,
                 hint: t('vacancies.form_hints.qualifications'),
                 input_html: {rows: 5},
-                required: false
+                required: true
       = f.input :experience,
                 label: t('vacancies.experience'),
                 as: :text,
                 hint: t('vacancies.form_hints.experience'),
                 input_html: {rows: 5},
-                required: false
+                required: true
 
       = f.input :school_id, as: :hidden
       = f.button :submit, t('buttons.save_and_continue')

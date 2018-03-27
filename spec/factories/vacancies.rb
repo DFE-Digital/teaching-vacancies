@@ -9,7 +9,9 @@ FactoryGirl.define do
     headline { Faker::Lorem.sentence }
     working_pattern { :full_time }
     job_description { Faker::Lorem.paragraph(4) }
-    essential_requirements { Faker::Lorem.paragraph(4) }
+    education { Faker::Lorem.paragraph(4) }
+    qualifications { Faker::Lorem.paragraph(4) }
+    experience { Faker::Lorem.paragraph(4) }
     status { :published }
     expires_on { Faker::Time.forward(14) }
     publish_on { Time.zone.today }
@@ -19,10 +21,6 @@ FactoryGirl.define do
     application_link { Faker::Internet.url }
 
     trait :complete do
-      qualifications { Faker::Lorem.sentence }
-      education { Faker::Lorem.sentence }
-      experience { Faker::Lorem.sentence }
-
       starts_on { Faker::Time.forward(30) }
       ends_on { Faker::Time.forward(60) }
     end

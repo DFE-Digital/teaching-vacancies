@@ -24,8 +24,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
   private
 
   def candidate_specification_form
-    params.require(:candidate_specification_form).permit(:essential_requirements, :education,
-                                                         :qualifications, :experience)
+    params.require(:candidate_specification_form).permit(:education, :qualifications, :experience)
   end
 
   def next_step

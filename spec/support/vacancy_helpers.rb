@@ -18,7 +18,6 @@ module VacancyHelpers
   end
 
   def fill_in_candidate_specification_form_fields(vacancy)
-    fill_in 'candidate_specification_form[essential_requirements]', with: vacancy.essential_requirements
     fill_in 'candidate_specification_form[education]', with: vacancy.education
     fill_in 'candidate_specification_form[qualifications]', with: vacancy.qualifications
     fill_in 'candidate_specification_form[experience]', with: vacancy.experience
@@ -47,7 +46,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
 
-    expect(page).to have_content(vacancy.essential_requirements)
     expect(page).to have_content(vacancy.education)
     expect(page).to have_content(vacancy.qualifications)
     expect(page).to have_content(vacancy.experience)
@@ -75,8 +73,8 @@ module VacancyHelpers
       'description': vacancy.headline,
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
+      'experienceRequirements': vacancy.experience,
       'employmentType': vacancy.working_pattern&.titleize,
-      'experienceRequirements': vacancy.essential_requirements,
       'industry': 'Education',
       'jobLocation': {
         '@type': 'Place',

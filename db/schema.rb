@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315170418) do
+ActiveRecord::Schema.define(version: 20180326111411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 20180315170418) do
     t.uuid "subject_id"
     t.uuid "pay_scale_id"
     t.uuid "leadership_id"
-    t.text "essential_requirements"
     t.text "education"
     t.text "qualifications"
     t.text "experience"

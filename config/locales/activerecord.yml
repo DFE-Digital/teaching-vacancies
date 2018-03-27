@@ -15,7 +15,11 @@ en:
               greater_than_maximum_salary: must be lower than the maximum salary
             working_pattern:
               blank: can't be blank
-            essential_requirements:
+            experience:
+              blank: can't be blank
+            education:
+              blank: can't be blank
+            qualifications:
               blank: can't be blank
             contact_email:
               blank: can't be blank
