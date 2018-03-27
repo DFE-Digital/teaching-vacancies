@@ -2,6 +2,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def show
     vacancy = school.vacancies.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
+    flash.now[:alert] = t('vacancies.draft') if vacancy.draft?
   end
 
   def new
