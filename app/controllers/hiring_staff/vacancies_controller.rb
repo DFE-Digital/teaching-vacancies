@@ -1,11 +1,8 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
-  def index
-    @vacancies = school.vacancies.all
-  end
-
   def show
-    vacancy = school.vacancies.published.find(id)
+    vacancy = school.vacancies.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
+    flash.now[:alert] = t('vacancies.draft') if vacancy.draft?
   end
 
   def new
@@ -30,7 +27,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     @vacancy = school.vacancies.find(id)
     @vacancy.destroy
 
-    redirect_to school_vacancies_path, notice: 'Your vacancy was deleted.'
+    redirect_to school_path, notice: 'Your vacancy was deleted.'
   end
 
   def summary

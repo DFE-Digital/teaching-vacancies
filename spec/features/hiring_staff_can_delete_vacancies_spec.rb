@@ -7,7 +7,7 @@ RSpec.feature 'School deleting vacancies' do
     school = FactoryGirl.create(:school)
     vacancy = FactoryGirl.create(:vacancy, school: school)
 
-    visit school_vacancies_path(school.id)
+    visit school_path(school.id)
 
     within("tr#vacancy_#{vacancy.id}") do
       expect(page).to have_content(I18n.t('buttons.delete'))
@@ -19,8 +19,7 @@ RSpec.feature 'School deleting vacancies' do
     vacancy1 = FactoryGirl.create(:vacancy, school: school)
     vacancy2 = FactoryGirl.create(:vacancy, school: school)
 
-    visit school_vacancies_path(school.id)
-
+    visit school_path(school.id)
     within("tr#vacancy_#{vacancy1.id}") do
       click_on 'Delete'
     end

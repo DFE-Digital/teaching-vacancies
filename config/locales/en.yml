@@ -52,6 +52,7 @@ en:
     status: 'Status'
     already_published: 'This vacancy has already been published'
     application_link: 'Application URL'
+    draft: 'This vacancy is currently a draft version.'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
       headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'
@@ -89,8 +90,10 @@ en:
     search_label: 'School name'
     description: 'Description'
     school_age: 'School age'
+    not_given: 'Not given'
     search_heading: 'Publish a vacancy'
     search_subheading: 'Which school is the job vacancy for?'
+    info: 'About %{school}'
     vacancies:
       index: 'Vacancies at %{school}'
   buttons:
