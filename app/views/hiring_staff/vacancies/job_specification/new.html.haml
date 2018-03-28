@@ -21,11 +21,13 @@
                 input_html: {rows: 5},
                 required: true
       = f.input :job_description,
+                as: :text,
                 label: t('vacancies.description'),
                 hint: t('vacancies.form_hints.description'),
                 input_html: {rows: 10},
                 required: true
       = f.input :benefits,
+                as: :text,
                 label: t('vacancies.benefits'),
                 input_html: {rows: 5},
                 required: false
@@ -34,6 +36,7 @@
                 hint: t('vacancies.form_hints.main_subject'),
                 collection: Subject.order(:name),
                 required: false
+
       %fieldset.form-group
         %label= t('vacancies.salary_range')
         %span.form-hint= t('vacancies.form_hints.salary_range')
