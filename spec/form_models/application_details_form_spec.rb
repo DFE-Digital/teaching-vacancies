@@ -8,6 +8,15 @@ RSpec.describe ApplicationDetailsForm, type: :model do
     it { should validate_presence_of(:publish_on) }
     it { should validate_presence_of(:expires_on) }
 
+    describe '#application_link' do
+      let(:application_details) { ApplicationDetailsForm.new(application_link: 'not a url') }
+
+      it 'checks for a valid url' do
+        expect(application_details.valid?).to be false
+        expect(application_details.errors.messages[:application_link][0])
+          .to eq('is not a valid URL')
+      end
+    end
     describe '#contact_email' do
       let(:application_details) { ApplicationDetailsForm.new(contact_email: 'Some string') }
 
@@ -44,7 +53,8 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
   context 'when all attributes are valid' do
     it 'can correctly be converted to a vacancy' do
-      application_details = ApplicationDetailsForm.new(contact_email: 'some@email.com',
+      application_details = ApplicationDetailsForm.new(application_link: 'http://an.application.link',
+                                                       contact_email: 'some@email.com',
                                                        expires_on: Time.zone.today + 1.week,
                                                        publish_on: Time.zone.today)
 

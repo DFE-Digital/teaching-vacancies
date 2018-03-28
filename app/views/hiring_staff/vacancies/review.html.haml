@@ -74,6 +74,14 @@
           = link_to t('buttons.change'), job_specification_school_vacancy_path(schoold_id: @school.id)
       %div
         %dt.cya-question
+          = t('vacancies.leadership_level')
+        %dd.cya-answer
+          - if @vacancy.leadership
+            = @vacancy.leadership.title
+        %dd.cya-change
+          = link_to t('buttons.change'), job_specification_school_vacancy_path(schoold_id: @school.id)
+      %div
+        %dt.cya-question
           = t('vacancies.starts_on')
         %dd.cya-answer
           = format_date @vacancy.starts_on
@@ -110,14 +118,6 @@
           = @vacancy.experience
         %dd.cya-change
           = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
-      %div
-        %dt.cya-question
-          = t('vacancies.leadership_level')
-        %dd.cya-answer
-          - if @vacancy.leadership
-            = @vacancy.leadership.title
-        %dd.cya-change
-          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
 
     %h2.heading-medium= t('vacancies.application_details')
     %dl.govuk-check-your-answers.cya-questions-short
@@ -126,6 +126,13 @@
           = t('vacancies.contact_email')
         %dd.cya-answer
           = @vacancy.contact_email
+        %dd.cya-change
+          = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
+      %div
+        %dt.cya-question
+          = t('vacancies.application_link')
+        %dd.cya-answer
+          = @vacancy.application_link
         %dd.cya-change
           = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
       %div

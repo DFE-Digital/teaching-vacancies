@@ -51,6 +51,7 @@ en:
     actions: 'Actions'
     status: 'Status'
     already_published: 'This vacancy has already been published'
+    application_link: 'Application URL'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
       headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'
@@ -68,6 +69,7 @@ en:
       publication_date: 'For example, 31 10 2017'
       benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
       contact_email: 'This will appear in the public listing'
+      application_link: 'This is the url linking the vacancy to your existing application page'
     filters:
       title: 'Search vacancies'
       location: 'Location'
@@ -96,3 +98,7 @@ en:
     save_and_continue: 'Save and continue'
     find: 'Find'
     delete: 'Delete'
+
+  errors:
+    url:
+      invalid: is not a valid URL

@@ -2,8 +2,8 @@ module VacancyApplicationDetailValidations
   extend ActiveSupport::Concern
 
   included do
-    validates :publish_on, :expires_on, presence: true
-    validates :contact_email, presence: true
+    validates :application_link, :contact_email, :publish_on, :expires_on, presence: true
+    validates :application_link, url: true, if: proc { |v| v.application_link.present? }
     validates :contact_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                               if: proc { |a| a.contact_email.present? }
 
