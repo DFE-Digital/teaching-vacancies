@@ -47,11 +47,11 @@ en:
     submitted: 'Vacancy submitted'
     view_posted_vacancy: 'The vacancy has been posted, you can view it here:'
     preview_posted_vacancy: 'The vacancy will be posted on %{date}, you can preview it here:'
-    application_link: 'Apply for this job'
+    apply: 'Apply for this job'
+    application_link: 'Application link'
     actions: 'Actions'
     status: 'Status'
     already_published: 'This vacancy has already been published'
-    application_link: 'Application URL'
     draft: 'This vacancy is currently a draft version.'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
