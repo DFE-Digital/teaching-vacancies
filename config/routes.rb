@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   resources :vacancies, only: %i[index show]
   resource :sessions, controller: 'hiring_staff/sessions'
   resources :schools, only: %i[show edit update], controller: 'hiring_staff/schools' do
-    resources :vacancies, only: %i[new destroy delete show], controller: 'hiring_staff/vacancies' do
+    resources :vacancies, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
+      resource :job_specification, only: %i[edit update], controller: 'hiring_staff/vacancies/job_specification'
     end
 
     resource :vacancy, only: [] do

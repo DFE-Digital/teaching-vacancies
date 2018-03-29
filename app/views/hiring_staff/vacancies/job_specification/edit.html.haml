@@ -1,9 +1,9 @@
 %h1.heading-large
   = t('vacancies.publish_heading', school: @school.name)
   %span.heading-secondary
-    Step 1 of 3
+    Edit Job Specification
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
-= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_vacancy_path(school_id: @school.id) do |f|
+= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, method: :put, url: school_vacancy_job_specification_path(@school, @job_specification_form.id) do |f|
   %h2.heading-medium
     = t('vacancies.job_specification')
 
@@ -12,30 +12,35 @@
       = f.input :job_title,
                 label: t('vacancies.job_title'),
                 hint: t('vacancies.form_hints.job_title'),
+                wrapper_html: {id: 'job_title'},
                 required: true
       = f.input :headline,
                 label: t('vacancies.headline'),
                 hint: t('vacancies.form_hints.headline'),
                 input_html: {rows: 5},
+                wrapper_html: {id: 'headline'},
                 required: true
       = f.input :job_description,
                 as: :text,
                 label: t('vacancies.description'),
                 hint: t('vacancies.form_hints.description'),
                 input_html: {rows: 10},
+                wrapper_html: {id: 'job_description'},
                 required: true
       = f.input :benefits,
                 as: :text,
                 label: t('vacancies.benefits'),
                 input_html: {rows: 5},
+                wrapper_html: {id: 'benefits'},
                 required: false
       = f.input :subject_id,
                 label: t('vacancies.main_subject'),
                 hint: t('vacancies.form_hints.main_subject'),
+                wrapper_html: {id: 'subject'},
                 collection: Subject.order(:name),
                 required: false
 
-      %fieldset.form-group
+      %fieldset.form-group#salary_range
         %label.form-label.form-label-bold= t('vacancies.salary_range')
         %span.form-hint= t('vacancies.form_hints.salary_range')
 
@@ -60,25 +65,36 @@
                   hint: t('vacancies.form_hints.pay_scale'),
                   collection: PayScale.order(:label),
                   label_method: :label,
+                  wrapper_html: {id: 'pay_scale'},
                   required: false
       = f.input :working_pattern,
                 label: t('vacancies.working_pattern'),
                 collection: working_pattern_options,
+                wrapper_html: {id: 'working_pattern'},
                 required: true
       = f.input :weekly_hours,
                 label: t('vacancies.weekly_hours'),
                 as: :decimal,
                 hint: t('vacancies.form_hints.weekly_hours'),
+                wrapper_html: {id: 'weekly_hours'},
                 required: false
       = f.input :leadership_id,
-                      label: t('vacancies.leadership_level'),
-                      collection: Leadership.order(:title),
-                      required: false
+                label: t('vacancies.leadership_level'),
+                collection: Leadership.order(:title),
+                wrapper_html: {id: 'leadership'},
+                required: false
 
-      %div.form-group
-        = f.gov_uk_date_field :starts_on, legend_text: "#{t('vacancies.starts_on')} (optional)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.start_date')
+      %div.form-group#starts_on
+        = f.gov_uk_date_field :starts_on,
+          legend_text: "#{t('vacancies.starts_on')} (optional)",
+          legend_class: 'form-label-bold',
+          form_hint_text: t('vacancies.form_hints.start_date')
 
-      %div.form-group
-        = f.gov_uk_date_field :ends_on, legend_text: "#{t('vacancies.ends_on')} (optional)", legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.end_date')
 
-      = f.button :submit, t('buttons.save_and_continue')
+      %div.form-group#ends_on
+        = f.gov_uk_date_field :ends_on,
+          legend_text: "#{t('vacancies.ends_on')} (optional)",
+          legend_class: 'form-label-bold',
+          form_hint_text: t('vacancies.form_hints.end_date')
+
+      = f.button :submit, t('buttons.update_vacancy')

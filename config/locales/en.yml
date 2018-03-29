@@ -35,6 +35,7 @@ en:
     per_year: 'per year'
     publish_heading: 'Publish a vacancy for %{school}'
     review_heading: 'Review the vacancy for %{school}'
+    edit_heading: 'Edit vacancy for %{school}'
     job_specification: 'Job specification'
     candidate_specification: 'Candidate specification'
     application_details: 'Application details'
@@ -42,6 +43,7 @@ en:
     deadline_date: 'Application deadline'
     publication_date: 'Date role will be listed'
     review: 'Review the vacancy details and make any necessary changes before submitting it for publication below.'
+    edit: 'Edit the vacancy details.'
     confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
     submit: 'Confirm and submit vacancy'
     submitted: 'Vacancy submitted'
@@ -122,6 +124,7 @@ en:
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'
+    update_vacancy: 'Update vacancy'
     find: 'Find'
     delete: 'Delete'
     create_vacancy: 'Create a vacancy'
