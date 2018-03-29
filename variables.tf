@@ -103,17 +103,17 @@ variable "ecs_service_task_definition_file_path" {
 
 variable "ecs_import_schools_task_definition_file_path" {
   description = "Task definition to import schools"
-  default     = "./import_schools_task_definition.json"
+  default     = "./cron_task_definition.json"
 }
 
 variable "ecs_vacancies_scrape_task_definition_file_path" {
   description = "Task definition to scrape vacancies"
-  default     = "./vacancies_scrape_task_definition.json"
+  default     = "./cron_task_definition.json"
 }
 
 variable "ecs_sessions_trim_task_definition_file_path" {
   description = "Task definition to trim session data"
-  default     = "./sessions_trim_task_definition.json"
+  default     = "./cron_task_definition.json"
 }
 
 variable "vacancies_scrape_schedule_expression" {
