@@ -17,10 +17,6 @@ class School < ApplicationRecord
     all_through: 7,
   }
 
-  def to_param
-    urn
-  end
-
   def easting=(easting)
     self[:easting] = easting
     set_geolocation_from_easting_and_northing
