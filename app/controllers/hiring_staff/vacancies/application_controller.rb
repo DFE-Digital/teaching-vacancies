@@ -26,7 +26,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_to_next_step(vacancy)
-    next_path = session[:current_step].eql?('review') ? review_path(vacancy) : next_step
+    next_path = session[:current_step].eql?(:review) ? review_path(vacancy) : next_step
     redirect_to next_path
   end
 

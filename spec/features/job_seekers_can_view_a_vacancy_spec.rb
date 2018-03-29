@@ -47,7 +47,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
       visit vacancy_path(vacancy)
-      click_on I18n.t('vacancies.application_link')
+      click_on 'Apply for this job'
 
       expect(page.current_url).to eq vacancy.application_link
     end
