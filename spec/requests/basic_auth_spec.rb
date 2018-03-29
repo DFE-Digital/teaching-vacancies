@@ -84,7 +84,7 @@ RSpec.describe 'authentication', type: :request do
 
       context 'and they try to visit publishing for a school' do
         it_behaves_like 'basic auth is required',
-                        '/schools',
+                        '/schools/some-school-id',
                         :hiring_staff_http_user,
                         :hiring_staff_http_pass
       end
@@ -112,7 +112,7 @@ RSpec.describe 'authentication', type: :request do
                                    env_value_for_password: password)
       end
 
-      it_behaves_like 'basic auth is required', '/schools', :hiring_staff_http_user, :hiring_staff_http_pass
+      it_behaves_like 'basic auth is required', '/schools/school-id', :hiring_staff_http_user, :hiring_staff_http_pass
     end
   end
 end
