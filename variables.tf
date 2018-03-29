@@ -111,9 +111,19 @@ variable "ecs_vacancies_scrape_task_definition_file_path" {
   default     = "./vacancies_scrape_task_definition.json"
 }
 
+variable "ecs_sessions_trim_task_definition_file_path" {
+  description = "Task definition to trim session data"
+  default     = "./sessions_trim_task_definition.json"
+}
+
 variable "vacancies_scrape_schedule_expression" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "rate(60 minutes)"
+}
+
+variable "sessions_trim_schedule_expression" {
+  description = "sessions_trim schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(1 day)"
 }
 
 variable "buildspec_location" {
@@ -135,6 +145,12 @@ variable "vacancies_scrape_entrypoint" {
   description = "The Entrypoint for the vacancies_scrape task"
   default     = ["rake", "vacancies:data:scrape"]
 }
+
+variable "sessions_trim_entrypoint" {
+  description = "The Entrypoint for trimming old sessions"
+  default     = ["rake", "db:sessions:trim"]
+}
+
 
 # RDS
 variable "rds_engine" {
