@@ -124,6 +124,7 @@ en:
     save_and_continue: 'Save and continue'
     find: 'Find'
     delete: 'Delete'
+    create_vacancy: 'Create a vacancy'
 
   errors:
     url:

@@ -10,7 +10,7 @@ RSpec.feature 'School viewing vacancies' do
 
     expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
     expect(page).not_to have_css('table.vacancies')
-    expect(page).to have_content(I18n.t('schools.no_vacancies.heading'))
+    expect(page).to have_content('You have no current vacancies.')
   end
 
   scenario 'A school can see a list of vacancies', elasticsearch: true do

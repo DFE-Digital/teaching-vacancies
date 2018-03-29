@@ -1,0 +1,5 @@
+%h2.heading-medium= t('schools.no_vacancies.heading')
+%p= t('schools.no_vacancies.list_title')
+%ul.list.list-bullet
+  - t('schools.no_vacancies.bullets').each do |bullet|
+    %li= bullet
