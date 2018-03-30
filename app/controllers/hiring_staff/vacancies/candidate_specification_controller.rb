@@ -1,5 +1,5 @@
 class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Vacancies::ApplicationController
-  before_action :school, :redirect_unless_vacancy_session_id
+  before_action :school, :redirect_unless_vacancy_session_id, only: %i[new create]
 
   def new
     redirect_to job_specification_school_vacancy_path(school_id: school.id) unless session_vacancy_id
@@ -19,6 +19,26 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
 
     session[:current_step] = :step_2 unless session[:current_step].eql?(:review)
     redirect_to candidate_specification_school_vacancy_path(school_id: @school.id)
+  end
+
+  def edit
+    vacancy = school.vacancies.published.find(vacancy_id)
+
+    @candidate_specification_form = CandidateSpecificationForm.new(vacancy.attributes)
+    @candidate_specification_form.valid?
+  end
+
+  def update
+    vacancy = school.vacancies.published.find(vacancy_id)
+    @candidate_specification_form = CandidateSpecificationForm.new(candidate_specification_form)
+    @candidate_specification_form.id = vacancy.id
+
+    if @candidate_specification_form.valid?
+      vacancy.update_attributes(@candidate_specification_form.vacancy.attributes.compact)
+      redirect_to edit_school_vacancy_path(school, vacancy.id), notice: 'The vacancy has been updated'
+    else
+      render 'edit'
+    end
   end
 
   private

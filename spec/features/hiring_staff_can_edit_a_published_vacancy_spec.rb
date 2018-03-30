@@ -27,7 +27,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
         find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
-        expect(page.current_path).to eq(edit_school_vacancy_job_specification_path(school, vacancy.id))
 
         fill_in 'job_specification_form[job_title]', with: ''
         click_on 'Update vacancy'
@@ -39,12 +38,37 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
         find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
-        expect(page.current_path).to eq(edit_school_vacancy_job_specification_path(school, vacancy.id))
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on 'Update vacancy'
 
         expect(page).to have_content('The vacancy has been updated')
+        expect(page).to have_content('Assistant Head Teacher')
+      end
+    end
+
+    context '#candidate_specification' do
+      scenario 'can not be edited when validation fails' do
+        vacancy = create(:vacancy, :published, school: school)
+        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        find(:xpath, '//div[dt[contains(text(), "Educational requirements")]]').find('a').click
+
+        fill_in 'candidate_specification_form[experience]', with: ''
+        click_on 'Update vacancy'
+
+        expect(page).to have_content('Experience can\'t be blank')
+      end
+
+      scenario 'can be succesfuly edited' do
+        vacancy = create(:vacancy, :published, school: school)
+        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        find(:xpath, '//div[dt[contains(text(), "Qualification")]]').find('a').click
+
+        fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
+        click_on 'Update vacancy'
+
+        expect(page).to have_content('The vacancy has been updated')
+        expect(page).to have_content('Teaching deegree')
       end
     end
   end

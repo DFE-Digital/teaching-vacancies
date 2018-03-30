@@ -10,7 +10,10 @@ Rails.application.routes.draw do
       get 'review'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
-      resource :job_specification, only: %i[edit update], controller: 'hiring_staff/vacancies/job_specification'
+      resource :job_specification, only: %i[edit update],
+                                   controller: 'hiring_staff/vacancies/job_specification'
+      resource :candidate_specification, only: %i[edit update],
+                                         controller: 'hiring_staff/vacancies/candidate_specification'
     end
 
     resource :vacancy, only: [] do
