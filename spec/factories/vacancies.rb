@@ -19,6 +19,8 @@ FactoryGirl.define do
     maximum_salary { Faker::Number.number(6) }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
+    weekly_hours '8.5'
+    benefits { Faker::Lorem.sentence }
 
     trait :complete do
       starts_on { Faker::Time.forward(30) }
