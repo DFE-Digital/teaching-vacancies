@@ -71,5 +71,30 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Teaching deegree')
       end
     end
+
+    context '#application_details' do
+      scenario 'can not be edited when validation fails' do
+        vacancy = create(:vacancy, :published, school: school)
+        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        find(:xpath, '//div[dt[contains(text(), "Application link")]]').find('a').click
+
+        fill_in 'application_details_form[application_link]', with: 'some link'
+        click_on 'Update vacancy'
+
+        expect(page).to have_content(I18n.t('errors.url.invalid'))
+      end
+
+      scenario 'can be succesfuly edited' do
+        vacancy = create(:vacancy, :published, school: school)
+        visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+        find(:xpath, '//div[dt[contains(text(), "Application link")]]').find('a').click
+
+        fill_in 'application_details_form[application_link]', with: 'https://tvs.com'
+        click_on 'Update vacancy'
+
+        expect(page).to have_content('The vacancy has been updated')
+        expect(page).to have_content('https://tvs.com')
+      end
+    end
   end
 end

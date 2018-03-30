@@ -14,6 +14,8 @@ Rails.application.routes.draw do
                                    controller: 'hiring_staff/vacancies/job_specification'
       resource :candidate_specification, only: %i[edit update],
                                          controller: 'hiring_staff/vacancies/candidate_specification'
+      resource :application_details, only: %i[edit update],
+                                     controller: 'hiring_staff/vacancies/application_details'
     end
 
     resource :vacancy, only: [] do
