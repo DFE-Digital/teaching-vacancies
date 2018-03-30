@@ -5,18 +5,14 @@
 
 .grid-row
   .column-full
-    %table.vacancies
-      %th= t('vacancies.job_title')
-      %th= t('vacancies.publish_on')
-      %th= t('vacancies.expires_on')
-      %th= t('vacancies.status')
-      %th= t('vacancies.actions')
-      - @school.vacancies.each do |vacancy|
-        = render partial: 'vacancy', locals: { vacancy: vacancy, school: @school }
+    - if @school.vacancies.any?
+      = render partial: 'vacancies'
+    - else
+      = render partial: 'no_vacancies'
 
   .column-full
     .form-group.mt1
-      = link_to 'Publish a vacancy', new_school_vacancy_path(@school), class: 'button'
+      = link_to t('buttons.create_vacancy'), new_school_vacancy_path(@school), class: 'button'
 
 .grid-row
   .column-full

@@ -4,6 +4,15 @@ RSpec.feature 'School viewing vacancies' do
   include_context 'when authenticated as a member of hiring staff',
                   stub_basic_auth_env: true
 
+  scenario 'A school should see advisory text when there are no vacancies', elasticsearch: true do
+    school = FactoryGirl.create(:school)
+    visit school_path(school.id)
+
+    expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
+    expect(page).not_to have_css('table.vacancies')
+    expect(page).to have_content('You have no current vacancies.')
+  end
+
   scenario 'A school can see a list of vacancies', elasticsearch: true do
     school = FactoryGirl.create(:school)
     vacancy1 = FactoryGirl.create(:vacancy, school: school)
