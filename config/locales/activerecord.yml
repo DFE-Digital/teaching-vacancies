@@ -13,6 +13,7 @@ en:
             minimum_salary:
               blank: can't be blank
               greater_than_maximum_salary: must be lower than the maximum salary
+              lower_than_minimum_payscale: must be at least equal to the minimum pay range of %{minimum_salary}
             working_pattern:
               blank: can't be blank
             experience:
