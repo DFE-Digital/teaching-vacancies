@@ -4,7 +4,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   end
 
   def edit
-    @school = School.find_by!(urn: params[:id])
+    @school = School.find(params[:id])
 
     return if params[:description].nil?
 
@@ -13,7 +13,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   end
 
   def update
-    school = School.find_by!(urn: params[:id])
+    school = School.find(params[:id])
     school.description = params[:school][:description]
 
     if school.save
