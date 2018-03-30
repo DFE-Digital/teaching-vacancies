@@ -38,7 +38,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
     if @job_specification_form.valid?
       vacancy.update_attributes(@job_specification_form.vacancy.attributes.compact)
-      redirect_to edit_school_vacancy_path(school, vacancy.id), notice: 'The vacancy has been updated'
+      redirect_to edit_school_vacancy_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
     else
       render 'edit'
     end

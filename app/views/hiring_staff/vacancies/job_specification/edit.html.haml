@@ -1,7 +1,5 @@
 %h1.heading-large
-  = t('vacancies.publish_heading', school: @school.name)
-  %span.heading-secondary
-    Edit Job Specification
+  = t('vacancies.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
 = simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, method: :put, url: school_vacancy_job_specification_path(@school, @job_specification_form.id) do |f|
   %h2.heading-medium

@@ -26,6 +26,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+
+        expect(page).to have_content("Edit vacancy for #{school.name}")
         find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
 
         fill_in 'job_specification_form[job_title]', with: ''
@@ -51,6 +53,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+
+        expect(page).to have_content("Edit vacancy for #{school.name}")
         find(:xpath, '//div[dt[contains(text(), "Educational requirements")]]').find('a').click
 
         fill_in 'candidate_specification_form[experience]', with: ''
@@ -76,6 +80,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+
+        expect(page).to have_content("Edit vacancy for #{school.name}")
         find(:xpath, '//div[dt[contains(text(), "Application link")]]').find('a').click
 
         fill_in 'application_details_form[application_link]', with: 'some link'

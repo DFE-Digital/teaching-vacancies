@@ -1,7 +1,5 @@
 %h1.heading-large
-  = t('vacancies.publish_heading', school: @school.name)
-  %span.heading-secondary
-    Application Details
+  = t('vacancies.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
 = simple_form_for @application_details_form, html: { class: 'vacancy-form' }, method: :put, url: school_vacancy_application_details_path(@school, @application_details_form.id) do |f|
   %h2.heading-medium

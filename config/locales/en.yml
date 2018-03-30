@@ -132,6 +132,7 @@ en:
   messages:
     vacancies:
       delete: The vacancy has been deleted
+      updated: 'The vacancy has been updated'
 
   errors:
     vacancies:
