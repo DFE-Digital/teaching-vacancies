@@ -180,7 +180,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
+          click_link_in_container_with_text('Job title')
 
           expect(page).to have_content('Step 1 of 3')
 
@@ -194,7 +194,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
+          click_link_in_container_with_text('Job title')
 
           fill_in 'job_specification_form[job_title]', with: ''
           click_on 'Save and continue'
@@ -213,7 +213,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Qualifications")]]').find('a').click
+          click_link_in_container_with_text('Qualifications')
 
           expect(page).to have_content('Step 2 of 3')
 
@@ -227,7 +227,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Educational requirements")]]').find('a').click
+          click_link_in_container_with_text('Educational requirements')
 
           expect(page).to have_content('Step 2 of 3')
 
@@ -248,7 +248,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Vacancy contact email")]]').find('a').click
+          click_link_in_container_with_text('Vacancy contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -267,7 +267,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
-          find(:xpath, '//div[dt[contains(text(), "Vacancy contact email")]]').find('a').click
+          click_link_in_container_with_text('Vacancy contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -332,10 +332,5 @@ RSpec.feature 'Creating a vacancy' do
         expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
       end
     end
-  end
-
-  def within_row_for(element: 'label', text:, &block)
-    element = page.find(element, text: text).find(:xpath, '..')
-    within(element, &block)
   end
 end

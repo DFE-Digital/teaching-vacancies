@@ -28,7 +28,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
 
         expect(page).to have_content("Edit vacancy for #{school.name}")
-        find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: ''
         click_on 'Update vacancy'
@@ -39,12 +39,12 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
-        find(:xpath, '//div[dt[contains(text(), "Job title")]]').find('a').click
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on 'Update vacancy'
 
-        expect(page).to have_content('The vacancy has been updated')
+        expect(page).to have_content(I18n.t('messages.vacancies.updated'))
         expect(page).to have_content('Assistant Head Teacher')
       end
     end
@@ -55,23 +55,25 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
 
         expect(page).to have_content("Edit vacancy for #{school.name}")
-        find(:xpath, '//div[dt[contains(text(), "Educational requirements")]]').find('a').click
+        click_link_in_container_with_text(I18n.t('vacancies.experience'))
 
         fill_in 'candidate_specification_form[experience]', with: ''
         click_on 'Update vacancy'
 
-        expect(page).to have_content('Experience can\'t be blank')
+        within_row_for(text: I18n.t('vacancies.experience')) do
+          expect(page).to have_content('can\'t be blank')
+        end
       end
 
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
-        find(:xpath, '//div[dt[contains(text(), "Qualification")]]').find('a').click
+        click_link_in_container_with_text(I18n.t('vacancies.qualifications'))
 
         fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
         click_on 'Update vacancy'
 
-        expect(page).to have_content('The vacancy has been updated')
+        expect(page).to have_content(I18n.t('messages.vacancies.updated'))
         expect(page).to have_content('Teaching deegree')
       end
     end
@@ -82,23 +84,25 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
 
         expect(page).to have_content("Edit vacancy for #{school.name}")
-        find(:xpath, '//div[dt[contains(text(), "Application link")]]').find('a').click
+        click_link_in_container_with_text(I18n.t('vacancies.application_link'))
 
         fill_in 'application_details_form[application_link]', with: 'some link'
         click_on 'Update vacancy'
 
-        expect(page).to have_content(I18n.t('errors.url.invalid'))
+        within_row_for(text: I18n.t('vacancies.application_link')) do
+          expect(page).to have_content(I18n.t('errors.url.invalid'))
+        end
       end
 
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
-        find(:xpath, '//div[dt[contains(text(), "Application link")]]').find('a').click
+        click_link_in_container_with_text(I18n.t('vacancies.application_link'))
 
         fill_in 'application_details_form[application_link]', with: 'https://tvs.com'
         click_on 'Update vacancy'
 
-        expect(page).to have_content('The vacancy has been updated')
+        expect(page).to have_content(I18n.t('messages.vacancies.updated'))
         expect(page).to have_content('https://tvs.com')
       end
     end
