@@ -128,6 +128,6 @@ en:
 
   errors:
     vacancies:
-      unable_to_publish: We were unable to publish this vacancy. Make sure that you can filled in all mandatory fields
+      unable_to_publish: We were unable to publish this vacancy. Make sure that you have filled all mandatory fields
     url:
       invalid: is not a valid URL
