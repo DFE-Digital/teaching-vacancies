@@ -126,6 +126,10 @@ en:
     delete: 'Delete'
     create_vacancy: 'Create a vacancy'
 
+  messages:
+    vacancies:
+      delete: The vacancy has been deleted
+
   errors:
     vacancies:
       unable_to_publish: We were unable to publish this vacancy. Make sure that you have filled all mandatory fields

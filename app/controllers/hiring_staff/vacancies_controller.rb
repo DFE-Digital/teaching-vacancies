@@ -27,7 +27,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     @vacancy = school.vacancies.active.find(id)
     @vacancy.trash!
 
-    redirect_to school_path, notice: 'Your vacancy was deleted.'
+    redirect_to school_path, notice: t('messages.vacancies.delete')
   end
 
   def summary
