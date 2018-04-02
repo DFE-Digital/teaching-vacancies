@@ -24,7 +24,6 @@ RSpec.feature 'School deleting vacancies' do
       click_on 'Delete'
     end
 
-    expect(school.vacancies.count).to equal(1)
     expect(page).not_to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
     expect(page).to have_content('Your vacancy was deleted.')

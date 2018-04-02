@@ -57,6 +57,7 @@ class Vacancy < ApplicationRecord
   acts_as_gov_uk_date :starts_on, :ends_on, :publish_on, :expires_on
 
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
+  scope :active, (-> { where(status: %i[published draft]) })
 
   paginates_per 10
 
@@ -78,6 +79,11 @@ class Vacancy < ApplicationRecord
         subject: { only: %i[name] }
       }
     )
+  end
+
+  def trash!
+    self.status = :trashed
+    save(validate: false)
   end
 
   private
