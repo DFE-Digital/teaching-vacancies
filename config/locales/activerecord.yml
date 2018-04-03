@@ -1,4 +1,8 @@
 en:
+  errors:
+    messages:
+      too_short:
+        other: is too short (minimum is %{count} characters)
   activerecord:
     errors:
       models:

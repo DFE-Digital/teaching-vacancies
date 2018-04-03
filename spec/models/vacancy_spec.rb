@@ -28,6 +28,43 @@ RSpec.describe Vacancy, type: :model do
       it { should validate_presence_of(:experience) }
     end
 
+    context 'set minimum length of mandatory fields' do
+      subject { build(:vacancy, :fail_minimum_validation) }
+      before(:each) do
+        subject.valid?
+      end
+
+      it '#job_title' do
+        expect(subject.errors.messages[:job_title].first)
+          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+      end
+
+      it '#headline' do
+        expect(subject.errors.messages[:headline].first)
+          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+      end
+
+      it '#job_description' do
+        expect(subject.errors.messages[:job_description].first)
+          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+      end
+
+      it '#experience' do
+        expect(subject.errors.messages[:experience].first)
+          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+      end
+
+      it '#education' do
+        expect(subject.errors.messages[:education].first)
+          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+      end
+
+      it '#qualifications' do
+        expect(subject.errors.messages[:qualifications].first)
+          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+      end
+    end
+
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
 

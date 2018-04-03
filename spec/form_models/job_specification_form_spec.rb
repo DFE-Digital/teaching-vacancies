@@ -47,7 +47,8 @@ RSpec.describe JobSpecificationForm, type: :model do
     let(:leadership) { create(:leadership) }
 
     it 'a JobSpecificationForm can be converted to a vacancy' do
-      job_specification_form = JobSpecificationForm.new(headline: 'headline', job_title: 'job title',
+      job_specification_form = JobSpecificationForm.new(headline: 'Full time English Teacher',
+                                                        job_title: 'English Teacher',
                                                         job_description: 'description',
                                                         working_pattern: :full_time,
                                                         minimum_salary: 20000, maximum_salary: 40000,
@@ -55,9 +56,9 @@ RSpec.describe JobSpecificationForm, type: :model do
                                                         pay_scale_id: payscale.id, leadership_id: leadership.id)
 
       expect(job_specification_form.valid?).to be true
-      expect(job_specification_form.vacancy.job_title).to eq('job title')
+      expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_description).to eq('description')
-      expect(job_specification_form.vacancy.headline).to eq('headline')
+      expect(job_specification_form.vacancy.headline).to eq('Full time English Teacher')
       expect(job_specification_form.vacancy.working_pattern).to eq('full_time')
       expect(job_specification_form.vacancy.minimum_salary).to eq(20000)
       expect(job_specification_form.vacancy.maximum_salary).to eq(40000)
