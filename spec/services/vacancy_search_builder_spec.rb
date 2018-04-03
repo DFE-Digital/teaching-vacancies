@@ -1,3 +1,4 @@
+require 'rails_helper'
 RSpec.describe VacancySearchBuilder do
   describe '#call' do
     it 'returns the default keyword query with no parameters' do
@@ -131,6 +132,23 @@ RSpec.describe VacancySearchBuilder do
             terms: {
               status: ['published'],
             },
+          },
+        },
+      }
+
+      expect(builder).to be_a(Hash)
+      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
+    end
+
+    it 'builds a published_on query by default' do
+      sort = OpenStruct.new(column: :expires_on, order: :desc)
+      filters = OpenStruct.new
+      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+
+      expected_hash = {
+        range: {
+          publish_on: {
+            lte: 'now/d',
           },
         },
       }

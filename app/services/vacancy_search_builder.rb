@@ -19,6 +19,7 @@ class VacancySearchBuilder
     minimum_salary_query = minimum_salary_build
     maximum_salary_query = maximum_salary_build
     expired_query = expired_build
+    published_on_query = published_on_build
     status_query = status_build
     sort_query = sort_build
 
@@ -31,6 +32,7 @@ class VacancySearchBuilder
       maximum_salary_query,
       expired_query,
       status_query,
+      published_on_query
     ].compact
 
     query = {
@@ -73,6 +75,17 @@ class VacancySearchBuilder
       range: {
         'expires_on': {
           'gte': 'now/d',
+        },
+      },
+    }
+  end
+
+  def published_on_build
+    return if @published_on
+    {
+      range: {
+        'publish_on': {
+          'lte': 'now/d',
         },
       },
     }
