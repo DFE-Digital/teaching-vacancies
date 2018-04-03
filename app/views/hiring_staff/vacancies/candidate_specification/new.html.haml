@@ -14,18 +14,21 @@
                 as: :text,
                 hint: t('vacancies.form_hints.education'),
                 input_html: {rows: 5},
+                wrapper_html: {id: 'education'},
                 required: true
       = f.input :qualifications,
                 label: t('vacancies.qualifications'),
                 as: :text,
                 hint: t('vacancies.form_hints.qualifications'),
                 input_html: {rows: 5},
+                wrapper_html: {id: 'qualifications'},
                 required: true
       = f.input :experience,
                 label: t('vacancies.experience'),
                 as: :text,
                 hint: t('vacancies.form_hints.experience'),
                 input_html: {rows: 5},
+                wrapper_html: {id: 'experience'},
                 required: true
 
       = f.button :submit, t('buttons.save_and_continue')

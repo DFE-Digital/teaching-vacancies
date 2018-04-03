@@ -105,21 +105,21 @@
         %dd.cya-answer
           = @vacancy.education
         %dd.cya-change
-          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(@school, anchor: 'education')
       %div
         %dt.cya-question
           = t('vacancies.qualifications')
         %dd.cya-answer
           = @vacancy.qualifications
         %dd.cya-change
-          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(@school, anchor: 'qualifications')
       %div
         %dt.cya-question
           = t('vacancies.experience')
         %dd.cya-answer
           = @vacancy.experience
         %dd.cya-change
-          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), candidate_specification_school_vacancy_path(@school, anchor: 'experience')
 
     %h2.heading-medium= t('vacancies.application_details')
     %dl.govuk-check-your-answers.cya-questions-short
