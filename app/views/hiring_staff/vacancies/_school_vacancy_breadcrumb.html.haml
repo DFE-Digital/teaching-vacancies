@@ -1,0 +1,8 @@
+.grid-row
+  .column-full
+    .breadcrumbs
+      %ol.no-style
+        %li
+          = link_to @school.name, school_path(@school)
+        %li{'aria-current' => 'page'}
+          = @vacancy.job_title
