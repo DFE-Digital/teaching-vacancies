@@ -133,6 +133,8 @@ en:
     vacancies:
       delete: The vacancy has been deleted
       updated: 'The vacancy has been updated'
+      view:
+        only_published: You can only view published vacancies
 
   errors:
     vacancies:
