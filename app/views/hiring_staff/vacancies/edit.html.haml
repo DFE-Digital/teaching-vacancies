@@ -1,0 +1,148 @@
+= link_to @school.name, school_path(@school)
+%h1.heading-large
+  = t('vacancies.edit_heading', school: @vacancy.school.name)
+
+.vacancy.grid-row
+  .column-two-thirds
+    %h2.heading-medium= t('vacancies.job_specification')
+    %dl.govuk-check-your-answers.cya-questions-short
+      %div
+        %dt.cya-question
+          = t('vacancies.job_title')
+        %dd.cya-answer
+          = @vacancy.job_title
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'job_title')
+      %div
+        %dt.cya-question
+          = t('vacancies.headline')
+        %dd.cya-answer
+          = @vacancy.headline
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'headline')
+      %div
+        %dt.cya-question
+          = t('vacancies.description')
+        %dd.cya-answer
+          = @vacancy.job_description
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'job_description')
+      %div
+        %dt.cya-question
+          = t('vacancies.main_subject')
+        %dd.cya-answer
+          = @vacancy.main_subject
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'subject')
+      %div
+        %dt.cya-question
+          = t('vacancies.salary_range')
+        %dd.cya-answer
+          = @vacancy.salary_range("to")
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'salary_range')
+      %div
+        %dt.cya-question
+          = t('vacancies.working_pattern')
+        %dd.cya-answer
+          = @vacancy.working_pattern.humanize
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'working_pattern')
+      %div
+        %dt.cya-question
+          = t('vacancies.benefits')
+        %dd.cya-answer
+          = @vacancy.benefits
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'benefits')
+      %div
+        %dt.cya-question
+          = t('vacancies.pay_scale')
+        %dd.cya-answer
+          =@vacancy.pay_scale
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'pay_scale')
+      %div
+        %dt.cya-question
+          = t('vacancies.weekly_hours')
+        %dd.cya-answer
+          = @vacancy.weekly_hours
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'weekly_hours')
+      %div
+        %dt.cya-question
+          = t('vacancies.leadership_level')
+        %dd.cya-answer
+          - if @vacancy.leadership
+            = @vacancy.leadership.title
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'leadership')
+      %div
+        %dt.cya-question
+          = t('vacancies.starts_on')
+        %dd.cya-answer
+          = format_date @vacancy.starts_on
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'starts_on')
+      %div
+        %dt.cya-question
+          = t('vacancies.ends_on')
+        %dd.cya-answer
+          = format_date @vacancy.ends_on
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'ends_on')
+
+    %h2.heading-medium= t('vacancies.candidate_specification')
+    %dl.govuk-check-your-answers.cya-questions-short
+      %div
+        %dt.cya-question
+          = t('vacancies.education')
+        %dd.cya-answer
+          = @vacancy.education
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_candidate_specification_path(@school, @vacancy.id, anchor: 'education')
+      %div
+        %dt.cya-question
+          = t('vacancies.qualifications')
+        %dd.cya-answer
+          = @vacancy.qualifications
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_candidate_specification_path(@school, @vacancy.id, anchor: 'qualifications')
+      %div
+        %dt.cya-question
+          = t('vacancies.experience')
+        %dd.cya-answer
+          = @vacancy.experience
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_candidate_specification_path(@school, @vacancy.id, anchor: 'experience')
+
+    %h2.heading-medium= t('vacancies.application_details')
+    %dl.govuk-check-your-answers.cya-questions-short
+      %div
+        %dt.cya-question
+          = t('vacancies.contact_email')
+        %dd.cya-answer
+          = @vacancy.contact_email
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_application_details_path(@school, @vacancy.id, anchor: 'contact_email')
+      %div
+        %dt.cya-question
+          = t('vacancies.application_link')
+        %dd.cya-answer
+          = @vacancy.application_link
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_application_details_path(@school, @vacancy.id, anchor: 'application_link')
+      %div
+        %dt.cya-question
+          = t('vacancies.deadline_date')
+        %dd.cya-answer
+          = format_date @vacancy.expires_on
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_application_details_path(@school, @vacancy.id, anchor: 'starts_on')
+      %div
+        %dt.cya-question
+          = t('vacancies.publication_date')
+        %dd.cya-answer
+          = format_date @vacancy.publish_on
+        %dd.cya-change
+          = link_to t('buttons.change'), edit_school_vacancy_application_details_path(@school, @vacancy.id, anchor: 'publish_on')

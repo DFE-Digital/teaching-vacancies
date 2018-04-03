@@ -3,6 +3,6 @@
   %th= t('vacancies.publish_on')
   %th= t('vacancies.expires_on')
   %th= t('vacancies.status')
-  %th= t('vacancies.actions')
+  %th{ colspan: 2}= t('vacancies.actions')
   - vacancies.each do |vacancy|
     = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }

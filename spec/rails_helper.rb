@@ -49,6 +49,7 @@ RSpec.configure do |config|
   config.include DateHelper
   config.include VacancyHelpers
   config.include AuthHelpers
+  config.include CapybaraHelper, type: :feature
 end
 
 Shoulda::Matchers.configure do |config|

@@ -10,6 +10,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     redirect_to job_specification_school_vacancy_path(school_id: school.id)
   end
 
+  def edit
+    vacancy = school.vacancies.find(id)
+    redirect_to school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id) unless vacancy.published?
+
+    @vacancy = VacancyPresenter.new(vacancy)
+  end
+
   def review
     vacancy = school.vacancies.active.find(vacancy_id)
     if vacancy.published?

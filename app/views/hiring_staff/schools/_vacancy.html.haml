@@ -3,5 +3,6 @@
   %td= format_date(vacancy.publish_on)
   %td= format_date(vacancy.expires_on)
   %td= vacancy.status.titleize
+  %td= link_to 'Edit', edit_school_vacancy_path(school, vacancy.id)
   %td= link_to 'Delete', school_vacancy_path(school_id: school.id, id: vacancy.id), method: :delete, data: { confirm: "Are you sure you want to delete the '#{vacancy.job_title}' vacancy?" }
 

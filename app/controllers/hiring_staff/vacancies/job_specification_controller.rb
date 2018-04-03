@@ -19,17 +19,37 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       redirect_to_next_step(vacancy)
     else
       session[:current_step] = :step_1 if session[:current_step].blank?
-      redirect_to job_specification_school_vacancy_path(school_id: school.id)
+      redirect_to job_specification_school_vacancy_path(school)
     end
   end
   # rubocop:enable Metrics/AbcSize
 
+  def edit
+    vacancy = school.vacancies.published.find(vacancy_id)
+
+    @job_specification_form = JobSpecificationForm.new(vacancy.attributes)
+    @job_specification_form.valid?
+  end
+
+  def update
+    vacancy = school.vacancies.published.find(vacancy_id)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    @job_specification_form.id = vacancy.id
+
+    if @job_specification_form.valid?
+      vacancy.update_attributes(@job_specification_form.vacancy.attributes.compact)
+      redirect_to edit_school_vacancy_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def job_specification_form
-    params.require(:job_specification_form).permit(:job_title, :job_description, :headline,
+    params.require(:job_specification_form).permit(:job_title, :job_description, :headline, :leadership_id,
                                                    :minimum_salary, :maximum_salary, :working_pattern,
-                                                   :school_id, :subject_id, :pay_scale_id, :leadership_id,
+                                                   :benefits, :weekly_hours, :subject_id, :pay_scale_id,
                                                    :starts_on_dd, :starts_on_mm, :starts_on_yyyy,
                                                    :ends_on_dd, :ends_on_mm, :ends_on_yyyy)
   end

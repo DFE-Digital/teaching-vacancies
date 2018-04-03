@@ -1,0 +1,34 @@
+%h1.heading-large
+  = t('vacancies.edit_heading', school: @school.name)
+= render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
+= simple_form_for @application_details_form, html: { class: 'vacancy-form' }, method: :put, url: school_vacancy_application_details_path(@school, @application_details_form.id) do |f|
+  %h2.heading-medium
+    = t('vacancies.application_details')
+
+  .grid-row
+    .column-one-half
+      = f.input :contact_email,
+                label: t('vacancies.contact_email'),
+                as: :email,
+                wrapper_html: {id: 'contact_email'},
+                required: true
+
+      = f.input :application_link,
+                label: t('vacancies.application_link'),
+                hint: t('vacancies.form_hints.application_link'),
+                wrapper_html: {id: 'application_link'},
+                required: true
+
+      %div.form-group#starts_on
+        = f.gov_uk_date_field :expires_on,
+                              legend_text: t('vacancies.deadline_date'),
+                              legend_class: 'form-label-bold',
+                              form_hint_text: t('vacancies.form_hints.deadline_date')
+
+      %div.form-group#publish_on
+        = f.gov_uk_date_field :publish_on,
+          legend_text: t('vacancies.publication_date'),
+          legend_class: 'form-label-bold',
+          form_hint_text: t('vacancies.form_hints.publication_date')
+
+      = f.button :submit, t('buttons.update_vacancy')

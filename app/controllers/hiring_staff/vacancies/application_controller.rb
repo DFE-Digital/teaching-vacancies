@@ -9,6 +9,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     params.permit![:school_id]
   end
 
+  def vacancy_id
+    params.permit![:vacancy_id]
+  end
+
   def session_vacancy_id
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
   end
