@@ -1,6 +1,6 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
   def show
-    vacancy = school.vacancies.find(id)
+    vacancy = school.vacancies.active.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
     flash.now[:alert] = t('vacancies.draft') if vacancy.draft?
   end
@@ -11,7 +11,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def review
-    vacancy = school.vacancies.find(vacancy_id)
+    vacancy = school.vacancies.active.find(vacancy_id)
     if vacancy.published?
       redirect_to school_vacancy_path(school_id: school.id, id: vacancy.id),
                   notice: t('vacancies.already_published')
@@ -24,10 +24,10 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def destroy
-    @vacancy = school.vacancies.find(id)
-    @vacancy.destroy
+    @vacancy = school.vacancies.active.find(id)
+    @vacancy.trash!
 
-    redirect_to school_path, notice: 'Your vacancy was deleted.'
+    redirect_to school_path, notice: t('messages.vacancies.delete')
   end
 
   def summary

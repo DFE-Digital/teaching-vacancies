@@ -96,18 +96,42 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe 'applicable scope' do
-    it 'should only find current vacancies' do
-      expired = build(:vacancy, :expired)
-      expired.send :set_slug
-      expired.save(validete: false)
-      expires_today = create(:vacancy, expires_on: Time.zone.today)
-      expires_future = create(:vacancy, expires_on: 3.months.from_now)
+  context 'actions' do
+    describe '#trash!' do
+      it 'sets a vacancy to trashed and does not retrieve it in the applicable scope' do
+        vacancies = create_list(:vacancy, 4)
+        vacancies.last.trashed!
+        expect(Vacancy.active.count).to eq(3)
+        vacancies.first.trashed!
+        expect(Vacancy.active.count).to eq(2)
+      end
+    end
+  end
 
-      results = Vacancy.applicable
-      expect(results).to include(expires_today)
-      expect(results).to include(expires_future)
-      expect(results).to_not include(expired)
+  context 'scopes' do
+    describe '#applicable' do
+      it 'finds current vacancies' do
+        expired = build(:vacancy, :expired)
+        expired.send :set_slug
+        expired.save(validate: false)
+        expires_today = create(:vacancy, expires_on: Time.zone.today)
+        expires_future = create(:vacancy, expires_on: 3.months.from_now)
+
+        results = Vacancy.applicable
+        expect(results).to include(expires_today)
+        expect(results).to include(expires_future)
+        expect(results).to_not include(expired)
+      end
+    end
+
+    describe '#active' do
+      it 'retrieves active vacancies that have a status of :draft or :published' do
+        draft = create_list(:vacancy, 2, :draft)
+        published = create_list(:vacancy, 5, :published)
+        create_list(:vacancy, 4, :trashed)
+
+        expect(Vacancy.active.count).to eq(draft.count + published.count)
+      end
     end
   end
 

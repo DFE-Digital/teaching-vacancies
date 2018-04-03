@@ -4,5 +4,5 @@
   %th= t('vacancies.expires_on')
   %th= t('vacancies.status')
   %th= t('vacancies.actions')
-  - @school.vacancies.each do |vacancy|
-    = render partial: 'vacancy', locals: { vacancy: vacancy, school: @school }
+  - vacancies.each do |vacancy|
+    = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }

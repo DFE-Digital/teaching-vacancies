@@ -1,6 +1,7 @@
 class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
     @school = SchoolPresenter.new(current_school)
+    @vacancies = @school.vacancies.active
   end
 
   def edit
@@ -21,9 +22,5 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
     else
       redirect_to edit_school_path(school, description: school.description)
     end
-  end
-
-  def index
-    # Nothing to do here yet
   end
 end
