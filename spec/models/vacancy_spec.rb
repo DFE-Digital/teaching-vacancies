@@ -109,6 +109,23 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
+    context 'restrict maximum length of integer fields' do
+      subject { build(:vacancy, :fail_maximum_validation) }
+      before(:each) do
+        subject.valid?
+      end
+
+      it '#minimum_salary' do
+        expect(subject.errors.messages[:minimum_salary].first)
+          .to eq('must be less than or equal to £2,147,483,647.00')
+      end
+
+      it '#maximum_salary' do
+        expect(subject.errors.messages[:maximum_salary].first)
+          .to eq('must be less than or equal to £2,147,483,647.00')
+      end
+    end
+
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
 

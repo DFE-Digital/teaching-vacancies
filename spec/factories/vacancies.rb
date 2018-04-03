@@ -38,6 +38,8 @@ FactoryGirl.define do
       experience { Faker::Lorem.characters(1010) }
       education { Faker::Lorem.characters(1005) }
       qualifications { Faker::Lorem.characters(1002) }
+      minimum_salary { Vacancy::MAX_INTEGER + 10 }
+      maximum_salary { Vacancy::MAX_INTEGER + 10 }
     end
 
     trait :complete do
