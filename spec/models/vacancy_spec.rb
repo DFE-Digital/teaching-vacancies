@@ -65,6 +65,50 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
+    context 'restrict maximum length of string fields' do
+      subject { build(:vacancy, :fail_maximum_validation) }
+      before(:each) do
+        subject.valid?
+      end
+
+      it '#job_title' do
+        expect(subject.errors.messages[:job_title].first)
+          .to eq(I18n.t('errors.messages.too_long.other', count: 50))
+      end
+
+      it '#headline' do
+        expect(subject.errors.messages[:headline].first)
+          .to eq(I18n.t('errors.messages.too_long.other', count: 50))
+      end
+    end
+
+    context 'restrict maximum length of text fields' do
+      subject { build(:vacancy, :fail_maximum_validation) }
+      before(:each) do
+        subject.valid?
+      end
+
+      it '#job_description' do
+        expect(subject.errors.messages[:job_description].first)
+          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+      end
+
+      it '#experience' do
+        expect(subject.errors.messages[:experience].first)
+          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+      end
+
+      it '#education' do
+        expect(subject.errors.messages[:education].first)
+          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+      end
+
+      it '#qualifications' do
+        expect(subject.errors.messages[:qualifications].first)
+          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+      end
+    end
+
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
 

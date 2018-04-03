@@ -3,11 +3,11 @@ module VacancyCandidateSpecificationValidations
 
   included do
     validates :experience, :education, :qualifications, presence: true
-    validates :experience, length: { minimum: 10 },
+    validates :experience, length: { minimum: 10, maximum: 1000 },
                            if: proc { |model| model.experience.present? }
-    validates :education, length: { minimum: 10 },
+    validates :education, length: { minimum: 10, maximum: 1000 },
                           if: proc { |model| model.education.present? }
-    validates :qualifications, length: { minimum: 10 },
+    validates :qualifications, length: { minimum: 10, maximum: 1000 },
                                if: proc { |model| model.qualifications.present? }
   end
 end
