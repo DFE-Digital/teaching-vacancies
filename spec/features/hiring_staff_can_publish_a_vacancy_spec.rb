@@ -290,6 +290,17 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#publish' do
+      scenario 'can not be published unless the details are valid' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+        vacancy.assign_attributes qualifications: nil
+        vacancy.save(validate: false)
+
+        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        click_on 'Confirm and submit vacancy'
+
+        expect(page).to have_content(I18n.t('errors.vacancies.unable_to_publish'))
+      end
+
       scenario 'can be published at a later date' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
