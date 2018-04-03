@@ -3,7 +3,7 @@ FactoryGirl.define do
     association :school_type
     association :region
 
-    name { Faker::Educator.secondary_school }
+    name { Faker::Educator.secondary_school.strip }
     description { Faker::Lorem.paragraph(1) }
     urn { Faker::Number.number(10) }
     address { Faker::Address.street_name }

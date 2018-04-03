@@ -14,6 +14,16 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     end
   end
 
+  context 'navigation' do
+    scenario 'links to the school page' do
+      vacancy = create(:vacancy, :published, school: school)
+      visit edit_school_vacancy_path(school_id: school.id, id: vacancy.id)
+
+      click_on school.name
+      expect(page).to have_content("Vacancies at #{school.name}")
+    end
+  end
+
   context 'editing a published vacancy' do
     scenario 'takes your to the edit page' do
       vacancy = create(:vacancy, :published, school: school)
