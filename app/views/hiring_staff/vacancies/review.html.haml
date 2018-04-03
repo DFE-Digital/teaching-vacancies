@@ -129,28 +129,28 @@
         %dd.cya-answer
           = @vacancy.contact_email
         %dd.cya-change
-          = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'contact_email')
       %div
         %dt.cya-question
           = t('vacancies.application_link')
         %dd.cya-answer
           = @vacancy.application_link
         %dd.cya-change
-          = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'application_link')
       %div
         %dt.cya-question
           = t('vacancies.deadline_date')
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
-          = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'deadline')
       %div
         %dt.cya-question
           = t('vacancies.publication_date')
         %dd.cya-answer
           = format_date @vacancy.publish_on
         %dd.cya-change
-          = link_to t('buttons.change'), application_details_school_vacancy_path(school_id: @school.id)
+          = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'publish_on')
 
     %h2.heading-medium Now submit your vacancy
     %p= t('vacancies.confirmation_summary')
