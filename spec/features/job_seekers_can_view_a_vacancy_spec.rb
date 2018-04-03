@@ -35,10 +35,9 @@ RSpec.feature 'Viewing a single published vacancy' do
     expect(page).to have_content('This vacancy has expired')
   end
 
-  scenario 'A single vacancy must contain JobPosting schema.org mark up', elasticsearch: true do
+  scenario 'A single vacancy must contain JobPosting schema.org mark up' do
     vacancy = create(:vacancy, :job_schema)
 
-    Vacancy.__elasticsearch__.client.indices.flush
     visit vacancy_path(vacancy)
 
     expect(script_tag_content(wrapper_class: '.jobref')).to eq(vacancy_json_ld(vacancy).to_json)
