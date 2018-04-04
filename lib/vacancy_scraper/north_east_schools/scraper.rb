@@ -36,8 +36,10 @@ module VacancyScraper::NorthEastSchools
       vacancy.status = min_salary.to_i.positive? ? :published : :draft
       vacancy.publish_on = Time.zone.today
       vacancy.application_link = "#{@vacancy_url}#apply"
+      vacancy.send :set_slug
 
-      return vacancy.save if vacancy.valid?
+      return vacancy.save(validate: false) if valid?(vacancy)
+      vacancy.valid?
       Rails.logger.debug("Invalid vacancy: #{vacancy.errors.inspect}")
     rescue StandardError => e
       Rails.logger.debug("Unable to save scraped vacancy: #{e.inspect}")
@@ -199,6 +201,12 @@ module VacancyScraper::NorthEastSchools
     end
 
     private
+
+    def valid?(vacancy)
+      vacancy.job_description.present? && vacancy.job_title.present? &&
+        vacancy.working_pattern.present? && vacancy.headline.present? &&
+        vacancy.expires_on.present? && vacancy.expires_on < vacancy.publish_on
+    end
 
     def vacancy_scraped?
       Vacancy.where('application_link like ?', "#{@vacancy_url}%").exists?
