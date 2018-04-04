@@ -5,7 +5,7 @@ RSpec.describe 'non-existent pages' do
     get '/foo'
     expect(response).to have_http_status(404)
     expect(response.header['Content-Type']).to include 'text/html'
-    expect(response.body).to include('not found')
+    expect(response.body).to include('Page not found')
   end
 
   it 'returns a 404 for js' do
