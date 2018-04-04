@@ -9,8 +9,11 @@ RSpec.feature 'Hiring staff can log in' do
   end
 
   let!(:school) { create(:school, urn: '110627') }
+  before(:each) do
+    stub_const('Permission::USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
+  end
 
-  scenario 'with valid credentials', elasticsearch: true do
+  scenario 'with valid credentials that do match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
       provider: 'default',
       extra: {
@@ -29,7 +32,7 @@ RSpec.feature 'Hiring staff can log in' do
     expect(page).to have_content("Vacancies at #{school.name}")
   end
 
-  scenario 'when the valid credentials do not match a school', elasticsearch: true do
+  scenario 'with valid credentials that do not match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
       provider: 'default',
       extra: {

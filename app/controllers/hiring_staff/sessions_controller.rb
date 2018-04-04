@@ -9,9 +9,10 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
   end
 
   def create
-    if hiring_staff_authorised?
-      session.update(urn: permission_mappings[oid])
+    permission = Permission.new(identifier: oid)
 
+    if permission.valid?
+      session.update(urn: permission.school_urn)
       redirect_to school_path(current_school.id)
     else
       redirect_to root_path, notice: I18n.t('errors.sign_in.unauthorised')
@@ -31,14 +32,6 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
   private def redirect_to_azure
     # Defined by Azure AD strategy: https://github.com/AzureAD/omniauth-azure-activedirectory#usage
     redirect_to '/auth/azureactivedirectory'
-  end
-
-  private def hiring_staff_authorised?
-    permission_mappings[oid].present?
-  end
-
-  private def permission_mappings
-    { 'a-valid-oid' => '110627' }
   end
 
   private def auth_hash
