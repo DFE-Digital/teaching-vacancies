@@ -153,7 +153,7 @@ class VacancySearchBuilder
     {
       multi_match: {
         query: keyword,
-        fields: %w[job_title^5 subject.name^3 headline^2 job_description],
+        fields: %w[job_title^5 subject.name^3 headline^2],
         operator: 'and',
         fuzziness: 1,
       },
