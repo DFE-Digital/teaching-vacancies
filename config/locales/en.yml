@@ -144,6 +144,7 @@ en:
     vacancies:
       unable_to_publish: We were unable to publish this vacancy. Make sure that you have filled all mandatory fields
     sign_in:
+      unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
     url:
       invalid: is not a valid URL
