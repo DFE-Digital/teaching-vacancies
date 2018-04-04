@@ -1,12 +1,13 @@
 require 'rails_helper'
 RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
-
-  include_context 'when authenticated as a member of hiring staff',
-                  stub_basic_auth_env: true
+  before(:each) do
+    stub_hiring_staff_auth(urn: school.urn)
+  end
 
   scenario 'Visiting the school page' do
     school = create(:school, name: 'Salisbury School')
+    stub_hiring_staff_auth(urn: school.urn)
 
     visit school_path(school.id)
 

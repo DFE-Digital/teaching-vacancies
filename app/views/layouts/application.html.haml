@@ -22,6 +22,8 @@
         %ul#proposition-links
           %li
             = link_to "School sign in", new_sessions_path
+          %li
+            = link_to "School sign out", sessions_path, method: :delete
 
 - content_for :content do
   %main#content{ role: 'main', tabindex: -1 }

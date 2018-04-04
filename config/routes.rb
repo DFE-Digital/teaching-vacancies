@@ -5,6 +5,12 @@ Rails.application.routes.draw do
 
   resources :vacancies, only: %i[index show]
   resource :sessions, controller: 'hiring_staff/sessions'
+
+  get '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
+  get '/auth/azureactivedirectory/failure', to: 'hiring_staff/sessions#failure'
+  get '/auth/failure', to: 'hiring_staff/sessions#failure' # For OmniAuth testing only
+  post '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
+
   resources :schools, only: %i[show edit update], controller: 'hiring_staff/schools' do
     resources :vacancies, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'

@@ -1,11 +1,12 @@
 require 'rails_helper'
 RSpec.feature 'School deleting vacancies' do
-  include_context 'when authenticated as a member of hiring staff',
-                  stub_basic_auth_env: true
+  let(:school) { create(:school) }
+  before(:each) do
+    stub_hiring_staff_auth(urn: school.urn)
+  end
 
   scenario 'Hiring staff should see a delete button for a vacancy' do
-    school = FactoryGirl.create(:school)
-    vacancy = FactoryGirl.create(:vacancy, school: school)
+    vacancy = create(:vacancy, school: school)
 
     visit school_path(school.id)
 
@@ -15,9 +16,8 @@ RSpec.feature 'School deleting vacancies' do
   end
 
   scenario 'A school can delete a vacancy from a list' do
-    school = FactoryGirl.create(:school)
-    vacancy1 = FactoryGirl.create(:vacancy, school: school)
-    vacancy2 = FactoryGirl.create(:vacancy, school: school)
+    vacancy1 = create(:vacancy, school: school)
+    vacancy2 = create(:vacancy, school: school)
 
     visit school_path(school.id)
     within("tr#vacancy_#{vacancy1.id}") do
