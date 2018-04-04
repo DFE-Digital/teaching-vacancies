@@ -30,7 +30,7 @@ RSpec.feature 'School viewing vacancies' do
     visit school_vacancy_path(school_id: school.id, id: vacancy.id)
 
     expect(page.current_path).to eq(school_vacancy_review_path(school, vacancy.id))
-    expect(page).to have_content(I18n.t('vacancies.view.only_published'))
+    expect(page).to have_content(I18n.t('messages.vacancies.view.only_published'))
   end
 
   scenario 'A published vacancy show page should not show a flash message with the status', elasticsearch: true do

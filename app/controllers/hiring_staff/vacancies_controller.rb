@@ -3,7 +3,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     vacancy = school.vacancies.active.find(id)
     unless vacancy.published?
       return redirect_to school_vacancy_review_path(school, vacancy.id),
-                         notice: I18n.t('vacancies.view.only_published')
+                         alert: I18n.t('messages.vacancies.view.only_published')
     end
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -24,7 +24,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     vacancy = school.vacancies.active.find(vacancy_id)
     if vacancy.published?
       redirect_to school_vacancy_path(school_id: school.id, id: vacancy.id),
-                  notice: t('vacancies.already_published')
+                  notice: t('messages.vacancies.already_published')
     end
 
     session[:current_step] = :review
