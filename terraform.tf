@@ -70,6 +70,8 @@ module "ecs" {
   override_school_urn      = "${var.override_school_urn}"
   http_pass                = "${var.http_pass}"
   http_user                = "${var.http_user}"
+  aad_client_id            = "${var.aad_client_id}"
+  aad_tenant               = "${var.aad_tenant}"
   google_maps_api_key      = "${var.google_maps_api_key}"
   google_analytics         = "${var.google_analytics}"
   rollbar_access_token     = "${var.rollbar_access_token}"

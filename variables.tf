@@ -201,6 +201,8 @@ variable "rails_env" {}
 variable "override_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
+variable "aad_client_id" {}
+variable "aad_tenant" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "secret_key_base" {}

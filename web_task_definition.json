@@ -40,6 +40,14 @@
         "value": "${http_pass}"
       },
       {
+        "name": "AAD_CLIENT_ID",
+        "value": "${aad_client_id}"
+      },
+      {
+        "name": "AAD_TENANT",
+        "value": "${aad_tenant}"
+      },
+      {
         "name": "GOOGLE_MAPS_API_KEY",
         "value": "${google_maps_api_key}"
       },
