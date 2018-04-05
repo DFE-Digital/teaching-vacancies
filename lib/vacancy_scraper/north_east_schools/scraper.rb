@@ -205,7 +205,7 @@ module VacancyScraper::NorthEastSchools
     def valid?(vacancy)
       vacancy.job_description.present? && vacancy.job_title.present? &&
         vacancy.working_pattern.present? && vacancy.headline.present? &&
-        vacancy.expires_on.present? && vacancy.expires_on < vacancy.publish_on
+        vacancy.expires_on.present? && vacancy.expires_on > vacancy.publish_on
     end
 
     def vacancy_scraped?
