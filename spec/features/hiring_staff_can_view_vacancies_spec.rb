@@ -6,7 +6,7 @@ RSpec.feature 'School viewing vacancies' do
 
   scenario 'A school should see advisory text when there are no vacancies', elasticsearch: true do
     school = FactoryGirl.create(:school)
-    visit school_path(school.id)
+    visit school_path(school)
 
     expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
     expect(page).not_to have_css('table.vacancies')
@@ -17,28 +17,27 @@ RSpec.feature 'School viewing vacancies' do
     school = FactoryGirl.create(:school)
     vacancy1 = FactoryGirl.create(:vacancy, school: school)
     vacancy2 = FactoryGirl.create(:vacancy, school: school)
-    visit school_path(school.id)
+    visit school_path(school)
 
     expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
     expect(page).to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
   end
 
-  scenario 'A draft vacancy show page should show a flash message with the status', elasticsearch: true do
+  scenario 'A draft vacancy redirects to the vacancy review page' do
     school = FactoryGirl.create(:school)
-    vacancy = FactoryGirl.create(:vacancy, school: school, status: 'draft')
+    vacancy = FactoryGirl.create(:vacancy, :draft, school: school)
     visit school_vacancy_path(school_id: school.id, id: vacancy.id)
-    expect(page).to have_content(school.name)
-    expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(I18n.t('vacancies.draft'))
+
+    expect(page.current_path).to eq(school_vacancy_review_path(school, vacancy.id))
+    expect(page).to have_content(I18n.t('messages.vacancies.view.only_published'))
   end
 
   scenario 'A published vacancy show page should not show a flash message with the status', elasticsearch: true do
     school = FactoryGirl.create(:school)
-    vacancy = FactoryGirl.create(:vacancy, school: school, status: 'published')
-    visit school_vacancy_path(school_id: school.id, id: vacancy.id)
+    vacancy = FactoryGirl.create(:vacancy, :published, school: school)
+    visit school_vacancy_path(school, vacancy.id)
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).not_to have_content(I18n.t('vacancies.draft'))
   end
 end
