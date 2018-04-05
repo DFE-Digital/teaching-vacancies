@@ -24,8 +24,8 @@
         "value": "${rails_env}"
       },
       {
-        "name": "DEFAULT_SCHOOL_URN",
-        "value": "${default_school_urn}"
+        "name": "OVERRIDE_SCHOOL_URN",
+        "value": "${override_school_urn}"
       },
       {
         "name": "ROLLBAR_ENV",

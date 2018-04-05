@@ -44,5 +44,14 @@ RSpec.describe Permission, type: :model do
         expect(result).to eq(nil)
       end
     end
+
+    context 'when a OVERRIDE_SCHOOL_URN is set in the ENV' do
+      it 'returns that value' do
+        ENV['OVERRIDE_SCHOOL_URN'] = '123'
+        result = described_class.new(identifier: 'user-id').school_urn
+        expect(result).to eq('123')
+        ENV.delete('OVERRIDE_SCHOOL_URN')
+      end
+    end
   end
 end
