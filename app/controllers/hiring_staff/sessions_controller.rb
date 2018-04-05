@@ -1,8 +1,6 @@
 class HiringStaff::SessionsController < HiringStaff::BaseController
   skip_before_action :check_session, only: %i[create new destroy failure]
-
-  # TODO: Bug with create when CSRF enabled. Obviously we need this before we can merge.
-  protect_from_forgery with: :exception, except: :create
+  skip_before_action :verify_authenticity_token, only: [:create]
 
   def new
     redirect_to_azure
