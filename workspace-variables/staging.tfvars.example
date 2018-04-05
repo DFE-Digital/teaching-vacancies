@@ -47,14 +47,11 @@ cloudwatch_ops_genie_api_key =
 
 # Application
 rails_env =
+override_school_urn =
 load_balancer_check_path = "/check"
 secret_key_base =
 http_user = "user"
 http_pass = "password"
-hiring_staff_http_user = "staff"
-hiring_staff_http_pass = "password"
-benwick_http_user = "staff"
-benwick_http_pass = "password"
 google_maps_api_key =
 google_analytics =
 rollbar_access_token =
