@@ -7,7 +7,6 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'A school should see advisory text when there are no vacancies', elasticsearch: true do
-    school = FactoryGirl.create(:school)
     visit school_path(school)
 
     expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
@@ -33,7 +32,7 @@ RSpec.feature 'School viewing vacancies' do
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(I18n.t('vacancies.draft'))
+    expect(page).to have_content(I18n.t('messages.vacancies.view.only_published'))
   end
 
   scenario 'A published vacancy show page should not show a flash message with the status', elasticsearch: true do

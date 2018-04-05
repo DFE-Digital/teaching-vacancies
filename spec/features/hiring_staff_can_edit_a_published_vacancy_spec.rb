@@ -2,8 +2,9 @@ require 'rails_helper'
 RSpec.feature 'Hiring staff can edit a vacancy' do
   let(:school) { create(:school) }
 
-  include_context 'when authenticated as a member of hiring staff',
-                  stub_basic_auth_env: true
+  before(:each) do
+    stub_hiring_staff_auth(urn: school.urn)
+  end
 
   context 'attempting to edit a draft vacancy' do
     scenario 'redirects to the review vacancy page' do
