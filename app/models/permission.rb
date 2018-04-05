@@ -1,6 +1,6 @@
 class Permission
   USER_TO_SCHOOL_MAPPING = {
-    'a-valid-oid' => '110627',
+    '9f3fb216-608b-4e34-8a04-84651ba98660' => '110627', # Test user
   }.freeze
 
   def initialize(identifier:)
