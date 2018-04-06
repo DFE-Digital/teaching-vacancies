@@ -24,7 +24,7 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
 
   def destroy
     session.destroy
-    redirect_to root_path, notice: I18n.t('access.signed_out')
+    redirect_to root_path, notice: I18n.t('messages.access.signed_out')
   end
 
   private def redirect_to_azure

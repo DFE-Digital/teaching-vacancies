@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.feature 'Hiring staff can log in' do
+RSpec.feature 'Hiring staff can sign in' do
   before do
     OmniAuth.config.test_mode = true
   end
