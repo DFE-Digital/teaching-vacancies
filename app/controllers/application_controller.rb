@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def not_found
     respond_to do |format|
       format.html { render 'errors/not_found', status: 404 }
-      format.json { render json: { errors: 'Resource not found' }, status: 404 }
+      format.json { render json: { error: 'Resource not found' }, status: 404 }
       format.all { render status: 404, body: nil }
     end
   end
