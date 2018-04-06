@@ -6,10 +6,7 @@ RSpec.feature 'Viewing a single published vacancy' do
 
     visit vacancy_path(published_vacancy)
 
-    expect(page).to have_content(published_vacancy.job_title)
-    expect(page.html).to include(published_vacancy.job_description)
-    expect(page).to have_content(published_vacancy.salary_range)
-    expect(page).to have_content(published_vacancy.contact_email)
+    verify_vacancy_show_page_details(published_vacancy)
   end
 
   scenario 'Unpublished vacancies are not viewable' do
@@ -46,10 +43,8 @@ RSpec.feature 'Viewing a single published vacancy' do
   context 'A user viewing a vacancy' do
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
-      vacancy = VacancyPresenter.new(vacancy)
       visit vacancy_path(vacancy)
 
-      verify_vacancy_show_page_details(vacancy)
       click_on 'Apply for this job'
 
       expect(page.current_url).to eq vacancy.application_link
