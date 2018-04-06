@@ -40,6 +40,8 @@ en:
     candidate_specification: 'Candidate specification'
     application_details: 'Application details'
     contact_email: 'Vacancy contact email'
+    contact_email_subject: '%{vacancy} vacancy enquiry'
+    contact_email_body: 'Regarding the vacancy at %{url}'
     deadline_date: 'Application deadline'
     publication_date: 'Date role will be listed'
     review: 'Review the vacancy details and make any necessary changes before submitting it for publication below.'
