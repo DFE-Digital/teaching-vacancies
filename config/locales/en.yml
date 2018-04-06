@@ -20,6 +20,7 @@ en:
     publish_on: 'Date posted'
     expires_on: 'Closing date'
     working_pattern: 'Working pattern'
+    flexible_working: 'Flexible working'
     starts_on: 'Expected start date'
     ends_on: 'End date'
     expired: 'This vacancy has expired'

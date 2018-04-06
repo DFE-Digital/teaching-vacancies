@@ -29,11 +29,12 @@
 @import 'design-patterns/buttons';
 @import 'design-patterns/breadcrumbs';
 
-// From GDS's alphagov/govuk_elements
+// From GDS's alphagov/govuk_elements https://github.com/alphagov/govuk_elements/blob/master/assets/sass/_elements.scss
 @import 'elements/layout';
 @import 'elements/helpers';
 @import 'elements/reset';
 @import 'elements/elements-typography';
+@import "elements/forms/form-multiple-choice";
 @import 'elements/buttons';
 @import 'elements/lists';
 @import 'elements/tables';

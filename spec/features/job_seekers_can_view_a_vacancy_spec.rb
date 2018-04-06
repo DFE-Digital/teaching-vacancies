@@ -46,7 +46,10 @@ RSpec.feature 'Viewing a single published vacancy' do
   context 'A user viewing a vacancy' do
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
+      vacancy = VacancyPresenter.new(vacancy)
       visit vacancy_path(vacancy)
+
+      verify_vacancy_show_page_details(vacancy)
       click_on 'Apply for this job'
 
       expect(page.current_url).to eq vacancy.application_link
