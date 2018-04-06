@@ -12,17 +12,19 @@
       = f.input :contact_email,
                 label: t('vacancies.contact_email'),
                 as: :email,
+                wrapper_html: {id: 'contact_email'},
                 required: true
 
       = f.input :application_link,
                 label: t('vacancies.application_link'),
                 hint: t('vacancies.form_hints.application_link'),
+                wrapper_html: {id: 'application_link'},
                 required: true
 
-      %div.form-group
+      %div.form-group#deadline
         = f.gov_uk_date_field :expires_on, legend_text: t('vacancies.deadline_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.deadline_date')
 
-      %div.form-group
+      %div.form-group#publish_on
         = f.gov_uk_date_field :publish_on, legend_text: t('vacancies.publication_date'), legend_class: 'form-label-bold', form_hint_text: t('vacancies.form_hints.publication_date')
 
       = f.button :submit, t('buttons.save_and_continue')

@@ -2,12 +2,36 @@ module VacancyJobSpecificationValidations
   extend ActiveSupport::Concern
   include ApplicationHelper
 
+  MAX_INTEGER = 2147483647
+
   included do
     validates :job_title, :job_description, :headline,
               :minimum_salary, :working_pattern, presence: true
 
+    validates :minimum_salary,
+              numericality: {
+                less_than_or_equal_to: MAX_INTEGER,
+                message: I18n.t('errors.messages.less_than_or_equal_to',
+                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER))
+              },
+              if: proc { |model| model.minimum_salary.present? }
+
+    validates :maximum_salary,
+              numericality: {
+                less_than_or_equal_to: MAX_INTEGER,
+                message: I18n.t('errors.messages.less_than_or_equal_to',
+                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER))
+              },
+              if: proc { |model| model.maximum_salary.present? }
+
     validate :minimum_salary_lower_than_maximum, :working_hours
     validate :minimum_salary_greater_than_minimum_payscale, if: proc { |a| a.minimum_salary.present? }
+    validates :job_title, length: { minimum: 10, maximum: 50 },
+                          if: proc { |model| model.job_title.present? }
+    validates :job_description, length: { minimum: 10, maximum: 1000 },
+                                if: proc { |model| model.job_description.present? }
+    validates :headline, length: { minimum: 10, maximum: 50 },
+                         if: proc { |model| model.headline.present? }
   end
 
   def minimum_salary_lower_than_maximum

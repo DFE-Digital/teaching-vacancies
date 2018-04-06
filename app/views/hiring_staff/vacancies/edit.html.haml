@@ -139,7 +139,7 @@
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
-          = link_to t('buttons.change'), edit_school_vacancy_application_details_path(@school, @vacancy.id, anchor: 'starts_on')
+          = link_to t('buttons.change'), edit_school_vacancy_application_details_path(@school, @vacancy.id, anchor: 'deadline')
       %div
         %dt.cya-question
           = t('vacancies.publication_date')
