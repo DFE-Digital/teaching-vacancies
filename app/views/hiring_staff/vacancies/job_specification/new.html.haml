@@ -70,10 +70,9 @@
                 collection: working_pattern_options,
                 wrapper_html: {id: 'working_pattern'},
                 required: true
-      %fieldset.form-group#flexible-working
-        .multiple-choice
-          = f.check_box :flexible_working
-          = f.label :flexible_working
+      = f.input :flexible_working, as: :boolean,
+                wrapper: :inline_checkbox,
+                wrapper_html: { id: 'flexible_working' }
       = f.input :weekly_hours,
                 label: t('vacancies.weekly_hours'),
                 as: :decimal,

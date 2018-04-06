@@ -62,7 +62,7 @@ SimpleForm.setup do |config|
   # Defaults to :nested for bootstrap config.
   #   inline: input + label
   #   nested: label > input
-  config.boolean_style = :nested
+  config.boolean_style = :inline
 
   # Default class for buttons
   config.button_class = 'button'
@@ -96,6 +96,15 @@ SimpleForm.setup do |config|
   # You can wrap each item in a collection of radio/check boxes with a tag,
   # defaulting to :span.
   # config.item_wrapper_tag = :span
+   config.wrappers :inline_checkbox, :tag => 'fieldset', :class => 'form-group', :error_class => 'error' do |b|
+     b.use :html5
+     b.wrapper :class => 'multiple-choice' do |ba|
+       ba.use :input
+       ba.use :label_text, wrap_with: { tag: 'label' }
+       ba.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
+       ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
+     end
+   end
 
   # You can define a class to use in all item wrappers. Defaulting to none.
   # config.item_wrapper_class = nil
