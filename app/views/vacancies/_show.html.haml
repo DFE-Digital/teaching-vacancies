@@ -113,6 +113,10 @@
           %dt= t('vacancies.leadership_level')
           %dd= @vacancy.leadership.title
 
+        - if @vacancy.contact_email.present?
+          %dt= t('vacancies.contact_email')
+          %dd.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, subject: t('vacancies.contact_email_subject', vacancy: @vacancy.job_title), body: t('vacancies.contact_email_body', url: url_for(only_path: false))
+
     - if @vacancy.application_link.present?
       %br
       = link_to t('vacancies.apply'), @vacancy.application_link, target: '_blank', class: 'button'
