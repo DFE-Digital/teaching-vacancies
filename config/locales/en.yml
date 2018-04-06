@@ -4,7 +4,7 @@ en:
       format:
         unit: "£"
   app:
-    title: 'Teacher Vacancy Service'
+    title: 'School Jobs'
     menu: 'Menu'
   vacancies:
     sort_by: 'Sort by:'
