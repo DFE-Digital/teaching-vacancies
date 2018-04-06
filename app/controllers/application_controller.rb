@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :authenticate, except: :check
+  before_action :check_staging_auth, except: :check
 
   def check
     render json: { status: 'OK' }, status: 200
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def authenticate
+  def check_staging_auth
     return unless authenticate?
     authenticate_or_request_with_http_basic('Global') do |name, password|
       name == http_user && password == http_pass

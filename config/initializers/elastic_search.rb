@@ -9,9 +9,11 @@ if ENV['ELASTICSEARCH_AWS_SIGNING']
               region: ENV['AWS_ELASTICSEARCH_REGION']
 
     f.response :logger
-    f.adapter  Faraday.default_adapter
+    f.adapter Faraday.default_adapter
   end
 
 else
-  Elasticsearch::Model.client = Elasticsearch::Client.new(host: ENV['ELASTICSEARCH_URL'])
+  Elasticsearch::Model.client = Elasticsearch::Client.new(host: ENV['ELASTICSEARCH_URL']) do |f|
+    f.adapter Faraday.default_adapter
+  end
 end

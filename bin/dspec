@@ -4,8 +4,8 @@ set -e
 if [ $# -eq 0 ]
 then
   echo "No arguments supplied. Defaults to 'rake default'"
-  docker exec teachervacancyservice_test_1 rake default $@
+  docker exec -it teachervacancyservice_test_1 rake default $@
 else
   echo "Testing: $@"
-  docker exec teachervacancyservice_test_1 rspec $@
+  docker exec -it teachervacancyservice_test_1 rspec $@
 fi

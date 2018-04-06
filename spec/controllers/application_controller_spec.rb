@@ -7,7 +7,7 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
-  describe '#authenticate' do
+  describe '#check_staging_auth' do
     context 'when we want to authenticate' do
       before(:each) do
         allow(controller).to receive(:authenticate?).and_return(true)
@@ -15,7 +15,7 @@ RSpec.describe ApplicationController, type: :controller do
 
       it 'passes information to ActionController to decide' do
         expect(controller).to receive(:authenticate_or_request_with_http_basic)
-        controller.authenticate
+        controller.check_staging_auth
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe ApplicationController, type: :controller do
 
       it 'skips the authentication call' do
         expect(controller).to_not receive(:authenticate_or_request_with_http_basic)
-        controller.authenticate
+        controller.check_staging_auth
       end
     end
   end

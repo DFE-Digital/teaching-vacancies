@@ -24,8 +24,8 @@
         "value": "${rails_env}"
       },
       {
-        "name": "DEFAULT_SCHOOL_URN",
-        "value": "${default_school_urn}"
+        "name": "OVERRIDE_SCHOOL_URN",
+        "value": "${override_school_urn}"
       },
       {
         "name": "ROLLBAR_ENV",
@@ -40,20 +40,12 @@
         "value": "${http_pass}"
       },
       {
-        "name": "HIRING_STAFF_HTTP_USER",
-        "value": "${hiring_staff_http_user}"
+        "name": "AAD_CLIENT_ID",
+        "value": "${aad_client_id}"
       },
       {
-        "name": "HIRING_STAFF_HTTP_PASS",
-        "value": "${hiring_staff_http_pass}"
-      },
-      {
-        "name": "BENWICK_HTTP_USER",
-        "value": "${benwick_http_user}"
-      },
-      {
-        "name": "BENWICK_HTTP_PASS",
-        "value": "${benwick_http_pass}"
+        "name": "AAD_TENANT",
+        "value": "${aad_tenant}"
       },
       {
         "name": "GOOGLE_MAPS_API_KEY",

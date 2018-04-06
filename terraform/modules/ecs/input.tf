@@ -14,13 +14,11 @@ variable "ecs_vacancies_scrape_task_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}
-variable "default_school_urn" {}
+variable "override_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
-variable "hiring_staff_http_user" {}
-variable "hiring_staff_http_pass" {}
-variable "benwick_http_user" {}
-variable "benwick_http_pass" {}
+variable "aad_client_id" {}
+variable "aad_tenant" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "rollbar_access_token" {}
