@@ -11,7 +11,7 @@ RSpec.feature 'Creating a vacancy' do
     school = create(:school, name: 'Salisbury School')
     stub_hiring_staff_auth(urn: school.urn)
 
-    visit school_path(school.id)
+    visit school_path(school)
 
     expect(page).to have_content('Salisbury School')
     expect(page).to have_content(/#{school.address}/)
@@ -34,16 +34,16 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'redirects to step 1, job specification' do
-      visit new_school_vacancy_path(school_id: school.id)
+      visit new_school_vacancy_path(school)
 
-      expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
+      expect(page.current_path).to eq(job_specification_school_vacancy_path(school))
       expect(page).to have_content("Publish a vacancy for #{school.name}")
       expect(page).to have_content('Step 1 of 3')
     end
 
     context '#job_specification' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         click_on 'Save and continue'
 
@@ -73,7 +73,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 2, candidate profile, when submitted succesfuly' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -96,7 +96,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#candidate_profile' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -120,7 +120,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 3, application_details profile, when submitted succesfuly' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -133,7 +133,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#application_details' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -159,7 +159,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to the vacancy review page when submitted succesfuly' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -177,14 +177,14 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'is not available for published vacancies' do
         vacancy = create(:vacancy, :published, school_id: school.id)
 
-        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        visit school_vacancy_review_path(school, vacancy.id)
 
-        expect(page).to have_current_path(school_vacancy_path(school_id: school.id, id: vacancy.id))
+        expect(page).to have_current_path(school_vacancy_path(school, vacancy.id))
       end
 
       scenario 'lists all the vacancy details correctly' do
         vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
-        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        visit school_vacancy_review_path(school, vacancy.id)
 
         expect(page).to have_content("Review the vacancy for #{school.name}")
 
@@ -194,7 +194,7 @@ RSpec.feature 'Creating a vacancy' do
       context 'edit job_specification_details' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Job title')
 
           expect(page).to have_content('Step 1 of 3')
@@ -209,7 +209,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'tracks any changes to  the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           current_title = vacancy.job_title
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Job title')
 
           expect(page).to have_content('Step 1 of 3')
@@ -224,7 +224,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Job title')
 
           fill_in 'job_specification_form[job_title]', with: ''
@@ -243,7 +243,7 @@ RSpec.feature 'Creating a vacancy' do
       context 'editing the candidate_specification_details' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Qualifications')
 
           expect(page).to have_content('Step 2 of 3')
@@ -271,7 +271,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Educational requirements')
 
           expect(page).to have_content('Step 2 of 3')
@@ -292,7 +292,7 @@ RSpec.feature 'Creating a vacancy' do
       context 'editing the application_details' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Vacancy contact email')
 
           expect(page).to have_content('Step 3 of 3')
@@ -311,7 +311,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Vacancy contact email')
 
           expect(page).to have_content('Step 3 of 3')
@@ -326,7 +326,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'tracks any changes' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           contact_email = vacancy.contact_email
-          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          visit school_vacancy_review_path(school, vacancy.id)
           click_link_in_container_with_text('Vacancy contact email')
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
@@ -340,7 +340,7 @@ RSpec.feature 'Creating a vacancy' do
 
       scenario 'redirects to the school vacancy page when published' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
-        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        visit school_vacancy_review_path(school, vacancy.id)
         click_on 'Confirm and submit vacancy'
 
         expect(page).to have_content("The system reference number is #{vacancy.reference}")
@@ -354,7 +354,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy.assign_attributes qualifications: nil
         vacancy.save(validate: false)
 
-        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        visit school_vacancy_review_path(school, vacancy.id)
         click_on 'Confirm and submit vacancy'
 
         expect(page).to have_content(I18n.t('errors.vacancies.unable_to_publish'))
@@ -363,7 +363,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'can be published at a later date' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
-        visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+        visit school_vacancy_review_path(school, vacancy.id)
         click_on 'Confirm and submit vacancy'
 
         expect(page).to have_content("The system reference number is #{vacancy.reference}")
@@ -384,7 +384,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'a published vacancy cannot be edited' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -395,11 +395,11 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Confirm and submit vacancy'
         expect(page).to have_content('The vacancy has been posted, you can view it here:')
 
-        visit candidate_specification_school_vacancy_path(school_id: school.id)
-        expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
+        visit candidate_specification_school_vacancy_path(school)
+        expect(page.current_path).to eq(job_specification_school_vacancy_path(school))
 
-        visit application_details_school_vacancy_path(school_id: school.id)
-        expect(page.current_path).to eq(job_specification_school_vacancy_path(school_id: school.id))
+        visit application_details_school_vacancy_path(school)
+        expect(page.current_path).to eq(job_specification_school_vacancy_path(school))
       end
     end
   end

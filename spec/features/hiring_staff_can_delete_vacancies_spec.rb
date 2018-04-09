@@ -10,7 +10,7 @@ RSpec.feature 'School deleting vacancies' do
   scenario 'Hiring staff should see a delete button for a vacancy' do
     vacancy = create(:vacancy, school: school)
 
-    visit school_path(school.id)
+    visit school_path(school)
 
     within("tr#vacancy_#{vacancy.id}") do
       expect(page).to have_content(I18n.t('buttons.delete'))
@@ -21,7 +21,7 @@ RSpec.feature 'School deleting vacancies' do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
 
-    visit school_path(school.id)
+    visit school_path(school)
     within("tr#vacancy_#{vacancy1.id}") do
       click_on 'Delete'
     end
