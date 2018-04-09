@@ -111,6 +111,17 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         it '#ends_on' do
           expect(scraper.ends_on).to eq(Date.new(2018, 3, 22))
         end
+
+        it 'saved as it passes validation' do
+          expect(Vacancy).to receive_message_chain(:where, :exists?).and_return(false)
+          expect(School).to receive(:where).and_return([create(:school)])
+
+          # ensure publish_on is not past the fixture's end date (22 3 2018)
+          expect(Time.zone).to receive(:today).and_return(Date.new(2018, 3, 20))
+
+          scraper.map!
+          expect(Vacancy.count).to eq(1)
+        end
       end
 
       context 'Math teacher sample' do
@@ -506,6 +517,18 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#min_salary' do
           expect(scraper.min_salary).to eq('22917')
+        end
+
+        it '#ends_on' do
+          expect(scraper.ends_on).to eq(nil)
+        end
+
+        it 'not saved because it fails validation' do
+          expect(Vacancy).to receive_message_chain(:where, :exists?).and_return(false)
+          expect(School).to receive(:where).and_return([create(:school)])
+
+          scraper.map!
+          expect(Vacancy.count).to eq(0)
         end
       end
     end
