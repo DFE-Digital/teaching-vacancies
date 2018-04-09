@@ -24,10 +24,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     session[:vacancy_attributes].merge!(vacancy_attributes)
   end
 
-  def update_vacancy(attributes)
-    vacancy = school.vacancies.find(session_vacancy_id)
+  def update_vacancy(attributes, vacancy = nil)
+    vacancy ||= school.vacancies.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
-    Auditor::Audit.new(vacancy, 'vacancy.updates', current_session_id).log do
+    Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do
       vacancy.save(validate: false)
     end
     vacancy
