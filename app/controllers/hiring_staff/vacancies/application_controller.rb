@@ -1,3 +1,5 @@
+require 'auditor'
+
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
   private
 
@@ -25,9 +27,9 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def update_vacancy(attributes)
     vacancy = school.vacancies.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
-    changes = vacancy.changes
-    vacancy.save(validate: false)
-    vacancy.create_activity key: 'vacancy.update', session_id: current_session_id, parameters: changes.to_hash
+    Auditor::Audit.new(vacancy, 'vacancy.updates', current_session_id).log do
+      vacancy.save(validate: false)
+    end
     vacancy
   end
 
