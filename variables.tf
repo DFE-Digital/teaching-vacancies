@@ -10,6 +10,16 @@ variable "project_name" {
   description = "This name will be used to identify all AWS resources. The workspace name will be suffixed. Alphanumeric characters only due to RDS."
 }
 
+variable "buildspec_location" {
+  description = "AWS Codebuild will look for this file to tell it how to build this project"
+  default     = "./buildspec.yml"
+}
+
+variable "git_branch_to_track" {
+  description = "Git branch to listen for code changes on and auto deploy"
+  default     = "master"
+}
+
 # Network
 variable "vpc_cidr" {
   default = "10.0.0.0/16"
@@ -96,62 +106,41 @@ variable "ecs_service_task_port" {
   default     = 3000
 }
 
+# ECS Tasks
 variable "ecs_service_task_definition_file_path" {
   description = "Containers running on ECS will be executed based on the configuration of this file"
   default     = "./web_task_definition.json"
 }
 
-variable "ecs_import_schools_task_definition_file_path" {
-  description = "Task definition to import schools"
-  default     = "./cron_task_definition.json"
+variable "ecs_service_rake_task_definition_file_path" {
+  description = "Task definition for rake tasks"
   default     = "./rake_task_definition.json"
 }
 
-variable "ecs_vacancies_scrape_task_definition_file_path" {
-  description = "Task definition to scrape vacancies"
-  default     = "./cron_task_definition.json"
-}
-
-variable "ecs_sessions_trim_task_definition_file_path" {
-  description = "Task definition to trim session data"
-  default     = "./cron_task_definition.json"
-}
-
-variable "vacancies_scrape_schedule_expression" {
-  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "rate(60 minutes)"
-}
-
-variable "sessions_trim_schedule_expression" {
-  description = "sessions_trim schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "rate(1 day)"
-}
-
-variable "buildspec_location" {
-  description = "AWS Codebuild will look for this file to tell it how to build this project"
-  default     = "./buildspec.yml"
-}
-
-variable "git_branch_to_track" {
-  description = "Git branch to listen for code changes on and auto deploy"
-  default     = "master"
-}
-
-variable "import_schools_entrypoint" {
+variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
   default     = ["rake", "data:schools:import"]
 }
 
-variable "vacancies_scrape_entrypoint" {
+variable "vacancies_scrape_task_command" {
   description = "The Entrypoint for the vacancies_scrape task"
   default     = ["rake", "vacancies:data:scrape"]
 }
 
-variable "sessions_trim_entrypoint" {
+variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "db:sessions:trim"]
 }
 
+variable "vacancies_scrape_task_schedule" {
+  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(60 minutes)"
+}
+
+variable "sessions_trim_task_schedule" {
+  description = "sessions_trim schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(1 day)"
+}
 
 # RDS
 variable "rds_engine" {
