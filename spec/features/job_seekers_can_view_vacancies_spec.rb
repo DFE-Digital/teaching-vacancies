@@ -11,20 +11,25 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).to have_selector('.vacancy', count: Vacancy.default_per_page)
   end
 
-  scenario 'Only published, non-expired vacancies are visible in the list', elasticsearch: true do
+  scenario 'Only vacancies satisfying all publishing conditions are listed', elasticsearch: true do
     valid_vacancy = create(:vacancy)
 
     expired = build(:vacancy, :expired)
     expired.send :set_slug
-    expired.save(validete: false)
+    expired.save(validate: false)
     [:trashed, :draft,
      %i[trashed], %i[draft]].each { |args| create(:vacancy, *args) }
+    create(:vacancy, :published, publish_on: Time.zone.tomorrow)
+    already_published = build(:vacancy, :published, publish_on: Time.zone.yesterday)
+    already_published.send :set_slug
+    already_published.save(validate: false)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
 
     expect(page).to have_content(valid_vacancy.job_title)
-    expect(page).to have_selector('.vacancy', count: 1)
+    expect(page).to have_content(already_published.job_title)
+    expect(page).to have_selector('.vacancy', count: 2)
   end
 
   scenario 'Vacancies should not paginate when under per-page limit', elasticsearch: true do
@@ -82,7 +87,7 @@ RSpec.feature 'Viewing vacancies' do
       expect(page).to have_content(I18n.t('vacancies.weekly_hours'))
       expect(page).to have_content(vacancy.weekly_hours)
     end
-    scenario 'Does not show if there are not the weekly_hours' do
+    scenario 'does not show the weekly hours if they are not set' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: nil)
       Vacancy.__elasticsearch__.client.indices.flush
       visit vacancy_path(vacancy)

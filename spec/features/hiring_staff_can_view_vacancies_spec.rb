@@ -6,7 +6,7 @@ RSpec.feature 'School viewing vacancies' do
     stub_hiring_staff_auth(urn: school.urn)
   end
 
-  scenario 'A school should see advisory text when there are no vacancies', elasticsearch: true do
+  scenario 'A school should see advisory text when there are no vacancies' do
     visit school_path(school)
 
     expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
@@ -14,7 +14,7 @@ RSpec.feature 'School viewing vacancies' do
     expect(page).to have_content('You have no current vacancies.')
   end
 
-  scenario 'A school can see a list of vacancies', elasticsearch: true do
+  scenario 'A school can see a list of vacancies' do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
 
@@ -35,10 +35,9 @@ RSpec.feature 'School viewing vacancies' do
     expect(page).to have_content(I18n.t('messages.vacancies.view.only_published'))
   end
 
-  scenario 'A published vacancy show page should not show a flash message with the status', elasticsearch: true do
+  scenario 'A published vacancy show page should not show a flash message with the status' do
     vacancy = create(:vacancy, school: school, status: 'published')
-
-    visit school_vacancy_path(school_id: school.id, id: vacancy.id)
+    visit school_vacancy_path(school, vacancy.id)
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
