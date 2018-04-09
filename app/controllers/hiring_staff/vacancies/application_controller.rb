@@ -25,7 +25,9 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def update_vacancy(attributes)
     vacancy = school.vacancies.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
+    changes = vacancy.changes
     vacancy.save(validate: false)
+    vacancy.create_activity key: 'vacancy.update', session_id: current_session_id, parameters: changes.to_hash
     vacancy
   end
 

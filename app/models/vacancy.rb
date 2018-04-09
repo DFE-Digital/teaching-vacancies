@@ -2,6 +2,9 @@ require 'elasticsearch/model'
 
 class Vacancy < ApplicationRecord
   include ApplicationHelper
+  include PublicActivity::Model
+
+  attr_accessor :session_id
 
   include VacancyJobSpecificationValidations
   include VacancyCandidateSpecificationValidations

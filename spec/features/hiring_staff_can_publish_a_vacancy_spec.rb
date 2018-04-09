@@ -78,6 +78,17 @@ RSpec.feature 'Creating a vacancy' do
 
         expect(page).to have_content('Step 2 of 3')
       end
+
+      scenario 'tracks the vacancy creation' do
+        visit new_school_vacancy_path(school_id: school.id)
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        activity = vacancy.activities.last
+        puts activity.inspect
+        expect(activity.parameters.symbolize_keys).to eq(contact_email: [contact_email, 'an@email.com'])
+      end
     end
 
     context '#candidate_profile' do
@@ -192,6 +203,21 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('An edited job title')
         end
 
+        scenario 'tracks any changes to  the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          current_title = vacancy.job_title
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          click_link_in_container_with_text('Job title')
+
+          expect(page).to have_content('Step 1 of 3')
+
+          fill_in 'job_specification_form[job_title]', with: 'High school teacher'
+          click_on 'Save and continue'
+
+          activity = vacancy.activities.last
+          expect(activity.parameters.symbolize_keys).to eq(job_title: [current_title, 'High school teacher'])
+        end
+
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
@@ -223,6 +249,19 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('Teaching diploma')
+        end
+
+        scenario 'tracks any changes to  the vacancy details' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          qualifications = vacancy.qualifications
+          visit school_vacancy_review_path(school, vacancy.id)
+          click_link_in_container_with_text('Qualifications')
+
+          fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
+          click_on 'Save and continue'
+
+          activity = vacancy.activities.last
+          expect(activity.parameters.symbolize_keys).to eq(qualifications: [qualifications, 'Teaching diploma'])
         end
 
         scenario 'fails validation until values are set correctly' do
@@ -277,6 +316,19 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content("Review the vacancy for #{school.name}")
           expect(page).to have_content('an@email.com')
+        end
+
+        scenario 'tracks any changes' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          contact_email = vacancy.contact_email
+          visit school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+          click_link_in_container_with_text('Vacancy contact email')
+
+          fill_in 'application_details_form[contact_email]', with: 'an@email.com'
+          click_on 'Save and continue'
+
+          activity = vacancy.activities.last
+          expect(activity.parameters.symbolize_keys).to eq(contact_email: [contact_email, 'an@email.com'])
         end
       end
 

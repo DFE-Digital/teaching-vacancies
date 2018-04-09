@@ -8,4 +8,8 @@ class HiringStaff::BaseController < ApplicationController
   def current_school
     @current_school ||= School.find_by! urn: session[:urn]
   end
+
+  def current_session_id
+    session[:session_id]
+  end
 end

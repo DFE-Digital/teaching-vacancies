@@ -44,6 +44,8 @@ gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/i
 
 gem 'activerecord-session_store'
 
+gem 'public_activity'
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_girl_rails'
