@@ -1,71 +1,113 @@
 require 'rails_helper'
 
 RSpec.feature 'Searching vacancies by keyword' do
-  scenario 'searching for the exact job title', elasticsearch: true do
-    vacancy = create(:vacancy, job_title: 'Maths Teacher')
+  describe 'searchable fields' do
+    context '#job_title' do
+      scenario 'exact match', elasticsearch: true do
+        vacancy = create(:vacancy, job_title: 'Maths Teacher')
 
-    Vacancy.__elasticsearch__.client.indices.flush
+        Vacancy.__elasticsearch__.client.indices.flush
 
-    visit vacancies_path
+        visit vacancies_path
 
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
 
-    within '.filters-form' do
-      fill_in 'keyword', with: vacancy.job_title
-      page.find('.button[type=submit]').click
+        within '.filters-form' do
+          fill_in 'keyword', with: vacancy.job_title
+          page.find('.button[type=submit]').click
+        end
+
+        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+      end
+
+      scenario 'partial match', elasticsearch: true do
+        vacancy = create(:vacancy, job_title: 'Maths Teacher')
+
+        Vacancy.__elasticsearch__.client.indices.flush
+
+        visit vacancies_path
+
+        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+
+        within '.filters-form' do
+          fill_in 'keyword', with: 'Math'
+          page.find('.button[type=submit]').click
+        end
+
+        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+      end
     end
 
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+    scenario '#subject', elasticsearch: true do
+      vacancy = create(:vacancy, job_title: 'Teacher Foo', subject: create(:subject, name: 'English'))
+
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit vacancies_path
+
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'English'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+    end
+
+    scenario '#headline', elasticsearch: true do
+      vacancy = create(:vacancy, headline: 'Opening for enthusiasic teacher')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit vacancies_path
+
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'enthusiastic'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+    end
   end
 
-  scenario 'searching for the a partial job title', elasticsearch: true do
-    vacancy = create(:vacancy, job_title: 'Maths Teacher')
+  describe 'does not match' do
+    scenario '#description', elasticsearch: true do
+      vacancy = create(:vacancy, job_description: 'Opening has for an outstanding teacher.')
 
-    Vacancy.__elasticsearch__.client.indices.flush
+      Vacancy.__elasticsearch__.client.indices.flush
 
-    visit vacancies_path
+      visit vacancies_path
 
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
 
-    within '.filters-form' do
-      fill_in 'keyword', with: 'Math'
-      page.find('.button[type=submit]').click
+      within '.filters-form' do
+        fill_in 'keyword', with: 'standing'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page).to_not have_content(vacancy.job_title)
     end
-
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
   end
 
-  scenario 'searching for a word in the job title that has a single typo', elasticsearch: true do
-    vacancy = create(:vacancy, job_title: 'Maths Teacher')
+  context 'fuzzy search' do
+    scenario 'finds on any searchable word with a single typo', elasticsearch: true do
+      vacancy = create(:vacancy, job_title: 'Maths Teacher')
 
-    Vacancy.__elasticsearch__.client.indices.flush
+      Vacancy.__elasticsearch__.client.indices.flush
 
-    visit vacancies_path
+      visit vacancies_path
 
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
 
-    within '.filters-form' do
-      fill_in 'keyword', with: 'Maht'
-      page.find('.button[type=submit]').click
+      within '.filters-form' do
+        fill_in 'keyword', with: 'Maht'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
     end
-
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-  end
-
-  scenario 'searching for the subject', elasticsearch: true do
-    vacancy = create(:vacancy, job_title: 'Teacher Foo', subject: create(:subject, name: 'English'))
-
-    Vacancy.__elasticsearch__.client.indices.flush
-
-    visit vacancies_path
-
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-
-    within '.filters-form' do
-      fill_in 'keyword', with: 'English'
-      page.find('.button[type=submit]').click
-    end
-
-    expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
   end
 end
