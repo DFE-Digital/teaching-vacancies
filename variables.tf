@@ -104,6 +104,7 @@ variable "ecs_service_task_definition_file_path" {
 variable "ecs_import_schools_task_definition_file_path" {
   description = "Task definition to import schools"
   default     = "./cron_task_definition.json"
+  default     = "./rake_task_definition.json"
 }
 
 variable "ecs_vacancies_scrape_task_definition_file_path" {
