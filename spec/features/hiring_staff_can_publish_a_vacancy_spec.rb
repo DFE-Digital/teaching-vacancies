@@ -218,6 +218,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Save and continue'
 
           activity = vacancy.activities.last
+          expect(activity.session_id).to eq(session_id)
           expect(activity.parameters.symbolize_keys).to eq(job_title: [current_title, 'High school teacher'])
         end
 
@@ -264,6 +265,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Save and continue'
 
           activity = vacancy.activities.last
+          expect(activity.session_id).to eq(session_id)
           expect(activity.parameters.symbolize_keys).to eq(qualifications: [qualifications, 'Teaching diploma'])
         end
 
@@ -331,6 +333,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Save and continue'
 
           activity = vacancy.activities.last
+          expect(activity.session_id).to eq(session_id)
           expect(activity.parameters.symbolize_keys).to eq(contact_email: [contact_email, 'an@email.com'])
         end
       end
@@ -367,6 +370,17 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
         visit vacancy_url(vacancy)
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
+      end
+
+      scenario 'tracks publishing information' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+
+        visit school_vacancy_review_path(school, vacancy.id)
+        click_on 'Confirm and submit vacancy'
+
+        activity = vacancy.activities.last
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.key).to eq('vacancy.publish')
       end
 
       scenario 'a published vacancy cannot be edited' do

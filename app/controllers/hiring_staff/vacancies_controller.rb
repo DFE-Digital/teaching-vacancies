@@ -41,7 +41,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def summary
-    vacancy = school.vacancies.published.find(id)
+    vacancy = school.vacancies.published.find(vacancy_id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
