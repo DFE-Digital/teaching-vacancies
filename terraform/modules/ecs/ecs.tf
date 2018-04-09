@@ -93,7 +93,7 @@ data "template_file" "web_task" {
 
 /* import_schools task definition*/
 data "template_file" "import_schools_task" {
-  template = "${file(var.ecs_import_schools_task_definition_file_path)}"
+  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -112,13 +112,13 @@ data "template_file" "import_schools_task" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint               = "${jsonencode(var.import_schools_entrypoint)}"
+    entrypoint               = "${jsonencode(var.import_schools_task_command)}"
   }
 }
 
 /* vacancies_scrape task definition*/
 data "template_file" "vacancies_scrape_task" {
-  template = "${file(var.ecs_vacancies_scrape_task_definition_file_path)}"
+  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -137,7 +137,32 @@ data "template_file" "vacancies_scrape_task" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint               = "${jsonencode(var.vacancies_scrape_entrypoint)}"
+    entrypoint               = "${jsonencode(var.vacancies_scrape_task_command)}"
+  }
+}
+
+/* trim sessions task definition*/
+data "template_file" "sessions_trim_task" {
+  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_sessions_trim"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    entrypoint               = "${jsonencode(var.sessions_trim_task_command)}"
   }
 }
 
@@ -150,46 +175,6 @@ resource "aws_ecs_task_definition" "web" {
   memory                   = "512"
   execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_ecs_task_definition" "import_schools" {
-  family                   = "${var.ecs_service_task_name}_import_schools"
-  container_definitions    = "${data.template_file.import_schools_task.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_ecs_task_definition" "vacancies_scrape" {
-  family                   = "${var.ecs_service_task_name}_vacancies_scrape"
-  container_definitions    = "${data.template_file.vacancies_scrape_task.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "vacancies_scrape_task_cron" {
-  name                = "${var.ecs_service_task_name}_vacancies_scrape_cron"
-  description         = "Run vacancies_scrape_task at specified cron time"
-  schedule_expression = "${var.vacancies_scrape_schedule_expression}"
-}
-
-resource "aws_cloudwatch_event_target" "vacancies_scrape_task_cron_event" {
-  target_id = "${var.ecs_service_task_name}_vacancies_scrape"
-  rule      = "${aws_cloudwatch_event_rule.vacancies_scrape_task_cron.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.vacancies_scrape.arn}"
-  }
 }
 
 /*====
@@ -260,4 +245,77 @@ data "aws_iam_policy_document" "ecs-instance-policy" {
 resource "aws_iam_role_policy_attachment" "ecs-instance-role-attachment" {
   role       = "${aws_iam_role.ecs-instance-role.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+/*====
+ECS ONE-OFF TASKS
+======*/
+resource "aws_ecs_task_definition" "import_schools_task" {
+  family                   = "${var.ecs_service_task_name}_import_schools_task"
+  container_definitions    = "${data.template_file.import_schools_task.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+/*====
+ECS SCHEDULED TASKS
+======*/
+resource "aws_ecs_task_definition" "vacancies_scrape_task" {
+  family                   = "${var.ecs_service_task_name}_vacancies_scrape_task"
+  container_definitions    = "${data.template_file.vacancies_scrape_task.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "vacancies_scrape_task" {
+  name                = "${var.ecs_service_task_name}_vacancies_scrape_task"
+  description         = "Run vacancies_scrape_task at a scheduled time"
+  schedule_expression = "${var.vacancies_scrape_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "vacancies_scrape_task_event" {
+  target_id = "${var.ecs_service_task_name}_vacancies_scrape"
+  rule      = "${aws_cloudwatch_event_rule.vacancies_scrape_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.vacancies_scrape_task.arn}"
+  }
+}
+
+resource "aws_ecs_task_definition" "sessions_trim_task" {
+  family                   = "${var.ecs_service_task_name}_sessions_trim_task"
+  container_definitions    = "${data.template_file.sessions_trim_task.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "sessions_trim_task" {
+  name                = "${var.ecs_service_task_name}_sessions_trim_task"
+  description         = "Run sessions trim at a scheuled time"
+  schedule_expression = "${var.sessions_trim_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "sessions_trim_task_event" {
+  target_id = "${var.ecs_service_task_name}_sessions_trim_task"
+  rule      = "${aws_cloudwatch_event_rule.sessions_trim_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.sessions_trim_task.arn}"
+  }
 }

@@ -2,12 +2,6 @@
   {
     "name": "${task_name}",
     "image": "${image}:latest",
-    "portMappings": [
-      {
-        "containerPort": ${task_port},
-        "hostPort": 0
-      }
-    ],
     "memory": 512,
     "networkMode": "bridge",
     "logConfiguration": {
@@ -18,6 +12,12 @@
         "awslogs-stream-prefix": "${task_name}"
       }
     },
+    "portMappings": [
+      {
+        "containerPort": ${task_port},
+        "hostPort": 0
+      }
+    ],
     "environment": [
       {
         "name": "RAILS_ENV",
