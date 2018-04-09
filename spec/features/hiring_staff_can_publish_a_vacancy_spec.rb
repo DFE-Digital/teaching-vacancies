@@ -1,8 +1,10 @@
 require 'rails_helper'
 RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
+  let(:session_id) { SecureRandom.uuid }
+
   before(:each) do
-    stub_hiring_staff_auth(urn: school.urn)
+    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
   scenario 'Visiting the school page' do
@@ -80,14 +82,15 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'tracks the vacancy creation' do
-        visit new_school_vacancy_path(school_id: school.id)
+        visit new_school_vacancy_path(school)
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
 
-        activity = vacancy.activities.last
-        puts activity.inspect
-        expect(activity.parameters.symbolize_keys).to eq(contact_email: [contact_email, 'an@email.com'])
+        activity = Vacancy.last.activities.last
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.key).to eq('vacancy.create')
+        expect(activity.parameters.symbolize_keys).to include(job_title: [nil, vacancy.job_title])
       end
     end
 

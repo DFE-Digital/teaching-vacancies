@@ -58,7 +58,9 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form.vacancy.school_id = school.id
     @job_specification_form.vacancy.send :set_slug
     @job_specification_form.vacancy.status = :draft
-    @job_specification_form.vacancy.save(validate: false)
+    Auditor::Audit.new(@job_specification_form.vacancy, 'vacancy.create', current_session_id).log do
+      @job_specification_form.vacancy.save(validate: false)
+    end
     @job_specification_form.vacancy
   end
 
