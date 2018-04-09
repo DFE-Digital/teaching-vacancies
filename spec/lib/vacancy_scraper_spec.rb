@@ -174,11 +174,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq('38633')
+          expect(scraper.max_salary).to eq(38633)
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('22917')
+          expect(scraper.min_salary).to eq(22917)
         end
 
         it '#ends_on' do
@@ -350,7 +350,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('44544')
+          expect(scraper.min_salary).to eq(44544)
         end
 
         it '#ends_on' do
@@ -390,11 +390,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq('38633')
+          expect(scraper.max_salary).to eq(38633)
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('22917')
+          expect(scraper.min_salary).to eq(22917)
         end
       end
 
@@ -416,11 +416,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq('59857')
+          expect(scraper.max_salary).to eq(59857)
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('51639')
+          expect(scraper.min_salary).to eq(51639)
         end
       end
 
@@ -442,11 +442,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq('189857')
+          expect(scraper.max_salary).to eq(189857)
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('159857')
+          expect(scraper.min_salary).to eq(159857)
         end
       end
       context 'MPR/UPR payscale checks' do
@@ -466,11 +466,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq('38633')
+          expect(scraper.max_salary).to eq(38633)
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('22917')
+          expect(scraper.min_salary).to eq(22917)
         end
       end
 
@@ -491,11 +491,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#max_salary' do
-          expect(scraper.max_salary).to eq('38633')
+          expect(scraper.max_salary).to eq(38633)
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('22917')
+          expect(scraper.min_salary).to eq(22917)
         end
       end
 
@@ -516,7 +516,7 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#min_salary' do
-          expect(scraper.min_salary).to eq('22917')
+          expect(scraper.min_salary).to eq(22917)
         end
 
         it '#ends_on' do

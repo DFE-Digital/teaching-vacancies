@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327162516) do
+ActiveRecord::Schema.define(version: 20180404143058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180327162516) do
   create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
     t.string "code"
-    t.string "salary"
+    t.integer "salary"
     t.date "expires_at"
     t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at", unique: true
     t.index ["label"], name: "index_pay_scales_on_label", unique: true
