@@ -1,6 +1,7 @@
 class Permission
   USER_TO_SCHOOL_MAPPING = {
-    '9f3fb216-608b-4e34-8a04-84651ba98660' => '110627', # Test user
+    'a5161a87-94d6-4723-823b-90d10a5760d6' => '137138', # test@
+    '0535c532-31e2-4170-9846-225f5b1347aa' => '110627'
   }.freeze
 
   def initialize(identifier:)
