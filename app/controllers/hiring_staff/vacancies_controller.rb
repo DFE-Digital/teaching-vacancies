@@ -36,12 +36,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def destroy
     @vacancy = school.vacancies.active.find(id)
     @vacancy.trash!
+    Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
     redirect_to school_path, notice: t('messages.vacancies.delete')
   end
 
   def summary
-    vacancy = school.vacancies.published.find(id)
+    vacancy = school.vacancies.published.find(vacancy_id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 

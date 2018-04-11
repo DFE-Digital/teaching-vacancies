@@ -10,6 +10,7 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
     permission = Permission.new(identifier: oid)
 
     if permission.valid?
+      session.update(session_id: oid)
       session.update(urn: permission.school_urn)
       redirect_to school_path(current_school.id)
     else

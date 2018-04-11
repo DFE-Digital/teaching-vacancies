@@ -15,8 +15,9 @@ module AuthHelpers
     allow(fake_env).to receive(env_field_for_password.to_sym).and_return(env_value_for_password)
   end
 
-  def stub_hiring_staff_auth(urn:)
+  def stub_hiring_staff_auth(urn:, session_id: 'session_id')
     page.set_rack_session(urn: urn)
+    page.set_rack_session(session_id: session_id)
   end
 end
 
