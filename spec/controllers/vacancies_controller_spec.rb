@@ -23,12 +23,10 @@ RSpec.describe VacanciesController, type: :controller do
       end
     end
 
-    describe 'GET /vacancies/:id', elasticsearch: true do
+    describe 'GET /vacancies/:id' do
       render_views
       it 'retrieves a specific vacancy' do
         vacancy = create(:vacancy)
-
-        Vacancy.__elasticsearch__.refresh_index!
 
         get :show, params: { id: vacancy.id }
 

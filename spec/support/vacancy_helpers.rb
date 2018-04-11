@@ -70,9 +70,10 @@ module VacancyHelpers
     {
       '@context': 'http://schema.org',
       '@type': 'JobPosting',
+      'title': vacancy.job_title,
       'jobBenefits': vacancy.benefits,
       'datePosted': vacancy.publish_on.to_s(:db),
-      'description': vacancy.headline,
+      'description': vacancy.job_description,
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,
@@ -88,14 +89,13 @@ module VacancyHelpers
           'postalCode': vacancy.school.postcode,
         },
       },
-      'responsibilities': vacancy.job_description,
-      'title': vacancy.job_title,
       'url': vacancy_url(vacancy),
       'baseSalary': {
         '@type': 'MonetaryAmount',
         'minValue': vacancy.minimum_salary,
         'maxValue': vacancy.maximum_salary,
         'currency': 'GBP',
+        "unitText": "YEAR"
       },
       'hiringOrganization': {
         '@type': 'Organization',
