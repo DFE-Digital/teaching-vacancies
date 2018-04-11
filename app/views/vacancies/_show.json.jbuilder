@@ -35,8 +35,9 @@ json.baseSalary do
 end
 
 json.hiringOrganization do
-  json.set! '@type', 'Organization'
+  json.set! '@type', 'School'
   json.name vacancy.school.name
+  json.identifier vacancy.school.urn
 end
 
 json.validThrough vacancy.expires_on.to_s(:db)

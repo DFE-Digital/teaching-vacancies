@@ -98,8 +98,9 @@ module VacancyHelpers
         "unitText": "YEAR"
       },
       'hiringOrganization': {
-        '@type': 'Organization',
+        '@type': 'School',
         'name': vacancy.school.name,
+        'identifier': vacancy.school.urn,
       },
       'validThrough': vacancy.expires_on.to_s(:db),
       'workHours': vacancy.weekly_hours,
