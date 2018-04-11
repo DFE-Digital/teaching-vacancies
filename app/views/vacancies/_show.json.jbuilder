@@ -28,10 +28,17 @@ json.url vacancy_url(vacancy)
 
 json.baseSalary do
   json.set! '@type', 'MonetaryAmount'
-  json.minValue vacancy.minimum_salary
-  json.maxValue vacancy.maximum_salary
   json.currency 'GBP'
-  json.unitText 'YEAR'
+  json.value do
+    json.set! '@type', 'QuantitativeValue'
+    if vacancy.minimum_salary && vacancy.maximum_salary.blank?
+      json.value vacancy.minimum_salary
+    else
+      json.minValue vacancy.minimum_salary
+      json.maxValue vacancy.maximum_salary
+    end
+    json.unitText 'YEAR'
+  end
 end
 
 json.hiringOrganization do

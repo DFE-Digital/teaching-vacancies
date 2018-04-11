@@ -92,10 +92,13 @@ module VacancyHelpers
       'url': vacancy_url(vacancy),
       'baseSalary': {
         '@type': 'MonetaryAmount',
-        'minValue': vacancy.minimum_salary,
-        'maxValue': vacancy.maximum_salary,
         'currency': 'GBP',
-        "unitText": "YEAR"
+        value: {
+          '@type': 'QuantitativeValue',
+          'minValue': vacancy.minimum_salary,
+          'maxValue': vacancy.maximum_salary,
+          "unitText": "YEAR"
+        },
       },
       'hiringOrganization': {
         '@type': 'School',
