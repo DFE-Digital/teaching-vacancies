@@ -17,7 +17,10 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
     school = School.find(params[:id])
     school.description = params[:school][:description]
 
-    if school.save
+    if school.valid?
+      Auditor::Audit.new(school, 'school.update', current_session_id).log do
+        school.save
+      end
       redirect_to school_path(school)
     else
       redirect_to edit_school_path(school, description: school.description)

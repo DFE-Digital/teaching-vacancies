@@ -34,7 +34,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
     @candidate_specification_form.id = vacancy.id
 
     if @candidate_specification_form.valid?
-      vacancy.update_attributes(@candidate_specification_form.vacancy.attributes.compact)
+      update_vacancy(candidate_specification_form, vacancy)
       redirect_to edit_school_vacancy_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
     else
       render 'edit'

@@ -1,7 +1,9 @@
 require 'elasticsearch/model'
+require 'auditor'
 
 class Vacancy < ApplicationRecord
   include ApplicationHelper
+  include Auditor::Model
 
   include VacancyJobSpecificationValidations
   include VacancyCandidateSpecificationValidations
@@ -9,6 +11,7 @@ class Vacancy < ApplicationRecord
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
 
   mappings dynamic: 'false' do
