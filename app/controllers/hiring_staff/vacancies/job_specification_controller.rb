@@ -37,7 +37,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form.id = vacancy.id
 
     if @job_specification_form.valid?
-      vacancy.update_attributes(@job_specification_form.vacancy.attributes.compact)
+      update_vacancy(job_specification_form, vacancy)
       redirect_to edit_school_vacancy_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
     else
       render 'edit'
@@ -58,7 +58,9 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form.vacancy.school_id = school.id
     @job_specification_form.vacancy.send :set_slug
     @job_specification_form.vacancy.status = :draft
-    @job_specification_form.vacancy.save(validate: false)
+    Auditor::Audit.new(@job_specification_form.vacancy, 'vacancy.create', current_session_id).log do
+      @job_specification_form.vacancy.save(validate: false)
+    end
     @job_specification_form.vacancy
   end
 
