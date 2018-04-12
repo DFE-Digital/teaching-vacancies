@@ -66,6 +66,8 @@ module "ecs" {
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
+  update_pay_scale_task_command                  = "${var.update_pay_scale_task_command}"
+
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
 
