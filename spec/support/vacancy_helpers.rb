@@ -77,7 +77,7 @@ module VacancyHelpers
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,
-      'employmentType': vacancy.working_pattern&.titleize,
+      'employmentType': vacancy.working_pattern_for_job_schema,
       'industry': 'Education',
       'jobLocation': {
         '@type': 'Place',
@@ -97,7 +97,7 @@ module VacancyHelpers
           '@type': 'QuantitativeValue',
           'minValue': vacancy.minimum_salary,
           'maxValue': vacancy.maximum_salary,
-          "unitText": "YEAR"
+          'unitText': 'YEAR'
         },
       },
       'hiringOrganization': {
