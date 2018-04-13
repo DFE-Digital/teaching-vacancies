@@ -22,7 +22,6 @@ module VacancyScraper::NorthEastSchools
 
       vacancy = Vacancy.new
       vacancy.job_title = job_title
-      vacancy.headline = job_title
       vacancy.subject = Subject.find_by(name: subject)
       vacancy.school = school
       vacancy.job_description = job_description
@@ -204,8 +203,8 @@ module VacancyScraper::NorthEastSchools
 
     def valid?(vacancy)
       vacancy.job_description.present? && vacancy.job_title.present? &&
-        vacancy.working_pattern.present? && vacancy.headline.present? &&
-        vacancy.expires_on.present? && vacancy.expires_on > vacancy.publish_on
+        vacancy.working_pattern.present? && vacancy.expires_on.present? &&
+        vacancy.expires_on > vacancy.publish_on
     end
 
     def vacancy_scraped?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410100948) do
+ActiveRecord::Schema.define(version: 20180413100631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,6 @@ ActiveRecord::Schema.define(version: 20180410100948) do
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title", null: false
     t.string "slug", null: false
-    t.string "headline", null: false
     t.text "job_description", null: false
     t.integer "minimum_salary", null: false
     t.integer "maximum_salary"

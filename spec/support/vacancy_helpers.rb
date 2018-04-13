@@ -1,7 +1,6 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    fill_in 'job_specification_form[headline]', with: vacancy.headline
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
     select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
     select vacancy.pay_scale, from: 'job_specification_form[pay_scale_id]'
@@ -36,7 +35,6 @@ module VacancyHelpers
 
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.headline)
     expect(page).to have_content(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.salary_range)

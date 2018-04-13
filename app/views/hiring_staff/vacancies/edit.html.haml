@@ -16,13 +16,6 @@
           = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'job_title')
       %div
         %dt.cya-question
-          = t('vacancies.headline')
-        %dd.cya-answer
-          = @vacancy.headline
-        %dd.cya-change
-          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'headline')
-      %div
-        %dt.cya-question
           = t('vacancies.description')
         %dd.cya-answer
           = @vacancy.job_description

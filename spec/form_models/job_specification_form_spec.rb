@@ -4,7 +4,6 @@ RSpec.describe JobSpecificationForm, type: :model do
 
   context 'validations' do
     it { should validate_presence_of(:job_title) }
-    it { should validate_presence_of(:headline) }
     it { should validate_presence_of(:job_description) }
     it { should validate_presence_of(:minimum_salary) }
     it { should validate_presence_of(:working_pattern) }
@@ -12,7 +11,7 @@ RSpec.describe JobSpecificationForm, type: :model do
     describe '#minimum_salary' do
       describe '#minimum_salary_lower_than_maximum' do
         let(:job_specification) do
-          JobSpecificationForm.new(headline: 'headline', job_title: 'job title',
+          JobSpecificationForm.new(job_title: 'job title',
                                    job_description: 'description', working_pattern: :full_time,
                                    minimum_salary: 20, maximum_salary: 10)
         end
@@ -26,7 +25,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       describe '#minimum_salary_at_least_minimum_payscale' do
         let(:job_specification) do
-          JobSpecificationForm.new(headline: 'headline', job_title: 'job title',
+          JobSpecificationForm.new(job_title: 'job title',
                                    job_description: 'description', working_pattern: :full_time,
                                    minimum_salary: 20, maximum_salary: 200)
         end
@@ -47,8 +46,7 @@ RSpec.describe JobSpecificationForm, type: :model do
     let(:leadership) { create(:leadership) }
 
     it 'a JobSpecificationForm can be converted to a vacancy' do
-      job_specification_form = JobSpecificationForm.new(headline: 'Full time English Teacher',
-                                                        job_title: 'English Teacher',
+      job_specification_form = JobSpecificationForm.new(job_title: 'English Teacher',
                                                         job_description: 'description',
                                                         working_pattern: :full_time,
                                                         minimum_salary: 20000, maximum_salary: 40000,
@@ -58,7 +56,6 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_description).to eq('description')
-      expect(job_specification_form.vacancy.headline).to eq('Full time English Teacher')
       expect(job_specification_form.vacancy.working_pattern).to eq('full_time')
       expect(job_specification_form.vacancy.minimum_salary).to eq(20000)
       expect(job_specification_form.vacancy.maximum_salary).to eq(40000)

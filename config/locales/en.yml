@@ -29,7 +29,6 @@ en:
     vacancy_count_plural: 'There are %{count} vacancies that match your search.'
     no_vacancies: 'No vacancies found. Try expanding your search.'
     job_title: 'Job title'
-    headline: 'Headline'
     benefits: 'Employee benefits'
     salary_range: 'Salary range'
     per_year: 'per year'
@@ -59,7 +58,6 @@ en:
     draft: 'This vacancy is currently a draft version.'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
-      headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'
       description: 'Describe the job, the duties involved and the competencies required by the jobholder.'
       main_subject: 'What subject will the teacher focus on?'
       salary_range: 'Annual pay before tax (do not include £ sign)'
@@ -105,7 +103,6 @@ en:
       list_title: 'To create a good vacancy listing, you will need:'
       bullets:
         - 'a job title'
-        - 'a headline for the posting'
         - 'a job description'
         - 'a link to apply'
         - 'details of employee benefits (optional)'

@@ -12,12 +12,6 @@
                 hint: t('vacancies.form_hints.job_title'),
                 wrapper_html: {id: 'job_title'},
                 required: true
-      = f.input :headline,
-                label: t('vacancies.headline'),
-                hint: t('vacancies.form_hints.headline'),
-                input_html: {rows: 5},
-                wrapper_html: {id: 'headline'},
-                required: true
       = f.input :job_description,
                 as: :text,
                 label: t('vacancies.description'),
