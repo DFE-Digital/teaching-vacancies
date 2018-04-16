@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  helper_method :sort_order, :sort_column
+
   def index
     @filters = VacancyFilters.new(params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
