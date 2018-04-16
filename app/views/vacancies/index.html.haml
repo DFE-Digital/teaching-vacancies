@@ -1,7 +1,7 @@
 = render partial: 'shared/beta_banner'
 
 %h1.heading-large
-  = pluralize_vacancy_count(@vacancy_count, 'vacancies.vacancy_count')
+  = @vacancies.total_count
 .grid-row
   .column-one-third
     = render 'filters'
