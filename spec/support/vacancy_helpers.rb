@@ -72,7 +72,7 @@ module VacancyHelpers
       '@type': 'JobPosting',
       'title': vacancy.job_title,
       'jobBenefits': vacancy.benefits,
-      'datePosted': vacancy.publish_on.to_s(:db),
+      'datePosted': vacancy.publish_on.to_time.iso8601,
       'description': vacancy.job_description,
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
@@ -105,7 +105,7 @@ module VacancyHelpers
         'name': vacancy.school.name,
         'identifier': vacancy.school.urn,
       },
-      'validThrough': vacancy.expires_on.to_s(:db),
+      'validThrough': vacancy.expires_on.to_time.iso8601,
       'workHours': vacancy.weekly_hours,
     }
   end

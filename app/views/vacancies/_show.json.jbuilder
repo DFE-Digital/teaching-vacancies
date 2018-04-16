@@ -3,7 +3,7 @@ json.set! '@type', 'JobPosting'
 
 json.title vacancy.job_title
 json.jobBenefits vacancy.benefits
-json.datePosted vacancy.publish_on.to_s(:db)
+json.datePosted vacancy.publish_on.to_time.iso8601
 json.description vacancy.job_description
 
 json.educationRequirements vacancy.education
@@ -47,5 +47,5 @@ json.hiringOrganization do
   json.identifier vacancy.school.urn
 end
 
-json.validThrough vacancy.expires_on.to_s(:db)
+json.validThrough vacancy.expires_on.to_time.iso8601
 json.workHours vacancy.weekly_hours
