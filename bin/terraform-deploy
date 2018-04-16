@@ -1,0 +1,50 @@
+#!/bin/bash
+set -e
+
+if [ $# -eq 0 ]
+then
+  echo "No terraform workspace supplied, aborting."
+  exit 1
+fi
+
+TERRAFORM_WORKSPACE=$1
+GIT_BRANCH=""
+
+case $TERRAFORM_WORKSPACE in
+  "production") GIT_BRANCH="master"
+    ;;
+  "staging") GIT_BRANCH="develop"
+    ;;
+  "edge") GIT_BRANCH="edge"
+    ;;
+  "testing") GIT_BRANCH="testing"
+    ;;
+  *)
+    echo "Could not find an known environment with the name: $TERRAFORM_WORKSPACE"
+    exit 1
+    ;;
+esac
+
+echo "Deploying…"
+echo "* Terraform workspace: $TERRAFORM_WORKSPACE"
+echo "* Git branch: $GIT_BRANCH"
+
+read -r -p "Continue (y/n)?" CONT
+if [ "$CONT" = "y" ]; then
+  echo
+else
+  exit 1
+fi
+
+echo "-> Checking out terraform workspace $TERRAFORM_WORKSPACE …"
+terraform workspace select "$TERRAFORM_WORKSPACE"
+
+echo "-> Fetching latest git changes …"
+git fetch
+git pull origin $GIT_BRANCH
+
+echo "-> Checking out branch $GIT_BRANCH …"
+git checkout $GIT_BRANCH
+
+echo "-> Applying Terraform command on the $TERRAFORM_WORKSPACE workspace …"
+terraform apply -var-file="workspace-variables/$TERRAFORM_WORKSPACE.tfvars"
