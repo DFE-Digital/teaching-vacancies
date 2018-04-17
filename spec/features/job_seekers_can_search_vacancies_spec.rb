@@ -54,23 +54,6 @@ RSpec.feature 'Searching vacancies by keyword' do
 
       expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
     end
-
-    scenario '#headline', elasticsearch: true do
-      vacancy = create(:vacancy, headline: 'Opening for enthusiasic teacher')
-
-      Vacancy.__elasticsearch__.client.indices.flush
-
-      visit vacancies_path
-
-      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-
-      within '.filters-form' do
-        fill_in 'keyword', with: 'enthusiastic'
-        page.find('.button[type=submit]').click
-      end
-
-      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-    end
   end
 
   describe 'does not match' do

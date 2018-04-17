@@ -13,8 +13,6 @@ en:
           attributes:
             job_title:
               blank: can't be blank
-            headline:
-              blank: can't be blank
             job_description:
               blank: can't be blank
             minimum_salary:

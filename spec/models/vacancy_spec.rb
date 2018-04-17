@@ -7,7 +7,6 @@ RSpec.describe Vacancy, type: :model do
     context 'a new record' do
       it { should validate_presence_of(:working_pattern) }
       it { should validate_presence_of(:job_title) }
-      it { should validate_presence_of(:headline) }
       it { should validate_presence_of(:job_description) }
       it { should validate_presence_of(:minimum_salary) }
     end
@@ -17,7 +16,6 @@ RSpec.describe Vacancy, type: :model do
         Vacancy.create(
           school: create(:school),
           job_title: 'Primary teacher',
-          headline: 'We are looking for a great teacher',
           job_description: 'Teach a primary class.',
           minimum_salary: 20_000,
           working_pattern: :full_time
@@ -36,11 +34,6 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
-      end
-
-      it '#headline' do
-        expect(subject.errors.messages[:headline].first)
           .to eq(I18n.t('errors.messages.too_short.other', count: 10))
       end
 
@@ -73,11 +66,6 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 50))
-      end
-
-      it '#headline' do
-        expect(subject.errors.messages[:headline].first)
           .to eq(I18n.t('errors.messages.too_long.other', count: 50))
       end
     end

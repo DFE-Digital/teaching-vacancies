@@ -5,8 +5,7 @@ module VacancyJobSpecificationValidations
   MAX_INTEGER = 2147483647
 
   included do
-    validates :job_title, :job_description, :headline,
-              :minimum_salary, :working_pattern, presence: true
+    validates :job_title, :job_description, :minimum_salary, :working_pattern, presence: true
 
     validates :minimum_salary,
               numericality: {
@@ -30,8 +29,6 @@ module VacancyJobSpecificationValidations
                           if: proc { |model| model.job_title.present? }
     validates :job_description, length: { minimum: 10, maximum: 1000 },
                                 if: proc { |model| model.job_description.present? }
-    validates :headline, length: { minimum: 10, maximum: 50 },
-                         if: proc { |model| model.headline.present? }
   end
 
   def minimum_salary_lower_than_maximum

@@ -48,15 +48,11 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.error-summary') do
-          expect(page).to have_content('5 errors prevented this vacancy from being saved:')
+          expect(page).to have_content('4 errors prevented this vacancy from being saved:')
         end
 
         within_row_for(text: I18n.t('vacancies.job_title')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
-        end
-
-        within_row_for(text: I18n.t('vacancies.headline')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.headline.blank'))
         end
 
         within_row_for(text: I18n.t('vacancies.description')) do
