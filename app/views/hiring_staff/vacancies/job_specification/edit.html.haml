@@ -37,7 +37,6 @@
         %span.form-hint= t('vacancies.form_hints.salary_range')
 
         = f.input :minimum_salary,
-                  as: :integer,
                   required: true,
                   wrapper: false,
                   label: false,
@@ -46,7 +45,6 @@
         to
 
         = f.input :maximum_salary,
-                  as: :integer,
                   wrapper: false,
                   required: true,
                   label: false,

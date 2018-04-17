@@ -27,6 +27,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  config.before do
+    stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '1')
+  end
+
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
   end

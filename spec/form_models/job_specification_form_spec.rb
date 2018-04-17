@@ -31,7 +31,7 @@ RSpec.describe JobSpecificationForm, type: :model do
         end
 
         it 'the minimum salary should be at least equal to the minimum payscale value' do
-          create(:pay_scale, salary: 3000)
+          stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '3000')
           expect(job_specification.valid?). to be false
           expect(job_specification.errors.messages[:minimum_salary][0])
             . to eq('must be at least equal to the minimum pay range of £3,000')
@@ -57,8 +57,8 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_description).to eq('description')
       expect(job_specification_form.vacancy.working_pattern).to eq('full_time')
-      expect(job_specification_form.vacancy.minimum_salary).to eq(20000)
-      expect(job_specification_form.vacancy.maximum_salary).to eq(40000)
+      expect(job_specification_form.vacancy.minimum_salary).to eq('20000')
+      expect(job_specification_form.vacancy.maximum_salary).to eq('40000')
       expect(job_specification_form.vacancy.benefits).to eq('benefits')
       expect(job_specification_form.vacancy.pay_scale.label).to eq(payscale.label)
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)

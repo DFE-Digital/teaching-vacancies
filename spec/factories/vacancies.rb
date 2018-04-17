@@ -14,8 +14,8 @@ FactoryGirl.define do
     status { :published }
     expires_on { Faker::Time.forward(14) }
     publish_on { Time.zone.today }
-    minimum_salary { Faker::Number.number(5) }
-    maximum_salary { Faker::Number.number(6) }
+    minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
+    maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
     weekly_hours '8.5'
@@ -35,8 +35,8 @@ FactoryGirl.define do
       experience { Faker::Lorem.characters(1010) }
       education { Faker::Lorem.characters(1005) }
       qualifications { Faker::Lorem.characters(1002) }
-      minimum_salary { Vacancy::MAX_INTEGER + 10 }
-      maximum_salary { Vacancy::MAX_INTEGER + 10 }
+      minimum_salary { (SalaryValidator::MAX_SALARY_ALLOWED + 100) }
+      maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
     end
 
     trait :complete do
