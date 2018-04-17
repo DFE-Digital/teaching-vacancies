@@ -39,4 +39,10 @@
         %span= msg
     = yield
 
+- content_for :footer_top do
+  %p
+    Problems using this service? Email
+    =mail_to 'isobel.croot@digital.education.gov.uk'
+    for support.
+
 = render file: 'layouts/govuk_template'
