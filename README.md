@@ -45,8 +45,10 @@ Rebuilds the test server, runs rubocop checks, all tests (both specs and javascr
 `bin/dtests`
 
 
-## Importing school data
+## Importing school data (optional)
 
 Populate your envirnoment with real school data from the Edubase archive
 
 `bin/drake data:schools:import`
+
+_db/seeds.rb contain sample school data so this is not required for development_

@@ -47,24 +47,24 @@ module "core" {
 module "ecs" {
   source = "./terraform/modules/ecs"
 
-  environment                                    = "${terraform.workspace}"
-  project_name                                   = "${var.project_name}"
-  region                                         = "${var.region}"
-  ecs_cluster_name                               = "${var.ecs_cluster_name}"
-  ecs_service_name                               = "${var.project_name}_${terraform.workspace}_${var.ecs_service_name}"
-  ecs_service_task_name                          = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
-  ecs_service_task_count                         = "${var.ecs_service_task_count}"
-  ecs_service_task_port                          = "${var.ecs_service_task_port}"
-  ecs_service_task_definition_file_path          = "${var.ecs_service_task_definition_file_path}"
-  ecs_service_rake_task_definition_file_path     = "${var.ecs_service_rake_task_definition_file_path}"
+  environment                                = "${terraform.workspace}"
+  project_name                               = "${var.project_name}"
+  region                                     = "${var.region}"
+  ecs_cluster_name                           = "${var.ecs_cluster_name}"
+  ecs_service_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_name}"
+  ecs_service_task_name                      = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
+  ecs_service_task_count                     = "${var.ecs_service_task_count}"
+  ecs_service_task_port                      = "${var.ecs_service_task_port}"
+  ecs_service_task_definition_file_path      = "${var.ecs_service_task_definition_file_path}"
+  ecs_service_rake_task_definition_file_path = "${var.ecs_service_rake_task_definition_file_path}"
 
-  import_schools_task_command                    = "${var.import_schools_task_command}"
+  import_schools_task_command = "${var.import_schools_task_command}"
 
-  vacancies_scrape_task_command                  = "${var.vacancies_scrape_task_command}"
-  vacancies_scrape_task_schedule                 = "${var.vacancies_scrape_task_schedule}"
+  vacancies_scrape_task_command  = "${var.vacancies_scrape_task_command}"
+  vacancies_scrape_task_schedule = "${var.vacancies_scrape_task_schedule}"
 
-  sessions_trim_task_command                     = "${var.sessions_trim_task_command}"
-  sessions_trim_task_schedule                    = "${var.sessions_trim_task_schedule}"
+  sessions_trim_task_command  = "${var.sessions_trim_task_command}"
+  sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
@@ -161,4 +161,6 @@ module "cloudfront" {
   cloudfront_origin_domain_name = "${module.core.alb_dns_name}"
   cloudfront_aliases            = "${var.cloudfront_aliases}"
   cloudfront_certificate_arn    = "${var.cloudfront_certificate_arn}"
+  offline_bucket_domain_name    = "${var.offline_bucket_domain_name}"
+  offline_bucket_origin_path    = "${var.offline_bucket_origin_path}"
 }

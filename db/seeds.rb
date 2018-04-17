@@ -1,33 +1,3 @@
-[['MPS1', 'Minimum Pay Range 1', 22917 ],
- ['MPS2', 'Minimum Pay Range 2', 24728 ],
- ['MPS3', 'Minimum Pay Range 3', 26716 ],
- ['MPS4', 'Minimum Pay Range 4', 28772 ],
- ['MPS5', 'Minimum Pay Range 5', 31029 ],
- ['MPS6', 'Minimum Pay Range 6', 33824 ],
- ['UPS1', 'Upper Pay Range 1', 35927 ],
- ['UPS2', 'Upper Pay Range 2', 37258 ],
- ['UPS3', 'Upper Pay Range 3', 38633 ],
- ['LPS1', 'Lead Practitioners Range 1', 39374 ],
- ['LPS2', 'Lead Practitioners Range 2', 40360 ],
- ['LPS3', 'Lead Practitioners Range 3', 41368 ],
- ['LPS4', 'Lead Practitioners Range 4', 42398 ],
- ['LPS5', 'Lead Practitioners Range 5', 43454 ],
- ['LPS6', 'Lead Practitioners Range 6', 44544 ],
- ['LPS7', 'Lead Practitioners Range 7', 45743 ],
- ['LPS8', 'Lead Practitioners Range 8', 46799 ],
- ['LPS9', 'Lead Practitioners Range 9', 47967 ],
- ['LPS10', 'Lead Practitioners Range 10', 49199 ],
- ['LPS11', 'Lead Practitioners Range 11', 50476 ],
- ['LPS12', 'Lead Practitioners Range 12', 51639 ],
- ['LPS13', 'Lead Practitioners Range 13', 52930 ],
- ['LPS14', 'Lead Practitioners Range 14', 54250 ],
- ['LPS15', 'Lead Practitioners Range 15', 55600 ],
- ['LPS16', 'Lead Practitioners Range 16', 57077 ],
- ['LPS17', 'Lead Practitioners Range 17', 58389 ],
- ['LPS18', 'Lead Practitioners Range 18', 59857 ]].each do |scale|
-   PayScale.create(code: scale[0], label: scale[1], salary: scale[2], expires_at: Date.new(2018,8,31))
- end
-
 ['Chemistry', 'Economics', 'General Science',
 'History', 'Maths', 'Other',
 'Primary', 'Spanish', 'Art',
@@ -56,22 +26,6 @@ Region.create(name: 'West Midlands', code: 'F')
 Region.create(name: 'East Midlands', code: 'E')
 Region.create(name: 'North East England', code: 'A')
 
-payscale = PayScale.create(label: 'Main pay range 1')
-PayScale.create(label: 'Main pay range 2')
-PayScale.create(label: 'Main pay range 3')
-PayScale.create(label: 'Main pay range 4')
-PayScale.create(label: 'Main pay range 5')
-PayScale.create(label: 'Main pay range 6')
-PayScale.create(label: 'Upper pay range 1')
-PayScale.create(label: 'Upper pay range 2')
-PayScale.create(label: 'Upper pay range 3')
-
-Leadership.create(title: 'Middle Leader')
-leadership = Leadership.create(title: 'Senior Leader')
-Leadership.create(title: 'Headteacher')
-Leadership.create(title: 'Executive Head')
-Leadership.create(title: 'Multi-Academy Trust')
-
 academy = SchoolType.create(label: 'Academy', code: '10')
 SchoolType.create(label: 'Independent School', code: '3')
 SchoolType.create(label: 'Free School', code: '11')
@@ -79,26 +33,31 @@ SchoolType.create(label: 'LA Maintained School', code: '4')
 SchoolType.create(label: 'Special School', code: '5')
 
 
-ealing_school = FactoryGirl.create(:school, name: 'Acme Secondary School',
+ealing_school = FactoryGirl.create(:school, name: 'Macmillan Academy ',
                                    school_type: academy,
-                                   urn: 1234567890,
-                                   address: '22 High Street',
-                                   town: 'Ealing',
-                                   county: 'Middlesex',
-                                   postcode: 'EA1 1NG',
+                                   urn: 110627,
+                                   address: 'Stockton Road',
+                                   phase: :secondary,
+                                   town: 'Middlesbrough',
+                                   postcode: 'TS5 4AG',
+                                   url: 'http://www.macmillan-academy.org.uk',
                                    region: london,
-                                   geolocation: '(51.395261, 0.056949)')
+                                   geolocation: '(54.565770,-1.264489)')
 
 bromley_school = FactoryGirl.create(:school,
-                                    name: 'Bromley High School',
+                                    name: ' Sacred Heart Roman Catholic VA School - A Specialist Science College',
                                     school_type: academy,
-                                    urn: 1234567890,
-                                    address: '8 London Road',
-                                    town: 'Bromley',
-                                    county: 'London Borough of Bromley',
-                                    postcode: 'BR1 9EY',
+                                    urn: 110627,
+                                    address: 'Mersey Road',
+                                    phase: :secondary,
+                                    town: 'Redcar',
+                                    county: 'North Yorkshire',
+                                    postcode: 'TS10 1PJ',
                                     region: london,
-                                    geolocation: '(51.395261, 0.056949)')
+                                    geolocation: '(54.612422,-1.079842)')
+
+payscale = PayScale.limit(5).sample(1).first
+leadership = Leadership.limit(1).sample(1).first
 
 FactoryGirl.create(:vacancy,
                    job_title: 'Physics Teacher',

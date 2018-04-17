@@ -7,3 +7,5 @@ variable "cloudfront_aliases" {
 }
 
 variable "cloudfront_certificate_arn" {}
+variable "offline_bucket_domain_name" {}
+variable "offline_bucket_origin_path" {}

@@ -123,3 +123,21 @@ The `cloudwatch_slack_hook_url` and `cloudwatch_ops_genie_api_key` variables nee
 6. Click 'Save'
 7. Reload the page, and copy both of the (now encrypted) values, and replace `cloudwatch_slack_hook_url` and `cloudwatch_ops_genie_api_key` in your variables file.
 8. Run a terraform plan to ensure everything has been done correctly (You should not have any changes required for the lambda resource)
+
+## Being offline
+
+We are using a combination of AWS CloudFront and S3 to serve users a self-contained static page that can be found here https://github.com/dxw/school-jobs-offline. CloudFront has been configured through Terraform to detect 503 'Service Unavailable' or 502 'Bad Gateway' responses that occur downstream in our stack and will handle those requests by responding with content from the bucket.
+
+This allows for our servers or containers to be turned off intentionally or fail unintentionally whilst ensuring a our service fails gracefully, with expectations set with the user.
+
+If we wished to turn force the service into this offline mode we can set the desired container count to 0 through Terraform.
+
+The way this can fail is that either AWS CloudFront, AWS S3 or our configuration of the 2 becomes non functional. Should AWS experience such a fundamental failure we might consider recovering from that situation by moving the static content to a new provider and updating the DNS.
+
+### Setup
+
+Without this setup, CloudFront will continue to provide generic 503 and 502 pages.
+
+1. Create a new S3 bucket and set the access permissions to public, this value will correspond to: `offline_bucket_domain_name`
+2. Add your static content to a new directory that corresponds to, making sure they are all set to public too: `offline_bucket_origin_path`
+3. The file that will be rendered is currently `index.html`
