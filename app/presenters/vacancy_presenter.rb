@@ -1,9 +1,15 @@
 class VacancyPresenter < BasePresenter
+  include ActionView::Helpers::TextHelper
+
   delegate :total_pages, to: :model
 
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
     "#{number_to_currency(model.minimum_salary)} #{del} #{number_to_currency(model.maximum_salary)}"
+  end
+
+  def job_description
+    simple_format(model.job_description, {}, wrapper_tag: :div)
   end
 
   def location

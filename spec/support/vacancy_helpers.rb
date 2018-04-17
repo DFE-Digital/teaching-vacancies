@@ -35,7 +35,7 @@ module VacancyHelpers
 
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.job_description)
+    expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)

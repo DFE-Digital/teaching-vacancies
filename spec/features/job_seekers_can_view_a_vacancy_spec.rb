@@ -7,7 +7,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     visit vacancy_path(published_vacancy)
 
     expect(page).to have_content(published_vacancy.job_title)
-    expect(page).to have_content(published_vacancy.job_description)
+    expect(page.html).to include(published_vacancy.job_description)
     expect(page).to have_content(published_vacancy.salary_range)
     expect(page).to have_content(published_vacancy.contact_email)
   end

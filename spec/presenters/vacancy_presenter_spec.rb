@@ -69,4 +69,13 @@ RSpec.describe VacancyPresenter do
       expect(vacancy.publish_today?).to eq(true)
     end
   end
+
+  describe '#job_description' do
+    it 'sanitizes and transforms the job_description into HTML' do
+      vacancy = build(:vacancy, job_description: '<script> call();</script>Sanitized content')
+      presenter = VacancyPresenter.new(vacancy)
+
+      expect(presenter.job_description).to eq('<div> call();Sanitized content</div>')
+    end
+  end
 end
