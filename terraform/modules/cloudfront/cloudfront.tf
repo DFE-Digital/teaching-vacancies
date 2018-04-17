@@ -11,6 +11,25 @@ resource "aws_cloudfront_distribution" "default" {
     }
   }
 
+  origin {
+    domain_name = "${var.offline_bucket_domain_name}"
+    origin_id   = "${var.project_name}-${var.environment}-offline"
+  }
+
+  custom_error_response {
+    error_code            = "503"
+    error_caching_min_ttl = "60"
+    response_code         = "503"
+    response_page_path    = "${var.offline_bucket_origin_path}/index.html"
+  }
+
+  custom_error_response {
+    error_code            = "502"
+    error_caching_min_ttl = "60"
+    response_code         = "502"
+    response_page_path    = "${var.offline_bucket_origin_path}/index.html"
+  }
+
   enabled = true
   aliases = "${var.cloudfront_aliases}"
 
@@ -30,6 +49,28 @@ resource "aws_cloudfront_distribution" "default" {
 
     min_ttl     = 0
     default_ttl = 5
+    max_ttl     = 86400
+
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
+  cache_behavior {
+    allowed_methods  = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "${var.project_name}-${var.environment}-offline"
+
+    path_pattern = "${var.offline_bucket_origin_path}/*"
+
+    forwarded_values = {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+
+    min_ttl     = 0
+    default_ttl = 60
     max_ttl     = 86400
 
     viewer_protocol_policy = "redirect-to-https"
