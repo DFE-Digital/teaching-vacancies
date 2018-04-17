@@ -9,6 +9,9 @@ en:
   app:
     title: 'School Jobs'
     menu: 'Menu'
+  nav:
+    sign_in: 'Sign in as a school'
+    sign_out: 'Sign out'
   vacancies:
     heading: 'Find a job in a school'
     sort_by: 'Sort by:'
