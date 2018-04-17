@@ -1,4 +1,7 @@
 en:
+  date:
+    formats:
+      hinttext: "%d %-m %Y"
   number:
     currency:
       format:
@@ -63,13 +66,13 @@ en:
       salary_range: 'Annual pay before tax (do not include £ sign)'
       pay_scale: 'What pay scale does the job’s salary fall in?'
       weekly_hours: 'Number of hours to be worked each week'
-      start_date: 'For example, 31 9 2018'
-      end_date: 'For example, 31 2 2019'
+      start_date: 'For example, %{date}'
+      end_date: 'For example, %{date}'
       education: 'Degree or certificate needed for the role'
       qualifications: 'Specific qualifications required for this role'
       experience: 'Expected teaching or other experience'
-      deadline_date: 'For example, 31 11 2017'
-      publication_date: 'For example, 31 10 2017'
+      deadline_date: 'For example, %{date}'
+      publication_date: 'For example, %{date}'
       benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
       contact_email: 'This will appear in the public listing'
       application_link: 'This is the url linking the vacancy to your existing application page'

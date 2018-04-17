@@ -80,13 +80,15 @@
         = f.gov_uk_date_field :starts_on,
           legend_text: "#{t('vacancies.starts_on')} (optional)",
           legend_class: 'form-label-bold',
-          form_hint_text: t('vacancies.form_hints.start_date')
+          form_hint_text: t('vacancies.form_hints.start_date',
+                            date: l(Date.today + 3.months, format: :hinttext))
 
 
       %div.form-group#ends_on
         = f.gov_uk_date_field :ends_on,
           legend_text: "#{t('vacancies.ends_on')} (optional)",
           legend_class: 'form-label-bold',
-          form_hint_text: t('vacancies.form_hints.end_date')
+          form_hint_text: t('vacancies.form_hints.end_date',
+                            date: l(Date.today + 6.months, format: :hinttext))
 
       = f.button :submit, t('buttons.update_vacancy')
