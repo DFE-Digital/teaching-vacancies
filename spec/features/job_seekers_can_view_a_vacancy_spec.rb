@@ -40,7 +40,8 @@ RSpec.feature 'Viewing a single published vacancy' do
 
     visit vacancy_path(vacancy)
 
-    expect(script_tag_content(wrapper_class: '.jobref')).to eq(vacancy_json_ld(vacancy).to_json)
+    expect(script_tag_content(wrapper_class: '.jobref'))
+      .to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)).to_json)
   end
 
   context 'A user viewing a vacancy' do

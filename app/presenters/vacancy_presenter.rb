@@ -33,4 +33,8 @@ class VacancyPresenter < BasePresenter
   def working_pattern
     model.working_pattern.sub('_', ' ').humanize
   end
+
+  def working_pattern_for_job_schema
+    model.working_pattern.upcase
+  end
 end

@@ -70,13 +70,14 @@ module VacancyHelpers
     {
       '@context': 'http://schema.org',
       '@type': 'JobPosting',
+      'title': vacancy.job_title,
       'jobBenefits': vacancy.benefits,
-      'datePosted': vacancy.publish_on.to_s(:db),
-      'description': vacancy.headline,
+      'datePosted': vacancy.publish_on.to_time.iso8601,
+      'description': vacancy.job_description,
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,
-      'employmentType': vacancy.working_pattern&.titleize,
+      'employmentType': vacancy.working_pattern_for_job_schema,
       'industry': 'Education',
       'jobLocation': {
         '@type': 'Place',
@@ -88,20 +89,23 @@ module VacancyHelpers
           'postalCode': vacancy.school.postcode,
         },
       },
-      'responsibilities': vacancy.job_description,
-      'title': vacancy.job_title,
       'url': vacancy_url(vacancy),
       'baseSalary': {
         '@type': 'MonetaryAmount',
-        'minValue': vacancy.minimum_salary,
-        'maxValue': vacancy.maximum_salary,
         'currency': 'GBP',
+        value: {
+          '@type': 'QuantitativeValue',
+          'minValue': vacancy.minimum_salary,
+          'maxValue': vacancy.maximum_salary,
+          'unitText': 'YEAR'
+        },
       },
       'hiringOrganization': {
-        '@type': 'Organization',
+        '@type': 'School',
         'name': vacancy.school.name,
+        'identifier': vacancy.school.urn,
       },
-      'validThrough': vacancy.expires_on.to_s(:db),
+      'validThrough': vacancy.expires_on.to_time.iso8601,
       'workHours': vacancy.weekly_hours,
     }
   end
