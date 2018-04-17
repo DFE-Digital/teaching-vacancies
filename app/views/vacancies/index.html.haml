@@ -1,11 +1,12 @@
 = render partial: 'shared/beta_banner'
 
-%h1.heading-large
-  = @vacancies.total_count
+%h1.heading-xlarge
+  = t('vacancies.heading')
 .grid-row
   .column-one-third
     = render 'filters'
   .column-two-thirds
+    %p.heading-medium.mt0= pluralize_vacancy_count(@vacancy_count, 'vacancies.vacancy_count')
     - if @vacancies.any?
       %div.sortable-links
         = t('vacancies.sort_by')
