@@ -229,4 +229,25 @@ RSpec.describe Vacancy, type: :model do
       expect(vacancy.school_name).to eq('St James School')
     end
   end
+
+  describe '#application_link' do
+    it 'returns the url' do
+      vacancy = create(:vacancy, application_link: 'https://example.com')
+      expect(vacancy.application_link).to eql('https://example.com')
+    end
+
+    context 'when a protocol was not provided' do
+      it 'returns an absolute url with `http` as the protocol' do
+        vacancy = create(:vacancy, application_link: 'example.com')
+        expect(vacancy.application_link).to eql('http://example.com')
+      end
+    end
+
+    context 'when only the `www` sub domain was provided' do
+      it 'returns an absolute url with `http` as the protocol' do
+        vacancy = create(:vacancy, application_link: 'www.example.com')
+        expect(vacancy.application_link).to eql('http://www.example.com')
+      end
+    end
+  end
 end
