@@ -88,6 +88,13 @@ class Vacancy < ApplicationRecord
     save(validate: false)
   end
 
+  def application_link=(value)
+    # Data may not include a scheme/protocol so we must be careful when creating
+    # links that Rails doesn't make them incorrectly relative.
+    value = Addressable::URI.heuristic_parse(value).to_s
+    super(value)
+  end
+
   private
 
   def slug_candidates
