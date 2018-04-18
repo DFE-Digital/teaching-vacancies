@@ -1,8 +1,15 @@
 class VacanciesController < ApplicationController
-  helper_method :sort_order, :sort_column
+  helper_method :location,
+                :keyword,
+                :minimum_salary,
+                :maximum_salary,
+                :working_pattern,
+                :phase,
+                :sort_column,
+                :sort_order
 
   def index
-    @filters = VacancyFilters.new(sanitised_params)
+    @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
     records = Vacancy.public_search(filters: @filters, sort: @sort).records
@@ -14,52 +21,56 @@ class VacanciesController < ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
-  private def id
+  def params
+    sanitised_params = super.each_pair do |key, value|
+      super[key] = Sanitize.fragment(value)
+    end
+    ActionController::Parameters.new(sanitised_params)
+  end
+
+  private
+
+  def search_params
+    params.permit(:keyword, :location, :minimum_salary, :maximum_salary, :phase, :phase, :working_pattern).to_hash
+  end
+
+  def id
     params[:id]
   end
 
-  private def page
+  def page
     params[:page]
   end
 
-  helper_method :location
-  private def location
+  def location
     params[:location]
   end
 
-  helper_method :keyword
-  private def keyword
+  def keyword
     params[:keyword]
   end
 
-  helper_method :minimum_salary
-  private def minimum_salary
+  def minimum_salary
     params[:minimum_salary]
   end
 
-  helper_method :maximum_salary
-  private def maximum_salary
+  def maximum_salary
     params[:maximum_salary]
   end
 
-  helper_method :working_pattern
-  private def working_pattern
+  def working_pattern
     params[:working_pattern]
   end
 
-  helper_method :phase
-  private def phase
+  def phase
     params[:phase]
   end
 
-  helper_method :sort_column
-  private def sort_column
+  def sort_column
     params[:sort_column]
   end
 
-  helper_method :sort_order
-  private def sort_order
+  def sort_order
     params[:sort_order]
   end
-
 end

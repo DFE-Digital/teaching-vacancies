@@ -1,6 +1,54 @@
 require 'rails_helper'
 
 RSpec.describe VacanciesController, type: :controller do
+  describe '#index' do
+    context 'when parameters include syntax' do
+      it 'passes only safe values to VacancyFilters' do
+        received_values = {
+          keyword: "<body onload=alert('test1')>Text</script>",
+          location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
+          minimum_salary: '<xml>Foo</xml',
+          maximum_salary: '<css>Foo</css>',
+          phase: '<script>Foo</script>',
+          working_pattern: '<script>Foo</script>',
+        }
+
+        expected_safe_values = {
+          'keyword' => 'Text',
+          'location' => '',
+          'minimum_salary' => 'Foo',
+          'maximum_salary' => 'Foo',
+          'phase' => 'Foo',
+          'working_pattern' => 'Foo',
+        }
+
+        expect(VacancyFilters).to receive(:new)
+          .with(expected_safe_values)
+          .and_call_original
+
+        get :index, params: received_values
+      end
+
+      it 'passes sanitised params to VacancySort' do
+        received_values = {
+          sort_column: "<body onload=alert('test1')>Text</script>",
+          sort_order: '<xml>Foo</xml',
+        }
+
+        expected_safe_values = {
+          column: 'Text',
+          order: 'Foo',
+        }
+
+        expect_any_instance_of(VacancySort).to receive(:update)
+          .with(expected_safe_values)
+          .and_call_original
+
+        get :index, params: received_values
+      end
+    end
+  end
+
   context 'JSON api' do
     let(:json) { JSON.parse(response.body, symbolize_names: true) }
 
