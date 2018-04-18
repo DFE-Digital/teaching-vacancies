@@ -1,5 +1,6 @@
 module VacancyCandidateSpecificationValidations
   extend ActiveSupport::Concern
+  include ActionView::Helpers::SanitizeHelper
 
   included do
     validates :experience, :education, :qualifications, presence: true
@@ -9,5 +10,17 @@ module VacancyCandidateSpecificationValidations
                           if: proc { |model| model.education.present? }
     validates :qualifications, length: { minimum: 10, maximum: 1000 },
                                if: proc { |model| model.qualifications.present? }
+  end
+
+  def experience=(value)
+    super(sanitize(value))
+  end
+
+  def qualifications=(value)
+    super(sanitize(value))
+  end
+
+  def education=(value)
+    super(sanitize(value))
   end
 end

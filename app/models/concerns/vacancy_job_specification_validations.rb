@@ -36,6 +36,14 @@ module VacancyJobSpecificationValidations
     super(sanitize(value))
   end
 
+  def job_title=(value)
+    super(sanitize(value, tags: []))
+  end
+
+  def benefits=(value)
+    super(sanitize(value))
+  end
+
   def minimum_salary_lower_than_maximum
     errors.add(:minimum_salary, min_salary_must_be_greater_than_max_error) if minimum_higher_than_maximum_salary?
   end

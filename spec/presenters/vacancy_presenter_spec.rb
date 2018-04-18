@@ -75,7 +75,7 @@ RSpec.describe VacancyPresenter do
       vacancy = build(:vacancy, job_description: '<script> call();</script>Sanitized content')
       presenter = VacancyPresenter.new(vacancy)
 
-      expect(presenter.job_description).to eq('<div> call();Sanitized content</div>')
+      expect(presenter.job_description).to eq('<p> call();Sanitized content</p>')
     end
   end
 end
