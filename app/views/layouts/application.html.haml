@@ -42,7 +42,7 @@
 - content_for :footer_top do
   %p
     Problems using this service? Email
-    =mail_to 'isobel.croot@digital.education.gov.uk'
+    = mail_to I18n.t('help.email')
     for support.
 
 = render file: 'layouts/govuk_template'

@@ -149,5 +149,5 @@ en:
     url:
       invalid: is not a valid URL
 
-  error_pages:
-    help_email: email@example.com
+  help:
+    email: isobel.croot@digital.education.gov.uk
