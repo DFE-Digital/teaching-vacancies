@@ -17,17 +17,21 @@
     %h2.heading-medium= t('vacancies.description')
     %p= @vacancy.job_description
 
-    %h2.heading-medium= t('vacancies.education')
-    %p= @vacancy.education
+    - if @vacancy.education?
+      %h2.heading-medium= t('vacancies.education')
+      %p= @vacancy.education
 
-    %h2.heading-medium= t('vacancies.qualifications')
-    %p= @vacancy.qualifications
+    - if @vacancy.qualifications?
+      %h2.heading-medium= t('vacancies.qualifications')
+      %p= @vacancy.qualifications
 
-    %h2.heading-medium= t('vacancies.experience')
-    %p= @vacancy.experience
+    - if @vacancy.experience?
+      %h2.heading-medium= t('vacancies.experience')
+      %p= @vacancy.experience
 
-    %h2.heading-medium= t('vacancies.benefits')
-    %p= @vacancy.benefits
+    - if @vacancy.benefits?
+      %h2.heading-medium= t('vacancies.benefits')
+      %p= @vacancy.benefits
 
     %hr
     %h2.heading-medium

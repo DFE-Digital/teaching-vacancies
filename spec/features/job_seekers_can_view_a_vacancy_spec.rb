@@ -51,5 +51,18 @@ RSpec.feature 'Viewing a single published vacancy' do
 
       expect(page.current_url).to eq vacancy.application_link
     end
+
+    scenario 'does not see headers of empty fields' do
+      vacancy = build(:vacancy, education: nil, qualifications: nil,
+                                experience: nil, benefits: nil, slug: 'vacancy')
+      vacancy.save(validate: false)
+
+      visit vacancy_path(vacancy)
+
+      expect(page).to_not have_content(I18n.t('vacancies.education'))
+      expect(page).to_not have_content(I18n.t('vacancies.qualifications'))
+      expect(page).to_not have_content(I18n.t('vacancies.experience'))
+      expect(page).to_not have_content(I18n.t('vacancies.benefits'))
+    end
   end
 end
