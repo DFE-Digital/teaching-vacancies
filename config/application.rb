@@ -28,6 +28,8 @@ module TeacherVacancyService
       g.orm :active_record, primary_key_type: :uuid
     end
 
+    config.action_view.sanitized_allowed_tags = ['p', 'br', 'strong', 'ul', 'li', 'h1', 'h2', 'h3', 'h4', 'h5']
+
     # Settings in config/environments/* take precedence over those
     # specified here.
     # Application configuration should go into files in config/initializers

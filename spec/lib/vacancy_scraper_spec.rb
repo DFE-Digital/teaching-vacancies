@@ -60,9 +60,12 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#job_description' do
-          expect(scraper.job_description).to include(
-            '<p>Kings Priory School'
+          expect(scraper.job_description).to_not include(
+            'please click <a href="https://kingspriory.careers.eteach.com/o/teacher-of-psychology">here \
+            </a> to be redirected'
           )
+
+          expect(scraper.job_description).to include('please click here to be redirected')
         end
 
         it '#url' do

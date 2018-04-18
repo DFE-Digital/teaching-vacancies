@@ -33,7 +33,7 @@ module VacancyJobSpecificationValidations
   end
 
   def job_description=(value)
-    super(sanitize(value, tags: %w(p br strong ul li h1 h2 h3 h4 h5)))
+    super(sanitize(value))
   end
 
   def minimum_salary_lower_than_maximum

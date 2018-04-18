@@ -56,7 +56,7 @@ module VacancyScraper::NorthEastSchools
     end
 
     def job_description
-      body.to_html
+      sanitize(body.to_html)
     end
 
     def subject
