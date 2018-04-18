@@ -1,6 +1,7 @@
 module VacancyJobSpecificationValidations
   extend ActiveSupport::Concern
   include ApplicationHelper
+  include ActionView::Helpers::SanitizeHelper
 
   MAX_INTEGER = 2147483647
 
@@ -29,6 +30,10 @@ module VacancyJobSpecificationValidations
                           if: proc { |model| model.job_title.present? }
     validates :job_description, length: { minimum: 10, maximum: 1000 },
                                 if: proc { |model| model.job_description.present? }
+  end
+
+  def job_description=(value)
+    super(sanitize(value, tags: %w(p br strong ul li h1 h2 h3 h4 h5)))
   end
 
   def minimum_salary_lower_than_maximum

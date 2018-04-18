@@ -3,6 +3,8 @@ require 'nokogiri'
 
 module VacancyScraper::NorthEastSchools
   class Scraper
+    include ActionView::Helpers::SanitizeHelper
+
     def initialize(url)
       @vacancy_url = url
     end
@@ -54,7 +56,7 @@ module VacancyScraper::NorthEastSchools
     end
 
     def job_description
-      Nokogiri::HTML(body.to_html).text
+      body.to_html
     end
 
     def subject
@@ -160,6 +162,8 @@ module VacancyScraper::NorthEastSchools
       xpath = '//div[@class="job-list-mobile"]/following-sibling::*[not(self::div[@id="schoolinfo"])' \
         'and not(self::div[@id="apply"]) and not(self::div[@class="supporting-documents"])]'
       @body ||= vacancy.xpath(xpath)
+      remove_blank_paragraphs
+      @body
     end
 
     def starts_on
@@ -200,6 +204,11 @@ module VacancyScraper::NorthEastSchools
     end
 
     private
+
+    def remove_blank_paragraphs
+      nodes = @body.xpath('//p').select { |n| n.text.blank? }
+      nodes.each { |n| @body.delete(n) }
+    end
 
     def valid?(vacancy)
       vacancy.job_description.present? && vacancy.job_title.present? &&

@@ -61,9 +61,6 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'Kings Priory School'
-          )
-          expect(scraper.job_description).not_to include(
             '<p>Kings Priory School'
           )
         end
@@ -138,9 +135,6 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'ASSISTANT CURRICULUM LEADER: MATHEMATICS PermanentTMPS/UPS + TLR2B (£4,443)'
-          )
-          expect(scraper.job_description).not_to include(
             '<p><strong>ASSISTANT CURRICULUM LEADER: MATHEMATICS </strong></p>'
           )
         end
@@ -201,9 +195,6 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'Permanent Main Scale Teacher plus TLR2B (KS2 and maths)'
-          )
-          expect(scraper.job_description).not_to include(
             '<p><strong>Permanent Main Scale Teacher plus TLR2B (KS2 and maths)</strong></p>'
           )
         end
@@ -264,10 +255,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'NQT /Main/Upper Pay Ranges: £22,917 – £38,633 per annum'
-          )
-          expect(scraper.job_description).not_to include(
             '<p>NQT /Main/Upper Pay Ranges: £22,917 – £38,633 per annum</p>'
+          )
+
+          expect(scraper.job_description).to_not include(
+            '<p> <p>'
           )
         end
 

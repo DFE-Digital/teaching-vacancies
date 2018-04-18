@@ -250,4 +250,14 @@ RSpec.describe Vacancy, type: :model do
       end
     end
   end
+
+  describe '#job_description' do
+    it 'is sanitized' do
+      html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
+      vacancy = build(:vacancy, job_description: html)
+
+      sanitized_html = '<p> a paragraph with a link</p><br>'
+      expect(vacancy.job_description).to eq(sanitized_html)
+    end
+  end
 end
