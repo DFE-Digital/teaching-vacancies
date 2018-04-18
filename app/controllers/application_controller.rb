@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :check_staging_auth, except: :check
+  before_action :set_headers
 
   def check
     render json: { status: 'OK' }, status: 200
@@ -44,5 +45,9 @@ class ApplicationController < ActionController::Base
       Rails.logger.warn('Basic auth failed: ENV["HTTP_PASS"] expected but not found.')
       nil
     end
+  end
+
+  private def set_headers
+    response.set_header('X-Robots-Tag', 'none')
   end
 end

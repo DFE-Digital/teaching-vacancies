@@ -76,4 +76,11 @@ RSpec.describe ApplicationController, type: :controller do
       end
     end
   end
+
+  describe 'sets headers' do
+    it 'robots are asked not to follow' do
+      get :check
+      expect(response.headers['X-Robots-Tag']).to eq('none')
+    end
+  end
 end
