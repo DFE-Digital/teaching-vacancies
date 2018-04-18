@@ -72,7 +72,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'returns true' do
-        expect(controller.authenticate?).to eq(true)
+        expect(controller.authenticate?).to eq(false)
       end
     end
   end

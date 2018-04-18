@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate?
-    !(Rails.env.development? || Rails.env.test?)
+    Rails.env.staging?
   end
 
   private def http_user
