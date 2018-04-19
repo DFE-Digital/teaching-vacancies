@@ -58,21 +58,10 @@
 
     - if @vacancy.school.geolocation
       %div#map_zoom
-      :javascript
-        function initMap() {
-          var myLatLng = {lat: #{@vacancy.school.geolocation.x}, lng: #{@vacancy.school.geolocation.y }};
+      = render partial: 'school', formats: [:js], locals: { name: @vacancy.school.name,
+                                                            lat: @vacancy.school_geolocation.x,
+                                                            lng: @vacancy.school_geolocation.y }
 
-          var map = new google.maps.Map(document.getElementById('map_zoom'), {
-            zoom: 17,
-            center: myLatLng
-          });
-
-          var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: '#{@vacancy.school.name}'
-          });
-        }
       %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
   .column-one-third
