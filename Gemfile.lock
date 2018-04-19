@@ -205,6 +205,8 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    nokogumbo (1.5.0)
+      nokogiri
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -308,6 +310,10 @@ GEM
     ruby_parser (3.10.1)
       sexp_processor (~> 4.9)
     safe_yaml (1.0.4)
+    sanitize (4.6.4)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.4.4)
+      nokogumbo (~> 1.4)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -412,6 +418,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails
   rubocop
+  sanitize (~> 4.6)
   sass-rails (~> 5.0)
   shoulda-matchers!
   simple_form

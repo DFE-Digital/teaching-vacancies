@@ -5,22 +5,22 @@
   = form_tag vacancies_path, class: 'filters-form', method: :get do
     .form-group
       = label_tag 'location', t('vacancies.filters.location'), class: 'form-label'
-      = search_field_tag :location, params[:location], class: 'form-control form-control-block', placeholder: t('vacancies.filters.location_hint')
+      = search_field_tag :location, location, class: 'form-control form-control-block', placeholder: t('vacancies.filters.location_hint')
     .form-group
       = label_tag 'keyword', t('vacancies.filters.keyword'), class: 'form-label'
-      = search_field_tag :keyword, params[:keyword], class: 'form-control form-control-block', placeholder: t('vacancies.filters.keyword_hint')
+      = search_field_tag :keyword, keyword, class: 'form-control form-control-block', placeholder: t('vacancies.filters.keyword_hint')
     .form-group
       = label_tag 'minimum_salary', t('vacancies.filters.minimum_salary'), class: 'form-label'
-      = select_tag 'minimum_salary', options_for_select(salary_options, params[:minimum_salary]), class: 'form-control form-control-block', include_blank: 'None'
+      = select_tag 'minimum_salary', options_for_select(salary_options, minimum_salary), class: 'form-control form-control-block', include_blank: 'None'
     .form-group
       = label_tag 'maximum_salary', t('vacancies.filters.maximum_salary'), class: 'form-label'
-      = select_tag 'maximum_salary', options_for_select(salary_options, params[:maximum_salary]), class: 'form-control form-control-block', include_blank: 'None'
+      = select_tag 'maximum_salary', options_for_select(salary_options, maximum_salary), class: 'form-control form-control-block', include_blank: 'None'
     .form-group
       = label_tag 'working_pattern', t('vacancies.filters.working_pattern'), class: 'form-label'
-      = select_tag 'working_pattern', options_for_select(working_pattern_options, params[:working_pattern]), class: 'form-control form-control-block', include_blank: 'Any'
+      = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'form-control form-control-block', include_blank: 'Any'
     .form-group
       = label_tag 'phase', t('vacancies.filters.education_phase'), class: 'form-label'
-      = select_tag 'phase', options_for_select(school_phase_options, params[:phase]), class: 'form-control form-control-block', include_blank: 'Any'
+      = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'form-control form-control-block', include_blank: 'Any'
 
     = hidden_field_tag :sort_column, sort_column
     = hidden_field_tag :sort_order, sort_order
