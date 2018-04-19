@@ -1,12 +1,11 @@
 class VacanciesController < ApplicationController
+  helper_method :sort_order, :sort_column
+
   def index
     @filters = VacancyFilters.new(params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
-    @query = Vacancy.public_search(filters: @filters, sort: @sort)
-    records = @query.records
-
-    @vacancy_count = records.count
+    records = Vacancy.public_search(filters: @filters, sort: @sort).records
     @vacancies = VacanciesPresenter.new(records.page(params[:page]))
   end
 

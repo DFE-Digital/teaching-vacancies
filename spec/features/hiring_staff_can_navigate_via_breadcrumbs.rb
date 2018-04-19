@@ -5,8 +5,8 @@ RSpec.feature 'School viewing vacancies' do
                   stub_basic_auth_env: true
 
   scenario 'Navigate from viewing a vacancy to all vacancies for that school' do
-    school = FactoryGirl.create(:school)
-    vacancy = FactoryGirl.create(:vacancy, school: school)
+    school = create(:school)
+    vacancy = create(:vacancy, school: school)
 
     visit school_vacancy_path(school, vacancy.id)
 
@@ -21,8 +21,8 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'Navigate from editing an active vacancy to all vacancies for that school' do
-    school = FactoryGirl.create(:school)
-    vacancy = FactoryGirl.create(:vacancy, school: school)
+    school = create(:school)
+    vacancy = create(:vacancy, school: school)
 
     visit edit_school_vacancy_path(school, vacancy.id)
 
@@ -37,8 +37,8 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'Navigate from reviewing a draft vacancy to all vacancies for that school' do
-    school = FactoryGirl.create(:school)
-    vacancy = FactoryGirl.create(:vacancy, school: school)
+    school = create(:school)
+    vacancy = create(:vacancy, school: school)
 
     visit school_vacancy_review_path(school, vacancy.id)
 
