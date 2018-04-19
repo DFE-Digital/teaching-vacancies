@@ -1,5 +1,20 @@
-%h2.heading-medium= t('schools.no_vacancies.heading')
-%p= t('schools.no_vacancies.list_title')
-%ul.list.list-bullet
-  - t('schools.no_vacancies.bullets').each do |bullet|
-    %li= bullet
+.grid-row
+  .column-full
+    %h2.heading-medium= t('schools.no_vacancies.heading')
+
+    %p
+      = "To"
+      = link_to 'create', new_school_vacancy_path(school)
+      = 'a good vacancy listing for your school, you will need the following information:'
+
+  .column-one-half
+    %h2.heading-small Required
+    %ul.list.list-bullet
+      - t('schools.no_vacancies.bullets.mandatory').each do |bullet|
+        %li= bullet
+
+  .column-one-half
+    %h2.heading-small Optional
+    %ul.list.list-bullet
+      - t('schools.no_vacancies.bullets.optional').each do |bullet|
+        %li= bullet
