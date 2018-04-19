@@ -5,6 +5,12 @@ module VacancyScraper::NorthEastSchools
   class Scraper
     include ActionView::Helpers::SanitizeHelper
 
+    SUBJECTS_REGEX = 'Chemistry|Economics|General Science|History|Maths|Other|Primary|' \
+                      'Spanish|Art|Classics|English Language|Geography|ICT|Media Studies|' \
+                      'Physical Education|Psychology|Statistics|Biology|Design Technology|' \
+                      'English Literature|German|Latin|Music|Physics|Religious Studies|' \
+                      'Business Studies|Drama|French|Health and Social care|Law|Politics|Sociology'.freeze
+
     def initialize(url)
       @vacancy_url = url
     end
@@ -60,8 +66,7 @@ module VacancyScraper::NorthEastSchools
     end
 
     def subject
-      subjects = Subject.pluck(:name).join('|')
-      job_title[/(#{subjects})/, 1]
+      job_title[/(#{SUBJECTS_REGEX})/, 1]
     end
 
     def school_name

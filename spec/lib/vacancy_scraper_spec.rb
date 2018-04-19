@@ -5,9 +5,6 @@ require 'vacancy_scraper'
 RSpec.describe VacancyScraper::NorthEastSchools do
   context 'Scraping NorthEastSchool vacancies' do
     before(:each) do
-      ['Math', 'Mathematics', 'Psychology', 'English', 'Physics'].each do |name|
-        Subject.create(name: name)
-      end
       create(:pay_scale, code: 'MPS1', salary: 22917)
       create(:pay_scale, code: 'UPS3', salary: 38633)
       create(:pay_scale, code: 'LPS5', salary: 44544)
@@ -128,6 +125,8 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         let(:vacancy_url) { 'https://www.jobsinschoolsnortheast.com/job/assistant-curriculum-leader-mathematics-2/' }
         let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(vacancy_url) }
         before do
+          stub_const('VacancyScraper::NorthEastSchools::Scraper::SUBJECTS_REGEX',
+                     'English|Economics|General Science|Math')
           math_teacher = File.read(Rails.root.join('spec', 'fixtures', 'math-teacher.html'))
           stub_request(:get, vacancy_url).to_return(body: math_teacher, status: 200)
         end
@@ -248,6 +247,9 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(url) }
 
         before do
+          stub_const('VacancyScraper::NorthEastSchools::Scraper::SUBJECTS_REGEX',
+                     'English|Economics|General Science|History')
+
           teacher = File.read(Rails.root.join('spec', 'fixtures', 'english-teacher.html'))
           stub_request(:get, url).to_return(body: teacher, status: 200)
         end
