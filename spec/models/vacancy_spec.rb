@@ -250,4 +250,54 @@ RSpec.describe Vacancy, type: :model do
       end
     end
   end
+
+  context 'Content sanitization' do
+    it '#job_description' do
+      html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
+      vacancy = build(:vacancy, job_description: html)
+
+      sanitized_html = '<p> a paragraph with a link</p><br>'
+      expect(vacancy.job_description).to eq(sanitized_html)
+    end
+
+    it '#job_title' do
+      title = '<strong>School teacher </strong>'
+      vacancy = build(:vacancy, job_title: title)
+
+      sanitized_title = 'School teacher '
+      expect(vacancy.job_title).to eq(sanitized_title)
+    end
+
+    it '#benefits' do
+      benefits = '<ul><li><a href="">Gym membership</a></li></ul>'
+      vacancy = build(:vacancy, benefits: benefits)
+
+      sanitized_benefits = '<ul><li>Gym membership</li></ul>'
+      expect(vacancy.benefits).to eq(sanitized_benefits)
+    end
+
+    it '#experience' do
+      experience = '<strong>2 years experience</strong><script>'
+      vacancy = build(:vacancy, experience: experience)
+
+      sanitized_experience = '<strong>2 years experience</strong>'
+      expect(vacancy.experience).to eq(sanitized_experience)
+    end
+
+    it '#qualifications' do
+      qualifications = '<em>Degree in Teaching</em><br><a href="a-link">more info</a>'
+      vacancy = build(:vacancy, qualifications: qualifications)
+
+      sanitized_qualifications = '<em>Degree in Teaching</em><br>more info'
+      expect(vacancy.qualifications).to eq(sanitized_qualifications)
+    end
+
+    it '#education' do
+      education = '<p><a href="http://university-of-london">University of London</a></p>'
+      vacancy = build(:vacancy, education: education)
+
+      sanitized_education = '<p>University of London</p>'
+      expect(vacancy.education).to eq(sanitized_education)
+    end
+  end
 end
