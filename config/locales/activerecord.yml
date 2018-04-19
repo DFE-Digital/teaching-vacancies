@@ -6,6 +6,7 @@ en:
       too_long:
         other: is too long (maximum is %{count} characters)
       less_than_or_equal_to: must be less than or equal to %{count}
+      taken: has already been taken
   activerecord:
     errors:
       models:
