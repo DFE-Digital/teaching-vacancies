@@ -21,7 +21,7 @@
           = t('app.title')
         %ul#proposition-links
           %li
-            - if current_user
+            - if authenticated?
               = link_to t('nav.sign_out'), sessions_path, method: :delete
             - else
               = link_to t('nav.sign_in'), new_sessions_path

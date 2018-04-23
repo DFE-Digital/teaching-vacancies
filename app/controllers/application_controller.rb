@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :check_staging_auth, except: :check
   before_action :set_headers
 
-  include CurrentUser
+  include AuthenticationConcerns
 
   def check
     render json: { status: 'OK' }, status: 200

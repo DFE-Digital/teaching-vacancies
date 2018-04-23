@@ -1,11 +1,11 @@
-module CurrentUser
+module AuthenticationConcerns
   extend ActiveSupport::Concern
 
   included do
-    helper_method :current_user
+    helper_method :authenticated?
   end
 
-  def current_user
+  def authenticated?
     session[:session_id].present? && session[:urn].present?
   end
 end
