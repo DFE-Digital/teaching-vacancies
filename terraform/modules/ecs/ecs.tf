@@ -23,6 +23,7 @@ resource "aws_ecs_service" "web" {
   desired_count   = "${var.ecs_service_task_count}"
 
   deployment_minimum_healthy_percent = 50
+  health_check_grace_period_seconds = 30
 
   load_balancer {
     target_group_arn = "${var.aws_alb_target_group_arn}"
