@@ -6,6 +6,10 @@ en:
       too_long:
         other: is too long (maximum is %{count} characters)
       less_than_or_equal_to: must be less than or equal to %{count}
+      blank: can't be blank
+      salary:
+        invalid_format: please enter a valid salary
+        lower_than_minimum_payscale: must be at least equal to the minimum pay range of %{minimum_salary}
   activerecord:
     errors:
       models:
@@ -18,7 +22,6 @@ en:
             minimum_salary:
               blank: can't be blank
               greater_than_maximum_salary: must be lower than the maximum salary
-              lower_than_minimum_payscale: must be at least equal to the minimum pay range of %{minimum_salary}
             working_pattern:
               blank: can't be blank
             experience:

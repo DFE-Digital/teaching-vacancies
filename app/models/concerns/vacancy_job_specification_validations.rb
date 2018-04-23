@@ -3,33 +3,19 @@ module VacancyJobSpecificationValidations
   include ApplicationHelper
   include ActionView::Helpers::SanitizeHelper
 
-  MAX_INTEGER = 2147483647
-
   included do
-    validates :job_title, :job_description, :minimum_salary, :working_pattern, presence: true
+    validates :job_title, :job_description, :working_pattern, presence: true
 
-    validates :minimum_salary,
-              numericality: {
-                less_than_or_equal_to: MAX_INTEGER,
-                message: I18n.t('errors.messages.less_than_or_equal_to',
-                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER))
-              },
-              if: proc { |model| model.minimum_salary.present? }
+    validates :minimum_salary, salary: { presence: true, minimum_value: true }
+    validates :maximum_salary, salary: { presence: false }, if: :minimum_and_maximum_salary_present?
+    validate :working_hours
+    validate :minimum_salary_lower_than_maximum, if: :minimum_and_maximum_salary_present?
+    validates :job_title, length: { minimum: 10, maximum: 50 }, if: :job_title?
+    validates :job_description, length: { minimum: 10, maximum: 1000 }, if: :job_description?
+  end
 
-    validates :maximum_salary,
-              numericality: {
-                less_than_or_equal_to: MAX_INTEGER,
-                message: I18n.t('errors.messages.less_than_or_equal_to',
-                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER))
-              },
-              if: proc { |model| model.maximum_salary.present? }
-
-    validate :minimum_salary_lower_than_maximum, :working_hours
-    validate :minimum_salary_greater_than_minimum_payscale, if: proc { |a| a.minimum_salary.present? }
-    validates :job_title, length: { minimum: 10, maximum: 50 },
-                          if: proc { |model| model.job_title.present? }
-    validates :job_description, length: { minimum: 10, maximum: 1000 },
-                                if: proc { |model| model.job_description.present? }
+  def minimum_and_maximum_salary_present?
+    minimum_salary.present? && maximum_salary.present?
   end
 
   def job_description=(value)
@@ -65,16 +51,10 @@ module VacancyJobSpecificationValidations
 
   private
 
-  def minimum_at_least_minimum_payscale?
-    minimum_salary >= minimum_payscale_salary
-  end
-
-  def minimum_payscale_salary
-    @minimum_payscale_salar ||= PayScale.minimum_payscale_salary
-  end
-
   def minimum_higher_than_maximum_salary?
-    maximum_salary && minimum_salary > maximum_salary
+    BigDecimal(minimum_salary) > BigDecimal(maximum_salary)
+  rescue ArgumentError
+    true
   end
 
   def min_salary_must_be_greater_than_max_error
@@ -87,10 +67,5 @@ module VacancyJobSpecificationValidations
 
   def invalid_weekly_hours_error
     I18n.t('activerecord.errors.models.vacancy.attributes.weekly_hours.invalid')
-  end
-
-  def min_salary_lower_than_minimum_payscale_error
-    I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.lower_than_minimum_payscale',
-           minimum_salary: number_to_currency(minimum_payscale_salary))
   end
 end
