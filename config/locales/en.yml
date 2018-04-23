@@ -9,7 +9,11 @@ en:
   app:
     title: 'School Jobs'
     menu: 'Menu'
+  nav:
+    sign_in: 'Sign in as a school'
+    sign_out: 'Sign out'
   vacancies:
+    heading: 'Find a job in a school'
     sort_by: 'Sort by:'
     salary: 'Salary'
     publish_on: 'Date posted'
@@ -77,7 +81,7 @@ en:
       contact_email: 'This will appear in the public listing'
       application_link: 'This is the url linking the vacancy to your existing application page'
     filters:
-      title: 'Search vacancies'
+      title: 'Search job listings'
       location: 'Location'
       location_hint: 'Town, postcode or region'
       keyword: 'Keyword'
