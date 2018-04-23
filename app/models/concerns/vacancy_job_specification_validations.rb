@@ -12,7 +12,9 @@ module VacancyJobSpecificationValidations
               numericality: {
                 less_than_or_equal_to: MAX_INTEGER,
                 message: I18n.t('errors.messages.less_than_or_equal_to',
-                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER))
+                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER,
+                                                                                         separator: '.',
+                                                                                         delimiter: ''))
               },
               if: proc { |model| model.minimum_salary.present? }
 
@@ -20,7 +22,9 @@ module VacancyJobSpecificationValidations
               numericality: {
                 less_than_or_equal_to: MAX_INTEGER,
                 message: I18n.t('errors.messages.less_than_or_equal_to',
-                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER))
+                                count: ActionController::Base.helpers.number_to_currency(MAX_INTEGER,
+                                                                                         separator: '.',
+                                                                                         delimiter: ''))
               },
               if: proc { |model| model.maximum_salary.present? }
 

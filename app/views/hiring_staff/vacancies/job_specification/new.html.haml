@@ -38,21 +38,25 @@
         %label.form-label.form-label-bold= t('vacancies.salary_range')
         %span.form-hint= t('vacancies.form_hints.salary_range')
 
-        = f.input :minimum_salary,
-                  as: :integer,
-                  required: true,
-                  wrapper: false,
-                  label: false,
-                  input_html: {class: 'form-control-1-8'}
+        .salary_field
+          %span.pound_sign £
+          = f.input :minimum_salary,
+                    as: :integer,
+                    wrapper: false,
+                    required: true,
+                    label: false,
+                    input_html: { class: 'form-control-1-8', step: '100', min: '1000', max: '1000000' }
 
         to
 
-        = f.input :maximum_salary,
-                  as: :integer,
-                  wrapper: false,
-                  required: true,
-                  label: false,
-                  input_html: {class: 'form-control-1-8'}
+        .salary_field
+          %span.pound_sign £
+          = f.input :maximum_salary,
+                    as: :integer,
+                    wrapper: false,
+                    required: true,
+                    label: false,
+                    input_html: { class: 'form-control-1-8', step: '100', min: '1000', max: '1000000' }
 
       = f.input :pay_scale_id,
                   label: t('vacancies.pay_scale'),
