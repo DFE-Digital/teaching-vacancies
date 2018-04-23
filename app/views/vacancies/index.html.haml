@@ -6,7 +6,7 @@
   .column-one-third
     = render 'filters'
   .column-two-thirds
-    %p.heading-medium.mt0= pluralize_vacancy_count(@vacancy_count, 'vacancies.vacancy_count')
+    %p.heading-medium.mt0= @vacancies.total_count
     - if @vacancies.any?
       %div.sortable-links
         = t('vacancies.sort_by')
