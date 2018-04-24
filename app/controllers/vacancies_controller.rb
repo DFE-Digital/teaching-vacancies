@@ -12,8 +12,8 @@ class VacanciesController < ApplicationController
     @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
-    records = Vacancy.public_search(filters: @filters, sort: @sort).records
-    @vacancies = VacanciesPresenter.new(records.page(params[:page]))
+    records = Vacancy.public_search(filters: @filters, sort: @sort).page(params[:page]).records
+    @vacancies = VacanciesPresenter.new(records)
   end
 
   def show
@@ -31,7 +31,7 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(:keyword, :location, :minimum_salary, :maximum_salary, :phase, :phase, :working_pattern).to_hash
+    params.permit(:keyword, :location, :minimum_salary, :maximum_salary, :phase, :working_pattern).to_hash
   end
 
   def id
