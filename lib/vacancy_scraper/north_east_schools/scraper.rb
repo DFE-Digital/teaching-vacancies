@@ -24,8 +24,6 @@ module VacancyScraper::NorthEastSchools
     # rubocop:disable Metrics/AbcSize
     def map!
       return if vacancy_scraped?
-
-      school = School.where('levenshtein(name, ?) <= 3 or url like ?', school_name, "#{url}%").first
       return Rails.logger.debug("Unable to find school: #{school_name}") if school.nil?
 
       vacancy = Vacancy.new
@@ -52,6 +50,21 @@ module VacancyScraper::NorthEastSchools
       Rails.logger.debug("Unable to save scraped vacancy: #{e.inspect}")
     end
     # rubocop:enable Metrics/AbcSize
+
+    def school
+      @school ||= begin
+        school_matches = School.where('levenshtein(name, ?) <= 1 or url like ?', school_name, "#{url}%")
+
+        if school_matches.count > 1
+          Rails.logger.debug('Matched on multiple schools so could not safely determine the correct school' \
+                             "based on: #{school_name}. It matched: #{school_matches.map(&:name).join(', ')}" \
+                             "which have the following school URN: #{school_matches.map(&:urn).join(', ')}")
+          return nil
+        end
+
+        school_matches.first
+      end
+    end
 
     def vacancy
       @vacancy ||= page.css('article.featured-vacancies').first

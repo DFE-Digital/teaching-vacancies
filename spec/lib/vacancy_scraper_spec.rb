@@ -43,6 +43,27 @@ RSpec.describe VacancyScraper::NorthEastSchools do
     end
 
     context 'Vacancy examples' do
+      context 'when the school name is similar to others by 1 word' do
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(health_and_social_teacher_url) }
+        let(:health_and_social_teacher_url) do
+          'https://www.jobsinschoolsnortheast.com/job/teacher-health-social-care-5/'
+        end
+
+        before do
+          health_and_social_teacher = File.read(Rails.root.join('spec', 'fixtures', 'health-and-social.html'))
+          stub_request(:get, health_and_social_teacher_url).to_return(body: health_and_social_teacher, status: 200)
+        end
+
+        it 'returns the correct school' do
+          create(:school, name: 'Durham Sixth Form Centre')
+          create(:school, name: 'Eltham Sixth Form Centre')
+          create(:school, name: 'Fulham Sixth Form Centre')
+          create(:school, name: 'Witham Sixth Form Centre')
+
+          expect(scraper.school.name).to eq('Durham Sixth Form Centre')
+        end
+      end
+
       context 'Psychology teacher sample' do
         let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(psychology_teacher_url) }
         let(:psychology_teacher_url) { 'https://www.jobsinschoolsnortheast.com/job/teacher-of-psychology-2/' }
