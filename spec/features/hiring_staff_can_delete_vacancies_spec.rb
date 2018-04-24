@@ -21,6 +21,17 @@ RSpec.feature 'School deleting vacancies' do
     expect(page).to have_content('The vacancy has been deleted')
   end
 
+  scenario 'The last vacancy is deleted' do
+    vacancy = create(:vacancy, school: school)
+
+    visit school_path(school)
+    within("tr#vacancy_#{vacancy.id}") do
+      click_on 'Delete'
+    end
+
+    expect(page).to have_content(I18n.t('schools.no_vacancies.heading'))
+  end
+
   scenario 'Audits the vacancy deletion' do
     vacancy = create(:vacancy, school: school)
 
