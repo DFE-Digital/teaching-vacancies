@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'permission'
 RSpec.feature 'Hiring staff can sign in' do
   before do
     OmniAuth.config.test_mode = true
@@ -31,6 +32,7 @@ RSpec.feature 'Hiring staff can sign in' do
 
     expect(page).to have_content("Vacancies at #{school.name}")
     within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+    within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'with valid credentials that do not match a school', elasticsearch: true do
@@ -50,6 +52,7 @@ RSpec.feature 'Hiring staff can sign in' do
     click_on(I18n.t('nav.sign_in'))
 
     expect(page).to have_content(I18n.t('errors.sign_in.unauthorised'))
+    within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'with invalid credentials' do
