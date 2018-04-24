@@ -5,7 +5,7 @@
 
 .grid-row
   .column-full
-    - if @school.vacancies.any?
+    - if @school.vacancies.active.any?
       = render partial: 'vacancies', locals: { school: @school, vacancies: @vacancies }
     - else
       = render partial: 'no_vacancies', locals: { school: @school }
