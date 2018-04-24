@@ -65,8 +65,8 @@ en:
     already_published: 'This vacancy has already been published'
     draft: 'This vacancy is currently a draft version.'
     form_hints:
-      job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
-      description: 'Describe the job, the duties involved and the competencies required by the jobholder.'
+      job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
+      description: 'Describe the job, the duties involved and the competencies required by the jobholder in 1000 characters'
       main_subject: 'What subject will the teacher focus on?'
       salary_range: 'Annual pay before tax. No commas or decimal points, for example 30000'
       pay_scale: 'What pay scale does the job’s salary fall in?'

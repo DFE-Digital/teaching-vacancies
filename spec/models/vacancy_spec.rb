@@ -78,7 +78,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_description' do
         expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('errors.messages.too_long.other', count: 50_000))
       end
 
       it '#experience' do
