@@ -20,6 +20,7 @@ namespace :vacancies do
 
     desc 'Updates vacancies specified in lib/task/vacancies_to_update.yaml'
     task update: :environment do
+      Rake::Task["vacancies:data:delete"].execute
       Rails.logger.debug("Editing scraped vacancies in #{Rails.env}")
       vacancies = YAML.load_file(Rails.root.join('lib', 'tasks', 'vacancies_to_update.yaml'))['vacancies']['update']
 
