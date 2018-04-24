@@ -22,7 +22,7 @@ FactoryGirl.define do
     benefits { Faker::Lorem.sentence }
 
     trait :fail_minimum_validation do
-      job_title { Faker::Job.title[0..7] }
+      job_title { Faker::Job.title[0..2] }
       job_description { Faker::Lorem.paragraph[0..5] }
       experience { Faker::Lorem.paragraph[0..7] }
       education { Faker::Lorem.paragraph[0..8] }

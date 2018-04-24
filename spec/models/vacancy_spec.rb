@@ -34,7 +34,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+          .to eq(I18n.t('errors.messages.too_short.other', count: 4))
       end
 
       it '#job_description' do
