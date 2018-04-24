@@ -10,7 +10,7 @@ namespace :vacancies do
     desc 'Deletes vacancies specified in lib/tasks/vacancies_to_update.yaml'
     task delete: :environment do
       Rails.logger.debug("Deleting scraped vacancies in #{Rails.env}")
-      vacancies = YAML.load_file('./lib/tasks/vacancies_to_update.yaml')['vacancies']['delete']
+      vacancies = YAML.load_file(Rails.root.join('lib', 'tasks', 'vacancies_to_update.yaml'))['vacancies']['delete']
       vacancies.each do |slug|
         Rails.logger.debug("Deleting vacancy #{slug}")
         vacancy = Vacancy.find_by(slug: slug)
@@ -20,13 +20,14 @@ namespace :vacancies do
 
     desc 'Updates vacancies specified in lib/task/vacancies_to_update.yaml'
     task update: :environment do
-      Rake::Task["vacancies:data:delete"].execute
+      Rake::Task['vacancies:data:delete'].execute
       Rails.logger.debug("Editing scraped vacancies in #{Rails.env}")
       vacancies = YAML.load_file(Rails.root.join('lib', 'tasks', 'vacancies_to_update.yaml'))['vacancies']['update']
 
       vacancies.each do |data|
         Rails.logger.debug("Updating vacancy #{data['slug']}")
         vacancy = Vacancy.find_by(slug: data['slug'])
+        next if vacancy.nil?
         vacancy.job_title = data['job_title']
         vacancy.job_description = data['job_description'] if data.key?('job_description')
         vacancy.experience      = data['experience']      if data.key?('experience')

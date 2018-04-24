@@ -137,6 +137,11 @@ variable "update_pay_scale_task_command" {
   default     = ["rake", "data:update:pay_scale"]
 }
 
+variable "update_vacancies_task_command" {
+  description = "The Entrypoint for the update_vacancies task"
+  default     = ["rake", "vacancies:data:update"]
+}
+
 variable "vacancies_scrape_task_schedule" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "rate(60 minutes)"
