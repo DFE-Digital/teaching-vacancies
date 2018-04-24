@@ -7,16 +7,6 @@ RSpec.feature 'School deleting vacancies' do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
-  scenario 'Hiring staff should see a delete button for a vacancy' do
-    vacancy = create(:vacancy, school: school)
-
-    visit school_path(school)
-
-    within("tr#vacancy_#{vacancy.id}") do
-      expect(page).to have_content(I18n.t('buttons.delete'))
-    end
-  end
-
   scenario 'A school can delete a vacancy from a list' do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
