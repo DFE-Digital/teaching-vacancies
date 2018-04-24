@@ -30,9 +30,9 @@ module VacancyJobSpecificationValidations
 
     validate :minimum_salary_lower_than_maximum, :working_hours
     validate :minimum_salary_greater_than_minimum_payscale, if: proc { |a| a.minimum_salary.present? }
-    validates :job_title, length: { minimum: 10, maximum: 50 },
+    validates :job_title, length: { minimum: 4, maximum: 100 },
                           if: proc { |model| model.job_title.present? }
-    validates :job_description, length: { minimum: 10, maximum: 1000 },
+    validates :job_description, length: { minimum: 10, maximum: 50_000 },
                                 if: proc { |model| model.job_description.present? }
   end
 

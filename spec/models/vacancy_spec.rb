@@ -34,7 +34,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+          .to eq(I18n.t('errors.messages.too_short.other', count: 4))
       end
 
       it '#job_description' do
@@ -66,7 +66,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 50))
+          .to eq(I18n.t('errors.messages.too_long.other', count: 100))
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_description' do
         expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('errors.messages.too_long.other', count: 50_000))
       end
 
       it '#experience' do
