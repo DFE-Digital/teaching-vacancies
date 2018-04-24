@@ -11,6 +11,8 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
 
     CSV.foreach(csv_file_location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
       School.transaction do
+        next if row['EstablishmentStatus (name)'].eql?('Closed')
+
         school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
         school_type.label = row['EstablishmentTypeGroup (name)']
 
