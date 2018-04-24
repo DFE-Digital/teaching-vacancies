@@ -12,7 +12,7 @@ RSpec.feature 'Viewing a vacancy' do
   end
 
   scenario 'should not display a map when a school has no geocoding' do
-    school = create(:school)
+    school = create(:school, easting: nil, northing: nil)
     vacancy = create(:vacancy, school: school)
     visit vacancy_path(vacancy)
     expect(page).not_to have_css('div#map_zoom')
