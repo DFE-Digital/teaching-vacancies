@@ -6,7 +6,6 @@ FactoryGirl.define do
     association :school
 
     job_title { Faker::Lorem.sentence[1...50] }
-    headline { Faker::Lorem.sentence[1...50] }
     working_pattern { :full_time }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }
@@ -23,8 +22,7 @@ FactoryGirl.define do
     benefits { Faker::Lorem.sentence }
 
     trait :fail_minimum_validation do
-      job_title { Faker::Job.title[0..7] }
-      headline { Faker::Lorem.sentence[0..6] }
+      job_title { Faker::Job.title[0..2] }
       job_description { Faker::Lorem.paragraph[0..5] }
       experience { Faker::Lorem.paragraph[0..7] }
       education { Faker::Lorem.paragraph[0..8] }
@@ -32,9 +30,8 @@ FactoryGirl.define do
     end
 
     trait :fail_maximum_validation do
-      job_title { Faker::Lorem.paragraph[0..70] }
-      headline { Faker::Lorem.paragraph[0..70] }
-      job_description { Faker::Lorem.characters(10001) }
+      job_title { Faker::Lorem.paragraph[0..101] }
+      job_description { Faker::Lorem.characters(50001) }
       experience { Faker::Lorem.characters(1010) }
       education { Faker::Lorem.characters(1005) }
       qualifications { Faker::Lorem.characters(1002) }

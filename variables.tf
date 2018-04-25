@@ -132,6 +132,11 @@ variable "sessions_trim_task_command" {
   default     = ["rake", "db:sessions:trim"]
 }
 
+variable "update_pay_scale_task_command" {
+  description = "The Entrypoint for the update_pay_scale task"
+  default     = ["rake", "data:update:pay_scale"]
+}
+
 variable "vacancies_scrape_task_schedule" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "rate(60 minutes)"

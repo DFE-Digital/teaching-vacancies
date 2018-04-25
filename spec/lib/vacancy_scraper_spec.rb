@@ -5,9 +5,6 @@ require 'vacancy_scraper'
 RSpec.describe VacancyScraper::NorthEastSchools do
   context 'Scraping NorthEastSchool vacancies' do
     before(:each) do
-      ['Math', 'Mathematics', 'Psychology', 'English', 'Physics'].each do |name|
-        Subject.create(name: name)
-      end
       create(:pay_scale, code: 'MPS1', salary: 22917)
       create(:pay_scale, code: 'UPS3', salary: 38633)
       create(:pay_scale, code: 'LPS5', salary: 44544)
@@ -46,6 +43,27 @@ RSpec.describe VacancyScraper::NorthEastSchools do
     end
 
     context 'Vacancy examples' do
+      context 'when the school name is similar to others by 1 word' do
+        let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(health_and_social_teacher_url) }
+        let(:health_and_social_teacher_url) do
+          'https://www.jobsinschoolsnortheast.com/job/teacher-health-social-care-5/'
+        end
+
+        before do
+          health_and_social_teacher = File.read(Rails.root.join('spec', 'fixtures', 'health-and-social.html'))
+          stub_request(:get, health_and_social_teacher_url).to_return(body: health_and_social_teacher, status: 200)
+        end
+
+        it 'returns the correct school' do
+          create(:school, name: 'Durham Sixth Form Centre')
+          create(:school, name: 'Eltham Sixth Form Centre')
+          create(:school, name: 'Fulham Sixth Form Centre')
+          create(:school, name: 'Witham Sixth Form Centre')
+
+          expect(scraper.school.name).to eq('Durham Sixth Form Centre')
+        end
+      end
+
       context 'Psychology teacher sample' do
         let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(psychology_teacher_url) }
         let(:psychology_teacher_url) { 'https://www.jobsinschoolsnortheast.com/job/teacher-of-psychology-2/' }
@@ -60,12 +78,12 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         end
 
         it '#job_description' do
-          expect(scraper.job_description).to include(
-            'Kings Priory School'
+          expect(scraper.job_description).to_not include(
+            'please click <a href="https://kingspriory.careers.eteach.com/o/teacher-of-psychology">here \
+            </a> to be redirected'
           )
-          expect(scraper.job_description).not_to include(
-            '<p>Kings Priory School'
-          )
+
+          expect(scraper.job_description).to include('please click here to be redirected')
         end
 
         it '#url' do
@@ -128,6 +146,8 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         let(:vacancy_url) { 'https://www.jobsinschoolsnortheast.com/job/assistant-curriculum-leader-mathematics-2/' }
         let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(vacancy_url) }
         before do
+          stub_const('VacancyScraper::NorthEastSchools::Scraper::SUBJECTS_REGEX',
+                     'English|Economics|General Science|Math')
           math_teacher = File.read(Rails.root.join('spec', 'fixtures', 'math-teacher.html'))
           stub_request(:get, vacancy_url).to_return(body: math_teacher, status: 200)
         end
@@ -138,9 +158,6 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'ASSISTANT CURRICULUM LEADER: MATHEMATICS PermanentTMPS/UPS + TLR2B (£4,443)'
-          )
-          expect(scraper.job_description).not_to include(
             '<p><strong>ASSISTANT CURRICULUM LEADER: MATHEMATICS </strong></p>'
           )
         end
@@ -201,9 +218,6 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'Permanent Main Scale Teacher plus TLR2B (KS2 and maths)'
-          )
-          expect(scraper.job_description).not_to include(
             '<p><strong>Permanent Main Scale Teacher plus TLR2B (KS2 and maths)</strong></p>'
           )
         end
@@ -254,6 +268,9 @@ RSpec.describe VacancyScraper::NorthEastSchools do
         let(:scraper) { VacancyScraper::NorthEastSchools::Scraper.new(url) }
 
         before do
+          stub_const('VacancyScraper::NorthEastSchools::Scraper::SUBJECTS_REGEX',
+                     'English|Economics|General Science|History')
+
           teacher = File.read(Rails.root.join('spec', 'fixtures', 'english-teacher.html'))
           stub_request(:get, url).to_return(body: teacher, status: 200)
         end
@@ -264,10 +281,11 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#job_description' do
           expect(scraper.job_description).to include(
-            'NQT /Main/Upper Pay Ranges: £22,917 – £38,633 per annum'
-          )
-          expect(scraper.job_description).not_to include(
             '<p>NQT /Main/Upper Pay Ranges: £22,917 – £38,633 per annum</p>'
+          )
+
+          expect(scraper.job_description).to_not include(
+            '<p> <p>'
           )
         end
 

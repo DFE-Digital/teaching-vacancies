@@ -7,8 +7,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     visit vacancy_path(published_vacancy)
 
     expect(page).to have_content(published_vacancy.job_title)
-    expect(page).to have_content(published_vacancy.headline)
-    expect(page).to have_content(published_vacancy.job_description)
+    expect(page.html).to include(published_vacancy.job_description)
     expect(page).to have_content(published_vacancy.salary_range)
     expect(page).to have_content(published_vacancy.contact_email)
   end
@@ -40,7 +39,8 @@ RSpec.feature 'Viewing a single published vacancy' do
 
     visit vacancy_path(vacancy)
 
-    expect(script_tag_content(wrapper_class: '.jobref')).to eq(vacancy_json_ld(vacancy).to_json)
+    expect(script_tag_content(wrapper_class: '.jobref'))
+      .to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)).to_json)
   end
 
   context 'A user viewing a vacancy' do
@@ -50,6 +50,19 @@ RSpec.feature 'Viewing a single published vacancy' do
       click_on 'Apply for this job'
 
       expect(page.current_url).to eq vacancy.application_link
+    end
+
+    scenario 'does not see headers of empty fields' do
+      vacancy = build(:vacancy, education: nil, qualifications: nil,
+                                experience: nil, benefits: nil, slug: 'vacancy')
+      vacancy.save(validate: false)
+
+      visit vacancy_path(vacancy)
+
+      expect(page).to_not have_content(I18n.t('vacancies.education'))
+      expect(page).to_not have_content(I18n.t('vacancies.qualifications'))
+      expect(page).to_not have_content(I18n.t('vacancies.experience'))
+      expect(page).to_not have_content(I18n.t('vacancies.benefits'))
     end
   end
 end

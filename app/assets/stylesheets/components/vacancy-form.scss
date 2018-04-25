@@ -1,10 +1,25 @@
 .vacancy-form {
-  
+
   .form-control {
     width: 100%;
     &.text {
       max-width: 100%;
     }
   }
+
+  .salary_field {
+    @include clearfix;
+    position: relative;
+    .pound_sign {
+      position: absolute;
+        bottom: 6px;
+        left: 8px;
+    }
+    #job_specification_form_minimum_salary,
+    #job_specification_form_maximum_salary {
+      padding-left: 18px;
+    }
+  }
+
 
 }

@@ -20,13 +20,6 @@
           = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'job_title')
       %div
         %dt.cya-question
-          = t('vacancies.headline')
-        %dd.cya-answer
-          = @vacancy.headline
-        %dd.cya-change
-          = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'headline')
-      %div
-        %dt.cya-question
           = t('vacancies.description')
         %dd.cya-answer
           = @vacancy.job_description
@@ -139,18 +132,18 @@
           = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'application_link')
       %div
         %dt.cya-question
-          = t('vacancies.deadline_date')
-        %dd.cya-answer
-          = format_date @vacancy.expires_on
-        %dd.cya-change
-          = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'deadline')
-      %div
-        %dt.cya-question
           = t('vacancies.publication_date')
         %dd.cya-answer
           = format_date @vacancy.publish_on
         %dd.cya-change
           = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'publish_on')
+      %div
+        %dt.cya-question
+          = t('vacancies.deadline_date')
+        %dd.cya-answer
+          = format_date @vacancy.expires_on
+        %dd.cya-change
+          = link_to t('buttons.change'), application_details_school_vacancy_path(@school, anchor: 'deadline')
 
     %h2.heading-medium Now submit your vacancy
     %p= t('vacancies.confirmation_summary')

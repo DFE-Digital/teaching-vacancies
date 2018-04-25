@@ -3,6 +3,14 @@ require 'nokogiri'
 
 module VacancyScraper::NorthEastSchools
   class Scraper
+    include ActionView::Helpers::SanitizeHelper
+
+    SUBJECTS_REGEX = 'Chemistry|Economics|General Science|History|Maths|Other|Primary|' \
+                      'Spanish|Art|Classics|English Language|Geography|ICT|Media Studies|' \
+                      'Physical Education|Psychology|Statistics|Biology|Design Technology|' \
+                      'English Literature|German|Latin|Music|Physics|Religious Studies|' \
+                      'Business Studies|Drama|French|Health and Social care|Law|Politics|Sociology'.freeze
+
     def initialize(url)
       @vacancy_url = url
     end
@@ -16,13 +24,10 @@ module VacancyScraper::NorthEastSchools
     # rubocop:disable Metrics/AbcSize
     def map!
       return if vacancy_scraped?
-
-      school = School.where('levenshtein(name, ?) <= 3 or url like ?', school_name, "#{url}%").first
       return Rails.logger.debug("Unable to find school: #{school_name}") if school.nil?
 
       vacancy = Vacancy.new
       vacancy.job_title = job_title
-      vacancy.headline = job_title
       vacancy.subject = Subject.find_by(name: subject)
       vacancy.school = school
       vacancy.job_description = job_description
@@ -46,6 +51,21 @@ module VacancyScraper::NorthEastSchools
     end
     # rubocop:enable Metrics/AbcSize
 
+    def school
+      @school ||= begin
+        school_matches = School.where('levenshtein(name, ?) <= 1 or url like ?', school_name, "#{url}%")
+
+        if school_matches.count > 1
+          Rails.logger.debug('Matched on multiple schools so could not safely determine the correct school' \
+                             "based on: #{school_name}. It matched: #{school_matches.map(&:name).join(', ')}" \
+                             "which have the following school URN: #{school_matches.map(&:urn).join(', ')}")
+          return nil
+        end
+
+        school_matches.first
+      end
+    end
+
     def vacancy
       @vacancy ||= page.css('article.featured-vacancies').first
     end
@@ -55,12 +75,11 @@ module VacancyScraper::NorthEastSchools
     end
 
     def job_description
-      Nokogiri::HTML(body.to_html).text
+      sanitize(body.to_html)
     end
 
     def subject
-      subjects = Subject.pluck(:name).join('|')
-      job_title[/(#{subjects})/, 1]
+      job_title[/(#{SUBJECTS_REGEX})/, 1]
     end
 
     def school_name
@@ -161,6 +180,8 @@ module VacancyScraper::NorthEastSchools
       xpath = '//div[@class="job-list-mobile"]/following-sibling::*[not(self::div[@id="schoolinfo"])' \
         'and not(self::div[@id="apply"]) and not(self::div[@class="supporting-documents"])]'
       @body ||= vacancy.xpath(xpath)
+      remove_blank_paragraphs
+      @body
     end
 
     def starts_on
@@ -202,10 +223,15 @@ module VacancyScraper::NorthEastSchools
 
     private
 
+    def remove_blank_paragraphs
+      nodes = @body.xpath('//p').select { |n| n.text.blank? }
+      nodes.each { |n| @body.delete(n) }
+    end
+
     def valid?(vacancy)
       vacancy.job_description.present? && vacancy.job_title.present? &&
-        vacancy.working_pattern.present? && vacancy.headline.present? &&
-        vacancy.expires_on.present? && vacancy.expires_on > vacancy.publish_on
+        vacancy.working_pattern.present? && vacancy.expires_on.present? &&
+        vacancy.expires_on > vacancy.publish_on
     end
 
     def vacancy_scraped?

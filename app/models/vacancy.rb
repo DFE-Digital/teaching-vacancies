@@ -16,7 +16,6 @@ class Vacancy < ApplicationRecord
 
   mappings dynamic: 'false' do
     indexes :job_title, type: :string, analyzer: 'english'
-    indexes :headline, analyzer: 'english'
     indexes :job_description, analyzer: 'english'
 
     indexes :school do
@@ -87,6 +86,13 @@ class Vacancy < ApplicationRecord
   def trash!
     self.status = :trashed
     save(validate: false)
+  end
+
+  def application_link=(value)
+    # Data may not include a scheme/protocol so we must be careful when creating
+    # links that Rails doesn't make them incorrectly relative.
+    value = Addressable::URI.heuristic_parse(value).to_s
+    super(value)
   end
 
   private

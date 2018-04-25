@@ -72,8 +72,15 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'returns true' do
-        expect(controller.authenticate?).to eq(true)
+        expect(controller.authenticate?).to eq(false)
       end
+    end
+  end
+
+  describe 'sets headers' do
+    it 'robots are asked not to follow' do
+      get :check
+      expect(response.headers['X-Robots-Tag']).to eq('none')
     end
   end
 end

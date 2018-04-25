@@ -1,11 +1,18 @@
 class Permission
   USER_TO_SCHOOL_MAPPING = {
     'a5161a87-94d6-4723-823b-90d10a5760d6' => '137138', # test@
-    '0535c532-31e2-4170-9846-225f5b1347aa' => '110627', # benwick@
-    '3e2728aa-958c-42fe-9890-39f6d8b8496a' => '137138', # bexleyheath@
     '7d842528-52c8-49db-9deb-6bd4d9aaf7c8' => '111692', # fiona@
-    'd486e1aa-180c-4871-8c26-f12a590cdac3' => '137060', # tolworthtest@
-    '64f35537-9d8f-468d-ab81-e73ba328970e' => '137060', # tolworth@
+    '072c5093-522f-42d2-bdd7-4f8eaac13f6a' => '137138', # despo@
+    '7cc40258-46ae-484e-8c5f-df1b29409757' => '137138', # gaz@
+    'b1217fdd-931c-4763-9d2a-6bb78a5c74fe' => '137138', # hilary@
+    '301a4244-b1e4-4449-be41-19aa22653b18' => '137138', # isobel@
+    'bbbcc38c-b0fa-4d44-ac8e-c0c833207071' => '137138', # leanne@
+    'f7973e5c-8035-42ce-aaaa-31e88d182507' => '137138', # michael@
+    '38c07d17-e16b-4607-8b4a-b8cb79e603bc' => '137138', # tom@
+    'f53a9c87-2ad7-47cb-af7b-341d0940196d' => '137138', # ellie@
+    '65adc1e9-3a8c-4392-babe-444f1618da60' => '143291', # qehs@
+    '60259165-9f06-4e2e-9dbf-ce84ec5085f0' => '141297', # cromwellacademy@
+    'd1b3cdd6-a02b-48e7-8b38-a5eb9d2f0044' => '137475', # hinchbk@
   }.freeze
 
   def initialize(identifier:)

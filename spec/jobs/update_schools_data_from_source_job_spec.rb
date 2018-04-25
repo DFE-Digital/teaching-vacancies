@@ -136,7 +136,6 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
 
         expect(School.find_by(urn: '100002')).to be_present
         expect(School.find_by(urn: '100003')).to be_present
-        expect(School.find_by(urn: '100004')).to be_present
         expect(School.find_by(urn: '100005')).to be_present
         expect(School.find_by(urn: '100006')).to be_present
         expect(School.find_by(urn: '100007')).to be_present

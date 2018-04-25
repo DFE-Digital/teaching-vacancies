@@ -14,23 +14,24 @@
       %span.heading-secondary
         = @vacancy.location
 
-    %p.lede
-      = @vacancy.headline
-
     %h2.heading-medium= t('vacancies.description')
     %p= @vacancy.job_description
 
-    %h2.heading-medium= t('vacancies.education')
-    %p= @vacancy.education
+    - if @vacancy.education?
+      %h2.heading-medium= t('vacancies.education')
+      %p= @vacancy.education
 
-    %h2.heading-medium= t('vacancies.qualifications')
-    %p= @vacancy.qualifications
+    - if @vacancy.qualifications?
+      %h2.heading-medium= t('vacancies.qualifications')
+      %p= @vacancy.qualifications
 
-    %h2.heading-medium= t('vacancies.experience')
-    %p= @vacancy.experience
+    - if @vacancy.experience?
+      %h2.heading-medium= t('vacancies.experience')
+      %p= @vacancy.experience
 
-    %h2.heading-medium= t('vacancies.benefits')
-    %p= @vacancy.benefits
+    - if @vacancy.benefits?
+      %h2.heading-medium= t('vacancies.benefits')
+      %p= @vacancy.benefits
 
     %hr
     %h2.heading-medium
@@ -57,21 +58,10 @@
 
     - if @vacancy.school.geolocation
       %div#map_zoom
-      :javascript
-        function initMap() {
-          var myLatLng = {lat: #{@vacancy.school.geolocation.x}, lng: #{@vacancy.school.geolocation.y }};
+      = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
+                                                            lat: @vacancy.school_geolocation.x,
+                                                            lng: @vacancy.school_geolocation.y }
 
-          var map = new google.maps.Map(document.getElementById('map_zoom'), {
-            zoom: 17,
-            center: myLatLng
-          });
-
-          var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: '#{@vacancy.school.name}'
-          });
-        }
       %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
   .column-one-third

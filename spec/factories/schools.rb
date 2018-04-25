@@ -11,6 +11,8 @@ FactoryGirl.define do
     county { Faker::Address.state_abbr }
     postcode { Faker::Address.postcode }
     phase { :secondary }
+    easting { '1' }
+    northing { '1' }
 
     trait :primary do
       phase { :primary }

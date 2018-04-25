@@ -1,13 +1,15 @@
 class VacancyFilters
   attr_reader :location, :keyword, :minimum_salary, :maximum_salary, :working_pattern, :phase
 
-  def initialize(params)
-    @location = params[:location]
-    @keyword = params[:keyword]
-    @minimum_salary = params[:minimum_salary]
-    @maximum_salary = params[:maximum_salary]
-    @working_pattern = extract_working_pattern(params)
-    @phase = School.phases.include?(params[:phase]) ? params[:phase] : nil
+  def initialize(args)
+    args = ActiveSupport::HashWithIndifferentAccess.new(args)
+
+    @location = args[:location]
+    @keyword = args[:keyword]
+    @minimum_salary = args[:minimum_salary]
+    @maximum_salary = args[:maximum_salary]
+    @working_pattern = extract_working_pattern(args)
+    @phase = School.phases.include?(args[:phase]) ? args[:phase] : nil
   end
 
   private

@@ -47,7 +47,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   private
 
   def job_specification_form
-    params.require(:job_specification_form).permit(:job_title, :job_description, :headline, :leadership_id,
+    params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
                                                    :minimum_salary, :maximum_salary, :working_pattern,
                                                    :benefits, :weekly_hours, :subject_id, :pay_scale_id,
                                                    :starts_on_dd, :starts_on_mm, :starts_on_yyyy,

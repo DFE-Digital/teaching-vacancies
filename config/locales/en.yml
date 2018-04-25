@@ -1,4 +1,7 @@
 en:
+  date:
+    formats:
+      hinttext: "%d %-m %Y"
   number:
     currency:
       format:
@@ -6,7 +9,12 @@ en:
   app:
     title: 'School Jobs'
     menu: 'Menu'
+  nav:
+    sign_in: 'Sign in as a school'
+    sign_out: 'Sign out'
+    school_page_link: 'My vacancies'
   vacancies:
+    heading: 'Find a job in a school'
     sort_by: 'Sort by:'
     salary: 'Salary'
     publish_on: 'Date posted'
@@ -29,7 +37,6 @@ en:
     vacancy_count_plural: 'There are %{count} vacancies that match your search.'
     no_vacancies: 'No vacancies found. Try expanding your search.'
     job_title: 'Job title'
-    headline: 'Headline'
     benefits: 'Employee benefits'
     salary_range: 'Salary range'
     per_year: 'per year'
@@ -58,25 +65,24 @@ en:
     already_published: 'This vacancy has already been published'
     draft: 'This vacancy is currently a draft version.'
     form_hints:
-      job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)."
-      headline: 'Sum up the job in a single sentence, which will appear at the top of the listing.'
-      description: 'Describe the job, the duties involved and the competencies required by the jobholder.'
+      job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
+      description: 'Describe the job, the duties involved and the competencies required by the jobholder in 1000 characters'
       main_subject: 'What subject will the teacher focus on?'
-      salary_range: 'Annual pay before tax (do not include £ sign)'
+      salary_range: 'Annual pay before tax. No commas or decimal points, for example 30000'
       pay_scale: 'What pay scale does the job’s salary fall in?'
       weekly_hours: 'Number of hours to be worked each week'
-      start_date: 'For example, 31 9 2018'
-      end_date: 'For example, 31 2 2019'
+      start_date: 'For example, %{date}'
+      end_date: 'For example, %{date}'
       education: 'Degree or certificate needed for the role'
       qualifications: 'Specific qualifications required for this role'
       experience: 'Expected teaching or other experience'
-      deadline_date: 'For example, 31 11 2017'
-      publication_date: 'For example, 31 10 2017'
+      deadline_date: 'For example, %{date}'
+      publication_date: 'For example, %{date}'
       benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
       contact_email: 'This will appear in the public listing'
       application_link: 'This is the url linking the vacancy to your existing application page'
     filters:
-      title: 'Search vacancies'
+      title: 'Search job listings'
       location: 'Location'
       location_hint: 'Town, postcode or region'
       keyword: 'Keyword'
@@ -102,27 +108,27 @@ en:
       index: 'Vacancies at %{school}'
     no_vacancies:
       heading: 'You have no current vacancies.'
-      list_title: 'To create a good vacancy listing, you will need:'
       bullets:
-        - 'a job title'
-        - 'a headline for the posting'
-        - 'a job description'
-        - 'a link to apply'
-        - 'details of employee benefits (optional)'
-        - 'the main subject (optional)'
-        - 'a salary range'
-        - 'a pay scale (optional)'
-        - 'a working pattern (optional)'
-        - 'weekly hours (optional)'
-        - 'leadership level (optional)'
-        - 'expected start date (optional)'
-        - 'end date (for fixed-term jobs)'
-        - 'educational requirements'
-        - 'qualifications required'
-        - 'experience required'
-        - 'a contact email address'
-        - 'a link to apply online'
-        - 'the deadline for applications'
+        mandatory:
+          - 'a job title'
+          - 'a job description'
+          - 'a link to apply'
+          - 'a salary range'
+          - 'educational requirements'
+          - 'qualifications required'
+          - 'experience required'
+          - 'a contact email address'
+          - 'a link to apply online'
+          - 'the deadline for applications'
+        optional:
+          - 'details of employee benefits'
+          - 'the main subject'
+          - 'a pay scale'
+          - 'a working pattern'
+          - 'weekly hours'
+          - 'leadership level'
+          - 'expected start date'
+          - 'end date (for fixed-term jobs)'
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'
@@ -149,5 +155,5 @@ en:
     url:
       invalid: is not a valid URL
 
-  error_pages:
-    help_email: email@example.com
+  help:
+    email: isobel.croot@digital.education.gov.uk

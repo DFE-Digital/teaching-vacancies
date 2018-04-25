@@ -7,7 +7,6 @@ RSpec.describe Vacancy, type: :model do
     context 'a new record' do
       it { should validate_presence_of(:working_pattern) }
       it { should validate_presence_of(:job_title) }
-      it { should validate_presence_of(:headline) }
       it { should validate_presence_of(:job_description) }
       it { should validate_presence_of(:minimum_salary) }
     end
@@ -17,7 +16,6 @@ RSpec.describe Vacancy, type: :model do
         Vacancy.create(
           school: create(:school),
           job_title: 'Primary teacher',
-          headline: 'We are looking for a great teacher',
           job_description: 'Teach a primary class.',
           minimum_salary: 20_000,
           working_pattern: :full_time
@@ -36,12 +34,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
-      end
-
-      it '#headline' do
-        expect(subject.errors.messages[:headline].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+          .to eq(I18n.t('errors.messages.too_short.other', count: 4))
       end
 
       it '#job_description' do
@@ -73,12 +66,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 50))
-      end
-
-      it '#headline' do
-        expect(subject.errors.messages[:headline].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 50))
+          .to eq(I18n.t('errors.messages.too_long.other', count: 100))
       end
     end
 
@@ -90,7 +78,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_description' do
         expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('errors.messages.too_long.other', count: 50_000))
       end
 
       it '#experience' do
@@ -117,12 +105,12 @@ RSpec.describe Vacancy, type: :model do
 
       it '#minimum_salary' do
         expect(subject.errors.messages[:minimum_salary].first)
-          .to eq('must be less than or equal to £2,147,483,647.00')
+          .to eq('must be less than or equal to £2147483647.00')
       end
 
       it '#maximum_salary' do
         expect(subject.errors.messages[:maximum_salary].first)
-          .to eq('must be less than or equal to £2,147,483,647.00')
+          .to eq('must be less than or equal to £2147483647.00')
       end
     end
 
@@ -239,6 +227,77 @@ RSpec.describe Vacancy, type: :model do
       vacancy = create(:vacancy, school: school)
 
       expect(vacancy.school_name).to eq('St James School')
+    end
+  end
+
+  describe '#application_link' do
+    it 'returns the url' do
+      vacancy = create(:vacancy, application_link: 'https://example.com')
+      expect(vacancy.application_link).to eql('https://example.com')
+    end
+
+    context 'when a protocol was not provided' do
+      it 'returns an absolute url with `http` as the protocol' do
+        vacancy = create(:vacancy, application_link: 'example.com')
+        expect(vacancy.application_link).to eql('http://example.com')
+      end
+    end
+
+    context 'when only the `www` sub domain was provided' do
+      it 'returns an absolute url with `http` as the protocol' do
+        vacancy = create(:vacancy, application_link: 'www.example.com')
+        expect(vacancy.application_link).to eql('http://www.example.com')
+      end
+    end
+  end
+
+  context 'Content sanitization' do
+    it '#job_description' do
+      html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
+      vacancy = build(:vacancy, job_description: html)
+
+      sanitized_html = '<p> a paragraph with a link</p><br>'
+      expect(vacancy.job_description).to eq(sanitized_html)
+    end
+
+    it '#job_title' do
+      title = '<strong>School teacher </strong>'
+      vacancy = build(:vacancy, job_title: title)
+
+      sanitized_title = 'School teacher '
+      expect(vacancy.job_title).to eq(sanitized_title)
+    end
+
+    it '#benefits' do
+      benefits = '<ul><li><a href="">Gym membership</a></li></ul>'
+      vacancy = build(:vacancy, benefits: benefits)
+
+      sanitized_benefits = '<ul><li>Gym membership</li></ul>'
+      expect(vacancy.benefits).to eq(sanitized_benefits)
+    end
+
+    it '#experience' do
+      experience = '<strong>2 years experience</strong><script>'
+      vacancy = build(:vacancy, experience: experience)
+
+      sanitized_experience = '<strong>2 years experience</strong>'
+      expect(vacancy.experience).to eq(sanitized_experience)
+    end
+
+    it '#qualifications' do
+      qualifications = '<em>Degree in Teaching</em><br><a href="a-link">more info</a>'
+      vacancy = build(:vacancy, qualifications: qualifications)
+
+      sanitized_qualifications = '<em>Degree in Teaching</em><br>more info'
+      expect(vacancy.qualifications).to eq(sanitized_qualifications)
+    end
+
+    it '#education' do
+      education = '<p><a href="http://university-of-london">University of London</a></p>'
+      vacancy = build(:vacancy, education: education)
+
+      sanitized_education = '<p>University of London</p>'
+      expect(vacancy.education).to eq(sanitized_education)
     end
   end
 end

@@ -12,12 +12,6 @@
                 hint: t('vacancies.form_hints.job_title'),
                 wrapper_html: {id: 'job_title'},
                 required: true
-      = f.input :headline,
-                label: t('vacancies.headline'),
-                hint: t('vacancies.form_hints.headline'),
-                input_html: {rows: 5},
-                wrapper_html: {id: 'headline'},
-                required: true
       = f.input :job_description,
                 as: :text,
                 label: t('vacancies.description'),
@@ -42,21 +36,25 @@
         %label.form-label.form-label-bold= t('vacancies.salary_range')
         %span.form-hint= t('vacancies.form_hints.salary_range')
 
-        = f.input :minimum_salary,
-                  as: :integer,
-                  required: true,
-                  wrapper: false,
-                  label: false,
-                  input_html: {class: 'form-control-1-8'}
+        .salary_field
+          %span.pound_sign £
+          = f.input :minimum_salary,
+                    as: :integer,
+                    required: true,
+                    wrapper: false,
+                    label: false,
+                    input_html: { class: 'form-control-1-8', step: '100', min: '1000', max: '1000000', onchange: "this.value = this.value.replace(/,/g, '')" }
 
         to
 
-        = f.input :maximum_salary,
-                  as: :integer,
-                  wrapper: false,
-                  required: true,
-                  label: false,
-                  input_html: {class: 'form-control-1-8'}
+        .salary_field
+          %span.pound_sign £
+          = f.input :maximum_salary,
+                    as: :integer,
+                    wrapper: false,
+                    required: true,
+                    label: false,
+                    input_html: { class: 'form-control-1-8', step: '100', min: '1000', max: '1000000', onchange: "this.value = this.value.replace(/,/g, '')" }
 
       = f.input :pay_scale_id,
                   label: t('vacancies.pay_scale'),
@@ -86,13 +84,15 @@
         = f.gov_uk_date_field :starts_on,
           legend_text: "#{t('vacancies.starts_on')} (optional)",
           legend_class: 'form-label-bold',
-          form_hint_text: t('vacancies.form_hints.start_date')
+          form_hint_text: t('vacancies.form_hints.start_date',
+                            date: l(Date.today + 3.months, format: :hinttext))
 
 
       %div.form-group#ends_on
         = f.gov_uk_date_field :ends_on,
           legend_text: "#{t('vacancies.ends_on')} (optional)",
           legend_class: 'form-label-bold',
-          form_hint_text: t('vacancies.form_hints.end_date')
+          form_hint_text: t('vacancies.form_hints.end_date',
+                            date: l(Date.today + 6.months, format: :hinttext))
 
       = f.button :submit, t('buttons.update_vacancy')

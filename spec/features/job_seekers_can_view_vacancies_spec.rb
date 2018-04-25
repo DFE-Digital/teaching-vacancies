@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
     vacancy_count = Vacancy.default_per_page + 1 # must be larger than the default page limit
-    vacancy_count.times { FactoryGirl.create(:vacancy) }
+    create_list(:vacancy, vacancy_count)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path

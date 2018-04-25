@@ -1,7 +1,6 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    fill_in 'job_specification_form[headline]', with: vacancy.headline
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
     select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
     select vacancy.pay_scale, from: 'job_specification_form[pay_scale_id]'
@@ -36,20 +35,19 @@ module VacancyHelpers
 
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.headline)
-    expect(page).to have_content(vacancy.job_description)
+    expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
-    expect(page).to have_content(vacancy.benefits)
+    expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale)
     expect(page).to have_content(vacancy.weekly_hours)
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
 
-    expect(page).to have_content(vacancy.education)
-    expect(page).to have_content(vacancy.qualifications)
-    expect(page).to have_content(vacancy.experience)
+    expect(page.html).to include(vacancy.education)
+    expect(page.html).to include(vacancy.qualifications)
+    expect(page.html).to include(vacancy.experience)
     expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_content(vacancy.contact_email)
@@ -70,13 +68,14 @@ module VacancyHelpers
     {
       '@context': 'http://schema.org',
       '@type': 'JobPosting',
+      'title': vacancy.job_title,
       'jobBenefits': vacancy.benefits,
-      'datePosted': vacancy.publish_on.to_s(:db),
-      'description': vacancy.headline,
+      'datePosted': vacancy.publish_on.to_time.iso8601,
+      'description': vacancy.job_description,
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,
-      'employmentType': vacancy.working_pattern&.titleize,
+      'employmentType': vacancy.working_pattern_for_job_schema,
       'industry': 'Education',
       'jobLocation': {
         '@type': 'Place',
@@ -88,20 +87,23 @@ module VacancyHelpers
           'postalCode': vacancy.school.postcode,
         },
       },
-      'responsibilities': vacancy.job_description,
-      'title': vacancy.job_title,
       'url': vacancy_url(vacancy),
       'baseSalary': {
         '@type': 'MonetaryAmount',
-        'minValue': vacancy.minimum_salary,
-        'maxValue': vacancy.maximum_salary,
         'currency': 'GBP',
+        value: {
+          '@type': 'QuantitativeValue',
+          'minValue': vacancy.minimum_salary,
+          'maxValue': vacancy.maximum_salary,
+          'unitText': 'YEAR'
+        },
       },
       'hiringOrganization': {
-        '@type': 'Organization',
+        '@type': 'School',
         'name': vacancy.school.name,
+        'identifier': vacancy.school.urn,
       },
-      'validThrough': vacancy.expires_on.to_s(:db),
+      'validThrough': vacancy.expires_on.to_time.iso8601,
       'workHours': vacancy.weekly_hours,
     }
   end

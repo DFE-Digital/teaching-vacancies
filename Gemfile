@@ -21,6 +21,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks', '~> 5'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
+gem 'addressable'
+gem 'sanitize', '~> 4.6'
 
 gem 'omniauth'
 gem 'omniauth-azure-activedirectory'
