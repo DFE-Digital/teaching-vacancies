@@ -5,7 +5,7 @@ FactoryGirl.define do
     association :leadership
     association :school
 
-    job_title { Faker::Lorem.sentence[1...50] }
+    job_title { Faker::Lorem.sentence[1...50].strip }
     working_pattern { :full_time }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }

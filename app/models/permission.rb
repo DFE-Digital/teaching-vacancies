@@ -1,5 +1,11 @@
 class Permission
-  USER_TO_SCHOOL_MAPPING = {
+  HIRING_STAFF_USER_TO_SCHOOL_MAPPING = {
+    '65adc1e9-3a8c-4392-babe-444f1618da60' => '143291', # qehs@
+    '60259165-9f06-4e2e-9dbf-ce84ec5085f0' => '141297', # cromwellacademy@
+    'd1b3cdd6-a02b-48e7-8b38-a5eb9d2f0044' => '137475', # hinchbk@
+  }.freeze
+
+  TEAM_USER_TO_SCHOOL_MAPPING = {
     'a5161a87-94d6-4723-823b-90d10a5760d6' => '137138', # test@
     '7d842528-52c8-49db-9deb-6bd4d9aaf7c8' => '111692', # fiona@
     '072c5093-522f-42d2-bdd7-4f8eaac13f6a' => '137138', # despo@
@@ -10,9 +16,6 @@ class Permission
     'f7973e5c-8035-42ce-aaaa-31e88d182507' => '137138', # michael@
     '38c07d17-e16b-4607-8b4a-b8cb79e603bc' => '137138', # tom@
     'f53a9c87-2ad7-47cb-af7b-341d0940196d' => '137138', # ellie@
-    '65adc1e9-3a8c-4392-babe-444f1618da60' => '143291', # qehs@
-    '60259165-9f06-4e2e-9dbf-ce84ec5085f0' => '141297', # cromwellacademy@
-    'd1b3cdd6-a02b-48e7-8b38-a5eb9d2f0044' => '137475', # hinchbk@
   }.freeze
 
   def initialize(identifier:)
@@ -25,6 +28,10 @@ class Permission
 
   def school_urn
     return ENV['OVERRIDE_SCHOOL_URN'] if !Rails.env.production? && ENV['OVERRIDE_SCHOOL_URN'].present?
-    USER_TO_SCHOOL_MAPPING[@identifier]
+    if !Rails.env.production? && TEAM_USER_TO_SCHOOL_MAPPING.key?(@identifier)
+      return TEAM_USER_TO_SCHOOL_MAPPING[@identifier]
+    end
+
+    HIRING_STAFF_USER_TO_SCHOOL_MAPPING[@identifier]
   end
 end

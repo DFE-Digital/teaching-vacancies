@@ -12,7 +12,7 @@ RSpec.feature 'School viewing public listings' do
 
   let!(:school) { create(:school, urn: '110627') }
   before(:each) do
-    stub_const('Permission::USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
+    stub_const('Permission::HIRING_STAFF_USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
   end
 
   scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do

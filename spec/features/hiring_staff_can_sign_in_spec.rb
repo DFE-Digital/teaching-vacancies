@@ -11,7 +11,7 @@ RSpec.feature 'Hiring staff can sign in' do
 
   let!(:school) { create(:school, urn: '110627') }
   before(:each) do
-    stub_const('Permission::USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
+    stub_const('Permission::HIRING_STAFF_USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
   end
 
   scenario 'with valid credentials that do match a school', elasticsearch: true do
