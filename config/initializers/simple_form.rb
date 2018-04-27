@@ -96,15 +96,18 @@ SimpleForm.setup do |config|
   # You can wrap each item in a collection of radio/check boxes with a tag,
   # defaulting to :span.
   # config.item_wrapper_tag = :span
-   config.wrappers :inline_checkbox, :tag => 'fieldset', :class => 'form-group', :error_class => 'error' do |b|
-     b.use :html5
-     b.wrapper :class => 'multiple-choice' do |ba|
-       ba.use :input
-       ba.use :label_text, wrap_with: { tag: 'label' }
-       ba.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
-       ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
-     end
-   end
+  config.wrappers :inline_checkbox, :tag => 'div',
+                                    :class => 'form-group',
+                                    :error_class => 'error' do |checkbox|
+    checkbox.use :html5
+    checkbox.wrapper :class => 'multiple-choice' do |field|
+      field.use :input
+      field.use :label_text, wrap_with: { tag: 'label', class: 'form-label form-label-bold' }
+    end
+
+    checkbox.use :error, :wrap_with => { :tag => 'div', :class => 'help-inline' }
+    checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'form-hint' }
+  end
 
   # You can define a class to use in all item wrappers. Defaulting to none.
   # config.item_wrapper_class = nil
