@@ -166,4 +166,34 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
       end
     end
   end
+
+  context 'where the CSV contains an incomplete school website URL' do
+    it 'is converted to include the protocol' do
+      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
+        .to_return(body:
+                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
+                   "Town,Postcode\n" \
+                   "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
+      UpdateSchoolsDataFromSourceJob.new.perform
+
+      school.reload
+
+      expect(school.url).to eql('http://test.com')
+    end
+
+    it 'does not return a value if the website is not set' do
+      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
+        .to_return(body:
+                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
+                   "Town,Postcode\n" \
+                   "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
+      UpdateSchoolsDataFromSourceJob.new.perform
+
+      school.reload
+
+      expect(school.url).to eql('')
+    end
+  end
 end
