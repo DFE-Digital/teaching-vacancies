@@ -3,7 +3,8 @@ module VacancyHelpers
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
     select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
-    select vacancy.pay_scale, from: 'job_specification_form[pay_scale_id]'
+    select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
+    select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
     check 'job_specification_form[flexible_working]' if vacancy.flexible_working
@@ -42,7 +43,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.working_pattern)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page.html).to include(vacancy.benefits)
-    expect(page).to have_content(vacancy.pay_scale)
+    expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.weekly_hours)
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
@@ -66,7 +67,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.working_pattern)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page.html).to include(vacancy.benefits)
-    expect(page).to have_content(vacancy.pay_scale)
+    expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.weekly_hours) if vacancy.part_time?
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)

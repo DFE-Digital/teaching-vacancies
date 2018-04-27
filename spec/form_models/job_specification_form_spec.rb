@@ -41,7 +41,8 @@ RSpec.describe JobSpecificationForm, type: :model do
   end
 
   context 'when all attributes are valid' do
-    let(:payscale) { create(:pay_scale) }
+    let(:min_pay_scale) { create(:pay_scale) }
+    let(:max_pay_scale) { create(:pay_scale) }
     let(:main_subject) { create(:subject) }
     let(:leadership) { create(:leadership) }
 
@@ -51,7 +52,9 @@ RSpec.describe JobSpecificationForm, type: :model do
                                                         working_pattern: :full_time,
                                                         minimum_salary: 20000, maximum_salary: 40000,
                                                         benefits: 'benefits', subject_id: main_subject.id,
-                                                        pay_scale_id: payscale.id, leadership_id: leadership.id)
+                                                        min_pay_scale_id: min_pay_scale.id,
+                                                        max_pay_scale_id: max_pay_scale.id,
+                                                        leadership_id: leadership.id)
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
@@ -60,7 +63,8 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.vacancy.minimum_salary).to eq(20000)
       expect(job_specification_form.vacancy.maximum_salary).to eq(40000)
       expect(job_specification_form.vacancy.benefits).to eq('benefits')
-      expect(job_specification_form.vacancy.pay_scale.label).to eq(payscale.label)
+      expect(job_specification_form.vacancy.min_pay_scale.label).to eq(min_pay_scale.label)
+      expect(job_specification_form.vacancy.max_pay_scale.label).to eq(max_pay_scale.label)
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)
       expect(job_specification_form.vacancy.leadership.title).to eq(leadership.title)
     end

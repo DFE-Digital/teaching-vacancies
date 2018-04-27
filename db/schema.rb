@@ -9,8 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema.define(version: 20180419160314) do
+ActiveRecord::Schema.define(version: 20180426143050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,7 +122,7 @@ ActiveRecord::Schema.define(version: 20180419160314) do
     t.date "starts_on"
     t.date "ends_on"
     t.uuid "subject_id"
-    t.uuid "pay_scale_id"
+    t.uuid "min_pay_scale_id"
     t.uuid "leadership_id"
     t.text "education"
     t.text "qualifications"
@@ -138,9 +137,10 @@ ActiveRecord::Schema.define(version: 20180419160314) do
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
     t.string "application_link"
     t.boolean "flexible_working"
+    t.uuid "max_pay_scale_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
-    t.index ["pay_scale_id"], name: "index_vacancies_on_pay_scale_id"
+    t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
   end

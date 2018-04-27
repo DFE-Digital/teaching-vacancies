@@ -34,6 +34,13 @@
           = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'subject')
       %div
         %dt.cya-question
+          = t('vacancies.pay_scale')
+        %dd.cya-answer
+          =@vacancy.pay_scale_range
+        %dd.cya-change
+          = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'pay_scale')
+      %div
+        %dt.cya-question
           = t('vacancies.salary_range')
         %dd.cya-answer
           = @vacancy.salary_range("to")
@@ -61,13 +68,6 @@
           = @vacancy.benefits
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'benefits')
-      %div
-        %dt.cya-question
-          = t('vacancies.pay_scale')
-        %dd.cya-answer
-          =@vacancy.pay_scale
-        %dd.cya-change
-          = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'pay_scale')
       %div
         %dt.cya-question
           = t('vacancies.weekly_hours')

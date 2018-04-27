@@ -33,6 +33,25 @@
                 wrapper_html: {id: 'subject'},
                 collection: Subject.order(:name),
                 required: false
+                required: false
+      %fieldset.form-group#pay_scale_range
+        %label.form-label.form-label-bold="#{t('vacancies.pay_scale_range')} (optional)"
+        %span.form-hint= t('vacancies.form_hints.pay_scale_range')
+        = f.input :min_pay_scale_id,
+                  collection: pay_scale_options,
+                  label_method: :label,
+                  label: false,
+                  required: false,
+                  wrapper: false
+
+        to
+
+        = f.input :max_pay_scale_id,
+                  collection: pay_scale_options,
+                  label_method: :label,
+                  required: false,
+                  label: false,
+                  wrapper: false
 
       %fieldset.form-group#salary_range
         %label.form-label.form-label-bold= t('vacancies.salary_range')
@@ -58,13 +77,6 @@
                     label: false,
                     input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
 
-      = f.input :pay_scale_id,
-                  label: t('vacancies.pay_scale'),
-                  hint: t('vacancies.form_hints.pay_scale'),
-                  collection: PayScale.order(:label),
-                  label_method: :label,
-                  wrapper_html: {id: 'pay_scale'},
-                  required: false
       = f.input :working_pattern,
                 label: t('vacancies.working_pattern'),
                 collection: working_pattern_options,

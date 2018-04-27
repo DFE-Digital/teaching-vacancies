@@ -45,8 +45,9 @@ class VacancyPresenter < BasePresenter
     @main_subject ||= model.subject ? model.subject.name : ''
   end
 
-  def pay_scale
-    @pay_scale ||= model.pay_scale ? model.pay_scale.label : ''
+  def pay_scale_range
+    return '' if model.min_pay_scale.blank?
+    @pay_scale_range ||= model.max_pay_scale.blank? ? model.min_pay_scale.label : pay_scale_range_label
   end
 
   def publish_today?
@@ -68,5 +69,11 @@ class VacancyPresenter < BasePresenter
 
   def working_pattern_for_job_schema
     model.working_pattern.upcase
+  end
+
+  private
+
+  def pay_scale_range_label
+    "#{model.min_pay_scale.label} to #{model.max_pay_scale.label}"
   end
 end
