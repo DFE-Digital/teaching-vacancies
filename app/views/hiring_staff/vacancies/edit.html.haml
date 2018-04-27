@@ -62,7 +62,7 @@
         %dd.cya-answer
           =@vacancy.pay_scale_range
         %dd.cya-change
-          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'pay_scale')
+          = link_to t('buttons.change'), edit_school_vacancy_job_specification_path(@school, @vacancy.id, anchor: 'pay_scale_range')
       %div
         %dt.cya-question
           = t('vacancies.weekly_hours')
