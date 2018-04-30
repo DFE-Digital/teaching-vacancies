@@ -1,7 +1,7 @@
 # Teacher Vacancy Service (TVS)
 
 ### Prerequisites
- - [Docker](https://docs.docker.com/docker-for-mac)
+ - [Docker](https://docs.docker.com/docker-for-mac) greater than or equal to `18.03.1-ce-mac64 (24245)`
 
 
 ### Setting up the project
