@@ -1,7 +1,7 @@
 # Teacher Vacancy Service (TVS)
 
 ### Prerequisites
- - [Docker](https://docs.docker.com/docker-for-mac)
+ - [Docker](https://docs.docker.com/docker-for-mac) greater than or equal to `18.03.1-ce-mac64 (24245)`
 
 
 ### Setting up the project
@@ -9,7 +9,7 @@
 Copy the docker environment variables and fill in any missing secrets:
 
 ```
-$ cp docker-compose.dev.env.example docker-compose.dev.env
+$ cp docker-compose.env.example docker-compose.env
 ```
 
 Build the docker container and set up the database
