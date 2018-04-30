@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Remove all unused images before we build new ones…"
+docker image prune -f
+
 echo "Rebuiling the test server…"
 docker-compose --file=docker-compose.test.yml down -v --remove-orphans
 docker-compose --file=docker-compose.test.yml build
