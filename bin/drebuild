@@ -7,7 +7,7 @@ bin/dtest-server
 echo "Rebuilt and started the testing server for TVS."
 
 echo "Rebuiling the web server…"
-docker-compose down --remove-orphans
+docker-compose down -v --remove-orphans
 docker-compose build
 docker-compose run --rm web rake db:seed
 echo "Rebuilt and starting the web server for TVS."
