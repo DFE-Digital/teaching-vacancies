@@ -42,6 +42,7 @@ FactoryGirl.define do
     trait :complete do
       starts_on { Faker::Time.forward(30) }
       ends_on { Faker::Time.forward(60) }
+      flexible_working true
     end
 
     trait :draft do

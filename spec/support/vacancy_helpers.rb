@@ -6,6 +6,7 @@ module VacancyHelpers
     select vacancy.pay_scale, from: 'job_specification_form[pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
+    check 'job_specification_form[flexible_working]' if vacancy.flexible_working
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
@@ -39,6 +40,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
+    expect(page).to have_content("Flexible working #{vacancy.flexible_working}")
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale)
     expect(page).to have_content(vacancy.weekly_hours)
@@ -52,6 +54,29 @@ module VacancyHelpers
 
     expect(page).to have_content(vacancy.contact_email)
     expect(page).to have_content(vacancy.application_link)
+    expect(page).to have_content(vacancy.expires_on)
+    expect(page).to have_content(vacancy.publish_on)
+  end
+
+  def verify_vacancy_show_page_details(vacancy)
+    expect(page).to have_content(vacancy.job_title)
+    expect(page.html).to include(vacancy.job_description)
+    expect(page).to have_content(vacancy.subject.name)
+    expect(page).to have_content(vacancy.salary_range)
+    expect(page).to have_content(vacancy.working_pattern)
+    expect(page).to have_content("Flexible working #{vacancy.flexible_working}")
+    expect(page.html).to include(vacancy.benefits)
+    expect(page).to have_content(vacancy.pay_scale)
+    expect(page).to have_content(vacancy.weekly_hours) if vacancy.part_time?
+    expect(page).to have_content(vacancy.starts_on)
+    expect(page).to have_content(vacancy.ends_on)
+
+    expect(page.html).to include(vacancy.education)
+    expect(page.html).to include(vacancy.qualifications)
+    expect(page.html).to include(vacancy.experience)
+    expect(page).to have_content(vacancy.leadership.title)
+
+    expect(page).to have_link(I18n.t('vacancies.apply'), href: vacancy.application_link)
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
   end

@@ -78,4 +78,18 @@ RSpec.describe VacancyPresenter do
       expect(presenter.job_description).to eq('<p> call();Sanitized content</p>')
     end
   end
+
+  describe '#flexible_working' do
+    context 'it converts flexible working' do
+      it 'to Yes' do
+        vacancy = VacancyPresenter.new(build(:vacancy, :complete))
+        expect(vacancy.flexible_working).to eq('Yes')
+      end
+
+      it 'to No' do
+        vacancy = VacancyPresenter.new(build(:vacancy))
+        expect(vacancy.flexible_working).to eq('No')
+      end
+    end
+  end
 end

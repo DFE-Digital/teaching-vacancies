@@ -68,6 +68,10 @@
                 collection: working_pattern_options,
                 wrapper_html: {id: 'working_pattern'},
                 required: true
+      = f.input :flexible_working, as: :boolean,
+                hint: t('vacancies.form_hints.flexible_working'),
+                wrapper: :inline_checkbox,
+                wrapper_html: { id: 'flexible_working' }
       = f.input :weekly_hours,
                 label: t('vacancies.weekly_hours'),
                 as: :decimal,

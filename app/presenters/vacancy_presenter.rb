@@ -52,6 +52,10 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Time.zone.today
   end
 
+  def flexible_working
+    @flexible_working = model.flexible_working ? 'Yes' : 'No'
+  end
+
   def working_pattern
     model.working_pattern.sub('_', ' ').humanize
   end
