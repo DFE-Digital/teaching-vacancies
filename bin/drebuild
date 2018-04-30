@@ -1,12 +1,15 @@
 #!/bin/sh
 
-echo "Rebuiling the test server…"
+echo "Remove all unused images before we build new ones…"
+docker image prune -f
+
+echo "Rebuilding the test server…"
 docker-compose --file=docker-compose.test.yml down -v --remove-orphans
 docker-compose --file=docker-compose.test.yml build
 bin/dtest-server
 echo "Rebuilt and started the testing server for TVS."
 
-echo "Rebuiling the web server…"
+echo "Rebuilding the web server…"
 docker-compose down -v --remove-orphans
 docker-compose build
 docker-compose run --rm web rake db:seed
