@@ -8,6 +8,8 @@ class School < ApplicationRecord
 
   has_many :vacancies
 
+  validates :urn, uniqueness: true
+
   enum phase: {
     not_applicable: 0,
     nursery: 1,
