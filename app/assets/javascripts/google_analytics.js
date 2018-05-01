@@ -9,3 +9,9 @@ $(document).on('click', '.view-vacancy-link', function() {
     gtag('event', 'vacancy_visited');
   }
 );
+
+// Track when someone applies for a vacancy
+$(document).on('click', '.vacancy-apply-link', function() {
+    gtag('event', 'vacancy_applied');
+  }
+);

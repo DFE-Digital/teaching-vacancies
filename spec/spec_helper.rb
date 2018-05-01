@@ -2,7 +2,14 @@ require 'webmock/rspec'
 require 'rack_session_access/capybara'
 
 RSpec.configure do |config|
-  WebMock.allow_net_connect!
+  allowed_http_requests = [
+    'elasticsearch-test',
+    'localhost',
+    '127.0.0.1', # Required for Capybara sessions
+    'es', # Required for CI. Defined in ./buildspec.yml
+    'pg', # Required for CI. Defined in ./buildspec.yml
+  ]
+  WebMock.disable_net_connect!(allow: allowed_http_requests)
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
