@@ -541,6 +541,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
           expect(scraper.ends_on).to eq(nil)
         end
 
+        it '#application_link' do
+          expect(scraper.application_link).to eq("#{vacancy_url}#application")
+        end
+
         it 'not saved because it fails validation' do
           expect(Vacancy).to receive_message_chain(:where, :exists?).and_return(false)
           expect(School).to receive(:where).and_return([create(:school)])
