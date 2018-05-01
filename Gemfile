@@ -11,6 +11,8 @@ gem 'rails', '~> 5.1.4'
 
 gem 'puma', '~> 3.7'
 gem 'pg', '~> 0.18'
+
+gem 'will_paginate' # must be included before elasticsearch-model
 gem 'elasticsearch-model'
 gem 'faraday_middleware-aws-signers-v4'
 gem 'friendly_id'
@@ -33,7 +35,6 @@ gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit'
 gem 'govuk_template'
 gem 'haml-rails'
-gem 'kaminari'
 gem 'roadie-rails'
 gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version due to CVE-2018-3741
