@@ -4,6 +4,7 @@ class Permission
     '60259165-9f06-4e2e-9dbf-ce84ec5085f0' => '141297', # cromwellacademy@
     'd1b3cdd6-a02b-48e7-8b38-a5eb9d2f0044' => '137475', # hinchbk@
     '2e38e584-572b-41c5-bc0a-5ef9e05812a3' => '138088', # springfield@
+    '31c327a7-3cbd-4d84-ad5f-bc82802d0e4a' => '108531', # heatonmanor@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
