@@ -5,7 +5,7 @@ FactoryGirl.define do
     association :leadership
     association :school
 
-    job_title { Faker::Lorem.sentence[1...50].strip }
+    job_title { Faker::Lorem.sentence[1...30].strip }
     working_pattern { :full_time }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }
@@ -30,7 +30,7 @@ FactoryGirl.define do
     end
 
     trait :fail_maximum_validation do
-      job_title { Faker::Lorem.paragraph[0..150] }
+      job_title { Faker::Lorem.characters(150) }
       job_description { Faker::Lorem.characters(50001) }
       experience { Faker::Lorem.characters(1010) }
       education { Faker::Lorem.characters(1005) }
