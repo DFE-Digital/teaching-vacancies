@@ -48,6 +48,14 @@
           = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, anchor: 'working_pattern')
       %div
         %dt.cya-question
+          = t('vacancies.flexible_working')
+        %dd.cya-answer
+          = @vacancy.flexible_working
+        %dd.cya-change
+          = link_to t('buttons.change'), job_specification_school_vacancy_path(@school, acndhor: 'flexible_working')
+
+      %div
+        %dt.cya-question
           = t('vacancies.benefits')
         %dd.cya-answer
           = @vacancy.benefits

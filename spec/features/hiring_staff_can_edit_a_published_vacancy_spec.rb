@@ -141,14 +141,17 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
+        vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_vacancy_path(school, vacancy.id)
-        click_link_in_container_with_text(I18n.t('vacancies.application_link'))
 
-        fill_in 'application_details_form[application_link]', with: 'https://tvs.com'
+        click_link_in_container_with_text(I18n.t('vacancies.application_link'))
+        vacancy.application_link = 'https://tvs.com'
+
+        fill_in 'application_details_form[application_link]', with: vacancy.application_link
         click_on 'Update vacancy'
 
         expect(page).to have_content(I18n.t('messages.vacancies.updated'))
-        expect(page).to have_content('https://tvs.com')
+        verify_all_vacancy_details(vacancy)
       end
     end
 
