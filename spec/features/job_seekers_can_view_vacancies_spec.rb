@@ -81,14 +81,14 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).to have_content(I18n.t('vacancies.vacancy_count_plural', count: vacancies.count))
   end
 
-  scenario 'Should correctly singularize the number of vacancies returned without a search' do
+  scenario 'Should correctly singularize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 1)
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
     expect(page).to have_content(I18n.t('vacancies.vacancy_count_without_search', count: vacancies.count))
   end
 
-  scenario 'Should correctly pluralize the number of vacancies returned without a search' do
+  scenario 'Should correctly pluralize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 3)
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
