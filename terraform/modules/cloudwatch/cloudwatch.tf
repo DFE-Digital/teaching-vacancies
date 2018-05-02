@@ -1,5 +1,23 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_sns_topic" "cloudwatch_alerts" {
   name = "${var.project_name}-${var.environment}-cloudwatch-alerts"
+}
+
+resource "aws_sns_topic_policy" "sns_cloudwatch_alerts" {
+  arn = "${aws_sns_topic.cloudwatch_alerts.arn}"
+
+  policy = "${data.template_file.sns_cloudwatch_alerts_policy.rendered}"
+}
+
+data "template_file" "sns_cloudwatch_alerts_policy" {
+  template = "${file("./terraform/policies/sns-policy.json")}"
+
+  vars {
+    policy_id      = "${var.project_name}-${var.environment}-cloudwatch-alerts-policy"
+    sns_arn        = "${aws_sns_topic.cloudwatch_alerts.arn}"
+    aws_account_id = "${data.aws_caller_identity.current.account_id}"
+  }
 }
 
 resource "aws_kms_key" "cloudwatch_lambda" {
