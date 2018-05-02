@@ -34,6 +34,7 @@ variable "ecs_service_logspout_container_definition_file_path" {}
 variable "logspout_command" {
   type = "list"
 }
+variable "ecs_logspout_task_count" {}
 
 variable "import_schools_task_command" {
   type = "list"
