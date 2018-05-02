@@ -77,8 +77,9 @@
           %dt= t('vacancies.weekly_hours')
           %dd= @vacancy.weekly_hours
 
-        %dt= t('vacancies.flexible_working')
-        %dd= @vacancy.flexible_working
+        - if @vacancy.flexible_working?
+          %dt= t('vacancies.flexible_working')
+          %dd= @vacancy.flexible_working
 
         %dt= t('vacancies.expires_on')
         %dd= format_date(@vacancy.expires_on)
