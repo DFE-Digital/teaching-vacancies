@@ -240,7 +240,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school, vacancy.id)
-          click_link_in_container_with_text('Qualifications')
+          click_link_in_container_with_text('Essential qualifications')
 
           expect(page).to have_content('Step 2 of 3')
 
@@ -255,7 +255,7 @@ RSpec.feature 'Creating a vacancy' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           qualifications = vacancy.qualifications
           visit school_vacancy_review_path(school, vacancy.id)
-          click_link_in_container_with_text('Qualifications')
+          click_link_in_container_with_text('Essential qualifications')
 
           fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
           click_on 'Save and continue'
@@ -268,7 +268,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_vacancy_review_path(school, vacancy.id)
-          click_link_in_container_with_text('Educational requirements')
+          click_link_in_container_with_text('Essential educational requirements')
 
           expect(page).to have_content('Step 2 of 3')
 

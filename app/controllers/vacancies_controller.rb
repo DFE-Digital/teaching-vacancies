@@ -12,8 +12,9 @@ class VacanciesController < ApplicationController
     @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new(default_column: 'expires_on', default_order: 'asc')
                        .update(column: sort_column, order: sort_order)
-    records = Vacancy.public_search(filters: @filters, sort: @sort).records
-    @vacancies = VacanciesPresenter.new(records.page(params[:page]))
+
+    records = Vacancy.public_search(filters: @filters, sort: @sort).page(params[:page]).records
+    @vacancies = VacanciesPresenter.new(records, searched: searched?)
   end
 
   def show
@@ -72,5 +73,9 @@ class VacanciesController < ApplicationController
 
   def sort_order
     params[:sort_order]
+  end
+
+  def searched?
+    params[:commit] && params[:commit].eql?(I18n.t('buttons.apply_filters'))
   end
 end
