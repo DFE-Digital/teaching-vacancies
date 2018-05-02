@@ -9,6 +9,8 @@ module VacancyHelpers
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
     check 'job_specification_form[flexible_working]' if vacancy.flexible_working
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
+    fill_in 'job_specification_form[benefits]', with: vacancy.benefits
+    fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours
     fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
     fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')

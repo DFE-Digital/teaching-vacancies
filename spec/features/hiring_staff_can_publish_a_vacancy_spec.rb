@@ -165,8 +165,8 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
 
-        expect(page).to_not have_content('Step 3 of 3')
         expect(page).to have_content(I18n.t('vacancies.review'))
+        verify_all_vacancy_details(vacancy)
       end
     end
 
