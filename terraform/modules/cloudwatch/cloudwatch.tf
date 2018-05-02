@@ -134,5 +134,5 @@ resource "aws_cloudwatch_event_target" "code_pipeline_fail_sns_target" {
   rule      = "${aws_cloudwatch_event_rule.code_pipeline_fail.name}"
   target_id = "CodePipeLineFail"
   arn       = "${aws_sns_topic.cloudwatch_alerts.arn}"
-  input     = "{\"AlarmName\": \"Failed Pipeline\",\"NewStateValue\": \"ALARM\",\"NewStateReason\": \"Pipeline ${var.pipeline_name} has failed\"}"
+  input     = "{\"AlarmName\": \"Failed Pipeline\",\"NewStateValue\": \"SOFT_ALARM\",\"NewStateReason\": \"Pipeline ${var.pipeline_name} has failed\"}"
 }
