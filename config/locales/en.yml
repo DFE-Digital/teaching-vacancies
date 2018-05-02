@@ -7,7 +7,7 @@ en:
       format:
         unit: "£"
   app:
-    title: 'School Jobs'
+    title: 'Teaching Jobs'
     menu: 'Menu'
   nav:
     sign_in: 'Sign in as a school'
