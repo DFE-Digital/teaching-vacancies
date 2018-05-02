@@ -40,7 +40,7 @@ module VacancyScraper::NorthEastSchools
       vacancy.expires_on = ends_on
       vacancy.status = min_salary.to_i.positive? ? :published : :draft
       vacancy.publish_on = Time.zone.today
-      vacancy.application_link = "#{@vacancy_url}#apply"
+      vacancy.application_link = application_link
       vacancy.send :set_slug
 
       return vacancy.save(validate: false) if valid?(vacancy)
@@ -64,6 +64,10 @@ module VacancyScraper::NorthEastSchools
 
         school_matches.first
       end
+    end
+
+    def application_link
+      "#{@vacancy_url}#application"
     end
 
     def vacancy
