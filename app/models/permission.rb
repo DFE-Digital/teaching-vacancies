@@ -5,6 +5,11 @@ class Permission
     'd1b3cdd6-a02b-48e7-8b38-a5eb9d2f0044' => '137475', # hinchbk@
     '2e38e584-572b-41c5-bc0a-5ef9e05812a3' => '138088', # springfield@
     '31c327a7-3cbd-4d84-ad5f-bc82802d0e4a' => '108531', # heatonmanor@
+    '348db94b-5331-45f4-90c3-f61698eeb78d' => '111669', # thornaby.stockton@
+    'dee1927f-ce4f-40c3-8755-0517b54fe27c' => '108513', # stteresas@
+    'b86cd643-f811-4574-8b9f-fc9cfbb9a210' => '130908', # macmillan-academy@
+    '2a761502-7ebd-4358-b19d-3ef6b006735f' => '111637', # lps.rac@
+    'd9181457-126d-4860-b50e-659122cebd8c' => '136775', # sawstonvc@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
