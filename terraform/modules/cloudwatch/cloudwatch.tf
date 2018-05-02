@@ -13,7 +13,7 @@ resource "aws_kms_alias" "lambda" {
 }
 
 resource "aws_cloudwatch_log_group" "cloudwatch_lambda_log_group" {
-  name = "${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
+  name = "/aws/lambda/${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
 }
 
 resource "aws_iam_role" "slack_lambda_role" {
