@@ -117,6 +117,11 @@ variable "ecs_service_rake_task_definition_file_path" {
   default     = "./rake_task_definition.json"
 }
 
+variable "ecs_service_logspout_container_definition_file_path" {
+  description = "Logspout container definition"
+  default     = "./logspout_container_definition.json"
+}
+
 variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
   default     = ["rake", "data:schools:import"]
@@ -232,3 +237,7 @@ variable "load_balancer_check_path" {
 }
 
 variable "rollbar_access_token" {}
+
+variable "logspout_command" {
+  type = "list"
+}
