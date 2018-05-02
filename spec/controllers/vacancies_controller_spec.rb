@@ -47,6 +47,27 @@ RSpec.describe VacanciesController, type: :controller do
         get :index, params: received_values
       end
     end
+
+    it 'invokes pagination correctly to ensure sort order persists' do
+      create(:vacancy)
+
+      # This assertion ensures the ordering of search and pagination stays correct
+      # in future as the gem allows you to call `page` on 2 similar objects.
+      #
+      # Correct:
+      # - Vacancy.search.page.records
+      # - Vacancy.search.page => Elasticsearch::Model::Response::Records
+      # Incorrect:
+      # - Vacancy.search.records.page
+      # - Vacancy.search.records => Elasticsearch::Model::Response::Response
+
+      elasticsearch_response = instance_double(Elasticsearch::Model::Response::Response)
+      allow(Vacancy).to receive(:public_search).and_return(elasticsearch_response)
+      expect(elasticsearch_response).to receive(:page).and_return(elasticsearch_response)
+      expect(elasticsearch_response).to receive(:records).and_return([])
+
+      get :index
+    end
   end
 
   context 'JSON api' do

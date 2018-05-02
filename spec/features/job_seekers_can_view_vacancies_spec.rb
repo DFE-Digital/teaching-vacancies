@@ -59,7 +59,7 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).to have_link('2')
   end
 
-  scenario 'Should correctly singularize when one vacancy is returned by a search' do
+  scenario 'Should correctly singularize when one vacancy is returned by a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 1, subject: create(:subject, name: 'English'))
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
@@ -70,7 +70,7 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).to have_content(I18n.t('vacancies.vacancy_count', count: vacancies.count))
   end
 
-  scenario 'Should correctly pluralize the number of vacancies returned by a search' do
+  scenario 'Should correctly pluralize the number of vacancies returned by a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 3, subject: create(:subject, name: 'English'))
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
@@ -81,14 +81,14 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).to have_content(I18n.t('vacancies.vacancy_count_plural', count: vacancies.count))
   end
 
-  scenario 'Should correctly singularize the number of vacancies returned without a search' do
+  scenario 'Should correctly singularize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 1)
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
     expect(page).to have_content(I18n.t('vacancies.vacancy_count_without_search', count: vacancies.count))
   end
 
-  scenario 'Should correctly pluralize the number of vacancies returned without a search' do
+  scenario 'Should correctly pluralize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 3)
     Vacancy.__elasticsearch__.client.indices.flush
     visit vacancies_path
@@ -109,6 +109,7 @@ RSpec.feature 'Viewing vacancies' do
       expect(page).to have_content(I18n.t('vacancies.weekly_hours'))
       expect(page).to have_content(vacancy.weekly_hours)
     end
+
     scenario 'does not show the weekly hours if they are not set' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: nil)
       Vacancy.__elasticsearch__.client.indices.flush
