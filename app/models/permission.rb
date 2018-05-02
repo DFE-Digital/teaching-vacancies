@@ -1,5 +1,6 @@
 class Permission
   HIRING_STAFF_USER_TO_SCHOOL_MAPPING = {
+    '38c07d17-e16b-4607-8b4a-b8cb79e603bc' => '137138', # tom@
     '65adc1e9-3a8c-4392-babe-444f1618da60' => '143291', # qehs@
     '60259165-9f06-4e2e-9dbf-ce84ec5085f0' => '141297', # cromwellacademy@
     'd1b3cdd6-a02b-48e7-8b38-a5eb9d2f0044' => '137475', # hinchbk@
