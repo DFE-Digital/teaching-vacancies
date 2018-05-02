@@ -68,6 +68,8 @@ module "ecs" {
 
   update_pay_scale_task_command                  = "${var.update_pay_scale_task_command}"
 
+  update_vacancies_task_command                  = "${var.update_vacancies_task_command}"
+
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
 
