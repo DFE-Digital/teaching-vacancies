@@ -15,20 +15,20 @@ class Vacancy < ApplicationRecord
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
 
   mappings dynamic: 'false' do
-    indexes :job_title, type: :string, analyzer: 'english'
+    indexes :job_title, type: :text, analyzer: 'english'
     indexes :job_description, analyzer: 'english'
 
     indexes :school do
       indexes :name, analyzer: 'english'
       indexes :phase, type: :keyword
-      indexes :postcode, type: :string
-      indexes :town, type: :string
-      indexes :county, type: :string
-      indexes :address, type: :string
+      indexes :postcode, type: :text
+      indexes :town, type: :text
+      indexes :county, type: :text
+      indexes :address, type: :text
     end
 
     indexes :subject do
-      indexes :name, type: :string
+      indexes :name, type: :text
     end
 
     indexes :expires_on, type: :date
