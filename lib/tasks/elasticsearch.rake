@@ -3,7 +3,8 @@ namespace :elasticsearch do
   namespace :vacancies do
     task index: :environment do
       Rails.logger.debug("Indexing vacancies in #{Rails.env}")
-      Vacancy.__elasticsearch__.create_index! force: true
+      Vacancy.__elasticsearch__.client.indices.flush
+      Vacancy.import
     end
   end
 end
