@@ -11,6 +11,7 @@ class Permission
     'b86cd643-f811-4574-8b9f-fc9cfbb9a210' => '130908', # macmillan-academy@
     '2a761502-7ebd-4358-b19d-3ef6b006735f' => '111637', # lps.rac@
     'd9181457-126d-4860-b50e-659122cebd8c' => '136775', # sawstonvc@
+    '90604155-14d0-4bb3-9af0-9a8b9f90df63' => '136580', # swaveseyvc@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
