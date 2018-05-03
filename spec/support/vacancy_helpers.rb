@@ -40,7 +40,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
-    expect(page).to have_content("Flexible working #{vacancy.flexible_working}")
+    expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale)
     expect(page).to have_content(vacancy.weekly_hours)
@@ -64,7 +64,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
-    expect(page).to have_content("Flexible working #{vacancy.flexible_working}")
+    expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale)
     expect(page).to have_content(vacancy.weekly_hours) if vacancy.part_time?
