@@ -63,7 +63,12 @@ RSpec.describe VacancyPresenter do
 
     it 'returns the minimum payscale when no max_pay_scale is set' do
       vacancy = VacancyPresenter.new(build(:vacancy, max_pay_scale: nil))
-      expect(vacancy.pay_scale_range).to eq(vacancy.min_pay_scale.label)
+      expect(vacancy.pay_scale_range).to eq("from #{vacancy.min_pay_scale.label}")
+    end
+
+    it 'returns the maximum payscale when no min_pay_scale is set' do
+      vacancy = VacancyPresenter.new(build(:vacancy, min_pay_scale: nil))
+      expect(vacancy.pay_scale_range).to eq("up to #{vacancy.max_pay_scale.label}")
     end
 
     it 'returns the  payscale range when min_pay_scale and max_pay_scale are set' do
