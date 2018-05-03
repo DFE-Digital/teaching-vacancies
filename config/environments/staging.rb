@@ -83,6 +83,12 @@ Rails.application.configure do
   config.lograge.ignore_actions = ['ApplicationController#check']
   config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
 
+  # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
+  config.lograge.custom_options = lambda do |event|
+    exceptions = ['controller', 'action', 'format', 'id']
+    { params: event.payload[:params].except(*exceptions) }
+  end
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
