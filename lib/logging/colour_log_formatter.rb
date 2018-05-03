@@ -20,7 +20,7 @@ class ColourLogFormatter < Lograge::Formatters::KeyValue
   def format(key, value)
     line = super(key, value)
 
-    colour = FIELDS_COLOURS[key] || :default
+    colour = FIELDS_COLOURS[key] || :white
     ColorizedString.new(line).public_send(colour)
   end
 end
