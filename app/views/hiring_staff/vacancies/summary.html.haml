@@ -3,12 +3,8 @@
 .vacancy.grid-row
   .column-full
     .govuk-box-highlight.margin-bottom-large
-      %h1.heading-large.margin-top
+      %h1.heading-large.mv0
         = t('vacancies.submitted')
-      %p
-        The system reference number is
-        %br
-        %strong.heading-medium=@vacancy.reference
 
   .column-two-thirds
     - if @vacancy.publish_today?
