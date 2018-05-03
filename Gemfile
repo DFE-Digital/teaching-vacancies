@@ -23,6 +23,8 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'addressable'
 gem 'sanitize', '~> 4.6'
+gem 'lograge'
+gem 'colorize'
 
 gem 'omniauth'
 gem 'omniauth-azure-activedirectory'

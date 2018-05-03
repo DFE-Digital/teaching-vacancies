@@ -6,12 +6,7 @@
     "networkMode": "bridge",
     "entryPoint": ${entrypoint},
     "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "${project_name}-${environment}",
-        "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "${task_name}"
-      }
+      "logDriver": "json-file"
     },
     "environment": [
       {
