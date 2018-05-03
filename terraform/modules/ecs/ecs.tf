@@ -78,8 +78,8 @@ resource "aws_iam_role_policy" "scheduled_task_policy" {
 }
 
 /* the task definition for the web service */
-data "template_file" "web_task" {
-  template = "${file(var.ecs_service_task_definition_file_path)}"
+data "template_file" "web_container_definition" {
+  template = "${file(var.ecs_service_web_container_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -110,8 +110,8 @@ data "template_file" "web_task" {
 }
 
 /* import_schools task definition*/
-data "template_file" "import_schools_task" {
-  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
+data "template_file" "import_schools_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -135,8 +135,8 @@ data "template_file" "import_schools_task" {
 }
 
 /* vacancies_scrape task definition*/
-data "template_file" "vacancies_scrape_task" {
-  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
+data "template_file" "vacancies_scrape_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -160,8 +160,8 @@ data "template_file" "vacancies_scrape_task" {
 }
 
 /* trim sessions task definition*/
-data "template_file" "sessions_trim_task" {
-  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
+data "template_file" "sessions_trim_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -185,8 +185,8 @@ data "template_file" "sessions_trim_task" {
 }
 
 /* update_pay_scale task definition*/
-data "template_file" "update_pay_scale_task" {
-  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
+data "template_file" "update_pay_scale_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -210,8 +210,8 @@ data "template_file" "update_pay_scale_task" {
 }
 
 /* update_vacancies task definition*/
-data "template_file" "update_vacancies_task" {
-  template = "${file(var.ecs_service_rake_task_definition_file_path)}"
+data "template_file" "update_vacancies_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
@@ -245,7 +245,7 @@ data "template_file" "logspout_container_definition" {
 
 resource "aws_ecs_task_definition" "web" {
   family                   = "${var.ecs_service_task_name}"
-  container_definitions    = "${data.template_file.web_task.rendered}"
+  container_definitions    = "${data.template_file.web_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"
@@ -340,7 +340,7 @@ ECS ONE-OFF TASKS
 ======*/
 resource "aws_ecs_task_definition" "import_schools_task" {
   family                   = "${var.ecs_service_task_name}_import_schools_task"
-  container_definitions    = "${data.template_file.import_schools_task.rendered}"
+  container_definitions    = "${data.template_file.import_schools_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"
@@ -351,7 +351,7 @@ resource "aws_ecs_task_definition" "import_schools_task" {
 
 resource "aws_ecs_task_definition" "update_pay_scale_task" {
   family                   = "${var.ecs_service_task_name}_update_pay_scale_task"
-  container_definitions    = "${data.template_file.update_pay_scale_task.rendered}"
+  container_definitions    = "${data.template_file.update_pay_scale_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"
@@ -362,7 +362,7 @@ resource "aws_ecs_task_definition" "update_pay_scale_task" {
 
 resource "aws_ecs_task_definition" "update_vacancies_task" {
   family                   = "${var.ecs_service_task_name}_update_vacancies_task"
-  container_definitions    = "${data.template_file.update_vacancies_task.rendered}"
+  container_definitions    = "${data.template_file.update_vacancies_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"
@@ -376,7 +376,7 @@ ECS SCHEDULED TASKS
 ======*/
 resource "aws_ecs_task_definition" "vacancies_scrape_task" {
   family                   = "${var.ecs_service_task_name}_vacancies_scrape_task"
-  container_definitions    = "${data.template_file.vacancies_scrape_task.rendered}"
+  container_definitions    = "${data.template_file.vacancies_scrape_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"
@@ -405,7 +405,7 @@ resource "aws_cloudwatch_event_target" "vacancies_scrape_task_event" {
 
 resource "aws_ecs_task_definition" "sessions_trim_task" {
   family                   = "${var.ecs_service_task_name}_sessions_trim_task"
-  container_definitions    = "${data.template_file.sessions_trim_task.rendered}"
+  container_definitions    = "${data.template_file.sessions_trim_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
