@@ -14,7 +14,7 @@ en:
     sign_out: 'Sign out'
     school_page_link: 'My vacancies'
   vacancies:
-    heading: 'Find a job in a school'
+    heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
     salary: 'Salary'
     publish_on: 'Date posted'
