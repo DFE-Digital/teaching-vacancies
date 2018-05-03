@@ -90,6 +90,12 @@ Rails.application.configure do
   config.lograge.ignore_actions = ['ApplicationController#check']
   config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
 
+  # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
+  config.lograge.custom_options = lambda do |event|
+    exceptions = ['controller', 'action', 'format', 'id']
+    { params: event.payload[:params].except(*exceptions) }
+  end
+
   # Don't log SQL in production
   config.active_record.logger = nil
 
