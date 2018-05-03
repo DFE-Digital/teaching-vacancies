@@ -47,16 +47,20 @@ module "core" {
 module "ecs" {
   source = "./terraform/modules/ecs"
 
-  environment                                = "${terraform.workspace}"
-  project_name                               = "${var.project_name}"
-  region                                     = "${var.region}"
-  ecs_cluster_name                           = "${var.ecs_cluster_name}"
-  ecs_service_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_name}"
-  ecs_service_task_name                      = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
-  ecs_service_task_count                     = "${var.ecs_service_task_count}"
-  ecs_service_task_port                      = "${var.ecs_service_task_port}"
-  ecs_service_task_definition_file_path      = "${var.ecs_service_task_definition_file_path}"
-  ecs_service_rake_task_definition_file_path = "${var.ecs_service_rake_task_definition_file_path}"
+  environment                                     = "${terraform.workspace}"
+  project_name                                    = "${var.project_name}"
+  region                                          = "${var.region}"
+  ecs_cluster_name                                = "${var.ecs_cluster_name}"
+  ecs_service_name                                = "${var.project_name}_${terraform.workspace}_${var.ecs_service_name}"
+  ecs_service_task_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
+  ecs_service_task_count                          = "${var.ecs_service_task_count}"
+  ecs_service_task_port                           = "${var.ecs_service_task_port}"
+  ecs_service_web_container_definition_file_path  = "${var.ecs_service_web_container_definition_file_path}"
+  ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
+
+  ecs_service_logspout_container_definition_file_path = "${var.ecs_service_logspout_container_definition_file_path}"
+  logspout_command                                    = "${var.logspout_command}"
+  ecs_logspout_task_count                             = "${var.asg_min_size}"
 
   import_schools_task_command = "${var.import_schools_task_command}"
 

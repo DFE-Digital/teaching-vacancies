@@ -83,6 +83,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -187,6 +188,11 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    lograge (0.10.0)
+      actionpack (>= 4)
+      activesupport (>= 4)
+      railties (>= 4)
+      request_store (~> 1.0)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -271,6 +277,8 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    request_store (1.4.1)
+      rack (>= 1.4)
     roadie (3.2.2)
       css_parser (~> 1.4)
       nokogiri (~> 1.5)
@@ -383,6 +391,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   coffee-rails
+  colorize
   database_cleaner
   elasticsearch-extensions
   elasticsearch-model
@@ -402,6 +411,7 @@ DEPENDENCIES
   kaminari
   launchy
   listen (>= 3.0.5, < 3.2)
+  lograge
   omniauth
   omniauth-azure-activedirectory
   pg (~> 0.18)

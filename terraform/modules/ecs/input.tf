@@ -8,8 +8,8 @@ variable "ecs_service_task_count" {}
 variable "ecs_service_task_port" {}
 variable "aws_alb_target_group_arn" {}
 
-variable "ecs_service_task_definition_file_path" {}
-variable "ecs_service_rake_task_definition_file_path" {}
+variable "ecs_service_web_container_definition_file_path" {}
+variable "ecs_service_rake_container_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}
@@ -29,6 +29,12 @@ variable "es_address" {}
 variable "aws_elasticsearch_region" {}
 variable "aws_elasticsearch_key" {}
 variable "aws_elasticsearch_secret" {}
+
+variable "ecs_service_logspout_container_definition_file_path" {}
+variable "logspout_command" {
+  type = "list"
+}
+variable "ecs_logspout_task_count" {}
 
 variable "import_schools_task_command" {
   type = "list"

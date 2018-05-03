@@ -107,14 +107,19 @@ variable "ecs_service_task_port" {
 }
 
 # ECS Tasks
-variable "ecs_service_task_definition_file_path" {
-  description = "Containers running on ECS will be executed based on the configuration of this file"
-  default     = "./web_task_definition.json"
+variable "ecs_service_web_container_definition_file_path" {
+  description = "Container definition for the web task"
+  default     = "./web_container_definition.json"
 }
 
-variable "ecs_service_rake_task_definition_file_path" {
-  description = "Task definition for rake tasks"
-  default     = "./rake_task_definition.json"
+variable "ecs_service_rake_container_definition_file_path" {
+  description = "Container definition for rake tasks"
+  default     = "./rake_container_definition.json"
+}
+
+variable "ecs_service_logspout_container_definition_file_path" {
+  description = "Logspout container definition"
+  default     = "./logspout_container_definition.json"
 }
 
 variable "import_schools_task_command" {
@@ -232,3 +237,7 @@ variable "load_balancer_check_path" {
 }
 
 variable "rollbar_access_token" {}
+
+variable "logspout_command" {
+  type = "list"
+}

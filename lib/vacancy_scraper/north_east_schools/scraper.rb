@@ -43,7 +43,10 @@ module VacancyScraper::NorthEastSchools
       vacancy.application_link = application_link
       vacancy.send :set_slug
 
-      return vacancy.save(validate: false) if valid?(vacancy)
+      if valid?(vacancy)
+        Rails.logger.info("Successfully scraped a vacancy: #{vacancy.job_title}")
+        return vacancy.save(validate: false)
+      end
       vacancy.valid?
       Rails.logger.debug("Invalid vacancy: #{vacancy.errors.inspect}")
     rescue StandardError => e

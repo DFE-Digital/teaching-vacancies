@@ -4,27 +4,55 @@
     "image": "${image}:latest",
     "memory": 512,
     "networkMode": "bridge",
-    "entryPoint": ${entrypoint},
     "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "${project_name}-${environment}",
-        "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "${task_name}"
-      }
+      "logDriver": "json-file"
     },
+    "portMappings": [
+      {
+        "containerPort": ${task_port},
+        "hostPort": 0
+      }
+    ],
     "environment": [
       {
         "name": "RAILS_ENV",
         "value": "${rails_env}"
       },
       {
+        "name": "OVERRIDE_SCHOOL_URN",
+        "value": "${override_school_urn}"
+      },
+      {
         "name": "ROLLBAR_ENV",
         "value": "${environment}"
       },
       {
+        "name": "HTTP_USER",
+        "value": "${http_user}"
+      },
+      {
+        "name": "HTTP_PASS",
+        "value": "${http_pass}"
+      },
+      {
+        "name": "AAD_CLIENT_ID",
+        "value": "${aad_client_id}"
+      },
+      {
+        "name": "AAD_TENANT",
+        "value": "${aad_tenant}"
+      },
+      {
         "name": "GOOGLE_MAPS_API_KEY",
         "value": "${google_maps_api_key}"
+      },
+      {
+        "name": "GOOGLE_ANALYTICS",
+        "value": "${google_analytics}"
+      },
+      {
+        "name": "ROLLBAR_ACCESS_TOKEN",
+        "value": "${rollbar_access_token}"
       },
       {
         "name": "SECRET_KEY_BASE",

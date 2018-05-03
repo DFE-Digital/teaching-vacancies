@@ -83,11 +83,15 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
+  # Use Lograge for cleaner logging
+  config.log_level = :info
+  config.lograge.enabled = true
+  config.lograge.formatter = ColourLogFormatter.new
+  config.lograge.ignore_actions = ['ApplicationController#check']
+  config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
+
+  # Don't log SQL in production
+  config.active_record.logger = nil
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

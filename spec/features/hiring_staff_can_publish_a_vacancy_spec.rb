@@ -339,8 +339,7 @@ RSpec.feature 'Creating a vacancy' do
         visit school_vacancy_review_path(school, vacancy.id)
         click_on 'Confirm and submit vacancy'
 
-        expect(page).to have_content("The system reference number is #{vacancy.reference}")
-        expect(page).to have_content('The vacancy has been posted, you can view it here:')
+        expect(page).to have_content('The job has been posted, you can view it here:')
       end
     end
 
@@ -362,8 +361,7 @@ RSpec.feature 'Creating a vacancy' do
         visit school_vacancy_review_path(school, vacancy.id)
         click_on 'Confirm and submit vacancy'
 
-        expect(page).to have_content("The system reference number is #{vacancy.reference}")
-        expect(page).to have_content("The vacancy will be posted on #{vacancy.publish_on}, you can preview it here:")
+        expect(page).to have_content("The job will be posted on #{vacancy.publish_on}, you can preview it here:")
         visit vacancy_url(vacancy)
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
       end
@@ -389,7 +387,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
         click_on 'Confirm and submit vacancy'
-        expect(page).to have_content('The vacancy has been posted, you can view it here:')
+        expect(page).to have_content('The job has been posted, you can view it here:')
 
         visit candidate_specification_school_vacancy_path(school)
         expect(page.current_path).to eq(job_specification_school_vacancy_path(school))
