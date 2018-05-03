@@ -1,5 +1,6 @@
 class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::UrlHelper
 
   delegate :total_pages, to: :model
 
@@ -53,7 +54,12 @@ class VacancyPresenter < BasePresenter
   end
 
   def flexible_working
-    @flexible_working = model.flexible_working ? 'Yes' : 'No'
+    if model.flexible_working?
+      mailto = mail_to(model.contact_email, model.school.name)
+      @flexible_working = safe_join([I18n.t('vacancies.flexible_working_info', mailto: mailto).html_safe])
+    else
+      'No'
+    end
   end
 
   def working_pattern
