@@ -12,6 +12,7 @@ class Permission
     '2a761502-7ebd-4358-b19d-3ef6b006735f' => '111637', # lps.rac@
     'd9181457-126d-4860-b50e-659122cebd8c' => '136775', # sawstonvc@
     '90604155-14d0-4bb3-9af0-9a8b9f90df63' => '136580', # swaveseyvc@
+    '0328c13e-d2cb-469a-a76b-55525a6ec567' => '137851', # stthomasmore@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
