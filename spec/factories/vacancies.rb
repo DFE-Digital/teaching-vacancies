@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :vacancy do
     association :pay_scale
     association :subject

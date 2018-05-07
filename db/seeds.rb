@@ -15,7 +15,7 @@ end
 raise if Rails.env.production?
 
 require 'faker'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 
 london = Region.create(name: 'London', code: 'H')
 Region.create(name: 'South East England', code: 'J')
@@ -33,7 +33,7 @@ SchoolType.create(label: 'LA Maintained School', code: '4')
 SchoolType.create(label: 'Special School', code: '5')
 
 
-ealing_school = FactoryGirl.create(:school, name: 'Macmillan Academy ',
+ealing_school = FactoryBot.create(:school, name: 'Macmillan Academy ',
                                    school_type: academy,
                                    urn: 110627,
                                    address: 'Stockton Road',
@@ -44,7 +44,7 @@ ealing_school = FactoryGirl.create(:school, name: 'Macmillan Academy ',
                                    region: london,
                                    geolocation: '(54.565770,-1.264489)')
 
-bromley_school = FactoryGirl.create(:school,
+bromley_school = FactoryBot.create(:school,
                                     name: ' Sacred Heart Roman Catholic VA School - A Specialist Science College',
                                     school_type: academy,
                                     urn: 110628,
@@ -59,7 +59,7 @@ bromley_school = FactoryGirl.create(:school,
 payscale = PayScale.limit(5).sample(1).first
 leadership = Leadership.limit(1).sample(1).first
 
-FactoryGirl.create(:vacancy,
+FactoryBot.create(:vacancy,
                    job_title: 'Physics Teacher',
                    subject: Subject.first,
                    school: ealing_school,
@@ -68,7 +68,7 @@ FactoryGirl.create(:vacancy,
                    pay_scale: payscale,
                    leadership: leadership)
 
-FactoryGirl.create(:vacancy,
+FactoryBot.create(:vacancy,
                    job_title: 'Maths Teacher',
                    subject: Subject.last,
                    school: bromley_school,
@@ -78,7 +78,7 @@ FactoryGirl.create(:vacancy,
                    pay_scale: payscale,
                    leadership: leadership)
 
-FactoryGirl.create(:vacancy,
+FactoryBot.create(:vacancy,
                    job_title: 'PE Teacher',
                    subject: Subject.last,
                    school: ealing_school,
@@ -88,7 +88,7 @@ FactoryGirl.create(:vacancy,
                    pay_scale: payscale,
                    leadership: leadership)
 
-FactoryGirl.create(:vacancy,
+FactoryBot.create(:vacancy,
                    job_title: 'Geography Teacher',
                    subject: Subject.last,
                    school: ealing_school,

@@ -7,7 +7,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'database_cleaner_helper'
 require 'browser_test_helper'
 
@@ -19,7 +19,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
   config.include DateHelper
