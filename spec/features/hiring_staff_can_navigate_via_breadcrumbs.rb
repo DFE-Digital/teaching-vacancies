@@ -8,7 +8,7 @@ RSpec.feature 'School viewing vacancies' do
     school = create(:school)
     vacancy = create(:vacancy, school: school)
 
-    visit school_vacancy_path(school, vacancy.id)
+    visit school_job_path(school, vacancy.id)
 
     expect(page).to have_css('.breadcrumbs')
     within('.breadcrumbs') do
@@ -24,7 +24,7 @@ RSpec.feature 'School viewing vacancies' do
     school = create(:school)
     vacancy = create(:vacancy, school: school)
 
-    visit edit_school_vacancy_path(school, vacancy.id)
+    visit edit_school_job_path(school, vacancy.id)
 
     expect(page).to have_css('.breadcrumbs')
     within('.breadcrumbs') do
@@ -40,7 +40,7 @@ RSpec.feature 'School viewing vacancies' do
     school = create(:school)
     vacancy = create(:vacancy, school: school)
 
-    visit school_vacancy_review_path(school, vacancy.id)
+    visit school_job_review_path(school, vacancy.id)
 
     expect(page).to have_css('.breadcrumbs')
     within('.breadcrumbs') do

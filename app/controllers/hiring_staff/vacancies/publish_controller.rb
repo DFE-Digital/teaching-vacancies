@@ -5,7 +5,7 @@ class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::Applic
     if PublishVacancy.new(vacancy: vacancy).call
       Auditor::Audit.new(vacancy, 'vacancy.publish', current_session_id).log
       reset_session_vacancy!
-      redirect_to school_vacancy_summary_path(school, vacancy.id)
+      redirect_to school_job_summary_path(school, vacancy.id)
     else
       redirect_to review_path(vacancy), notice: I18n.t('errors.vacancies.unable_to_publish')
     end
@@ -14,6 +14,6 @@ class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::Applic
   private
 
   def vacancy_id
-    params.permit(:vacancy_id)[:vacancy_id]
+    params.permit(:job_id)[:job_id]
   end
 end

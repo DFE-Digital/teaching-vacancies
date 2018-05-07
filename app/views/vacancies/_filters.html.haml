@@ -2,7 +2,7 @@
   %h2.heading-medium
     =t('vacancies.filters.title')
 
-  = form_tag vacancies_path, class: 'filters-form', method: :get do
+  = form_tag jobs_path, class: 'filters-form', method: :get do
     .form-group
       = label_tag 'location', t('vacancies.filters.location'), class: 'form-label'
       = search_field_tag :location, location, class: 'form-control form-control-block', placeholder: t('vacancies.filters.location_hint')

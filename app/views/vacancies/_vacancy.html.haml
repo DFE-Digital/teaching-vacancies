@@ -1,5 +1,5 @@
 %li.vacancy
-  %h2= link_to vacancy.job_title, vacancy_path(vacancy), class: 'view-vacancy-link'
+  %h2= link_to vacancy.job_title, job_path(vacancy), class: 'view-vacancy-link'
   %p= vacancy.location
   %dl
     %dt= t('vacancies.salary')

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'check' => 'application#check'
 
-  resources :vacancies, only: %i[index show]
+  resources :jobs, only: %i[index show], controller: 'vacancies'
   resource :sessions, controller: 'hiring_staff/sessions'
 
   get '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
 
   resources :schools, only: %i[show edit update], controller: 'hiring_staff/schools' do
-    resources :vacancies, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
+    resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
                                      controller: 'hiring_staff/vacancies/application_details'
     end
 
-    resource :vacancy, only: [] do
+    resource :job, only: [] do
       get :job_specification, to: 'hiring_staff/vacancies/job_specification#new'
       post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'
       get :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#new'

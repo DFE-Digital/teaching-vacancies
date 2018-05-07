@@ -17,8 +17,8 @@ module VacanciesHelper
       active_class = ' active'
     end
     link_to title,
-            vacancies_path(vacancy_params(sort_column: column,
-                                          sort_order: order)),
+            jobs_path(vacancy_params(sort_column: column,
+                                     sort_order: order)),
             class: "sortby--#{order}#{active_class || ''}"
   end
 
