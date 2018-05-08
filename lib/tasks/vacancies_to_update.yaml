@@ -3,6 +3,7 @@ vacancies:
     - 'head-of-maths-st-cuthbert-s-rc-primary-school'
     - 'class-teacher-primary'
     - 'headteacher-principal'
+    - 'teacher-of-history-maternity-cover-copy'
   update:
     -
       slug: 'english-ks4-co-ordinator'
@@ -249,6 +250,8 @@ We can offer:
       <li>can motivate the whole school community</li>
       <li>can uphold and continue to strengthen the vision and values of our school</li>
       <li>has the ability and vision to promote Inclusion across the school</li> </ul>"
+      min_pay_scale: 'Lead Practisioners range 9'
+      max_pay_scale: 'Lead Practisioners range 13'
     -
       slug: 'director-of-additional-educational-needs'
       job_title: 'Director of Additional Educational Needs'
@@ -317,8 +320,9 @@ We can offer:
       <p>If you do not hear from us within six weeks of the closing date, you should assume that your application has not been successful.</p>
       <p>At Benfield School we are committed to the safeguarding and welfare of young people. All posts are subject to an enhanced DBS check. We welcome applications from all sections of the community, regardless of gender, race, religion, disability, sexual orientation or age.</p>
       <p>This post may involve working with children, vulnerable adults or dealing with sensitive information. Please note that in all cases written references will be taken up and made available to interviewers before the final selection stage; even if you indicate otherwise.</p>"
-      subject_name: 'Science'
       starts_on: '01/09/2018'
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'support-assistants'
       job_title: 'Support Assistants (2 roles)'
@@ -336,7 +340,6 @@ We can offer:
       </p>
       <p><em>At Benfield School we are committed to the safeguarding and welfare of young people. All posts are subject to an enhanced DBS check. We welcome applications from all sections of the community, regardless of gender, race, religion, disability, sexual orientation or age.</em></p>
       <p>This post may involve working with children, vulnerable adults or dealing with sensitive information. Please note that in all cases written references will be taken up and made available to interviewers before the final selection stage; even if you indicate otherwise.</p>"
-      subject: 'Science'
       education: 'Support role for science department requires A Level science'
       working_pattern: 'part_time'
       min_salary: 11817
@@ -358,6 +361,8 @@ We can offer:
       <li> and be committed to working in an inclusive environment in support of the values, vision, purpose and direction of Durham Sixth Form Centre</li></ul>"
       starts_on: '01/09/2018'
       ends_on: '31/08/2019'
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'head-of-history'
       job_title: 'Head of History'
@@ -375,6 +380,8 @@ We can offer:
       subject: 'History'
       benefits: 'TLR 2c (£6515)'
       experience: 'The post provides an exciting opportunity for a forward-thinking and well-motivated classroom practitioner with proven success at GCSE and A Level. The ability to teach A level Government and Politics would be an advantage'
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'teacher-of-pe-girls'
       job_title: 'Teacher of PE (Girls)'
@@ -393,21 +400,8 @@ We can offer:
       <li>a track record of success in raising standards</li>
       <li>exceptional interpersonal skills </li>
       <li>a strong commitment to teamwork</li></ul>"
-    -
-      slug: 'teacher-of-history-maternity-cover'
-      job_description: "
-      <p>St Leonard’s Catholic School is a  highly successful and oversubscribed 11 to 18 comprehensive school, with 1378 on roll (238 in Sixth Form). We require a qualified individual to provide maternity cover for a part-time teacher of History.</p>
-      <p>CES Application form and further details are available from:<br> St Leonard’s Catholic School, North End, Durham DH1 4NG<br> Telephone: 0191 3848575</p>
-      <p>Details are also available on the school website: www.st-leonards.durham.sch.uk</p>
-      <p>Closing date for the receipt of applications is 12 noon on Friday 11th May 2018.</p>
-      <p>The school is committed to safeguarding and promoting the welfare of children and young people and expects all staff and volunteers to share this commitment.<br>
-Any appointment is subject to an enhanced D.B.S. check. Please note that the Childcare Disqualifications Regulations 2009 apply to this position and therefore you are required to complete the “disqualification by association” declaration form. Should you be successful in your application for this post, your appointment can not be progressed without this declaration.</p>
-      <p>The Governing Body is an Equal Opportunity Employer.</p>
-      <p>Applicants with disabilities will be invited for interview if the essential job criteria are met.</p>
-      <p>This post is not open to job share.</p>"
-      experience: 'Applicants should be a well-qualified teacher of History able to teach Key Stage 3, GCSE and the ability to teach A level would be an advantage'
-      qualifications: 'Qualified teacher status (or on course to obtain one) and a good honours degree'
-      max_pay_scale: 'Upper Pay Scale 3'
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'teacher-of-science'
       job_title: 'Teacher of Science'
@@ -428,7 +422,6 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>If you do not hear from us within six weeks of the closing date, you should assume that your application has not been successful.</p>
       <p>At Benfield School we are committed to the safeguarding and welfare of young people. All posts are subject to an enhanced DBS check. We welcome applications from all sections of the community, regardless of gender, race, religion, disability, sexual orientation or age.</p>
       <p>This post may involve working with children, vulnerable adults or dealing with sensitive information. Please note that in all cases written references will be taken up and made available to interviewers before the final selection stage; even if you indicate otherwise.</p>"
-      subject: 'Science'
       experience: 'Candidate should have a specialism in either Physics or Chemistry.'
       starts_on: "01/09/2018"
       min_pay_scale: 'Main pay range 1'
@@ -474,7 +467,6 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>Shortlisting will take place on Monday 14th May and shortlisted candidates will be contacted soon after. Interviews are scheduled to take place on Thursday 17th May 2018.</p>
       <p>Framwellgate School Durham is committed to the safeguarding of children and young people. An enhanced disclosure from the DBS will be required for this post, together with completion of a pre-employment health questionnaire.</p>
       <p>The Excel Academy Partnership at Framwellgate School Durham<br> Newton Drive<br> Durham<br> DH1 5BQ<br> Tel: (0191) 3866628<br> Email: Thompson.f@framdurham.com"
-      subject: 'Science'
       benefits: 'We can offer you an environment where student behaviour is excellent, prior attainment levels are amongst the highest in the North-East and our students and staff are a pleasure to work with'
       experience: 'The successful candidate will possess energy, vision and enthusiasm and believe that every young person deserves the very best education. A commitment to raising achievement, and a willingness to learn, train and develop as a teacher are all essential.'
       starts_on: "01/09/2018"
@@ -515,6 +507,8 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <li>takes pride in building relationships with students</li>
       <li>believes strongly in the ability of all students both within and beyond the classroom.</li>
       <li>is able to inspire and motivate colleagues and students alike</li></ul>"
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'teacher-maternity-cover-1-year-diamond-hall-infant-academy'
       job_title: 'Teacher (maternity cover - 1 year)'
@@ -553,7 +547,6 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>Closing date: 9am/first post on Friday 18 May 2018<br> Interviews:     Thursday 24 May 2018</p>
       <p>Application packs can be downloaded from our website: www.mardenhigh.net</p>
       <p>Marden High School is committed to safeguarding and promoting the welfare of children and young people. The successful applicant will be required to undertake an enhanced DBS disclosure and a range of other recruitment checks.</p>"
-      subject: "Science"
     -
       slug: 'teacher-of-english'
       job_title: 'Teacher of English'
@@ -573,6 +566,8 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       DIOCESE OF HEXHAM AND NEWCASTLE<br>
       DURHAM MARTYRS MULTI ACADEMY TRUST</p>"
       subject: "English"
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'curriculum-leader-of-mathematics'
       job_title: "Curriculum Leader of Mathematics"
@@ -589,6 +584,8 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>Closing date:  9am Monday 14th May 2018</p>
       <p>Interview date: Thursday 17th May 2018</p>"
       experience: "The successful candidate will have a strong track record in leadership, and a passion for teaching and learning. In addition, you will have experience of delivering consistently excellent mathematics teaching across key stages"
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'teacher-of-history-maternity-cover'
       job_title: 'Teacher of History (part time maternity cover)'
@@ -603,6 +600,8 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>Applicants with disabilities will be invited for interview if the essential job criteria are met.</p>
       <p>This post is not open to job share.</p>
       <p>DIOCESE OF HEXHAM AND NEWCASTLE<br> DURHAM MARTYRS MULTI ACADEMY TRUST"
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'teacher-of-health-and-social-care'
       job_title: 'Teacher of Health and Social Care'
@@ -623,7 +622,8 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <li>have the ability to communicate effectively with a wide range of stakeholders including students, parents, the media and governors</li>
       <li>have evidence of outstanding results and student outcomes</li>
       <li>be committed to working in an inclusive environment in support of the values, vision, purpose and direction of Durham Sixth Form Centre</li></ul>"
-      starts_on: '01/09/2018'
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: "teacher-of-ict-computing"
       job_title: "Teacher of ICT"
@@ -634,6 +634,8 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>Application packs are available by contacting c.collings@pchs.org.uk  Closing date for applications is 12 noon on 8 May 2018. Applications received after this date will not be considered.</p>
       <p>PCHS is committed to safeguarding the welfare of young people: an enhanced DBS check will be required</p>"
       subject: "Computing"
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
     -
       slug: 'teacher-of-physical-education'
       job_title: 'Teacher of Physical Education'
@@ -644,7 +646,7 @@ Any appointment is subject to an enhanced D.B.S. check. Please note that the Chi
       <p>The PE Department has a strong reputation both within the school and within the North East where we have a history of success in extra-curricular sport.</p>
       <p>The Governing Body are committed to safeguarding and promoting the welfare of children and young people and vulnerable adults. The successful candidate will be subject to an enhanced disclosure through the Disclosure and Barring Service and additional recruitment checks.</p>
       <p>NQTs are welcome to apply.</p>
-      <p>NB – Applications close Friday 11th May 2018.  Interviews will take place on Thursday 17th May.</p>
+      <p>Interviews will take place on Thursday 17th May.</p>
       <p>Should you wish to visit the school or talk to key staff prior to application then we would welcome the opportunity to meet you and show you around our school. If you would like to arrange such a visit, then please call 0191 553 6073.</p>"
       subject: "Physical Education"
       benefits: "We can offer you:
@@ -686,3 +688,5 @@ Telephone: 0191 2598500</p>
       <p><em>Please note Monkseaton High School is committed the Safer Recruitment and Safeguarding Children and Young People.  Any submissions received with an incomplete application form will not be considered. A Curriculum Vitae will not be accepted alone.</em></p>"
       subject: "Maths"
       experience: "The ideal candidate will be an outstanding teaching practitioner with sound subject knowledge and a passion for teaching mathematics. You will be able to demonstrate the talent, interpersonal skills and a range of teaching strategies required to inspire and motivate students. Above all, you must have a passion for your subject and be able to embed an enjoyment in your lessons."
+      min_pay_scale: 'Main pay range 1'
+      max_pay_scale: 'Upper pay range 3'
