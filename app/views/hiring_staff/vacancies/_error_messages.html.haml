@@ -1,8 +1,7 @@
 - if errors.any?
   .error-summary{role: 'alert', tabindex: '-1'}
     %h2.heading-medium.error-summary-heading
-      = pluralize(errors.count, 'error')
-      prevented this vacancy from being saved:
+      Please correct the following #{pluralize(errors.count, 'error')} in your listing:
     %ul
       - errors.full_messages.each do |message|
         %li= message
