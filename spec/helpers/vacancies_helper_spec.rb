@@ -39,7 +39,7 @@ RSpec.describe VacanciesHelper, type: :helper do
     it 'should return a link to the vacancies index with the new parameters' do
       sort = OpenStruct.new(column: 'maximum_salary')
       result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
-      expect(result).to eq('<a class="sortby--asc" href="/vacancies?sort_column=starts_on&amp;sort_order=asc">foo</a>')
+      expect(result).to eq('<a class="sortby--asc" href="/jobs?sort_column=starts_on&amp;sort_order=asc">foo</a>')
     end
 
     context 'when the current sort column is the same as the given column' do
@@ -47,7 +47,7 @@ RSpec.describe VacanciesHelper, type: :helper do
         sort = OpenStruct.new(column: 'starts_on', reverse_order: 'desc')
         result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
         expect(result)
-          .to eq('<a class="sortby--desc active" href="/vacancies?sort_column=starts_on&amp;sort_order=desc">foo</a>')
+          .to eq('<a class="sortby--desc active" href="/jobs?sort_column=starts_on&amp;sort_order=desc">foo</a>')
       end
     end
   end

@@ -24,7 +24,7 @@ json.jobLocation do
   end
 end
 
-json.url vacancy_url(vacancy)
+json.url job_url(vacancy)
 
 json.baseSalary do
   json.set! '@type', 'MonetaryAmount'

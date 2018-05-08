@@ -9,7 +9,7 @@ RSpec.feature 'Sorting vacancies' do
     third_vacancy = create(:vacancy, :published, expires_on: 5.days.from_now, publish_on: 8.days.ago)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     expect(page.find('.vacancy:eq(1)')).to have_content(third_vacancy.job_title)
     expect(page.find('.vacancy:eq(2)')).to have_content(second_vacancy.job_title)

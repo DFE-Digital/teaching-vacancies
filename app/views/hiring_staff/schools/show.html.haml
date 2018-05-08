@@ -10,7 +10,7 @@
     - else
       = render partial: 'no_vacancies', locals: { school: @school }
     .form-group.mt1
-      = link_to t('buttons.create_vacancy'), new_school_vacancy_path(@school), class: 'button'
+      = link_to t('buttons.create_vacancy'), new_school_job_path(@school), class: 'button'
 
 .grid-row
   .column-full

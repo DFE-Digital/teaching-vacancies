@@ -68,7 +68,7 @@ RSpec.shared_examples 'basic auth' do
     let(:vacancy) { create(:vacancy) }
 
     it 'returns 401 and asks for the basic auth credentials' do
-      get "/vacancies/#{vacancy.id}"
+      get jobs_path(vacancy)
 
       expect(response).to have_http_status(401)
     end
@@ -86,7 +86,7 @@ RSpec.shared_examples 'basic auth' do
 
         encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
 
-        get "/vacancies/#{vacancy.id}", env: { 'HTTP_AUTHORIZATION': encoded_credentials }
+        get jobs_path(vacancy), env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
         expect(response).to have_http_status(200)
       end
@@ -101,7 +101,7 @@ RSpec.shared_examples 'basic auth' do
                                   env_value_for_password: nil)
 
         encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('wrong-user', 'password')
-        get "/vacancies/#{vacancy.id}", env: { 'HTTP_AUTHORIZATION': encoded_credentials }
+        get jobs_path(vacancy), env: { 'HTTP_AUTHORIZATION': encoded_credentials }
         expect(response).to have_http_status(401)
       end
     end
@@ -174,7 +174,7 @@ RSpec.shared_examples 'no basic auth' do
                                 env_value_for_password: nil)
       vacancy = create(:vacancy)
 
-      get "/vacancies/#{vacancy.id}"
+      get jobs_path(vacancy)
 
       expect(response).to have_http_status(200)
     end
@@ -188,7 +188,7 @@ RSpec.shared_examples 'no basic auth' do
                                 env_value_for_password: nil)
       school = create(:school)
 
-      get "/schools/#{school.id}"
+      get school_path(school)
 
       expect(response).to have_http_status(302)
     end

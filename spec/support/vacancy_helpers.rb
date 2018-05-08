@@ -115,7 +115,7 @@ module VacancyHelpers
           'postalCode': vacancy.school.postcode,
         },
       },
-      'url': vacancy_url(vacancy),
+      'url': job_url(vacancy),
       'baseSalary': {
         '@type': 'MonetaryAmount',
         'currency': 'GBP',
