@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :pay_scale do
     label { Faker::Lorem.unique.words(2).join(' ') }
     code { Faker::Code.asin }

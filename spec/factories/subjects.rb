@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :subject do
     name { Faker::Educator.course }
     initialize_with { Subject.find_or_create_by(name: name) }
