@@ -12,6 +12,7 @@ RSpec.describe ':vacancies' do
     it 'updates the information of a given vacancy' do
       art = create(:subject, name: 'Art')
       mps = create(:pay_scale, label: 'Main pay range 1')
+      ups = create(:pay_scale, label: 'Upper pay range 3')
       create(:vacancy, slug: 'teacher-of-a-level-chemistry', job_title: 'Chemistry teacher',
                        job_description: 'Old description', experience: 'Old experience')
       create(:vacancy, slug: 'teacher-of-technology-and-art-part-time-temporary', working_pattern: 'full_time',
@@ -36,6 +37,7 @@ RSpec.describe ':vacancies' do
       expect(other_vacancy.working_pattern).to eq('part_time')
       expect(other_vacancy.subject).to eq(art)
       expect(pay_scale_vacancy.min_pay_scale).to eq(mps)
+      expect(pay_scale_vacancy.max_pay_scale).to eq(ups)
       expect(edited_vacancy.job_title).to eq('Another french teacher')
     end
   end
