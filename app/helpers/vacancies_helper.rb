@@ -30,4 +30,8 @@ module VacanciesHelper
   def vacancy_params(overwrite = {})
     params.merge(overwrite).permit(vacancy_params_whitelist)
   end
+
+  def pay_scale_options
+    @pay_scale_options ||= PayScale.all
+  end
 end

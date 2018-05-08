@@ -50,7 +50,8 @@ class Vacancy < ApplicationRecord
 
   belongs_to :school, required: true
   belongs_to :subject, required: false
-  belongs_to :pay_scale, required: false
+  belongs_to :min_pay_scale, class_name: 'PayScale', required: false
+  belongs_to :max_pay_scale, class_name: 'PayScale', required: false
   belongs_to :leadership, required: false
 
   delegate :name, to: :school, prefix: true, allow_nil: false

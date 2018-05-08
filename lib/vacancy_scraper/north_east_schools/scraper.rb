@@ -35,7 +35,7 @@ module VacancyScraper::NorthEastSchools
       vacancy.weekly_hours = work_hours
       vacancy.minimum_salary = min_salary
       vacancy.maximum_salary = max_salary
-      vacancy.pay_scale = PayScale.where(code: pay_scale).first
+      vacancy.min_pay_scale = PayScale.where(code: pay_scale).first
       vacancy.starts_on = starts_on
       vacancy.expires_on = ends_on
       vacancy.status = min_salary.to_i.positive? ? :published : :draft
@@ -163,7 +163,7 @@ module VacancyScraper::NorthEastSchools
     end
     # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
-    # # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
     def pay_scale
       payscale_pattern = salary[/(\wPS\d*)/, 1] || salary[/([MU]\d+)/, 1]
       payscale = payscale_pattern.present? ? payscale_pattern.gsub(/\W*(\w{1})(\d+)/, '\1PS\3') : nil

@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :vacancy do
-    association :pay_scale
+    association :min_pay_scale, factory: :pay_scale
+    association :max_pay_scale, factory: :pay_scale
     association :subject
     association :leadership
     association :school
