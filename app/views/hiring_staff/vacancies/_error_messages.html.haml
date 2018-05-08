@@ -1,8 +1,7 @@
 - if errors.any?
   #errors.error-summary{role: 'alert', tabindex: '-1'}
     %h2.heading-medium.error-summary-heading
-      = pluralize(errors.count, 'error')
-      prevented this job from being saved:
+      Please correct the following #{pluralize(errors.count, 'error')} in your listing:
     %ul.error-summary-list
       - errors.each do |attribute, error|
         %li= link_to errors.full_message(attribute, error), "##{attribute}"
