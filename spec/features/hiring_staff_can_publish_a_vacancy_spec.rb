@@ -28,7 +28,8 @@ RSpec.feature 'Creating a vacancy' do
     let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
-                                 pay_scale: pay_scales.sample,
+                                 min_pay_scale: pay_scales.sample,
+                                 max_pay_scale: pay_scales.sample,
                                  subject: subjects.sample,
                                  leadership: leaderships.sample))
     end
@@ -164,8 +165,8 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
 
-        expect(page).to_not have_content('Step 3 of 3')
         expect(page).to have_content(I18n.t('vacancies.review'))
+        verify_all_vacancy_details(vacancy)
       end
     end
 

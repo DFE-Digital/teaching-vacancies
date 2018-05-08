@@ -99,9 +99,10 @@
           %dt= t('vacancies.main_subject')
           %dd= @vacancy.main_subject
 
-        - if @vacancy.pay_scale.present?
-          %dt= t('vacancies.pay_scale')
-          %dd= @vacancy.pay_scale
+        - if @vacancy.pay_scale_range.present?
+          %dt= t('vacancies.min_pay_scale')
+          %dd= @vacancy.pay_scale_range
+
 
         - if @vacancy.leadership.present?
           %dt= t('vacancies.leadership_level')
