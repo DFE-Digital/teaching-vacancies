@@ -12,9 +12,7 @@ namespace :vacancies do
       Rails.logger.debug("Deleting scraped vacancies in #{Rails.env}")
       vacancies = YAML.load_file(Rails.root.join('lib', 'tasks', 'vacancies_to_update.yaml'))['vacancies']['delete']
       vacancies.each do |slug|
-        Rails.logger.debug("Deleting vacancy #{slug}")
-        vacancy = Vacancy.find_by(slug: slug)
-        vacancy&.delete
+        Rails.logger.debug("Deleted vacancy #{slug}") unless Vacancy.where(slug: slug).destroy_all.empty?
       end
     end
 
@@ -39,7 +37,6 @@ namespace :vacancies do
         vacancy.working_pattern = data['working_pattern'].to_sym if data.key?('working_pattern')
         vacancy.subject = Subject.find_by(name: data['subject']) if data.key?('subject')
         vacancy.leadership = Leadership.find_by(title: data['leadership_title']) if data.key?('leadership_title')
-
         vacancy.save(validate: false)
       end
     end
