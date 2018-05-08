@@ -57,26 +57,26 @@
         %label.form-label.form-label-bold= t('jobs.salary_range')
         %span.form-hint= t('jobs.form_hints.salary_range')
 
-        .salary_field
-          %span.pound_sign £
-          = f.input :minimum_salary,
-                    as: :integer,
-                    wrapper: false,
-                    required: true,
-                    label: false,
-                    input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
+        .salary_field.form-group.mb0{class: ("form-group-error" if @job_specification_form.errors.details[:minimum_salary].present?)}
+          .salary_input_wrapper
+            %span.pound_sign £
+            = f.input :minimum_salary,
+                      as: :integer,
+                      wrapper: false,
+                      required: true,
+                      label: false,
                       input_html: { class: 'form-control-1-8', step: '1', min: '22917', max: '200000', onchange: "this.value = removeCommaFromNumber(this.value)" }
 
         to
 
-        .salary_field
-          %span.pound_sign £
-          = f.input :maximum_salary,
-                    as: :integer,
-                    wrapper: false,
-                    required: true,
-                    label: false,
-                    input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
+        .salary_field.form-group{class: ("form-group-error" if @job_specification_form.errors.details[:maximum_salary].present?)}
+          .salary_input_wrapper
+            %span.pound_sign £
+            = f.input :maximum_salary,
+                      as: :integer,
+                      wrapper: false,
+                      required: true,
+                      label: false,
                       input_html: { class: 'form-control-1-8', step: '1', min: '22917', max: '200000', onchange: "this.value = removeCommaFromNumber(this.value)" }
 
       = f.input :working_pattern,
