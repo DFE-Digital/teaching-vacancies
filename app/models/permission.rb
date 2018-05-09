@@ -15,6 +15,7 @@ class Permission
     '0328c13e-d2cb-469a-a76b-55525a6ec567' => '137851', # stthomasmore@
     '45d5131b-82af-4026-84e4-19e6e978348f' => '108524', # walbottlecampus@
     '66c6f48d-9adc-42a4-9c43-0d530b1d5213' => '143871', # cavalryprimary@
+    '34a1cbdc-1152-49a6-8884-08d376de8683' => '137903', # parksideacademy@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {

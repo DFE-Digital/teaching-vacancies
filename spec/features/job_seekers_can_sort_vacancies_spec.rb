@@ -15,13 +15,13 @@ RSpec.feature 'Sorting vacancies' do
     expect(page.find('.vacancy:eq(2)')).to have_content(second_vacancy.job_title)
     expect(page.find('.vacancy:eq(3)')).to have_content(first_vacancy.job_title)
 
-    click_link I18n.t('vacancies.expires_on')
+    click_link I18n.t('jobs.expires_on')
 
     expect(page.find('.vacancy:eq(1)')).to have_content(first_vacancy.job_title)
     expect(page.find('.vacancy:eq(2)')).to have_content(second_vacancy.job_title)
     expect(page.find('.vacancy:eq(3)')).to have_content(third_vacancy.job_title)
 
-    click_link I18n.t('vacancies.publish_on')
+    click_link I18n.t('jobs.publish_on')
 
     expect(page.find('.vacancy:eq(1)')).to have_content(first_vacancy.job_title)
     expect(page.find('.vacancy:eq(2)')).to have_content(third_vacancy.job_title)

@@ -25,10 +25,10 @@ RSpec.feature 'Viewing a single published vacancy' do
     expired_vacancy.save(validate: false)
 
     visit job_path(current_vacancy)
-    expect(page).to have_no_content('This vacancy has expired')
+    expect(page).to have_no_content('This job post has expired')
 
     visit job_path(expired_vacancy)
-    expect(page).to have_content('This vacancy has expired')
+    expect(page).to have_content('This job post has expired')
   end
 
   scenario 'A single vacancy must contain JobPosting schema.org mark up' do
@@ -57,10 +57,10 @@ RSpec.feature 'Viewing a single published vacancy' do
 
       visit job_path(vacancy)
 
-      expect(page).to_not have_content(I18n.t('vacancies.education'))
-      expect(page).to_not have_content(I18n.t('vacancies.qualifications'))
-      expect(page).to_not have_content(I18n.t('vacancies.experience'))
-      expect(page).to_not have_content(I18n.t('vacancies.benefits'))
+      expect(page).to_not have_content(I18n.t('jobs.education'))
+      expect(page).to_not have_content(I18n.t('jobs.qualifications'))
+      expect(page).to_not have_content(I18n.t('jobs.experience'))
+      expect(page).to_not have_content(I18n.t('jobs.benefits'))
     end
   end
 end

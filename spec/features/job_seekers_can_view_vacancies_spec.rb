@@ -1,13 +1,13 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
-    vacancy_count = Vacancy.default_per_page + 1 # must be larger than the default page limit
-    create_list(:vacancy, vacancy_count)
+    job_count = Vacancy.default_per_page + 1 # must be larger than the default page limit
+    create_list(:vacancy, job_count)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
-    expect(page).to have_content("There are #{vacancy_count} jobs listed.")
+    expect(page).to have_content("There are #{job_count} jobs listed.")
     expect(page).to have_selector('.vacancy', count: Vacancy.default_per_page)
   end
 
@@ -67,7 +67,7 @@ RSpec.feature 'Viewing vacancies' do
       fill_in 'keyword', with: 'English'
       page.find('.button[type=submit]').click
     end
-    expect(page).to have_content(I18n.t('vacancies.vacancy_count', count: vacancies.count))
+    expect(page).to have_content(I18n.t('jobs.job_count', count: vacancies.count))
   end
 
   scenario 'Should correctly pluralize the number of vacancies returned by a search', elasticsearch: true do
@@ -78,27 +78,28 @@ RSpec.feature 'Viewing vacancies' do
       fill_in 'keyword', with: 'English'
       page.find('.button[type=submit]').click
     end
-    expect(page).to have_content(I18n.t('vacancies.vacancy_count_plural', count: vacancies.count))
+    expect(page).to have_content(I18n.t('jobs.job_count_plural', count: vacancies.count))
   end
 
   scenario 'Should correctly singularize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 1)
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
-    expect(page).to have_content(I18n.t('vacancies.vacancy_count_without_search', count: vacancies.count))
+    expect(page).to have_content(I18n.t('jobs.job_count_without_search', count: vacancies.count))
   end
 
   scenario 'Should correctly pluralize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 3)
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
-    expect(page).to have_content(I18n.t('vacancies.vacancy_count_plural_without_search', count: vacancies.count))
+    expect(page).to have_content(I18n.t('jobs.job_count_plural_without_search', count: vacancies.count))
   end
 
   scenario 'Should advise users to widen their search when no results are returned' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
-    expect(page).to have_content(I18n.t('vacancies.no_vacancies'))
+
+    expect(page).to have_content(I18n.t('jobs.no_jobs'))
   end
 
   context 'when the vacancy is part_time' do
@@ -106,7 +107,7 @@ RSpec.feature 'Viewing vacancies' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: '5')
       Vacancy.__elasticsearch__.client.indices.flush
       visit job_path(vacancy)
-      expect(page).to have_content(I18n.t('vacancies.weekly_hours'))
+      expect(page).to have_content(I18n.t('jobs.weekly_hours'))
       expect(page).to have_content(vacancy.weekly_hours)
     end
 
@@ -114,7 +115,7 @@ RSpec.feature 'Viewing vacancies' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: nil)
       Vacancy.__elasticsearch__.client.indices.flush
       visit job_path(vacancy)
-      expect(page).not_to have_content(I18n.t('vacancies.weekly_hours'))
+      expect(page).not_to have_content(I18n.t('jobs.weekly_hours'))
     end
   end
 end
