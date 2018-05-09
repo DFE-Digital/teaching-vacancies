@@ -25,7 +25,7 @@ namespace :vacancies do
         vacancy = Vacancy.find_by(slug: data['slug'])
         next if vacancy.nil? || vacancy.created_at != vacancy.updated_at
         Rails.logger.debug("Updating vacancy #{data['slug']}")
-        vacancy.job_title = data['job_title']
+        vacancy.job_title       = data['job_title'] if data.key?('job_title')
         vacancy.job_description = data['job_description'] if data.key?('job_description')
         vacancy.experience      = data['experience'] if data.key?('experience')
         vacancy.benefits        = data['benefits'] if data.key?('benefits')
