@@ -3,7 +3,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     vacancy = school.vacancies.active.find(id)
     unless vacancy.published?
       return redirect_to school_job_review_path(school, vacancy.id),
-                         alert: I18n.t('messages.vacancies.view.only_published')
+                         alert: I18n.t('messages.jobs.view.only_published')
     end
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -38,7 +38,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     @vacancy.trash!
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
-    redirect_to school_path, notice: t('messages.vacancies.delete')
+    redirect_to school_path, notice: t('messages.jobs.delete')
   end
 
   def summary

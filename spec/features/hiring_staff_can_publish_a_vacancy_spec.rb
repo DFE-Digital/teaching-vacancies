@@ -17,7 +17,7 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content(/#{school.address}/)
     expect(page).to have_content(/#{school.town}/)
 
-    click_link 'Create a vacancy'
+    click_link 'Create a job'
 
     expect(page).to have_content('Step 1 of 3')
   end
@@ -38,7 +38,7 @@ RSpec.feature 'Creating a vacancy' do
       visit new_school_job_path(school)
 
       expect(page.current_path).to eq(job_specification_school_job_path(school))
-      expect(page).to have_content("Publish a vacancy for #{school.name}")
+      expect(page).to have_content("Publish a job for #{school.name}")
       expect(page).to have_content('Step 1 of 3')
     end
 
@@ -49,22 +49,22 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.error-summary') do
-          expect(page).to have_content('4 errors prevented this vacancy from being saved:')
+          expect(page).to have_content('4 errors prevented this job from being saved:')
         end
 
-        within_row_for(text: I18n.t('vacancies.job_title')) do
+        within_row_for(text: I18n.t('jobs.job_title')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
         end
 
-        within_row_for(text: I18n.t('vacancies.description')) do
+        within_row_for(text: I18n.t('jobs.description')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
         end
 
-        within_row_for(text: I18n.t('vacancies.salary_range')) do
+        within_row_for(text: I18n.t('jobs.salary_range')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
         end
 
-        within_row_for(text: I18n.t('vacancies.working_pattern')) do
+        within_row_for(text: I18n.t('jobs.working_pattern')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
         end
       end
@@ -101,17 +101,17 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue' # submit empty form
 
         within('.error-summary') do
-          expect(page).to have_content('3 errors prevented this vacancy from being saved:')
+          expect(page).to have_content('3 errors prevented this job from being saved:')
         end
 
-        within_row_for(text: I18n.t('vacancies.education')) do
+        within_row_for(text: I18n.t('jobs.education')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.education.blank'))
         end
 
-        within_row_for(text: I18n.t('vacancies.qualifications')) do
+        within_row_for(text: I18n.t('jobs.qualifications')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.blank'))
         end
-        within_row_for(text: I18n.t('vacancies.experience')) do
+        within_row_for(text: I18n.t('jobs.experience')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.experience.blank'))
         end
       end
@@ -139,18 +139,18 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.error-summary') do
-          expect(page).to have_content('4 errors prevented this vacancy from being saved:')
+          expect(page).to have_content('4 errors prevented this job from being saved:')
         end
 
-        within_row_for(text: I18n.t('vacancies.contact_email')) do
+        within_row_for(text: I18n.t('jobs.contact_email')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
         end
 
-        within_row_for(element: 'legend', text: I18n.t('vacancies.deadline_date')) do
+        within_row_for(element: 'legend', text: I18n.t('jobs.deadline_date')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
         end
 
-        within_row_for(element: 'legend', text: I18n.t('vacancies.publication_date')) do
+        within_row_for(element: 'legend', text: I18n.t('jobs.publication_date')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
         end
       end
@@ -165,7 +165,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
 
-        expect(page).to have_content(I18n.t('vacancies.review'))
+        expect(page).to have_content(I18n.t('jobs.review'))
         verify_all_vacancy_details(vacancy)
       end
     end
@@ -183,7 +183,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
         visit school_job_review_path(school, vacancy.id)
 
-        expect(page).to have_content("Review the vacancy for #{school.name}")
+        expect(page).to have_content("Review the job for #{school.name}")
 
         verify_all_vacancy_details(vacancy)
       end
@@ -199,7 +199,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content("Review the job for #{school.name}")
           expect(page).to have_content('An edited job title')
         end
 
@@ -232,7 +232,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content("Review the job for #{school.name}")
           expect(page).to have_content('A new job title')
         end
       end
@@ -248,7 +248,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content("Review the job for #{school.name}")
           expect(page).to have_content('Teaching diploma')
         end
 
@@ -281,7 +281,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'candidate_specification_form[education]', with: 'essential requirements'
           click_on 'Save and continue'
 
-          expect(page).to have_content('Confirm and submit vacancy')
+          expect(page).to have_content('Confirm and submit job')
           expect(page).to have_content('essential requirements')
         end
       end
@@ -290,7 +290,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(school, vacancy.id)
-          click_link_in_container_with_text('Vacancy contact email')
+          click_link_in_container_with_text('Job contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -302,21 +302,21 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content("Review the job for #{school.name}")
           expect(page).to have_content('a@valid.email')
         end
 
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(school, vacancy.id)
-          click_link_in_container_with_text('Vacancy contact email')
+          click_link_in_container_with_text('Job contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the vacancy for #{school.name}")
+          expect(page).to have_content("Review the job for #{school.name}")
           expect(page).to have_content('an@email.com')
         end
 
@@ -324,7 +324,7 @@ RSpec.feature 'Creating a vacancy' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           contact_email = vacancy.contact_email
           visit school_job_review_path(school, vacancy.id)
-          click_link_in_container_with_text('Vacancy contact email')
+          click_link_in_container_with_text('Job contact email')
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
@@ -338,7 +338,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'redirects to the school vacancy page when published' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_job_review_path(school, vacancy.id)
-        click_on 'Confirm and submit vacancy'
+        click_on 'Confirm and submit job'
 
         expect(page).to have_content('The job has been posted, you can view it here:')
       end
@@ -351,16 +351,16 @@ RSpec.feature 'Creating a vacancy' do
         vacancy.save(validate: false)
 
         visit school_job_review_path(school, vacancy.id)
-        click_on 'Confirm and submit vacancy'
+        click_on 'Confirm and submit job'
 
-        expect(page).to have_content(I18n.t('errors.vacancies.unable_to_publish'))
+        expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
       end
 
       scenario 'can be published at a later date' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(school, vacancy.id)
-        click_on 'Confirm and submit vacancy'
+        click_on 'Confirm and submit job'
 
         expect(page).to have_content("The job will be posted on #{vacancy.publish_on}, you can preview it here:")
         visit job_url(vacancy)
@@ -371,7 +371,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(school, vacancy.id)
-        click_on 'Confirm and submit vacancy'
+        click_on 'Confirm and submit job'
 
         activity = vacancy.activities.last
         expect(activity.session_id).to eq(session_id)
@@ -387,7 +387,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
-        click_on 'Confirm and submit vacancy'
+        click_on 'Confirm and submit job'
         expect(page).to have_content('The job has been posted, you can view it here:')
 
         visit candidate_specification_school_job_path(school)

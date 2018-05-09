@@ -1,7 +1,7 @@
 = render partial: 'shared/beta_banner'
 
 %h1.heading-xlarge
-  = t('vacancies.heading')
+  = t('jobs.heading')
 .grid-row
   .column-one-third
     = render 'filters'
@@ -9,9 +9,9 @@
     %p.heading-medium.mt0= @vacancies.total_count
     - if @vacancies.any?
       %div.sortable-links
-        = t('vacancies.sort_by')
-        = link_to_sort_by t('vacancies.expires_on'), column: 'expires_on', order: 'asc', sort: @sort
-        = link_to_sort_by t('vacancies.publish_on'), column: 'publish_on', order: 'desc', sort: @sort
+        = t('jobs.sort_by')
+        = link_to_sort_by t('jobs.expires_on'), column: 'expires_on', order: 'asc', sort: @sort
+        = link_to_sort_by t('jobs.publish_on'), column: 'publish_on', order: 'desc', sort: @sort
 
       %ul.vacancies
         - @vacancies.each do |vacancy|
@@ -19,6 +19,6 @@
 
     - else
       %div.empty
-        = t('vacancies.no_vacancies')
+        = t('jobs.no_jobs')
 
 = paginate @vacancies

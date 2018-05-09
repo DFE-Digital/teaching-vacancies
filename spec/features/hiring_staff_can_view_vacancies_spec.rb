@@ -9,9 +9,9 @@ RSpec.feature 'School viewing vacancies' do
   scenario 'A school should see advisory text when there are no vacancies' do
     visit school_path(school)
 
-    expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
+    expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
     expect(page).not_to have_css('table.vacancies')
-    expect(page).to have_content('You have no current vacancies.')
+    expect(page).to have_content('You have no current jobs.')
   end
 
   scenario 'A school can see a list of vacancies' do
@@ -20,7 +20,7 @@ RSpec.feature 'School viewing vacancies' do
 
     visit school_path(school)
 
-    expect(page).to have_content(I18n.t('schools.vacancies.index', school: school.name))
+    expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
     expect(page).to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
   end
@@ -32,7 +32,7 @@ RSpec.feature 'School viewing vacancies' do
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(I18n.t('messages.vacancies.view.only_published'))
+    expect(page).to have_content(I18n.t('messages.jobs.view.only_published'))
   end
 
   scenario 'A published vacancy show page should not show a flash message with the status' do
