@@ -19,7 +19,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       redirect_to_next_step(vacancy)
     else
       session[:current_step] = :step_1 if session[:current_step].blank?
-      redirect_to job_specification_school_vacancy_path(school)
+      redirect_to job_specification_school_job_path(school)
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -38,7 +38,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
     if @job_specification_form.valid?
       update_vacancy(job_specification_form, vacancy)
-      redirect_to edit_school_vacancy_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
+      redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
     else
       render 'edit'
     end
@@ -49,9 +49,9 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def job_specification_form
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
                                                    :minimum_salary, :maximum_salary, :working_pattern,
-                                                   :benefits, :weekly_hours, :subject_id, :pay_scale_id,
-                                                   :starts_on_dd, :starts_on_mm, :starts_on_yyyy,
-                                                   :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
+                                                   :benefits, :weekly_hours, :subject_id, :min_pay_scale_id,
+                                                   :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
+                                                   :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                                                    :flexible_working)
   end
 
@@ -66,6 +66,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    candidate_specification_school_vacancy_path(school_id: school.id)
+    candidate_specification_school_job_path(school_id: school.id)
   end
 end

@@ -12,7 +12,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def vacancy_id
-    params.permit![:vacancy_id]
+    params.permit![:job_id]
   end
 
   def session_vacancy_id
@@ -44,10 +44,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def review_path(vacancy)
-    school_vacancy_review_path(school_id: school.id, vacancy_id: vacancy.id)
+    school_job_review_path(school_id: school.id, job_id: vacancy.id)
   end
 
   def redirect_unless_vacancy_session_id
-    redirect_to job_specification_school_vacancy_path(school_id: school.id) unless session_vacancy_id
+    redirect_to job_specification_school_job_path(school_id: school.id) unless session_vacancy_id
   end
 end

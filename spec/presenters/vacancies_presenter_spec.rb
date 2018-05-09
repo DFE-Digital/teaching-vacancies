@@ -14,7 +14,7 @@ RSpec.describe VacanciesPresenter do
     end
   end
 
-  describe '#total_count', wip: true do
+  describe '#total_count' do
     it 'returns the correct number for a single vacancy', elasticsearch: true do
       create(:vacancy, job_title: 'School teacher')
       Vacancy.__elasticsearch__.client.indices.flush

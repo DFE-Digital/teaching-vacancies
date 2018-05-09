@@ -4,7 +4,7 @@ RSpec.feature 'Viewing a single published vacancy' do
   scenario 'Published vacancies are viewable' do
     published_vacancy = VacancyPresenter.new(create(:vacancy, :published))
 
-    visit vacancy_path(published_vacancy)
+    visit job_path(published_vacancy)
 
     verify_vacancy_show_page_details(published_vacancy)
   end
@@ -12,7 +12,7 @@ RSpec.feature 'Viewing a single published vacancy' do
   scenario 'Unpublished vacancies are not viewable' do
     draft_vacancy = create(:vacancy, :draft)
 
-    visit vacancy_path(draft_vacancy)
+    visit job_path(draft_vacancy)
 
     expect(page).to have_content('Page not found')
     expect(page).to_not have_content(draft_vacancy.job_title)
@@ -24,17 +24,17 @@ RSpec.feature 'Viewing a single published vacancy' do
     expired_vacancy.send :set_slug
     expired_vacancy.save(validate: false)
 
-    visit vacancy_path(current_vacancy)
+    visit job_path(current_vacancy)
     expect(page).to have_no_content('This vacancy has expired')
 
-    visit vacancy_path(expired_vacancy)
+    visit job_path(expired_vacancy)
     expect(page).to have_content('This vacancy has expired')
   end
 
   scenario 'A single vacancy must contain JobPosting schema.org mark up' do
     vacancy = create(:vacancy, :job_schema)
 
-    visit vacancy_path(vacancy)
+    visit job_path(vacancy)
 
     expect(script_tag_content(wrapper_class: '.jobref'))
       .to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)).to_json)
@@ -43,7 +43,7 @@ RSpec.feature 'Viewing a single published vacancy' do
   context 'A user viewing a vacancy' do
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
-      visit vacancy_path(vacancy)
+      visit job_path(vacancy)
 
       click_on 'Apply for this job'
 
@@ -55,7 +55,7 @@ RSpec.feature 'Viewing a single published vacancy' do
                                 experience: nil, benefits: nil, slug: 'vacancy')
       vacancy.save(validate: false)
 
-      visit vacancy_path(vacancy)
+      visit job_path(vacancy)
 
       expect(page).to_not have_content(I18n.t('vacancies.education'))
       expect(page).to_not have_content(I18n.t('vacancies.qualifications'))

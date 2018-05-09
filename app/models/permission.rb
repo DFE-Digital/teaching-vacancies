@@ -14,6 +14,7 @@ class Permission
     '90604155-14d0-4bb3-9af0-9a8b9f90df63' => '136580', # swaveseyvc@
     '0328c13e-d2cb-469a-a76b-55525a6ec567' => '137851', # stthomasmore@
     '45d5131b-82af-4026-84e4-19e6e978348f' => '108524', # walbottlecampus@
+    '66c6f48d-9adc-42a4-9c43-0d530b1d5213' => '143871', # cavalryprimary@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {

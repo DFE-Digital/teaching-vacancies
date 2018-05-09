@@ -17,8 +17,8 @@ module VacanciesHelper
       active_class = ' active'
     end
     link_to title,
-            vacancies_path(vacancy_params(sort_column: column,
-                                          sort_order: order)),
+            jobs_path(vacancy_params(sort_column: column,
+                                     sort_order: order)),
             class: "sortby--#{order}#{active_class || ''}"
   end
 
@@ -29,5 +29,9 @@ module VacanciesHelper
 
   def vacancy_params(overwrite = {})
     params.merge(overwrite).permit(vacancy_params_whitelist)
+  end
+
+  def pay_scale_options
+    @pay_scale_options ||= PayScale.all
   end
 end

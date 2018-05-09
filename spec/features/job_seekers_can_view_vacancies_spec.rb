@@ -5,7 +5,7 @@ RSpec.feature 'Viewing vacancies' do
     create_list(:vacancy, vacancy_count)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     expect(page).to have_content("There are #{vacancy_count} jobs listed.")
     expect(page).to have_selector('.vacancy', count: Vacancy.default_per_page)
@@ -25,7 +25,7 @@ RSpec.feature 'Viewing vacancies' do
     already_published.save(validate: false)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     expect(page).to have_content(valid_vacancy.job_title)
     expect(page).to have_content(already_published.job_title)
@@ -37,7 +37,7 @@ RSpec.feature 'Viewing vacancies' do
     vacancies = create_list(:vacancy, 2)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     vacancies.each { |v| expect(page).to have_content(v.job_title) }
     expect(page).to have_no_link('2')
@@ -50,7 +50,7 @@ RSpec.feature 'Viewing vacancies' do
     third_vacancy = create(:vacancy, expires_on: 7.days.from_now)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     expect(page).to have_content(first_vacancy.job_title)
     expect(page).to have_content(second_vacancy.job_title)
@@ -62,7 +62,7 @@ RSpec.feature 'Viewing vacancies' do
   scenario 'Should correctly singularize when one vacancy is returned by a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 1, subject: create(:subject, name: 'English'))
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
     within '.filters-form' do
       fill_in 'keyword', with: 'English'
       page.find('.button[type=submit]').click
@@ -73,7 +73,7 @@ RSpec.feature 'Viewing vacancies' do
   scenario 'Should correctly pluralize the number of vacancies returned by a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 3, subject: create(:subject, name: 'English'))
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
     within '.filters-form' do
       fill_in 'keyword', with: 'English'
       page.find('.button[type=submit]').click
@@ -84,20 +84,20 @@ RSpec.feature 'Viewing vacancies' do
   scenario 'Should correctly singularize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 1)
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
     expect(page).to have_content(I18n.t('vacancies.vacancy_count_without_search', count: vacancies.count))
   end
 
   scenario 'Should correctly pluralize the number of vacancies returned without a search', elasticsearch: true do
     vacancies = create_list(:vacancy, 3)
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
     expect(page).to have_content(I18n.t('vacancies.vacancy_count_plural_without_search', count: vacancies.count))
   end
 
   scenario 'Should advise users to widen their search when no results are returned' do
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
     expect(page).to have_content(I18n.t('vacancies.no_vacancies'))
   end
 
@@ -105,7 +105,7 @@ RSpec.feature 'Viewing vacancies' do
     scenario 'Shows the weekly hours if there are weekly_hours' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: '5')
       Vacancy.__elasticsearch__.client.indices.flush
-      visit vacancy_path(vacancy)
+      visit job_path(vacancy)
       expect(page).to have_content(I18n.t('vacancies.weekly_hours'))
       expect(page).to have_content(vacancy.weekly_hours)
     end
@@ -113,7 +113,7 @@ RSpec.feature 'Viewing vacancies' do
     scenario 'does not show the weekly hours if they are not set' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: nil)
       Vacancy.__elasticsearch__.client.indices.flush
-      visit vacancy_path(vacancy)
+      visit job_path(vacancy)
       expect(page).not_to have_content(I18n.t('vacancies.weekly_hours'))
     end
   end

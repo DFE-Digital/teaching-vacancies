@@ -35,7 +35,8 @@ module VacancyScraper::NorthEastSchools
       vacancy.weekly_hours = work_hours
       vacancy.minimum_salary = min_salary
       vacancy.maximum_salary = max_salary
-      vacancy.pay_scale = PayScale.where(code: pay_scale).first
+      vacancy.min_pay_scale = PayScale.where(code: pay_scale).first
+      vacancy.max_pay_scale = PayScale.where(code: max_pay_scale).first
       vacancy.starts_on = starts_on
       vacancy.expires_on = ends_on
       vacancy.status = min_salary.to_i.positive? ? :published : :draft
@@ -163,7 +164,7 @@ module VacancyScraper::NorthEastSchools
     end
     # rubocop:enable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
-    # # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
     def pay_scale
       payscale_pattern = salary[/(\wPS\d*)/, 1] || salary[/([MU]\d+)/, 1]
       payscale = payscale_pattern.present? ? payscale_pattern.gsub(/\W*(\w{1})(\d+)/, '\1PS\3') : nil
@@ -178,6 +179,25 @@ module VacancyScraper::NorthEastSchools
       pay_scale.present? ? pay_scale.code : nil
     end
     # rubocop:enable
+
+    def max_pay_scale
+      code = salary[/(UP[SR]\d*)/, 1] || salary[/(Upper).*[Ss]cale/, 1] || salary[/(U\d{1})/, 1]
+      code = 'UPS3' if ['UPS', 'UPR', 'Upper'].include?(code)
+      code = code.present? ? code.gsub(/(\w{1,3})(\d)/, 'UPS\2') : nil
+
+      pay_scale = PayScale.find_by(code: code)
+      return pay_scale.code if pay_scale.present?
+
+      code = salary.scan(/Leader[\W\w]*(L)\d+\W+(\d+)/).join('')
+      code = salary[/L\d+\W+(L\d+)/, 1] if code.empty?
+      code = code.present? ? code.gsub(/(L)(\d+)/, 'LPS\2') : nil
+      pay_scale = PayScale.find_by(code: code) if code.present?
+
+      return pay_scale.code if pay_scale.present?
+
+      pay_scale = PayScale.find_by(salary: max_salary)
+      pay_scale.present? ? pay_scale.code : nil
+    end
 
     def leadership; end
 

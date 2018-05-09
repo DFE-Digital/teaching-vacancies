@@ -6,7 +6,7 @@ RSpec.feature 'Filtering vacancies' do
     languages_teacher = create(:vacancy, :published, job_title: 'Languages Teacher')
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     within '.filters-form' do
       fill_in 'keyword', with: 'Headmaster'
@@ -22,7 +22,7 @@ RSpec.feature 'Filtering vacancies' do
     penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School', town: 'Penzance'))
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     within '.filters-form' do
       fill_in 'location', with: 'enfield'
@@ -38,7 +38,7 @@ RSpec.feature 'Filtering vacancies' do
     full_time_vacancy = create(:vacancy, :published, working_pattern: :full_time)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     within '.filters-form' do
       select 'Part time', from: 'working_pattern'
@@ -54,7 +54,7 @@ RSpec.feature 'Filtering vacancies' do
     secondary_vacancy = create(:vacancy, :published, school: build(:school, :secondary))
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     within '.filters-form' do
       select 'Primary', from: 'phase'
@@ -70,7 +70,7 @@ RSpec.feature 'Filtering vacancies' do
     higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     within '.filters-form' do
       select '£30,000', from: 'minimum_salary'
@@ -86,7 +86,7 @@ RSpec.feature 'Filtering vacancies' do
     higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
 
     Vacancy.__elasticsearch__.client.indices.flush
-    visit vacancies_path
+    visit jobs_path
 
     within '.filters-form' do
       select '£40,000', from: 'maximum_salary'

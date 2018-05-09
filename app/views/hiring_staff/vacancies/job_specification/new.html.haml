@@ -3,7 +3,7 @@
   %span.heading-secondary
     Step 1 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
-= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_vacancy_path(school_id: @school.id) do |f|
+= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_job_path(school_id: @school.id) do |f|
   %h2.heading-medium
     = t('vacancies.job_specification')
 
@@ -33,6 +33,24 @@
                 wrapper_html: {id: 'subject'},
                 collection: Subject.order(:name),
                 required: false
+      %fieldset.form-group#pay_scale_range
+        %label.form-label.form-label-bold="#{t('vacancies.pay_scale_range')} (optional)"
+        %span.form-hint= t('vacancies.form_hints.pay_scale_range')
+        = f.input :min_pay_scale_id,
+                  collection: pay_scale_options,
+                  label_method: :label,
+                  label: false,
+                  required: false,
+                  wrapper: false
+
+        to
+
+        = f.input :max_pay_scale_id,
+                  collection: pay_scale_options,
+                  label_method: :label,
+                  required: false,
+                  label: false,
+                  wrapper: false
 
       %fieldset.form-group#salary_range
         %label.form-label.form-label-bold= t('vacancies.salary_range')
@@ -58,13 +76,6 @@
                     label: false,
                     input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
 
-      = f.input :pay_scale_id,
-                  label: t('vacancies.pay_scale'),
-                  hint: t('vacancies.form_hints.pay_scale'),
-                  collection: PayScale.order(:label),
-                  label_method: :label,
-                  wrapper_html: {id: 'pay_scale'},
-                  required: false
       = f.input :working_pattern,
                 label: t('vacancies.working_pattern'),
                 collection: working_pattern_options,
