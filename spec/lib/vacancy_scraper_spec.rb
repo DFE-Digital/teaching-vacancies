@@ -114,6 +114,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
           expect(scraper.pay_scale).to eq('MPS1')
         end
 
+        it '#max_pay_scale' do
+          expect(scraper.max_pay_scale).to eq('UPS3')
+        end
+
         it '#max_salary' do
           expect(scraper.max_salary).to eq('38633')
         end
@@ -188,6 +192,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#pay_scale' do
           expect(scraper.pay_scale).to eq('MPS1')
+        end
+
+        it '#max_pay_scale' do
+          expect(scraper.max_pay_scale).to eq('UPS3')
         end
 
         it '#max_salary' do
@@ -311,6 +319,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#pay_scale' do
           expect(scraper.pay_scale).to eq('MPS1')
+        end
+
+        it '#max_pay_scale' do
+          expect(scraper.max_pay_scale).to eq('UPS3')
         end
 
         it '#max_salary' do
@@ -506,6 +518,10 @@ RSpec.describe VacancyScraper::NorthEastSchools do
 
         it '#pay_scale' do
           expect(scraper.pay_scale).to eq('MPS1')
+        end
+
+        it '#max_pay_scale' do
+          expect(scraper.max_pay_scale).to eq('UPS3')
         end
 
         it '#max_salary' do
