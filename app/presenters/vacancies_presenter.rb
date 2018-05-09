@@ -13,11 +13,11 @@ class VacanciesPresenter < BasePresenter
 
   def total_count
     if model.total_count == 1
-      return I18n.t('vacancies.vacancy_count_without_search', count: model.total_count) unless @searched
-      I18n.t('vacancies.vacancy_count', count: model.total_count)
+      return I18n.t('jobs.job_count_without_search', count: model.total_count) unless @searched
+      I18n.t('jobs.job_count', count: model.total_count)
     else
-      return I18n.t('vacancies.vacancy_count_plural_without_search', count: model.total_count) unless @searched
-      I18n.t('vacancies.vacancy_count_plural', count: model.total_count)
+      return I18n.t('jobs.job_count_plural_without_search', count: model.total_count) unless @searched
+      I18n.t('jobs.job_count_plural', count: model.total_count)
     end
   end
 end

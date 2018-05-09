@@ -1,7 +1,7 @@
 .school.grid-row
   .column-full
     %h1.heading-large
-      = t('schools.vacancies.index', school: @school.name)
+      = t('schools.jobs.index', school: @school.name)
 
 .grid-row
   .column-full
@@ -10,7 +10,7 @@
     - else
       = render partial: 'no_vacancies', locals: { school: @school }
     .form-group.mt1
-      = link_to t('buttons.create_vacancy'), new_school_job_path(@school), class: 'button'
+      = link_to t('buttons.create_job'), new_school_job_path(@school), class: 'button'
 
 .grid-row
   .column-full

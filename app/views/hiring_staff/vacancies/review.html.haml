@@ -1,61 +1,61 @@
 =render partial: 'school_vacancy_breadcrumb'
 
 %h1.heading-large
-  = t('vacancies.review_heading', school: @vacancy.school.name)
+  = t('jobs.review_heading', school: @vacancy.school.name)
 
 %p.lede
-  = t('vacancies.review')
+  = t('jobs.review')
 
 .vacancy.grid-row
   .column-two-thirds
 
-    %h2.heading-medium= t('vacancies.job_specification')
+    %h2.heading-medium= t('jobs.job_specification')
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          = t('vacancies.job_title')
+          = t('jobs.job_title')
         %dd.cya-answer
           = @vacancy.job_title
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'job_title')
       %div
         %dt.cya-question
-          = t('vacancies.description')
+          = t('jobs.description')
         %dd.cya-answer
           = @vacancy.job_description
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'job_description')
       %div
         %dt.cya-question
-          = t('vacancies.main_subject')
+          = t('jobs.main_subject')
         %dd.cya-answer
           = @vacancy.main_subject
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'subject')
       %div
         %dt.cya-question
-          = t('vacancies.pay_scale')
+          = t('jobs.pay_scale')
         %dd.cya-answer
           =@vacancy.pay_scale_range
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'pay_scale_range')
       %div
         %dt.cya-question
-          = t('vacancies.salary_range')
+          = t('jobs.salary_range')
         %dd.cya-answer
           = @vacancy.salary_range("to")
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'salary_range')
       %div
         %dt.cya-question
-          = t('vacancies.working_pattern')
+          = t('jobs.working_pattern')
         %dd.cya-answer
           = @vacancy.working_pattern.humanize
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'working_pattern')
       %div
         %dt.cya-question
-          = t('vacancies.flexible_working')
+          = t('jobs.flexible_working')
         %dd.cya-answer
           = @vacancy.flexible_working
         %dd.cya-change
@@ -63,21 +63,21 @@
 
       %div
         %dt.cya-question
-          = t('vacancies.benefits')
+          = t('jobs.benefits')
         %dd.cya-answer
           = @vacancy.benefits
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'benefits')
       %div
         %dt.cya-question
-          = t('vacancies.weekly_hours')
+          = t('jobs.weekly_hours')
         %dd.cya-answer
           = @vacancy.weekly_hours
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'weekly_hours')
       %div
         %dt.cya-question
-          = t('vacancies.leadership_level')
+          = t('jobs.leadership_level')
         %dd.cya-answer
           - if @vacancy.leadership
             = @vacancy.leadership.title
@@ -85,75 +85,75 @@
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'leadership')
       %div
         %dt.cya-question
-          = t('vacancies.starts_on')
+          = t('jobs.starts_on')
         %dd.cya-answer
           = format_date @vacancy.starts_on
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'starts_on')
       %div
         %dt.cya-question
-          = t('vacancies.ends_on')
+          = t('jobs.ends_on')
         %dd.cya-answer
           = format_date @vacancy.ends_on
         %dd.cya-change
           = link_to t('buttons.change'), job_specification_school_job_path(@school, anchor: 'ends_on')
 
-    %h2.heading-medium= t('vacancies.candidate_specification')
+    %h2.heading-medium= t('jobs.candidate_specification')
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          = t('vacancies.education')
+          = t('jobs.education')
         %dd.cya-answer
           = @vacancy.education
         %dd.cya-change
           = link_to t('buttons.change'), candidate_specification_school_job_path(@school, anchor: 'education')
       %div
         %dt.cya-question
-          = t('vacancies.qualifications')
+          = t('jobs.qualifications')
         %dd.cya-answer
           = @vacancy.qualifications
         %dd.cya-change
           = link_to t('buttons.change'), candidate_specification_school_job_path(@school, anchor: 'qualifications')
       %div
         %dt.cya-question
-          = t('vacancies.experience')
+          = t('jobs.experience')
         %dd.cya-answer
           = @vacancy.experience
         %dd.cya-change
           = link_to t('buttons.change'), candidate_specification_school_job_path(@school, anchor: 'experience')
 
-    %h2.heading-medium= t('vacancies.application_details')
+    %h2.heading-medium= t('jobs.application_details')
     %dl.govuk-check-your-answers.cya-questions-short
       %div
         %dt.cya-question
-          = t('vacancies.contact_email')
+          = t('jobs.contact_email')
         %dd.cya-answer
           = @vacancy.contact_email
         %dd.cya-change
           = link_to t('buttons.change'), application_details_school_job_path(@school, anchor: 'contact_email')
       %div
         %dt.cya-question
-          = t('vacancies.application_link')
+          = t('jobs.application_link')
         %dd.cya-answer
           = @vacancy.application_link
         %dd.cya-change
           = link_to t('buttons.change'), application_details_school_job_path(@school, anchor: 'application_link')
       %div
         %dt.cya-question
-          = t('vacancies.publication_date')
+          = t('jobs.publication_date')
         %dd.cya-answer
           = format_date @vacancy.publish_on
         %dd.cya-change
           = link_to t('buttons.change'), application_details_school_job_path(@school, anchor: 'publish_on')
       %div
         %dt.cya-question
-          = t('vacancies.deadline_date')
+          = t('jobs.deadline_date')
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
           = link_to t('buttons.change'), application_details_school_job_path(@school, anchor: 'deadline')
 
-    %h2.heading-medium Now submit your vacancy
-    %p= t('vacancies.confirmation_summary')
+    %h2.heading-medium Now submit your job
+    %p= t('jobs.confirmation_summary')
 
-    = link_to t('vacancies.submit'), school_job_publish_path(school_id: @school.id, vacancy_id: @vacancy.id), method: :post, class: "button"
+    = link_to t('jobs.submit'), school_job_publish_path(school_id: @school.id, vacancy_id: @vacancy.id), method: :post, class: "button"

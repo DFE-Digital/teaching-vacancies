@@ -12,8 +12,8 @@ en:
   nav:
     sign_in: 'Sign in as a school'
     sign_out: 'Sign out'
-    school_page_link: 'My vacancies'
-  vacancies:
+    school_page_link: 'My jobs'
+  jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
     salary: 'Salary'
@@ -24,7 +24,7 @@ en:
     flexible_working_info: 'Yes. Email %{mailto} for more information.'
     starts_on: 'Expected start date'
     ends_on: 'End date'
-    expired: 'This vacancy has expired'
+    expired: 'This job post has expired'
     description: 'Job description'
     education: 'Essential educational requirements'
     qualifications: 'Essential qualifications'
@@ -36,39 +36,39 @@ en:
     pay_scale: 'Pay scale'
     pay_scale_range: 'Pay scale range'
     leadership_level: 'Leadership level'
-    vacancy_count_without_search: 'There is %{count} job listed.'
-    vacancy_count_plural_without_search: 'There are %{count} jobs listed.'
-    vacancy_count: 'There is %{count} job that matches your search.'
-    vacancy_count_plural: 'There are %{count} jobs that match your search.'
-    no_vacancies: 'No vacancies found. Try expanding your search.'
+    job_count_without_search: 'There is %{count} job listed.'
+    job_count_plural_without_search: 'There are %{count} jobs listed.'
+    job_count: 'There is %{count} job that matches your search.'
+    job_count_plural: 'There are %{count} jobs that match your search.'
+    no_jobs: 'No jobs found. Try expanding your search.'
     job_title: 'Job title'
     benefits: 'Employee benefits'
     salary_range: 'Salary range'
     per_year: 'per year'
-    publish_heading: 'Publish a vacancy for %{school}'
-    review_heading: 'Review the vacancy for %{school}'
-    edit_heading: 'Edit vacancy for %{school}'
+    publish_heading: 'Publish a job for %{school}'
+    review_heading: 'Review the job for %{school}'
+    edit_heading: 'Edit job for %{school}'
     job_specification: 'Job specification'
     candidate_specification: 'Candidate specification'
     application_details: 'Application details'
-    contact_email: 'Vacancy contact email'
-    contact_email_subject: '%{vacancy} vacancy enquiry'
-    contact_email_body: 'Regarding the vacancy at %{url}'
+    contact_email: 'Job contact email'
+    contact_email_subject: '%{job} job enquiry'
+    contact_email_body: 'Regarding the job at %{url}'
     deadline_date: 'Application deadline'
     publication_date: 'Date role will be listed'
-    review: 'Review the vacancy details and make any necessary changes before submitting it for publication below.'
-    edit: 'Edit the vacancy details.'
+    review: 'Review the job details and make any necessary changes before submitting it for publication below.'
+    edit: 'Edit the job details.'
     confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
-    submit: 'Confirm and submit vacancy'
+    submit: 'Confirm and submit job'
     submitted: 'Your job posting has been submitted'
-    view_posted_vacancy: 'The job has been posted, you can view it here:'
-    preview_posted_vacancy: 'The job will be posted on %{date}, you can preview it here:'
+    view_posted_job: 'The job has been posted, you can view it here:'
+    preview_posted_job: 'The job will be posted on %{date}, you can preview it here:'
     apply: 'Apply for this job'
     application_link: 'Application link'
     actions: 'Actions'
     status: 'Status'
-    already_published: 'This vacancy has already been published'
-    draft: 'This vacancy is currently a draft version.'
+    already_published: 'This job has already been published'
+    draft: 'This job is currently a draft version.'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Describe the job, the duties involved and the competencies required by the jobholder in 1000 characters'
@@ -86,7 +86,7 @@ en:
       publication_date: 'For example, %{date}'
       benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
       contact_email: 'This will appear in the public listing'
-      application_link: 'This is the url linking the vacancy to your existing application page'
+      application_link: 'This is the url linking the job to your existing application page'
     filters:
       title: 'Search job listings'
       location: 'Location'
@@ -107,13 +107,13 @@ en:
     description: 'Description'
     school_age: 'School age'
     not_given: 'Not given'
-    search_heading: 'Publish a vacancy'
-    search_subheading: 'Which school is the job vacancy for?'
+    search_heading: 'Publish a job'
+    search_subheading: 'Which school is the job job for?'
     info: 'About %{school}'
-    vacancies:
-      index: 'Vacancies at %{school}'
-    no_vacancies:
-      heading: 'You have no current vacancies.'
+    jobs:
+      index: 'Jobs at %{school}'
+    no_jobs:
+      heading: 'You have no current jobs.'
       bullets:
         mandatory:
           - 'a job title'
@@ -138,23 +138,23 @@ en:
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'
-    update_vacancy: 'Update vacancy'
+    update_job: 'Update job'
     find: 'Find'
     delete: 'Delete'
-    create_vacancy: 'Create a vacancy'
+    create_job: 'Create a job'
 
   messages:
-    vacancies:
-      delete: The vacancy has been deleted
-      updated: 'The vacancy has been updated'
+    jobs:
+      delete: The job has been deleted
+      updated: 'The job has been updated'
       view:
-        only_published: You can only view published vacancies
+        only_published: You can only view published jobs
     access:
       signed_out: You've been signed out.
 
   errors:
-    vacancies:
-      unable_to_publish: We were unable to publish this vacancy. Make sure that you have filled all mandatory fields
+    jobs:
+      unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.

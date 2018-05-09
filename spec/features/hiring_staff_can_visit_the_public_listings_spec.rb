@@ -30,13 +30,13 @@ RSpec.feature 'School viewing public listings' do
     visit root_path
 
     click_on(I18n.t('nav.sign_in'))
-    expect(page).to have_content("Vacancies at #{school.name}")
+    expect(page).to have_content("Jobs at #{school.name}")
     within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
 
     click_on(I18n.t('app.title'))
-    expect(page).to have_content(I18n.t('vacancies.heading'))
+    expect(page).to have_content(I18n.t('jobs.heading'))
 
     click_on(I18n.t('nav.school_page_link'))
-    expect(page).to have_content("Vacancies at #{school.name}")
+    expect(page).to have_content("Jobs at #{school.name}")
   end
 end

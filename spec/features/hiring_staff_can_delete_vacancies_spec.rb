@@ -18,7 +18,7 @@ RSpec.feature 'School deleting vacancies' do
 
     expect(page).not_to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
-    expect(page).to have_content('The vacancy has been deleted')
+    expect(page).to have_content('The job has been deleted')
   end
 
   scenario 'The last vacancy is deleted' do
@@ -29,7 +29,7 @@ RSpec.feature 'School deleting vacancies' do
       click_on 'Delete'
     end
 
-    expect(page).to have_content(I18n.t('schools.no_vacancies.heading'))
+    expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
   end
 
   scenario 'Audits the vacancy deletion' do

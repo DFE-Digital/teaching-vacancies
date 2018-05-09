@@ -4,16 +4,16 @@
   .column-full
     .govuk-box-highlight.margin-bottom-large
       %h1.heading-large.mv0
-        = t('vacancies.submitted')
+        = t('jobs.submitted')
 
   .column-two-thirds
     - if @vacancy.publish_today?
       %p
-        = t('vacancies.view_posted_vacancy')
+        = t('jobs.view_posted_job')
       %p
         = link_to job_url(@vacancy), job_path(@vacancy)
     - else
       %p
-        = t('vacancies.preview_posted_vacancy', date: @vacancy.publish_on)
+        = t('jobs.preview_posted_job', date: @vacancy.publish_on)
       %p
         = link_to school_job_url(school_id: @school.id, id: @vacancy.id), school_job_path(school_id: @school.id, id: @vacancy.id)

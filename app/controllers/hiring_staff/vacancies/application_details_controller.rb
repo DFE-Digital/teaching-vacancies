@@ -33,7 +33,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
     if @application_details_form.valid?
       update_vacancy(application_details_form, vacancy)
-      redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.vacancies.updated')
+      redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
       render 'edit'
     end

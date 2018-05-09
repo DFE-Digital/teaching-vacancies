@@ -1,41 +1,41 @@
 %h1.heading-large
-  = t('vacancies.publish_heading', school: @school.name)
+  = t('jobs.publish_heading', school: @school.name)
   %span.heading-secondary
     Step 1 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
 = simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_job_path(school_id: @school.id) do |f|
   %h2.heading-medium
-    = t('vacancies.job_specification')
+    = t('jobs.job_specification')
 
   .grid-row
     .column-one-half
       = f.input :job_title,
-                label: t('vacancies.job_title'),
-                hint: t('vacancies.form_hints.job_title'),
+                label: t('jobs.job_title'),
+                hint: t('jobs.form_hints.job_title'),
                 wrapper_html: {id: 'job_title'},
                 required: true
       = f.input :job_description,
                 as: :text,
-                label: t('vacancies.description'),
-                hint: t('vacancies.form_hints.description'),
+                label: t('jobs.description'),
+                hint: t('jobs.form_hints.description'),
                 input_html: {rows: 10},
                 wrapper_html: {id: 'job_description'},
                 required: true
       = f.input :benefits,
                 as: :text,
-                label: t('vacancies.benefits'),
+                label: t('jobs.benefits'),
                 input_html: {rows: 5},
                 wrapper_html: {id: 'benefits'},
                 required: false
       = f.input :subject_id,
-                label: t('vacancies.main_subject'),
-                hint: t('vacancies.form_hints.main_subject'),
+                label: t('jobs.main_subject'),
+                hint: t('jobs.form_hints.main_subject'),
                 wrapper_html: {id: 'subject'},
                 collection: Subject.order(:name),
                 required: false
       %fieldset.form-group#pay_scale_range
-        %label.form-label.form-label-bold="#{t('vacancies.pay_scale_range')} (optional)"
-        %span.form-hint= t('vacancies.form_hints.pay_scale_range')
+        %label.form-label.form-label-bold="#{t('jobs.pay_scale_range')} (optional)"
+        %span.form-hint= t('jobs.form_hints.pay_scale_range')
         = f.input :min_pay_scale_id,
                   collection: pay_scale_options,
                   label_method: :label,
@@ -53,8 +53,8 @@
                   wrapper: false
 
       %fieldset.form-group#salary_range
-        %label.form-label.form-label-bold= t('vacancies.salary_range')
-        %span.form-hint= t('vacancies.form_hints.salary_range')
+        %label.form-label.form-label-bold= t('jobs.salary_range')
+        %span.form-hint= t('jobs.form_hints.salary_range')
 
         .salary_field
           %span.pound_sign £
@@ -77,36 +77,36 @@
                     input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
 
       = f.input :working_pattern,
-                label: t('vacancies.working_pattern'),
+                label: t('jobs.working_pattern'),
                 collection: working_pattern_options,
                 wrapper_html: {id: 'working_pattern'},
                 required: true
       = f.input :flexible_working, as: :boolean,
-                hint: t('vacancies.form_hints.flexible_working'),
+                hint: t('jobs.form_hints.flexible_working'),
                 wrapper: :inline_checkbox,
                 wrapper_html: { id: 'flexible_working' }
       = f.input :weekly_hours,
-                label: t('vacancies.weekly_hours'),
+                label: t('jobs.weekly_hours'),
                 as: :decimal,
-                hint: t('vacancies.form_hints.weekly_hours'),
+                hint: t('jobs.form_hints.weekly_hours'),
                 wrapper_html: {id: 'weekly_hours'},
                 required: false
       = f.input :leadership_id,
-                label: t('vacancies.leadership_level'),
+                label: t('jobs.leadership_level'),
                 collection: Leadership.order(:title),
                 wrapper_html: {id: 'leadership'},
                 required: false
 
       %div.form-group#starts_on
         = f.gov_uk_date_field :starts_on,
-                              legend_text: "#{t('vacancies.starts_on')} (optional)",
+                              legend_text: "#{t('jobs.starts_on')} (optional)",
                               legend_class: 'form-label-bold',
-                              form_hint_text: t('vacancies.form_hints.start_date',
+                              form_hint_text: t('jobs.form_hints.start_date',
                                                 date: l(Date.today + 3.months, format: :hinttext))
       %div.form-group#ends_on
         = f.gov_uk_date_field :ends_on,
-                              legend_text: "#{t('vacancies.ends_on')} (optional)",
+                              legend_text: "#{t('jobs.ends_on')} (optional)",
                               legend_class: 'form-label-bold',
-                              form_hint_text: t('vacancies.form_hints.end_date',
+                              form_hint_text: t('jobs.form_hints.end_date',
                                                 date: l(Date.today + 6.months, format: :hinttext))
       = f.button :submit, t('buttons.save_and_continue')

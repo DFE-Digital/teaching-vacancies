@@ -12,7 +12,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       vacancy = create(:vacancy, :draft, school: school)
       visit edit_school_job_path(school, vacancy.id)
 
-      expect(page).to have_content("Review the vacancy for #{school.name}")
+      expect(page).to have_content("Review the job for #{school.name}")
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       visit edit_school_job_path(school, vacancy.id)
 
       click_on school.name
-      expect(page).to have_content("Vacancies at #{school.name}")
+      expect(page).to have_content("Jobs at #{school.name}")
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       vacancy = create(:vacancy, :published, school: school)
       visit edit_school_job_path(school, vacancy.id)
 
-      expect(page).to have_content("Edit vacancy for #{school.name}")
+      expect(page).to have_content("Edit job for #{school.name}")
     end
 
     context '#job_specification' do
@@ -39,11 +39,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(school, vacancy.id)
 
-        expect(page).to have_content("Edit vacancy for #{school.name}")
+        expect(page).to have_content("Edit job for #{school.name}")
         click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: ''
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
         expect(page).to have_content('Job title can\'t be blank')
       end
@@ -54,9 +54,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
-        expect(page).to have_content(I18n.t('messages.vacancies.updated'))
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
         expect(page).to have_content('Assistant Head Teacher')
       end
 
@@ -68,7 +68,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
         activity = vacancy.activities.last
         expect(activity.key).to eq('vacancy.update')
@@ -82,13 +82,13 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(school, vacancy.id)
 
-        expect(page).to have_content("Edit vacancy for #{school.name}")
-        click_link_in_container_with_text(I18n.t('vacancies.experience'))
+        expect(page).to have_content("Edit job for #{school.name}")
+        click_link_in_container_with_text(I18n.t('jobs.experience'))
 
         fill_in 'candidate_specification_form[experience]', with: ''
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
-        within_row_for(text: I18n.t('vacancies.experience')) do
+        within_row_for(text: I18n.t('jobs.experience')) do
           expect(page).to have_content('can\'t be blank')
         end
       end
@@ -96,12 +96,12 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(school, vacancy.id)
-        click_link_in_container_with_text(I18n.t('vacancies.qualifications'))
+        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
 
         fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
-        expect(page).to have_content(I18n.t('messages.vacancies.updated'))
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
         expect(page).to have_content('Teaching deegree')
       end
 
@@ -110,10 +110,10 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         qualifications = vacancy.qualifications
 
         visit edit_school_job_path(school, vacancy.id)
-        click_link_in_container_with_text(I18n.t('vacancies.qualifications'))
+        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
 
         fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
         activity = vacancy.activities.last
         expect(activity.key).to eq('vacancy.update')
@@ -128,13 +128,13 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(school, vacancy.id)
 
-        expect(page).to have_content("Edit vacancy for #{school.name}")
-        click_link_in_container_with_text(I18n.t('vacancies.application_link'))
+        expect(page).to have_content("Edit job for #{school.name}")
+        click_link_in_container_with_text(I18n.t('jobs.application_link'))
 
         fill_in 'application_details_form[application_link]', with: 'some link'
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
-        within_row_for(text: I18n.t('vacancies.application_link')) do
+        within_row_for(text: I18n.t('jobs.application_link')) do
           expect(page).to have_content(I18n.t('errors.url.invalid'))
         end
       end
@@ -144,13 +144,13 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_job_path(school, vacancy.id)
 
-        click_link_in_container_with_text(I18n.t('vacancies.application_link'))
+        click_link_in_container_with_text(I18n.t('jobs.application_link'))
         vacancy.application_link = 'https://tvs.com'
 
         fill_in 'application_details_form[application_link]', with: vacancy.application_link
-        click_on 'Update vacancy'
+        click_on 'Update job'
 
-        expect(page).to have_content(I18n.t('messages.vacancies.updated'))
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
         verify_all_vacancy_details(vacancy)
       end
     end
@@ -160,10 +160,10 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       application_link = vacancy.application_link
 
       visit edit_school_job_path(school, vacancy.id)
-      click_link_in_container_with_text(I18n.t('vacancies.application_link'))
+      click_link_in_container_with_text(I18n.t('jobs.application_link'))
 
       fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
-      click_on 'Update vacancy'
+      click_on 'Update job'
 
       activity = vacancy.activities.last
       expect(activity.key).to eq('vacancy.update')

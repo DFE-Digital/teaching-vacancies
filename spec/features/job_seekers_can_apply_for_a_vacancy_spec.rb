@@ -6,6 +6,6 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
 
     visit job_path(vacancy)
 
-    expect(page).to have_link(I18n.t('vacancies.apply', href: 'http://www.google.com'))
+    expect(page).to have_link(I18n.t('jobs.apply', href: 'http://www.google.com'))
   end
 end
