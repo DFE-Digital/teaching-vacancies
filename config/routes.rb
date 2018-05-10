@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get 'check' => 'application#check'
 
   resources :jobs, only: %i[index show], controller: 'vacancies'
+
+  # Backward compatibility after changing routes to 'jobs'
+  resources :vacancies, only: [:show], controller: 'vacancies'
+
   resource :sessions, controller: 'hiring_staff/sessions'
 
   get '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
