@@ -17,7 +17,7 @@ class Permission
     '66c6f48d-9adc-42a4-9c43-0d530b1d5213' => '143871', # cavalryprimary@
     '34a1cbdc-1152-49a6-8884-08d376de8683' => '137903', # parksideacademy@
     '7b5bb636-143c-4af2-8058-f03ab53a883c' => '138845', # nunthorpe@
-    '7b5bb636-143c-4af2-8058-f03ab53a883c' => '138567', # grindonhall@
+    '3be81987-4f1f-4c8b-b85b-798afe266e0f' => '138567', # grindonhall@
     '67fe3d15-65b0-4e29-90b9-ee51f7454526' => '141865', # trinitynewcastle@
     'af39c52e-e991-4037-9356-d62049a2cf28' => '143575', # sawtryjunior@
     '483e4399-d3f3-408a-b076-2a7da6ac7c9e' => '143267', # kentonbarnewcastle@
