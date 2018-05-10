@@ -124,12 +124,12 @@ variable "ecs_service_logspout_container_definition_file_path" {
 
 variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
-  default     = ["rake", "data:schools:import"]
+  default     = ["rake", "verbose", "data:schools:import"]
 }
 
 variable "vacancies_scrape_task_command" {
   description = "The Entrypoint for the vacancies_scrape task"
-  default     = ["rake", "vacancies:data:scrape"]
+  default     = ["rake", "verbose", "vacancies:data:scrape"]
 }
 
 variable "sessions_trim_task_command" {
