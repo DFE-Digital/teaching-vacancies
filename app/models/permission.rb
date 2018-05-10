@@ -23,6 +23,7 @@ class Permission
     '483e4399-d3f3-408a-b076-2a7da6ac7c9e' => '143267', # kentonbarnewcastle@
     'f8fe6605-2978-4dc5-a71a-f87ab72d2e10' => '135818', # castleview@
     '853b2990-6241-4cf0-ad9c-a3a97ae6cad0' => '110791', # islehamprimary@
+    '0af8f449-0591-487e-98e7-4f8444fbe987' => '136352', # gosforthacademy@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
