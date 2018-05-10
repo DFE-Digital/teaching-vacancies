@@ -24,6 +24,7 @@ class Permission
     'f8fe6605-2978-4dc5-a71a-f87ab72d2e10' => '135818', # castleview@
     '853b2990-6241-4cf0-ad9c-a3a97ae6cad0' => '110791', # islehamprimary@
     '0af8f449-0591-487e-98e7-4f8444fbe987' => '136352', # gosforthacademy@
+    '7487f45c-d87b-44fa-bb7a-8b918e09d7da' => '136745', # northdurham@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
