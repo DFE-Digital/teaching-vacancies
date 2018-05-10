@@ -371,7 +371,7 @@ resource "aws_appautoscaling_policy" "down" {
 resource "aws_cloudwatch_metric_alarm" "service_cpu_high" {
   alarm_name          = "${var.project_name}-${var.environment}_web_cpu_utilization_high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "5"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/ECS"
   period              = "60"
