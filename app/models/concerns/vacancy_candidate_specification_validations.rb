@@ -1,6 +1,6 @@
 module VacancyCandidateSpecificationValidations
   extend ActiveSupport::Concern
-  include ActionView::Helpers::SanitizeHelper
+  include ApplicationHelper
 
   included do
     validates :experience, :education, :qualifications, presence: true

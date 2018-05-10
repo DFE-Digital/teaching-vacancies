@@ -1,7 +1,6 @@
 module VacancyJobSpecificationValidations
   extend ActiveSupport::Concern
   include ApplicationHelper
-  include ActionView::Helpers::SanitizeHelper
 
   MAX_INTEGER = 2147483647
 
