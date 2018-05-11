@@ -25,6 +25,7 @@ class Permission
     '853b2990-6241-4cf0-ad9c-a3a97ae6cad0' => '110791', # islehamprimary@
     '0af8f449-0591-487e-98e7-4f8444fbe987' => '136352', # gosforthacademy@
     '7487f45c-d87b-44fa-bb7a-8b918e09d7da' => '136745', # northdurham@
+    '8f3f3a62-6f9a-480d-a693-13c5dfe2fa14' => '138530', # barbarapriestman@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
