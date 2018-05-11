@@ -63,4 +63,14 @@ RSpec.feature 'Viewing a single published vacancy' do
       expect(page).to_not have_content(I18n.t('jobs.benefits'))
     end
   end
+
+  context 'when the old vacancy URL is used' do
+    scenario 'vacancy is viewable' do
+      published_vacancy = VacancyPresenter.new(create(:vacancy, :published))
+
+      visit vacancy_path(published_vacancy)
+
+      expect(page).to have_content(published_vacancy.job_title)
+    end
+  end
 end
