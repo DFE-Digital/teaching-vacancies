@@ -34,11 +34,15 @@ namespace :vacancies do
         vacancy.ends_on         = Date.parse(data['ends_on']) if data.key?('ends_on')
         vacancy.min_pay_scale = PayScale.find_by(label: data['min_pay_scale']) if data.key?('min_pay_scale')
         vacancy.max_pay_scale = PayScale.find_by(label: data['max_pay_scale']) if data.key?('max_pay_scale')
-        vacancy.working_pattern = data['working_pattern'].to_sym if data.key?('working_pattern')
+        vacancy.working_pattern = extract_working_pattern(data) if data.key?('working_pattern')
         vacancy.subject = Subject.find_by(name: data['subject']) if data.key?('subject')
         vacancy.leadership = Leadership.find_by(title: data['leadership_title']) if data.key?('leadership_title')
         vacancy.save(validate: false)
       end
     end
   end
+end
+
+def extract_working_pattern(data)
+  data['working_pattern'].present? ? data['working_pattern'].to_sym : ''
 end

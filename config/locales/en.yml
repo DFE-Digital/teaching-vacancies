@@ -29,7 +29,6 @@ en:
     education: 'Essential educational requirements'
     qualifications: 'Essential qualifications'
     experience: 'Essential skills and experience'
-    benefits: 'Benefits'
     weekly_hours: 'Weekly hours'
     ref_no: 'Reference number'
     main_subject: 'Main subject'
@@ -84,7 +83,7 @@ en:
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
-      benefits: 'For example, financial benefits, job training, continuing professional development and whether SEN and/or TLR allowances are available'
+      benefits: 'For example, financial benefits, job training, continuing professional development and whether Special Educational Needs (SEN) allowances or Teaching and Learning Responsibility (TLR) payments are available.'
       contact_email: 'This will appear in the public listing'
       application_link: 'This is the url linking the job to your existing application page'
     filters:
