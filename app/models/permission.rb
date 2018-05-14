@@ -30,6 +30,8 @@ class Permission
     '3d04eccb-ed37-40aa-98a3-4fe8b1c14761' => '110907', # stjohnfisher@
     'ffe1b710-ac6b-42ac-90c3-0a6fa628d26f' => '143836', # orchards@
     'f41fc865-6b60-4f3f-8200-c2df2b366725' => '134937', # granta@
+    '0ecd58da-9d2b-4a42-9971-59ea63c06a40' => '110715', # warboyscprimary@
+    '9923ebfd-ec55-4454-98ff-f66eead02104' => '110759', # fulbournprimary@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
