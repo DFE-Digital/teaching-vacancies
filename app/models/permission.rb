@@ -29,6 +29,7 @@ class Permission
     'f5594370-85b4-4d33-acbf-53e63e08249a' => '110834', # tevershamprimary@
     '3d04eccb-ed37-40aa-98a3-4fe8b1c14761' => '110907', # stjohnfisher@
     'ffe1b710-ac6b-42ac-90c3-0a6fa628d26f' => '143836', # orchards@
+    'f41fc865-6b60-4f3f-8200-c2df2b366725' => '134937', # granta@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
