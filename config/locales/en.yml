@@ -70,7 +70,7 @@ en:
     draft: 'This job is currently a draft version.'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
-      description: 'Describe the job, the duties involved and the competencies required by the jobholder in 1000 characters'
+      description: 'Briefly describe the duties and responsibilities involved in the role'
       main_subject: 'What subject will the teacher focus on?'
       salary_range: 'Annual pay before tax. No commas or decimal points, for example 30000'
       flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
