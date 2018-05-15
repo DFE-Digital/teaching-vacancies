@@ -33,6 +33,8 @@ class Permission
     '0ecd58da-9d2b-4a42-9971-59ea63c06a40' => '110715', # warboyscprimary@
     '9923ebfd-ec55-4454-98ff-f66eead02104' => '110759', # fulbournprimary@
     '1a4ccf5d-8f5e-4f0c-b9b6-b7afb9606b75' => '136974', # sawtryva@
+    'df1bc1b2-ccab-49a0-a043-806c4d44217d' => '137022', # heighington@
+    'accd2e47-9780-466d-a83d-3ecf1b9f8245' => '137021', # bishoptonredmarshall@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
