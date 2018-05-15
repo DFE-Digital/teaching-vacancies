@@ -32,6 +32,7 @@ class Permission
     'f41fc865-6b60-4f3f-8200-c2df2b366725' => '134937', # granta@
     '0ecd58da-9d2b-4a42-9971-59ea63c06a40' => '110715', # warboyscprimary@
     '9923ebfd-ec55-4454-98ff-f66eead02104' => '110759', # fulbournprimary@
+    '1a4ccf5d-8f5e-4f0c-b9b6-b7afb9606b75' => '136974', # sawtryva@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
