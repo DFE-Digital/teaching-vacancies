@@ -35,6 +35,7 @@ class Permission
     '1a4ccf5d-8f5e-4f0c-b9b6-b7afb9606b75' => '136974', # sawtryva@
     'df1bc1b2-ccab-49a0-a043-806c4d44217d' => '137022', # heighington@
     'accd2e47-9780-466d-a83d-3ecf1b9f8245' => '137021', # bishoptonredmarshall@
+    'ab08a70f-3719-4e72-8dea-ba30951e85b3' => '145477', # academy360@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
