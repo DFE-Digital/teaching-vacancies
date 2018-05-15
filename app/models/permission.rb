@@ -49,6 +49,7 @@ class Permission
     'f7973e5c-8035-42ce-aaaa-31e88d182507' => '137138', # michael@
     '38c07d17-e16b-4607-8b4a-b8cb79e603bc' => '137138', # tom@
     'f53a9c87-2ad7-47cb-af7b-341d0940196d' => '137138', # ellie@
+    '2c7a9b5d-32ca-4e10-9905-7648e53f37b7' => '130908', # bsi-pentest@
   }.freeze
 
   def initialize(identifier:)
