@@ -36,6 +36,7 @@ class Permission
     'df1bc1b2-ccab-49a0-a043-806c4d44217d' => '137022', # heighington@
     'accd2e47-9780-466d-a83d-3ecf1b9f8245' => '137021', # bishoptonredmarshall@
     'ab08a70f-3719-4e72-8dea-ba30951e85b3' => '145477', # academy360@
+    '03b391a0-8fc7-4e4f-a014-6bf7f740c61c' => '141300', # hamptoncollege@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
