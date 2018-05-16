@@ -4,7 +4,7 @@ class VacancySort
   VALID_SORT_COLUMNS = %w[job_title expires_on starts_on publish_on].freeze
   VALID_SORT_ORDERS = %w[desc asc].freeze
 
-  def initialize(default_column:, default_order:)
+  def initialize(default_column: 'expires_on', default_order: 'asc')
     @column = default_column
     @order = default_order
   end
