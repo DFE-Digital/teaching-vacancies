@@ -12,6 +12,17 @@ class VacancyFilters
     @phase = School.phases.include?(args[:phase]) ? args[:phase] : nil
   end
 
+  def to_hash
+    {
+      location: location,
+      keyword: keyword,
+      minimum_salary: minimum_salary,
+      maximum_salary: maximum_salary,
+      working_pattern: working_pattern,
+      phase: phase,
+    }
+  end
+
   private
 
   def extract_working_pattern(params)
