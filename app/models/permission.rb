@@ -38,6 +38,8 @@ class Permission
     'ab08a70f-3719-4e72-8dea-ba30951e85b3' => '145477', # academy360@
     '03b391a0-8fc7-4e4f-a014-6bf7f740c61c' => '141300', # hamptoncollege@
     '3c2c270a-baeb-4971-961a-0e1088841942' => '142557', # springcommon@
+    'a1d57e34-84a8-4c35-bb63-9259833cc7f7' => '145188', # outwoodredcar@
+    '203a3ca1-6d55-478f-a211-34e75fc05ccf' => '141399', # outwoodbydales@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
