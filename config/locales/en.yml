@@ -155,7 +155,7 @@ en:
     jobs:
       unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
     sign_in:
-      unauthorised: You are not authorised to act on behalf of this school
+      unauthorised: Your school has not been onboarded yet. Please try again when it has.
       failure: An unexpected error occured. We have been notified.
     url:
       invalid: is not a valid URL
