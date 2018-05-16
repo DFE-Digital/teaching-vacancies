@@ -3,6 +3,27 @@ RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school) }
 
+  describe '.public_search' do
+    context 'when there were no results' do
+      it 'records the event in Rollbar' do
+        filters = VacancyFilters.new(keyword: 'a-non-matching-search-term')
+        expect(Rollbar).to receive(:log)
+          .with(:info,
+                'A search returned 0 results',
+                location: nil,
+                keyword: 'a-non-matching-search-term',
+                minimum_salary: nil,
+                maximum_salary: nil,
+                working_pattern: nil,
+                phase: nil)
+
+        results = Vacancy.public_search(filters: filters, sort: VacancySort.new)
+
+        expect(results.count).to eql(0)
+      end
+    end
+  end
+
   describe 'validations' do
     context 'a new record' do
       it { should validate_presence_of(:working_pattern) }
