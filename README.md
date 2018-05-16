@@ -6,20 +6,25 @@
 
 ### Setting up the project
 
-Copy the docker environment variables and fill in any missing secrets:
+1. Copy the docker environment variables and fill in any missing secrets:
 
 ```
 $ cp docker-compose.env.example docker-compose.env
 ```
 
-Build the docker container and set up the database
+2. Build the docker container and set up the database
 
-`bin/drebuild`
+```
+bin/drebuild
+```
 
+3. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
 
-Start the application
+4. Start the application
 
-`bin/dstart`
+```
+bin/dstart
+```
 
 ## Running the tests
 

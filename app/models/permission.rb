@@ -32,6 +32,12 @@ class Permission
     'f41fc865-6b60-4f3f-8200-c2df2b366725' => '134937', # granta@
     '0ecd58da-9d2b-4a42-9971-59ea63c06a40' => '110715', # warboyscprimary@
     '9923ebfd-ec55-4454-98ff-f66eead02104' => '110759', # fulbournprimary@
+    '1a4ccf5d-8f5e-4f0c-b9b6-b7afb9606b75' => '136974', # sawtryva@
+    'df1bc1b2-ccab-49a0-a043-806c4d44217d' => '137022', # heighington@
+    'accd2e47-9780-466d-a83d-3ecf1b9f8245' => '137021', # bishoptonredmarshall@
+    'ab08a70f-3719-4e72-8dea-ba30951e85b3' => '145477', # academy360@
+    '03b391a0-8fc7-4e4f-a014-6bf7f740c61c' => '141300', # hamptoncollege@
+    '3c2c270a-baeb-4971-961a-0e1088841942' => '142557', # springcommon@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
@@ -45,6 +51,7 @@ class Permission
     'f7973e5c-8035-42ce-aaaa-31e88d182507' => '137138', # michael@
     '38c07d17-e16b-4607-8b4a-b8cb79e603bc' => '137138', # tom@
     'f53a9c87-2ad7-47cb-af7b-341d0940196d' => '137138', # ellie@
+    '2c7a9b5d-32ca-4e10-9905-7648e53f37b7' => '130908', # bsi-pentest@
   }.freeze
 
   def initialize(identifier:)
