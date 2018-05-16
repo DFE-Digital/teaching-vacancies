@@ -12,7 +12,7 @@ class ColourLogFormatter < Lograge::Formatters::KeyValue
     view: :magenta,
     db: :magenta,
     time: :cyan,
-    ip: :red,
+    ip: :cyan,
     host: :red,
     params: :green
   }.freeze
