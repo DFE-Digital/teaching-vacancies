@@ -11,9 +11,8 @@ class ColourLogFormatter < Lograge::Formatters::KeyValue
     duration: :magenta,
     view: :magenta,
     db: :magenta,
-    time: :cyan,
-    ip: :red,
-    host: :red,
+    session_id: :cyan,
+    ip: :cyan,
     params: :green
   }.freeze
 

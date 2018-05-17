@@ -7,6 +7,21 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
+  describe '#request_ip' do
+    it 'returns the partial IP with the last octet removed' do
+      expect(controller.request_ip).to eql('0.0.0…')
+    end
+
+    context 'when the IP is at the max range' do
+      it 'returns the partial IP with the last octet removed' do
+        allow_any_instance_of(ActionController::TestRequest)
+          .to receive(:ip)
+          .and_return('255.255.255.255')
+        expect(controller.request_ip).to eql('255.255.255…')
+      end
+    end
+  end
+
   describe '#check_staging_auth' do
     context 'when we want to authenticate' do
       before(:each) do
