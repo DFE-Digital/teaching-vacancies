@@ -86,7 +86,11 @@ Rails.application.configure do
   # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
   config.lograge.custom_options = lambda do |event|
     exceptions = ['controller', 'action', 'format', 'id']
-    { params: event.payload[:params].except(*exceptions) }
+    {
+      ip: event.payload[:ip],
+      session_id: event.payload[:session_id],
+      params: event.payload[:params].except(*exceptions)
+    }
   end
 
   # Do not dump schema after migrations.
