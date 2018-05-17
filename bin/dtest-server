@@ -3,6 +3,7 @@ set -e
 
 start_test_server()
 {
+  docker-compose --file docker-compose.test.yml build
   docker-compose --file docker-compose.test.yml up -d db-test
   docker-compose --file docker-compose.test.yml up -d elasticsearch-test
   docker-compose --file docker-compose.test.yml up -d test

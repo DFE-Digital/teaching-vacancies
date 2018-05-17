@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :set_headers
 
   include AuthenticationConcerns
+  include Ip
 
   def check
     render json: { status: 'OK' }, status: 200
@@ -47,6 +48,12 @@ class ApplicationController < ActionController::Base
       Rails.logger.warn('Basic auth failed: ENV["HTTP_PASS"] expected but not found.')
       nil
     end
+  end
+
+  private def append_info_to_payload(payload)
+    super
+    payload[:ip] = request_ip
+    payload[:session_id] = "#{session.id[0..7]}…" if session.id
   end
 
   private def set_headers
