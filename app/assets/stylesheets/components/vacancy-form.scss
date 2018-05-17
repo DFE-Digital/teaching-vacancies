@@ -9,7 +9,9 @@
 
   .salary_field {
     @include clearfix;
-    position: relative;
+    .salary_input_wrapper {
+      position: relative;
+    }
     .pound_sign {
       position: absolute;
         bottom: 6px;
@@ -21,5 +23,11 @@
     }
   }
 
+  .form-group-error{
+    .pound_sign {
+      bottom: 8px;
+    }
+
+  }
 
 }
