@@ -1,0 +1,32 @@
+html.lte-ie8 {
+
+  #content {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .column-one-third {
+    width: 30%;
+    float: left;
+  }
+
+  .column-one-half {
+    width: 48%;
+    float: left;
+  }
+
+  .column-two-thirds {
+    width: 60%;
+    float: left;
+  }
+
+  .multiple-choice {
+    input.boolean {
+      -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+      border: 1px solid #000;
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+}

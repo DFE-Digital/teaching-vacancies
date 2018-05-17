@@ -58,6 +58,8 @@
 @import 'components/sortable_links';
 @import 'components/flashes';
 
+@import 'ie';
+
 main#content {
   @extend %site-width-container;
   &:focus {
