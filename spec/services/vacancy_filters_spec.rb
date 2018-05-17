@@ -1,3 +1,4 @@
+require 'rails_helper'
 RSpec.describe VacancyFilters do
   describe '#initialize' do
     it 'sets the keyword filter if provided' do
@@ -43,6 +44,30 @@ RSpec.describe VacancyFilters do
     it 'does not set filters for any other given params' do
       vacancy_filters = VacancyFilters.new(column: 'expires_on')
       expect { vacancy_filters.column }.to raise_error(NoMethodError)
+    end
+  end
+
+  describe '#to_hash' do
+    it 'returns a hash of the reader attributes' do
+      filters = described_class.new(
+        location: 'location',
+        keyword: 'keyword',
+        minimum_salary: 'minimum_salary',
+        maximum_salary: 'maximum_salary',
+        working_pattern: 'working_pattern',
+        phase: 'phase',
+      )
+
+      result = filters.to_hash
+
+      expect(result).to eql(
+        location: 'location',
+        keyword: 'keyword',
+        minimum_salary: 'minimum_salary',
+        maximum_salary: 'maximum_salary',
+        working_pattern: nil,
+        phase: nil
+      )
     end
   end
 end

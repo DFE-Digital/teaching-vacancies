@@ -72,7 +72,10 @@ class Vacancy < ApplicationRecord
 
   def self.public_search(filters:, sort:)
     query = VacancySearchBuilder.new(filters: filters, sort: sort).call
-    ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
+    results = ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
+
+    Rollbar.log(:info, 'A search returned 0 results', filters.to_hash) if results.count.zero?
+    results
   end
 
   def as_indexed_json(_ = {})

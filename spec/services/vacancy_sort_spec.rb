@@ -1,3 +1,4 @@
+require 'rails_helper'
 RSpec.describe VacancySort do
   subject(:vacancy_sort) { VacancySort.new(default_column: 'expires_on', default_order: 'asc') }
 
