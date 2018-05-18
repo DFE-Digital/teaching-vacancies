@@ -1,4 +1,5 @@
 .filter-vacancies {
+  margin-bottom: 0;
   padding: $gutter-half;
   background-color: $panel-colour;
   h2 {
@@ -12,5 +13,9 @@
   }
   .button {
     margin-top: $gutter-half;
+  }
+
+  @media screen and (max-width: $small-screen) {
+    margin-bottom: $gutter;
   }
 }
