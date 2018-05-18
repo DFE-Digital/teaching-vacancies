@@ -29,7 +29,7 @@ RSpec.describe ':vacancies' do
       other_vacancy = Vacancy.find_by(slug: 'teacher-of-technology-and-art-part-time-temporary')
       pay_scale_vacancy = Vacancy.find_by(slug: 'teacher-of-french')
       edited_vacancy = Vacancy.find_by(slug: 'teacher-of-maths-maternity-cover')
-      reset_working_pattern = Vacancy.find_by(slug: 'teaching-assistants')
+      dont_reset_working_pattern = Vacancy.find_by(slug: 'teaching-assistants')
 
       expect(vacancy.experience).to eq(sanitize(data[index]['experience']))
       expect(vacancy.job_title).to eq(data[index]['job_title'])
@@ -41,7 +41,7 @@ RSpec.describe ':vacancies' do
       expect(pay_scale_vacancy.min_pay_scale).to eq(mps)
       expect(pay_scale_vacancy.max_pay_scale).to eq(ups)
       expect(edited_vacancy.job_title).to eq('Another french teacher')
-      expect(reset_working_pattern.working_pattern).to eq(nil)
+      expect(dont_reset_working_pattern.working_pattern).to eq('part_time')
     end
   end
 
