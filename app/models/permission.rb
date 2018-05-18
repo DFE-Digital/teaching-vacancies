@@ -41,7 +41,7 @@ class Permission
     'a1d57e34-84a8-4c35-bb63-9259833cc7f7' => '145188', # outwoodredcar@
     '203a3ca1-6d55-478f-a211-34e75fc05ccf' => '141399', # outwoodbydales@
     'e818ce7e-fbd1-4ca6-9eaf-6bb5fbcfd909' => '131197', # wheatfieldsprimary@
-    'e4740a39-e759-4d84-8554-b06d6e22761f' => '142550', # mayfieldprimary@
+    'e4740a39-e759-4d84-8554-b06d6e22761f' => '110666', # mayfieldprimary@
     '6d3c543f-3229-4727-b8a1-47a7ccf42bc2' => '138177', # cromwellcommunity@
     '000830a0-9de2-4835-a14b-03489089614d' => '136442', # lintonvillage@
   }.freeze
