@@ -99,6 +99,8 @@ identifier | `Text` | The school urn
 
 ### Sample JSON response
 
+#### Example with salary range
+
 ```json
 {
   "@context": "http://schema.org",
@@ -140,6 +142,52 @@ identifier | `Text` | The school urn
   },
   "validThrough": "2018-05-21T00:00:00+00:00",
   "workHours": ""
+}
+```
+
+#### Example with exact salary (no range)
+
+
+```json
+{
+  "@context": "http://schema.org",
+  "@type": "JobPosting",
+  "title": "History teacher",
+  "jobBenefits": null,
+  "datePosted": "2018-05-15T00:00:00+00:00",
+  "description": "<p> <p>We are seeking to appoint an enthusiastic and talented teacher of History to join our established and highly effective Humanities department. The successful candidate will join a committed team of teachers who are passionate about engaging and inspiring young people in their learning across the whole ability range. We offer fantastic opportunities to learn from very experienced and highly effective colleagues whilst also developing and contributing your own ideas and approaches.</p> <p>The Humanities subjects are an improving strength at Washington Academy with an excellent uptake at Key Stage 4. This well-resourced department is housed in a purpose-built suite of rooms and benefits from a forward thinking and innovative team of staff. If you are interested in joining an excellent department and have the skills and qualities required, we would be delighted to hear from you.</p> <p>Proudly rated Good by Ofsted in all 4 categories we are a mixed 11-16 Academy in the heart of Washington’s community. The successful candidate will join Washington Academy at a pivotal point as it has recently become part of the Consilium Multi Academy Trust. This MAT of 8 schools based in the North West and North East of England provides excellent provision for students in similar socioeconomic contexts. This will provide abundant opportunity to work with other colleagues in an expanding and progressive professional community and a fantastic springboard for professional progression within this vibrant and forward looking group of academies.</p> <p>If you are seeking a challenging and highly rewarding position, enriching the lives of the students who attend Washington Academy and members of the local community, then we are keen to hear from you.</p> <p>Washington Academy is committed to safeguarding and promoting the welfare of young people and expects all staff and volunteers to share this commitment. This post is subject to Enhanced Disclosure procedures.</p> <p>If you know that you can contribute to moving our Academy forward during this important time of change and development in education and believe that you can bring something unique to the post then please visit our website www.washingtonacademy.co.uk for further details and an application pack. Applications should be submitted for the attention of the Principal, to Mrs L Foster at Foster.L@washingtonacademy.co.uk.</p> <p>Washington Academy, Spout Lane, Washington NE37 2AA</p> <p>Closing date: 09:00 Tuesday 22nd May 2018<br> Interview date: Friday 25th May 2018</p> <p>Visits to the Academy are being held on Friday 18th May by appointment only.  Please email Mrs L Foster if you would like to attend, please include a contact number. Unfortunately we are unable to offer alternative dates and times.</p> <p>PLEASE NOTE: If you have not been contacted by the morning of Wednesday 23rd May please assume that your application has been unsuccessful on this occasion.  We are unable to provide feedback on individual applications. Applications received after the closing time stated will not be considered.  We do not accept CV’s.</p></p>",
+  "educationRequirements": null,
+  "qualifications": null,
+  "experienceRequirements": "<p> The successful teacher will: <ul> <li>spark creativity amongst our students</li> <li>quickly motivate and bond with our students</li> <li>maintain a strong focus on stretching and challenging our students to achieve above and beyond expectations</li> <li>have excellent organisational skills and ability to work as part of a highly successful team that have a real buzz and enthusiasm for teaching</li> <li>NQTs and experienced teachers welcome.</li>\n<br /></ul></p>",
+  "employmentType": "FULL_TIME",
+  "industry": "Education",
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Washington",
+      "addressRegion": "Tyne and Wear",
+      "streetAddress": "Spout Lane",
+      "postalCode": "NE37 2AA"
+    }
+  },
+  "url": "https://teachingjobs.education.gov.uk/jobs/history-teacher-washington-academy",
+  "baseSalary": {
+    "@type": "MonetaryAmount",
+    "currency": "GBP",
+    "value": {
+      "@type": "QuantitativeValue",
+      "value": 22917,
+      "unitText": "YEAR"
+    }
+  },
+  "hiringOrganization": {
+    "@type": "School",
+    "name": "Washington Academy",
+    "identifier": "144937"
+  },
+  "validThrough": "2018-05-22T00:00:00+00:00",
+  "workHours": null
 }
 ```
 
