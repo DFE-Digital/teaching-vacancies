@@ -3,10 +3,14 @@ Rails.application.routes.draw do
 
   get 'check' => 'application#check'
 
-  resources :jobs, only: %i[index show], controller: 'vacancies'
+  resources :jobs, only: %i[index show], controller: 'vacancies' do
+    resources :interests, only: %i[new]
+  end
 
   # Backward compatibility after changing routes to 'jobs'
-  resources :vacancies, only: [:show], controller: 'vacancies'
+  resources :vacancies, only: [:show], controller: 'vacancies' do
+    resources :interests, only: %i[new]
+  end
 
   resource :sessions, controller: 'hiring_staff/sessions'
 
