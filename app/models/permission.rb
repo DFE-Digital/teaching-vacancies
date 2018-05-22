@@ -44,6 +44,9 @@ class Permission
     'e4740a39-e759-4d84-8554-b06d6e22761f' => '110666', # mayfieldprimary@
     '6d3c543f-3229-4727-b8a1-47a7ccf42bc2' => '138177', # cromwellcommunity@
     '000830a0-9de2-4835-a14b-03489089614d' => '136442', # lintonvillage@
+    'f090416f-cf7b-4f18-85a4-c62559128d3b' => '139272', # nealewade@
+    '9b7f1044-bb7c-415e-a12b-f7c9b0660260' => '143543', # adderlaneacademy@
+    '174a4fb8-11ec-41cd-b266-2c9d3795a9b6' => '138172', # stbedecatholic@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
