@@ -87,7 +87,7 @@ Rails.application.configure do
   config.lograge.custom_options = lambda do |event|
     exceptions = ['controller', 'action', 'format', 'id']
     {
-      ip: event.payload[:ip],
+      ip: event.payload[:remote_ip],
       session_id: event.payload[:session_id],
       params: event.payload[:params].except(*exceptions)
     }

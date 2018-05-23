@@ -4,7 +4,7 @@ module Ip
   extend ActiveSupport::Concern
 
   def request_ip
-    anonymize_ip(request.ip)
+    anonymize_ip(request.remote_ip)
   end
 
   def anonymize_ip(ip_string)

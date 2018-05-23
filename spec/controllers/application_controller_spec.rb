@@ -15,7 +15,7 @@ RSpec.describe ApplicationController, type: :controller do
     context 'when the IP is at the max range' do
       it 'returns the anonymized IP with the last octet zero padded' do
         allow_any_instance_of(ActionController::TestRequest)
-          .to receive(:ip)
+          .to receive(:remote_ip)
           .and_return('255.255.255.255')
         expect(controller.request_ip).to eql('255.255.255.0')
       end
