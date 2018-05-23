@@ -126,12 +126,12 @@ RSpec.describe Vacancy, type: :model do
 
       it '#minimum_salary' do
         expect(subject.errors.messages[:minimum_salary].first)
-          .to eq('must be less than or equal to £2,147,483,647.00')
+          .to eq('must not be more than £2,147,483,647.00')
       end
 
       it '#maximum_salary' do
         expect(subject.errors.messages[:maximum_salary].first)
-          .to eq('must be less than or equal to £2,147,483,647.00')
+          .to eq('must not be more than £2,147,483,647.00')
       end
     end
 

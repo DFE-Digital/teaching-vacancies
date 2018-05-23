@@ -34,7 +34,7 @@ RSpec.describe JobSpecificationForm, type: :model do
           stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '3000')
           expect(job_specification.valid?). to be false
           expect(job_specification.errors.messages[:minimum_salary][0])
-            . to eq('must be at least equal to the minimum pay range of £3,000')
+            . to eq('must be at least £3,000')
         end
       end
     end
