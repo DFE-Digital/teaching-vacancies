@@ -59,22 +59,20 @@
         .salary_field
           %span.pound_sign £
           = f.input :minimum_salary,
-                    as: :integer,
                     required: true,
                     wrapper: false,
                     label: false,
-                    input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
+                    input_html: { class: 'form-control-1-8' }
 
         to
 
         .salary_field
           %span.pound_sign £
           = f.input :maximum_salary,
-                    as: :integer,
                     wrapper: false,
                     required: true,
                     label: false,
-                    input_html: { class: 'form-control-1-8', step: '1', min: '1000', max: '1000000', onchange: "this.value = removeCommaFromNumber(this.value)" }
+                    input_html: { class: 'form-control-1-8' }
 
       = f.input :working_pattern,
                 label: t('jobs.working_pattern'),

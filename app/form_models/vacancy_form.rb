@@ -3,7 +3,7 @@ class VacancyForm
 
   attr_accessor :vacancy
 
-  delegate *Vacancy.attribute_names.map { |attr| [attr, "#{attr}="] }.flatten, to: :vacancy
+  delegate *Vacancy.attribute_names.map { |attr| [attr, "#{attr}=", "#{attr}?"] }.flatten, to: :vacancy
   delegate :save, to: :vacancy
 
   def initialize(params = {})

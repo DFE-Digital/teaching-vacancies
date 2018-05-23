@@ -126,12 +126,54 @@ RSpec.describe Vacancy, type: :model do
 
       it '#minimum_salary' do
         expect(subject.errors.messages[:minimum_salary].first)
-          .to eq('must be less than or equal to £2147483647.00')
+          .to eq('must be less than or equal to £2,147,483,647.00')
       end
 
       it '#maximum_salary' do
         expect(subject.errors.messages[:maximum_salary].first)
-          .to eq('must be less than or equal to £2147483647.00')
+          .to eq('must be less than or equal to £2,147,483,647.00')
+      end
+    end
+
+    context '#minimum_salary' do
+      it 'does not allow the pound sign' do
+        vacancy = build(:vacancy, minimum_salary: '£123.33')
+        vacancy.valid?
+
+        expect(vacancy.errors.messages[:minimum_salary].first).to eq(I18n.t('errors.messages.salary.invalid_format'))
+      end
+
+      it 'does not allow commas' do
+        vacancy = build(:vacancy, minimum_salary: '300,33')
+        vacancy.valid?
+
+        expect(vacancy.errors.messages[:minimum_salary].first).to eq(I18n.t('errors.messages.salary.invalid_format'))
+      end
+
+      it 'does not allow fullstops if the decimal separation point is wrong' do
+        vacancy = build(:vacancy, minimum_salary: '300.330')
+        vacancy.valid?
+
+        expect(vacancy.errors.messages[:minimum_salary].first).to eq(I18n.t('errors.messages.salary.invalid_format'))
+      end
+
+      it 'does not allow any non numeric characters' do
+        vacancy = build(:vacancy, minimum_salary: 'A300330')
+        vacancy.valid?
+
+        expect(vacancy.errors.messages[:minimum_salary].first).to eq(I18n.t('errors.messages.salary.invalid_format'))
+      end
+
+      it 'allows fullstops if the decimal separation point is correct' do
+        vacancy = build(:vacancy, minimum_salary: '30000.50')
+
+        expect(vacancy).to be_valid
+      end
+
+      it 'accepts integer numbers' do
+        vacancy = build(:vacancy, minimum_salary: '45000')
+
+        expect(vacancy).to be_valid
       end
     end
 
