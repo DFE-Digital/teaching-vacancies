@@ -25,6 +25,7 @@ gem 'addressable'
 gem 'sanitize', '~> 4.6'
 gem 'lograge'
 gem 'colorize'
+gem 'ipaddr'
 
 gem 'omniauth'
 gem 'omniauth-azure-activedirectory'
@@ -42,7 +43,7 @@ gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version 
 
 gem 'gov_uk_date_fields', '~> 2.0', '>= 2.0.3'
 
-gem 'rollbar'
+gem 'rollbar', '~> 2.16'
 
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 

@@ -47,6 +47,17 @@ class Permission
     'f090416f-cf7b-4f18-85a4-c62559128d3b' => '139272', # nealewade@
     '9b7f1044-bb7c-415e-a12b-f7c9b0660260' => '143543', # adderlaneacademy@
     '174a4fb8-11ec-41cd-b266-2c9d3795a9b6' => '138172', # stbedecatholic@
+    'c73c3397-177b-41bc-88e4-4f2c14667e9e' => '136463', # combertonvillage@
+    '892be392-f22d-4bcf-88e6-309e23f0bf51' => '139408', # cambournevillage@
+    '8158426c-7c4f-4267-af83-40fbe0f3b871' => '144537', # jeavonswood@
+    '95f805d8-5419-4c5a-8398-050bb7c708e5' => '137248', # stpeterscatrust@
+    '596ad4db-b9c9-44c7-a3c7-66b24e76ad38' => '110814', # barnabasoley@
+    'f7e8e80f-b4e6-47a4-a20a-61597167dc81' => '136339', # crosshalljunior@
+    '37ae2e2b-e10c-4cd2-a332-8855b8dbe70f' => '139087', # histonimpingtonjunior@
+    '484c6fdc-90b7-4cc5-9c16-e7a18dda4fea' => '139086', # histonimpingtoninfant@
+    '48a15b08-79bb-4f53-886c-3a27262e0867' => '144770', # trumpingtonpark@
+    '8adfa484-8391-435c-bd33-7846c83f8821' => '138993', # hattonpark@
+    'd00508e1-426e-435b-b2fd-a2dc18d9db7d' => '111731', # northfieldschool@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {

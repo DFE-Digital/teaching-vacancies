@@ -114,4 +114,4 @@
 
     - if @vacancy.application_link.present?
       %br
-      = link_to t('jobs.apply'), @vacancy.application_link, target: '_blank', class: 'button vacancy-apply-link'
+      = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'button vacancy-apply-link'

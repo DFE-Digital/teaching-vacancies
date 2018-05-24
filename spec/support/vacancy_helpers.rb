@@ -79,7 +79,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.experience)
     expect(page).to have_content(vacancy.leadership.title)
 
-    expect(page).to have_link(I18n.t('jobs.apply'), href: vacancy.application_link)
+    expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
   end
