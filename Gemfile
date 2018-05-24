@@ -51,6 +51,8 @@ gem 'activerecord-session_store'
 
 gem 'public_activity'
 
+gem 'high_voltage', '~> 3.1'
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_bot_rails'
