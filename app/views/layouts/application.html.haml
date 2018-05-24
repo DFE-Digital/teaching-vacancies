@@ -49,4 +49,10 @@
     = mail_to I18n.t('help.email')
     for support.
 
+- content_for :footer_support_links do
+  %h2.visuallyhidden Support links
+  %ul
+    %li=link_to 'Cookies', page_path('cookies')
+
+
 = render file: 'layouts/govuk_template'
