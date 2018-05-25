@@ -63,7 +63,7 @@
                     wrapper: false,
                     required: true,
                     label: false,
-                    input_html: { class: 'form-control-1-8' }
+                    input_html: { class: 'form-control-1-8', pattern: '\d*' }
 
         to
 
@@ -73,7 +73,7 @@
                     wrapper: false,
                     required: true,
                     label: false,
-                    input_html: { class: 'form-control-1-8' }
+                    input_html: { class: 'form-control-1-8', pattern: '\d*' }
       = f.input :working_pattern,
                 label: t('jobs.working_pattern'),
                 collection: working_pattern_options,
