@@ -208,12 +208,12 @@ RSpec.describe Vacancy, type: :model do
       it { should validate_presence_of(:expires_on) }
     end
 
-    describe '#minimum_salary_lower_than_maximum' do
+    describe '#maximum_salary_greater_than_minimum' do
       it 'the minimum salary should be less than the maximum salary' do
         vacancy = build(:vacancy, minimum_salary: 20, maximum_salary: 10)
 
         expect(vacancy.valid?).to be false
-        expect(vacancy.errors.messages[:minimum_salary]).to eq(['must be lower than the maximum salary'])
+        expect(vacancy.errors.messages[:maximum_salary]).to eq(['must be higher than the minimum salary'])
       end
     end
 

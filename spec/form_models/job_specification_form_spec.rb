@@ -9,20 +9,6 @@ RSpec.describe JobSpecificationForm, type: :model do
     it { should validate_presence_of(:working_pattern) }
 
     describe '#minimum_salary' do
-      describe '#minimum_salary_lower_than_maximum' do
-        let(:job_specification) do
-          JobSpecificationForm.new(job_title: 'job title',
-                                   job_description: 'description', working_pattern: :full_time,
-                                   minimum_salary: 20, maximum_salary: 10)
-        end
-
-        it 'the minimum salary should be less than the maximum salary' do
-          expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:minimum_salary][0])
-            .to eq('must be lower than the maximum salary')
-        end
-      end
-
       describe '#minimum_salary_at_least_minimum_payscale' do
         let(:job_specification) do
           JobSpecificationForm.new(job_title: 'job title',
@@ -36,6 +22,20 @@ RSpec.describe JobSpecificationForm, type: :model do
           expect(job_specification.errors.messages[:minimum_salary][0])
             . to eq('must be at least £3,000')
         end
+      end
+    end
+
+    describe '#maximum_salary' do
+      let(:job_specification) do
+        JobSpecificationForm.new(job_title: 'job title',
+                                 job_description: 'description', working_pattern: :full_time,
+                                 minimum_salary: 20, maximum_salary: 10)
+      end
+
+      it 'the maximum salary should be higher than the minimum salary' do
+        expect(job_specification.valid?).to be false
+        expect(job_specification.errors.messages[:maximum_salary][0])
+          .to eq('must be higher than the minimum salary')
       end
     end
   end
