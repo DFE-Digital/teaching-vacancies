@@ -9,7 +9,7 @@ class SalaryValidator < ActiveModel::EachValidator
   MAX_SALARY_ALLOWED = 2147483647
 
   def validate_each(record, attribute, value)
-    return error_message(record, attribute, cant_be_blank_message) if value.blank? && check_presence?
+    return error_message(record, attribute, cant_be_blank_message) if check_presence? && value.blank?
     return error_message(record, attribute, invalid_format_message) if value[SALARY_FORMAT].nil?
 
     salary = converted_salary(value)

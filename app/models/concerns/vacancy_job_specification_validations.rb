@@ -6,15 +6,19 @@ module VacancyJobSpecificationValidations
     validates :job_title, :job_description, :working_pattern, presence: true
 
     validates :minimum_salary, salary: { presence: true, minimum_value: true }
-    validates :maximum_salary, salary: { presence: false }, if: :minimum_and_maximum_salary_present?
+    validates :maximum_salary, salary: { presence: false }, if: :minimum_valid_and_maximum_salary_present?
+    validate :minimum_salary_lower_than_maximum, if: :minimum_and_maximum_salary_present_and_valid?
     validate :working_hours
-    validate :minimum_salary_lower_than_maximum, if: :minimum_and_maximum_salary_present?
     validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
     validates :job_description, length: { minimum: 10, maximum: 50_000 }, if: :job_description?
   end
 
-  def minimum_and_maximum_salary_present?
-    minimum_salary.present? && maximum_salary.present?
+  def minimum_valid_and_maximum_salary_present?
+    errors[:minimum_salary].blank? && maximum_salary.present?
+  end
+
+  def minimum_and_maximum_salary_present_and_valid?
+    errors[:minimum_salary].blank? && maximum_salary.present? && errors[:maximum_salary].blank?
   end
 
   def job_description=(value)

@@ -40,6 +40,15 @@ FactoryBot.define do
       maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
     end
 
+    trait :fail_minimum_salary_max_validation do
+      minimum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
+    end
+
+    trait :fail_maximum_salary_max_validation do
+      minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
+      maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
+    end
+
     trait :complete do
       starts_on { Faker::Time.forward(30) }
       ends_on { Faker::Time.forward(60) }
