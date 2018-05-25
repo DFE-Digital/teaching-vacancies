@@ -6,7 +6,7 @@ class SalaryValidator < ActiveModel::EachValidator
 
   SALARY_FORMAT = /^\d+\.{0,1}\d{2}{0,1}$/
   MIN_SALARY_ALLOWED = PayScale.minimum_payscale_salary.freeze
-  MAX_SALARY_ALLOWED = 2147483647
+  MAX_SALARY_ALLOWED = 200000
 
   def validate_each(record, attribute, value)
     return error_message(record, attribute, cant_be_blank_message) if check_presence? && value.blank?

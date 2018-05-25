@@ -51,7 +51,7 @@ RSpec.describe SalaryValidator do
         model.amount = '200000000000000'
 
         expect(model).to_not be_valid
-        expect(model.errors.messages[:amount]).to eq(['must not be more than £2,147,483,647.00'])
+        expect(model.errors.messages[:amount]).to eq(['must not be more than £200,000.00'])
       end
     end
 
