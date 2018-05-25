@@ -3,14 +3,15 @@ module VacancyJobSpecificationValidations
   include ApplicationHelper
 
   included do
-    validates :job_title, :job_description, :working_pattern, presence: true
+    validates :job_title, :job_description, presence: true
+    validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
+    validates :job_description, length: { minimum: 10, maximum: 50_000 }, if: :job_description?
 
     validates :minimum_salary, salary: { presence: true, minimum_value: true }
     validates :maximum_salary, salary: { presence: false }, if: :minimum_valid_and_maximum_salary_present?
     validate :maximum_salary_greater_than_minimum, if: :minimum_and_maximum_salary_present_and_valid?
+    validates :working_pattern, presence: true
     validate :working_hours
-    validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
-    validates :job_description, length: { minimum: 10, maximum: 50_000 }, if: :job_description?
   end
 
   def minimum_valid_and_maximum_salary_present?

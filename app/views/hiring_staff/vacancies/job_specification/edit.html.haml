@@ -54,25 +54,22 @@
 
       %fieldset.form-group#salary_range
         %label.form-label.form-label-bold= t('jobs.salary_range')
-        %span.form-hint= t('jobs.form_hints.salary_range')
-
-        .salary_field
-          %span.pound_sign £
-          = f.input :minimum_salary,
-                    required: true,
-                    wrapper: false,
-                    label: false,
-                    input_html: { class: 'form-control-1-8', pattern: '\d*' }
+        = f.input :minimum_salary,
+                  wrapper: 'money',
+                  hint: t('jobs.form_hints.salary_range'),
+                  required: true,
+                  label: '£',
+                  wrapper_html: { id: 'minimum_salary' },
+                  input_html: { class: 'form-control-1-8' }
 
         to
 
-        .salary_field
-          %span.pound_sign £
-          = f.input :maximum_salary,
-                    wrapper: false,
-                    required: true,
-                    label: false,
-                    input_html: { class: 'form-control-1-8', pattern: '\d*' }
+        = f.input :maximum_salary,
+                  wrapper: 'money',
+                  required: true,
+                  label: '£',
+                  wrapper_html: { id: 'maximum_salary' },
+                  input_html: { class: 'form-control-1-8' }
 
       = f.input :working_pattern,
                 label: t('jobs.working_pattern'),

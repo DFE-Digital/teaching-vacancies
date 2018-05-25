@@ -109,6 +109,16 @@ SimpleForm.setup do |config|
     checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'form-hint' }
   end
 
+  config.wrappers :money, tag: 'div',
+                                class: 'salary_field form-group',
+                                error_class: 'form-group-error' do |field|
+    field.use :html5
+    field.use :hint,  wrap_with: { tag: 'div', class: 'form-hint' }
+    field.use :error, wrap_with: { tag: 'div', class: 'error-message' }
+    field.use :label, wrap_with: { tag: 'span', class: 'pound_sign' }
+    field.use :input, class: 'form-control', pattern: '\d*'
+  end
+
   # You can define a class to use in all item wrappers. Defaulting to none.
   # config.item_wrapper_class = nil
 
