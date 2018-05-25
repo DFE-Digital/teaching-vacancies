@@ -296,6 +296,62 @@ resource "aws_iam_role_policy" "ecs_autoscale_role_policy" {
   role   = "${aws_iam_role.ecs_autoscale_role.id}"
 }
 
+resource "aws_autoscaling_policy" "ecs-autoscaling-up-policy" {
+  name                    = "${var.project_name}-${var.environment}-${var.asg_name}-scale-up"
+  scaling_adjustment      = 2
+  adjustment_type         = "ChangeInCapacity"
+  cooldown                = 300
+  autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  policy_type             = "SimpleScaling"
+  metric_aggregation_type = "Average"
+}
+
+resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
+  name                    = "${var.project_name}-${var.environment}-${var.asg_name}-scale-down"
+  scaling_adjustment      = -1
+  adjustment_type         = "ChangeInCapacity"
+  cooldown                = 300
+  autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  policy_type             = "SimpleScaling"
+  metric_aggregation_type = "Minimum"
+}
+
+resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
+  alarm_name          = "${terraform.workspace}-average-reserved-cpu-high"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUReservation"
+  namespace           = "AWS/ECS"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "70"
+
+  dimensions {
+    ClusterName = "${var.ecs_cluster_name}"
+  }
+
+  alarm_description = "This metric monitors ${aws_autoscaling_group.ecs-autoscaling-group.name} for high cpu reservation"
+  alarm_actions     = ["${aws_autoscaling_policy.ecs-autoscaling-up-policy.arn}"]
+}
+
+resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-low" {
+  alarm_name          = "${terraform.workspace}-minimum-reserved-cpu-low"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUReservation"
+  namespace           = "AWS/ECS"
+  period              = "60"
+  statistic           = "Minimum"
+  threshold           = "10"
+
+  dimensions {
+    ClusterName = "${var.ecs_cluster_name}"
+  }
+
+  alarm_description = "This metric monitors ${aws_autoscaling_group.ecs-autoscaling-group.name} for low cpu reservation"
+  alarm_actions     = ["${aws_autoscaling_policy.ecs-autoscaling-down-policy.arn}"]
+}
+
 resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   # Naming important to tie it to launch configuration: https://github.com/hashicorp/terraform/issues/532#issuecomment-272263827
   name                 = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
