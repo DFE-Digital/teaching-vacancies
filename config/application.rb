@@ -39,5 +39,6 @@ module TeacherVacancyService
     config.exceptions_app = routes
 
     config.autoload_paths += Dir[Rails.root.join('lib', 'logging')]
+    config.autoload_paths += Dir[Rails.root.join('lib', 'aws_ip_ranges')]
   end
 end
