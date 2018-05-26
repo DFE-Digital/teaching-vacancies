@@ -41,7 +41,7 @@ gem 'roadie-rails'
 gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version due to CVE-2018-3741
 
-gem 'gov_uk_date_fields', '~> 2.0', '>= 2.0.3'
+gem 'gov_uk_date_fields'
 
 gem 'rollbar', '~> 2.16'
 
