@@ -10,7 +10,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   # rubocop:disable Metrics/AbcSize
   def create
     @job_specification_form = JobSpecificationForm.new(job_specification_form)
-    store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
+    store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact)
 
     if @job_specification_form.valid?
       vacancy = session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
@@ -19,7 +19,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       redirect_to_next_step(vacancy)
     else
       session[:current_step] = :step_1 if session[:current_step].blank?
-      redirect_to job_specification_school_job_path(school)
+      redirect_to job_specification_school_job_path(school, anchor: 'errors')
     end
   end
   # rubocop:enable Metrics/AbcSize

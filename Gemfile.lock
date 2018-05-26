@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/despo/gov_uk_date_fields.git
+  revision: 5ac501e863eeaf89d2e05ea3e595018d8c606cd5
+  branch: trigger-iphone-numeric-keyboard
+  specs:
+    gov_uk_date_fields (3.0.0)
+      rails (>= 5.0)
+
+GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: 4b160bd19ecca7f97d7ac22dccd5fde9b0da5a9f
   branch: rails-5
@@ -130,8 +138,6 @@ GEM
       activerecord (>= 4.0.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    gov_uk_date_fields (3.0.0)
-      rails (>= 5.0)
     govuk_elements_rails (3.1.0)
       govuk_frontend_toolkit (>= 6.0.2)
       rails (>= 4.1.0)
@@ -399,7 +405,7 @@ DEPENDENCIES
   faraday_middleware-aws-signers-v4
   figaro
   friendly_id
-  gov_uk_date_fields
+  gov_uk_date_fields!
   govuk_elements_rails
   govuk_frontend_toolkit
   govuk_template

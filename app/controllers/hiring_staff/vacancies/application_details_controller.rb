@@ -15,7 +15,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
       redirect_to next_step(vacancy)
     else
       session[:current_step] = :step_3 unless session[:current_step].eql?(:review)
-      redirect_to application_details_school_job_path(school_id: @school.id)
+      redirect_to application_details_school_job_path(@school, anchor: 'errors')
     end
   end
 

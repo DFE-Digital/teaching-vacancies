@@ -146,4 +146,4 @@
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
-          = link_to t('buttons.change'), edit_school_job_application_details_path(@school, @vacancy.id, anchor: 'deadline')
+          = link_to t('buttons.change'), edit_school_job_application_details_path(@school, @vacancy.id, anchor: 'expires_on')

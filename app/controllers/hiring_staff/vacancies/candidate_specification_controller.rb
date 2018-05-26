@@ -18,7 +18,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
     end
 
     session[:current_step] = :step_2 unless session[:current_step].eql?(:review)
-    redirect_to candidate_specification_school_job_path(school_id: @school.id)
+    redirect_to candidate_specification_school_job_path(@school, anchor: 'errors')
   end
 
   def edit

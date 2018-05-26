@@ -151,7 +151,7 @@
         %dd.cya-answer
           = format_date @vacancy.expires_on
         %dd.cya-change
-          = link_to t('buttons.change'), application_details_school_job_path(@school, anchor: 'deadline')
+          = link_to t('buttons.change'), application_details_school_job_path(@school, anchor: 'expires_on')
 
     %h2.heading-medium Now submit your job
     %p= t('jobs.confirmation_summary')
