@@ -3,6 +3,6 @@
     %h2.heading-medium.error-summary-heading
       = pluralize(errors.count, 'error')
       prevented this job from being saved:
-    %ul
-      - errors.full_messages.each do |message|
-        %li= message
+    %ul.error-summary-list
+      - errors.each do |attribute, error|
+        %li= link_to errors.full_message(attribute, error), "##{attribute}"
