@@ -20,24 +20,32 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
   end
 
   def edit
-    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy_attributes = source_update? ? session[:vacancy_attributes] : retrieve_job_from_db
 
-    @application_details_form = ApplicationDetailsForm.new(vacancy.attributes)
+    @school = school
+    @application_details_form = ApplicationDetailsForm.new(vacancy_attributes)
     @application_details_form.valid?
   end
 
+  # rubocop:disable Metrics/AbcSize
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
     @application_details_form.id = vacancy.id
 
     if @application_details_form.valid?
+      reset_session_vacancy!
       update_vacancy(application_details_form, vacancy)
       redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
-      render 'edit'
+      store_vacancy_attributes(@application_details_form.vacancy.attributes.compact!)
+      redirect_to edit_school_job_application_details_path(school,
+                                                           vacancy.id,
+                                                           anchor: 'errors',
+                                                           source: 'update')
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
