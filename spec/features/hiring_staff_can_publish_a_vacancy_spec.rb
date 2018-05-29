@@ -363,7 +363,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Confirm and submit job'
 
         expect(page).to have_content("The job will be posted on #{vacancy.publish_on}, you can preview it here:")
-        visit job_url(vacancy)
+        visit school_job_path(school, vacancy.id)
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
       end
 

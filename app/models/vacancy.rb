@@ -61,6 +61,7 @@ class Vacancy < ApplicationRecord
 
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
   scope :active, (-> { where(status: %i[published draft]) })
+  scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
 
   paginates_per 10
 

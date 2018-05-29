@@ -9,13 +9,22 @@ RSpec.feature 'Viewing a single published vacancy' do
     verify_vacancy_show_page_details(published_vacancy)
   end
 
-  scenario 'Unpublished vacancies are not viewable' do
+  scenario 'Unpublished vacancies are not accessible' do
     draft_vacancy = create(:vacancy, :draft)
 
     visit job_path(draft_vacancy)
 
     expect(page).to have_content('Page not found')
     expect(page).to_not have_content(draft_vacancy.job_title)
+  end
+
+  scenario 'Job post with a future publish_on date are not accessible' do
+    job_post = create(:vacancy, :future_publish)
+
+    visit job_path(job_post)
+
+    expect(page).to have_content('Page not found')
+    expect(page).to_not have_content(job_post.job_title)
   end
 
   scenario 'Expired vacancies display a warning message' do
