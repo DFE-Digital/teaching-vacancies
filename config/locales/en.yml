@@ -89,7 +89,7 @@ en:
     filters:
       title: 'Search job listings'
       location: 'Location'
-      location_hint: 'Town, postcode or region'
+      location_hint: 'Town or region'
       keyword: 'Keyword'
       keyword_hint: 'Role or subject, for example'
       minimum_salary: 'Minimum salary'
