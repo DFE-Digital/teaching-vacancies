@@ -50,4 +50,12 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def redirect_unless_vacancy_session_id
     redirect_to job_specification_school_job_path(school_id: school.id) unless session_vacancy_id
   end
+
+  def retrieve_job_from_db
+    school.vacancies.published.find(vacancy_id).attributes
+  end
+
+  def source_update?
+    params[:source] && params[:source].eql?('update')
+  end
 end
