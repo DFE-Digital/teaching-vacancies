@@ -1,5 +1,6 @@
 en:
   errors:
+    title: 'Please correct the following %{errors} in your listing:'
     messages:
       too_short:
         other: is too short (minimum is %{count} characters)
