@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get 'check' => 'application#check'
 
+  get '/pages/*id' => 'pages#show', as: :page, format: false
+
   resources :jobs, only: %i[index show], controller: 'vacancies' do
     resources :interests, only: %i[new]
   end

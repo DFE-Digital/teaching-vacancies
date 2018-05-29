@@ -152,6 +152,7 @@ GEM
       railties (>= 4.0.1)
     hashdiff (0.3.7)
     hashie (3.5.6)
+    high_voltage (3.1.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -406,6 +407,7 @@ DEPENDENCIES
   govuk_frontend_toolkit
   govuk_template
   haml-rails
+  high_voltage (~> 3.1)
   httparty
   ipaddr
   jbuilder (~> 2.5)
@@ -447,4 +449,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
