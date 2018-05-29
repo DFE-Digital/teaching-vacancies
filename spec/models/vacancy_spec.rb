@@ -170,7 +170,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq(['must be at least £3,000'])
+          .to eq(['must be at least £3000'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -180,7 +180,7 @@ RSpec.describe Vacancy, type: :model do
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary]).to be_empty
         expect(job.errors.messages[:maximum_salary])
-          .to eq(['must not be more than £200,000.00'])
+          .to eq(['must not be more than £200000'])
       end
 
       it 'greater than allowed minimum_salary and no maximum_salary' do
@@ -188,7 +188,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary])
-          .to eq(['must not be more than £200,000.00'])
+          .to eq(['must not be more than £200000'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
     end

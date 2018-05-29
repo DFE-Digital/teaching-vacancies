@@ -49,11 +49,11 @@ class SalaryValidator < ActiveModel::EachValidator
 
   def must_be_less_than_max_salary_message
     I18n.t('errors.messages.less_than_or_equal_to',
-           count: ActionController::Base.helpers.number_to_currency(MAX_SALARY_ALLOWED))
+           count: number_to_currency(MAX_SALARY_ALLOWED, delimiter: ''))
   end
 
   def must_be_higher_than_min_allowed_message
     I18n.t('errors.messages.salary.lower_than_minimum_payscale',
-           minimum_salary: number_to_currency(MIN_SALARY_ALLOWED))
+           minimum_salary: number_to_currency(MIN_SALARY_ALLOWED, delimiter: ''))
   end
 end
