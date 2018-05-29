@@ -8,6 +8,8 @@
   }
 
   .salary_field {
+    margin-bottom: 0px;
+
     @include clearfix;
     position: relative;
     .pound_sign {
@@ -15,11 +17,19 @@
         bottom: 6px;
         left: 8px;
     }
+
+    &.form-group-error .pound_sign {
+      left: 24px;
+      bottom: 8px;
+    }
+
+    input {
+      padding-left: 17px;
+    }
+
     #job_specification_form_minimum_salary,
     #job_specification_form_maximum_salary {
       padding-left: 18px;
     }
   }
-
-
 }

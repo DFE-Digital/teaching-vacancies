@@ -6,6 +6,8 @@ en:
     currency:
       format:
         unit: "£"
+        precision: 0
+        delimiter: ','
   app:
     title: 'Teaching Jobs'
     menu: 'Menu'
