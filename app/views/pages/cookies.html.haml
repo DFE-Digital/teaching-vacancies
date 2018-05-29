@@ -42,15 +42,30 @@
         %th Purpose
         %th Expires
       %tr
-        %td _tvs_session
-        %td Session cookie containing a randomly generated string when you visit the site
-        %td After 1 hour
+        %td _ga
+        %td This helps us count how many people visit teachingjobs.education.gov.uk by tracking if you’ve visited before
+        %td After 2 years
       %tr
-        %td seen_cookie_message
-        %td
-        %td
+        %td _gid
+        %td This helps us count how many people visit teachingjobs.education.gov.uk by tracking if you’ve visited before
+        %td After 24 hours
 
     %p You can #{link_to 'opt out of Google Analytics.', 'https://tools.google.com/dlpage/gaoptout'}
+
+
+    %h3.heading-medium Sessions
+
+    %p A cookie is set to record your session activity.
+
+    %table.mb1
+      %thead
+        %th Name
+        %th Purpose
+        %th Expires
+      %tr
+        %td _teachingjobs_session
+        %td Stores session data
+        %td After 1 hour
 
     %h3.heading-medium Our introductory message
 
@@ -62,6 +77,6 @@
         %th Purpose
         %th Expires
       %tr
-        %td ???
-        %td ???
-        %td ???
+        %td seen_cookie_message
+        %td Saves a message to let us know that you have seen our cookie message
+        %td After 1 month
