@@ -20,6 +20,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include FactoryBot::Syntax::Methods
+
+  config.before do
+    stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '1')
+  end
+
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
   config.include DateHelper

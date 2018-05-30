@@ -49,7 +49,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.error-summary') do
-          expect(page).to have_content('4 errors prevented this job from being saved:')
+          expect(page).to have_content('Please correct the following 4 errors in your listing:')
         end
 
         within_row_for(text: I18n.t('jobs.job_title')) do
@@ -101,7 +101,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue' # submit empty form
 
         within('.error-summary') do
-          expect(page).to have_content('3 errors prevented this job from being saved:')
+          expect(page).to have_content('Please correct the following 3 errors in your listing:')
         end
 
         within_row_for(text: I18n.t('jobs.education')) do
@@ -139,7 +139,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.error-summary') do
-          expect(page).to have_content('4 errors prevented this job from being saved:')
+          expect(page).to have_content('Please correct the following 4 errors in your listing:')
         end
 
         within_row_for(text: I18n.t('jobs.contact_email')) do

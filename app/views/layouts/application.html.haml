@@ -10,6 +10,9 @@
 - content_for :page_title do
   = t('app.title')
 
+- content_for :cookie_message do
+  %p Teaching Jobs uses cookies to make the site simpler. #{link_to 'Find out more about how we use cookies', page_path('cookies')}
+
 - content_for :proposition_header do
   .header-proposition
     .content
@@ -45,5 +48,12 @@
     Problems using this service? Email
     = mail_to I18n.t('help.email')
     for support.
+
+- content_for :footer_support_links do
+  %h2.visuallyhidden Support links
+  %ul
+    %li=link_to 'Cookies', page_path('cookies')
+    %li=link_to 'Privacy policy', page_path('privacy-policy')
+
 
 = render file: 'layouts/govuk_template'

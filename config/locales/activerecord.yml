@@ -1,12 +1,17 @@
 en:
   errors:
+    title: 'Please correct the following %{errors} in your listing:'
     messages:
       too_short:
         other: is too short (minimum is %{count} characters)
       too_long:
         other: is too long (maximum is %{count} characters)
-      less_than_or_equal_to: must be less than or equal to %{count}
+      less_than_or_equal_to: must not be more than %{count}
       taken: has already been taken
+      blank: can't be blank
+      salary:
+        invalid_format: 'must be entered in one of the following formats: 25000 or 25000.00'
+        lower_than_minimum_payscale: 'must be at least %{minimum_salary}'
   activerecord:
     errors:
       models:
@@ -18,8 +23,8 @@ en:
               blank: can't be blank
             minimum_salary:
               blank: can't be blank
-              greater_than_maximum_salary: must be lower than the maximum salary
-              lower_than_minimum_payscale: must be at least equal to the minimum pay range of %{minimum_salary}
+            maximum_salary:
+              greater_than_minimum_salary: must be higher than the minimum salary
             working_pattern:
               blank: can't be blank
             experience:

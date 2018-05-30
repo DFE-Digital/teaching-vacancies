@@ -109,6 +109,16 @@ SimpleForm.setup do |config|
     checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'form-hint' }
   end
 
+  config.wrappers :money, tag: 'div',
+                                class: 'salary_field form-group',
+                                error_class: 'form-group-error' do |field|
+    field.use :html5
+    field.use :hint,  wrap_with: { tag: 'div', class: 'form-hint' }
+    field.use :error, wrap_with: { tag: 'div', class: 'error-message' }
+    field.use :label, wrap_with: { tag: 'span', class: 'pound_sign' }
+    field.use :input, class: 'form-control', pattern: '\d*'
+  end
+
   # You can define a class to use in all item wrappers. Defaulting to none.
   # config.item_wrapper_class = nil
 
@@ -133,7 +143,7 @@ SimpleForm.setup do |config|
   # in this configuration, which is recommended due to some quirks from different browsers.
   # To stop SimpleForm from generating the novalidate option, enabling the HTML5 validations,
   # change this configuration to true.
-  config.browser_validations = true
+  config.browser_validations = false
 
   # Collection of methods to detect if a file type was given.
   # config.file_methods = [ :mounted_as, :file?, :public_filename ]

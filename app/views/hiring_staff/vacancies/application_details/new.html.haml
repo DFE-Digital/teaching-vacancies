@@ -29,7 +29,7 @@
                               form_hint_text: t('jobs.form_hints.publication_date',
                                               date: l(Date.today, format: :hinttext))
 
-      %div.form-group#deadline
+      %div.form-group#expires_on
         = f.gov_uk_date_field :expires_on,
                               legend_text: t('jobs.deadline_date'),
                               legend_class: 'form-label-bold',

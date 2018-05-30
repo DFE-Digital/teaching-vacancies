@@ -6,6 +6,8 @@ en:
     currency:
       format:
         unit: "£"
+        precision: 0
+        delimiter: ','
   app:
     title: 'Teaching Jobs'
     menu: 'Menu'
@@ -89,7 +91,7 @@ en:
     filters:
       title: 'Search job listings'
       location: 'Location'
-      location_hint: 'Town, postcode or region'
+      location_hint: 'Town or region'
       keyword: 'Keyword'
       keyword_hint: 'Role or subject, for example'
       minimum_salary: 'Minimum salary'
@@ -161,4 +163,4 @@ en:
       invalid: is not a valid URL
 
   help:
-    email: isobel.croot@digital.education.gov.uk
+    email: teachingjobs@digital.education.gov.uk

@@ -41,7 +41,8 @@ gem 'roadie-rails'
 gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version due to CVE-2018-3741
 
-gem 'gov_uk_date_fields', '~> 2.0', '>= 2.0.3'
+gem 'gov_uk_date_fields', git: 'https://github.com/despo/gov_uk_date_fields.git',
+                          branch: 'trigger-iphone-numeric-keyboard'
 
 gem 'rollbar', '~> 2.16'
 
@@ -50,6 +51,8 @@ gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/i
 gem 'activerecord-session_store'
 
 gem 'public_activity'
+
+gem 'high_voltage', '~> 3.1'
 
 group :test, :development, :staging do
   gem 'faker'
