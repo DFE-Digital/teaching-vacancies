@@ -72,6 +72,11 @@ FactoryBot.define do
       expires_on { Faker::Time.backward(7) }
     end
 
+    trait :future_publish do
+      publish_on { Time.zone.today + 2.days }
+      expires_on { Time.zone.today + 2.months }
+    end
+
     trait :job_schema do
       weekly_hours '8.5'
       education { Faker::Lorem.paragraph }

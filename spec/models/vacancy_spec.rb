@@ -298,6 +298,16 @@ RSpec.describe Vacancy, type: :model do
         expect(Vacancy.active.count).to eq(draft.count + published.count)
       end
     end
+
+    describe '#listed' do
+      it 'retrieves  vacancies that have a status of :published and a future publish_on date' do
+        published = create_list(:vacancy, 5, :published)
+        create_list(:vacancy, 3, :future_publish)
+        create_list(:vacancy, 4, :trashed)
+
+        expect(Vacancy.listed.count).to eq(published.count)
+      end
+    end
   end
 
   describe 'delegate school_name' do
