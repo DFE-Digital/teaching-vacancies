@@ -20,4 +20,14 @@ RSpec.feature 'A visitor to the website can access the support links' do
                                  'the DfE is the data controller for the personal data processed as part of ' \
                                  'Teaching Jobs. ')
   end
+
+  scenario 'the terms and conditions' do
+    visit root_path
+    click_on 'Terms and Conditions'
+
+    expect(page).to have_content('Terms and Conditions')
+
+    expect(page).to have_content('Please read these Terms of Use (“General Terms”) carefully before using ' \
+                                 'this Teaching Jobs website (the “Service”).')
+  end
 end
