@@ -119,7 +119,6 @@ en:
         mandatory:
           - 'a job title'
           - 'a job description'
-          - 'a link to apply'
           - 'a salary range'
           - 'educational requirements'
           - 'qualifications required'
