@@ -54,7 +54,7 @@
 
       - if @vacancy.school.url.present?
         %dt= t('schools.website')
-        %dd= @vacancy.school.url
+        %dd.wordwrap= @vacancy.school.url
 
     - if @vacancy.school.geolocation
       %div#map_zoom
