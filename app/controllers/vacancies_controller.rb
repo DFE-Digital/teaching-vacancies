@@ -18,7 +18,7 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    vacancy = Vacancy.published.friendly.find(id)
+    vacancy = Vacancy.listed.friendly.find(id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
