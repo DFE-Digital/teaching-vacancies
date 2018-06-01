@@ -59,6 +59,7 @@ class Permission
     '8adfa484-8391-435c-bd33-7846c83f8821' => '138993', # hattonpark@
     'd00508e1-426e-435b-b2fd-a2dc18d9db7d' => '111731', # northfieldschool@
     'df351d8e-542b-479f-9dc4-649a43380c60' => '110801', # cherryhinton@
+    'd5f77232-b87f-4b8a-bc20-5ecbecfc7e12' => '136146', # northshorecademy@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
