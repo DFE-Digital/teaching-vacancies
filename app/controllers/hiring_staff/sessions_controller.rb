@@ -12,7 +12,7 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
     if permission.valid?
       session.update(session_id: oid)
       session.update(urn: permission.school_urn)
-      redirect_to school_path(current_school.id)
+      redirect_to school_path
     else
       redirect_to root_path, notice: I18n.t('errors.sign_in.unauthorised')
     end
