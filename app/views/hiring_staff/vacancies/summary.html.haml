@@ -16,4 +16,4 @@
       %p
         = t('jobs.preview_posted_job', date: @vacancy.publish_on)
       %p
-        = link_to school_job_url(school_id: @school.id, id: @vacancy.id), school_job_path(school_id: @school.id, id: @vacancy.id)
+        = link_to school_job_url(@vacancy.id), school_job_path(@vacancy.id)

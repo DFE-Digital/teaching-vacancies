@@ -7,7 +7,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     stub_hiring_staff_auth(urn: school.urn)
     vacancy = create(:vacancy, school: school, status: 'published')
 
-    visit school_path(school)
+    visit school_path
 
     click_on(vacancy.job_title)
 

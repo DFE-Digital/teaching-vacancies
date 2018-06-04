@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'hiring_staff/sessions#failure' # For OmniAuth testing only
   post '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
 
-  resources :schools, only: %i[show edit update], controller: 'hiring_staff/schools' do
+  resource :school, only: %i[show edit update], controller: 'hiring_staff/schools' do
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'
       get 'summary'

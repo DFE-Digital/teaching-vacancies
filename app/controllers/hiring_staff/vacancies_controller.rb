@@ -2,7 +2,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def show
     vacancy = school.vacancies.active.find(id)
     unless vacancy.published?
-      return redirect_to school_job_review_path(school, vacancy.id),
+      return redirect_to school_job_review_path(vacancy.id),
                          alert: I18n.t('messages.jobs.view.only_published')
     end
     @vacancy = VacancyPresenter.new(vacancy)
@@ -10,12 +10,12 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def new
     reset_session_vacancy!
-    redirect_to job_specification_school_job_path(school)
+    redirect_to job_specification_school_job_path
   end
 
   def edit
     vacancy = school.vacancies.find(id)
-    redirect_to school_job_review_path(school, vacancy.id) unless vacancy.published?
+    redirect_to school_job_review_path(vacancy.id) unless vacancy.published?
 
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -23,7 +23,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def review
     vacancy = school.vacancies.active.find(vacancy_id)
     if vacancy.published?
-      redirect_to school_job_path(school_id: school.id, id: vacancy.id),
+      redirect_to school_job_path(vacancy.id),
                   notice: t('messages.vacancies.already_published')
     end
 

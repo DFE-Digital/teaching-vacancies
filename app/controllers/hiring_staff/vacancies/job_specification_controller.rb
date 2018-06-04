@@ -19,7 +19,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       redirect_to_next_step(vacancy)
     else
       session[:current_step] = :step_1 if session[:current_step].blank?
-      redirect_to job_specification_school_job_path(school, anchor: 'errors')
+      redirect_to job_specification_school_job_path(anchor: 'errors')
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -41,11 +41,10 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if @job_specification_form.valid?
       reset_session_vacancy!
       update_vacancy(job_specification_form, vacancy)
-      redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
       store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
-      redirect_to edit_school_job_job_specification_path(school,
-                                                         vacancy.id,
+      redirect_to edit_school_job_job_specification_path(vacancy.id,
                                                          anchor: 'errors',
                                                          source: 'update')
     end
@@ -74,7 +73,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    candidate_specification_school_job_path(school_id: school.id)
+    candidate_specification_school_job_path
   end
 
   def called_from_update_method

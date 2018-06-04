@@ -109,16 +109,16 @@ RSpec.shared_examples 'basic auth' do
 
   context 'when the path is schools show' do
     it 'returns 401 and asks for the basic auth credentials' do
-      school = create(:school)
+      create(:school)
 
-      get "/schools/#{school.id}"
+      get '/school'
 
       expect(response).to have_http_status(401)
     end
 
     context 'when the correct basic auth credentials are given' do
       it 'returns a 302 redirect to the OmniAuth provider' do
-        school = create(:school)
+        create(:school)
         username = 'username'
         password = 'foobar'
 
@@ -129,7 +129,7 @@ RSpec.shared_examples 'basic auth' do
 
         encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
 
-        get "/schools/#{school.id}", env: { 'HTTP_AUTHORIZATION': encoded_credentials }
+        get '/school', env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
         expect(response).to have_http_status(302)
       end
@@ -137,7 +137,7 @@ RSpec.shared_examples 'basic auth' do
 
     context 'when the incorrect basic auth credentials are given' do
       it 'returns a 401' do
-        school = create(:school)
+        create(:school)
         stub_env_for_staging_auth(env_field_for_username: :http_user,
                                   env_field_for_password: :http_pass,
                                   env_value_for_username: nil,
@@ -145,7 +145,7 @@ RSpec.shared_examples 'basic auth' do
 
         encoded_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('wrong-user', 'password')
 
-        get "/schools/#{school.id}", env: { 'HTTP_AUTHORIZATION': encoded_credentials }
+        get '/school', env: { 'HTTP_AUTHORIZATION': encoded_credentials }
 
         expect(response).to have_http_status(401)
       end
