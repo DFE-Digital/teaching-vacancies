@@ -11,7 +11,7 @@
     - else
       = render partial: 'no_vacancies', locals: { school: @school }
     .form-group.mt1
-      = link_to t('buttons.create_job'), new_school_job_path(@school), class: 'button'
+      = link_to t('buttons.create_job'), new_school_job_path, class: 'button'
 
 .grid-row
   .column-full
@@ -29,7 +29,7 @@
           %td
             = @school.description.presence || 'Not provided'
           %td.change-answer
-            = link_to edit_school_path(@school) do
+            = link_to edit_school_path do
               = t('buttons.change')
               %span.visually-hidden
                 description

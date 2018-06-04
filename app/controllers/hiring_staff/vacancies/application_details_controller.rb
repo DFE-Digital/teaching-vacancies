@@ -15,7 +15,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
       redirect_to next_step(vacancy)
     else
       session[:current_step] = :step_3 unless session[:current_step].eql?(:review)
-      redirect_to application_details_school_job_path(@school, anchor: 'errors')
+      redirect_to application_details_school_job_path(anchor: 'errors')
     end
   end
 
@@ -36,11 +36,10 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     if @application_details_form.valid?
       reset_session_vacancy!
       update_vacancy(application_details_form, vacancy)
-      redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
       store_vacancy_attributes(@application_details_form.vacancy.attributes.compact!)
-      redirect_to edit_school_job_application_details_path(school,
-                                                           vacancy.id,
+      redirect_to edit_school_job_application_details_path(vacancy.id,
                                                            anchor: 'errors',
                                                            source: 'update')
     end

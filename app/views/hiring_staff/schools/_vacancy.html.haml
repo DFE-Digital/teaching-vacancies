@@ -1,8 +1,8 @@
 %tr.vacancy[vacancy]
-  %td= link_to vacancy.job_title, school_job_path(school.id, vacancy.id), class: 'view-vacancy-link'
+  %td= link_to vacancy.job_title, school_job_path(vacancy.id), class: 'view-vacancy-link'
   %td= format_date(vacancy.publish_on)
   %td= format_date(vacancy.expires_on)
   %td= vacancy.status.titleize
-  %td= link_to 'Edit', edit_school_job_path(school, vacancy.id)
-  %td= link_to 'Delete', school_job_path(school_id: school.id, id: vacancy.id), method: :delete, data: { confirm: "Are you sure you want to delete the '#{vacancy.job_title}' job?" }
+  %td= link_to 'Edit', edit_school_job_path(vacancy.id)
+  %td= link_to 'Delete', school_job_path(id: vacancy.id), method: :delete, data: { confirm: "Are you sure you want to delete the '#{vacancy.job_title}' job?" }
 
