@@ -1,0 +1,8 @@
+.grid-row
+  .column-full
+    .breadcrumbs
+      %ol.no-style
+        %li
+          = link_to I18n.t('jobs.heading'), root_path
+        %li{'aria-current' => 'page'}
+          = @vacancy.job_title
