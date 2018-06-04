@@ -60,6 +60,7 @@ class Permission
     'd00508e1-426e-435b-b2fd-a2dc18d9db7d' => '111731', # northfieldschool@
     'df351d8e-542b-479f-9dc4-649a43380c60' => '110801', # cherryhinton@
     'd5f77232-b87f-4b8a-bc20-5ecbecfc7e12' => '136146', # northshorecademy@
+    '21f1c0cf-9a86-4363-b93c-b801b86ff8d6' => '142174', # polamhall@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {
