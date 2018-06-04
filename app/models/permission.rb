@@ -9,7 +9,7 @@ class Permission
     '348db94b-5331-45f4-90c3-f61698eeb78d' => '111669', # thornaby.stockton@
     'dee1927f-ce4f-40c3-8755-0517b54fe27c' => '108513', # stteresas@
     'b86cd643-f811-4574-8b9f-fc9cfbb9a210' => '130908', # macmillan-academy@
-    '2a761502-7ebd-4358-b19d-3ef6b006735f' => '111637', # lps.rac@
+    '2a761502-7ebd-4358-b19d-3ef6b006735f' => '145665', # lps.rac@
     'd9181457-126d-4860-b50e-659122cebd8c' => '136775', # sawstonvc@
     '90604155-14d0-4bb3-9af0-9a8b9f90df63' => '136580', # swaveseyvc@
     '0328c13e-d2cb-469a-a76b-55525a6ec567' => '137851', # stthomasmore@
@@ -60,6 +60,7 @@ class Permission
     'd00508e1-426e-435b-b2fd-a2dc18d9db7d' => '111731', # northfieldschool@
     'df351d8e-542b-479f-9dc4-649a43380c60' => '110801', # cherryhinton@
     'd5f77232-b87f-4b8a-bc20-5ecbecfc7e12' => '136146', # northshorecademy@
+    '21f1c0cf-9a86-4363-b93c-b801b86ff8d6' => '142174', # polamhall@
   }.freeze
 
   TEAM_USER_TO_SCHOOL_MAPPING = {

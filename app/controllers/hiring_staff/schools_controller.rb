@@ -5,8 +5,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   end
 
   def edit
-    @school = School.find(params[:id])
-
+    @school = current_school
     return if params[:description].nil?
 
     @school.description = params[:description].presence
@@ -14,16 +13,16 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   end
 
   def update
-    school = School.find(params[:id])
+    school = current_school
     school.description = params[:school][:description]
 
     if school.valid?
       Auditor::Audit.new(school, 'school.update', current_session_id).log do
         school.save
       end
-      redirect_to school_path(school)
+      redirect_to school_path
     else
-      redirect_to edit_school_path(school, description: school.description)
+      redirect_to edit_school_path(description: school.description)
     end
   end
 end

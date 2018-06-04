@@ -2,7 +2,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
   before_action :school, :redirect_unless_vacancy_session_id, only: %i[new create]
 
   def new
-    redirect_to job_specification_school_job_path(school_id: school.id) unless session_vacancy_id
+    redirect_to job_specification_school_job_path unless session_vacancy_id
 
     @candidate_specification_form = ::CandidateSpecificationForm.new(session[:vacancy_attributes])
     @candidate_specification_form.valid? if %i[step_2 review].include?(session[:current_step])
@@ -18,7 +18,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
     end
 
     session[:current_step] = :step_2 unless session[:current_step].eql?(:review)
-    redirect_to candidate_specification_school_job_path(@school, anchor: 'errors')
+    redirect_to candidate_specification_school_job_path(anchor: 'errors')
   end
 
   def edit
@@ -38,11 +38,10 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
     if @candidate_specification_form.valid?
       reset_session_vacancy!
       update_vacancy(candidate_specification_form, vacancy)
-      redirect_to edit_school_job_path(school, vacancy.id), notice: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
       store_vacancy_attributes(@candidate_specification_form.vacancy.attributes.compact!)
-      redirect_to edit_school_job_candidate_specification_path(school,
-                                                               vacancy.id,
+      redirect_to edit_school_job_candidate_specification_path(vacancy.id,
                                                                anchor: 'errors',
                                                                source: 'update')
     end
@@ -56,6 +55,6 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
   end
 
   def next_step
-    application_details_school_job_path(school_id: school.id)
+    application_details_school_job_path
   end
 end
