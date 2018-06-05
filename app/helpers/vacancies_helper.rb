@@ -16,10 +16,13 @@ module VacanciesHelper
       order = sort.reverse_order
       active_class = ' active'
     end
-    link_to title,
-            jobs_path(vacancy_params(sort_column: column,
-                                     sort_order: order)),
-            class: "sortby--#{order}#{active_class || ''}"
+    link_to jobs_path(
+      vacancy_params(sort_column: column, sort_order: order)
+    ), class: "sortby--#{order}#{active_class || ''}" do
+      concat(content_tag('span', 'Sort jobs by ', class: 'visually-hidden'))
+      concat(content_tag('span', title))
+      concat(content_tag('span', "(#{order}ending)", class: 'visually-hidden'))
+    end
   end
 
   def vacancy_params_whitelist

@@ -39,15 +39,22 @@ RSpec.describe VacanciesHelper, type: :helper do
     it 'should return a link to the vacancies index with the new parameters' do
       sort = OpenStruct.new(column: 'maximum_salary')
       result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
-      expect(result).to eq('<a class="sortby--asc" href="/jobs?sort_column=starts_on&amp;sort_order=asc">foo</a>')
+      expect(result).to eq(
+        '<a class="sortby--asc" href="/jobs?sort_column=starts_on&amp;sort_order=asc">' \
+        '<span class="visually-hidden">Sort jobs by </span><span>foo</span>' \
+        '<span class="visually-hidden">(ascending)</span></a>'
+      )
     end
 
     context 'when the current sort column is the same as the given column' do
       it 'should output an active class and the reverse order of the sort object' do
         sort = OpenStruct.new(column: 'starts_on', reverse_order: 'desc')
         result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
-        expect(result)
-          .to eq('<a class="sortby--desc active" href="/jobs?sort_column=starts_on&amp;sort_order=desc">foo</a>')
+        expect(result).to eq(
+          '<a class="sortby--desc active" href="/jobs?sort_column=starts_on&amp;sort_order=desc">' \
+          '<span class="visually-hidden">Sort jobs by </span><span>foo</span>' \
+          '<span class="visually-hidden">(descending)</span></a>'
+        )
       end
     end
   end
