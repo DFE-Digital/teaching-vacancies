@@ -13,8 +13,12 @@
       %thead
         %tr
           %th{:colspan => "2"}
-            %h2.heading-medium
-              = link_to t('jobs.job_specification'), edit_school_job_job_specification_path(@vacancy.id)
+            %h2.heading-medium.mb0
+              = t('jobs.job_specification')
+            .font-xsmall.mb1
+              = link_to edit_school_job_job_specification_path(@vacancy.id) do
+                Change
+                %span.visually-hidden the job specification
           %th
       %tbody
         %tr
@@ -107,8 +111,12 @@
       %thead
         %tr
           %th{:colspan => "2"}
-            %h2.heading-medium
-              = link_to t('jobs.candidate_specification'), edit_school_job_candidate_specification_path(@vacancy.id)
+            %h2.heading-medium.mb0
+              = t('jobs.candidate_specification')
+            .font-xsmall.mb1
+              = link_to edit_school_job_candidate_specification_path(@vacancy.id) do
+                Change
+                %span.visually-hidden the candidate specification
           %th
       %tbody
         %tr
@@ -137,8 +145,12 @@
       %thead
         %tr
           %th{:colspan => "2"}
-            %h2.heading-medium
-              = link_to t('jobs.application_details'), edit_school_job_application_details_path(@vacancy.id)
+            %h2.heading-medium.mb0
+              = t('jobs.application_details')
+            .font-xsmall.mb1
+              = link_to edit_school_job_application_details_path(@vacancy.id) do
+                Change
+                %span.visually-hidden the application details
           %th
       %tbody
         %tr

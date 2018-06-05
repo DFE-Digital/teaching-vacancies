@@ -15,8 +15,12 @@
       %thead
         %tr
           %th{:colspan => "2"}
-            %h2.heading-medium
-              = link_to t('jobs.job_specification'), job_specification_school_job_path
+            %h2.heading-medium.mb0
+              = t('jobs.job_specification')
+            .font-xsmall.mb1
+              = link_to job_specification_school_job_path do
+                Change
+                %span.visually-hidden the job specification
           %th
       %tbody
         %tr
@@ -109,8 +113,12 @@
       %thead
         %tr
           %th{:colspan => "2"}
-            %h2.heading-medium
-              = link_to t('jobs.candidate_specification'), candidate_specification_school_job_path
+            %h2.heading-medium.mb0
+              = t('jobs.candidate_specification')
+            .font-xsmall.mb1
+              = link_to candidate_specification_school_job_path do
+                Change
+                %span.visually-hidden the candidate specification
           %th
       %tbody
         %tr
@@ -139,8 +147,12 @@
       %thead
         %tr
           %th{:colspan => "2"}
-            %h2.heading-medium
-              = link_to t('jobs.application_details'), application_details_school_job_path
+            %h2.heading-medium.mb0
+              = t('jobs.application_details')
+            .font-xsmall.mb1
+              = link_to application_details_school_job_path do
+                Change
+                %span.visually-hidden the application details
           %th
       %tbody
         %tr
