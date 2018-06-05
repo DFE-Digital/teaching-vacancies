@@ -2,8 +2,10 @@
 
 =render partial: 'school_vacancy_breadcrumb'
 
-%h1.heading-large
-  = t('jobs.edit_heading', school: @vacancy.school.name)
+.grid-row
+  .column-two-thirds
+    %h1.heading-large
+      = t('jobs.edit_heading', school: @vacancy.school.name)
 
 .vacancy.grid-row
   .column-two-thirds
