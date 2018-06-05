@@ -8,7 +8,7 @@
   with-proposition
 
 - content_for :page_title do
-  = t('app.title')
+  #{content_for :page_title_prefix} — #{t('app.title')}
 
 - content_for :cookie_message do
   %p Teaching Jobs uses cookies to make the site simpler. #{link_to 'Find out more about how we use cookies', page_path('cookies')}
