@@ -22,13 +22,6 @@
         %tr
           %td.cya-question
             = t('jobs.job_title')
-          %td
-            = @vacancy.job_title
-          %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_title')
-        %tr
-          %td.cya-question
-            = t('jobs.job_title')
           %td.cya-answer
             = @vacancy.job_title
           %td.cya-change
