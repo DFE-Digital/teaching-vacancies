@@ -1,4 +1,6 @@
 // Recommended - Use these styles for the check your answers pattern
+
+// NOTE: these styles are for the <dl> markup versions of CYA, which are invalid.
 .govuk-check-your-answers {
 
   @include media(desktop) {
@@ -82,14 +84,46 @@
 }
 
 // Deprecated - these styles will be removed in a later release
+
+// NOTE: these styles are for the valid <table> versions of the CYA pattern.
 .check-your-answers {
+
+  @include media(desktop) {
+    // to make group of q&a line up horizontally (unless there is just one group)
+    &.cya-questions-short,
+    &.cya-questions-long {
+      width: 100%;
+    } // recommended for mostly short questions
+    &.cya-questions-short .cya-question {
+      width: 30%;
+    } // recommended for mostly long questions
+    &.cya-questions-long .cya-question {
+      width: 50%;
+    }
+  }
+
   td {
     @include core-19;
     vertical-align: top;
+
+    p {
+      margin: 0;
+    }
   }
-  .change-answer {
-    text-align: right;
+
+  .cya-question {
     font-weight: bold;
+  }
+
+  .cya-answer {
+
+  }
+
+  .cya-change {
+    text-align: right;
     padding-right: 0;
   }
+
 }
+
+
