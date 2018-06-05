@@ -1,3 +1,5 @@
+- content_for :page_title_prefix, "Edit the Application details"
+
 %h1.heading-large
   = t('jobs.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
