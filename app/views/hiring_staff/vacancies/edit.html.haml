@@ -14,7 +14,7 @@
         %tr
           %th{:colspan => "2"}
             %h2.heading-medium
-              = t('jobs.job_specification')
+              = link_to t('jobs.job_specification'), edit_school_job_job_specification_path(@vacancy.id)
           %th
       %tbody
         %tr
@@ -108,7 +108,7 @@
         %tr
           %th{:colspan => "2"}
             %h2.heading-medium
-              = t('jobs.candidate_specification')
+              = link_to t('jobs.candidate_specification'), edit_school_job_candidate_specification_path(@vacancy.id)
           %th
       %tbody
         %tr
@@ -138,7 +138,7 @@
         %tr
           %th{:colspan => "2"}
             %h2.heading-medium
-              = t('jobs.application_details')
+              = link_to t('jobs.application_details'), edit_school_job_application_details_path(@vacancy.id)
           %th
       %tbody
         %tr
