@@ -18,7 +18,7 @@
             %h2.heading-medium.mb0
               = t('jobs.job_specification')
             .font-xsmall.mb1
-              = link_to job_specification_school_job_path do
+              = link_to job_specification_school_job_path, 'aria-label': 'Change job specification' do
                 Change
                 %span.visually-hidden the job specification
           %th
@@ -29,63 +29,63 @@
           %td.cya-answer
             = @vacancy.job_title
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_title')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_title'), 'aria-label': 'Change job title'
         %tr
           %td.cya-question
             = t('jobs.description')
           %td.cya-answer
             = @vacancy.job_description
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_description')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_description'), 'aria-label': 'Change job description'
         %tr
           %td.cya-question
             = t('jobs.main_subject')
           %td.cya-answer
             = @vacancy.main_subject
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'subject')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'subject'), 'aria-label': 'Change main subject'
         %tr
           %td.cya-question
             = t('jobs.pay_scale')
           %td.cya-answer
             =@vacancy.pay_scale_range
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'pay_scale_range')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'pay_scale_range'), 'aria-label': 'Change pay scale'
         %tr
           %td.cya-question
             = t('jobs.salary_range')
           %td.cya-answer
             = @vacancy.salary_range("to")
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'salary_range')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'salary_range'), 'aria-label': 'Change salary range'
         %tr
           %td.cya-question
             = t('jobs.working_pattern')
           %td.cya-answer
             = @vacancy.working_pattern.humanize
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_pattern')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_pattern'), 'aria-label': 'Change working pattern'
         %tr
           %td.cya-question
             = t('jobs.flexible_working')
           %td.cya-answer
             = @vacancy.flexible_working
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'flexible_working')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'flexible_working'), 'aria-label': 'Change flexible working'
         %tr
           %td.cya-question
             = t('jobs.benefits')
           %td.cya-answer
             = @vacancy.benefits
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'benefits')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'benefits'), 'aria-label': 'Change employee benefits'
         %tr
           %td.cya-question
             = t('jobs.weekly_hours')
           %td.cya-answer
             = @vacancy.weekly_hours
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'weekly_hours')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'weekly_hours'), 'aria-label': 'Change weekly hours'
         %tr
           %td.cya-question
             = t('jobs.leadership_level')
@@ -93,21 +93,21 @@
             - if @vacancy.leadership
               =@vacancy.leadership.title
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'leadership')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'leadership'), 'aria-label': 'Change leadership level'
         %tr
           %td.cya-question
             = t('jobs.starts_on')
           %td.cya-answer
             = format_date @vacancy.starts_on
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'starts_on')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'starts_on'), 'aria-label': 'Change expected start date'
         %tr
           %td.cya-question
             = t('jobs.ends_on')
           %td.cya-answer
             = format_date @vacancy.ends_on
           %td.cya-change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'ends_on')
+            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'ends_on'), 'aria-label': 'Change end date'
 
     %table.check-your-answers.cya-questions-short
       %thead
