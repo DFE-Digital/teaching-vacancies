@@ -59,14 +59,14 @@
                   input_html: { 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range'), 'aria-labelledby': 'pay_scale_range_label' }
 
       %fieldset.form-group#salary_range
-        %label.form-label.form-label-bold= t('jobs.salary_range')
+        %legend.form-label.form-label-bold#salary_range_label= t('jobs.salary_range')
         = f.input :minimum_salary,
                   wrapper: 'money',
                   hint: t('jobs.form_hints.salary_range'),
                   required: true,
                   label: '£',
                   wrapper_html: { id: 'minimum_salary' },
-                  input_html: { class: 'form-control-1-8'}
+                  input_html: { class: 'form-control-1-8', 'aria-label': 'Minimum salary', 'aria-labelledby': 'salary_range_label' }
 
         to
 
@@ -75,7 +75,7 @@
                   required: true,
                   label: '£',
                   wrapper_html: { id: 'maximum_salary' },
-                  input_html: { class: 'form-control-1-8' }
+                  input_html: { class: 'form-control-1-8', 'aria-label': 'Maximum salary', 'aria-labelledby': 'salary_range_label' }
 
       = f.input :working_pattern,
                 label: t('jobs.working_pattern'),
