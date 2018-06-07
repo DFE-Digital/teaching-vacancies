@@ -37,7 +37,7 @@
                 collection: Subject.order(:name),
                 required: false
       %fieldset.form-group#pay_scale_range
-        %legend.form-label.form-label-bold= "#{t('jobs.pay_scale_range')} (optional)"
+        %legend.form-label.form-label-bold#pay_scale_range_label= "#{t('jobs.pay_scale_range')} (optional)"
         %span.form-hint= t('jobs.form_hints.pay_scale_range')
 
         = f.input :min_pay_scale_id,
@@ -46,7 +46,7 @@
                   label: false,
                   required: false,
                   wrapper: false,
-                  input_html: { 'aria-label': 'Minimum pay scale range' }
+                  input_html: { 'aria-label': 'Minimum pay scale range', 'aria-labelledby': 'pay_scale_range_label' }
 
         to
 
@@ -56,7 +56,7 @@
                   required: false,
                   label: false,
                   wrapper: false,
-                  input_html: { 'aria-label': 'Maximum pay scale range' }
+                  input_html: { 'aria-label': 'Maximum pay scale range', 'aria-labelledby': 'pay_scale_range_label' }
 
       %fieldset.form-group#salary_range
         %label.form-label.form-label-bold= t('jobs.salary_range')
