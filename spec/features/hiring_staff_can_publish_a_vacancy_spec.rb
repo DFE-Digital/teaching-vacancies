@@ -60,7 +60,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
         end
 
-        within_row_for(text: I18n.t('jobs.salary_range')) do
+        within_row_for(element: 'legend', text: I18n.t('jobs.salary_range')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
         end
 
