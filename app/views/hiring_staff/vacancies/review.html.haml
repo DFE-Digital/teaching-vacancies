@@ -116,7 +116,7 @@
             %h2.heading-medium.mb0
               = t('jobs.candidate_specification')
             .font-xsmall.mb1
-              = link_to candidate_specification_school_job_path do
+              = link_to candidate_specification_school_job_path, 'aria-label': 'Change candidate specification' do
                 Change
                 %span.visually-hidden the candidate specification
           %th
@@ -150,7 +150,7 @@
             %h2.heading-medium.mb0
               = t('jobs.application_details')
             .font-xsmall.mb1
-              = link_to application_details_school_job_path do
+              = link_to application_details_school_job_path, 'aria-label': 'Change application details' do
                 Change
                 %span.visually-hidden the application details
           %th
