@@ -52,6 +52,7 @@ RSpec.describe VacancyFilters do
       filters = described_class.new(
         location: 'location',
         keyword: 'keyword',
+        radius: 20,
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
         working_pattern: 'working_pattern',
@@ -63,6 +64,7 @@ RSpec.describe VacancyFilters do
       expect(result).to eql(
         location: 'location',
         keyword: 'keyword',
+        radius: '20km',
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
         working_pattern: nil,

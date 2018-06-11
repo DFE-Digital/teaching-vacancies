@@ -136,6 +136,7 @@ GEM
       thor (~> 0.14)
     friendly_id (5.2.1)
       activerecord (>= 4.0.0)
+    geocoder (1.4.9)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     govuk_elements_rails (3.1.0)
@@ -405,6 +406,7 @@ DEPENDENCIES
   faraday_middleware-aws-signers-v4
   figaro
   friendly_id
+  geocoder
   gov_uk_date_fields!
   govuk_elements_rails
   govuk_frontend_toolkit

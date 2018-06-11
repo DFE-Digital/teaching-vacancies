@@ -33,20 +33,24 @@ RSpec.describe VacancySearchBuilder do
     end
 
     it 'builds a location query when a location is provided' do
+      expect(Geocoder).to receive(:coordinates).with('Devon').and_return([54.32, -1.2332])
+
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(location: 'Devon')
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
 
       expected_hash = {
-        multi_match: {
-          query: 'Devon',
-          fields: %w[school.postcode^5 school.name^2 school.town school.county school.address],
-          operator: 'and',
-        },
+        geo_distance: {
+          distance: '0km',
+          coordinates: {
+            lat: 54.32,
+            lon: -1.2332
+          }
+        }
       }
 
       expect(builder).to be_a(Hash)
-      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
+      expect(builder[:search_query][:bool][:filter]).to include(expected_hash)
     end
 
     it 'builds a working pattern query when one is provided' do
@@ -131,16 +135,16 @@ RSpec.describe VacancySearchBuilder do
           filter: {
             terms: {
               status: ['published'],
-            },
-          },
-        },
+            }
+          }
+        }
       }
 
       expect(builder).to be_a(Hash)
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-    it 'builds a published_on query by default' do
+    it 'builds a published_on query by default', wip: true do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call

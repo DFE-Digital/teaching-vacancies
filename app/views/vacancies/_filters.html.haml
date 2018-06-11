@@ -6,6 +6,8 @@
     .form-group
       = label_tag 'location', t('jobs.filters.location'), class: 'form-label'
       = search_field_tag :location, location, class: 'form-control form-control-block', placeholder: t('jobs.filters.location_hint')
+      = label_tag 'Radius', 'Radius', class: 'form-label'
+      = select_tag 'radius', options_for_select([['25km', 25], ['50km', 50],['75km', 75],['100km', 100]], radius), class: 'form-control form-control-block'
     .form-group
       = label_tag 'keyword', t('jobs.filters.keyword'), class: 'form-label'
       = search_field_tag :keyword, keyword, class: 'form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')

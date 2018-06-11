@@ -2,6 +2,8 @@ class VacancySearchBuilder
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
     @location = filters.location.to_s.strip
+    @geocoded_location ||= Geocoder.coordinates(@location) if @location.present?
+    @radius = filters.radius.to_i
     @working_pattern = filters.working_pattern
     @phase = filters.phase
     @minimum_salary = filters.minimum_salary
@@ -13,33 +15,33 @@ class VacancySearchBuilder
 
   def call
     keyword_query = keyword_build
-    location_query = location_build
     working_pattern_query = working_pattern_build
     phase_query = phase_build
     minimum_salary_query = minimum_salary_build
     maximum_salary_query = maximum_salary_build
     expired_query = expired_build
-    published_on_query = published_on_build
+    published_query = published_on_build
     status_query = status_build
     sort_query = sort_build
 
     joined_query = [
       keyword_query,
-      location_query,
-      working_pattern_query,
       phase_query,
+      working_pattern_query,
       minimum_salary_query,
       maximum_salary_query,
       expired_query,
       status_query,
-      published_on_query
+      published_query
     ].compact
 
     query = {
       bool: {
         must: joined_query,
-      },
+        filter: location_geo_distance
+      }
     }
+
     { search_query: query, search_sort: sort_query }
   end
 
@@ -53,19 +55,16 @@ class VacancySearchBuilder
     end
   end
 
-  def location_build
-    location_multi_match(@location) if @location.present?
-  end
-
-  def location_multi_match(location)
+  def location_geo_distance
+    return if @geocoded_location.nil?
     {
-      multi_match: {
-        query: location,
-        fields: %w[school.postcode^5 school.name^2
-                   school.town school.county
-                   school.address],
-        operator: 'and',
-      },
+      geo_distance: {
+        distance: "#{@radius}km",
+        coordinates: {
+          lat: @geocoded_location.first,
+          lon: @geocoded_location.last
+        }
+      }
     }
   end
 
@@ -125,8 +124,8 @@ class VacancySearchBuilder
           terms: {
             'school.phase': [@phase.to_s],
           },
-        },
-      },
+        }
+      }
     }
   end
 

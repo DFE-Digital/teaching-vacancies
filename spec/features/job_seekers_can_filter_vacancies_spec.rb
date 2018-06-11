@@ -18,7 +18,11 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   scenario 'Filterable by location', elasticsearch: true do
-    enfield_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School', town: 'Enfield'))
+    expect(Geocoder).to receive(:coordinates).with('enfield').and_return([51.6622925, -0.1180655])
+    enfield_vacancy = create(:vacancy, :published,
+                             school: build(:school, name: 'St James School',
+                                                    town: 'Enfield',
+                                                    geolocation: '(51.6580645, -0.0448643)'))
     penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School', town: 'Penzance'))
 
     Vacancy.__elasticsearch__.client.indices.flush
@@ -26,6 +30,7 @@ RSpec.feature 'Filtering vacancies' do
 
     within '.filters-form' do
       fill_in 'location', with: 'enfield'
+      select '25km'
       page.find('.button[type=submit]').click
     end
 
