@@ -74,6 +74,7 @@ en:
       minimum_pay_scale_range: 'Minimum pay scale range'
       maximum_pay_scale_range: 'Maximum pay scale range'
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
+      flexible_working: 'Flexible working (optional)'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Briefly describe the duties and responsibilities involved in the role'
