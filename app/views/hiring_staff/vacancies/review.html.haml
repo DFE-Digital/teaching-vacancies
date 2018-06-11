@@ -159,14 +159,17 @@
           %td.cya-question
             = t('jobs.contact_email')
           %td.cya-answer
-            = @vacancy.contact_email
+            =mail_to 'Job contact email', @vacancy.contact_email, 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
           %td.cya-change
             = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email')
         %tr
           %td.cya-question
             = t('jobs.application_link')
           %td.cya-answer
-            = @vacancy.application_link
+            = link_to @vacancy.application_link, 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link)  do
+              %span= t('jobs.application_link_url')
+              %br
+              %span.font-xsmall= @vacancy.application_link
           %td.cya-change
             = link_to t('buttons.change'), application_details_school_job_path(anchor: 'application_link'), 'aria-label': t('jobs.aria_labels.change_application_link_URL')
         %tr
