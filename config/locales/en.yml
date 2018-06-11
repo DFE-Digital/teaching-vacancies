@@ -173,6 +173,7 @@ en:
     find: 'Find'
     delete: 'Delete'
     create_job: 'Create a job'
+    change: 'Change'
 
   messages:
     jobs:
