@@ -40,9 +40,8 @@ RSpec.describe VacanciesHelper, type: :helper do
       sort = OpenStruct.new(column: 'maximum_salary')
       result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
       expect(result).to eq(
-        '<a class="sortby--asc" href="/jobs?sort_column=starts_on&amp;sort_order=asc">' \
-        '<span class="visually-hidden">Sort jobs by </span><span>foo</span>' \
-        '<span class="visually-hidden">(ascending)</span></a>'
+        '<a class="sortby--asc" aria-label="Sort jobs by foo in ascending order" '\
+        'href="/jobs?sort_column=starts_on&amp;sort_order=asc">foo</a>'
       )
     end
 
@@ -51,9 +50,8 @@ RSpec.describe VacanciesHelper, type: :helper do
         sort = OpenStruct.new(column: 'starts_on', reverse_order: 'desc')
         result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
         expect(result).to eq(
-          '<a class="sortby--desc active" href="/jobs?sort_column=starts_on&amp;sort_order=desc">' \
-          '<span class="visually-hidden">Sort jobs by </span><span>foo</span>' \
-          '<span class="visually-hidden">(descending)</span></a>'
+          '<a class="sortby--desc active" aria-label="Sort jobs by foo in descending order" '\
+          'href="/jobs?sort_column=starts_on&amp;sort_order=desc">foo</a>'
         )
       end
     end
