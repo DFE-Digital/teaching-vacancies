@@ -64,7 +64,7 @@ en:
     submitted: 'Your job posting has been submitted'
     view_posted_job: 'The job has been posted, you can view it here:'
     preview_posted_job: 'The job will be posted on %{date}, you can preview it here:'
-    apply: 'Apply for this job'
+    apply: 'Get more information'
     application_link: 'Application link'
     actions: 'Actions'
     status: 'Status'
@@ -97,6 +97,7 @@ en:
       change_application_link_URL: 'Change application link URL'
       change_date_role_will_be_listed: 'Change date role will be listed'
       change_application_deadline: 'Change application deadline'
+      apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Briefly describe the duties and responsibilities involved in the role'
