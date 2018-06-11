@@ -53,7 +53,8 @@
 
       - if @vacancy.school.url.present?
         %dt= t('schools.website')
-        %dd.wordwrap= @vacancy.school.url
+        %dd
+          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'wordwrap', target: '_blank')
 
     - if @vacancy.school.geolocation
       %div#map_zoom

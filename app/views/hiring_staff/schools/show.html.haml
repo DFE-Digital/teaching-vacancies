@@ -57,5 +57,5 @@
           %td
             %strong.strong Website
           %td
-            = link_to @school.url, @school.url
+            = link_to("#{@school.name} website (opens in a new window)", @school.url, class: 'wordwrap', target: '_blank')
           %td
