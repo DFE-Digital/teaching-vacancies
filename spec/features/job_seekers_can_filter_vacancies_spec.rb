@@ -30,7 +30,7 @@ RSpec.feature 'Filtering vacancies' do
 
     within '.filters-form' do
       fill_in 'location', with: 'enfield'
-      select '25km'
+      select 'Within 25 miles'
       page.find('.button[type=submit]').click
     end
 

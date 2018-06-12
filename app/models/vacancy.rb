@@ -73,7 +73,11 @@ class Vacancy < ApplicationRecord
   end
 
   def coordinates
-    [school_geolocation.y.to_f, school_geolocation.x.to_f] if school_geolocation.present?
+    return if school_geolocation.nil?
+    {
+      lat: school_geolocation.x.to_f,
+      lon: school_geolocation.y.to_f
+    }
   end
 
   def self.public_search(filters:, sort:)

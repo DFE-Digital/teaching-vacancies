@@ -59,7 +59,7 @@ class VacancySearchBuilder
     return if @geocoded_location.nil?
     {
       geo_distance: {
-        distance: "#{@radius}km",
+        distance: "#{@radius}mi",
         coordinates: {
           lat: @geocoded_location.first,
           lon: @geocoded_location.last
