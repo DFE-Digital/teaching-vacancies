@@ -75,6 +75,8 @@ en:
     apply: 'Get more information'
     application_link: 'Link for more information'
     application_link_url: 'Link for more information (link opens external website in a new window)'
+    view_posted_job: 'Your job listing has been published. You can view it at:'
+    preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
     actions: 'Actions'
     status: 'Status'
     already_published: 'This job has already been published'
