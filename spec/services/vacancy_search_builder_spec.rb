@@ -33,7 +33,8 @@ RSpec.describe VacancySearchBuilder do
     end
 
     it 'builds a location query when a location is provided' do
-      expect(Geocoder).to receive(:coordinates).with('Devon').and_return([54.32, -1.2332])
+      expect(Geocoder).to receive(:coordinates).with('Devon', params: { countrycodes: 'uk' })
+        .and_return([54.32, -1.2332])
 
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(location: 'Devon')

@@ -2,7 +2,7 @@ class VacancySearchBuilder
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
     @location = filters.location.to_s.strip
-    @geocoded_location ||= Geocoder.coordinates(@location) if @location.present?
+    @geocoded_location ||= Geocoder.coordinates(@location, params: { countrycodes: 'uk' }) if @location.present?
     @radius = filters.radius.to_i
     @working_pattern = filters.working_pattern
     @phase = filters.phase
