@@ -39,7 +39,7 @@ class Vacancy < ApplicationRecord
     indexes :working_pattern, type: :keyword
     indexes :minimum_salary, type: :text
     indexes :maximum_salary, type: :text
-    indexes :coordinates, type: :geo_point
+    indexes :coordinates, type: :geo_point, ignore_malformed: true
   end
 
   extend FriendlyId
