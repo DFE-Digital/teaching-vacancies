@@ -101,7 +101,7 @@ en:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Briefly describe the duties and responsibilities involved in the role'
       main_subject: 'What subject will the teacher focus on?'
-      salary_range: 'Annual pay before tax. No commas or decimal points, for example 30000'
+      salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
       flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
       pay_scale_range: 'What pay scale range does the job’s salary fall in?'
       weekly_hours: 'Number of hours to be worked each week'
