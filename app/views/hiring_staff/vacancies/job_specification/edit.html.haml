@@ -35,7 +35,7 @@
                 collection: Subject.order(:name),
                 required: false
       %fieldset.form-group#pay_scale_range
-        %label.form-label.form-label-bold= "#{t('jobs.pay_scale_range')} (optional)"
+        %legend.form-label.form-label-bold= "#{t('jobs.pay_scale_range')} (optional)"
         %span.form-hint= t('jobs.form_hints.pay_scale_range')
 
         = f.input :min_pay_scale_id,
@@ -43,7 +43,8 @@
                   label_method: :label,
                   label: false,
                   required: false,
-                  wrapper: false
+                  wrapper: false,
+                  input_html: { 'aria-label': t('jobs.aria_labels.minimum_pay_scale_range') }
 
         to
 
@@ -52,18 +53,18 @@
                   label_method: :label,
                   label: false,
                   required: false,
-                  wrapper: false
+                  wrapper: false,
+                  input_html: { 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range') }
 
       %fieldset.form-group#salary_range
-        %label.form-label.form-label-bold= t('jobs.salary_range')
+        %legend.form-label.form-label-bold= t('jobs.salary_range')
         = f.input :minimum_salary,
                   wrapper: 'money',
                   hint: t('jobs.form_hints.salary_range'),
                   required: true,
                   label: '£',
                   wrapper_html: { id: 'minimum_salary' },
-                  input_html: { class: 'form-control-1-8' }
-
+                  input_html: { class: 'form-control-1-8', 'aria-label': t('jobs.aria_labels.minimum_salary') }
         to
 
         = f.input :maximum_salary,
@@ -71,8 +72,7 @@
                   required: true,
                   label: '£',
                   wrapper_html: { id: 'maximum_salary' },
-                  input_html: { class: 'form-control-1-8' }
-
+                  input_html: { class: 'form-control-1-8', 'aria-label': t('jobs.aria_labels.maximum_salary') }
       = f.input :working_pattern,
                 label: t('jobs.working_pattern'),
                 collection: working_pattern_options,

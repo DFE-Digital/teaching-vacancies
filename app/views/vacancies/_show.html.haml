@@ -53,7 +53,8 @@
 
       - if @vacancy.school.url.present?
         %dt= t('schools.website')
-        %dd.wordwrap= @vacancy.school.url
+        %dd
+          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'wordwrap', target: '_blank')
 
     - if @vacancy.school.geolocation
       %div#map_zoom
@@ -66,6 +67,10 @@
   .column-one-third
     %aside.vacancy--metadata
       %dl
+        - if @vacancy.pay_scale_range.present?
+          %dt= t('jobs.pay_scale_range')
+          %dd= @vacancy.pay_scale_range
+
         %dt= t('jobs.salary')
         %dd= @vacancy.salary_range
 
@@ -97,11 +102,6 @@
         - if @vacancy.main_subject.present?
           %dt= t('jobs.main_subject')
           %dd= @vacancy.main_subject
-
-        - if @vacancy.pay_scale_range.present?
-          %dt= t('jobs.pay_scale_range')
-          %dd= @vacancy.pay_scale_range
-
 
         - if @vacancy.leadership.present?
           %dt= t('jobs.leadership_level')
