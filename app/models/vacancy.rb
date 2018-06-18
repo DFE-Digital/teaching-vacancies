@@ -37,8 +37,8 @@ class Vacancy < ApplicationRecord
     indexes :publish_on, type: :date
     indexes :status, type: :keyword
     indexes :working_pattern, type: :keyword
-    indexes :minimum_salary, type: :string
-    indexes :maximum_salary, type: :string
+    indexes :minimum_salary, type: :text
+    indexes :maximum_salary, type: :text
   end
 
   extend FriendlyId
