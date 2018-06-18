@@ -116,7 +116,7 @@
             %h2.heading-medium.mb0
               = t('jobs.candidate_specification')
             .font-xsmall.mb1
-              = link_to candidate_specification_school_job_path do
+              = link_to candidate_specification_school_job_path, 'aria-label': 'Change candidate specification' do
                 Change
                 %span.visually-hidden the candidate specification
           %th
@@ -150,7 +150,7 @@
             %h2.heading-medium.mb0
               = t('jobs.application_details')
             .font-xsmall.mb1
-              = link_to application_details_school_job_path do
+              = link_to application_details_school_job_path, 'aria-label': 'Change application details' do
                 Change
                 %span.visually-hidden the application details
           %th
@@ -159,14 +159,17 @@
           %td.cya-question
             = t('jobs.contact_email')
           %td.cya-answer
-            = @vacancy.contact_email
+            =mail_to 'Job contact email', @vacancy.contact_email, 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
           %td.cya-change
             = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email')
         %tr
           %td.cya-question
             = t('jobs.application_link')
           %td.cya-answer
-            = @vacancy.application_link
+            = link_to @vacancy.application_link, 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link)  do
+              %span= t('jobs.application_link_url')
+              %br
+              %span.font-xsmall= @vacancy.application_link
           %td.cya-change
             = link_to t('buttons.change'), application_details_school_job_path(anchor: 'application_link'), 'aria-label': t('jobs.aria_labels.change_application_link_URL')
         %tr
