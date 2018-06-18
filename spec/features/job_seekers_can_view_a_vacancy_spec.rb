@@ -54,7 +54,7 @@ RSpec.feature 'Viewing a single published vacancy' do
       vacancy = create(:vacancy, :job_schema)
       visit job_path(vacancy)
 
-      click_on 'Apply for this job'
+      click_on 'Get more information'
 
       expect(page.current_url).to eq vacancy.application_link
     end
