@@ -1,7 +1,8 @@
 
+redis = Redis.new(url: ENV['REDIS_URL'])
 # config/initializers/geocoder.rb
 Geocoder.configure(
-  lookup: :google,
+  lookup: :postcodes_io,
 
   # IP address geocoding service (see below for supported options):
   ip_lookup: :nil,
@@ -16,7 +17,7 @@ Geocoder.configure(
   units: :mi,
 
   # caching (see below for details):
-  #:cache => Redis.new,
+  cache: redis,
   cache_prefix: 'geocoder:',
   distance: :spherical
 )
