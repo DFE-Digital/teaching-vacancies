@@ -85,7 +85,8 @@
       = f.input :flexible_working, as: :boolean,
                 hint: t('jobs.form_hints.flexible_working'),
                 wrapper: :inline_checkbox,
-                wrapper_html: { id: 'flexible_working' }
+                wrapper_html: { id: 'flexible_working' },
+                input_html: { 'aria-label': t('jobs.aria_labels.flexible_working') }
       = f.input :weekly_hours,
                 label: t('jobs.weekly_hours'),
                 as: :decimal,

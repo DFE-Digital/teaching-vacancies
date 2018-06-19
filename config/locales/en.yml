@@ -101,6 +101,7 @@ en:
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'
       application_link_url: 'Link for more information (link opens external website in a new window) — %{url}'
+      flexible_working: 'Flexible working (optional)'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Briefly describe the duties and responsibilities involved in the role'
