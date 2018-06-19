@@ -194,6 +194,24 @@ variable "es_instance_type" {
   default = "t2.small.elasticsearch"
 }
 
+# Elasticache
+
+variable "elasticache_redis_engine_version" {
+  default = "4.0.10"
+}
+
+variable "elasticache_redis_instance_type" {
+  default = "cache.t2.small"
+}
+
+variable "elasticache_redis_parameter_group_name" {
+  default = "default.redis4.0"
+}
+
+variable "elasticache_redis_maintenance_window" {
+  default = "sun:01:00-sun:02:00"
+}
+
 # CloudFront
 variable "cloudfront_certificate_arn" {
   description = "Create and verify a certificate through AWS Certificate Manager to acquire this"

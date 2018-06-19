@@ -17,3 +17,11 @@ output "default_security_group_id" {
 output "ecs_autoscaling_group_name" {
   value = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
 }
+
+output "private_subnet_ids" {
+  value = ["${aws_subnet.private_subnet.*.id}"]
+}
+
+output "public_subnet_ids" {
+  value = ["${aws_subnet.public_subnet.*.id}"]
+}
