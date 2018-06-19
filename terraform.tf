@@ -95,6 +95,7 @@ module "ecs" {
   aws_elasticsearch_region = "${var.region}"
   aws_elasticsearch_key    = "${module.es.es_user_access_key_id}"
   aws_elasticsearch_secret = "${module.es.es_user_access_key_secret}"
+  redis_url                = "redis://${module.elasticache_redis.endpoint}"
 }
 
 module "logs" {

@@ -106,6 +106,7 @@ data "template_file" "web_container_definition" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    redis_url                = "${var.redis_url}"
   }
 }
 
