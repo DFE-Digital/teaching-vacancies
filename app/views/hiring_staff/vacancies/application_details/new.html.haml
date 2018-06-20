@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, "Application details — Publish a job for #{@school.name}"
+- content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Application details — Publish a job for #{@school.name}"
 
 %h1.heading-large
   = t('jobs.publish_heading', school: @application_details_form.school.name)

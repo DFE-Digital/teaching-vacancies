@@ -24,7 +24,9 @@
 }
 
 .overflow-scroll {
-  overflow: scroll;
+  @include media(mobile) {
+    overflow: scroll;
+  }
 }
 
 .strong {

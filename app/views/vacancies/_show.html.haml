@@ -66,6 +66,10 @@
 
   .column-one-third
     %aside.vacancy--metadata
+      - if @vacancy.application_link.present?
+        %p.font-xsmall=t('jobs.aria_labels.apply_link')
+        = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
+
       %dl
         - if @vacancy.pay_scale_range.present?
           %dt= t('jobs.pay_scale_range')
@@ -110,7 +114,3 @@
         - if @vacancy.contact_email.present?
           %dt= t('jobs.contact_email')
           %dd.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
-
-    - if @vacancy.application_link.present?
-      %br
-      = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'button vacancy-apply-link'

@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, "Edit the Application details"
+- content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Edit the Application details"
 
 %h1.heading-large
   = t('jobs.edit_heading', school: @school.name)
