@@ -2,7 +2,12 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
+  delegate :url_helpers, to: 'Rails.application.routes'
   delegate :total_pages, to: :model
+
+  def share_url
+    Rails.application.routes.url_helpers.job_url(model)
+  end
 
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
