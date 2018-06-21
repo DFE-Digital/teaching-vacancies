@@ -81,6 +81,9 @@ en:
     status: 'Status'
     already_published: 'This job has already been published'
     draft: 'This job is currently a draft version.'
+    share_url: 'This job is publicly visible at:'
+    view_public_link: 'View the public page for this job'
+    copy_public_url: 'copy the public URL to the clipboard'
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'

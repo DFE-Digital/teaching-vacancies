@@ -42,6 +42,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.middleware.use RackSessionAccess::Middleware
+
+  Rails.application.routes.default_url_options[:host] = 'teachingjobs.gov.uk'
 end
 
 # Avoid OmniAuth output in tests:

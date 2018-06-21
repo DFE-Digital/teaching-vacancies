@@ -7,6 +7,8 @@
       .banner-warning
         = t('jobs.expired')
 
+  = render partial: 'share_url' if controller_path == 'hiring_staff/vacancies'
+
   .column-two-thirds
     %h1.heading-large
       = @vacancy.job_title

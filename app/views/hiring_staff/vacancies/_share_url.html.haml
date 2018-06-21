@@ -1,0 +1,7 @@
+.column-full
+  .share-url.display-none
+    %h2.heading-small.mt0 Share this job
+    #{link_to t('jobs.view_public_link'), job_path(@vacancy), id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
+  .share-url-no-js
+    %h2.heading-small.mt0 Share this job
+    #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), id: 'share-url'}
