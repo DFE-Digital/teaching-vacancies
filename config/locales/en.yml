@@ -104,7 +104,7 @@ en:
       flexible_working: 'Flexible working (optional)'
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
-      description: 'Briefly describe the duties and responsibilities involved in the role'
+      description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       main_subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
       flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
