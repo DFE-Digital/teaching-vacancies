@@ -13,6 +13,7 @@ services:
     depends_on:
       - db
       - elasticsearch
+      - redis
     tty: true
     stdin_open: true
     restart: on-failure
@@ -38,6 +39,10 @@ services:
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
     restart: on-failure
+
+  redis:
+    image: redis:latest
+    command: redis-server
 
 volumes:
   pg_data: {}

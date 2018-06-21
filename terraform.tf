@@ -95,6 +95,7 @@ module "ecs" {
   aws_elasticsearch_region = "${var.region}"
   aws_elasticsearch_key    = "${module.es.es_user_access_key_id}"
   aws_elasticsearch_secret = "${module.es.es_user_access_key_secret}"
+  redis_url                = "redis://${module.elasticache_redis.endpoint}"
 }
 
 module "logs" {
@@ -171,4 +172,25 @@ module "cloudfront" {
   cloudfront_certificate_arn    = "${var.cloudfront_certificate_arn}"
   offline_bucket_domain_name    = "${var.offline_bucket_domain_name}"
   offline_bucket_origin_path    = "${var.offline_bucket_origin_path}"
+}
+
+module "elasticache_redis" {
+  source = "./terraform/modules/elasticache-redis"
+
+  cluster_id           = "${var.project_name}-${terraform.workspace}"
+  engine_version       = "${var.elasticache_redis_engine_version}"
+  instance_type        = "${var.elasticache_redis_instance_type}"
+  parameter_group_name = "${var.elasticache_redis_parameter_group_name}"
+  maintenance_window   = "${var.elasticache_redis_maintenance_window}"
+  vpc_id               = "${module.core.vpc_id}"
+  private_subnet_ids   = "${join(",", module.core.private_subnet_ids)}"
+
+  tag_name          = "${var.project_name}-${terraform.workspace}"
+  tag_environment   = "${terraform.workspace}"
+  tag_team          = "dfe"
+  tag_contact-email = ""
+  tag_customer      = ""
+  tag_application   = "tvs"
+
+  default_security_group_id = "${module.core.default_security_group_id}"
 }
