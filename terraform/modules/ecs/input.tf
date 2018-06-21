@@ -29,6 +29,7 @@ variable "es_address" {}
 variable "aws_elasticsearch_region" {}
 variable "aws_elasticsearch_key" {}
 variable "aws_elasticsearch_secret" {}
+variable "redis_url" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 variable "logspout_command" {
