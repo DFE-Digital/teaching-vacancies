@@ -56,7 +56,8 @@ class VacancySearchBuilder
   end
 
   def location_geo_distance
-    return if @geocoded_location.nil?
+    return unless @location.present?
+    @geocoded_location ||= [0, 0]
     {
       geo_distance: {
         distance: "#{@radius}mi",
