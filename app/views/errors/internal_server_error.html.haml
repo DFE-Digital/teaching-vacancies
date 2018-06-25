@@ -1,2 +1,4 @@
-%h1.heading-xlarge Something went wrong at our end.
+- content_for :page_title_prefix, t('error_pages.server_error')
+
+%h1.heading-xlarge=t('error_pages.server_error')
 %p You can email #{mail_to t('help.email')} if the problem persists.
