@@ -110,9 +110,8 @@ RSpec.describe VacancyPresenter do
 
   describe '#share_url' do
     it 'returns the absolute public url for the job post' do
-      service_domain = 'http://teachingjobs.gov.uk'
-      vacancy = VacancyPresenter.new(create(:vacancy))
-      expect(vacancy.share_url).to eq(service_domain + Rails.application.routes.url_helpers.job_path(vacancy))
+      vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'PE Teacher'))
+      expect(vacancy.share_url).to eq('http://localhost:3000/jobs/pe-teacher')
     end
   end
 end
