@@ -5,7 +5,7 @@ class VacancyPresenter < BasePresenter
   delegate :total_pages, to: :model
 
   def share_url
-    Rails.application.routes.url_helpers.job_url(model)
+    Rails.application.routes.url_helpers.job_url(model, protocol: 'https')
   end
 
   def salary_range(del = 'to')
