@@ -1,9 +1,7 @@
+require 'geocoding'
 class VacancySearchBuilder
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
-    @location = filters.location.to_s.strip
-    @geocoded_location ||= Geocoder.coordinates(@location, params: { countrycodes: 'uk' }) if @location.present?
-    @radius = filters.radius.to_i
     @working_pattern = filters.working_pattern
     @phase = filters.phase
     @minimum_salary = filters.minimum_salary
@@ -11,20 +9,29 @@ class VacancySearchBuilder
     @sort = sort
     @expired = expired
     @status = status
+
+    return if filters.location.blank?
+    @geocoded_location = Geocoding.new(filters.location).coordinates
+    @radius = filters.radius.to_i
   end
 
   def call
-    keyword_query = keyword_build
-    working_pattern_query = working_pattern_build
-    phase_query = phase_build
-    minimum_salary_query = minimum_salary_build
-    maximum_salary_query = maximum_salary_build
-    expired_query = expired_build
-    published_query = published_on_build
-    status_query = status_build
-    sort_query = sort_build
+    { search_query: search_query, search_sort: sort_query }
+  end
 
-    joined_query = [
+  private
+
+  def search_query
+    {
+      bool: {
+        must: must_query_clause,
+        filter: filters
+      }
+    }
+  end
+
+  def must_query_clause
+    [
       keyword_query,
       phase_query,
       working_pattern_query,
@@ -32,22 +39,15 @@ class VacancySearchBuilder
       maximum_salary_query,
       expired_query,
       status_query,
-      published_query
+      published_on_query
     ].compact
-
-    query = {
-      bool: {
-        must: joined_query,
-        filter: location_geo_distance
-      }
-    }
-
-    { search_query: query, search_sort: sort_query }
   end
 
-  private
+  def filters
+    @geocoded_location.present? ? location_geo_distance : {}
+  end
 
-  def keyword_build
+  def keyword_query
     if @keyword.empty?
       match_all_hash
     else
@@ -56,8 +56,6 @@ class VacancySearchBuilder
   end
 
   def location_geo_distance
-    return unless @location.present?
-    @geocoded_location ||= [0, 0]
     {
       geo_distance: {
         distance: "#{@radius}mi",
@@ -69,7 +67,7 @@ class VacancySearchBuilder
     }
   end
 
-  def expired_build
+  def expired_query
     return if @expired
     {
       range: {
@@ -80,7 +78,7 @@ class VacancySearchBuilder
     }
   end
 
-  def published_on_build
+  def published_on_query
     return if @published_on
     {
       range: {
@@ -91,7 +89,7 @@ class VacancySearchBuilder
     }
   end
 
-  def status_build
+  def status_query
     return if @status.blank?
     {
       bool: {
@@ -104,7 +102,7 @@ class VacancySearchBuilder
     }
   end
 
-  def working_pattern_build
+  def working_pattern_query
     return if @working_pattern.blank?
     {
       bool: {
@@ -117,7 +115,7 @@ class VacancySearchBuilder
     }
   end
 
-  def phase_build
+  def phase_query
     return if @phase.blank?
     {
       bool: {
@@ -130,7 +128,7 @@ class VacancySearchBuilder
     }
   end
 
-  def minimum_salary_build
+  def minimum_salary_query
     return if @minimum_salary.blank?
     {
       range: {
@@ -141,7 +139,7 @@ class VacancySearchBuilder
     }
   end
 
-  def maximum_salary_build
+  def maximum_salary_query
     return if @maximum_salary.blank?
     {
       range: {
@@ -152,7 +150,7 @@ class VacancySearchBuilder
     }
   end
 
-  def sort_build
+  def sort_query
     [{ @sort.column.to_sym => { order: @sort.order.to_sym } }]
   end
 
