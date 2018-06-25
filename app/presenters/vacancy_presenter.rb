@@ -2,7 +2,6 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
-  delegate :url_helpers, to: 'Rails.application.routes'
   delegate :total_pages, to: :model
 
   def share_url
