@@ -33,11 +33,10 @@ RSpec.describe VacancySearchBuilder do
     end
 
     it 'builds a location query when a location is provided' do
-      expect(Geocoder).to receive(:coordinates).with('Devon', params: { countrycodes: 'uk' })
-        .and_return([54.32, -1.2332])
+      expect(Geocoding).to receive_message_chain(:new, :coordinates) { [54.32, -1.2332] }
 
       sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(location: 'Devon')
+      filters = OpenStruct.new(location: 'TR2 56D')
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
 
       expected_hash = {
@@ -145,7 +144,7 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-    it 'builds a published_on query by default', wip: true do
+    it 'builds a published_on query by default' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
