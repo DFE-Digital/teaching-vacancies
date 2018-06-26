@@ -33,6 +33,7 @@ RSpec.feature 'Hiring staff can sign in' do
     expect(page).to have_content("Jobs at #{school.name}")
     within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
     within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+    within('#proposition-links') { expect(page).to have_selector('a.active', text: 'My jobs') }
   end
 
   scenario 'with valid credentials that do not match a school', elasticsearch: true do
