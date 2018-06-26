@@ -194,5 +194,10 @@ en:
     url:
       invalid: is not a valid URL
 
+  error_pages:
+    unprocessable_entity: We're unable to process your request.
+    not_found: Page not found.
+    server_error: Something went wrong at our end.
+
   help:
     email: teachingjobs@digital.education.gov.uk
