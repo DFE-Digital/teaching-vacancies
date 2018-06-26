@@ -40,6 +40,5 @@ module TeacherVacancyService
 
     config.autoload_paths += Dir[Rails.root.join('lib', 'logging')]
     config.autoload_paths += Dir[Rails.root.join('lib', 'modules')]
-    config.autoload_paths += Dir[Rails.root.join('presenters')]
   end
 end

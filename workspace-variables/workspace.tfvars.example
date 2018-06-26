@@ -60,3 +60,4 @@ aad_tenant = # "example.onmicrosoft.com"
 google_maps_api_key =
 google_analytics =
 rollbar_access_token =
+domain = # "tvs.dxw.net"

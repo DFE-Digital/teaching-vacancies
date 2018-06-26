@@ -56,6 +56,7 @@ Rails.application.configure do
   logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
-
-  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end
+
+domain = URI('localhost:3000')
+Rails.application.routes.default_url_options[:host] = domain.to_s

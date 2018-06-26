@@ -42,8 +42,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.middleware.use RackSessionAccess::Middleware
-
-  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end
 
 # Avoid OmniAuth output in tests:
@@ -54,3 +52,6 @@ OmniAuth.config.on_failure = proc { |env|
 }
 
 Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['ELASTICSEARCH_URL']
+
+domain = URI('localhost:3000')
+Rails.application.routes.default_url_options[:host] = domain.to_s
