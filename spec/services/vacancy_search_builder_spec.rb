@@ -33,20 +33,24 @@ RSpec.describe VacancySearchBuilder do
     end
 
     it 'builds a location query when a location is provided' do
+      expect(Geocoding).to receive_message_chain(:new, :coordinates) { [54.32, -1.2332] }
+
       sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(location: 'Devon')
+      filters = OpenStruct.new(location: 'TR2 56D')
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
 
       expected_hash = {
-        multi_match: {
-          query: 'Devon',
-          fields: %w[school.postcode^5 school.name^2 school.town school.county school.address],
-          operator: 'and',
-        },
+        geo_distance: {
+          distance: '0mi',
+          coordinates: {
+            lat: 54.32,
+            lon: -1.2332
+          }
+        }
       }
 
       expect(builder).to be_a(Hash)
-      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
+      expect(builder[:search_query][:bool][:filter]).to include(expected_hash)
     end
 
     it 'builds a working pattern query when one is provided' do
@@ -131,9 +135,9 @@ RSpec.describe VacancySearchBuilder do
           filter: {
             terms: {
               status: ['published'],
-            },
-          },
-        },
+            }
+          }
+        }
       }
 
       expect(builder).to be_a(Hash)
