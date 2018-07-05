@@ -22,12 +22,13 @@ class VacancySearchBuilder
   private
 
   def search_query
-    {
+    query = {
       bool: {
         must: must_query_clause,
-        filter: filters
       }
     }
+    query[:bool][:filter] = filters unless filters.empty?
+    query
   end
 
   def must_query_clause
