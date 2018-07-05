@@ -62,7 +62,7 @@ RSpec.describe SalaryValidator do
 
       context 'if minimum_value: true' do
         it 'validates that the value is not less than the minimum allowed' do
-          stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '400')
+          stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '400')
           model.amount = '12.23'
 
           expect(model).to_not be_valid
