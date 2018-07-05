@@ -22,7 +22,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.before do
-    stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '1')
+    stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '1')
   end
 
   config.include ActionView::Helpers::NumberHelper

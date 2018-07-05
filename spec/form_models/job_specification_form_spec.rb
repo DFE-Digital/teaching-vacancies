@@ -17,7 +17,7 @@ RSpec.describe JobSpecificationForm, type: :model do
         end
 
         it 'the minimum salary should be at least equal to the minimum payscale value' do
-          stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '3000')
+          stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '3000')
           expect(job_specification.valid?). to be false
           expect(job_specification.errors.messages[:minimum_salary][0])
             . to eq('must be at least £3000')

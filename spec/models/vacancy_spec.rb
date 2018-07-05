@@ -166,7 +166,7 @@ RSpec.describe Vacancy, type: :model do
       end
 
       it 'less than allowed minimum_salary and no maximum_salary' do
-        stub_const('SalaryValidator::MIN_SALARY_ALLOWED', '3000')
+        stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '3000')
         job = build(:vacancy, minimum_salary: '20', maximum_salary: nil)
 
         expect(job.valid?).to be false
