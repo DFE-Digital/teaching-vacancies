@@ -29,8 +29,9 @@ gem 'ipaddr'
 gem 'geocoder'
 gem 'redis'
 
-gem 'omniauth'
-gem 'omniauth-azure-activedirectory'
+gem 'omniauth', '~> 1.8'
+gem 'omniauth-azure-activedirectory', '~> 1.0'
+gem 'omniauth_openid_connect', '~> 0.1'
 
 gem 'breasal', '~> 0.0.1'
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 require 'permission'
-RSpec.feature 'Hiring staff can sign in' do
+RSpec.feature 'Hiring staff can sign in with Azure' do
   before do
     OmniAuth.config.test_mode = true
   end
