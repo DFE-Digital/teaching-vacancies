@@ -26,6 +26,8 @@ gem 'sanitize', '~> 4.6'
 gem 'lograge'
 gem 'colorize'
 gem 'ipaddr'
+gem 'geocoder'
+gem 'redis'
 
 gem 'omniauth'
 gem 'omniauth-azure-activedirectory'

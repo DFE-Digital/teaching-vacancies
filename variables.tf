@@ -147,6 +147,11 @@ variable "update_vacancies_task_command" {
   default     = ["rake", "vacancies:data:update"]
 }
 
+variable "reindex_vacancies_task_command" {
+  description = "The Entrypoint for the reindex_vacancies task"
+  default     = ["rake", "elasticsearch:vacancies:index"]
+}
+
 variable "vacancies_scrape_task_schedule" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "rate(60 minutes)"

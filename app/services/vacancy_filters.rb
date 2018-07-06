@@ -1,10 +1,11 @@
 class VacancyFilters
-  attr_reader :location, :keyword, :minimum_salary, :maximum_salary, :working_pattern, :phase
+  attr_reader :location, :radius, :keyword, :minimum_salary, :maximum_salary, :working_pattern, :phase
 
   def initialize(args)
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
 
     @location = args[:location]
+    @radius = args[:radius]
     @keyword = args[:keyword]
     @minimum_salary = args[:minimum_salary]
     @maximum_salary = args[:maximum_salary]
@@ -15,6 +16,7 @@ class VacancyFilters
   def to_hash
     {
       location: location,
+      radius: "#{radius}km",
       keyword: keyword,
       minimum_salary: minimum_salary,
       maximum_salary: maximum_salary,

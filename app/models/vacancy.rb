@@ -39,6 +39,7 @@ class Vacancy < ApplicationRecord
     indexes :working_pattern, type: :keyword
     indexes :minimum_salary, type: :text
     indexes :maximum_salary, type: :text
+    indexes :coordinates, type: :geo_point, ignore_malformed: true
   end
 
   extend FriendlyId
@@ -71,6 +72,14 @@ class Vacancy < ApplicationRecord
     @location ||= SchoolPresenter.new(school).location
   end
 
+  def coordinates
+    return if school_geolocation.nil?
+    {
+      lat: school_geolocation.x.to_f,
+      lon: school_geolocation.y.to_f
+    }
+  end
+
   def self.public_search(filters:, sort:)
     query = VacancySearchBuilder.new(filters: filters, sort: sort).call
     results = ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
@@ -81,8 +90,9 @@ class Vacancy < ApplicationRecord
 
   def as_indexed_json(_ = {})
     as_json(
+      methods: %i[coordinates],
       include: {
-        school: { only: %i[phase postcode name town county address] },
+        school: { only: %i[phase name postcode address town] },
         subject: { only: %i[name] }
       }
     )

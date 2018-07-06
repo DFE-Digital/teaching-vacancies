@@ -5,6 +5,7 @@ class VacanciesController < ApplicationController
                 :maximum_salary,
                 :working_pattern,
                 :phase,
+                :radius,
                 :sort_column,
                 :sort_order
 
@@ -32,7 +33,9 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(:keyword, :location, :minimum_salary, :maximum_salary, :phase, :phase, :working_pattern).to_hash
+    params.permit(:keyword, :location, :radius,
+                  :minimum_salary, :maximum_salary, :phase,
+                  :phase, :working_pattern).to_hash
   end
 
   def id
@@ -65,6 +68,10 @@ class VacanciesController < ApplicationController
 
   def phase
     params[:phase]
+  end
+
+  def radius
+    params[:radius]
   end
 
   def sort_column
