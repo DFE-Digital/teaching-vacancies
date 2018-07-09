@@ -1,0 +1,19 @@
+- content_for :page_title_prefix, 'Feedback'
+
+%h1.heading-large
+  Give feedback
+
+- if @feedback.errors.any?
+  #errors.error-summary{role: 'alert', tabindex: '-1'}
+    %h2.heading-medium.error-summary-heading
+      Please correct the following error
+    %ul.error-summary-list
+      - @feedback.errors.each do |attribute, error|
+        %li= @feedback.errors.full_message(attribute, error)
+
+= simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
+  .grid-row
+    .column-two-thirds
+      = f.input :rating, as: :radio_buttons, collection: rating_options, label: 'Overall, how did you feel about the service you received today?', required: true
+      = f.input :comment, as: :text, label: 'How could we improve this service?', hint: 'Limit is 200 characters. Please don\'t include any personal or financial information, for example your National Insurance or credit card numbers'
+      = f.submit 'Submit feedback', class: 'button'
