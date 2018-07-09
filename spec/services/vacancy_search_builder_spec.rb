@@ -41,7 +41,7 @@ RSpec.describe VacancySearchBuilder do
 
       expected_hash = {
         geo_distance: {
-          distance: '0mi',
+          distance: '1mi',
           coordinates: {
             lat: 54.32,
             lon: -1.2332
