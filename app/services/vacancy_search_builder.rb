@@ -1,5 +1,7 @@
 require 'geocoding'
 class VacancySearchBuilder
+  MIN_ALLOWED_RADIUS = 1
+
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
     @working_pattern = filters.working_pattern
@@ -12,7 +14,7 @@ class VacancySearchBuilder
 
     return if filters.location.blank?
     @geocoded_location = Geocoding.new(filters.location).coordinates
-    @radius = filters.radius.to_i
+    @radius = filters.radius.to_i.positive? ? filters.radius.to_i : MIN_ALLOWED_RADIUS
   end
 
   def call
