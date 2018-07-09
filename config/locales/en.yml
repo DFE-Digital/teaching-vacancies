@@ -183,6 +183,8 @@ en:
         only_published: You can only view published jobs
     access:
       signed_out: You've been signed out.
+    feedback:
+      submitted: Your feedback has been succesfuly submitted
 
   errors:
     jobs:
@@ -192,6 +194,8 @@ en:
       failure: An unexpected error occured. We have been notified.
     url:
       invalid: is not a valid URL
+    feedback:
+      already_submitted: Feedback for this job listing has already been submitted
 
   error_pages:
     unprocessable_entity: We're unable to process your request.
