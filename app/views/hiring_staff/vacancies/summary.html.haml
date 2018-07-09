@@ -22,4 +22,4 @@
 
     %p The listing will appear on the service until #{@vacancy.expires_on}, after which it will no longer be visible to jobseekers.
 
-    %p #{link_to 'What did you think of this service?', '#'} (takes 30 seconds)
+    %p #{link_to 'What did you think of this service?', new_school_job_feedback_path(@vacancy.id)} (takes 30 seconds)
