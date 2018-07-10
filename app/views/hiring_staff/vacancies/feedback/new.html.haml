@@ -14,6 +14,10 @@
 = simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
   .grid-row
     .column-two-thirds
-      = f.input :rating, as: :radio_buttons, collection: rating_options, label: 'Overall, how did you feel about the service you received today?', required: true
-      = f.input :comment, as: :text, label: 'How could we improve this service?', hint: 'Limit is 200 characters. Please don\'t include any personal or financial information, for example your National Insurance or credit card numbers'
-      = f.submit 'Submit feedback', class: 'button'
+      .form-group
+        %legend
+          %h2.heading-medium Overall, how did you feel about the service you received today?
+        %fieldset
+          = f.input :rating, as: :radio_buttons, collection: rating_options, label: false, required: true, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
+          = f.input :comment, as: :text, label: 'How could we improve this service?', hint: 'Limit is 200 characters. Please don\'t include any personal or financial information, for example your National Insurance or credit card numbers', input_html: { class: 'form-control form-control-4-4', rows: '5' }
+          = f.submit 'Submit feedback', class: 'button'
