@@ -43,6 +43,22 @@
         "value": "${aad_tenant}"
       },
       {
+        "name": "DFE_SIGN_IN_ISSUER",
+        "value": "${dfe_sign_in_issuer}"
+      },
+      {
+        "name": "DFE_SIGN_IN_REDIRECT_URL",
+        "value": "${dfe_sign_in_redirect_url}"
+      },
+      {
+        "name": "DFE_SIGN_IN_IDENTIFIER",
+        "value": "${dfe_sign_in_identifier}"
+      },
+      {
+        "name": "DFE_SIGN_IN_SECRET",
+        "value": "${dfe_sign_in_secret}"
+      },
+      {
         "name": "GOOGLE_MAPS_API_KEY",
         "value": "${google_maps_api_key}"
       },
