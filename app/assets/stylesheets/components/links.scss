@@ -1,0 +1,8 @@
+a.reversed-link {
+  &:link {
+    color: $white;
+  }
+  &:visited {
+    color: $white;
+  }
+}
