@@ -184,7 +184,7 @@ en:
     access:
       signed_out: You've been signed out.
     feedback:
-      submitted: Your feedback has been succesfuly submitted
+      submitted: Your feedback has been succesfully submitted
 
   errors:
     jobs:

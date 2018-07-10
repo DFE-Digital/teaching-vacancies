@@ -49,7 +49,7 @@ RSpec.feature 'Vacancy feedback' do
         fill_in 'feedback_comment', with: 'Perfect!'
 
         click_on 'Submit feedback'
-        expect(page).to have_content('Your feedback has been succesfuly submitted')
+        expect(page).to have_content('Your feedback has been succesfully submitted')
       end
     end
   end
