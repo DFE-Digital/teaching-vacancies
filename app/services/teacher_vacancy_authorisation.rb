@@ -6,6 +6,7 @@ module TeacherVacancyAuthorisation
     def initialize
       uri = URI.parse(AUTHORISATION_SERVICE_URL)
       @http = Net::HTTP.new(uri.host, uri.port)
+      @http.use_ssl = true
       @headers = { 'Authorization' => "Token token=#{AUTHORISATION_SERVICE_TOKEN}",
                    'Content-Type' => 'application/json' }
     end
