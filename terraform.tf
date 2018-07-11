@@ -78,6 +78,11 @@ module "ecs" {
 
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
+  
+  dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
+  dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
+  dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
+  dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
 
   # Application variables
   rails_env                = "${var.rails_env}"
