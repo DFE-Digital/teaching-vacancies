@@ -55,6 +55,8 @@ class Vacancy < ApplicationRecord
   belongs_to :max_pay_scale, class_name: 'PayScale', required: false
   belongs_to :leadership, required: false
 
+  has_one :feedback
+
   delegate :name, to: :school, prefix: true, allow_nil: false
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
 

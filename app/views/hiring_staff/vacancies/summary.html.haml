@@ -1,21 +1,27 @@
-- content_for :page_title_prefix, "Your job posting for #{@school.name} has been submitted"
+- content_for :page_title_prefix, t('jobs.confirmation_page.page_title', school: @school.name)
 
 =render partial: 'school_vacancy_breadcrumb'
 
 .vacancy.grid-row
-  .column-full
+  .column-two-thirds
     .govuk-box-highlight.margin-bottom-large
-      %h1.heading-large.mv0
-        = t('jobs.submitted')
+      %h1.heading-large.mt0
+        = t('jobs.confirmation_page.submitted')
+
+      - if @vacancy.publish_today?
+        %p= link_to t('jobs.confirmation_page.preview_posted_job'), job_path(@vacancy), class: 'reversed-link'
+      - else
+        %p= link_to t('jobs.confirmation_page.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
+
+      %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', new_sessions_path, class: 'reversed-link')).html_safe
 
   .column-two-thirds
-    - if @vacancy.publish_today?
-      %p
-        = t('jobs.view_posted_job')
-      %p
-        = link_to job_url(@vacancy), job_path(@vacancy)
-    - else
-      %p
-        = t('jobs.preview_posted_job', date: @vacancy.publish_on)
-      %p
-        = link_to school_job_url(@vacancy.id), school_job_path(@vacancy.id)
+    %h3.heading-medium= t('jobs.confirmation_page.next_step')
+
+    %p= t('jobs.confirmation_page.date_posted', date: @vacancy.publish_on)
+
+    %p= t('jobs.confirmation_page.date_expires', date: @vacancy.expires_on)
+
+    %p
+      = link_to(t('jobs.confirmation_page.feedback_link'), new_school_job_feedback_path(@vacancy.id))
+      = t('jobs.confirmation_page.feedback_time')
