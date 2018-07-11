@@ -9,6 +9,7 @@ class HiringStaff::SignIn::Azure::SessionsController < HiringStaff::BaseControll
     if permissions.school_urn.present?
       session.update(session_id: oid)
       session.update(urn: permissions.school_urn)
+      Auditor::Audit.new(current_school, 'login.azure', current_session_id).log
       redirect_to school_path
     else
       redirect_to page_path('user-not-authorised')

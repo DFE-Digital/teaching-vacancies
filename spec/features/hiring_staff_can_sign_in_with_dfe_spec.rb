@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
+RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   before do
     OmniAuth.config.test_mode = true
     ENV['SIGN_IN_WITH_DFE'] = 'true'
@@ -46,7 +46,7 @@ RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
     within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
   end
 
-  scenario 'with valid credentials that do not match a school', elasticsearch: true do
+  scenario 'with valid credentials that do not match a school' do
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
       uid: 'an-unknown-oid',
