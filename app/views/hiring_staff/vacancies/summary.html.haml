@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, "The job listing for #{@school.name} has been completed"
+- content_for :page_title_prefix, t('jobs.confirmation_page.page_title', school: @school.name)
 
 =render partial: 'school_vacancy_breadcrumb'
 
@@ -6,20 +6,22 @@
   .column-two-thirds
     .govuk-box-highlight.margin-bottom-large
       %h1.heading-large.mt0
-        = t('jobs.submitted')
+        = t('jobs.confirmation_page.submitted')
 
       - if @vacancy.publish_today?
-        %p= link_to t('jobs.preview_posted_job'), job_path(@vacancy), class: 'reversed-link'
+        %p= link_to t('jobs.confirmation_page.preview_posted_job'), job_path(@vacancy), class: 'reversed-link'
       - else
-        %p= link_to t('jobs.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
+        %p= link_to t('jobs.confirmation_page.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
 
-      %p.mb0 You can also view, amend or delete it on #{link_to "your school's dashboard", new_sessions_path, class: 'reversed-link'}
+      %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', new_sessions_path, class: 'reversed-link')).html_safe
 
   .column-two-thirds
-    %h3.heading-medium What happens next
+    %h3.heading-medium= t('jobs.confirmation_page.next_step')
 
-    %p Your job listing will be posted on #{@vacancy.publish_on}.
+    %p= t('jobs.confirmation_page.date_posted', date: @vacancy.publish_on)
 
-    %p The listing will appear on the service until #{@vacancy.expires_on}, after which it will no longer be visible to jobseekers.
+    %p= t('jobs.confirmation_page.date_expires', date: @vacancy.expires_on)
 
-    %p #{link_to 'What did you think of this service?', new_school_job_feedback_path(@vacancy.id)} (takes 30 seconds)
+    %p
+      = link_to(t('jobs.confirmation_page.feedback_link'), new_school_job_feedback_path(@vacancy.id))
+      = t('jobs.confirmation_page.feedback_time')
