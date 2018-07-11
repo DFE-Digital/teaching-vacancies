@@ -3,11 +3,12 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
-    permission = Permission.new(identifier: oid)
+    permissions = TeacherVacancyAuthorisation::Permissions.new
+    permissions.authorise(identifier)
 
-    if permission.valid?
+    if permissions.school_urn.present?
       session.update(session_id: oid)
-      session.update(urn: permission.school_urn)
+      session.update(urn: permissions.school_urn)
       redirect_to school_path
     else
       redirect_to root_path, notice: I18n.t('errors.sign_in.unauthorised')
@@ -19,6 +20,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   private def oid
+    auth_hash['uid']
+  end
+
+  private def identifier
     auth_hash['uid']
   end
 end

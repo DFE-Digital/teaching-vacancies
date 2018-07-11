@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'permission'
 
 RSpec.feature 'School viewing public listings' do
   before do
@@ -11,9 +10,6 @@ RSpec.feature 'School viewing public listings' do
   end
 
   let!(:school) { create(:school, urn: '110627') }
-  before(:each) do
-    stub_const('Permission::HIRING_STAFF_USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
-  end
 
   context 'when signed in with Azure' do
     before(:each) do
@@ -56,6 +52,10 @@ RSpec.feature 'School viewing public listings' do
         provider: 'dfe',
         uid: 'a-valid-oid'
       )
+
+      mock_response = double(body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
+      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+        .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
       ENV['SIGN_IN_WITH_DFE'] = 'true'
     end
