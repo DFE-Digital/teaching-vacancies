@@ -19,6 +19,9 @@ RSpec.feature 'School viewing public listings' do
     before(:each) do
       OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
         provider: 'default',
+        info: {
+          name: 'an-email@example.com',
+        },
         extra: {
           raw_info: {
             id_token_claims: {
@@ -27,6 +30,9 @@ RSpec.feature 'School viewing public listings' do
           }
         }
       )
+      mock_response = double(body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
+      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+        .and_return(AuthHelpers::MockPermissions.new(mock_response))
     end
 
     scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
