@@ -30,4 +30,16 @@ RSpec.describe 'Auditor::Audit' do
         .to eq(job_description: [job_description, 'A new description'])
     end
   end
+
+  describe '#log_without_association' do
+    it 'audits without requiring an associated model' do
+      audit = Auditor::Audit.new(nil, 'dfe-sign-in.test', 'test_session_id')
+      audit.log_without_association
+
+      audit_log = PublicActivity::Activity.last
+      expect(audit_log.key).to eq('dfe-sign-in.test')
+      expect(audit_log.session_id).to eq('test_session_id')
+      expect(audit_log.trackable).to eq(nil)
+    end
+  end
 end

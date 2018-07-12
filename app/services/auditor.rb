@@ -14,10 +14,18 @@ module Auditor
       create(changes)
     end
 
+    def log_without_association
+      create_without_model
+    end
+
     private
 
     def create(changes)
       PublicActivity::Activity.create trackable: model, key: key, session_id: session_id, parameters: changes
+    end
+
+    def create_without_model
+      PublicActivity::Activity.new(key: key, session_id: session_id).save(validate: false)
     end
   end
 
