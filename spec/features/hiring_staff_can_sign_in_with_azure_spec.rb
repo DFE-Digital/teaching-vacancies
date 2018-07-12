@@ -45,17 +45,20 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
       click_on(I18n.t('nav.sign_in'))
     end
 
-    it 'signs in the user successfully' do
+    scenario 'signs-in the user successfully' do
       expect(page).to have_content("Jobs at #{school.name}")
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
       within('#proposition-links') { expect(page).to have_selector('a.active', text: 'My jobs') }
     end
 
-    it 'adds an entry in the audit log' do
-      activity = PublicActivity::Activity.last
-      expect(activity.key).to eq('login.azure')
-      expect(activity.trackable.urn).to eq(school.urn)
+    scenario 'adds entries in the audit log' do
+      authentication = PublicActivity::Activity.first
+      expect(authentication.key).to eq('azure.authentication.success')
+
+      authorisation = PublicActivity::Activity.last
+      expect(authorisation.key).to eq('azure.authorisation.success')
+      expect(authorisation.trackable.urn).to eq(school.urn)
     end
   end
 
@@ -82,19 +85,37 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
+    end
 
+    scenario 'it does not sign-in the user' do
       expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
       within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
     end
 
-    scenario 'with invalid credentials are unable to access the service' do
+    scenario 'adds entries in the audit log' do
+      authentication = PublicActivity::Activity.first
+      expect(authentication.key).to eq('azure.authentication.success')
+
+      authorisation = PublicActivity::Activity.last
+      expect(authorisation.key).to eq('azure.authorisation.failure')
+    end
+  end
+
+  context 'with invalid credentials are unable to access the service' do
+    before(:each) do
       OmniAuth.config.mock_auth[:default] = :invalid_credentials
 
       visit root_path
-
       click_on(I18n.t('nav.sign_in'))
+    end
 
+    scenario 'renders an error' do
       expect(page).to have_content(I18n.t('errors.sign_in.failure'))
+    end
+
+    scenario 'adds an entry in the audit log' do
+      activity = PublicActivity::Activity.last
+      expect(activity.key).to eq('azure.authentication.failure')
     end
   end
 end
