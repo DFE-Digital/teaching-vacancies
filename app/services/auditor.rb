@@ -34,4 +34,10 @@ module Auditor
       PublicActivity::Activity.where(trackable: self)
     end
   end
+
+  class Auth
+    def yesterdays_activities
+      PublicActivity::Activity.where("(key like 'azure%' or key LIKE 'dfe-sign-in%') and date(created_at) = (current_date - 1)")
+    end
+  end
 end
