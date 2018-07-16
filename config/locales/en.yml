@@ -30,6 +30,7 @@ en:
   jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
+    key_info: 'Key information'
     salary: 'Salary'
     publish_on: 'Date posted'
     expires_on: 'Closing date'

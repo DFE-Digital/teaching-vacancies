@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :check_staging_auth, except: :check
   before_action :set_headers
+  before_action :detect_device_format
 
   include AuthenticationConcerns
   include Ip
@@ -30,6 +31,10 @@ class ApplicationController < ActionController::Base
 
   def authenticate?
     Rails.env.staging?
+  end
+
+  def detect_device_format
+    request.variant = :phone if browser.device.mobile?
   end
 
   private def http_user

@@ -56,6 +56,8 @@ gem 'public_activity'
 gem 'high_voltage', '~> 3.1'
 gem 'google_drive', require: false
 
+gem 'browser'
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_bot_rails'

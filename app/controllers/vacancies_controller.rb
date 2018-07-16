@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  # include VariantConcerns
+
   helper_method :location,
                 :keyword,
                 :minimum_salary,
