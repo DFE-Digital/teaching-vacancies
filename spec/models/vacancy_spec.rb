@@ -321,6 +321,23 @@ RSpec.describe Vacancy, type: :model do
         expect(Vacancy.listed.count).to eq(published.count)
       end
     end
+
+    describe '#published_on_count(date)' do
+      it 'retrieves vacancies listed on the specified date' do
+        published_today = create_list(:vacancy, 3, :published_slugged)
+        published_yesterday = build_list(:vacancy, 2, :published_slugged, publish_on: 1.day.ago)
+        published_yesterday.each { |v| v.save(validate: false) }
+        published_the_other_day = build_list(:vacancy, 1, :published_slugged, publish_on: 2.days.ago)
+        published_the_other_day.each { |v| v.save(validate: false) }
+        published_some_other_day = build_list(:vacancy, 6, :published_slugged, publish_on: 1.month.ago)
+        published_some_other_day.each { |v| v.save(validate: false) }
+
+        expect(Vacancy.published_on_count(Time.zone.today)).to eq(published_today.count)
+        expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
+        expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
+        expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
+      end
+    end
   end
 
   describe 'delegate school_name' do
