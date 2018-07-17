@@ -24,6 +24,7 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
     sign_in_path = new_azure_path
     sign_in_path = new_dfe_path if DFE_SIGN_IN_OPTIONS.map(&:name).include?(choice)
 
+    logger.debug("Hiring staff identified as from the #{choice} local authority during sign in.")
     redirect_to sign_in_path
   end
 
