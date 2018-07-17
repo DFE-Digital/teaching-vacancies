@@ -1,4 +1,6 @@
 class HiringStaff::IdentificationsController < HiringStaff::BaseController
+  include ActionView::Helpers::OutputSafetyHelper
+
   skip_before_action :check_session, only: %i[new create]
   skip_before_action :verify_authenticity_token, only: [:create]
 
@@ -44,8 +46,14 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
 
   private def halt_other_regions
     return unless choice.eql?('Other')
-    flash[:notice] = "Other areas have not been invited yet, \
-      please register your interest by emailing us at #{I18n.t('help.email')}."
+
+    flash[:notice] = safe_join(
+      [
+        'Other areas have not been invited yet, please register your interest by emailing us at ',
+        "<a href=mailto:#{I18n.t('help.email')}>#{I18n.t('help.email')}</a>".html_safe
+      ]
+    )
+
     redirect_to root_path
   end
 end
