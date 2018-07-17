@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'permission'
 RSpec.feature 'Hiring staff can sign in with Azure' do
   before do
     OmniAuth.config.test_mode = true
@@ -10,13 +9,13 @@ RSpec.feature 'Hiring staff can sign in with Azure' do
   end
 
   let!(:school) { create(:school, urn: '110627') }
-  before(:each) do
-    stub_const('Permission::HIRING_STAFF_USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
-  end
 
   scenario 'with valid credentials that do match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
       provider: 'default',
+      info: {
+        name: 'an-email@example.com',
+      },
       extra: {
         raw_info: {
           id_token_claims: {
@@ -25,6 +24,21 @@ RSpec.feature 'Hiring staff can sign in with Azure' do
         }
       }
     )
+    mock_response = double(body: {
+      user:
+      {
+        permissions:
+        [
+          {
+            user_token: 'an-email@example.com',
+            school_urn: '110627'
+          }
+        ]
+      }
+    }.to_json)
+
+    expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
     visit root_path
 
@@ -39,6 +53,9 @@ RSpec.feature 'Hiring staff can sign in with Azure' do
   scenario 'with valid credentials that do not match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
       provider: 'default',
+      info: {
+        name: 'an-email@example.com',
+      },
       extra: {
         raw_info: {
           id_token_claims: {
@@ -47,6 +64,10 @@ RSpec.feature 'Hiring staff can sign in with Azure' do
         }
       }
     )
+
+    mock_response = double(body: { user: { permissions: [] } }.to_json)
+    expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
     visit root_path
 

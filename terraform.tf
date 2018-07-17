@@ -102,6 +102,8 @@ module "ecs" {
   aws_elasticsearch_key    = "${module.es.es_user_access_key_id}"
   aws_elasticsearch_secret = "${module.es.es_user_access_key_secret}"
   redis_url                = "redis://${module.elasticache_redis.endpoint}"
+  authorisation_service_token = "${var.authorisation_service_token}"
+  authorisation_service_url   = "${var.authorisation_service_url}"
 }
 
 module "logs" {

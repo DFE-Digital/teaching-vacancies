@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'permission'
 RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
   before do
     OmniAuth.config.test_mode = true
@@ -12,15 +11,31 @@ RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
   end
 
   let!(:school) { create(:school, urn: '110627') }
-  before(:each) do
-    stub_const('Permission::HIRING_STAFF_USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
-  end
 
   scenario 'with valid credentials that do match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
-      uid: 'a-valid-oid'
+      uid: 'an-email@exmple.com',
+      info: {
+        email: 'an-email@example.com',
+      }
     )
+
+    mock_response = double(body: {
+      user:
+      {
+        permissions:
+        [
+          {
+            user_token: 'an-email@example.com',
+            school_urn: '110627'
+          }
+        ]
+      }
+    }.to_json)
+
+    expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
     visit root_path
 
@@ -34,9 +49,14 @@ RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
   scenario 'with valid credentials that do not match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
-      uid: 'an-unknown-oid'
+      uid: 'an-unknown-oid',
+      info: {
+        email: 'an-email@example.com',
+      }
     )
-
+    mock_response = double(body: { user: { permissions: [] } }.to_json)
+    expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      .and_return(AuthHelpers::MockPermissions.new(mock_response))
     visit root_path
 
     click_on(I18n.t('nav.sign_in'))

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'permission'
 
 RSpec.feature 'School viewing public listings' do
   before do
@@ -11,14 +10,14 @@ RSpec.feature 'School viewing public listings' do
   end
 
   let!(:school) { create(:school, urn: '110627') }
-  before(:each) do
-    stub_const('Permission::HIRING_STAFF_USER_TO_SCHOOL_MAPPING', 'a-valid-oid' => school.urn)
-  end
 
   context 'when signed in with Azure' do
     before(:each) do
       OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
         provider: 'default',
+        info: {
+          name: 'an-email@example.com',
+        },
         extra: {
           raw_info: {
             id_token_claims: {
@@ -27,6 +26,9 @@ RSpec.feature 'School viewing public listings' do
           }
         }
       )
+      mock_response = double(body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
+      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+        .and_return(AuthHelpers::MockPermissions.new(mock_response))
     end
 
     scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
@@ -48,8 +50,15 @@ RSpec.feature 'School viewing public listings' do
     before(:each) do
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
         provider: 'dfe',
-        uid: 'a-valid-oid'
+        uid: 'a-valid-oid',
+        info: {
+          email: 'an-email@example.com',
+        }
       )
+
+      mock_response = double(body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
+      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+        .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
       ENV['SIGN_IN_WITH_DFE'] = 'true'
     end
