@@ -50,7 +50,10 @@ RSpec.feature 'School viewing public listings' do
     before(:each) do
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
         provider: 'dfe',
-        uid: 'a-valid-oid'
+        uid: 'a-valid-oid',
+        info: {
+          email: 'an-email@example.com',
+        }
       )
 
       mock_response = double(body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)

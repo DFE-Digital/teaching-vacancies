@@ -15,7 +15,10 @@ RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
   scenario 'with valid credentials that do match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
-      uid: 'an-email@exmple.com'
+      uid: 'an-email@exmple.com',
+      info: {
+        email: 'an-email@example.com',
+      }
     )
 
     mock_response = double(body: {
@@ -46,7 +49,10 @@ RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
   scenario 'with valid credentials that do not match a school', elasticsearch: true do
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
-      uid: 'an-unknown-oid'
+      uid: 'an-unknown-oid',
+      info: {
+        email: 'an-email@example.com',
+      }
     )
     mock_response = double(body: { user: { permissions: [] } }.to_json)
     expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
