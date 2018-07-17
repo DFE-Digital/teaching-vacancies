@@ -111,6 +111,8 @@ data "template_file" "web_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     redis_url                = "${var.redis_url}"
+    authorisation_service_url   = "${var.authorisation_service_url}"
+    authorisation_service_token = "${var.authorisation_service_token}"
   }
 }
 

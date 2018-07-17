@@ -109,6 +109,14 @@
       {
         "name": "REDIS_URL",
         "value": "${redis_url}"
+      },
+      {
+        "name": "AUTHORISATION_SERVICE_URL",
+        "value": "${authorisation_service_url}"
+      },
+      {
+        "name": "AUTHORISATION_SERVICE_TOKEN",
+        "value": "${authorisation_service_token}"
       }
     ]
   }
