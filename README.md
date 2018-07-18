@@ -9,7 +9,7 @@
 1. Copy the docker environment variables and fill in any missing secrets:
 
 ```
-$ cp docker-compose.env.example docker-compose.env
+$ cp docker-compose.env.sample docker-compose.env
 ```
 
 2. Build the docker container and set up the database
