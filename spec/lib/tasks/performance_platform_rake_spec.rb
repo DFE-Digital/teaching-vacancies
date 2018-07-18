@@ -1,5 +1,9 @@
 require 'rails_helper'
-RSpec.describe ':vacancies' do
+RSpec.describe 'Performance Platform rake tasks' do
+  before(:all) do
+    TeacherVacancyService::Application.load_tasks
+  end
+
   context ':performance_platform' do
     context ':submit_transactions' do
       it 'returns the Vacancy count for the previous day' do
