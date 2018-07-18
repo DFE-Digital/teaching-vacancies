@@ -42,6 +42,9 @@ en:
     job_count: 'There is %{count} job that matches your search.'
     job_count_plural: 'There are %{count} jobs that match your search.'
     no_jobs: 'No jobs found. Try expanding your search.'
+    none_listed:
+      - 'This is because schools are on summer holidays and this isn’t a peak period in the teacher recruitment cycle.'
+      - 'We’re still growing as a service. Even more schools will be able to list jobs on the service from September. So please check back soon!'
     job_title: 'Job title'
     benefits: 'Employee benefits'
     salary_range: 'Salary range'

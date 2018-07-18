@@ -1,5 +1,5 @@
 class VacanciesPresenter < BasePresenter
-  attr_reader :decorated_collection
+  attr_reader :decorated_collection, :searched
 
   def initialize(vacancies, searched:)
     @decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
