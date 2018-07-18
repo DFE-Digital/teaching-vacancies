@@ -278,3 +278,4 @@ variable "load_balancer_check_path" {
 }
 
 variable "rollbar_access_token" {}
+variable "pp_transactions_by_channel_token" {}

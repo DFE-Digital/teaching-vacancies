@@ -98,6 +98,7 @@ module "ecs" {
   google_maps_api_key      = "${var.google_maps_api_key}"
   google_analytics         = "${var.google_analytics}"
   rollbar_access_token     = "${var.rollbar_access_token}"
+  pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
   secret_key_base          = "${var.secret_key_base}"
   rds_username             = "${var.rds_username}"
   rds_password             = "${var.rds_password}"

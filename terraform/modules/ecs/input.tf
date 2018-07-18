@@ -25,6 +25,7 @@ variable "dfe_sign_in_secret" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "rollbar_access_token" {}
+variable "pp_transactions_by_channel_token" {}
 variable "secret_key_base" {}
 variable "rds_username" {}
 variable "rds_password" {}

@@ -95,6 +95,7 @@ data "template_file" "web_container_definition" {
     google_maps_api_key      = "${var.google_maps_api_key}"
     google_analytics         = "${var.google_analytics}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}"
