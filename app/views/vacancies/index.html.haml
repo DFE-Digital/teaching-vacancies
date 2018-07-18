@@ -8,7 +8,7 @@
   .column-one-third
     = render 'filters'
   .column-two-thirds
-    %p.heading-medium.mt0= @vacancies.total_count
+    %p.heading-medium.mt0= @vacancies.total_count_message
     - if @vacancies.any?
       %div.sortable-links
         = t('jobs.sort_by')
