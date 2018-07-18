@@ -271,6 +271,33 @@ data "template_file" "reindex_vacancies_container_definition" {
   }
 }
 
+/* performance_platform_submit task definition*/
+data "template_file" "performance_platform_submit_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_performance_platform_submit"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    entrypoint               = "${jsonencode(var.performance_platform_submit_task_command)}"
+  }
+}
+
+
+
 data "template_file" "logspout_container_definition" {
   template = "${file(var.ecs_service_logspout_container_definition_file_path)}"
 
@@ -475,5 +502,32 @@ resource "aws_cloudwatch_event_target" "sessions_trim_task_event" {
   ecs_target {
     task_count          = "1"
     task_definition_arn = "${aws_ecs_task_definition.sessions_trim_task.arn}"
+  }
+}
+
+resource "aws_ecs_task_definition" "performance_platform_submit_task" {
+  family                   = "${var.ecs_service_task_name}_performance_platform_submit_task"
+  container_definitions    = "${data.template_file.performance_platform_submit_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "performance_platform_submit_task" {
+  name                = "${var.ecs_service_task_name}_performance_platform_submit_task"
+  description         = "Submits all required data to the performance platform"
+  schedule_expression = "${var.performance_platform_submit_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" {
+  target_id = "${var.ecs_service_task_name}_performance_platform_submit_task"
+  rule      = "${aws_cloudwatch_event_rule.performance_platform_submit_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.performance_platform_submit_task.arn}"
   }
 }

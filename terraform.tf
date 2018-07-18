@@ -84,6 +84,9 @@ module "ecs" {
   dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
   dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
 
+  performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"
+  performance_platform_submit_task_schedule   = "${var.performance_platform_submit_task_schedule}"
+
   # Application variables
   rails_env                        = "${var.rails_env}"
   override_school_urn              = "${var.override_school_urn}"

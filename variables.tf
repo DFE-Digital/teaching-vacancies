@@ -177,6 +177,16 @@ variable "rds_engine_version" {
   }
 }
 
+variable "performance_platform_submit_task_command" {
+  description = "The Entrypoint for the performance_platform_submit task"
+  default     = ["rake", "verbose", "performance_platform:submit"]
+}
+
+variable "performance_platform_submit_task_schedule" {
+  description = "performance_platform_submit schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(24 hours)"
+}
+
 variable "rds_storage_gb" {}
 variable "rds_username" {}
 variable "rds_password" {}
