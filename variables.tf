@@ -243,6 +243,14 @@ variable "cloudwatch_ops_genie_api_key" {
   description = "The ops genie api key for sending alerts to ops genie"
 }
 
+variable "load_balancer_check_path" {
+  default = "/"
+}
+
+variable "logspout_command" {
+  type = "list"
+}
+
 # Application
 variable "rails_env" {}
 
@@ -270,7 +278,3 @@ variable "load_balancer_check_path" {
 }
 
 variable "rollbar_access_token" {}
-
-variable "logspout_command" {
-  type = "list"
-}
