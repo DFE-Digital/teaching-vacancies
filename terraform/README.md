@@ -141,3 +141,18 @@ Without this setup, CloudFront will continue to provide generic 503 and 502 page
 1. Create a new S3 bucket and set the access permissions to public, this value will correspond to: `offline_bucket_domain_name`
 2. Add your static content to a new directory that corresponds to, making sure they are all set to public too: `offline_bucket_origin_path`
 3. The file that will be rendered is currently `index.html`
+
+## Add new environment variables
+
+Our application environment variables are defined and used in multiple places. We try to group the variables in the 
+same way in each file to reduce cognitive effort for future readers.
+
+1. `docker-compose.env.sample` - In the application’s sample env file
+1. `variables.tf` - At the bottom under 'Application variables'
+1. `terraform.tf` - In the ECS module
+1. `web_container_definition.json` - Add entry to the `environment` array
+1. `terraform/modules/ecs/input.tf` - In the ECS module input contract
+1. `terraform/modules/ecs/ecs.tf` - In the ECS module web container definition
+1. `workspace-variables/<env>.tfvars` - In each workspace tfvars
+1. `workspace-variables/workspace.tfvars.example` - In the example workspace tfvars
+1. Sync workspace tfvars to 1password for the team
