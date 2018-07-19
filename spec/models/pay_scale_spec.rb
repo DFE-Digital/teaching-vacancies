@@ -38,4 +38,21 @@ RSpec.describe PayScale, type: :model do
       end
     end
   end
+
+  describe '#minimum_payscale_salary' do
+    it 'returns the lowest current pay scale salary' do
+      Timecop.freeze(Time.zone.today) do
+        minimum = create(:pay_scale,
+                         salary: 1000, starts_at: Time.zone.today - 2.days, expires_at: Time.zone.today + 2.days)
+        create(:pay_scale, salary: 2000, starts_at: Time.zone.today - 2.days, expires_at: Time.zone.today + 2.days)
+        future_minimum = create(:pay_scale, salary: 5000, starts_at: Time.zone.today + 2.months)
+        create(:pay_scale, salary: 6000, starts_at: Time.zone.today + 2.months)
+
+        expect(PayScale.minimum_payscale_salary).to be minimum.salary
+
+        Timecop.travel(Time.zone.today + 3.months)
+        expect(PayScale.minimum_payscale_salary).to be future_minimum.salary
+      end
+    end
+  end
 end
