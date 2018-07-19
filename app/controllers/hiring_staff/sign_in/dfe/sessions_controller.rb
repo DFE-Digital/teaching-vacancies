@@ -11,7 +11,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
       session.update(urn: permissions.school_urn)
       redirect_to school_path
     else
-      redirect_to root_path, notice: I18n.t('errors.sign_in.unauthorised')
+      redirect_to page_path('user-not-authorised')
     end
   end
 

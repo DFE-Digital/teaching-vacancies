@@ -73,7 +73,7 @@ RSpec.feature 'Hiring staff can sign in with Azure' do
 
     click_on(I18n.t('nav.sign_in'))
 
-    expect(page).to have_content(I18n.t('errors.sign_in.unauthorised'))
+    expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
     within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
