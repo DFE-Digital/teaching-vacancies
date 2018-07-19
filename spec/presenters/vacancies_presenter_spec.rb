@@ -14,7 +14,7 @@ RSpec.describe VacanciesPresenter do
     end
   end
 
-  describe '#total_count' do
+  describe '#total_count_message' do
     it 'returns the correct number for a single vacancy', elasticsearch: true do
       create(:vacancy, job_title: 'School teacher')
       Vacancy.__elasticsearch__.client.indices.flush
@@ -22,7 +22,7 @@ RSpec.describe VacanciesPresenter do
       vacancies = Vacancy.search('Teacher').records
       searched = true
       vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count).to eq(I18n.t('jobs.job_count', count: 1))
+      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count', count: 1))
     end
 
     it 'returns the correct number for multiple vacancies', elasticsearch: true do
@@ -34,7 +34,7 @@ RSpec.describe VacanciesPresenter do
       vacancies = Vacancy.search('Teacher').records
       searched = true
       vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count).to eq(I18n.t('jobs.job_count_plural', count: 3))
+      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_plural', count: 3))
     end
 
     it 'returns the correct number for a single vacancy without a search', elasticsearch: true do
@@ -44,7 +44,7 @@ RSpec.describe VacanciesPresenter do
       vacancies = Vacancy.search('Teacher').records
       searched = false
       vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count).to eq(I18n.t('jobs.job_count_without_search', count: 1))
+      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_without_search', count: 1))
     end
 
     it 'returns the correct number for multiple vacancies without a search', elasticsearch: true do
@@ -56,7 +56,7 @@ RSpec.describe VacanciesPresenter do
       vacancies = Vacancy.search('Teacher').records
       searched = false
       vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count).to eq(I18n.t('jobs.job_count_plural_without_search', count: 3))
+      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_plural_without_search', count: 3))
     end
   end
 end

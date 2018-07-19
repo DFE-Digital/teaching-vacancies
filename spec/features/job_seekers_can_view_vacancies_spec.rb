@@ -99,7 +99,16 @@ RSpec.feature 'Viewing vacancies' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
+    click_on I18n.t('buttons.apply_filters')
     expect(page).to have_content(I18n.t('jobs.no_jobs'))
+  end
+
+  scenario 'Should advise users to check back soon when no jobs are listed' do
+    visit jobs_path
+    I18n.t('jobs.none_listed').each do |sentence|
+      expect(page).to have_content(sentence)
+    end
+    expect(page).not_to have_content(I18n.t('jobs.no_jobs'))
   end
 
   context 'when the vacancy is part_time' do
