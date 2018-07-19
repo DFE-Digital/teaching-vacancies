@@ -105,7 +105,7 @@ RSpec.feature 'Viewing vacancies' do
 
   scenario 'Should advise users to check back soon when no jobs are listed' do
     visit jobs_path
-    I18n.t('jobs.none_listed').each do |sentence|
+    I18n.t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
       expect(page).to have_content(sentence)
     end
     expect(page).not_to have_content(I18n.t('jobs.no_jobs'))
