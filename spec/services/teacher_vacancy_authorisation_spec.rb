@@ -3,7 +3,7 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
   let(:service) { TeacherVacancyAuthorisation::Permissions.new }
   let(:headers) { { 'Authorization' => 'Token token=test-token', 'Content-Type' => 'application/json' } }
   let(:request) { double(:request, path: '') }
-  let(:mock_http) { double(:http, request: double(:reponse, body: { user: { permissions: [] } }.to_json)) }
+  let(:mock_http) { double(:http, request: double(:reponse, code: 200, body: { user: { permissions: [] } }.to_json)) }
 
   before(:each) do
     stub_const('AUTHORISATION_SERVICE_URL', 'https://localhost:1357')
@@ -24,6 +24,15 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
 
       expect(service.authorise('sample-token')).to eq([])
     end
+
+    it 'does not parse the returned result if code is not 200' do
+      mock_http = double(:http, request: double(:reponse, code: 505))
+      expect(Net::HTTP::Get).to receive(:new).with('/users/some invalid sample-token', headers).and_return(request)
+      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
+      expect(mock_http).to receive(:use_ssl=).with(true)
+
+      expect(service.authorise('some invalid sample-token')).to eq([])
+    end
   end
 
   describe '#school_urn' do
@@ -38,7 +47,7 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
 
     it 'returns the first school_urn for the user_token' do
       response = { user: { permissions: [{ school_urn: '12345' }] } }.to_json
-      mock_http = double(:http, request: double(:reponse, body: response))
+      mock_http = double(:http, request: double(:reponse, code: 200, body: response))
       expect(mock_http).to receive(:use_ssl=).with(true)
       expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
       expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
