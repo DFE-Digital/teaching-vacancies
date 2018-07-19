@@ -76,6 +76,28 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
+  cache_behavior {
+    allowed_methods  = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "${var.project_name}-${var.environment}-default-origin"
+
+    path_pattern = "/assets/*"
+
+    forwarded_values = {
+      query_string = false
+      headers = ["Host"]
+      cookies {
+        forward = "none"
+      }
+    }
+
+    min_ttl     = 0
+    default_ttl = 3600
+    max_ttl     = 86400
+
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
   price_class = "PriceClass_100"
 
   restrictions {
