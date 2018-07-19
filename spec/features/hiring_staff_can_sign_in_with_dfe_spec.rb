@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
+RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   before do
     OmniAuth.config.test_mode = true
     ENV['SIGN_IN_WITH_DFE'] = 'true'
@@ -12,56 +12,87 @@ RSpec.feature 'Hiring staff can sign in with DfE Sign In' do
 
   let!(:school) { create(:school, urn: '110627') }
 
-  scenario 'with valid credentials that do match a school', elasticsearch: true do
-    OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-      provider: 'dfe',
-      uid: 'an-email@exmple.com',
-      info: {
-        email: 'an-email@example.com',
-      }
-    )
+  context 'with valid credentials that do match a school' do
+    before(:each) do
+      OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+        provider: 'dfe',
+        uid: 'an-unknown-oid',
+        info: {
+          email: 'an-email@example.com',
+        }
+      )
+      mock_response = double(body: {
+        user:
+        {
+          permissions:
+          [
+            {
+              user_token: 'an-email@example.com',
+              school_urn: '110627'
+            }
+          ]
+        }
+      }.to_json)
 
-    mock_response = double(body: {
-      user:
-      {
-        permissions:
-        [
-          {
-            user_token: 'an-email@example.com',
-            school_urn: '110627'
-          }
-        ]
-      }
-    }.to_json)
+      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+        .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
-    expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-      .and_return(AuthHelpers::MockPermissions.new(mock_response))
+      visit root_path
+      click_on(I18n.t('nav.sign_in'))
+    end
 
-    visit root_path
+    scenario 'it signs in the user successfully' do
+      expect(page).to have_content("Jobs at #{school.name}")
+      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+    end
 
-    click_on(I18n.t('nav.sign_in'))
+    scenario 'adds entries in the audit log' do
+      activity = PublicActivity::Activity.last
+      expect(activity.key).to eq('dfe-sign-in.authorisation.success')
+      expect(activity.trackable.urn).to eq(school.urn)
 
-    expect(page).to have_content("Jobs at #{school.name}")
-    within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-    within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+      authorisation = PublicActivity::Activity.last
+      expect(authorisation.key).to eq('dfe-sign-in.authorisation.success')
+      expect(authorisation.trackable.urn).to eq(school.urn)
+    end
   end
 
-  scenario 'with valid credentials that do not match a school', elasticsearch: true do
-    OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-      provider: 'dfe',
-      uid: 'an-unknown-oid',
-      info: {
-        email: 'an-email@example.com',
-      }
-    )
-    mock_response = double(body: { user: { permissions: [] } }.to_json)
-    expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-      .and_return(AuthHelpers::MockPermissions.new(mock_response))
-    visit root_path
+  context 'with valid credentials that do not match a school' do
+    before(:each) do
+      OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+        provider: 'dfe',
+        uid: 'an-unknown-oid',
+        info: {
+          email: 'another_email@example.com',
+        }
+      )
 
-    click_on(I18n.t('nav.sign_in'))
+      mock_response = double(body: {
+        user:
+        {
+          user_token: 'an-email@example.com',
+          permissions: []
+        }
+      }.to_json)
+      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+        .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
-    expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
-    within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
+      visit root_path
+      click_on(I18n.t('nav.sign_in'))
+    end
+
+    scenario 'it does not sign-in the user' do
+      expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
+      within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
+    end
+
+    scenario 'adds entries in the audit log' do
+      authentication = PublicActivity::Activity.first
+      expect(authentication.key).to eq('dfe-sign-in.authentication.success')
+
+      authorisation = PublicActivity::Activity.last
+      expect(authorisation.key).to eq('dfe-sign-in.authorisation.failure')
+    end
   end
 end

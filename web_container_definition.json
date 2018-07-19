@@ -117,6 +117,14 @@
       {
         "name": "AUTHORISATION_SERVICE_TOKEN",
         "value": "${authorisation_service_token}"
+      },
+      {
+        "name": "GOOGLE_DRIVE_JSON_KEY",
+        "value": "${google_drive_json_key}"
+      },
+      {
+        "name": "AUTH_SPREADSHEET_ID",
+        "value": "${auth_spreadsheet_id}"
       }
     ]
   }

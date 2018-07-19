@@ -113,6 +113,8 @@ data "template_file" "web_container_definition" {
     redis_url                = "${var.redis_url}"
     authorisation_service_url   = "${var.authorisation_service_url}"
     authorisation_service_token = "${var.authorisation_service_token}"
+    google_drive_json_key    = "#{var.google_drive_json_key}"
+    auth_spreadsheet_id      = "#{var.auth_spreadsheet_id}"
   }
 }
 

@@ -52,10 +52,9 @@ gem 'rollbar', '~> 2.16'
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
 gem 'activerecord-session_store'
-
 gem 'public_activity'
-
 gem 'high_voltage', '~> 3.1'
+gem 'google_drive', require: false
 
 group :test, :development, :staging do
   gem 'faker'
@@ -78,6 +77,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'teaspoon-mocha'
   gem 'coffee-rails'
+  gem 'timecop'
 end
 
 group :test do
