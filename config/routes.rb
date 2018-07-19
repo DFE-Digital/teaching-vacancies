@@ -14,12 +14,23 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
-  resource :sessions, controller: 'hiring_staff/sessions'
+  # Sign in
+  resource :sessions, only: %i[new destroy], controller: 'hiring_staff/sessions'
 
-  get '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
-  get '/auth/azureactivedirectory/failure', to: 'hiring_staff/sessions#failure'
-  get '/auth/failure', to: 'hiring_staff/sessions#failure' # For OmniAuth testing only
-  post '/auth/azureactivedirectory/callback', to: 'hiring_staff/sessions#create'
+  # DfE Sign In
+  resource :sessions, only: %i[create], path: '/dfe/sessions', controller: 'hiring_staff/sign_in/dfe/sessions'
+  get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
+
+  # Azure Sign In
+  resource :sessions,
+           only: %i[create failure],
+           path: '/azure/sessions',
+           controller: 'hiring_staff/sign_in/azure/sessions'
+
+  get '/auth/azureactivedirectory/callback', to: 'hiring_staff/sign_in/azure/sessions#create'
+  post '/auth/azureactivedirectory/callback', to: 'hiring_staff/sign_in/azure/sessions#create'
+  get '/auth/azureactivedirectory/failure', to: 'hiring_staff/sign_in/azure/sessions#failure'
+  get '/auth/failure', to: 'hiring_staff/sign_in/azure/sessions#failure' # For OmniAuth testing only
 
   resource :school, only: %i[show edit update], controller: 'hiring_staff/schools' do
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
@@ -32,6 +43,8 @@ Rails.application.routes.draw do
                                          controller: 'hiring_staff/vacancies/candidate_specification'
       resource :application_details, only: %i[edit update],
                                      controller: 'hiring_staff/vacancies/application_details'
+
+      resource :feedback, controller: 'hiring_staff/vacancies/feedback', only: %i[new create]
     end
 
     resource :job, only: [] do

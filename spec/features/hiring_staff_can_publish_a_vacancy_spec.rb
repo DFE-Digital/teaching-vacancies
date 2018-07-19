@@ -340,7 +340,7 @@ RSpec.feature 'Creating a vacancy' do
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
-        expect(page).to have_content('The job has been posted, you can view it here:')
+        expect(page).to have_content('Preview your job listing')
       end
     end
 
@@ -362,9 +362,20 @@ RSpec.feature 'Creating a vacancy' do
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
-        expect(page).to have_content("The job will be posted on #{vacancy.publish_on}, you can preview it here:")
+        expect(page).to have_content("Your job listing will be posted on #{vacancy.publish_on}.")
         visit school_job_path(vacancy.id)
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
+      end
+
+      scenario 'displays the expiration date on the confirmation page' do
+        vacancy = create(:vacancy, :draft, school_id: school.id)
+        visit school_job_review_path(vacancy.id)
+        click_on 'Confirm and submit job'
+
+        expect(page).to have_content(
+          "The listing will appear on the service until #{vacancy.expires_on},
+          after which it will no longer be visible to jobseekers."
+        )
       end
 
       scenario 'tracks publishing information' do
@@ -388,7 +399,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
         click_on 'Confirm and submit job'
-        expect(page).to have_content('The job has been posted, you can view it here:')
+        expect(page).to have_content('Preview your job listing')
 
         visit candidate_specification_school_job_path
         expect(page.current_path).to eq(job_specification_school_job_path)

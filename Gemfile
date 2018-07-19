@@ -29,8 +29,9 @@ gem 'ipaddr'
 gem 'geocoder'
 gem 'redis'
 
-gem 'omniauth'
-gem 'omniauth-azure-activedirectory'
+gem 'omniauth', '~> 1.8'
+gem 'omniauth-azure-activedirectory', '~> 1.0'
+gem 'omniauth_openid_connect', '~> 0.1'
 
 gem 'breasal', '~> 0.0.1'
 
@@ -51,10 +52,9 @@ gem 'rollbar', '~> 2.16'
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
 gem 'activerecord-session_store'
-
 gem 'public_activity'
-
 gem 'high_voltage', '~> 3.1'
+gem 'google_drive', require: false
 
 group :test, :development, :staging do
   gem 'faker'
@@ -77,6 +77,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'teaspoon-mocha'
   gem 'coffee-rails'
+  gem 'timecop'
 end
 
 group :test do

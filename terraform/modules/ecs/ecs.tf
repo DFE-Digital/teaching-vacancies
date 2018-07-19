@@ -88,6 +88,10 @@ data "template_file" "web_container_definition" {
     http_pass                = "${var.http_pass}"
     aad_client_id            = "${var.aad_client_id}"
     aad_tenant               = "${var.aad_tenant}"
+    dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
+    dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
+    dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
+    dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
     google_maps_api_key      = "${var.google_maps_api_key}"
     google_analytics         = "${var.google_analytics}"
     rollbar_access_token     = "${var.rollbar_access_token}"
@@ -107,6 +111,10 @@ data "template_file" "web_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     redis_url                = "${var.redis_url}"
+    authorisation_service_url   = "${var.authorisation_service_url}"
+    authorisation_service_token = "${var.authorisation_service_token}"
+    google_drive_json_key    = "#{var.google_drive_json_key}"
+    auth_spreadsheet_id      = "#{var.auth_spreadsheet_id}"
   }
 }
 

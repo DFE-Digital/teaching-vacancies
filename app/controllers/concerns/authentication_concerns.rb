@@ -6,6 +6,6 @@ module AuthenticationConcerns
   end
 
   def authenticated?
-    session[:session_id].present? && session[:urn].present?
+    session[:session_id].present?
   end
 end

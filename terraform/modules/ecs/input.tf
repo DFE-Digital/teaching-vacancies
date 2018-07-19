@@ -18,6 +18,10 @@ variable "http_user" {}
 variable "http_pass" {}
 variable "aad_client_id" {}
 variable "aad_tenant" {}
+variable "dfe_sign_in_issuer" {}
+variable "dfe_sign_in_redirect_url" {}
+variable "dfe_sign_in_identifier" {}
+variable "dfe_sign_in_secret" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "rollbar_access_token" {}
@@ -30,6 +34,10 @@ variable "aws_elasticsearch_region" {}
 variable "aws_elasticsearch_key" {}
 variable "aws_elasticsearch_secret" {}
 variable "redis_url" {}
+variable "authorisation_service_url" {}
+variable "authorisation_service_token" {}
+variable "google_drive_json_key" {}
+variable "auth_spreadsheet_id" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 variable "logspout_command" {

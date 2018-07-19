@@ -86,6 +86,10 @@ module "ecs" {
   http_user                = "${var.http_user}"
   aad_client_id            = "${var.aad_client_id}"
   aad_tenant               = "${var.aad_tenant}"
+  dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
+  dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
+  dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
+  dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
   google_maps_api_key      = "${var.google_maps_api_key}"
   google_analytics         = "${var.google_analytics}"
   rollbar_access_token     = "${var.rollbar_access_token}"
@@ -98,6 +102,8 @@ module "ecs" {
   aws_elasticsearch_key    = "${module.es.es_user_access_key_id}"
   aws_elasticsearch_secret = "${module.es.es_user_access_key_secret}"
   redis_url                = "redis://${module.elasticache_redis.endpoint}"
+  authorisation_service_token = "${var.authorisation_service_token}"
+  authorisation_service_url   = "${var.authorisation_service_url}"
 }
 
 module "logs" {
