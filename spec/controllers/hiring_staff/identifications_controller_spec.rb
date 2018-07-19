@@ -4,7 +4,7 @@ RSpec.describe HiringStaff::IdentificationsController, type: :controller do
   describe '#create' do
     context 'when the area is other' do
       it 'redirects to the root path with an explanation' do
-        choice = HiringStaff::IdentificationsController::OTHER_SIGN_IN_OPTION.first.name
+        choice = HiringStaff::IdentificationsController::OTHER_SIGN_IN_OPTION.first.to_radio.last
         post :create, params: { identifications: { name: choice } }
         expect(controller).to set_flash[:notice]
         expect(response).to redirect_to(root_path)
