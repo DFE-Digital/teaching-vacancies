@@ -12,7 +12,7 @@ en:
     title: 'Teaching Jobs'
     menu: 'Menu'
   nav:
-    sign_in: 'Sign in as a school'
+    sign_in: 'List a teaching job at your school'
     sign_out: 'Sign out'
     school_page_link: 'My jobs'
   jobs:
