@@ -39,6 +39,8 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
       visit root_path
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.name)
+      click_on(I18n.t('sign_in.link'))
     end
 
     scenario 'it signs in the user successfully' do
@@ -73,6 +75,8 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
       visit root_path
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.name)
+      click_on(I18n.t('sign_in.link'))
     end
 
     scenario 'it does not sign-in the user' do

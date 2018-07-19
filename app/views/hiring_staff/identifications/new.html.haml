@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = t('sign_in.title')
+
+.grid-row
+
+  .column-two-thirds
+    %h1.heading-large= t('sign_in.title')
+
+    %p.lede= t('sign_in.intro')
+
+    = simple_form_for :identifications, url: identifications_path, method: :post do |f|
+
+      .form-group
+        %legend
+          %h2.heading-medium= t('sign_in.legend')
+
+        %fieldset
+          .form-group
+            = f.collection_radio_buttons :name, @identification_options, :first, :last, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
+
+        %p
+          = "If you're not sure you can"
+          = link_to('look up a schools local authority.', 'https://get-information-schools.service.gov.uk/', target: :_blank)
+
+        = f.submit t('sign_in.link'), class: 'button'

@@ -35,6 +35,9 @@ RSpec.feature 'School viewing public listings' do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::AZURE_SIGN_IN_OPTIONS.first.name)
+      click_on(I18n.t('sign_in.link'))
+
       expect(page).to have_content("Jobs at #{school.name}")
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
 
@@ -71,6 +74,9 @@ RSpec.feature 'School viewing public listings' do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.name)
+      click_on(I18n.t('sign_in.link'))
+
       expect(page).to have_content("Jobs at #{school.name}")
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
 

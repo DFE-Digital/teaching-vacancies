@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :check_staging_auth, except: :check
   before_action :set_headers
 
-  helper_method :current_school
-
   include AuthenticationConcerns
   include Ip
 
@@ -28,10 +26,6 @@ class ApplicationController < ActionController::Base
     authenticate_or_request_with_http_basic('Global') do |name, password|
       name == http_user && password == http_pass
     end
-  end
-
-  def current_school
-    @current_school ||= School.find_by! urn: session[:urn]
   end
 
   def authenticate?

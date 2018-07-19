@@ -13,7 +13,7 @@
       - else
         %p= link_to t('jobs.confirmation_page.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
 
-      %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', new_sessions_path, class: 'reversed-link')).html_safe
+      %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', new_identifications_path, class: 'reversed-link')).html_safe
 
   .column-two-thirds
     %h3.heading-medium= t('jobs.confirmation_page.next_step')

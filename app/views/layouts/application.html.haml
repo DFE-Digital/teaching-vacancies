@@ -24,10 +24,10 @@
           = t('app.title')
         %ul#proposition-links
           - if authenticated?
-            %li= link_to t('nav.school_page_link'), school_path(school: current_school), class: active_link_class(school_path)
+            %li= link_to t('nav.school_page_link'), school_path, class: active_link_class(school_path)
             %li= link_to t('nav.sign_out'), sessions_path, method: :delete
           - else
-            %li= link_to t('nav.sign_in'), new_sessions_path
+            %li= link_to t('nav.sign_in'), new_identifications_path
 
 - content_for :content do
   %main#content{ role: 'main', tabindex: -1 }

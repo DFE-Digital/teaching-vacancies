@@ -1,6 +1,11 @@
 class HiringStaff::SignIn::Azure::SessionsController < HiringStaff::BaseController
-  skip_before_action :check_session, only: %i[create failure]
-  skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :check_session, only: %i[create new failure]
+  skip_before_action :verify_authenticity_token, only: %i[create new]
+
+  def new
+    # Defined by Azure AD strategy: https://github.com/AzureAD/omniauth-azure-activedirectory#usage
+    redirect_to '/auth/azureactivedirectory'
+  end
 
   def create
     permissions = TeacherVacancyAuthorisation::Permissions.new
