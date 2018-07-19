@@ -16,7 +16,7 @@
 
         %fieldset
           .form-group
-            = f.collection_radio_buttons :name, @identification_options, :first, :last, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
+            = f.collection_radio_buttons :name, identification_options, :first, :last, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
 
         %p
           = link_to("Find your schools official area", 'https://get-information-schools.service.gov.uk/', target: :_blank)

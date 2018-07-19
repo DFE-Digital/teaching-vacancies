@@ -1,36 +1,13 @@
 class HiringStaff::IdentificationsController < HiringStaff::BaseController
   include ActionView::Helpers::OutputSafetyHelper
+  include IdentificationsHelper
 
   skip_before_action :check_session, only: %i[new create]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   before_action :halt_other_regions, only: [:create]
 
-  OTHER_SIGN_IN_OPTION = [
-    OpenStruct.new(
-      name: 'Other',
-      to_radio: ['Other', 'Other']
-    )
-  ].freeze
-
-  DFE_SIGN_IN_OPTIONS = [
-    OpenStruct.new(
-      name: 'Milton Keynes',
-      to_radio: ['Milton Keynes', 'Milton Keynes']
-    )
-  ].freeze
-
-  AZURE_SIGN_IN_OPTIONS = [
-    OpenStruct.new(name: 'Cambridgeshire', to_radio: ['Cambridgeshire', 'Cambridgeshire']),
-    OpenStruct.new(name: 'The North East', to_radio: ['The North East', 'The North East'])
-  ].freeze
-
-  def new
-    @identification_options =
-      AZURE_SIGN_IN_OPTIONS.map(&:to_radio) +
-      DFE_SIGN_IN_OPTIONS.map(&:to_radio) +
-      OTHER_SIGN_IN_OPTION.map(&:to_radio)
-  end
+  def new; end
 
   def create
     sign_in_path = new_azure_path
