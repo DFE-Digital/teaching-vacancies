@@ -24,7 +24,7 @@
         = t('jobs.no_jobs')
     - else
       %div.empty
-        - t('jobs.none_listed').each do |sentence|
+        - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
           %p= sentence
 
 = paginate @vacancies
