@@ -12,5 +12,30 @@ RSpec.describe PayScale, type: :model do
         expect(PayScale.all.last).to eq(last)
       end
     end
+
+    describe '#current' do
+      it 'also orders by index' do
+        last = create(:pay_scale, index: 30)
+        first = create(:pay_scale, index: 1)
+
+        expect(PayScale.current.first).to eq(first)
+        expect(PayScale.current.last).to eq(last)
+      end
+
+      it 'includes pay scales that are current' do
+        current = create(:pay_scale, starts_at: Time.zone.today - 2.days, expires_at: Time.zone.today + 2.days)
+        expect(PayScale.current).to include(current)
+      end
+
+      it 'doesn’t include pay scales that haven’t started' do
+        not_started = create(:pay_scale, starts_at: Time.zone.today + 2.days)
+        expect(PayScale.current).not_to include(not_started)
+      end
+
+      it 'doesn’t include pay scales that have expired' do
+        expired = create(:pay_scale, expires_at: Time.zone.today - 2.days)
+        expect(PayScale.current).not_to include(expired)
+      end
+    end
   end
 end
