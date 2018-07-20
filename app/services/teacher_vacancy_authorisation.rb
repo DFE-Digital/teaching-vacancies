@@ -25,11 +25,11 @@ module TeacherVacancyAuthorisation
     private
 
     def parsed_response
-      JSON.parse(response.body)
+      response.code == 200 ? JSON.parse(response.body) : nil
     end
 
     def user_permissions
-      parsed_response['user']['permissions']
+      parsed_response.present? ? parsed_response['user']['permissions'] : []
     end
   end
 end

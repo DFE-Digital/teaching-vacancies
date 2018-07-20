@@ -104,6 +104,8 @@ module "ecs" {
   redis_url                = "redis://${module.elasticache_redis.endpoint}"
   authorisation_service_token = "${var.authorisation_service_token}"
   authorisation_service_url   = "${var.authorisation_service_url}"
+  google_drive_json_key = "${var.google_drive_json_key}"
+  auth_spreadsheet_id = "${var.auth_spreadsheet_id}"
 }
 
 module "logs" {

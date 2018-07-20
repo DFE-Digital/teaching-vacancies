@@ -25,7 +25,7 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
           }
         }
       )
-      mock_response = double(body: {
+      mock_response = double(code: 200, body: {
         user:
         {
           permissions:
@@ -78,10 +78,9 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
         }
       )
 
-      mock_response = double(body: { user: { permissions: [] } }.to_json)
+      mock_response = double(code: 200, body: { user: { permissions: [] } }.to_json)
       expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
-
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
