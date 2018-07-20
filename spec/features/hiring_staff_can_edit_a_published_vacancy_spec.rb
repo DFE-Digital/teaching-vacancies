@@ -153,23 +153,23 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
         verify_all_vacancy_details(vacancy)
       end
-    end
 
-    scenario 'tracks the vacancy update' do
-      vacancy = create(:vacancy, :published, school: school)
-      application_link = vacancy.application_link
+      scenario 'tracks the vacancy update' do
+        vacancy = create(:vacancy, :published, school: school)
+        application_link = vacancy.application_link
 
-      visit edit_school_job_path(vacancy.id)
-      click_link_in_container_with_text(I18n.t('jobs.application_link'))
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.application_link'))
 
-      fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
-      click_on 'Update job'
+        fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
+        click_on 'Update job'
 
-      activity = vacancy.activities.last
-      expect(activity.key).to eq('vacancy.update')
-      expect(activity.session_id).to eq(session_id)
-      expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
-                                                                               'https://schooljobs.com'])
+        activity = vacancy.activities.last
+        expect(activity.key).to eq('vacancy.update')
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
+                                                                                 'https://schooljobs.com'])
+      end
     end
   end
 end
