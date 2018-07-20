@@ -60,6 +60,21 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Assistant Head Teacher')
       end
 
+      scenario 'ensures the vacancy slug is updated when the title is saved' do
+        vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text('Job title')
+
+        fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
+        click_on 'Update job'
+
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page).to have_content('Assistant Head Teacher')
+
+        visit job_path(vacancy.reload)
+        expect(page.current_path).to eq('/jobs/assistant-head-teacher')
+      end
+
       scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         job_title = vacancy.job_title
