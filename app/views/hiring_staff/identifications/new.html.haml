@@ -19,6 +19,6 @@
             = f.collection_radio_buttons :name, identification_options, :first, :last, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
 
         %p
-          = link_to("Find your schools official area", 'https://get-information-schools.service.gov.uk/', target: :_blank)
+          = link_to(t('identification.find_school_information'), 'https://get-information-schools.service.gov.uk/', target: :_blank)
           = "from the location tab."
         = f.submit t('sign_in.link'), class: 'button'
