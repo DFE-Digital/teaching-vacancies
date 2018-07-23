@@ -1,6 +1,11 @@
 class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
-  skip_before_action :check_session, only: %i[create callback]
-  skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :check_session, only: %i[create new callback]
+  skip_before_action :verify_authenticity_token, only: %i[create new]
+
+  def new
+    # This is defined by the class name of our Omniauth strategy
+    redirect_to '/auth/dfe'
+  end
 
   def create
     permissions = TeacherVacancyAuthorisation::Permissions.new

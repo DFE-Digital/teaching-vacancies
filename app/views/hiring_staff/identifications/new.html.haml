@@ -1,0 +1,24 @@
+- content_for :page_title do
+  = t('sign_in.title')
+
+.grid-row
+
+  .column-two-thirds
+    %h1.heading-large= t('sign_in.title')
+
+    %p.lede= t('sign_in.intro')
+
+    = simple_form_for :identifications, url: identifications_path, method: :post do |f|
+
+      .form-group
+        %legend
+          %h2.heading-medium= t('sign_in.legend')
+
+        %fieldset
+          .form-group
+            = f.collection_radio_buttons :name, identification_options, :first, :last, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
+
+        %p
+          = link_to(t('identification.find_school_information'), 'https://get-information-schools.service.gov.uk/', target: :_blank)
+          = "from the location tab."
+        = f.submit t('sign_in.link'), class: 'button'
