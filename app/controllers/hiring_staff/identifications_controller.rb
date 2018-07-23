@@ -22,7 +22,7 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   end
 
   private def halt_other_regions
-    return unless choice.eql?('Other')
+    return unless choice.eql?(OTHER_SIGN_IN_OPTION.map(&:name).first)
 
     flash[:notice] = safe_join(
       [
