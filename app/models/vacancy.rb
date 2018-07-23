@@ -112,6 +112,11 @@ class Vacancy < ApplicationRecord
     super(value)
   end
 
+  def refresh_slug
+    self.slug = nil
+    send(:set_slug)
+  end
+
   private
 
   def slug_candidates

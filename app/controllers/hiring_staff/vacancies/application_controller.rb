@@ -27,6 +27,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def update_vacancy(attributes, vacancy = nil)
     vacancy ||= school.vacancies.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
+    vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do
       vacancy.save(validate: false)
     end

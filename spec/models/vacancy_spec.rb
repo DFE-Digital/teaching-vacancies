@@ -242,23 +242,35 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe '#slug' do
-    it 'a vacancy slug is not duplicate' do
-      green_school = build(:school, name: 'Green school', town: 'Greenway', county: 'Mars')
-      blue_school = build(:school, name: 'Blue school')
-      first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: blue_school)
-      second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
-      third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
-      fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+  describe 'friendly_id generated slug' do
+    context '#slug' do
+      it 'the slug cannot be duplicate' do
+        green_school = build(:school, name: 'Green school', town: 'Greenway', county: 'Mars')
+        blue_school = build(:school, name: 'Blue school')
+        first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: blue_school)
+        second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+        third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+        fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
 
-      expect(first_maths_teacher.slug).to eq('maths-teacher')
-      expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
-      expect(third_maths_teacher.slug).to eq('maths-teacher-green-school-greenway-mars')
+        expect(first_maths_teacher.slug).to eq('maths-teacher')
+        expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
+        expect(third_maths_teacher.slug).to eq('maths-teacher-green-school-greenway-mars')
 
-      expect(fourth_maths_teacher.slug).to include('maths-teacher')
-      expect(fourth_maths_teacher.slug).not_to eq('maths-teacher')
-      expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school')
-      expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school-greenway-mars')
+        expect(fourth_maths_teacher.slug).to include('maths-teacher')
+        expect(fourth_maths_teacher.slug).not_to eq('maths-teacher')
+        expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school')
+        expect(fourth_maths_teacher.slug).not_to eq('maths-teacher-green-school-greenway-mars')
+      end
+    end
+
+    context '#refresh_slug' do
+      it 'resets the current slug by accessing a friendly_id private method' do
+        job = create(:vacancy, slug: 'the-wrong-slug')
+        job.job_title = 'CS Teacher'
+        job.refresh_slug
+
+        expect(job.slug).to eq('cs-teacher')
+      end
     end
   end
 

@@ -60,6 +60,21 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Assistant Head Teacher')
       end
 
+      scenario 'ensures the vacancy slug is updated when the title is saved' do
+        vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text('Job title')
+
+        fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
+        click_on 'Update job'
+
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page).to have_content('Assistant Head Teacher')
+
+        visit job_path(vacancy.reload)
+        expect(page.current_path).to eq('/jobs/assistant-head-teacher')
+      end
+
       scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         job_title = vacancy.job_title
@@ -153,23 +168,23 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
         verify_all_vacancy_details(vacancy)
       end
-    end
 
-    scenario 'tracks the vacancy update' do
-      vacancy = create(:vacancy, :published, school: school)
-      application_link = vacancy.application_link
+      scenario 'tracks the vacancy update' do
+        vacancy = create(:vacancy, :published, school: school)
+        application_link = vacancy.application_link
 
-      visit edit_school_job_path(vacancy.id)
-      click_link_in_container_with_text(I18n.t('jobs.application_link'))
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.application_link'))
 
-      fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
-      click_on 'Update job'
+        fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
+        click_on 'Update job'
 
-      activity = vacancy.activities.last
-      expect(activity.key).to eq('vacancy.update')
-      expect(activity.session_id).to eq(session_id)
-      expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
-                                                                               'https://schooljobs.com'])
+        activity = vacancy.activities.last
+        expect(activity.key).to eq('vacancy.update')
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
+                                                                                 'https://schooljobs.com'])
+      end
     end
   end
 end
