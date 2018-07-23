@@ -12,7 +12,6 @@ RSpec.feature 'Hiring staff can share their vacancy' do
     visit school_path
 
     click_on(vacancy.job_title)
-
     click_on(I18n.t('jobs.view_public_link'))
 
     expected_url = URI("localhost:3000#{job_path(vacancy)}")
