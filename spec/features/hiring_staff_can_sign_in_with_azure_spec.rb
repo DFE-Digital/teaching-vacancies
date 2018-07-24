@@ -64,23 +64,10 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
     end
   end
 
-  context 'with valid credentials that match multiple schools', wip: true do
+  context 'with valid credentials that match multiple schools' do
     let!(:other_school) { create(:school, urn: '318937', name: 'Hogwards Academy') }
-    before(:each) do
-      OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
-        provider: 'default',
-        info: {
-          name: 'an-email@example.com',
-        },
-        extra: {
-          raw_info: {
-            id_token_claims: {
-              oid: 'a-valid-oid'
-            }
-          }
-        }
-      )
-      mock_response = double(code: '200', body: {
+    let(:mock_response) do
+      double(code: '200', body: {
         user:
         {
           permissions:
@@ -96,8 +83,24 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
           ]
         }
       }.to_json)
+    end
 
-      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+    before(:each) do
+      OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
+        provider: 'default',
+        info: {
+          name: 'an-email@example.com',
+        },
+        extra: {
+          raw_info: {
+            id_token_claims: {
+              oid: 'a-valid-oid'
+            }
+          }
+        }
+      )
+
+      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
       visit root_path
@@ -124,6 +127,29 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
       expect(activities[1].key).to eq('azure.authorisation.select_school')
       expect(activities[2].key).to eq('azure.authorisation.success')
       expect(activities[2].trackable.urn).to eq(other_school.urn)
+    end
+
+    context 'allows the user to switch between organisation' do
+      before(:each) do
+        click_on 'Change organisation'
+
+        expect(page).to have_content('Select your organisation')
+        choose school.name
+        click_on 'Continue'
+      end
+
+      scenario 'allows the user to switch between orgnisations and logs audit events' do
+        expect(page).to have_content("Jobs at #{school.name}")
+      end
+
+      scenario 'adds entries to the audit log' do
+        activities = PublicActivity::Activity.all
+
+        expect(activities[3].key).to eq('azure.authentication.success')
+        expect(activities[4].key).to eq('azure.authorisation.select_school')
+        expect(activities[5].key).to eq('azure.authorisation.success')
+        expect(activities[5].trackable.urn).to eq(school.urn)
+      end
     end
   end
 
