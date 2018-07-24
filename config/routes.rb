@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   # Azure Sign In
   resource :sessions,
-           only: %i[create new failure],
+           only: %i[create show new failure],
            as: :azure,
            path: '/azure/sessions',
            controller: 'hiring_staff/sign_in/azure/sessions'

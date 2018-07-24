@@ -21,6 +21,9 @@ en:
     legend: 'Please select your area:'
     no_area: "Not in one of these areas? Register your interest in using the service by emailing %{email_link} and we'll let you know when it will be available to you."
     link: 'Sign in to Teaching Jobs'
+    organisation:
+      title: 'Select your organisation'
+      legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
   identification:
     find_school_information: Find your schools official area
   jobs:
@@ -204,6 +207,7 @@ en:
     update_job: 'Update job'
     find: 'Find'
     delete: 'Delete'
+    continue: 'Continue'
     create_job: 'Create a job'
     change: 'Change'
 
