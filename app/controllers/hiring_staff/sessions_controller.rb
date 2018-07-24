@@ -1,13 +1,5 @@
 class HiringStaff::SessionsController < HiringStaff::BaseController
-  skip_before_action :check_session, only: %i[new destroy]
-
-  def new
-    if Rails.env.test? && ENV['SIGN_IN_WITH_DFE'].present? && ENV['SIGN_IN_WITH_DFE'].eql?('true')
-      redirect_to_dfe_sign_in
-    else
-      redirect_to_azure
-    end
-  end
+  skip_before_action :check_session, only: %i[destroy]
 
   def destroy
     session.destroy

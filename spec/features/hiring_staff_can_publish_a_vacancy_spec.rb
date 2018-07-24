@@ -206,6 +206,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'tracks any changes to  the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           current_title = vacancy.job_title
+          current_slug = vacancy.slug
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job title')
 
@@ -216,7 +217,8 @@ RSpec.feature 'Creating a vacancy' do
 
           activity = vacancy.activities.last
           expect(activity.session_id).to eq(session_id)
-          expect(activity.parameters.symbolize_keys).to eq(job_title: [current_title, 'High school teacher'])
+          expect(activity.parameters.symbolize_keys).to include(job_title: [current_title, 'High school teacher'])
+          expect(activity.parameters.symbolize_keys).to include(slug: [current_slug, 'high-school-teacher'])
         end
 
         scenario 'fails validation until values are set correctly' do

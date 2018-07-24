@@ -25,7 +25,7 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
           }
         }
       )
-      mock_response = double(code: 200, body: {
+      mock_response = double(code: '200', body: {
         user:
         {
           permissions:
@@ -43,6 +43,8 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
 
       visit root_path
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::AZURE_SIGN_IN_OPTIONS.first.to_radio.last)
+      click_on(I18n.t('sign_in.link'))
     end
 
     scenario 'signs-in the user successfully' do
@@ -78,12 +80,14 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
         }
       )
 
-      mock_response = double(code: 200, body: { user: { permissions: [] } }.to_json)
+      mock_response = double(code: '200', body: { user: { permissions: [] } }.to_json)
       expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::AZURE_SIGN_IN_OPTIONS.first.to_radio.last)
+      click_on(I18n.t('sign_in.link'))
     end
 
     scenario 'it does not sign-in the user' do
@@ -106,6 +110,8 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
 
       visit root_path
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::AZURE_SIGN_IN_OPTIONS.first.to_radio.last)
+      click_on(I18n.t('sign_in.link'))
     end
 
     scenario 'renders an error' do

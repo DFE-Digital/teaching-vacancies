@@ -26,7 +26,7 @@ RSpec.feature 'School viewing public listings' do
           }
         }
       )
-      mock_response = double(code: 200, body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
+      mock_response = double(code: '200', body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
       allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
     end
@@ -35,6 +35,9 @@ RSpec.feature 'School viewing public listings' do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::AZURE_SIGN_IN_OPTIONS.first.to_radio.last)
+      click_on(I18n.t('sign_in.link'))
+
       expect(page).to have_content("Jobs at #{school.name}")
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
 
@@ -56,7 +59,7 @@ RSpec.feature 'School viewing public listings' do
         }
       )
 
-      mock_response = double(code: 200, body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
+      mock_response = double(code: '200', body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
       allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
@@ -71,6 +74,9 @@ RSpec.feature 'School viewing public listings' do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
+      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
+      click_on(I18n.t('sign_in.link'))
+
       expect(page).to have_content("Jobs at #{school.name}")
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
 

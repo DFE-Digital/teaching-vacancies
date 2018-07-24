@@ -15,6 +15,13 @@ en:
     sign_in: 'List a teaching job at your school'
     sign_out: 'Sign out'
     school_page_link: 'My jobs'
+  sign_in:
+    title: 'Sign in to Teaching Jobs'
+    intro: 'While we are in beta, we need to direct you to the correct place to sign in.'
+    legend: 'Please select the area your school is in:'
+    link: 'Sign in to Teaching Jobs'
+  identification:
+    find_school_information: Find your schools official area
   jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'

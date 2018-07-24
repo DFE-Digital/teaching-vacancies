@@ -14,16 +14,23 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
+  resource :identifications, only: %i[new create], controller: 'hiring_staff/identifications'
+
   # Sign in
-  resource :sessions, only: %i[new destroy], controller: 'hiring_staff/sessions'
+  resource :sessions, only: %i[destroy], controller: 'hiring_staff/sessions'
 
   # DfE Sign In
-  resource :sessions, only: %i[create], path: '/dfe/sessions', controller: 'hiring_staff/sign_in/dfe/sessions'
+  resource :sessions,
+           only: %i[create new],
+           as: :dfe,
+           path: '/dfe/sessions',
+           controller: 'hiring_staff/sign_in/dfe/sessions'
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
 
   # Azure Sign In
   resource :sessions,
-           only: %i[create failure],
+           only: %i[create new failure],
+           as: :azure,
            path: '/azure/sessions',
            controller: 'hiring_staff/sign_in/azure/sessions'
 
