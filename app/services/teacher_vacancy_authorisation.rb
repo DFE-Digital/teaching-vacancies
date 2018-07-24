@@ -18,8 +18,16 @@ module TeacherVacancyAuthorisation
       user_permissions
     end
 
+    def all_permissions
+      user_permissions
+    end
+
     def school_urn
       user_permissions.any? ? user_permissions.first['school_urn'] : nil
+    end
+
+    def many?
+      user_permissions && user_permissions.count > 1
     end
 
     private
@@ -29,7 +37,7 @@ module TeacherVacancyAuthorisation
     end
 
     def user_permissions
-      parsed_response.present? ? parsed_response['user']['permissions'] : []
+      @user_permissions ||= parsed_response.present? ? parsed_response['user']['permissions'] : []
     end
   end
 end

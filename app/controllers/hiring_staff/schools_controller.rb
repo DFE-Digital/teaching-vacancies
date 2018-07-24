@@ -1,5 +1,6 @@
 class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
+    @multiple_schools = session.key?(:tva_permissions)
     @school = SchoolPresenter.new(current_school)
     @vacancies = @school.vacancies.active
   end
