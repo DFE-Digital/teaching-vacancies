@@ -109,3 +109,6 @@ Rails.application.configure do
 
   config.action_dispatch.trusted_proxies = AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) }
 end
+
+domain = URI(ENV['DOMAIN'])
+Rails.application.routes.default_url_options[:host] = domain.to_s

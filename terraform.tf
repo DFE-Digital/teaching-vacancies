@@ -106,6 +106,7 @@ module "ecs" {
   authorisation_service_url   = "${var.authorisation_service_url}"
   google_drive_json_key = "${var.google_drive_json_key}"
   auth_spreadsheet_id = "${var.auth_spreadsheet_id}"
+  domain                   = "${var.domain}"
 }
 
 module "logs" {

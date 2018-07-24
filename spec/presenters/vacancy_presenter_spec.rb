@@ -40,7 +40,6 @@ RSpec.describe VacancyPresenter do
     it 'returns the school location' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       school = SchoolPresenter.new(vacancy.school)
-
       expect(vacancy).to receive(:school).and_return(school)
       expect(school).to receive(:location)
 
@@ -105,6 +104,14 @@ RSpec.describe VacancyPresenter do
       school = create(:school, name: 'Smith High School')
       vacancy = VacancyPresenter.new(build(:vacancy, school: school, flexible_working: true))
       expect(vacancy.flexible_working).to include('Smith High School')
+    end
+  end
+
+  describe '#share_url' do
+    it 'returns the absolute public url for the job post' do
+      vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'PE Teacher'))
+      expected_url = URI('localhost:3000/jobs/pe-teacher')
+      expect(vacancy.share_url).to match(expected_url.to_s)
     end
   end
 end
