@@ -1,0 +1,14 @@
+common_caps:
+  "browserstack.debug": true
+  "browserstack.networkLogs": true
+  "browserstack.local": true
+
+browser_caps:
+  -
+    "browser": "chrome"
+#  -
+#    "browser": "firefox"
+#  -
+#    "browser": "internet explorer"
+#  -
+#    "browser": "safari"
