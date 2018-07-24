@@ -53,7 +53,7 @@
 
       - if @vacancy.school.phase.present?
         %dt= t('schools.phase')
-        %dd= @vacancy.school.phase&.titleize
+        %dd= @vacancy.school.phase.titleize
 
       - if @vacancy.school.school_type.present?
         %dt= t('schools.type')
