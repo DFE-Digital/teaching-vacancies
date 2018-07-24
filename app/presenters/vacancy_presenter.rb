@@ -4,6 +4,10 @@ class VacancyPresenter < BasePresenter
 
   delegate :total_pages, to: :model
 
+  def share_url
+    Rails.application.routes.url_helpers.job_url(model, protocol: 'https')
+  end
+
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
     "#{number_to_currency(model.minimum_salary)} #{del} #{number_to_currency(model.maximum_salary)}"

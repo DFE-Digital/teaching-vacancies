@@ -262,6 +262,7 @@ variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}
 variable "google_drive_json_key" {}
 variable "auth_spreadsheet_id" {}
+variable "domain" {}
 
 variable "load_balancer_check_path" {
   default = "/"

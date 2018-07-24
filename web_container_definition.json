@@ -125,6 +125,10 @@
       {
         "name": "AUTH_SPREADSHEET_ID",
         "value": "${auth_spreadsheet_id}"
+      },
+      {
+        "name": "DOMAIN",
+        "value": "${domain}"
       }
     ]
   }

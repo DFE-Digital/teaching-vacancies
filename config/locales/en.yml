@@ -17,8 +17,9 @@ en:
     school_page_link: 'My jobs'
   sign_in:
     title: 'Sign in to Teaching Jobs'
-    intro: 'While we are in beta, we need to direct you to the correct place to sign in.'
-    legend: 'Please select the area your school is in:'
+    intro: 'While the service is in development it lists teaching jobs in select areas, currently Cambridgeshire, the North East and Milton Keynes. In order for you to sign into the service we need to know which area your school is in. '
+    legend: 'Please select your area:'
+    no_area: "Not in one of these areas? Register your interest in using the service by emailing %{email_link} and we'll let you know when it will be available to you."
     link: 'Sign in to Teaching Jobs'
   identification:
     find_school_information: Find your schools official area
@@ -75,10 +76,15 @@ en:
     apply: 'Get more information'
     application_link: 'Link for more information'
     application_link_url: 'Link for more information (link opens external website in a new window)'
+    view_posted_job: 'Your job listing has been published. You can view it at:'
+    preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
     actions: 'Actions'
     status: 'Status'
     already_published: 'This job has already been published'
     draft: 'This job is currently a draft version.'
+    share_url: 'This job is publicly visible at:'
+    view_public_link: 'View the public page for this job'
+    copy_public_url: 'copy the public URL to the clipboard'
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
@@ -239,3 +245,6 @@ en:
         - You can register your interest to use the service by emailing <a href='mailto:teachingjobs@digital.education.gov.uk'>teachingjobs@digital.education.gov.uk</a>. It is currently open to schools in Cambridgeshire, the North East and Milton Keynes but will be rolled out in phases to other areas across England.
 
         - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with “help” in the subject line.
+  beta_banner:
+    line_1: 'This service is in development and lists teaching jobs in select areas, currently Cambridgeshire and the North East. When the service launches nationally it will list roles throughout England.'
+    line_2: 'The summer holidays aren’t a peak period in the teacher recruitment cycle, but it’s still worth checking back soon for new opportunities.'

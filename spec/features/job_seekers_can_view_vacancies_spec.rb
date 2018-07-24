@@ -1,5 +1,19 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
+  scenario 'View a banner with information about the service' do
+    visit jobs_path
+
+    expect(page).to have_content(
+      'This service is in development and lists teaching jobs in select areas, currently
+      Cambridgeshire and the North East. When the service launches nationally it will list
+      roles throughout England.'
+    )
+    expect(page).to have_content(
+      'The summer holidays aren’t a peak period in the teacher recruitment cycle, but it’s
+        still worth checking back soon for new opportunities.'
+    )
+  end
+
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
     job_count = Vacancy.default_per_page + 1 # must be larger than the default page limit
     create_list(:vacancy, job_count)
