@@ -1,25 +1,43 @@
 require 'rails_helper'
-RSpec.describe 'Performance Platform rake tasks' do
-  before(:all) do
-    TeacherVacancyService::Application.load_tasks
+RSpec.describe 'rake performance_platform:submit_transactions', type: :task do
+  it 'Submits job publication transactions for the previous day' do
+    now = DateTime.current.beginning_of_day
+    expect(DateTime).to receive_message_chain(:current, :beginning_of_day).and_return(now)
+
+    stub_const('PP_TRANSACTIONS_BY_CHANNEL_TOKEN', 'not-nil')
+
+    pp = double(:performance_platform)
+
+    published_yesterday = build_list(:vacancy, 3, :published_slugged, publish_on: now - 2.days)
+    published_yesterday.each { |v| v.save(validate: false) }
+
+    expect(PerformancePlatform::TransactionsByChannel).to receive(:new).with('not-nil').and_return(pp)
+    expect(pp).to receive(:submit_transactions).with(3, (now - 1.day).utc.iso8601)
+
+    task.invoke
   end
+end
 
-  context ':performance_platform' do
-    context ':submit_transactions' do
-      it 'returns the Vacancy count for the previous day' do
-        stub_const('PP_TRANSACTIONS_BY_CHANNEL_TOKEN', 'not-nil')
+RSpec.describe 'rake performance_platform:submit_user_satisfaction', type: :task do
+  it 'Submits user satisfaction for the previous day' do
+    now = DateTime.current.beginning_of_day
+    expect(DateTime).to receive_message_chain(:current, :beginning_of_day).and_return(now)
 
-        published_yesterday = build_list(:vacancy, 3, :published_slugged, publish_on: 1.day.ago)
-        published_yesterday.each { |v| v.save(validate: false) }
+    stub_const('PP_USER_SATISFACTION_TOKEN', 'user-satisfaction-token')
 
-        pp = double(:performance_platform)
-        now = Time.zone.now
-        allow(Time).to receive_message_chain(:zone, :now).and_return(now)
-        expect(PerformancePlatform::TransactionsByChannel).to receive(:new).with('not-nil').and_return(pp)
-        expect(pp).to receive(:submit_transactions).with(3, (now - 1.day).utc.iso8601)
+    user_satisfaction = double(:user_satisfaction)
 
-        Rake::Task['performance_platform:submit_transactions'].invoke
-      end
-    end
+    feedback = create_list(:feedback, 2, rating: 3, created_at: 2.days.ago)
+    feedback << create_list(:feedback, 3, rating: 5, created_at: 2.days.ago)
+    feedback.flatten!
+
+    ratings = { 1 => 0, 2 => 0, 3 => 2, 4 => 0, 5 => 3 }
+
+    expect(PerformancePlatform::UserSatisfaction).to receive(:new)
+      .with('user-satisfaction-token')
+      .and_return(user_satisfaction)
+    expect(user_satisfaction).to receive(:submit).with(ratings, (now - 1.day).utc.iso8601)
+
+    task.invoke
   end
 end
