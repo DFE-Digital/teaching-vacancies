@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing a single published vacancy' do
-  scenario 'Published vacancies are viewable' do
+  scenario 'Published vacancies are viewable', browserstack: true do
     published_vacancy = VacancyPresenter.new(create(:vacancy, :published))
 
     visit job_path(published_vacancy)

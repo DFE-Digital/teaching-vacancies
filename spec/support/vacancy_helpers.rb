@@ -7,7 +7,7 @@ module VacancyHelpers
     select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
-    check 'job_specification_form[flexible_working]' if vacancy.flexible_working
+    check 'job_specification_form[flexible_working]', visible: false if vacancy.flexible_working
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'job_specification_form[benefits]', with: vacancy.benefits
     fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours

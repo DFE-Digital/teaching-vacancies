@@ -3,21 +3,21 @@ require 'rails_helper'
 RSpec.feature 'Searching vacancies by keyword' do
   describe 'searchable fields' do
     context '#job_title' do
-      scenario 'exact match', elasticsearch: true do
+      scenario 'exact match', elasticsearch: true, browserstack: true do
         vacancy = create(:vacancy, job_title: 'Maths Teacher')
 
         Vacancy.__elasticsearch__.client.indices.flush
 
         visit jobs_path
 
-        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+        expect(page.find('.vacancy:nth-child(1)')).to have_content(vacancy.job_title)
 
         within '.filters-form' do
           fill_in 'keyword', with: vacancy.job_title
           page.find('.button[type=submit]').click
         end
 
-        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+        expect(page.find('.vacancy:nth-child(1)')).to have_content(vacancy.job_title)
       end
 
       scenario 'partial match', elasticsearch: true do

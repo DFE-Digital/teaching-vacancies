@@ -7,7 +7,7 @@ RSpec.feature 'Creating a vacancy' do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
-  scenario 'Visiting the school page' do
+  scenario 'Visiting the school page', browserstack: true do
     school = create(:school, name: 'Salisbury School')
     stub_hiring_staff_auth(urn: school.urn)
 
@@ -34,7 +34,7 @@ RSpec.feature 'Creating a vacancy' do
                                  leadership: leaderships.sample))
     end
 
-    scenario 'redirects to step 1, job specification' do
+    scenario 'redirects to step 1, job specification', browserstack: true do
       visit new_school_job_path
 
       expect(page.current_path).to eq(job_specification_school_job_path)
@@ -69,7 +69,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 2, candidate profile, when submitted succesfuly' do
+      scenario 'redirects to step 2, candidate profile, when submitted successfully', browserstack: true do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -116,7 +116,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 3, application_details profile, when submitted succesfuly' do
+      scenario 'redirects to step 3, application_details profile, when submitted successfully', browserstack: true do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -155,7 +155,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to the vacancy review page when submitted succesfuly' do
+      scenario 'redirects to the vacancy review page when submitted successfully', browserstack: true do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -179,7 +179,7 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_current_path(school_job_path(vacancy.id))
       end
 
-      scenario 'lists all the vacancy details correctly' do
+      scenario 'lists all the vacancy details correctly', browserstack: true do
         vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
         visit school_job_review_path(vacancy.id)
 
@@ -189,7 +189,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       context 'edit job_specification_details' do
-        scenario 'updates the vacancy details' do
+        scenario 'updates the vacancy details', browserstack: true do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job title')
@@ -240,7 +240,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       context 'editing the candidate_specification_details' do
-        scenario 'updates the vacancy details' do
+        scenario 'updates the vacancy details', browserstack: true do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Essential qualifications')
@@ -308,7 +308,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('a@valid.email')
         end
 
-        scenario 'updates the vacancy details' do
+        scenario 'updates the vacancy details', browserstack: true do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job contact email')
@@ -337,7 +337,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to the school vacancy page when published' do
+      scenario 'redirects to the school vacancy page when published', browserstack: true do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'

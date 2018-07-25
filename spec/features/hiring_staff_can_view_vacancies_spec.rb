@@ -14,7 +14,7 @@ RSpec.feature 'School viewing vacancies' do
     expect(page).to have_content('You have no current jobs.')
   end
 
-  scenario 'A school can see a list of vacancies' do
+  scenario 'A school can see a list of vacancies', browserstack: true do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
 

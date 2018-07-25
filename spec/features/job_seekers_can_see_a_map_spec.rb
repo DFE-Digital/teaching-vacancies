@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing a vacancy' do
-  scenario 'should display a map when a school has geocoding' do
+  scenario 'should display a map when a school has geocoding', browserstack: true do
     school = create(:school,
                     easting: '537224',
                     northing: '177395',

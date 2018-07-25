@@ -42,10 +42,10 @@ RSpec.feature 'Vacancy feedback' do
         expect(page).to have_content('Rating can\'t be blank')
       end
 
-      scenario 'Can be successfully submitted for a published vacancy' do
+      scenario 'Can be successfully submitted for a published vacancy', browserstack: true do
         visit new_school_job_feedback_path(published_job.id)
 
-        choose 'Very satisfied'
+        choose 'Very satisfied', allow_label_click: true
         fill_in 'feedback_comment', with: 'Perfect!'
 
         click_on 'Submit feedback'

@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.feature 'Hiring staff can sign out' do
   let(:school) { create(:school) }
 
-  scenario 'as an authenticated user' do
+  scenario 'as an authenticated user', browserstack: true do
     stub_hiring_staff_auth(urn: school.urn)
 
     visit root_path

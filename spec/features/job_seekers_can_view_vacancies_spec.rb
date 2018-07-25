@@ -25,7 +25,7 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).to have_selector('.vacancy', count: Vacancy.default_per_page)
   end
 
-  scenario 'Only vacancies satisfying all publishing conditions are listed', elasticsearch: true do
+  scenario 'Only vacancies satisfying all publishing conditions are listed', elasticsearch: true, browserstack: true do
     valid_vacancy = create(:vacancy)
 
     expired = build(:vacancy, :expired)
