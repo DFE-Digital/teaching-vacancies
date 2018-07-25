@@ -1,4 +1,42 @@
-class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
+class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Style/GuardClause
+  # Please refer to this commit to read why this has been copied from:https://github.com/m0n9oose/omniauth_openid_connect/blob/master/lib/omniauth/strategies/openid_connect.rb
+  def callback_phase
+    logger.info('Override callback phase…')
+    error = request.params['error_reason'] || request.params['error']
+    if error
+      raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
+    elsif request['QUERY_STRING'].blank?
+      return Rack::Response.new(['Oops there was a problem. Please visit this URL to continue: https://teaching-jobs.service.gov.uk/identifications/new'], 200)
+    elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
+      return Rack::Response.new(['401 Unauthorized'], 401).finish
+    elsif !request.params['code']
+      return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
+    else
+      options.issuer = issuer if options.issuer.blank?
+      discover! if options.discovery
+      client.redirect_uri = redirect_uri
+      client.authorization_code = authorization_code
+      access_token
+      super
+    end
+  rescue CallbackError => e
+    fail!(:invalid_credentials, e)
+  rescue ::Timeout::Error, ::Errno::ETIMEDOUT => e
+    fail!(:timeout, e)
+  rescue ::SocketError => e
+    fail!(:failed_to_connect, e)
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Style/GuardClause
+end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   dfe_sign_in_issuer_uri    = URI(ENV.fetch('DFE_SIGN_IN_ISSUER', 'example'))
