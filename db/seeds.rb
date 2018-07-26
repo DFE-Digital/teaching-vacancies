@@ -35,7 +35,7 @@ SchoolType.create(label: 'Special School', code: '5')
 
 ealing_school = FactoryBot.create(:school, name: 'Macmillan Academy ',
                                    school_type: academy,
-                                   urn: 110627,
+                                   urn: 137138,
                                    address: 'Stockton Road',
                                    phase: :secondary,
                                    town: 'Middlesbrough',

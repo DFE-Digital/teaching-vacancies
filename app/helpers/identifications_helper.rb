@@ -15,4 +15,10 @@ module IdentificationsHelper
       opts
     end
   end
+
+  def schools_to_radio(schools)
+    schools.inject([]) do |school_options, school|
+      school_options << [school.urn, school.name]
+    end
+  end
 end
