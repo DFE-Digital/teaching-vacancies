@@ -9,38 +9,52 @@ namespace :performance_platform do
 
   task submit_transactions: :environment do
     Rails.logger.debug('here')
-    begin
-      time_now = DateTime.current.beginning_of_day
-      no_of_transactions = Vacancy.published_on_count(time_now - 1.day)
-
-      performance_platform = PerformancePlatform::TransactionsByChannel.new(PP_TRANSACTIONS_BY_CHANNEL_TOKEN)
-      performance_platform.submit_transactions(no_of_transactions, (time_now - 1.day).utc.iso8601)
-
-      Rollbar.log(:info,
-                  "Performance Platform transactions for #{time_now - 1.day}: #{no_of_transactions}")
-    rescue StandardError => e
-      Rollbar.log(:error,
-                  'Something went wrong and transactions were not submitted to the Performance Platform',
-                  e.message)
-    end
+    yesteday = DateTime.current.beginning_of_day - 1.day
+    submit_transactions(yesteday)
   end
 
   task submit_user_satisfaction: :environment do
-    begin
-      time_now = DateTime.current.beginning_of_day
-      data = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
-      feedback_counts = Feedback.published_on(time_now - 1.day).group(:rating).count
-      data.merge!(feedback_counts)
+    yesterday = DateTime.current.beginning_of_day - 1.day
+    submit_feedback(yesterday)
+  end
 
-      user_satisfaction = PerformancePlatform::UserSatisfaction.new(PP_USER_SATISFACTION_TOKEN)
-      user_satisfaction.submit(data, (time_now - 1.day).utc.iso8601)
+  task submit_data_up_to_today: :environment do
+    start_date = Date.parse('01/04/2018')
+    current_date = Date.current
+    number_of_days = current_date.mjd - start_date.mjd
 
-      Rollbar.log(:info,
-                  "Performance Platform user satisfaction for #{time_now - 1.day}: #{data}")
-    rescue StandardError => e
-      Rollbar.log(:error,
-                  'Something went wrong and user satisfaction was not submitted to the Performance Platform',
-                  e.message)
+    while number_of_days.positive?
+      date = DateTime.current.beginning_of_day - number_of_days.day
+      submit_transactions(date)
+      submit_feedback(date)
+      number_of_days -= 1
     end
   end
+end
+
+def submit_feedback(date = DateTime.current.beginning_of_day - 1)
+  data = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
+  feedback_counts = Feedback.published_on(date).group(:rating).count
+  data.merge!(feedback_counts)
+
+  user_satisfaction = PerformancePlatform::UserSatisfaction.new(PP_USER_SATISFACTION_TOKEN)
+  user_satisfaction.submit(data, date.utc.iso8601)
+
+  Rollbar.log(:info, "Performance Platform user satisfaction for #{date}: #{data}")
+rescue StandardError => e
+  Rollbar.log(:error,
+              'Something went wrong and user satisfaction was not submitted to the Performance Platform',
+              e.message)
+end
+
+def submit_transactions(date = DateTime.current.beginning_of_day - 1)
+  no_of_transactions = Vacancy.published_on_count(date)
+  performance_platform = PerformancePlatform::TransactionsByChannel.new(PP_TRANSACTIONS_BY_CHANNEL_TOKEN)
+  performance_platform.submit_transactions(no_of_transactions, date.utc.iso8601)
+
+  Rollbar.log(:info, "Performance Platform transactions for #{date}: #{no_of_transactions}")
+rescue StandardError => e
+  Rollbar.log(:error,
+              'Something went wrong and transactions were not submitted to the Performance Platform',
+              e.message)
 end

@@ -1,7 +1,7 @@
 module PerformancePlatform
   PP_DOMAIN = 'https://www.performance.service.gov.uk'.freeze
 
-  class TransactionsByChannel
+  class Base
     attr_reader :headers
 
     def initialize(token = nil)
@@ -10,7 +10,9 @@ module PerformancePlatform
                    'Content-Type' => 'application/json' }
       self
     end
+  end
 
+  class TransactionsByChannel < Base
     def submit_transactions(count, timestamp = Time.zone.now.utc.iso8601, period = 'day')
       HTTParty.post("#{PP_DOMAIN}#{transaction_endpoint}",
                     body: data(timestamp, period, count),
@@ -33,21 +35,14 @@ module PerformancePlatform
     end
   end
 
-  class UserSatisfaction
-    attr_reader :headers
-
-    def initialize(token = nil)
-      token || abort('No token set. Note that this task should only be executed in production.')
-      @headers = { 'Authorization' => "Bearer #{token}",
-                   'Content-Type' => 'application/json' }
-      self
-    end
-
+  class UserSatisfaction < Base
     def submit(rating_counts, timestamp = Time.zone.now.utc.iso8601, period = 'day')
       HTTParty.post("#{PP_DOMAIN}#{transaction_endpoint}",
                     body: data(timestamp, period, rating_counts.values.inject(:+), rating_counts),
                     headers: headers)
     end
+
+    private
 
     def transaction_endpoint
       '/data/teaching-jobs-job-listings/user-satisfaction'
