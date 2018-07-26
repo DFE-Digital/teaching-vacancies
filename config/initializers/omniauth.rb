@@ -16,7 +16,7 @@ module OmniAuth
           req = Rack::Request.new(env)
           return redirect(redirects[req.path]) if redirects.include?(req.path)
         elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
-          return Rack::Response.new(['401 Unauthorized'], 401).finish
+          return redirect('/401')
         elsif !request.params['code']
           return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
         else
