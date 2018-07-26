@@ -7,6 +7,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
   after(:each) do
     OmniAuth.config.mock_auth[:default] = nil
+    OmniAuth.config.mock_auth[:dfe] = nil
     ENV['SIGN_IN_WITH_DFE'] = 'false'
   end
 
