@@ -44,3 +44,7 @@ en:
             weekly_hours:
               negative: can't be negative
               invalid: must be a valid number
+        transaction_auditor:
+          attributes:
+            task:
+              taken: must have a unique entry for a date
