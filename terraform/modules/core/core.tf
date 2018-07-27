@@ -317,7 +317,7 @@ resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
-  alarm_name          = "${terraform.workspace}-average-reserved-cpu-high"
+  alarm_name          = "${var.project_name}-${var.environment}-average-reserved-cpu-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUReservation"
@@ -335,7 +335,7 @@ resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-low" {
-  alarm_name          = "${terraform.workspace}-minimum-reserved-cpu-low"
+  alarm_name          = "${var.project_name}-${var.environment}-minimum-reserved-cpu-low"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUReservation"
