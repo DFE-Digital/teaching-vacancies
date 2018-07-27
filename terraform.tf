@@ -87,6 +87,8 @@ module "ecs" {
   performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule   = "${var.performance_platform_submit_task_schedule}"
 
+  performance_platform_submit_all_task_command    = "${var.performance_platform_submit_all_task_command}"
+
   # Application variables
   rails_env                        = "${var.rails_env}"
   override_school_urn              = "${var.override_school_urn}"

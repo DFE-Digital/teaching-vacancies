@@ -187,6 +187,11 @@ variable "performance_platform_submit_task_schedule" {
   default     = "rate(24 hours)"
 }
 
+variable "performance_platform_submit_all_task_command" {
+  description = "The Entrypoint for the performance_platform_submit_all task"
+  default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
+}
+
 variable "rds_storage_gb" {}
 variable "rds_username" {}
 variable "rds_password" {}
