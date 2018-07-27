@@ -150,8 +150,8 @@ en:
       application_link: 'This is the url linking the job to your existing application page'
     filters:
       title: 'Search job listings'
-      location: 'Postcode'
-      location_hint: 'Full UK postcode'
+      location: 'Location'
+      location_hint: 'Town, postcode or region'
       keyword: 'Keyword'
       keyword_hint: 'Role or subject, for example'
       minimum_salary: 'Minimum salary'
