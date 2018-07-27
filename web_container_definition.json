@@ -75,6 +75,10 @@
         "value": "${pp_transactions_by_channel_token}"
       },
       {
+        "name": "PP_USER_SATISFACTION_TOKEN",
+        "value": "${pp_user_satisfaction_token}"
+      },
+      {
         "name": "SECRET_KEY_BASE",
         "value": "${secret_key_base}"
       },
