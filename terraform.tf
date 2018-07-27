@@ -112,6 +112,7 @@ module "ecs" {
   google_drive_json_key = "${var.google_drive_json_key}"
   auth_spreadsheet_id = "${var.auth_spreadsheet_id}"
   domain                   = "${var.domain}"
+  google_geocoding_api_key = "${var.google_geocoding_api_key}"
 }
 
 module "logs" {
