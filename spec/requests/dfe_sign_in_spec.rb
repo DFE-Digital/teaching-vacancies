@@ -9,8 +9,8 @@ RSpec.describe 'DfE Sign-in' do
     context 'when that payload is unauthorised' do
       it 'redirects the user to the not authorised page' do
         params = {
-          'code' => 'a-long-secret',
-          'session_state' => '123.456'
+          'code': 'a-long-secret',
+          'session_state': '123.456'
         }
 
         get '/auth/dfe/callback', params: params
