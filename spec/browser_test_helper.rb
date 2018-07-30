@@ -19,9 +19,10 @@ if ENV['TEST_BROWSER'] == 'browserstack'
   CONFIG = YAML.load(File.read(File.join(File.dirname(__FILE__), '../config/browserstack.yml')))
   CONFIG['user'] = ENV['BROWSERSTACK_USERNAME']
   CONFIG['key'] = ENV['BROWSERSTACK_ACCESS_KEY']
+  TASK_ID = ENV['TASK_ID'] ||= '0'
 
   Capybara.register_driver :browserstack do |app|
-    caps = CONFIG['common_caps'].merge(CONFIG['browser_caps'][0])
+    caps = CONFIG['common_caps'].merge(CONFIG['browser_caps'][TASK_ID.to_i])
     caps["browserstack.local"] = true
 
     @browserstack_local = BrowserStack::Local.new

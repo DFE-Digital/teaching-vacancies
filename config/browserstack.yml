@@ -6,9 +6,13 @@ common_caps:
 browser_caps:
   -
     "browser": "chrome"
-#  -
-#    "browser": "firefox"
-#  -
-#    "browser": "internet explorer"
-#  -
-#    "browser": "safari"
+  -
+    "browser": "firefox"
+  -
+    "browser": "safari"
+  -
+    "browser": "internet explorer"
+    "enablePersistentHover": false
+  -
+    "browser": "edge"
+    "enablePersistentHover": false
