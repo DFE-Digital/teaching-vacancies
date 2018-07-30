@@ -11,7 +11,7 @@ module IdentificationsHelper
   def identification_options
     @identification_options ||= begin
       opts = AZURE_SIGN_IN_OPTIONS.map(&:to_radio)
-      opts += DFE_SIGN_IN_OPTIONS.map(&:to_radio) unless Rails.env.production?
+      opts += DFE_SIGN_IN_OPTIONS.map(&:to_radio)
       opts
     end
   end
