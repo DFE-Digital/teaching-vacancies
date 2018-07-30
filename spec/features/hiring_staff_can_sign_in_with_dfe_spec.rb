@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
-  before do
+  before(:each) do
     OmniAuth.config.test_mode = true
     ENV['SIGN_IN_WITH_DFE'] = 'true'
   end
@@ -9,6 +9,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
     OmniAuth.config.mock_auth[:default] = nil
     OmniAuth.config.mock_auth[:dfe] = nil
     ENV['SIGN_IN_WITH_DFE'] = 'false'
+    OmniAuth.config.test_mode = false
   end
 
   let!(:school) { create(:school, urn: '110627') }

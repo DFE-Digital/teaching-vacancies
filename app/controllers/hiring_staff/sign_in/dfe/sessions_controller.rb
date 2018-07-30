@@ -36,7 +36,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     auth_hash['uid']
   end
 
-  private def identifier
+  def identifier
     auth_hash['info']['email']
   end
 end
