@@ -2,6 +2,14 @@ class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token,
                      only: %i[not_found unprocessable_entity internal_server_error]
 
+  def unauthorised
+    respond_to do |format|
+      format.html { render status: 401 }
+      format.json { render json: { error: 'Not authorised' }, status: 401 }
+      format.all { render status: 401, body: nil }
+    end
+  end
+
   def not_found
     respond_to do |format|
       format.html { render status: 404 }
