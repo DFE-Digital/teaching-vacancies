@@ -1,3 +1,48 @@
+module OmniAuth
+  module Strategies
+    class OpenIDConnect
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Style/GuardClause
+      # Please refer to this commit to read why this has been copied from: https://github.com/m0n9oose/omniauth_openid_connect/blob/master/lib/omniauth/strategies/openid_connect.rb
+      def callback_phase
+        error = request.params['error_reason'] || request.params['error']
+        if error
+          raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
+        elsif request.params.blank?
+          redirects = { '/auth/dfe/callback' => '/dfe/sessions/new' }
+          req = Rack::Request.new(env)
+          return redirect(redirects[req.path]) if redirects.include?(req.path)
+        elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
+          return redirect('/401')
+        elsif !request.params['code']
+          return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
+        else
+          options.issuer = issuer if options.issuer.blank?
+          discover! if options.discovery
+          client.redirect_uri = redirect_uri
+          client.authorization_code = authorization_code
+          access_token
+          super
+        end
+      rescue CallbackError => e
+        fail!(:invalid_credentials, e)
+      rescue ::Timeout::Error, ::Errno::ETIMEDOUT => e
+        fail!(:timeout, e)
+      rescue ::SocketError => e
+        fail!(:failed_to_connect, e)
+      end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/PerceivedComplexity
+      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Style/GuardClause
+    end
+  end
+end
+
 class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
