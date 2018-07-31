@@ -1,7 +1,7 @@
 class Geocoding
   attr_reader :params, :location
 
-  def initialize(location, params = { params: { countrycodes: 'uk' } })
+  def initialize(location, params = { params: { region: 'uk' } })
     @location = location
     @params = params
   end
