@@ -33,6 +33,7 @@ module "core" {
   image_id                 = "${var.image_id}"
   instance_type            = "${var.ecs_instance_type}"
   ecs_key_pair_name        = "${var.ecs_key_pair_name}"
+  ecs_ssh_keys             = "${var.ecs_ssh_keys}"
 
   asg_name         = "${var.asg_name}"
   asg_max_size     = "${var.asg_max_size}"

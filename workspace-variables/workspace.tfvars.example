@@ -9,6 +9,7 @@ project_name = "tvs"
 ecs_service_name = "tvs2-service"
 ecs_cluster_name = "tvs-cluster"
 ecs_key_pair_name =
+ecs_ssh_keys = []
 instance_type = "t2.micro"
 
 # ALB

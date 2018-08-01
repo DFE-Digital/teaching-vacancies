@@ -468,5 +468,6 @@ data "template_file" "ecs-launch-configuration-user-data" {
 
   vars {
     ecs_cluster_name = "${var.ecs_cluster_name}"
+    ecs_ssh_keys     = "${join("\n",var.ecs_ssh_keys)}"
   }
 }

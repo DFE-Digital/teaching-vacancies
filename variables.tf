@@ -51,6 +51,13 @@ variable "availability_zones" {
 
 variable "ecs_key_pair_name" {
   description = "This key will be placed onto the machines by Terraform to allow SSH"
+
+}
+
+variable "ecs_ssh_keys" {
+  description = "ssh keys to be placed in the ec2-user authorized_keys file"
+  type        = "list"
+  default     = []
 }
 
 variable "image_id" {

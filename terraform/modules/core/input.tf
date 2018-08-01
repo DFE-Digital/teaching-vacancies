@@ -22,6 +22,9 @@ variable "region" {}
 variable "image_id" {}
 variable "instance_type" {}
 variable "ecs_key_pair_name" {}
+variable "ecs_ssh_keys" {
+  type = "list"
+}
 variable "load_balancer_check_path" {}
 variable "alb_certificate_arn" {}
 variable "aws_iam_ecs_instance_profile_name" {}
