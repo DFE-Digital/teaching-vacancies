@@ -371,7 +371,19 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
     },
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   depends_on = ["aws_vpc.vpc", "aws_launch_configuration.ecs-launch-configuration", "aws_security_group.default", "aws_security_group.ecs"]
+}
+
+resource "aws_autoscaling_lifecycle_hook" "wait_before_terminate" {
+  name                   = "wait_before_terminate"
+  autoscaling_group_name = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  default_result         = "CONTINUE"
+  heartbeat_timeout      = "120"
+  lifecycle_transition   = "autoscaling:EC2_INSTANCE_TERMINATING"
 }
 
 resource "aws_appautoscaling_target" "target" {
