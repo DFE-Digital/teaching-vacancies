@@ -34,6 +34,7 @@ if ENV['TEST_BROWSER'] == 'browserstack'
   Capybara.javascript_driver = :browserstack
   Capybara.current_driver = :browserstack
   Capybara.run_server = true
+  Capybara.ignore_hidden_elements = true
 
   at_exit do
     @browserstack_local&.stop
