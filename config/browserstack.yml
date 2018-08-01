@@ -1,7 +1,7 @@
 common_caps:
   "browserstack.debug": true
-  "browserstack.networkLogs": true
   "browserstack.local": true
+  "project": "TeachingJobs"
 
 browser_caps:
   -
@@ -11,7 +11,8 @@ browser_caps:
   -
     "browser": "safari"
   -
-    "browser": "internet explorer"
+    "browser": "IE"
+    "browser_version": "11.0"
     "enablePersistentHover": false
   -
     "browser": "edge"
