@@ -1,6 +1,6 @@
 module IdentificationsHelper
   DFE_SIGN_IN_OPTIONS = [
-    OpenStruct.new(name: 'milton_keynes', to_radio: ['milton_keynes', 'Milton Keynes'])
+    OpenStruct.new(name: 'other', to_radio: ['other', 'Other'])
   ].freeze
 
   AZURE_SIGN_IN_OPTIONS = [
