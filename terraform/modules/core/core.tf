@@ -464,7 +464,7 @@ resource "aws_launch_configuration" "ecs-launch-configuration" {
 }
 
 data "template_file" "ecs-launch-configuration-user-data" {
-  template = "${file("./terraform/cloud-config/container-instance.yml.tpl")}"
+  template = "${file("./terraform/cloud-config/container-instance.sh.tpl")}"
 
   vars {
     ecs_cluster_name = "${var.ecs_cluster_name}"
