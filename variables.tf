@@ -61,7 +61,7 @@ variable "ecs_ssh_keys" {
 }
 
 variable "image_id" {
-  default = "ami-67cbd003" # Make sure this AWS AMI is valid for the chosen region.
+  default = "ami-2e9866c5" # Make sure this AWS AMI is valid for the chosen region.
 }
 
 variable "ecs_instance_type" {
