@@ -28,6 +28,8 @@ en:
     option:
       other: 'Other'
       milton_keynes: 'Milton Keynes'
+      cambridgeshire: 'Cambridgeshire'
+      the_north_east: 'The North East'
   identification:
     find_school_information: Find your schools official area
   jobs:

@@ -1,4 +1,11 @@
 inherit_from: .rubocop_todo.yml
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+    
 AllCops:
     TargetRubyVersion: 2.4
     Exclude:

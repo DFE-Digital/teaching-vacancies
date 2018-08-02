@@ -2,7 +2,7 @@ module IdentificationsHelper
   DFE_SIGN_IN_OPTIONS = [
     OpenStruct.new(
       name: I18n.t('sign_in.option.milton_keynes').downcase,
-      to_radio: [I18n.t('sign_in.milton_keynes.other').downcase, I18n.t('sign_in.milton_keynes.other')]
+      to_radio: [I18n.t('sign_in.option.milton_keynes').downcase, I18n.t('sign_in.option.milton_keynes')]
     )
   ].freeze
 
@@ -16,8 +16,14 @@ module IdentificationsHelper
   ].freeze
 
   AZURE_SIGN_IN_OPTIONS = [
-    OpenStruct.new(name: 'cambridgeshire', to_radio: ['cambridgeshire', 'Cambridgeshire']),
-    OpenStruct.new(name: 'the_north_east', to_radio: ['the_north_east', 'The North East'])
+    OpenStruct.new(
+      name: I18n.t('sign_in.option.cambridgeshire').downcase,
+      to_radio: [I18n.t('sign_in.option.cambridgeshire').downcase, I18n.t('sign_in.option.cambridgeshire')]
+    ),
+    OpenStruct.new(
+      name: I18n.t('sign_in.option.the_north_east').downcase.tr('_', ' '),
+      to_radio: ['the_north_east', 'The North East']
+    )
   ].freeze
 
   def identification_options
