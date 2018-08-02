@@ -122,6 +122,24 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         expect(page).to have_content("Jobs at #{other_school.name}")
       end
     end
+
+    context 'when usability testing is carried out in staging' do
+      before(:each) do
+        stub_global_auth(return_value: false)
+        allow(Rails).to receive(:env)
+          .and_return(ActiveSupport::StringInquirer.new('staging'))
+      end
+
+      it 'allows the user to select the "other" option for signing in with DfE Sign-in', elasticsearch: true do
+        visit root_path
+
+        click_on(I18n.t('nav.sign_in'))
+        choose(I18n.t('sign_in.option.other'))
+        click_on(I18n.t('sign_in.link'))
+
+        expect(page).to have_content("Jobs at #{school.name}")
+      end
+    end
   end
 
   context 'with valid credentials but no permission' do

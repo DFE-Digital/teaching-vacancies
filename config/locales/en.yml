@@ -25,6 +25,9 @@ en:
       title: 'Select your organisation'
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
       change: 'Change organisation'
+    option:
+      other: 'Other'
+      milton_keynes: 'Milton Keynes'
   identification:
     find_school_information: Find your schools official area
   jobs:
