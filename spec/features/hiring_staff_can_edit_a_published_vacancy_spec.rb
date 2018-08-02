@@ -17,7 +17,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   end
 
   context 'navigation' do
-    scenario 'links to the school page', browserstack: true do
+    scenario 'links to the school page' do
       vacancy = create(:vacancy, :published, school: school)
       visit edit_school_job_path(vacancy.id)
 
@@ -27,7 +27,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   end
 
   context 'editing a published vacancy' do
-    scenario 'takes your to the edit page', browserstack: true do
+    scenario 'takes your to the edit page' do
       vacancy = create(:vacancy, :published, school: school)
       visit edit_school_job_path(vacancy.id)
 
@@ -108,7 +108,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited', browserstack: true do
+      scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
@@ -154,7 +154,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited', browserstack: true do
+      scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_job_path(vacancy.id)
