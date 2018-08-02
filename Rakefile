@@ -6,7 +6,7 @@ require_relative 'config/application'
 Rails.application.load_tasks
 
 desc 'Run all the specs'
-task default: %i[spec teaspoon]
+task default: %i[spec teaspoon browserstack:all]
 
 namespace :db do
   desc 'runs `data:seed:pay_scale` and `data:update:pay_scale`'
