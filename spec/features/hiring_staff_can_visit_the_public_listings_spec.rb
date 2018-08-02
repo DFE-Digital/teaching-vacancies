@@ -6,6 +6,7 @@ RSpec.feature 'School viewing public listings' do
   end
 
   after(:each) do
+    OmniAuth.config.test_mode = false
     OmniAuth.config.mock_auth[:default] = nil
     OmniAuth.config.mock_auth[:dfe] = nil
   end
