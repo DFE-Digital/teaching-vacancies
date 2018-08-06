@@ -9,6 +9,7 @@ namespace :browserstack do
   end
 
   task :all do
+    next if ENV['BROWSERSTACK_USERNAME'].blank?
     CONFIG['browser_caps'].each_with_index do |_browser, i|
       ENV['TASK_ID'] = i.to_s
       Rake::Task['browserstack:local'].execute
