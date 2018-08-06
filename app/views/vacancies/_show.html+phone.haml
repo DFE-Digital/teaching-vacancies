@@ -18,22 +18,7 @@
       = @vacancy.school.name
     %p= @vacancy.school.description
 
-    %dl.school--details
-      %dt= t('schools.address')
-      %dd= @vacancy.school.full_address
-
-      - if @vacancy.school.phase.present?
-        %dt= t('schools.phase')
-        %dd= @vacancy.school.phase&.titleize
-
-      - if @vacancy.school.school_type.present?
-        %dt= t('schools.type')
-        %dd= @vacancy.school.school_type.label
-
-      - if @vacancy.school.url.present?
-        %dt= t('schools.website')
-        %dd
-          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'wordwrap', target: '_blank')
+    = render partial: 'school_details'
 
     - if @vacancy.school.geolocation
       #map_zoom{style: 'height: 200px; margin-bottom: 20px;'}
