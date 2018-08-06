@@ -23,7 +23,7 @@ resource "aws_ecs_service" "web" {
   desired_count   = "${var.ecs_service_task_count}"
 
   deployment_minimum_healthy_percent = 50
-  health_check_grace_period_seconds = 30
+  health_check_grace_period_seconds  = 30
 
   load_balancer {
     target_group_arn = "${var.aws_alb_target_group_arn}"
@@ -82,41 +82,43 @@ data "template_file" "web_container_definition" {
   template = "${file(var.ecs_service_web_container_definition_file_path)}"
 
   vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    override_school_urn      = "${var.override_school_urn}"
-    http_user                = "${var.http_user}"
-    http_pass                = "${var.http_pass}"
-    aad_client_id            = "${var.aad_client_id}"
-    aad_tenant               = "${var.aad_tenant}"
-    dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
-    dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
-    dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
-    dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
-    google_analytics         = "${var.google_analytics}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_task_name}"
-    task_port                = "${var.ecs_service_task_port}"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    redis_url                = "${var.redis_url}"
-    authorisation_service_url   = "${var.authorisation_service_url}"
-    authorisation_service_token = "${var.authorisation_service_token}"
-    google_drive_json_key    = "${var.google_drive_json_key}"
-    auth_spreadsheet_id      = "${var.auth_spreadsheet_id}"
-    domain                   = "${var.domain}"
-    google_geocoding_api_key = "${var.google_geocoding_api_key}"
+    image                            = "${aws_ecr_repository.default.repository_url}"
+    override_school_urn              = "${var.override_school_urn}"
+    http_user                        = "${var.http_user}"
+    http_pass                        = "${var.http_pass}"
+    aad_client_id                    = "${var.aad_client_id}"
+    aad_tenant                       = "${var.aad_tenant}"
+    dfe_sign_in_issuer               = "${var.dfe_sign_in_issuer}"
+    dfe_sign_in_redirect_url         = "${var.dfe_sign_in_redirect_url}"
+    dfe_sign_in_identifier           = "${var.dfe_sign_in_identifier}"
+    dfe_sign_in_secret               = "${var.dfe_sign_in_secret}"
+    google_maps_api_key              = "${var.google_maps_api_key}"
+    google_analytics                 = "${var.google_analytics}"
+    rollbar_access_token             = "${var.rollbar_access_token}"
+    secret_key_base                  = "${var.secret_key_base}"
+    project_name                     = "${var.project_name}"
+    task_name                        = "${var.ecs_service_task_name}"
+    task_port                        = "${var.ecs_service_task_port}"
+    environment                      = "${var.environment}"
+    rails_env                        = "${var.rails_env}"
+    region                           = "${var.region}"
+    log_group                        = "${var.aws_cloudwatch_log_group_name}"
+    database_user                    = "${var.rds_username}"
+    database_password                = "${var.rds_password}"
+    database_url                     = "${var.rds_address}"
+    elastic_search_url               = "${var.es_address}"
+    aws_elasticsearch_region         = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key            = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
+    redis_url                        = "${var.redis_url}"
+    authorisation_service_url        = "${var.authorisation_service_url}"
+    authorisation_service_token      = "${var.authorisation_service_token}"
+    google_geocoding_api_key         = "${var.google_geocoding_api_key}"
+    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
+    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
+    google_drive_json_key            = "${var.google_drive_json_key}"
+    auth_spreadsheet_id              = "${var.auth_spreadsheet_id}"
+    domain                           = "${var.domain}"
   }
 }
 
@@ -270,6 +272,55 @@ data "template_file" "reindex_vacancies_container_definition" {
   }
 }
 
+/* performance_platform_submit task definition*/
+data "template_file" "performance_platform_submit_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_performance_platform_submit"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    entrypoint               = "${jsonencode(var.performance_platform_submit_task_command)}"
+  }
+
+/* performance_platform_submit_all task definition*/
+data "template_file" "performance_platform_submit_all_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    google_maps_api_key      = "${var.google_maps_api_key}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_performance_platform_submit_all"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    entrypoint               = "${jsonencode(var.performance_platform_submit_all_task_command)}"
+  }
+}
+
 data "template_file" "logspout_container_definition" {
   template = "${file(var.ecs_service_logspout_container_definition_file_path)}"
 
@@ -291,9 +342,9 @@ resource "aws_ecs_task_definition" "web" {
 }
 
 resource "aws_ecs_task_definition" "logspout" {
-  family                   = "ecs-logspout-${var.environment}"
-  container_definitions    = "${data.template_file.logspout_container_definition.rendered}"
-  memory                   = "128"
+  family                = "ecs-logspout-${var.environment}"
+  container_definitions = "${data.template_file.logspout_container_definition.rendered}"
+  memory                = "128"
 
   volume {
     name      = "dockersock"
@@ -418,6 +469,17 @@ resource "aws_ecs_task_definition" "reindex_vacancies_task" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+resource "aws_ecs_task_definition" "performance_platform_submit_all_task" {
+  family                   = "${var.ecs_service_task_name}_performance_platform_submit_all_task"
+  container_definitions    = "${data.template_file.performance_platform_submit_all_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
 /*====
 ECS SCHEDULED TASKS
 ======*/
@@ -474,5 +536,32 @@ resource "aws_cloudwatch_event_target" "sessions_trim_task_event" {
   ecs_target {
     task_count          = "1"
     task_definition_arn = "${aws_ecs_task_definition.sessions_trim_task.arn}"
+  }
+}
+
+resource "aws_ecs_task_definition" "performance_platform_submit_task" {
+  family                   = "${var.ecs_service_task_name}_performance_platform_submit_task"
+  container_definitions    = "${data.template_file.performance_platform_submit_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "performance_platform_submit_task" {
+  name                = "${var.ecs_service_task_name}_performance_platform_submit_task"
+  description         = "Submits all required data to the performance platform"
+  schedule_expression = "${var.performance_platform_submit_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" {
+  target_id = "${var.ecs_service_task_name}_performance_platform_submit_task"
+  rule      = "${aws_cloudwatch_event_rule.performance_platform_submit_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.performance_platform_submit_task.arn}"
   }
 }
