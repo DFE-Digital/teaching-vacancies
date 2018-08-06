@@ -1,0 +1,26 @@
+- content_for :page_title_prefix, t('jobs.heading')
+
+%h1.heading-xlarge
+  = t('jobs.heading')
+.grid-row
+
+  .column-two-thirds
+    %p.heading-medium.mt0.mb1
+      %p.heading-medium.mt0= @vacancies.total_count_message
+      = link_to 'Refine your search?', '#filters'
+    - if @vacancies.any?
+      %div.sortable-links
+        = t('jobs.sort_by')
+        = link_to_sort_by t('jobs.expires_on'), column: 'expires_on', order: 'asc', sort: @sort
+        = link_to_sort_by t('jobs.publish_on'), column: 'publish_on', order: 'desc', sort: @sort
+
+      %ul.vacancies
+        - @vacancies.each do |vacancy|
+          = render partial: 'vacancy', locals: { vacancy: vacancy }
+
+  .column-one-third#filters
+    = render 'filters'
+
+= paginate @vacancies
+
+= render partial: 'shared/beta_banner'
