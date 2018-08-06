@@ -456,7 +456,7 @@ GEM
     validate_url (1.0.2)
       activemodel (>= 3.0.0)
       addressable
-    web-console (3.5.1)
+    web-console (3.6.2)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
