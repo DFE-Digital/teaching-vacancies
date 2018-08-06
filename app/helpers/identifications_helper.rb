@@ -1,11 +1,11 @@
 module IdentificationsHelper
   DFE_SIGN_IN_OPTIONS = [
-    OpenStruct.new(name: 'milton_keynes', to_radio: ['milton_keynes', 'Milton Keynes'])
+    OpenStruct.new(name: 'milton_keynes', to_radio: ['milton_keynes', 'Milton Keynes']),
+    OpenStruct.new(name: 'cambridgeshire', to_radio: ['cambridgeshire', 'Cambridgeshire']),
+    OpenStruct.new(name: 'the_north_east', to_radio: ['the_north_east', 'The North East'])
   ].freeze
 
   AZURE_SIGN_IN_OPTIONS = [
-    OpenStruct.new(name: 'cambridgeshire', to_radio: ['cambridgeshire', 'Cambridgeshire']),
-    OpenStruct.new(name: 'the_north_east', to_radio: ['the_north_east', 'The North East'])
   ].freeze
 
   def identification_options
