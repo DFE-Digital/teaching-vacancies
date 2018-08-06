@@ -13,14 +13,6 @@
       %span.heading-secondary
         = @vacancy.location
 
-    - if @vacancy.school.geolocation
-      #map_zoom{style: 'height: 200px; margin-bottom: 20px;'}
-      = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
-                                                            lat: @vacancy.school_geolocation.x,
-                                                            lng: @vacancy.school_geolocation.y }
-
-      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
-
     %h2.heading-medium
       = t('schools.about')
       = @vacancy.school.name
@@ -42,6 +34,14 @@
         %dt= t('schools.website')
         %dd
           = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'wordwrap', target: '_blank')
+
+    - if @vacancy.school.geolocation
+      #map_zoom{style: 'height: 200px; margin-bottom: 20px;'}
+      = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
+                                                            lat: @vacancy.school_geolocation.x,
+                                                            lng: @vacancy.school_geolocation.y }
+
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
     %h2.mt1.heading-medium= t('jobs.key_info')
 
