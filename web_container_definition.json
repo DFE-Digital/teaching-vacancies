@@ -129,6 +129,10 @@
       {
         "name": "DOMAIN",
         "value": "${domain}"
+      },
+      {
+        "name": "GOOGLE_GEOCODING_API_KEY",
+        "value": "${google_geocoding_api_key}"
       }
     ]
   }

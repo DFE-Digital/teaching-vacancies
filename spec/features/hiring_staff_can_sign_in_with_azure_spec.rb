@@ -6,6 +6,7 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
 
   after(:each) do
     OmniAuth.config.mock_auth[:default] = nil
+    OmniAuth.config.test_mode = false
   end
 
   let!(:school) { create(:school, urn: '110627') }
