@@ -51,6 +51,12 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
     end
 
+    scenario 'it redirects the sign in page to the school page' do
+      visit new_identifications_path
+      expect(page).to have_content("Jobs at #{school.name}")
+      expect(current_path).to eql(school_path)
+    end
+
     scenario 'adds entries in the audit log' do
       activity = PublicActivity::Activity.last
       expect(activity.key).to eq('dfe-sign-in.authorisation.success')
