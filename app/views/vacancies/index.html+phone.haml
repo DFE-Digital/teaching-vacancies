@@ -6,7 +6,7 @@
 
   .column-two-thirds
     %p.heading-medium.mt0.mb1
-      = @vacancies.total_count
+      %p.heading-medium.mt0= @vacancies.total_count_message
       = link_to 'Refine your search?', '#filters'
     - if @vacancies.any?
       %div.sortable-links
