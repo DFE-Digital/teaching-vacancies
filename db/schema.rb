@@ -54,6 +54,23 @@ ActiveRecord::Schema.define(version: 20180810104419) do
     t.index ["title"], name: "index_leaderships_on_title", unique: true
   end
 
+  create_table "local_authorities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "code"], name: "index_local_authorities_on_name_and_code", unique: true
+    t.index ["name"], name: "index_local_authorities_on_name", unique: true
+  end
+
+  create_table "local_authority_regional_pay_band_areas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "local_authority_id"
+    t.uuid "regional_pay_band_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["local_authority_id", "regional_pay_band_area_id"], name: "la_regional_pay_band_areas_index", unique: true
+  end
+
   create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
     t.string "code"
@@ -63,6 +80,13 @@ ActiveRecord::Schema.define(version: 20180810104419) do
     t.date "starts_at"
     t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at", unique: true
     t.index ["label"], name: "index_pay_scales_on_label", unique: true
+  end
+
+  create_table "regional_pay_band_areas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_regional_pay_band_areas_on_name", unique: true
   end
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
