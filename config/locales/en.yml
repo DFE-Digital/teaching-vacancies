@@ -12,9 +12,10 @@ en:
     title: 'Teaching Jobs'
     menu: 'Menu'
   nav:
-    sign_in: 'List a teaching job at your school'
+    sign_in: 'Sign in to list a job'
     sign_out: 'Sign out'
     school_page_link: 'My jobs'
+    jobseekers_index_link: 'All jobs'
   sign_in:
     title: 'Sign in to Teaching Jobs'
     intro: 'While the service is in development it lists teaching jobs in select areas, currently Cambridgeshire, the North East and Milton Keynes. In order for you to sign into the service we need to know which area your school is in. '

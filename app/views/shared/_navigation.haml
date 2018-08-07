@@ -1,0 +1,8 @@
+%nav.app-navigation.govuk-clearfix
+  %ul.app-navigation__list
+    - if authenticated?
+      %li{class: active_link_class(school_path)}= link_to t('nav.school_page_link'), school_path, class: active_link_class(school_path)
+      %li{class: active_link_class(root_path)}= link_to t('nav.jobseekers_index_link'), root_path, class: active_link_class(root_path)
+      %li{class: active_link_class(sessions_path)}= link_to t('nav.sign_out'), sessions_path, method: :delete
+    - else
+      %li{class: active_link_class(new_identifications_path)}= link_to t('nav.sign_in'), new_identifications_path

@@ -22,12 +22,15 @@
 
 - content_for :content do
   %main#content{ role: 'main', tabindex: -1 }
+
     .phase-banner
       %p
         %strong.phase-tag
           BETA
         %span
           This is a new service - #{link_to 'your feedback', 'https://www.surveymonkey.co.uk/r/FV5YF9Q'} will help us to improve it.
+
+    = render partial: 'shared/navigation'
 
     - flash.each do |name, msg|
       %div{class: "flash #{name}"}
