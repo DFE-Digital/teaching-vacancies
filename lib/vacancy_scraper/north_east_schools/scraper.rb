@@ -178,7 +178,7 @@ module VacancyScraper::NorthEastSchools
       pay_scale = PayScale.find_by(salary: min_salary)
       pay_scale.present? ? pay_scale.code : nil
     end
-    # rubocop:enable
+    # rubocop:enable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
 
     def max_pay_scale
       code = salary[/(UP[SR]\d*)/, 1] || salary[/(Upper).*[Ss]cale/, 1] || salary[/(U\d{1})/, 1]
