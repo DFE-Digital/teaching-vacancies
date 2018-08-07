@@ -47,8 +47,8 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
     scenario 'it signs in the user successfully' do
       expect(page).to have_content("Jobs at #{school.name}")
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+      within('.app-navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+      within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
     end
 
     scenario 'it redirects the sign in page to the school page' do
@@ -89,7 +89,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
     scenario 'it does not sign-in the user' do
       expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
-      within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
+      within('.app-navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
     end
 
     scenario 'adds entries in the audit log' do
