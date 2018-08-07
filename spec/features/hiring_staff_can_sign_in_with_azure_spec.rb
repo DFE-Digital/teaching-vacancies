@@ -50,9 +50,9 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
 
     scenario 'signs-in the user successfully' do
       expect(page).to have_content("Jobs at #{school.name}")
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
-      within('#proposition-links') { expect(page).to have_selector('a.active', text: 'My jobs') }
+      within('.app-navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+      within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+      within('.app-navigation') { expect(page).to have_selector('a.active', text: 'My jobs') }
     end
 
     scenario 'adds entries in the audit log' do
@@ -116,9 +116,9 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
 
     scenario 'offer the ability to select which school to sign-in with' do
       expect(page).to have_content("Jobs at #{other_school.name}")
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
-      within('#proposition-links') { expect(page).to have_selector('a.active', text: 'My jobs') }
+      within('.app-navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+      within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+      within('.app-navigation') { expect(page).to have_selector('a.active', text: 'My jobs') }
     end
 
     scenario 'adds entries in the audit log' do
@@ -182,7 +182,7 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
 
     scenario 'it does not sign-in the user' do
       expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
-      within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
+      within('.app-navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
     end
 
     scenario 'adds entries in the audit log' do
