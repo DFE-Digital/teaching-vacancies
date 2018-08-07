@@ -11,14 +11,14 @@ class ApplicationController < ActionController::Base
   include Ip
 
   def check
-    render json: { status: 'OK' }, status: 200
+    render json: { status: 'OK' }, status: :ok
   end
 
   def not_found
     respond_to do |format|
-      format.html { render 'errors/not_found', status: 404 }
-      format.json { render json: { error: 'Resource not found' }, status: 404 }
-      format.all { render status: 404, body: nil }
+      format.html { render 'errors/not_found', status: :not_found }
+      format.json { render json: { error: 'Resource not found' }, status: :not_found }
+      format.all { render status: :not_found, body: nil }
     end
   end
 
