@@ -29,9 +29,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # rubocop:disable Rails/UnknownEnv
   def authenticate?
     Rails.env.staging?
   end
+  # rubocop:enable Rails/UnknownEnv
 
   def detect_device_format
     request.variant = :phone if browser.device.mobile?

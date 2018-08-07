@@ -91,6 +91,7 @@ class Vacancy < ApplicationRecord
     results
   end
 
+  # rubocop:disable Naming/UncommunicativeMethodParamName
   def as_indexed_json(_ = {})
     as_json(
       methods: %i[coordinates],
@@ -100,6 +101,7 @@ class Vacancy < ApplicationRecord
       }
     )
   end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def trash!
     self.status = :trashed

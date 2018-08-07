@@ -62,6 +62,7 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Time.zone.today
   end
 
+  # rubocop:disable Rails/OutputSafety
   def flexible_working
     if model.flexible_working?
       mailto = mail_to(model.contact_email, model.school.name)
@@ -70,6 +71,7 @@ class VacancyPresenter < BasePresenter
       'No'
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def working_pattern
     model.working_pattern.sub('_', ' ').humanize
