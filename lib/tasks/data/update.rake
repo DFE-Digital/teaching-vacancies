@@ -4,7 +4,7 @@ namespace :data do
     task pay_scale: :environment do
       PAYSCALE_DATA.each_with_index do |scale, index|
         payscale = PayScale.find_by(code: scale[0])
-        payscale.update_attributes(index: index, label: scale[1], starts_at: Date.new(2017, 9, 1)) if payscale.present?
+        payscale.update(index: index, label: scale[1], starts_at: Date.new(2017, 9, 1)) if payscale.present?
       end
     end
   end
