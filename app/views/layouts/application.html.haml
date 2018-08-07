@@ -16,18 +16,9 @@
 - content_for :proposition_header do
   .header-proposition
     .content
-      %a.js-header-toggle.menu{ href: '#proposition-links' }
-        = t('app.menu')
-
       %nav#proposition-menu
         %a#proposition-name{ href: '/' }
           = t('app.title')
-        %ul#proposition-links
-          - if authenticated?
-            %li= link_to t('nav.school_page_link'), school_path, class: active_link_class(school_path)
-            %li= link_to t('nav.sign_out'), sessions_path, method: :delete
-          - else
-            %li= link_to t('nav.sign_in'), new_identifications_path
 
 - content_for :content do
   %main#content{ role: 'main', tabindex: -1 }
