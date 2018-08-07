@@ -287,11 +287,6 @@ variable "google_drive_json_key" {}
 variable "auth_spreadsheet_id" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
-
-variable "load_balancer_check_path" {
-  default = "/"
-}
-
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
 variable "pp_user_satisfaction_token" {}
