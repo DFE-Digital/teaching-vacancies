@@ -4,31 +4,31 @@ class ErrorsController < ApplicationController
 
   def unauthorised
     respond_to do |format|
-      format.html { render status: 401 }
-      format.json { render json: { error: 'Not authorised' }, status: 401 }
-      format.all { render status: 401, body: nil }
+      format.html { render status: :unauthorized }
+      format.json { render json: { error: 'Not authorised' }, status: :unauthorised }
+      format.all { render status: :unauthorised, body: nil }
     end
   end
 
   def not_found
     respond_to do |format|
-      format.html { render status: 404 }
-      format.json { render json: { error: 'Resource not found' }, status: 404 }
-      format.all { render status: 404, body: nil }
+      format.html { render status: :not_found }
+      format.json { render json: { error: 'Resource not found' }, status: :not_found }
+      format.all { render status: :not_found, body: nil }
     end
   end
 
   def unprocessable_entity
     respond_to do |format|
-      format.html { render status: 422 }
-      format.json { render json: { error: 'Unprocessable entity' }, status: 422 }
+      format.html { render status: :unprocessable_entity }
+      format.json { render json: { error: 'Unprocessable entity' }, status: :unprocessable_entity }
     end
   end
 
   def internal_server_error
     respond_to do |format|
-      format.html { render status: 500 }
-      format.json { render json: { error: 'Internal server error' }, status: 500 }
+      format.html { render status: :internal_server_error }
+      format.json { render json: { error: 'Internal server error' }, status: :internal_server_error }
     end
   end
 end

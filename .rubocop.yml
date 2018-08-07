@@ -7,9 +7,14 @@ AllCops:
       - 'db/seeds.rb'
       - 'bin/**/*'
       - 'config/initializers/simple_form.rb'
+      - 'spec/rails_helper.rb'
+      - 'lib/vacancy_scraper/north_east_schools/*.rb'
 
 Rails:
     Enabled: true
+
+Rails/HasManyOrHasOneDependent:
+    Enabled: false
 
 Bundler/OrderedGems:
     Enabled: false
@@ -23,13 +28,16 @@ Style/FrozenStringLiteralComment:
 Style/NumericLiterals:
     Enabled: false
 
-Style/TrailingBlankLines:
-    Enabled: false
-
-Style/TrailingCommaInLiteral:
+Layout/TrailingBlankLines:
     Enabled: false
 
 Style/TrailingCommaInArguments:
+    Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+    Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
     Enabled: false
 
 Style/Documentation:
@@ -61,6 +69,8 @@ Metrics/ModuleLength:
 
 Metrics/LineLength:
     Max: 120
+    Exclude:
+      - 'config/initializers/performance_platform.rb'
 
 Metrics/BlockLength:
     Max: 40

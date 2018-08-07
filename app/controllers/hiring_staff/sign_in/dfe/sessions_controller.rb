@@ -1,5 +1,5 @@
 class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
-  skip_before_action :check_session, only: %i[create new callback]
+  skip_before_action :check_session, only: %i[create new]
   skip_before_action :verify_authenticity_token, only: %i[create new]
 
   def new

@@ -77,6 +77,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def called_from_update_method
-    params[:source] && params[:source].eql?('update')
+    params[:source]&.eql?('update')
   end
 end

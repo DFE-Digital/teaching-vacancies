@@ -2,7 +2,8 @@ class HiringStaff::Vacancies::FeedbackController < HiringStaff::Vacancies::Appli
   def new
     vacancy = Vacancy.published.find_by!(id: params[:job_id])
     if vacancy.feedback.present?
-      return redirect_to school_path, notice: I18n.t('errors.feedback.already_submitted')
+      return redirect_to school_path,
+                         notice: I18n.t('errors.feedback.already_submitted')
     end
 
     @feedback = Feedback.new

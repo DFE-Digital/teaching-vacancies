@@ -8,12 +8,12 @@ namespace :performance_platform do
   end
 
   task submit_transactions: :environment do
-    yesteday = DateTime.current.beginning_of_day - 1.day
+    yesteday = Date.current.beginning_of_day - 1.day
     submit_transactions(yesteday)
   end
 
   task submit_user_satisfaction: :environment do
-    yesterday = DateTime.current.beginning_of_day - 1.day
+    yesterday = Date.current.beginning_of_day - 1.day
     submit_feedback(yesterday)
   end
 
@@ -23,7 +23,7 @@ namespace :performance_platform do
     number_of_days = current_date.mjd - start_date.mjd
 
     while number_of_days.positive?
-      date = DateTime.current.beginning_of_day - number_of_days.day
+      date = Date.current.beginning_of_day - number_of_days.day
       submit_transactions(date)
       submit_feedback(date)
       number_of_days -= 1
@@ -31,7 +31,7 @@ namespace :performance_platform do
   end
 end
 
-def submit_feedback(date = DateTime.current.beginning_of_day - 1)
+def submit_feedback(date = Date.current.beginning_of_day - 1)
   return if TransactionAuditor::Logger.new('performance_platform:submit_user_satisfaction', date).performed?
 
   data = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
@@ -49,7 +49,7 @@ rescue StandardError => e
               e.message)
 end
 
-def submit_transactions(date = DateTime.current.beginning_of_day - 1)
+def submit_transactions(date = Date.current.beginning_of_day - 1)
   return if TransactionAuditor::Logger.new('performance_platform:submit_transactions', date).performed?
   no_of_transactions = Vacancy.published_on_count(date)
   performance_platform = PerformancePlatform::TransactionsByChannel.new(PP_TRANSACTIONS_BY_CHANNEL_TOKEN)

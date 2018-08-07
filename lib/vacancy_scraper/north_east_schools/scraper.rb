@@ -178,7 +178,7 @@ module VacancyScraper::NorthEastSchools
       pay_scale = PayScale.find_by(salary: min_salary)
       pay_scale.present? ? pay_scale.code : nil
     end
-    # rubocop:enable
+    # rubocop:enable Metrics/AbcSize,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
 
     def max_pay_scale
       code = salary[/(UP[SR]\d*)/, 1] || salary[/(Upper).*[Ss]cale/, 1] || salary[/(U\d{1})/, 1]
@@ -216,7 +216,7 @@ module VacancyScraper::NorthEastSchools
                                        ' contains(.,"Start Date") or contains(.,"start in")]]').text
       starts_on = starts_on_string[/(\w+ \d{4})/, 1]
       Date.parse(starts_on)
-    rescue
+    rescue StandardError
       nil
     end
 
@@ -244,7 +244,7 @@ module VacancyScraper::NorthEastSchools
       date_parts = ends_on_string.scan(/(\d{1,2})\w*[\s](\w*)\s(\d{4})/)
       date = date_parts.is_a?(Array) ? date_parts.first.join(' ') : nil
       date.present? ? Date.parse(date) : date
-    rescue
+    rescue StandardError
       nil
     end
 

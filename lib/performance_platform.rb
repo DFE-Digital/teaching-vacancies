@@ -8,7 +8,6 @@ module PerformancePlatform
       token || abort('No token set. Note that this task should only be executed in production.')
       @headers = { 'Authorization' => "Bearer #{token}",
                    'Content-Type' => 'application/json' }
-      self
     end
   end
 
