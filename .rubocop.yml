@@ -69,6 +69,8 @@ Metrics/ModuleLength:
 
 Metrics/LineLength:
     Max: 120
+    Exclude:
+      - 'config/initializers/performance_platform.rb'
 
 Metrics/BlockLength:
     Max: 40

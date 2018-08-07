@@ -1,8 +1,8 @@
 require 'rails_helper'
 RSpec.describe 'rake performance_platform:submit_transactions', type: :task do
   it 'Submits job publication transactions for the previous day' do
-    now = DateTime.current.beginning_of_day
-    expect(DateTime).to receive_message_chain(:current, :beginning_of_day).and_return(now)
+    now = Date.current.beginning_of_day
+    expect(Date).to receive_message_chain(:current, :beginning_of_day).and_return(now)
 
     stub_const('PP_TRANSACTIONS_BY_CHANNEL_TOKEN', 'not-nil')
 
@@ -20,8 +20,8 @@ end
 
 RSpec.describe 'rake performance_platform:submit_user_satisfaction', type: :task do
   it 'Submits user satisfaction for the previous day' do
-    now = DateTime.current.beginning_of_day
-    expect(DateTime).to receive_message_chain(:current, :beginning_of_day).and_return(now)
+    now = Date.current.beginning_of_day
+    expect(Date).to receive_message_chain(:current, :beginning_of_day).and_return(now)
 
     stub_const('PP_USER_SATISFACTION_TOKEN', 'user-satisfaction-token')
 
