@@ -37,7 +37,9 @@ class ApplicationController < ActionController::Base
     request.variant = :phone if browser.device.mobile?
   end
 
-  private def http_user
+  private
+
+  def http_user
     if Figaro.env.http_user?
       Figaro.env.http_user
     else
@@ -46,7 +48,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private def http_pass
+  def http_pass
     if Figaro.env.http_pass?
       Figaro.env.http_pass
     else
@@ -55,13 +57,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private def append_info_to_payload(payload)
+  def append_info_to_payload(payload)
     super
     payload[:remote_ip] = request_ip
     payload[:session_id] = "#{session.id[0..7]}…" if session.id
   end
 
-  private def set_headers
+  def set_headers
     response.set_header('X-Robots-Tag', 'none')
   end
 end
