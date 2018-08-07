@@ -2,7 +2,7 @@
 
 .school.grid-row
   .column-full
-    %h1.heading-large
+    %h1.heading-large.mt0
       = t('schools.jobs.index', school: @school.name)
     - if @multiple_schools
       = link_to t('sign_in.organisation.change'), new_azure_path
