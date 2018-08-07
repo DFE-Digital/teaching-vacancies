@@ -216,7 +216,7 @@ module VacancyScraper::NorthEastSchools
                                        ' contains(.,"Start Date") or contains(.,"start in")]]').text
       starts_on = starts_on_string[/(\w+ \d{4})/, 1]
       Date.parse(starts_on)
-    rescue
+    rescue StandardError
       nil
     end
 
@@ -244,7 +244,7 @@ module VacancyScraper::NorthEastSchools
       date_parts = ends_on_string.scan(/(\d{1,2})\w*[\s](\w*)\s(\d{4})/)
       date = date_parts.is_a?(Array) ? date_parts.first.join(' ') : nil
       date.present? ? Date.parse(date) : date
-    rescue
+    rescue StandardError
       nil
     end
 
