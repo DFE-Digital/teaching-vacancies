@@ -12,8 +12,9 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     permissions.authorise(identifier)
     Auditor::Audit.new(nil, 'dfe-sign-in.authentication.success', current_session_id).log_without_association
 
-    if permissions.school_urn.present?
-      update_session(permissions.school_urn)
+    if permissions.all_permissions.any?
+      school_urn = selected_school_urn || permissions.school_urn
+      update_session(school_urn)
       redirect_to school_path
     else
       Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
@@ -38,5 +39,9 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def identifier
     auth_hash['info']['email']
+  end
+
+  def selected_school_urn
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'urn')
   end
 end
