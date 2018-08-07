@@ -295,6 +295,7 @@ data "template_file" "performance_platform_submit_container_definition" {
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     entrypoint               = "${jsonencode(var.performance_platform_submit_task_command)}"
   }
+}
 
 /* performance_platform_submit_all task definition*/
 data "template_file" "performance_platform_submit_all_container_definition" {
