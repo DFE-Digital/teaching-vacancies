@@ -11,9 +11,10 @@ module TeacherVacancyAuthorisation
                    'Content-Type' => 'application/json' }
     end
 
-    def authorise(user_token)
+    def authorise(user_token, school_urn = nil)
       request = Net::HTTP::Get.new("/users/#{user_token}", headers)
       @response = http.request(request)
+      @school_urn = school_urn
 
       user_permissions
     end
@@ -23,11 +24,17 @@ module TeacherVacancyAuthorisation
     end
 
     def school_urn
-      user_permissions.any? ? user_permissions.first['school_urn'] : nil
+      return nil unless user_permissions.any?
+      return user_permissions_for_school.first['school_urn'] if @school_urn.present?
+      user_permissions.first['school_urn']
     end
 
     def many?
       user_permissions && user_permissions.count > 1
+    end
+
+    def authorised?
+      user_permissions_for_school.any?
     end
 
     private
@@ -38,6 +45,10 @@ module TeacherVacancyAuthorisation
 
     def user_permissions
       @user_permissions ||= parsed_response.present? ? parsed_response['user']['permissions'] : []
+    end
+
+    def user_permissions_for_school
+      user_permissions.select { |permission| permission['school_urn'] == @school_urn }
     end
   end
 end

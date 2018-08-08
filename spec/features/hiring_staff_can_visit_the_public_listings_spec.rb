@@ -58,6 +58,11 @@ RSpec.feature 'School viewing public listings' do
         uid: 'a-valid-oid',
         info: {
           email: 'an-email@example.com',
+        },
+        extra: {
+          raw_info: {
+            organisation: { urn: '110627' }
+          }
         }
       )
 

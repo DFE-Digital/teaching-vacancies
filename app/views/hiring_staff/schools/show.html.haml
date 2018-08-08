@@ -5,7 +5,7 @@
     %h1.heading-large
       = t('schools.jobs.index', school: @school.name)
     - if @multiple_schools
-      = link_to t('sign_in.organisation.change'), new_azure_path
+      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path
       %br
       %br
 
