@@ -24,7 +24,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   private
 
   def update_session(school_urn, permissions)
-    session.update(session_id: oid, urn: school_urn, tva_permissions: permissions.all_permissions)
+    session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)
     Auditor::Audit.new(current_school, 'dfe-sign-in.authorisation.success', current_session_id).log
   end
 

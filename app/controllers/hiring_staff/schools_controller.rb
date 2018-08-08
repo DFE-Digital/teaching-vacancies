@@ -30,6 +30,6 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   private
 
   def session_has_multiple_schools?
-    session.key?(:tva_permissions) && session[:tva_permissions].count > 1
+    session.key?(:multiple_schools) && session[:multiple_schools] == true
   end
 end
