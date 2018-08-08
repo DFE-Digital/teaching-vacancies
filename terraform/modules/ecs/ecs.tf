@@ -34,6 +34,25 @@ resource "aws_ecs_service" "web" {
   depends_on = ["aws_iam_role.ecs_role"]
 }
 
+resource "aws_ecs_service" "web_daemon" {
+  name            = "${var.ecs_service_name}_daemon"
+  iam_role        = "${aws_iam_role.ecs_role.arn}"
+  cluster         = "${aws_ecs_cluster.cluster.id}"
+  task_definition = "${aws_ecs_task_definition.web_daemon.arn}"
+
+  health_check_grace_period_seconds  = 30
+
+  load_balancer {
+    target_group_arn = "${var.aws_alb_target_group_arn}"
+    container_name   = "${var.ecs_service_task_name}"
+    container_port   = "${var.ecs_service_task_port}"
+  }
+
+  scheduling_strategy = "DAEMON"
+
+  depends_on = ["aws_iam_role.ecs_role"]
+}
+
 resource "aws_ecs_service" "logspout" {
   name            = "logspout-${var.environment}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
@@ -323,6 +342,17 @@ data "template_file" "logspout_container_definition" {
 
 resource "aws_ecs_task_definition" "web" {
   family                   = "${var.ecs_service_task_name}"
+  container_definitions    = "${data.template_file.web_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_ecs_task_definition" "web_daemon" {
+  family                   = "${var.ecs_service_task_name}_daemon"
   container_definitions    = "${data.template_file.web_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
