@@ -8,6 +8,7 @@ RSpec.describe School, type: :model do
       it { should belong_to(:regional_pay_band_area) }
       it { should belong_to(:school_type) }
       it { should belong_to(:detailed_school_type) }
+      it { should belong_to(:local_authority) }
     end
 
     context '#urn' do

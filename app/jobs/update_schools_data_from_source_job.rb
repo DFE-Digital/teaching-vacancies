@@ -44,6 +44,9 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
         school.detailed_school_type = detailed_school_type
         school.region = region
 
+        local_authority = LocalAuthority.find_by(code: row['LA (code)'])
+        school.local_authority = local_authority
+
         school.save
       end
     end

@@ -5,6 +5,7 @@ class School < ApplicationRecord
   belongs_to :school_type, required: true
   belongs_to :detailed_school_type, optional: true
   belongs_to :region
+  belongs_to :local_authority
   belongs_to :regional_pay_band_area, required: false
 
   has_many :vacancies

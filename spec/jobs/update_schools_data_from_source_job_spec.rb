@@ -49,6 +49,9 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
     let!(:london) { Region.create(name: 'London', code: 'H') }
 
     before do
+      create(:local_authority, code: '201', name: 'London')
+      create(:local_authority, code: '202', name: 'Camden')
+
       csv = File.read(test_file_path)
       stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
         .to_return(body: csv)
@@ -58,10 +61,10 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
       before do
         stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
           .to_return(body:
-                     'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                     'URN,LA (code),EstablishmentName,EstablishmentTypeGroup (code),' \
                      'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                      "Town,Postcode\n" \
-                     "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
+                     "100000,201,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
       end
 
       it 'it\'s correctly converted to a UTF-8 encoded file' do
@@ -81,6 +84,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
 
         school = School.find_by(urn: '100001')
         expect(school.name).to eql('City of London School for Girls')
+        expect(school.local_authority.name).to eql('London')
 
         expect(School.where("urn in ('#{new_school_urns.join('\',\'')}')").count).to eq(6)
       end
@@ -118,10 +122,10 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         it 'it correctly adds the protocol' do
           stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
             .to_return(body:
-                       'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                       'URN,LA (code),EstablishmentName,EstablishmentTypeGroup (code),' \
                        'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                        "Town,Postcode\n" \
-                       "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
+                       "100000,202,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
           UpdateSchoolsDataFromSourceJob.new.perform
 
           school.reload
@@ -134,10 +138,10 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         it 'sets the website to nil' do
           stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
             .to_return(body:
-                       'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                       'URN,LA (code),EstablishmentName,EstablishmentTypeGroup (code),' \
                        'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                        "Town,Postcode\n" \
-                       "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
+                       "100000,202,St John\x92s School,999,999,ZZZ,,?,?,?")
           UpdateSchoolsDataFromSourceJob.new.perform
 
           school.reload
