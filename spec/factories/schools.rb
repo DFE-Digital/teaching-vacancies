@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :school do
-    association :school_type
-    association :region
+    detailed_school_type
+    school_type
+    region
 
     name { Faker::Educator.secondary_school.strip }
     description { Faker::Lorem.paragraph(1) }
@@ -13,6 +14,7 @@ FactoryBot.define do
     phase { :secondary }
     easting { '1' }
     northing { '1' }
+    regional_pay_band_area
 
     trait :primary do
       phase { :primary }

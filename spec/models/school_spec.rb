@@ -4,6 +4,12 @@ RSpec.describe School, type: :model do
   context 'when there is no previous geolocation' do
     let(:school) { create(:school, easting: nil, northing: nil) }
 
+    context 'associations' do
+      it { should belong_to(:regional_pay_band_area) }
+      it { should belong_to(:school_type) }
+      it { should belong_to(:detailed_school_type) }
+    end
+
     context '#urn' do
       it 'must be unique' do
         create(:school, urn: '12345')

@@ -127,7 +127,9 @@ ActiveRecord::Schema.define(version: 20180810104419) do
     t.text "easting"
     t.text "northing"
     t.point "geolocation"
+    t.uuid "regional_pay_band_area_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
+    t.index ["regional_pay_band_area_id"], name: "index_schools_on_regional_pay_band_area_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
