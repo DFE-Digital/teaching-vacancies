@@ -5,5 +5,6 @@ FactoryBot.define do
     salary { Faker::Number.number(4) }
     starts_at { Time.zone.today - 5.months }
     expires_at { Time.zone.today + 5.months }
+    regional_pay_band_area
   end
 end

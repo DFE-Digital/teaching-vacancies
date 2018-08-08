@@ -78,8 +78,10 @@ ActiveRecord::Schema.define(version: 20180810104419) do
     t.date "expires_at"
     t.integer "index"
     t.date "starts_at"
+    t.uuid "regional_pay_band_area_id"
     t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at", unique: true
     t.index ["label"], name: "index_pay_scales_on_label", unique: true
+    t.index ["regional_pay_band_area_id"], name: "index_pay_scales_on_regional_pay_band_area_id"
   end
 
   create_table "regional_pay_band_areas", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

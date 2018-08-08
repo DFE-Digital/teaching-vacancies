@@ -1,5 +1,9 @@
 require 'rails_helper'
 RSpec.describe PayScale, type: :model do
+  context 'associations' do
+    it { should belong_to(:regional_pay_band_area) }
+  end
+
   context 'scopes' do
     describe '#default' do
       it 'orders by index' do
