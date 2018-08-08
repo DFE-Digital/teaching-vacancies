@@ -38,17 +38,7 @@ resource "aws_ecs_service" "logspout" {
   name            = "logspout-${var.environment}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
   task_definition = "${aws_ecs_task_definition.logspout.arn}"
-  desired_count   = "${var.ecs_logspout_task_count}"
-
-  deployment_minimum_healthy_percent = 50
-
-  placement_constraints {
-    type = "distinctInstance"
-  }
-
-  lifecycle {
-    ignore_changes = ["desired_count"]
-  }
+  scheduling_strategy = "DAEMON"
 }
 
 /*====
