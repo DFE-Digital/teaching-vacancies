@@ -35,14 +35,6 @@
         "value": "${http_pass}"
       },
       {
-        "name": "AAD_CLIENT_ID",
-        "value": "${aad_client_id}"
-      },
-      {
-        "name": "AAD_TENANT",
-        "value": "${aad_tenant}"
-      },
-      {
         "name": "DFE_SIGN_IN_ISSUER",
         "value": "${dfe_sign_in_issuer}"
       },
