@@ -41,6 +41,7 @@ module "core" {
 
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
   ecs_service_name                  = "${module.ecs.service_name}"
+  ecs_min_capacity                  = "${var.ecs_service_task_count}"
   aws_iam_ecs_instance_profile_name = "${module.ecs.aws_iam_ecs_instance_profile_name}"
 }
 
