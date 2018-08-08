@@ -113,6 +113,11 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         uid: 'an-unknown-oid',
         info: {
           email: 'another_email@example.com',
+        },
+        extra: {
+          raw_info: {
+            organisation: { urn: '110627' }
+          }
         }
       )
       mock_response = double(code: '200', body: { user: { permissions: [] } }.to_json)
@@ -225,20 +230,17 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       click_on(I18n.t('sign_in.link'))
     end
 
-    scenario 'it signs in the user successfully for school they have permission for' do
-      expect(page).to have_content("Jobs at #{school.name}")
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+    scenario 'it does not sign-in the user' do
+      expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
+      within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
     end
 
     scenario 'adds entries in the audit log' do
-      activity = PublicActivity::Activity.last
-      expect(activity.key).to eq('dfe-sign-in.authorisation.success')
-      expect(activity.trackable.urn).to eq(school.urn)
+      authentication = PublicActivity::Activity.first
+      expect(authentication.key).to eq('dfe-sign-in.authentication.success')
 
       authorisation = PublicActivity::Activity.last
-      expect(authorisation.key).to eq('dfe-sign-in.authorisation.success')
-      expect(authorisation.trackable.urn).to eq(school.urn)
+      expect(authorisation.key).to eq('dfe-sign-in.authorisation.failure')
     end
   end
 end
