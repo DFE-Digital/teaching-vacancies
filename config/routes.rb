@@ -27,18 +27,6 @@ Rails.application.routes.draw do
            controller: 'hiring_staff/sign_in/dfe/sessions'
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
 
-  # Azure Sign In
-  resource :sessions,
-           only: %i[create show new failure],
-           as: :azure,
-           path: '/azure/sessions',
-           controller: 'hiring_staff/sign_in/azure/sessions'
-
-  get '/auth/azureactivedirectory/callback', to: 'hiring_staff/sign_in/azure/sessions#create'
-  post '/auth/azureactivedirectory/callback', to: 'hiring_staff/sign_in/azure/sessions#create'
-  get '/auth/azureactivedirectory/failure', to: 'hiring_staff/sign_in/azure/sessions#failure'
-  get '/auth/failure', to: 'hiring_staff/sign_in/azure/sessions#failure' # For OmniAuth testing only
-
   resource :school, only: %i[show edit update], controller: 'hiring_staff/schools' do
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'

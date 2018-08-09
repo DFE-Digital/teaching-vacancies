@@ -12,9 +12,4 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
     # This is defined by the class name of our Omniauth strategy
     redirect_to '/auth/dfe'
   end
-
-  def redirect_to_azure
-    # Defined by Azure AD strategy: https://github.com/AzureAD/omniauth-azure-activedirectory#usage
-    redirect_to '/auth/azureactivedirectory'
-  end
 end
