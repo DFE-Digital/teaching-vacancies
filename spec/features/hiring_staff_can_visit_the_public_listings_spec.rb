@@ -13,44 +13,6 @@ RSpec.feature 'School viewing public listings' do
 
   let!(:school) { create(:school, urn: '110627') }
 
-  context 'when signed in with Azure' do
-    before(:each) do
-      OmniAuth.config.mock_auth[:default] = OmniAuth::AuthHash.new(
-        provider: 'default',
-        info: {
-          name: 'an-email@example.com',
-        },
-        extra: {
-          raw_info: {
-            id_token_claims: {
-              oid: 'a-valid-oid'
-            }
-          }
-        }
-      )
-      mock_response = double(code: '200', body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
-      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-        .and_return(AuthHelpers::MockPermissions.new(mock_response))
-    end
-
-    scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
-      visit root_path
-
-      click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::AZURE_SIGN_IN_OPTIONS.first.to_radio.last)
-      click_on(I18n.t('sign_in.link'))
-
-      expect(page).to have_content("Jobs at #{school.name}")
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
-
-      click_on(I18n.t('app.title'))
-      expect(page).to have_content(I18n.t('jobs.heading'))
-
-      click_on(I18n.t('nav.school_page_link'))
-      expect(page).to have_content("Jobs at #{school.name}")
-    end
-  end
-
   context 'when signed in with DfE Sign In' do
     before(:each) do
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(

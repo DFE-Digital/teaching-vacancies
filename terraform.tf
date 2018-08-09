@@ -94,8 +94,6 @@ module "ecs" {
   override_school_urn              = "${var.override_school_urn}"
   http_pass                        = "${var.http_pass}"
   http_user                        = "${var.http_user}"
-  aad_client_id                    = "${var.aad_client_id}"
-  aad_tenant                       = "${var.aad_tenant}"
   dfe_sign_in_issuer               = "${var.dfe_sign_in_issuer}"
   dfe_sign_in_redirect_url         = "${var.dfe_sign_in_redirect_url}"
   dfe_sign_in_identifier           = "${var.dfe_sign_in_identifier}"

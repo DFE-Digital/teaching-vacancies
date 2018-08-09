@@ -16,8 +16,6 @@ variable "rails_env" {}
 variable "override_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
-variable "aad_client_id" {}
-variable "aad_tenant" {}
 variable "dfe_sign_in_issuer" {}
 variable "dfe_sign_in_redirect_url" {}
 variable "dfe_sign_in_identifier" {}
