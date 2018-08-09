@@ -4,7 +4,9 @@ module AuthHelpers
       @response = response
     end
 
-    def authorise(identifier); end
+    def authorise(_identifier, school_urn = nil)
+      @school_urn = school_urn
+    end
   end
 
   def stub_global_auth(return_value: true)
