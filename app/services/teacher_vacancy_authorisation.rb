@@ -34,6 +34,7 @@ module TeacherVacancyAuthorisation
     end
 
     def authorised?
+      return user_permissions.any? if @school_urn.blank?
       user_permissions_for_school.any?
     end
 
