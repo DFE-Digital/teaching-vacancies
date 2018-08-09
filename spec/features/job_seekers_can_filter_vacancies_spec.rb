@@ -72,7 +72,7 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   scenario 'Filterable by minimum salary', elasticsearch: true do
-    lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
+    lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 28000)
     higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
 
     Vacancy.__elasticsearch__.client.indices.flush
@@ -88,8 +88,8 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   scenario 'Filterable by maximum salary', elasticsearch: true do
-    lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
-    higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
+    lower_paid_vacancy = create(:vacancy, :published, maximum_salary: 30000)
+    higher_paid_vacancy = create(:vacancy, :published, maximum_salary: 45000)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path

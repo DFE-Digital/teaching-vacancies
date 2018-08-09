@@ -3,13 +3,13 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form = JobSpecificationForm.new(school_id: school.id)
     return if session[:current_step].blank?
 
-    @job_specification_form = JobSpecificationForm.new(session[:vacancy_attributes])
+    @job_specification_form = JobSpecificationForm.new(session[:vacancy_attributes].merge(school_id: school.id))
     @job_specification_form.valid?
   end
 
   # rubocop:disable Metrics/AbcSize
   def create
-    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form.merge(school_id: school.id))
     store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact)
 
     if @job_specification_form.valid?
@@ -28,14 +28,14 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     vacancy_attributes = source_update? ? session[:vacancy_attributes] : retrieve_job_from_db
     @school = school
 
-    @job_specification_form = JobSpecificationForm.new(vacancy_attributes)
+    @job_specification_form = JobSpecificationForm.new(vacancy_attributes.merge(school_id: school.id))
     @job_specification_form.valid?
   end
 
   # rubocop:disable Metrics/AbcSize
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
-    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form.merge(school_id: school.id))
     @job_specification_form.id = vacancy.id
 
     if @job_specification_form.valid?
