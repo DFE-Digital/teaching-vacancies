@@ -112,7 +112,7 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
 
       context 'no school urn is given' do
         let(:school_urn) { nil }
-        it { is_expected.to be false }
+        it { is_expected.to be true }
       end
 
       context 'school urn is given and matches a permission' do
