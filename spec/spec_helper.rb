@@ -30,7 +30,5 @@ RSpec.configure do |config|
 
   config.before(:each) do
     ENV.delete('OVERRIDE_SCHOOL_URN')
-    ENV.delete('AAD_CLIENT_ID')
-    ENV.delete('AAD_TENANT')
   end
 end

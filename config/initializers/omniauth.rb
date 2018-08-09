@@ -53,7 +53,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   dfe_sign_in_issuer_url = "#{dfe_sign_in_issuer_uri}:#{dfe_sign_in_issuer_uri.port}" if dfe_sign_in_issuer_uri.port
 
-  provider :azure_activedirectory, ENV['AAD_CLIENT_ID'], ENV['AAD_TENANT']
   provider :dfe,
            name: :dfe,
            discovery: true,
