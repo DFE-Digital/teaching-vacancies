@@ -3,7 +3,6 @@ module Spreadsheet
   class Writer
     def initialize(spreadsheet_id)
       @spreadsheet_id = spreadsheet_id
-      self
     end
 
     def append(rows)

@@ -129,29 +129,6 @@ RSpec.feature 'Hiring staff signing-in with Azure' do
       expect(activities[2].key).to eq('azure.authorisation.success')
       expect(activities[2].trackable.urn).to eq(other_school.urn)
     end
-
-    context 'allows the user to switch between organisation' do
-      before(:each) do
-        click_on 'Change organisation'
-
-        expect(page).to have_content('Select your organisation')
-        choose school.name
-        click_on 'Continue'
-      end
-
-      scenario 'allows the user to switch between orgnisations and logs audit events' do
-        expect(page).to have_content("Jobs at #{school.name}")
-      end
-
-      scenario 'adds entries to the audit log' do
-        activities = PublicActivity::Activity.all
-
-        expect(activities[3].key).to eq('azure.authentication.success')
-        expect(activities[4].key).to eq('azure.authorisation.select_school')
-        expect(activities[5].key).to eq('azure.authorisation.success')
-        expect(activities[5].trackable.urn).to eq(school.urn)
-      end
-    end
   end
 
   context 'with valid credentials that do not match a school' do

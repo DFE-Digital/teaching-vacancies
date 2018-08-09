@@ -25,6 +25,8 @@ variable "dfe_sign_in_secret" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "rollbar_access_token" {}
+variable "pp_transactions_by_channel_token" {}
+variable "pp_user_satisfaction_token" {}
 variable "secret_key_base" {}
 variable "rds_username" {}
 variable "rds_password" {}
@@ -42,9 +44,11 @@ variable "domain" {}
 variable "google_geocoding_api_key" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
+
 variable "logspout_command" {
   type = "list"
 }
+
 variable "ecs_logspout_task_count" {}
 
 variable "import_schools_task_command" {
@@ -71,5 +75,14 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
+variable "performance_platform_submit_task_command" {
+  type = "list"
+}
+
+variable "performance_platform_submit_all_task_command" {
+  type = "list"
+}
+
 variable "vacancies_scrape_task_schedule" {}
 variable "sessions_trim_task_schedule" {}
+variable "performance_platform_submit_task_schedule" {}

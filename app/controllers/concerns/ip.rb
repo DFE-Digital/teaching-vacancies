@@ -12,7 +12,7 @@ module Ip
 
     return anonymize_ipv4(ip) if ip.ipv4?
     return anonymize_ipv6(ip) if ip.ipv6?
-  rescue
+  rescue StandardError
     nil
   end
 

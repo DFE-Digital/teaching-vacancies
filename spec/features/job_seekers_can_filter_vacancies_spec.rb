@@ -19,7 +19,7 @@ RSpec.feature 'Filtering vacancies' do
 
   scenario 'Filterable by location', elasticsearch: true do
     expect(Geocoder).to receive(:coordinates).with('enfield', params: { region: 'uk' })
-      .and_return([51.6622925, -0.1180655])
+                                             .and_return([51.6622925, -0.1180655])
     enfield_vacancy = create(:vacancy, :published,
                              school: build(:school, name: 'St James School',
                                                     town: 'Enfield',

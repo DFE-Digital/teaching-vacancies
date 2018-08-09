@@ -5,6 +5,8 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   skip_before_action :check_session, only: %i[new create]
   skip_before_action :verify_authenticity_token, only: [:create]
 
+  before_action :redirect_signed_in_users
+
   def new; end
 
   def create
@@ -17,5 +19,9 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
 
   def choice
     params.require('identifications').permit('name')['name']
+  end
+
+  def redirect_signed_in_users
+    return redirect_to school_path if session.key?(:urn)
   end
 end

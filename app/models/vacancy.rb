@@ -65,6 +65,7 @@ class Vacancy < ApplicationRecord
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
   scope :active, (-> { where(status: %i[published draft]) })
   scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
+  scope :published_on_count, (->(date) { published.where('date(publish_on) = ?', date).count })
 
   paginates_per 10
 
@@ -90,6 +91,7 @@ class Vacancy < ApplicationRecord
     results
   end
 
+  # rubocop:disable Naming/UncommunicativeMethodParamName
   def as_indexed_json(_ = {})
     as_json(
       methods: %i[coordinates],
@@ -99,6 +101,7 @@ class Vacancy < ApplicationRecord
       }
     )
   end
+  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def trash!
     self.status = :trashed

@@ -42,6 +42,7 @@ module VacancyJobSpecificationValidations
     errors.add(:minimum_salary, min_salary_lower_than_minimum_payscale_error) unless minimum_at_least_minimum_payscale?
   end
 
+  # rubocop:disable Lint/Void
   def working_hours
     return if weekly_hours.blank?
 
@@ -52,6 +53,7 @@ module VacancyJobSpecificationValidations
       errors.add(:weekly_hours, invalid_weekly_hours_error)
     end
   end
+  # rubocop:enable Lint/Void
 
   private
 

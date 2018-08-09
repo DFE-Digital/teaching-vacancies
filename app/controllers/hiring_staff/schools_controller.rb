@@ -1,6 +1,6 @@
 class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
-    @multiple_schools = session.key?(:tva_permissions)
+    @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
     @vacancies = @school.vacancies.active
   end
@@ -25,5 +25,11 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
     else
       redirect_to edit_school_path(description: school.description)
     end
+  end
+
+  private
+
+  def session_has_multiple_schools?
+    session.key?(:multiple_schools) && session[:multiple_schools] == true
   end
 end

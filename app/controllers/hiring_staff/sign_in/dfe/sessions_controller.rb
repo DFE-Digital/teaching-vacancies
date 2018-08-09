@@ -1,5 +1,5 @@
 class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
-  skip_before_action :check_session, only: %i[create new callback]
+  skip_before_action :check_session, only: %i[create new]
   skip_before_action :verify_authenticity_token, only: %i[create new]
 
   def new
@@ -9,11 +9,11 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def create
     permissions = TeacherVacancyAuthorisation::Permissions.new
-    permissions.authorise(identifier)
+    permissions.authorise(identifier, selected_school_urn)
     Auditor::Audit.new(nil, 'dfe-sign-in.authentication.success', current_session_id).log_without_association
 
-    if permissions.school_urn.present?
-      update_session(permissions.school_urn)
+    if permissions.authorised?
+      update_session(permissions.school_urn, permissions)
       redirect_to school_path
     else
       Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
@@ -23,8 +23,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   private
 
-  def update_session(school_urn)
-    session.update(session_id: oid, urn: school_urn)
+  def update_session(school_urn, permissions)
+    session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)
     Auditor::Audit.new(current_school, 'dfe-sign-in.authorisation.success', current_session_id).log
   end
 
@@ -38,5 +38,9 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def identifier
     auth_hash['info']['email']
+  end
+
+  def selected_school_urn
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'urn')
   end
 end

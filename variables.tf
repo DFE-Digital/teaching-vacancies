@@ -177,6 +177,21 @@ variable "rds_engine_version" {
   }
 }
 
+variable "performance_platform_submit_task_command" {
+  description = "The Entrypoint for the performance_platform_submit task"
+  default     = ["rake", "verbose", "performance_platform:submit"]
+}
+
+variable "performance_platform_submit_task_schedule" {
+  description = "performance_platform_submit schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(24 hours)"
+}
+
+variable "performance_platform_submit_all_task_command" {
+  description = "The Entrypoint for the performance_platform_submit_all task"
+  default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
+}
+
 variable "rds_storage_gb" {}
 variable "rds_username" {}
 variable "rds_password" {}
@@ -243,6 +258,14 @@ variable "cloudwatch_ops_genie_api_key" {
   description = "The ops genie api key for sending alerts to ops genie"
 }
 
+variable "load_balancer_check_path" {
+  default = "/"
+}
+
+variable "logspout_command" {
+  type = "list"
+}
+
 # Application
 variable "rails_env" {}
 
@@ -264,13 +287,6 @@ variable "google_drive_json_key" {}
 variable "auth_spreadsheet_id" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
-
-variable "load_balancer_check_path" {
-  default = "/"
-}
-
 variable "rollbar_access_token" {}
-
-variable "logspout_command" {
-  type = "list"
-}
+variable "pp_transactions_by_channel_token" {}
+variable "pp_user_satisfaction_token" {}

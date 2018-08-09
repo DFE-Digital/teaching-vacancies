@@ -61,3 +61,5 @@ google_maps_api_key =
 google_analytics =
 rollbar_access_token =
 domain = # "tvs.dxw.net"
+pp_transactions_by_channel_token =
+pp_user_satisfaction_token =

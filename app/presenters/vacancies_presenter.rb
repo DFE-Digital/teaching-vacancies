@@ -21,7 +21,9 @@ class VacanciesPresenter < BasePresenter
     end
   end
 
-  private def total_count
+  private
+
+  def total_count
     model.total_count
   end
 end

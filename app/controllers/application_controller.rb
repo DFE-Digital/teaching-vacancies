@@ -5,19 +5,20 @@ class ApplicationController < ActionController::Base
 
   before_action :check_staging_auth, except: :check
   before_action :set_headers
+  before_action :detect_device_format
 
   include AuthenticationConcerns
   include Ip
 
   def check
-    render json: { status: 'OK' }, status: 200
+    render json: { status: 'OK' }, status: :ok
   end
 
   def not_found
     respond_to do |format|
-      format.html { render 'errors/not_found', status: 404 }
-      format.json { render json: { error: 'Resource not found' }, status: 404 }
-      format.all { render status: 404, body: nil }
+      format.html { render 'errors/not_found', status: :not_found }
+      format.json { render json: { error: 'Resource not found' }, status: :not_found }
+      format.all { render status: :not_found, body: nil }
     end
   end
 
@@ -28,11 +29,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # rubocop:disable Rails/UnknownEnv
   def authenticate?
     Rails.env.staging?
   end
+  # rubocop:enable Rails/UnknownEnv
 
-  private def http_user
+  def detect_device_format
+    request.variant = :phone if browser.device.mobile?
+  end
+
+  private
+
+  def http_user
     if Figaro.env.http_user?
       Figaro.env.http_user
     else
@@ -41,7 +50,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private def http_pass
+  def http_pass
     if Figaro.env.http_pass?
       Figaro.env.http_pass
     else
@@ -50,13 +59,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private def append_info_to_payload(payload)
+  def append_info_to_payload(payload)
     super
     payload[:remote_ip] = request_ip
     payload[:session_id] = "#{session.id[0..7]}…" if session.id
   end
 
-  private def set_headers
+  def set_headers
     response.set_header('X-Robots-Tag', 'none')
   end
 end
