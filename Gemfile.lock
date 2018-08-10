@@ -297,7 +297,7 @@ GEM
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
     public_suffix (3.0.2)
-    puma (3.10.0)
+    puma (3.12.0)
     rack (2.0.5)
     rack-oauth2 (1.9.2)
       activesupport
@@ -516,7 +516,7 @@ DEPENDENCIES
   poltergeist
   pry
   public_activity
-  puma (~> 3.7)
+  puma (~> 3.12)
   rack_session_access
   rails (~> 5.1.4)
   rails-controller-testing (~> 1.0, >= 1.0.2)
