@@ -214,7 +214,6 @@ en:
       - 'Listing data'
     please_accept: 'Please accept the terms and conditions'
     label: 'I agree to all of the Terms and Conditions of the Teaching Jobs service.'
-    error_message: 'You must accept the terms and conditions to continue'
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'
