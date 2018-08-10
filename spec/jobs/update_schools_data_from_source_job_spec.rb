@@ -43,7 +43,10 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
   context 'when the CSV is available' do
     let(:school_type) { create(:school_type, label: 'Previous school type', code: '999') }
     let(:region) { create(:region, name: 'Previous region', code: 'ZZZ') }
-    let!(:school)  { create(:school, urn: '100000', school_type: school_type, region: region) }
+    let!(:school)  do
+      create(:school, urn: '100000', name: 'Hogwards Academy',
+                      school_type: school_type, region: region)
+    end
     let!(:la_maintained_school_type) { SchoolType.create!(label: 'LA maintained school', code: '4') }
     let!(:voluntary_aided_school) { DetailedSchoolType.create!(label: 'Voluntary aided school', code: '02') }
     let!(:london) { Region.create(name: 'London', code: 'H') }
@@ -63,8 +66,9 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
           .to_return(body:
                      'URN,LA (code),EstablishmentName,EstablishmentTypeGroup (code),' \
                      'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-                     "Town,Postcode\n" \
-                     "100000,201,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
+                     "Town,Postcode,LastChangedDate\n" \
+                     "100000,201,St John\x92s School,999,999,ZZZ,http://test.com,?," \
+                     "?,?,#{Time.zone.today.strftime('%d/%m/%y')}")
       end
 
       it 'it\'s correctly converted to a UTF-8 encoded file' do
@@ -86,11 +90,11 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         expect(school.name).to eql('City of London School for Girls')
         expect(school.local_authority.name).to eql('London')
 
-        expect(School.where("urn in ('#{new_school_urns.join('\',\'')}')").count).to eq(6)
+        expect(School.where("urn in ('#{new_school_urns.join('\',\'')}')").count).to eq(7)
       end
     end
 
-    context 'and a school is already in the database' do
+    context 'and a school is already in the database', wip: true do
       it 'updates the school details' do
         UpdateSchoolsDataFromSourceJob.new.perform
 
@@ -114,6 +118,20 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
         expect(school.northing).to eql('181201')
         expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51396894535262)
         expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.07751626505544208)
+        expect(school.last_changed_on).to eql(Date.parse('16/09/2017'))
+        expect(school.status).to eql('Open')
+      end
+
+      it 'does not update the school details if the last_changed_on has not changed', wip: true do
+        date = Date.parse('16/09/2017')
+        school.update(last_changed_on: date)
+        UpdateSchoolsDataFromSourceJob.new.perform
+
+        school.reload
+        expect(school.last_changed_on).to eq(date)
+        expect(school.name).to eq('Hogwards Academy')
+        expect(school.region).to eq(region)
+        expect(school.school_type).to eq(school_type)
       end
     end
 
@@ -124,8 +142,8 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
             .to_return(body:
                        'URN,LA (code),EstablishmentName,EstablishmentTypeGroup (code),' \
                        'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-                       "Town,Postcode\n" \
-                       "100000,202,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
+                       "Town,Postcode,LastChangedDate\n" \
+                       "100000,202,St John\x92s School,999,999,ZZZ,test.com,?,?,?,19/08/2018")
           UpdateSchoolsDataFromSourceJob.new.perform
 
           school.reload
@@ -140,8 +158,8 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
             .to_return(body:
                        'URN,LA (code),EstablishmentName,EstablishmentTypeGroup (code),' \
                        'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-                       "Town,Postcode\n" \
-                       "100000,202,St John\x92s School,999,999,ZZZ,,?,?,?")
+                       "Town,Postcode,LastChangedDate\n" \
+                       "100000,202,St John\x92s School,999,999,ZZZ,,?,?,?,19/08/2019")
           UpdateSchoolsDataFromSourceJob.new.perform
 
           school.reload

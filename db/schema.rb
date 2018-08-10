@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180810104419) do
+ActiveRecord::Schema.define(version: 20180810164627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,10 +129,14 @@ ActiveRecord::Schema.define(version: 20180810104419) do
     t.point "geolocation"
     t.uuid "regional_pay_band_area_id"
     t.uuid "local_authority_id"
+    t.date "last_changed_on"
+    t.string "status"
+    t.index ["last_changed_on"], name: "index_schools_on_last_changed_on"
     t.index ["local_authority_id"], name: "index_schools_on_local_authority_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["regional_pay_band_area_id"], name: "index_schools_on_regional_pay_band_area_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
+    t.index ["status"], name: "index_schools_on_status"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
