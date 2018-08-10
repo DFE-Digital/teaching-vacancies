@@ -27,6 +27,8 @@ Rails.application.routes.draw do
            controller: 'hiring_staff/sign_in/dfe/sessions'
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
 
+  resource :terms_and_conditions, only: %i[show update], controller: 'hiring_staff/terms_and_conditions'
+
   resource :school, only: %i[show edit update], controller: 'hiring_staff/schools' do
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review'

@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t('terms_and_conditions.page_title')
+
+.grid-row
+  .column-two-thirds
+    %h1.heading-xlarge= t('terms_and_conditions.page_title')
+    %p= t('terms_and_conditions.intro')
+    %p= t('terms_and_conditions.intro_link', link: link_to('Terms and Conditions for Schools', page_path('terms-and-conditions'))).html_safe
+    %ul.list.list-bullet
+      - t('terms_and_conditions.summary_list').each do |item|
+        %li= item
+
+    = form_for :terms_and_conditions, url: terms_and_conditions_path, method: :patch do |f|
+      .form-group
+        %fieldset
+          %legend
+            %h3.heading-medium= t('terms_and_conditions.please_accept')
+          .multiple-choice
+            = f.check_box :accept
+            = f.label :accept, t('terms_and_conditions.label')
+      .form-group
+        = f.submit t('buttons.accept_and_continue'), class: 'button'

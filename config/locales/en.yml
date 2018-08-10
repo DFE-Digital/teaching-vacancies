@@ -203,9 +203,22 @@ en:
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
+  terms_and_conditions:
+    page_title: 'Terms and Conditions'
+    intro: 'Before listing any role at your school on Teaching Jobs you must first read our Terms and Conditions and agree to abide by them.'
+    intro_link: 'Of particular importance is the section %{link} which includes:'
+    summary_list:
+      - 'Using the Service'
+      - 'Unacceptable use'
+      - 'Access to the Service'
+      - 'Listing data'
+    please_accept: 'Please accept the terms and conditions'
+    label: 'I agree to all of the Terms and Conditions of the Teaching Jobs service.'
+    error_message: 'You must accept the terms and conditions to continue'
   buttons:
     apply_filters: 'Apply filters'
     save_and_continue: 'Save and continue'
+    accept_and_continue: 'Accept and continue'
     update_job: 'Update job'
     find: 'Find'
     delete: 'Delete'

@@ -11,7 +11,7 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_terms_and_conditions
-    redirect_to page_path('terms-and-conditions') unless current_user.accepted_terms_and_conditions?
+    redirect_to terms_and_conditions_path unless current_user&.accepted_terms_and_conditions?
   end
 
   def current_session_id
@@ -23,6 +23,7 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def current_user
+    return if current_session_id.blank?
     @current_user ||= User.find_or_create_by(oid: current_session_id)
   end
 end

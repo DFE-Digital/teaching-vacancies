@@ -3,6 +3,7 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   include IdentificationsHelper
 
   skip_before_action :check_session, only: %i[new create]
+  skip_before_action :check_terms_and_conditions, only: %i[new create]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   before_action :redirect_signed_in_users
