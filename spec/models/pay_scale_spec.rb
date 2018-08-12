@@ -8,7 +8,7 @@ RSpec.describe PayScale, type: :model do
     describe '#default' do
       it 'orders by index' do
         create(:pay_scale, index: 23)
-        last = create(:pay_scale, index: 30)
+        last = create(:pay_scale, index: 44)
         first = create(:pay_scale, index: 1)
         create(:pay_scale, index: 27)
 
@@ -19,7 +19,7 @@ RSpec.describe PayScale, type: :model do
 
     describe '#current' do
       it 'also orders by index' do
-        last = create(:pay_scale, index: 30)
+        last = create(:pay_scale, index: 44)
         first = create(:pay_scale, index: 1)
 
         expect(PayScale.current.first).to eq(first)

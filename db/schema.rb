@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180810164627) do
+ActiveRecord::Schema.define(version: 20180811222703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,8 +79,9 @@ ActiveRecord::Schema.define(version: 20180810164627) do
     t.integer "index"
     t.date "starts_at"
     t.uuid "regional_pay_band_area_id"
-    t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at", unique: true
-    t.index ["label"], name: "index_pay_scales_on_label", unique: true
+    t.index ["code", "expires_at", "regional_pay_band_area_id"], name: "pay_scales_code_expiry_pay_band_area_index", unique: true
+    t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at"
+    t.index ["index", "expires_at", "regional_pay_band_area_id"], name: "index_expires_at_regional_pay_band_area_index", unique: true
     t.index ["regional_pay_band_area_id"], name: "index_pay_scales_on_regional_pay_band_area_id"
   end
 
