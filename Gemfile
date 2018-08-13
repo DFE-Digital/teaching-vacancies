@@ -86,7 +86,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
-  gem 'webmock', '~> 2.1'
+  gem 'webmock', '~> 3.4'
   gem 'shoulda-matchers',
       git: 'https://github.com/thoughtbot/shoulda-matchers.git',
       branch: 'rails-5'
