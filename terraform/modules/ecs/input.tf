@@ -73,6 +73,10 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
+variable "import_local_authorities_task_command" {
+  type = "list"
+}
+
 variable "performance_platform_submit_task_command" {
   type = "list"
 }

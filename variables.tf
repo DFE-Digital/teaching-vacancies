@@ -152,6 +152,11 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "elasticsearch:vacancies:index"]
 }
 
+variable "import_local_authorities_task_command" {
+  description = "The Entrypoint for the import_local_authorities task"
+  default     = ["rake", "data:local_authorities:import"]
+}
+
 variable "vacancies_scrape_task_schedule" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "rate(60 minutes)"
