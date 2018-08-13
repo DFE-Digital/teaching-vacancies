@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 5.1.4'
 
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 gem 'pg', '~> 0.18'
 gem 'elasticsearch-model'
 gem 'faraday_middleware-aws-signers-v4'
@@ -86,7 +86,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
-  gem 'webmock', '~> 2.1'
+  gem 'webmock', '~> 3.4'
   gem 'shoulda-matchers',
       git: 'https://github.com/thoughtbot/shoulda-matchers.git',
       branch: 'rails-5'
