@@ -126,7 +126,6 @@ data "template_file" "import_schools_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_import_schools"
@@ -151,7 +150,6 @@ data "template_file" "vacancies_scrape_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_vacancies_scrape"
@@ -176,7 +174,6 @@ data "template_file" "sessions_trim_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_sessions_trim"
@@ -201,7 +198,6 @@ data "template_file" "update_pay_scale_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_update_pay_scale"
@@ -226,7 +222,6 @@ data "template_file" "update_vacancies_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_update_vacancies"
@@ -251,7 +246,6 @@ data "template_file" "reindex_vacancies_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_reindex_vacancies"
