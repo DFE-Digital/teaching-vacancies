@@ -126,7 +126,6 @@ data "template_file" "import_schools_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_import_schools"
@@ -151,7 +150,6 @@ data "template_file" "vacancies_scrape_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_vacancies_scrape"
@@ -176,7 +174,6 @@ data "template_file" "sessions_trim_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_sessions_trim"
@@ -201,7 +198,6 @@ data "template_file" "update_pay_scale_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_update_pay_scale"
@@ -226,7 +222,6 @@ data "template_file" "update_vacancies_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_update_vacancies"
@@ -251,7 +246,6 @@ data "template_file" "reindex_vacancies_container_definition" {
 
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
     task_name                = "${var.ecs_service_task_name}_reindex_vacancies"
@@ -275,23 +269,24 @@ data "template_file" "performance_platform_submit_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_task_name}_performance_platform_submit"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint               = "${jsonencode(var.performance_platform_submit_task_command)}"
+    image                            = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base                  = "${var.secret_key_base}"
+    project_name                     = "${var.project_name}"
+    task_name                        = "${var.ecs_service_task_name}_performance_platform_submit"
+    environment                      = "${var.environment}"
+    rails_env                        = "${var.rails_env}"
+    region                           = "${var.region}"
+    log_group                        = "${var.aws_cloudwatch_log_group_name}"
+    database_user                    = "${var.rds_username}"
+    database_password                = "${var.rds_password}"
+    database_url                     = "${var.rds_address}"
+    elastic_search_url               = "${var.es_address}"
+    aws_elasticsearch_region         = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key            = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
+    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
+    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
+    entrypoint                       = "${jsonencode(var.performance_platform_submit_task_command)}"
   }
 }
 
@@ -300,23 +295,24 @@ data "template_file" "performance_platform_submit_all_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
 
   vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    google_maps_api_key      = "${var.google_maps_api_key}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_task_name}_performance_platform_submit_all"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint               = "${jsonencode(var.performance_platform_submit_all_task_command)}"
+    image                            = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base                  = "${var.secret_key_base}"
+    project_name                     = "${var.project_name}"
+    task_name                        = "${var.ecs_service_task_name}_performance_platform_submit_all"
+    environment                      = "${var.environment}"
+    rails_env                        = "${var.rails_env}"
+    region                           = "${var.region}"
+    log_group                        = "${var.aws_cloudwatch_log_group_name}"
+    database_user                    = "${var.rds_username}"
+    database_password                = "${var.rds_password}"
+    database_url                     = "${var.rds_address}"
+    elastic_search_url               = "${var.es_address}"
+    aws_elasticsearch_region         = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key            = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
+    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
+    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
+    entrypoint                       = "${jsonencode(var.performance_platform_submit_all_task_command)}"
   }
 }
 
