@@ -24,6 +24,7 @@ phases:
       - echo Tagging the successfully tested image as latest...
       - docker tag ${image_repo_name}:test $REPOSITORY_URI:latest
       - docker tag ${image_repo_name}:test $REPOSITORY_URI:$IMAGE_TAG
+      - echo "Test"
   post_build:
     commands:
       - echo Build completed on `date`
