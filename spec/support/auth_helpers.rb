@@ -28,6 +28,7 @@ module AuthHelpers
   def stub_hiring_staff_auth(urn:, session_id: 'session_id')
     page.set_rack_session(urn: urn)
     page.set_rack_session(session_id: session_id)
+    create(:user, oid: session_id)
   end
 end
 

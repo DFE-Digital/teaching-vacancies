@@ -12,6 +12,7 @@ RSpec.feature 'School viewing public listings' do
   end
 
   let!(:school) { create(:school, urn: '110627') }
+  let!(:user) { create(:user, oid: 'a-valid-oid') }
 
   context 'when signed in with DfE Sign In' do
     before(:each) do
