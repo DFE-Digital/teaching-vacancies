@@ -24,7 +24,7 @@ en:
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
       change: 'Change organisation'
   identification:
-    find_school_information: Find your schools official area
+    find_school_information: Find your school's official area
   jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
