@@ -34,6 +34,7 @@
                 wrapper_html: {id: 'benefits'},
                 required: false
       = f.input :subject_id,
+                wrapper: 'select',
                 label: t('jobs.main_subject'),
                 hint: t('jobs.form_hints.main_subject'),
                 wrapper_html: {id: 'subject'},
@@ -43,46 +44,47 @@
       %fieldset.govuk-fieldset#pay_scale_range
         %legend.govuk-label.govuk-label= "#{t('jobs.pay_scale_range')} (optional)"
         %span.govuk-hint= t('jobs.form_hints.pay_scale_range')
+        .govuk-form-group
+          = f.input :min_pay_scale_id,
+                    wrapper: 'select',
+                    collection: pay_scale_options,
+                    label_method: :label,
+                    label: false,
+                    required: false,
+                    input_html: { class: 'govuk-select', 'aria-label': t('jobs.aria_labels.minimum_pay_scale_range') }
 
-        = f.input :min_pay_scale_id,
-                  collection: pay_scale_options,
-                  label_method: :label,
-                  label: false,
-                  required: false,
-                  wrapper: false,
-                  input_html: { 'aria-label': t('jobs.aria_labels.minimum_pay_scale_range') }
           %p.value-to-value to
 
+          = f.input :max_pay_scale_id,
+                    wrapper: 'select',
+                    collection: pay_scale_options,
+                    label_method: :label,
+                    required: false,
+                    label: false,
+                    input_html: { class: 'govuk-select', 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range') }
 
-        = f.input :max_pay_scale_id,
-                  collection: pay_scale_options,
-                  label_method: :label,
-                  required: false,
-                  label: false,
-                  wrapper: false,
-                  input_html: { 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range') }
       %fieldset.govuk-fieldset#salary_range
         %legend.form-label.govuk-label= t('jobs.salary_range')
         .govuk-form-group
+          = f.input :minimum_salary,
+                    wrapper: 'money',
+                    hint: t('jobs.form_hints.salary_range'),
+                    required: true,
+                    label: '£',
+                    wrapper_html: { id: 'minimum_salary' },
+                    input_html: { class: 'govuk-!-width-one-half', 'aria-label': t('jobs.aria_labels.minimum_salary') }
 
-        = f.input :minimum_salary,
-                  wrapper: 'money',
-                  hint: t('jobs.form_hints.salary_range'),
-                  required: true,
-                  label: '£',
-                  wrapper_html: { id: 'minimum_salary' },
-                  input_html: { class: 'form-control-1-8', 'aria-label': t('jobs.aria_labels.minimum_salary') }
           %p.value-to-value to
 
-
-        = f.input :maximum_salary,
-                  wrapper: 'money',
-                  required: true,
-                  label: '£',
-                  wrapper_html: { id: 'maximum_salary' },
+          = f.input :maximum_salary,
+                    wrapper: 'money',
+                    required: true,
+                    label: '£',
+                    wrapper_html: { id: 'maximum_salary' },
                     input_html: { class: 'govuk-!-width-one-half', 'aria-label': t('jobs.aria_labels.maximum_salary') }
 
       = f.input :working_pattern,
+                wrapper: 'select',
                 label: t('jobs.working_pattern'),
                 collection: working_pattern_options,
                 wrapper_html: {id: 'working_pattern'},
@@ -105,6 +107,7 @@
                 input_html: {class: 'govuk-!-width-one-half'},
                 required: false
       = f.input :leadership_id,
+                wrapper: 'select',
                 label: t('jobs.leadership_level'),
                 collection: Leadership.order(:title),
                 wrapper_html: {id: 'leadership'},

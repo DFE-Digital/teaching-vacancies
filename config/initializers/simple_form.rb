@@ -96,6 +96,16 @@ SimpleForm.setup do |config|
   # You can wrap each item in a collection of radio/check boxes with a tag,
   # defaulting to :span.
   # config.item_wrapper_tag = :span
+
+  config.wrappers :select, tag: 'div',
+                             class: 'govuk-form-group',
+                             error_class: 'govuk-form-group--error' do |field|
+    field.use :label, wrap_with: { tag: 'span', class: 'govuk-label govuk-label' }
+    field.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
+    field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
+    field.use :input, as: :select, class: 'govuk-select'
+  end
+
   config.wrappers :textarea, tag: 'div',
                              class: 'govuk-form-group',
                              error_class: 'govuk-form-group--error' do |field|
