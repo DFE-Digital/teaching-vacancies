@@ -102,7 +102,7 @@ GEM
     crass (1.0.4)
     css_parser (1.6.0)
       addressable
-    database_cleaner (1.6.1)
+    database_cleaner (1.7.0)
     declarative (0.0.10)
     declarative-option (0.1.0)
     diff-lcs (1.3)
