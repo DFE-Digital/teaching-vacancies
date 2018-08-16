@@ -34,9 +34,6 @@ gem 'omniauth_openid_connect', '~> 0.1'
 
 gem 'breasal', '~> 0.0.1'
 
-gem 'govuk_elements_rails'
-gem 'govuk_frontend_toolkit'
-gem 'govuk_template'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'roadie-rails'
