@@ -5,7 +5,7 @@ SimpleForm.setup do |config|
   # wrapper, change the order or even add your own to the
   # stack. The options given below are used to wrap the
   # whole input.
-  config.wrappers :default, tag: 'div', class: 'form-group', error_class: 'form-group-error' do |b|
+  config.wrappers :default, tag: 'div', class: 'govuk-form-group', error_class: 'govuk-form-group--error' do |b|
     ## Extensions enabled by default
     # Any of these extensions can be disabled for a
     # given input by passing: `f.input EXTENSION_NAME => false`.
@@ -43,10 +43,10 @@ SimpleForm.setup do |config|
     b.optional :readonly
 
     ## Inputs
-    b.use :label, class: 'form-label form-label-bold'
-    b.use :hint, wrap_with: { tag: 'div', class: 'form-hint' }
-    b.use :error, wrap_with: { tag: 'div', class: 'error-message' }
-    b.use :input, class: 'form-control'
+    b.use :label, class: 'govuk-label govuk-label'
+    b.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
+    b.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
+    b.use :input, class: 'govuk-input'
 
     ## full_messages_for
     # If you want to display the full error message for the attribute, you can
@@ -65,7 +65,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :inline
 
   # Default class for buttons
-  config.button_class = 'button'
+  config.button_class = 'govuk-button'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.
@@ -97,26 +97,26 @@ SimpleForm.setup do |config|
   # defaulting to :span.
   # config.item_wrapper_tag = :span
   config.wrappers :inline_checkbox, :tag => 'div',
-                                    :class => 'form-group',
+                                    :class => 'govuk-form-group',
                                     :error_class => 'error' do |checkbox|
     checkbox.use :html5
-    checkbox.wrapper :class => 'multiple-choice' do |field|
-      field.use :input
-      field.use :label_text, wrap_with: { tag: 'label', class: 'form-label form-label-bold' }
+    checkbox.wrapper :class => 'govuk-checkboxes__item' do |field|
+      field.use :input, class: 'govuk-checkboxes__input'
+      field.use :label_text, wrap_with: { tag: 'label', class: 'govuk-label govuk-label govuk-checkboxes__label' }
     end
 
     checkbox.use :error, :wrap_with => { :tag => 'div', :class => 'help-inline' }
-    checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'form-hint' }
+    checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'govuk-hint' }
   end
 
   config.wrappers :money, tag: 'div',
-                                class: 'salary_field form-group',
-                                error_class: 'form-group-error' do |field|
+                                class: 'salary_field govuk-form-group',
+                                error_class: 'govuk-form-group--error' do |field|
     field.use :html5
-    field.use :hint,  wrap_with: { tag: 'div', class: 'form-hint' }
-    field.use :error, wrap_with: { tag: 'div', class: 'error-message' }
+    field.use :hint,  wrap_with: { tag: 'div', class: 'govuk-hint' }
+    field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
     field.use :label, wrap_with: { tag: 'span', class: 'pound_sign' }
-    field.use :input, class: 'form-control', pattern: '\d*'
+    field.use :input, class: 'govuk-input', pattern: '\d*'
   end
 
   # You can define a class to use in all item wrappers. Defaulting to none.
