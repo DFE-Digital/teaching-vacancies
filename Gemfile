@@ -10,7 +10,7 @@ end
 gem 'rails', '~> 5.2.1'
 
 gem 'puma', '~> 3.12'
-gem 'pg', '~> 0.18'
+gem 'pg', '~> 1.0'
 gem 'elasticsearch-model'
 gem 'faraday_middleware-aws-signers-v4'
 gem 'friendly_id'
