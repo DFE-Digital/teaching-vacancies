@@ -15,10 +15,10 @@ RSpec.feature 'A visitor to the website can access the support links' do
     click_on 'Privacy policy'
 
     expect(page).to have_content('Privacy Notice: Teaching Jobs')
-    expect(page).to have_content('This work is being carried out by Department for Education (DfE) Digital,' \
-                                 ' which is a part of DfE. For the purpose of data protection legislation, ' \
+    expect(page).to have_content('This work is being carried out by Department for Education (DfE) Digital, ' \
+                                 'which is a part of DfE. For the purpose of data protection legislation, ' \
                                  'the DfE is the data controller for the personal data processed as part of ' \
-                                 'Teaching Jobs. ')
+                                 'Teaching Jobs.')
   end
 
   scenario 'the terms and conditions' do

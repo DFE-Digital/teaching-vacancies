@@ -39,7 +39,7 @@ RSpec.feature 'Vacancy feedback' do
         fill_in 'feedback_comment', with: 'Perfect!'
 
         click_on 'Submit feedback'
-        expect(page).to have_content(' Rating can\'t be blank')
+        expect(page).to have_content('Rating can\'t be blank')
       end
 
       scenario 'Can be successfully submitted for a published vacancy' do
