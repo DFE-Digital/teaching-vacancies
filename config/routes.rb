@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
+  resources :stats, only: [:index]
+
   resource :identifications, only: %i[new create], controller: 'hiring_staff/identifications'
 
   # Sign in
