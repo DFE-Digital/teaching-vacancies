@@ -90,7 +90,7 @@ $ terraform apply -var-file=workspace-variables/staging.tfvars
 
 ## Setup a testing pipeline
 
-To enable CI to give us test feedback on our GitHub pull requests we can do a small piece of manual set up:  
+To enable CI to give us test feedback on our GitHub pull requests we can do a small piece of manual set up:
 
 1. Create a new CodeBuild project in AWS
 2. Name it eg. `tvs2-pull-requests`. You can call it anything you like but bear in mind it is not environment or workspace related, there's one per repository
@@ -144,7 +144,7 @@ Without this setup, CloudFront will continue to provide generic 503 and 502 page
 
 ## Add new environment variables
 
-Our application environment variables are defined and used in multiple places. We try to group the variables in the 
+Our application environment variables are defined and used in multiple places. We try to group the variables in the
 same way in each file to reduce cognitive effort for future readers.
 
 1. `docker-compose.env.sample` - In the application’s sample env file
@@ -156,3 +156,78 @@ same way in each file to reduce cognitive effort for future readers.
 1. `workspace-variables/<env>.tfvars` - In each workspace tfvars
 1. `workspace-variables/workspace.tfvars.example` - In the example workspace tfvars
 1. Sync workspace tfvars to 1password for the team
+
+
+### Configuring a rake task
+
+In `terraform.tf` add a task command and a relevant schedule for tasks that need to be executed automatically  on a time schedule
+
+```
+  <task_name>_task_command    = "${var.<task_name>_submit_task_command}"
+  <task_name>_task_schedule   = "${var.<task_name>_submit_task_schedule}"
+```
+
+In `terraform/modules/ecs/ecs.tf` add a new task definition. All variables specified below are required **but** if your task is making use of other variables, make sure you specify them within the vars block as well.
+
+```
+/* <task_name> task definition*/
+data "template_file" "<task_name>_submit_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_task_name}_<task_name>"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    entrypoint               = "${jsonencode(var.<task_name>_task_command)}"
+
+    # other task specific env variables
+
+  }
+}
+```
+
+If your task is one-off (only manually executed) add an entry under `ECS ONE-OFF TASKS` for the aws task definition
+
+```
+  resource "aws_ecs_task_definition" "<task_name>_task" {
+  family                   = "${var.ecs_service_task_name}_<task_name>_task"
+  container_definitions    = "${data.template_file.<task_name>_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+```
+
+For scheduled tasks add both the entry from above under `ECS SCHEDULED TASKS` and along with that specify an aws_clouwatch event rule and target
+
+```
+resource "aws_cloudwatch_event_rule" "<task_name>" {
+  name                = "${var.ecs_service_task_name}_<task_name>_task"
+  description         = "Run <task_name> at a scheduled time"
+  schedule_expression = "${var.<task_name>_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "<task_name>_task_event" {
+  target_id = "${var.ecs_service_task_name}_<task_name>"
+  rule      = "${aws_cloudwatch_event_rule.<task_name>_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.<task_name>_task.arn}"
+  }
+}
+```

@@ -48,6 +48,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
   let!(:school) { create(:school, urn: '110627') }
   let!(:other_school) { create(:school, urn: '101010') }
+  let!(:user) { create(:user, oid: 'an-unknown-oid') }
 
   context 'with valid credentials that do match a school' do
     before(:each) do
