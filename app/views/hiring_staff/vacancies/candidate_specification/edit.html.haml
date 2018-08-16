@@ -10,6 +10,7 @@
   .govuk-grid-row
     .govuk-grid-column-one-half
       = f.input :education,
+                wrapper: 'textarea',
                 label: t('jobs.education'),
                 as: :text,
                 hint: t('jobs.form_hints.education'),
@@ -17,6 +18,7 @@
                 wrapper_html: {id: 'education'},
                 required: true
       = f.input :qualifications,
+                wrapper: 'textarea',
                 label: t('jobs.qualifications'),
                 as: :text,
                 hint: t('jobs.form_hints.qualifications'),
@@ -24,6 +26,7 @@
                 wrapper_html: {id: 'qualifications'},
                 required: true
       = f.input :experience,
+                wrapper: 'textarea',
                 label: t('jobs.experience'),
                 as: :text,
                 hint: t('jobs.form_hints.experience'),

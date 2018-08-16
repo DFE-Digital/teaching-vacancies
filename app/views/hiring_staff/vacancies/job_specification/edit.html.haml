@@ -15,6 +15,7 @@
                 wrapper_html: {id: 'job_title'},
                 required: true
       = f.input :job_description,
+                wrapper: 'textarea',
                 as: :text,
                 label: t('jobs.description'),
                 hint: t('jobs.form_hints.description'),
@@ -22,6 +23,7 @@
                 wrapper_html: {id: 'job_description'},
                 required: true
       = f.input :benefits,
+                wrapper: 'textarea',
                 as: :text,
                 label: t('jobs.benefits'),
                 hint: t('jobs.form_hints.benefits'),
