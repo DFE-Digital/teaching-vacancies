@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/despo/gov_uk_date_fields.git
-  revision: 5ac501e863eeaf89d2e05ea3e595018d8c606cd5
-  branch: trigger-iphone-numeric-keyboard
+  revision: 80a638ccea7eb4beba9e8ac12605bae8efaa1654
+  branch: trigger-iphone-numeric-keyboard-for-new-gov-uk-ds
   specs:
     gov_uk_date_fields (3.0.0)
       rails (>= 5.0)
