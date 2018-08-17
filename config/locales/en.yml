@@ -215,7 +215,7 @@ en:
     please_accept: 'Please accept the terms and conditions'
     label: 'I agree to all of the Terms and Conditions of the Teaching Jobs service.'
   buttons:
-    apply_filters: 'Apply filters'
+    search: 'Search'
     save_and_continue: 'Save and continue'
     accept_and_continue: 'Accept and continue'
     update_job: 'Update job'
