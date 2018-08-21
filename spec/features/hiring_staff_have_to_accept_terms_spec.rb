@@ -43,9 +43,9 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
   end
 
   context 'the user has accepted the terms and conditions' do
-    before { current_user.update(accepted_terms_at: Time.zone.now) }
-
     scenario 'they will not see the terms and conditions' do
+      current_user.update(accepted_terms_at: Time.zone.now)
+
       visit school_path
 
       expect(page).not_to have_content(I18n.t('terms_and_conditions.please_accept'))
