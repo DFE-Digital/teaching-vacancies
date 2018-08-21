@@ -100,6 +100,31 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       expect(page).to have_content("Jobs at #{school.name}")
       expect(current_path).to eql(school_path)
     end
+
+    context 'the user can switch between organisations' do
+      scenario 'allows the user to switch between organisations' do
+        expect(page).to have_content("Jobs at #{school.name}")
+
+        # Mock switching organisations on DfE Sign In
+        OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
+          provider: 'dfe',
+          uid: 'an-unknown-oid',
+          info: {
+            email: 'an-email@example.com',
+          },
+          extra: {
+            raw_info: {
+              organisation: { urn: '101010' }
+            }
+          }
+        )
+        expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+          .and_return(mock_permissions)
+        click_on 'Change organisation'
+
+        expect(page).to have_content("Jobs at #{other_school.name}")
+      end
+    end
   end
 
   context 'with valid credentials but no permission' do
