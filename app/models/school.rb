@@ -2,9 +2,12 @@ require 'breasal'
 class School < ApplicationRecord
   include Auditor::Model
 
-  belongs_to :school_type, required: true
+  belongs_to :school_type
   belongs_to :detailed_school_type, optional: true
   belongs_to :region
+  belongs_to :local_authority
+  belongs_to :regional_pay_band_area, required: false
+  has_many :pay_scales, through: :regional_pay_band_area
 
   has_many :vacancies
 
@@ -20,6 +23,10 @@ class School < ApplicationRecord
     sixteen_plus: 6,
     all_through: 7,
   }
+
+  def minimum_pay_scale_salary
+    pay_scales.current.minimum(:salary).to_i
+  end
 
   def easting=(easting)
     self[:easting] = easting

@@ -157,7 +157,7 @@ RSpec.describe Vacancy, type: :model do
       end
 
       it 'valid minimum_salary and invalid maximum_salary' do
-        job = build(:vacancy, minimum_salary: '20000', maximum_salary: 'A20000')
+        job = build(:vacancy, minimum_salary: '28000', maximum_salary: 'A20000')
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary]).to be_empty
@@ -166,17 +166,16 @@ RSpec.describe Vacancy, type: :model do
       end
 
       it 'less than allowed minimum_salary and no maximum_salary' do
-        stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '3000')
         job = build(:vacancy, minimum_salary: '20', maximum_salary: nil)
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq(['must be at least £3000'])
+          .to eq(["must be at least £#{job.school_minimum_salary}"])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
       it 'valid minimum_salary and greater than allowed maximum_salary' do
-        job = build(:vacancy, minimum_salary: '20000', maximum_salary: 200000000000)
+        job = build(:vacancy, minimum_salary: '28000', maximum_salary: 200000000000)
 
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary]).to be_empty
@@ -211,7 +210,7 @@ RSpec.describe Vacancy, type: :model do
 
     describe '#maximum_salary_greater_than_minimum' do
       it 'the minimum salary should be less than the maximum salary' do
-        vacancy = build(:vacancy, minimum_salary: 20, maximum_salary: 10)
+        vacancy = build(:vacancy, minimum_salary: 30000, maximum_salary: 25000)
 
         expect(vacancy.valid?).to be false
         expect(vacancy.errors.messages[:maximum_salary]).to eq(['must be higher than the minimum salary'])

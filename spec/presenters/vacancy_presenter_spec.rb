@@ -13,8 +13,8 @@ RSpec.describe VacancyPresenter do
 
     context 'when no maximum salary is set' do
       it 'should just return the minimum salary' do
-        vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 20000, maximum_salary: nil))
-        expect(vacancy.salary_range).to eq('£20,000')
+        vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 28000, maximum_salary: nil))
+        expect(vacancy.salary_range).to eq('£28,000')
       end
     end
   end

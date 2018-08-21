@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe SalaryValidator do
   describe '#validates_each(record, attribute, value)' do
     context 'mandatory checks' do
-      let(:model) do
-        TestModel.new
-      end
+      let(:model) { TestModel.new }
 
       it 'does not allow the pound sign' do
         model.amount = '£123.33'
@@ -56,18 +54,23 @@ RSpec.describe SalaryValidator do
     end
 
     context 'optional checks' do
-      let(:model) do
-        TestModelOnlyMandatory.new
+      let(:school) { create(:school) }
+      let(:model) { TestModelOnlyMandatory.new(school) }
+
+      before(:each) do
+        minimum = create(:pay_scale, salary: 23450)
+        other = create(:pay_scale, salary: 40050)
+        regional_pay_band_area = school.regional_pay_band_area
+        regional_pay_band_area.pay_scales << minimum << other
       end
 
       context 'if minimum_value: true' do
         it 'validates that the value is not less than the minimum allowed' do
-          stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '400')
           model.amount = '12.23'
 
           expect(model).to_not be_valid
           expect(model.errors[:amount]).to eq([I18n.t('errors.messages.salary.lower_than_minimum_payscale',
-                                                      minimum_salary: '£400')])
+                                                      minimum_salary: '£23450')])
         end
       end
     end
@@ -78,6 +81,7 @@ class TestModel
   include ActiveModel::Validations
 
   attr_accessor :amount
+
   validates :amount, salary: { presence: true }
 end
 
@@ -86,4 +90,12 @@ class TestModelOnlyMandatory
 
   attr_accessor :amount
   validates :amount, salary: { presence: true, minimum_value: true }
+
+  def initialize(school)
+    @school = school
+  end
+
+  def school_minimum_salary
+    @school.minimum_pay_scale_salary
+  end
 end

@@ -15,7 +15,7 @@ FactoryBot.define do
     status { :published }
     expires_on { Faker::Time.forward(14) }
     publish_on { Time.zone.today }
-    minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
+    minimum_salary { Faker::Number.between(27050, 29000) }
     maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }

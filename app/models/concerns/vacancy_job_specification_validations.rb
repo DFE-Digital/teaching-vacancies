@@ -14,6 +14,10 @@ module VacancyJobSpecificationValidations
     validate :working_hours
   end
 
+  def school_minimum_salary
+    school.minimum_pay_scale_salary
+  end
+
   def minimum_valid_and_maximum_salary_present?
     errors[:minimum_salary].blank? && maximum_salary.present?
   end

@@ -4,14 +4,14 @@ require 'vacancy_scraper'
 
 RSpec.describe VacancyScraper::NorthEastSchools do
   context 'Scraping NorthEastSchool vacancies' do
+    let(:region) { create(:regional_pay_band_area) }
+
     before(:each) do
-      create(:pay_scale, code: 'MPS1', salary: 22917)
-      create(:pay_scale, code: 'UPS3', salary: 38633)
-      create(:pay_scale, code: 'LPS5', salary: 44544)
-      create(:pay_scale, code: 'LPS12', salary: 51639)
-      create(:pay_scale, code: 'LPS16', salary: 59857)
-      create(:pay_scale, code: 'LPS29', salary: 159857)
-      create(:pay_scale, code: 'LPS35', salary: 189857)
+      [['MPS1', 22917], ['UPS3', 38633], ['LPS5', 44544],
+       ['LPS12', 51639], ['LPS16', 59857], ['LPS29', 159857],
+       ['LPS35', 189857]].each_with_index do |ps, i|
+         create(:pay_scale, index: i, code: ps[0], salary: ps[1], regional_pay_band_area: region).save
+       end
     end
 
     context 'Retrieving the listed vacancy urls' do

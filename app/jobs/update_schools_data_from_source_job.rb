@@ -10,42 +10,48 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
     save_csv_file
 
     CSV.foreach(csv_file_location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
-      School.transaction do
-        next if row['EstablishmentStatus (name)'].eql?('Closed')
+      school = School.find_or_initialize_by(urn: row['URN'])
+      last_changed_date = Date.parse(row['LastChangedDate'])
+      next if school.last_changed_on.eql?(last_changed_date)
 
-        school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
-        school_type.label = row['EstablishmentTypeGroup (name)']
+      school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
+      school_type.label = row['EstablishmentTypeGroup (name)']
+      local_authority = LocalAuthority.find_by(code: row['LA (code)'])
 
-        detailed_school_type = DetailedSchoolType.find_or_initialize_by(code: row['TypeOfEstablishment (code)'])
-        detailed_school_type.label = row['TypeOfEstablishment (name)']
+      detailed_school_type = DetailedSchoolType.find_or_initialize_by(code: row['TypeOfEstablishment (code)'])
+      detailed_school_type.label = row['TypeOfEstablishment (name)']
 
-        region = Region.find_or_initialize_by(code: row['GOR (code)'])
-        region.name = row['GOR (name)']
+      region = Region.find_or_initialize_by(code: row['GOR (code)'])
+      region.name = row['GOR (name)']
 
-        school = School.find_or_initialize_by(urn: row['URN'])
-        school.name = row['EstablishmentName']
-        school.address = row['Street']
-        school.locality = row['Locality'].presence
-        school.address3 = row['Address3'].presence
-        school.town = row['Town']
-        school.county = row['County (name)'].presence
-        school.postcode = row['Postcode']
-        school.minimum_age = row['StatutoryLowAge']
-        school.maximum_age = row['StatutoryHighAge']
+      school.name = row['EstablishmentName']
+      school.address = row['Street']
+      school.locality = row['Locality'].presence
+      school.address3 = row['Address3'].presence
+      school.town = row['Town']
+      school.county = row['County (name)'].presence
+      school.postcode = row['Postcode']
+      school.minimum_age = row['StatutoryLowAge']
+      school.maximum_age = row['StatutoryHighAge']
 
-        school.easting = row['Easting']
-        school.northing = row['Northing']
+      school.easting = row['Easting']
+      school.northing = row['Northing']
 
-        school.url = valid_website(row['SchoolWebsite'])
+      school.url = valid_website(row['SchoolWebsite'])
+      school.phase = row['PhaseOfEducation (code)'].to_i
 
-        school.phase = row['PhaseOfEducation (code)'].to_i
+      school.status = row['EstablishmentStatus (name)']
 
-        school.school_type = school_type
-        school.detailed_school_type = detailed_school_type
-        school.region = region
+      school.school_type = school_type
+      school.detailed_school_type = detailed_school_type
+      school.region = region
 
-        school.save
-      end
+      school.local_authority = local_authority
+      school.regional_pay_band_area ||= local_authority&.default_regional_pay_band_area
+
+      school.last_changed_on = last_changed_date
+
+      school.save
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -82,5 +88,7 @@ class UpdateSchoolsDataFromSourceJob < ApplicationJob
 
   def valid_website(url)
     Addressable::URI.heuristic_parse(url).to_s
+  rescue Addressable::URI::InvalidURIError
+    nil
   end
 end

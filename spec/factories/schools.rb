@@ -1,7 +1,10 @@
 FactoryBot.define do
   factory :school do
-    association :school_type
-    association :region
+    detailed_school_type
+    school_type
+    regional_pay_band_area
+    local_authority
+    region
 
     name { Faker::Educator.secondary_school.strip }
     description { Faker::Lorem.paragraph(1) }

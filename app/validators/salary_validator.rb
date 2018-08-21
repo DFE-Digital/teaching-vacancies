@@ -5,7 +5,6 @@ class SalaryValidator < ActiveModel::EachValidator
   rescue_from ArgumentError, with: :invalid_format_message
 
   SALARY_FORMAT = /^\d+\.{0,1}\d{2}{0,1}$/
-  MIN_SALARY_ALLOWED = PayScale.minimum_payscale_salary.freeze
   MAX_SALARY_ALLOWED = 200000
 
   def validate_each(record, attribute, value)
@@ -13,7 +12,8 @@ class SalaryValidator < ActiveModel::EachValidator
     return error_message(record, attribute, invalid_format_message) if value[SALARY_FORMAT].nil?
 
     salary = converted_salary(value)
-    return error_message(record, attribute, must_be_higher_than_min_allowed_message) if less_than_min_allowed?(salary)
+    @record = record
+    return error_message(record, attribute, lower_than_min_allowed_message) if less_than_min_allowed?(salary)
     return error_message(record, attribute, must_be_less_than_max_salary_message) if salary > MAX_SALARY_ALLOWED
   end
 
@@ -32,7 +32,8 @@ class SalaryValidator < ActiveModel::EachValidator
   end
 
   def less_than_min_allowed?(value)
-    value < BigDecimal(MIN_SALARY_ALLOWED) if check_minimum?
+    return false unless check_minimum?
+    value < BigDecimal(@record.school_minimum_salary)
   end
 
   def converted_salary(value)
@@ -52,8 +53,8 @@ class SalaryValidator < ActiveModel::EachValidator
            count: number_to_currency(MAX_SALARY_ALLOWED, delimiter: ''))
   end
 
-  def must_be_higher_than_min_allowed_message
+  def lower_than_min_allowed_message
     I18n.t('errors.messages.salary.lower_than_minimum_payscale',
-           minimum_salary: number_to_currency(MIN_SALARY_ALLOWED, delimiter: ''))
+           minimum_salary: number_to_currency(@record.school_minimum_salary, delimiter: ''))
   end
 end
