@@ -19,7 +19,7 @@ FactoryBot.define do
     maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
-    weekly_hours '8.5'
+    weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
 
     trait :fail_minimum_validation do
@@ -52,7 +52,7 @@ FactoryBot.define do
     trait :complete do
       starts_on { Faker::Time.forward(30) }
       ends_on { Faker::Time.forward(60) }
-      flexible_working true
+      flexible_working { true }
     end
 
     trait :draft do
@@ -83,7 +83,7 @@ FactoryBot.define do
     end
 
     trait :job_schema do
-      weekly_hours '8.5'
+      weekly_hours { '8.5' }
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
     end
