@@ -1,0 +1,90 @@
+{
+  "name": "teacher-vacancy-service",
+  "scripts": {
+    "postdeploy": "pg_dump $HEROKU_POSTGRESQL_SILVER_URL | psql $DATABASE_URL"
+  },
+  "env": {
+    "AUTHORISATION_SERVICE_TOKEN": {
+      "required": true
+    },
+    "AUTHORISATION_SERVICE_URL": {
+      "required": true
+    },
+    "DFE_SIGN_IN_IDENTIFIER": {
+      "required": true
+    },
+    "DFE_SIGN_IN_ISSUER": {
+      "required": true
+    },
+    "DFE_SIGN_IN_REDIRECT_URL": {
+      "required": true
+    },
+    "DFE_SIGN_IN_SECRET": {
+      "required": true
+    },
+    "ELASTIC_SEARCH_ENDPOINT": {
+      "required": true
+    },
+    "ELASTICSEARCH_URL": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_SILVER_URL": {
+      "required": true
+    },
+    "HTTP_PASS": {
+      "required": true
+    },
+    "HTTP_USER": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    },
+    "SEARCHBOX_SSL_URL": {
+      "required": true
+    },
+    "SEARCHBOX_URL": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1
+    },
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "papertrail",
+    "heroku-postgresql",
+    "heroku-redis",
+    "searchbox"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}

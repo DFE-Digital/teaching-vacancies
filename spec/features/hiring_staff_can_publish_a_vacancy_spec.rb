@@ -375,7 +375,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Confirm and submit job'
 
         expect(page).to have_content(
-          "The listing will appear on the service until #{vacancy.expires_on}, " \
+          "The listing will appear on the service until #{format_date(vacancy.expires_on)}, " \
           'after which it will no longer be visible to jobseekers.'
         )
       end
