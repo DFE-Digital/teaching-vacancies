@@ -91,7 +91,6 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-
     context 'salary query' do
       it 'only includes the minimum salary when no maximum is provided' do
         sort = OpenStruct.new(column: :expires_on, order: :desc)

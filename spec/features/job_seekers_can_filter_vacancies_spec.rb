@@ -178,6 +178,5 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(higher_paid_vacancy.job_title)
       expect(page).to have_content(lower_paid_vacancy.job_title)
     end
-
   end
 end
