@@ -176,12 +176,22 @@ class VacancySearchBuilder
             'lte': @maximum_salary.to_i,
           }
         }
-      }, {
-        range: {
-          'maximum_salary': {
-            'lte': @maximum_salary.to_i,
-          },
+      },
+      bool: {
+        should: [{
+          range: {
+            'maximum_salary': {
+              'lte': @maximum_salary.to_i
+            }
+          }
         },
+        bool: {
+          must_not: {
+            exists: {
+              field: 'maximum_salary'
+            }
+          }
+        }]
       }
     end
   end
