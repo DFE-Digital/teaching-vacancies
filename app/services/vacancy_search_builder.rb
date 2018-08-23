@@ -38,8 +38,7 @@ class VacancySearchBuilder
       keyword_query,
       phase_query,
       working_pattern_query,
-      minimum_salary_query,
-      maximum_salary_query,
+      salary_query,
       expired_query,
       status_query,
       published_on_query
@@ -131,26 +130,60 @@ class VacancySearchBuilder
     }
   end
 
-  def minimum_salary_query
-    return if @minimum_salary.blank?
-    {
-      range: {
-        'minimum_salary': {
-          'gte': @minimum_salary.to_i,
-        },
+  def salary_query
+    if @minimum_salary.present? && @maximum_salary.present?
+      return {
+        range: {
+          'minimum_salary': {
+            'gte': @minimum_salary.to_i,
+          }
+        }
       },
-    }
-  end
-
-  def maximum_salary_query
-    return if @maximum_salary.blank?
-    {
-      range: {
-        'maximum_salary': {
-          'lt': @maximum_salary.to_i,
+      bool: {
+        should: [{
+          range: {
+            'maximum_salary': {
+              'lte': @maximum_salary.to_i
+            }
+          }
         },
-      },
-    }
+        bool: {
+          must_not: {
+            exists: {
+              field: 'maximum_salary'
+            }
+          }
+        }]
+      }
+    elsif @minimum_salary.present? && @maximum_salary.blank?
+      return {
+        range: {
+          'minimum_salary': {
+            'gte': @minimum_salary.to_i,
+          }
+        }
+      }, {
+        range: {
+          'maximum_salary': {
+            'gte': @minimum_salary.to_i,
+          },
+        },
+      }
+    elsif @minimum_salary.blank? && @maximum_salary.present?
+      return {
+        range: {
+          'minimum_salary': {
+            'lte': @maximum_salary.to_i,
+          }
+        }
+      }, {
+        range: {
+          'maximum_salary': {
+            'lte': @maximum_salary.to_i,
+          },
+        },
+      }
+    end
   end
 
   def sort_query
