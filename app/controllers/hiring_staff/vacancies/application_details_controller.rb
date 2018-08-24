@@ -24,6 +24,8 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
     @school = school
     @application_details_form = ApplicationDetailsForm.new(vacancy_attributes)
+    vacancy ||= school.vacancies.find(@application_details_form.id)
+    @application_details_form.original_publish_on = vacancy.publish_on
     @application_details_form.valid?
   end
 
@@ -33,6 +35,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
     @application_details_form.status = vacancy.status
     @application_details_form.id = vacancy.id
+    @application_details_form.original_publish_on = vacancy.publish_on
 
     if @application_details_form.valid?
       reset_session_vacancy!

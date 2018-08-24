@@ -22,7 +22,7 @@
                 wrapper_html: {id: 'application_link'},
                 required: true
 
-      - if @application_details_form.published?
+      - if @application_details_form.disable_editing_publish_on?
         #publish_on
           %label.form-label-bold= t('jobs.publication_date')
           = format_date @application_details_form.publish_on
