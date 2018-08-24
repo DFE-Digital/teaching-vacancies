@@ -48,7 +48,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
     anonymised_email = options[:email].gsub(/(.)./, '\1*')
     expect_any_instance_of(ActiveSupport::Logger)
       .to receive(:warn)
-      .with("Unauthenticated user for identifier: #{anonymised_email}")
+      .with("Unauthenticated user for identifier: #{anonymised_email}, school_urn: #{options[:school_urn]}")
 
     visit root_path
 
@@ -178,7 +178,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in', email: 'another_email@example.com'
+    it_behaves_like 'a failed sign in', email: 'another_email@example.com', school_urn: '110627'
   end
 
   context 'with valid credentials and no organisation in DfE Sign In but existing permissions' do
@@ -213,6 +213,6 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in', email: 'an-email@example.com'
+    it_behaves_like 'a failed sign in', email: 'an-email@example.com', school_urn: nil
   end
 end
