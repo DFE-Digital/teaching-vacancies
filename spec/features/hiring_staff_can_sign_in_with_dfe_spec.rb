@@ -18,18 +18,43 @@ RSpec.shared_examples 'a successful sign in' do
   end
 end
 
-RSpec.shared_examples 'a failed sign in' do
+RSpec.shared_examples 'a failed sign in' do |options|
   scenario 'it does not sign-in the user' do
+    visit root_path
+
+    click_on(I18n.t('nav.sign_in'))
+    choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
+    click_on(I18n.t('sign_in.link'))
+
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
     within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'adds entries in the audit log' do
+    visit root_path
+
+    click_on(I18n.t('nav.sign_in'))
+    choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
+    click_on(I18n.t('sign_in.link'))
+
     authentication = PublicActivity::Activity.first
     expect(authentication.key).to eq('dfe-sign-in.authentication.success')
 
     authorisation = PublicActivity::Activity.last
     expect(authorisation.key).to eq('dfe-sign-in.authorisation.failure')
+  end
+
+  scenario 'logs a partially anonymised identifier so we can lookup any legitimate users who may be genuinley stuck' do
+    anonymised_email = options[:email].gsub(/(.)./, '\1*')
+    expect_any_instance_of(ActiveSupport::Logger)
+      .to receive(:warn)
+      .with("Unauthenticated user for identifier: #{anonymised_email}")
+
+    visit root_path
+
+    click_on(I18n.t('nav.sign_in'))
+    choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
+    click_on(I18n.t('sign_in.link'))
   end
 end
 
@@ -127,7 +152,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
     end
   end
 
-  context 'with valid credentials but no permission' do
+  context 'with valid credentials but no authorisation' do
     before(:each) do
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
         provider: 'dfe',
@@ -141,56 +166,19 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
           }
         }
       )
-      mock_response = double(code: '200', body: { user: { permissions: [] } }.to_json)
-      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-        .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
-      visit root_path
-      click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
-      click_on(I18n.t('sign_in.link'))
-    end
-
-    it_behaves_like 'a failed sign in'
-  end
-
-  context 'with valid credentials but the existing permissions don’t match the selected school' do
-    before(:each) do
-      OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-        provider: 'dfe',
-        uid: 'an-unknown-oid',
-        info: {
-          email: 'an-email@example.com',
-        },
-        extra: {
-          raw_info: {
-            organisation: { urn: '110627' }
-          }
-        }
-      )
-
-      mock_response = double(code: '200', body: {
+      mock_authorisation_response = double(code: '200', body: {
         user:
           {
-            permissions:
-              [
-                {
-                  user_token: 'an-email@example.com',
-                  school_urn: '109871'
-                }
-              ]
+            permissions: []
           }
       }.to_json)
 
       expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-        .and_return(AuthHelpers::MockPermissions.new(mock_response))
-      visit root_path
-      click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
-      click_on(I18n.t('sign_in.link'))
+        .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in'
+    it_behaves_like 'a failed sign in', email: 'another_email@example.com'
   end
 
   context 'with valid credentials and no organisation in DfE Sign In but existing permissions' do
@@ -208,7 +196,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         }
       )
 
-      mock_response = double(code: '200', body: {
+      mock_authorisation_response = double(code: '200', body: {
         user:
           {
             permissions:
@@ -222,13 +210,9 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       }.to_json)
 
       expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-        .and_return(AuthHelpers::MockPermissions.new(mock_response))
-      visit root_path
-      click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
-      click_on(I18n.t('sign_in.link'))
+        .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in'
+    it_behaves_like 'a failed sign in', email: 'an-email@example.com'
   end
 end

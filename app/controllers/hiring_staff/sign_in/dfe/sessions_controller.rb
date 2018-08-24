@@ -18,6 +18,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
       redirect_to school_path
     else
       Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
+      logger.warn("Unauthenticated user for identifier: #{identifier.gsub(/(.)./, '\1*')}")
       redirect_to page_path('user-not-authorised')
     end
   end
