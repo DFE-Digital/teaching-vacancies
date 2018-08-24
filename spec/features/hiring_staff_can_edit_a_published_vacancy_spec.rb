@@ -169,6 +169,25 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         verify_all_vacancy_details(vacancy)
       end
 
+      context 'if the job post has already been published' do
+        scenario 'renders the publication date as text and does not allow editing' do
+          vacancy = create(:vacancy, :published, school: school)
+          vacancy = VacancyPresenter.new(vacancy)
+          visit edit_school_job_path(vacancy.id)
+
+          click_header_link(I18n.t('jobs.application_details'))
+          expect(page).to have_content('Date role will be listed')
+          expect(page).to have_content(format_date(vacancy.publish_on))
+          expect(page).not_to have_css('#application_details_form_publish_on_dd')
+
+          fill_in 'application_details_form[application_link]', with: vacancy.application_link
+          click_on 'Update job'
+
+          expect(page).to have_content(I18n.t('messages.jobs.updated'))
+          verify_all_vacancy_details(vacancy)
+        end
+      end
+
       scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         application_link = vacancy.application_link

@@ -4,14 +4,15 @@ module VacancyApplicationDetailValidations
   included do
     validates :contact_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                               if: proc { |a| a.contact_email.present? }
-    validates :application_link, :contact_email, :publish_on, :expires_on, presence: true
+    validates :application_link, :contact_email, :expires_on, presence: true
     validates :application_link, url: true, if: proc { |v| v.application_link.present? }
 
+    validates :publish_on, presence: true, if: proc { |v| !v.published? }
     validate :validity_of_publish_on, :validity_of_expires_on
   end
 
   def validity_of_publish_on
-    errors.add(:publish_on, publish_on_before_today_error) if publish_on_after_today?
+    errors.add(:publish_on, publish_on_before_today_error) if !published? && publish_on_after_today?
   end
 
   def validity_of_expires_on

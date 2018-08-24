@@ -31,6 +31,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
+    @application_details_form.status = vacancy.status
     @application_details_form.id = vacancy.id
 
     if @application_details_form.valid?
