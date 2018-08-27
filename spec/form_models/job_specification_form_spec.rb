@@ -23,6 +23,52 @@ RSpec.describe JobSpecificationForm, type: :model do
     end
   end
 
+  describe '#starts_on' do
+    it 'has no validation applied when blank' do
+      job_specification_form = JobSpecificationForm.new(starts_on: nil)
+      job_specification_form.valid?
+
+      expect(job_specification_form).to have(:no).errors_on(:starts_on)
+    end
+
+    it 'must be in the future' do
+      job_specification_form = JobSpecificationForm.new(starts_on: 1.day.ago)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:starts_on)
+      expect(job_specification_form.errors.messages[:starts_on][0])
+        .to eq('can\'t be in the past')
+    end
+
+    it 'must be before the ends_on date' do
+      job_specification_form = JobSpecificationForm.new(starts_on: Time.zone.today + 10.days,
+                                                        ends_on: Time.zone.today + 5.days)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:starts_on)
+      expect(job_specification_form.errors.messages[:starts_on][0])
+        .to eq('can\'t be after the end date')
+    end
+  end
+
+  describe '#ends_on' do
+    it 'has no validation applied when blank' do
+      job_specification_form = JobSpecificationForm.new(ends_on: nil)
+      job_specification_form.valid?
+
+      expect(job_specification_form).to have(:no).errors_on(:ends_on)
+    end
+
+    it 'must be in the future' do
+      job_specification_form = JobSpecificationForm.new(ends_on: 1.day.ago)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:ends_on)
+      expect(job_specification_form.errors.messages[:ends_on][0])
+        .to eq('can\'t be in the past')
+    end
+  end
+
   context 'when all attributes are valid' do
     let(:min_pay_scale) { create(:pay_scale) }
     let(:max_pay_scale) { create(:pay_scale) }

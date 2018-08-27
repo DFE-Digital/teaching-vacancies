@@ -12,6 +12,34 @@ module VacancyJobSpecificationValidations
     validate :maximum_salary_greater_than_minimum, if: :minimum_and_maximum_salary_present_and_valid?
     validates :working_pattern, presence: true
     validate :working_hours
+
+    validate :starts_on_in_future?, if: :starts_on?
+    validate :ends_on_in_future?, if: :ends_on?
+    validate :starts_on_before_ends_on?
+  end
+
+  def starts_on_before_ends_on?
+    errors.add(:starts_on, starts_on_after_ends_on_error) if starts_on? && ends_on? && starts_on > ends_on
+  end
+
+  def starts_on_after_ends_on_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.after_ends_on')
+  end
+
+  def starts_on_in_future?
+    errors.add(:starts_on, starts_on_past_error) if starts_on.past?
+  end
+
+  def starts_on_past_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.past')
+  end
+
+  def ends_on_in_future?
+    errors.add(:ends_on, ends_on_past_error) if ends_on.past?
+  end
+
+  def ends_on_past_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.ends_on.past')
   end
 
   def minimum_valid_and_maximum_salary_present?
