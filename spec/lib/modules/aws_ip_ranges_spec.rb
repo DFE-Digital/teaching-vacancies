@@ -65,7 +65,8 @@ RSpec.describe AWSIpRanges do
         EOFError,
         Net::HTTPBadResponse,
         Net::HTTPHeaderSyntaxError,
-        Net::ProtocolError
+        Net::ProtocolError,
+        Net::OpenTimeout
       ].each do |error|
         context "when #{error} is raised" do
           it 'returns an empty array' do
