@@ -6,8 +6,13 @@ module AWSIpRanges
     uri = URI(PATH)
 
     begin
-      response = Net::HTTP.get(uri)
-      return parse_json_for_ips(response)
+      http_connection = Net::HTTP.new(uri.host, uri.port)
+      http_connection.read_timeout = 10
+      http_connection.open_timeout = 5
+      http_connection.use_ssl = true
+      response = http_connection.start { |http| http.get(uri.path) }
+
+      return parse_json_for_ips(response.body)
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
            Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => error
       Rails.logger.warn("Unable to setup Rack Proxies to acquire the correct remote_ip: #{error.class}")
