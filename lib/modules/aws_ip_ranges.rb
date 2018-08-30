@@ -21,5 +21,8 @@ module AWSIpRanges
       record['region'] == 'GLOBAL' && record['service'] == 'CLOUDFRONT'
     end
     cloudfront_ip_blocks.map { |cloudfront_ip| cloudfront_ip['ip_prefix'] }
+  rescue JSON::ParserError
+    Rails.logger.warn('Unable parse AWS Ip Range response to setup Rack Proxies')
+    []
   end
 end

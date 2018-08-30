@@ -75,5 +75,25 @@ RSpec.describe AWSIpRanges do
         end
       end
     end
+
+    context 'when the response was 403 and not JSON' do
+      before(:each) do
+        aws_ip_ranges = File.read(Rails.root.join('spec', 'fixtures', 'bad_aws_ip_ranges.xml'))
+
+        stub_request(:get, AWSIpRanges::PATH)
+          .to_return(body: aws_ip_ranges, status: 403)
+      end
+
+      it 'returns an empty array' do
+        expect(AWSIpRanges.cloudfront_ips).to eql([])
+      end
+
+      it 'logs a warning' do
+        expect(Rails.logger)
+          .to receive(:warn)
+          .with('Unable parse AWS Ip Range response to setup Rack Proxies')
+        AWSIpRanges.cloudfront_ips
+      end
+    end
   end
 end
