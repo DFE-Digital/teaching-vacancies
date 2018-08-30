@@ -14,11 +14,11 @@
     position: relative;
     .pound_sign {
       position: absolute;
-        bottom: 6px;
+        bottom: 13px;
         left: 8px;
     }
 
-    &.form-group-error .pound_sign {
+    &.govuk-form-group--error .pound_sign {
       left: 24px;
       bottom: 8px;
     }
@@ -31,5 +31,9 @@
     #job_specification_form_maximum_salary {
       padding-left: 18px;
     }
+  }
+
+  p.value-to-value {
+    margin: 9px 0;
   }
 }

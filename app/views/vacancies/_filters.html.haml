@@ -1,5 +1,5 @@
 %aside.filter-vacancies
-  %h2.heading-medium
+  %h2.govuk-heading-m
     =t('jobs.filters.title')
 
   = form_tag jobs_path, class: 'filters-form', method: :get do
@@ -32,4 +32,5 @@
     = hidden_field_tag :sort_column, sort_column
     = hidden_field_tag :sort_order, sort_order
 
-    = submit_tag @vacancies.apply_filters_button_text, class: 'button'
+    .mt1
+      = submit_tag @vacancies.apply_filters_button_text, class: 'govuk-button'

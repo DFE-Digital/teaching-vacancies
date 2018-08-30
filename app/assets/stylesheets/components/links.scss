@@ -1,8 +1,8 @@
 a.reversed-link {
   &:link {
-    color: $white;
+    color: govuk-colour("white");
   }
   &:visited {
-    color: $white;
+    color: govuk-colour("white");
   }
 }

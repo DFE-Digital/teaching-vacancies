@@ -1,19 +1,19 @@
 - content_for :page_title_prefix do
   #{@vacancy.job_title} — #{@vacancy.school_name}
 
-.vacancy.grid-row
+.vacancy.govuk-grid-row
   - if @vacancy.expired?
-    .column-full
+    .govuk-column-full
       .banner-warning
         = t('jobs.expired')
 
-  .column-one-third
-    %h1.heading-large
+  .govuk-column-one-third
+    %h1.govuk-heading-l
       = @vacancy.job_title
-      %span.heading-secondary
+      %span.govuk-caption-l
         = @vacancy.location
 
-    %h2.heading-medium
+    %h2.govuk-heading-m
       = t('schools.about')
       = @vacancy.school.name
     %p= @vacancy.school.description
@@ -28,7 +28,7 @@
 
       %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
-    %h2.mt1.heading-medium= t('jobs.key_info')
+    %h2.mt1.govuk-heading-m= t('jobs.key_info')
 
     %table.check-your-answers.cya-questions-short
       %tbody
@@ -81,28 +81,28 @@
             %td.cya-answer.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
 
 
-    %h2.heading-medium= t('jobs.description')
+    %h2.govuk-heading-m= t('jobs.description')
     %p= @vacancy.job_description
 
     - if @vacancy.education?
-      %h2.heading-medium= t('jobs.education')
+      %h2.govuk-heading-m= t('jobs.education')
       %p= @vacancy.education
 
     - if @vacancy.qualifications?
-      %h2.heading-medium= t('jobs.qualifications')
+      %h2.govuk-heading-m= t('jobs.qualifications')
       %p= @vacancy.qualifications
 
     - if @vacancy.experience?
-      %h2.heading-medium= t('jobs.experience')
+      %h2.govuk-heading-m= t('jobs.experience')
       %p= @vacancy.experience
 
     - if @vacancy.benefits?
-      %h2.heading-medium= t('jobs.benefits')
+      %h2.govuk-heading-m= t('jobs.benefits')
       %p= @vacancy.benefits
 
     %aside.vacancy--metadata
       - if @vacancy.application_link.present?
-        %p.font-xsmall=t('jobs.aria_labels.apply_link')
+        %p.govuk-body-s=t('jobs.aria_labels.apply_link')
         = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'button vacancy-apply-link', 'aria-label': t('jobs.aria_labels.apply_link')
 
 = render partial: 'shared/beta_banner'

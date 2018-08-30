@@ -8,7 +8,7 @@
 }
 
 .mb1 {
-  margin-bottom: $gutter;
+  margin-bottom: $govuk-gutter;
 }
 
 .mb0 {
@@ -16,7 +16,7 @@
 }
 
 .mt1 {
-  margin-top: $gutter;
+  margin-top: $govuk-gutter;
 }
 
 .wordwrap {
@@ -24,7 +24,7 @@
 }
 
 .overflow-scroll {
-  @include media(mobile) {
+  @include govuk-media-query($until: tablet) {
     overflow: scroll;
   }
 }

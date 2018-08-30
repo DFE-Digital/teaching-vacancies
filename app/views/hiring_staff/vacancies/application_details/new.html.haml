@@ -1,16 +1,16 @@
 - content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Application details — Publish a job for #{@school.name}"
 
-%h1.heading-large
+%h1.govuk-heading-l
   = t('jobs.publish_heading', school: @application_details_form.school.name)
-  %span.heading-secondary
+  %span.govuk-caption-l
     Step 3 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
 = simple_form_for @application_details_form, html: { class: 'vacancy-form' }, action: :post, url: application_details_school_job_path(school_id: @school.id) do |f|
-  %h2.heading-medium
+  %h2.govuk-heading-m
     = t('jobs.application_details')
 
-  .grid-row
-    .column-one-half
+  .govuk-grid-row
+    .govuk-grid-column-one-half
       = f.input :contact_email,
                 label: t('jobs.contact_email'),
                 hint: t('jobs.form_hints.contact_email'),
@@ -24,17 +24,17 @@
                 wrapper_html: {id: 'application_link'},
                 required: true
 
-      %div.form-group#publish_on
+      %div.govuk-form-group#publish_on
         = f.gov_uk_date_field :publish_on,
                               legend_text: t('jobs.publication_date'),
-                              legend_class: 'form-label-bold',
+                              legend_class: 'govuk-label',
                               form_hint_text: t('jobs.form_hints.publication_date',
                                               date: l(Date.today, format: :hinttext))
 
-      %div.form-group#expires_on
+      %div.govuk-form-group#expires_on
         = f.gov_uk_date_field :expires_on,
                               legend_text: t('jobs.deadline_date'),
-                              legend_class: 'form-label-bold',
+                              legend_class: 'govuk-label',
                               form_hint_text: t('jobs.form_hints.deadline_date',
                                                 date: l(Date.today + 2.months, format: :hinttext))
 

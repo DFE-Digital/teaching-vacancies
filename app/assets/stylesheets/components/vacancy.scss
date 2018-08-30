@@ -1,18 +1,20 @@
 .vacancy {
+  @include govuk-font(19);
   &--metadata {
-    background-color: $panel-colour;
-    padding: $gutter-half;
-    margin-top: $gutter*3;
-    @media screen and (max-width: $small-screen) {
-      margin-top: $gutter;
+    background-color: govuk-colour("grey-3");
+    padding: $govuk-gutter-half;
+    margin-top: $govuk-gutter*3;
+    @include govuk-media-query($until: tablet) {
+      margin-top: $govuk-gutter;
     }
 
     dl {
       dt {
-        font-weight: $bold-font-weight;
+        @include govuk-font(19, $weight: bold);
       }
       dd {
-        margin-bottom: $gutter-half;
+        margin-left: 0;
+        margin-bottom: $govuk-gutter-half;
         &:last-of-type {
           margin-bottom: 0;
         }

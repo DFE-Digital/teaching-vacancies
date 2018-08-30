@@ -1,7 +1,8 @@
 .share-url,
 .share-url-no-js {
-  padding: $gutter-half;
-  margin-top: $gutter-half;
+  padding: $govuk-gutter-half;
+  margin-top: $govuk-gutter-half;
+  margin-bottom: $govuk-gutter;
   border: $thick-border solid;
   border-color: $warning-color;
 }

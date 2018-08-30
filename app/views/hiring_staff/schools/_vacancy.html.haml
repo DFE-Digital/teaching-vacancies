@@ -1,8 +1,8 @@
-%tr.vacancy[vacancy]
-  %td= link_to vacancy.job_title, school_job_path(vacancy.id), class: 'view-vacancy-link'
-  %td= format_date(vacancy.publish_on)
-  %td= format_date(vacancy.expires_on)
-  %td= vacancy.status.titleize
-  %td= link_to 'Edit', edit_school_job_path(vacancy.id)
-  %td= link_to 'Delete', school_job_path(id: vacancy.id), method: :delete, data: { confirm: "Are you sure you want to delete the '#{vacancy.job_title}' job?" }
+%tr.govuk-table__row.vacancy[vacancy]
+  %td.govuk-table__cell= link_to vacancy.job_title, school_job_path(vacancy.id), class: 'govuk-link view-vacancy-link'
+  %td.govuk-table__cell= format_date(vacancy.publish_on)
+  %td.govuk-table__cell= format_date(vacancy.expires_on)
+  %td.govuk-table__cell= vacancy.status.titleize
+  %td.govuk-table__cell= link_to 'Edit', edit_school_job_path(vacancy.id), class: 'govuk-link'
+  %td.govuk-table__cell= link_to 'Delete', school_job_path(id: vacancy.id), class: 'govuk-link', method: :delete, data: { confirm: "Are you sure you want to delete the '#{vacancy.job_title}' job?" }
 

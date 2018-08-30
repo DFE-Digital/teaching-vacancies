@@ -1,14 +1,14 @@
 - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Edit the Job specification"
 
-%h1.heading-large
+%h1.govuk-heading-l
   = t('jobs.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
 = simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, method: :put, url: school_job_job_specification_path(@job_specification_form.id) do |f|
-  %h2.heading-medium
+  %h2.govuk-heading-m
     = t('jobs.job_specification')
 
-  .grid-row
-    .column-one-half
+  .govuk-grid-row
+    .govuk-grid-column-one-half
       = f.input :job_title,
                 label: t('jobs.job_title'),
                 hint: t('jobs.form_hints.job_title'),
@@ -34,9 +34,10 @@
                 wrapper_html: {id: 'subject'},
                 collection: Subject.order(:name),
                 required: false
-      %fieldset.form-group#pay_scale_range
-        %legend.form-label.form-label-bold= "#{t('jobs.pay_scale_range')} (optional)"
-        %span.form-hint= t('jobs.form_hints.pay_scale_range')
+      %fieldset.govuk-fieldset#pay_scale_range
+        %legend.form-label.govuk-label= "#{t('jobs.pay_scale_range')} (optional)"
+        %span.govuk-hint= t('jobs.form_hints.pay_scale_range')
+        .govuk-form-group
 
         = f.input :min_pay_scale_id,
                   collection: pay_scale_options,
@@ -45,8 +46,8 @@
                   required: false,
                   wrapper: false,
                   input_html: { 'aria-label': t('jobs.aria_labels.minimum_pay_scale_range') }
+          %p.value-to-value to
 
-        to
 
         = f.input :max_pay_scale_id,
                   collection: pay_scale_options,
@@ -55,9 +56,10 @@
                   required: false,
                   wrapper: false,
                   input_html: { 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range') }
+      %fieldset.govuk-fieldset#salary_range
+        %legend.form-label.govuk-label= t('jobs.salary_range')
+        .govuk-form-group
 
-      %fieldset.form-group#salary_range
-        %legend.form-label.form-label-bold= t('jobs.salary_range')
         = f.input :minimum_salary,
                   wrapper: 'money',
                   hint: t('jobs.form_hints.salary_range'),
@@ -65,7 +67,7 @@
                   label: '£',
                   wrapper_html: { id: 'minimum_salary' },
                   input_html: { class: 'form-control-1-8', 'aria-label': t('jobs.aria_labels.minimum_salary') }
-        to
+          %p.value-to-value to
 
         = f.input :maximum_salary,
                   wrapper: 'money',
@@ -100,18 +102,18 @@
                 wrapper_html: {id: 'leadership'},
                 required: false
 
-      %div.form-group#starts_on
+      %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,
           legend_text: "#{t('jobs.starts_on')} (optional)",
-          legend_class: 'form-label-bold',
+          legend_class: 'govuk-label',
           form_hint_text: t('jobs.form_hints.start_date',
                             date: l(Date.today + 3.months, format: :hinttext))
 
 
-      %div.form-group#ends_on
+      %div.govuk-form-group#ends_on
         = f.gov_uk_date_field :ends_on,
           legend_text: "#{t('jobs.ends_on')} (optional)",
-          legend_class: 'form-label-bold',
+          legend_class: 'govuk-label',
           form_hint_text: t('jobs.form_hints.end_date',
                             date: l(Date.today + 6.months, format: :hinttext))
 

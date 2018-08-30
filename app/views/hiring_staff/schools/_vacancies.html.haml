@@ -1,8 +1,8 @@
-%table.vacancies
-  %th= t('jobs.job_title')
-  %th= t('jobs.publish_on')
-  %th= t('jobs.expires_on')
-  %th= t('jobs.status')
-  %th{ colspan: 2}= t('jobs.actions')
+%table.vacancies.govuk-table
+  %th.govuk-table__header= t('jobs.job_title')
+  %th.govuk-table__header= t('jobs.publish_on')
+  %th.govuk-table__header= t('jobs.expires_on')
+  %th.govuk-table__header= t('jobs.status')
+  %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
   - vacancies.each do |vacancy|
     = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }

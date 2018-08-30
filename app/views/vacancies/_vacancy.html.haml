@@ -1,6 +1,6 @@
 %li.vacancy
-  %h2= link_to vacancy.job_title, job_path(vacancy), class: 'view-vacancy-link'
-  %p= vacancy.location
+  %h2.govuk-heading-m= link_to vacancy.job_title, job_path(vacancy), class: 'govuk-link view-vacancy-link'
+  %p.govuk-body= vacancy.location
   %dl
     %dt= t('jobs.salary')
     %dd.double

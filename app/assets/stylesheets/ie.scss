@@ -1,21 +1,21 @@
 html.lte-ie8 {
 
-  #content {
+  .govuk-width-container {
     margin-left: auto;
     margin-right: auto;
   }
 
-  .column-one-third {
+  .govuk-grid-column-one-third {
     width: 30%;
     float: left;
   }
 
-  .column-one-half {
+  .govuk-grid-column-one-half {
     width: 48%;
     float: left;
   }
 
-  .column-two-thirds {
+  .govuk-grid-column-two-thirds {
     width: 60%;
     float: left;
   }

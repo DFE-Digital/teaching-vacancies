@@ -1,54 +1,11 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_self
- */
-@import 'colours';
-@import 'font_stack';
-@import 'measurements';
-@import 'conditionals';
-@import 'device-pixels';
-@import 'grid_layout';
-@import 'typography';
-@import 'shims';
+$govuk-images-path: '/assets/';
+$govuk-fonts-path: '/assets/';
 
-@import 'base/mixins';
-
-@import 'govuk_date_fields';
-
-@import 'design-patterns/alpha-beta';
-@import 'design-patterns/buttons';
-@import 'design-patterns/breadcrumbs';
-
-// From GDS's alphagov/govuk_elements https://github.com/alphagov/govuk_elements/blob/master/assets/sass/_elements.scss
-@import 'elements/layout';
-@import 'elements/helpers';
-@import 'elements/reset';
-@import 'elements/elements-typography';
-@import "elements/forms/form-multiple-choice";
-@import 'elements/buttons';
-@import 'elements/lists';
-@import 'elements/tables';
-@import 'elements/details';
-@import 'elements/panels';
-@import 'elements/forms';
-@import 'elements/forms/form-date';
-@import 'elements/forms/form-validation';
-@import 'elements/breadcrumbs';
-@import 'elements/phase-banner';
-@import 'elements/components';
-
+@import 'govuk-frontend/all';
 @import 'global/variables';
-@import 'global/helpers';
+@import 'base/mixins';
+@import 'base/utilities';
+@import 'govuk_date_fields';
 @import 'components/filter_vacancies';
 @import 'components/vacancies';
 @import 'components/vacancy';
@@ -59,29 +16,13 @@
 @import 'components/flashes';
 @import 'components/links';
 @import 'components/share-url';
+@import 'components/check_your_answers';
 @import 'ie';
 
-main#content {
-  @extend %site-width-container;
-  &:focus {
-    outline: none;
-  }
-}
-
-input[type="search"] {
+input[type='search'] {
   box-sizing: border-box;
 }
 
-@import 'components/check_your_answers';
-
-@import 'base/layout';
-@import 'base/forms';
-@import 'base/utilities';
-
-.form-group .form-hint {
-  clear: both;
-}
-
-.form-control-4-4 {
-  width: 100%;
+p {
+  @include govuk-font(19);
 }

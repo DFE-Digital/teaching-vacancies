@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.shared_examples 'a successful sign in' do
   scenario 'it signs in the user successfully' do
     expect(page).to have_content("Jobs at #{school.name}")
-    within('#proposition-links') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-    within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+    within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+    within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'adds entries in the audit log' do
@@ -26,7 +26,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
     click_on(I18n.t('sign_in.link'))
 
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
-    within('#proposition-links') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
+    within('.govuk-header__navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'adds entries in the audit log' do

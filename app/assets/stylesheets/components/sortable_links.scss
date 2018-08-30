@@ -1,10 +1,10 @@
 .sortable-links {
-  @extend .font-xsmall;
-  margin-bottom: $gutter;
+  @extend .govuk-body-s;
+  margin-bottom: $govuk-gutter;
   a {
     margin: 0 4px;
     &.active {
-      font-weight: $bold-font-weight;
+      @include govuk-font(16, $weight: bold);
       text-decoration: none;
       &.sortby--asc:after {
         content: ' \25B4';

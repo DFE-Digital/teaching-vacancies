@@ -1,22 +1,22 @@
 .filter-vacancies {
   margin-bottom: 0;
-  padding: $gutter-half;
-  background-color: $panel-colour;
+  padding: $govuk-gutter-half;
+  background-color: govuk-colour("grey-3");
   h2 {
-    margin: 0 0 $gutter-half 0;
+    margin: 0 0 $govuk-gutter-half 0;
   }
-  .form-group {
-    margin-bottom: $gutter-half;
+  .govuk-form-group {
+    margin-bottom: $govuk-gutter-half;
   }
   .form-control {
-    border-color: $grey-1;
+    border-color: govuk-colour("grey-1");
   }
-  .button {
-    margin-top: $gutter-half;
+  .govuk-button {
+    margin-top: $govuk-gutter-half;
   }
 
-  @media screen and (max-width: $small-screen) {
-    margin-bottom: $gutter;
+  @include govuk-media-query($until: tablet) {
+    margin-bottom: $govuk-gutter;
   }
 
 // filters form white checkbox on grey background

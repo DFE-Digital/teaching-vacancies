@@ -1,16 +1,16 @@
 - content_for :page_title_prefix, t('jobs.heading')
 
-%h1.heading-xlarge
+%h1.govuk-heading-xl
   = t('jobs.heading')
-.grid-row
+.govuk-grid-row
 
-  .column-two-thirds
-    %p.mb1
-      %span.heading-medium.mv0.inline= @vacancies.total_count_message
+  .govuk-grid-column-two-thirds
+    %p.govuk-heading-m.mt0.mb1
+      %p.govuk-heading-m.mt0= @vacancies.total_count_message
       - if @vacancies.searched
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
       .nobreak
-        = link_to 'Refine your search?', '#filters'
+        = link_to 'Refine your search?', '#filters', class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
         = t('jobs.sort_by')
@@ -21,7 +21,7 @@
         - @vacancies.each do |vacancy|
           = render partial: 'vacancy', locals: { vacancy: vacancy }
 
-  .column-one-third#filters
+  .govuk-grid-column-one-third#filters
     = render 'filters'
 
 = paginate @vacancies

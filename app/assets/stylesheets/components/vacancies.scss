@@ -7,14 +7,14 @@
     font-size: 22px;
   }
   p {
-    margin-bottom: $gutter-half;
+    margin-bottom: $govuk-gutter-half;
   }
   li {
-    border-bottom: 1px solid $grey-3;
-    padding-bottom: $gutter-half;
-    margin-bottom: $gutter-half;
+    border-bottom: 1px solid govuk-colour("grey-3");
+    padding-bottom: $govuk-gutter-half;
+    margin-bottom: $govuk-gutter-half;
     dl {
-      font-size: $small-font-size;
+      @include govuk-font(16);
     }
     dt, dd {
       display: inline-block;
@@ -22,18 +22,18 @@
     }
     dt {
       width: 25%;
-      color: $secondary-text-colour;
-      @include media(desktop) {
+      color: $govuk-secondary-text-colour;
+      @include govuk-media-query($from: desktop) {
         width: 20%;
       }
     }
     dd {
       width: 50%;
       &.double {
-        width: 70%;
+        width: 60%;
       }
-      @include media(desktop) {
-        width: 25%;
+      @include govuk-media-query($from: desktop) {
+        width: 20%;
       }
     }
   }

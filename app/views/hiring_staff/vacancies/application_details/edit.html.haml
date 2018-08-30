@@ -1,14 +1,14 @@
 - content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Edit the Application details"
 
-%h1.heading-large
+%h1.govuk-heading-l
   = t('jobs.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
 = simple_form_for @application_details_form, html: { class: 'vacancy-form' }, method: :put, url: school_job_application_details_path(@application_details_form.id) do |f|
-  %h2.heading-medium
+  %h2.govuk-heading-m
     = t('jobs.application_details')
 
-  .grid-row
-    .column-one-half
+  .govuk-grid-row
+    .govuk-grid-column-one-half
       = f.input :contact_email,
                 label: t('jobs.contact_email'),
                 hint: t('jobs.form_hints.contact_email'),
@@ -24,21 +24,21 @@
 
       - if @application_details_form.disable_editing_publish_on?
         #publish_on
-          %label.form-label-bold= t('jobs.publication_date')
+          %label.govuk-label= t('jobs.publication_date')
           = format_date @application_details_form.publish_on
         %br
       - else
-        %div.form-group#publish_on
+        %div.govuk-form-group#publish_on
           = f.gov_uk_date_field :publish_on,
             legend_text: t('jobs.publication_date'),
-            legend_class: 'form-label-bold',
+            legend_class: 'govuk-label',
             form_hint_text: t('jobs.form_hints.publication_date',
                             date: l(Date.today, format: :hinttext))
 
-      %div.form-group#deadline
+      %div.govuk-form-group#deadline
         = f.gov_uk_date_field :expires_on,
                               legend_text: t('jobs.deadline_date'),
-                              legend_class: 'form-label-bold',
+                              legend_class: 'govuk-label',
                               form_hint_text: t('jobs.form_hints.deadline_date',
                                                 date: l(Date.today + 2.months, format: :hinttext))
 

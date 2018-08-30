@@ -1,14 +1,14 @@
 - content_for :page_title_prefix, "#{@candidate_specification_form.errors.present? ? 'Error: ' : ''}Edit the Candidate specification"
 
-%h1.heading-large
+%h1.govuk-heading-l
   = t('jobs.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @candidate_specification_form.errors
 = simple_form_for @candidate_specification_form, html: { class: 'vacancy-form' }, method: :put, url: school_job_candidate_specification_path(@candidate_specification_form.id)  do |f|
-  %h2.heading-medium
+  %h2.govuk-heading-m
     = t('jobs.candidate_specification')
 
-  .grid-row
-    .column-one-half
+  .govuk-grid-row
+    .govuk-grid-column-one-half
       = f.input :education,
                 label: t('jobs.education'),
                 as: :text,

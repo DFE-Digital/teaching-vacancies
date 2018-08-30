@@ -1,22 +1,22 @@
 - content_for :page_title_prefix, t('feedback.page_title')
 
-%h1.heading-large
+%h1.govuk-heading-l
   = t('feedback.heading')
 
 - if @feedback.errors.any?
-  #errors.error-summary{role: 'alert', tabindex: '-1'}
-    %h2.heading-medium.error-summary-heading
+  #errors.govuk-error-summary{role: 'alert', tabindex: '-1'}
+    %h2.govuk-heading-m.govuk-error-summary-heading
       = t('errors.feedback.errors_present')
-    %ul.error-summary-list
+    %ul.govuk-error-summary-list
       - @feedback.errors.each do |attribute, error|
         %li= @feedback.errors.full_message(attribute, error)
 
 = simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
-  .grid-row
-    .column-two-thirds
-      .form-group
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      .govuk-form-group
         %legend
-          %h2.heading-medium= t('feedback.legend')
+          %h2.govuk-heading-m= t('feedback.legend')
         %fieldset
           = f.input :rating, as: :radio_buttons, collection: rating_options, label: false, required: true, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
           = f.input :comment, as: :text, label: t('feedback.label'), hint: t('feedback.hint_text'), input_html: { class: 'form-control form-control-4-4', rows: '5' }

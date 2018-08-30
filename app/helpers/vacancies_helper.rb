@@ -19,7 +19,7 @@ module VacanciesHelper
     link_to title,
             jobs_path(vacancy_params(sort_column: column,
                                      sort_order: order)),
-            class: "sortby--#{order}#{active_class || ''}",
+            class: "govuk-link sortby--#{order}#{active_class || ''}",
             'aria-label': "Sort jobs by #{title} in #{order}ending order"
   end
 
