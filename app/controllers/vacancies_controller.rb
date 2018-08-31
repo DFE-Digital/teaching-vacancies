@@ -85,4 +85,8 @@ class VacanciesController < ApplicationController
   def searched?
     params[:commit]&.eql?(I18n.t('buttons.apply_filters'))
   end
+
+  def set_headers
+    response.set_header('X-Robots-Tag', 'noarchive')
+  end
 end

@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe VacanciesController, type: :controller do
+  describe 'sets headers' do
+    it 'robots are asked to index but not to follow' do
+      get :index
+      expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+    end
+  end
+
   describe '#index' do
     context 'when parameters include syntax' do
       it 'passes only safe values to VacancyFilters' do
