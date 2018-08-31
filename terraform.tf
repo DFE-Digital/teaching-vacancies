@@ -55,8 +55,10 @@ module "ecs" {
   ecs_service_task_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
   ecs_service_task_count                          = "${var.ecs_service_task_count}"
   ecs_service_task_port                           = "${var.ecs_service_task_port}"
+
   ecs_service_web_container_definition_file_path  = "${var.ecs_service_web_container_definition_file_path}"
   ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
+  performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
 
   ecs_service_logspout_container_definition_file_path = "${var.ecs_service_logspout_container_definition_file_path}"
   logspout_command                                    = "${var.logspout_command}"

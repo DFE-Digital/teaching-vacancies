@@ -197,6 +197,51 @@ data "template_file" "<task_name>_submit_container_definition" {
 }
 ```
 
+#### Environment variables for rake tasks
+
+When adding new environment variables you need to define the variables in the task's container definition JSON file.
+
+1. `cp rake_container_definition.json <identifier>_rake_container_definition.json` Create a copy of the existing rake container definition
+2. Set the new variables
+
+  ```
+  {
+    "name": "NEW_ENV_VARIABLE",
+    "value": "${new_env_variable}"
+  }
+  ```
+3. Add a new entry for the file in `variables.tf` under **Rake task container definitions**
+
+  ```
+  variable "<identifier>_container_definition_file_path" {
+    description = "Container definition for <identifier> rake tasks"
+    default     = "./<identifier>_rake_container_definition.json"
+  }
+  ```
+
+4. Add a new variable in `terraform/modules/ecs/input.tf` under **Rake task container definitions**
+
+  ```
+  variable "<identifier>_rake_container_definition_file_path" {}
+  ```
+
+5. Add a new entry in the `ecs` module in `terraform.tf`
+
+  ```
+  <identifier>_rake_container_definition_file_path = "${var.<identifier>_rake_container_definition_file_path}"
+  ```
+
+6. Update the template value in the task definition in `terraform/modules/ecs/ecs.tf` to point to the new template
+
+  ```
+  template = "${file(var.<identifier>_rake_container_definition_file_path)}"
+  ```
+
+
+
+#### One-off and scheduled tasks
+
+
 If your task is one-off (only manually executed) add an entry under `ECS ONE-OFF TASKS` for the aws task definition
 
 ```

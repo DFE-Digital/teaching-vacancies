@@ -112,9 +112,15 @@ variable "ecs_service_web_container_definition_file_path" {
   default     = "./web_container_definition.json"
 }
 
+# Rake task container definitions
 variable "ecs_service_rake_container_definition_file_path" {
   description = "Container definition for rake tasks"
   default     = "./rake_container_definition.json"
+}
+
+variable "performance_platform_rake_container_definition_file_path" {
+  description = "Container definition for rake tasks"
+  default     = "./performance_platform_rake_container_definition.json"
 }
 
 variable "ecs_service_logspout_container_definition_file_path" {
