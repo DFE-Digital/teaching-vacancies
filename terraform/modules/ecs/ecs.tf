@@ -266,7 +266,7 @@ data "template_file" "reindex_vacancies_container_definition" {
 
 /* performance_platform_submit task definition*/
 data "template_file" "performance_platform_submit_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+  template = "${file(var.performance_platform_rake_container_definition_file_path)}"
 
   vars {
     image                            = "${aws_ecr_repository.default.repository_url}"
@@ -292,7 +292,7 @@ data "template_file" "performance_platform_submit_container_definition" {
 
 /* performance_platform_submit_all task definition*/
 data "template_file" "performance_platform_submit_all_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+  template = "${file(var.performance_platform_rake_container_definition_file_path)}"
 
   vars {
     image                            = "${aws_ecr_repository.default.repository_url}"
