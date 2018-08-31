@@ -233,7 +233,7 @@ resource "aws_alb_target_group" "alb_target_group" {
 
   health_check {
     healthy_threshold   = "5"
-    unhealthy_threshold = "2"
+    unhealthy_threshold = "3"
     interval            = "30"
     matcher             = "200"
     path                = "${var.load_balancer_check_path}"
