@@ -1,5 +1,6 @@
 class HiringStaff::SessionsController < HiringStaff::BaseController
   skip_before_action :check_session, only: %i[destroy]
+  skip_before_action :check_terms_and_conditions, only: %i[destroy]
 
   def destroy
     session.destroy
