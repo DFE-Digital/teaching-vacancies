@@ -57,6 +57,8 @@ gem 'google_drive', require: false
 
 gem 'browser'
 
+gem 'sidekiq'
+
 group :test, :development, :staging do
   gem 'faker'
   gem 'factory_bot_rails'
