@@ -47,6 +47,6 @@ module VacanciesHelper
   end
 
   def pay_scale_options
-    @pay_scale_options ||= PayScale.current
+    @pay_scale_options ||= PayScale.all
   end
 end
