@@ -18,6 +18,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
       redirect_to school_path
     else
       Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
+      log_debug_information
       redirect_to page_path('user-not-authorised')
     end
   end
@@ -43,5 +44,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def selected_school_urn
     auth_hash.dig('extra', 'raw_info', 'organisation', 'urn')
+  end
+
+  def log_debug_information
+    anonymised_email = identifier.gsub(/(.)./, '\1*')
+    logger.warn("Unauthenticated user for identifier: #{anonymised_email}, school_urn: #{selected_school_urn}")
   end
 end
