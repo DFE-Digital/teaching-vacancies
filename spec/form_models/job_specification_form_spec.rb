@@ -8,23 +8,6 @@ RSpec.describe JobSpecificationForm, type: :model do
     it { should validate_presence_of(:minimum_salary) }
     it { should validate_presence_of(:working_pattern) }
 
-    describe '#minimum_salary' do
-      describe '#minimum_salary_at_least_minimum_payscale' do
-        let(:job_specification) do
-          JobSpecificationForm.new(job_title: 'job title',
-                                   job_description: 'description', working_pattern: :full_time,
-                                   minimum_salary: 20, maximum_salary: 200)
-        end
-
-        it 'the minimum salary should be at least equal to the minimum payscale value' do
-          stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '3000')
-          expect(job_specification.valid?). to be false
-          expect(job_specification.errors.messages[:minimum_salary][0])
-            . to eq('must be at least £3000')
-        end
-      end
-    end
-
     describe '#maximum_salary' do
       let(:job_specification) do
         JobSpecificationForm.new(job_title: 'job title',
