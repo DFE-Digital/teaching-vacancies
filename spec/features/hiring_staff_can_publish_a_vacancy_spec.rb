@@ -69,7 +69,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 2, candidate profile, when submitted succesfuly' do
+      scenario 'redirects to step 2, candidate profile, when submitted successfully' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -116,7 +116,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 3, application_details profile, when submitted succesfuly' do
+      scenario 'redirects to step 3, application_details profile, when submitted successfully' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -155,7 +155,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to the vacancy review page when submitted succesfuly' do
+      scenario 'redirects to the vacancy review page when submitted successfully', browserstack: true do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)

@@ -4,7 +4,7 @@ RSpec.feature 'School viewing vacancies' do
   include_context 'when authenticated as a member of hiring staff',
                   stub_basic_auth_env: true
 
-  scenario 'Navigate from viewing a vacancy to all vacancies for that school' do
+  scenario 'Navigate from viewing a vacancy to all vacancies for that school', browserstack: true do
     school = create(:school)
     vacancy = create(:vacancy, school: school)
 

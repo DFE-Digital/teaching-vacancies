@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Hiring staff can see their vacancies' do
-  scenario 'school with geolocation' do
+  scenario 'school with geolocation', browserstack: true do
     school = create(:school, northing: '1', easting: '2')
 
     stub_hiring_staff_auth(urn: school.urn)

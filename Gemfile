@@ -79,6 +79,8 @@ group :development, :test do
   gem 'teaspoon-mocha'
   gem 'coffee-rails'
   gem 'timecop'
+  gem 'browserstack-local'
+  gem 'selenium-webdriver'
 end
 
 group :test do

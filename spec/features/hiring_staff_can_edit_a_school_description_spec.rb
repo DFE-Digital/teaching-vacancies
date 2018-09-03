@@ -7,7 +7,7 @@ RSpec.feature 'Editing a School’s description' do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
-  scenario 'updating a description' do
+  scenario 'updating a description', browserstack: true do
     visit school_path
 
     expect(page).to have_content(school.name)

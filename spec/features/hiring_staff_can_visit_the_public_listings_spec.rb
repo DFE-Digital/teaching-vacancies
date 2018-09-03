@@ -40,11 +40,12 @@ RSpec.feature 'School viewing public listings' do
       ENV['SIGN_IN_WITH_DFE'] = 'false'
     end
 
-    scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
+    scenario 'A signed in school should see a link back to their own dashboard when viewing public listings',
+             browserstack: true do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
+      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last, allow_label_click: true)
       click_on(I18n.t('sign_in.link'))
 
       expect(page).to have_content("Jobs at #{school.name}")

@@ -2,14 +2,14 @@ module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
+    fill_in 'job_specification_form[benefits]', with: vacancy.benefits
     select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
     select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
     select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
-    check 'job_specification_form[flexible_working]' if vacancy.flexible_working
+    find('#flexible_working label').click if vacancy.flexible_working
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
-    fill_in 'job_specification_form[benefits]', with: vacancy.benefits
     fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours
     fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day

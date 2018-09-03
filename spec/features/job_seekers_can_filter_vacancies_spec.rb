@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Filtering vacancies' do
-  scenario 'Filterable by keyword', elasticsearch: true do
+  scenario 'Filterable by keyword', elasticsearch: true, browserstack: true do
     headmaster = create(:vacancy, :published, job_title: 'Headmaster')
     languages_teacher = create(:vacancy, :published, job_title: 'Languages Teacher')
 

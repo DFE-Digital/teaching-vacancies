@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Hiring staff can only see their school' do
-  context 'when the session is connected to a school' do
+  context 'when the session is connected to a school', browserstack: true do
     scenario 'school page can be viewed' do
       school = create(:school)
       stub_hiring_staff_auth(urn: school.urn)
