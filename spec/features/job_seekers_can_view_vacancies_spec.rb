@@ -125,6 +125,21 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).not_to have_content(I18n.t('jobs.no_jobs'))
   end
 
+  scenario 'The search button text changes from \'Search\' to \'Refine search\' when the filters are applied' do
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+
+    within '.filters-form' do
+      fill_in 'keyword', with: 'English'
+      expect(find('.button').value).to eq('Search')
+      click_on I18n.t('buttons.apply_filters')
+    end
+
+    within '.filters-form' do
+      expect(find('.button').value).to eq(I18n.t('buttons.apply_filters_if_criteria'))
+    end
+  end
+
   context 'when the vacancy is part_time' do
     scenario 'Shows the weekly hours if there are weekly_hours' do
       vacancy = create(:vacancy, working_pattern: :part_time, weekly_hours: '5')

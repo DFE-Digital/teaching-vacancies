@@ -5,6 +5,30 @@ resource "aws_ecr_repository" "default" {
   name = "${var.project_name}-${var.environment}"
 }
 
+resource "aws_ecr_lifecycle_policy" "autoexpire" {
+  repository = "${aws_ecr_repository.default.name}"
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 10,
+            "description": "Expire images older than 60 days",
+            "selection": {
+                "tagStatus": "any",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 60
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
 /*====
 ECS cluster
 ======*/
@@ -266,7 +290,7 @@ data "template_file" "reindex_vacancies_container_definition" {
 
 /* performance_platform_submit task definition*/
 data "template_file" "performance_platform_submit_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+  template = "${file(var.performance_platform_rake_container_definition_file_path)}"
 
   vars {
     image                            = "${aws_ecr_repository.default.repository_url}"
@@ -292,7 +316,7 @@ data "template_file" "performance_platform_submit_container_definition" {
 
 /* performance_platform_submit_all task definition*/
 data "template_file" "performance_platform_submit_all_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+  template = "${file(var.performance_platform_rake_container_definition_file_path)}"
 
   vars {
     image                            = "${aws_ecr_repository.default.repository_url}"

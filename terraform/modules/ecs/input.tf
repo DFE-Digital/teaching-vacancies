@@ -9,7 +9,11 @@ variable "ecs_service_task_port" {}
 variable "aws_alb_target_group_arn" {}
 
 variable "ecs_service_web_container_definition_file_path" {}
+
+# Rake task container definitions
 variable "ecs_service_rake_container_definition_file_path" {}
+variable "performance_platform_rake_container_definition_file_path" {}
+
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}

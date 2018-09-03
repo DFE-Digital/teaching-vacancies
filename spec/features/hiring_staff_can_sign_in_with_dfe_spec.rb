@@ -23,7 +23,6 @@ RSpec.shared_examples 'a failed sign in' do |options|
     visit root_path
 
     click_on(I18n.t('nav.sign_in'))
-    choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
     click_on(I18n.t('sign_in.link'))
 
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
@@ -34,7 +33,6 @@ RSpec.shared_examples 'a failed sign in' do |options|
     visit root_path
 
     click_on(I18n.t('nav.sign_in'))
-    choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
     click_on(I18n.t('sign_in.link'))
 
     authentication = PublicActivity::Activity.first
@@ -53,7 +51,6 @@ RSpec.shared_examples 'a failed sign in' do |options|
     visit root_path
 
     click_on(I18n.t('nav.sign_in'))
-    choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
     click_on(I18n.t('sign_in.link'))
   end
 end
@@ -93,7 +90,6 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(mock_permissions)
       visit root_path
       click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
       click_on(I18n.t('sign_in.link'))
     end
 

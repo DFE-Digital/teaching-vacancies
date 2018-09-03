@@ -40,6 +40,13 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
       expect(page).to have_content(I18n.t('errors.feedback.errors_present'))
       expect(current_user).not_to be_accepted_terms_and_conditions
     end
+
+    scenario 'can sign out' do
+      visit terms_and_conditions_path
+      click_on(I18n.t('nav.sign_out'))
+
+      expect(page).to have_content(I18n.t('messages.access.signed_out'))
+    end
   end
 
   context 'the user has accepted the terms and conditions' do
