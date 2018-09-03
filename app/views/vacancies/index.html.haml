@@ -8,7 +8,10 @@
   .column-one-third
     = render 'filters'
   .column-two-thirds
-    %p.heading-medium.mt0= @vacancies.total_count_message
+    %p.mb1
+      %span.heading-medium.mv0.inline= @vacancies.total_count_message
+      - if @vacancies.searched
+        %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
         = t('jobs.sort_by')

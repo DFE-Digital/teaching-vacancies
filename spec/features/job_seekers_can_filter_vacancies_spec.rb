@@ -180,5 +180,24 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(higher_paid_vacancy.job_title)
       expect(page).to have_content(lower_paid_vacancy.job_title)
     end
+
+    scenario 'a user clears their search', elasticsearch: true do
+      create(:vacancy, :published, job_title: 'Physics Teacher')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      expect(page).not_to have_content(I18n.t('jobs.filters.clear_filters'))
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'Physics'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
+
+      click_on I18n.t('jobs.filters.clear_filters')
+      expect(current_path).to eq root_path
+    end
   end
 end
