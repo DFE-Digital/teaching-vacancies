@@ -5,6 +5,30 @@ resource "aws_ecr_repository" "default" {
   name = "${var.project_name}-${var.environment}"
 }
 
+resource "aws_ecr_lifecycle_policy" "autoexpire" {
+  repository = "${aws_ecr_repository.default.name}"
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 10,
+            "description": "Expire images older than 60 days",
+            "selection": {
+                "tagStatus": "any",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 60
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
 /*====
 ECS cluster
 ======*/
