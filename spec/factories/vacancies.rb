@@ -50,8 +50,8 @@ FactoryBot.define do
     end
 
     trait :complete do
-      starts_on { Faker::Time.forward(30) }
-      ends_on { Faker::Time.forward(60) }
+      starts_on { Faker::Time.between(Time.zone.today, Time.zone.today + 30.days) }
+      ends_on { Faker::Time.between(Time.zone.today + 30.days, Time.zone.today + 60.days) }
       flexible_working { true }
     end
 
