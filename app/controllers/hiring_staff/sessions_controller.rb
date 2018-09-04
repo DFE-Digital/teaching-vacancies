@@ -1,4 +1,6 @@
 class HiringStaff::SessionsController < HiringStaff::BaseController
+  protect_from_forgery with: :null_session, only: %i[destroy]
+
   skip_before_action :check_session, only: %i[destroy]
   skip_before_action :check_terms_and_conditions, only: %i[destroy]
 
