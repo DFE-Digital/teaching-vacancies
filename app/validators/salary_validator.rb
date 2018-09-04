@@ -5,7 +5,7 @@ class SalaryValidator < ActiveModel::EachValidator
   rescue_from ArgumentError, with: :invalid_format_message
 
   SALARY_FORMAT = /^\d+\.{0,1}\d{2}{0,1}$/
-  MIN_SALARY_ALLOWED = PayScale.minimum_payscale_salary.freeze
+  MIN_SALARY_ALLOWED = 0
   MAX_SALARY_ALLOWED = 200000
 
   def validate_each(record, attribute, value)
