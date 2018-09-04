@@ -124,6 +124,7 @@ RSpec.feature 'Filtering vacancies' do
   context 'Filterable by both minimum and maximum salary', elasticsearch: true do
     scenario 'when a job\'s salary is within the specified salary range', elasticsearch: true do
       no_match = create(:vacancy, :published, minimum_salary: 30000, maximum_salary: 41000)
+      other_higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 125000)
       higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 40000, maximum_salary: 41000)
       other_paid_vacancy = create(:vacancy, :published, minimum_salary: 40000, maximum_salary: 50000)
 
@@ -137,6 +138,7 @@ RSpec.feature 'Filtering vacancies' do
       end
 
       expect(page).not_to have_content(no_match.job_title)
+      expect(page).not_to have_content(other_higher_paid_vacancy.job_title)
       expect(page).to have_content(higher_paid_vacancy.job_title)
       expect(page).to have_content(other_paid_vacancy.job_title)
     end
