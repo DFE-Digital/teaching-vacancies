@@ -3,7 +3,6 @@ RSpec.feature 'Viewing vacancies' do
   scenario 'View a banner with information about the service' do
     visit jobs_path
     expect(page).to have_content(I18n.t('beta_banner.line_1'))
-    expect(page).to have_content(I18n.t('beta_banner.line_2'))
   end
 
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
