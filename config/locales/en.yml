@@ -50,9 +50,11 @@ en:
     leadership_level: 'Leadership level'
     job_count_without_search: 'There is %{count} job listed.'
     job_count_plural_without_search: 'There are %{count} jobs listed.'
-    job_count: 'There is %{count} job that matches your search.'
-    job_count_plural: 'There are %{count} jobs that match your search.'
-    no_jobs: 'No jobs found. Try expanding your search.'
+    job_count: '%{count} job matches your search.'
+    job_count_plural: '%{count} jobs match your search.'
+    no_jobs:
+      - 'Expanding your search may give more results.'
+      - 'There may be few jobs if this isn’t a busy period in the teacher recruitment cycle. Also, as this new service rolls out to more areas of England, the number of jobs will grow.'
     none_listed:
       - 'This may be because this isn’t a busy period in the teacher recruitment cycle. Also, as this new service is rolled out to more areas of England, the number of jobs will grow. Check back regularly for new listings.'
       - 'Schools have listed %{count} jobs but they have since expired.'

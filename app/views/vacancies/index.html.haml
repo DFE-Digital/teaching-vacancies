@@ -24,7 +24,9 @@
 
     - elsif @vacancies.searched
       %div.empty
-        = t('jobs.no_jobs')
+        - t('jobs.no_jobs').each do |list_item|
+          %p= list_item
+
     - else
       %div.empty
         - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
