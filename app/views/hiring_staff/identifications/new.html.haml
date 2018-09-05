@@ -6,18 +6,7 @@
   .column-two-thirds
     %h1.heading-large= t('sign_in.title')
 
-    %p.lede= t('sign_in.intro')
-
     = simple_form_for :identifications, url: identifications_path, method: :post do |f|
-
       .form-group
-        %legend
-          %h2.heading-medium= t('sign_in.legend')
-
-        %fieldset
-          .form-group
-            = f.collection_radio_buttons :name, identification_options, :first, :last, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
-
-        %p
-          =t('sign_in.no_area', email_link: mail_to(t('help.email'))).html_safe
+        %p= t('sign_in.guidance')
         = f.submit t('sign_in.link'), class: 'button'

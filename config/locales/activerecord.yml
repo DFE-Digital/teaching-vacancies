@@ -41,6 +41,11 @@ en:
             publish_on:
               blank: can't be blank
               before_today: can't be before today
+            starts_on:
+              past: can't be in the past
+              after_ends_on: can't be after the end date
+            ends_on:
+              past: can't be in the past
             weekly_hours:
               negative: can't be negative
               invalid: must be a valid number

@@ -17,10 +17,8 @@ en:
     school_page_link: 'My jobs'
   sign_in:
     title: 'Sign in to Teaching Jobs'
-    intro: 'While we are rolling out this service we need to know which area your school is in so that you can sign into the service.'
-    legend: 'Please select your area:'
-    no_area: "Not in one of these areas? Register your interest in using the service by emailing %{email_link} and we'll let you know when it will be available to you."
-    link: 'Sign in to Teaching Jobs'
+    link: 'Sign in'
+    guidance: 'Once you have received an email invitation from Teaching Jobs you can sign in to this service. Invitations are being sent out gradually by region.'
     organisation:
       title: 'Select your organisation'
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
@@ -215,7 +213,8 @@ en:
     please_accept: 'Please accept the terms and conditions'
     label: 'I agree to all of the Terms and Conditions of the Teaching Jobs service.'
   buttons:
-    apply_filters: 'Apply filters'
+    apply_filters: 'Search'
+    apply_filters_if_criteria: 'Refine search'
     save_and_continue: 'Save and continue'
     accept_and_continue: 'Accept and continue'
     update_job: 'Update job'

@@ -44,7 +44,6 @@ RSpec.feature 'School viewing public listings' do
       visit root_path
 
       click_on(I18n.t('nav.sign_in'))
-      choose(HiringStaff::IdentificationsController::DFE_SIGN_IN_OPTIONS.first.to_radio.last)
       click_on(I18n.t('sign_in.link'))
 
       expect(page).to have_content("Jobs at #{school.name}")

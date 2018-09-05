@@ -21,6 +21,14 @@ class VacanciesPresenter < BasePresenter
     end
   end
 
+  def apply_filters_button_text
+    if @searched == true
+      I18n.t('buttons.apply_filters_if_criteria')
+    else
+      I18n.t('buttons.apply_filters')
+    end
+  end
+
   private
 
   def total_count

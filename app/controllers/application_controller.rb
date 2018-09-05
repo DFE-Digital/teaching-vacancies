@@ -66,6 +66,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_headers
-    response.set_header('X-Robots-Tag', 'none')
+    response.set_header('X-Robots-Tag', 'noindex, nofollow')
   end
 end

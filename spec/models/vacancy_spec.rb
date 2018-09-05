@@ -113,6 +113,14 @@ RSpec.describe Vacancy, type: :model do
     end
 
     context '#minimum_salary and #maximum_salary combined validations' do
+      it 'present minimum_salary and no maximum_salary' do
+        job = build(:vacancy, minimum_salary: '20', maximum_salary: nil)
+
+        expect(job.valid?).to be true
+        expect(job.errors.messages[:minimum_salary]).to be_empty
+        expect(job.errors.messages[:maximum_salary]).to be_empty
+      end
+
       it 'no minimum_salary and no maximum_salary set' do
         job = build(:vacancy, minimum_salary: nil, maximum_salary: nil)
 
@@ -163,16 +171,6 @@ RSpec.describe Vacancy, type: :model do
         expect(job.errors.messages[:minimum_salary]).to be_empty
         expect(job.errors.messages[:maximum_salary])
           .to eq(['must be entered in one of the following formats: 25000 or 25000.00'])
-      end
-
-      it 'less than allowed minimum_salary and no maximum_salary' do
-        stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '3000')
-        job = build(:vacancy, minimum_salary: '20', maximum_salary: nil)
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq(['must be at least £3000'])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
       it 'valid minimum_salary and greater than allowed maximum_salary' do

@@ -8,23 +8,6 @@ RSpec.describe JobSpecificationForm, type: :model do
     it { should validate_presence_of(:minimum_salary) }
     it { should validate_presence_of(:working_pattern) }
 
-    describe '#minimum_salary' do
-      describe '#minimum_salary_at_least_minimum_payscale' do
-        let(:job_specification) do
-          JobSpecificationForm.new(job_title: 'job title',
-                                   job_description: 'description', working_pattern: :full_time,
-                                   minimum_salary: 20, maximum_salary: 200)
-        end
-
-        it 'the minimum salary should be at least equal to the minimum payscale value' do
-          stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '3000')
-          expect(job_specification.valid?). to be false
-          expect(job_specification.errors.messages[:minimum_salary][0])
-            . to eq('must be at least £3000')
-        end
-      end
-    end
-
     describe '#maximum_salary' do
       let(:job_specification) do
         JobSpecificationForm.new(job_title: 'job title',
@@ -37,6 +20,52 @@ RSpec.describe JobSpecificationForm, type: :model do
         expect(job_specification.errors.messages[:maximum_salary][0])
           .to eq('must be higher than the minimum salary')
       end
+    end
+  end
+
+  describe '#starts_on' do
+    it 'has no validation applied when blank' do
+      job_specification_form = JobSpecificationForm.new(starts_on: nil)
+      job_specification_form.valid?
+
+      expect(job_specification_form).to have(:no).errors_on(:starts_on)
+    end
+
+    it 'must be in the future' do
+      job_specification_form = JobSpecificationForm.new(starts_on: 1.day.ago)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:starts_on)
+      expect(job_specification_form.errors.messages[:starts_on][0])
+        .to eq('can\'t be in the past')
+    end
+
+    it 'must be before the ends_on date' do
+      job_specification_form = JobSpecificationForm.new(starts_on: Time.zone.today + 10.days,
+                                                        ends_on: Time.zone.today + 5.days)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:starts_on)
+      expect(job_specification_form.errors.messages[:starts_on][0])
+        .to eq('can\'t be after the end date')
+    end
+  end
+
+  describe '#ends_on' do
+    it 'has no validation applied when blank' do
+      job_specification_form = JobSpecificationForm.new(ends_on: nil)
+      job_specification_form.valid?
+
+      expect(job_specification_form).to have(:no).errors_on(:ends_on)
+    end
+
+    it 'must be in the future' do
+      job_specification_form = JobSpecificationForm.new(ends_on: 1.day.ago)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:ends_on)
+      expect(job_specification_form.errors.messages[:ends_on][0])
+        .to eq('can\'t be in the past')
     end
   end
 

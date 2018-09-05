@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe HiringStaff::SchoolsController, type: :controller do
+RSpec.describe HiringStaff::VacanciesController, type: :controller do
   describe 'sets headers' do
     it 'robots are asked not to index or to follow' do
-      get :show
+      get :new
       expect(response.headers['X-Robots-Tag']).to eq('noindex, nofollow')
     end
   end
