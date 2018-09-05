@@ -509,16 +509,6 @@ resource "aws_iam_role_policy_attachment" "ecs-instance-role-attachment" {
 /*====
 ECS ONE-OFF TASKS
 ======*/
-resource "aws_ecs_task_definition" "import_schools_task" {
-  family                   = "${var.ecs_service_web_task_name}_import_schools_task"
-  container_definitions    = "${data.template_file.import_schools_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
 
 resource "aws_ecs_task_definition" "update_pay_scale_task" {
   family                   = "${var.ecs_service_web_task_name}_update_pay_scale_task"
@@ -647,5 +637,34 @@ resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" 
   ecs_target {
     task_count          = "1"
     task_definition_arn = "${aws_ecs_task_definition.performance_platform_submit_task.arn}"
+  }
+}
+
+resource "aws_ecs_task_definition" "import_schools_task" {
+  family                   = "${var.ecs_service_web_task_name}_import_schools_task"
+  container_definitions    = "${data.template_file.import_schools_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "import_schools_task" {
+  name                = "${var.ecs_service_web_task_name}_import_schools_task"
+  description         = "Run school import at a scheuled time"
+  schedule_expression = "${var.import_schools_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "import_schools_task_event" {
+  target_id = "${var.ecs_service_web_task_name}_import_schools_task"
+  rule      = "${aws_cloudwatch_event_rule.import_schools_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.import_schools_task.arn}"
   }
 }

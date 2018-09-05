@@ -151,14 +151,29 @@ variable "import_schools_task_command" {
   default     = ["rake", "verbose", "data:schools:import"]
 }
 
+variable "import_schools_task_schedule" {
+  description = "import_schools schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 02 * * ? *)"
+}
+
 variable "vacancies_scrape_task_command" {
   description = "The Entrypoint for the vacancies_scrape task"
   default     = ["rake", "verbose", "vacancies:data:scrape"]
 }
 
+variable "vacancies_scrape_task_schedule" {
+  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(60 minutes)"
+}
+
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "verbose", "db:sessions:trim"]
+}
+
+variable "sessions_trim_task_schedule" {
+  description = "sessions_trim schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(1 day)"
 }
 
 variable "update_pay_scale_task_command" {
@@ -176,14 +191,19 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
-variable "vacancies_scrape_task_schedule" {
-  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "rate(60 minutes)"
+variable "performance_platform_submit_task_command" {
+  description = "The Entrypoint for the performance_platform_submit task"
+  default     = ["rake", "verbose", "performance_platform:submit"]
 }
 
-variable "sessions_trim_task_schedule" {
-  description = "sessions_trim schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "rate(1 day)"
+variable "performance_platform_submit_task_schedule" {
+  description = "performance_platform_submit schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "rate(24 hours)"
+}
+
+variable "performance_platform_submit_all_task_command" {
+  description = "The Entrypoint for the performance_platform_submit_all task"
+  default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
 }
 
 # RDS
@@ -199,21 +219,6 @@ variable "rds_engine_version" {
     mysql    = "5.6.22"
     postgres = "9.6.6"
   }
-}
-
-variable "performance_platform_submit_task_command" {
-  description = "The Entrypoint for the performance_platform_submit task"
-  default     = ["rake", "verbose", "performance_platform:submit"]
-}
-
-variable "performance_platform_submit_task_schedule" {
-  description = "performance_platform_submit schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "rate(24 hours)"
-}
-
-variable "performance_platform_submit_all_task_command" {
-  description = "The Entrypoint for the performance_platform_submit_all task"
-  default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
 }
 
 variable "rds_storage_gb" {}
