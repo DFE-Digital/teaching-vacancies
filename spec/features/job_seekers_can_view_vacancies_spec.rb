@@ -156,4 +156,19 @@ RSpec.feature 'Viewing vacancies' do
       expect(page).not_to have_content(I18n.t('jobs.weekly_hours'))
     end
   end
+
+  context 'when the user is not on mobile' do
+    scenario 'they should not see the \'refine your search\' link' do
+      visit jobs_path
+      expect(page).not_to have_content('Refine your search')
+    end
+  end
+
+  context 'when the user is on mobile' do
+    scenario 'they should see the \'refine your search\' link' do
+      page.driver.header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
+      visit jobs_path
+      expect(page).to have_content('Refine your search')
+    end
+  end
 end
