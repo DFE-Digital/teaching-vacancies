@@ -169,6 +169,50 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         verify_all_vacancy_details(vacancy)
       end
 
+      context 'if the job post has already been published' do
+        context 'and the publication date is in the past' do
+          scenario 'renders the publication date as text and does not allow editing' do
+            vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
+            vacancy.save(validate: false)
+            vacancy = VacancyPresenter.new(vacancy)
+            visit edit_school_job_path(vacancy.id)
+
+            click_header_link(I18n.t('jobs.application_details'))
+            expect(page).to have_content('Date role will be listed')
+            expect(page).to have_content(format_date(vacancy.publish_on))
+            expect(page).not_to have_css('#application_details_form_publish_on_dd')
+
+            fill_in 'application_details_form[application_link]', with: vacancy.application_link
+            click_on 'Update job'
+
+            expect(page).to have_content(I18n.t('messages.jobs.updated'))
+            verify_all_vacancy_details(vacancy)
+          end
+        end
+
+        context 'and the publication date is in the future' do
+          scenario 'renders the publication date as text and allows editing' do
+            vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days, school: school)
+            vacancy = VacancyPresenter.new(vacancy)
+            visit edit_school_job_path(vacancy.id)
+            click_link_in_container_with_text(I18n.t('jobs.publication_date'))
+
+            expect(page).to have_content('Date role will be listed')
+            expect(page).to have_css('#application_details_form_publish_on_dd')
+
+            fill_in 'application_details_form[publish_on_dd]', with: (Time.zone.today + 2.days).day
+            fill_in 'application_details_form[publish_on_mm]', with: (Time.zone.today + 2.days).month
+            fill_in 'application_details_form[publish_on_yyyy]', with: (Time.zone.today + 2.days).year
+            click_on 'Update job'
+
+            expect(page).to have_content(I18n.t('messages.jobs.updated'))
+
+            vacancy.publish_on = Time.zone.today + 2.days
+            verify_all_vacancy_details(vacancy)
+          end
+        end
+      end
+
       scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         application_link = vacancy.application_link

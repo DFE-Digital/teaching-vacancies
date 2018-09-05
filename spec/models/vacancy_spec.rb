@@ -195,7 +195,7 @@ RSpec.describe Vacancy, type: :model do
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
 
-      subject { build(:vacancy) }
+      subject { build(:vacancy, status: :draft) }
       before { subject.contact_email = '' }
 
       it 'should validate presence of contact email' do
