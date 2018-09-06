@@ -1,6 +1,6 @@
 # Install dependencies into a seperate and isolated Docker stage
 # that is thrown away apart from any subsequent COPY commands
-FROM mkenney/npm AS dependencies
+FROM mkenney/npm:latest AS dependencies
 ENV INSTALL_PATH /deps
 RUN mkdir -p $INSTALL_PATH
 WORKDIR $INSTALL_PATH
