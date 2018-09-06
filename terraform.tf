@@ -56,7 +56,12 @@ module "ecs" {
   ecs_service_task_count                          = "${var.ecs_service_task_count}"
   ecs_service_task_port                           = "${var.ecs_service_task_port}"
 
+  ecs_service_worker_task_port                    = "${var.ecs_service_worker_task_port}"
+
   ecs_service_web_container_definition_file_path  = "${var.ecs_service_web_container_definition_file_path}"
+  ecs_service_worker_container_definition_file_path  = "${var.ecs_service_worker_container_definition_file_path}"
+  worker_command                                     = "${var.worker_command}"
+
   ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
   performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
 
@@ -79,6 +84,7 @@ module "ecs" {
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
+  aws_alb_worker_target_group_arn  = "${module.core.alb_worker_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
   
   dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"

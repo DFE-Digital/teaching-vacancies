@@ -249,6 +249,47 @@ resource "aws_alb_target_group" "alb_target_group" {
   depends_on = ["aws_alb.alb_default"]
 }
 
+# worker load balancer
+
+resource "aws_alb" "worker" {
+  name            = "${var.project_name}-alb-worker-${var.environment}"
+  subnets         = ["${aws_subnet.private_subnet.*.id}"]
+  load_balancer_type = "network"
+
+  tags {
+    Name        = "${var.project_name}-alb-worker-${var.environment}"
+    Environment = "${var.environment}"
+  }
+}
+
+resource "aws_alb_listener" "worker" {
+  load_balancer_arn = "${aws_alb.worker.arn}"
+  port              = "6379"
+  protocol          = "TCP"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.worker_target_group.arn}"
+    type             = "forward"
+  }
+
+  depends_on = ["aws_alb_target_group.worker_target_group"]
+}
+
+resource "aws_alb_target_group" "worker_target_group" {
+  name     = "${var.project_name}-${var.environment}-alb-worker"
+  port     = 6379
+  protocol = "TCP"
+  vpc_id   = "${aws_vpc.vpc.id}"
+  stickiness = []
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = ["aws_alb.worker"]
+}
+
+
 /* security group for ALB */
 resource "aws_security_group" "web_inbound_sg" {
   name        = "${var.project_name}-${var.environment}-inbound"

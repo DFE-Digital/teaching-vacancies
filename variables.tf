@@ -106,6 +106,11 @@ variable "ecs_service_task_port" {
   default     = 3000
 }
 
+variable "ecs_service_worker_task_port" {
+  description = "The port the worker is listening on (ALB will map these with ephemeral port numbers)"
+  default     = 3000
+}
+
 # ECS Tasks
 variable "ecs_service_web_container_definition_file_path" {
   description = "Container definition for the web task"
@@ -126,6 +131,11 @@ variable "performance_platform_rake_container_definition_file_path" {
 variable "ecs_service_logspout_container_definition_file_path" {
   description = "Logspout container definition"
   default     = "./logspout_container_definition.json"
+}
+
+variable "ecs_service_worker_container_definition_file_path" {
+  description = "Worker container definition"
+  default     = "./worker_container_definition.json"
 }
 
 variable "import_schools_task_command" {
@@ -269,6 +279,10 @@ variable "load_balancer_check_path" {
 }
 
 variable "logspout_command" {
+  type = "list"
+}
+
+variable "worker_command" {
   type = "list"
 }
 

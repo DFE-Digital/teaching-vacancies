@@ -6,7 +6,10 @@ variable "ecs_service_name" {}
 variable "ecs_service_task_name" {}
 variable "ecs_service_task_count" {}
 variable "ecs_service_task_port" {}
+
+variable "ecs_service_worker_task_port" {}
 variable "aws_alb_target_group_arn" {}
+variable "aws_alb_worker_target_group_arn" {}
 
 variable "ecs_service_web_container_definition_file_path" {}
 
@@ -52,6 +55,12 @@ variable "logspout_command" {
 }
 
 variable "ecs_logspout_task_count" {}
+
+variable "ecs_service_worker_container_definition_file_path" {}
+
+variable "worker_command" {
+  type = "list"
+}
 
 variable "import_schools_task_command" {
   type = "list"

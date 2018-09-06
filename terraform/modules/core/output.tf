@@ -10,6 +10,10 @@ output "alb_target_group_arn" {
   value = "${aws_alb_target_group.alb_target_group.arn}"
 }
 
+output "alb_worker_target_group_arn" {
+  value = "${aws_alb_target_group.worker_target_group.arn}"
+}
+
 output "default_security_group_id" {
   value = "${aws_security_group.default.id}"
 }
