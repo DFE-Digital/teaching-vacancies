@@ -125,6 +125,29 @@ RSpec.feature 'Viewing vacancies' do
     expect(page).not_to have_content(I18n.t('jobs.no_jobs'))
   end
 
+  scenario 'Should not show text warning about zero jobs on the site if jobs exist but are filtered out' do
+    visit jobs_path
+
+    create(:vacancy, :published, job_title: 'Headmaster')
+    create(:vacancy, :published, job_title: 'Languages Teacher')
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+
+    within '.filters-form' do
+      fill_in 'keyword', with: 'Maths'
+      click_button('Search')
+    end
+
+    expect(page).to have_content(I18n.t('jobs.no_jobs'))
+    expect(page).not_to have_content(I18n.t('jobs.none_listed'))
+
+    click_button('Refine search')
+
+    expect(page).to have_content(I18n.t('jobs.no_jobs'))
+    expect(page).not_to have_content(I18n.t('jobs.none_listed'))
+  end
+
   scenario 'The search button text changes from \'Search\' to \'Refine search\' when the filters are applied' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path

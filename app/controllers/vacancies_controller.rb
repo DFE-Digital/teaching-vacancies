@@ -83,7 +83,8 @@ class VacanciesController < ApplicationController
   end
 
   def searched?
-    params[:commit]&.eql?(I18n.t('buttons.apply_filters'))
+    params[:commit]&.eql?(I18n.t('buttons.apply_filters')) ||
+      params[:commit]&.eql?(I18n.t('buttons.apply_filters_if_criteria'))
   end
 
   def set_headers
