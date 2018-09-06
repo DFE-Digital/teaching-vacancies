@@ -191,7 +191,7 @@ RSpec.feature 'Filtering vacancies' do
 
       within '.filters-form' do
         fill_in 'keyword', with: 'Physics'
-        page.find('.button[type=submit]').click
+        page.find('.govuk-button[type=submit]').click
       end
 
       expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))

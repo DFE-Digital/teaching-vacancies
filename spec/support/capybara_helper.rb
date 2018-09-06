@@ -4,7 +4,7 @@ module CapybaraHelper
   end
 
   def click_header_link(text)
-    find(:xpath, "//th[h2[contains(text(), '#{text}')]]").find('a', text: 'Change').click
+    find(:xpath, "//h2[contains(text(), '#{text}')]/following-sibling::div").find('a', text: 'Change').click
   end
 
   def within_row_for(element: 'label', text:, &block)
