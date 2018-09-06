@@ -5,11 +5,11 @@
 .govuk-grid-row
 
   .govuk-grid-column-two-thirds
-    %p.govuk-heading-m.mt0.mb1
-      %p.govuk-heading-m.mt0= @vacancies.total_count_message
+    %p.govuk-heading-m.mt0
+      %p.govuk-heading-m.mb0= @vacancies.total_count_message
       - if @vacancies.searched
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
-      .nobreak
+      .mt1
         = link_to 'Refine your search?', '#filters', class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
