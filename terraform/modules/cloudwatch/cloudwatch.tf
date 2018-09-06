@@ -136,3 +136,34 @@ resource "aws_cloudwatch_event_target" "code_pipeline_fail_sns_target" {
   arn       = "${aws_sns_topic.cloudwatch_alerts.arn}"
   input     = "{\"AlarmName\": \"Failed Pipeline\",\"NewStateValue\": \"SOFT_ALARM\",\"NewStateReason\": \"Pipeline ${var.pipeline_name} has failed\"}"
 }
+
+resource "aws_cloudwatch_event_rule" "code_pipeline_succeeded" {
+  name        = "${var.project_name}-${var.environment}-code-pipeline-succeeded"
+  description = "Notify on CodePipeline Success"
+
+  event_pattern = <<PATTERN
+{
+  "source": [
+    "aws.codepipeline"
+  ],
+  "detail-type": [
+    "CodePipeline Pipeline Execution State Change"
+  ],
+  "detail": {
+    "state": [
+      "SUCCEEDED"
+    ],
+    "pipeline": [
+      "${var.pipeline_name}"
+    ]
+  }
+}
+PATTERN
+}
+
+resource "aws_cloudwatch_event_target" "code_pipeline_succeeded_sns_target" {
+  rule      = "${aws_cloudwatch_event_rule.code_pipeline_succeeded.name}"
+  target_id = "CodePipeLineSucceeded"
+  arn       = "${aws_sns_topic.cloudwatch_alerts.arn}"
+  input     = "{\"AlarmName\": \"Succeeded Pipeline\",\"NewStateValue\": \"SOFT_ALARM\",\"NewStateReason\": \"Pipeline ${var.pipeline_name} has succeeded :tada:\"}"
+}
