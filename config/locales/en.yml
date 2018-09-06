@@ -157,6 +157,7 @@ en:
       maximum_salary: 'Maximum salary'
       working_pattern: 'Working pattern'
       education_phase: 'Education phase'
+      clear_filters: 'Reset search'
   feedback:
     page_title: 'Feedback'
     heading: 'Give feedback'
