@@ -20,6 +20,7 @@ services:
     restart: on-failure
     volumes:
       - .:/srv/dfe-tvs:cached
+      - node_modules:/srv/dfe-tvs/node_modules
     command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'"
 
   db:
@@ -56,3 +57,4 @@ services:
 volumes:
   pg_data: {}
   elasticsearch: {}
+  node_modules:

@@ -8,7 +8,6 @@ COPY package.json ./package.json
 COPY package-lock.json ./package-lock.json
 RUN npm set progress=false && npm config set depth 0
 RUN npm install --only=production
-RUN npm install
 
 FROM ruby:2.4.0 as release
 MAINTAINER dxw <rails@dxw.com>
@@ -24,10 +23,12 @@ RUN tar xvjf $PHANTOM_JS.tar.bz2
 RUN mv $PHANTOM_JS/bin/phantomjs /usr/local/bin/phantomjs
 RUN rm -rf $PHANTOM_JS
 
-COPY --from=dependencies ./deps/ /usr/local/bin/govuk_design_system
-
 ENV INSTALL_PATH /srv/dfe-tvs
 RUN mkdir -p $INSTALL_PATH
+
+# This must be ordered before rake assets:precompile
+COPY --from=dependencies ./deps/node_modules $INSTALL_PATH/node_modules
+COPY --from=dependencies ./deps/node_modules/govuk-frontend/assets $INSTALL_PATH/app/assets
 
 WORKDIR $INSTALL_PATH
 
