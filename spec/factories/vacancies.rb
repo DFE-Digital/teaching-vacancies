@@ -65,6 +65,7 @@ FactoryBot.define do
 
     trait :published do
       status { :published }
+      expires_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 20.days) }
     end
 
     trait :published_slugged do
