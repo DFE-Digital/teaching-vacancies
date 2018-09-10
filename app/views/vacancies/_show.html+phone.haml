@@ -3,11 +3,11 @@
 
 .vacancy.govuk-grid-row
   - if @vacancy.expired?
-    .govuk-column-full
+    .govuk-grid-column-full
       .banner-warning
         = t('jobs.expired')
 
-  .govuk-column-one-third
+  .govuk-grid-column-one-third
     %h1.govuk-heading-l
       = @vacancy.job_title
       %span.govuk-caption-l
