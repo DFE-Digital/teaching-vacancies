@@ -50,13 +50,14 @@ en:
     leadership_level: 'Leadership level'
     job_count_without_search: 'There is %{count} job listed.'
     job_count_plural_without_search: 'There are %{count} jobs listed.'
-    job_count: 'There is %{count} job that matches your search.'
-    job_count_plural: 'There are %{count} jobs that match your search.'
-    no_jobs: 'No jobs found. Try expanding your search.'
+    job_count: '%{count} job matches your search.'
+    job_count_plural: '%{count} jobs match your search.'
+    no_jobs:
+      - 'Expanding your search may give more results.'
+      - 'There may be few jobs if this isn’t a busy period in the teacher recruitment cycle. Also, as this new service rolls out to more areas of England, the number of jobs will grow.'
     none_listed:
-      - 'This is because schools are on summer holidays and this isn’t a peak period in the teacher recruitment cycle.'
+      - 'This may be because this isn’t a busy period in the teacher recruitment cycle. Also, as this new service is rolled out to more areas of England, the number of jobs will grow. Check back regularly for new listings.'
       - 'Schools have listed %{count} jobs but they have since expired.'
-      - 'We’re still growing as a service. Even more schools will be able to list jobs on the service from September. So please check back soon!'
     job_title: 'Job title'
     benefits: 'Employee benefits'
     salary_range: 'Salary range'
@@ -267,5 +268,4 @@ en:
 
         - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with “help” in the subject line.
   beta_banner:
-    line_1: 'This service is in development and lists teaching jobs in select areas, currently Cambridgeshire and the North East. When the service launches nationally it will list roles throughout England.'
-    line_2: 'The summer holidays aren’t a peak period in the teacher recruitment cycle, but it’s still worth checking back soon for new opportunities.'
+    line_1: 'This service is in development and lists jobs in select areas of England. It will be rolled out in phases to new areas, so check back regularly for new listings.'

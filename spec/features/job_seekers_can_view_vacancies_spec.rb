@@ -2,16 +2,7 @@ require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
   scenario 'View a banner with information about the service' do
     visit jobs_path
-
-    expect(page).to have_content(
-      'This service is in development and lists teaching jobs in select areas, currently ' \
-      'Cambridgeshire and the North East. When the service launches nationally it will list ' \
-      'roles throughout England.'
-    )
-    expect(page).to have_content(
-      'The summer holidays aren’t a peak period in the teacher recruitment cycle, but it’s ' \
-       'still worth checking back soon for new opportunities.'
-    )
+    expect(page).to have_content(I18n.t('beta_banner.line_1'))
   end
 
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
@@ -114,7 +105,9 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     click_on I18n.t('buttons.apply_filters')
-    expect(page).to have_content(I18n.t('jobs.no_jobs'))
+    I18n.t('jobs.no_jobs').each do |sentence|
+      expect(page).to have_content(sentence)
+    end
   end
 
   scenario 'Should advise users to check back soon when no jobs are listed' do
@@ -139,13 +132,23 @@ RSpec.feature 'Viewing vacancies' do
       click_button('Search')
     end
 
-    expect(page).to have_content(I18n.t('jobs.no_jobs'))
-    expect(page).not_to have_content(I18n.t('jobs.none_listed'))
+    I18n.t('jobs.no_jobs').each do |sentence|
+      expect(page).to have_content(sentence)
+    end
+
+    I18n.t('jobs.none_listed').each do |sentence|
+      expect(page).not_to have_content(sentence)
+    end
 
     click_button('Refine search')
 
-    expect(page).to have_content(I18n.t('jobs.no_jobs'))
-    expect(page).not_to have_content(I18n.t('jobs.none_listed'))
+    I18n.t('jobs.no_jobs').each do |sentence|
+      expect(page).to have_content(sentence)
+    end
+
+    I18n.t('jobs.none_listed').each do |sentence|
+      expect(page).not_to have_content(sentence)
+    end
   end
 
   scenario 'The search button text changes from \'Search\' to \'Refine search\' when the filters are applied' do
