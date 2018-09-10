@@ -22,6 +22,7 @@
     -# = stylesheet_link_tag '/govuk-frontend/all-ie8', media: 'all'
     /[if lt IE 9]
     = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
+    = javascript_include_tag 'application'
     %meta{content: asset_path("govuk-opengraph-image.png"), property: "og:image"}/
     = csrf_meta_tags
   %body.govuk-template__body.app-body-class
@@ -93,4 +94,3 @@
                 %a.govuk-footer__link{href: "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/", rel: "license"} Open Government Licence v3.0
           .govuk-footer__meta-item
             %a.govuk-footer__link.govuk-footer__copyright-logo{href: "https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"} © Crown copyright
-    = javascript_include_tag 'application'
