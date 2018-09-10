@@ -10,7 +10,7 @@ end
 gem 'rails', '~> 5.2.1'
 
 gem 'puma', '~> 3.12'
-gem 'pg', '~> 1.0'
+gem 'pg', '~> 1.1'
 gem 'elasticsearch-model'
 gem 'faraday_middleware-aws-signers-v4'
 gem 'friendly_id'
@@ -82,7 +82,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 3.6'
+  gem 'capybara', '~> 3.7'
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
