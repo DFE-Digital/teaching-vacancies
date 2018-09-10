@@ -132,13 +132,23 @@ RSpec.feature 'Viewing vacancies' do
       click_button('Search')
     end
 
-    expect(page).to have_content(I18n.t('jobs.no_jobs'))
-    expect(page).not_to have_content(I18n.t('jobs.none_listed'))
+    I18n.t('jobs.no_jobs').each do |sentence|
+      expect(page).to have_content(sentence)
+    end
+
+    I18n.t('jobs.none_listed').each do |sentence|
+      expect(page).not_to have_content(sentence)
+    end
 
     click_button('Refine search')
 
-    expect(page).to have_content(I18n.t('jobs.no_jobs'))
-    expect(page).not_to have_content(I18n.t('jobs.none_listed'))
+    I18n.t('jobs.no_jobs').each do |sentence|
+      expect(page).to have_content(sentence)
+    end
+
+    I18n.t('jobs.none_listed').each do |sentence|
+      expect(page).not_to have_content(sentence)
+    end
   end
 
   scenario 'The search button text changes from \'Search\' to \'Refine search\' when the filters are applied' do
