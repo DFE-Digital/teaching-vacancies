@@ -48,7 +48,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Job title can\'t be blank')
       end
 
-      scenario 'can be succesfuly edited' do
+      scenario 'can be succesfuly edited', :stub_indexing_api do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
@@ -60,7 +60,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Assistant Head Teacher')
       end
 
-      scenario 'ensures the vacancy slug is updated when the title is saved' do
+      scenario 'ensures the vacancy slug is updated when the title is saved', :stub_indexing_api do
         vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
@@ -75,7 +75,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page.current_path).to eq('/jobs/assistant-head-teacher')
       end
 
-      scenario 'tracks the vacancy update' do
+      scenario 'tracks the vacancy update', :stub_indexing_api do
         vacancy = create(:vacancy, :published, school: school)
         job_title = vacancy.job_title
 
@@ -89,6 +89,20 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.key).to eq('vacancy.update')
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(job_title: [job_title, 'Assistant Head Teacher'])
+      end
+
+      scenario 'notifies the Google index service' do
+        vacancy = create(:vacancy, :published, school: school)
+
+        indexing_service = double(:mock)
+        expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
+        expect(indexing_service).to receive(:update)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text('Job title')
+
+        fill_in 'job_specification_form[job_description]', with: 'Sample description'
+        click_on 'Update job'
       end
     end
 
@@ -108,7 +122,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited' do
+      scenario 'can be succesfuly edited', :stub_indexing_api do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
@@ -120,7 +134,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Teaching deegree')
       end
 
-      scenario 'tracks the vacancy update' do
+      scenario 'tracks the vacancy update', :stub_indexing_api do
         vacancy = create(:vacancy, :published, school: school)
         qualifications = vacancy.qualifications
 
@@ -135,6 +149,20 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(qualifications: [qualifications,
                                                                                'Teaching deegree'])
+      end
+
+      scenario 'notifies the Google index service' do
+        vacancy = create(:vacancy, :published, school: school)
+
+        indexing_service = double(:mock)
+        expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
+        expect(indexing_service).to receive(:update)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
+
+        fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
+        click_on 'Update job'
       end
     end
 
@@ -154,7 +182,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited' do
+      scenario 'can be succesfuly edited', :stub_indexing_api do
         vacancy = create(:vacancy, :published, school: school)
         vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_job_path(vacancy.id)
@@ -171,7 +199,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       context 'if the job post has already been published' do
         context 'and the publication date is in the past' do
-          scenario 'renders the publication date as text and does not allow editing' do
+          scenario 'renders the publication date as text and does not allow editing', :stub_indexing_api do
             vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
             vacancy.save(validate: false)
             vacancy = VacancyPresenter.new(vacancy)
@@ -213,7 +241,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'tracks the vacancy update' do
+      scenario 'tracks the vacancy update', :stub_indexing_api do
         vacancy = create(:vacancy, :published, school: school)
         application_link = vacancy.application_link
 
@@ -228,6 +256,20 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
                                                                                  'https://schooljobs.com'])
+      end
+
+      scenario 'notifies the Google index service' do
+        vacancy = create(:vacancy, :published, school: school)
+
+        indexing_service = double(:mock)
+        expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
+        expect(indexing_service).to receive(:update)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.application_link'))
+
+        fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
+        click_on 'Update job'
       end
     end
   end

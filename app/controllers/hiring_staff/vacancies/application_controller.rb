@@ -1,4 +1,5 @@
 require 'auditor'
+require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
   private
@@ -58,5 +59,15 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def source_update?
     params[:source]&.eql?('update')
+  end
+
+  def update_google_index(job)
+    url = job_url(job, protocol: 'https')
+    Indexing.new(url).update
+  end
+
+  def remove_google_index(job)
+    url = job_url(job, protocol: 'https')
+    Indexing.new(url).remove
   end
 end
