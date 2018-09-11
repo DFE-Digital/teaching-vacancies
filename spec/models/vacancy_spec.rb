@@ -270,6 +270,21 @@ RSpec.describe Vacancy, type: :model do
         expect(job.slug).to eq('cs-teacher')
       end
     end
+
+    context '#listed?' do
+      it 'returns true if the vacancy is currently listed' do
+        job = create(:vacancy, :published)
+
+        expect(job.listed?).to be true
+      end
+
+      it 'returns false if the vacancy is not yet listed' do
+        job = build(:vacancy, :published, slug: 'value', publish_on: Time.zone.tomorrow)
+        job.save(validate: false)
+
+        expect(job.listed?).to be false
+      end
+    end
   end
 
   context 'actions' do
