@@ -83,7 +83,7 @@ GEM
     browser (2.5.3)
     builder (3.2.3)
     byebug (10.0.2)
-    capybara (3.6.0)
+    capybara (3.7.1)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -287,7 +287,7 @@ GEM
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
-    pg (1.0.0)
+    pg (1.1.3)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
@@ -296,12 +296,12 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    public_activity (1.6.1)
+    public_activity (1.6.2)
       actionpack (>= 3.0.0)
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
-    public_suffix (3.0.2)
+    public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.5)
     rack-oauth2 (1.9.2)
@@ -460,7 +460,7 @@ GEM
     validate_url (1.0.2)
       activemodel (>= 3.0.0)
       addressable
-    web-console (3.6.2)
+    web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
@@ -487,7 +487,7 @@ DEPENDENCIES
   breasal (~> 0.0.1)
   browser
   byebug
-  capybara (~> 3.6)
+  capybara (~> 3.7)
   coffee-rails
   colorize
   database_cleaner
@@ -516,7 +516,7 @@ DEPENDENCIES
   lograge
   omniauth (~> 1.8)
   omniauth_openid_connect (~> 0.1)
-  pg (~> 1.0)
+  pg (~> 1.1)
   poltergeist
   pry
   public_activity

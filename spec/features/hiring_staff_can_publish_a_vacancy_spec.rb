@@ -188,6 +188,22 @@ RSpec.feature 'Creating a vacancy' do
         verify_all_vacancy_details(vacancy)
       end
 
+      scenario 'lists jobs without an application_link or a contact_email correctly' do
+        vacancy_factory = build(:vacancy, :complete, :draft, school_id: school.id,
+                                                             slug: 'test-slug',
+                                                             application_link: nil,
+                                                             contact_email: nil)
+        vacancy_factory.save(validate: false)
+        vacancy = VacancyPresenter.new(vacancy_factory)
+        visit school_job_review_path(vacancy.id)
+
+        expect(page).to have_content("Review the job for #{school.name}")
+        expect(page).to have_content('No application link given')
+        expect(page).to have_content('No job contact email given')
+
+        verify_all_vacancy_details(vacancy)
+      end
+
       context 'edit job_specification_details' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)

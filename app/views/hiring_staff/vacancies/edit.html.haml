@@ -176,7 +176,8 @@
           %td.cya-answer
             = format_date @vacancy.publish_on
           %td.cya-change
-            = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'publish_on'), 'aria-label': t('jobs.aria_labels.change_date_role_will_be_listed')
+            - unless @vacancy.published? && @vacancy.publish_on.past?
+              = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'publish_on'), 'aria-label': t('jobs.aria_labels.change_date_role_will_be_listed')
         %tr
           %td.cya-question
             = t('jobs.deadline_date')

@@ -157,7 +157,7 @@ RSpec.feature 'Filtering vacancies' do
         page.find('.button[type=submit]').click
       end
 
-      expect(page).to have_content('There is 1 job that matches your search')
+      expect(page).to have_content(I18n.t('jobs.job_count', count: 1))
       expect(page).not_to have_content(no_match.job_title)
       expect(page).to have_content(other_paid_vacancy.job_title)
     end
@@ -176,9 +176,28 @@ RSpec.feature 'Filtering vacancies' do
         page.find('.button[type=submit]').click
       end
 
-      expect(page).to have_content('There are 2 jobs that match your search')
+      expect(page).to have_content(I18n.t('jobs.job_count_plural', count: 2))
       expect(page).to have_content(higher_paid_vacancy.job_title)
       expect(page).to have_content(lower_paid_vacancy.job_title)
+    end
+
+    scenario 'a user clears their search', elasticsearch: true do
+      create(:vacancy, :published, job_title: 'Physics Teacher')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      expect(page).not_to have_content(I18n.t('jobs.filters.clear_filters'))
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'Physics'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
+
+      click_on I18n.t('jobs.filters.clear_filters')
+      expect(current_path).to eq root_path
     end
   end
 end

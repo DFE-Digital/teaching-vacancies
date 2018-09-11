@@ -8,7 +8,10 @@
   .column-one-third
     = render 'filters'
   .column-two-thirds
-    %p.heading-medium.mt0= @vacancies.total_count_message
+    %p.mb1
+      %span.heading-medium.mv0.inline= @vacancies.total_count_message
+      - if @vacancies.searched
+        %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
         = t('jobs.sort_by')
@@ -21,7 +24,9 @@
 
     - elsif @vacancies.searched
       %div.empty
-        = t('jobs.no_jobs')
+        - t('jobs.no_jobs').each do |list_item|
+          %p= list_item
+
     - else
       %div.empty
         - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
