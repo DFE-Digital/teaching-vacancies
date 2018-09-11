@@ -21,9 +21,9 @@
         - @vacancies.each do |vacancy|
           = render partial: 'vacancy', locals: { vacancy: vacancy }
 
+  = paginate @vacancies
+
   .govuk-grid-column-one-third#filters
     = render 'filters'
-
-= paginate @vacancies
 
 = render partial: 'shared/beta_banner'
