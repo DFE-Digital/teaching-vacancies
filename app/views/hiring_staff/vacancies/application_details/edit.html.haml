@@ -25,7 +25,7 @@
       - if @application_details_form.disable_editing_publish_on?
         #publish_on
           %label.govuk-label= t('jobs.publication_date')
-          = format_date @application_details_form.publish_on
+          %p= format_date @application_details_form.publish_on
         %br
       - else
         %div.govuk-form-group#publish_on
