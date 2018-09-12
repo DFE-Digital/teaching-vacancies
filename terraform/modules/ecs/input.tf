@@ -9,8 +9,6 @@ variable "ecs_service_task_port" {}
 
 variable "ecs_service_worker_task_port" {}
 variable "aws_alb_target_group_arn" {}
-variable "aws_alb_worker_target_group_arn" {}
-
 variable "ecs_service_web_container_definition_file_path" {}
 
 # Rake task container definitions

@@ -81,18 +81,11 @@ resource "aws_ecs_service" "logspout" {
 
 resource "aws_ecs_service" "worker" {
   name            = "worker-${var.ecs_service_name}"
-  iam_role        = "${aws_iam_role.ecs_role.arn}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
   task_definition = "${aws_ecs_task_definition.worker.arn}"
   desired_count   = "${var.ecs_service_task_count}"
 
   deployment_minimum_healthy_percent = 50
-
-  load_balancer {
-    target_group_arn = "${var.aws_alb_worker_target_group_arn}"
-    container_name   = "worker-${var.ecs_service_task_name}"
-    container_port   = "${var.ecs_service_worker_task_port}"
-  }
 
   scheduling_strategy = "DAEMON"
 
