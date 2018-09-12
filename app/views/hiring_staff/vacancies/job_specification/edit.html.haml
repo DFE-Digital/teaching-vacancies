@@ -99,7 +99,8 @@
                 label: t('jobs.weekly_hours'),
                 as: :decimal,
                 hint: t('jobs.form_hints.weekly_hours'),
-                wrapper_html: {class: 'govuk-!-width-one-half', id: 'weekly_hours'},
+                wrapper_html: {id: 'weekly_hours'},
+                input_html: { class: 'govuk-!-width-one-half' },
                 required: false
       = f.input :leadership_id,
                 wrapper: 'select',
