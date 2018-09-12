@@ -1,5 +1,6 @@
 .share-url,
 .share-url-no-js {
+  @include govuk-font(19);
   padding: $govuk-gutter-half;
   margin-top: $govuk-gutter-half;
   margin-bottom: $govuk-gutter;

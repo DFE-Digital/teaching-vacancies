@@ -8,7 +8,7 @@
     %h1.govuk-heading-l
       = t('schools.jobs.index', school: @school.name)
     - if @multiple_schools
-      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path
+      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
       %br
       %br
 
