@@ -13,9 +13,10 @@
     @include clearfix;
     position: relative;
     .pound_sign {
+      @include govuk-font(19);
       position: absolute;
-        bottom: 13px;
-        left: 8px;
+      bottom: 7px;
+      left: 8px;
     }
 
     &.govuk-form-group--error .pound_sign {
