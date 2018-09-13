@@ -21,6 +21,7 @@ FactoryBot.define do
     application_link { Faker::Internet.url }
     weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
+    newly_qualified_teacher { true }
 
     trait :fail_minimum_validation do
       job_title { Faker::Job.title[0..2] }
