@@ -200,4 +200,20 @@ RSpec.feature 'Filtering vacancies' do
       expect(current_path).to eq root_path
     end
   end
+
+  scenario 'Filterable by newly qualified teacher', elasticsearch: true do
+    nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
+    nqt_not_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+
+    within '.filters-form' do
+      select 'Suitable', from: 'newly_qualified_teacher'
+      page.find('.button[type=submit]').click
+    end
+
+    expect(page).to have_content(nqt_suitable_vacancy.job_title)
+    expect(page).not_to have_content(nqt_not_suitable_vacancy.job_title)
+  end
 end
