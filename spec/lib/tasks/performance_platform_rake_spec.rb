@@ -4,7 +4,7 @@ RSpec.describe 'rake performance_platform:submit_transactions', type: :task do
     today = Date.current.beginning_of_day
     expect(Date).to receive_message_chain(:current, :beginning_of_day).and_return(today)
 
-    expect(PerformancePlatformFeedbackQueueJob).to receive(:perform_later).with((today - 1.day).to_i)
+    expect(PerformancePlatformFeedbackQueueJob).to receive(:perform_later).with((today - 1.day).to_s)
 
     task.invoke
   end
@@ -15,7 +15,7 @@ RSpec.describe 'rake performance_platform:submit_user_satisfaction', type: :task
     today = Date.current.beginning_of_day
     expect(Date).to receive_message_chain(:current, :beginning_of_day).and_return(today)
 
-    expect(PerformancePlatformTransactionsQueueJob).to receive(:perform_later).with((today - 1.day).to_i)
+    expect(PerformancePlatformTransactionsQueueJob).to receive(:perform_later).with((today - 1.day).to_s)
 
     task.invoke
   end

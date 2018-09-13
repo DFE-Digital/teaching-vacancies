@@ -4,7 +4,7 @@ RSpec.describe PerformancePlatformTransactionsQueueJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:date) { Date.current.beginning_of_day }
-  subject(:job) { described_class.perform_later(date) }
+  subject(:job) { described_class.perform_later(date.to_s) }
 
   it 'queues the job' do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
