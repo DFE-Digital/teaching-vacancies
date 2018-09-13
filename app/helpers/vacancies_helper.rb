@@ -49,4 +49,11 @@ module VacanciesHelper
   def pay_scale_options
     @pay_scale_options ||= PayScale.all
   end
+
+  def nqts_options
+    {
+      'Suitable': true,
+      'Not suitable': false
+    }
+  end
 end
