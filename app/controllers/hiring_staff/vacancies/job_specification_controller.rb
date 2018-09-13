@@ -60,7 +60,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                                                    :benefits, :weekly_hours, :subject_id, :min_pay_scale_id,
                                                    :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
                                                    :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
-                                                   :flexible_working)
+                                                   :flexible_working, :newly_qualified_teacher)
   end
 
   def save_vacancy_without_validation

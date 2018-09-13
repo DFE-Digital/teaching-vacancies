@@ -65,6 +65,13 @@
             = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern')
         %tr
           %td.cya-question
+            = t('jobs.newly_qualified_teacher')
+          %td.cya-answer
+            = @vacancy.newly_qualified_teacher
+          %td.cya-change
+            = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.change_newly_qualified_teacher')
+        %tr
+          %td.cya-question
             = t('jobs.flexible_working')
           %td.cya-answer
             = @vacancy.flexible_working
