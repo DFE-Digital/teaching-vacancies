@@ -40,6 +40,7 @@ class Vacancy < ApplicationRecord
     indexes :minimum_salary, type: :integer
     indexes :maximum_salary, type: :integer
     indexes :coordinates, type: :geo_point, ignore_malformed: true
+    indexes :newly_qualified_teacher, type: :keyword
   end
 
   extend FriendlyId
