@@ -40,7 +40,7 @@ module "core" {
   asg_desired_size = "${var.asg_desired_size}"
 
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
-  ecs_service_name                  = "${module.ecs.service_name}"
+  ecs_web_service_name              = "${module.ecs.web_service_name}"
   aws_iam_ecs_instance_profile_name = "${module.ecs.aws_iam_ecs_instance_profile_name}"
 }
 
@@ -51,7 +51,7 @@ module "ecs" {
   project_name                                    = "${var.project_name}"
   region                                          = "${var.region}"
   ecs_cluster_name                                = "${var.ecs_cluster_name}"
-  ecs_service_name                                = "${var.project_name}_${terraform.workspace}_${var.ecs_service_name}"
+  ecs_web_service_name                            = "${var.project_name}_${terraform.workspace}_${var.ecs_web_service_name}"
   ecs_service_task_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
   ecs_service_task_count                          = "${var.ecs_service_task_count}"
   ecs_service_task_port                           = "${var.ecs_service_task_port}"
@@ -85,7 +85,7 @@ module "ecs" {
 
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
-  
+
   dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
   dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
   dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
@@ -158,7 +158,8 @@ module "pipeline" {
 
   registry_name    = "${module.ecs.registry_name}"
   ecs_cluster_name = "${module.ecs.cluster_name}"
-  ecs_service_name = "${module.ecs.service_name}"
+  ecs_web_service_name = "${module.ecs.web_service_name}"
+  ecs_worker_service_name = "${module.ecs.worker_service_name}"
 }
 
 module "rds" {

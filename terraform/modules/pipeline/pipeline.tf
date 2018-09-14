@@ -131,7 +131,7 @@ resource "aws_codepipeline" "pipeline" {
     name = "Production"
 
     action {
-      name            = "Deploy"
+      name            = "Web"
       category        = "Deploy"
       owner           = "AWS"
       provider        = "ECS"
@@ -140,7 +140,22 @@ resource "aws_codepipeline" "pipeline" {
 
       configuration {
         ClusterName = "${var.ecs_cluster_name}"
-        ServiceName = "${var.ecs_service_name}"
+        ServiceName = "${var.ecs_web_service_name}"
+        FileName    = "imagedefinitions.json"
+      }
+    }
+
+    action {
+      name            = "Sidekiq"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      input_artifacts = ["imagedefinitions"]
+      version         = "1"
+
+      configuration {
+        ClusterName = "${var.ecs_cluster_name}"
+        ServiceName = "${var.ecs_worker_service_name}"
         FileName    = "imagedefinitions.json"
       }
     }

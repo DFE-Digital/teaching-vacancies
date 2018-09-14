@@ -6,4 +6,5 @@ variable "buildspec_location" {}
 variable "registry_name" {}
 variable "ecs_service_name" {}
 variable "ecs_cluster_name" {}
+variable "ecs_worker_service_name" {}
 variable "git_branch_to_track" {}
