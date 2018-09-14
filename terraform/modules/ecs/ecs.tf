@@ -391,14 +391,14 @@ data "template_file" "worker_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
 
-    rollbar_access_token             = "${var.rollbar_access_token}"
-    redis_url                        = "${var.redis_url}"
+    rollbar_access_token = "${var.rollbar_access_token}"
+    redis_url            = "${var.redis_url}"
 
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
     domain                           = "${var.domain}"
 
-    worker_command                   = "${jsonencode(var.worker_command)}"
+    worker_command = "${jsonencode(var.worker_command)}"
   }
 }
 

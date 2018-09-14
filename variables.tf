@@ -107,7 +107,7 @@ variable "ecs_service_web_task_port" {
 }
 
 variable "ecs_service_worker_name" {
-  default = "default-worker"
+  default = "worker"
 }
 
 variable "ecs_service_worker_task_name" {
