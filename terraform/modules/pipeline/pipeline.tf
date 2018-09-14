@@ -140,13 +140,13 @@ resource "aws_codepipeline" "pipeline" {
 
       configuration {
         ClusterName = "${var.ecs_cluster_name}"
-        ServiceName = "${var.ecs_web_service_name}"
+        ServiceName = "${var.ecs_service_web_name}"
         FileName    = "imagedefinitions.json"
       }
     }
 
     action {
-      name            = "Sidekiq"
+      name            = "Worker"
       category        = "Deploy"
       owner           = "AWS"
       provider        = "ECS"

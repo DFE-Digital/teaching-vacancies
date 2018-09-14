@@ -88,22 +88,30 @@ variable "alb_certificate_arn" {
 # ECS
 variable "ecs_cluster_name" {}
 
-variable "ecs_service_name" {
+variable "ecs_service_web_name" {
   default = "default-web"
 }
 
-variable "ecs_service_task_name" {
+variable "ecs_service_web_task_name" {
   default = "web"
 }
 
-variable "ecs_service_task_count" {
+variable "ecs_service_web_task_count" {
   description = "The number of containers to run for this service"
   default     = 1
 }
 
-variable "ecs_service_task_port" {
+variable "ecs_service_web_task_port" {
   description = "The port this application is listening on (ALB will map these with ephemeral port numbers)"
   default     = 3000
+}
+
+variable "ecs_service_worker_name" {
+  default = "default-worker"
+}
+
+variable "ecs_service_worker_task_name" {
+  default = "worker"
 }
 
 variable "ecs_service_worker_task_port" {

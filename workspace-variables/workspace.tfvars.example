@@ -6,7 +6,7 @@ ssh_ips = []
 region = "eu-west-2"
 availability_zones = ["eu-west-2a","eu-west-2b"]
 project_name = "tvs"
-ecs_service_name = "tvs2-service"
+ecs_service_web_name = "tvs2-service"
 ecs_cluster_name = "tvs-cluster"
 ecs_key_pair_name =
 instance_type = "t2.micro"
@@ -20,9 +20,9 @@ asg_min_size = 2
 asg_desired_size = 2
 
 # Containers
-ecs_service_task_name = "web"
-ecs_service_task_count = 1
-ecs_service_task_port = 3000
+ecs_service_web_task_name = "web"
+ecs_service_web_task_count = 1
+ecs_service_web_task_port = 3000
 ecs_service_worker_task_port = 8082
 vacancies_scrape_schedule_expression = "rate(60 minutes)"
 logspout_command = ["syslog+tls://logsN.papertrailapp.com:XXXXX"]
