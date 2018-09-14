@@ -373,11 +373,11 @@ data "template_file" "worker_container_definition" {
   template = "${file(var.ecs_service_worker_container_definition_file_path)}"
 
   vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_worker_task_name}"
-    task_port                = "${var.ecs_service_worker_task_port}"
+    image           = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base = "${var.secret_key_base}"
+    project_name    = "${var.project_name}"
+    task_name       = "${var.ecs_service_worker_web_name}"
+    task_port       = "${var.ecs_service_worker_task_port}"
 
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
@@ -414,7 +414,7 @@ resource "aws_ecs_task_definition" "web" {
 }
 
 resource "aws_ecs_task_definition" "worker" {
-  family                   = "worker-${var.ecs_service_web_task_name}"
+  family                   = "${var.ecs_service_web_task_name}"
   container_definitions    = "${data.template_file.worker_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
