@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_05_101200) do
+ActiveRecord::Schema.define(version: 2018_09_13_113736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2018_09_05_101200) do
     t.string "application_link"
     t.boolean "flexible_working"
     t.uuid "max_pay_scale_id"
+    t.boolean "newly_qualified_teacher", default: false, null: false
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
