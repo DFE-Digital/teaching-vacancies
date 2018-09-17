@@ -16,6 +16,8 @@ class HiringStaff::Vacancies::FeedbackController < HiringStaff::Vacancies::Appli
                                 comment: feedback_params[:comment])
 
     return render 'new' unless @feedback.save
+
+    Auditor::Audit.new(vacancy, 'vacancy.feedback.create', current_session_id).log
     redirect_to school_path, notice: I18n.t('messages.feedback.submitted')
   end
 
