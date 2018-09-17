@@ -10,9 +10,9 @@ class VacancyFilters
     @keyword = args[:keyword]
     @minimum_salary = args[:minimum_salary]
     @maximum_salary = args[:maximum_salary]
+    @newly_qualified_teacher = args[:newly_qualified_teacher]
     @working_pattern = extract_working_pattern(args)
     @phase = School.phases.include?(args[:phase]) ? args[:phase] : nil
-    @newly_qualified_teacher = args[:newly_qualified_teacher]
   end
 
   def to_hash
