@@ -210,7 +210,7 @@ RSpec.feature 'Filtering vacancies' do
       visit jobs_path
 
       within '.filters-form' do
-        select 'Suitable', from: 'newly_qualified_teacher'
+        check 'newly_qualified_teacher'
         page.find('.button[type=submit]').click
       end
 
@@ -218,7 +218,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).not_to have_content(not_nqt_suitable_vacancy.job_title)
     end
 
-    scenario 'Not suitable for NQTs', elasticsearch: true do
+    scenario 'Display all available jobs when NQT suitable is unchecked', elasticsearch: true do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
       not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
 
@@ -226,12 +226,13 @@ RSpec.feature 'Filtering vacancies' do
       visit jobs_path
 
       within '.filters-form' do
-        select 'Not suitable', from: 'newly_qualified_teacher'
+        check 'newly_qualified_teacher'
+        uncheck 'newly_qualified_teacher'
         page.find('.button[type=submit]').click
       end
 
       expect(page).to have_content(not_nqt_suitable_vacancy.job_title)
-      expect(page).not_to have_content(nqt_suitable_vacancy.job_title)
+      expect(page).to have_content(nqt_suitable_vacancy.job_title)
     end
   end
 end

@@ -18,4 +18,12 @@
   @media screen and (max-width: $small-screen) {
     margin-bottom: $gutter;
   }
+
+// filters form white checkbox on grey background
+.filters-form .multiple-choice {
+  background: $white;
+  label {
+    background: $panel-colour;
+  }
+}
 }
