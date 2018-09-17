@@ -8,6 +8,7 @@ module VacancyHelpers
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
     check 'job_specification_form[flexible_working]' if vacancy.flexible_working
+    check 'job_specification_form[newly_qualified_teacher]' if vacancy.newly_qualified_teacher
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'job_specification_form[benefits]', with: vacancy.benefits
     fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours
@@ -44,6 +45,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
+    expect(page).to have_content('Suitable')
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.weekly_hours)
@@ -68,6 +70,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
+    expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.weekly_hours) if vacancy.part_time?

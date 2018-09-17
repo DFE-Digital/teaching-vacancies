@@ -63,11 +63,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def newly_qualified_teacher
-    if model.newly_qualified_teacher?
-      'Suitable'
-    else
-      'Not suitable'
-    end
+    model.newly_qualified_teacher? ? 'Suitable' : 'Not suitable'
   end
 
   # rubocop:disable Rails/OutputSafety
