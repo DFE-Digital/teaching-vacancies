@@ -376,7 +376,7 @@ data "template_file" "worker_container_definition" {
     image           = "${aws_ecr_repository.default.repository_url}"
     secret_key_base = "${var.secret_key_base}"
     project_name    = "${var.project_name}"
-    task_name       = "${var.ecs_service_worker_web_name}"
+    task_name       = "${var.ecs_service_web_task_name}"
     task_port       = "${var.ecs_service_worker_task_port}"
 
     environment              = "${var.environment}"
