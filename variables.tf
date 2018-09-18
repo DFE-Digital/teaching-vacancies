@@ -158,22 +158,22 @@ variable "vacancies_scrape_task_command" {
 
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
-  default     = ["rake", "db:sessions:trim"]
+  default     = ["rake", "verbose", "db:sessions:trim"]
 }
 
 variable "update_pay_scale_task_command" {
   description = "The Entrypoint for the update_pay_scale task"
-  default     = ["rake", "data:update:pay_scale"]
+  default     = ["rake", "verbose", "data:update:pay_scale"]
 }
 
 variable "update_vacancies_task_command" {
   description = "The Entrypoint for the update_vacancies task"
-  default     = ["rake", "vacancies:data:update"]
+  default     = ["rake", "verbose", "vacancies:data:update"]
 }
 
 variable "reindex_vacancies_task_command" {
   description = "The Entrypoint for the reindex_vacancies task"
-  default     = ["rake", "elasticsearch:vacancies:index"]
+  default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
 variable "vacancies_scrape_task_schedule" {
