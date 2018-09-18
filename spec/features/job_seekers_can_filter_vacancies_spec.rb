@@ -202,7 +202,7 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   context 'Filterable by newly qualified teacher', elasticsearch: true do
-    scenario 'Suitable for NQTs', elasticsearch: true do
+    scenario 'Suitable for NQTs' do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
       not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
 
@@ -216,9 +216,10 @@ RSpec.feature 'Filtering vacancies' do
 
       expect(page).to have_content(nqt_suitable_vacancy.job_title)
       expect(page).not_to have_content(not_nqt_suitable_vacancy.job_title)
+      expect(page).to have_field('newly_qualified_teacher', checked: true)
     end
 
-    scenario 'Display all available jobs when NQT suitable is unchecked', elasticsearch: true do
+    scenario 'Display all available jobs when NQT suitable is unchecked' do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
       not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
 
@@ -233,6 +234,7 @@ RSpec.feature 'Filtering vacancies' do
 
       expect(page).to have_content(not_nqt_suitable_vacancy.job_title)
       expect(page).to have_content(nqt_suitable_vacancy.job_title)
+      expect(page).to have_field('newly_qualified_teacher', checked: false)
     end
   end
 end
