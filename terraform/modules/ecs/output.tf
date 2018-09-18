@@ -2,8 +2,12 @@ output "cluster_name" {
   value = "${aws_ecs_cluster.cluster.name}"
 }
 
-output "service_name" {
+output "web_service_name" {
   value = "${aws_ecs_service.web.name}"
+}
+
+output "worker_service_name" {
+  value = "${aws_ecs_service.worker.name}"
 }
 
 output "desired_service_count" {

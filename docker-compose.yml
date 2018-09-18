@@ -14,6 +14,7 @@ services:
       - db
       - elasticsearch
       - redis
+      - sidekiq
     tty: true
     stdin_open: true
     restart: on-failure
@@ -43,6 +44,14 @@ services:
   redis:
     image: redis:latest
     command: redis-server
+
+  sidekiq:
+    build: .
+    env_file:
+      - docker-compose.env
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
 
 volumes:
   pg_data: {}

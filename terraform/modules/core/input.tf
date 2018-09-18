@@ -32,4 +32,4 @@ variable "asg_min_size" {}
 variable "asg_desired_size" {}
 
 variable "ecs_cluster_name" {}
-variable "ecs_service_name" {}
+variable "ecs_service_web_name" {}

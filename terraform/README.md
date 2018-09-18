@@ -177,7 +177,7 @@ data "template_file" "<task_name>_submit_container_definition" {
     image                    = "${aws_ecr_repository.default.repository_url}"
     secret_key_base          = "${var.secret_key_base}"
     project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_task_name}_<task_name>"
+    task_name                = "${var.ecs_service_web_task_name}_<task_name>"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
     region                   = "${var.region}"
@@ -246,7 +246,7 @@ If your task is one-off (only manually executed) add an entry under `ECS ONE-OFF
 
 ```
   resource "aws_ecs_task_definition" "<task_name>_task" {
-  family                   = "${var.ecs_service_task_name}_<task_name>_task"
+  family                   = "${var.ecs_service_web_task_name}_<task_name>_task"
   container_definitions    = "${data.template_file.<task_name>_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
@@ -259,13 +259,13 @@ For scheduled tasks add both the entry from above under `ECS SCHEDULED TASKS` an
 
 ```
 resource "aws_cloudwatch_event_rule" "<task_name>" {
-  name                = "${var.ecs_service_task_name}_<task_name>_task"
+  name                = "${var.ecs_service_web_task_name}_<task_name>_task"
   description         = "Run <task_name> at a scheduled time"
   schedule_expression = "${var.<task_name>_schedule}"
 }
 
 resource "aws_cloudwatch_event_target" "<task_name>_task_event" {
-  target_id = "${var.ecs_service_task_name}_<task_name>"
+  target_id = "${var.ecs_service_web_task_name}_<task_name>"
   rule      = "${aws_cloudwatch_event_rule.<task_name>_task.name}"
   arn       = "${aws_ecs_cluster.cluster.arn}"
   role_arn  = "${aws_iam_role.scheduled_task_role.arn}"

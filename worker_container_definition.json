@@ -4,10 +4,16 @@
     "image": "${image}:latest",
     "memory": 512,
     "networkMode": "bridge",
-    "entryPoint": ${entrypoint},
+    "command": ${worker_command},
     "logConfiguration": {
       "logDriver": "json-file"
     },
+    "portMappings": [
+      {
+        "containerPort": ${task_port},
+        "hostPort": 0
+      }
+    ],
     "environment": [
       {
         "name": "RAILS_ENV",
@@ -16,6 +22,10 @@
       {
         "name": "ROLLBAR_ENV",
         "value": "${environment}"
+      },
+      {
+        "name": "ROLLBAR_ACCESS_TOKEN",
+        "value": "${rollbar_access_token}"
       },
       {
         "name": "SECRET_KEY_BASE",

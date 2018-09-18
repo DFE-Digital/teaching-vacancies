@@ -88,21 +88,34 @@ variable "alb_certificate_arn" {
 # ECS
 variable "ecs_cluster_name" {}
 
-variable "ecs_service_name" {
+variable "ecs_service_web_name" {
   default = "default-web"
 }
 
-variable "ecs_service_task_name" {
+variable "ecs_service_web_task_name" {
   default = "web"
 }
 
-variable "ecs_service_task_count" {
+variable "ecs_service_web_task_count" {
   description = "The number of containers to run for this service"
   default     = 1
 }
 
-variable "ecs_service_task_port" {
+variable "ecs_service_web_task_port" {
   description = "The port this application is listening on (ALB will map these with ephemeral port numbers)"
+  default     = 3000
+}
+
+variable "ecs_service_worker_name" {
+  default = "worker"
+}
+
+variable "ecs_service_worker_task_name" {
+  default = "worker"
+}
+
+variable "ecs_service_worker_task_port" {
+  description = "The port the worker is listening on (ALB will map these with ephemeral port numbers)"
   default     = 3000
 }
 
@@ -126,6 +139,11 @@ variable "performance_platform_rake_container_definition_file_path" {
 variable "ecs_service_logspout_container_definition_file_path" {
   description = "Logspout container definition"
   default     = "./logspout_container_definition.json"
+}
+
+variable "ecs_service_worker_container_definition_file_path" {
+  description = "Worker container definition"
+  default     = "./worker_container_definition.json"
 }
 
 variable "import_schools_task_command" {
@@ -269,6 +287,10 @@ variable "load_balancer_check_path" {
 }
 
 variable "logspout_command" {
+  type = "list"
+}
+
+variable "worker_command" {
   type = "list"
 }
 

@@ -40,24 +40,32 @@ module "core" {
   asg_desired_size = "${var.asg_desired_size}"
 
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
-  ecs_service_name                  = "${module.ecs.service_name}"
+  ecs_service_web_name              = "${module.ecs.web_service_name}"
   aws_iam_ecs_instance_profile_name = "${module.ecs.aws_iam_ecs_instance_profile_name}"
 }
 
 module "ecs" {
   source = "./terraform/modules/ecs"
 
-  environment                                     = "${terraform.workspace}"
-  project_name                                    = "${var.project_name}"
-  region                                          = "${var.region}"
-  ecs_cluster_name                                = "${var.ecs_cluster_name}"
-  ecs_service_name                                = "${var.project_name}_${terraform.workspace}_${var.ecs_service_name}"
-  ecs_service_task_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_task_name}"
-  ecs_service_task_count                          = "${var.ecs_service_task_count}"
-  ecs_service_task_port                           = "${var.ecs_service_task_port}"
+  environment      = "${terraform.workspace}"
+  project_name     = "${var.project_name}"
+  region           = "${var.region}"
+  ecs_cluster_name = "${var.ecs_cluster_name}"
 
-  ecs_service_web_container_definition_file_path  = "${var.ecs_service_web_container_definition_file_path}"
-  ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
+  ecs_service_web_container_definition_file_path = "${var.ecs_service_web_container_definition_file_path}"
+  ecs_service_web_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_web_name}"
+  ecs_service_web_task_name                      = "${var.project_name}_${terraform.workspace}_${var.ecs_service_web_task_name}"
+  ecs_service_web_task_count                     = "${var.ecs_service_web_task_count}"
+  ecs_service_web_task_port                      = "${var.ecs_service_web_task_port}"
+
+  ecs_service_worker_container_definition_file_path = "${var.ecs_service_worker_container_definition_file_path}"
+  ecs_service_worker_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_worker_name}"
+  ecs_service_worker_task_name                      = "${var.project_name}_${terraform.workspace}_${var.ecs_service_worker_task_name}"
+  ecs_service_worker_task_port                      = "${var.ecs_service_worker_task_port}"
+
+  worker_command = "${var.worker_command}"
+
+  ecs_service_rake_container_definition_file_path          = "${var.ecs_service_rake_container_definition_file_path}"
   performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
 
   ecs_service_logspout_container_definition_file_path = "${var.ecs_service_logspout_container_definition_file_path}"
@@ -80,16 +88,16 @@ module "ecs" {
 
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
-  
+
   dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
   dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
   dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
   dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
 
-  performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"
-  performance_platform_submit_task_schedule   = "${var.performance_platform_submit_task_schedule}"
+  performance_platform_submit_task_command  = "${var.performance_platform_submit_task_command}"
+  performance_platform_submit_task_schedule = "${var.performance_platform_submit_task_schedule}"
 
-  performance_platform_submit_all_task_command    = "${var.performance_platform_submit_all_task_command}"
+  performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
 
   # Application variables
   rails_env                        = "${var.rails_env}"
@@ -105,21 +113,21 @@ module "ecs" {
   rollbar_access_token             = "${var.rollbar_access_token}"
   pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
   pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
-  secret_key_base          = "${var.secret_key_base}"
-  rds_username             = "${var.rds_username}"
-  rds_password             = "${var.rds_password}"
-  rds_address              = "${module.rds.rds_address}"
-  es_address               = "${module.es.es_address}"
-  aws_elasticsearch_region = "${var.region}"
-  aws_elasticsearch_key    = "${module.es.es_user_access_key_id}"
-  aws_elasticsearch_secret = "${module.es.es_user_access_key_secret}"
-  redis_url                = "redis://${module.elasticache_redis.endpoint}"
-  authorisation_service_token = "${var.authorisation_service_token}"
-  authorisation_service_url   = "${var.authorisation_service_url}"
-  google_drive_json_key = "${var.google_drive_json_key}"
-  auth_spreadsheet_id = "${var.auth_spreadsheet_id}"
-  domain                   = "${var.domain}"
-  google_geocoding_api_key = "${var.google_geocoding_api_key}"
+  secret_key_base                  = "${var.secret_key_base}"
+  rds_username                     = "${var.rds_username}"
+  rds_password                     = "${var.rds_password}"
+  rds_address                      = "${module.rds.rds_address}"
+  es_address                       = "${module.es.es_address}"
+  aws_elasticsearch_region         = "${var.region}"
+  aws_elasticsearch_key            = "${module.es.es_user_access_key_id}"
+  aws_elasticsearch_secret         = "${module.es.es_user_access_key_secret}"
+  redis_url                        = "redis://${module.elasticache_redis.endpoint}"
+  authorisation_service_token      = "${var.authorisation_service_token}"
+  authorisation_service_url        = "${var.authorisation_service_url}"
+  google_drive_json_key            = "${var.google_drive_json_key}"
+  auth_spreadsheet_id              = "${var.auth_spreadsheet_id}"
+  domain                           = "${var.domain}"
+  google_geocoding_api_key         = "${var.google_geocoding_api_key}"
 }
 
 module "logs" {
@@ -151,9 +159,10 @@ module "pipeline" {
   buildspec_location  = "${var.buildspec_location}"
   git_branch_to_track = "${var.git_branch_to_track}"
 
-  registry_name    = "${module.ecs.registry_name}"
-  ecs_cluster_name = "${module.ecs.cluster_name}"
-  ecs_service_name = "${module.ecs.service_name}"
+  registry_name           = "${module.ecs.registry_name}"
+  ecs_cluster_name        = "${module.ecs.cluster_name}"
+  ecs_service_web_name    = "${module.ecs.web_service_name}"
+  ecs_worker_service_name = "${module.ecs.worker_service_name}"
 }
 
 module "rds" {
