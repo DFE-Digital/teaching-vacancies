@@ -126,8 +126,8 @@ class VacancySearchBuilder
     {
       bool: {
         filter: {
-          terms: {
-            newly_qualified_teacher: [@newly_qualified_teacher.to_s],
+          term: {
+            newly_qualified_teacher: @newly_qualified_teacher.to_s,
           },
         },
       },
