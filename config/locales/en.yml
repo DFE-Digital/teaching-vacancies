@@ -164,7 +164,6 @@ en:
       maximum_salary: 'Maximum salary'
       working_pattern: 'Working pattern'
       education_phase: 'Education phase'
-      newly_qualified_teacher: 'Newly qualified teacher'
       nqt_suitable: 'Suitable for NQTs'
       clear_filters: 'Reset search'
   feedback:
