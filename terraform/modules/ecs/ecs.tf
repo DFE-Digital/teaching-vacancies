@@ -158,6 +158,7 @@ data "template_file" "web_container_definition" {
     google_drive_json_key            = "${var.google_drive_json_key}"
     auth_spreadsheet_id              = "${var.auth_spreadsheet_id}"
     domain                           = "${var.domain}"
+    google_api_json_key variable     = "${var.google_api_json_key}"
   }
 }
 

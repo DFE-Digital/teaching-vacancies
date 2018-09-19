@@ -38,6 +38,7 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
     if @candidate_specification_form.valid?
       reset_session_vacancy!
       update_vacancy(candidate_specification_form, vacancy)
+      update_google_index(vacancy) if vacancy.listed?
       redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
       store_vacancy_attributes(@candidate_specification_form.vacancy.attributes.compact!)

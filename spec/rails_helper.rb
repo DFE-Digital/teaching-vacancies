@@ -27,6 +27,12 @@ RSpec.configure do |config|
     stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '1')
   end
 
+  config.before(:each, stub_indexing_api: true) do
+    stub_request(:post, /indexing.googleapis.com/).
+      with(headers: {'Accept'=>'*/*'}).
+      to_return(status: 200, body: "stubbed response", headers: {})
+  end
+
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
   config.include DateHelper
