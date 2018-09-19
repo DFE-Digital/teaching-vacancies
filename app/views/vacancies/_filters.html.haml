@@ -25,7 +25,6 @@
       = label_tag 'phase', t('jobs.filters.education_phase'), class: 'form-label'
       = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'form-control form-control-block', include_blank: 'Any'
     .form-group
-      %span.form-label= t('jobs.filters.newly_qualified_teacher')
       .multiple-choice
         = check_box_tag :newly_qualified_teacher, 'true', nqt_suitable_checked?(newly_qualified_teacher)
         = label_tag 'newly_qualified_teacher', t('jobs.filters.nqt_suitable'), class: 'form-label'
