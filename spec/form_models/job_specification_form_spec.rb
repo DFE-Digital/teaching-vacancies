@@ -83,7 +83,8 @@ RSpec.describe JobSpecificationForm, type: :model do
                                                         benefits: 'benefits', subject_id: main_subject.id,
                                                         min_pay_scale_id: min_pay_scale.id,
                                                         max_pay_scale_id: max_pay_scale.id,
-                                                        leadership_id: leadership.id)
+                                                        leadership_id: leadership.id,
+                                                        newly_qualified_teacher: true)
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
@@ -96,6 +97,7 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.vacancy.max_pay_scale.label).to eq(max_pay_scale.label)
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)
       expect(job_specification_form.vacancy.leadership.title).to eq(leadership.title)
+      expect(job_specification_form.vacancy.newly_qualified_teacher).to eq(true)
     end
   end
 end

@@ -82,6 +82,11 @@
                 collection: working_pattern_options,
                 wrapper_html: {id: 'working_pattern'},
                 required: true
+      = f.input :newly_qualified_teacher, as: :boolean,
+                hint: t('jobs.form_hints.newly_qualified_teacher'),
+                wrapper: :inline_checkbox,
+                wrapper_html: { id: 'newly_qualified_teacher' },
+                input_html: { 'aria-label': t('jobs.aria_labels.newly_qualified_teacher') }
       = f.input :flexible_working, as: :boolean,
                 hint: t('jobs.form_hints.flexible_working'),
                 wrapper: :inline_checkbox,

@@ -26,6 +26,11 @@ RSpec.describe VacancyFilters do
       expect(vacancy_filters.working_pattern).to eq('full_time')
     end
 
+    it 'sets the newly qualified teacher filter if provided' do
+      vacancy_filters = VacancyFilters.new(newly_qualified_teacher: true)
+      expect(vacancy_filters.newly_qualified_teacher).to eq(true)
+    end
+
     it 'does not set the working pattern filter if invalid' do
       vacancy_filters = VacancyFilters.new(working_pattern: 'home_time')
       expect(vacancy_filters.working_pattern).to be_nil
@@ -56,6 +61,7 @@ RSpec.describe VacancyFilters do
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
         working_pattern: 'working_pattern',
+        newly_qualified_teacher: false,
         phase: 'phase',
       )
 
@@ -67,6 +73,7 @@ RSpec.describe VacancyFilters do
         radius: '20km',
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
+        newly_qualified_teacher: false,
         working_pattern: nil,
         phase: nil
       )

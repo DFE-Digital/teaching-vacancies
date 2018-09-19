@@ -2,10 +2,12 @@ require 'geocoding'
 class VacancySearchBuilder
   MIN_ALLOWED_RADIUS = 1
 
+  # rubocop:disable Metrics/AbcSize
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
     @working_pattern = filters.working_pattern
     @phase = filters.phase
+    @newly_qualified_teacher = filters.newly_qualified_teacher
     @minimum_salary = filters.minimum_salary
     @maximum_salary = filters.maximum_salary
     @sort = sort
@@ -16,6 +18,7 @@ class VacancySearchBuilder
     @geocoded_location = Geocoding.new(filters.location).coordinates
     @radius = filters.radius.to_i.positive? ? filters.radius.to_i : MIN_ALLOWED_RADIUS
   end
+  # rubocop:enable Metrics/AbcSize
 
   def call
     { search_query: search_query, search_sort: sort_query }
@@ -37,6 +40,7 @@ class VacancySearchBuilder
     [
       keyword_query,
       phase_query,
+      newly_qualified_teacher_query,
       working_pattern_query,
       salary_query,
       expired_query,
@@ -111,6 +115,19 @@ class VacancySearchBuilder
         filter: {
           terms: {
             working_pattern: [@working_pattern.to_s],
+          },
+        },
+      },
+    }
+  end
+
+  def newly_qualified_teacher_query
+    return if @newly_qualified_teacher.blank?
+    {
+      bool: {
+        filter: {
+          term: {
+            newly_qualified_teacher: @newly_qualified_teacher.to_s,
           },
         },
       },

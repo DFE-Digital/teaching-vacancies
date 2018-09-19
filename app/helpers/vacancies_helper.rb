@@ -49,4 +49,8 @@ module VacanciesHelper
   def pay_scale_options
     @pay_scale_options ||= PayScale.all
   end
+
+  def nqt_suitable_checked?(newly_qualified_teacher)
+    newly_qualified_teacher == 'true'
+  end
 end

@@ -200,4 +200,41 @@ RSpec.feature 'Filtering vacancies' do
       expect(current_path).to eq root_path
     end
   end
+
+  context 'Filterable by newly qualified teacher', elasticsearch: true do
+    scenario 'Suitable for NQTs' do
+      nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
+      not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        check 'newly_qualified_teacher'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page).to have_content(nqt_suitable_vacancy.job_title)
+      expect(page).not_to have_content(not_nqt_suitable_vacancy.job_title)
+      expect(page).to have_field('newly_qualified_teacher', checked: true)
+    end
+
+    scenario 'Display all available jobs when NQT suitable is unchecked' do
+      nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
+      not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        check 'newly_qualified_teacher'
+        uncheck 'newly_qualified_teacher'
+        page.find('.button[type=submit]').click
+      end
+
+      expect(page).to have_content(not_nqt_suitable_vacancy.job_title)
+      expect(page).to have_content(nqt_suitable_vacancy.job_title)
+      expect(page).to have_field('newly_qualified_teacher', checked: false)
+    end
+  end
 end
