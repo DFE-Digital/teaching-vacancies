@@ -7,7 +7,7 @@ RSpec.feature 'School deleting vacancies' do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
-  scenario 'A school can delete a vacancy from a list', :stub_indexing_api do
+  scenario 'A school can delete a vacancy from a list' do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
 
@@ -21,7 +21,7 @@ RSpec.feature 'School deleting vacancies' do
     expect(page).to have_content('The job has been deleted')
   end
 
-  scenario 'The last vacancy is deleted', :stub_indexing_api do
+  scenario 'The last vacancy is deleted' do
     vacancy = create(:vacancy, school: school)
 
     visit school_path(school)
@@ -32,7 +32,7 @@ RSpec.feature 'School deleting vacancies' do
     expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
   end
 
-  scenario 'Audits the vacancy deletion', :stub_indexing_api do
+  scenario 'Audits the vacancy deletion' do
     vacancy = create(:vacancy, school: school)
 
     visit school_path(school)
@@ -48,9 +48,9 @@ RSpec.feature 'School deleting vacancies' do
 
   scenario 'Notifies the Google index service' do
     vacancy = create(:vacancy, school: school)
-    indexing_service = double(:mock)
-    expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
-    expect(indexing_service).to receive(:remove)
+    vacancy_url = job_url(vacancy, protocol: 'https')
+
+    expect(RemoveGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
 
     visit school_path(school)
 
