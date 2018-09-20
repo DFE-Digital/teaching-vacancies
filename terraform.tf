@@ -65,14 +65,16 @@ module "ecs" {
 
   worker_command = "${var.worker_command}"
 
-  ecs_service_rake_container_definition_file_path          = "${var.ecs_service_rake_container_definition_file_path}"
-  performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
-
   ecs_service_logspout_container_definition_file_path = "${var.ecs_service_logspout_container_definition_file_path}"
   logspout_command                                    = "${var.logspout_command}"
   ecs_logspout_task_count                             = "${var.asg_min_size}"
 
+  # Rake tasks
+  ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
+  performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
+
   import_schools_task_command = "${var.import_schools_task_command}"
+  import_schools_task_schedule = "${var.import_schools_task_schedule}"
 
   vacancies_scrape_task_command  = "${var.vacancies_scrape_task_command}"
   vacancies_scrape_task_schedule = "${var.vacancies_scrape_task_schedule}"
@@ -86,18 +88,14 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
+  performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"
+  performance_platform_submit_task_schedule   = "${var.performance_platform_submit_task_schedule}"
+  performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
+
+  # Module inputs
+
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
-
-  dfe_sign_in_issuer       = "${var.dfe_sign_in_issuer}"
-  dfe_sign_in_redirect_url = "${var.dfe_sign_in_redirect_url}"
-  dfe_sign_in_identifier   = "${var.dfe_sign_in_identifier}"
-  dfe_sign_in_secret       = "${var.dfe_sign_in_secret}"
-
-  performance_platform_submit_task_command  = "${var.performance_platform_submit_task_command}"
-  performance_platform_submit_task_schedule = "${var.performance_platform_submit_task_schedule}"
-
-  performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
 
   # Application variables
   rails_env                        = "${var.rails_env}"
