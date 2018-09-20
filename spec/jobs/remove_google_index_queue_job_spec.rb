@@ -21,4 +21,13 @@ RSpec.describe RemoveGoogleIndexQueueJob, type: :job do
 
     perform_enqueued_jobs { job }
   end
+
+  it 'aborts execution when no Google credentials are set' do
+    stub_const('GOOGLE_API_JSON_KEY', '')
+    Sidekiq::Testing.inline! do
+      expect(Indexing).to receive(:new).and_raise(SystemExit, 'No Google API')
+
+      described_class.perform_now(url)
+    end
+  end
 end

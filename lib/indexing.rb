@@ -9,6 +9,8 @@ class Indexing
   attr_reader :service, :url
 
   def initialize(url)
+    abort('No Google API key set.') if GOOGLE_API_JSON_KEY.empty?
+
     @service = API::IndexingService.new
     @url = url
   end
