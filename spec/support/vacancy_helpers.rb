@@ -113,7 +113,7 @@ module VacancyHelpers
         'address': {
           '@type': 'PostalAddress',
           'addressLocality': vacancy.school.town,
-          'addressRegion': vacancy.school.county,
+          'addressRegion': vacancy.school.region.name,
           'streetAddress': vacancy.school.address,
           'postalCode': vacancy.school.postcode,
         },
