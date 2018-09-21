@@ -221,6 +221,9 @@ en:
       - 'Listing data'
     please_accept: 'Please accept the terms and conditions'
     label: 'I agree to all of the Terms and Conditions of the Teaching Jobs service.'
+  stats:
+    title: Statistics
+    intro: This page is an event log used by the service team to measure and monitor the stability and performance of Teaching Jobs. It keeps a live count of key user interactions with the service since 20 April 2018 (the date we began recording statistics).
   buttons:
     apply_filters: 'Search'
     apply_filters_if_criteria: 'Refine search'
