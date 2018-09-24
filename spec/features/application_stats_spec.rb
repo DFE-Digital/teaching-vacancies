@@ -12,5 +12,6 @@ RSpec.feature 'Application statistics' do
     expect(page).to have_content('dfe-sign-in.authentication.success: 5')
     expect(page).to have_content('vacancy.publish: 1')
     expect(page).to have_content('vacancy.update: 4')
+    expect(page).to have_content(I18n.t('stats.intro'))
   end
 end
