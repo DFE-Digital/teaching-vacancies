@@ -353,7 +353,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to the school vacancy page when published', stub_indexing_api: true do
+      scenario 'redirects to the school vacancy page when published' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
@@ -374,7 +374,7 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
       end
 
-      scenario 'can be published at a later date', stub_indexing_api: true do
+      scenario 'can be published at a later date' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(vacancy.id)
@@ -385,7 +385,7 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
       end
 
-      scenario 'displays the expiration date on the confirmation page', stub_indexing_api: true do
+      scenario 'displays the expiration date on the confirmation page' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
@@ -396,7 +396,7 @@ RSpec.feature 'Creating a vacancy' do
         )
       end
 
-      scenario 'tracks publishing information', stub_indexing_api: true do
+      scenario 'tracks publishing information' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(vacancy.id)
@@ -407,7 +407,7 @@ RSpec.feature 'Creating a vacancy' do
         expect(activity.key).to eq('vacancy.publish')
       end
 
-      scenario 'a published vacancy cannot be edited', stub_indexing_api: true do
+      scenario 'a published vacancy cannot be edited' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -426,12 +426,12 @@ RSpec.feature 'Creating a vacancy' do
         expect(page.current_path).to eq(job_specification_school_job_path)
       end
 
-      context 'notifies the Google index service' do
+      context 'adds a job to update the Google index in the queue' do
         scenario 'if the vacancy is published immediately' do
           vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
-          indexing_service = double(:mock)
-          expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
-          expect(indexing_service).to receive(:update)
+          vacancy_url = job_url(vacancy, protocol: 'https')
+
+          expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
 
           visit school_job_review_path(vacancy.id)
           click_on 'Confirm and submit job'

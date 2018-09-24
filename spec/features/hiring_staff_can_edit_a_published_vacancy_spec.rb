@@ -48,7 +48,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Job title can\'t be blank')
       end
 
-      scenario 'can be succesfuly edited', :stub_indexing_api do
+      scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
@@ -60,7 +60,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Assistant Head Teacher')
       end
 
-      scenario 'ensures the vacancy slug is updated when the title is saved', :stub_indexing_api do
+      scenario 'ensures the vacancy slug is updated when the title is saved' do
         vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
@@ -75,7 +75,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page.current_path).to eq('/jobs/assistant-head-teacher')
       end
 
-      scenario 'tracks the vacancy update', :stub_indexing_api do
+      scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         job_title = vacancy.job_title
 
@@ -93,10 +93,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'notifies the Google index service' do
         vacancy = create(:vacancy, :published, school: school)
+        vacancy_url = job_url(vacancy, protocol: 'https')
 
-        indexing_service = double(:mock)
-        expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
-        expect(indexing_service).to receive(:update)
+        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
 
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
@@ -122,7 +121,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited', :stub_indexing_api do
+      scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
@@ -134,7 +133,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Teaching deegree')
       end
 
-      scenario 'tracks the vacancy update', :stub_indexing_api do
+      scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         qualifications = vacancy.qualifications
 
@@ -151,12 +150,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                                                                'Teaching deegree'])
       end
 
-      scenario 'notifies the Google index service' do
+      scenario 'adds a job to update the Google index in the queue' do
         vacancy = create(:vacancy, :published, school: school)
+        vacancy_url = job_url(vacancy, protocol: 'https')
 
-        indexing_service = double(:mock)
-        expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
-        expect(indexing_service).to receive(:update)
+        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
 
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
@@ -182,7 +180,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited', :stub_indexing_api do
+      scenario 'can be succesfuly edited' do
         vacancy = create(:vacancy, :published, school: school)
         vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_job_path(vacancy.id)
@@ -199,7 +197,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       context 'if the job post has already been published' do
         context 'and the publication date is in the past' do
-          scenario 'renders the publication date as text and does not allow editing', :stub_indexing_api do
+          scenario 'renders the publication date as text and does not allow editing' do
             vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
             vacancy.save(validate: false)
             vacancy = VacancyPresenter.new(vacancy)
@@ -241,7 +239,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'tracks the vacancy update', :stub_indexing_api do
+      scenario 'tracks the vacancy update' do
         vacancy = create(:vacancy, :published, school: school)
         application_link = vacancy.application_link
 
@@ -258,12 +256,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                                                                  'https://schooljobs.com'])
       end
 
-      scenario 'notifies the Google index service' do
+      scenario 'adds a job to update the Google index in the queue' do
         vacancy = create(:vacancy, :published, school: school)
+        vacancy_url = job_url(vacancy, protocol: 'https')
 
-        indexing_service = double(:mock)
-        expect(Indexing).to receive(:new).with(job_url(vacancy, protocol: 'https')).and_return(indexing_service)
-        expect(indexing_service).to receive(:update)
+        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
 
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.application_link'))

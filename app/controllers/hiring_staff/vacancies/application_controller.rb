@@ -63,11 +63,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def update_google_index(job)
     url = job_url(job, protocol: 'https')
-    Indexing.new(url).update
+    UpdateGoogleIndexQueueJob.perform_later(url)
   end
 
   def remove_google_index(job)
     url = job_url(job, protocol: 'https')
-    Indexing.new(url).remove
+    RemoveGoogleIndexQueueJob.perform_later(url)
   end
 end
