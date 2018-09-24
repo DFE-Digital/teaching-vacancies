@@ -397,6 +397,7 @@ data "template_file" "worker_container_definition" {
 
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
+    google_api_json_key              = "${var.google_api_json_key}"
     domain                           = "${var.domain}"
 
     worker_command = "${jsonencode(var.worker_command)}"
