@@ -211,7 +211,7 @@ RSpec.feature 'Filtering vacancies' do
 
       within '.filters-form' do
         check 'newly_qualified_teacher'
-        page.find('.button[type=submit]').click
+        page.find('.govuk-button[type=submit]').click
       end
 
       expect(page).to have_content(nqt_suitable_vacancy.job_title)
@@ -229,7 +229,7 @@ RSpec.feature 'Filtering vacancies' do
       within '.filters-form' do
         check 'newly_qualified_teacher'
         uncheck 'newly_qualified_teacher'
-        page.find('.button[type=submit]').click
+        page.find('.govuk-button[type=submit]').click
       end
 
       expect(page).to have_content(not_nqt_suitable_vacancy.job_title)
