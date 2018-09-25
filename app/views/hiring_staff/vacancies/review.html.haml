@@ -48,19 +48,11 @@
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
-          = t('jobs.first_supporting_subject')
+          = t('jobs.other_subjects')
         %dd.app-check-your-answers__answer
-          = @vacancy.first_supporting_subject
+          = @vacancy.other_subjects
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'first_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_first_supporting_subject'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
-          = t('jobs.second_supporting_subject')
-        %dd.app-check-your-answers__answer
-          = @vacancy.second_supporting_subject
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'second_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
+          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'other_subjects'), 'aria-label': t('jobs.aria_labels.change_other_subjects'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question#pay_scale

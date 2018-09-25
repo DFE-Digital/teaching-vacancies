@@ -6,6 +6,8 @@ module VacancyHelpers
     select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
     select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
+    select vacancy.first_supporting_subject, from: 'job_specification_form[first_supporting_subject_id]'
+    select vacancy.second_supporting_subject, from: 'job_specification_form[second_supporting_subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
     check 'job_specification_form[flexible_working]' if vacancy.flexible_working
     check 'job_specification_form[newly_qualified_teacher]' if vacancy.newly_qualified_teacher
@@ -42,6 +44,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.job_title)
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
+    expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
@@ -67,6 +70,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.job_title)
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
+    expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_pattern)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
