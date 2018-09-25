@@ -181,6 +181,8 @@ ActiveRecord::Schema.define(version: 2018_10_10_093949) do
     t.integer "total_pageviews"
     t.datetime "weekly_pageviews_updated_at"
     t.datetime "total_pageviews_updated_at"
+    t.uuid "first_supporting_subject_id"
+    t.uuid "second_supporting_subject_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
