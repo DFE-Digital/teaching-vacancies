@@ -67,6 +67,12 @@
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.main_subject')
           %dd.app-check-your-answers__answer= @vacancy.main_subject
+
+      - if @vacancy.other_subjects.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.other_subjects')
+          %dd.app-check-your-answers__answer= @vacancy.other_subjects
+
       - if @vacancy.pay_scale_range.present?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.pay_scale_range')
