@@ -62,6 +62,10 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Time.zone.today
   end
 
+  def newly_qualified_teacher
+    model.newly_qualified_teacher? ? 'Suitable' : 'Not suitable'
+  end
+
   # rubocop:disable Rails/OutputSafety
   def flexible_working
     if model.flexible_working?

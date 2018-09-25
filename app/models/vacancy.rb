@@ -40,6 +40,7 @@ class Vacancy < ApplicationRecord
     indexes :minimum_salary, type: :integer
     indexes :maximum_salary, type: :integer
     indexes :coordinates, type: :geo_point, ignore_malformed: true
+    indexes :newly_qualified_teacher, type: :boolean
   end
 
   extend FriendlyId
@@ -89,6 +90,10 @@ class Vacancy < ApplicationRecord
 
     Rollbar.log(:info, 'A search returned 0 results', filters.to_hash) if results.count.zero?
     results
+  end
+
+  def listed?
+    published? && !publish_on.future? && expires_on.future?
   end
 
   # rubocop:disable Naming/UncommunicativeMethodParamName

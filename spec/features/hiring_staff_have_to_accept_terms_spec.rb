@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.feature 'Hiring staff accepts terms and conditions' do
   let(:school) { create(:school) }
-  let(:current_user) { User.find_by(oid: 'a-valid-oid') }
+  let(:session_id) { 'a-valid-oid' }
+  let(:current_user) { User.find_by(oid: session_id) }
   before do
-    stub_hiring_staff_auth(urn: school.urn, session_id: 'a-valid-oid')
+    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
   context 'the user has not accepted the terms and conditions' do
@@ -27,6 +28,19 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
       current_user.reload
       expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
       expect(current_user).to be_accepted_terms_and_conditions
+    end
+
+    scenario 'an audit entry is logged when they accept' do
+      visit terms_and_conditions_path
+
+      expect(current_user).not_to be_accepted_terms_and_conditions
+
+      check I18n.t('terms_and_conditions.label')
+      click_on I18n.t('buttons.accept_and_continue')
+
+      activity = current_user.activities.last
+      expect(activity.key).to eq('user.terms_and_conditions.accept')
+      expect(activity.session_id).to eq(session_id)
     end
 
     scenario 'an error is shown if they don’t accept' do

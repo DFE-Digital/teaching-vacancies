@@ -2,16 +2,26 @@ variable "environment" {}
 variable "project_name" {}
 variable "region" {}
 variable "ecs_cluster_name" {}
-variable "ecs_service_name" {}
-variable "ecs_service_task_name" {}
-variable "ecs_service_task_count" {}
-variable "ecs_service_task_port" {}
 variable "aws_alb_target_group_arn" {}
 
+# Web service (running Puma)
 variable "ecs_service_web_container_definition_file_path" {}
+
+variable "ecs_service_web_name" {}
+variable "ecs_service_web_task_name" {}
+variable "ecs_service_web_task_count" {}
+variable "ecs_service_web_task_port" {}
+
+# Worker service (running Sidekiq)
+variable "ecs_service_worker_container_definition_file_path" {}
+
+variable "ecs_service_worker_name" {}
+variable "ecs_service_worker_task_name" {}
+variable "ecs_service_worker_task_port" {}
 
 # Rake task container definitions
 variable "ecs_service_rake_container_definition_file_path" {}
+
 variable "performance_platform_rake_container_definition_file_path" {}
 
 variable "aws_cloudwatch_log_group_name" {}
@@ -44,6 +54,7 @@ variable "google_drive_json_key" {}
 variable "auth_spreadsheet_id" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
+variable "google_api_json_key" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 
@@ -52,6 +63,10 @@ variable "logspout_command" {
 }
 
 variable "ecs_logspout_task_count" {}
+
+variable "worker_command" {
+  type = "list"
+}
 
 variable "import_schools_task_command" {
   type = "list"
@@ -88,3 +103,4 @@ variable "performance_platform_submit_all_task_command" {
 variable "vacancies_scrape_task_schedule" {}
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
+variable "import_schools_task_schedule" {}

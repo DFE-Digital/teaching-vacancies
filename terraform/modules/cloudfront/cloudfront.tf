@@ -85,7 +85,8 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values = {
       query_string = false
-      headers = ["Host"]
+      headers      = ["Host"]
+
       cookies {
         forward = "none"
       }

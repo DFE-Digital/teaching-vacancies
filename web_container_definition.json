@@ -133,6 +133,10 @@
       {
         "name": "GOOGLE_GEOCODING_API_KEY",
         "value": "${google_geocoding_api_key}"
+      },
+      {
+        "name": "GOOGLE_API_JSON_KEY",
+        "value": "${google_api_json_key}"
       }
     ]
   }

@@ -16,6 +16,7 @@ RSpec.describe Vacancy, type: :model do
                 minimum_salary: nil,
                 maximum_salary: nil,
                 working_pattern: nil,
+                newly_qualified_teacher: nil,
                 phase: nil)
 
         results = Vacancy.public_search(filters: filters, sort: VacancySort.new)
@@ -268,6 +269,21 @@ RSpec.describe Vacancy, type: :model do
         job.refresh_slug
 
         expect(job.slug).to eq('cs-teacher')
+      end
+    end
+
+    context '#listed?' do
+      it 'returns true if the vacancy is currently listed' do
+        job = create(:vacancy, :published)
+
+        expect(job.listed?).to be true
+      end
+
+      it 'returns false if the vacancy is not yet listed' do
+        job = build(:vacancy, :published, slug: 'value', publish_on: Time.zone.tomorrow)
+        job.save(validate: false)
+
+        expect(job.listed?).to be false
       end
     end
   end

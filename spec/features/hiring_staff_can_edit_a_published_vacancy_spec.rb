@@ -90,6 +90,19 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(job_title: [job_title, 'Assistant Head Teacher'])
       end
+
+      scenario 'notifies the Google index service' do
+        vacancy = create(:vacancy, :published, school: school)
+        vacancy_url = job_url(vacancy, protocol: 'https')
+
+        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text('Job title')
+
+        fill_in 'job_specification_form[job_description]', with: 'Sample description'
+        click_on 'Update job'
+      end
     end
 
     context '#candidate_specification' do
@@ -135,6 +148,19 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(qualifications: [qualifications,
                                                                                'Teaching deegree'])
+      end
+
+      scenario 'adds a job to update the Google index in the queue' do
+        vacancy = create(:vacancy, :published, school: school)
+        vacancy_url = job_url(vacancy, protocol: 'https')
+
+        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
+
+        fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
+        click_on 'Update job'
       end
     end
 
@@ -228,6 +254,19 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
                                                                                  'https://schooljobs.com'])
+      end
+
+      scenario 'adds a job to update the Google index in the queue' do
+        vacancy = create(:vacancy, :published, school: school)
+        vacancy_url = job_url(vacancy, protocol: 'https')
+
+        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.application_link'))
+
+        fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
+        click_on 'Update job'
       end
     end
   end

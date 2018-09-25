@@ -18,7 +18,7 @@ json.jobLocation do
   json.address do
     json.set! '@type', 'PostalAddress'
     json.addressLocality vacancy.school.town
-    json.addressRegion vacancy.school.county
+    json.addressRegion vacancy.school&.region&.name
     json.streetAddress vacancy.school.address
     json.postalCode vacancy.school.postcode
   end

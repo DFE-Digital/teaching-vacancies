@@ -54,8 +54,10 @@ gem 'activerecord-session_store'
 gem 'public_activity'
 gem 'high_voltage', '~> 3.1'
 gem 'google_drive', require: false
-
+gem 'google-api-client'
 gem 'browser'
+
+gem 'sidekiq'
 
 group :test, :development, :staging do
   gem 'faker'

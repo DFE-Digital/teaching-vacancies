@@ -88,21 +88,34 @@ variable "alb_certificate_arn" {
 # ECS
 variable "ecs_cluster_name" {}
 
-variable "ecs_service_name" {
+variable "ecs_service_web_name" {
   default = "default-web"
 }
 
-variable "ecs_service_task_name" {
+variable "ecs_service_web_task_name" {
   default = "web"
 }
 
-variable "ecs_service_task_count" {
+variable "ecs_service_web_task_count" {
   description = "The number of containers to run for this service"
   default     = 1
 }
 
-variable "ecs_service_task_port" {
+variable "ecs_service_web_task_port" {
   description = "The port this application is listening on (ALB will map these with ephemeral port numbers)"
+  default     = 3000
+}
+
+variable "ecs_service_worker_name" {
+  default = "worker"
+}
+
+variable "ecs_service_worker_task_name" {
+  default = "worker"
+}
+
+variable "ecs_service_worker_task_port" {
+  description = "The port the worker is listening on (ALB will map these with ephemeral port numbers)"
   default     = 3000
 }
 
@@ -128,9 +141,19 @@ variable "ecs_service_logspout_container_definition_file_path" {
   default     = "./logspout_container_definition.json"
 }
 
+variable "ecs_service_worker_container_definition_file_path" {
+  description = "Worker container definition"
+  default     = "./worker_container_definition.json"
+}
+
 variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
   default     = ["rake", "verbose", "data:schools:import"]
+}
+
+variable "import_schools_task_schedule" {
+  description = "import_schools schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 02 * * ? *)"
 }
 
 variable "vacancies_scrape_task_command" {
@@ -138,29 +161,14 @@ variable "vacancies_scrape_task_command" {
   default     = ["rake", "verbose", "vacancies:data:scrape"]
 }
 
-variable "sessions_trim_task_command" {
-  description = "The Entrypoint for trimming old sessions"
-  default     = ["rake", "db:sessions:trim"]
-}
-
-variable "update_pay_scale_task_command" {
-  description = "The Entrypoint for the update_pay_scale task"
-  default     = ["rake", "data:update:pay_scale"]
-}
-
-variable "update_vacancies_task_command" {
-  description = "The Entrypoint for the update_vacancies task"
-  default     = ["rake", "vacancies:data:update"]
-}
-
-variable "reindex_vacancies_task_command" {
-  description = "The Entrypoint for the reindex_vacancies task"
-  default     = ["rake", "elasticsearch:vacancies:index"]
-}
-
 variable "vacancies_scrape_task_schedule" {
   description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "rate(60 minutes)"
+}
+
+variable "sessions_trim_task_command" {
+  description = "The Entrypoint for trimming old sessions"
+  default     = ["rake", "verbose", "db:sessions:trim"]
 }
 
 variable "sessions_trim_task_schedule" {
@@ -168,19 +176,19 @@ variable "sessions_trim_task_schedule" {
   default     = "rate(1 day)"
 }
 
-# RDS
-variable "rds_engine" {
-  default     = "postgres"
-  description = "Engine type, example values mysql, postgres"
+variable "update_pay_scale_task_command" {
+  description = "The Entrypoint for the update_pay_scale task"
+  default     = ["rake", "verbose", "data:update:pay_scale"]
 }
 
-variable "rds_engine_version" {
-  description = "Engine version"
+variable "update_vacancies_task_command" {
+  description = "The Entrypoint for the update_vacancies task"
+  default     = ["rake", "verbose", "vacancies:data:update"]
+}
 
-  default = {
-    mysql    = "5.6.22"
-    postgres = "9.6.6"
-  }
+variable "reindex_vacancies_task_command" {
+  description = "The Entrypoint for the reindex_vacancies task"
+  default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
 variable "performance_platform_submit_task_command" {
@@ -196,6 +204,21 @@ variable "performance_platform_submit_task_schedule" {
 variable "performance_platform_submit_all_task_command" {
   description = "The Entrypoint for the performance_platform_submit_all task"
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
+}
+
+# RDS
+variable "rds_engine" {
+  default     = "postgres"
+  description = "Engine type, example values mysql, postgres"
+}
+
+variable "rds_engine_version" {
+  description = "Engine version"
+
+  default = {
+    mysql    = "5.6.22"
+    postgres = "9.6.6"
+  }
 }
 
 variable "rds_storage_gb" {}
@@ -272,6 +295,10 @@ variable "logspout_command" {
   type = "list"
 }
 
+variable "worker_command" {
+  type = "list"
+}
+
 # Application
 variable "rails_env" {}
 
@@ -294,3 +321,4 @@ variable "google_geocoding_api_key" {}
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
 variable "pp_user_satisfaction_token" {}
+variable "google_api_json_key" {}

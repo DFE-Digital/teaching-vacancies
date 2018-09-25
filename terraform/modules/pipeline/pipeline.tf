@@ -50,10 +50,10 @@ data "template_file" "buildspec" {
   template = "${file(var.buildspec_location)}"
 
   vars {
-    aws_account_id  = "${var.aws_account_id}"
-    image_repo_name = "${var.registry_name}"
-    environment     = "${var.environment}"
-    task_name       = "${var.project_name}_${var.environment}_web"
+    aws_account_id   = "${var.aws_account_id}"
+    image_repo_name  = "${var.registry_name}"
+    environment      = "${var.environment}"
+    task_name    = "${var.project_name}_${var.environment}_web"
   }
 }
 
@@ -131,7 +131,7 @@ resource "aws_codepipeline" "pipeline" {
     name = "Production"
 
     action {
-      name            = "Deploy"
+      name            = "Web"
       category        = "Deploy"
       owner           = "AWS"
       provider        = "ECS"
@@ -140,7 +140,22 @@ resource "aws_codepipeline" "pipeline" {
 
       configuration {
         ClusterName = "${var.ecs_cluster_name}"
-        ServiceName = "${var.ecs_service_name}"
+        ServiceName = "${var.ecs_service_web_name}"
+        FileName    = "imagedefinitions.json"
+      }
+    }
+
+    action {
+      name            = "Worker"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      input_artifacts = ["imagedefinitions"]
+      version         = "1"
+
+      configuration {
+        ClusterName = "${var.ecs_cluster_name}"
+        ServiceName = "${var.ecs_worker_service_name}"
         FileName    = "imagedefinitions.json"
       }
     }
