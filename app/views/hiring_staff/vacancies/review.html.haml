@@ -72,6 +72,14 @@
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
+          = t('jobs.newly_qualified_teacher')
+        %dd.app-check-your-answers__answer
+          = @vacancy.newly_qualified_teacher
+        %dd.app-check-your-answers__change
+          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher')
+
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question
           = t('jobs.flexible_working')
         %dd.app-check-your-answers__answer
           = @vacancy.flexible_working
@@ -168,18 +176,25 @@
         %dt.app-check-your-answers__question
           = t('jobs.contact_email')
         %dd.app-check-your-answers__answer
-          =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), class: 'govuk-link', 'aria-label': t('jobs.aria_labels.change_job_contact_email')
+          - if @vacancy.contact_email.present?
+            =mail_to 'Job contact email', @vacancy.contact_email, 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
+            %dd.app-check-your-answers__change
+              = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email')
+          - else
+            %span= t('jobs.no_contact_email')
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
           = t('jobs.application_link')
         %dd.app-check-your-answers__answer
-          = link_to @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link)  do
-            %span= t('jobs.application_link_url')
-            %br
-            %span.govuk-body-s= @vacancy.application_link
+          - if @vacancy.application_link.present?
+            = link_to @vacancy.application_link, 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link)  do
+              %span= t('jobs.application_link_url')
+              %br
+              %span.font-xsmall= @vacancy.application_link
+          - else
+            %span= t('jobs.no_application_link')
+
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), application_details_school_job_path(anchor: 'application_link'), 'aria-label': t('jobs.aria_labels.change_application_link_URL'), class: 'govuk-link'
 
