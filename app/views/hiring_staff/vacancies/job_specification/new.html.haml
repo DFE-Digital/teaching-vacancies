@@ -84,6 +84,8 @@
                     wrapper_html: { id: 'maximum_salary' },
                     input_html: { class: 'govuk-!-width-one-half', 'aria-label': t('jobs.aria_labels.maximum_salary') }
 
+      = render partial: 'pro_rata_warning'
+
       = f.input :working_pattern,
                 wrapper: 'select',
                 label: t('jobs.working_pattern'),

@@ -157,6 +157,7 @@ en:
       benefits: 'For example, financial benefits, job training, continuing professional development and whether Special Educational Needs (SEN) allowances or Teaching and Learning Responsibility (TLR) payments are available.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'This is the url linking the job to your existing application page'
+      pro_rata_warning: 'Part time roles must state a pro rata salary'
     filters:
       title: 'Search job listings'
       location: 'Location'
