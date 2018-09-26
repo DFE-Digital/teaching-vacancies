@@ -47,7 +47,7 @@ RSpec.feature 'School viewing public listings' do
       click_on(I18n.t('sign_in.link'))
 
       expect(page).to have_content("Jobs at #{school.name}")
-      within('#proposition-links') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+      within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
 
       click_on(I18n.t('app.title'))
       expect(page).to have_content(I18n.t('jobs.heading'))

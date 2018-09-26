@@ -98,3 +98,5 @@ FactoryBot.create(:vacancy,
                    min_pay_scale: payscale,
                    status: 1,
                    leadership: leadership)
+
+20.times { FactoryBot.create(:vacancy) }

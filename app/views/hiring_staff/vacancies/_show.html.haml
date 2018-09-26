@@ -1,47 +1,47 @@
 - content_for :page_title_prefix do
   #{@vacancy.job_title} - #{@vacancy.school_name}
 
-.vacancy.grid-row
+.vacancy.govuk-grid-row
   - if @vacancy.expired?
-    .column-full
+    .govuk-grid-column-full
       .banner-warning
         = t('jobs.expired')
 
-  .column-full
+  .govuk-grid-column-full
     .share-url.display-none
-      %h2.heading-small.mt0 Share this job
-      #{link_to t('jobs.view_public_link'), @vacancy.share_url, id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
+      %h2.govuk-heading-s.mt0 Share this job
+      #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
     .share-url-no-js
-      %h2.heading-small.mt0 Share this job
-      #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), id: 'share-url'}
+      %h2.govuk-heading-s.mt0 Share this job
+      #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
 
-  .column-two-thirds
-    %h1.heading-large
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-l
       = @vacancy.job_title
-      %span.heading-secondary
+      %span.govuk-caption-l
         = @vacancy.location
 
-    %h2.heading-medium= t('jobs.description')
+    %h2.govuk-heading-m= t('jobs.description')
     %p= @vacancy.job_description
 
     - if @vacancy.education?
-      %h2.heading-medium= t('jobs.education')
+      %h2.govuk-heading-m= t('jobs.education')
       %p= @vacancy.education
 
     - if @vacancy.qualifications?
-      %h2.heading-medium= t('jobs.qualifications')
+      %h2.govuk-heading-m= t('jobs.qualifications')
       %p= @vacancy.qualifications
 
     - if @vacancy.experience?
-      %h2.heading-medium= t('jobs.experience')
+      %h2.govuk-heading-m= t('jobs.experience')
       %p= @vacancy.experience
 
     - if @vacancy.benefits?
-      %h2.heading-medium= t('jobs.benefits')
+      %h2.govuk-heading-m= t('jobs.benefits')
       %p= @vacancy.benefits
 
     %hr
-    %h2.heading-medium
+    %h2.govuk-heading-m
       = t('schools.about')
       = @vacancy.school.name
 
@@ -62,7 +62,7 @@
       - if @vacancy.school.url.present?
         %dt= t('schools.website')
         %dd
-          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'wordwrap', target: '_blank')
+          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link wordwrap', target: '_blank')
 
     - if @vacancy.school.geolocation
       %div#map_zoom
@@ -72,11 +72,11 @@
 
       %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
-  .column-one-third
+  .govuk-grid-column-one-third
     %aside.vacancy--metadata
       - if @vacancy.application_link.present?
-        %p.font-xsmall=t('jobs.aria_labels.apply_link')
-        = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
+        %p.govuk-body-s=t('jobs.aria_labels.apply_link')
+        = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
 
       %dl
         - if @vacancy.pay_scale_range.present?
@@ -125,4 +125,4 @@
 
         - if @vacancy.contact_email.present?
           %dt= t('jobs.contact_email')
-          %dd.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
+          %dd.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))

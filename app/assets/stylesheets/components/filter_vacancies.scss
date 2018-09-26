@@ -1,29 +1,37 @@
 .filter-vacancies {
   margin-bottom: 0;
-  padding: $gutter-half;
-  background-color: $panel-colour;
+  padding: $govuk-gutter-half;
+  background-color: govuk-colour("grey-3");
   h2 {
-    margin: 0 0 $gutter-half 0;
+    margin: 0 0 $govuk-gutter-half 0;
   }
-  .form-group {
-    margin-bottom: $gutter-half;
+  .govuk-form-group {
+    margin-bottom: $govuk-gutter-half;
   }
   .form-control {
-    border-color: $grey-1;
+    border-color: govuk-colour("grey-1");
   }
-  .button {
-    margin-top: $gutter-half;
-  }
-
-  @media screen and (max-width: $small-screen) {
-    margin-bottom: $gutter;
+  .govuk-button {
+    margin-top: $govuk-gutter-half;
   }
 
-// filters form white checkbox on grey background
-.filters-form .multiple-choice {
-  background: $white;
-  label {
-    background: $panel-colour;
+  @include govuk-media-query($until: tablet) {
+    margin-bottom: $govuk-gutter;
   }
-}
+
+  // filters form white checkbox on grey background
+  .filters-form .govuk-checkboxes {
+    float: left;
+    background: govuk-colour("white");
+    .govuk-checkboxes__item {
+      max-height: 40px;
+    }
+    label {
+      background: govuk-colour("grey-3");
+      padding: 12px 15px 8px;
+       @include govuk-media-query($from: desktop) {
+         padding: 10px 15px 5px;
+       }
+    }
+  }
 }

@@ -1,35 +1,37 @@
 %aside.filter-vacancies
-  %h2.heading-medium
+  %h2.govuk-heading-m
     =t('jobs.filters.title')
 
   = form_tag jobs_path, class: 'filters-form', method: :get do
-    .form-group
-      = label_tag 'location', t('jobs.filters.location'), class: 'form-label'
-      = search_field_tag :location, location, class: 'form-control form-control-block', placeholder: t('jobs.filters.location_hint')
-    .form-group
-      = label_tag 'Radius', 'Radius', class: 'form-label'
-      = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'form-control form-control-block'
-    .form-group
-      = label_tag 'keyword', t('jobs.filters.keyword'), class: 'form-label'
-      = search_field_tag :keyword, keyword, class: 'form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
-    .form-group
-      = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'form-label'
-      = select_tag 'minimum_salary', options_for_select(salary_options, minimum_salary), class: 'form-control form-control-block', include_blank: 'None'
-    .form-group
-      = label_tag 'maximum_salary', t('jobs.filters.maximum_salary'), class: 'form-label'
-      = select_tag 'maximum_salary', options_for_select(salary_options, maximum_salary), class: 'form-control form-control-block', include_blank: 'None'
-    .form-group
-      = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'form-label'
-      = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'form-control form-control-block', include_blank: 'Any'
-    .form-group
-      = label_tag 'phase', t('jobs.filters.education_phase'), class: 'form-label'
-      = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'form-control form-control-block', include_blank: 'Any'
-    .form-group
-      .multiple-choice
-        = check_box_tag :newly_qualified_teacher, 'true', nqt_suitable_checked?(newly_qualified_teacher)
-        = label_tag 'newly_qualified_teacher', t('jobs.filters.nqt_suitable'), class: 'form-label'
+    .govuk-form-group
+      = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
+      = search_field_tag :location, location, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.location_hint')
+    .govuk-form-group
+      = label_tag 'Radius', 'Radius', class: 'govuk-label'
+      = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'govuk-select form-control form-control-block'
+    .govuk-form-group
+      = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
+      = search_field_tag :keyword, keyword, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
+    .govuk-form-group
+      = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
+      = select_tag 'minimum_salary', options_for_select(salary_options, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
+    .govuk-form-group
+      = label_tag 'maximum_salary', t('jobs.filters.maximum_salary'), class: 'govuk-label'
+      = select_tag 'maximum_salary', options_for_select(salary_options, maximum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
+    .govuk-form-group
+      = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
+      = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
+    .govuk-form-group
+      = label_tag 'phase', t('jobs.filters.education_phase'), class: 'govuk-label'
+      = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
+    .govuk-form-group
+      %fieldset.govuk-fieldset
+        .govuk-checkboxes
+          .govuk-checkboxes__item
+            = check_box_tag :newly_qualified_teacher, 'true', nqt_suitable_checked?(newly_qualified_teacher), class: 'govuk-checkboxes__input'
+            = label_tag 'newly_qualified_teacher', t('jobs.filters.nqt_suitable'), class: 'govuk-label govuk-checkboxes__label'
 
     = hidden_field_tag :sort_column, sort_column
     = hidden_field_tag :sort_order, sort_order
 
-    = submit_tag @vacancies.apply_filters_button_text, class: 'button'
+    = submit_tag @vacancies.apply_filters_button_text, class: 'govuk-button mb0'

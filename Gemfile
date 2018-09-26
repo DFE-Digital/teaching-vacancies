@@ -34,9 +34,6 @@ gem 'omniauth_openid_connect', '~> 0.1'
 
 gem 'breasal', '~> 0.0.1'
 
-gem 'govuk_elements_rails'
-gem 'govuk_frontend_toolkit'
-gem 'govuk_template'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'roadie-rails'
@@ -44,7 +41,7 @@ gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version due to CVE-2018-3741
 
 gem 'gov_uk_date_fields', git: 'https://github.com/despo/gov_uk_date_fields.git',
-                          branch: 'trigger-iphone-numeric-keyboard'
+                          branch: 'trigger-iphone-numeric-keyboard-for-new-gov-uk-ds'
 
 gem 'rollbar', '~> 2.17'
 
