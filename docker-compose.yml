@@ -45,6 +45,7 @@ services:
   redis:
     image: redis:latest
     command: redis-server
+    restart: on-failure
 
   sidekiq:
     build: .
@@ -53,6 +54,7 @@ services:
     command: bundle exec sidekiq
     depends_on:
       - redis
+    restart: on-failure
 
 volumes:
   pg_data: {}
