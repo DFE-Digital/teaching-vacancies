@@ -415,7 +415,7 @@ resource "aws_ecs_task_definition" "web" {
 }
 
 resource "aws_ecs_task_definition" "worker" {
-  family                   = "${var.ecs_service_web_task_name}"
+  family                   = "${var.ecs_service_worker_name}"
   container_definitions    = "${data.template_file.worker_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
