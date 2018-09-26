@@ -58,7 +58,7 @@ resource "aws_ecs_service" "web" {
   depends_on = ["aws_iam_role.ecs_role"]
 
   lifecycle {
-    ignore_changes = ["task_definition", "desired_count"]
+    ignore_changes = ["desired_count"]
   }
 }
 
