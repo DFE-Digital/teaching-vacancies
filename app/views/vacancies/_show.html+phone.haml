@@ -84,7 +84,10 @@
           %td.cya-answer= @vacancy.working_pattern
         %tr
           %td.cya-question= t('jobs.salary')
-          %td.cya-answer= @vacancy.salary_range
+          %td.cya-answer
+            = @vacancy.salary_range
+            - if @vacancy.part_time?
+              pro rata
         - if @vacancy.part_time? && @vacancy.weekly_hours
           %tr
             %td.cya-question= t('jobs.weekly_hours')
