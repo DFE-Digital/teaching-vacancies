@@ -65,6 +65,7 @@ en:
     benefits: 'Employee benefits'
     salary_range: 'Salary range'
     per_year: 'per year'
+    per_year_pro_rata: 'per year pro rata'
     publish_heading: 'Publish a job for %{school}'
     review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review the job for %{school}'
