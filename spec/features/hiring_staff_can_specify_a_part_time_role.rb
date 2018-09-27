@@ -84,4 +84,24 @@ RSpec.feature 'When hiring staff specify a part time role' do
       within('.vacancy table.check-your-answers') { expect(page).not_to have_content('pro rata') }
     end
   end
+
+  scenario 'a job edit page should indicate a pro rata salary if the role is part time' do
+    school = create(:school)
+    stub_hiring_staff_auth(urn: school.urn)
+    vacancy = create(:vacancy, :published, school: school, working_pattern: :part_time)
+
+    visit edit_school_job_path(vacancy.id)
+
+    expect(page).to have_content('pro rata')
+  end
+
+  scenario 'a job edit page should not indicate a pro rata salary if the role is full time' do
+    school = create(:school)
+    stub_hiring_staff_auth(urn: school.urn)
+    vacancy = create(:vacancy, :published, school: school, working_pattern: :full_time)
+
+    visit edit_school_job_path(vacancy.id)
+
+    expect(page).not_to have_content('pro rata')
+  end
 end
