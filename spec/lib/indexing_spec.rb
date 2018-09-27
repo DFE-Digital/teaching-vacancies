@@ -9,7 +9,7 @@ RSpec.describe Indexing do
 
   context 'Successful requests' do
     before(:each) do
-      stub_const('GOOGLE_API_JSON_KEY', 'some value')
+      stub_const('GOOGLE_API_JSON_KEY', '{ "key": "value" }')
     end
 
     context 'Requesting a url index update' do
