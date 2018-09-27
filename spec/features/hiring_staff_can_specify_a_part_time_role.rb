@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.feature 'When hiring staff specify a part time role' do
   scenario 'the create job form should warn hiring staff to enter a pro rata salary for part time roles' do
     school = create(:school)
@@ -102,6 +101,30 @@ RSpec.feature 'When hiring staff specify a part time role' do
 
     visit edit_school_job_path(vacancy.id)
 
+    expect(page).not_to have_content('pro rata')
+  end
+
+  scenario 'a job review page should indicate a pro rata salary if the role is part time' do
+    school = create(:school)
+    stub_hiring_staff_auth(urn: school.urn)
+    vacancy = VacancyPresenter.new(
+      create(:vacancy, :complete, :draft, school_id: school.id, working_pattern: :part_time)
+    )
+    visit school_job_review_path(vacancy.id)
+
+    expect(page).to have_content("Review the job for #{school.name}")
+    expect(page).to have_content('pro rata')
+  end
+
+  scenario 'a job review page should not indicate a pro rata salary if the role is full time' do
+    school = create(:school)
+    stub_hiring_staff_auth(urn: school.urn)
+    vacancy = VacancyPresenter.new(
+      create(:vacancy, :complete, :draft, school_id: school.id, working_pattern: :full_time)
+    )
+    visit school_job_review_path(vacancy.id)
+
+    expect(page).to have_content("Review the job for #{school.name}")
     expect(page).not_to have_content('pro rata')
   end
 end
