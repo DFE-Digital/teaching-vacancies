@@ -41,6 +41,13 @@
                 input_html: {class: 'govuk-select'},
                 collection: Subject.order(:name),
                 required: false
+      = f.input :working_pattern,
+                wrapper: 'select',
+                label: t('jobs.working_pattern'),
+                collection: working_pattern_options,
+                wrapper_html: {id: 'working_pattern'},
+                required: true
+
       %fieldset.govuk-fieldset#pay_scale_range
         %legend.govuk-label.govuk-label= "#{t('jobs.pay_scale_range')} (optional)"
         %span.govuk-hint= t('jobs.form_hints.pay_scale_range')
@@ -86,12 +93,6 @@
 
       = render partial: 'pro_rata_warning'
 
-      = f.input :working_pattern,
-                wrapper: 'select',
-                label: t('jobs.working_pattern'),
-                collection: working_pattern_options,
-                wrapper_html: {id: 'working_pattern'},
-                required: true
       = f.input :newly_qualified_teacher, as: :boolean,
                 hint: t('jobs.form_hints.newly_qualified_teacher'),
                 wrapper: :inline_checkbox,
