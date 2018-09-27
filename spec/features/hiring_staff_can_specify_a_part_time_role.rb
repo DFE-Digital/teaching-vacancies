@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Hiring staff can specify a part time role' do
+RSpec.feature 'When hiring staff specify a part time role' do
   scenario 'the create job form should warn hiring staff to enter a pro rata salary for part time roles' do
     school = create(:school)
     stub_hiring_staff_auth(urn: school.urn)
@@ -10,7 +10,7 @@ RSpec.feature 'Hiring staff can specify a part time role' do
     expect(page).to have_content(I18n.t('jobs.form_hints.pro_rata_warning'))
   end
 
-  scenario 'the edit job form should warn hiring staff to enter a pro rata salary for part time roles' do
+  scenario 'the edit job form should warn hiring staff to enter a pro rata salary' do
     school = create(:school)
     stub_hiring_staff_auth(urn: school.urn)
     vacancy = create(:vacancy, :published, school: school)
@@ -22,7 +22,7 @@ RSpec.feature 'Hiring staff can specify a part time role' do
     expect(page).to have_content(I18n.t('jobs.form_hints.pro_rata_warning'))
   end
 
-  scenario 'the list page should indicate a pro rata salary if the role is part time', elasticsearch: true do
+  scenario 'the list page should indicate a pro rata salary', elasticsearch: true do
     create(:vacancy, working_pattern: :part_time)
 
     Vacancy.__elasticsearch__.client.indices.flush
@@ -63,7 +63,7 @@ RSpec.feature 'Hiring staff can specify a part time role' do
     within('.vacancy--metadata') { expect(page).not_to have_content('pro rata') }
   end
 
-  context 'when the user is on mobile' do
+  context 'and the user is on mobile' do
     scenario 'a job page should indicate a pro rata salary if the role is part time' do
       page.driver.header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
       school = create(:school)
