@@ -115,18 +115,6 @@ SimpleForm.setup do |config|
     field.use :input, as: :text, class: 'govuk-textarea'
   end
 
-  config.wrappers :stacked_radios, tag: 'div',
-                             class: 'govuk-form-group',
-                             error_class: 'govuk-form-group--error' do |radio|
-    radio.wrapper :class => 'govuk-radios' do |field|
-      field.use :input, class: 'govuk-radios__input', wrap_with: { tag: 'div', class: 'govuk-radios__item' }
-    end
-    # radio.use :label, wrap_with: { tag: 'span', class: 'govuk-label govuk-label' }
-    radio.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
-    radio.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
-    # radio.use :input, as: :text, class: 'govuk-textarea'
-  end
-
   config.wrappers :inline_checkbox, :tag => 'div',
                                     :class => 'govuk-form-group',
                                     :error_class => 'error' do |checkbox|
