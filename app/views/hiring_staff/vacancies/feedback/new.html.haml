@@ -15,9 +15,20 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       .govuk-form-group
-        %legend
-          %h2.govuk-heading-m= t('feedback.legend')
-        %fieldset
-          = f.input :rating, as: :radio_buttons, collection: rating_options, label: false, required: true, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
-          = f.input :comment, as: :text, label: t('feedback.label'), hint: t('feedback.hint_text'), input_html: { class: 'form-control form-control-4-4', rows: '5' }
-          = f.submit t('feedback.submit'), class: 'button'
+        %fieldset.govuk-fieldset
+          %legend
+            %h2.govuk-heading-m= t('feedback.legend')
+
+          = f.input :rating,
+                    wrapper: :stacked_radios,
+                    as: :radio_buttons,
+                    collection: rating_options,
+                    required: true
+
+          = f.input :comment, as: :text,
+                    wrapper: :textarea,
+                    label: t('feedback.label'),
+                    hint: t('feedback.hint_text'),
+                    input_html: { class: 'form-control form-control-4-4', rows: '5' }
+
+          = f.submit t('feedback.submit'), class: 'govuk-button'

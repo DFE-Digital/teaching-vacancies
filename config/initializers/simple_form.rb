@@ -95,7 +95,7 @@ SimpleForm.setup do |config|
 
   # You can wrap each item in a collection of radio/check boxes with a tag,
   # defaulting to :span.
-  # config.item_wrapper_tag = :span
+  config.item_wrapper_tag = :div
 
   config.wrappers :select, tag: 'div',
                              class: 'govuk-form-group',
@@ -113,6 +113,18 @@ SimpleForm.setup do |config|
     field.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
     field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
     field.use :input, as: :text, class: 'govuk-textarea'
+  end
+
+  config.wrappers :stacked_radios, tag: 'div',
+                             class: 'govuk-form-group',
+                             error_class: 'govuk-form-group--error' do |radio|
+    radio.wrapper :class => 'govuk-radios' do |field|
+      field.use :input, class: 'govuk-radios__input', wrap_with: { tag: 'div', class: 'govuk-radios__item' }
+    end
+    # radio.use :label, wrap_with: { tag: 'span', class: 'govuk-label govuk-label' }
+    radio.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
+    radio.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
+    # radio.use :input, as: :text, class: 'govuk-textarea'
   end
 
   config.wrappers :inline_checkbox, :tag => 'div',
