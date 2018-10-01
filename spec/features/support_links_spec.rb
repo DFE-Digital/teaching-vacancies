@@ -16,9 +16,11 @@ RSpec.feature 'A visitor to the website can access the support links' do
 
     expect(page).to have_content('Privacy Notice: Teaching Jobs')
     expect(page).to have_content('This work is being carried out by Department for Education (DfE) Digital, ' \
-                                 'which is a part of DfE. For the purpose of data protection legislation, ' \
+                                 'which is a part of DfE. DfE engages the private company dxw to help improve ' \
+                                 'and provide the service. For the purpose of data protection legislation, ' \
                                  'the DfE is the data controller for the personal data processed as part of ' \
-                                 'Teaching Jobs.')
+                                 'Teaching Jobs. Teaching Jobs is a free and optional service for schools ' \
+                                 'to advertise teaching roles.')
   end
 
   scenario 'the terms and conditions' do
