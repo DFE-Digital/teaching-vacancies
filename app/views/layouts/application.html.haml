@@ -42,14 +42,6 @@
         .govuk-header__content
           %a.govuk-header__link.govuk-header__link--service-name{href: "/"}
             = t('app.title')
-          %button.govuk-header__menu-button.js-header-toggle{"aria-controls": "navigation", "aria-label": "Show or hide Top Level Navigation", role: "button"} Menu
-          %nav
-            %ul#navigation.govuk-header__navigation{"aria-label": "Top Level Navigation"}
-              - if authenticated?
-                %li.govuk-header__navigation-item= link_to t('nav.school_page_link'), school_path, class: ['govuk-header__link', active_link_class(school_path)]
-                %li.govuk-header__navigation-item= link_to t('nav.sign_out'), sessions_path, method: :delete, class: 'govuk-header__link'
-              - else
-                %li.govuk-header__navigation-item= link_to t('nav.sign_in'), new_identifications_path, class: 'govuk-header__link'
 
     .govuk-width-container
       .govuk-phase-banner
@@ -58,6 +50,8 @@
             beta
           %span.govuk-phase-banner__text
             This is a new service - #{link_to 'your feedback', 'https://www.surveymonkey.co.uk/r/FV5YF9Q', class: 'govuk-link'} will help us to improve it.
+
+      = render partial: 'shared/navigation'
 
       %main#main-content.govuk-main-wrapper.app-main-class{role: "main"}
         - flash.each do |name, msg|

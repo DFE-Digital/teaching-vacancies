@@ -14,7 +14,8 @@ en:
   nav:
     sign_in: 'List a teaching job at your school'
     sign_out: 'Sign out'
-    school_page_link: 'My jobs'
+    school_page_link: 'Manage jobs'
+    jobseekers_index_link: 'View public jobs'
   sign_in:
     title: 'Sign in to Teaching Jobs'
     link: 'Sign in'
