@@ -50,13 +50,6 @@ Rails.application.configure do
   config.force_ssl = true
   config.ssl_options = { redirect: { exclude: ->(request) { request.path =~ /check/ } } }
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
-  config.log_level = :debug
-
-  # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
-
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
@@ -78,14 +71,13 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
-
-  # Use a different logger for distributed setups.
-  # require 'syslog/logger'
+  # Logging
+  config.log_level = :info
+  config.log_tags = [:request_id] # Prepend all log lines with the following tags.
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.active_record.logger = nil # Don't log SQL in production
 
   # Use Lograge for cleaner logging
-  config.log_level = :info
   config.lograge.enabled = true
   config.lograge.formatter = ColourLogFormatter.new
   config.lograge.ignore_actions = ['ApplicationController#check']
@@ -100,9 +92,6 @@ Rails.application.configure do
       params: event.payload[:params].except(*exceptions)
     }
   end
-
-  # Don't log SQL in production
-  config.active_record.logger = nil
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

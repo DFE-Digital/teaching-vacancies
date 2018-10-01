@@ -2,7 +2,6 @@ require 'geocoding'
 class VacancySearchBuilder
   MIN_ALLOWED_RADIUS = 1
 
-  # rubocop:disable Metrics/AbcSize
   def initialize(filters:, sort:, expired: false, status: :published)
     @keyword = filters.keyword.to_s.strip
     @working_pattern = filters.working_pattern
@@ -18,7 +17,6 @@ class VacancySearchBuilder
     @geocoded_location = Geocoding.new(filters.location).coordinates
     @radius = filters.radius.to_i.positive? ? filters.radius.to_i : MIN_ALLOWED_RADIUS
   end
-  # rubocop:enable Metrics/AbcSize
 
   def call
     { search_query: search_query, search_sort: sort_query }
