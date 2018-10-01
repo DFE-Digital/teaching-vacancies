@@ -95,7 +95,7 @@ SimpleForm.setup do |config|
 
   # You can wrap each item in a collection of radio/check boxes with a tag,
   # defaulting to :span.
-  # config.item_wrapper_tag = :span
+  config.item_wrapper_tag = :div
 
   config.wrappers :select, tag: 'div',
                              class: 'govuk-form-group',

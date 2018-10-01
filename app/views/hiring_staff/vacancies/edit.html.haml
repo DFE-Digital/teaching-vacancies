@@ -74,7 +74,7 @@
         %dd.app-check-your-answers__answer
           = @vacancy.newly_qualified_teacher
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher')
+          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
@@ -181,7 +181,7 @@
         %dt.app-check-your-answers__question
           = t('jobs.application_link')
         %dd.app-check-your-answers__answer
-          = link_to @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link)  do
+          = link_to @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link) do
             %span= t('jobs.application_link_url')
             %br
             %span.govuk-body-s.govuk-link= @vacancy.application_link

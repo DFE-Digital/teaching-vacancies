@@ -14,10 +14,24 @@
 = simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
+
       .govuk-form-group
-        %legend
-          %h2.govuk-heading-m= t('feedback.legend')
-        %fieldset
-          = f.input :rating, as: :radio_buttons, collection: rating_options, label: false, required: true, item_wrapper_tag: :div, item_wrapper_class: 'multiple-choice'
-          = f.input :comment, as: :text, label: t('feedback.label'), hint: t('feedback.hint_text'), input_html: { class: 'form-control form-control-4-4', rows: '5' }
-          = f.submit t('feedback.submit'), class: 'button'
+        %fieldset.govuk-fieldset
+          %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+            %h2.govuk-fieldset__heading
+              = t('feedback.legend')
+          = f.collection_radio_buttons :rating, rating_options, :last, :first,
+                                       collection_wrapper_tag: 'div',
+                                       collection_wrapper_class: 'govuk-radios',
+                                       item_wrapper_class: 'govuk-radios__item',
+                                       item_wrapper_tag: 'div' do |field|
+            = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
+
+
+      = f.input :comment, as: :text,
+                wrapper: :textarea,
+                label: t('feedback.label'),
+                hint: t('feedback.hint_text'),
+                input_html: { class: 'form-control form-control-4-4', rows: '5' }
+
+      = f.submit t('feedback.submit'), class: 'govuk-button'

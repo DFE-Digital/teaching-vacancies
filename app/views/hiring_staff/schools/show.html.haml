@@ -2,9 +2,6 @@
 
 .school.govuk-grid-row
   .govuk-grid-column-full
-    - if @multiple_schools
-      .share-url
-        = 'We can see you are responsible for other schools. We will be adding support for you to manage them all soon.'
     %h1.govuk-heading-l.mb0
       = t('schools.jobs.index', school: @school.name)
     - if @multiple_schools

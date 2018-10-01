@@ -76,7 +76,7 @@
         %dd.app-check-your-answers__answer
           = @vacancy.newly_qualified_teacher
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher')
+          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
@@ -177,9 +177,9 @@
           = t('jobs.contact_email')
         %dd.app-check-your-answers__answer
           - if @vacancy.contact_email.present?
-            =mail_to 'Job contact email', @vacancy.contact_email, 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
+            =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
             %dd.app-check-your-answers__change
-              = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email')
+              = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email'), class: 'govuk-link'
           - else
             %span= t('jobs.no_contact_email')
 
@@ -188,10 +188,10 @@
           = t('jobs.application_link')
         %dd.app-check-your-answers__answer
           - if @vacancy.application_link.present?
-            = link_to @vacancy.application_link, 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link)  do
+            = link_to @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link) do
               %span= t('jobs.application_link_url')
               %br
-              %span.font-xsmall= @vacancy.application_link
+              %span.govuk-body-s.govuk-link= @vacancy.application_link
           - else
             %span= t('jobs.no_application_link')
 
