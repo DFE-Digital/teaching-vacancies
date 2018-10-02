@@ -5,8 +5,9 @@
   /<![endif]
   %head
     = render partial: 'shared/gtag'
+    = render partial: 'shared/open_graph'
     %meta{charset: "utf-8"}/
-    %meta{name: 'description', content: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'}/
+    %meta{name: 'description', content: "#{t('app.description')}"}/
     %title #{content_for :page_title_prefix} — #{t('app.title')}
     %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
     %meta{content: "blue", name: "theme-color"}/
