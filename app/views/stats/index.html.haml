@@ -2,13 +2,13 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    %h1.heading-large
+    %h1.govuk-heading-xl
       Statistics
     %p=t('stats.intro')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    %ul.statistics
+    %ul.govuk-list.statistics
       - @audit_summary.each do |key, value|
         %li
           #{key}: #{value}
