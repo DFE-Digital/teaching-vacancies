@@ -43,10 +43,13 @@ RSpec.shared_examples 'a failed sign in' do |options|
   end
 
   scenario 'logs a partially anonymised identifier so we can lookup any legitimate users who may be genuinley stuck' do
-    anonymised_email = options[:email].gsub(/(.)./, '\1*')
-    expect_any_instance_of(ActiveSupport::Logger)
+    expect(Rails.logger)
       .to receive(:warn)
-      .with("Unauthenticated user for identifier: #{anonymised_email}, school_urn: #{options[:school_urn]}")
+      .with("Hiring staff signed in: #{options[:dsi_id]}")
+
+    expect(Rails.logger)
+      .to receive(:warn)
+      .with("Hiring staff not authorised: #{options[:dsi_id]} for school: #{options[:school_urn]}")
 
     visit root_path
 
@@ -174,7 +177,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in', email: 'another_email@example.com', school_urn: '110627'
+    it_behaves_like 'a failed sign in', dsi_id: 'an-unknown-oid', school_urn: '110627'
   end
 
   context 'with valid credentials and no organisation in DfE Sign In but existing permissions' do
@@ -209,6 +212,6 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in', email: 'an-email@example.com', school_urn: nil
+    it_behaves_like 'a failed sign in', dsi_id: 'an-unknown-oid', school_urn: nil
   end
 end
