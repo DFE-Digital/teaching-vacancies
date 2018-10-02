@@ -8,5 +8,5 @@
 
     = simple_form_for :identifications, url: identifications_path, :defaults => { :input_html => { :class => "text" } }, method: :post do |f|
       .govuk-form-group
-        %p= t('sign_in.guidance')
+        %p= t('sign_in.guidance', link: link_to('Invitations are being sent out gradually by region.', roll_out_blog_url, target: :_blank)).html_safe
         = f.submit t('sign_in.link'), class: 'govuk-button'
