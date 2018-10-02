@@ -58,7 +58,7 @@ resource "aws_ecs_service" "web" {
   depends_on = ["aws_iam_role.ecs_role"]
 
   lifecycle {
-    ignore_changes = ["task_definition", "desired_count"]
+    ignore_changes = ["desired_count"]
   }
 }
 
@@ -158,14 +158,13 @@ data "template_file" "web_container_definition" {
     google_drive_json_key            = "${var.google_drive_json_key}"
     auth_spreadsheet_id              = "${var.auth_spreadsheet_id}"
     domain                           = "${var.domain}"
-    google_api_json_key              = "${var.google_api_json_key}"
+    google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
   }
 }
 
 /* import_schools task definition*/
 data "template_file" "import_schools_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
     secret_key_base          = "${var.secret_key_base}"
@@ -397,7 +396,7 @@ data "template_file" "worker_container_definition" {
 
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
-    google_api_json_key              = "${var.google_api_json_key}"
+    google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     domain                           = "${var.domain}"
 
     worker_command = "${jsonencode(var.worker_command)}"
@@ -416,7 +415,7 @@ resource "aws_ecs_task_definition" "web" {
 }
 
 resource "aws_ecs_task_definition" "worker" {
-  family                   = "${var.ecs_service_web_task_name}"
+  family                   = "${var.ecs_service_worker_name}"
   container_definitions    = "${data.template_file.worker_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"

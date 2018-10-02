@@ -64,4 +64,4 @@ domain = # "tvs.dxw.net"
 pp_transactions_by_channel_token =
 pp_user_satisfaction_token =
 
-google_api_json_key =
+google_api_json_key = {}
