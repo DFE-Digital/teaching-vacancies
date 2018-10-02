@@ -321,4 +321,7 @@ variable "google_geocoding_api_key" {}
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
 variable "pp_user_satisfaction_token" {}
-variable "google_api_json_key" {}
+
+variable "google_api_json_key" {
+  type = "map"
+}

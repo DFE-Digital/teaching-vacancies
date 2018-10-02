@@ -1,7 +1,8 @@
 - if errors.any?
-  #errors.error-summary{role: 'alert', tabindex: '-1'}
-    %h2.heading-medium.error-summary-heading
+  #errors.govuk-error-summary{role: 'alert', tabindex: '-1'}
+    %h2.govuk-error-summary__title
       = I18n.t('errors.title', errors: pluralize(errors.count, 'error'))
-    %ul.error-summary-list
-      - errors.each do |attribute, error|
-        %li= link_to errors.full_message(attribute, error), "##{attribute}"
+    .govuk-error-summary__body
+      %ul.govuk-list.govuk-error-summary__list
+        - errors.each do |attribute, error|
+          %li= link_to errors.full_message(attribute, error), "##{attribute}"

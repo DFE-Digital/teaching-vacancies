@@ -48,7 +48,7 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on 'Save and continue'
 
-        within('.error-summary') do
+        within('.govuk-error-summary') do
           expect(page).to have_content('Please correct the following 4 errors in your listing:')
         end
 
@@ -100,7 +100,7 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on 'Save and continue' # submit empty form
 
-        within('.error-summary') do
+        within('.govuk-error-summary') do
           expect(page).to have_content('Please correct the following 3 errors in your listing:')
         end
 
@@ -138,7 +138,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
         click_on 'Save and continue'
 
-        within('.error-summary') do
+        within('.govuk-error-summary') do
           expect(page).to have_content('Please correct the following 4 errors in your listing:')
         end
 

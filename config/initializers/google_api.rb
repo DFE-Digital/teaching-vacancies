@@ -1,7 +1,10 @@
 require 'google/apis/indexing_v3'
 
 GOOGLE_API_JSON_KEY = ENV.fetch('GOOGLE_API_JSON_KEY', '')
-return Rails.logger.info('***No GOOGLE_API_JSON_KEY set') if GOOGLE_API_JSON_KEY.empty?
+
+if GOOGLE_API_JSON_KEY.empty? || JSON.parse(GOOGLE_API_JSON_KEY).empty?
+  return Rails.logger.info('***No GOOGLE_API_JSON_KEY set')
+end
 
 key = StringIO.new(GOOGLE_API_JSON_KEY)
 scope = 'https://www.googleapis.com/auth/indexing'

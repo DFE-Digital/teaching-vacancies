@@ -9,7 +9,7 @@ class Indexing
   attr_reader :service, :url
 
   def initialize(url)
-    abort('No Google API key set.') if GOOGLE_API_JSON_KEY.empty?
+    abort('No Google API key set.') if api_key_empty?
 
     @service = API::IndexingService.new
     @url = url
@@ -28,5 +28,9 @@ class Indexing
   def call(action)
     notification = API::UrlNotification.new(url: url, type: ACTIONS[action])
     service.publish_url_notification(notification)
+  end
+
+  def api_key_empty?
+    GOOGLE_API_JSON_KEY.empty? || JSON.parse(GOOGLE_API_JSON_KEY).empty?
   end
 end

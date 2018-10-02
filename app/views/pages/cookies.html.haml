@@ -1,33 +1,33 @@
-- content_for :page_title do
+- content_for :page_title_prefix  do
   Cookies
 
-.grid-row
+.govuk-grid-row
 
-  .column-two-thirds
-    %h1.heading-xlarge Cookies
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-xl Cookies
 
-    %p.lede ‘Teaching Jobs’ puts small files (known as ‘cookies’) onto your computer to collect information about how you use the site.
+    %p.govuk-body-l ‘Teaching Jobs’ puts small files (known as ‘cookies’) onto your computer to collect information about how you use the site.
 
     %p Cookies are used to:
 
-    %ul.list.list-bullet
+    %ul.govuk-list.govuk-list--bullet
       %li measure how you use the this service so it can be updated and improved based on your needs
       %li remember the notifications you’ve seen so that we don’t show them to you again
       %li remember who you are when you have logged in so we can show you your information and information relevant to you
 
     .panel.panel-border-wide
       %p ‘Teaching Jobs’ cookies aren’t used to identify you personally.
-    %p Find out more about #{link_to 'how to manage cookies.', 'http://www.aboutcookies.org/'}
+    %p Find out more about #{link_to 'how to manage cookies.', 'http://www.aboutcookies.org/', class: 'govuk-link'}
 
-    %h2.heading-large How we use cookies
+    %h2.govuk-heading-l How we use cookies
 
-    %h3.heading-medium Measuring website usage (Google Analytics)
+    %h3.govuk-heading-m Measuring website usage (Google Analytics)
 
     %p We use Google Analytics software to collect information about how you use ‘Teaching Jobs’. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
 
     %p Google Analytics stores information about:
 
-    %ul.list.list-bullet
+    %ul.govuk-list.govuk-list--bullet
       %li the pages you visit on ‘Teaching Jobs’
       %li how long you spend on each page
       %li how you got to the site
@@ -38,69 +38,69 @@
 
     %p Google Analytics sets the following cookies:
 
-    %table.mb1
-      %thead
-        %th Name
-        %th Purpose
-        %th Expires
-      %tr
-        %td _ga
-        %td This helps us count how many people visit teachingjobs.education.gov.uk by tracking if you’ve visited before
-        %td After 2 years
-      %tr
-        %td _gid
-        %td This helps us count how many people visit teachingjobs.education.gov.uk by tracking if you’ve visited before
-        %td After 24 hours
+    %table.govuk-table.mb1
+      %thead.govuk-table__head
+        %th.govuk-table__header Name
+        %th.govuk-table__header Purpose
+        %th.govuk-table__header Expires
+      %tr.govuk-table__row
+        %td.govuk-table__cell _ga
+        %td.govuk-table__cell This helps us count how many people visit teachingjobs.education.gov.uk by tracking if you’ve visited before
+        %td.govuk-table__cell After 2 years
+      %tr.govuk-table__row
+        %td.govuk-table__cell _gid
+        %td.govuk-table__cell This helps us count how many people visit teachingjobs.education.gov.uk by tracking if you’ve visited before
+        %td.govuk-table__cell After 24 hours
 
-    %p You can #{link_to 'opt out of Google Analytics.', 'https://tools.google.com/dlpage/gaoptout'}
+    %p You can #{link_to 'opt out of Google Analytics.', 'https://tools.google.com/dlpage/gaoptout', class: 'govuk-link'}
 
 
-    %h3.heading-medium Sessions
+    %h3.govuk-heading-m Sessions
 
     %p A cookie is set to record your session activity.
 
-    %table.mb1
-      %thead
-        %th Name
-        %th Purpose
-        %th Expires
-      %tr
-        %td _teachingjobs_session
-        %td Stores session data
-        %td After 1 hour
+    %table.govuk-table.mb1
+      %thead.govuk-table__head
+        %th.govuk-table__header Name
+        %th.govuk-table__header Purpose
+        %th.govuk-table__header Expires
+      %tr.govuk-table__row
+        %td.govuk-table__cell _teachingjobs_session
+        %td.govuk-table__cell Stores session data
+        %td.govuk-table__cell After 1 hour
 
-    %h3.heading-medium Our introductory message
+    %h3.govuk-heading-m Our introductory message
 
     %p You may see a pop-up welcome message when you first visit ‘Teaching Jobs’. We’ll store a cookie so that your computer knows you’ve seen it and knows not to show it again.
 
-    %table.mb1
-      %thead
-        %th Name
-        %th Purpose
-        %th Expires
-      %tr
-        %td seen_cookie_message
-        %td Saves a message to let us know that you have seen our cookie message
-        %td After 1 month
+    %table.govuk-table.mb1
+      %thead.govuk-table__head
+        %th.govuk-table__header Name
+        %th.govuk-table__header Purpose
+        %th.govuk-table__header Expires
+      %tr.govuk-table__row
+        %td.govuk-table__cell seen_cookie_message
+        %td.govuk-table__cell Saves a message to let us know that you have seen our cookie message
+        %td.govuk-table__cell After 1 month
 
-    %h3.heading-medium Our feedback survey
+    %h3.govuk-heading-m Our feedback survey
 
-    %p <a href='https://www.surveymonkey.com/' target='_blank'>SurveyMonkey</a> is used to collect responses to our feedback survey. If you take part, SurveyMonkey will save extra cookies to your computer to track your progress through it.
+    %p <a href='https://www.surveymonkey.com/' target='_blank' class='govuk-link'>SurveyMonkey</a> is used to collect responses to our feedback survey. If you take part, SurveyMonkey will save extra cookies to your computer to track your progress through it.
 
-    %table.mb1
-      %thead
-        %th Name
-        %th Purpose
-        %th Expires
-      %tr
-        %td RP211276217
-        %td This cookie is used to restrict a users to one response per survey
-        %td After 90 days
-      %tr
-        %td ep201
-        %td This is used to help us identify how you use the survey
-        %td After 30 minutes
-      %tr
-        %td ep202
-        %td This works with ep201 to help us identify how you use the survey
-        %td After 1 year
+    %table.govuk-table.mb1
+      %thead.govuk-table__head
+        %th.govuk-table__header Name
+        %th.govuk-table__header Purpose
+        %th.govuk-table__header Expires
+      %tr.govuk-table__row
+        %td.govuk-table__cell RP211276217
+        %td.govuk-table__cell This cookie is used to restrict a users to one response per survey
+        %td.govuk-table__cell After 90 days
+      %tr.govuk-table__row
+        %td.govuk-table__cell ep201
+        %td.govuk-table__cell This is used to help us identify how you use the survey
+        %td.govuk-table__cell After 30 minutes
+      %tr.govuk-table__row
+        %td.govuk-table__cell ep202
+        %td.govuk-table__cell This works with ep201 to help us identify how you use the survey
+        %td.govuk-table__cell After 1 year

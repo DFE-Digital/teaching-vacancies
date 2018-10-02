@@ -1,15 +1,16 @@
 - content_for :page_title_prefix, "#{@candidate_specification_form.errors.present? ? 'Error: ' : ''}Edit the Candidate specification"
 
-%h1.heading-large
+%h1.govuk-heading-l
   = t('jobs.edit_heading', school: @school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @candidate_specification_form.errors
 = simple_form_for @candidate_specification_form, html: { class: 'vacancy-form' }, method: :put, url: school_job_candidate_specification_path(@candidate_specification_form.id)  do |f|
-  %h2.heading-medium
+  %h2.govuk-heading-m
     = t('jobs.candidate_specification')
 
-  .grid-row
-    .column-one-half
+  .govuk-grid-row
+    .govuk-grid-column-one-half
       = f.input :education,
+                wrapper: 'textarea',
                 label: t('jobs.education'),
                 as: :text,
                 hint: t('jobs.form_hints.education'),
@@ -17,6 +18,7 @@
                 wrapper_html: {id: 'education'},
                 required: true
       = f.input :qualifications,
+                wrapper: 'textarea',
                 label: t('jobs.qualifications'),
                 as: :text,
                 hint: t('jobs.form_hints.qualifications'),
@@ -24,6 +26,7 @@
                 wrapper_html: {id: 'qualifications'},
                 required: true
       = f.input :experience,
+                wrapper: 'textarea',
                 label: t('jobs.experience'),
                 as: :text,
                 hint: t('jobs.form_hints.experience'),

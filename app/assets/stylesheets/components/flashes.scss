@@ -1,25 +1,26 @@
 @mixin flash {
-  color: $black;
-  border: 1px solid $black;
+  @include govuk-font(19);
+  color: govuk-colour("black");
+  border: 1px solid govuk-colour("black");
 }
 
 .flash {
-  margin-top: $gutter/2;
+  margin-bottom: $govuk-gutter;
   padding: 14px 15px 10px 15px;
   &.notice {
-    background-color: $light-blue-25;
+    background-color: tint(govuk-colour("light-blue"), 75);
     @include flash;
   }
   &.success {
-    background-color: $green-25;
+    background-color: tint(govuk-colour("green"), 75);
     @include flash;
   }
   &.error {
-    background-color: $red-25;
+    background-color: tint(govuk-colour("red"), 75);
     @include flash;
   }
   &.alert {
-    background-color: $yellow-25;
+    background-color: tint(govuk-colour("yellow"), 75);
     @include flash;
   }
 }

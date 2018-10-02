@@ -1,8 +1,21 @@
-FROM ruby:2.4.0
+# Install dependencies into a seperate and isolated Docker stage
+# that is thrown away apart from any subsequent COPY commands
+FROM mkenney/npm:latest AS dependencies
+ENV INSTALL_PATH /deps
+RUN mkdir -p $INSTALL_PATH
+WORKDIR $INSTALL_PATH
+COPY package.json ./package.json
+COPY package-lock.json ./package-lock.json
+RUN npm set progress=false && npm config set depth 0
+RUN npm install --only=production
 
+FROM ruby:2.4.0 as release
 MAINTAINER dxw <rails@dxw.com>
-
-RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev --fix-missing --no-install-recommends
+RUN apt-get update && apt-get install -qq -y \
+  build-essential \
+  nodejs \
+  libpq-dev \
+  --fix-missing --no-install-recommends
 
 ENV PHANTOM_JS="phantomjs-2.1.1-linux-x86_64"
 RUN curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
@@ -12,6 +25,10 @@ RUN rm -rf $PHANTOM_JS
 
 ENV INSTALL_PATH /srv/dfe-tvs
 RUN mkdir -p $INSTALL_PATH
+
+# This must be ordered before rake assets:precompile
+COPY --from=dependencies ./deps/node_modules $INSTALL_PATH/node_modules
+COPY --from=dependencies ./deps/node_modules/govuk-frontend/assets $INSTALL_PATH/app/assets
 
 WORKDIR $INSTALL_PATH
 

@@ -69,7 +69,7 @@ class VacancyPresenter < BasePresenter
   # rubocop:disable Rails/OutputSafety
   def flexible_working
     if model.flexible_working?
-      mailto = mail_to(model.contact_email, model.school.name)
+      mailto = mail_to(model.contact_email, model.school.name, class: 'govuk-link')
       @flexible_working = safe_join([I18n.t('jobs.flexible_working_info', mailto: mailto).html_safe])
     else
       'No'

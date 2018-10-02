@@ -13,4 +13,4 @@
   - if @vacancy.school.url.present?
     %dt= t('schools.website')
     %dd
-      = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'wordwrap', target: '_blank')
+      = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link wordwrap', target: '_blank')

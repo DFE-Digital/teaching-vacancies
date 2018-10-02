@@ -7,6 +7,7 @@ AllCops:
       - 'db/seeds.rb'
       - 'bin/**/*'
       - 'config/initializers/simple_form.rb'
+      - 'config/initializers/assets.rb'
       - 'spec/rails_helper.rb'
       - 'lib/vacancy_scraper/north_east_schools/*.rb'
 
@@ -60,7 +61,7 @@ Metrics/MethodLength:
     Exclude:
 
 Metrics/AbcSize:
-    Max: 20
+    Max: 25
     Exclude:
       - 'spec/**/*'
       - 'app/jobs/performance_platform_feedback_queue_job.rb'

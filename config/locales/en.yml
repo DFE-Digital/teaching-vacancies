@@ -24,7 +24,7 @@ en:
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
       change: 'Change organisation'
   identification:
-    find_school_information: Find your schools official area
+    find_school_information: Find your school's official area
   jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
@@ -272,7 +272,7 @@ en:
     not_authorised:
       title: You are not yet authorised to use the Teaching Jobs service
       text:
-        - You can register your interest to use the service by emailing <a href='mailto:teachingjobs@digital.education.gov.uk'>teachingjobs@digital.education.gov.uk</a>. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
+        - You can register your interest to use the service by emailing <a href='mailto:teachingjobs@digital.education.gov.uk', class='govuk-link'>teachingjobs@digital.education.gov.uk</a>. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
 
         - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with “help” in the subject line.
   beta_banner:

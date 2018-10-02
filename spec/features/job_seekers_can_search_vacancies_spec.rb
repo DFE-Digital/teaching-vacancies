@@ -14,7 +14,7 @@ RSpec.feature 'Searching vacancies by keyword' do
 
         within '.filters-form' do
           fill_in 'keyword', with: vacancy.job_title
-          page.find('.button[type=submit]').click
+          page.find('.govuk-button[type=submit]').click
         end
 
         expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
@@ -31,7 +31,7 @@ RSpec.feature 'Searching vacancies by keyword' do
 
         within '.filters-form' do
           fill_in 'keyword', with: 'Math'
-          page.find('.button[type=submit]').click
+          page.find('.govuk-button[type=submit]').click
         end
 
         expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
@@ -49,7 +49,7 @@ RSpec.feature 'Searching vacancies by keyword' do
 
       within '.filters-form' do
         fill_in 'keyword', with: 'English'
-        page.find('.button[type=submit]').click
+        page.find('.govuk-button[type=submit]').click
       end
 
       expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
@@ -68,7 +68,7 @@ RSpec.feature 'Searching vacancies by keyword' do
 
       within '.filters-form' do
         fill_in 'keyword', with: 'standing'
-        page.find('.button[type=submit]').click
+        page.find('.govuk-button[type=submit]').click
       end
 
       expect(page).to_not have_content(vacancy.job_title)
@@ -87,7 +87,7 @@ RSpec.feature 'Searching vacancies by keyword' do
 
       within '.filters-form' do
         fill_in 'keyword', with: 'Maht'
-        page.find('.button[type=submit]').click
+        page.find('.govuk-button[type=submit]').click
       end
 
       expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)

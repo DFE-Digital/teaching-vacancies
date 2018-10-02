@@ -4,8 +4,8 @@
       display: inline-block;
     }
     dt {
-      width: 30%;
-      color: $secondary-text-colour;
+      width: 20%;
+      color: $govuk-secondary-text-colour;
       float: left;
     }
     dd {
@@ -14,10 +14,10 @@
   }
 
   &--metadata {
-    padding: $gutter-half;
-    margin-top: $gutter*3;
-    @media screen and (max-width: $small-screen) {
-      margin-top: $gutter;
+    padding: $govuk-gutter-half;
+    margin-top: $govuk-gutter*3;
+    @include govuk-media-query($until: tablet) {
+      margin-top: $govuk-gutter;
     }
   }
 

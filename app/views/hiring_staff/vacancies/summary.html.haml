@@ -2,23 +2,24 @@
 
 =render partial: 'school_vacancy_breadcrumb'
 
-.vacancy.grid-row
-  .column-two-thirds
-    .govuk-box-highlight.margin-bottom-large
-      %h1.heading-large.mt0
+.vacancy.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-panel.govuk-panel--confirmation
+      %h1.govuk-panel__title
         = t('jobs.confirmation_page.submitted')
 
-      - if @vacancy.publish_today?
-        %p= link_to t('jobs.confirmation_page.preview_posted_job'), job_path(@vacancy), class: 'reversed-link'
-      - else
-        %p= link_to t('jobs.confirmation_page.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
+      .govuk-panel__body
+        - if @vacancy.publish_today?
+          %p= link_to t('jobs.confirmation_page.preview_posted_job'), job_path(@vacancy), class: 'reversed-link'
+        - else
+          %p= link_to t('jobs.confirmation_page.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
 
-      %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', school_path, class: 'reversed-link')).html_safe
+        %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', school_path, class: 'reversed-link')).html_safe
 
-  .column-two-thirds
-    %h3.heading-medium= t('jobs.confirmation_page.next_step')
+  .govuk-grid-column-two-thirds
+    %h3.govuk-heading-m= t('jobs.confirmation_page.next_step')
     %p= t('jobs.confirmation_page.date_posted', date: @vacancy.publish_on)
     %p= t('jobs.confirmation_page.date_expires', date: @vacancy.expires_on)
     %p
-      = link_to(t('jobs.confirmation_page.feedback_link'), new_school_job_feedback_path(@vacancy.id))
+      = link_to(t('jobs.confirmation_page.feedback_link'), new_school_job_feedback_path(@vacancy.id), class: 'govuk-link')
       = t('jobs.confirmation_page.feedback_time')
