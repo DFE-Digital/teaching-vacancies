@@ -1,128 +1,141 @@
 - content_for :page_title_prefix do
   #{@vacancy.job_title} - #{@vacancy.school_name}
 
-.vacancy.govuk-grid-row
+.vacancy
   - if @vacancy.expired?
-    .govuk-grid-column-full
-      .banner-warning
-        = t('jobs.expired')
+    .govuk-grid-row
+      .govuk-grid-column-full
+        .banner-warning
+          = t('jobs.expired')
 
-  .govuk-grid-column-full
-    .share-url.display-none
-      %h2.govuk-heading-s.mt0 Share this job
-      #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
-    .share-url-no-js
-      %h2.govuk-heading-s.mt0 Share this job
-      #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
+  .share-url-info
+    .govuk-grid-row
+      .govuk-grid-column-one-half
+        .share-url.mb1.display-none
+          %h2.govuk-heading-m.mt0 Share this job
+          #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
+        .share-url-no-js.mb1
+          %h2.govuk-heading-s.mt0 Share this job
+          #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
+      .govuk-grid-column-one-half
+        .og-preview
+          .og_image= image_tag 'og_image.jpg'
+          .og_text
+            .og_url= I18n.t('app.title')
+            .og_title #{@vacancy.job_title} - #{@vacancy.school_name}
+            .og_description= truncate(strip_tags(@vacancy.job_description), length: 76, separator: ' ')
+        .og-caption
+          Your job listing will appear on Facebook in a format similar to the above.
 
-  .govuk-grid-column-two-thirds
-    %h1.govuk-heading-l
-      = @vacancy.job_title
-      %span.govuk-caption-l
-        = @vacancy.location
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      %h1.govuk-heading-l
+        = @vacancy.job_title
+        %span.govuk-caption-l
+          = @vacancy.location
 
-    %h2.govuk-heading-m= t('jobs.description')
-    %p= @vacancy.job_description
+      %h2.govuk-heading-m= t('jobs.description')
+      %p= @vacancy.job_description
 
-    - if @vacancy.education?
-      %h2.govuk-heading-m= t('jobs.education')
-      %p= @vacancy.education
+      - if @vacancy.education?
+        %h2.govuk-heading-m= t('jobs.education')
+        %p= @vacancy.education
 
-    - if @vacancy.qualifications?
-      %h2.govuk-heading-m= t('jobs.qualifications')
-      %p= @vacancy.qualifications
+      - if @vacancy.qualifications?
+        %h2.govuk-heading-m= t('jobs.qualifications')
+        %p= @vacancy.qualifications
 
-    - if @vacancy.experience?
-      %h2.govuk-heading-m= t('jobs.experience')
-      %p= @vacancy.experience
+      - if @vacancy.experience?
+        %h2.govuk-heading-m= t('jobs.experience')
+        %p= @vacancy.experience
 
-    - if @vacancy.benefits?
-      %h2.govuk-heading-m= t('jobs.benefits')
-      %p= @vacancy.benefits
+      - if @vacancy.benefits?
+        %h2.govuk-heading-m= t('jobs.benefits')
+        %p= @vacancy.benefits
 
-    %hr
-    %h2.govuk-heading-m
-      = t('schools.about')
-      = @vacancy.school.name
+      %hr
+      %h2.govuk-heading-m
+        = t('schools.about')
+        = @vacancy.school.name
 
-    %p= @vacancy.school.description
+      %p= @vacancy.school.description
 
-    %dl.school--details
-      %dt= t('schools.address')
-      %dd= @vacancy.school.full_address
+      %dl.school--details
+        %dt= t('schools.address')
+        %dd= @vacancy.school.full_address
 
-      - if @vacancy.school.phase.present?
-        %dt= t('schools.phase')
-        %dd= @vacancy.school.phase.titleize
+        - if @vacancy.school.phase.present?
+          %dt= t('schools.phase')
+          %dd= @vacancy.school.phase.titleize
 
-      - if @vacancy.school.school_type.present?
-        %dt= t('schools.type')
-        %dd= @vacancy.school.school_type.label
+        - if @vacancy.school.school_type.present?
+          %dt= t('schools.type')
+          %dd= @vacancy.school.school_type.label
 
-      - if @vacancy.school.url.present?
-        %dt= t('schools.website')
-        %dd
-          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link wordwrap', target: '_blank')
+        - if @vacancy.school.url.present?
+          %dt= t('schools.website')
+          %dd
+            = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link wordwrap', target: '_blank')
 
-    - if @vacancy.school.geolocation
-      %div#map_zoom
-      = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
-                                                            lat: @vacancy.school_geolocation.x,
-                                                            lng: @vacancy.school_geolocation.y }
+      - if @vacancy.school.geolocation
+        %div#map_zoom
+        = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
+                                                              lat: @vacancy.school_geolocation.x,
+                                                              lng: @vacancy.school_geolocation.y }
 
-      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+        %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
-  .govuk-grid-column-one-third
-    %aside.vacancy--metadata
-      - if @vacancy.application_link.present?
-        %p.govuk-body-s=t('jobs.aria_labels.apply_link')
-        = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
+    .govuk-grid-column-one-third
+      %aside.vacancy--metadata
+        - if @vacancy.application_link.present?
+          %p.govuk-body-s=t('jobs.aria_labels.apply_link')
+          = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
 
-      %dl
-        - if @vacancy.pay_scale_range.present?
-          %dt= t('jobs.pay_scale_range')
-          %dd= @vacancy.pay_scale_range
+        %dl
+          - if @vacancy.pay_scale_range.present?
+            %dt= t('jobs.pay_scale_range')
+            %dd= @vacancy.pay_scale_range
 
-        %dt= t('jobs.salary')
-        %dd= @vacancy.salary_range
+          %dt= t('jobs.salary')
+          %dd= @vacancy.salary_range
 
-        %dt= t('jobs.working_pattern')
-        %dd= @vacancy.working_pattern
+          %dt= t('jobs.working_pattern')
+          %dd= @vacancy.working_pattern
 
-        - if @vacancy.part_time? && @vacancy.weekly_hours
-          %dt= t('jobs.weekly_hours')
-          %dd= @vacancy.weekly_hours
+          - if @vacancy.part_time? && @vacancy.weekly_hours
+            %dt= t('jobs.weekly_hours')
+            %dd= @vacancy.weekly_hours
 
-        - if @vacancy.newly_qualified_teacher?
-          %dt= t('jobs.newly_qualified_teacher')
-          %dd= @vacancy.newly_qualified_teacher
+          - if @vacancy.newly_qualified_teacher?
+            %dt= t('jobs.newly_qualified_teacher')
+            %dd= @vacancy.newly_qualified_teacher
 
-        - if @vacancy.flexible_working?
-          %dt= t('jobs.flexible_working')
-          %dd= @vacancy.flexible_working
+          - if @vacancy.flexible_working?
+            %dt= t('jobs.flexible_working')
+            %dd= @vacancy.flexible_working
 
-        %dt= t('jobs.expires_on')
-        %dd= format_date(@vacancy.expires_on)
+          %dt= t('jobs.expires_on')
+          %dd= format_date(@vacancy.expires_on)
 
-        - if @vacancy.starts_on.present?
-          %dt= t('jobs.starts_on')
-          %dd= format_date(@vacancy.starts_on)
+          - if @vacancy.starts_on.present?
+            %dt= t('jobs.starts_on')
+            %dd= format_date(@vacancy.starts_on)
 
-        - if @vacancy.ends_on.present?
-          %dt= t('jobs.ends_on')
-          %dd= format_date(@vacancy.ends_on)
+          - if @vacancy.ends_on.present?
+            %dt= t('jobs.ends_on')
+            %dd= format_date(@vacancy.ends_on)
 
-        %dt= t('jobs.publish_on')
-        %dd= format_date(@vacancy.publish_on)
+          %dt= t('jobs.publish_on')
+          %dd= format_date(@vacancy.publish_on)
 
-        - if @vacancy.main_subject.present?
-          %dt= t('jobs.main_subject')
-          %dd= @vacancy.main_subject
+          - if @vacancy.main_subject.present?
+            %dt= t('jobs.main_subject')
+            %dd= @vacancy.main_subject
 
-        - if @vacancy.leadership.present?
-          %dt= t('jobs.leadership_level')
-          %dd= @vacancy.leadership.title
+          - if @vacancy.leadership.present?
+            %dt= t('jobs.leadership_level')
+            %dd= @vacancy.leadership.title
 
-        - if @vacancy.contact_email.present?
-          %dt= t('jobs.contact_email')
-          %dd.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
+          - if @vacancy.contact_email.present?
+            %dt= t('jobs.contact_email')
+            %dd.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
