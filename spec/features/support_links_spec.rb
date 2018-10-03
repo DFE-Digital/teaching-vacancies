@@ -32,4 +32,17 @@ RSpec.feature 'A visitor to the website can access the support links' do
     expect(page).to have_content('Please read these Terms of Use (“General Terms”) carefully before using ' \
                                  'this Teaching Jobs website (the “Service”).')
   end
+
+  context 'the roll out blog link' do
+    scenario 'on the service homepage' do
+      visit root_path
+      expect(page).to have_selector "a[href='#{roll_out_blog_url}']", text: 'rolled out in phases'
+    end
+
+    scenario 'on the hiring staff sign in page' do
+      visit new_identifications_path
+      expect(page).to have_selector "a[href='#{roll_out_blog_url}']",
+                                    text: 'Invitations are being sent out gradually by region.'
+    end
+  end
 end
