@@ -13,6 +13,7 @@ class Vacancy < ApplicationRecord
   include Elasticsearch::Model::Callbacks
 
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
+  document_type 'vacancy'
 
   mappings dynamic: 'false' do
     indexes :job_title, type: :text, analyzer: 'english'
