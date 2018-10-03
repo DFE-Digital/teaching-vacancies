@@ -13,6 +13,7 @@ services:
       - docker-compose.env
     volumes:
       - .:/srv/dfe-tvs:cached
+      - node_modules:/srv/dfe-tvs/node_modules:cached
     depends_on:
       - db-test
       - elasticsearch-test
@@ -42,7 +43,6 @@ services:
     tmpfs: /usr/share/elasticsearch/test/data
     volumes:
       - elasticsearch_test:/usr/share/elasticsearch/data
-      #- ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - tests
     restart: on-failure
@@ -53,3 +53,4 @@ networks:
 volumes:
   pg_test_data: {}
   elasticsearch_test: {}
+  node_modules:
