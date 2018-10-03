@@ -31,7 +31,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   # rubocop:disable Metrics/AbcSize
   def update
-    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy = school.vacancies.find(vacancy_id)
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
     @application_details_form.status = vacancy.status
     @application_details_form.id = vacancy.id

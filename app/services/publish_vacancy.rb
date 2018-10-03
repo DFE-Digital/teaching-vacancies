@@ -4,6 +4,8 @@ class PublishVacancy
   end
 
   def call
+    return false unless @vacancy.valid?
+
     @vacancy.status = :published
     @vacancy.save
   end

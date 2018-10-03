@@ -58,7 +58,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def source_update?
-    params[:source]&.eql?('update')
+    params[:source]&.eql?('update') || params[:source]&.eql?('review')
   end
 
   def update_google_index(job)

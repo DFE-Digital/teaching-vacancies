@@ -10,8 +10,4 @@ class ApplicationDetailsForm < VacancyForm
   def disable_editing_publish_on?
     published? && vacancy.reload.publish_on.past?
   end
-
-  def publish_on_change?
-    original_publish_on.present? ? !publish_on.eql?(original_publish_on) : false
-  end
 end
