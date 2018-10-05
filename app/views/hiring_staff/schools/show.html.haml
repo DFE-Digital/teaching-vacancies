@@ -1,65 +1,89 @@
 - content_for :page_title_prefix, @school.name
 
-.school.govuk-grid-row
-  .govuk-grid-column-full
-    %h1.govuk-heading-l.mb0
-      = t('schools.jobs.index', school: @school.name)
-    - if @multiple_schools
-      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
-      %br
-      %br
+#school
+  .school.govuk-grid-row
+    .govuk-grid-column-full
+      %h1.govuk-heading-l.mb0
+        = t('schools.jobs.index', school: @school.name)
+      - if @multiple_schools
+        = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
+        %br
+        %br
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    - if @school.vacancies.active.any?
-      .overflow-scroll
-        = render partial: 'vacancies', locals: { school: @school, vacancies: @vacancies }
-    - else
-      = render partial: 'no_vacancies', locals: { school: @school }
-    .govuk-form-group.mt1
-      = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button'
+  .govuk-grid-row
+    .govuk-grid-column-full
+      - if @school.vacancies.active.any?
+        .overflow-scroll
+          = render partial: 'vacancies', locals: { school: @school, vacancies: @vacancies }
+      - else
+        = render partial: 'no_vacancies', locals: { school: @school }
+      .govuk-form-group.mt1
+        = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button'
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    %table.check-your-answers.govuk-table
-      %thead.govuk-table__head
-        %tr.govuk-table__row
-          %th.govuk-table__header{:colspan => "2"}
-            %h2.govuk-heading-m
-              = t('schools.info', school: @school.name)
-          %th.govuk-table__header
-      %tbody.govuk-table__body
-        %tr.govuk-table__row
-          %td.govuk-table__cell
-            %strong.strong= t('schools.description')
-          %td.govuk-table__cell
-            = @school.description.presence || 'Not provided'
-          %td.govuk-table__cell.change-answer
-            = link_to edit_school_path, class: 'govuk-link' do
-              = t('buttons.change')
-              %span.govuk-visually-hidden
-                description
-        %tr.govuk-table__row
-          %td.govuk-table__cell
-            %strong.strong= t('schools.address')
-          %td.govuk-table__cell
-            = @school.full_address
-          %td.govuk-table__cell
-        %tr.govuk-table__row
-          %td.govuk-table__cell
-            %strong.strong= t('schools.school_age')
-          %td.govuk-table__cell
-            = @school.age_range
-          %td.govuk-table__cell
-        %tr.govuk-table__row
-          %td.govuk-table__cell
-            %strong.strong= t('schools.type')
-          %td.govuk-table__cell
-            = @school.school_type.label
-          %td.govuk-table__cell
-        %tr.govuk-table__row
-          %td.govuk-table__cell
-            %strong.strong Website
-          %td.govuk-table__cell
-            = link_to("#{@school.name} website (opens in a new window)", @school.url, class: 'govuk-link wordwrap', target: '_blank')
-          %td.govuk-table__cell
+  .govuk-grid-row#statistics
+    .govuk-grid-column-full
+      .banner-warning
+        %h2.govuk-heading-s
+          = t('schools.statistics')
+        .govuk-grid-row.mb0
+          .govuk-grid-column-one-third
+            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@total_pageviews
+            %br
+            %span.govuk-body=t('statistics.total_views')
+          .govuk-grid-column-one-third
+            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@weekly_pageviews
+            %br
+            %span.govuk-body=t('statistics.weekly_views')
+          .govuk-grid-column-one-third
+            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@get_information_count
+            %br
+            %span.govuk-body=t('statistics.apply_button_clicks')
+
+
+  %br
+  %br
+
+  .govuk-grid-row
+    .govuk-grid-column-full
+      %table.check-your-answers.govuk-table
+        %thead.govuk-table__head
+          %tr.govuk-table__row
+            %th.govuk-table__header{:colspan => "2"}
+              %h2.govuk-heading-m
+                = t('schools.info', school: @school.name)
+            %th.govuk-table__header
+        %tbody.govuk-table__body
+          %tr.govuk-table__row
+            %td.govuk-table__cell
+              %strong.strong= t('schools.description')
+            %td.govuk-table__cell
+              = @school.description.presence || 'Not provided'
+            %td.govuk-table__cell.change-answer
+              = link_to edit_school_path, class: 'govuk-link' do
+                = t('buttons.change')
+                %span.govuk-visually-hidden
+                  description
+          %tr.govuk-table__row
+            %td.govuk-table__cell
+              %strong.strong= t('schools.address')
+            %td.govuk-table__cell
+              = @school.full_address
+            %td.govuk-table__cell
+          %tr.govuk-table__row
+            %td.govuk-table__cell
+              %strong.strong= t('schools.school_age')
+            %td.govuk-table__cell
+              = @school.age_range
+            %td.govuk-table__cell
+          %tr.govuk-table__row
+            %td.govuk-table__cell
+              %strong.strong= t('schools.type')
+            %td.govuk-table__cell
+              = @school.school_type.label
+            %td.govuk-table__cell
+          %tr.govuk-table__row
+            %td.govuk-table__cell
+              %strong.strong Website
+            %td.govuk-table__cell
+              = link_to("#{@school.name} website (opens in a new window)", @school.url, class: 'govuk-link wordwrap', target: '_blank')
+            %td.govuk-table__cell

@@ -197,6 +197,7 @@ en:
     search_heading: 'Publish a job'
     search_subheading: 'Which school is the job job for?'
     info: 'About %{school}'
+    statistics: Statistics for all jobs
     jobs:
       index: 'Jobs at %{school}'
     no_jobs:
@@ -221,6 +222,10 @@ en:
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
+  statistics:
+    total_views: Total views
+    weekly_views: Views this week
+    apply_button_clicks: Apply button clicks
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Jobs you must first read our Terms and Conditions and agree to abide by them.'
