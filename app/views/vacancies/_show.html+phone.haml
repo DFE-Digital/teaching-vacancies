@@ -30,56 +30,51 @@
 
     %h2.mt1.govuk-heading-m= t('jobs.key_info')
 
-    %table.check-your-answers.cya-questions-short
-      %tbody
-        %tr
-          %td.cya-question= t('jobs.salary')
-          %td.cya-answer= @vacancy.salary_range
-        %tr
-          %td.cya-question= t('jobs.working_pattern')
-          %td.cya-answer= @vacancy.working_pattern
-        - if @vacancy.part_time? && @vacancy.weekly_hours
-          %tr
-            %td.cya-question= t('jobs.weekly_hours')
-            %td.cya-answer= @vacancy.weekly_hours
-        - if @vacancy.flexible_working?
-          %tr
-            %td.cya-question= t('jobs.flexible_working')
-            %td.cya-answer= @vacancy.flexible_working
-        - if @vacancy.starts_on.present?
-          %tr
-            %td.cya-question= t('jobs.starts_on')
-            %td.cya-answer= format_date(@vacancy.starts_on)
-        - if @vacancy.ends_on.present?
-          %tr
-            %td.cya-question= t('jobs.ends_on')
-            %td.cya-answer= format_date(@vacancy.ends_on)
-        %tr
-          %td.cya-question= t('jobs.publish_on')
-          %td.cya-answer= format_date(@vacancy.publish_on)
-        %tr
-          %td.cya-question= t('jobs.expires_on')
-          %td.cya-answer= format_date(@vacancy.expires_on)
-        - if @vacancy.main_subject.present?
-          %tr
-            %td.cya-question= t('jobs.main_subject')
-            %td.cya-answer= @vacancy.main_subject
-
-        - if @vacancy.pay_scale_range.present?
-          %tr
-            %td.cya-question= t('jobs.pay_scale_range')
-            %td.cya-answer= @vacancy.pay_scale_range
-
-        - if @vacancy.leadership.present?
-          %tr
-            %td.cya-question= t('jobs.leadership_level')
-            %td.cya-answer= @vacancy.leadership.title
-
-        - if @vacancy.contact_email.present?
-          %tr
-            %td.cya-question= t('jobs.contact_email')
-            %td.cya-answer.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
-
+    %dl.app-check-your-answers.app-check-your-answers--short
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question= t('jobs.salary')
+        %dd.app-check-your-answers__answer= @vacancy.salary_range
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question= t('jobs.working_pattern')
+        %dd.app-check-your-answers__answer= @vacancy.working_pattern
+      - if @vacancy.part_time? && @vacancy.weekly_hours
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.weekly_hours')
+          %dd.app-check-your-answers__answer= @vacancy.weekly_hours
+      - if @vacancy.flexible_working?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.flexible_working')
+          %dd.app-check-your-answers__answer= @vacancy.flexible_working
+      - if @vacancy.starts_on.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.starts_on')
+          %dd.app-check-your-answers__answer= format_date(@vacancy.starts_on)
+      - if @vacancy.ends_on.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.ends_on')
+          %dd.app-check-your-answers__answer= format_date(@vacancy.ends_on)
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question= t('jobs.publish_on')
+        %dd.app-check-your-answers__answer= format_date(@vacancy.publish_on)
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question= t('jobs.expires_on')
+        %dd.app-check-your-answers__answer= format_date(@vacancy.expires_on)
+      - if @vacancy.main_subject.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.main_subject')
+          %dd.app-check-your-answers__answer= @vacancy.main_subject
+      - if @vacancy.pay_scale_range.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.pay_scale_range')
+          %dd.app-check-your-answers__answer= @vacancy.pay_scale_range
+      - if @vacancy.leadership.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.leadership_level')
+          %dd.app-check-your-answers__answer= @vacancy.leadership.title
+      - if @vacancy.contact_email.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.contact_email')
+          %dd.app-check-your-answers__answer.wordwrap= mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
 
     %h2.govuk-heading-m= t('jobs.description')
     %p= @vacancy.job_description
