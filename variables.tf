@@ -325,3 +325,4 @@ variable "pp_user_satisfaction_token" {}
 variable "google_api_json_key" {
   type = "map"
 }
+variable "google_analytics_profile_id" {}

@@ -57,6 +57,7 @@ variable "google_geocoding_api_key" {}
 variable "google_api_json_key" {
   type = "map"
 }
+variable "google_analytics_profile_id" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 

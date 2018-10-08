@@ -127,6 +127,7 @@ module "ecs" {
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"
+  google_analytics_profile_id      = "${var.google_analytics_profile_id}"
 }
 
 module "logs" {
