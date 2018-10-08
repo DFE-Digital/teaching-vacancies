@@ -72,6 +72,7 @@ module "ecs" {
   # Rake tasks
   ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
   performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
+  google_api_rake_container_definition_file_path = "${var.google_api_rake_container_definition_file_path}"
 
   import_schools_task_command = "${var.import_schools_task_command}"
   import_schools_task_schedule = "${var.import_schools_task_schedule}"
@@ -91,6 +92,9 @@ module "ecs" {
   performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule   = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
+
+  vacancies_pageviews_refresh_cache_task_command  = "${var.vacancies_pageviews_refresh_cache_task_command}"
+  vacancies_pageviews_refresh_cache_task_schedule = "${var.vacancies_pageviews_refresh_cache_task_schedule}"
 
   # Module inputs
 

@@ -360,6 +360,31 @@ data "template_file" "performance_platform_submit_all_container_definition" {
   }
 }
 
+/* vacancies pageviews refresh cache task definition*/
+data "template_file" "vacancies_pageviews_refresh_cache_container_definition" {
+  template = "${file(var.google_api_rake_container_definition_file_path)}"
+  vars {
+    image                        = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base              = "${var.secret_key_base}"
+    project_name                 = "${var.project_name}"
+    task_name                    = "${var.ecs_service_web_task_name}_import_schools"
+    environment                  = "${var.environment}"
+    rails_env                    = "${var.rails_env}"
+    region                       = "${var.region}"
+    log_group                    = "${var.aws_cloudwatch_log_group_name}"
+    database_user                = "${var.rds_username}"
+    database_password            = "${var.rds_password}"
+    database_url                 = "${var.rds_address}"
+    elastic_search_url           = "${var.es_address}"
+    aws_elasticsearch_region     = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key        = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret     = "${var.aws_elasticsearch_secret}"
+    google_api_json_key          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    google_analytics_profile_id  = "${var.google_analytics_profile_id}"
+    entrypoint                   = "${jsonencode(var.vacancies_pageviews_refresh_cache_task_command)}"
+  }
+}
+
 data "template_file" "logspout_container_definition" {
   template = "${file(var.ecs_service_logspout_container_definition_file_path)}"
 
@@ -668,5 +693,34 @@ resource "aws_cloudwatch_event_target" "import_schools_task_event" {
   ecs_target {
     task_count          = "1"
     task_definition_arn = "${aws_ecs_task_definition.import_schools_task.arn}"
+  }
+}
+
+resource "aws_ecs_task_definition" "vacancies_pageviews_refresh_cache_task" {
+  family                   = "${var.ecs_service_web_task_name}_vacancies_pageviews_refresh_cache_task"
+  container_definitions    = "${data.template_file.vacancies_pageviews_refresh_cache_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "vacancies_pageviews_refresh_cache_task" {
+  name                = "${var.ecs_service_web_task_name}_vacancies_pageviews_refresh_cache_task"
+  description         = "Run vacacncy pageviews cache redresh at a scheuled time"
+  schedule_expression = "${var.vacancies_pageviews_refresh_cache_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "vacancies_pageviews_refresh_cache_task_event" {
+  target_id = "${var.ecs_service_web_task_name}_vacancies_pageviews_refresh_cache_task"
+  rule      = "${aws_cloudwatch_event_rule.vacancies_pageviews_refresh_cache_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = "1"
+    task_definition_arn = "${aws_ecs_task_definition.vacancies_pageviews_refresh_cache_task.arn}"
   }
 }

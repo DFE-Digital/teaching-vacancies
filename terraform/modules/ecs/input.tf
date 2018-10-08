@@ -23,6 +23,7 @@ variable "ecs_service_worker_task_port" {}
 variable "ecs_service_rake_container_definition_file_path" {}
 
 variable "performance_platform_rake_container_definition_file_path" {}
+variable "google_api_rake_container_definition_file_path" {}
 
 variable "aws_cloudwatch_log_group_name" {}
 
@@ -107,3 +108,8 @@ variable "vacancies_scrape_task_schedule" {}
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
+
+variable "vacancies_pageviews_refresh_cache_task_command" {
+  type = "list"
+}
+variable "vacancies_pageviews_refresh_cache_task_schedule" {}
