@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /vacancy/
+Disallow: /school/
+Disallow: /check
+Disallow: /stats
