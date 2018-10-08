@@ -100,4 +100,5 @@
         %p.govuk-body-s=t('jobs.aria_labels.apply_link')
         = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link', 'aria-label': t('jobs.aria_labels.apply_link')
 
-= render partial: 'shared/beta_banner'
+.mt1
+  = render partial: 'shared/beta_banner'
