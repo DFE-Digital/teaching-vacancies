@@ -20,9 +20,9 @@
       .govuk-form-group.mt1
         = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button'
 
-  .govuk-grid-row#statistics
+  .govuk-grid-row
     .govuk-grid-column-full
-      .banner-warning
+      #statistics
         %h2.govuk-heading-s
           = t('schools.statistics')
         .govuk-grid-row.mb0
