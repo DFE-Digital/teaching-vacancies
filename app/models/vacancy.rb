@@ -45,7 +45,7 @@ class Vacancy < ApplicationRecord
 
   extend FriendlyId
 
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time]
