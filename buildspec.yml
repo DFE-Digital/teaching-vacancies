@@ -14,7 +14,7 @@ phases:
       - IMAGE_TAG=commit-$CODEBUILD_RESOLVED_SOURCE_VERSION
       - REPOSITORY_URI=${aws_account_id}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/${image_repo_name}
       - echo Testing the newly built Docker image...
-      - docker run --name es -d -p 9200:9200 elasticsearch
+      - docker run --name es -d -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:6.0.1
       - docker run --name pg -d -p 5432:5432 postgres
       - docker run --name test -d -e RAILS_ENV=test --link pg:pg --link es:es ${image_repo_name}:test /bin/bash -c "tail -f /dev/null"
       - docker exec test bundle install --with test --retry 3 --jobs 20
