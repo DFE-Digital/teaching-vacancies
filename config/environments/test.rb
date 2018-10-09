@@ -53,5 +53,5 @@ OmniAuth.config.on_failure = proc { |env|
 
 Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['ELASTICSEARCH_URL']
 
-domain = URI('localhost:3000')
-Rails.application.routes.default_url_options[:host] = domain.to_s
+DOMAIN = URI('localhost:3000')
+Rails.application.routes.default_url_options[:host] = DOMAIN.to_s

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'vacancies#index'
 
   get 'check' => 'application#check'
+  get 'sitemap' => 'sitemap#show', format: 'xml'
 
   get '/pages/*id' => 'pages#show', as: :page, format: false
 
