@@ -4,16 +4,10 @@
     "image": "${image}:latest",
     "memory": 512,
     "networkMode": "bridge",
-    "command": ${worker_command},
+    "entryPoint": ${entrypoint},
     "logConfiguration": {
       "logDriver": "json-file"
     },
-    "portMappings": [
-      {
-        "containerPort": ${task_port},
-        "hostPort": 0
-      }
-    ],
     "environment": [
       {
         "name": "RAILS_ENV",
@@ -22,10 +16,6 @@
       {
         "name": "ROLLBAR_ENV",
         "value": "${environment}"
-      },
-      {
-        "name": "ROLLBAR_ACCESS_TOKEN",
-        "value": "${rollbar_access_token}"
       },
       {
         "name": "SECRET_KEY_BASE",
@@ -60,16 +50,8 @@
         "value": "${aws_elasticsearch_key}"
       },
       {
-        "name": "REDIS_URL",
-        "value": "${redis_url}"
-      },
-      {
-        "name": "PP_TRANSACTIONS_BY_CHANNEL_TOKEN",
-        "value": "${pp_transactions_by_channel_token}"
-      },
-      {
-        "name": "PP_USER_SATISFACTION_TOKEN",
-        "value": "${pp_user_satisfaction_token}"
+        "name": "AWS_ELASTICSEARCH_SECRET",
+        "value": "${aws_elasticsearch_secret}"
       },
       {
         "name": "GOOGLE_API_JSON_KEY",
