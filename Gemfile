@@ -43,6 +43,8 @@ gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version 
 gem 'gov_uk_date_fields', git: 'https://github.com/despo/gov_uk_date_fields.git',
                           branch: 'trigger-iphone-numeric-keyboard-for-new-gov-uk-ds'
 
+gem 'xml-sitemap'
+
 gem 'rollbar', '~> 2.17'
 
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4

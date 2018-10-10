@@ -1,0 +1,7 @@
+SITEMAP: https://teachings-jobs.service.gov.uk/sitemap.xml
+User-agent: *
+Allow: /
+Disallow: /vacancy/
+Disallow: /school/
+Disallow: /check
+Disallow: /stats
