@@ -33,7 +33,7 @@ Before you can log in to the application locally you will need a __DfE Sign-in__
 
 ### Importing school data
 
-Populate your environment with real school data from the Edubase archive
+Populate your environment with real school data. This is taken from [GIAS](https://get-information-schools.service.gov.uk/)
 
 ```bash
 bin/drake data:schools:import
@@ -43,7 +43,7 @@ _db/seeds.rb contain sample school data so this is not required for development_
 
 ### Indexing the vacancies
 
-Index the test vacancies in Elasticsearch
+Index the vacancies in Elasticsearch, both in the development and test environments
 
 ```bash
 bin/drake elasticsearch:vacancies:index
