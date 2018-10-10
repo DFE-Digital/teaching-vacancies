@@ -1,6 +1,7 @@
 class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::ApplicationController
   def create
     vacancy = Vacancy.find(vacancy_id)
+    return redirect_to school_job_path(vacancy.id), notice: I18n.t('jobs.already_published') if vacancy.published?
 
     if PublishVacancy.new(vacancy: vacancy).call
       Auditor::Audit.new(vacancy, 'vacancy.publish', current_session_id).log

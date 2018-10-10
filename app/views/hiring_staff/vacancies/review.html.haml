@@ -217,4 +217,4 @@
     %h2.govuk-heading-m Now submit your job
     %p= t('jobs.confirmation_summary')
 
-    = link_to t('jobs.submit'), school_job_publish_path(vacancy_id: @vacancy.id), method: :post, class: "govuk-button"
+    = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
