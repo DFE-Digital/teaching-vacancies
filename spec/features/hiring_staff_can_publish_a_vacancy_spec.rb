@@ -393,8 +393,7 @@ RSpec.feature 'Creating a vacancy' do
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
-        expect(current_path).to eq edit_school_job_application_details_path(vacancy.id)
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
+        expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
       end
 
       scenario 'displays the expiration date on the confirmation page' do
