@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 services:
   test: &test
     build:
@@ -31,7 +31,8 @@ services:
     restart: on-failure
 
   elasticsearch-test:
-    image: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
+    hostname: "{{.Node.Hostname}}-elasticsearch-test"
     depends_on:
       - db-test
     ports:
@@ -39,6 +40,8 @@ services:
     environment:
       - discovery.type=single-node
       - cluster.name=docker=docker-test-cluster
+      - node.name={{.Node.Hostname}}-elasticsearch-test
+      - network.host=0.0.0.0
     # place elasticsearch data on tmpfs for performance
     tmpfs: /usr/share/elasticsearch/test/data
     volumes:
