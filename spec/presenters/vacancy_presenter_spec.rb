@@ -17,6 +17,15 @@ RSpec.describe VacancyPresenter do
         expect(vacancy.salary_range).to eq('£20,000')
       end
     end
+
+    context 'when the vacancy is part time' do
+      it 'should state the salary is pro rata' do
+        vacancy = VacancyPresenter.new(
+          create(:vacancy, minimum_salary: 30000, maximum_salary: 40000, working_pattern: :part_time)
+        )
+        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year pro rata')
+      end
+    end
   end
 
   describe '#expired?' do

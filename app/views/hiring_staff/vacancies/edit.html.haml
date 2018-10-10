@@ -65,8 +65,6 @@
           = t('jobs.salary_range')
         %dd.app-check-your-answers__answer
           = @vacancy.salary_range("to")
-          - if @vacancy.part_time?
-            pro rata
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
 

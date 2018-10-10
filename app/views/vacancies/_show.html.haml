@@ -69,8 +69,6 @@
         %dt= t('jobs.salary')
         %dd
           = @vacancy.salary_range
-          - if @vacancy.part_time?
-            pro rata
 
         - if @vacancy.part_time? && @vacancy.weekly_hours
           %dt= t('jobs.weekly_hours')

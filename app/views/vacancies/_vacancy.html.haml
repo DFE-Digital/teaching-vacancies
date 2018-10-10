@@ -5,7 +5,6 @@
     %dt= t('jobs.salary')
     %dd.double
       = vacancy.salary_range
-      = vacancy.working_pattern == 'Full time' ? t('jobs.per_year') : t('jobs.per_year_pro_rata')
     %dt= t('jobs.publish_on')
     %dd= format_date(vacancy.publish_on)
     %dt= t('jobs.expires_on')
