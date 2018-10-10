@@ -418,6 +418,18 @@ RSpec.feature 'Creating a vacancy' do
         expect(activity.key).to eq('vacancy.publish')
       end
 
+      scenario 'a published vacancy cannot be republished' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+
+        visit school_job_review_path(vacancy.id)
+        click_on 'Confirm and submit job'
+        expect(page).to have_content('The job listing has been completed')
+
+        visit school_job_publish_path(vacancy.id)
+
+        expect(page).to have_content('Your job listing has already been published')
+      end
+
       scenario 'a published vacancy cannot be edited' do
         visit new_school_job_path
 
