@@ -28,8 +28,8 @@ RSpec.feature 'When hiring staff specify a part time role' do
 
     visit jobs_path
 
-    expect(page.find('.vacancy:eq(1)')).to have_content('Part time')
-    expect(page.find('.vacancy:eq(1)')).to have_content(I18n.t('jobs.per_year_pro_rata'))
+    expect(page.find('.vacancy')).to have_content('£1 to £200,000 per year pro rata')
+    expect(page.find('.vacancy')).to have_content('Part time')
   end
 
   scenario 'the list page should not indicate a pro rata salary if the role is full time', elasticsearch: true do
@@ -39,9 +39,8 @@ RSpec.feature 'When hiring staff specify a part time role' do
 
     visit jobs_path
 
-    expect(page.find('.vacancy:eq(1)')).to have_content('Full time')
-    expect(page.find('.vacancy:eq(1)')).to have_content(I18n.t('jobs.per_year'))
-    expect(page.find('.vacancy:eq(1)')).not_to have_content(I18n.t('jobs.per_year_pro_rata'))
+    expect(page.find('.vacancy')).to have_content('£1 to £200,000 per year')
+    expect(page.find('.vacancy')).to have_content('Full time')
   end
 
   scenario 'a job page should indicate a pro rata salary if the role is part time' do
@@ -70,7 +69,7 @@ RSpec.feature 'When hiring staff specify a part time role' do
 
       visit job_path(vacancy.id)
 
-      within('.vacancy table.check-your-answers') { expect(page).to have_content('pro rata') }
+      within('.vacancy dl.app-check-your-answers') { expect(page).to have_content('pro rata') }
     end
 
     scenario 'a job page should not indicate a pro rata salary if the role is full time' do
@@ -80,7 +79,7 @@ RSpec.feature 'When hiring staff specify a part time role' do
 
       visit job_path(vacancy.id)
 
-      within('.vacancy table.check-your-answers') { expect(page).not_to have_content('pro rata') }
+      within('.vacancy dl.app-check-your-answers') { expect(page).not_to have_content('pro rata') }
     end
   end
 

@@ -3,12 +3,12 @@ RSpec.describe VacancyPresenter do
   describe '#salary_range' do
     it 'return the formatted minimum to maximum salary' do
       vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000))
-      expect(vacancy.salary_range).to eq('£30,000 to £40,000')
+      expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year')
     end
 
     it 'returns the formatted minumum to maximum salary with the specified delimiter' do
       vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000))
-      expect(vacancy.salary_range('to')).to eq('£30,000 to £40,000')
+      expect(vacancy.salary_range('to')).to eq('£30,000 to £40,000 per year')
     end
 
     context 'when no maximum salary is set' do
