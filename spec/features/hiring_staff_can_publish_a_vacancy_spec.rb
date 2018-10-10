@@ -427,7 +427,7 @@ RSpec.feature 'Creating a vacancy' do
 
         visit school_job_publish_path(vacancy.id)
 
-        expect(page).to have_content('Your job listing has already been published')
+        expect(page).to have_content('This job has already been published')
       end
 
       scenario 'a published vacancy cannot be edited' do
