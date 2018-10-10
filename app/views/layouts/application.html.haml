@@ -56,8 +56,9 @@
 
       %main#main-content.govuk-main-wrapper.app-main-class{role: "main"}
         - flash.each do |name, msg|
-          %div{class: "flash #{name}"}
-            %span= msg
+          - unless name == 'hidden'
+            %div{class: "flash #{name}"}
+              %span= msg
 
         = yield
 

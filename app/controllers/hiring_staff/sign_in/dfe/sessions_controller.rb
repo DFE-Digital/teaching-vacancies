@@ -19,13 +19,18 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
       update_session(permissions.school_urn, permissions)
       redirect_to school_path
     else
-      Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
-      Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
-      redirect_to page_path('user-not-authorised')
+      not_authorised
     end
   end
 
   private
+
+  def not_authorised
+    Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
+    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
+    flash[:hidden] = identifier
+    redirect_to page_path('user-not-authorised')
+  end
 
   def update_session(school_urn, permissions)
     session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)

@@ -6,5 +6,9 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl=t('static_pages.not_authorised.title')
 
-    -t('static_pages.not_authorised.text').each do |p|
-      %p=p.html_safe
+    -if flash[:hidden]&.present?
+      -t('static_pages.not_authorised.with_email.text', email: flash[:hidden]).each do |p|
+        %p=p.html_safe
+    -else
+      -t('static_pages.not_authorised.without_email.text').each do |p|
+        %p=p.html_safe
