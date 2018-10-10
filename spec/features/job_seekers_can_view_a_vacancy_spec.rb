@@ -81,5 +81,20 @@ RSpec.feature 'Viewing a single published vacancy' do
 
       expect(page).to have_content(published_vacancy.job_title)
     end
+
+    context 'when the vacancy\'s url changes' do
+      scenario 'the user is still able to use the old url' do
+        vacancy = VacancyPresenter.new(create(:vacancy, :published))
+        old_path = job_path(vacancy)
+        vacancy.job_title = 'A new job title'
+        vacancy.refresh_slug
+        vacancy.save
+        new_path = job_path(vacancy)
+
+        visit old_path
+
+        expect(page.current_path).to eq(new_path)
+      end
+    end
   end
 end

@@ -107,8 +107,19 @@ RSpec.describe VacanciesController, type: :controller do
       let(:vacancy) { create(:vacancy) }
 
       it 'returns status code :ok' do
-        get :show, params: { id: vacancy.id }
+        get :show, params: { id: vacancy.slug }
 
+        expect(response.status).to eq(Rack::Utils.status_code(:ok))
+      end
+
+      it 'never redirects to latest url' do
+        vacancy = create(:vacancy, :published)
+        old_slug = vacancy.slug
+        vacancy.job_title = 'A new job title'
+        vacancy.refresh_slug
+        vacancy.save
+
+        get :show, params: { id: old_slug }
         expect(response.status).to eq(Rack::Utils.status_code(:ok))
       end
 
