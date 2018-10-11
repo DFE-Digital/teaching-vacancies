@@ -119,6 +119,8 @@ en:
       change_job_description: 'Change job description'
       change_main_subject: 'Change main subject'
       change_other_subjects: 'Change other subjects'
+      change_first_supporting_subject: 'Change first supporting subject'
+      change_second_supporting_subject: 'Change second supporting subject'
       change_pay_scale: 'Change pay scale'
       change_salary_range: 'Change salary range'
       change_working_pattern: 'Change working pattern'

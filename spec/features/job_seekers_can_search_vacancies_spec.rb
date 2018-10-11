@@ -39,20 +39,27 @@ RSpec.feature 'Searching vacancies by keyword' do
     end
 
     scenario '#subject', elasticsearch: true do
-      vacancy = create(:vacancy, job_title: 'Teacher Foo', subject: create(:subject, name: 'English'))
+      arts_vacancy = create(:vacancy, job_title: 'Arts Teacher', subject: create(:subject, name: 'Arts'),
+                                      first_supporting_subject: create(:subject, name: 'English'))
+      maths_vacancy = create(:vacancy, job_title: 'Teacher Bar', subject: create(:subject, name: 'Maths'))
+      english_vacancy = create(:vacancy, job_title: 'Teacher Foo', subject: create(:subject, name: 'English'))
 
       Vacancy.__elasticsearch__.client.indices.flush
 
       visit jobs_path
 
-      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+      expect(page).to have_content(arts_vacancy.job_title)
+      expect(page).to have_content(maths_vacancy.job_title)
+      expect(page).to have_content(english_vacancy.job_title)
 
       within '.filters-form' do
         fill_in 'keyword', with: 'English'
         page.find('.govuk-button[type=submit]').click
       end
 
-      expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
+      expect(page).to have_content(arts_vacancy.job_title)
+      expect(page).to have_content(english_vacancy.job_title)
+      expect(page).not_to have_content(maths_vacancy.job_title)
     end
   end
 

@@ -40,13 +40,13 @@
       = f.input :first_supporting_subject_id,
                 label: t('jobs.first_supporting_subject'),
                 hint: t('jobs.form_hints.subject'),
-                wrapper_html: {id: 'second_supporting_subject'},
+                wrapper_html: {id: 'first_supporting_subject'},
                 collection: subject_options,
                 required: false
       = f.input :second_supporting_subject_id,
                 label: t('jobs.second_supporting_subject'),
                 hint: t('jobs.form_hints.subject'),
-                wrapper_html: {id: 'third_supporting_subject'},
+                wrapper_html: {id: 'second_supporting_subject'},
                 collection: subject_options,
                 required: false
       = f.input :working_pattern,

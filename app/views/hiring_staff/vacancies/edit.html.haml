@@ -42,7 +42,7 @@
         %dd.app-check-your-answers__answer
           = @vacancy.main_subject
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'subject'), 'aria-label': t('jobs.aria_labels.change_main_subject'), class: 'govuk-link'
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'main_subject'), 'aria-label': t('jobs.aria_labels.change_main_subject'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
@@ -50,7 +50,7 @@
         %dd.app-check-your-answers__answer
           = @vacancy.first_supporting_subject
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'subject'), 'aria-label': t('jobs.aria_labels.change_first_supporting_subject'), class: 'govuk-link'
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'first_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_first_supporting_subject'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
@@ -58,7 +58,7 @@
         %dd.app-check-your-answers__answer
           = @vacancy.second_supporting_subject
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'second_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question

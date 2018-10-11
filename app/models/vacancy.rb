@@ -31,6 +31,14 @@ class Vacancy < ApplicationRecord
       indexes :name, type: :text
     end
 
+    indexes :first_supporting_subject do
+      indexes :name, type: :text
+    end
+
+    indexes :second_supporting_subject do
+      indexes :name, type: :text
+    end
+
     indexes :expires_on, type: :date
     indexes :starts_on, type: :date
     indexes :updated_at, type: :date
@@ -108,7 +116,9 @@ class Vacancy < ApplicationRecord
       methods: %i[coordinates],
       include: {
         school: { only: %i[phase name postcode address town] },
-        subject: { only: %i[name] }
+        subject: { only: %i[name] },
+        first_supporting_subject: { only: %i[name] },
+        second_supporting_subject: { only: %i[name] }
       }
     )
   end
