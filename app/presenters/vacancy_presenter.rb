@@ -12,7 +12,7 @@ class VacancyPresenter < BasePresenter
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
     "#{number_to_currency(model.minimum_salary)} #{del} "\
     "#{number_to_currency(model.maximum_salary)}"\
-    " per year #{model.part_time? ? ' pro rata' : ''}"
+    "#{model.part_time? ? ' per year pro rata' : ' per year'}"
   end
 
   def job_description
