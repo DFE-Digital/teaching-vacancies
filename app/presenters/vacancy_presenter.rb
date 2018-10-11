@@ -85,6 +85,11 @@ class VacancyPresenter < BasePresenter
     model.working_pattern.upcase
   end
 
+  def review_page_title
+    page_title = I18n.t('jobs.review_page_title', school: model.school.name)
+    "#{model.errors.present? ? 'Error: ' : ''}#{page_title}"
+  end
+
   private
 
   def pay_scale_range_label

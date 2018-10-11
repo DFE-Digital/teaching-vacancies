@@ -50,7 +50,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def review_path_with_errors(vacancy)
-    school_job_review_path(school_id: school.id, job_id: vacancy.id, anchor: 'errors', source: 'publish')
+    school_job_review_path(job_id: vacancy.id, anchor: 'errors', source: 'publish')
   end
 
   def redirect_unless_vacancy_session_id

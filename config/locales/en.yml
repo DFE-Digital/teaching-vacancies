@@ -66,6 +66,7 @@ en:
     salary_range: 'Salary range'
     per_year: 'per year'
     publish_heading: 'Publish a job for %{school}'
+    review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review the job for %{school}'
     edit_heading: 'Edit job for %{school}'
     job_specification: 'Job specification'
