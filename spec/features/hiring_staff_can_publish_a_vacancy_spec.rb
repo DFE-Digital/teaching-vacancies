@@ -363,15 +363,24 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#publish' do
-      scenario 'can not be published unless the details are valid' do
+      scenario 'cannot be published unless the details are valid' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
         vacancy.assign_attributes qualifications: nil
+        vacancy.assign_attributes education: nil
+        vacancy.assign_attributes contact_email: nil
+        vacancy.assign_attributes expires_on: Time.zone.yesterday
         vacancy.save(validate: false)
 
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
         expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.blank'))
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.education.blank'))
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
+        expect(page).to have_content(
+          I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date')
+        )
       end
 
       scenario 'can be published at a later date' do
@@ -394,6 +403,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Confirm and submit job'
 
         expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
       end
 
       scenario 'displays the expiration date on the confirmation page' do

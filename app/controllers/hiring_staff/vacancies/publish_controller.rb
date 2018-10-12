@@ -9,7 +9,7 @@ class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::Applic
       reset_session_vacancy!
       redirect_to school_job_summary_path(vacancy.id)
     else
-      redirect_to review_path(vacancy), notice: I18n.t('errors.jobs.unable_to_publish')
+      redirect_to review_path_with_errors(vacancy), notice: I18n.t('errors.jobs.unable_to_publish')
     end
   end
 
