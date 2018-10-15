@@ -7,8 +7,8 @@
     %h1.govuk-heading-xl=t('static_pages.not_authorised.title')
 
     -if flash[:hidden]&.present?
-      -t('static_pages.not_authorised.with_email.text', email: flash[:hidden]).each do |p|
+      -t('static_pages.not_authorised.with_email.text', email: @identifier, signin_url: "<a href='https://profile.signin.education.gov.uk/' class='govuk-link'>https://profile.signin.education.gov.uk/</a>", blog_url: "<a href='https://dfedigital.blog.gov.uk/2018/09/21/how-were-rolling-out-our-search-and-listing-service-to-more-schools-to-support-their-teacher-recruitment-needs/' class='govuk-link'>blog on the service's phased roll-out</a>", mailto_url: "<a href='mailto:teachingjobs@digital.education.gov.uk', class='govuk-link'>teachingjobs@digital.education.gov.uk</a>").each do |p|
         %p=p.html_safe
     -else
-      -t('static_pages.not_authorised.without_email.text').each do |p|
+      -t('static_pages.not_authorised.without_email.text', mailto_url: "<a href='mailto:teachingjobs@digital.education.gov.uk', class='govuk-link'>teachingjobs@digital.education.gov.uk</a>").each do |p|
         %p=p.html_safe
