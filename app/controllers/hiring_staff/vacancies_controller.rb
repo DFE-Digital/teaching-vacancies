@@ -31,6 +31,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     store_vacancy_attributes(vacancy.attributes.compact)
 
     @vacancy = VacancyPresenter.new(vacancy)
+
+    @vacancy.valid? if params[:source]&.eql?('publish')
   end
 
   def destroy

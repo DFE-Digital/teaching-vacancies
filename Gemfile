@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.0'
+ruby '2.4.1'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -42,6 +42,8 @@ gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version 
 
 gem 'gov_uk_date_fields', git: 'https://github.com/despo/gov_uk_date_fields.git',
                           branch: 'trigger-iphone-numeric-keyboard-for-new-gov-uk-ds'
+
+gem 'xml-sitemap'
 
 gem 'rollbar', '~> 2.17'
 

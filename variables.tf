@@ -136,6 +136,11 @@ variable "performance_platform_rake_container_definition_file_path" {
   default     = "./performance_platform_rake_container_definition.json"
 }
 
+variable "google_api_rake_container_definition_file_path" {
+  description = "Container definition for rake tasks using Google API"
+  default     = "./google_api_rake_container_definition.json"
+}
+
 variable "ecs_service_logspout_container_definition_file_path" {
   description = "Logspout container definition"
   default     = "./logspout_container_definition.json"
@@ -204,6 +209,16 @@ variable "performance_platform_submit_task_schedule" {
 variable "performance_platform_submit_all_task_command" {
   description = "The Entrypoint for the performance_platform_submit_all task"
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
+}
+
+variable "vacancies_pageviews_refresh_cache_task_command" {
+  description = "The Entrypoint for the vacancies_pageviews_refresh_cache task"
+  default     = ["rake", "verbose", "vacancies:pageviews:refresh_cache"]
+}
+
+variable "vacancies_pageviews_refresh_cache_task_schedule" {
+  description = "vacancies_pageviews_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 08 * * ? *)"
 }
 
 # RDS
@@ -325,3 +340,4 @@ variable "pp_user_satisfaction_token" {}
 variable "google_api_json_key" {
   type = "map"
 }
+variable "google_analytics_profile_id" {}

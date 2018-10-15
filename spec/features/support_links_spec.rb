@@ -16,9 +16,11 @@ RSpec.feature 'A visitor to the website can access the support links' do
 
     expect(page).to have_content('Privacy Notice: Teaching Jobs')
     expect(page).to have_content('This work is being carried out by Department for Education (DfE) Digital, ' \
-                                 'which is a part of DfE. For the purpose of data protection legislation, ' \
+                                 'which is a part of DfE. DfE engages the private company dxw to help improve ' \
+                                 'and provide the service. For the purpose of data protection legislation, ' \
                                  'the DfE is the data controller for the personal data processed as part of ' \
-                                 'Teaching Jobs.')
+                                 'Teaching Jobs. Teaching Jobs is a free and optional service for schools ' \
+                                 'to advertise teaching roles.')
   end
 
   scenario 'the terms and conditions' do
@@ -29,5 +31,18 @@ RSpec.feature 'A visitor to the website can access the support links' do
 
     expect(page).to have_content('Please read these Terms of Use (“General Terms”) carefully before using ' \
                                  'this Teaching Jobs website (the “Service”).')
+  end
+
+  context 'the roll out blog link' do
+    scenario 'on the service homepage' do
+      visit root_path
+      expect(page).to have_selector "a[href='#{roll_out_blog_url}']", text: 'rolled out in phases'
+    end
+
+    scenario 'on the hiring staff sign in page' do
+      visit new_identifications_path
+      expect(page).to have_selector "a[href='#{roll_out_blog_url}']",
+                                    text: 'Invitations are being sent out gradually by region.'
+    end
   end
 end

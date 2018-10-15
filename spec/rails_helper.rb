@@ -27,6 +27,10 @@ RSpec.configure do |config|
     stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '1')
   end
 
+  config.before(:each, :sitemap) do
+    default_url_options[:host] = DOMAIN.to_s
+  end
+
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
   config.include DateHelper

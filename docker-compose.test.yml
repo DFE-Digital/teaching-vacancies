@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 services:
   test: &test
     build:
@@ -13,6 +13,7 @@ services:
       - docker-compose.env
     volumes:
       - .:/srv/dfe-tvs:cached
+      - node_modules:/srv/dfe-tvs/node_modules:cached
     depends_on:
       - db-test
       - elasticsearch-test
@@ -30,7 +31,8 @@ services:
     restart: on-failure
 
   elasticsearch-test:
-    image: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
+    hostname: "{{.Node.Hostname}}-elasticsearch-test"
     depends_on:
       - db-test
     ports:
@@ -38,11 +40,12 @@ services:
     environment:
       - discovery.type=single-node
       - cluster.name=docker=docker-test-cluster
+      - node.name={{.Node.Hostname}}-elasticsearch-test
+      - network.host=0.0.0.0
     # place elasticsearch data on tmpfs for performance
     tmpfs: /usr/share/elasticsearch/test/data
     volumes:
       - elasticsearch_test:/usr/share/elasticsearch/data
-      #- ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - tests
     restart: on-failure
@@ -53,3 +56,4 @@ networks:
 volumes:
   pg_test_data: {}
   elasticsearch_test: {}
+  node_modules:

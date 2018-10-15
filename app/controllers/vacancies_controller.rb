@@ -21,6 +21,7 @@ class VacanciesController < ApplicationController
 
   def show
     vacancy = Vacancy.listed.friendly.find(id)
+    return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -37,6 +38,10 @@ class VacanciesController < ApplicationController
     params.permit(:keyword, :location, :radius,
                   :minimum_salary, :maximum_salary, :phase,
                   :phase, :working_pattern, :newly_qualified_teacher).to_hash
+  end
+
+  def old_vacancy_path?(vacancy)
+    request.path != job_path(vacancy) && !request.format.json?
   end
 
   def id

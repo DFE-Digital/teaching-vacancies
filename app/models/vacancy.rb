@@ -10,9 +10,9 @@ class Vacancy < ApplicationRecord
   include VacancyApplicationDetailValidations
 
   include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
 
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
+  document_type 'vacancy'
 
   mappings dynamic: 'false' do
     indexes :job_title, type: :text, analyzer: 'english'
@@ -45,7 +45,7 @@ class Vacancy < ApplicationRecord
 
   extend FriendlyId
 
-  friendly_id :slug_candidates, use: :slugged
+  friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time]
@@ -71,6 +71,10 @@ class Vacancy < ApplicationRecord
   paginates_per 10
 
   validates :slug, presence: true
+
+  after_commit on: %i[create update] do
+    __elasticsearch__.index_document
+  end
 
   def location
     @location ||= SchoolPresenter.new(school).location

@@ -11,14 +11,16 @@ en:
   app:
     title: 'Teaching Jobs'
     menu: 'Menu'
+    description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
   nav:
     sign_in: 'List a teaching job at your school'
     sign_out: 'Sign out'
-    school_page_link: 'My jobs'
+    school_page_link: 'Manage jobs'
+    jobseekers_index_link: 'View public jobs'
   sign_in:
     title: 'Sign in to Teaching Jobs'
     link: 'Sign in'
-    guidance: 'Once you have received an email invitation from Teaching Jobs you can sign in to this service. Invitations are being sent out gradually by region.'
+    guidance: 'Once you have received an email invitation from Teaching Jobs you can sign in to this service. %{link}'
     organisation:
       title: 'Select your organisation'
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
@@ -64,6 +66,7 @@ en:
     salary_range: 'Salary range'
     per_year: 'per year'
     publish_heading: 'Publish a job for %{school}'
+    review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review the job for %{school}'
     edit_heading: 'Edit job for %{school}'
     job_specification: 'Job specification'
@@ -276,4 +279,4 @@ en:
 
         - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with “help” in the subject line.
   beta_banner:
-    line_1: 'This service is in development and lists jobs in select areas of England. It will be rolled out in phases to new areas, so check back regularly for new listings.'
+    line_1: 'This service is in development and lists jobs in select areas of England. It will be %{link} to new areas, so check back regularly for new listings.'

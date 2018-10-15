@@ -1,0 +1,38 @@
+.og-preview {
+  max-width: 524px;
+  background-color: #f2f3f5;
+  border: 1px solid #dadde1;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  .og_image img {
+    max-width: 100%;
+    line-height: 0;
+  }
+  .og_text {
+    padding: 10px 12px;
+    border-top: 1px solid #dadde1;
+    .og_url {
+      font-size: 12px;
+      line-height: 11px;
+      color: #606770;
+      text-transform: uppercase;
+    }
+    .og_title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 5px;
+      color: #1d2129;
+    }
+    .og_description {
+      margin-top: 3px;
+      color: #606770;
+      font-size: 14px;
+      line-height: 20px;
+      // font-family: 'Helvetica Neue', Helvetica, Arial, sans-seri!important;
+    }
+  }
+}
+
+.og-caption {
+  margin-top: 10px;
+  @include govuk-font(14);
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_113736) do
+ActiveRecord::Schema.define(version: 2018_10_10_093949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 2018_09_13_113736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id", unique: true
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.uuid "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -165,6 +177,10 @@ ActiveRecord::Schema.define(version: 2018_09_13_113736) do
     t.boolean "flexible_working"
     t.uuid "max_pay_scale_id"
     t.boolean "newly_qualified_teacher", default: false, null: false
+    t.integer "weekly_pageviews"
+    t.integer "total_pageviews"
+    t.datetime "weekly_pageviews_updated_at"
+    t.datetime "total_pageviews_updated_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"

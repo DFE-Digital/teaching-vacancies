@@ -134,7 +134,7 @@ module VacancyHelpers
         'name': vacancy.school.name,
         'identifier': vacancy.school.urn,
       },
-      'validThrough': vacancy.expires_on.to_time.iso8601,
+      'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
       'workHours': vacancy.weekly_hours,
     }
   end

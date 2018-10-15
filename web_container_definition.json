@@ -137,6 +137,10 @@
       {
         "name": "GOOGLE_API_JSON_KEY",
         "value": "${google_api_json_key}"
+      },
+      {
+        "name": "GOOGLE_ANALYTICS_PROFILE_ID",
+        "value": "${google_analytics_profile_id}"
       }
     ]
   }
