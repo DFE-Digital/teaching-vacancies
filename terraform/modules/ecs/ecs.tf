@@ -382,6 +382,7 @@ data "template_file" "vacancies_pageviews_refresh_cache_container_definition" {
     google_api_json_key          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id  = "${var.google_analytics_profile_id}"
     entrypoint                   = "${jsonencode(var.vacancies_pageviews_refresh_cache_task_command)}"
+    redis_url                    = "${var.redis_url}"
   }
 }
 

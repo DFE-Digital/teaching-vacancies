@@ -60,6 +60,10 @@
       {
         "name": "GOOGLE_ANALYTICS_PROFILE_ID",
         "value": "${google_analytics_profile_id}"
+      },
+      {
+        "name": "REDIS_URL",
+        "value": "${redis_url}"
       }
     ]
   }
