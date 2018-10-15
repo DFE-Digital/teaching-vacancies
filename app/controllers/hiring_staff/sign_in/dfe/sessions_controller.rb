@@ -28,8 +28,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   def not_authorised
     Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
     Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
-    flash[:hidden] = identifier
-    redirect_to page_path('user-not-authorised')
+    @identifier = identifier
+    render 'user-not-authorised'
   end
 
   def update_session(school_urn, permissions)
