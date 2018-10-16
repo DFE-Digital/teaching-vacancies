@@ -43,46 +43,6 @@ RSpec.feature 'When hiring staff specify a part time role' do
     expect(page.find('.vacancy')).to have_content('Full time')
   end
 
-  scenario 'a job page should indicate a pro rata salary if the role is part time' do
-    school = create(:school)
-    vacancy = create(:vacancy, :published, school: school, working_pattern: :part_time)
-
-    visit job_path(vacancy.id)
-
-    within('.vacancy--metadata') { expect(page).to have_content('pro rata') }
-  end
-
-  scenario 'a job page should not indicate a pro rata salary if the role is full time' do
-    school = create(:school)
-    vacancy = create(:vacancy, :published, school: school, working_pattern: :full_time)
-
-    visit job_path(vacancy.id)
-
-    within('.vacancy--metadata') { expect(page).not_to have_content('pro rata') }
-  end
-
-  context 'and the user is on mobile' do
-    scenario 'a job page should indicate a pro rata salary if the role is part time' do
-      page.driver.header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
-      school = create(:school)
-      vacancy = create(:vacancy, :published, school: school, working_pattern: :part_time)
-
-      visit job_path(vacancy.id)
-
-      within('.vacancy dl.app-check-your-answers') { expect(page).to have_content('pro rata') }
-    end
-
-    scenario 'a job page should not indicate a pro rata salary if the role is full time' do
-      page.driver.header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
-      school = create(:school)
-      vacancy = create(:vacancy, :published, school: school, working_pattern: :full_time)
-
-      visit job_path(vacancy.id)
-
-      within('.vacancy dl.app-check-your-answers') { expect(page).not_to have_content('pro rata') }
-    end
-  end
-
   scenario 'a job edit page should indicate a pro rata salary if the role is part time' do
     school = create(:school)
     stub_hiring_staff_auth(urn: school.urn)

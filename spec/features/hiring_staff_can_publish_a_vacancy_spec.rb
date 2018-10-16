@@ -363,6 +363,45 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#publish' do
+      scenario 'view the published listing as a job seeker' do
+        vacancy = create(:vacancy, :draft, school_id: school.id)
+
+        visit school_job_review_path(vacancy.id)
+
+        click_on 'Confirm and submit job'
+        save_page
+
+        click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+        verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+      end
+
+      scenario 'view the full-time published listing as a job seeker' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :full_time)
+
+        visit school_job_review_path(vacancy.id)
+
+        click_on 'Confirm and submit job'
+        save_page
+
+        click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+        verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+      end
+
+      scenario 'view the part-time published listing as a job seeker' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :part_time)
+
+        visit school_job_review_path(vacancy.id)
+
+        click_on 'Confirm and submit job'
+        save_page
+
+        click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+        verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+      end
+
       scenario 'cannot be published unless the details are valid' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
         vacancy.assign_attributes qualifications: nil
