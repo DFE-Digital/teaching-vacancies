@@ -75,6 +75,8 @@ FactoryBot.define do
     end
 
     trait :expired do
+      status { :published }
+      sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.backward(14) }
       expires_on { Faker::Time.backward(7) }
     end
