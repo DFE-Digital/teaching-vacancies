@@ -41,6 +41,10 @@
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.weekly_hours')
           %dd.app-check-your-answers__answer= @vacancy.weekly_hours
+      - if @vacancy.newly_qualified_teacher?
+        .app-check-your-answers__contents
+          %dt= t('jobs.newly_qualified_teacher')
+          %dd= @vacancy.newly_qualified_teacher
       - if @vacancy.flexible_working?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.flexible_working')
