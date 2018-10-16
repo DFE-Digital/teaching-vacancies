@@ -1,8 +1,8 @@
 namespace :vacancies do
-  desc 'Refreshes the cached pageviews for listed job vacancies'
+  desc 'Refreshes the cached pageviews for listed non expired job vacancies'
   namespace :pageviews do
     task refresh_cache: :environment do
-      Vacancy.listed.pluck(:id).each do |vacancy_id|
+      Vacancy.listed.applicable.pluck(:id).each do |vacancy_id|
         CacheTotalAnalyticsPageviewsQueueJob.perform_later(vacancy_id)
         CacheWeeklyAnalyticsPageviewsQueueJob.perform_later(vacancy_id)
       end
