@@ -24,7 +24,7 @@ RSpec.describe VacancySearchBuilder do
           query: 'german',
           fields: %w[job_title^5 subject.name^3],
           operator: 'and',
-          fuzziness: 1
+          fuzziness: 'AUTO'
         },
       }
 
