@@ -19,13 +19,14 @@ RSpec.shared_examples 'a successful sign in' do
 end
 
 RSpec.shared_examples 'a failed sign in' do |options|
-  scenario 'it does not sign-in the user' do
+  scenario 'it does not sign-in the user, and tells the user what to do' do
     visit root_path
 
     click_on(I18n.t('nav.sign_in'))
     click_on(I18n.t('sign_in.link'))
 
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
+    expect(page).to have_content(options['email'])
     within('.app-navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
@@ -177,7 +178,10 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in', dsi_id: 'an-unknown-oid', school_urn: '110627'
+    it_behaves_like 'a failed sign in',
+                    dsi_id: 'an-unknown-oid',
+                    school_urn: '110627',
+                    email: 'another_email@example.com'
   end
 
   context 'with valid credentials and no organisation in DfE Sign In but existing permissions' do
@@ -212,6 +216,9 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
-    it_behaves_like 'a failed sign in', dsi_id: 'an-unknown-oid', school_urn: nil
+    it_behaves_like 'a failed sign in',
+                    dsi_id: 'an-unknown-oid',
+                    school_urn: nil,
+                    email: 'an-email@example.com'
   end
 end
