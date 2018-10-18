@@ -27,15 +27,15 @@
           = t('schools.statistics')
         .govuk-grid-row.mb0
           .govuk-grid-column-one-third
-            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@total_pageviews
+            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@total_pageviews || 0
             %br
             %span.govuk-body=t('statistics.total_views')
           .govuk-grid-column-one-third
-            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@weekly_pageviews
+            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@weekly_pageviews || 0
             %br
             %span.govuk-body=t('statistics.weekly_views')
           .govuk-grid-column-one-third
-            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@get_information_count
+            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@get_information_count || 0
             %br
             %span.govuk-body=t('statistics.apply_button_clicks')
 
