@@ -78,6 +78,10 @@
       {
         "name": "GOOGLE_ANALYTICS_PROFILE_ID",
         "value": "${google_analytics_profile_id}"
+      },
+      {
+        "name": "AWS_ELASTICSEARCH_SECRET",
+        "value": "${aws_elasticsearch_secret}"
       }
     ]
   }
