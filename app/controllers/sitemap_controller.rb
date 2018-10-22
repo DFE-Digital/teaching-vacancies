@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   def show
-    map = XmlSitemap::Map.new(DOMAIN) do |m|
+    map = XmlSitemap::Map.new(DOMAIN, secure: true) do |m|
       Vacancy.listed.applicable.find_each do |vacancy|
         m.add job_path(vacancy, protocol: 'https'), updated: vacancy.updated_at,
                                                     expires: vacancy.expires_on,
