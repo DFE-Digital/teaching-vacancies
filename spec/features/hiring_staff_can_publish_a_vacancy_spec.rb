@@ -360,6 +360,25 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('a@valid.email')
         end
 
+        scenario 'fails validation correctly when an invalid link is entered' do
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          visit school_job_review_path(vacancy.id)
+          click_link_in_container_with_text('Link for more information')
+
+          expect(page).to have_content('Step 3 of 3')
+
+          fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Application link is not a valid URL')
+
+          fill_in 'application_details_form[application_link]', with: 'www.valid-domain.com'
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content('www.valid-domain.com')
+        end
+
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
