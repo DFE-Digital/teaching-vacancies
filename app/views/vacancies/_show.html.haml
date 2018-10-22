@@ -50,7 +50,7 @@
                                                             lat: @vacancy.school_geolocation.x,
                                                             lng: @vacancy.school_geolocation.y }
 
-      %script{src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap", 'data-turbolinks-eval': 'false'}
 
   .govuk-grid-column-one-third
     %aside.vacancy--metadata
