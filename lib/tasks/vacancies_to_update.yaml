@@ -1224,9 +1224,6 @@ Telephone: 0191 2598500</p>
       benefits: "<p>The school is working with Churchill Community College, a local outstanding teaching school, to accelerate progress. This partnership provides excellent CPD opportunities.</p>
       <p>The school recognises that its staff are its greatest asset and this is highlighted through our innovative CPD programme and recognition for our work in Investors in People.</p>"
     -
-      slug: 'teacher-with-phase-leader-responsibility-for-pupils-with-special-educational-needs-mainly-to-teach-in-ks3-ks4'
-      ends_on: '22/10/2018'
-    -
       slug: 'home-school-support-worker'
       job_title: 'Home School Support Worker'
       job_description: "<p>37 hours per week</p>
@@ -1265,3 +1262,4 @@ Telephone: 0191 2598500</p>
       <li>the support of experienced, enthusiastic and dedicated staff;</li>
       <li>the opportunity for on-going personal and professional development;</li>
       <li>a strong and effective governing body, which is both supportive and challenging and wholly committed to working in partnership</li></ul>"
+      ends_on: '22/10/2018'
