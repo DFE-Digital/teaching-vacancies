@@ -215,7 +215,7 @@ When adding new environment variables you need to define the variables in the ta
   ```
   variable "<identifier>_container_definition_file_path" {
     description = "Container definition for <identifier> rake tasks"
-    default     = "./<identifier>_rake_container_definition.json"
+    default     = "./terraform/container-definitons/<identifier>_rake_container_definition.json"
   }
   ```
 
