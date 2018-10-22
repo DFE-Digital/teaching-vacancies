@@ -39,7 +39,7 @@ services:
       - "9201:9200"
     environment:
       - discovery.type=single-node
-      - cluster.name=docker=docker-test-cluster
+      - cluster.name=docker-test-cluster
       - node.name={{.Node.Hostname}}-elasticsearch-test
       - network.host=0.0.0.0
     # place elasticsearch data on tmpfs for performance

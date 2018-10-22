@@ -38,7 +38,7 @@ services:
       - "9200:9200"
     environment:
       - discovery.type=single-node
-      - cluster.name=docker=docker-cluster
+      - cluster.name=docker-dev-cluster
       - node.name={{.Node.Hostname}}-elasticsearch
       - network.host=0.0.0.0
     volumes:
