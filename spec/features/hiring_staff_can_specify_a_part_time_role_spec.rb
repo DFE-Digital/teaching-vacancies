@@ -21,28 +21,6 @@ RSpec.feature 'When hiring staff specify a part time role' do
     expect(page).to have_content(I18n.t('jobs.form_hints.pro_rata_warning'))
   end
 
-  scenario 'the list page should indicate a pro rata salary', elasticsearch: true do
-    create(:vacancy, working_pattern: :part_time)
-
-    Vacancy.__elasticsearch__.client.indices.flush
-
-    visit jobs_path
-
-    expect(page.find('.vacancy')).to have_content('£1 to £200,000 per year pro rata')
-    expect(page.find('.vacancy')).to have_content('Part time')
-  end
-
-  scenario 'the list page should not indicate a pro rata salary if the role is full time', elasticsearch: true do
-    create(:vacancy, working_pattern: :full_time)
-
-    Vacancy.__elasticsearch__.client.indices.flush
-
-    visit jobs_path
-
-    expect(page.find('.vacancy')).to have_content('£1 to £200,000 per year')
-    expect(page.find('.vacancy')).to have_content('Full time')
-  end
-
   scenario 'a job edit page should indicate a pro rata salary if the role is part time' do
     school = create(:school)
     stub_hiring_staff_auth(urn: school.urn)

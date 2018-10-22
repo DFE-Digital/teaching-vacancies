@@ -87,6 +87,15 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.publish_on)
   end
 
+  def verify_vacancy_list_page_details(vacancy)
+    expect(page.find('.vacancy')).to have_content(vacancy.job_title)
+    expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
+    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
+    expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
+    expect(page.find('.vacancy')).to have_content(vacancy.starts_on)
+    expect(page.find('.vacancy')).to have_content(vacancy.working_pattern)
+  end
+
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
   end
