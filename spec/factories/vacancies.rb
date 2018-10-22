@@ -83,7 +83,6 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.backward(14) }
       expires_on { Faker::Time.backward(7) }
-      slug { Faker::Internet.slug }
     end
 
     trait :future_publish do

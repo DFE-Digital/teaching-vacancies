@@ -29,7 +29,7 @@ RSpec.feature 'Viewing a single published vacancy' do
 
   scenario 'Expired vacancies display a warning message' do
     current_vacancy = create(:vacancy)
-    expired_vacancy = build(:vacancy, :expired, slug: 'vacancy-slug')
+    expired_vacancy = build(:vacancy, :expired)
     expired_vacancy.save(validate: false)
 
     visit job_path(current_vacancy)
