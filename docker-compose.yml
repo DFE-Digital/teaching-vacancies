@@ -42,7 +42,7 @@ services:
       - node.name={{.Node.Hostname}}-elasticsearch
       - network.host=0.0.0.0
     volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
+      - elasticsearch:/usr/share/elasticsearch/teaching_jobs_dev/data
     restart: on-failure
 
   redis:

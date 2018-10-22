@@ -45,7 +45,7 @@ services:
     # place elasticsearch data on tmpfs for performance
     tmpfs: /usr/share/elasticsearch/test/data
     volumes:
-      - elasticsearch_test:/usr/share/elasticsearch/data
+      - elasticsearch_test:/usr/share/elasticsearch/teaching_jobs_test/data
     networks:
       - tests
     restart: on-failure
