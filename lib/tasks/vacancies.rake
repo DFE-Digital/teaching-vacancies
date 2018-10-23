@@ -32,6 +32,7 @@ namespace :vacancies do
         vacancy.qualifications  = data['qualifications'] if data.key?('qualifications')
         vacancy.starts_on       = Date.parse(data['starts_on']) if data.key?('starts_on')
         vacancy.ends_on         = Date.parse(data['ends_on']) if data.key?('ends_on')
+        vacancy.expires_on      = Date.parse(data['expires_on']) if data.key?('expires_on')
         vacancy.min_pay_scale = PayScale.find_by(label: data['min_pay_scale']) if data.key?('min_pay_scale')
         vacancy.max_pay_scale = PayScale.find_by(label: data['max_pay_scale']) if data.key?('max_pay_scale')
         vacancy.working_pattern = extract_working_pattern(data) if data.key?('working_pattern')
