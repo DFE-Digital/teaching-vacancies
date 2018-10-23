@@ -70,7 +70,7 @@
         %dd
           = @vacancy.salary_range
 
-        - if @vacancy.part_time? && @vacancy.weekly_hours
+        - if @vacancy.part_time? && @vacancy.weekly_hours.present?
           %dt= t('jobs.weekly_hours')
           %dd= @vacancy.weekly_hours
 
