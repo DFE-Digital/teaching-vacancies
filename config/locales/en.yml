@@ -48,6 +48,9 @@ en:
     weekly_hours: 'Weekly hours'
     ref_no: 'Reference number'
     main_subject: 'Main subject'
+    first_supporting_subject: 'Supporting subject 1'
+    second_supporting_subject: 'Supporting subject 2'
+    other_subjects: 'Other subjects'
     pay_scale: 'Pay scale'
     pay_scale_range: 'Pay scale range'
     leadership_level: 'Leadership level'
@@ -115,6 +118,9 @@ en:
       change_job_title: 'Change job title'
       change_job_description: 'Change job description'
       change_main_subject: 'Change main subject'
+      change_other_subjects: 'Change other subjects'
+      change_first_supporting_subject: 'Change first supporting subject'
+      change_second_supporting_subject: 'Change second supporting subject'
       change_pay_scale: 'Change pay scale'
       change_salary_range: 'Change salary range'
       change_working_pattern: 'Change working pattern'
@@ -142,7 +148,7 @@ en:
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
-      main_subject: 'What subject will the teacher focus on?'
+      subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
       flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'

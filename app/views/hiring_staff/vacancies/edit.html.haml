@@ -42,15 +42,23 @@
         %dd.app-check-your-answers__answer
           = @vacancy.main_subject
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'subject'), 'aria-label': t('jobs.aria_labels.change_main_subject'), class: 'govuk-link'
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'main_subject'), 'aria-label': t('jobs.aria_labels.change_main_subject'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
-          = t('jobs.working_pattern')
+          = t('jobs.first_supporting_subject')
         %dd.app-check-your-answers__answer
-          = @vacancy.working_pattern.humanize
+          = @vacancy.first_supporting_subject
         %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern'), class: 'govuk-link'
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'first_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_first_supporting_subject'), class: 'govuk-link'
+
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question
+          = t('jobs.second_supporting_subject')
+        %dd.app-check-your-answers__answer
+          = @vacancy.second_supporting_subject
+        %dd.app-check-your-answers__change
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'second_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
@@ -67,6 +75,15 @@
           = @vacancy.salary_range("to")
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
+
+
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question
+        = t('jobs.working_pattern')
+        %dd.app-check-your-answers__answer
+          = @vacancy.working_pattern.humanize
+        %dd.app-check-your-answers__change
+          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question

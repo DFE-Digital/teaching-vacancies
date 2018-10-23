@@ -30,7 +30,9 @@ RSpec.feature 'Creating a vacancy' do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  min_pay_scale: pay_scales.sample,
                                  max_pay_scale: pay_scales.sample,
-                                 subject: subjects.sample,
+                                 subject: subjects[0],
+                                 first_supporting_subject: subjects[1],
+                                 second_supporting_subject: subjects[2],
                                  leadership: leaderships.sample))
     end
 

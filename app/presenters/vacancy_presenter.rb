@@ -51,6 +51,35 @@ class VacancyPresenter < BasePresenter
     @main_subject ||= model.subject ? model.subject.name : ''
   end
 
+  def first_supporting_subject
+    @first_supporting_subject ||= model.first_supporting_subject ? model.first_supporting_subject.name : ''
+  end
+
+  def second_supporting_subject
+    @second_supporting_subject ||= model.second_supporting_subject ? model.second_supporting_subject.name : ''
+  end
+
+  def other_subjects
+    @other_subjects ||= begin
+        return '' if first_supporting_subject.blank? && second_supporting_subject.blank?
+        return first_supporting_subject if only_first_supporting_subject_present?
+        return second_supporting_subject if only_second_supporting_subject_present?
+        supporting_subjects
+      end
+  end
+
+  def only_first_supporting_subject_present?
+    first_supporting_subject.present? && second_supporting_subject.blank?
+  end
+
+  def only_second_supporting_subject_present?
+    second_supporting_subject.present? && first_supporting_subject.blank?
+  end
+
+  def supporting_subjects
+    "#{first_supporting_subject}, #{second_supporting_subject}"
+  end
+
   def pay_scale_range
     @pay_scale_range ||= begin
                            return '' if model.min_pay_scale.blank? && model.max_pay_scale.blank?

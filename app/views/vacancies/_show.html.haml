@@ -100,6 +100,10 @@
           %dt= t('jobs.main_subject')
           %dd= @vacancy.main_subject
 
+        - if @vacancy.other_subjects.present?
+          %dt= t('jobs.other_subjects')
+          %dd= @vacancy.other_subjects
+
         - if @vacancy.leadership.present?
           %dt= t('jobs.leadership_level')
           %dd= @vacancy.leadership.title
