@@ -27,7 +27,15 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   end
 
   context 'editing a published vacancy' do
-    scenario 'takes your to the edit page' do
+    scenario 'All vacancy information is shown' do
+      vacancy = create(:vacancy, :published, school: school)
+
+      visit edit_school_job_path(vacancy.id)
+
+      verify_all_vacancy_details(VacancyPresenter.new(vacancy))
+    end
+
+    scenario 'takes you to the edit page' do
       vacancy = create(:vacancy, :published, school: school)
       visit edit_school_job_path(vacancy.id)
 

@@ -59,15 +59,16 @@
         = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
 
       %dl
+        %dt= t('jobs.working_pattern')
+        %dd= @vacancy.working_pattern
+
         - if @vacancy.pay_scale_range.present?
           %dt= t('jobs.pay_scale_range')
           %dd= @vacancy.pay_scale_range
 
         %dt= t('jobs.salary')
-        %dd= @vacancy.salary_range
-
-        %dt= t('jobs.working_pattern')
-        %dd= @vacancy.working_pattern
+        %dd
+          = @vacancy.salary_range
 
         - if @vacancy.part_time? && @vacancy.weekly_hours
           %dt= t('jobs.weekly_hours')

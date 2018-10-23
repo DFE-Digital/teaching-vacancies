@@ -1,5 +1,14 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
+  scenario 'Vacancies are listed with summary information' do
+    vacancy = create(:vacancy)
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+
+    verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
+  end
+
   scenario 'View a banner with information about the service' do
     visit jobs_path
     expect(page).to have_content('This service is in development and lists jobs in select areas of England.')

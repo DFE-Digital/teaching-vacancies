@@ -48,6 +48,14 @@
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question#pay_scale
+          = t('jobs.working_pattern')
+        %dd.app-check-your-answers__answer
+          = @vacancy.working_pattern.humanize
+        %dd.app-check-your-answers__change
+          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern'), class: 'govuk-link'
+
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question
           = t('jobs.pay_scale')
         %dd.app-check-your-answers__answer
           =@vacancy.pay_scale_range
@@ -61,14 +69,6 @@
           = @vacancy.salary_range("to")
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#working_pattern
-          = t('jobs.working_pattern')
-        %dd.app-check-your-answers__answer
-          = @vacancy.working_pattern.humanize
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question#newly_qualified_teacher

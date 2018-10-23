@@ -188,6 +188,40 @@ RSpec.feature 'Creating a vacancy' do
         verify_all_vacancy_details(vacancy)
       end
 
+      context 'when the listing is full-time' do
+        scenario 'lists all the full-time vacancy details correctly' do
+          vacancy = VacancyPresenter.new(
+            create(:vacancy,
+                   :complete,
+                   :draft,
+                   school_id: school.id,
+                   working_pattern: :full_time)
+          )
+          visit school_job_review_path(vacancy.id)
+
+          expect(page).to have_content("Review the job for #{school.name}")
+
+          verify_all_vacancy_details(vacancy)
+        end
+      end
+
+      context 'when the listing is part-time' do
+        scenario 'lists all the part-time vacancy details correctly' do
+          vacancy = VacancyPresenter.new(
+            create(:vacancy,
+                   :complete,
+                   :draft,
+                   school_id: school.id,
+                   working_pattern: :part_time)
+          )
+          visit school_job_review_path(vacancy.id)
+
+          expect(page).to have_content("Review the job for #{school.name}")
+
+          verify_all_vacancy_details(vacancy)
+        end
+      end
+
       scenario 'lists jobs without an application_link or a contact_email correctly' do
         vacancy_factory = build(:vacancy, :complete, :draft, school_id: school.id,
                                                              slug: 'test-slug',
@@ -363,6 +397,49 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#publish' do
+      scenario 'view the published listing as a job seeker' do
+        vacancy = create(:vacancy, :draft, school_id: school.id)
+
+        visit school_job_review_path(vacancy.id)
+
+        click_on 'Confirm and submit job'
+        save_page
+
+        click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+        verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+      end
+
+      context 'when the listing is full-time' do
+        scenario 'view the full-time published listing as a job seeker' do
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :full_time)
+
+          visit school_job_review_path(vacancy.id)
+
+          click_on 'Confirm and submit job'
+          save_page
+
+          click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+        end
+      end
+
+      context 'when the listing is part-time' do
+        scenario 'view the part-time published listing as a job seeker' do
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :part_time)
+
+          visit school_job_review_path(vacancy.id)
+
+          click_on 'Confirm and submit job'
+          save_page
+
+          click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+        end
+      end
+
       scenario 'cannot be published unless the details are valid' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
         vacancy.assign_attributes qualifications: nil
