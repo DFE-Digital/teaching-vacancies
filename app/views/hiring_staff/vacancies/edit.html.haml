@@ -76,10 +76,9 @@
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
 
-
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
-        = t('jobs.working_pattern')
+          = t('jobs.working_pattern')
         %dd.app-check-your-answers__answer
           = @vacancy.working_pattern.humanize
         %dd.app-check-your-answers__change
