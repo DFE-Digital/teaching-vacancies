@@ -13,5 +13,6 @@ echo "Rebuilding the web server…"
 docker-compose down -v --remove-orphans
 docker-compose build
 docker-compose run --rm web rake db:seed
+bin/drake elasticsearch:vacancies:index
 echo "Rebuilt and starting the web server for TVS."
 bin/dstart
