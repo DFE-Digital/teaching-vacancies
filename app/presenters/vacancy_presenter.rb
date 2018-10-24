@@ -10,7 +10,9 @@ class VacancyPresenter < BasePresenter
 
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
-    "#{number_to_currency(model.minimum_salary)} #{del} #{number_to_currency(model.maximum_salary)}"
+    "#{number_to_currency(model.minimum_salary)} #{del} "\
+    "#{number_to_currency(model.maximum_salary)}"\
+    "#{model.part_time? ? ' per year pro rata' : ' per year'}"
   end
 
   def job_description
@@ -47,6 +49,35 @@ class VacancyPresenter < BasePresenter
 
   def main_subject
     @main_subject ||= model.subject ? model.subject.name : ''
+  end
+
+  def first_supporting_subject
+    @first_supporting_subject ||= model.first_supporting_subject ? model.first_supporting_subject.name : ''
+  end
+
+  def second_supporting_subject
+    @second_supporting_subject ||= model.second_supporting_subject ? model.second_supporting_subject.name : ''
+  end
+
+  def other_subjects
+    @other_subjects ||= begin
+        return '' if first_supporting_subject.blank? && second_supporting_subject.blank?
+        return first_supporting_subject if only_first_supporting_subject_present?
+        return second_supporting_subject if only_second_supporting_subject_present?
+        supporting_subjects
+      end
+  end
+
+  def only_first_supporting_subject_present?
+    first_supporting_subject.present? && second_supporting_subject.blank?
+  end
+
+  def only_second_supporting_subject_present?
+    second_supporting_subject.present? && first_supporting_subject.blank?
+  end
+
+  def supporting_subjects
+    "#{first_supporting_subject}, #{second_supporting_subject}"
   end
 
   def pay_scale_range

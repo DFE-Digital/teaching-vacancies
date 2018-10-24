@@ -26,7 +26,7 @@
                                                             lat: @vacancy.school_geolocation.x,
                                                             lng: @vacancy.school_geolocation.y }
 
-      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap" }
 
     %h2.mt1.govuk-heading-m= t('jobs.key_info')
 
@@ -37,10 +37,14 @@
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question= t('jobs.working_pattern')
         %dd.app-check-your-answers__answer= @vacancy.working_pattern
-      - if @vacancy.part_time? && @vacancy.weekly_hours
+      - if @vacancy.part_time? && @vacancy.weekly_hours.present?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.weekly_hours')
           %dd.app-check-your-answers__answer= @vacancy.weekly_hours
+      - if @vacancy.newly_qualified_teacher?
+        .app-check-your-answers__contents
+          %dt= t('jobs.newly_qualified_teacher')
+          %dd= @vacancy.newly_qualified_teacher
       - if @vacancy.flexible_working?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.flexible_working')
@@ -63,6 +67,12 @@
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.main_subject')
           %dd.app-check-your-answers__answer= @vacancy.main_subject
+
+      - if @vacancy.other_subjects.present?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.other_subjects')
+          %dd.app-check-your-answers__answer= @vacancy.other_subjects
+
       - if @vacancy.pay_scale_range.present?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.pay_scale_range')

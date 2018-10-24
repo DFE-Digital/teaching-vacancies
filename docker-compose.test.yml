@@ -39,13 +39,13 @@ services:
       - "9201:9200"
     environment:
       - discovery.type=single-node
-      - cluster.name=docker=docker-test-cluster
+      - cluster.name=docker-test-cluster
       - node.name={{.Node.Hostname}}-elasticsearch-test
       - network.host=0.0.0.0
     # place elasticsearch data on tmpfs for performance
     tmpfs: /usr/share/elasticsearch/test/data
     volumes:
-      - elasticsearch_test:/usr/share/elasticsearch/data
+      - elasticsearch_test:/usr/share/elasticsearch/teaching_jobs_test/data
     networks:
       - tests
     restart: on-failure

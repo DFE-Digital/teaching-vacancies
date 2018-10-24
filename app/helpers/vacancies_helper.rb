@@ -53,4 +53,8 @@ module VacanciesHelper
   def nqt_suitable_checked?(newly_qualified_teacher)
     newly_qualified_teacher == 'true'
   end
+
+  def subject_options
+    @subject_options ||= Subject.all
+  end
 end

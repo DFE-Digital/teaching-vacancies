@@ -48,6 +48,9 @@ en:
     weekly_hours: 'Weekly hours'
     ref_no: 'Reference number'
     main_subject: 'Main subject'
+    first_supporting_subject: 'Supporting subject 1'
+    second_supporting_subject: 'Supporting subject 2'
+    other_subjects: 'Other subjects'
     pay_scale: 'Pay scale'
     pay_scale_range: 'Pay scale range'
     leadership_level: 'Leadership level'
@@ -65,6 +68,7 @@ en:
     benefits: 'Employee benefits'
     salary_range: 'Salary range'
     per_year: 'per year'
+    per_year_pro_rata: 'per year pro rata'
     publish_heading: 'Publish a job for %{school}'
     review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review the job for %{school}'
@@ -114,6 +118,9 @@ en:
       change_job_title: 'Change job title'
       change_job_description: 'Change job description'
       change_main_subject: 'Change main subject'
+      change_other_subjects: 'Change other subjects'
+      change_first_supporting_subject: 'Change first supporting subject'
+      change_second_supporting_subject: 'Change second supporting subject'
       change_pay_scale: 'Change pay scale'
       change_salary_range: 'Change salary range'
       change_working_pattern: 'Change working pattern'
@@ -141,7 +148,7 @@ en:
     form_hints:
       job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
-      main_subject: 'What subject will the teacher focus on?'
+      subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
       flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
@@ -157,6 +164,7 @@ en:
       benefits: 'For example, financial benefits, job training, continuing professional development and whether Special Educational Needs (SEN) allowances or Teaching and Learning Responsibility (TLR) payments are available.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'This is the url linking the job to your existing application page'
+      pro_rata_warning: 'Part time roles must state a pro rata salary'
     filters:
       title: 'Search job listings'
       location: 'Location'
@@ -274,9 +282,19 @@ en:
   static_pages:
     not_authorised:
       title: You are not yet authorised to use the Teaching Jobs service
-      text:
-        - You can register your interest to use the service by emailing <a href='mailto:teachingjobs@digital.education.gov.uk', class='govuk-link'>teachingjobs@digital.education.gov.uk</a>. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
+      without_email:
+        text:
+          - You can register your interest to use the service by emailing %{mailto_url}. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
 
-        - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with “help” in the subject line.
+          - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with "help" in the subject line.
+      with_email:
+        text:
+          - You've tried to sign in with %{email}, which is not associated with a Teaching Jobs account. If you have an account associated with another email, please first sign %{email} out of DfE Sign-in. Then sign into Teaching Jobs at %{signin_url} using your authorised email.
+
+          - If you don't have a Teaching Jobs account you will need to wait for an invitation for one. Invitations are being sent out gradually, by region. When you have accepted the invitation and created your account you will be able to start listing roles at your school.
+
+          - Read the Teaching Jobs %{blog_url} to learn when schools in your area will be invited.
+
+          - If your Teaching Jobs account has already been set up but you are unable to sign in, email %{mailto_url} with "help" in the subject line.
   beta_banner:
     line_1: 'This service is in development and lists jobs in select areas of England. It will be %{link} to new areas, so check back regularly for new listings.'

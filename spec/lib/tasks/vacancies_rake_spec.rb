@@ -16,6 +16,8 @@ RSpec.describe 'rake vacancies:data:update', type: :task do
     create(:vacancy, slug: 'teacher-of-maths-maternity-cover', job_title: 'Another french teacher',
                      updated_at: Time.zone.now + 2.minutes)
     create(:vacancy, slug: 'teaching-assistants', working_pattern: 'part_time')
+    expired_slug = 'teacher-of-science-the-english-martyrs-school-and-sixth-form-college-hartlepool'
+    create(:vacancy, slug: expired_slug, expires_on: Time.zone.now + 1.year)
 
     task.invoke
 
@@ -26,6 +28,7 @@ RSpec.describe 'rake vacancies:data:update', type: :task do
     pay_scale_vacancy = Vacancy.find_by(slug: 'teacher-of-french')
     edited_vacancy = Vacancy.find_by(slug: 'teacher-of-maths-maternity-cover')
     dont_reset_working_pattern = Vacancy.find_by(slug: 'teaching-assistants')
+    expired_update = Vacancy.find_by(slug:  expired_slug)
 
     expect(vacancy.experience).to eq(sanitize(data[index]['experience']))
     expect(vacancy.job_title).to eq(data[index]['job_title'])
@@ -38,6 +41,7 @@ RSpec.describe 'rake vacancies:data:update', type: :task do
     expect(pay_scale_vacancy.max_pay_scale).to eq(ups)
     expect(edited_vacancy.job_title).to eq('Another french teacher')
     expect(dont_reset_working_pattern.working_pattern).to eq('part_time')
+    expect(expired_update.expires_on).to eq(Date.parse('12/10/2018'))
   end
 end
 

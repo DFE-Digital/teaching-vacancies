@@ -122,33 +122,33 @@ variable "ecs_service_worker_task_port" {
 # ECS Tasks
 variable "ecs_service_web_container_definition_file_path" {
   description = "Container definition for the web task"
-  default     = "./web_container_definition.json"
+  default     = "./terraform/container-definitions/web_container_definition.json"
 }
 
 # Rake task container definitions
 variable "ecs_service_rake_container_definition_file_path" {
   description = "Container definition for rake tasks"
-  default     = "./rake_container_definition.json"
+  default     = "./terraform/container-definitions/rake_container_definition.json"
 }
 
 variable "performance_platform_rake_container_definition_file_path" {
   description = "Container definition for rake tasks"
-  default     = "./performance_platform_rake_container_definition.json"
+  default     = "./terraform/container-definitions/performance_platform_rake_container_definition.json"
 }
 
 variable "google_api_rake_container_definition_file_path" {
   description = "Container definition for rake tasks using Google API"
-  default     = "./google_api_rake_container_definition.json"
+  default     = "./terraform/container-definitions/google_api_rake_container_definition.json"
 }
 
 variable "ecs_service_logspout_container_definition_file_path" {
   description = "Logspout container definition"
-  default     = "./logspout_container_definition.json"
+  default     = "./terraform/container-definitions/logspout_container_definition.json"
 }
 
 variable "ecs_service_worker_container_definition_file_path" {
   description = "Worker container definition"
-  default     = "./worker_container_definition.json"
+  default     = "./terraform/container-definitions/worker_container_definition.json"
 }
 
 variable "import_schools_task_command" {

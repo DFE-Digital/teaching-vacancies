@@ -3,18 +3,25 @@ require 'rails_helper'
 RSpec.feature 'Filtering vacancies' do
   scenario 'Filterable by keyword', elasticsearch: true do
     headmaster = create(:vacancy, :published, job_title: 'Headmaster')
-    languages_teacher = create(:vacancy, :published, job_title: 'Languages Teacher')
+    languages_teacher = create(:vacancy, :published, job_title: 'English Language')
+    english_teacher = create(:vacancy, job_title: 'Foo Tutor', subject: create(:subject, name: 'English'))
+    arts_teacher = create(:vacancy, job_title: 'Arts Tutor', subject: create(:subject, name: 'Arts'),
+                                    first_supporting_subject: create(:subject, name: 'English'))
+    maths_teacher = create(:vacancy, job_title: 'Maths Subject Leader', subject: create(:subject, name: 'Maths'))
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'keyword', with: 'Headmaster'
+      fill_in 'keyword', with: 'English'
       page.find('.govuk-button[type=submit]').click
     end
 
-    expect(page).to have_content(headmaster.job_title)
-    expect(page).not_to have_content(languages_teacher.job_title)
+    expect(page).not_to have_content(headmaster.job_title)
+    expect(page).not_to have_content(maths_teacher.job_title)
+    expect(page).to have_content(languages_teacher.job_title)
+    expect(page).to have_content(arts_teacher.job_title)
+    expect(page).to have_content(english_teacher.job_title)
   end
 
   scenario 'Filterable by location', elasticsearch: true do

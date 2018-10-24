@@ -83,7 +83,7 @@
                                                               lat: @vacancy.school_geolocation.x,
                                                               lng: @vacancy.school_geolocation.y }
 
-        %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+        %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap" }
 
     .govuk-grid-column-one-third
       %aside.vacancy--metadata
@@ -131,6 +131,10 @@
           - if @vacancy.main_subject.present?
             %dt= t('jobs.main_subject')
             %dd= @vacancy.main_subject
+
+          - if @vacancy.other_subjects.present?
+            %dt= t('jobs.other_subjects')
+            %dd= @vacancy.other_subjects
 
           - if @vacancy.leadership.present?
             %dt= t('jobs.leadership_level')
