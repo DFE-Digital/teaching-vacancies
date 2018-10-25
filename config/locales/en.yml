@@ -147,7 +147,7 @@ en:
       flexible_working: 'Flexible working (optional)'
       newly_qualified_teacher: 'Newly qualified teacher (optional)'
     form_hints:
-      job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
+      job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
