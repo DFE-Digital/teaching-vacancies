@@ -1,0 +1,5 @@
+:queues:
+  - [ page_view_collector, 2 ]
+  - [ performance_platform, 2 ]
+  - [ google_indexing, 2]
+  - [ import_school_data, 1 ]

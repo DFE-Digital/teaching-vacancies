@@ -10,8 +10,8 @@ RSpec.describe RemoveGoogleIndexQueueJob, type: :job do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
   end
 
-  it 'is in the default queue' do
-    expect(job.queue_name).to eq('default')
+  it 'is in the google_indexing queue' do
+    expect(job.queue_name).to eq('google_indexing')
   end
 
   it 'executes perform' do

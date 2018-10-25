@@ -54,7 +54,7 @@ services:
     build: .
     env_file:
       - docker-compose.env
-    command: bundle exec sidekiq
+    command: bundle exec sidekiq -C config/sidekiq.yml
     depends_on:
       - redis
     restart: on-failure
