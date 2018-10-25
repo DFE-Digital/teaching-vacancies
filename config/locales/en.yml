@@ -158,7 +158,7 @@ en:
       start_date: 'For example, %{date}'
       end_date: 'For example, %{date}'
       education: 'Educational background needed for the position'
-      qualifications: 'Specific qualifications required for this role'
+      qualifications: 'List any qualifications needed for this role (<span arial-label="Qualified Teacher Status">QTS</span>, for example)'
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'

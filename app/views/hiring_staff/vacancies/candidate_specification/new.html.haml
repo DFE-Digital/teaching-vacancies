@@ -23,7 +23,7 @@
                 wrapper: 'textarea',
                 label: t('jobs.qualifications'),
                 as: :text,
-                hint: t('jobs.form_hints.qualifications'),
+                hint: t('jobs.form_hints.qualifications').html_safe,
                 input_html: {rows: 5},
                 wrapper_html: {id: 'qualifications'},
                 required: true
