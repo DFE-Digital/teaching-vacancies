@@ -304,7 +304,6 @@ RSpec.describe Vacancy, type: :model do
     describe '#applicable' do
       it 'finds current vacancies' do
         expired = build(:vacancy, :expired)
-        expired.send :set_slug
         expired.save(validate: false)
         expires_today = create(:vacancy, expires_on: Time.zone.today)
         expires_future = create(:vacancy, expires_on: 3.months.from_now)

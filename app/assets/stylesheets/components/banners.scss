@@ -13,3 +13,9 @@
     border-color: $warning-color;
   }
 }
+
+#statistics {
+  @extend %banner;
+  color: $warning-color;
+  border-color: $warning-color;
+}
