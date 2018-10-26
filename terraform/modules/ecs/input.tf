@@ -76,19 +76,11 @@ variable "import_schools_task_command" {
   type = "list"
 }
 
-variable "vacancies_scrape_task_command" {
-  type = "list"
-}
-
 variable "sessions_trim_task_command" {
   type = "list"
 }
 
 variable "update_pay_scale_task_command" {
-  type = "list"
-}
-
-variable "update_vacancies_task_command" {
   type = "list"
 }
 
@@ -104,7 +96,6 @@ variable "performance_platform_submit_all_task_command" {
   type = "list"
 }
 
-variable "vacancies_scrape_task_schedule" {}
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
