@@ -29,7 +29,7 @@
                 wrapper: 'textarea',
                 as: :text,
                 label: t('jobs.benefits'),
-                hint: t('jobs.form_hints.benefits'),
+                hint: t('jobs.form_hints.benefits').html_safe,
                 input_html: {rows: 5},
                 wrapper_html: {id: 'benefits'},
                 required: false
