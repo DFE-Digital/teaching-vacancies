@@ -157,7 +157,7 @@ en:
       weekly_hours: 'Number of hours to be worked each week'
       start_date: 'For example, %{date}'
       end_date: 'For example, %{date}'
-      education: 'Educational background needed for the position'
+      education: 'State any formal education needed for the role (undergraduate degree, for example)'
       qualifications: 'List any qualifications needed for this role (<span arial-label="Qualified Teacher Status">QTS</span>, for example)'
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
