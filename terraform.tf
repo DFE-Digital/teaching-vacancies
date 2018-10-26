@@ -80,8 +80,6 @@ module "ecs" {
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
-  update_pay_scale_task_command = "${var.update_pay_scale_task_command}"
-
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
   performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"

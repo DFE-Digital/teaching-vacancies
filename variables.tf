@@ -171,11 +171,6 @@ variable "sessions_trim_task_schedule" {
   default     = "rate(1 day)"
 }
 
-variable "update_pay_scale_task_command" {
-  description = "The Entrypoint for the update_pay_scale task"
-  default     = ["rake", "verbose", "data:update:pay_scale"]
-}
-
 variable "reindex_vacancies_task_command" {
   description = "The Entrypoint for the reindex_vacancies task"
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
