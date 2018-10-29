@@ -1,6 +1,6 @@
 # Teaching Jobs JSON API
 
-[teachingjobs.education.gov.uk](teachingjobs.education.gov.uk)
+[teaching-jobs.service.gov.uk](https://teaching-jobs.service.gov.uk)
 
 Disclaimer: The Teaching Jobs JSON API is **read-only**.
 
