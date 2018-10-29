@@ -10,8 +10,8 @@ RSpec.describe CacheTotalAnalyticsPageviewsQueueJob, type: :job, wip: true do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
   end
 
-  it 'is in the default queue' do
-    expect(job.queue_name).to eq('default')
+  it 'is in the page_view_collector queue' do
+    expect(job.queue_name).to eq('page_view_collector')
   end
 
   it 'executes perform' do

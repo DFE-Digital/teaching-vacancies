@@ -91,5 +91,9 @@ FactoryBot.define do
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
     end
+
+    trait :expire_tomorrow do
+      expires_on { Time.zone.tomorrow.end_of_day }
+    end
   end
 end

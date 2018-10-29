@@ -1,6 +1,6 @@
 require 'performance_platform'
 class PerformancePlatformFeedbackQueueJob < ApplicationJob
-  queue_as :default
+  queue_as :performance_platform
 
   def perform(time_to_s)
     date = Time.zone.parse(time_to_s)
