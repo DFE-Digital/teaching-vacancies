@@ -19,11 +19,10 @@ RSpec.describe PerformancePlatformTransactionsQueueJob, type: :job do
 
     pp = double(:performance_platform)
 
-    published_yesterday = build_list(:vacancy, 3, :published_slugged, publish_on: date - 1.day)
-    published_yesterday.each { |v| v.save(validate: false) }
+    published = create_list(:vacancy, 3, :published, publish_on: date)
 
     expect(PerformancePlatform::TransactionsByChannel).to receive(:new).with('not-nil').and_return(pp)
-    expect(pp).to receive(:submit_transactions).with(3, date.utc.iso8601)
+    expect(pp).to receive(:submit_transactions).with(published.count, date.utc.iso8601)
     perform_enqueued_jobs { job }
   end
 end
