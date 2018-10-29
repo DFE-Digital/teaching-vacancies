@@ -14,4 +14,8 @@ class ApplicationDetailsForm < VacancyForm
   def publish_on_change?
     original_publish_on.present? ? !publish_on.eql?(original_publish_on) : false
   end
+
+  def completed?
+    application_link && contact_email && publish_on && expires_on
+  end
 end

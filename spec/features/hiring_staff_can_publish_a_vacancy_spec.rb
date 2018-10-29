@@ -173,6 +173,35 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#review' do
+      context 'redirects the user back to the last incomplete step' do
+        scenario 'redirects to step 2, candidate profile, when that step has not been completed' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          visit school_path
+          click_on vacancy.job_title
+
+          expect(page).to have_content('Step 2 of 3')
+        end
+
+        scenario 'redirects to step 3, application details, when that step has not been completed' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_candidate_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          visit school_path
+          click_on vacancy.job_title
+
+          expect(page).to have_content('Step 3 of 3')
+        end
+      end
+
       scenario 'is not available for published vacancies' do
         vacancy = create(:vacancy, :published, school_id: school.id)
 
@@ -222,22 +251,6 @@ RSpec.feature 'Creating a vacancy' do
 
           verify_all_vacancy_details(vacancy)
         end
-      end
-
-      scenario 'lists jobs without an application_link or a contact_email correctly' do
-        vacancy_factory = build(:vacancy, :complete, :draft, school_id: school.id,
-                                                             slug: 'test-slug',
-                                                             application_link: nil,
-                                                             contact_email: nil)
-        vacancy_factory.save(validate: false)
-        vacancy = VacancyPresenter.new(vacancy_factory)
-        visit school_job_review_path(vacancy.id)
-
-        expect(page).to have_content("Review the job for #{school.name}")
-        expect(page).to have_content('No application link given')
-        expect(page).to have_content('No job contact email given')
-
-        verify_all_vacancy_details(vacancy)
       end
 
       context 'edit job_specification_details' do
@@ -463,9 +476,6 @@ RSpec.feature 'Creating a vacancy' do
 
       scenario 'cannot be published unless the details are valid' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
-        vacancy.assign_attributes qualifications: nil
-        vacancy.assign_attributes education: nil
-        vacancy.assign_attributes contact_email: nil
         vacancy.assign_attributes expires_on: Time.zone.yesterday
         vacancy.save(validate: false)
 
@@ -473,9 +483,6 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Confirm and submit job'
 
         expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.blank'))
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.education.blank'))
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
         expect(page).to have_content(
           I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date')
         )
