@@ -22,10 +22,6 @@ FactoryBot.define do
     weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
     newly_qualified_teacher { true }
-    weekly_pageviews { Faker::Number.number(1) }
-    weekly_pageviews_updated_at { Time.zone.yesterday }
-    total_pageviews { Faker::Number.number(1) }
-    total_pageviews_updated_at { Time.zone.yesterday }
 
     trait :fail_minimum_validation do
       job_title { Faker::Job.title[0..2] }

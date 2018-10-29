@@ -8,47 +8,24 @@
         .banner-warning
           = t('jobs.expired')
 
-  .govuk-grid-row.hiring-staff-job-info
-    .govuk-grid-column-full
-      #statistics
-        %h3.govuk-heading-s
-          = t('job.statistics', title: @vacancy.job_title)
-        .govuk-grid-row.mb0
-          .govuk-grid-column-one-third
-            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@vacancy.total_pageviews || 0
-            %br
-            %span.govuk-body=t('statistics.total_views', date: @vacancy.publish_on)
-          .govuk-grid-column-one-third
-            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@vacancy.weekly_pageviews || 0
-            %br
-            %span.govuk-body=t('statistics.weekly_views')
-          .govuk-grid-column-one-third
-            %span{class: 'govuk-body govuk-!-font-size-80 govuk-!-font-weight-bold'}=@get_information_count || 0
-            %br
-            %span.govuk-body=t('statistics.apply_button_clicks')
-    .govuk-grid-column-one-half
-      %details.govuk-details
-        %summary.govuk-details__summary
-          %span.govuk-details__summary-text
-            Share this job posting
-
-        .share-url-info
-          .share-url.mb1.display-none
-            %span{class: 'govuk-body govuk-!-font-weight-bold'} Share this job
-            %br
-            #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
-          .share-url-no-js.mb1
-            %h2.govuk-heading-s.mt0 Share this job
-            #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
-
-          .og-preview
-            .og_image= image_tag 'og_image.jpg'
-            .og_text
-              .og_url= I18n.t('app.title')
-              .og_title #{@vacancy.job_title} - #{@vacancy.school_name}
-              .og_description= truncate(strip_tags(@vacancy.job_description), length: 76, separator: ' ')
-          .og-caption
-            Your listing would appear on Facebook, for example, in a format like the above.
+  .share-url-info
+    .govuk-grid-row
+      .govuk-grid-column-one-half
+        .share-url.mb1.display-none
+          %h2.govuk-heading-m.mt0 Share this job
+          #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
+        .share-url-no-js.mb1
+          %h2.govuk-heading-s.mt0 Share this job
+          #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
+      .govuk-grid-column-one-half
+        .og-preview
+          .og_image= image_tag 'og_image.jpg'
+          .og_text
+            .og_url= I18n.t('app.title')
+            .og_title #{@vacancy.job_title} - #{@vacancy.school_name}
+            .og_description= truncate(strip_tags(@vacancy.job_description), length: 76, separator: ' ')
+        .og-caption
+          Your job listing will appear on Facebook in a format similar to the above.
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
