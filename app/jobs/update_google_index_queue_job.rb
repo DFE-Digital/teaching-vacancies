@@ -1,6 +1,6 @@
 require 'indexing'
 class UpdateGoogleIndexQueueJob < ApplicationJob
-  queue_as :default
+  queue_as :google_indexing
 
   def perform(url)
     Indexing.new(url).update
