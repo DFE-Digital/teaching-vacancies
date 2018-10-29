@@ -1,7 +1,7 @@
 require 'analytics'
 class CacheWeeklyAnalyticsPageviewsQueueJob < ApplicationJob
   include ActionView::Helpers::UrlHelper
-  queue_as :default
+  queue_as :page_view_collector
 
   def perform(vacancy_id)
     vacancy = Vacancy.find(vacancy_id)

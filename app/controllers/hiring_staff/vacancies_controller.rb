@@ -5,7 +5,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
       return redirect_to school_job_review_path(vacancy.id),
                          alert: I18n.t('messages.jobs.view.only_published')
     end
-    @get_information_count = vacancy.activities.where(key: 'vacancy.get_more_information').count
     @vacancy = VacancyPresenter.new(vacancy)
   end
 

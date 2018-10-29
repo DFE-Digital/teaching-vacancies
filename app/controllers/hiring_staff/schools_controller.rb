@@ -3,10 +3,6 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
     @vacancies = @school.vacancies.active
-
-    @get_information_count = @vacancies.any? ? retrieve_get_information_count(@vacancies) : 0
-    @weekly_pageviews = @vacancies.pluck(:weekly_pageviews).compact.inject(:+)
-    @total_pageviews = @vacancies.pluck(:total_pageviews).compact.inject(:+)
   end
 
   def edit
@@ -35,11 +31,5 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
 
   def session_has_multiple_schools?
     session.key?(:multiple_schools) && session[:multiple_schools] == true
-  end
-
-  def retrieve_get_information_count(vacancies)
-    vacancy_ids = vacancies.pluck(:id).join("','")
-    PublicActivity::Activity.where("trackable_id in ('#{vacancy_ids}')")
-                            .where(key: 'vacancy.get_more_information').count
   end
 end

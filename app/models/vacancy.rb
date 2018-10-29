@@ -13,42 +13,62 @@ class Vacancy < ApplicationRecord
 
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
   document_type 'vacancy'
+  settings index: {
+    analysis: {
+      analyzer: {
+        stopwords: {
+          tokenizer: 'standard',
+          filter: ['standard', 'lowercase', 'english_stopwords', 'stopwords']
+        }
+      },
+      filter: {
+        english_stopwords: {
+          type: 'stop',
+          stopwords: '_english_'
+        },
+        stopwords: {
+          type: 'stop',
+          stopwords: ['part', 'full', 'time']
+        }
+      }
+    }
+  } do
+    mappings dynamic: 'false' do
+      indexes :job_title, type: :text, analyzer: :stopwords
+      indexes :job_description, analyzer: 'english'
 
-  mappings dynamic: 'false' do
-    indexes :job_title, type: :text, analyzer: 'english'
-    indexes :job_description, analyzer: 'english'
+      indexes :school do
+        indexes :name, analyzer: 'english'
+        indexes :phase, type: :keyword
+        indexes :postcode, type: :text
+        indexes :town, type: :text
+        indexes :county, type: :text
+        indexes :address, type: :text
+      end
 
-    indexes :school do
-      indexes :name, analyzer: 'english'
-      indexes :phase, type: :keyword
-      indexes :postcode, type: :text
-      indexes :town, type: :text
-      indexes :county, type: :text
-      indexes :address, type: :text
+      indexes :subject do
+        indexes :name, type: :text
+      end
+
+      indexes :first_supporting_subject do
+        indexes :name, type: :text
+      end
+
+      indexes :second_supporting_subject do
+        indexes :name, type: :text
+      end
+
+      indexes :expires_on, type: :date
+      indexes :starts_on, type: :date
+      indexes :updated_at, type: :date
+      indexes :publish_on, type: :date
+      indexes :status, type: :keyword
+      indexes :working_pattern, type: :keyword
+      indexes :minimum_salary, type: :integer
+      indexes :maximum_salary, type: :integer
+      indexes :coordinates, type: :geo_point, ignore_malformed: true
+      indexes :newly_qualified_teacher, type: :boolean
     end
-
-    indexes :subject do
-      indexes :name, type: :text
-    end
-
-    indexes :first_supporting_subject do
-      indexes :name, type: :text
-    end
-
-    indexes :second_supporting_subject do
-      indexes :name, type: :text
-    end
-
-    indexes :expires_on, type: :date
-    indexes :starts_on, type: :date
-    indexes :updated_at, type: :date
-    indexes :publish_on, type: :date
-    indexes :status, type: :keyword
-    indexes :working_pattern, type: :keyword
-    indexes :minimum_salary, type: :integer
-    indexes :maximum_salary, type: :integer
-    indexes :coordinates, type: :geo_point, ignore_malformed: true
-    indexes :newly_qualified_teacher, type: :boolean
   end
 
   extend FriendlyId
