@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  DEFAULT_RADIUS = 20
+
   helper_method :location,
                 :keyword,
                 :minimum_salary,
@@ -81,7 +83,7 @@ class VacanciesController < ApplicationController
   end
 
   def radius
-    params[:radius]
+    params[:radius] || DEFAULT_RADIUS
   end
 
   def sort_column
