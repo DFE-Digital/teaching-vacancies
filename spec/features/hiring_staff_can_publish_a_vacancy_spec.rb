@@ -589,6 +589,17 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Confirm and submit job'
         end
       end
+
+      context 'updates the published vacancy spreadsheet via Sidekiq' do
+        scenario 'when the vacancy is published' do
+          vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
+
+          expect(UpdateVacancySpreadsheetJob).to receive(:perform_later).with(vacancy.id)
+
+          visit school_job_review_path(vacancy.id)
+          click_on 'Confirm and submit job'
+        end
+      end
     end
   end
 end

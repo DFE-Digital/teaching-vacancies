@@ -444,7 +444,7 @@ RSpec.describe Vacancy, type: :model do
 
     it 'creates a CSV row representation of the vacancy' do
       expect(vacancy.to_row).to be_an(Array)
-      expect(vacancy.to_row).to include('123a-456b-789c','my-new-vacancy','published')
+      expect(vacancy.to_row).to include('123a-456b-789c', 'my-new-vacancy', 'published')
     end
   end
 end

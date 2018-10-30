@@ -3,6 +3,6 @@ class UpdateVacancySpreadsheetJob < ApplicationJob
 
   def perform(vacancy_id)
     vacancy = Vacancy.find(vacancy_id)
-    row = vacancy.to_row
+    _row = vacancy.to_row
   end
 end
