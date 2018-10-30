@@ -244,4 +244,31 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_field('newly_qualified_teacher', checked: false)
     end
   end
+
+  context 'Resetting search filters' do
+    it 'Hiring staff can reset search after filtering' do
+      create(:vacancy, :published, job_title: 'Physics Teacher')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'Physics'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
+      click_on 'Closing date'
+      expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
+    end
+
+    it 'Hiring staff can reset search after adding any filter params to the url' do
+      create(:vacancy, :published, job_title: 'Physics Teacher')
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit jobs_path(keyword: 'Other')
+
+      expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
+    end
+  end
 end

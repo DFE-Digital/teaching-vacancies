@@ -28,6 +28,12 @@ class VacancyFilters
     }
   end
 
+  def any?
+    filters = to_hash
+    filters.delete_if { |k, v| k.eql?(:radius) || v.nil? }
+    filters.any?
+  end
+
   private
 
   def extract_working_pattern(params)
