@@ -5,13 +5,11 @@ module Spreadsheet
       @spreadsheet_id = spreadsheet_id
     end
 
-    def append(rows)
+    def append(row)
       last_pos = worksheet.num_rows
-      rows.each_with_index do |row, i|
-        pos = last_pos + i + 1
-        row.each_with_index do |cell, index|
-          worksheet[pos, index + 1] = cell
-        end
+      pos = last_pos + 1
+      row.each_with_index do |cell, index|
+        worksheet[pos, index + 1] = cell
       end
       worksheet.save
     end
