@@ -116,4 +116,23 @@ RSpec.feature 'Viewing a single published vacancy' do
       end
     end
   end
+
+  context 'meta tags' do
+    include ActionView::Helpers::SanitizeHelper
+    scenario 'the vacancy\'s meta data are rendered correctly' do
+      vacancy = VacancyPresenter.new(create(:vacancy, :published))
+      visit job_path(vacancy)
+
+      expect(page.find('meta[name="description"]', visible: false)['content'])
+        .to eq(strip_tags(vacancy.job_description))
+    end
+
+    scenario 'the vacancy\'s open graph meta data are rendered correctly' do
+      vacancy = VacancyPresenter.new(create(:vacancy, :published))
+      visit job_path(vacancy)
+
+      expect(page.find('meta[property="og:description"]', visible: false)['content'])
+        .to eq(strip_tags(vacancy.job_description))
+    end
+  end
 end

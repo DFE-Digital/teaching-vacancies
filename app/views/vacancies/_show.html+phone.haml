@@ -1,6 +1,9 @@
 - content_for :page_title_prefix do
   #{@vacancy.job_title} — #{@vacancy.school_name}
 
+- content_for :page_description do
+  = strip_tags(@vacancy.job_description)
+
 .vacancy.govuk-grid-row
   - if @vacancy.expired?
     .govuk-grid-column-full
