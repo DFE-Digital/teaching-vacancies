@@ -20,7 +20,6 @@ namespace :vacancies do
     task update: :environment do
       Rake::Task['vacancies:data:delete'].execute
       vacancies = YAML.load_file(Rails.root.join('lib', 'tasks', 'vacancies_to_update.yaml'))['vacancies']['update']
-
       vacancies.each do |data|
         vacancy = Vacancy.find_by(slug: data['slug'])
         next if vacancy.nil?
@@ -38,6 +37,7 @@ namespace :vacancies do
         vacancy.working_pattern = extract_working_pattern(data) if data.key?('working_pattern')
         vacancy.subject = Subject.find_by(name: data['subject']) if data.key?('subject')
         vacancy.leadership = Leadership.find_by(title: data['leadership_title']) if data.key?('leadership_title')
+        vacancy.newly_qualified_teacher = true if data['nqt'].eql?(true)
         vacancy.save(validate: false)
       end
     end

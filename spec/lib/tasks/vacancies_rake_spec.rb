@@ -17,18 +17,26 @@ RSpec.describe 'rake vacancies:data:update', type: :task do
                      benefits: 'sample benefits',
                      slug: other_slug)
 
+    nqt_slug = 'teacher-of-music-maternity-cover-0-6'
+    create(:vacancy, job_title: 'Teacher of Music',
+                     newly_qualified_teacher: false,
+                     slug: nqt_slug)
+
     task.invoke
 
     index = 0 # position in data file
-    vacancy = Vacancy.find_by(slug:  slug)
+    vacancy = Vacancy.find_by(slug: slug)
     expect(vacancy.job_title).to eq(data[index]['job_title'])
     expect(vacancy.job_description).to eq(sanitize(data[index]['job_description']))
     expect(vacancy.expires_on).to eq(Date.parse('12/10/2018'))
 
     index = 1
-    other_vacancy = Vacancy.find_by(slug:  other_slug)
+    other_vacancy = Vacancy.find_by(slug: other_slug)
     expect(other_vacancy.experience).to eq(sanitize(data[index]['experience']))
     expect(other_vacancy.benefits).to eq(sanitize(data[index]['benefits']))
+
+    nqt_vacancy = Vacancy.find_by(slug: nqt_slug)
+    expect(nqt_vacancy.newly_qualified_teacher).to eq(true)
   end
 end
 
