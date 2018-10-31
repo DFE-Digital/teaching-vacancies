@@ -29,7 +29,7 @@ bin/dstart
 
 ## User accounts & data
 
-Before you can log in to the application locally you will need a __DfE Sign-in__ and an __invitation to join Teaching Jobs__. Talk to the team to get these set up.
+Before you can log in to the application locally you will need a __DfE Sign-in__ and an __invitation to join Teaching Vacancies__. Talk to the team to get these set up.
 
 ### Importing school data
 

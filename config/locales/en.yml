@@ -9,7 +9,7 @@ en:
         precision: 0
         delimiter: ','
   app:
-    title: 'Teaching Jobs'
+    title: 'Teaching Vacancies'
     menu: 'Menu'
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
   nav:
@@ -18,9 +18,9 @@ en:
     school_page_link: 'Manage jobs'
     jobseekers_index_link: 'View public jobs'
   sign_in:
-    title: 'Sign in to Teaching Jobs'
+    title: 'Sign in to Teaching Vacancies'
     link: 'Sign in'
-    guidance: 'Once you have received an email invitation from Teaching Jobs you can sign in to this service. %{link}'
+    guidance: 'Once you have received an email invitation from Teaching Vacancies you can sign in to this service. %{link}'
     organisation:
       title: 'Select your organisation'
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
@@ -223,7 +223,7 @@ en:
           - 'end date (for fixed-term jobs)'
   terms_and_conditions:
     page_title: 'Terms and Conditions'
-    intro: 'Before listing any role at your school on Teaching Jobs you must first read our Terms and Conditions and agree to abide by them.'
+    intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
     intro_link: 'Of particular importance is the section %{link} which includes:'
     summary_list:
       - 'Using the Service'
@@ -231,10 +231,10 @@ en:
       - 'Access to the Service'
       - 'Listing data'
     please_accept: 'Please accept the terms and conditions'
-    label: 'I agree to all of the Terms and Conditions of the Teaching Jobs service.'
+    label: 'I agree to all of the Terms and Conditions of the Teaching Vacancies service.'
   stats:
     title: Statistics
-    intro: This page is an event log used by the service team to measure and monitor the stability and performance of Teaching Jobs. It keeps a live count of key user interactions with the service since 20 April 2018 (the date we began recording statistics).
+    intro: This page is an event log used by the service team to measure and monitor the stability and performance of Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018 (the date we began recording statistics).
   buttons:
     apply_filters: 'Search'
     apply_filters_if_criteria: 'Refine search'
@@ -286,17 +286,17 @@ en:
         text:
           - You can register your interest to use the service by emailing %{mailto_url}. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
 
-          - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with "help" in the subject line.
+          - If your Teaching Vacancies account has already been set up but you are unable to sign in, email the same address with "help" in the subject line.
       with_email:
         text:
-          - You've tried to sign in with %{email}, which is not authorised to list jobs for this school. If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in, then sign into Teaching Jobs with your authorised email. You can do this at %{signin_url}
+          - You've tried to sign in with %{email}, which is not authorised to list jobs for this school. If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in, then sign into Teaching Vacancies with your authorised email. You can do this at %{signin_url}
 
-          - If you don't have a Teaching Jobs account you will need to wait for an invitation for one. Invitations are being sent out gradually, by region. When you have accepted the invitation and created your account you will be able to start listing roles at your school.
+          - If you don't have a Teaching Vacancies account you will need to wait for an invitation for one. Invitations are being sent out gradually, by region. When you have accepted the invitation and created your account you will be able to start listing roles at your school.
 
-          - Read the Teaching Jobs %{blog_url} to learn when schools in your area will be invited.
+          - Read the Teaching Vacancies %{blog_url} to learn when schools in your area will be invited.
 
-          - If your Teaching Jobs account has already been set up but you are unable to sign in, email %{mailto_url} with "help" in the subject line.
+          - If your Teaching Vacancies account has already been set up but you are unable to sign in, email %{mailto_url} with "help" in the subject line.
 
-          - The Teaching Jobs team
+          - The Teaching Vacancies team
   beta_banner:
     line_1: 'This service is in development and lists jobs in select areas of England. It will be %{link} to new areas, so check back regularly for new listings.'
