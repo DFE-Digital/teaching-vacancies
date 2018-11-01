@@ -1,6 +1,8 @@
 class VacancyFilters
-  attr_reader :location, :radius, :keyword, :minimum_salary, :maximum_salary, :working_pattern, :phase,
-              :newly_qualified_teacher
+  AVAILABLE_FILTERS = %i[location radius keyword minimum_salary maximum_salary working_pattern
+                         phase newly_qualified_teacher].freeze
+
+  attr_reader(*AVAILABLE_FILTERS)
 
   def initialize(args)
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
