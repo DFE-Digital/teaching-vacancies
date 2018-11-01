@@ -82,6 +82,10 @@
       {
         "name": "AWS_ELASTICSEARCH_SECRET",
         "value": "${aws_elasticsearch_secret}"
+      },
+      {
+        "name": "PUBLISHED_VACANCY_SPREADSHEET_ID",
+        "value": "${published_vacancy_spreadsheet_id}"
       }
     ]
   }

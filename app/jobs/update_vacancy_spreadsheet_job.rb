@@ -3,8 +3,6 @@ require 'spreadsheet_writer'
 class UpdateVacancySpreadsheetJob < ApplicationJob
   queue_as :update_vacancy_spreadsheet
 
-  PUBLISHED_VACANCY_SPREADSHEET_ID = ENV['PUBLISHED_VACANCY_SPREADSHEET_ID']
-
   def perform(vacancy_id)
     return unless PUBLISHED_VACANCY_SPREADSHEET_ID
     vacancy = Vacancy.find(vacancy_id)
