@@ -14,7 +14,7 @@ class UpdateVacancySpreadsheetJob < ApplicationJob
   private
 
   def write_row(vacancy)
-    row = vacancy.to_row
+    row = VacancyPresenter.new(vacancy).to_row
     worksheet = Spreadsheet::Writer.new(PUBLISHED_VACANCY_SPREADSHEET_ID)
     worksheet.append(row)
     Rails.logger.info("Sidekiq: added vacancy #{vacancy.id} to published vacancies sheet")
