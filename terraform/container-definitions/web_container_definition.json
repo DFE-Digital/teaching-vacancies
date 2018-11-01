@@ -127,6 +127,10 @@
         "value": "${auth_spreadsheet_id}"
       },
       {
+        "name": "PUBLISHED_VACANCY_SPREADSHEET_ID",
+        "value": "${published_vacancy_spreadsheet_id}"
+      },
+      {
         "name": "DOMAIN",
         "value": "${domain}"
       },

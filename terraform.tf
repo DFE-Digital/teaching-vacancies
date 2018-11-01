@@ -121,6 +121,7 @@ module "ecs" {
   authorisation_service_url        = "${var.authorisation_service_url}"
   google_drive_json_key            = "${var.google_drive_json_key}"
   auth_spreadsheet_id              = "${var.auth_spreadsheet_id}"
+  published_vacancy_spreadsheet_id = "${var.published_vacancy_spreadsheet_id}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"

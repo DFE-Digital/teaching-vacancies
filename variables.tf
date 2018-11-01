@@ -311,6 +311,7 @@ variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}
 variable "google_drive_json_key" {}
 variable "auth_spreadsheet_id" {}
+variable "published_vacancy_spreadsheet_id" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 variable "rollbar_access_token" {}
