@@ -219,6 +219,20 @@ RSpec.feature 'Creating a vacancy' do
         verify_all_vacancy_details(vacancy)
       end
 
+      scenario 'enables the user to resolve cross-form errors' do
+        vacancy = build(:vacancy, :draft, :complete, slug: 'vacancy-slug', school_id: school.id,
+                                                     starts_on: Time.zone.today)
+        vacancy.save(validate: false)
+
+        visit school_job_review_path(vacancy.id)
+        expect(page)
+          .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.before_expires_on'))
+
+        click_link_in_container_with_text(I18n.t('jobs.starts_on'))
+        expect(page)
+          .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.before_expires_on'))
+      end
+
       context 'when the listing is full-time' do
         scenario 'lists all the full-time vacancy details correctly' do
           vacancy = VacancyPresenter.new(
