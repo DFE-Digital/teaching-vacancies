@@ -281,7 +281,7 @@ en:
 
   static_pages:
     not_authorised:
-      title: You are not yet authorised to use the Teaching Jobs service
+      title: The email you're signed in with hasn't been authorised to list jobs for this school
       without_email:
         text:
           - You can register your interest to use the service by emailing %{mailto_url}. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
