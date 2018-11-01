@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  DEFAULT_RADIUS = 20
+
   helper_method :location,
                 :keyword,
                 :minimum_salary,
@@ -16,7 +18,7 @@ class VacanciesController < ApplicationController
 
     records = Vacancy.public_search(filters: @filters, sort: @sort).page(params[:page]).records
 
-    @vacancies = VacanciesPresenter.new(records, searched: searched?)
+    @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
   end
 
   def show
@@ -81,7 +83,7 @@ class VacanciesController < ApplicationController
   end
 
   def radius
-    params[:radius]
+    params[:radius] || DEFAULT_RADIUS
   end
 
   def sort_column
@@ -90,11 +92,6 @@ class VacanciesController < ApplicationController
 
   def sort_order
     params[:sort_order]
-  end
-
-  def searched?
-    params[:commit]&.eql?(I18n.t('buttons.apply_filters')) ||
-      params[:commit]&.eql?(I18n.t('buttons.apply_filters_if_criteria'))
   end
 
   def set_headers
