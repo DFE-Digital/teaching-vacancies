@@ -15,6 +15,7 @@ RSpec.describe UpdateVacancySpreadsheetJob, type: :job do
   end
 
   it 'writes to the spreadsheet' do
+    stub_const('UpdateVacancySpreadsheetJob::PUBLISHED_VACANCY_SPREADSHEET_ID', 'abc1-def2')
     spreadsheet = double(:mock)
     allow(spreadsheet).to receive(:append)
     expect(Spreadsheet::Writer).to receive(:new).and_return(spreadsheet)
