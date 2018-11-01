@@ -24,26 +24,37 @@ RSpec.feature 'Filtering vacancies' do
     expect(page).to have_content(english_teacher.job_title)
   end
 
-  scenario 'Filterable by location', elasticsearch: true do
-    expect(Geocoder).to receive(:coordinates).with('enfield', params: { region: 'uk' })
-                                             .and_return([51.6622925, -0.1180655])
-    enfield_vacancy = create(:vacancy, :published,
-                             school: build(:school, name: 'St James School',
-                                                    town: 'Enfield',
-                                                    geolocation: '(51.6580645, -0.0448643)'))
-    penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School', town: 'Penzance'))
+  context 'Filterable by location', elasticsearch: true do
+    scenario 'The search radius defaults to 20' do
+      visit jobs_path
 
-    Vacancy.__elasticsearch__.client.indices.flush
-    visit jobs_path
-
-    within '.filters-form' do
-      fill_in 'location', with: 'enfield'
-      select 'Within 25 miles'
-      page.find('.govuk-button[type=submit]').click
+      within '.filters-form' do
+        expect(page).to have_select('radius', selected: 'Within 20 miles')
+      end
     end
 
-    expect(page).to have_content(enfield_vacancy.job_title)
-    expect(page).not_to have_content(penzance_vacancy.job_title)
+    scenario 'Search results can be filtered by the selected location and radius' do
+      expect(Geocoder).to receive(:coordinates).with('enfield', params: { region: 'uk' })
+                                               .and_return([51.6622925, -0.1180655])
+      enfield_vacancy = create(:vacancy, :published,
+                               school: build(:school, name: 'St James School',
+                                                      town: 'Enfield',
+                                                      geolocation: '(51.6580645, -0.0448643)'))
+      penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
+                                                                             town: 'Penzance'))
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'location', with: 'enfield'
+        select 'Within 25 miles'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(enfield_vacancy.job_title)
+      expect(page).not_to have_content(penzance_vacancy.job_title)
+    end
   end
 
   scenario 'Filterable by working pattern', elasticsearch: true do
