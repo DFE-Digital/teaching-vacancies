@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :jobs, only: %i[index show], controller: 'vacancies'
+    scope 'v:api_version', api_version: /[1]/ do
+      resources :jobs, only: %i[index show], controller: 'vacancies'
+    end
   end
 
   resources :stats, only: [:index]

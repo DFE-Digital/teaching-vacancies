@@ -7,18 +7,18 @@ RSpec.describe Api::VacanciesController, type: :controller do
     request.accept = 'application/json'
   end
 
-  describe 'GET /jobs', elasticsearch: true do
+  describe 'GET /api/v1/jobs.json', elasticsearch: true do
     render_views
 
     context 'sets headers' do
       it 'robots are asked to index but not to follow' do
-        get :index
+        get :index, params: { api_version: 1 }
         expect(response.headers['X-Robots-Tag']).to eq('noarchive')
       end
     end
 
     it 'returns status :not_found if the request format is not JSON' do
-      get :index, format: :html
+      get :index, params: { api_version: 1 }, format: :html
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
@@ -28,7 +28,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       Vacancy.__elasticsearch__.refresh_index!
 
-      get :index
+      get :index, params: { api_version: 1 }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
       expect(json[:vacancies].count).to eq(3)
@@ -38,18 +38,18 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
   end
 
-  describe 'GET /jobs/:id' do
+  describe 'GET /api/v1/jobs/:id.json' do
     render_views
     let(:vacancy) { create(:vacancy) }
 
     it 'returns status :not_found if the request format is not JSON' do
-      get :show, params: { id: vacancy.slug }, format: :html
+      get :show, params: { id: vacancy.slug, api_version: 1 }, format: :html
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
 
     it 'returns status code :ok' do
-      get :show, params: { id: vacancy.slug }
+      get :show, params: { id: vacancy.slug, api_version: 1 }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
@@ -61,20 +61,20 @@ RSpec.describe Api::VacanciesController, type: :controller do
       vacancy.refresh_slug
       vacancy.save
 
-      get :show, params: { id: old_slug }
+      get :show, params: { id: old_slug, api_version: 1 }
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
     context 'format' do
       it 'maps vacancy to the JobPosting schema' do
-        get :show, params: { id: vacancy.id }
+        get :show, params: { id: vacancy.id, api_version: 1 }
 
         expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
       end
 
       context '#salary' do
         it 'when both minimum and maximum salary are set' do
-          get :show, params: { id: vacancy.id }
+          get :show, params: { id: vacancy.id, api_version: 1 }
 
           salary = {
             'baseSalary': {
@@ -93,7 +93,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
         it 'when no maximum salary is set' do
           vacancy = create(:vacancy, maximum_salary: nil)
-          get :show, params: { id: vacancy.id }
+          get :show, params: { id: vacancy.id, api_version: 1 }
 
           salary = {
             'baseSalary': {
@@ -112,7 +112,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       context '#employment_type' do
         it 'FULL_TIME' do
-          get :show, params: { id: vacancy.id }
+          get :show, params: { id: vacancy.id, api_version: 1 }
 
           employment_type = { 'employmentType': 'FULL_TIME' }
           expect(json.to_h).to include(employment_type)
@@ -121,7 +121,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         it 'PART_TIME' do
           vacancy = create(:vacancy, working_pattern: :part_time)
 
-          get :show, params: { id: vacancy.id }
+          get :show, params: { id: vacancy.id, api_version: 1 }
 
           employment_type = { 'employmentType': 'PART_TIME' }
           expect(json.to_h).to include(employment_type)
@@ -130,7 +130,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       context '#hiringOrganization' do
         it 'sets the school\'s details' do
-          get :show, params: { id: vacancy.id }
+          get :show, params: { id: vacancy.id, api_version: 1 }
 
           hiring_organization = {
             'hiringOrganization': {
