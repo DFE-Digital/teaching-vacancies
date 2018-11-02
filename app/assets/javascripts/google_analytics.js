@@ -15,3 +15,9 @@ $(document).on('click', '.vacancy-apply-link', function() {
     gtag('event', 'vacancy_applied');
   }
 );
+
+// Track when someone starts to create a vacancy
+$(document).on('click', '.vacancy-create-button', function() {
+    gtag('event', 'vacancy_creation_started');
+  }
+);
