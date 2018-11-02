@@ -21,3 +21,15 @@ $(document).on('click', '.vacancy-create-button', function() {
     gtag('event', 'vacancy_creation_started');
   }
 );
+
+// Track when someone starts to edit their school
+$(document).on('click', '.school-edit-started', function() {
+    gtag('event', 'school_edit_started');
+  }
+);
+
+// Track when someone submits the edit school form
+$(document).on('submit', 'form.school-edit-form', function() {
+    gtag('event', 'school_edit_complete');
+  }
+);

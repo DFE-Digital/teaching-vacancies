@@ -4,7 +4,7 @@
   Edit description for
   = @school.name
 
-= form_for @school do |form|
+= form_for @school, class: 'school-edit-form' do |form|
 
   - if @school.errors.any?
     %div.govuk-error-summary{role: "alert", 'aria-labelledby' => "school-error-heading", tabindex: '-1'}
