@@ -23,6 +23,23 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
 
+    it 'returns the API\'s openapi version' do
+      get :index, params: { api_version: 1 }
+
+      expect(json[:openapi]).to eq('3.0.0')
+    end
+
+    it 'returns the API\'s info' do
+      get :index, params: { api_version: 1 }
+
+      info_object = json[:info]
+      expect(info_object[:title]).to eq("GOV UK - #{I18n.t('app.title')}")
+      expect(info_object[:description]).to eq(I18n.t('app.description'))
+      expect(info_object[:termsOfService])
+        .to eq(terms_and_conditions_url(protocol: 'https', anchor: 'api'))
+      expect(info_object[:contact][:email]).to eq(I18n.t('help.email'))
+    end
+
     it 'retrieves all available vacancies' do
       vacancies = create_list(:vacancy, 3)
 
@@ -31,9 +48,9 @@ RSpec.describe Api::VacanciesController, type: :controller do
       get :index, params: { api_version: 1 }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(json[:vacancies].count).to eq(3)
+      expect(json[:data].count).to eq(3)
       vacancies.each do |v|
-        expect(json[:vacancies]).to include(vacancy_json_ld(VacancyPresenter.new(v)))
+        expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(v)))
       end
     end
   end
