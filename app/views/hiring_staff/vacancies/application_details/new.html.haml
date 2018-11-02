@@ -5,7 +5,7 @@
   %span.govuk-caption-l
     Step 3 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
-= simple_form_for @application_details_form, html: { class: 'vacancy-form' }, action: :post, url: application_details_school_job_path(school_id: @school.id) do |f|
+= simple_form_for @application_details_form, html: { class: 'vacancy-application-details-new-form' }, action: :post, url: application_details_school_job_path(school_id: @school.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.application_details')
 
