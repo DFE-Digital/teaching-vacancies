@@ -79,4 +79,23 @@ RSpec.describe VacancyFilters do
       )
     end
   end
+
+  describe '#any?' do
+    it 'returns true if any filters other than radius are set' do
+      filters = described_class.new(
+        radius: 20
+      )
+
+      expect(filters.any?).to be false
+    end
+
+    it 'returns true if any filters are set' do
+      filters = described_class.new(
+        minimum_salary: 'minimum_salary',
+        maximum_salary: 'maximum_salary',
+      )
+
+      expect(filters.any?).to be true
+    end
+  end
 end

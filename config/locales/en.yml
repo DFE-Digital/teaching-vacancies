@@ -146,7 +146,7 @@ en:
       flexible_working: 'Flexible working (optional)'
       newly_qualified_teacher: 'Newly qualified teacher (optional)'
     form_hints:
-      job_title: "For secondary school roles include subject to be taught and, if applicable, level of seniority ('Subject leader for Science', for example)"
+      job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
@@ -156,12 +156,12 @@ en:
       weekly_hours: 'Number of hours to be worked each week'
       start_date: 'For example, %{date}'
       end_date: 'For example, %{date}'
-      education: 'Educational background needed for the position'
-      qualifications: 'Specific qualifications required for this role'
+      education: 'State any formal education needed for the role (undergraduate degree, for example)'
+      qualifications: 'List any qualifications needed for this role (<span arial-label="Qualified Teacher Status">QTS</span>, for example)'
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
-      benefits: 'For example, financial benefits, job training, continuing professional development and whether Special Educational Needs (SEN) allowances or Teaching and Learning Responsibility (TLR) payments are available.'
+      benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'This is the url linking the job to your existing application page'
       pro_rata_warning: 'Part time roles must state a pro rata salary'
@@ -281,7 +281,7 @@ en:
 
   static_pages:
     not_authorised:
-      title: You are not yet authorised to use the Teaching Jobs service
+      title: The email you're signed in with hasn't been authorised to list jobs for this school
       without_email:
         text:
           - You can register your interest to use the service by emailing %{mailto_url}. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
@@ -289,12 +289,14 @@ en:
           - If your Teaching Jobs account has already been set up but you are unable to sign in, email the same address with "help" in the subject line.
       with_email:
         text:
-          - You've tried to sign in with %{email}, which is not associated with a Teaching Jobs account. If you have an account associated with another email, please first sign %{email} out of DfE Sign-in. Then sign into Teaching Jobs at %{signin_url} using your authorised email.
+          - You've tried to sign in with %{email}, which is not authorised to list jobs for this school. If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in, then sign into Teaching Jobs with your authorised email. You can do this at %{signin_url}
 
           - If you don't have a Teaching Jobs account you will need to wait for an invitation for one. Invitations are being sent out gradually, by region. When you have accepted the invitation and created your account you will be able to start listing roles at your school.
 
           - Read the Teaching Jobs %{blog_url} to learn when schools in your area will be invited.
 
           - If your Teaching Jobs account has already been set up but you are unable to sign in, email %{mailto_url} with "help" in the subject line.
+
+          - The Teaching Jobs team
   beta_banner:
     line_1: 'This service is in development and lists jobs in select areas of England. It will be %{link} to new areas, so check back regularly for new listings.'

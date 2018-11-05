@@ -1,4 +1,6 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
+  before_action :set_vacancy, only: %i[review]
+
   def show
     vacancy = school.vacancies.active.find(id)
     unless vacancy.published?
@@ -21,17 +23,16 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def review
-    vacancy = school.vacancies.active.find(vacancy_id)
-    if vacancy.published?
-      redirect_to school_job_path(vacancy.id),
-                  notice: t('messages.vacancies.already_published')
+    return redirect_to school_job_path(@vacancy.id), notice: already_published_message if @vacancy.published?
+
+    unless @vacancy.valid?
+      return redirect_to candidate_specification_school_job_path unless step_2_valid?
+      return redirect_to application_details_school_job_path unless step_3_valid?
     end
 
     session[:current_step] = :review
-    store_vacancy_attributes(vacancy.attributes.compact)
-
-    @vacancy = VacancyPresenter.new(vacancy)
-
+    store_vacancy_attributes(@vacancy.attributes.compact)
+    @vacancy = VacancyPresenter.new(@vacancy)
     @vacancy.valid? if params[:source]&.eql?('publish')
   end
 
@@ -57,5 +58,30 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def vacancy_id
     params.require(:job_id)
+  end
+
+  def step_2_valid?
+    valid = CandidateSpecificationForm.new(@vacancy.attributes).completed?
+    clear_cache_and_step unless valid
+    valid
+  end
+
+  def step_3_valid?
+    valid = ApplicationDetailsForm.new(@vacancy.attributes).completed?
+    clear_cache_and_step unless valid
+    valid
+  end
+
+  def already_published_message
+    I18n.t('messages.vacancies.already_published')
+  end
+
+  def clear_cache_and_step
+    flash.clear
+    session[:current_step] = ''
+  end
+
+  def set_vacancy
+    @vacancy = school.vacancies.active.find(vacancy_id)
   end
 end

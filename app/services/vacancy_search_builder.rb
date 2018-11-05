@@ -154,7 +154,7 @@ class VacancySearchBuilder
   end
 
   def sort_query
-    [{ @sort.column.to_sym => { order: @sort.order.to_sym } }]
+    @sort.present? ? [{ @sort.column.to_sym => { order: @sort.order.to_sym } }] : []
   end
 
   def match_all_hash
@@ -167,9 +167,10 @@ class VacancySearchBuilder
     {
       multi_match: {
         query: keyword,
-        fields: %w[job_title^5 subject.name^3 first_supporting_subject.name^3 second_supporting_subject.name^3],
+        fields: %w[job_title^3 subject.name first_supporting_subject.name second_supporting_subject.name],
         operator: 'and',
-        fuzziness: 'AUTO',
+        fuzziness: 2,
+        prefix_length: 1
       },
     }
   end

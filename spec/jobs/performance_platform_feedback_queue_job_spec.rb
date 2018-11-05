@@ -10,8 +10,8 @@ RSpec.describe PerformancePlatformFeedbackQueueJob, type: :job do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
   end
 
-  it 'is in the default queue' do
-    expect(PerformancePlatformFeedbackQueueJob.new.queue_name).to eq('default')
+  it 'is in the performance_platform queue' do
+    expect(PerformancePlatformFeedbackQueueJob.new.queue_name).to eq('performance_platform')
   end
 
   it 'executes perform' do

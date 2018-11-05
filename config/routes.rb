@@ -15,6 +15,10 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
+  namespace :api do
+    resources :jobs, only: %i[index show], controller: 'vacancies'
+  end
+
   resources :stats, only: [:index]
 
   resource :identifications, only: %i[new create], controller: 'hiring_staff/identifications'

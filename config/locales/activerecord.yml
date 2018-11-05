@@ -44,8 +44,10 @@ en:
             starts_on:
               past: can't be in the past
               after_ends_on: can't be after the end date
+              before_expires_on: must be after the closing date
             ends_on:
               past: can't be in the past
+              before_expires_on: must be after the closing date
             weekly_hours:
               negative: can't be negative
               invalid: must be a valid number
