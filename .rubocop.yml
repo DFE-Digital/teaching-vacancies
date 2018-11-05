@@ -79,3 +79,4 @@ Metrics/BlockLength:
     Exclude:
       - 'spec/**/*'
       - 'config/routes.rb'
+      - 'lib/tasks/vacancies.rake'
