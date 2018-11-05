@@ -49,6 +49,16 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.errors.messages[:starts_on][0])
         .to eq('can\'t be after the end date')
     end
+
+    it 'must be after the closing date' do
+      job_specification_form = JobSpecificationForm.new(starts_on: Time.zone.today,
+                                                        expires_on: Time.zone.tomorrow)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:starts_on)
+      expect(job_specification_form.errors.messages[:starts_on][0])
+        .to eq('must be after the closing date')
+    end
   end
 
   describe '#ends_on' do
@@ -66,6 +76,16 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form).to have(1).errors_on(:ends_on)
       expect(job_specification_form.errors.messages[:ends_on][0])
         .to eq('can\'t be in the past')
+    end
+
+    it 'must be after the closing date' do
+      job_specification_form = JobSpecificationForm.new(ends_on: Time.zone.today,
+                                                        expires_on: Time.zone.tomorrow)
+      expect(job_specification_form.valid?).to be false
+
+      expect(job_specification_form).to have(1).errors_on(:ends_on)
+      expect(job_specification_form.errors.messages[:ends_on][0])
+        .to eq('must be after the closing date')
     end
   end
 

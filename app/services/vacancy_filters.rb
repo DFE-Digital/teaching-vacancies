@@ -1,6 +1,8 @@
 class VacancyFilters
-  attr_reader :location, :radius, :keyword, :minimum_salary, :maximum_salary, :working_pattern, :phase,
-              :newly_qualified_teacher
+  AVAILABLE_FILTERS = %i[location radius keyword minimum_salary maximum_salary working_pattern
+                         phase newly_qualified_teacher].freeze
+
+  attr_reader(*AVAILABLE_FILTERS)
 
   def initialize(args)
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
@@ -26,6 +28,12 @@ class VacancyFilters
       phase: phase,
       newly_qualified_teacher: newly_qualified_teacher,
     }
+  end
+
+  def any?
+    filters = to_hash
+    filters.delete_if { |k, v| k.eql?(:radius) || v.nil? }
+    filters.any?
   end
 
   private

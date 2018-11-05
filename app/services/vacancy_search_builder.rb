@@ -154,7 +154,7 @@ class VacancySearchBuilder
   end
 
   def sort_query
-    [{ @sort.column.to_sym => { order: @sort.order.to_sym } }]
+    @sort.present? ? [{ @sort.column.to_sym => { order: @sort.order.to_sym } }] : []
   end
 
   def match_all_hash
