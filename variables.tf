@@ -161,16 +161,6 @@ variable "import_schools_task_schedule" {
   default     = "cron(0 02 * * ? *)"
 }
 
-variable "vacancies_scrape_task_command" {
-  description = "The Entrypoint for the vacancies_scrape task"
-  default     = ["rake", "verbose", "vacancies:data:scrape"]
-}
-
-variable "vacancies_scrape_task_schedule" {
-  description = "vacancies_scrape schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "rate(60 minutes)"
-}
-
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "verbose", "db:sessions:trim"]
@@ -184,11 +174,6 @@ variable "sessions_trim_task_schedule" {
 variable "update_pay_scale_task_command" {
   description = "The Entrypoint for the update_pay_scale task"
   default     = ["rake", "verbose", "data:update:pay_scale"]
-}
-
-variable "update_vacancies_task_command" {
-  description = "The Entrypoint for the update_vacancies task"
-  default     = ["rake", "verbose", "vacancies:data:update"]
 }
 
 variable "reindex_vacancies_task_command" {

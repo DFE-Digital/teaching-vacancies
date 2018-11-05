@@ -77,15 +77,10 @@ module "ecs" {
   import_schools_task_command = "${var.import_schools_task_command}"
   import_schools_task_schedule = "${var.import_schools_task_schedule}"
 
-  vacancies_scrape_task_command  = "${var.vacancies_scrape_task_command}"
-  vacancies_scrape_task_schedule = "${var.vacancies_scrape_task_schedule}"
-
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
   update_pay_scale_task_command = "${var.update_pay_scale_task_command}"
-
-  update_vacancies_task_command = "${var.update_vacancies_task_command}"
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 

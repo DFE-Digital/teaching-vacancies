@@ -187,31 +187,6 @@ data "template_file" "import_schools_container_definition" {
   }
 }
 
-/* vacancies_scrape task definition*/
-data "template_file" "vacancies_scrape_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_vacancies_scrape"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    redis_url                = "${var.redis_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint               = "${jsonencode(var.vacancies_scrape_task_command)}"
-  }
-}
-
 /* trim sessions task definition*/
 data "template_file" "sessions_trim_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
@@ -259,31 +234,6 @@ data "template_file" "update_pay_scale_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     entrypoint               = "${jsonencode(var.update_pay_scale_task_command)}"
-  }
-}
-
-/* update_vacancies task definition*/
-data "template_file" "update_vacancies_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_update_vacancies"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    redis_url                = "${var.redis_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    entrypoint               = "${jsonencode(var.update_vacancies_task_command)}"
   }
 }
 
@@ -555,17 +505,6 @@ resource "aws_ecs_task_definition" "update_pay_scale_task" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "update_vacancies_task" {
-  family                   = "${var.ecs_service_web_task_name}_update_vacancies_task"
-  container_definitions    = "${data.template_file.update_vacancies_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
 resource "aws_ecs_task_definition" "reindex_vacancies_task" {
   family                   = "${var.ecs_service_web_task_name}_reindex_vacancies_task"
   container_definitions    = "${data.template_file.reindex_vacancies_container_definition.rendered}"
@@ -591,35 +530,6 @@ resource "aws_ecs_task_definition" "performance_platform_submit_all_task" {
 /*====
 ECS SCHEDULED TASKS
 ======*/
-resource "aws_ecs_task_definition" "vacancies_scrape_task" {
-  family                   = "${var.ecs_service_web_task_name}_vacancies_scrape_task"
-  container_definitions    = "${data.template_file.vacancies_scrape_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "vacancies_scrape_task" {
-  name                = "${var.ecs_service_web_task_name}_vacancies_scrape_task"
-  description         = "Run vacancies_scrape_task at a scheduled time"
-  schedule_expression = "${var.vacancies_scrape_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "vacancies_scrape_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_vacancies_scrape"
-  rule      = "${aws_cloudwatch_event_rule.vacancies_scrape_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.vacancies_scrape_task.arn}"
-  }
-}
-
 resource "aws_ecs_task_definition" "sessions_trim_task" {
   family                   = "${var.ecs_service_web_task_name}_sessions_trim_task"
   container_definitions    = "${data.template_file.sessions_trim_container_definition.rendered}"
