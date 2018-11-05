@@ -80,10 +80,6 @@ variable "sessions_trim_task_command" {
   type = "list"
 }
 
-variable "update_pay_scale_task_command" {
-  type = "list"
-}
-
 variable "reindex_vacancies_task_command" {
   type = "list"
 }

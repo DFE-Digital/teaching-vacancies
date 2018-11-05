@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_11_164936) do
+ActiveRecord::Schema.define(version: 2018_10_26_110204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -69,11 +69,7 @@ ActiveRecord::Schema.define(version: 2018_10_11_164936) do
   create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
     t.string "code"
-    t.integer "salary"
-    t.date "expires_at"
     t.integer "index"
-    t.date "starts_at"
-    t.index ["code", "expires_at"], name: "index_pay_scales_on_code_and_expires_at", unique: true
     t.index ["label"], name: "index_pay_scales_on_label", unique: true
   end
 
