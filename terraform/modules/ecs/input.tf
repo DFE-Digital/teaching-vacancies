@@ -51,7 +51,9 @@ variable "aws_elasticsearch_secret" {}
 variable "redis_url" {}
 variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}
-variable "google_drive_json_key" {}
+variable "google_drive_json_key" {
+  type = "map"
+}
 variable "auth_spreadsheet_id" {}
 variable "published_vacancy_spreadsheet_id" {}
 variable "domain" {}

@@ -86,6 +86,10 @@
       {
         "name": "PUBLISHED_VACANCY_SPREADSHEET_ID",
         "value": "${published_vacancy_spreadsheet_id}"
+      },
+      {
+        "name": "GOOGLE_DRIVE_JSON_KEY",
+        "value": "${google_drive_json_key}"
       }
     ]
   }
