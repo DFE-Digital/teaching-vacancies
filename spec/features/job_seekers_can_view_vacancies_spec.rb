@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
-  scenario 'Vacancies are listed with summary information' do
+  scenario 'Vacancies are listed with summary information', elasticsearch: true do
     vacancy = create(:vacancy)
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path

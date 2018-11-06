@@ -24,7 +24,6 @@ ecs_service_web_task_name = "web"
 ecs_service_web_task_count = 1
 ecs_service_web_task_port = 3000
 ecs_service_worker_task_port = 8082
-vacancies_scrape_schedule_expression = "rate(60 minutes)"
 logspout_command = ["syslog+tls://logsN.papertrailapp.com:XXXXX"]
 worker_command = ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 
