@@ -158,7 +158,7 @@ variable "import_schools_task_command" {
 
 variable "import_schools_task_schedule" {
   description = "import_schools schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "cron(0 02 * * ? *)"
+  default     = "cron(0 07 * * ? *)"
 }
 
 variable "sessions_trim_task_command" {
