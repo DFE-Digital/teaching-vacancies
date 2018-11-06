@@ -291,7 +291,7 @@ GEM
       railties (>= 3.0.0)
     public_suffix (3.0.3)
     puma (3.12.0)
-    rack (2.0.5)
+    rack (2.0.6)
     rack-oauth2 (1.9.2)
       activesupport
       attr_required
