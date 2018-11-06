@@ -6,8 +6,8 @@
   %head
     = render partial: 'shared/gtag'
     = render partial: 'shared/open_graph'
+    = render partial: 'shared/meta'
     %meta{charset: "utf-8"}/
-    %meta{name: 'description', content: "#{t('app.description')}"}/
     %title #{content_for :page_title_prefix} — #{t('app.title')}
     %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
     %meta{content: "blue", name: "theme-color"}/
