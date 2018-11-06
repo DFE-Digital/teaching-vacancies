@@ -1,10 +1,16 @@
 class Api::VacanciesController < Api::ApplicationController
-  before_action :verify_json_request
+  before_action :verify_json_request, only: %w[show]
+  before_action :verify_json_or_csv_request, only: %w[index]
 
   def index
     filters = VacancyFilters.new({})
     records = Vacancy.public_search(filters: filters, sort: {}).records
     @vacancies = VacanciesPresenter.new(records, searched: false)
+
+    respond_to do |format|
+      format.csv { send_data @vacancies.to_csv, filename: "#{Time.zone.now.iso8601}_jobs.csv", template: false }
+      format.json
+    end
   end
 
   def show
@@ -16,13 +22,5 @@ class Api::VacanciesController < Api::ApplicationController
 
   def id
     params[:id]
-  end
-
-  def set_headers
-    response.set_header('X-Robots-Tag', 'noarchive')
-  end
-
-  def verify_json_request
-    not_found unless request.format.json?
   end
 end
