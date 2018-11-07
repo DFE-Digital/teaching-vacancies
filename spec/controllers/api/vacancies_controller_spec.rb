@@ -7,6 +7,23 @@ RSpec.describe Api::VacanciesController, type: :controller do
     request.accept = 'application/json'
   end
 
+  describe 'GET /api/v1/jobs.html' do
+    it 'returns status :not_found as only CSV and JSON format is allowed' do
+      get :index, params: { api_version: 1 }, format: :html
+
+      expect(response.status).to eq(Rack::Utils.status_code(:not_found))
+    end
+  end
+
+  describe 'GET /api/v1/jobs.csv' do
+    it 'robots are asked to index but not to follow' do
+      get :index, params: { api_version: 1 }, format: :csv
+
+      expect(response.status).to eq(Rack::Utils.status_code(:ok))
+      expect(response.content_type).to eq('text/csv')
+    end
+  end
+
   describe 'GET /api/v1/jobs.json', elasticsearch: true do
     render_views
 
