@@ -123,10 +123,6 @@
         "value": "${google_drive_json_key}"
       },
       {
-        "name": "AUTH_SPREADSHEET_ID",
-        "value": "${auth_spreadsheet_id}"
-      },
-      {
         "name": "PUBLISHED_VACANCY_SPREADSHEET_ID",
         "value": "${published_vacancy_spreadsheet_id}"
       },
