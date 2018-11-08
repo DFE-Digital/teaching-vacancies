@@ -25,17 +25,8 @@ RSpec.describe Api::VacanciesController, type: :controller do
     context 'sets headers' do
       before(:each) { get :index, params: { api_version: 1 }, format: :csv }
 
-      describe 'X-Robots-Tag' do
-        it 'robots are asked to index but not to follow' do
-          expect(response.headers['X-Robots-Tag']).to eq('noarchive')
-        end
-      end
-
-      describe 'Content-Type' do
-        it 'type is set to text/csv' do
-          expect(response.content_type).to eq('text/csv')
-        end
-      end
+      it_behaves_like 'X-Robots-Tag'
+      it_behaves_like 'Content-Type CSV'
     end
   end
 
@@ -45,21 +36,8 @@ RSpec.describe Api::VacanciesController, type: :controller do
     context 'sets headers' do
       before(:each) { get :index, params: { api_version: 1 } }
 
-      describe 'X-Robots-Tag' do
-        it 'robots are asked to index but not to follow' do
-          expect(response.headers['X-Robots-Tag']).to eq('noarchive')
-        end
-      end
-
-      describe 'Content-Type' do
-        it 'charset is set to UTF-8' do
-          expect(response.charset.to_s).to eq('utf-8')
-        end
-
-        it 'type is set to application/json' do
-          expect(response.content_type).to include('application/json')
-        end
-      end
+      it_behaves_like 'X-Robots-Tag'
+      it_behaves_like 'Content-Type JSON'
     end
 
     it 'returns status :not_found if the request format is not JSON' do
@@ -113,21 +91,8 @@ RSpec.describe Api::VacanciesController, type: :controller do
     context 'sets headers' do
       before(:each) { get :show, params: { id: vacancy.slug, api_version: 1 } }
 
-      describe 'X-Robots-Tag' do
-        it 'robots are asked to index but not to follow' do
-          expect(response.headers['X-Robots-Tag']).to eq('noarchive')
-        end
-      end
-
-      describe 'Content-Type' do
-        it 'charset is set to UTF-8' do
-          expect(response.charset.to_s).to eq('utf-8')
-        end
-
-        it 'type is set to text/csv' do
-          expect(response.content_type).to eq('application/json')
-        end
-      end
+      it_behaves_like 'X-Robots-Tag'
+      it_behaves_like 'Content-Type JSON'
     end
 
     it 'returns status code :ok' do
