@@ -4,3 +4,4 @@
   - [ google_indexing, 2]
   - [ import_school_data, 1 ]
   - [ update_vacancy_spreadsheet, 1 ]
+  - [ audit_sign_in_event, 1 ]

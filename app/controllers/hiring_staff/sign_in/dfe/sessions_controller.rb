@@ -1,4 +1,6 @@
 class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
+  include SignInAuditConcerns
+
   skip_before_action :check_session, only: %i[create new]
   skip_before_action :check_terms_and_conditions, only: %i[create new]
   skip_before_action :verify_authenticity_token, only: %i[create new]
@@ -13,7 +15,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
     permissions = TeacherVacancyAuthorisation::Permissions.new
     permissions.authorise(identifier, selected_school_urn)
-    Auditor::Audit.new(nil, 'dfe-sign-in.authentication.success', current_session_id).log_without_association
+
+    log_succesful_authentication
 
     if permissions.authorised?
       update_session(permissions.school_urn, permissions)
@@ -26,15 +29,14 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   private
 
   def not_authorised
-    Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
-    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
+    log_failed_authorisation
     @identifier = identifier
     render 'user-not-authorised'
   end
 
   def update_session(school_urn, permissions)
     session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)
-    Auditor::Audit.new(current_school, 'dfe-sign-in.authorisation.success', current_session_id).log
+    log_succesful_authorisation
   end
 
   def auth_hash
@@ -50,6 +52,6 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def selected_school_urn
-    auth_hash.dig('extra', 'raw_info', 'organisation', 'urn')
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
   end
 end
