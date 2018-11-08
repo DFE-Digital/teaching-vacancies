@@ -121,6 +121,23 @@ class VacancyPresenter < BasePresenter
     "#{model.errors.present? ? 'Error: ' : ''}#{page_title}"
   end
 
+  def to_row
+    [
+      id,
+      slug,
+      created_at,
+      status,
+      publish_on,
+      expires_on,
+      starts_on,
+      ends_on,
+      weekly_hours,
+      flexible_working,
+      school.urn,
+      school.county
+    ]
+  end
+
   private
 
   def pay_scale_range_label

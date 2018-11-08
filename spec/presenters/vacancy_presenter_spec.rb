@@ -123,4 +123,17 @@ RSpec.describe VacancyPresenter do
       expect(vacancy.share_url).to match(expected_url.to_s)
     end
   end
+
+  describe '#to_row' do
+    let(:vacancy) { VacancyPresenter.new(create(:vacancy)) }
+    before do
+      allow(vacancy).to receive(:id).and_return('123a-456b-789c')
+      allow(vacancy).to receive(:slug).and_return('my-new-vacancy')
+    end
+
+    it 'creates a CSV row representation of the vacancy' do
+      expect(vacancy.to_row).to be_an(Array)
+      expect(vacancy.to_row).to include('123a-456b-789c', 'my-new-vacancy', 'published')
+    end
+  end
 end
