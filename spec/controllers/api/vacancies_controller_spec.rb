@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::VacanciesController, type: :controller do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
 
-  before(:each) do
+  before(:each, :json) do
     request.accept = 'application/json'
   end
 
@@ -16,21 +16,49 @@ RSpec.describe Api::VacanciesController, type: :controller do
   end
 
   describe 'GET /api/v1/jobs.csv' do
-    it 'robots are asked to index but not to follow' do
+    it 'responds with :ok' do
       get :index, params: { api_version: 1 }, format: :csv
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(response.content_type).to eq('text/csv')
+    end
+
+    context 'sets headers' do
+      before(:each) { get :index, params: { api_version: 1 }, format: :csv }
+
+      describe 'X-Robots-Tag' do
+        it 'robots are asked to index but not to follow' do
+          expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+        end
+      end
+
+      describe 'Content-Type' do
+        it 'type is set to text/csv' do
+          expect(response.content_type).to eq('text/csv')
+        end
+      end
     end
   end
 
-  describe 'GET /api/v1/jobs.json', elasticsearch: true do
+  describe 'GET /api/v1/jobs.json', elasticsearch: true, json: true do
     render_views
 
     context 'sets headers' do
-      it 'robots are asked to index but not to follow' do
-        get :index, params: { api_version: 1 }
-        expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+      before(:each) { get :index, params: { api_version: 1 } }
+
+      describe 'X-Robots-Tag' do
+        it 'robots are asked to index but not to follow' do
+          expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+        end
+      end
+
+      describe 'Content-Type' do
+        it 'charset is set to UTF-8' do
+          expect(response.charset.to_s).to eq('utf-8')
+        end
+
+        it 'type is set to application/json' do
+          expect(response.content_type).to include('application/json')
+        end
       end
     end
 
@@ -72,7 +100,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
   end
 
-  describe 'GET /api/v1/jobs/:id.json' do
+  describe 'GET /api/v1/jobs/:id.json', json: true do
     render_views
     let(:vacancy) { create(:vacancy) }
 
@@ -80,6 +108,26 @@ RSpec.describe Api::VacanciesController, type: :controller do
       get :show, params: { id: vacancy.slug, api_version: 1 }, format: :html
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
+    end
+
+    context 'sets headers' do
+      before(:each) { get :show, params: { id: vacancy.slug, api_version: 1 } }
+
+      describe 'X-Robots-Tag' do
+        it 'robots are asked to index but not to follow' do
+          expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+        end
+      end
+
+      describe 'Content-Type' do
+        it 'charset is set to UTF-8' do
+          expect(response.charset.to_s).to eq('utf-8')
+        end
+
+        it 'type is set to text/csv' do
+          expect(response.content_type).to eq('application/json')
+        end
+      end
     end
 
     it 'returns status code :ok' do
