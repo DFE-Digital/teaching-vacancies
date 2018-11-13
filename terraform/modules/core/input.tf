@@ -31,5 +31,8 @@ variable "asg_max_size" {}
 variable "asg_min_size" {}
 variable "asg_desired_size" {}
 
+variable "domain" {}
+variable "redirect_old_teachingjobs_traffic" {}
+
 variable "ecs_cluster_name" {}
 variable "ecs_service_web_name" {}

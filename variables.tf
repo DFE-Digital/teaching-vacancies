@@ -85,6 +85,9 @@ variable "alb_certificate_arn" {
   description = "The certificate ARN to attach to the ALB's HTTPS listener"
 }
 
+variable "domain" {}
+variable "redirect_old_teachingjobs_traffic" {}
+
 # ECS
 variable "ecs_cluster_name" {}
 
@@ -313,7 +316,6 @@ variable "google_drive_json_key" {
   type = "map"
 }
 variable "published_vacancy_spreadsheet_id" {}
-variable "domain" {}
 variable "google_geocoding_api_key" {}
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
