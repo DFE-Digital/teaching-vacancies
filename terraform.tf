@@ -39,6 +39,9 @@ module "core" {
   asg_min_size     = "${var.asg_min_size}"
   asg_desired_size = "${var.asg_desired_size}"
 
+  domain = "${var.domain}"
+  redirect_old_teachingjobs_traffic = "${var.redirect_old_teachingjobs_traffic}"
+
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
   ecs_service_web_name              = "${module.ecs.web_service_name}"
   aws_iam_ecs_instance_profile_name = "${module.ecs.aws_iam_ecs_instance_profile_name}"
