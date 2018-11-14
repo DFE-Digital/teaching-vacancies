@@ -64,17 +64,34 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
 
     it 'retrieves all available vacancies' do
-      vacancies = create_list(:vacancy, 3)
+      skip_vacancy_publish_on_validation
+      published_vacancy = create(:vacancy)
+      expired_vacancy = create(:vacancy, :expired)
+
+      vacancies = [published_vacancy, expired_vacancy]
 
       Vacancy.__elasticsearch__.refresh_index!
 
       get :index, params: { api_version: 1 }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(json[:data].count).to eq(3)
+      expect(json[:data].count).to eq(2)
       vacancies.each do |v|
         expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(v)))
       end
+    end
+
+    it 'does not retrieve incomplete or deleted vacancies' do
+      create(:vacancy, :draft)
+      create(:vacancy, :trashed)
+      create(:vacancy, :future_publish)
+
+      Vacancy.__elasticsearch__.refresh_index!
+
+      get :index, params: { api_version: 1 }
+
+      expect(response.status).to eq(Rack::Utils.status_code(:ok))
+      expect(json[:data].count).to eq(0)
     end
   end
 
