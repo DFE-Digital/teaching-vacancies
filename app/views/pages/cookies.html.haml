@@ -1,106 +1,102 @@
 - content_for :page_title_prefix  do
-  Cookies
+  =t('static_pages.cookies.title')
 
 .govuk-grid-row
 
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-xl Cookies
+    %h1.govuk-heading-xl=t('static_pages.cookies.title')
 
-    %p.govuk-body-l 'Teaching Vacancies' puts small files (known as 'cookies') onto your computer to collect information about how you use the site.
+    %p.govuk-body-l=t('static_pages.cookies.explainer')
 
-    %p Cookies are used to:
-
-    %ul.govuk-list.govuk-list--bullet
-      %li measure how you use the this service so it can be updated and improved based on your needs
-      %li remember the notifications you've seen so that we don't show them to you again
-      %li remember who you are when you have logged in so we can show you your information and information relevant to you
-
-    .panel.panel-border-wide
-      %p 'Teaching Vacancies' cookies aren't used to identify you personally.
-    %p Find out more about #{link_to 'how to manage cookies.', 'http://www.aboutcookies.org/', class: 'govuk-link'}
-
-    %h2.govuk-heading-l How we use cookies
-
-    %h3.govuk-heading-m Measuring website usage (Google Analytics)
-
-    %p We use Google Analytics software to collect information about how you use 'Teaching Vacancies'. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.
-
-    %p Google Analytics stores information about:
+    %p=t('static_pages.cookies.cookies_are_used_to.title')
 
     %ul.govuk-list.govuk-list--bullet
-      %li the pages you visit on 'Teaching Vacancies'
-      %li how long you spend on each page
-      %li how you got to the site
-      %li what you click on while you're visiting the site
+      -t('static_pages.cookies.cookies_are_used_to.text').each do |li|
+        %li=li.html_safe
 
     .panel.panel-border-wide
-      %p We don't allow Google to use or share our analytics data.
+      %p=t('static_pages.cookies.not_used_to_identify')
+    %p=t('static_pages.cookies.find_out_more_about_cookies', how_to_manage_url: link_to(t('static_pages.cookies.how_to_manage'), 'http://www.aboutcookies.org/', class: 'govuk-link')).html_safe
 
-    %p Google Analytics sets the following cookies:
+    %h2.govuk-heading-l=t('static_pages.cookies.how_we_use.title')
+
+    %h3.govuk-heading-m=t('static_pages.cookies.how_we_use.analytics.title')
+
+    %p=t('static_pages.cookies.how_we_use.analytics.line_1')
+
+    %p=t('static_pages.cookies.how_we_use.analytics.line_2')
+
+    %ul.govuk-list.govuk-list--bullet
+      -t('static_pages.cookies.how_we_use.analytics.list').each do |li|
+        %li=li.html_safe
+
+    .panel.panel-border-wide
+      %p=t('static_pages.cookies.how_we_use.analytics.line_3')
+
+    %p=t('static_pages.cookies.how_we_use.analytics.line_4')
 
     %table.govuk-table.mb1
       %thead.govuk-table__head
-        %th.govuk-table__header Name
-        %th.govuk-table__header Purpose
-        %th.govuk-table__header Expires
+        %th.govuk-table__header=t('static_pages.cookies.name')
+        %th.govuk-table__header=t('static_pages.cookies.purpose')
+        %th.govuk-table__header=t('static_pages.cookies.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell _ga
-        %td.govuk-table__cell This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before
-        %td.govuk-table__cell After 2 years
+        %td.govuk-table__cell=t('static_pages.cookies.types.ga.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.ga.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell _gid
-        %td.govuk-table__cell This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before
-        %td.govuk-table__cell After 24 hours
+        %td.govuk-table__cell=t('static_pages.cookies.types.gid.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.gid.expires')
 
-    %p You can #{link_to 'opt out of Google Analytics.', 'https://tools.google.com/dlpage/gaoptout', class: 'govuk-link'}
+    %p=t('static_pages.cookies.how_we_use.analytics.you_can_opt_out', opt_out_url: link_to(t('static_pages.cookies.how_we_use.analytics.opt_out'), 'https://tools.google.com/dlpage/gaoptout', class: 'govuk-link')).html_safe
 
+    %h3.govuk-heading-m=t('static_pages.cookies.sessions.title')
 
-    %h3.govuk-heading-m Sessions
-
-    %p A cookie is set to record your session activity.
+    %p=t('static_pages.cookies.sessions.about')
 
     %table.govuk-table.mb1
       %thead.govuk-table__head
-        %th.govuk-table__header Name
-        %th.govuk-table__header Purpose
-        %th.govuk-table__header Expires
+        %th.govuk-table__header=t('static_pages.cookies.name')
+        %th.govuk-table__header=t('static_pages.cookies.purpose')
+        %th.govuk-table__header=t('static_pages.cookies.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell _teachingvacancies_session
-        %td.govuk-table__cell Stores session data
-        %td.govuk-table__cell After 1 hour
+        %td.govuk-table__cell=t('static_pages.cookies.types.teachingvacancies_session.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.teachingvacancies_session.expires')
 
-    %h3.govuk-heading-m Our introductory message
+    %h3.govuk-heading-m=t('static_pages.cookies.introductory_message.title')
 
-    %p You may see a pop-up welcome message when you first visit 'Teaching Vacancies'. We'll store a cookie so that your computer knows you've seen it and knows not to show it again.
+    %p=t('static_pages.cookies.introductory_message.about')
 
     %table.govuk-table.mb1
       %thead.govuk-table__head
-        %th.govuk-table__header Name
-        %th.govuk-table__header Purpose
-        %th.govuk-table__header Expires
+        %th.govuk-table__header=t('static_pages.cookies.name')
+        %th.govuk-table__header=t('static_pages.cookies.purpose')
+        %th.govuk-table__header=t('static_pages.cookies.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell seen_cookie_message
-        %td.govuk-table__cell Saves a message to let us know that you have seen our cookie message
-        %td.govuk-table__cell After 1 month
+        %td.govuk-table__cell=t('static_pages.cookies.types.seen_cookie_message.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.seen_cookie_message.expires')
 
-    %h3.govuk-heading-m Our feedback survey
+    %h3.govuk-heading-m=t('static_pages.cookies.feedback_survey.title')
 
-    %p <a href='https://www.surveymonkey.com/' target='_blank' class='govuk-link'>SurveyMonkey</a> is used to collect responses to our feedback survey. If you take part, SurveyMonkey will save extra cookies to your computer to track your progress through it.
+    %p=t('static_pages.cookies.feedback_survey.about').html_safe
 
     %table.govuk-table.mb1
       %thead.govuk-table__head
-        %th.govuk-table__header Name
-        %th.govuk-table__header Purpose
-        %th.govuk-table__header Expires
+        %th.govuk-table__header=t('static_pages.cookies.name')
+        %th.govuk-table__header=t('static_pages.cookies.purpose')
+        %th.govuk-table__header=t('static_pages.cookies.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell RP211276217
-        %td.govuk-table__cell This cookie is used to restrict a users to one response per survey
-        %td.govuk-table__cell After 90 days
+        %td.govuk-table__cell=t('static_pages.cookies.types.RP211276217.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.RP211276217.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell ep201
-        %td.govuk-table__cell This is used to help us identify how you use the survey
-        %td.govuk-table__cell After 30 minutes
+        %td.govuk-table__cell=t('static_pages.cookies.types.ep201.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.ep201.expires')
       %tr.govuk-table__row
         %td.govuk-table__cell ep202
-        %td.govuk-table__cell This works with ep201 to help us identify how you use the survey
-        %td.govuk-table__cell After 1 year
+        %td.govuk-table__cell=t('static_pages.cookies.types.ep202.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.ep202.expires')
