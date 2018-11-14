@@ -53,7 +53,7 @@
     %p=t('static_pages.privacy_policy.your_rights.line_3', gdpr_url: link_to(t('static_pages.privacy_policy.your_rights.gdpr'), 'https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/', target: '_blank', class: 'govuk-link')).html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.withdrawal_of_consent.title')
-    %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_1', mailto: mail_to('teachingjobs@digital.education.gov.uk', 'teachingjobs@digital.education.gov.uk', class: 'govuk-link')).html_safe
+    %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_1', mailto: mail_to(t('help.email'), t('help.email'), class: 'govuk-link')).html_safe
     %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_2')
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.last_updated.title')
