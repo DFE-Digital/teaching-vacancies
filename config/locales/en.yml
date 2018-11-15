@@ -17,6 +17,7 @@ en:
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
     jobseekers_index_link: 'View public jobs'
+    back: 'Back'
   sign_in:
     title: 'Sign in to Teaching Jobs'
     link: 'Sign in'
