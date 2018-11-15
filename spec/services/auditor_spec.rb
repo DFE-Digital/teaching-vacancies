@@ -62,6 +62,8 @@ RSpec.describe 'Auditor::Auth' do
       expect(latest_activities.count).to eq(2)
       expect(latest_activities.first.key).to eq('azure.authentication')
       expect(latest_activities.last.key).to eq('dfe-sign-in.authentication.failure')
+
+      Timecop.return
     end
   end
 end
