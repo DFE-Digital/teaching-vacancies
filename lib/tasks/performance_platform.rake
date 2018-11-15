@@ -8,12 +8,12 @@ namespace :performance_platform do
   end
 
   task submit_transactions: :environment do
-    yesteday = Date.current.beginning_of_day - 1.day
+    yesteday = Date.current.beginning_of_day.in_time_zone - 1.day
     PerformancePlatformFeedbackQueueJob.perform_later(yesteday.to_s)
   end
 
   task submit_user_satisfaction: :environment do
-    yesterday = Date.current.beginning_of_day - 1.day
+    yesterday = Date.current.beginning_of_day.in_time_zone - 1.day
     PerformancePlatformTransactionsQueueJob.perform_later(yesterday.to_s)
   end
 
@@ -23,7 +23,7 @@ namespace :performance_platform do
     number_of_days = current_date.mjd - start_date.mjd
 
     while number_of_days.positive?
-      date = Date.current.beginning_of_day - number_of_days.day
+      date = Date.current.beginning_of_day.in_time_zone - number_of_days.day
       PerformancePlatformFeedbackQueueJob.perform_later(date.to_s)
       PerformancePlatformTransactionsQueueJob.perform_later(date.to_s)
       number_of_days -= 1
