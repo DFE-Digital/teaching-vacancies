@@ -9,6 +9,14 @@ RSpec.describe PagesController, type: :controller do
 
       it { should respond_with(:success) }
       it { should render_template(page) }
+
+      it 'should not have a noindex header, unless it is the unauthorised user page' do
+        if page == 'user-not-authorised'
+          expect(response.headers['X-Robots-Tag']).to include('noindex')
+        else
+          expect(response.headers['X-Robots-Tag']).to_not include('noindex')
+        end
+      end
     end
   end
 end
