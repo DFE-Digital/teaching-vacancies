@@ -39,6 +39,9 @@ module "core" {
   asg_min_size     = "${var.asg_min_size}"
   asg_desired_size = "${var.asg_desired_size}"
 
+  domain = "${var.domain}"
+  redirect_old_teachingjobs_traffic = "${var.redirect_old_teachingjobs_traffic}"
+
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
   ecs_service_web_name              = "${module.ecs.web_service_name}"
   aws_iam_ecs_instance_profile_name = "${module.ecs.aws_iam_ecs_instance_profile_name}"
@@ -120,7 +123,7 @@ module "ecs" {
   authorisation_service_token      = "${var.authorisation_service_token}"
   authorisation_service_url        = "${var.authorisation_service_url}"
   google_drive_json_key            = "${var.google_drive_json_key}"
-  auth_spreadsheet_id              = "${var.auth_spreadsheet_id}"
+  published_vacancy_spreadsheet_id = "${var.published_vacancy_spreadsheet_id}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"

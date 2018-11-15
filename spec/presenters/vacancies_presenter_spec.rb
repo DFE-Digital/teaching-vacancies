@@ -59,4 +59,34 @@ RSpec.describe VacanciesPresenter do
       expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_plural_without_search', count: 3))
     end
   end
+
+  describe '#to_csv' do
+    it 'returns the correct number for multiple vacancies', elasticsearch: true do
+      vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'School teacher'))
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      vacancies = Vacancy.search('Teacher').records
+      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: false)
+      vacancies_text = vacancies_presenter.to_csv
+      vacancies_csv = CSV.parse(vacancies_text)
+
+      expect(vacancies_csv[0]).to eq(%w[title description jobBenefits datePosted educationRequirements
+                                        qualifications experienceRequirements employmentType
+                                        jobLocation.addressLocality jobLocation.addressRegion
+                                        jobLocation.streetAddress jobLocation.postalCode url
+                                        baseSalary.currency baseSalary.minValue baseSalary.maxValue
+                                        baseSalary.unitText hiringOrganization.type hiringOrganization.name
+                                        hiringOrganization.identifier])
+
+      expect(vacancies_csv[1]).to eq([vacancy.job_title, vacancy.job_description,
+                                      vacancy.benefits, vacancy.publish_on.to_time.iso8601, vacancy.education,
+                                      vacancy.qualifications, vacancy.experience,
+                                      vacancy.working_pattern_for_job_schema, vacancy.school.town,
+                                      vacancy.school&.region&.name, vacancy.school.address,
+                                      vacancy.school.postcode,
+                                      Rails.application.routes.url_helpers.job_url(vacancy, protocol: 'https'),
+                                      'GBP', vacancy.minimum_salary, vacancy.maximum_salary, 'YEAR',
+                                      'School', vacancy.school.name, vacancy.school.urn])
+    end
+  end
 end

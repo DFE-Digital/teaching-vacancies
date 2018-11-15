@@ -5,6 +5,7 @@ class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::Applic
 
     if PublishVacancy.new(vacancy: vacancy).call
       Auditor::Audit.new(vacancy, 'vacancy.publish', current_session_id).log
+      UpdateVacancySpreadsheetJob.perform_later(vacancy.id)
       update_google_index(vacancy) if vacancy.listed?
       reset_session_vacancy!
       redirect_to school_job_summary_path(vacancy.id)

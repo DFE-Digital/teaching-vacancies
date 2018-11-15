@@ -58,6 +58,7 @@ http_user = "user"
 http_pass = "password"
 google_maps_api_key =
 google_analytics =
+published_vacancy_spreadsheet_id =
 rollbar_access_token =
 domain = # "tvs.dxw.net"
 pp_transactions_by_channel_token =

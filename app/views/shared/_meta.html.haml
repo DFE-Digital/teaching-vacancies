@@ -1,0 +1,5 @@
+%meta{name: 'title', content: "#{content_for :page_title_prefix}".strip}/
+- if content_for :page_description
+  %meta{name: 'description', content: "#{content_for :page_description}".strip}/
+- else
+  %meta{name: 'description', content: I18n.t('app.description')}/

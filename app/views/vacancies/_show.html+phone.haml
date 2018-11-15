@@ -1,6 +1,9 @@
 - content_for :page_title_prefix do
   #{@vacancy.job_title} — #{@vacancy.school_name}
 
+- content_for :page_description do
+  = strip_tags(@vacancy.job_description)
+
 .vacancy.govuk-grid-row
   - if @vacancy.expired?
     .govuk-grid-column-full
@@ -43,8 +46,8 @@
           %dd.app-check-your-answers__answer= @vacancy.weekly_hours
       - if @vacancy.newly_qualified_teacher?
         .app-check-your-answers__contents
-          %dt= t('jobs.newly_qualified_teacher')
-          %dd= @vacancy.newly_qualified_teacher
+          %dt.app-check-your-answers__question= t('jobs.newly_qualified_teacher')
+          %dd.app-check-your-answers__answer= @vacancy.newly_qualified_teacher
       - if @vacancy.flexible_working?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.flexible_working')
