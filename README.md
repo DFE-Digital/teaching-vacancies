@@ -1,5 +1,7 @@
 # Teacher Vacancy Service (TVS)
 
+[API Documentation](https://dfe-digital.github.io/teaching-jobs-api-docs)
+
 ### Prerequisites
  - [Docker](https://docs.docker.com/docker-for-mac) greater than or equal to `18.03.1-ce-mac64 (24245)`
 
