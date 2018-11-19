@@ -1,3 +1,6 @@
 .govuk-grid-row
   .govuk-grid-column-full
-    = link_to t('nav.back'), url_for(:back), class: 'govuk-back-link'
+    -if request.referrer
+      = link_to t('nav.back'), request.referrer, class: 'govuk-back-link'
+    -else
+      = link_to t('nav.back'), root_path, class: 'govuk-back-link'
