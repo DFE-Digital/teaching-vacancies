@@ -157,4 +157,25 @@ RSpec.feature 'Searching vacancies by keyword' do
       expect(page).to have_content('0 jobs match your search.')
     end
   end
+
+  context 'search parameters are persisted on navigation' do
+    scenario 'back link perists search params' do
+      create(:vacancy, job_title: 'Maths Teacher')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'Math'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      page.find('.view-vacancy-link').click
+      expect(page).to have_content('Maths Teacher')
+
+      page.find('.govuk-back-link').click
+      expect(page.current_url).to include('keyword=Math')
+    end
+  end
 end
