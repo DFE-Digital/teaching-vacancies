@@ -17,7 +17,7 @@ RSpec.describe AuditSignInEventJob, type: :job do
   end
 
   it 'encrypts the data' do
-    stub_const('PUBLISHED_VACANCY_SPREADSHEET_ID', 'abc1-def2')
+    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
     spreadsheet = double(:mock)
     expect(Spreadsheet::Writer).to receive(:new).and_return(spreadsheet)
     expect(spreadsheet).to receive(:append).with(data)

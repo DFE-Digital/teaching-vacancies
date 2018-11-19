@@ -4,7 +4,7 @@ class UpdateVacancySpreadsheetJob < ApplicationJob
   queue_as :update_vacancy_spreadsheet
 
   def perform(vacancy_id)
-    return unless PUBLISHED_VACANCY_SPREADSHEET_ID
+    return unless AUDIT_SPREADSHEET_ID
     vacancy = Vacancy.find(vacancy_id)
     write_row(vacancy)
   end
@@ -13,7 +13,7 @@ class UpdateVacancySpreadsheetJob < ApplicationJob
 
   def write_row(vacancy)
     row = VacancyPresenter.new(vacancy).to_row
-    worksheet = Spreadsheet::Writer.new(PUBLISHED_VACANCY_SPREADSHEET_ID)
+    worksheet = Spreadsheet::Writer.new(AUDIT_SPREADSHEET_ID)
     worksheet.append(row)
     Rails.logger.info("Sidekiq: added vacancy #{vacancy.id} to published vacancies sheet")
   end

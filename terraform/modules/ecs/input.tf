@@ -54,7 +54,7 @@ variable "authorisation_service_token" {}
 variable "google_drive_json_key" {
   type = "map"
 }
-variable "published_vacancy_spreadsheet_id" {}
+variable "audit_spreadsheet_id" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 variable "google_api_json_key" {

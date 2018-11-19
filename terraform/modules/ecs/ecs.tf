@@ -156,7 +156,7 @@ data "template_file" "web_container_definition" {
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
-    published_vacancy_spreadsheet_id = "${var.published_vacancy_spreadsheet_id}"
+    audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     domain                           = "${var.domain}"
     google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id      = "${var.google_analytics_profile_id}"
@@ -357,7 +357,7 @@ data "template_file" "worker_container_definition" {
     google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id      = "${var.google_analytics_profile_id}"
     domain                           = "${var.domain}"
-    published_vacancy_spreadsheet_id = "${var.published_vacancy_spreadsheet_id}"
+    audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
 
     worker_command = "${jsonencode(var.worker_command)}"
