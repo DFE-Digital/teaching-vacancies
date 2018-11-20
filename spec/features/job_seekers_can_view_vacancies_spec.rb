@@ -10,7 +10,7 @@ RSpec.feature 'Viewing vacancies' do
 
   scenario 'View a banner with information about the service' do
     visit jobs_path
-    expect(page).to have_content('This service is in development and lists jobs in select areas of England.')
+    expect(page).to have_css('.flash.notice')
   end
 
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
