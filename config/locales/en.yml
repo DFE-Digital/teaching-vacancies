@@ -278,7 +278,7 @@ en:
     server_error: Something went wrong at our end.
 
   help:
-    email: teaching.vacancies@education.gov.uk
+    email: teachingjobs@digital.education.gov.uk
 
   static_pages:
     not_authorised:
