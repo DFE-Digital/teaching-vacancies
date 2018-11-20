@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Teaching Jobs stats', type: :request do
+RSpec.describe 'Teaching Vacancies stats', type: :request do
   context 'returns a JSON of useful information about the app' do
     context 'default usage' do
       it 'it includes all audited information' do
