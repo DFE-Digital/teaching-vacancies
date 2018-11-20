@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PerformancePlatformFeedbackQueueJob, type: :job do
   include ActiveJob::TestHelper
 
-  subject(:date) { Date.current.beginning_of_day }
+  subject(:date) { Date.current.beginning_of_day.in_time_zone }
   subject(:job) { described_class.perform_later(date.to_s) }
 
   it 'queues the job' do
