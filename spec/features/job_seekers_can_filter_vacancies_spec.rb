@@ -11,7 +11,6 @@ RSpec.feature 'Filtering vacancies' do
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
-
     within '.filters-form' do
       fill_in 'keyword', with: 'English'
       page.find('.govuk-button[type=submit]').click
@@ -253,6 +252,29 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(not_nqt_suitable_vacancy.job_title)
       expect(page).to have_content(nqt_suitable_vacancy.job_title)
       expect(page).to have_field('newly_qualified_teacher', checked: false)
+    end
+  end
+
+  scenario 'Searching triggers a job to write a search_event to the audit Spreadsheet' do
+    create(:vacancy, :published, job_title: 'Physics', newly_qualified_teacher: true)
+    create(:vacancy, :published, newly_qualified_teacher: false)
+    timestamp = Time.zone.now.iso8601
+
+    Vacancy.__elasticsearch__.client.indices.flush
+
+    data = [timestamp.to_s, 1, '', '20km', 'Physics', '', '', nil, nil, 'true']
+
+    expect(AuditSearchEventJob).to receive(:perform_later)
+      .with(data)
+
+    visit jobs_path
+
+    Timecop.freeze(timestamp) do
+      within '.filters-form' do
+        check 'newly_qualified_teacher'
+        fill_in 'keyword', with: 'Physics'
+        page.find('.govuk-button[type=submit]').click
+      end
     end
   end
 
