@@ -18,4 +18,19 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     expect(activity.key).to eq('vacancy.get_more_information')
     expect(activity.session_id).to eq(nil)
   end
+
+  scenario 'it triggers a job to write an express_interest_event to the audit Spreadsheet' do
+    vacancy = create(:vacancy, :published)
+    visit job_path(vacancy)
+
+    timestamp = Time.zone.now.iso8601
+    express_interest_event = [timestamp.to_s, vacancy.id, vacancy.school.urn, vacancy.application_link]
+
+    expect(AuditExpressInterestEventJob).to receive(:perform_later)
+      .with(express_interest_event)
+
+    Timecop.freeze(timestamp) do
+      click_on 'Get more information'
+    end
+  end
 end
