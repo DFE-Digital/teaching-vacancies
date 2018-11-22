@@ -9,7 +9,7 @@ class HiringStaff::TermsAndConditionsController < HiringStaff::BaseController
     @terms_and_conditions_form = TermsAndConditionsForm.new(terms_params)
     if @terms_and_conditions_form.valid?
       current_user.update(accepted_terms_at: Time.zone.now)
-      Auditor::Audit.new(current_user, 'user.terms_and_conditions.accept', current_session_id).log
+      audit_toc_acceptance
       redirect_to school_path
     else
       render :show
@@ -20,5 +20,12 @@ class HiringStaff::TermsAndConditionsController < HiringStaff::BaseController
 
   def terms_params
     params.require(:terms_and_conditions_form).permit(:terms)
+  end
+
+  def audit_toc_acceptance
+    Auditor::Audit.new(current_user, 'user.terms_and_conditions.accept', current_session_id).log
+    AuditTocAcceptanceEventJob.perform_later([Time.zone.now.iso8601.to_s,
+                                              current_session_id,
+                                              session[:urn]])
   end
 end
