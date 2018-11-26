@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CacheTotalAnalyticsPageviewsQueueJob, type: :job, wip: true do
+RSpec.describe CacheTotalAnalyticsPageviewsQueueJob, type: :job do
   include ActiveJob::TestHelper
 
   let(:vacancy) { create(:vacancy) }
