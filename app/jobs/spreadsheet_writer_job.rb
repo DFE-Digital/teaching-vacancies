@@ -10,7 +10,7 @@ class SpreadsheetWriterJob < ApplicationJob
 
   private
 
-  def write_row(row, worksheet_position = 0)
+  def write_row(row, worksheet_position = 99)
     worksheet = Spreadsheet::Writer.new(AUDIT_SPREADSHEET_ID, worksheet_position)
     worksheet.append(row)
   end
