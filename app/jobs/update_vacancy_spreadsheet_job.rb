@@ -7,6 +7,6 @@ class UpdateVacancySpreadsheetJob < SpreadsheetWriterJob
 
     vacancy = Vacancy.find(vacancy_id)
     row = VacancyPresenter.new(vacancy).to_row
-    write_row(row)
+    write_row(row, WORKSHEET_POSITION)
   end
 end
