@@ -6,6 +6,7 @@ services:
       args:
         RAILS_ENV: "development"
     ports: ["3000:3000"]
+    container_name: teacher-vacancy-service_web_1
     environment:
       RAILS_ENV: "development"
     env_file:

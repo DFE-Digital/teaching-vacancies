@@ -15,10 +15,11 @@ RSpec.describe UpdateVacancySpreadsheetJob, type: :job do
   end
 
   it 'writes to the spreadsheet' do
-    stub_const('UpdateVacancySpreadsheetJob::PUBLISHED_VACANCY_SPREADSHEET_ID', 'abc1-def2')
+    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
     spreadsheet = double(:mock)
     allow(spreadsheet).to receive(:append)
-    expect(Spreadsheet::Writer).to receive(:new).and_return(spreadsheet)
+    expect(Spreadsheet::Writer).to receive(:new)
+      .with('abc1-def2', UpdateVacancySpreadsheetJob::WORKSHEET_POSITION).and_return(spreadsheet)
 
     perform_enqueued_jobs { job }
   end

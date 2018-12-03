@@ -9,6 +9,7 @@ services:
       RAILS_ENV: "test"
       DATABASE_URL: "postgres://postgres@db-test:5432/tvs_test?template=template0&pool=5&encoding=unicode"
       ELASTICSEARCH_URL: "http://elasticsearch-test:9200"
+    container_name: teacher-vacancy-service_test_1
     env_file:
       - docker-compose.env
     volumes:

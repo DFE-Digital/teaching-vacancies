@@ -1,8 +1,9 @@
 require 'google_drive'
 module Spreadsheet
   class Writer
-    def initialize(spreadsheet_id)
+    def initialize(spreadsheet_id, worksheet_pos = 0)
       @spreadsheet_id = spreadsheet_id
+      @worksheet_pos = worksheet_pos
     end
 
     def append(row)
@@ -25,9 +26,9 @@ module Spreadsheet
     end
 
     def worksheet
-      @worksheet ||= session.spreadsheet_by_key(spreadsheet_id).worksheets[0]
+      @worksheet ||= session.spreadsheet_by_key(spreadsheet_id).worksheets[worksheet_pos]
     end
 
-    attr_reader :spreadsheet_id
+    attr_reader :spreadsheet_id, :worksheet_pos
   end
 end
