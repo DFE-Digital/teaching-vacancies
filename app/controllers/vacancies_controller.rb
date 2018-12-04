@@ -48,7 +48,7 @@ class VacanciesController < ApplicationController
 
   def audit_search_event(records, filters)
     AuditSearchEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                       records.count,
+                                       records.total_count,
                                        *filters.to_hash.values])
   end
 
