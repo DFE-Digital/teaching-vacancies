@@ -72,7 +72,7 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Logging
-  config.log_level = :debug
+  config.log_level = :info
   config.log_tags = [:request_id] # Prepend all log lines with the following tags.
   config.logger = ActiveSupport::Logger.new(STDOUT)
 
