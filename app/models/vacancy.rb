@@ -130,6 +130,10 @@ class Vacancy < ApplicationRecord
     published? && !publish_on.future? && expires_on.future?
   end
 
+  def pending?
+    published? && publish_on.future?
+  end
+
   # rubocop:disable Naming/UncommunicativeMethodParamName
   def as_indexed_json(_ = {})
     as_json(
