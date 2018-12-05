@@ -12,7 +12,7 @@ en:
       salary:
         invalid_format: 'must be entered in one of the following formats: 25000 or 25000.00'
         lower_than_minimum_payscale: 'must be at least %{minimum_salary}'
-      year_invalid: year is invalid
+      year_invalid: must include a 4-digit year
   activerecord:
     errors:
       models:

@@ -15,7 +15,7 @@ RSpec.describe DateFormatValidator do
 
       it 'shows an invalid year error' do
         vacancy.valid?
-        expect(vacancy.errors[:starts_on]).to include('year is invalid')
+        expect(vacancy.errors[:starts_on]).to include(I18n.t('errors.messages.year_invalid'))
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe DateFormatValidator do
 
       it 'shows an invalid year error' do
         vacancy.valid?
-        expect(vacancy.errors[:ends_on]).to include('year is invalid')
+        expect(vacancy.errors[:ends_on]).to include(I18n.t('errors.messages.year_invalid'))
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe DateFormatValidator do
 
       it 'shows an invalid year error' do
         vacancy.valid?
-        expect(vacancy.errors[:publish_on]).to include('year is invalid')
+        expect(vacancy.errors[:publish_on]).to include(I18n.t('errors.messages.year_invalid'))
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe DateFormatValidator do
 
       it 'shows an invalid year error' do
         vacancy.valid?
-        expect(vacancy.errors[:expires_on]).to include('year is invalid')
+        expect(vacancy.errors[:expires_on]).to include(I18n.t('errors.messages.year_invalid'))
       end
     end
   end
