@@ -11,10 +11,10 @@ module OmniAuth
         error = request.params['error_reason'] || request.params['error']
         if error
           raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
-        elsif request.params.blank?
-          redirects = { '/auth/dfe/callback' => '/dfe/sessions/new' }
-          req = Rack::Request.new(env)
-          return redirect(redirects[req.path]) if redirects.include?(req.path)
+        elsif request.params.blank? && request.path == '/auth/dfe/callback'
+          response = Rack::Response.new
+          response.redirect('/dfe/sessions/new')
+          response.finish
         elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
           return redirect('/401')
         elsif !request.params['code']
