@@ -1,8 +1,72 @@
-%table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
-  %th.govuk-table__header= t('jobs.job_title')
-  %th.govuk-table__header= t('jobs.publish_on')
-  %th.govuk-table__header= t('jobs.expires_on')
-  %th.govuk-table__header= t('jobs.status')
-  %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
-  - vacancies.each do |vacancy|
-    = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }
+.govuk-tabs{"data-module" => "tabs"}
+  %h2.govuk-tabs__title
+    Contents
+  %ul.govuk-tabs__list
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab.govuk-tabs__tab--selected{:href => "#published-jobs"}
+        Published jobs
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab{:href => "#pending-jobs"}
+        Pending jobs
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab{:href => "#draft-jobs"}
+        Draft jobs
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab{:href => "#expired-jobs"}
+        Expired jobs
+
+  %section#published-jobs.govuk-tabs__panel
+    %h2.govuk-heading-m Published jobs
+    %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header= t('jobs.job_title')
+          %th.govuk-table__header= t('jobs.publish_on')
+          %th.govuk-table__header= t('jobs.expires_on')
+          %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+      %tbody.govuk-table__body
+        %tr.govuk-table__row
+          - vacancies.each do |vacancy|
+            = render partial: 'vacancy_published', locals: { vacancy: vacancy, school: school } if vacancy.listed?
+
+  %section#pending-jobs.govuk-tabs__panel.govuk-tabs__panel--hidden
+    %h2.govuk-heading-m Pending jobs
+    %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header= t('jobs.job_title')
+          %th.govuk-table__header Date to be posted
+          %th.govuk-table__header= t('jobs.expires_on')
+          %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+      %tbody.govuk-table__body
+        %tr.govuk-table__row
+          - vacancies.each do |vacancy|
+            = render partial: 'vacancy_pending', locals: { vacancy: vacancy, school: school } if vacancy.pending?
+
+  %section#draft-jobs.govuk-tabs__panel.govuk-tabs__panel--hidden
+    %h2.govuk-heading-m Draft jobs
+    %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header= t('jobs.job_title')
+          %th.govuk-table__header Date drafted
+          %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+      %tbody.govuk-table__body
+        %tr.govuk-table__row
+          - vacancies.each do |vacancy|
+            = render partial: 'vacancy_draft', locals: { vacancy: vacancy, school: school } if vacancy.draft?
+
+  %section#expired-jobs.govuk-tabs__panel.govuk-tabs__panel--hidden
+    %h2.govuk-heading-m Expired jobs
+    %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header= t('jobs.job_title')
+          %th.govuk-table__header= t('jobs.publish_on')
+          %th.govuk-table__header= t('jobs.expires_on')
+          %th.govuk-table__header= t('jobs.status')
+          %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+      %tbody.govuk-table__body
+        %tr.govuk-table__row
+          - vacancies.each do |vacancy|
+            = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }
