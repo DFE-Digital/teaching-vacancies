@@ -1,0 +1,11 @@
+- if vacancies.any?
+  %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+    %th.govuk-table__header= t('jobs.job_title')
+    %th.govuk-table__header= t('jobs.publish_on')
+    %th.govuk-table__header= t('jobs.expires_on')
+    %th.govuk-table__header= t('jobs.total_views')
+    %th.govuk-table__header= t('jobs.views_this_week')
+    %th.govuk-table__header= t('jobs.get_more_info_clicks')
+    %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+    - vacancies.each do |vacancy|
+      = render partial: 'vacancy', locals: { vacancy: vacancy, school: school, status: 'published' }
