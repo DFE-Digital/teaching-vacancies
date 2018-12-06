@@ -35,6 +35,7 @@ en:
     salary: 'Salary'
     publish_on: 'Date posted'
     expires_on: 'Closing date'
+    expired_on: 'Date expired'
     working_pattern: 'Working pattern'
     newly_qualified_teacher: 'Newly qualified teacher'
     flexible_working: 'Flexible working'
@@ -100,10 +101,10 @@ en:
     share_url: 'This job is publicly visible at:'
     view_public_link: 'View the public page for this job'
     copy_public_url: 'copy the public URL to the clipboard'
-    edit_link: Edit
-    delete_link: Delete
-    duplicate_link: Duplicate
-    are_you_sure: Are you sure you want to delete the '%{job_title}' job?
+    total_views: Total views
+    views_this_week: Views this week
+    get_more_info_clicks: Total get more info clicks
+    republish: Republish
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
@@ -204,6 +205,11 @@ en:
     info: 'About %{school}'
     jobs:
       index: 'Jobs at %{school}'
+      headings:
+        published: Published jobs
+        pending: Pending jobs
+        draft: Draft jobs
+        expired: Expired jobs
     no_jobs:
       heading: 'You have no current jobs.'
       bullets:
@@ -266,7 +272,6 @@ en:
   errors:
     jobs:
       unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
-      unable_to_copy: We were unable to create a copy of this job
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
