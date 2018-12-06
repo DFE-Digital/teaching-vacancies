@@ -286,6 +286,20 @@ RSpec.describe Vacancy, type: :model do
         expect(job.listed?).to be false
       end
     end
+
+    context '#pending?' do
+      it 'returns true if the vacancy has not yet been published' do
+        job = create(:vacancy, :published, publish_on: Time.zone.tomorrow)
+
+        expect(job.pending?).to be true
+      end
+
+      it 'returns false if the vacancy is listed' do
+        job = create(:vacancy, :published)
+
+        expect(job.pending?).to be false
+      end
+    end
   end
 
   context 'actions' do
@@ -327,7 +341,7 @@ RSpec.describe Vacancy, type: :model do
     end
 
     describe '#listed' do
-      it 'retrieves  vacancies that have a status of :published and a future publish_on date' do
+      it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
         published = create_list(:vacancy, 5, :published)
         create_list(:vacancy, 3, :future_publish)
         create_list(:vacancy, 4, :trashed)
@@ -342,44 +356,6 @@ RSpec.describe Vacancy, type: :model do
         pending = create_list(:vacancy, 3, :future_publish)
 
         expect(Vacancy.pending.count).to eq(pending.count)
-      end
-    end
-
-    describe '#draft' do
-      it 'retrieves vacancies that have a status of :draft' do
-        create_list(:vacancy, 5, :published)
-        draft = create_list(:vacancy, 3, :draft)
-
-        expect(Vacancy.draft.count).to eq(draft.count)
-      end
-    end
-
-    describe '#expired' do
-      it 'retrieves vacancies that have a past expires_on date' do
-        create_list(:vacancy, 5, :published)
-        expired = build(:vacancy, :expired)
-        expired.send :set_slug
-        expired.save(validate: false)
-        expires_today = create(:vacancy, expires_on: Time.zone.today)
-
-        expect(Vacancy.expired.count).to eq(1)
-        expect(Vacancy.expired).to_not include(expires_today)
-      end
-    end
-
-    describe '#live' do
-      it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
-        live = create_list(:vacancy, 5, :published)
-        expires_today = create(:vacancy, expires_on: Time.zone.today)
-        expired = build(:vacancy, :expired)
-        expired.send :set_slug
-        expired.save(validate: false)
-        create_list(:vacancy, 3, :future_publish)
-        create_list(:vacancy, 4, :trashed)
-
-        expect(Vacancy.live.count).to eq(live.count + 1)
-        expect(Vacancy.live).to include(expires_today)
-        expect(Vacancy.live).to_not include(expired)
       end
     end
 
