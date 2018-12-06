@@ -359,6 +359,26 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
+    describe '#draft' do
+      it 'retrieves vacancies that have a status of :draft' do
+        create_list(:vacancy, 5, :published)
+        draft = create_list(:vacancy, 3, :draft)
+
+        expect(Vacancy.draft.count).to eq(draft.count)
+      end
+    end
+
+    describe '#expired' do
+      it 'retrieves vacancies that have a past expires_on date' do
+        create_list(:vacancy, 5, :published)
+        expired = build(:vacancy, :expired)
+        expired.send :set_slug
+        expired.save(validate: false)
+
+        expect(Vacancy.expired.count).to eq(1)
+      end
+    end
+
     describe '#published_on_count(date)' do
       it 'retrieves vacancies listed on the specified date' do
         published_today = create_list(:vacancy, 3, :published_slugged)
