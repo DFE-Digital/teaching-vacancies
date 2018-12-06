@@ -97,6 +97,7 @@ class Vacancy < ApplicationRecord
   scope :active, (-> { where(status: %i[published draft]) })
   scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
   scope :published_on_count, (->(date) { published.where('date(publish_on) = ?', date).count })
+  scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
 
   paginates_per 10
 
@@ -131,7 +132,7 @@ class Vacancy < ApplicationRecord
   end
 
   def pending?
-    published? && publish_on.future?
+    published? && publish_on.future? && expires_on.future?
   end
 
   # rubocop:disable Naming/UncommunicativeMethodParamName
