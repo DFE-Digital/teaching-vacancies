@@ -97,9 +97,19 @@ en:
     status: 'Status'
     already_published: 'This job has already been published'
     draft: 'This job is currently a draft version.'
+    date_to_be_posted: Date to be posted
+    date_drafted: Date drafted
     share_url: 'This job is publicly visible at:'
     view_public_link: 'View the public page for this job'
     copy_public_url: 'copy the public URL to the clipboard'
+    published_jobs: Published jobs
+    pending_jobs: Pending jobs
+    draft_jobs: Draft jobs
+    expired_jobs: Expired jobs
+    no_published_jobs: You currently have no published jobs
+    no_expired_jobs: You currently have no expired jobs
+    no_draft_jobs: You currently have no draft jobs
+    no_pending_jobs: You currently have no pending jobs
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
@@ -111,6 +121,7 @@ en:
       feedback_link: 'What did you think of this service?'
       feedback_time: '(takes 30 seconds)'
     aria_labels:
+      content: Content
       minimum_salary: 'Minimum salary'
       maximum_salary: 'Maximum salary'
       minimum_pay_scale_range: 'Minimum pay scale range (optional)'

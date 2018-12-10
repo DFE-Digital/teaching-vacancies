@@ -286,20 +286,6 @@ RSpec.describe Vacancy, type: :model do
         expect(job.listed?).to be false
       end
     end
-
-    context '#pending?' do
-      it 'returns true if the vacancy has not yet been published' do
-        job = create(:vacancy, :published, publish_on: Time.zone.tomorrow)
-
-        expect(job.pending?).to be true
-      end
-
-      it 'returns false if the vacancy is listed' do
-        job = create(:vacancy, :published)
-
-        expect(job.pending?).to be false
-      end
-    end
   end
 
   context 'actions' do
