@@ -120,10 +120,32 @@ RSpec.feature 'Viewing vacancies' do
 
   scenario 'Should advise users to check back soon when no jobs are listed' do
     visit jobs_path
+
     I18n.t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
       expect(page).to have_content(sentence)
     end
     expect(page).not_to have_content(I18n.t('jobs.no_jobs'))
+  end
+
+  context 'when a page number is manually added to the URL which does not return results' do
+    scenario 'should render the last page of results instead the of the no results copy', elasticsearch: true do
+      create_list(:vacancy, 11, :published)
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit jobs_path(page: 99)
+
+      expect(page).to have_content(I18n.t('jobs.job_count_plural_without_search', count: 11))
+
+      within('.pagination') do
+        within('.current') do
+          expect(page).to have_content('2')
+        end
+      end
+
+      I18n.t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
+        expect(page).not_to have_content(sentence)
+      end
+    end
   end
 
   scenario 'Should not show text warning about zero jobs on the site if jobs exist but are filtered out' do
