@@ -97,7 +97,7 @@ en:
     status: 'Status'
     already_published: 'This job has already been published'
     draft: 'This job is currently a draft version.'
-    date_to_be_posted: Date to be posted
+    date_to_be_posted: Date to be published
     date_drafted: Date drafted
     share_url: 'This job is publicly visible at:'
     view_public_link: 'View the public page for this job'
@@ -106,6 +106,7 @@ en:
     pending_jobs: Pending jobs
     draft_jobs: Draft jobs
     expired_jobs: Expired jobs
+    expired_on: Expired on
     no_published_jobs: You currently have no published jobs
     no_expired_jobs: You currently have no expired jobs
     no_draft_jobs: You currently have no draft jobs
