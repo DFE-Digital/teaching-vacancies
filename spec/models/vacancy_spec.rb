@@ -327,7 +327,7 @@ RSpec.describe Vacancy, type: :model do
     end
 
     describe '#listed' do
-      it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
+      it 'retrieves vacancies that have a status of :published and a past publish_on date' do
         published = create_list(:vacancy, 5, :published)
         create_list(:vacancy, 3, :future_publish)
         create_list(:vacancy, 4, :trashed)
@@ -362,6 +362,20 @@ RSpec.describe Vacancy, type: :model do
         expired.save(validate: false)
 
         expect(Vacancy.expired.count).to eq(1)
+      end
+    end
+
+    describe '#live' do
+      it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
+        live = create_list(:vacancy, 5, :published)
+        expired = build(:vacancy, :expired)
+        expired.send :set_slug
+        expired.save(validate: false)
+        create_list(:vacancy, 3, :future_publish)
+        create_list(:vacancy, 4, :trashed)
+
+        expect(Vacancy.live.count).to eq(live.count)
+        expect(live).to_not include(expired)
       end
     end
 
