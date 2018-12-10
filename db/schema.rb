@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_26_110204) do
+ActiveRecord::Schema.define(version: 2018_12_10_151520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -126,6 +126,18 @@ ActiveRecord::Schema.define(version: 2018_10_26_110204) do
   create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.index ["name"], name: "index_subjects_on_name", unique: true
+  end
+
+  create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email"
+    t.integer "frequency"
+    t.date "expires_on"
+    t.integer "status", default: 0
+    t.jsonb "search_criteria"
+    t.string "reference", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email", "search_criteria", "status", "frequency", "expires_on"], name: "sub_email_search_criteria_status_frequency_expires_on_index"
   end
 
   create_table "transaction_auditors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
