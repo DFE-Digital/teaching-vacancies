@@ -95,7 +95,6 @@ class Vacancy < ApplicationRecord
 
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
   scope :active, (-> { where(status: %i[published draft]) })
-  scope :draft, (-> { where(status: %i[draft]) })
   scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
   scope :published_on_count, (->(date) { published.where('date(publish_on) = ?', date).count })
   scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
@@ -131,10 +130,6 @@ class Vacancy < ApplicationRecord
 
   def listed?
     published? && !publish_on.future? && expires_on.future?
-  end
-
-  def pending?
-    published? && publish_on.future? && expires_on.future?
   end
 
   # rubocop:disable Naming/UncommunicativeMethodParamName
