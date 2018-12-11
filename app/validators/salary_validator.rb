@@ -1,6 +1,7 @@
 class SalaryValidator < ActiveModel::EachValidator
   include ApplicationHelper
   include ActiveSupport::Rescuable
+  include ValidatorConcerns
 
   rescue_from ArgumentError, with: :invalid_format_message
 
@@ -19,14 +20,6 @@ class SalaryValidator < ActiveModel::EachValidator
 
   private
 
-  def error_message(record, attribute, message)
-    record.errors[attribute] << message
-  end
-
-  def check_presence?
-    options.key?(:presence) && options[:presence]
-  end
-
   def check_minimum?
     options.key?(:minimum_value) && options[:minimum_value]
   end
@@ -37,10 +30,6 @@ class SalaryValidator < ActiveModel::EachValidator
 
   def converted_salary(value)
     BigDecimal(value)
-  end
-
-  def cant_be_blank_message
-    I18n.t('errors.messages.blank')
   end
 
   def invalid_format_message
