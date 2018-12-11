@@ -1,0 +1,5 @@
+%tr.govuk-table__row.vacancy[vacancy]
+  %td.govuk-table__cell= link_to vacancy.job_title, school_job_path(vacancy.id), class: 'govuk-link view-vacancy-link'
+  %td.govuk-table__cell= format_date(vacancy.publish_on)
+  %td.govuk-table__cell= format_date(vacancy.expires_on)
+  %td.govuk-table__cell= link_to t('jobs.delete_link'), school_job_path(id: vacancy.id), class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }

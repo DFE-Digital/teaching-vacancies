@@ -1,8 +1,83 @@
-%table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
-  %th.govuk-table__header= t('jobs.job_title')
-  %th.govuk-table__header= t('jobs.publish_on')
-  %th.govuk-table__header= t('jobs.expires_on')
-  %th.govuk-table__header= t('jobs.status')
-  %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
-  - vacancies.each do |vacancy|
-    = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }
+.govuk-tabs{"data-module" => "tabs"}
+  %h2.govuk-tabs__title
+    = t('aria_labels.content')
+  %ul.govuk-tabs__list
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab.govuk-tabs__tab--selected{:href => "#published-jobs"}
+        = t('jobs.published_jobs')
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab{:href => "#pending-jobs"}
+        = t('jobs.pending_jobs')
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab{:href => "#draft-jobs"}
+        = t('jobs.draft_jobs')
+    %li.govuk-tabs__list-item
+      %a.govuk-tabs__tab{:href => "#expired-jobs"}
+        = t('jobs.expired_jobs')
+
+  %section#published-jobs.govuk-tabs__panel
+    %h2.govuk-heading-m= t('jobs.published_jobs')
+    - if @published_vacancies.any?
+      %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+        %thead.govuk-table__head
+          %tr.govuk-table__row
+            %th.govuk-table__header= t('jobs.job_title')
+            %th.govuk-table__header= t('jobs.publish_on')
+            %th.govuk-table__header= t('jobs.expires_on')
+            %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+        %tbody.govuk-table__body
+          %tr.govuk-table__row
+            - @published_vacancies.each do |vacancy|
+              = render partial: 'vacancy_published', locals: { vacancy: vacancy, school: school }
+    - else
+      %p= t('jobs.no_published_jobs')
+
+  %section#pending-jobs.govuk-tabs__panel.govuk-tabs__panel--hidden
+    %h2.govuk-heading-m= t('jobs.pending_jobs')
+    - if @pending_vacancies.any?
+      %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+        %thead.govuk-table__head
+          %tr.govuk-table__row
+            %th.govuk-table__header= t('jobs.job_title')
+            %th.govuk-table__header= t('jobs.date_to_be_posted')
+            %th.govuk-table__header= t('jobs.expires_on')
+            %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+        %tbody.govuk-table__body
+          %tr.govuk-table__row
+            - @pending_vacancies.each do |vacancy|
+              = render partial: 'vacancy_pending', locals: { vacancy: vacancy, school: school }
+    - else
+      %p= t('jobs.no_pending_jobs')
+
+  %section#draft-jobs.govuk-tabs__panel.govuk-tabs__panel--hidden
+    %h2.govuk-heading-m= t('jobs.draft_jobs')
+    - if @draft_vacancies.any?
+      %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+        %thead.govuk-table__head
+          %tr.govuk-table__row
+            %th.govuk-table__header= t('jobs.job_title')
+            %th.govuk-table__header= t('jobs.date_drafted')
+            %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+        %tbody.govuk-table__body
+          %tr.govuk-table__row
+            - @draft_vacancies.each do |vacancy|
+              = render partial: 'vacancy_draft', locals: { vacancy: vacancy, school: school }
+    - else
+      %p= t('jobs.no_draft_jobs')
+
+  %section#expired-jobs.govuk-tabs__panel.govuk-tabs__panel--hidden
+    %h2.govuk-heading-m= t('jobs.expired_jobs')
+    - if @expired_vacancies.any?
+      %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+        %thead.govuk-table__head
+          %tr.govuk-table__row
+            %th.govuk-table__header= t('jobs.job_title')
+            %th.govuk-table__header= t('jobs.publish_on')
+            %th.govuk-table__header= t('jobs.expired_on')
+            %th.govuk-table__header= t('jobs.actions')
+        %tbody.govuk-table__body
+          %tr.govuk-table__row
+            - @expired_vacancies.each do |vacancy|
+              = render partial: 'vacancy_expired', locals: { vacancy: vacancy, school: school }
+    - else
+      %p= t('jobs.no_expired_jobs')
