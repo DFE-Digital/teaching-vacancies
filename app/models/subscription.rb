@@ -15,8 +15,9 @@ class Subscription < ApplicationRecord
   end
 
   def set_reference
-    self.reference ||= loop do
-      reference ||= SecureRandom.hex(8)
+    return if reference.present?
+    self.reference = loop do
+      reference = SecureRandom.hex(8)
       break reference unless self.class.exists?(email: email, reference: reference)
     end
   end
