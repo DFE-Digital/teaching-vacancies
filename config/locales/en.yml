@@ -111,6 +111,9 @@ en:
     no_expired_jobs: You currently have no expired jobs
     no_draft_jobs: You currently have no draft jobs
     no_pending_jobs: You currently have no pending jobs
+    edit_link: Edit
+    delete_link: Delete
+    are_you_sure: Are you sure you want to delete the '%{job_title}' job?
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
