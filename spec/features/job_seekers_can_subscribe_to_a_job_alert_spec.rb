@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'A job seeker can subscribe to a job alert', wip: true do
+RSpec.feature 'A job seeker can subscribe to a job alert' do
   context 'A job seeker' do
     scenario 'can access the new subscription page when search criteria have been specified' do
       expect { visit(new_subscription_path) }.to raise_error(ActionController::ParameterMissing)
@@ -41,7 +41,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert', wip: true do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page).to have_content('Email subscription created successfully')
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       scenario 'when the email address is associated with other active subscriptions' do
@@ -52,7 +52,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert', wip: true do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page).to have_content('Email subscription created successfully')
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       scenario 'when the email address is associated with the same inactive subscriptions' do
@@ -64,7 +64,41 @@ RSpec.feature 'A job seeker can subscribe to a job alert', wip: true do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page).to have_content('Email subscription created successfully')
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+      end
+
+      context 'and is redirected to the confirmation page' do
+        scenario 'without setting a reference number' do
+          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+          fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          click_on 'Subscribe'
+
+          expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+          expect(page).to have_content('jane.doe@example.com')
+          expect(page).to have_content(/Your reference [a-z]*/)
+          expect(page).to have_content('Keyword: teacher')
+        end
+
+        scenario 'when setting a reference number' do
+          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+          fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          fill_in 'subscription[reference]', with: 'Daily alert reference'
+          click_on 'Subscribe'
+
+          expect(page).to have_content(/Your reference Daily alert reference/)
+        end
+
+        scenario 'where they can go back to the filtered search' do
+          visit new_subscription_path(search_criteria: { keyword: 'teacher',
+                                                         newly_qualified_teacher: 'true' })
+          fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          click_on 'Subscribe'
+
+          click_on 'Return to your search results'
+
+          expect(page.find('#keyword').value).to eq('teacher')
+          expect(page.find('#newly_qualified_teacher').checked?).to eq(true)
+        end
       end
     end
 
