@@ -239,6 +239,11 @@ en:
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
+  subscriptions:
+    intro: 'Your search criteria are as follows:'
+    new: Sign up for daily emails
+    info: When you click subscribe, you'll receive daily emails featuring jobs that match these criteria for 3 months. You can unsubscribe at any time following the unsubscribe link in your daily mail.
+    location_text: Within %{radius} miles of %{location}
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
