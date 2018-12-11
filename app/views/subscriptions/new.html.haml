@@ -1,0 +1,39 @@
+- content_for :page_title_prefix do
+  = t('subscriptions.new')
+
+- content_for :page_description do
+  = t('subscriptions.new')
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    %h1.govuk-heading-xl
+      = t('subscriptions.new')
+.govuk-grid-row
+  .govuk-grid-column-full
+    %p.govuk-body-l
+      = t('subscriptions.intro')
+
+    %div.govuk-inset-text
+      %ul.govuk-list
+        - @subscription.filtered_search_criteria.each_pair do |filter, value|
+          %li
+            - if filter.present?
+              %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
+            = value
+
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    = simple_form_for @subscription do |f|
+      = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true
+      = f.input :reference, as: :string, input_html: { class: 'govuk-input' }
+
+      = f.input :search_criteria, as: :hidden
+
+      .govuk-warning-text
+        %span.govuk-warning-text__icon{'aria-hidden': "true"}
+          = '!'
+        %strong.govuk-warning-text__text
+          %span.govuk-warning-text__assistive Warning
+          = t('subscriptions.info')
+
+      = f.button :submit, 'Subscribe'
