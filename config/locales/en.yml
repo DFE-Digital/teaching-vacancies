@@ -2,6 +2,10 @@ en:
   date:
     formats:
       hinttext: "%d %-m %Y"
+      default: '%e %B %Y'
+  datetime:
+    formats:
+      default: '%e %B %Y %H:%M'
   number:
     currency:
       format:
@@ -247,6 +251,14 @@ en:
     new: Sign up for daily emails
     info: When you click subscribe, you'll receive daily emails featuring jobs that match these criteria for 3 months. You can unsubscribe at any time following the unsubscribe link in your daily mail.
     location_text: Within %{radius} miles of %{location}
+    reference: Your reference
+    confirmation:
+      header: Your email subscription has started
+      receipt_confirmation: We have sent you a confirmation email
+      next_step: 'What happens next'
+      unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
+      next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 3 months, until %{date}.'
+    back_to_search_results: 'Return to your search results'
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
