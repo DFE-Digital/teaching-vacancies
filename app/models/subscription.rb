@@ -10,6 +10,10 @@ class Subscription < ApplicationRecord
 
   before_save :set_reference
 
+  def search_criteria_to_h
+    @search_criteria_hash = JSON.parse(search_criteria)
+  end
+
   def set_reference
     self.reference ||= loop do
       reference ||= SecureRandom.hex(8)
