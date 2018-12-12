@@ -35,4 +35,14 @@ RSpec.describe 'DfE Sign-in', type: :request do
       expect(response).to redirect_to(new_dfe_path)
     end
   end
+
+  # Omniauth documentation says that any authentication failure with the provider
+  # will be caught and routed to /auth/failure: https://github.com/omniauth/omniauth/wiki
+  context 'when a request fails in omniauth or omniauth_openid_connect for any reason' do
+    it 'redirects to a styled 401 page' do
+      get '/auth/failure'
+
+      expect(response.status).to redirect_to('/401')
+    end
+  end
 end

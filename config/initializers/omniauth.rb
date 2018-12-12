@@ -12,7 +12,9 @@ module OmniAuth
         if error
           raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
         elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
-          return redirect('/401')
+          # Monkey patch: Ensure a basic 401 rack response with no body or header isn't served
+          # return Rack::Response.new(['401 Unauthorized'], 401).finish
+          return redirect('/auth/failure')
         elsif !request.params['code']
           return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
         else
@@ -75,7 +77,11 @@ if ENV['DFE_SIGN_IN_ISSUER'].present?
     def call(env)
       request = Rack::Request.new(env)
 
-      if request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
+      if request.path == '/auth/failure'
+        response = Rack::Response.new
+        response.redirect('/401')
+        response.finish
+      elsif request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
         response = Rack::Response.new
         response.redirect('/dfe/sessions/new')
         response.finish
