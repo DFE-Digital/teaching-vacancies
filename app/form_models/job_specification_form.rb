@@ -6,4 +6,5 @@ class JobSpecificationForm < VacancyForm
   # rubocop:enable Lint/AmbiguousOperator
 
   include VacancyJobSpecificationValidations
+  include VacancyDateValidations
 end

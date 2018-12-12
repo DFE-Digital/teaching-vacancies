@@ -8,8 +8,7 @@ module VacancyApplicationDetailValidations
     validates :application_link, url: true, if: proc { |v| v.application_link.present? }
 
     validates :publish_on, presence: true, if: proc { |v| !v.published? }
-    validate :validity_of_publish_on, :validity_of_expires_on
-    validates_with DateFormatValidator, fields: %i[publish_on expires_on]
+    validate :validity_of_publish_on
   end
 
   def validity_of_publish_on

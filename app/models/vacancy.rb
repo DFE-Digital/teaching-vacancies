@@ -8,6 +8,7 @@ class Vacancy < ApplicationRecord
   include VacancyJobSpecificationValidations
   include VacancyCandidateSpecificationValidations
   include VacancyApplicationDetailValidations
+  include VacancyDateValidations
 
   include Elasticsearch::Model
 
