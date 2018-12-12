@@ -11,10 +11,6 @@ module OmniAuth
         error = request.params['error_reason'] || request.params['error']
         if error
           raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
-        elsif request.params.blank? && request.path == '/auth/dfe/callback'
-          response = Rack::Response.new
-          response.redirect('/dfe/sessions/new')
-          response.finish
         elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
           return redirect('/401')
         elsif !request.params['code']
@@ -70,4 +66,23 @@ if ENV['DFE_SIGN_IN_ISSUER'].present?
   }
 
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
+
+  class DfeSignIn
+    def initialize(app)
+      @app = app
+    end
+
+    def call(env)
+      request = Rack::Request.new(env)
+
+      if request.path == '/auth/dfe/callback' && request.params.empty? && !OmniAuth.config.test_mode
+        response = Rack::Response.new
+        response.redirect('/dfe/sessions/new')
+        response.finish
+      else
+        @app.call(env)
+      end
+    end
+  end
+  Rails.application.config.middleware.insert_before OmniAuth::Strategies::OpenIDConnect, DfeSignIn
 end
