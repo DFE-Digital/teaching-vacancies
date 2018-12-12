@@ -52,6 +52,8 @@ Rails.application.routes.draw do
                                      controller: 'hiring_staff/vacancies/application_details'
 
       resource :feedback, controller: 'hiring_staff/vacancies/feedback', only: %i[new create]
+      resource :copy, only: %i[create],
+                      controller: 'hiring_staff/vacancies/copy'
     end
 
     resource :job, only: [] do

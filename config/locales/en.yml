@@ -262,6 +262,7 @@ en:
   errors:
     jobs:
       unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
+      unable_to_copy: We were unable to create a copy of this job
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
