@@ -267,6 +267,8 @@ en:
       signed_out: You've been signed out.
     feedback:
       submitted: Your feedback has been successfully submitted
+    subscriptions:
+      created: Email subscription created successfully.
 
   errors:
     jobs:
@@ -280,6 +282,8 @@ en:
     feedback:
       errors_present: Please correct the following error
       already_submitted: Feedback for this job listing has already been submitted
+    subscriptions:
+      already_exists: You are already subscribed to a daily email with these search criteria
 
   error_pages:
     unauthorised: We were unable to authorise your request.
