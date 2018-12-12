@@ -73,7 +73,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def already_published_message
-    I18n.t('messages.vacancies.already_published')
+    I18n.t('jobs.already_published')
   end
 
   def clear_cache_and_step
