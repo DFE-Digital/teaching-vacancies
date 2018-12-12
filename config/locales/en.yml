@@ -85,6 +85,7 @@ en:
     publication_date: 'Date role will be listed'
     review: 'Review the job details and make any necessary changes before submitting it for publication below.'
     edit: 'Edit the job details.'
+    edit_dates: 'Edit the Job dates'
     confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
     submit: 'Confirm and submit job'
     apply: 'Get more information'
@@ -113,6 +114,9 @@ en:
     no_pending_jobs: You currently have no pending jobs
     edit_link: Edit
     delete_link: Delete
+    republish_heading: Republish the job for %{school}
+    republish_link: Republish
+    republish_instructions: These fields need to be updated before republishing the job
     are_you_sure: Are you sure you want to delete the '%{job_title}' job?
     confirmation_page:
       submitted: 'The job listing has been completed'
@@ -275,6 +279,7 @@ en:
       submitted: Your feedback has been successfully submitted
 
   errors:
+    error: Error
     jobs:
       unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
     sign_in:

@@ -29,14 +29,6 @@ module VacancyApplicationDetailValidations
     expires_on && publish_on && expires_on < publish_on
   end
 
-  def publish_on_in_past?
-    publish_on && publish_on < Time.zone.today
-  end
-
-  def publish_on_before_today_error
-    I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today')
-  end
-
   def expires_on_before_publish_on_error
     I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date')
   end

@@ -50,6 +50,8 @@ Rails.application.routes.draw do
                                          controller: 'hiring_staff/vacancies/candidate_specification'
       resource :application_details, only: %i[edit update],
                                      controller: 'hiring_staff/vacancies/application_details'
+      resource :republish, only: %i[new create],
+                           controller: 'hiring_staff/vacancies/republish'
 
       resource :feedback, controller: 'hiring_staff/vacancies/feedback', only: %i[new create]
     end
