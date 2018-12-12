@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
-  resources :subscriptions, only: %i[new create]
+  resources :subscriptions, only: %i[new create] do
+    resource :confirmation, only: [:show]
+  end
 
   namespace :api do
     scope 'v:api_version', api_version: /[1]/ do
