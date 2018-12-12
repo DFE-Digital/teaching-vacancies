@@ -26,6 +26,15 @@ RSpec.feature 'A job seeker can subscribe to a job alert', wip: true do
       expect(page).to have_content('Maximum salary: £30,000')
     end
 
+    scenario 'subscribing to a search creates a new daily subscription audit' do
+      visit new_subscription_path(search_criteria: { keyword: 'test' })
+      fill_in 'subscription[email]', with: 'jane.doe@example.com'
+      click_on 'Subscribe'
+
+      activity = PublicActivity::Activity.last
+      expect(activity.key).to eq('subscription.daily_alert.create')
+    end
+
     context 'can create a new subscription' do
       scenario 'when the email address is valid' do
         visit new_subscription_path(search_criteria: { keyword: 'test' })
