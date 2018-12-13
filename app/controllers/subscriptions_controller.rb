@@ -2,6 +2,7 @@ class SubscriptionsController < ApplicationController
   def new
     subscription = Subscription.new(search_criteria: search_criteria.to_json)
     @subscription = SubscriptionPresenter.new(subscription)
+    Auditor::Audit.new(nil, 'subscription.daily_alert.new', nil).log_without_association
   end
 
   def create

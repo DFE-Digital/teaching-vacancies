@@ -231,6 +231,7 @@ en:
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
   subscriptions:
+    button: 'Subscribe to email notifications for this search'
     intro: 'Your search criteria are as follows:'
     new: Sign up for daily emails
     info: When you click subscribe, you'll receive daily emails featuring jobs that match these criteria for 3 months. You can unsubscribe at any time following the unsubscribe link in your daily mail.
