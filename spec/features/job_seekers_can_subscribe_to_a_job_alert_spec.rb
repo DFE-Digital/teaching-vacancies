@@ -125,5 +125,40 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content('You are already subscribed to a daily email with these search criteria')
       end
     end
+
+    scenario 'can succesfuly subscribe to a new alert', elasticsearch: true do
+      create_list(:vacancy, 5, :published, job_title: 'Math')
+      create_list(:vacancy, 3, :published, job_title: 'English')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'keyword', with: 'English'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content('3 jobs match your search')
+
+      click_on 'Subscribe to email notifications for this search'
+
+      expect(page).to have_content('Sign up for daily emails')
+      expect(page).to have_content('Keyword: English')
+
+      fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+      fill_in 'subscription[reference]', with: 'Daily alerts for: English'
+
+      click_on 'Subscribe'
+
+      expect(page).to have_content('Your email subscription has started')
+      click_on 'Return to your search results'
+
+      expect(page).to have_content('3 jobs match your search')
+
+      activities = PublicActivity::Activity.all
+      expect(activities.first.key).to eq('subscription.daily_alert.new')
+      expect(activities.last.key).to eq('subscription.daily_alert.create')
+    end
   end
 end
