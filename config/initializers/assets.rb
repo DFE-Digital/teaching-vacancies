@@ -16,7 +16,4 @@ Rails.application.config.assets.precompile += %w[
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile +=
-  %w[application.css
-     application-ie8.css
-     application.js
-     govuk_frontend_tab_patch_for_using_browser_back.js]
+  %w[application.css application-ie8.css application.js]
