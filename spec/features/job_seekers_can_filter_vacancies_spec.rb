@@ -263,7 +263,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 3, '', '20km', 'Physics', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 3, '', '20', 'Physics', '', '', nil, nil, 'true']
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)
@@ -285,7 +285,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 12, '', '20km', 'Math', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 12, '', '20', 'Math', '', '', nil, nil, 'true']
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)
