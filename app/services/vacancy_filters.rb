@@ -20,7 +20,7 @@ class VacancyFilters
   def to_hash
     {
       location: location,
-      radius: "#{radius}km",
+      radius: radius.to_s,
       keyword: keyword,
       minimum_salary: minimum_salary,
       maximum_salary: maximum_salary,

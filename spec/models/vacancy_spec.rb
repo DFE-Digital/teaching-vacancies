@@ -11,7 +11,7 @@ RSpec.describe Vacancy, type: :model do
           .with(:info,
                 'A search returned 0 results',
                 location: nil,
-                radius: 'km',
+                radius: '',
                 keyword: 'a-non-matching-search-term',
                 minimum_salary: nil,
                 maximum_salary: nil,
