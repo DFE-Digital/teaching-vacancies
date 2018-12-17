@@ -16,6 +16,7 @@ class SubscriptionsController < ApplicationController
       flash[:error] = I18n.t('errors.subscriptions.already_exists')
     elsif subscription.save
       Auditor::Audit.new(subscription, 'subscription.daily_alert.create', nil).log
+      NotifySubscriptionConfirmationEmailJob.perform_later(subscription.id)
       return render 'confirm'
     end
 
