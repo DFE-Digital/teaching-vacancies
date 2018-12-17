@@ -149,7 +149,10 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
       fill_in 'subscription[reference]', with: 'Daily alerts for: English'
 
-      click_on 'Subscribe'
+      Sidekiq::Testing.inline! do
+        expect(SubscriptionConfirmationEmail).to receive_message_chain(:new, :call)
+        click_on 'Subscribe'
+      end
 
       expect(page).to have_content('Your email subscription has started')
       click_on 'Return to your search results'
@@ -157,8 +160,9 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       expect(page).to have_content('3 jobs match your search')
 
       activities = PublicActivity::Activity.all
-      expect(activities.first.key).to eq('subscription.daily_alert.new')
-      expect(activities.last.key).to eq('subscription.daily_alert.create')
+      expect(activities[0].key).to eq('subscription.daily_alert.new')
+      expect(activities[1].key).to eq('subscription.daily_alert.create')
+      expect(activities[2].key).to eq('subscription.daily_alert.confirmation.sent')
     end
   end
 end
