@@ -260,6 +260,10 @@ en:
       unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
       next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 3 months, until %{date}.'
     back_to_search_results: 'Return to your search results'
+    email:
+      confirmation:
+        subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
+        expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'

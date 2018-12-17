@@ -247,6 +247,8 @@ GEM
       mini_portile2 (~> 2.4.0)
     nokogumbo (2.0.1)
       nokogiri (~> 1.8, >= 1.8.4)
+    notifications-ruby-client (2.9.0)
+      jwt (>= 1.5, < 3)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -506,6 +508,7 @@ DEPENDENCIES
   launchy
   listen (>= 3.0.5, < 3.2)
   lograge
+  notifications-ruby-client
   omniauth (~> 1.8)
   omniauth_openid_connect (~> 0.1)
   pg (~> 1.1)
