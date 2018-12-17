@@ -1,6 +1,7 @@
 class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   attr_reader :decorated_collection, :searched
+  alias_method :user_search?, :searched
 
   CSV_ATTRIBUTES = %w[title description jobBenefits datePosted educationRequirements qualifications
                       experienceRequirements employmentType jobLocation.addressLocality
