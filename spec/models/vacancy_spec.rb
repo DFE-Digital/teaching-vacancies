@@ -327,7 +327,7 @@ RSpec.describe Vacancy, type: :model do
     end
 
     describe '#listed' do
-      it 'retrieves vacancies that have a status of :published and a past publish_on date' do
+      it 'retrieves  vacancies that have a status of :published and a future publish_on date' do
         published = create_list(:vacancy, 5, :published)
         create_list(:vacancy, 3, :future_publish)
         create_list(:vacancy, 4, :trashed)
