@@ -32,5 +32,28 @@ RSpec.describe SubscriptionFinder do
         expect(service.exists?).to eq(true)
       end
     end
+
+    context 'when malicious arguments are passed in' do
+      it 'sanitises the string inputs before passing them to `where`' do
+        harmful_params = {
+          email: '<script>foo@email.com</script>',
+          search_criteria: "<body onload=alert('test1')>Text</script>",
+          frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
+        }
+        empty_active_record_relation = Subscription.none
+
+        relation = double
+        expect(Subscription).to receive(:ongoing).and_return(relation)
+        expect(relation).to receive(:where)
+          .with(
+            email: 'foo@email.com',
+            search_criteria: 'Text',
+            frequency: ''
+          )
+          .and_return(empty_active_record_relation)
+
+        described_class.new(harmful_params).exists?
+      end
+    end
   end
 end
