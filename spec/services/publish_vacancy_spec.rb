@@ -1,4 +1,6 @@
-RSpec.describe PublishVacancy do
+require 'rails_helper'
+
+RSpec.describe VacancySearchBuilder do
   let(:vacancy) { create(:vacancy, :draft) }
 
   describe '#call' do
