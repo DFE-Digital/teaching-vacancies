@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+  include ParameterSanitiser
+
   def new
     subscription = Subscription.new(search_criteria: search_criteria.to_json)
     @subscription = SubscriptionPresenter.new(subscription)
@@ -23,7 +25,9 @@ class SubscriptionsController < ApplicationController
   private
 
   def subscription_params
-    params.require(:subscription).permit(:email, :reference, :search_criteria)
+    ParameterSanitiser.call(
+      params.require(:subscription)
+    ).permit(:email, :reference, :search_criteria)
   end
 
   def daily_subscription_params
