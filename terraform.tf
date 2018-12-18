@@ -140,6 +140,8 @@ module "ecs" {
   skylight_env                     = "${var.skylight_env}"
   skylight_enabled                 = "${var.skylight_enabled}"
   skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
+  notify_key                                = "${var.notify_key}"
+  notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
 }
 
 module "logs" {

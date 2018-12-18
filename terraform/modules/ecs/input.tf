@@ -74,6 +74,8 @@ variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
+variable "notify_key" {}
+variable "notify_subscription_confirmation_template" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 

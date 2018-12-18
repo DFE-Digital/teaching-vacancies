@@ -347,7 +347,6 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
-
 variable "audit_vacancies_worksheet_gid" {}
 variable "audit_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
@@ -358,3 +357,5 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {
   default = "ApplicationController#check"
 }
+variable "notify_key" {}
+variable "notify_subscription_confirmation_template" {}

@@ -71,3 +71,6 @@ google_analytics_profile_id = ""
 skylight_authentication = ""
 skylight_env = ""
 skylight_enabled = "false"
+
+notify_key = ''
+notify_subscription_confirmation_template = ''

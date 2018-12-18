@@ -165,6 +165,8 @@ data "template_file" "web_container_definition" {
     skylight_env                     = "${var.skylight_env}"
     skylight_enabled                 = "${var.skylight_enabled}"
     skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
+    notify_key                       = "${var.notify_key}"
+    notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
   }
 }
 
@@ -433,6 +435,8 @@ data "template_file" "worker_container_definition" {
     audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
     audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
     audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
+    notify_key                       = "${var.notify_key}"
+    notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
 
     worker_command = "${jsonencode(var.worker_command)}"
   }
