@@ -10,9 +10,7 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.new(daily_subscription_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
-    if Subscription.ongoing.exists?(email: daily_subscription_params[:email],
-                                    search_criteria: daily_subscription_params[:search_criteria],
-                                    frequency: daily_subscription_params[:frequency])
+    if SubscriptionFinder.new(daily_subscription_params).exists?
       flash[:error] = I18n.t('errors.subscriptions.already_exists')
     elsif subscription.save
       Auditor::Audit.new(subscription, 'subscription.daily_alert.create', nil).log
