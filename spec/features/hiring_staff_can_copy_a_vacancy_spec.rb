@@ -48,7 +48,7 @@ RSpec.feature 'Copying a vacancy' do
   context 'review page' do
     context 'copying a published job' do
       scenario 'the job title is updated to show it is a copy' do
-        published = create(:vacancy, school: school, status: 'published')
+        published = FactoryBot.create(:vacancy, school: school)
 
         visit school_path
         click_on I18n.t('jobs.duplicate_link')
@@ -57,8 +57,8 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       scenario 'the publish_on date is updated to today' do
-        published = build(:vacancy, school: school, status: 'published', publish_on: Time.zone.yesterday)
-        published.send :set_slug
+        published = FactoryBot.build(:vacancy, :past_publish)
+        published.school = school
         published.save(validate: false)
 
         visit school_path
@@ -72,11 +72,9 @@ RSpec.feature 'Copying a vacancy' do
 
     context 'copying a pending job' do
       scenario 'the job title is updated to show it is a copy' do
-        pending = create(:vacancy,
-                         school: school,
-                         status: 'published',
-                         expires_on: Time.zone.today + 4.days,
-                         publish_on: Time.zone.tomorrow)
+        pending = FactoryBot.build(:vacancy, :future_publish)
+        pending.school = school
+        pending.save
 
         visit school_path
         click_on I18n.t('jobs.duplicate_link')
