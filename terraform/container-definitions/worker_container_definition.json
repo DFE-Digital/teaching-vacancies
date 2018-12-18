@@ -97,6 +97,14 @@
         "value": "${audit_spreadsheet_id}"
       },
       {
+        "name": "NOTIFY_KEY",
+        "value": "${notify_key}"
+      },
+      {
+        "name": "NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE",
+        "value": "${notify_subscription_confirmation_template}"
+      },
+      {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
       }

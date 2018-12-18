@@ -162,6 +162,8 @@ data "template_file" "web_container_definition" {
     domain                           = "${var.domain}"
     google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id      = "${var.google_analytics_profile_id}"
+    notify_key                       = "${var.notify_key}"
+    notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
   }
 }
 
@@ -377,6 +379,8 @@ data "template_file" "worker_container_definition" {
     domain                           = "${var.domain}"
     audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    notify_key                       = "${var.notify_key}"
+    notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
 
     worker_command = "${jsonencode(var.worker_command)}"
   }

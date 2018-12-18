@@ -332,3 +332,5 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
+variable "notify_key" {}
+variable "notify_subscription_confirmation_template" {}
