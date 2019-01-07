@@ -9,7 +9,7 @@
     = render 'filters'
   .govuk-grid-column-two-thirds
     %p.govuk-heading-m.mt0.mb1.inline-block= @vacancies.total_count_message
-    - if @vacancies.searched
+    - if @vacancies.user_search?
       %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
@@ -21,7 +21,7 @@
         - @vacancies.each do |vacancy|
           = render partial: 'vacancy', locals: { vacancy: vacancy }
 
-    - elsif @vacancies.searched
+    - elsif @vacancies.user_search?
       %div.empty
         - t('jobs.no_jobs').each do |list_item|
           %p= list_item

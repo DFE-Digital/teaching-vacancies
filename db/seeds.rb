@@ -99,4 +99,29 @@ FactoryBot.create(:vacancy,
                    status: 1,
                    leadership: leadership)
 
+# pending vacancy
+FactoryBot.create(:vacancy,
+                  job_title: 'Teacher of Drama',
+                  subject: Subject.last,
+                  school: ealing_school,
+                  minimum_salary: 30000,
+                  maximum_salary: 35000,
+                  min_pay_scale: payscale,
+                  leadership: leadership,
+                  publish_on: Time.zone.today + 1.year,
+                  expires_on: Time.zone.today + 2.years)
+
+# expired vacancy
+expired = FactoryBot.build(:vacancy,
+                  job_title: 'Subject lead in Art',
+                  subject: Subject.last,
+                  school: ealing_school,
+                  minimum_salary: 30000,
+                  maximum_salary: 35000,
+                  min_pay_scale: payscale,
+                  leadership: leadership,
+                  expires_on: Time.zone.today - 2.days)
+expired.send :set_slug
+expired.save(validate: false)
+
 20.times { FactoryBot.create(:vacancy) }

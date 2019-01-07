@@ -255,25 +255,49 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  scenario 'Searching triggers a job to write a search_event to the audit Spreadsheet' do
-    create(:vacancy, :published, job_title: 'Physics', newly_qualified_teacher: true)
-    create(:vacancy, :published, newly_qualified_teacher: false)
-    timestamp = Time.zone.now.iso8601
+  context 'Searching triggers a job to write a search_event to the audit Spreadsheet', elasticsearch: true do
+    scenario 'correctly logs the number of non-paginated results' do
+      create_list(:vacancy, 3, :published, job_title: 'Physics', newly_qualified_teacher: true)
+      create(:vacancy, :published, newly_qualified_teacher: false)
+      timestamp = Time.zone.now.iso8601
 
-    Vacancy.__elasticsearch__.client.indices.flush
+      Vacancy.__elasticsearch__.client.indices.flush
 
-    data = [timestamp.to_s, 1, '', '20km', 'Physics', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 3, '', '20km', 'Physics', '', '', nil, nil, 'true']
 
-    expect(AuditSearchEventJob).to receive(:perform_later)
-      .with(data)
+      expect(AuditSearchEventJob).to receive(:perform_later)
+        .with(data)
 
-    visit jobs_path
+      visit jobs_path
 
-    Timecop.freeze(timestamp) do
-      within '.filters-form' do
-        check 'newly_qualified_teacher'
-        fill_in 'keyword', with: 'Physics'
-        page.find('.govuk-button[type=submit]').click
+      Timecop.freeze(timestamp) do
+        within '.filters-form' do
+          check 'newly_qualified_teacher'
+          fill_in 'keyword', with: 'Physics'
+          page.find('.govuk-button[type=submit]').click
+        end
+      end
+    end
+
+    scenario 'correctly logs the total results when pagination is used' do
+      create_list(:vacancy, 12,  :published, job_title: 'Math', newly_qualified_teacher: true)
+      timestamp = Time.zone.now.iso8601
+
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      data = [timestamp.to_s, 12, '', '20km', 'Math', '', '', nil, nil, 'true']
+
+      expect(AuditSearchEventJob).to receive(:perform_later)
+        .with(data)
+
+      visit jobs_path
+
+      Timecop.freeze(timestamp) do
+        within '.filters-form' do
+          check 'newly_qualified_teacher'
+          fill_in 'keyword', with: 'Math'
+          page.find('.govuk-button[type=submit]').click
+        end
       end
     end
   end

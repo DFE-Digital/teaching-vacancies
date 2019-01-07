@@ -15,7 +15,7 @@ class VacanciesController < ApplicationController
   def index
     @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    records = Vacancy.public_search(filters: @filters, sort: @sort).page(params[:page]).records
+    records = Vacancy.public_search(filters: @filters, sort: @sort).page(page_number).records
     audit_search_event(records, @filters) if @filters.any?
 
     @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
@@ -48,7 +48,7 @@ class VacanciesController < ApplicationController
 
   def audit_search_event(records, filters)
     AuditSearchEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                       records.count,
+                                       records.total_count,
                                        *filters.to_hash.values])
   end
 
@@ -56,7 +56,9 @@ class VacanciesController < ApplicationController
     params[:id]
   end
 
-  def page
+  def page_number
+    return Vacancy.page.total_pages if Vacancy.page(params[:page]).out_of_range?
+
     params[:page]
   end
 

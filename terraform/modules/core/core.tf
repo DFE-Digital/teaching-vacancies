@@ -384,7 +384,7 @@ resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-low" {
   namespace           = "AWS/ECS"
   period              = "60"
   statistic           = "Minimum"
-  threshold           = "25"
+  threshold           = "45"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
