@@ -83,7 +83,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 3.7'
+  gem 'capybara', '~> 3.12'
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
