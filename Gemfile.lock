@@ -6,14 +6,6 @@ GIT
     gov_uk_date_fields (3.0.0)
       rails (>= 5.0)
 
-GIT
-  remote: https://github.com/thoughtbot/shoulda-matchers.git
-  revision: 4b160bd19ecca7f97d7ac22dccd5fde9b0da5a9f
-  branch: rails-5
-  specs:
-    shoulda-matchers (3.1.2)
-      activesupport (>= 4.2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -402,6 +394,8 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
     sexp_processor (4.10.0)
+    shoulda-matchers (3.1.2)
+      activesupport (>= 4.0.0)
     sidekiq (5.2.1)
       connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
@@ -527,7 +521,7 @@ DEPENDENCIES
   rubocop
   sanitize (~> 4.6)
   sass-rails (~> 5.0)
-  shoulda-matchers!
+  shoulda-matchers
   sidekiq
   simple_form
   spring
@@ -545,4 +539,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.5
+   1.17.1
