@@ -16,6 +16,10 @@ module OmniAuth
           response.redirect('/dfe/sessions/new')
           response.finish
         elsif request.params['state'].to_s.empty? || request.params['state'] != stored_state
+          Rollbar.log(:error,
+                      'A sign-in callback was unauthorised',
+                      session_id: session.id,
+                      received_state: request.params['state'],)
           return redirect('/401')
         elsif !request.params['code']
           return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
