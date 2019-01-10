@@ -1,4 +1,4 @@
-RSpec.describe VacancySearchBuilder do
+RSpec.describe PublishVacancy do
   let(:vacancy) { create(:vacancy, :draft) }
 
   describe '#call' do

@@ -88,6 +88,13 @@ FactoryBot.define do
       expires_on { Time.zone.today + 2.months }
     end
 
+    trait :past_publish do
+      status { :published }
+      sequence(:slug) { |n| "slug-#{n}" }
+      publish_on { Time.zone.yesterday }
+      expires_on { Time.zone.today + 2.months }
+    end
+
     trait :job_schema do
       weekly_hours { '8.5' }
       education { Faker::Lorem.paragraph }

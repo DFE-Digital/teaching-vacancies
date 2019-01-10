@@ -100,6 +100,10 @@ en:
     share_url: 'This job is publicly visible at:'
     view_public_link: 'View the public page for this job'
     copy_public_url: 'copy the public URL to the clipboard'
+    edit_link: Edit
+    delete_link: Delete
+    duplicate_link: Duplicate
+    are_you_sure: Are you sure you want to delete the '%{job_title}' job?
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
@@ -262,6 +266,7 @@ en:
   errors:
     jobs:
       unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
+      unable_to_copy: We were unable to create a copy of this job
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
