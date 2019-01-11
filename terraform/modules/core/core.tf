@@ -267,6 +267,46 @@ resource "aws_lb_listener_rule" "redirect_old_teachingjobs_https_traffic" {
   }
 }
 
+resource "aws_lb_listener_rule" "redirect_old_teachingjobs_https_traffic_with_www_subdomain" {
+  listener_arn = "${aws_alb_listener.default_https.arn}"
+
+  action {
+    type = "redirect"
+
+    redirect {
+      host        = "${var.domain}"
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  condition {
+    field  = "host-header"
+    values = ["www.teaching-jobs.service.gov.uk"]
+  }
+}
+
+resource "aws_lb_listener_rule" "redirect_https_traffic_with_www_subdomain" {
+  listener_arn = "${aws_alb_listener.default_https.arn}"
+
+  action {
+    type = "redirect"
+
+    redirect {
+      host        = "${var.domain}"
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  condition {
+    field  = "host-header"
+    values = ["www.teaching-vacancies.service.gov.uk"]
+  }
+}
+
 resource "aws_alb_target_group" "alb_target_group" {
   name     = "${var.project_name}-${var.environment}-alb-tg"
   port     = 80
