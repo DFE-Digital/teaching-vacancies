@@ -1,6 +1,6 @@
 class VacanciesController < ApplicationController
   include ParameterSanitiser
-  
+
   DEFAULT_RADIUS = 20
 
   helper_method :location,
