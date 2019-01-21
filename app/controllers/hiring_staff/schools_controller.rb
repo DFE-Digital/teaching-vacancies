@@ -2,10 +2,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
-    @published_vacancies = @school.vacancies.live
-    @draft_vacancies = @school.vacancies.draft
-    @pending_vacancies = @school.vacancies.pending
-    @expired_vacancies = @school.vacancies.expired
+    set_vacancies
   end
 
   def edit
@@ -34,5 +31,22 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
 
   def session_has_multiple_schools?
     session.key?(:multiple_schools) && session[:multiple_schools] == true
+  end
+
+  def set_vacancies
+    case params[:type]
+    when 'draft'
+      @vacancy_type = :draft
+      @vacancies = @school.vacancies.draft
+    when 'pending'
+      @vacancy_type = :pending
+      @vacancies = @school.vacancies.pending
+    when 'expired'
+      @vacancy_type = :expired
+      @vacancies = @school.vacancies.expired
+    else
+      @vacancy_type = :published
+      @vacancies = @school.vacancies.live
+    end
   end
 end
