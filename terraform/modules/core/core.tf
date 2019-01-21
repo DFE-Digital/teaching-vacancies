@@ -210,8 +210,7 @@ resource "aws_alb_listener" "default" {
   depends_on = ["aws_alb_target_group.alb_target_group"]
 }
 
-resource "aws_lb_listener_rule" "redirect_old_teachingjobs_http_traffic" {
-  count = "${var.redirect_old_teachingjobs_traffic}"
+resource "aws_lb_listener_rule" "redirect_all_http_requests_to_https" {
   listener_arn = "${aws_alb_listener.default.arn}"
 
   action {
@@ -226,8 +225,8 @@ resource "aws_lb_listener_rule" "redirect_old_teachingjobs_http_traffic" {
   }
 
   condition {
-    field  = "host-header"
-    values = ["teaching-jobs.service.gov.uk"]
+    field  = "path-pattern"
+    values = ["/*"]
   }
 }
 
@@ -303,7 +302,7 @@ resource "aws_lb_listener_rule" "redirect_https_traffic_with_www_subdomain" {
 
   condition {
     field  = "host-header"
-    values = ["www.teaching-vacancies.service.gov.uk"]
+    values = ["www.${var.domain}"]
   }
 }
 
