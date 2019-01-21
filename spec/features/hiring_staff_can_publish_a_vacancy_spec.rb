@@ -180,8 +180,8 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
 
-          visit school_path
-          click_on vacancy.job_title
+          v = Vacancy.find_by(job_title: vacancy.job_title)
+          visit school_job_path(id: v.id)
 
           expect(page).to have_content('Step 2 of 3')
         end
@@ -195,8 +195,8 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_candidate_specification_form_fields(vacancy)
           click_on 'Save and continue'
 
-          visit school_path
-          click_on vacancy.job_title
+          v = Vacancy.find_by(job_title: vacancy.job_title)
+          visit school_job_path(id: v.id)
 
           expect(page).to have_content('Step 3 of 3')
         end

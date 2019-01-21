@@ -29,13 +29,22 @@ RSpec.feature 'Hiring staff can see their vacancies' do
   context 'viewing the lists of jobs on the school page' do
     let(:school) { create(:school) }
 
+    let!(:published_vacancy) { create(:vacancy, :published, school: school) }
+    let!(:draft_vacancy) { create(:vacancy, :draft, school: school) }
+    let!(:pending_vacancy) { create(:vacancy, :future_publish, school: school) }
+    let!(:expired_vacancy) do
+      expired_vacancy = build(:vacancy, :expired, school: school)
+      expired_vacancy.save(validate: false)
+      expired_vacancy
+    end
+
     before do
       stub_hiring_staff_auth(urn: school.urn)
     end
 
     scenario 'jobs are split into sections' do
       5.times do
-        create(:vacancy, school: school, status: 'published')
+        create(:vacancy, :published, school: school)
       end
 
       visit school_path
@@ -47,92 +56,62 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     end
 
     scenario 'with published vacancies' do
-      vacancy = create(:vacancy, school: school, status: 'published')
-
       visit school_path
 
-      table = page.find('section#published-jobs table')
-      expect(table).to have_selector('th', text: I18n.t('jobs.job_title'))
-      expect(table).to have_selector('td', text: vacancy.job_title)
+      within('.tab-list') do
+        click_on(I18n.t('jobs.published_jobs'))
+      end
+
+      within('table.vacancies') do
+        expect(page).to have_content(I18n.t('jobs.job_title'))
+        expect(page).to have_content(published_vacancy.job_title)
+        expect(page).to have_css('tbody tr', count: 1)
+      end
     end
 
     scenario 'with draft vacancies' do
-      vacancy = create(:vacancy, school: school, status: 'draft')
-
       visit school_path
 
-      table = page.find('section#draft-jobs table')
-      expect(table).to have_selector('th', text: I18n.t('jobs.date_drafted'))
-      expect(table).to have_selector('td', text: vacancy.job_title)
+      within('.tab-list') do
+        click_on(I18n.t('jobs.draft_jobs'))
+      end
+
+      within('table.vacancies') do
+        expect(page).to have_content(I18n.t('jobs.date_drafted'))
+        expect(page).to have_content(format_date(draft_vacancy.updated_at))
+        expect(page).to have_content(draft_vacancy.job_title)
+        expect(page).to have_css('tbody tr', count: 1)
+      end
     end
 
     scenario 'with pending vacancies' do
-      publish_on = Time.zone.today + 2.days
-      expires_on = Time.zone.today + 4.days
-      vacancy = create(:vacancy, school: school, status: 'published', expires_on: expires_on, publish_on: publish_on)
-
       visit school_path
 
-      table = page.find('section#pending-jobs table')
-      expect(table).to have_selector('th', text: I18n.t('jobs.date_to_be_posted'))
-      expect(table).to have_selector('td', text: vacancy.job_title)
+      within('.tab-list') do
+        click_on(I18n.t('jobs.pending_jobs'))
+      end
+
+      within('table.vacancies') do
+        expect(page).to have_content(I18n.t('jobs.date_to_be_posted'))
+        expect(page).to have_content(pending_vacancy.job_title)
+        expect(page).to have_content(format_date(pending_vacancy.publish_on))
+        expect(page).to have_content(format_date(pending_vacancy.expires_on))
+        expect(page).to have_css('tbody tr', count: 1)
+      end
     end
 
     scenario 'with expired vacancies' do
-      expired = build(:vacancy, school: school, status: 'published', expires_on: Faker::Time.backward(6))
-      expired.send :set_slug
-      expired.save(validate: false)
-
       visit school_path
 
-      table = page.find('section#expired-jobs table')
-      expect(table).to have_selector('th', text: I18n.t('jobs.expired_on'))
-      expect(table).to have_selector('td', text: expired.job_title)
-    end
-
-    context 'tabs are clickable' do
-      scenario 'clicking on the Draft jobs tab shows draft jobs', js: true do
-        published_vacancy = create(:vacancy, school: school, status: 'published')
-        draft_vacancy = create(:vacancy, school: school, status: 'draft')
-
-        visit school_path
-
-        click_on(I18n.t('jobs.draft_jobs'))
-        expect(page).to_not have_selector('h2', text: I18n.t('jobs.published_jobs'))
-        expect(page).to_not have_selector('td', text: published_vacancy.job_title)
-        expect(page).to have_selector('td', text: draft_vacancy.job_title)
+      within('.tab-list') do
+        click_on(I18n.t('jobs.expired_jobs'))
       end
 
-      scenario 'clicking on the Pending jobs tab shows pending jobs', js: true do
-        published_vacancy = create(:vacancy, school: school, status: 'published')
-        draft_vacancy = create(:vacancy, school: school, status: 'draft')
-        publish_on = Time.zone.today + 2.days
-        expires_on = Time.zone.today + 4.days
-        pending_vacancy = create(:vacancy,
-                                 school: school,
-                                 status: 'published',
-                                 expires_on: expires_on,
-                                 publish_on: publish_on)
-
-        visit school_path
-
-        click_on(I18n.t('jobs.pending_jobs'))
-        expect(page).to_not have_selector('h2', text: I18n.t('jobs.published_jobs'))
-        expect(page).to_not have_selector('h2', text: I18n.t('jobs.draft_jobs'))
-        expect(page).to_not have_selector('td', text: published_vacancy.job_title)
-        expect(page).to_not have_selector('td', text: draft_vacancy.job_title)
-        expect(page).to have_selector('h2', text: I18n.t('jobs.pending_jobs'))
-        expect(page).to have_selector('td', text: pending_vacancy.job_title)
-      end
-
-      scenario 'there is a no content message within empty tabs', js: true do
-        create(:vacancy, school: school, status: 'published')
-
-        visit school_path
-
-        click_on(I18n.t('jobs.draft_jobs'))
-        section = page.find('section#draft-jobs')
-        expect(section).to have_content(I18n.t('jobs.no_draft_jobs'))
+      within('table.vacancies') do
+        expect(page).to have_content(expired_vacancy.job_title)
+        expect(page).to have_content(format_date(expired_vacancy.expires_on))
+        expect(page).to have_content(format_date(expired_vacancy.publish_on))
+        expect(page).to have_css('tbody tr', count: 1)
       end
     end
   end
