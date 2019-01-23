@@ -64,6 +64,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
 
       within('table.vacancies') do
         expect(page).to have_content(I18n.t('jobs.job_title'))
+        expect(page).to have_content(I18n.t('jobs.publish_on'))
         expect(page).to have_content(published_vacancy.job_title)
         expect(page).to have_css('tbody tr', count: 1)
       end
@@ -77,6 +78,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
       end
 
       within('table.vacancies') do
+        expect(page).to have_content(I18n.t('jobs.date_drafted'))
         expect(page).to have_content(I18n.t('jobs.date_drafted'))
         expect(page).to have_content(format_date(draft_vacancy.updated_at))
         expect(page).to have_content(draft_vacancy.job_title)
@@ -108,6 +110,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
       end
 
       within('table.vacancies') do
+        expect(page).to have_content(I18n.t('jobs.expired_on'))
         expect(page).to have_content(expired_vacancy.job_title)
         expect(page).to have_content(format_date(expired_vacancy.expires_on))
         expect(page).to have_content(format_date(expired_vacancy.publish_on))

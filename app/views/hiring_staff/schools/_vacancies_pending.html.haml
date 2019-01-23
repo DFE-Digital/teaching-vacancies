@@ -7,4 +7,4 @@
             %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
     %tbody.govuk-table__body
         - vacancies.each do |vacancy|
-            = render partial: 'vacancy_published', locals: { vacancy: vacancy, school: school }
+            = render partial: 'vacancy_pending', locals: { vacancy: vacancy, school: school }
