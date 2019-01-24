@@ -581,9 +581,9 @@ RSpec.feature 'Creating a vacancy' do
       context 'adds a job to update the Google index in the queue' do
         scenario 'if the vacancy is published immediately' do
           vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
-          vacancy_url = job_url(vacancy, protocol: 'https')
 
-          expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+          expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+            .to receive(:update_google_index).with(vacancy)
 
           visit school_job_review_path(vacancy.id)
           click_on 'Confirm and submit job'
