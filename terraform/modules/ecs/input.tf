@@ -48,7 +48,8 @@ variable "es_address" {}
 variable "aws_elasticsearch_region" {}
 variable "aws_elasticsearch_key" {}
 variable "aws_elasticsearch_secret" {}
-variable "redis_url" {}
+variable "redis_cache_url" {}
+variable "redis_queue_url" {}
 variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}
 variable "google_drive_json_key" {
