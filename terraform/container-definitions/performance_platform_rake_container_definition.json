@@ -50,8 +50,12 @@
         "value": "${aws_elasticsearch_key}"
       },
       {
-        "name": "REDIS_URL",
-        "value": "${redis_url}"
+        "name": "REDIS_CACHE_URL",
+        "value": "${redis_cache_url}"
+      },
+      {
+        "name": "REDIS_QUEUE_URL",
+        "value": "${redis_queue_url}"
       },
       {
         "name": "PP_TRANSACTIONS_BY_CHANNEL_TOKEN",

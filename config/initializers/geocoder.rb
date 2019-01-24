@@ -1,4 +1,4 @@
-redis = Redis.new(url: ENV['REDIS_URL'])
+redis = Redis.new(url: ENV['REDIS_CACHE_URL'])
 key = ENV.fetch('GOOGLE_GEOCODING_API_KEY', '')
 
 Geocoder.configure(
