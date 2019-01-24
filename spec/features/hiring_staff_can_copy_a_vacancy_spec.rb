@@ -2,10 +2,6 @@ require 'rails_helper'
 RSpec.feature 'Copying a vacancy' do
   let(:school) { create(:school) }
 
-  before do
-    skip 'Renable these tests once the hiring staff tabs are in place'
-  end
-
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn)
   end
@@ -34,7 +30,7 @@ RSpec.feature 'Copying a vacancy' do
     vacancy.school = school
     vacancy.save
 
-    visit school_path
+    visit jobs_with_type_school_path(:pending)
 
     expect(page).to have_selector('td', text: I18n.t('jobs.duplicate_link'))
   end
@@ -44,7 +40,7 @@ RSpec.feature 'Copying a vacancy' do
     vacancy.school = school
     vacancy.save
 
-    visit school_path
+    visit jobs_with_type_school_path(:draft)
 
     expect(page).to_not have_selector('td', text: I18n.t('jobs.duplicate_link'))
   end
@@ -54,7 +50,7 @@ RSpec.feature 'Copying a vacancy' do
       scenario 'the job title is updated to show it is a copy' do
         published = FactoryBot.create(:vacancy, school: school)
 
-        visit school_path
+        visit jobs_with_type_school_path(:published)
         click_on I18n.t('jobs.duplicate_link')
 
         expect(page).to have_content("#{I18n.t('jobs.copy_of')} #{published.job_title}")
@@ -80,7 +76,7 @@ RSpec.feature 'Copying a vacancy' do
         pending.school = school
         pending.save
 
-        visit school_path
+        visit jobs_with_type_school_path(:pending)
         click_on I18n.t('jobs.duplicate_link')
 
         expect(page).to have_content("#{I18n.t('jobs.copy_of')} #{pending.job_title}")
