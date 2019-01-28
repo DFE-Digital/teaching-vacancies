@@ -23,6 +23,13 @@ class SubscriptionsController < ApplicationController
     render 'new'
   end
 
+  def unsubscribe
+    token = ParameterSanitiser.call(params).require(:subscription_id)
+    @subscription = Subscription.find_and_verify_by_token(token)
+    @subscription.delete
+    Auditor::Audit.new(@subscription, 'subscription.daily_alert.delete', nil).log
+  end
+
   private
 
   def subscription_params

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :subscriptions, only: %i[new create] do
+    get :unsubscribe
     resource :confirmation, only: [:show]
   end
 
