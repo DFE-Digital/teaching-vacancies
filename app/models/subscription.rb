@@ -1,4 +1,6 @@
 class Subscription < ApplicationRecord
+  include Auditor::Model
+
   enum status: %i[active trashed]
   enum frequency: %i[daily]
 
