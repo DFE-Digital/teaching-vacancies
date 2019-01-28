@@ -36,7 +36,7 @@ RSpec.feature 'A visitor to the website can access the support links' do
   context 'the roll out blog link' do
     scenario 'on the service homepage' do
       visit root_path
-      expect(page).to have_selector "a[href='#{roll_out_blog_url}']", text: 'rolled out in phases'
+      expect(page).to have_selector "a[href='#{roll_out_blog_url}']", text: I18n.t('beta_banner.link')
     end
 
     scenario 'on the hiring staff sign in page' do
