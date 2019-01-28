@@ -26,7 +26,7 @@
     = javascript_include_tag 'application'
     %meta{content: asset_path("govuk-opengraph-image.png"), property: "og:image"}/
     = csrf_meta_tags
-  %body{class: "govuk-template__body app-body-class #{authenticated? ? 'hiring-staff': '' } #{controller_name + '_' + action_name}"}
+  %body{class: body_class}
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     %a.govuk-skip-link{href: "#main-content"} Skip to main content
