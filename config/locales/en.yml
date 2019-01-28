@@ -103,7 +103,7 @@ en:
     view_public_link: 'View the public page for this job'
     copy_public_url: 'copy the public URL to the clipboard'
     published_jobs: Published jobs
-    pending_jobs: Pending jobs
+    pending_jobs: Scheduled jobs
     draft_jobs: Draft jobs
     expired_jobs: Expired jobs
     expired_on: Expired on
