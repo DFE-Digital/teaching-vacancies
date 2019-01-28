@@ -83,4 +83,44 @@ RSpec.describe Subscription, type: :model do
       expect(subscription.reference).to eq('A-reference')
     end
   end
+
+  context 'token generation' do
+    before do
+      stub_const('SUBSCRIPTION_KEY_GENERATOR_SECRET', 'foo')
+      stub_const('SUBSCRIPTION_KEY_GENERATOR_SALT', 'bar')
+    end
+
+    let(:subscription) { create(:subscription, frequency: :daily) }
+    let(:token) { subscription.token }
+
+    it 'generates a token' do
+      expect(token).to_not be_nil
+    end
+
+    describe '#find_and_verify_by_token' do
+      let(:result) { Subscription.find_and_verify_by_token(token) }
+
+      it 'finds by token' do
+        expect(result).to eq(subscription)
+      end
+
+      context 'when token is expired' do
+        let(:token) do
+          Timecop.travel(-3.days) { subscription.token }
+        end
+
+        it 'raises an error' do
+          expect { result }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+
+      context 'when token is incorrect' do
+        let(:token) { subscription.id }
+
+        it 'raises an error' do
+          expect { result }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+  end
 end
