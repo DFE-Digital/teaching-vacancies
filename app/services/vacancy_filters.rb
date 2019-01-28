@@ -20,7 +20,7 @@ class VacancyFilters
   def to_hash
     {
       location: location,
-      radius: "#{radius}km",
+      radius: radius.to_s,
       keyword: keyword,
       minimum_salary: minimum_salary,
       maximum_salary: maximum_salary,
@@ -28,6 +28,10 @@ class VacancyFilters
       phase: phase,
       newly_qualified_teacher: newly_qualified_teacher,
     }
+  end
+
+  def only_active_to_hash
+    to_hash.delete_if { |_, v| v.blank? }
   end
 
   def any?
