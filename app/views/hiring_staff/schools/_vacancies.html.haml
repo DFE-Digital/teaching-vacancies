@@ -1,7 +1,7 @@
 .govuk-tabs{"data-module" => "tabs"}
   %h2.govuk-tabs__title
     = t('aria_labels.content')
-  %ul.govuk-tabs__list.tab-list
+  %ul.govuk-tabs__list.tab-list{ class: 'govuk-!-margin-top-6' }
     - SchoolVacanciesPresenter.valid_types.each do |t|
       %li.govuk-tabs__list-item
         = link_to t("jobs.#{t}_jobs"), jobs_with_type_school_path(t), class: "govuk-tabs__tab #{@vacancy_presenter.vacancy_type == t ? 'govuk-tabs__tab--selected' : ''}"
