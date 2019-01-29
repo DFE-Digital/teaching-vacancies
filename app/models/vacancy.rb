@@ -168,6 +168,14 @@ class Vacancy < ApplicationRecord
     send(:set_slug)
   end
 
+  def minimum_salary=(salary)
+    self[:minimum_salary] = salary.to_s.strip
+  end
+
+  def maximum_salary=(salary)
+    self[:maximum_salary] = salary.to_s.strip
+  end
+
   private
 
   def slug_candidates

@@ -2,7 +2,8 @@
   {
     "name": "${task_name}",
     "image": "${image}:latest",
-    "memory": 512,
+    "memory": 1024,
+    "memoryReservation": 512,
     "networkMode": "bridge",
     "command": ${worker_command},
     "logConfiguration": {

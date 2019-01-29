@@ -18,7 +18,7 @@ require 'faker'
 require 'factory_bot_rails'
 
 london = Region.create(name: 'London', code: 'H')
-Region.create(name: 'South East England', code: 'J')
+se = Region.create(name: 'South East England', code: 'J')
 Region.create(name: 'South West England', code: 'K')
 Region.create(name: 'Yorkshire and the Humber', code: 'D')
 Region.create(name: 'North West England', code: 'B')
@@ -27,6 +27,7 @@ Region.create(name: 'East Midlands', code: 'E')
 Region.create(name: 'North East England', code: 'A')
 
 academy = SchoolType.create(label: 'Academy', code: '10')
+community_school = SchoolType.create(label: 'Community School', code: '1')
 SchoolType.create(label: 'Independent School', code: '3')
 SchoolType.create(label: 'Free School', code: '11')
 SchoolType.create(label: 'LA Maintained School', code: '4')
@@ -45,16 +46,16 @@ ealing_school = FactoryBot.create(:school, name: 'Macmillan Academy ',
                                    geolocation: '(54.565770,-1.264489)')
 
 bromley_school = FactoryBot.create(:school,
-                                    name: ' Sacred Heart Roman Catholic VA School - A Specialist Science College',
-                                    school_type: academy,
+                                    name: 'Burnsfield Infant School',
+                                    school_type: community_school,
                                     urn: 110628,
-                                    address: 'Mersey Road',
-                                    phase: :secondary,
-                                    town: 'Redcar',
-                                    county: 'North Yorkshire',
-                                    postcode: 'TS10 1PJ',
-                                    region: london,
-                                    geolocation: '(54.612422,-1.079842)')
+                                    address: 'Burnsfield Estate',
+                                    phase: :primary,
+                                    town: 'Chatteris',
+                                    county: 'Cambridgeshire',
+                                    postcode: 'PE16 6ET',
+                                    region: se,
+                                    geolocation: '(52.455421,0.043325)')
 
 payscale = PayScale.limit(5).sample(1).first
 leadership = Leadership.limit(1).sample(1).first
