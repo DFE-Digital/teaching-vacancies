@@ -523,5 +523,5 @@ en:
           line_1: "You are free to reuse job listing data under the terms of the <a href='https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/' target='_blank' class='govuk-link'>Open Government Licence</a> for public sector information with the following exception:"
           list: you may not charge a school any fee or commission for contacting, interviewing or hiring a respondent to your advertisement or listing if it is based on Teaching Vacancies data that you have reused.
   beta_banner:
-    line_1: This service lists jobs in select areas of England. %{link}, with national coverage by March.
-    link: It's being rolled out in phases
+    line_1: This free service lists jobs in select areas. %{link} and will cover all of England in February.
+    link: It is rolling out in phases
