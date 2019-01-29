@@ -101,9 +101,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'notifies the Google index service' do
         vacancy = create(:vacancy, :published, school: school)
-        vacancy_url = job_url(vacancy, protocol: 'https')
 
-        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          .to receive(:update_google_index).with(vacancy)
 
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
@@ -160,9 +160,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'adds a job to update the Google index in the queue' do
         vacancy = create(:vacancy, :published, school: school)
-        vacancy_url = job_url(vacancy, protocol: 'https')
 
-        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          .to receive(:update_google_index).with(vacancy)
 
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
@@ -266,9 +266,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'adds a job to update the Google index in the queue' do
         vacancy = create(:vacancy, :published, school: school)
-        vacancy_url = job_url(vacancy, protocol: 'https')
 
-        expect(UpdateGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          .to receive(:update_google_index).with(vacancy)
 
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.application_link'))

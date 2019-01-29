@@ -2,8 +2,6 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
-  private
-
   def school
     @school ||= School.find_by! urn: session[:urn]
   end
@@ -66,11 +64,15 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def update_google_index(job)
+    return unless Rails.env.production?
+
     url = job_url(job, protocol: 'https')
     UpdateGoogleIndexQueueJob.perform_later(url)
   end
 
   def remove_google_index(job)
+    return unless Rails.env.production?
+
     url = job_url(job, protocol: 'https')
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
