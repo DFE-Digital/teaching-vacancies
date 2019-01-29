@@ -2,7 +2,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
-    @vacancies = @school.vacancies.active
+    @vacancy_presenter = SchoolVacanciesPresenter.new(@school, params[:type])
   end
 
   def edit

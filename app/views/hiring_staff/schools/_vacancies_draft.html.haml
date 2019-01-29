@@ -1,0 +1,15 @@
+%section.govuk-tabs__panel
+    %h2.govuk-heading-m= t("jobs.draft_jobs")
+
+    - if presenter.draft.any?
+        %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
+            %thead.govuk-table__head
+                %tr.govuk-table__row
+                    %th.govuk-table__header= t('jobs.job_title')
+                    %th.govuk-table__header= t('jobs.date_drafted')
+                    %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
+            %tbody.govuk-table__body
+                - presenter.draft.each do |vacancy|
+                    = render partial: 'vacancy_draft', locals: { vacancy: vacancy, school: presenter.school }
+    - else
+        %p= t("jobs.no_draft_jobs")
