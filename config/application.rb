@@ -42,5 +42,10 @@ module TeacherVacancyService
     config.autoload_paths += Dir[Rails.root.join('lib', 'modules')]
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.action_mailer.delivery_method = :notify
+    config.action_mailer.notify_settings = {
+      api_key: ENV['NOTIFY_KEY']
+    }
   end
 end

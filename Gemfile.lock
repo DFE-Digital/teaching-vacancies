@@ -231,6 +231,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    mail-notify (0.0.2)
+      actionmailer (~> 5.0)
+      notifications-ruby-client (~> 2.0)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     memoist (0.16.0)
@@ -521,6 +524,7 @@ DEPENDENCIES
   launchy
   listen (>= 3.0.5, < 3.2)
   lograge
+  mail-notify
   notifications-ruby-client
   omniauth (~> 1.8)
   omniauth_openid_connect (~> 0.1)
@@ -561,4 +565,4 @@ RUBY VERSION
    ruby 2.6.1p33
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
