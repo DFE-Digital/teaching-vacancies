@@ -1,5 +1,5 @@
 :queues:
-  - [ notify_request, 3 ]
+  - [ mailers, 3 ]
   - [ page_view_collector, 2 ]
   - [ performance_platform, 2 ]
   - [ google_indexing, 2]
@@ -22,5 +22,5 @@ audit_feedback:
   :concurrency: 1
 audit_toc_acceptance_event:
   :concurrency: 1
-notify_request:
+mailers:
   :concurrency: 2
