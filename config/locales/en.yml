@@ -271,6 +271,8 @@ en:
       confirmation:
         subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
         expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
+        unsubscribe_text_html: "Don't want to recieve these email alerts? %{link}"
+        unsubscribe_link_text: Unsubscribe here
     manage: Manage your subscription
     unsubscribe: Unsubscribe
   terms_and_conditions:
