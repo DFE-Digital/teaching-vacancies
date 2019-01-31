@@ -67,4 +67,28 @@ RSpec.feature 'Copying a vacancy' do
       expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
     end
   end
+
+  context 'when the publish on date is set in the past' do
+    scenario 'it renders a form error instead of a 500 error' do
+      original_vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
+      original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+
+      new_vacancy = original_vacancy.dup
+      new_vacancy.publish_on = 1.day.ago
+
+      visit school_path
+
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
+      end
+
+      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('form.copy-form') do
+        fill_in_copy_vacancy_form_fields(new_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+      end
+
+      expect(page).to have_content("Publish on can't be before today")
+    end
+  end
 end
