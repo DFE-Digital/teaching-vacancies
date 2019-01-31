@@ -22,6 +22,7 @@ FactoryBot.define do
     weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
     newly_qualified_teacher { true }
+    reference { SecureRandom.uuid }
 
     trait :fail_minimum_validation do
       job_title { Faker::Job.title[0..2] }
