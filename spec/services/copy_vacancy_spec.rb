@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe CopyVacancy do
-  describe '#update_fields' do
-    context 'a published vacancy with a publish_on date in the past' do
-      it 'updates the vacancy\'s publish_on field to enable it to be published' do
-        vacancy = FactoryBot.build(:vacancy, :past_publish)
-        vacancy_copy = CopyVacancy.new(vacancy: vacancy).copy
+  describe '#call' do
+    it 'creates a new vacancy as draft' do
+      original_vacancy = FactoryBot.build(:vacancy, job_title: 'Maths teacher')
+      original_vacancy.save
+      new_vacancy = original_vacancy.dup
 
         expect(vacancy_copy.publish_on).to eq(Time.zone.today)
       end

@@ -3,5 +3,5 @@
   %td.govuk-table__cell= format_date(vacancy.publish_on)
   %td.govuk-table__cell= format_date(vacancy.expires_on)
   %td.govuk-table__cell= link_to t('jobs.edit_link'), edit_school_job_path(vacancy.id), class: 'govuk-link'
-  %td.govuk-table__cell= link_to t('jobs.duplicate_link'), school_job_copy_path(vacancy.id), class: 'govuk-link', method: :post
+  %td.govuk-table__cell= link_to t('jobs.copy_link'), new_school_job_copy_path(vacancy.id), class: 'govuk-link', method: :get
   %td.govuk-table__cell= link_to t('jobs.delete_link'), school_job_path(id: vacancy.id), class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }
