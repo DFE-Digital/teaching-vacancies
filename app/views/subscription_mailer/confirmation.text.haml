@@ -3,7 +3,11 @@
 \
 = t('subscriptions.email.confirmation.subheading')
 \
-- @search_criteria.each_pair do |k, v| 
+- @search_criteria.each_pair do |k, v|
   * #{[k&.titleize, v].reject(&:blank?).join(': ')}
 \
 = t('subscriptions.email.confirmation.expiry_text_html', distance: '3 months', date: l(@expires_on))
+
+\---
+
+= t('subscriptions.email.confirmation.unsubscribe_text_html', link: unsubscribe_link(@unsubscribe_token))
