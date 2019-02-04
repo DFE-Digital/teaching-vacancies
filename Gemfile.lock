@@ -346,7 +346,7 @@ GEM
     roadie-rails (1.3.0)
       railties (>= 3.0, < 5.3)
       roadie (~> 3.1)
-    rollbar (2.17.0)
+    rollbar (2.18.2)
       multi_json
     rspec-collection_matchers (1.1.3)
       rspec-expectations (>= 2.99.0.beta1)
@@ -517,7 +517,7 @@ DEPENDENCIES
   rails-html-sanitizer (~> 1.0.4, >= 1.0.4)
   redis
   roadie-rails
-  rollbar (~> 2.17)
+  rollbar (~> 2.18)
   rspec-collection_matchers
   rspec-rails
   rubocop
