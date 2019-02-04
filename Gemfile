@@ -45,7 +45,7 @@ gem 'gov_uk_date_fields', git: 'https://github.com/despo/gov_uk_date_fields.git'
 
 gem 'xml-sitemap'
 
-gem 'rollbar', '~> 2.17'
+gem 'rollbar', '~> 2.18'
 
 gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
