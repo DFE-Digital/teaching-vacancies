@@ -48,9 +48,9 @@ RSpec.feature 'School deleting vacancies' do
 
   scenario 'Notifies the Google index service' do
     vacancy = create(:vacancy, school: school)
-    vacancy_url = job_url(vacancy, protocol: 'https')
 
-    expect(RemoveGoogleIndexQueueJob).to receive(:perform_later).with(vacancy_url)
+    expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+      .to receive(:remove_google_index).with(vacancy)
 
     visit school_path(school)
 

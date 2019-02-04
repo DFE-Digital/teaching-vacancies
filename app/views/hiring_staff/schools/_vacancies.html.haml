@@ -1,8 +1,9 @@
-%table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
-  %th.govuk-table__header= t('jobs.job_title')
-  %th.govuk-table__header= t('jobs.publish_on')
-  %th.govuk-table__header= t('jobs.expires_on')
-  %th.govuk-table__header= t('jobs.status')
-  %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
-  - vacancies.each do |vacancy|
-    = render partial: 'vacancy', locals: { vacancy: vacancy, school: school }
+.govuk-tabs{"data-module" => "tabs"}
+  %h2.govuk-tabs__title
+    = t('aria_labels.content')
+  %ul.govuk-tabs__list.tab-list{ class: 'govuk-!-margin-top-6' }
+    - SchoolVacanciesPresenter.valid_types.each do |t|
+      %li.govuk-tabs__list-item
+        = link_to t("jobs.#{t}_jobs"), jobs_with_type_school_path(t), class: "govuk-tabs__tab #{@vacancy_presenter.vacancy_type == t ? 'govuk-tabs__tab--selected' : ''}"
+
+  = render partial: "vacancies_#{@vacancy_presenter.vacancy_type}", locals: { presenter: @vacancy_presenter }

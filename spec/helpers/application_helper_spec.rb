@@ -16,4 +16,30 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.sanitize(html)).to eq(sanitized_html)
     end
   end
+
+  describe '#body_class' do
+    before do
+      expect(controller).to receive(:controller_name) { 'foo' }
+      expect(controller).to receive(:action_name) { 'bar' }
+      allow(controller).to receive(:authenticated?) { false }
+    end
+
+    it 'returns the controller and action name' do
+      expect(helper.body_class).to match(/foo_bar/)
+    end
+
+    it 'does not return the authenticated class' do
+      expect(helper.body_class).to_not match(/hiring-staff/)
+    end
+
+    context 'when logged in' do
+      before do
+        expect(controller).to receive(:authenticated?) { true }
+      end
+
+      it 'returns the authenticated class' do
+        expect(helper.body_class).to match(/hiring-staff/)
+      end
+    end
+  end
 end
