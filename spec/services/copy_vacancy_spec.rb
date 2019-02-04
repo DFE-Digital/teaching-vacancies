@@ -7,7 +7,7 @@ RSpec.describe CopyVacancy do
       original_vacancy.save
       new_vacancy = original_vacancy.dup
 
-      result = described_class.new(original: original_vacancy, new: new_vacancy)
+      result = described_class.new(proposed_vacancy: new_vacancy)
                               .call
 
       expect(result).to be_kind_of(Vacancy)
@@ -23,7 +23,7 @@ RSpec.describe CopyVacancy do
       original_vacancy = FactoryBot.create(:vacancy, job_title: 'Maths teacher')
       new_vacancy = original_vacancy.dup
 
-      described_class.new(original: original_vacancy, new: new_vacancy)
+      described_class.new(proposed_vacancy: new_vacancy)
                      .call
 
       expect(Vacancy.find(original_vacancy.id).attributes == original_vacancy.attributes)
@@ -38,7 +38,7 @@ RSpec.describe CopyVacancy do
         new_vacancy = original_vacancy.dup
         new_vacancy.job_title = 'English teacher'
 
-        result = described_class.new(original: original_vacancy, new: new_vacancy)
+        result = described_class.new(proposed_vacancy: new_vacancy)
                                 .call
 
         expect(Vacancy.find(result.id).job_title).to eq('English teacher')
@@ -54,7 +54,7 @@ RSpec.describe CopyVacancy do
         new_vacancy.publish_on = 0.days.from_now
         new_vacancy.expires_on = 50.days.from_now
 
-        result = described_class.new(original: original_vacancy, new: new_vacancy)
+        result = described_class.new(proposed_vacancy: new_vacancy)
                                 .call
 
         created_vacancy = Vacancy.find(result.id)

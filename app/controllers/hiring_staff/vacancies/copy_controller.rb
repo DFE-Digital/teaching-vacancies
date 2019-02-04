@@ -10,10 +10,9 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
     @school = school
     @copy_form = CopyVacancyForm.new(vacancy: old_vacancy)
 
-    vacancy = @copy_form.apply_changes!(copy_form_params)
-
-    if vacancy.valid?
-      new_vacancy = CopyVacancy.new(original: vacancy, new: @copy_form.vacancy).call
+    proposed_vacancy = @copy_form.apply_changes!(copy_form_params)
+    if proposed_vacancy.valid?
+      new_vacancy = CopyVacancy.new(proposed_vacancy: proposed_vacancy).call
       Auditor::Audit.new(new_vacancy, 'vacancy.copy', current_session_id).log
       redirect_to review_path(new_vacancy)
     else
