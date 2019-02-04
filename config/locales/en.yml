@@ -98,7 +98,6 @@ en:
     already_published: 'This job has already been published'
     draft: 'This job is currently a draft version.'
     date_to_be_posted: Date to be published
-    date_drafted: Date drafted
     share_url: 'This job is publicly visible at:'
     view_public_link: 'View the public page for this job'
     copy_public_url: 'copy the public URL to the clipboard'
@@ -114,6 +113,9 @@ en:
     edit_link: Edit
     delete_link: Delete
     are_you_sure: Are you sure you want to delete the '%{job_title}' job?
+    draft:
+      time_created: Date drafted
+      time_updated: Date last updated
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
