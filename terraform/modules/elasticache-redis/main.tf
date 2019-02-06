@@ -34,7 +34,7 @@ resource "aws_elasticache_cluster" "redis" {
   security_group_ids   = ["${aws_security_group.redis.id}"]
 
   tags {
-    Name          = "${var.tag_name}-cache"
+    Name          = "${var.tag_name}"
     environment   = "${var.tag_environment}"
     team          = "${var.tag_team}"
     application   = "${var.tag_application}"
