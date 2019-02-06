@@ -3,7 +3,7 @@ class Api::VacanciesController < Api::ApplicationController
   before_action :verify_json_or_csv_request, only: %w[index]
 
   def index
-    records = Vacancy.listed.where.not(status: :draft).where.not(status: :trashed)
+    records = Vacancy.includes(school: [:region]).listed.where.not(status: :draft).where.not(status: :trashed)
     @vacancies = VacanciesPresenter.new(records, searched: false)
 
     respond_to do |format|
