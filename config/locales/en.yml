@@ -71,6 +71,7 @@ en:
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
     publish_heading: 'Publish a job for %{school}'
+    copy_page_title: 'Copy your %{job_title} job'
     review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review the job for %{school}'
     edit_heading: 'Edit job for %{school}'
@@ -85,6 +86,7 @@ en:
     publication_date: 'Date role will be listed'
     review: 'Review the job details and make any necessary changes before submitting it for publication below.'
     edit: 'Edit the job details.'
+    copy_of: 'Copy of'
     confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
     submit: 'Confirm and submit job'
     apply: 'Get more information'
@@ -111,6 +113,7 @@ en:
     no_draft_jobs: You currently have no draft jobs
     no_pending_jobs: You currently have no pending jobs
     edit_link: Edit
+    copy_link: Copy
     delete_link: Delete
     are_you_sure: Are you sure you want to delete the '%{job_title}' job?
     draft:
