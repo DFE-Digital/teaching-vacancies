@@ -70,6 +70,8 @@ variable "google_analytics_profile_id" {}
 variable "notify_key" {}
 variable "notify_subscription_confirmation_template" {}
 
+variable "subscription_key_generator_secret" {}
+variable "subscription_key_generator_salt" {}
 variable "ecs_service_logspout_container_definition_file_path" {}
 
 variable "logspout_command" {
