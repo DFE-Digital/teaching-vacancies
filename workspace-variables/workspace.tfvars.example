@@ -74,3 +74,5 @@ skylight_enabled = "false"
 
 notify_key = ''
 notify_subscription_confirmation_template = ''
+subscription_key_generator_secret = ''
+subscription_key_generator_salt = ''

@@ -136,6 +136,8 @@ module "ecs" {
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"
   google_analytics_profile_id      = "${var.google_analytics_profile_id}"
+  subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
+  subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
   skylight_authentication          = "${var.skylight_authentication}"
   skylight_env                     = "${var.skylight_env}"
   skylight_enabled                 = "${var.skylight_enabled}"
