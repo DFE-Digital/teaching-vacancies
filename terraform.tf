@@ -119,6 +119,7 @@ module "ecs" {
   aws_elasticsearch_region         = "${var.region}"
   aws_elasticsearch_key            = "${module.es.es_user_access_key_id}"
   aws_elasticsearch_secret         = "${module.es.es_user_access_key_secret}"
+  redis_url                        = "redis://${module.elasticache_redis.redis_endpoint}"
   redis_cache_url                  = "redis://${module.elasticache_redis.redis_cache_endpoint}"
   redis_queue_url                  = "redis://${module.elasticache_redis.redis_queue_endpoint}"
   authorisation_service_token      = "${var.authorisation_service_token}"
