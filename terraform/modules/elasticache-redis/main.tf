@@ -44,7 +44,7 @@ resource "aws_elasticache_cluster" "redis" {
 }
 
 resource "aws_elasticache_cluster" "redis_cache" {
-  cluster_id           = "${var.cluster_id}Cache"
+  cluster_id           = "${var.cluster_id}cache"
   engine               = "redis"
   engine_version       = "${var.engine_version}"
   maintenance_window   = "${var.maintenance_window}"
@@ -56,7 +56,7 @@ resource "aws_elasticache_cluster" "redis_cache" {
   security_group_ids   = ["${aws_security_group.redis.id}"]
 
   tags {
-    Name          = "${var.tag_name}Cache"
+    Name          = "${var.tag_name}cache"
     environment   = "${var.tag_environment}"
     team          = "${var.tag_team}"
     application   = "${var.tag_application}"
@@ -66,7 +66,7 @@ resource "aws_elasticache_cluster" "redis_cache" {
 }
 
 resource "aws_elasticache_cluster" "redis_queue" {
-  cluster_id           = "${var.cluster_id}Queue"
+  cluster_id           = "${var.cluster_id}queue"
   engine               = "redis"
   engine_version       = "${var.engine_version}"
   maintenance_window   = "${var.maintenance_window}"
@@ -78,7 +78,7 @@ resource "aws_elasticache_cluster" "redis_queue" {
   security_group_ids   = ["${aws_security_group.redis.id}"]
 
   tags {
-    Name          = "${var.tag_name}Queue"
+    Name          = "${var.tag_name}queue"
     environment   = "${var.tag_environment}"
     team          = "${var.tag_team}"
     application   = "${var.tag_application}"
