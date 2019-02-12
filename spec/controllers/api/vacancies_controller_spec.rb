@@ -63,6 +63,12 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expect(info_object[:contact][:email]).to eq(I18n.t('help.email'))
     end
 
+    it 'returns a links object' do
+      get :index, params: { api_version: 1 }
+
+      expect(json[:links].keys).to include(:first, :last, :prev, :next)
+    end
+
     it 'retrieves all available vacancies' do
       skip_vacancy_publish_on_validation
       published_vacancy = create(:vacancy)

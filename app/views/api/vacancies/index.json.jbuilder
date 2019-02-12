@@ -17,3 +17,10 @@ json.openapi '3.0.0'
 json.data @vacancies.decorated_collection do |vacancy|
   json.partial! 'show.json.jbuilder', vacancy: vacancy
 end
+
+json.links do
+  json.first nil
+  json.last nil
+  json.prev nil
+  json.next nil
+end
