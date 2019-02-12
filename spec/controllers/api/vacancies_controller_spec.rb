@@ -112,6 +112,10 @@ RSpec.describe Api::VacanciesController, type: :controller do
           prev: api_jobs_url
         )
       end
+
+      it 'includes the total pages' do
+        expect(json[:meta]).to include(totalPages: 4)
+      end
     end
 
     it 'does not retrieve incomplete or deleted vacancies' do

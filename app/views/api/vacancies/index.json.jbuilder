@@ -25,3 +25,7 @@ json.links do
   json.prev  url_to_prev_page(@vacancies)
   json.next  url_to_next_page(@vacancies)
 end
+
+json.meta do
+  json.totalPages @vacancies.total_pages
+end
