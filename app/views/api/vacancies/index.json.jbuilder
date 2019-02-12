@@ -10,7 +10,7 @@ json.info do
     json.name 'Open Government License'
     json.url 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
   end
-  json.version '0.0.1'
+  json.version '0.1.0'
 end
 json.openapi '3.0.0'
 
