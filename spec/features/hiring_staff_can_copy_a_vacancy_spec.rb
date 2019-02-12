@@ -2,89 +2,93 @@ require 'rails_helper'
 RSpec.feature 'Copying a vacancy' do
   let(:school) { create(:school) }
 
-  before do
-    skip 'Renable these tests once the hiring staff tabs are in place'
-  end
-
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn)
   end
 
   scenario 'a job can be successfully copied and published' do
-    FactoryBot.create(:vacancy, school: school)
+    original_vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
+    original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+
+    new_vacancy = original_vacancy.dup
+    new_vacancy.job_title = 'A new job title'
+    new_vacancy.starts_on = 35.days.from_now
+    new_vacancy.ends_on = 100.days.from_now
+    new_vacancy.publish_on = 0.days.from_now
+    new_vacancy.expires_on = 30.days.from_now
 
     visit school_path
 
-    click_on I18n.t('jobs.duplicate_link')
+    within('table.vacancies') do
+      click_on I18n.t('jobs.copy_link')
+    end
+
+    expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+    within('form.copy-form') do
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+      click_on I18n.t('buttons.save_and_continue')
+    end
+
+    expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
     click_on I18n.t('jobs.submit')
 
     expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
+    click_on('Preview your job listing')
+
+    expect(page).to have_content(new_vacancy.job_title)
+    expect(page).to have_content(new_vacancy.starts_on)
+    expect(page).to have_content(new_vacancy.ends_on)
+    expect(page).to have_content(new_vacancy.publish_on)
+    expect(page).to have_content(new_vacancy.expires_on)
+
+    expect(page).not_to have_content(original_vacancy.job_title)
+    expect(page).not_to have_content(original_vacancy.starts_on)
+    expect(page).not_to have_content(original_vacancy.ends_on)
+    expect(page).not_to have_content(original_vacancy.publish_on)
+    expect(page).not_to have_content(original_vacancy.expires_on)
   end
 
-  scenario 'hiring staff can see a Duplicate link on published jobs' do
-    FactoryBot.create(:vacancy, school: school)
+  context 'when the original job is pending/scheduled/future_publish' do
+    scenario 'a job can be successfully copied' do
+      original_vacancy = FactoryBot.create(:vacancy, :future_publish, school: school)
 
-    visit school_path
+      visit school_path
 
-    expect(page).to have_selector('td', text: I18n.t('jobs.duplicate_link'))
-  end
-
-  scenario 'hiring staff can see a Duplicate link on pending jobs' do
-    vacancy = FactoryBot.build(:vacancy, :future_publish)
-    vacancy.school = school
-    vacancy.save
-
-    visit school_path
-
-    expect(page).to have_selector('td', text: I18n.t('jobs.duplicate_link'))
-  end
-
-  scenario 'hiring staff can NOT see a Duplicate link on draft jobs' do
-    vacancy = FactoryBot.build(:vacancy, :draft)
-    vacancy.school = school
-    vacancy.save
-
-    visit school_path
-
-    expect(page).to_not have_selector('td', text: I18n.t('jobs.duplicate_link'))
-  end
-
-  context 'review page' do
-    context 'copying a published job' do
-      scenario 'the job title is updated to show it is a copy' do
-        published = FactoryBot.create(:vacancy, school: school)
-
-        visit school_path
-        click_on I18n.t('jobs.duplicate_link')
-
-        expect(page).to have_content("#{I18n.t('jobs.copy_of')} #{published.job_title}")
+      click_on I18n.t('jobs.pending_jobs')
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
       end
 
-      scenario 'the publish_on date is updated to today' do
-        published = FactoryBot.build(:vacancy, :past_publish)
-        published.school = school
-        published.save(validate: false)
-
-        visit school_path
-        click_on I18n.t('jobs.duplicate_link')
-
-        dt_publish_on = page.find('dt#publish_on')
-        expect(dt_publish_on.sibling('dd.app-check-your-answers__answer')).to_not have_content(published.publish_on)
-        expect(dt_publish_on.sibling('dd.app-check-your-answers__answer')).to have_content(Time.zone.today)
+      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('form.copy-form') do
+        click_on I18n.t('buttons.save_and_continue')
       end
+
+      expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
     end
+  end
 
-    context 'copying a pending job' do
-      scenario 'the job title is updated to show it is a copy' do
-        pending = FactoryBot.build(:vacancy, :future_publish)
-        pending.school = school
-        pending.save
+  context 'when the publish on date is set in the past' do
+    scenario 'it renders a form error instead of a 500 error' do
+      original_vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
+      original_vacancy.save(validate: false) # Validation prevents publishing on a past date
 
-        visit school_path
-        click_on I18n.t('jobs.duplicate_link')
+      new_vacancy = original_vacancy.dup
+      new_vacancy.publish_on = 1.day.ago
 
-        expect(page).to have_content("#{I18n.t('jobs.copy_of')} #{pending.job_title}")
+      visit school_path
+
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
       end
+
+      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('form.copy-form') do
+        fill_in_copy_vacancy_form_fields(new_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+      end
+
+      expect(page).to have_content("Publish on can't be before today")
     end
   end
 end

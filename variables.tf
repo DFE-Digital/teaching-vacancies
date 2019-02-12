@@ -247,7 +247,11 @@ variable "elasticache_redis_engine_version" {
   default = "4.0.10"
 }
 
-variable "elasticache_redis_instance_type" {
+variable "elasticache_redis_cache_instance_type" {
+  default = "cache.t2.small"
+}
+
+variable "elasticache_redis_queue_instance_type" {
   default = "cache.t2.small"
 }
 

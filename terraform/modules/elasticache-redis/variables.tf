@@ -12,7 +12,11 @@ variable "parameter_group_name" {
   default = "default.redis2.8"
 }
 
-variable "instance_type" {
+variable "redis_cache_instance_type" {
+  default = "cache.m3.medium"
+}
+
+variable "redis_queue_instance_type" {
   default = "cache.m3.medium"
 }
 

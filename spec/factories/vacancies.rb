@@ -22,6 +22,7 @@ FactoryBot.define do
     weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
     newly_qualified_teacher { true }
+    reference { SecureRandom.uuid }
 
     trait :fail_minimum_validation do
       job_title { Faker::Job.title[0..2] }
@@ -93,6 +94,8 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Time.zone.yesterday }
       expires_on { Time.zone.today + 2.months }
+      starts_on  { Time.zone.today + 3.months }
+      ends_on { Time.zone.today + 4.months }
     end
 
     trait :job_schema do
