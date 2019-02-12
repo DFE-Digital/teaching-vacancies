@@ -15,21 +15,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
   end
 
-  describe 'GET /api/v1/jobs.csv' do
-    it 'responds with :ok' do
-      get :index, params: { api_version: 1 }, format: :csv
-
-      expect(response.status).to eq(Rack::Utils.status_code(:ok))
-    end
-
-    context 'sets headers' do
-      before(:each) { get :index, params: { api_version: 1 }, format: :csv }
-
-      it_behaves_like 'X-Robots-Tag'
-      it_behaves_like 'Content-Type CSV'
-    end
-  end
-
   describe 'GET /api/v1/jobs.json', elasticsearch: true, json: true do
     render_views
 
