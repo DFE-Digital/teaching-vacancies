@@ -19,8 +19,9 @@ json.data @vacancies.decorated_collection do |vacancy|
 end
 
 json.links do
-  json.first nil
-  json.last nil
-  json.prev nil
-  json.next nil
+  json.self  api_jobs_url(page: @vacancies.current_page)
+  json.first api_jobs_url
+  json.last  api_jobs_url(page: @vacancies.total_pages)
+  json.prev  url_to_prev_page(@vacancies)
+  json.next  url_to_next_page(@vacancies)
 end

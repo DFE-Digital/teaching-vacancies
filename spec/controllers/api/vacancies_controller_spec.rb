@@ -66,7 +66,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
     it 'returns a links object' do
       get :index, params: { api_version: 1 }
 
-      expect(json[:links].keys).to include(:first, :last, :prev, :next)
+      expect(json[:links].keys).to include(:self, :first, :last, :prev, :next)
     end
 
     it 'retrieves all available vacancies' do
@@ -84,6 +84,33 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expect(json[:data].count).to eq(2)
       vacancies.each do |v|
         expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(v)))
+      end
+    end
+
+    context 'when there are more vacancies than the per-page limit' do
+      before do
+        allow(Vacancy).to receive(:default_per_page).and_return(per_page)
+        create_list(:vacancy, 16)
+        Vacancy.__elasticsearch__.refresh_index!
+
+        get :index, params: { api_version: 1, page: 2 }
+      end
+
+      let(:per_page) { 5 }
+      let(:links_object) { json[:links] }
+
+      it 'paginates the result' do
+        expect(json[:data].count).to eq(per_page)
+      end
+
+      it 'includes the correct pagination links' do
+        expect(links_object).to include(
+          self: api_jobs_url(page: 2),
+          first: api_jobs_url,
+          last: api_jobs_url(page: 4),
+          next: api_jobs_url(page: 3),
+          prev: api_jobs_url
+        )
       end
     end
 
