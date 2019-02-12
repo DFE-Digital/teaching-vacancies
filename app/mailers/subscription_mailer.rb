@@ -1,6 +1,4 @@
-class SubscriptionMailer < Mail::Notify::Mailer
-  add_template_helper(NotifyViewHelper)
-
+class SubscriptionMailer < ApplicationMailer
   def confirmation(subscription_id)
     subscription = Subscription.find(subscription_id)
 

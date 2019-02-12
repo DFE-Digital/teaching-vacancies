@@ -268,13 +268,23 @@ en:
       resubscribe_link_text: resubscribe here
     back_to_search_results: 'Return to your search results'
     email:
+      unsubscribe_text_html: "Don't want to recieve these email alerts? %{link}"
+      unsubscribe_link_text: Unsubscribe here
       confirmation:
         subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
         expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
-        unsubscribe_text_html: "Don't want to recieve these email alerts? %{link}"
-        unsubscribe_link_text: Unsubscribe here
     manage: Manage your subscription
     unsubscribe: Unsubscribe
+  alerts:
+    email:
+      daily:
+        subject:
+          one: "We've found a new job for you"
+          other: "We've found %{count} new jobs for you"
+        summary:
+          one: "A new job matching your search criteria was posted yesterday."
+          other: "%{count} new jobs matching your search criteria were posted yesterday."
+        unsubscribe: Follow this link to unsubscribe.
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
