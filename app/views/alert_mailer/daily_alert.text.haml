@@ -1,0 +1,16 @@
+\# #{t('app.title')}
+\# #{t('alerts.email.daily.summary', count: @vacancies.count)}
+\
+\---
+\
+- @vacancies.each do |vacancy|
+  = notify_link(vacancy.share_url, vacancy.job_title)
+  = vacancy.school_name
+  = "Salary: #{vacancy.salary_range}"
+  \---
+\
+Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))}
+
+\---
+
+= t('subscriptions.email.unsubscribe_text_html', link: unsubscribe_link(@unsubscribe_token))
