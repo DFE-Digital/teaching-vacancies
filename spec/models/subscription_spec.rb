@@ -123,4 +123,36 @@ RSpec.describe Subscription, type: :model do
       end
     end
   end
+
+  context 'vacancies_for_range' do
+    let(:subscription) do
+      create(:subscription, frequency: :daily, search_criteria: { keyword: 'english' }.to_json)
+    end
+
+    let!(:old_matching_vacancies) do
+      Timecop.freeze(2.days.ago) do
+        create_list(:vacancy, 1, :published_slugged, publish_on: Time.zone.today, job_title: 'English Language')
+      end
+    end
+
+    let!(:old_vacancies) do
+      Timecop.freeze(2.days.ago) { create_list(:vacancy, 1, :published_slugged, publish_on: Time.zone.today) }
+    end
+
+    let!(:current_unmatching_vacancies) do
+      Timecop.freeze(1.day.ago) { create_list(:vacancy, 3, :published_slugged, publish_on: Time.zone.today) }
+    end
+
+    let!(:current_matching_vacancies) do
+      Timecop.freeze(1.day.ago) do
+        create_list(:vacancy, 4, :published_slugged, publish_on: Time.zone.today, job_title: 'English Language')
+      end
+    end
+
+    it 'returns the correct vacancies' do
+      Vacancy.__elasticsearch__.client.indices.flush
+      vacancies = subscription.vacancies_for_range(Time.zone.yesterday, Time.zone.today)
+      expect(vacancies.pluck(:id)).to match_array(current_matching_vacancies.pluck(:id))
+    end
+  end
 end

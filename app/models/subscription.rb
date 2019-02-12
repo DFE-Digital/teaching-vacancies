@@ -50,4 +50,8 @@ class Subscription < ApplicationRecord
     token_values = { id: id, expires: expires }
     self.class.encryptor.encrypt_and_sign(token_values)
   end
+
+  def vacancies_for_range(date_from, date_to)
+    AlertResultFinder.new(search_criteria_to_h, date_from, date_to).call.records
+  end
 end
