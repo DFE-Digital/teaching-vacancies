@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Subscription, type: :model do
+  it { should have_many(:alert_runs) }
+
   context 'validations' do
     context 'email' do
       it 'ensures an email is set' do

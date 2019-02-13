@@ -4,6 +4,8 @@ class Subscription < ApplicationRecord
   enum status: %i[active trashed]
   enum frequency: %i[daily]
 
+  has_many :alert_runs
+
   validates :email, email_address: { presence: true }
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
