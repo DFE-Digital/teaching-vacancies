@@ -26,8 +26,17 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
 
       it 'sends an email' do
         expect(AlertMailer).to receive(:daily_alert).with(subscription.id, vacancies.pluck(:id)) { mail }
-        expect(mail).to receive(:deliver_later)
+        expect(mail).to receive(:deliver_later) { ActionMailer::DeliveryJob.new }
         perform_enqueued_jobs { job }
+      end
+
+      it 'creates a run' do
+        job_id = 'ABC1234'
+        allow_any_instance_of(ActionMailer::DeliveryJob).to receive(:provider_job_id) { job_id }
+        perform_enqueued_jobs { job }
+        expect(subscription.alert_runs.count).to eq(1)
+        expect(subscription.alert_runs.first.job_id).to eq(job_id)
+        expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
       end
     end
 
@@ -39,6 +48,11 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
       it 'does not send an email' do
         expect(AlertMailer).to_not receive(:daily_alert)
         perform_enqueued_jobs { job }
+      end
+
+      it 'does not create a run' do
+        perform_enqueued_jobs { job }
+        expect(subscription.alert_runs.count).to eq(0)
       end
     end
   end

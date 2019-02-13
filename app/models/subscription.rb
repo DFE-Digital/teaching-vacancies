@@ -56,4 +56,10 @@ class Subscription < ApplicationRecord
   def vacancies_for_range(date_from, date_to)
     AlertResultFinder.new(search_criteria_to_h, date_from, date_to).call.records
   end
+
+  def log_alert_run(job_id)
+    run = alert_runs.find_or_create_by(run_on: Time.zone.today)
+    run.job_id = job_id
+    run.save
+  end
 end

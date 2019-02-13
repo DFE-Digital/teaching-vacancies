@@ -157,4 +157,17 @@ RSpec.describe Subscription, type: :model do
       expect(vacancies.pluck(:id)).to match_array(current_matching_vacancies.pluck(:id))
     end
   end
+
+  describe 'log_alert_run' do
+    let(:subscription) { create(:subscription, frequency: :daily) }
+
+    it 'logs a run' do
+      job_id = 'some_job_id'
+      subscription.log_alert_run(job_id)
+
+      expect(subscription.alert_runs.count).to eq(1)
+      expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
+      expect(subscription.alert_runs.first.job_id).to eq(job_id)
+    end
+  end
 end
