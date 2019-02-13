@@ -1,6 +1,8 @@
 class SendDailyAlertEmailJob < ApplicationJob
   def perform
     Subscription.ongoing.each do |s|
+      next if s.alert_run_today?
+
       vacancies = vacancies_for_subscription(s)
       next if vacancies.blank?
 
