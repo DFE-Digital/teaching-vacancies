@@ -70,7 +70,8 @@ class VacanciesPresenter < BasePresenter
   def json_api_params
     {
       format: :json,
-      api_version: 1
+      api_version: 1,
+      protocol: 'https'
     }
   end
 
