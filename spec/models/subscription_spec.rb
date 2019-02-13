@@ -158,6 +158,31 @@ RSpec.describe Subscription, type: :model do
     end
   end
 
+  describe 'alert_run_today?' do
+    let(:subscription) { create(:subscription, frequency: :daily) }
+    subject { subscription.alert_run_today? }
+
+    context 'when an alert has run today' do
+      before do
+        subscription.alert_runs.find_or_create_by(run_on: Time.zone.today)
+      end
+
+      it { expect(subject).to eq(true) }
+    end
+
+    context 'when an alert ran yesterday' do
+      before do
+        subscription.alert_runs.find_or_create_by(run_on: Time.zone.yesterday)
+      end
+
+      it { expect(subject).to eq(false) }
+    end
+
+    context 'when an alert has never run' do
+      it { expect(subject).to eq(false) }
+    end
+  end
+
   describe 'log_alert_run' do
     let(:subscription) { create(:subscription, frequency: :daily) }
 

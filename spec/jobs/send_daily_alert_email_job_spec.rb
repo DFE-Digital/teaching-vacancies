@@ -38,6 +38,15 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
         expect(subscription.alert_runs.first.job_id).to eq(job_id)
         expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
       end
+
+      context 'when a run exists' do
+        let!(:run) { subscription.alert_runs.create(run_on: Time.zone.today) }
+
+        it 'does not send another email' do
+          expect(AlertMailer).to_not receive(:daily_alert)
+          perform_enqueued_jobs { job }
+        end
+      end
     end
 
     context 'with no vacancies' do
