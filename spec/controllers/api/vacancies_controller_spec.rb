@@ -90,11 +90,11 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       it 'includes the correct pagination links' do
         expect(links_object).to include(
-          self: api_jobs_url(page: 2),
-          first: api_jobs_url,
-          last: api_jobs_url(page: 4),
-          next: api_jobs_url(page: 3),
-          prev: api_jobs_url
+          self: 'http://localhost:3000/api/v1/jobs.json?page=2',
+          first: 'http://localhost:3000/api/v1/jobs.json?page=1',
+          last: 'http://localhost:3000/api/v1/jobs.json?page=4',
+          next: 'http://localhost:3000/api/v1/jobs.json?page=3',
+          prev: 'http://localhost:3000/api/v1/jobs.json?page=1'
         )
       end
 
