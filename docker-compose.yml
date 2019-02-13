@@ -14,7 +14,8 @@ services:
     depends_on:
       - db
       - elasticsearch
-      - redis
+      - redis_queue
+      - redis_cache
       - sidekiq
     tty: true
     stdin_open: true
@@ -50,7 +51,12 @@ services:
       - elasticsearch:/usr/share/elasticsearch/data
     restart: on-failure
 
-  redis:
+  redis_cache:
+    image: redis:latest
+    command: redis-server
+    restart: on-failure
+
+  redis_queue:
     image: redis:latest
     command: redis-server
     restart: on-failure
@@ -61,7 +67,7 @@ services:
       - docker-compose.env
     command: bundle exec sidekiq -C config/sidekiq.yml
     depends_on:
-      - redis
+      - redis_queue
     restart: on-failure
 
 volumes:
