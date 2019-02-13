@@ -74,7 +74,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
     context 'when there are more vacancies than the per-page limit' do
       before do
-        allow(Vacancy).to receive(:default_per_page).and_return(per_page)
+        stub_const('Api::VacanciesController::MAX_API_RESULTS_PER_PAGE', per_page)
         create_list(:vacancy, 16)
         Vacancy.__elasticsearch__.refresh_index!
 
