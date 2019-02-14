@@ -32,7 +32,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
 
       it 'creates a run' do
         job_id = 'ABC1234'
-        allow_any_instance_of(ActionMailer::DeliveryJob).to receive(:provider_job_id) { job_id }
+        allow_any_instance_of(DailyAlertMailerJob).to receive(:provider_job_id) { job_id }
         perform_enqueued_jobs { job }
         expect(subscription.alert_runs.count).to eq(1)
         expect(subscription.alert_runs.first.job_id).to eq(job_id)
