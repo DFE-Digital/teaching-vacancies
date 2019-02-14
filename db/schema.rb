@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2019_02_27_175205) do
     t.string "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
   end
 
