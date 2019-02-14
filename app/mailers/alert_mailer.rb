@@ -1,4 +1,6 @@
 class AlertMailer < ApplicationMailer
+  self.delivery_job = DailyAlertMailerJob
+
   def daily_alert(subscription_id, vacancy_ids)
     subscription = Subscription.find(subscription_id)
     vacancies = Vacancy.where(id: vacancy_ids)
