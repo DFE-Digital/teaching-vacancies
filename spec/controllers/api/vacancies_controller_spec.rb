@@ -15,21 +15,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
   end
 
-  describe 'GET /api/v1/jobs.csv' do
-    it 'responds with :ok' do
-      get :index, params: { api_version: 1 }, format: :csv
-
-      expect(response.status).to eq(Rack::Utils.status_code(:ok))
-    end
-
-    context 'sets headers' do
-      before(:each) { get :index, params: { api_version: 1 }, format: :csv }
-
-      it_behaves_like 'X-Robots-Tag'
-      it_behaves_like 'Content-Type CSV'
-    end
-  end
-
   describe 'GET /api/v1/jobs.json', elasticsearch: true, json: true do
     render_views
 
@@ -63,6 +48,12 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expect(info_object[:contact][:email]).to eq(I18n.t('help.email'))
     end
 
+    it 'returns a links object' do
+      get :index, params: { api_version: 1 }
+
+      expect(json[:links].keys).to include(:self, :first, :last, :prev, :next)
+    end
+
     it 'retrieves all available vacancies' do
       skip_vacancy_publish_on_validation
       published_vacancy = create(:vacancy)
@@ -78,6 +69,37 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expect(json[:data].count).to eq(2)
       vacancies.each do |v|
         expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(v)))
+      end
+    end
+
+    context 'when there are more vacancies than the per-page limit' do
+      before do
+        stub_const('Api::VacanciesController::MAX_API_RESULTS_PER_PAGE', per_page)
+        create_list(:vacancy, 16)
+        Vacancy.__elasticsearch__.refresh_index!
+
+        get :index, params: { api_version: 1, page: 2 }
+      end
+
+      let(:per_page) { 5 }
+      let(:links_object) { json[:links] }
+
+      it 'paginates the result' do
+        expect(json[:data].count).to eq(per_page)
+      end
+
+      it 'includes the correct pagination links' do
+        expect(links_object).to include(
+          self: 'https://localhost:3000/api/v1/jobs.json?page=2',
+          first: 'https://localhost:3000/api/v1/jobs.json?page=1',
+          last: 'https://localhost:3000/api/v1/jobs.json?page=4',
+          next: 'https://localhost:3000/api/v1/jobs.json?page=3',
+          prev: 'https://localhost:3000/api/v1/jobs.json?page=1'
+        )
+      end
+
+      it 'includes the total pages' do
+        expect(json[:meta]).to include(totalPages: 4)
       end
     end
 

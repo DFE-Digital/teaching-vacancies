@@ -5,6 +5,7 @@ services:
       context: .
       args:
         RAILS_ENV: "development"
+    image: local/tvs_web
     ports: ["3000:3000"]
     container_name: teacher-vacancy-service_web_1
     environment:
@@ -14,7 +15,8 @@ services:
     depends_on:
       - db
       - elasticsearch
-      - redis
+      - redis_queue
+      - redis_cache
       - sidekiq
     tty: true
     stdin_open: true
@@ -50,18 +52,23 @@ services:
       - elasticsearch:/usr/share/elasticsearch/data
     restart: on-failure
 
-  redis:
+  redis_cache:
+    image: redis:latest
+    command: redis-server
+    restart: on-failure
+
+  redis_queue:
     image: redis:latest
     command: redis-server
     restart: on-failure
 
   sidekiq:
-    build: .
+    image: local/tvs_web
     env_file:
       - docker-compose.env
     command: bundle exec sidekiq -C config/sidekiq.yml
     depends_on:
-      - redis
+      - redis_queue
     restart: on-failure
 
 volumes:

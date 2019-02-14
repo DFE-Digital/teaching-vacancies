@@ -1,13 +1,17 @@
 class Api::VacanciesController < Api::ApplicationController
-  before_action :verify_json_request, only: %w[show]
-  before_action :verify_json_or_csv_request, only: %w[index]
+  before_action :verify_json_request, only: %w[show index]
+
+  MAX_API_RESULTS_PER_PAGE = 50
 
   def index
-    records = Vacancy.includes(school: [:region]).listed.where.not(status: :draft).where.not(status: :trashed)
+    records = Vacancy.includes(school: [:region])
+                     .listed
+                     .published
+                     .page(page_number)
+                     .per(MAX_API_RESULTS_PER_PAGE)
     @vacancies = VacanciesPresenter.new(records, searched: false)
 
     respond_to do |format|
-      format.csv { send_data @vacancies.to_csv, filename: "#{Time.zone.now.iso8601}_jobs.csv", template: false }
       format.json
     end
   end
@@ -21,5 +25,9 @@ class Api::VacanciesController < Api::ApplicationController
 
   def id
     params[:id]
+  end
+
+  def page_number
+    params[:page] || 1
   end
 end
