@@ -12,7 +12,7 @@ class CopyVacancyForm < VacancyForm
     self.job_title = vacancy.job_title
     self.starts_on = vacancy.starts_on
     self.ends_on = vacancy.ends_on
-    self.expires_on = vacancy.expires_on
+    self.expires_on = vacancy.expires_on.future? ? vacancy.expires_on : nil
     self.publish_on = vacancy.publish_on
   end
 

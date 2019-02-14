@@ -13,6 +13,12 @@ RSpec.describe CopyVacancyForm, type: :model do
     expect(form_object.publish_on).to eq(original_vacancy.publish_on)
   end
 
+  it 'doesn’t copy the expiry date for expired vacancies' do
+    expired_vacancy = build(:vacancy, :expired)
+    form_object = described_class.new(vacancy: expired_vacancy)
+    expect(form_object.expires_on).to be_nil
+  end
+
   describe '#apply_changes!' do
     it 'updates the original vacancy with the users new preferences' do
       original_vacancy = build(:vacancy)
