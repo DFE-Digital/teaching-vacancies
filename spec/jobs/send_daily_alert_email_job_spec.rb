@@ -30,15 +30,6 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
         perform_enqueued_jobs { job }
       end
 
-      it 'creates a run' do
-        job_id = 'ABC1234'
-        allow_any_instance_of(DailyAlertMailerJob).to receive(:provider_job_id) { job_id }
-        perform_enqueued_jobs { job }
-        expect(subscription.alert_runs.count).to eq(1)
-        expect(subscription.alert_runs.first.job_id).to eq(job_id)
-        expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
-      end
-
       context 'when a run exists' do
         let!(:run) { subscription.alert_runs.create(run_on: Time.zone.today) }
 

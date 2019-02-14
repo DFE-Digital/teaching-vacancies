@@ -65,9 +65,7 @@ class Subscription < ApplicationRecord
     alert_run_today.present?
   end
 
-  def log_alert_run(job_id)
-    run = alert_runs.find_or_create_by(run_on: Time.zone.today)
-    run.job_id = job_id
-    run.save
+  def create_alert_run
+    alert_runs.find_or_create_by(run_on: Time.zone.today)
   end
 end

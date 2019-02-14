@@ -8,9 +8,7 @@ class SendDailyAlertEmailJob < ApplicationJob
 
       Rails.logger.info("Sidekiq: Sending vacancy alerts for #{vacancies.count} vacancies")
 
-      job = AlertMailer.daily_alert(s.id, vacancies.pluck(:id)).deliver_later
-
-      s.log_alert_run(job.provider_job_id)
+      AlertMailer.daily_alert(s.id, vacancies.pluck(:id)).deliver_later
     end
   end
 
