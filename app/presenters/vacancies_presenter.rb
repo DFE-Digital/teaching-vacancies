@@ -1,4 +1,5 @@
 class VacanciesPresenter < BasePresenter
+  include Rails.application.routes.url_helpers
   include ActionView::Helpers::UrlHelper
   attr_reader :decorated_collection, :searched
   alias_method :user_search?, :searched
@@ -44,7 +45,35 @@ class VacanciesPresenter < BasePresenter
     end
   end
 
+  def current_api_url
+    api_jobs_url(json_api_params.merge(page: model.current_page))
+  end
+
+  def first_api_url
+    api_jobs_url(json_api_params.merge(page: 1))
+  end
+
+  def last_api_url
+    api_jobs_url(json_api_params.merge(page: model.total_pages))
+  end
+
+  def previous_api_url
+    api_jobs_url(json_api_params.merge(page: model.prev_page)) if model.prev_page
+  end
+
+  def next_api_url
+    api_jobs_url(json_api_params.merge(page: model.next_page)) if model.next_page
+  end
+
   private
+
+  def json_api_params
+    {
+      format: :json,
+      api_version: 1,
+      protocol: 'https'
+    }
+  end
 
   def total_count
     model.total_count
