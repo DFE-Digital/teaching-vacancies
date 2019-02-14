@@ -52,10 +52,22 @@ RSpec.describe DailyAlertMailerJob, type: :job do
     it 'delivers the mail' do
       expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
+
+    it 'updates the alert run' do
+      expect { perform_enqueued_jobs { job } }.to change { subscription.alert_run_today.status }.to('sent')
+    end
   end
 
   context 'if the job has expired' do
     let!(:alert_run) { create(:alert_run, subscription: subscription, created_at: Time.zone.now - 5.hours) }
+
+    it 'does not deliver the mail' do
+      expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)
+    end
+  end
+
+  context 'if the job has already been run' do
+    let!(:alert_run) { create(:alert_run, subscription: subscription, status: :sent) }
 
     it 'does not deliver the mail' do
       expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)
