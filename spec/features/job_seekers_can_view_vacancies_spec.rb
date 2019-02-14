@@ -8,11 +8,6 @@ RSpec.feature 'Viewing vacancies' do
     verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
   end
 
-  scenario 'View a banner with information about the service' do
-    visit jobs_path
-    expect(page).to have_css('.flash.notice')
-  end
-
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
     job_count = Vacancy.default_per_page + 1 # must be larger than the default page limit
     create_list(:vacancy, job_count)
