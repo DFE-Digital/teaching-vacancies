@@ -57,8 +57,12 @@ class Subscription < ApplicationRecord
     AlertResultFinder.new(search_criteria_to_h, date_from, date_to).call.records
   end
 
+  def alert_run_today
+    alert_runs.find_by(run_on: Time.zone.today)
+  end
+
   def alert_run_today?
-    alert_runs.where(run_on: Time.zone.today).present?
+    alert_run_today.present?
   end
 
   def log_alert_run(job_id)
