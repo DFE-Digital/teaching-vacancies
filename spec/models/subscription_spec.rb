@@ -183,16 +183,25 @@ RSpec.describe Subscription, type: :model do
     end
   end
 
-  describe 'log_alert_run' do
+  describe 'create_alert_run' do
     let(:subscription) { create(:subscription, frequency: :daily) }
 
-    it 'logs a run' do
-      job_id = 'some_job_id'
-      subscription.log_alert_run(job_id)
+    it 'creates a run' do
+      subscription.create_alert_run
 
       expect(subscription.alert_runs.count).to eq(1)
       expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
-      expect(subscription.alert_runs.first.job_id).to eq(job_id)
+    end
+
+    context 'if a run exists for today' do
+      let!(:alert_run) { subscription.alert_runs.create(run_on: Time.zone.today) }
+
+      it 'does not create another run' do
+        subscription.create_alert_run
+
+        expect(subscription.alert_runs.count).to eq(1)
+        expect(subscription.alert_runs.first.id).to eq(alert_run.id)
+      end
     end
   end
 end
