@@ -5,6 +5,7 @@ services:
       context: .
       args:
         RAILS_ENV: "development"
+    image: local/tvs_web
     ports: ["3000:3000"]
     container_name: teacher-vacancy-service_web_1
     environment:
@@ -62,7 +63,7 @@ services:
     restart: on-failure
 
   sidekiq:
-    build: .
+    image: local/tvs_web
     env_file:
       - docker-compose.env
     command: bundle exec sidekiq -C config/sidekiq.yml
