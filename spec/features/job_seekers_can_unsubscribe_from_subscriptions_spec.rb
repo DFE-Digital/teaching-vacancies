@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
+  before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
+
   let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
   let(:subscription) do
     create(:subscription,
