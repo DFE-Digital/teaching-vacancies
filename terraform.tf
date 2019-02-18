@@ -133,6 +133,7 @@ module "ecs" {
   subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
   notify_key                                = "${var.notify_key}"
   notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
+  feature_email_alerts                      = "${var.feature_email_alerts}"
 }
 
 module "logs" {
