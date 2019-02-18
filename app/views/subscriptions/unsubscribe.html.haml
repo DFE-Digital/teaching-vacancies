@@ -11,4 +11,5 @@
           %p= t('subscriptions.deletion.confirmation_with_reference', reference: @subscription.reference)
 
   .govuk-grid-column-two-thirds
-    %p.govuk-body=t('subscriptions.deletion.resubscribe_html', link: link_to(t('subscriptions.deletion.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link'))
+    - if EmailAlertsFeature.enabled?
+      %p.govuk-body=t('subscriptions.deletion.resubscribe_html', link: link_to(t('subscriptions.deletion.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link'))
