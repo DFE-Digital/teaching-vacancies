@@ -358,6 +358,7 @@ variable "skylight_ignored_endpoints" {
   default = "ApplicationController#check"
 }
 variable "notify_key" {}
+variable "feature_email_alerts" {}
 variable "notify_subscription_confirmation_template" {}
 variable "subscription_key_generator_secret" {}
 variable "subscription_key_generator_salt" {}

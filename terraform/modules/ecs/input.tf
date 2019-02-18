@@ -75,6 +75,7 @@ variable "skylight_env" {}
 variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
+variable "feature_email_alerts" {}
 variable "notify_subscription_confirmation_template" {}
 
 variable "subscription_key_generator_secret" {}

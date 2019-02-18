@@ -123,6 +123,10 @@
       {
         "name": "SUBSCRIPTION_KEY_GENERATOR_SALT",
         "value": "${subscription_key_generator_salt}"
+      },
+      {
+        "name": "FEATURE_EMAIL_ALERTS",
+        "value": "${feature_email_alerts}"
       }
     ]
   }
