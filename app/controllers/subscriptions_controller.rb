@@ -1,6 +1,8 @@
 class SubscriptionsController < ApplicationController
   include ParameterSanitiser
 
+  before_action :check_feature_flag, except: :unsubscribe
+
   def new
     subscription = Subscription.new(search_criteria: search_criteria.to_json)
     @subscription = SubscriptionPresenter.new(subscription)
@@ -45,5 +47,9 @@ class SubscriptionsController < ApplicationController
 
   def search_criteria
     params.require(:search_criteria).permit(*VacancyFilters::AVAILABLE_FILTERS)
+  end
+
+  def check_feature_flag
+    not_found unless EmailAlertsFeature.enabled?
   end
 end
