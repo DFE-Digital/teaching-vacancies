@@ -8,7 +8,8 @@ class VacancyPageView
   end
 
   def persist!
-    @vacancy.total_pageviews += @vacancy.page_view_counter.to_i
+    @vacancy.total_pageviews = @vacancy.total_pageviews.to_i + @vacancy.page_view_counter.to_i
+
     reset_counter if @vacancy.save
   end
 

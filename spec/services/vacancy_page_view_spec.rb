@@ -16,13 +16,25 @@ RSpec.describe VacancyPageView do
 
   describe '#persist!' do
     let(:page_view_counter) { spy(to_i: 30) }
-    let(:vacancy) { instance_spy('Vacancy', total_pageviews: 2, page_view_counter: page_view_counter) }
+    let(:vacancy) { instance_spy('Vacancy', total_pageviews: views, page_view_counter: page_view_counter) }
+    let(:views) { 2 }
 
-    it 'updates the total page views' do
+    it 'adds to and updates the total page views' do
       vacancy_page_view.persist!
 
       expect(vacancy).to have_received(:total_pageviews=).with 32
       expect(vacancy).to have_received(:save)
+    end
+
+    context 'the existing page views are nil' do
+      let(:views) { nil }
+
+      it 'updates the total page views' do
+        vacancy_page_view.persist!
+
+        expect(vacancy).to have_received(:total_pageviews=).with 30
+        expect(vacancy).to have_received(:save)
+      end
     end
 
     context 'the page views are persisted' do
