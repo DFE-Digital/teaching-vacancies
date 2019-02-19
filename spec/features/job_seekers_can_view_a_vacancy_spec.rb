@@ -94,7 +94,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     scenario 'the page view is tracked' do
       vacancy = create(:vacancy, :published)
 
-      expect(TrackVacancyPageView).to receive(:perform_later).with(vacancy.id)
+      expect(TrackVacancyPageViewJob).to receive(:perform_later).with(vacancy.id)
 
       visit job_path(vacancy)
     end
