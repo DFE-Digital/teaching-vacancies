@@ -166,6 +166,7 @@ data "template_file" "web_container_definition" {
     notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
     subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
+    feature_email_alerts              = "${var.feature_email_alerts}"
   }
 }
 
@@ -383,7 +384,7 @@ data "template_file" "worker_container_definition" {
     notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
     subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
-
+    feature_email_alerts              = "${var.feature_email_alerts}"
     worker_command = "${jsonencode(var.worker_command)}"
   }
 }
