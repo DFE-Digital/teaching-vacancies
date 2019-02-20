@@ -10,12 +10,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    flash.clear
     subscription = Subscription.new(daily_subscription_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
     if SubscriptionFinder.new(daily_subscription_params).exists?
-      flash[:error] = I18n.t('errors.subscriptions.already_exists')
+      flash.now[:error] = I18n.t('errors.subscriptions.already_exists')
     elsif subscription.save
       Auditor::Audit.new(subscription, 'subscription.daily_alert.create', nil).log
       SubscriptionMailer.confirmation(subscription.id).deliver_later
