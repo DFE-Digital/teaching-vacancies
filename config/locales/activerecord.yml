@@ -65,4 +65,4 @@ en:
         reference: 'Your reference'
     hints:
       defaults:
-        reference: You can provide your own reference to identify this alert or we'll automatically generate one for you, for example ca7f7b1627c7f530
+        reference: Save a description for this job alert. If you don’t choose a reference we'll generate a reference number for you.
