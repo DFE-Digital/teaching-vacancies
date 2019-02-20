@@ -68,6 +68,34 @@ RSpec.feature 'Copying a vacancy' do
     end
   end
 
+  context 'when the original job has expired' do
+    scenario 'a job can be successfully copied' do
+      original_vacancy = FactoryBot.create(:vacancy, :expired, school: school)
+
+      new_vacancy = original_vacancy.dup
+      new_vacancy.job_title = 'A new job title'
+      new_vacancy.starts_on = 35.days.from_now
+      new_vacancy.ends_on = 100.days.from_now
+      new_vacancy.publish_on = 0.days.from_now
+      new_vacancy.expires_on = 30.days.from_now
+
+      visit school_path
+
+      click_on I18n.t('jobs.expired_jobs')
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
+      end
+
+      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('form.copy-form') do
+        fill_in_copy_vacancy_form_fields(new_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+      end
+
+      expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
+    end
+  end
+
   context 'when the publish on date is set in the past' do
     scenario 'it renders a form error instead of a 500 error' do
       original_vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
