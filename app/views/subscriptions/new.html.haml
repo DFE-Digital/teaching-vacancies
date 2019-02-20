@@ -34,7 +34,7 @@
                 %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
               = value
       = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true
-      = f.input :reference, as: :string, input_html: { class: 'govuk-input' }
+      = f.input :reference, as: :string, input_html: { class: 'govuk-input', placeholder: 'eg Maths jobs in Manchester' }
 
 
       .govuk-warning-text

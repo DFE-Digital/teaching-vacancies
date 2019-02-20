@@ -248,9 +248,9 @@ en:
           - 'end date (for fixed-term jobs)'
   subscriptions:
     button: 'Subscribe to email notifications for this search'
-    intro: 'Your search criteria are as follows:'
-    new: Sign up for daily emails
-    info: When you click subscribe, you'll receive daily emails featuring jobs that match these criteria for 3 months. You can unsubscribe at any time following the unsubscribe link in your daily mail.
+    intro: 'You’ll be sent an email listing new jobs that match the following search criteria:'
+    new: Sign up for a job alert
+    info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 3 months or can be cancelled using the link at the bottom of alert emails.
     location_text: Within %{radius} miles of %{location}
     reference: Your reference
     confirmation:
