@@ -514,12 +514,31 @@ resource "aws_appautoscaling_policy" "down" {
 resource "aws_cloudwatch_metric_alarm" "web-cpu-utilisation-high" {
   alarm_name          = "${var.project_name}-${var.environment}-web-cpu-utilisation-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "5"
+  evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/ECS"
   period              = "60"
   statistic           = "Average"
-  threshold           = "85"
+  threshold           = "30"
+
+  dimensions {
+    ClusterName = "${var.ecs_cluster_name}"
+    ServiceName = "${var.ecs_service_web_name}"
+  }
+
+  alarm_actions = ["${aws_appautoscaling_policy.up.arn}"]
+  ok_actions    = ["${aws_appautoscaling_policy.down.arn}"]
+}
+
+resource "aws_cloudwatch_metric_alarm" "web-memory-utilisation-high" {
+  alarm_name          = "${var.project_name}-${var.environment}-web-memory-utilisation-high"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "MemoryUtilization"
+  namespace           = "AWS/ECS"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "80"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
