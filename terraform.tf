@@ -39,7 +39,7 @@ module "core" {
   asg_min_size     = "${var.asg_min_size}"
   asg_desired_size = "${var.asg_desired_size}"
 
-  domain = "${var.domain}"
+  domain                            = "${var.domain}"
   redirect_old_teachingjobs_traffic = "${var.redirect_old_teachingjobs_traffic}"
 
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
@@ -73,11 +73,11 @@ module "ecs" {
   ecs_logspout_task_count                             = "${var.asg_min_size}"
 
   # Rake tasks
-  ecs_service_rake_container_definition_file_path = "${var.ecs_service_rake_container_definition_file_path}"
+  ecs_service_rake_container_definition_file_path          = "${var.ecs_service_rake_container_definition_file_path}"
   performance_platform_rake_container_definition_file_path = "${var.performance_platform_rake_container_definition_file_path}"
-  google_api_rake_container_definition_file_path = "${var.google_api_rake_container_definition_file_path}"
+  google_api_rake_container_definition_file_path           = "${var.google_api_rake_container_definition_file_path}"
 
-  import_schools_task_command = "${var.import_schools_task_command}"
+  import_schools_task_command  = "${var.import_schools_task_command}"
   import_schools_task_schedule = "${var.import_schools_task_schedule}"
 
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
@@ -85,8 +85,8 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
-  performance_platform_submit_task_command    = "${var.performance_platform_submit_task_command}"
-  performance_platform_submit_task_schedule   = "${var.performance_platform_submit_task_schedule}"
+  performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
+  performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
 
   vacancies_pageviews_refresh_cache_task_command  = "${var.vacancies_pageviews_refresh_cache_task_command}"
@@ -96,7 +96,6 @@ module "ecs" {
 
   aws_alb_target_group_arn      = "${module.core.alb_target_group_arn}"
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
-
   # Application variables
   rails_env                        = "${var.rails_env}"
   override_school_urn              = "${var.override_school_urn}"
@@ -212,14 +211,14 @@ module "cloudfront" {
 module "elasticache_redis" {
   source = "./terraform/modules/elasticache-redis"
 
-  cluster_id           = "${var.project_name}-${terraform.workspace}"
-  engine_version       = "${var.elasticache_redis_engine_version}"
-  redis_cache_instance_type  = "${var.elasticache_redis_cache_instance_type}"
-  redis_queue_instance_type  = "${var.elasticache_redis_queue_instance_type}"
-  parameter_group_name = "${var.elasticache_redis_parameter_group_name}"
-  maintenance_window   = "${var.elasticache_redis_maintenance_window}"
-  vpc_id               = "${module.core.vpc_id}"
-  private_subnet_ids   = "${join(",", module.core.private_subnet_ids)}"
+  cluster_id                = "${var.project_name}-${terraform.workspace}"
+  engine_version            = "${var.elasticache_redis_engine_version}"
+  redis_cache_instance_type = "${var.elasticache_redis_cache_instance_type}"
+  redis_queue_instance_type = "${var.elasticache_redis_queue_instance_type}"
+  parameter_group_name      = "${var.elasticache_redis_parameter_group_name}"
+  maintenance_window        = "${var.elasticache_redis_maintenance_window}"
+  vpc_id                    = "${module.core.vpc_id}"
+  private_subnet_ids        = "${join(",", module.core.private_subnet_ids)}"
 
   tag_name          = "${var.project_name}-${terraform.workspace}"
   tag_environment   = "${terraform.workspace}"

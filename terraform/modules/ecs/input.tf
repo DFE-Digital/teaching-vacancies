@@ -53,15 +53,19 @@ variable "redis_cache_url" {}
 variable "redis_queue_url" {}
 variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}
+
 variable "google_drive_json_key" {
   type = "map"
 }
+
 variable "audit_spreadsheet_id" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
+
 variable "google_api_json_key" {
   type = "map"
 }
+
 variable "google_analytics_profile_id" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
@@ -103,4 +107,5 @@ variable "import_schools_task_schedule" {}
 variable "vacancies_pageviews_refresh_cache_task_command" {
   type = "list"
 }
+
 variable "vacancies_pageviews_refresh_cache_task_schedule" {}
