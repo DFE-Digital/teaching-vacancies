@@ -19,12 +19,16 @@ class VacanciesController < ApplicationController
     audit_search_event(records, @filters) if @filters.any?
 
     @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
+
+    expires_in 5.minutes, public: true
   end
 
   def show
     vacancy = Vacancy.listed.friendly.find(id)
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
     @vacancy = VacancyPresenter.new(vacancy)
+
+    expires_in 5.minutes, public: true
   end
 
   def params
