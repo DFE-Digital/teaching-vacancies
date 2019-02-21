@@ -453,6 +453,12 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   ]
 
   depends_on = ["aws_vpc.vpc", "aws_launch_configuration.ecs-launch-configuration", "aws_security_group.default", "aws_security_group.ecs"]
+
+  # Requires commenting out if the `asg_desired_size` variable in .tfvars is changed
+  # in either direction.
+  lifecycle {
+    ignore_changes = ["desired_capacity"]
+  }
 }
 
 resource "aws_appautoscaling_target" "target" {
