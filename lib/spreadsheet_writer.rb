@@ -6,13 +6,20 @@ module Spreadsheet
       @worksheet_pos = worksheet_pos
     end
 
-    def append(row)
-      last_pos = worksheet.num_rows
+    def append_rows(rows)
+      pos = worksheet.num_rows
+      rows.each_with_index do |row, i|
+        append_row(row, pos + i, false)
+      end
+      worksheet.save
+    end
+
+    def append_row(row, last_pos = worksheet.num_rows, save = true)
       pos = last_pos + 1
       row.each_with_index do |cell, index|
         worksheet[pos, index + 1] = cell
       end
-      worksheet.save
+      worksheet.save if save
     end
 
     private
