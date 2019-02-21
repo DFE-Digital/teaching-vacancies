@@ -17,6 +17,7 @@ resource "aws_db_instance" "default" {
   backup_retention_period   = 14
   maintenance_window        = "Sun:00:00-Sun:03:00"
   multi_az                  = "${terraform.workspace == "production" ? "true" : "false"}"
+  auto_minor_version_upgrade = true
 
   tags {
     Name        = "${var.project_name}-${var.environment}"
