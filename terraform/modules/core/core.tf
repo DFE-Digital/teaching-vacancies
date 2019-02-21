@@ -400,12 +400,12 @@ resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
 resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {
   alarm_name          = "${var.project_name}-${var.environment}-cluster-cpu-reservation-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1"
   metric_name         = "CPUReservation"
   namespace           = "AWS/ECS"
   period              = "60"
   statistic           = "Average"
-  threshold           = "70"
+  threshold           = "40"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
@@ -418,12 +418,12 @@ resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {
 resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-low" {
   alarm_name          = "${var.project_name}-${var.environment}-cluster-cpu-reservation-low"
   comparison_operator = "LessThanOrEqualToThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "5"
   metric_name         = "CPUReservation"
   namespace           = "AWS/ECS"
   period              = "60"
-  statistic           = "Minimum"
-  threshold           = "45"
+  statistic           = "Average"
+  threshold           = "35"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
