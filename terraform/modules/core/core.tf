@@ -397,15 +397,15 @@ resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
   metric_aggregation_type = "Minimum"
 }
 
-resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
-  alarm_name          = "${var.project_name}-${var.environment}-average-reserved-cpu-high"
+resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {
+  alarm_name          = "${var.project_name}-${var.environment}-cluster-cpu-reservation-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1"
   metric_name         = "CPUReservation"
   namespace           = "AWS/ECS"
   period              = "60"
   statistic           = "Average"
-  threshold           = "70"
+  threshold           = "40"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
@@ -415,15 +415,15 @@ resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
   alarm_actions     = ["${aws_autoscaling_policy.ecs-autoscaling-up-policy.arn}"]
 }
 
-resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-low" {
-  alarm_name          = "${var.project_name}-${var.environment}-minimum-reserved-cpu-low"
+resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-low" {
+  alarm_name          = "${var.project_name}-${var.environment}-cluster-cpu-reservation-low"
   comparison_operator = "LessThanOrEqualToThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "5"
   metric_name         = "CPUReservation"
   namespace           = "AWS/ECS"
   period              = "60"
-  statistic           = "Minimum"
-  threshold           = "45"
+  statistic           = "Average"
+  threshold           = "35"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
@@ -453,6 +453,12 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   ]
 
   depends_on = ["aws_vpc.vpc", "aws_launch_configuration.ecs-launch-configuration", "aws_security_group.default", "aws_security_group.ecs"]
+
+  # Requires commenting out if the `asg_desired_size` variable in .tfvars is changed
+  # in either direction.
+  lifecycle {
+    ignore_changes = ["desired_capacity"]
+  }
 }
 
 resource "aws_appautoscaling_target" "target" {
@@ -460,8 +466,8 @@ resource "aws_appautoscaling_target" "target" {
   resource_id        = "service/${var.ecs_cluster_name}/${var.ecs_service_web_name}"
   scalable_dimension = "ecs:service:DesiredCount"
   role_arn           = "${aws_iam_role.ecs_autoscale_role.arn}"
-  min_capacity       = 3
-  max_capacity       = 10
+  min_capacity       = 6
+  max_capacity       = 20
 }
 
 resource "aws_appautoscaling_policy" "up" {
@@ -472,12 +478,12 @@ resource "aws_appautoscaling_policy" "up" {
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
-    cooldown                = 60
+    cooldown                = 30
     metric_aggregation_type = "Maximum"
 
     step_adjustment {
       metric_interval_lower_bound = 0
-      scaling_adjustment          = 2
+      scaling_adjustment          = 4
     }
   }
 
@@ -497,7 +503,7 @@ resource "aws_appautoscaling_policy" "down" {
 
     step_adjustment {
       metric_interval_upper_bound = 0
-      scaling_adjustment          = -1
+      scaling_adjustment          = -2
     }
   }
 
@@ -505,15 +511,34 @@ resource "aws_appautoscaling_policy" "down" {
 }
 
 /* metric used for auto scale */
-resource "aws_cloudwatch_metric_alarm" "service_cpu_high" {
-  alarm_name          = "${var.project_name}-${var.environment}_web_cpu_utilization_high"
+resource "aws_cloudwatch_metric_alarm" "web-cpu-utilisation-high" {
+  alarm_name          = "${var.project_name}-${var.environment}-web-cpu-utilisation-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "5"
+  evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/ECS"
   period              = "60"
   statistic           = "Average"
-  threshold           = "85"
+  threshold           = "30"
+
+  dimensions {
+    ClusterName = "${var.ecs_cluster_name}"
+    ServiceName = "${var.ecs_service_web_name}"
+  }
+
+  alarm_actions = ["${aws_appautoscaling_policy.up.arn}"]
+  ok_actions    = ["${aws_appautoscaling_policy.down.arn}"]
+}
+
+resource "aws_cloudwatch_metric_alarm" "web-memory-utilisation-high" {
+  alarm_name          = "${var.project_name}-${var.environment}-web-memory-utilisation-high"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "MemoryUtilization"
+  namespace           = "AWS/ECS"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "80"
 
   dimensions {
     ClusterName = "${var.ecs_cluster_name}"
