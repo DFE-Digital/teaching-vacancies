@@ -6,6 +6,8 @@ RSpec.describe 'Spreadsheet::Writer' do
   end
 
   let(:session) { double(:session) }
+  let(:worksheet) { double(num_rows: 0, save: nil) }
+  let(:spreadsheet) { double(worksheets: [worksheet]) }
 
   describe 'it writes to a specified worksheet' do
     it 'the worksheet position can be configured' do
@@ -23,8 +25,6 @@ RSpec.describe 'Spreadsheet::Writer' do
   end
 
   describe '#append_row' do
-    let(:worksheet) { double(num_rows: 0, save: nil) }
-    let(:spreadsheet) { double(worksheets: [worksheet]) }
     let(:data) { ['foo', 'bar'] }
 
     it 'creates a new instance of a Google Drive session' do
@@ -59,12 +59,9 @@ RSpec.describe 'Spreadsheet::Writer' do
         Spreadsheet::Writer.new(:spreadsheet_id).append_row(data)
       end
     end
-
   end
 
   describe '#append_rows' do
-    let(:worksheet) { double(num_rows: 0, save: nil) }
-    let(:spreadsheet) { double(worksheets: [worksheet]) }
     let(:data) { [['foo', 'bar'], ['baz', 'foo'], ['fizz', 'buzz']] }
 
     it 'creates a new instance of a Google Drive session' do
@@ -105,6 +102,31 @@ RSpec.describe 'Spreadsheet::Writer' do
         expect(worksheet).to receive(:save).once
 
         Spreadsheet::Writer.new(:spreadsheet_id).append_rows(data)
+      end
+    end
+  end
+
+  describe '#last_row' do
+    let(:data) { [['foo', 'bar'], ['fizz', 'buzz']] }
+    let(:worksheet) { double(num_rows: 2, save: nil) }
+    let(:spreadsheet) { double(worksheets: [worksheet]) }
+    let(:row) { Spreadsheet::Writer.new(:spreadsheet_id).last_row }
+
+    before do
+      allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
+      allow(session).to receive(:spreadsheet_by_key).and_return(spreadsheet)
+      allow(worksheet).to receive(:[]) { |arg| data[arg] }
+    end
+
+    it 'gets the last row' do
+      expect(row).to eq(data.last)
+    end
+
+    context 'when the spreadsheet is blank' do
+      let(:data) { [] }
+
+      it 'returns nil' do
+        expect(row).to eq(nil)
       end
     end
   end
