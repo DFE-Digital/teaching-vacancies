@@ -246,7 +246,7 @@ resource "aws_alb_listener" "default_https" {
 }
 
 resource "aws_lb_listener_rule" "redirect_old_teachingjobs_https_traffic" {
-  count = "${var.redirect_old_teachingjobs_traffic}"
+  count        = "${var.redirect_old_teachingjobs_traffic}"
   listener_arn = "${aws_alb_listener.default_https.arn}"
 
   action {

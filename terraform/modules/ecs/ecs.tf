@@ -47,9 +47,9 @@ resource "aws_ecs_service" "web" {
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent = 100
+  deployment_maximum_percent         = 100
 
-  health_check_grace_period_seconds  = 30
+  health_check_grace_period_seconds = 30
 
   load_balancer {
     target_group_arn = "${var.aws_alb_target_group_arn}"
@@ -168,6 +168,7 @@ data "template_file" "web_container_definition" {
 /* import_schools task definition*/
 data "template_file" "import_schools_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
   vars {
     image                    = "${aws_ecr_repository.default.repository_url}"
     secret_key_base          = "${var.secret_key_base}"
@@ -306,28 +307,29 @@ data "template_file" "performance_platform_submit_all_container_definition" {
 /* vacancies pageviews refresh cache task definition*/
 data "template_file" "vacancies_pageviews_refresh_cache_container_definition" {
   template = "${file(var.google_api_rake_container_definition_file_path)}"
+
   vars {
-    image                        = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base              = "${var.secret_key_base}"
-    project_name                 = "${var.project_name}"
-    task_name                    = "${var.ecs_service_web_task_name}_import_schools"
-    environment                  = "${var.environment}"
-    rails_env                    = "${var.rails_env}"
-    region                       = "${var.region}"
-    log_group                    = "${var.aws_cloudwatch_log_group_name}"
-    database_user                = "${var.rds_username}"
-    database_password            = "${var.rds_password}"
-    database_url                 = "${var.rds_address}"
-    elastic_search_url           = "${var.es_address}"
-    aws_elasticsearch_region     = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key        = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret     = "${var.aws_elasticsearch_secret}"
-    google_api_json_key          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
-    google_analytics_profile_id  = "${var.google_analytics_profile_id}"
-    entrypoint                   = "${jsonencode(var.vacancies_pageviews_refresh_cache_task_command)}"
-    redis_url                    = "${var.redis_url}"
-    redis_cache_url              = "${var.redis_cache_url}"
-    redis_queue_url              = "${var.redis_queue_url}"
+    image                       = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base             = "${var.secret_key_base}"
+    project_name                = "${var.project_name}"
+    task_name                   = "${var.ecs_service_web_task_name}_import_schools"
+    environment                 = "${var.environment}"
+    rails_env                   = "${var.rails_env}"
+    region                      = "${var.region}"
+    log_group                   = "${var.aws_cloudwatch_log_group_name}"
+    database_user               = "${var.rds_username}"
+    database_password           = "${var.rds_password}"
+    database_url                = "${var.rds_address}"
+    elastic_search_url          = "${var.es_address}"
+    aws_elasticsearch_region    = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key       = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret    = "${var.aws_elasticsearch_secret}"
+    google_api_json_key         = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    google_analytics_profile_id = "${var.google_analytics_profile_id}"
+    entrypoint                  = "${jsonencode(var.vacancies_pageviews_refresh_cache_task_command)}"
+    redis_url                   = "${var.redis_url}"
+    redis_cache_url             = "${var.redis_cache_url}"
+    redis_queue_url             = "${var.redis_queue_url}"
   }
 }
 
@@ -364,9 +366,9 @@ data "template_file" "worker_container_definition" {
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
 
     rollbar_access_token = "${var.rollbar_access_token}"
-    redis_url                        = "${var.redis_url}"
-    redis_cache_url                  = "${var.redis_cache_url}"
-    redis_queue_url                  = "${var.redis_queue_url}"
+    redis_url            = "${var.redis_url}"
+    redis_cache_url      = "${var.redis_cache_url}"
+    redis_queue_url      = "${var.redis_queue_url}"
 
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"

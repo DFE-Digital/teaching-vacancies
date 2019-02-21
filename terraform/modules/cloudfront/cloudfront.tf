@@ -140,7 +140,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     # The absense of `ttl` configuration here means caching is deferred to the origin
     # https://angristan.xyz/terraform-enable-origin-cache-headers-aws-cloudfront/
-    
+
     viewer_protocol_policy = "redirect-to-https"
   }
 
