@@ -215,7 +215,7 @@ variable "rds_engine_version" {
 
   default = {
     mysql    = "5.6.22"
-    postgres = "9.6.6"
+    postgres = "9.6"
   }
 }
 
