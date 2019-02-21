@@ -122,20 +122,20 @@ class VacancyPresenter < BasePresenter
   end
 
   def to_row
-    [
-      id,
-      slug,
-      created_at,
-      status,
-      publish_on,
-      expires_on,
-      starts_on,
-      ends_on,
-      weekly_hours,
-      flexible_working,
-      school.urn,
-      school.county
-    ]
+    {
+      id: id,
+      slug: slug,
+      created_at: created_at,
+      status: status,
+      publish_on: publish_on,
+      expires_on: expires_on,
+      starts_on: starts_on,
+      ends_on: ends_on,
+      weekly_hours: weekly_hours,
+      flexible_working: flexible_working,
+      school_urn: school.urn,
+      school_county: school.county
+    }
   end
 
   private

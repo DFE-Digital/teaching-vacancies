@@ -132,8 +132,10 @@ RSpec.describe VacancyPresenter do
     end
 
     it 'creates a CSV row representation of the vacancy' do
-      expect(vacancy.to_row).to be_an(Array)
-      expect(vacancy.to_row).to include('123a-456b-789c', 'my-new-vacancy', 'published')
+      expect(vacancy.to_row).to be_a(Hash)
+      expect(vacancy.to_row[:id]).to eq('123a-456b-789c')
+      expect(vacancy.to_row[:slug]).to eq('my-new-vacancy')
+      expect(vacancy.to_row[:status]).to eq('published')
     end
   end
 end

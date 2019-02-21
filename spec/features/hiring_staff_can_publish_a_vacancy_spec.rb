@@ -594,7 +594,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'when the vacancy is published' do
           vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
 
-          expect(UpdateVacancySpreadsheetJob).to receive(:perform_later).with(vacancy.id)
+          expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)
 
           visit school_job_review_path(vacancy.id)
           click_on 'Confirm and submit job'
