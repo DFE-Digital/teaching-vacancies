@@ -397,8 +397,8 @@ resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
   metric_aggregation_type = "Minimum"
 }
 
-resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
-  alarm_name          = "${var.project_name}-${var.environment}-average-reserved-cpu-high"
+resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {
+  alarm_name          = "${var.project_name}-${var.environment}-cluster-cpu-reservation-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUReservation"
@@ -415,8 +415,8 @@ resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-high" {
   alarm_actions     = ["${aws_autoscaling_policy.ecs-autoscaling-up-policy.arn}"]
 }
 
-resource "aws_cloudwatch_metric_alarm" "average-reserved-cpu-low" {
-  alarm_name          = "${var.project_name}-${var.environment}-minimum-reserved-cpu-low"
+resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-low" {
+  alarm_name          = "${var.project_name}-${var.environment}-cluster-cpu-reservation-low"
   comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUReservation"
@@ -505,8 +505,8 @@ resource "aws_appautoscaling_policy" "down" {
 }
 
 /* metric used for auto scale */
-resource "aws_cloudwatch_metric_alarm" "service_cpu_high" {
-  alarm_name          = "${var.project_name}-${var.environment}_web_cpu_utilization_high"
+resource "aws_cloudwatch_metric_alarm" "web-cpu-utilisation-high" {
+  alarm_name          = "${var.project_name}-${var.environment}-web-cpu-utilisation-high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "5"
   metric_name         = "CPUUtilization"
