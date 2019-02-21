@@ -4,10 +4,18 @@ RSpec.describe AuditData, type: :model do
   let(:category) { 'vacancies' }
   let(:data) { { 'some' => 'data' } }
 
-  let(:audit_datum) { create(:audit_data, category: category, data: data) }
+  let(:audit_data) { create(:audit_data, category: category, data: data) }
 
   it 'creates some data' do
-    expect(audit_datum.category).to eq(category)
-    expect(audit_datum.data).to eq(data)
+    expect(audit_data.category).to eq(category)
+    expect(audit_data.data).to eq(data)
+  end
+
+  context '#to_row' do
+    let(:row) { audit_data.to_row }
+
+    it 'returns a row' do
+      expect(row).to eq([audit_data.created_at.to_s, 'data'])
+    end
   end
 end

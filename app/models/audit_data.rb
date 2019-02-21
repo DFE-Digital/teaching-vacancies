@@ -9,4 +9,8 @@ class AuditData < ApplicationRecord
     feedback
     toc_acceptance
   ]
+
+  def to_row
+    data.values.unshift(created_at.to_s)
+  end
 end
