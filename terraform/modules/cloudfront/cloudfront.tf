@@ -40,16 +40,25 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      headers      = ["*"]
+      headers      = [
+        "Host",
+        "Authorization",
+        "Origin",
+        "Referer",
+        "Accept",
+        "Accept-Charset",
+        "Accept-DateTime",
+        "Accept-Encoding",
+        "Accept-Language"
+      ]
 
       cookies {
         forward = "all"
       }
     }
 
-    min_ttl     = 0
-    default_ttl = 5
-    max_ttl     = 86400
+    # The absense of `ttl` configuration here means caching is deferred to the origin
+    # https://angristan.xyz/terraform-enable-origin-cache-headers-aws-cloudfront/
 
     viewer_protocol_policy = "redirect-to-https"
   }
@@ -118,28 +127,6 @@ resource "aws_cloudfront_distribution" "default" {
     min_ttl     = 900
     default_ttl = 3600
     max_ttl     = 86400
-
-    viewer_protocol_policy = "redirect-to-https"
-  }
-
-  ordered_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.project_name}-${var.environment}-default-origin"
-
-    path_pattern = "/*"
-
-    forwarded_values = {
-      query_string = true
-      headers      = ["Host", "Origin", "Authorization"]
-
-      cookies {
-        forward = "all"
-      }
-    }
-
-    # The absense of `ttl` configuration here means caching is deferred to the origin
-    # https://angristan.xyz/terraform-enable-origin-cache-headers-aws-cloudfront/
 
     viewer_protocol_policy = "redirect-to-https"
   }
