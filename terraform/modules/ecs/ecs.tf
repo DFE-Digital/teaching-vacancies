@@ -70,9 +70,7 @@ resource "aws_ecs_service" "logspout" {
 
   deployment_minimum_healthy_percent = 50
 
-  placement_constraints {
-    type = "distinctInstance"
-  }
+  scheduling_strategy = "DAEMON"
 
   lifecycle {
     ignore_changes = ["desired_count"]
