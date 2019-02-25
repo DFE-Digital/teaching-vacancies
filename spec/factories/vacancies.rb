@@ -78,6 +78,7 @@ FactoryBot.define do
     end
 
     trait :expired do
+      to_create { |instance| instance.save(validate: false) }
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.between(Time.zone.today - 14.days, Time.zone.today - 7.days) }

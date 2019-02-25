@@ -9,7 +9,7 @@
                     %th.govuk-table__header= t('jobs.job_title')
                     %th.govuk-table__header= t('jobs.date_to_be_posted')
                     %th.govuk-table__header= t('jobs.expired_on')
-                    %th.govuk-table__header= t('jobs.actions')
+                    %th.govuk-table__header{ colspan: 2 }= t('jobs.actions')
             %tbody.govuk-table__body
                 - presenter.expired.each do |vacancy|
                     = render partial: 'vacancy_expired', locals: { vacancy: vacancy, school: presenter.school }

@@ -215,7 +215,7 @@ variable "rds_engine_version" {
 
   default = {
     mysql    = "5.6.22"
-    postgres = "9.6.6"
+    postgres = "9.6"
   }
 }
 
@@ -316,9 +316,11 @@ variable "google_analytics" {}
 variable "secret_key_base" {}
 variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}
+
 variable "google_drive_json_key" {
   type = "map"
 }
+
 variable "audit_spreadsheet_id" {}
 variable "google_geocoding_api_key" {}
 variable "rollbar_access_token" {}
@@ -328,4 +330,5 @@ variable "pp_user_satisfaction_token" {}
 variable "google_api_json_key" {
   type = "map"
 }
+
 variable "google_analytics_profile_id" {}
