@@ -9,6 +9,7 @@
   - [ audit_search_event, 1 ]
   - [ audit_feedback, 1 ]
   - [ audit_toc_acceptance_event, 1 ]
+  - [ audit_spreadsheet, 1 ]
 update_vacancy_spreadsheet:
   :concurrency: 1
 audit_sign_in_event:
@@ -20,4 +21,6 @@ audit_search_event:
 audit_feedback:
   :concurrency: 1
 audit_toc_acceptance_event:
+  :concurrency: 1
+audit_spreadsheet:
   :concurrency: 1
