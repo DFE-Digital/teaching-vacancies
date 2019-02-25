@@ -377,6 +377,7 @@ data "template_file" "worker_container_definition" {
     domain                           = "${var.domain}"
     audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
 
     worker_command = "${jsonencode(var.worker_command)}"
   }
