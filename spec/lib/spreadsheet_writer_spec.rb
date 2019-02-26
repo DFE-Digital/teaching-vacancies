@@ -22,6 +22,21 @@ RSpec.describe 'Spreadsheet::Writer' do
 
       Spreadsheet::Writer.new(:spreadsheet_id, worksheet_position).append_row([])
     end
+
+    context 'when use_gid? is set' do
+      it 'the worksheet position can be configured' do
+        worksheet = double(num_rows: 2)
+        spreadsheet = double
+        gid = 2051310096
+
+        expect(GoogleDrive::Session).to receive(:from_service_account_key) { session }
+        expect(session).to receive(:spreadsheet_by_key) { spreadsheet }
+        expect(spreadsheet).to receive(:worksheet_by_gid).with(gid) { worksheet }
+        expect(worksheet).to receive(:save)
+
+        Spreadsheet::Writer.new(:spreadsheet_id, gid, true).append_row([])
+      end
+    end
   end
 
   describe '#append_row' do
