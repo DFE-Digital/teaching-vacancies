@@ -15,12 +15,7 @@ RSpec.feature 'A visitor to the website can access the support links' do
     click_on 'Privacy policy'
 
     expect(page).to have_content('Privacy Notice: Teaching Vacancies')
-    expect(page).to have_content('This work is being carried out by Department for Education (DfE) Digital, ' \
-                                 'which is a part of DfE. DfE engages the private company dxw to help improve ' \
-                                 'and provide the service. For the purpose of data protection legislation, ' \
-                                 'the DfE is the data controller for the personal data processed as part of ' \
-                                 'Teaching Vacancies. Teaching Vacancies is a free and optional service for schools ' \
-                                 'to list teaching roles.')
+    expect(page).to have_content(I18n.t('static_pages.privacy_policy.who_we_are.about'))
   end
 
   scenario 'the terms and conditions' do
