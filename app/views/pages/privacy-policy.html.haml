@@ -54,7 +54,7 @@
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.withdrawal_of_consent.title')
     %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_1', mailto: mail_to(t('help.email'), t('help.email'), class: 'govuk-link')).html_safe
-    %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_2')
+    %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_2', ico_url: link_to(t('static_pages.privacy_policy.withdrawal_of_consent.ico'), 'https://ico.org.uk/concerns/', target: '_blank', class: 'govuk-link')).html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.last_updated.title')
 
