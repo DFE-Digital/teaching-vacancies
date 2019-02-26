@@ -61,9 +61,9 @@ en:
     job_count_plural: '%{count} jobs match your search.'
     no_jobs:
       - 'Expanding your search may give more results.'
-      - 'There may be few jobs if this isn’t a busy period in the teacher recruitment cycle. Also, as this new service rolls out to more areas of England, the number of jobs will grow.'
+      - 'There may be few jobs if this isn’t a busy period in the teacher recruitment cycle.'
     none_listed:
-      - 'This may be because this isn’t a busy period in the teacher recruitment cycle. Also, as this new service is rolled out to more areas of England, the number of jobs will grow. Check back regularly for new listings.'
+      - 'This may be because this isn’t a busy period in the teacher recruitment cycle.'
       - 'Schools have listed %{count} jobs but they have since expired.'
     job_title: 'Job title'
     benefits: 'Employee benefits'
