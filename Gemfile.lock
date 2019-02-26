@@ -245,8 +245,8 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
-    nokogumbo (1.5.0)
-      nokogiri
+    nokogumbo (2.0.1)
+      nokogiri (~> 1.8, >= 1.8.4)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
@@ -381,10 +381,10 @@ GEM
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
     safe_yaml (1.0.4)
-    sanitize (4.6.6)
+    sanitize (5.0.0)
       crass (~> 1.0.2)
-      nokogiri (>= 1.4.4)
-      nokogumbo (~> 1.4)
+      nokogiri (>= 1.8.0)
+      nokogumbo (~> 2.0)
     sass (3.5.7)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -443,7 +443,7 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uber (0.1.0)
-    uglifier (4.1.18)
+    uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.4.0)
     validate_email (0.1.6)
@@ -523,7 +523,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails
   rubocop
-  sanitize (~> 4.6)
+  sanitize (~> 5.0)
   sass-rails (~> 5.0)
   shoulda-matchers
   sidekiq
