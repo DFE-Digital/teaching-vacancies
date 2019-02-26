@@ -67,8 +67,8 @@ resource "aws_codebuild_project" "tvs_build" {
   }
 
   environment {
-    compute_type    = "BUILD_GENERAL1_SMALL"
-    image           = "aws/codebuild/docker:17.09.0"
+    compute_type    = "BUILD_GENERAL1_MEDIUM"
+    image           = "aws/codebuild/docker:18.09.0"
     type            = "LINUX_CONTAINER"
     privileged_mode = true
   }
