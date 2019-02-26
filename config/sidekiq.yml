@@ -1,4 +1,5 @@
 :queues:
+  - [ daily_alert_email, 1 ]
   - [ mailers, 3 ]
   - [ page_view_collector, 2 ]
   - [ performance_platform, 2 ]

@@ -1,4 +1,6 @@
 class SendDailyAlertEmailJob < ApplicationJob
+  queue_as :daily_alert_email
+
   def perform
     Subscription.ongoing.each do |s|
       next if s.alert_run_today?
