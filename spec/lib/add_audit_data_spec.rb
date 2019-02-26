@@ -11,7 +11,10 @@ RSpec.describe AddAuditData do
   let!(:other_data) { create_list(:audit_data, 3, category: 'sign_in_events') }
 
   before do
-    allow(subject).to receive(:worksheet) { worksheet }
+    gids = { vacancies: 'some-gid' }
+    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
+    stub_const('AUDIT_GIDS', gids)
+    allow(Spreadsheet::Writer).to receive(:new).with(AUDIT_SPREADSHEET_ID, gids[:vacancies], true) { worksheet }
   end
 
   context 'when there is new data' do

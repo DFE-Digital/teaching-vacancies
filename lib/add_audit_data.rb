@@ -3,7 +3,6 @@ require 'spreadsheet_writer'
 class AddAuditData
   def initialize(category)
     @category = category
-    @worksheet_position = AuditData.categories[category]
   end
 
   def run!
@@ -12,8 +11,12 @@ class AddAuditData
 
   private
 
+  def worksheet_position
+    AUDIT_GIDS[category.to_sym]
+  end
+
   def worksheet
-    @worksheet ||= Spreadsheet::Writer.new(AUDIT_SPREADSHEET_ID, @worksheet_position)
+    @worksheet ||= Spreadsheet::Writer.new(AUDIT_SPREADSHEET_ID, worksheet_position, true)
   end
 
   def data_array
@@ -32,4 +35,6 @@ class AddAuditData
     return nil if worksheet.last_row.nil?
     Time.zone.parse(worksheet.last_row[0])
   end
+
+  attr_reader :category
 end
