@@ -204,4 +204,18 @@ RSpec.describe Subscription, type: :model do
       end
     end
   end
+
+  describe 'expired?' do
+    context 'when the expires_on date is in the future' do
+      let(:subscription) { build_stubbed(:daily_subscription, expires_on: Time.zone.today + 1.month) }
+
+      it { expect(subscription.expired?).to eq(false) }
+    end
+
+    context 'when the expires_on date is in the past' do
+      let(:subscription) { create(:daily_subscription, expires_on: Time.zone.today - 1.day) }
+
+      it { expect(subscription.expired?).to eq(true) }
+    end
+  end
 end
