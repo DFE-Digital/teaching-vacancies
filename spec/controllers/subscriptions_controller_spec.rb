@@ -32,11 +32,11 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect(response.code).to eq('200')
       end
 
-      it 'persists only sanitised params' do
+      it 'does not allow unsafe parameters' do
         params = {
           subscription: {
             email: '<script>foo@email.com</script>',
-            search_criteria: "<body onload=alert('test1')>Text</script>",
+            search_criteria: "<body onload=alert('test1')>Text</body>",
             frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
           }
         }
@@ -44,9 +44,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :create, params: params
 
         subscription = Subscription.last
-        expect(subscription.email).to eql('foo@email.com')
-        expect(subscription.search_criteria).to eql('Text')
-        expect(subscription.frequency).to eql('daily')
+        expect(subscription).to be_nil
       end
     end
 
