@@ -34,10 +34,10 @@ RSpec.describe SubscriptionFinder do
     end
 
     context 'when malicious arguments are passed in' do
-      it 'sanitises the string inputs before passing them to `where`' do
+      it 'does not pass them to `where`' do
         harmful_params = {
           email: '<script>foo@email.com</script>',
-          search_criteria: "<body onload=alert('test1')>Text</script>",
+          search_criteria: "<body onload=alert('test1')>Text</body>",
           frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
         }
         empty_active_record_relation = Subscription.none
@@ -46,7 +46,7 @@ RSpec.describe SubscriptionFinder do
         expect(Subscription).to receive(:ongoing).and_return(relation)
         expect(relation).to receive(:where)
           .with(
-            email: 'foo@email.com',
+            email: '',
             search_criteria: 'Text',
             frequency: ''
           )
