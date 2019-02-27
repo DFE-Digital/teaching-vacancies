@@ -201,7 +201,7 @@ variable "vacancies_pageviews_refresh_cache_task_command" {
 
 variable "vacancies_pageviews_refresh_cache_task_schedule" {
   description = "vacancies_pageviews_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "cron(0 08 * * ? *)"
+  default     = "cron(0 02 * * ? *)"
 }
 
 # RDS

@@ -28,6 +28,7 @@ gem 'colorize'
 gem 'ipaddr'
 gem 'geocoder'
 gem 'redis'
+gem 'redis-objects'
 
 gem 'omniauth', '~> 1.8'
 gem 'omniauth_openid_connect', '~> 0.1'

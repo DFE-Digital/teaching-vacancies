@@ -10,6 +10,7 @@ class Vacancy < ApplicationRecord
   include VacancyApplicationDetailValidations
 
   include Elasticsearch::Model
+  include Redis::Objects
 
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
   document_type 'vacancy'
@@ -108,6 +109,8 @@ class Vacancy < ApplicationRecord
   after_commit on: %i[create update] do
     __elasticsearch__.index_document
   end
+
+  counter :page_view_counter
 
   def location
     @location ||= SchoolPresenter.new(school).location
