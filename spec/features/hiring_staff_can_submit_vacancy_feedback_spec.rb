@@ -52,6 +52,22 @@ RSpec.feature 'Vacancy feedback' do
         expect(page).to have_content('Your feedback has been successfully submitted')
       end
 
+      scenario 'creates a feedback record' do
+        visit new_school_job_feedback_path(published_job.id)
+
+        choose 'Very satisfied'
+        fill_in 'feedback_comment', with: 'Perfect!'
+
+        click_on 'Submit feedback'
+
+        feedback = Feedback.last
+
+        expect(feedback).to_not be_nil
+        expect(feedback.rating).to eq(5)
+        expect(feedback.comment).to eq('Perfect!')
+        expect(feedback.user).to eq(User.find_by(oid: session_id))
+      end
+
       scenario 'logs an audit activity' do
         visit new_school_job_feedback_path(published_job.id)
 

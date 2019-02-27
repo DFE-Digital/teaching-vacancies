@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Feedback, type: :model do
   it { should belong_to(:vacancy) }
+  it { should belong_to(:user) }
 
   describe '#published_on(date)' do
     it 'retrieves feedback submitted on the given date' do

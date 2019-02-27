@@ -12,6 +12,7 @@ class HiringStaff::Vacancies::FeedbackController < HiringStaff::Vacancies::Appli
   def create
     vacancy = Vacancy.published.find_by!(id: params[:job_id])
     @feedback = Feedback.create(vacancy: vacancy,
+                                user: current_user,
                                 rating: feedback_params[:rating],
                                 comment: feedback_params[:comment])
 
