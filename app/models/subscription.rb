@@ -68,4 +68,8 @@ class Subscription < ApplicationRecord
   def create_alert_run
     alert_runs.find_or_create_by(run_on: Time.zone.today)
   end
+
+  def expired?
+    expires_on < Time.zone.today
+  end
 end
