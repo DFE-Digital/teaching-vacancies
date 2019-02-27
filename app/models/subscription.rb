@@ -4,6 +4,8 @@ class Subscription < ApplicationRecord
   enum status: %i[active trashed]
   enum frequency: %i[daily]
 
+  has_many :alert_runs
+
   validates :email, email_address: { presence: true }
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
@@ -49,5 +51,21 @@ class Subscription < ApplicationRecord
     expires = Time.current + expiration_in_days.days
     token_values = { id: id, expires: expires }
     self.class.encryptor.encrypt_and_sign(token_values)
+  end
+
+  def vacancies_for_range(date_from, date_to)
+    AlertResultFinder.new(search_criteria_to_h, date_from, date_to).call.records
+  end
+
+  def alert_run_today
+    alert_runs.find_by(run_on: Time.zone.today)
+  end
+
+  def alert_run_today?
+    alert_run_today.present?
+  end
+
+  def create_alert_run
+    alert_runs.find_or_create_by(run_on: Time.zone.today)
   end
 end

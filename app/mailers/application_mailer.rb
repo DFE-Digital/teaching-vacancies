@@ -1,5 +1,3 @@
-class ApplicationMailer < ActionMailer::Base
-  include Roadie::Rails::Automatic
-  default from: 'from@example.com'
-  layout 'mailer'
+class ApplicationMailer < Mail::Notify::Mailer
+  add_template_helper(NotifyViewHelper)
 end

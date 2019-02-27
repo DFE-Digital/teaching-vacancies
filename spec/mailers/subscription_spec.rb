@@ -35,6 +35,6 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   end
 
   it 'has an unsubscribe link' do
-    expect(body_lines[12]).to match(%r{https:\/\/localhost:3000\/subscriptions\/[0-9a-zA-Z\-]{418}\/unsubscribe})
+    expect(body_lines[12]).to match(%r{http:\/\/localhost:3000\/subscriptions\/[0-9a-zA-Z\-]{418}\/unsubscribe})
   end
 end
