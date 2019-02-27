@@ -52,6 +52,3 @@ Rails.application.configure do
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
 end
-
-DOMAIN = ENV.fetch('DOMAIN') { 'localhost:3000' }
-Rails.application.routes.default_url_options[:host] = DOMAIN.to_s
