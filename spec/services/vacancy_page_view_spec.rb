@@ -26,6 +26,13 @@ RSpec.describe VacancyPageView do
       expect(vacancy).to have_received(:save)
     end
 
+    it 'saves the time the total page views were updated' do
+      Timecop.freeze do
+        vacancy_page_view.persist!
+        expect(vacancy).to have_received(:total_pageviews_updated_at=).with Time.zone.now
+      end
+    end
+
     context 'the existing page views are nil' do
       let(:views) { nil }
 
