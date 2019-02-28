@@ -101,6 +101,10 @@
         "value": "${audit_feedback_worksheet_gid}"
       },
       {
+        "name": "AUDIT_EXPRESS_INTEREST_WORKSHEET_GID",
+        "value": "audit_express_interest_worksheet_gid"
+      },
+      {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
       }
