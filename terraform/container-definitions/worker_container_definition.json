@@ -97,6 +97,10 @@
         "value": "${audit_vacancies_worksheet_gid}"
       },
       {
+        "name": "AUDIT_FEEDBACK_WORKSHEET_GID",
+        "value": "audit_feedback_worksheet_gid"
+      },
+      {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
       }
