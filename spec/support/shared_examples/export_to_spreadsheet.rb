@@ -2,12 +2,12 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
   subject { described_class.new(category) }
 
   let(:worksheet) { double(num_rows: 2, save: nil) }
-  let(:gids) { { vacancies: 'some-gid' } }
+  let(:gids) { { vacancies: 'some-gid', feedback: 'feedback-gid' } }
 
   before do
     stub_const(spreadsheet_id, 'abc1-def2')
     stub_const('AUDIT_GIDS', gids)
-    allow(Spreadsheet::Writer).to receive(:new).with(AUDIT_SPREADSHEET_ID, gids[:vacancies], true) { worksheet }
+    allow(Spreadsheet::Writer).to receive(:new).with(AUDIT_SPREADSHEET_ID, gids[category.to_sym], true) { worksheet }
   end
 
   context 'when there is new data' do
@@ -20,12 +20,12 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
 
       expect(results.count).to eq(3)
 
-      expect(results.first.data).to eq(new_data.first.data)
-      expect(results.last.data).to eq(new_data.last.data)
+      expect(results.first).to eq(new_data.first)
+      expect(results.last).to eq(new_data.last)
     end
 
     it 'adds the new data to the spreadsheet' do
-      data = new_data.map { |d| d.data.values.unshift(d.created_at.to_s) }
+      data = new_data.map(&:to_row)
       expect(worksheet).to receive(:append_rows).with(data)
       subject.run!
     end
@@ -54,7 +54,7 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
     end
 
     it 'adds all the data to the spreadsheet' do
-      data = (existing_data + new_data).map { |d| d.data.values.unshift(Time.zone.now.to_s) }
+      data = (existing_data + new_data).map(&:to_row)
       expect(worksheet).to receive(:append_rows).with(data)
       subject.run!
     end

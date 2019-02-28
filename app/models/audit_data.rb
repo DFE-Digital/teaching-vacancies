@@ -6,7 +6,6 @@ class AuditData < ApplicationRecord
     sign_in_events
     interest_expression
     search_event
-    feedback
     toc_acceptance
   ]
 
