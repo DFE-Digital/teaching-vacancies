@@ -20,6 +20,7 @@ RSpec.describe AlertMailer, type: :mailer do
 
     let(:mail) { described_class.daily_alert(subscription.id, vacancies.pluck(:id)) }
     let(:vacancies) { create_list(:vacancy, 1, :published) }
+    let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: 'daily_alert' } }
 
     context 'with a single vacancy' do
       let(:vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
@@ -31,7 +32,9 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body_lines[0]).to match(/# #{I18n.t('app.title')}/)
         expect(body_lines[1]).to match(/# #{I18n.t('alerts.email.daily.summary.one')}/)
         expect(body_lines[3]).to match(/---/)
-        expect(body_lines[5]).to match(/\[#{vacancy_presenter.job_title}\]\(#{vacancy_presenter.share_url}\)/)
+        expect(body_lines[5]).to eql(
+          "[#{vacancy_presenter.job_title}](#{vacancy_presenter.share_url(campaign_params)})\r\n"
+        )
         expect(body_lines[6]).to match(/#{vacancy_presenter.school_name}/)
         expect(body_lines[7]).to match(/Salary: #{vacancy_presenter.salary_range}/)
       end
@@ -47,12 +50,16 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.to).to eq([subscription.email])
 
         expect(body_lines[5]).to match(/\[#{first_vacancy_presenter.job_title}\]/)
-        expect(body_lines[5]).to match(/\(#{first_vacancy_presenter.share_url}\)/)
+        expect(body_lines[5]).to eql(
+          "[#{first_vacancy_presenter.job_title}](#{first_vacancy_presenter.share_url(campaign_params)})\r\n"
+        )
         expect(body_lines[6]).to match(/#{first_vacancy_presenter.school_name}/)
         expect(body_lines[7]).to match(/Salary: #{first_vacancy_presenter.salary_range}/)
 
         expect(body_lines[9]).to match(/\[#{second_vacancy_presenter.job_title}\]/)
-        expect(body_lines[9]).to match(/\(#{second_vacancy_presenter.share_url}\)/)
+        expect(body_lines[9]).to eql(
+          "[#{second_vacancy_presenter.job_title}](#{second_vacancy_presenter.share_url(campaign_params)})\r\n"
+        )
         expect(body_lines[10]).to match(/#{second_vacancy_presenter.school_name}/)
         expect(body_lines[11]).to match(/Salary: #{second_vacancy_presenter.salary_range}/)
       end
