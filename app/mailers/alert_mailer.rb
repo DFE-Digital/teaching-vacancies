@@ -3,7 +3,7 @@ class AlertMailer < ApplicationMailer
 
   def daily_alert(subscription_id, vacancy_ids)
     subscription = Subscription.find(subscription_id)
-    vacancies = Vacancy.where(id: vacancy_ids)
+    vacancies = Vacancy.where(id: vacancy_ids).order(:created_at)
 
     @email = subscription.email
     @subscription_reference = subscription.reference
