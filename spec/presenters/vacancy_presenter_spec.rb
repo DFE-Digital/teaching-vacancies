@@ -122,6 +122,14 @@ RSpec.describe VacancyPresenter do
       expected_url = URI('localhost:3000/jobs/pe-teacher')
       expect(vacancy.share_url).to match(expected_url.to_s)
     end
+
+    context 'when campaign parameters are passed' do
+      it 'builds the campaign URL' do
+        vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'PE Teacher'))
+        expected_campaign_url = URI('https://localhost:3000/jobs/pe-teacher?utm_medium=dance&utm_source=subscription')
+        expect(vacancy.share_url(source: 'subscription', medium: 'dance')).to match(expected_campaign_url.to_s)
+      end
+    end
   end
 
   describe '#to_row' do
