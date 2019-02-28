@@ -164,6 +164,16 @@ variable "import_schools_task_schedule" {
   default     = "cron(0 07 * * ? *)"
 }
 
+variable "update_spreadsheets_task_command" {
+  description = "The Entrypoint for the update_spreadsheets task"
+  default     = ["rake", "verbose", "spreadsheets:update"]
+}
+
+variable "update_spreadsheets_task_schedule" {
+  description = "update_spreadsheets schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 01 * * ? *)"
+}
+
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "verbose", "db:sessions:trim"]
