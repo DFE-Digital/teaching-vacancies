@@ -17,4 +17,28 @@ RSpec.describe Feedback, type: :model do
       expect(Feedback.published_on(1.month.ago)).to eq(feedback_some_other_day)
     end
   end
+
+  describe '#to_row' do
+    let(:school) { create(:school) }
+    let(:created_at) { '2019-01-01T00:00:00+00:00' }
+    let(:user) { create(:user) }
+    let(:vacancy) { create(:vacancy, school: school) }
+    let(:rating) { 5 }
+    let(:comment) { 'Great!' }
+
+    let(:feedback) do
+      Timecop.freeze(created_at) do
+        create(:feedback, user: user, vacancy: vacancy, rating: rating, comment: comment)
+      end
+    end
+
+    it 'returns an array of data' do
+      expect(feedback.to_row[0]).to eq(created_at)
+      expect(feedback.to_row[1]).to eq(user.oid)
+      expect(feedback.to_row[2]).to eq(vacancy.id)
+      expect(feedback.to_row[3]).to eq(school.urn)
+      expect(feedback.to_row[4]).to eq(rating)
+      expect(feedback.to_row[5]).to eq(comment)
+    end
+  end
 end
