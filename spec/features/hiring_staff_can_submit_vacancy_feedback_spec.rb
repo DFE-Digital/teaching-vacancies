@@ -81,24 +81,6 @@ RSpec.feature 'Vacancy feedback' do
         expect(activity.key).to eq('vacancy.feedback.create')
         expect(activity.session_id).to eq(session_id)
       end
-
-      scenario 'triggers a job to write the feedback to a Spreadsheet' do
-        visit root_path
-        timestamp = Time.zone.now.iso8601
-        data = [timestamp.to_s, session_id, published_job.id, published_job.school.urn, 5, 'Perfect!']
-
-        expect(AuditFeedbackJob).to receive(:perform_later)
-          .with(data)
-
-        Timecop.freeze(timestamp) do
-          visit new_school_job_feedback_path(published_job.id)
-
-          choose 'Very satisfied'
-          fill_in 'feedback_comment', with: 'Perfect!'
-
-          click_on 'Submit feedback'
-        end
-      end
     end
   end
 end

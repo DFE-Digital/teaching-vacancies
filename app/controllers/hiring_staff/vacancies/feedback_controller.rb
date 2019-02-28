@@ -18,7 +18,7 @@ class HiringStaff::Vacancies::FeedbackController < HiringStaff::Vacancies::Appli
 
     return render 'new' unless @feedback.save
 
-    audit_feedback(vacancy, @feedback)
+    Auditor::Audit.new(vacancy, 'vacancy.feedback.create', current_session_id).log
 
     redirect_to school_path, notice: I18n.t('messages.feedback.submitted')
   end
@@ -27,15 +27,5 @@ class HiringStaff::Vacancies::FeedbackController < HiringStaff::Vacancies::Appli
 
   def feedback_params
     params.require(:feedback).permit(:rating, :comment)
-  end
-
-  def audit_feedback(vacancy, feedback)
-    Auditor::Audit.new(vacancy, 'vacancy.feedback.create', current_session_id).log
-    AuditFeedbackJob.perform_later([feedback.created_at.iso8601.to_s,
-                                    current_session_id,
-                                    vacancy.id,
-                                    vacancy.school.urn,
-                                    feedback.rating,
-                                    feedback.comment])
   end
 end
