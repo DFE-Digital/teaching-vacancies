@@ -89,6 +89,10 @@ variable "import_schools_task_command" {
   type = "list"
 }
 
+variable "send_job_alerts_daily_email_command" {
+  type = "list"
+}
+
 variable "sessions_trim_task_command" {
   type = "list"
 }
@@ -108,6 +112,7 @@ variable "performance_platform_submit_all_task_command" {
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
+variable "send_job_alerts_daily_email_schedule" {}
 
 variable "vacancies_pageviews_refresh_cache_task_command" {
   type = "list"
