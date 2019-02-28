@@ -10,6 +10,7 @@ class VacancyPresenter < BasePresenter
 
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
+
     "#{number_to_currency(model.minimum_salary)} #{del} "\
     "#{number_to_currency(model.maximum_salary)}"\
     "#{model.part_time? ? ' per year pro rata' : ' per year'}"
@@ -64,6 +65,7 @@ class VacancyPresenter < BasePresenter
         return '' if first_supporting_subject.blank? && second_supporting_subject.blank?
         return first_supporting_subject if only_first_supporting_subject_present?
         return second_supporting_subject if only_second_supporting_subject_present?
+
         supporting_subjects
       end
   end
@@ -85,6 +87,7 @@ class VacancyPresenter < BasePresenter
                            return '' if model.min_pay_scale.blank? && model.max_pay_scale.blank?
                            return "from #{model.min_pay_scale.label}" if only_min_pay_scale_present?
                            return "up to #{model.max_pay_scale.label}" if only_max_pay_scale_present?
+
                            pay_scale_range_label
                          end
   end

@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
 
   def check_staging_auth
     return unless authenticate?
+
     authenticate_or_request_with_http_basic('Global') do |name, password|
       name == http_user && password == http_pass
     end

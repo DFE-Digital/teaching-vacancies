@@ -5,6 +5,7 @@ class PerformancePlatformFeedbackQueueJob < ApplicationJob
   def perform(time_to_s)
     date = Time.zone.parse(time_to_s)
     return if TransactionAuditor::Logger.new('performance_platform:submit_user_satisfaction', date).performed?
+
     data = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }.merge!(Feedback.published_on(date).group(:rating).count)
     PerformancePlatform::UserSatisfaction.new(PP_USER_SATISFACTION_TOKEN)
                                          .submit(data, date.utc.iso8601)

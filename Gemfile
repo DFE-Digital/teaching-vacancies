@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.1'
+ruby '2.6.1'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -49,7 +49,7 @@ gem 'xml-sitemap'
 
 gem 'rollbar', '~> 2.18'
 
-gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
+gem 'rubocop', '~> 0.65.0', require: false # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
 gem 'activerecord-session_store'
 gem 'public_activity'
@@ -89,7 +89,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
-  gem 'webmock', '~> 3.4'
+  gem 'webmock', '~> 3.5'
   gem 'shoulda-matchers'
   gem 'rack_session_access'
 end

@@ -13,6 +13,7 @@ class InterestsController < ApplicationController
 
   def vacancy_id
     return params.require(:vacancy_id) if params.key?('vacancy_id')
+
     params.require(:job_id)
   end
 end
