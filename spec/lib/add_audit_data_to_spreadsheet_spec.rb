@@ -9,5 +9,7 @@ RSpec.describe AddAuditDataToSpreadsheet do
   let!(:new_data) { create_list(:audit_data, 3, category: 'vacancies') }
   let!(:other_data) { create_list(:audit_data, 3, category: 'sign_in_events') }
 
+  subject { described_class.new(category) }
+
   it_behaves_like 'ExportToSpreadsheet'
 end

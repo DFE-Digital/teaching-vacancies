@@ -1,6 +1,4 @@
 RSpec.shared_examples_for 'ExportToSpreadsheet' do
-  subject { described_class.new(category) }
-
   let(:worksheet) { double(num_rows: 2, save: nil) }
   let(:gids) { { vacancies: 'some-gid', feedback: 'feedback-gid' } }
 
