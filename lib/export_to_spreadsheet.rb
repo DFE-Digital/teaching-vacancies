@@ -1,6 +1,6 @@
 require 'spreadsheet_writer'
 
-class AddAuditData
+class ExportToSpreadsheet
   def initialize(category)
     @category = category
   end
@@ -25,8 +25,7 @@ class AddAuditData
 
   def results
     @results ||= begin
-      results = AuditData.where(category: @category)
-      results = results.where('created_at > ?', last_updated) unless last_updated.nil?
+      results = last_updated.nil? ? query : query.where('created_at > ?', last_updated)
       results.order(:created_at)
     end
   end

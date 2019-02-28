@@ -1,18 +1,11 @@
-require 'rails_helper'
-require 'add_audit_data'
-
-RSpec.describe AddAuditData do
-  subject { described_class.new('vacancies') }
+RSpec.shared_examples_for 'ExportToSpreadsheet' do
+  subject { described_class.new(category) }
 
   let(:worksheet) { double(num_rows: 2, save: nil) }
-
-  let!(:existing_data) { Timecop.freeze(2.days.ago) { create_list(:audit_data, 3, category: 'vacancies') } }
-  let!(:new_data) { create_list(:audit_data, 3, category: 'vacancies') }
-  let!(:other_data) { create_list(:audit_data, 3, category: 'sign_in_events') }
+  let(:gids) { { vacancies: 'some-gid' } }
 
   before do
-    gids = { vacancies: 'some-gid' }
-    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
+    stub_const(spreadsheet_id, 'abc1-def2')
     stub_const('AUDIT_GIDS', gids)
     allow(Spreadsheet::Writer).to receive(:new).with(AUDIT_SPREADSHEET_ID, gids[:vacancies], true) { worksheet }
   end

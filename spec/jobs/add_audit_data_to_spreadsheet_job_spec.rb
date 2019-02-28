@@ -16,7 +16,7 @@ RSpec.describe AddAuditDataToSpreadsheetJob, type: :job do
 
   it 'calls the add audit data class' do
     add_audit_data = double(run!: true)
-    expect(AddAuditData).to receive(:new).with(category) { add_audit_data }
+    expect(AddAuditDataToSpreadsheet).to receive(:new).with(category) { add_audit_data }
     expect(add_audit_data).to receive(:run!)
 
     perform_enqueued_jobs { job }
