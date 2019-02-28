@@ -2,10 +2,17 @@ return if Rails.env.test?
 
 redis_url = "#{ENV['REDIS_QUEUE_URL']}/0"
 
+options = {
+  concurrency: Integer(ENV.fetch('RAILS_MAX_THREADS') { 5 })
+}
+
+# Redis concurrency must be plus 5 https://github.com/mperham/sidekiq/wiki/Using-Redis#complete-control
 Sidekiq.configure_server do |config|
-  config.redis = { url: redis_url,  network_timeout: 5 }
+  config.options.merge!(options)
+  config.redis = { url: redis_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: redis_url,  network_timeout: 5 }
+  config.options.merge!(options)
+  config.redis = { url: redis_url, network_timeout: 5, size: config.options[:concurrency] + 5 }
 end

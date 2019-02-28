@@ -21,6 +21,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "RAILS_MAX_THREADS",
+        "value": "${rails_max_threads}"
+      },
+      {
         "name": "ROLLBAR_ENV",
         "value": "${environment}"
       },

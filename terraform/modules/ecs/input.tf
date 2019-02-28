@@ -28,6 +28,7 @@ variable "google_api_rake_container_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}
+variable "rails_max_threads" {}
 variable "override_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
