@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe VacanciesHelper, type: :helper do
-  describe '#salary_options' do
+  describe '.SALARY_OPTIONS' do
     it 'returns a hash of salary options' do
-      expect(helper.salary_options).to eq('£20,000' => 20000,
+      expect(helper.SALARY_OPTIONS).to eq('£20,000' => 20000,
                                           '£30,000' => 30000,
                                           '£40,000' => 40000,
                                           '£50,000' => 50000,

@@ -1,7 +1,12 @@
 module VacanciesHelper
-  def salary_options
-    (20000..70000).step(10000).map { |num| [number_to_currency(num), num] }.to_h
-  end
+  SALARY_OPTIONS = {
+    '£20,000': 20000,
+    '£30,000': 30000,
+    '£40,000': 40000,
+    '£50,000': 50000,
+    '£60,000': 60000,
+    '£70,000': 70000
+  }.freeze
 
   def working_pattern_options
     Vacancy.working_patterns.keys.map { |key| [key.humanize, key] }
