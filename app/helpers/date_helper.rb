@@ -4,8 +4,9 @@ module DateHelper
   def format_date(date, format = :default)
     return 'No date given' if date.nil?
 
-    date_formats = Date::DATE_FORMATS.keys.join(' ')
-    raise FormatDateError, date_format_error_message(format, date_formats) unless Date::DATE_FORMATS.include?(format)
+    unless Date::DATE_FORMATS.include?(format)
+      raise FormatDateError, date_format_error_message(format, Date::DATE_FORMATS.keys.join(' '))
+    end
 
     date.to_s(format).lstrip
   end
