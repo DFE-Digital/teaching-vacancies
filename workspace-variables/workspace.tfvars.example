@@ -66,3 +66,8 @@ pp_user_satisfaction_token =
 
 google_api_json_key = {}
 google_analytics_profile_id = ""
+
+# Performance monitoring
+skylight_authentication = ""
+skylight_env = ""
+skylight_enabled = "false"

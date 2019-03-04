@@ -162,6 +162,9 @@ data "template_file" "web_container_definition" {
     domain                           = "${var.domain}"
     google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id      = "${var.google_analytics_profile_id}"
+    skylight_authentication          = "${var.skylight_authentication}"
+    skylight_env                     = "${var.skylight_env}"
+    skylight_enabled                 = "${var.skylight_enabled}"
   }
 }
 

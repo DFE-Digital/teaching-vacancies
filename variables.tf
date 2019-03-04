@@ -344,4 +344,6 @@ variable "google_api_json_key" {
 variable "google_analytics_profile_id" {}
 
 variable "audit_vacancies_worksheet_gid" {}
-
+variable "skylight_authentication" {}
+variable "skylight_env" {}
+variable "skylight_enabled" {}
