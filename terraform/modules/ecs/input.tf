@@ -59,6 +59,7 @@ variable "google_drive_json_key" {
 }
 
 variable "audit_spreadsheet_id" {}
+variable "audit_vacancies_worksheet_gid" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 
@@ -103,7 +104,8 @@ variable "performance_platform_submit_all_task_command" {
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
-
+variable "update_spreadsheets_task_command" {}
+variable "update_spreadsheets_task_schedule" {}
 variable "vacancies_pageviews_refresh_cache_task_command" {
   type = "list"
 }
