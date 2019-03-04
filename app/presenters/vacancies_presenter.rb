@@ -1,7 +1,8 @@
 class VacanciesPresenter < BasePresenter
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::UrlHelper
-  attr_reader :decorated_collection, :searched
+  attr_accessor :decorated_collection
+  attr_reader :searched
   alias_method :user_search?, :searched
 
   CSV_ATTRIBUTES = %w[title description jobBenefits datePosted educationRequirements qualifications
@@ -11,7 +12,7 @@ class VacanciesPresenter < BasePresenter
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
   def initialize(vacancies, searched:)
-    @decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
+    self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
     super(vacancies)
   end
@@ -43,7 +44,7 @@ class VacanciesPresenter < BasePresenter
   def to_csv
     CSV.generate(headers: true) do |csv|
       csv << CSV_ATTRIBUTES
-      @decorated_collection.map { |vacancy| csv << to_csv_row(vacancy) }
+      decorated_collection.map { |vacancy| csv << to_csv_row(vacancy) }
     end
   end
 
