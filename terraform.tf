@@ -136,6 +136,7 @@ module "ecs" {
   skylight_authentication          = "${var.skylight_authentication}"
   skylight_env                     = "${var.skylight_env}"
   skylight_enabled                 = "${var.skylight_enabled}"
+  skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
 }
 
 module "logs" {

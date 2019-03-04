@@ -165,6 +165,10 @@
       {
         "name": "SKYLIGHT_ENABLED",
         "value": "${skylight_enabled}"
+      },
+      {
+        "name": "SKYLIGHT_IGNORED_ENDPOINTS",
+        "value": "${skylight_ignored_endpoints}"
       }
     ]
   }

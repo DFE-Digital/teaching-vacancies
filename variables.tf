@@ -347,3 +347,6 @@ variable "audit_vacancies_worksheet_gid" {}
 variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
+variable "skylight_ignored_endpoints" {
+  default = "ApplicationController#check"
+}
