@@ -80,6 +80,9 @@ module "ecs" {
   import_schools_task_command  = "${var.import_schools_task_command}"
   import_schools_task_schedule = "${var.import_schools_task_schedule}"
 
+  update_spreadsheets_task_command = "${var.update_spreadsheets_task_command}"
+  update_spreadsheets_task_schedule = "${var.update_spreadsheets_task_schedule}"
+
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
