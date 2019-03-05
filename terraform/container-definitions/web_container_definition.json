@@ -135,10 +135,6 @@
         "value": "${audit_spreadsheet_id}"
       },
       {
-        "name": "AUDIT_VACANCIES_WORKSHEET_GID",
-        "value": "audit_vacancies_worksheet_gid"
-      },
-      {
         "name": "DOMAIN",
         "value": "${domain}"
       },
