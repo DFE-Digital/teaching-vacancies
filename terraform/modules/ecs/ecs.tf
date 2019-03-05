@@ -162,6 +162,10 @@ data "template_file" "web_container_definition" {
     domain                           = "${var.domain}"
     google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id      = "${var.google_analytics_profile_id}"
+    skylight_authentication          = "${var.skylight_authentication}"
+    skylight_env                     = "${var.skylight_env}"
+    skylight_enabled                 = "${var.skylight_enabled}"
+    skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
   }
 }
 
@@ -176,6 +180,7 @@ data "template_file" "import_schools_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_import_schools"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_url                = "${var.redis_url}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"

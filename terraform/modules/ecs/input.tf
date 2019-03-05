@@ -68,6 +68,10 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
+variable "skylight_authentication" {}
+variable "skylight_env" {}
+variable "skylight_enabled" {}
+variable "skylight_ignored_endpoints" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 

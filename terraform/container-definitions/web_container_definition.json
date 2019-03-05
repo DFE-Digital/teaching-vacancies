@@ -153,6 +153,22 @@
       {
         "name": "GOOGLE_ANALYTICS_PROFILE_ID",
         "value": "${google_analytics_profile_id}"
+      },
+      {
+        "name": "SKYLIGHT_AUTHENTICATION",
+        "value": "${skylight_authentication}"
+      },
+      {
+        "name": "SKYLIGHT_ENV",
+        "value": "${skylight_env}"
+      },
+      {
+        "name": "SKYLIGHT_ENABLED",
+        "value": "${skylight_enabled}"
+      },
+      {
+        "name": "SKYLIGHT_IGNORED_ENDPOINTS",
+        "value": "${skylight_ignored_endpoints}"
       }
     ]
   }
