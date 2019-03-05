@@ -5,6 +5,7 @@ class SpreadsheetWriterJob < ApplicationJob
 
   def perform(data)
     return unless AUDIT_SPREADSHEET_ID
+
     write_row(data)
   end
 

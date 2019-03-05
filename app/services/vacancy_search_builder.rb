@@ -14,6 +14,7 @@ class VacancySearchBuilder
     @status = status
 
     return if filters.location.blank?
+
     @geocoded_location = Geocoding.new(filters.location).coordinates
     @radius = filters.radius.to_i.positive? ? filters.radius.to_i : MIN_ALLOWED_RADIUS
   end
@@ -73,6 +74,7 @@ class VacancySearchBuilder
 
   def expired_query
     return if @expired
+
     {
       range: {
         'expires_on': {
@@ -84,6 +86,7 @@ class VacancySearchBuilder
 
   def published_on_query
     return if @published_on
+
     {
       range: {
         'publish_on': {
@@ -95,6 +98,7 @@ class VacancySearchBuilder
 
   def status_query
     return if @status.blank?
+
     {
       bool: {
         filter: {
@@ -108,6 +112,7 @@ class VacancySearchBuilder
 
   def working_pattern_query
     return if @working_pattern.blank?
+
     {
       bool: {
         filter: {
@@ -121,6 +126,7 @@ class VacancySearchBuilder
 
   def newly_qualified_teacher_query
     return if @newly_qualified_teacher.blank?
+
     {
       bool: {
         filter: {
@@ -134,6 +140,7 @@ class VacancySearchBuilder
 
   def phase_query
     return if @phase.blank?
+
     {
       bool: {
         filter: {

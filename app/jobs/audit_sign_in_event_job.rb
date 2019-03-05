@@ -6,6 +6,7 @@ class AuditSignInEventJob < SpreadsheetWriterJob
 
   def perform(audit_details)
     return unless AUDIT_SPREADSHEET_ID
+
     write_row(decrypt_data(audit_details), WORKSHEET_POSITION)
   end
 

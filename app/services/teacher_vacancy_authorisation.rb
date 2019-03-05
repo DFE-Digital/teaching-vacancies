@@ -26,6 +26,7 @@ module TeacherVacancyAuthorisation
     def school_urn
       return nil unless user_permissions.any?
       return user_permissions_for_school.first['school_urn'] if @school_urn.present?
+
       user_permissions.first['school_urn']
     end
 

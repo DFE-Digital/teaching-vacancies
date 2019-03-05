@@ -28,6 +28,7 @@ class DatabaseRecordsToSpreadsheet
 
   def last_updated
     return nil if worksheet.last_row.nil?
+
     Time.zone.parse(worksheet.last_row[0])
   end
 

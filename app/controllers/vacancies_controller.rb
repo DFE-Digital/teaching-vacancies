@@ -26,6 +26,7 @@ class VacanciesController < ApplicationController
   def show
     vacancy = Vacancy.listed.friendly.find(id)
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
+
     @vacancy = VacancyPresenter.new(vacancy)
     TrackVacancyPageViewJob.perform_later(vacancy.id) unless authenticated?
 

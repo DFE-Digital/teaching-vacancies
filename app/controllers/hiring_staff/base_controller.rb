@@ -24,6 +24,7 @@ class HiringStaff::BaseController < ApplicationController
 
   def current_user
     return if current_session_id.blank?
+
     @current_user ||= User.find_or_create_by(oid: current_session_id)
   end
 end
