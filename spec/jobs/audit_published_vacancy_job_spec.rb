@@ -11,7 +11,7 @@ RSpec.describe AuditPublishedVacancyJob, type: :job do
   end
 
   it 'is in the default queue' do
-    expect(job.queue_name).to eq('default')
+    expect(job.queue_name).to eq('audit_published_vacancy')
   end
 
   it 'creates an audit record' do
