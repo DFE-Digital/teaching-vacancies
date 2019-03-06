@@ -128,7 +128,7 @@ class VacancyPresenter < BasePresenter
     {
       id: id,
       slug: slug,
-      created_at: created_at,
+      created_at: created_at.to_s,
       status: status,
       publish_on: publish_on,
       expires_on: expires_on,
