@@ -26,7 +26,7 @@ module Spreadsheet
     def last_row
       return nil if worksheet.num_rows <= 1
 
-      worksheet[worksheet.num_rows - 1]
+      worksheet.rows[worksheet.num_rows - 1]
     end
 
     private

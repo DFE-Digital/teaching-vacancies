@@ -123,14 +123,14 @@ RSpec.describe 'Spreadsheet::Writer' do
 
   describe '#last_row' do
     let(:data) { [['foo', 'bar'], ['fizz', 'buzz']] }
-    let(:worksheet) { double(num_rows: 2, save: nil) }
+    let(:worksheet) { double(num_rows: 2, save: nil, rows: double) }
     let(:spreadsheet) { double(worksheets: [worksheet]) }
     let(:row) { Spreadsheet::Writer.new(:spreadsheet_id).last_row }
 
     before do
       allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
       allow(session).to receive(:spreadsheet_by_key).and_return(spreadsheet)
-      allow(worksheet).to receive(:[]) { |arg| data[arg] }
+      allow(worksheet.rows).to receive(:[]) { |arg| data[arg] }
     end
 
     it 'gets the last row' do
