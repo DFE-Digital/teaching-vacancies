@@ -247,7 +247,7 @@ en:
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
   subscriptions:
-    button: 'Subscribe to email notifications for this search'
+    button: 'Sign up for a job alert matching your search'
     intro: 'You’ll be sent an email listing new jobs that match the following search criteria:'
     new: Sign up for a job alert
     info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 3 months or can be cancelled using the link at the bottom of alert emails.

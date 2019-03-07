@@ -1,0 +1,20 @@
+.vacancies-count {
+  padding-left: 0;
+}
+.search-made {
+  padding: 15px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  clear: both;
+  background-color: govuk-colour("grey-4");
+  border-left: 4px solid govuk-colour("grey-3");
+  p {
+    margin-bottom: 10px;
+  }
+  .job-seeker-alert-icon {
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+    left: 2px; 
+  }
+}
