@@ -13,7 +13,7 @@ module VacancyApplicationDetailValidations
   end
 
   def validity_of_publish_on
-    errors.add(:publish_on, publish_on_before_today_error) if publish_on_in_past?
+    errors.add(:publish_on, publish_on_before_today_error) if publish_on_in_past? && publish_on_changed?
   end
 
   def validity_of_expires_on
