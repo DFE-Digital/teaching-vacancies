@@ -61,7 +61,7 @@ RSpec.describe AddAuditData do
     end
 
     it 'adds all the data to the spreadsheet' do
-      data = (existing_data + new_data).map { |d| d.data.values.unshift(d.created_at.to_s) }
+      data = (existing_data + new_data).map { |d| d.data.values.unshift(Time.zone.now.to_s) }
       expect(worksheet).to receive(:append_rows).with(data)
       subject.run!
     end
