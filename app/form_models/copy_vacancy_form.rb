@@ -18,6 +18,8 @@ class CopyVacancyForm < VacancyForm
   def initialize(vacancy:)
     self.vacancy = vacancy
     self.job_title = vacancy.job_title
+
+    self.publish_on = nil if vacancy.publish_on.past?
     reset_date_fields if vacancy.expires_on.past?
   end
 
