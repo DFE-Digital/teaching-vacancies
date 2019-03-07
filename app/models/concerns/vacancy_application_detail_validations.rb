@@ -8,11 +8,11 @@ module VacancyApplicationDetailValidations
     validates :application_link, url: true, if: proc { |v| v.application_link.present? }
 
     validates :publish_on, presence: true, if: proc { |v| !v.published? }
-    validate :validity_of_publish_on, :validity_of_expires_on
+    validate :publish_on_must_not_be_in_the_past, :validity_of_expires_on
     validates_with DateFormatValidator, fields: %i[publish_on expires_on]
   end
 
-  def validity_of_publish_on
+  def publish_on_must_not_be_in_the_past
     errors.add(:publish_on, publish_on_before_today_error) if publish_on_in_past? && publish_on_changed?
   end
 
