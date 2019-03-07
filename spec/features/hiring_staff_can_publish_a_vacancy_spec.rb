@@ -513,18 +513,6 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
       end
 
-      scenario 'can not be published at a date in the past' do
-        vacancy = create(:vacancy, :draft, school_id: school.id)
-        vacancy.assign_attributes(publish_on: Time.zone.yesterday)
-        vacancy.save(validate: false)
-
-        visit school_job_review_path(vacancy.id)
-        click_on 'Confirm and submit job'
-
-        expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
-        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
-      end
-
       scenario 'displays the expiration date on the confirmation page' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_job_review_path(vacancy.id)
