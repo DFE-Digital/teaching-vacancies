@@ -65,5 +65,15 @@ RSpec.describe VacancyPageView do
         expect(page_view_counter).not_to have_received(:reset)
       end
     end
+
+    context 'when the page counter is 0' do
+      let(:page_view_counter) { spy(to_i: 0) }
+
+      it 'does not save the vacancy' do
+        vacancy_page_view.persist!
+
+        expect(vacancy).not_to have_received(:save)
+      end
+    end
   end
 end
