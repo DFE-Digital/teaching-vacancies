@@ -205,7 +205,6 @@ data "template_file" "update_spreadsheets_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_update_spreadsheets"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
-    redis_url                = "${var.redis_url}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
