@@ -2,7 +2,7 @@ require 'breasal'
 class School < ApplicationRecord
   include Auditor::Model
 
-  belongs_to :school_type, required: true
+  belongs_to :school_type, optional: false
   belongs_to :detailed_school_type, optional: true
   belongs_to :region
 

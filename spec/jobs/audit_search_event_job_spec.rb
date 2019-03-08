@@ -19,7 +19,7 @@ RSpec.describe AuditSearchEventJob, type: :job do
     spreadsheet = double(:mock)
     expect(Spreadsheet::Writer).to receive(:new)
       .with('abc1-def2', AuditSearchEventJob::WORKSHEET_POSITION).and_return(spreadsheet)
-    expect(spreadsheet).to receive(:append).with(data)
+    expect(spreadsheet).to receive(:append_row).with(data)
 
     perform_enqueued_jobs { job }
   end

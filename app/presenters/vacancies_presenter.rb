@@ -23,9 +23,11 @@ class VacanciesPresenter < BasePresenter
   def total_count_message
     if total_count == 1
       return I18n.t('jobs.job_count_without_search', count: total_count) unless @searched
+
       I18n.t('jobs.job_count', count: total_count)
     else
       return I18n.t('jobs.job_count_plural_without_search', count: total_count) unless @searched
+
       I18n.t('jobs.job_count_plural', count: total_count)
     end
   end

@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-ruby '2.4.1'
+ruby '2.6.1'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 5.2.2'
 
 gem 'puma', '~> 3.12'
 gem 'pg', '~> 1.1'
@@ -22,12 +22,14 @@ gem 'turbolinks', '~> 5'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'addressable'
-gem 'sanitize', '~> 4.6'
+gem 'sanitize', '~> 5.0'
 gem 'lograge'
 gem 'colorize'
 gem 'ipaddr'
 gem 'geocoder'
 gem 'redis'
+gem 'redis-objects'
+gem 'skylight'
 
 gem 'omniauth', '~> 1.8'
 gem 'omniauth_openid_connect', '~> 0.1'
@@ -47,7 +49,7 @@ gem 'xml-sitemap'
 
 gem 'rollbar', '~> 2.18'
 
-gem 'rubocop' # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
+gem 'rubocop', '~> 0.65.0', require: false # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
 
 gem 'activerecord-session_store'
 gem 'public_activity'
@@ -87,7 +89,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
-  gem 'webmock', '~> 3.4'
+  gem 'webmock', '~> 3.5'
   gem 'shoulda-matchers'
   gem 'rack_session_access'
 end

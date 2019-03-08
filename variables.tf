@@ -164,6 +164,16 @@ variable "import_schools_task_schedule" {
   default     = "cron(0 07 * * ? *)"
 }
 
+variable "update_spreadsheets_task_command" {
+  description = "The Entrypoint for the update_spreadsheets task"
+  default     = ["rake", "verbose", "spreadsheets:update"]
+}
+
+variable "update_spreadsheets_task_schedule" {
+  description = "update_spreadsheets schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 01 * * ? *)"
+}
+
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "verbose", "db:sessions:trim"]
@@ -201,7 +211,7 @@ variable "vacancies_pageviews_refresh_cache_task_command" {
 
 variable "vacancies_pageviews_refresh_cache_task_schedule" {
   description = "vacancies_pageviews_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "cron(0 08 * * ? *)"
+  default     = "cron(0 02 * * ? *)"
 }
 
 # RDS
@@ -332,3 +342,11 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
+
+variable "audit_vacancies_worksheet_gid" {}
+variable "skylight_authentication" {}
+variable "skylight_env" {}
+variable "skylight_enabled" {}
+variable "skylight_ignored_endpoints" {
+  default = "ApplicationController#check"
+}

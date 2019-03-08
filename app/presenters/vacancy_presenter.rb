@@ -10,6 +10,7 @@ class VacancyPresenter < BasePresenter
 
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
+
     "#{number_to_currency(model.minimum_salary)} #{del} "\
     "#{number_to_currency(model.maximum_salary)}"\
     "#{model.part_time? ? ' per year pro rata' : ' per year'}"
@@ -64,6 +65,7 @@ class VacancyPresenter < BasePresenter
         return '' if first_supporting_subject.blank? && second_supporting_subject.blank?
         return first_supporting_subject if only_first_supporting_subject_present?
         return second_supporting_subject if only_second_supporting_subject_present?
+
         supporting_subjects
       end
   end
@@ -85,6 +87,7 @@ class VacancyPresenter < BasePresenter
                            return '' if model.min_pay_scale.blank? && model.max_pay_scale.blank?
                            return "from #{model.min_pay_scale.label}" if only_min_pay_scale_present?
                            return "up to #{model.max_pay_scale.label}" if only_max_pay_scale_present?
+
                            pay_scale_range_label
                          end
   end
@@ -122,20 +125,20 @@ class VacancyPresenter < BasePresenter
   end
 
   def to_row
-    [
-      id,
-      slug,
-      created_at,
-      status,
-      publish_on,
-      expires_on,
-      starts_on,
-      ends_on,
-      weekly_hours,
-      flexible_working,
-      school.urn,
-      school.county
-    ]
+    {
+      id: id,
+      slug: slug,
+      created_at: created_at.to_s,
+      status: status,
+      publish_on: publish_on,
+      expires_on: expires_on,
+      starts_on: starts_on,
+      ends_on: ends_on,
+      weekly_hours: weekly_hours,
+      flexible_working: flexible_working,
+      school_urn: school.urn,
+      school_county: school.county
+    }
   end
 
   private

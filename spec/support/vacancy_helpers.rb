@@ -121,7 +121,7 @@ module VacancyHelpers
   end
 
   def skip_vacancy_publish_on_validation
-    allow_any_instance_of(Vacancy).to receive(:validity_of_publish_on).and_return(true)
+    allow_any_instance_of(Vacancy).to receive(:publish_on_must_not_be_in_the_past).and_return(true)
   end
 
   def vacancy_json_ld(vacancy)

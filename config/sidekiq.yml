@@ -4,12 +4,16 @@
   - [ google_indexing, 2]
   - [ import_school_data, 1 ]
   - [ update_vacancy_spreadsheet, 1 ]
+  - [ audit_published_vacancy, 1 ]
   - [ audit_sign_in_event, 1 ]
   - [ audit_express_interest_event, 1 ]
   - [ audit_search_event, 1 ]
   - [ audit_feedback, 1 ]
   - [ audit_toc_acceptance_event, 1 ]
+  - [ audit_spreadsheet, 1 ]
 update_vacancy_spreadsheet:
+  :concurrency: 1
+audit_published_vacancy:
   :concurrency: 1
 audit_sign_in_event:
   :concurrency: 1
@@ -20,4 +24,6 @@ audit_search_event:
 audit_feedback:
   :concurrency: 1
 audit_toc_acceptance_event:
+  :concurrency: 1
+audit_spreadsheet:
   :concurrency: 1

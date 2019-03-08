@@ -80,6 +80,9 @@ module "ecs" {
   import_schools_task_command  = "${var.import_schools_task_command}"
   import_schools_task_schedule = "${var.import_schools_task_schedule}"
 
+  update_spreadsheets_task_command = "${var.update_spreadsheets_task_command}"
+  update_spreadsheets_task_schedule = "${var.update_spreadsheets_task_schedule}"
+
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
@@ -125,10 +128,15 @@ module "ecs" {
   authorisation_service_url        = "${var.authorisation_service_url}"
   google_drive_json_key            = "${var.google_drive_json_key}"
   audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
+  audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"
   google_analytics_profile_id      = "${var.google_analytics_profile_id}"
+  skylight_authentication          = "${var.skylight_authentication}"
+  skylight_env                     = "${var.skylight_env}"
+  skylight_enabled                 = "${var.skylight_enabled}"
+  skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
 }
 
 module "logs" {

@@ -9,7 +9,7 @@ COPY package-lock.json ./package-lock.json
 RUN npm set progress=false && npm config set depth 0
 RUN npm install --only=production
 
-FROM ruby:2.4.1 as release
+FROM ruby:2.6.1 as release
 MAINTAINER dxw <rails@dxw.com>
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
@@ -45,10 +45,10 @@ RUN gem install bundler
 # bundle ruby gems based on the current environment, default to production
 RUN echo $RAILS_ENV
 RUN \
-  if [ "$RAILS_ENV" = "production" ]; then \
-    bundle install --without development test --retry 10; \
-  else \
+  if [ "$RAILS_ENV" = "development" ] || [ "$RAILS_ENV" = "test" ]; then \
     bundle install --retry 10; \
+  else \
+    bundle install --without development test --retry 10; \
   fi
 
 COPY . $INSTALL_PATH

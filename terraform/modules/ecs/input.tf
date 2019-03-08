@@ -59,6 +59,7 @@ variable "google_drive_json_key" {
 }
 
 variable "audit_spreadsheet_id" {}
+variable "audit_vacancies_worksheet_gid" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 
@@ -67,6 +68,10 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
+variable "skylight_authentication" {}
+variable "skylight_env" {}
+variable "skylight_enabled" {}
+variable "skylight_ignored_endpoints" {}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 
@@ -103,7 +108,10 @@ variable "performance_platform_submit_all_task_command" {
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
-
+variable "update_spreadsheets_task_command" {
+  type = "list"
+}
+variable "update_spreadsheets_task_schedule" {}
 variable "vacancies_pageviews_refresh_cache_task_command" {
   type = "list"
 }

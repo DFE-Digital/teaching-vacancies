@@ -90,6 +90,14 @@ RSpec.feature 'Viewing a single published vacancy' do
       expect(page).to have_content(I18n.t('jobs.weekly_hours'))
       expect(page).to have_content(30)
     end
+
+    scenario 'the page view is tracked' do
+      vacancy = create(:vacancy, :published)
+
+      expect(TrackVacancyPageViewJob).to receive(:perform_later).with(vacancy.id)
+
+      visit job_path(vacancy)
+    end
   end
 
   context 'when the old vacancy URL is used' do
