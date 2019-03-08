@@ -189,7 +189,7 @@ GEM
       concurrent-ruby (~> 1.0)
     ipaddr (1.2.2)
     jaro_winkler (1.5.2)
-    jbuilder (2.7.0)
+    jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jmespath (1.4.0)
@@ -513,7 +513,7 @@ DEPENDENCIES
   high_voltage (~> 3.1)
   httparty
   ipaddr
-  jbuilder (~> 2.5)
+  jbuilder (~> 2.8)
   jquery-rails
   kaminari
   launchy
