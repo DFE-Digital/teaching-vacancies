@@ -14,10 +14,10 @@
       = search_field_tag :keyword, keyword, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
     .govuk-form-group
       = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
-      = select_tag 'minimum_salary', options_for_select(salary_options, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
+      = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
     .govuk-form-group
       = label_tag 'maximum_salary', t('jobs.filters.maximum_salary'), class: 'govuk-label'
-      = select_tag 'maximum_salary', options_for_select(salary_options, maximum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
+      = select_tag 'maximum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, maximum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
     .govuk-form-group
       = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
       = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
