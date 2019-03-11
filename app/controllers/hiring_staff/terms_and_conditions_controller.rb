@@ -24,8 +24,5 @@ class HiringStaff::TermsAndConditionsController < HiringStaff::BaseController
 
   def audit_toc_acceptance
     Auditor::Audit.new(current_user, 'user.terms_and_conditions.accept', current_session_id).log
-    AuditTocAcceptanceEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                              current_session_id,
-                                              session[:urn]])
   end
 end
