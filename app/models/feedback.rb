@@ -8,12 +8,13 @@ class Feedback < ApplicationRecord
 
   def to_row
     [
-      created_at.iso8601.to_s,
+      Time.zone.now.to_s,
       user.oid,
       vacancy.id,
       vacancy.school.urn,
       rating,
-      comment
+      comment,
+      created_at.to_s
     ]
   end
 end

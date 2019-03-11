@@ -33,12 +33,13 @@ RSpec.describe Feedback, type: :model do
     end
 
     it 'returns an array of data' do
-      expect(feedback.to_row[0]).to eq(created_at)
+      expect(feedback.to_row[0]).to eq(Time.zone.now.to_s)
       expect(feedback.to_row[1]).to eq(user.oid)
       expect(feedback.to_row[2]).to eq(vacancy.id)
       expect(feedback.to_row[3]).to eq(school.urn)
       expect(feedback.to_row[4]).to eq(rating)
       expect(feedback.to_row[5]).to eq(comment)
+      expect(feedback.to_row[6]).to eq(feedback.created_at.to_s)
     end
   end
 end
