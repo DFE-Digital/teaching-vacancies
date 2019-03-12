@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe AuditFeedbackJob, type: :job do
+RSpec.describe AddFeedbackToSpreadsheetJob, type: :job do
   include ActiveJob::TestHelper
 
-  subject(:job) { described_class.perform_later(data) }
+  subject(:job) { described_class.perform_later }
   let(:data) { [Time.zone.now.to_s, 'vacancy-id', '010101', 5, 'feedback note'] }
 
   it 'queues the job' do
@@ -15,11 +15,9 @@ RSpec.describe AuditFeedbackJob, type: :job do
   end
 
   it 'writes to the spreadsheet' do
-    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
-    spreadsheet = double(:mock)
-    expect(Spreadsheet::Writer).to receive(:new)
-      .with('abc1-def2', AuditFeedbackJob::WORKSHEET_POSITION).and_return(spreadsheet)
-    expect(spreadsheet).to receive(:append_row).with(data)
+    add_feedback_to_spreadsheet = double(:add_feedback_to_spreadsheet)
+    expect(AddFeedbackToSpreadsheet).to receive(:new) { add_feedback_to_spreadsheet }
+    expect(add_feedback_to_spreadsheet).to receive(:run!)
 
     perform_enqueued_jobs { job }
   end

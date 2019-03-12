@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_21_102718) do
+ActiveRecord::Schema.define(version: 2019_02_27_175205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 2019_02_21_102718) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id", unique: true
   end
 
