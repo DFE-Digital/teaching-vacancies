@@ -10,7 +10,8 @@ module OmniAuth
       def callback_phase
         Rollbar.log(:info, 'A sign-in callback was started',
                     stored_state: session['omniauth.state'],
-                    accept_header: request.has_header?('Accept') ? request.get_header('Accept') : request.get_header('HTTP_ACCEPT'))
+                    accept_header: request.has_header?('Accept') ? request.get_header('Accept') : request.get_header('HTTP_ACCEPT'),
+                    time: Time.zone.now.strftime('%Y-%m-%d %H:%M:%S:%L'))
         error = request.params['error_reason'] || request.params['error']
         if error
           raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
