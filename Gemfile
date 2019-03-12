@@ -20,7 +20,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks', '~> 5'
 gem 'jquery-rails'
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.8'
 gem 'addressable'
 gem 'sanitize', '~> 5.0'
 gem 'lograge'
@@ -75,6 +75,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'elasticsearch-extensions'
   gem 'pry'

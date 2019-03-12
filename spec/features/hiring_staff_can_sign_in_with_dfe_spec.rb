@@ -44,28 +44,6 @@ RSpec.shared_examples 'a failed sign in' do |options|
     expect(authorisation.key).to eq('dfe-sign-in.authorisation.failure')
   end
 
-  scenario 'triggers a job to log the failed audit to a Spreadsheet' do
-    visit root_path
-    timestamp = Time.zone.now.iso8601
-
-    failed_authorisation = [timestamp.to_s, 'an-unknown-oid', options[:school_urn], options[:email],
-                            'failed_authorisation']
-
-    encrypted_failed_authorisation = MessageEncryptor.new(failed_authorisation).encrypt
-    authorisation_encryptor = double(MessageEncryptor,
-                                     encrypt: encrypted_failed_authorisation)
-
-    expect(MessageEncryptor).to receive(:new).with(failed_authorisation)
-                                             .and_return(authorisation_encryptor)
-    expect(AuditSignInEventJob).to receive(:perform_later)
-      .with(encrypted_failed_authorisation)
-
-    Timecop.freeze(timestamp) do
-      click_on(I18n.t('nav.sign_in'))
-      click_on(I18n.t('sign_in.link'))
-    end
-  end
-
   scenario 'logs a partially anonymised identifier so we can lookup any legitimate users who may be genuinley stuck' do
     expect(Rails.logger)
       .to receive(:warn)
@@ -135,31 +113,6 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       )
       expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
         .and_return(mock_permissions)
-    end
-
-    context 'sign in audit' do
-      scenario 'triggers a job to log the failed audit to a Spreadsheet' do
-        visit root_path
-        timestamp = Time.zone.now.iso8601
-        successful_authorisation = [timestamp.to_s,
-                                    'an-unknown-oid',
-                                    school.urn,
-                                    'an-email@example.com',
-                                    'successful_authorisation']
-
-        encrypted_successful_authorisation = MessageEncryptor.new(successful_authorisation).encrypt
-        authorisation_encryptor = double(MessageEncryptor,
-                                         encrypt: encrypted_successful_authorisation)
-
-        expect(MessageEncryptor).to receive(:new).with(successful_authorisation)
-                                                 .and_return(authorisation_encryptor)
-        expect(AuditSignInEventJob).to receive(:perform_later).with(encrypted_successful_authorisation)
-
-        Timecop.freeze(timestamp) do
-          click_on(I18n.t('nav.sign_in'))
-          click_on(I18n.t('sign_in.link'))
-        end
-      end
     end
 
     context 'successful events' do

@@ -6,7 +6,8 @@ HTTP_PASS: password
 
 # External dependencies
 DATABASE_URL: postgres://postgres@localhost:5432/tvs_development?template=template0&pool=5&encoding=unicode
-REDIS_URL: redis://localhost:6379
+REDIS_CACHE_URL: redis://localhost:6379
+REDIS_QUEUE_URL: redis://localhost:6379
 ELASTIC_SEARCH_ENDPOINT: 'localhost:9200'
 
 # Integrations

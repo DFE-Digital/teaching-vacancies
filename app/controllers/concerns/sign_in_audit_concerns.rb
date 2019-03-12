@@ -18,12 +18,10 @@ module SignInAuditConcerns
 
   def log_succesful_authorisation
     Auditor::Audit.new(current_school, 'dfe-sign-in.authorisation.success', current_session_id).log
-    AuditSignInEventJob.perform_later(sign_in_event(status: :successful_authorisation))
   end
 
   def log_failed_authorisation
     Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
-    AuditSignInEventJob.perform_later(sign_in_event(status: :failed_authorisation))
     Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
   end
 
