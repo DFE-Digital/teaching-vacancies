@@ -98,7 +98,7 @@
       },
       {
         "name": "AUDIT_FEEDBACK_WORKSHEET_GID",
-        "value": "audit_feedback_worksheet_gid"
+        "value": "${audit_feedback_worksheet_gid}"
       },
       {
         "name": "GOOGLE_DRIVE_JSON_KEY",
