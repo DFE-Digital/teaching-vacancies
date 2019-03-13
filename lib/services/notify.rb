@@ -10,6 +10,7 @@ class Notify
 
   def call
     raise 'Notify: NOTIFY_KEY is not set' if NOTIFY_KEY.blank?
+
     send_email
   end
 

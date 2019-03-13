@@ -22,6 +22,7 @@ class SubscriptionPresenter < BasePresenter
 
   def render_location_filter(location, radius)
     return if location.empty? || radius.empty?
+
     { location: I18n.t('subscriptions.location_text', radius: radius, location: location) }
   end
 
