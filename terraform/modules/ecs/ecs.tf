@@ -185,7 +185,6 @@ data "template_file" "send_job_alerts_daily_email_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
-    redis_url                = "${var.redis_url}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
