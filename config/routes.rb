@@ -35,6 +35,7 @@ Rails.application.routes.draw do
            path: '/dfe/sessions',
            controller: 'hiring_staff/sign_in/dfe/sessions'
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
+  get '/auth/failure', to: 'hiring_staff/sign_in/dfe/sessions#new'
 
   resource :terms_and_conditions, only: %i[show update], controller: 'hiring_staff/terms_and_conditions'
 
