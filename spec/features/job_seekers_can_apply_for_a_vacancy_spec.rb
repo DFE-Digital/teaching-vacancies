@@ -24,7 +24,13 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     visit job_path(vacancy)
 
     timestamp = Time.zone.now.iso8601
-    express_interest_event = [timestamp.to_s, vacancy.id, vacancy.school.urn, vacancy.application_link]
+
+    express_interest_event = {
+      datestamp: timestamp.to_s,
+      vacancy_id: vacancy.id,
+      school_urn: vacancy.school.urn,
+      application_link: vacancy.application_link
+    }
 
     expect(AuditExpressInterestEventJob).to receive(:perform_later)
       .with(express_interest_event)

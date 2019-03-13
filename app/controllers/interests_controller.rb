@@ -2,10 +2,12 @@ class InterestsController < ApplicationController
   def new
     vacancy = Vacancy.find(vacancy_id)
     Auditor::Audit.new(vacancy, 'vacancy.get_more_information', nil).log
-    AuditExpressInterestEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                                vacancy.id,
-                                                vacancy.school.urn,
-                                                vacancy.application_link])
+    AuditExpressInterestEventJob.perform_later(
+      datestamp: Time.zone.now.iso8601.to_s,
+      vacancy_id: vacancy.id,
+      school_urn: vacancy.school.urn,
+      application_link: vacancy.application_link
+    )
     redirect_to(vacancy.application_link)
   end
 
