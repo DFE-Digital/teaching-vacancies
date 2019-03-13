@@ -11,4 +11,9 @@ RSpec.describe AddFeedbackToSpreadsheet do
   subject { described_class.new }
 
   it_behaves_like 'ExportToSpreadsheet'
+
+  context 'with no user attached to the feedback' do
+    let!(:new_data) { create_list(:feedback, 3, :old_with_no_user) }
+    it_behaves_like 'ExportToSpreadsheet'
+  end
 end
