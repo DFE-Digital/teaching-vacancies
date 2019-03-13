@@ -9,7 +9,7 @@ class Feedback < ApplicationRecord
   def to_row
     [
       Time.zone.now.to_s,
-      user.oid,
+      user&.oid,
       vacancy.id,
       vacancy.school.urn,
       rating,
