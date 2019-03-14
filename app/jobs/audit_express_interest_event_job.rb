@@ -1,10 +1,7 @@
-class AuditExpressInterestEventJob < SpreadsheetWriterJob
-  WORKSHEET_POSITION = 2
+class AuditExpressInterestEventJob < ApplicationJob
   queue_as :audit_express_interest_event
 
   def perform(data)
-    return unless AUDIT_SPREADSHEET_ID
-
-    write_row(data, WORKSHEET_POSITION)
+    AuditData.create(category: :interest_expression, data: data)
   end
 end

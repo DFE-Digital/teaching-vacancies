@@ -14,13 +14,9 @@ RSpec.describe AuditExpressInterestEventJob, type: :job do
     expect(job.queue_name).to eq('audit_express_interest_event')
   end
 
-  it 'writes to the spreadsheet' do
-    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
-    spreadsheet = double(:mock)
-    expect(Spreadsheet::Writer).to receive(:new)
-      .with('abc1-def2', AuditExpressInterestEventJob::WORKSHEET_POSITION).and_return(spreadsheet)
-    expect(spreadsheet).to receive(:append_row).with(data)
-
-    perform_enqueued_jobs { job }
+  it 'creates an AuditData record' do
+    expect { perform_enqueued_jobs { job } }.to change { AuditData.count }.by(1)
+    expect(AuditData.last.category).to eq('interest_expression')
+    expect(AuditData.last.data).to eq(data)
   end
 end

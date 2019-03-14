@@ -427,6 +427,8 @@ data "template_file" "worker_container_definition" {
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
     audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+    audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
+
     worker_command = "${jsonencode(var.worker_command)}"
   }
 }

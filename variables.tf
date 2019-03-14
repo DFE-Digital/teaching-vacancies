@@ -350,6 +350,7 @@ variable "google_analytics_profile_id" {}
 
 variable "audit_vacancies_worksheet_gid" {}
 variable "audit_feedback_worksheet_gid" {}
+variable "audit_express_interest_worksheet_gid" {}
 
 variable "skylight_authentication" {}
 variable "skylight_env" {}
