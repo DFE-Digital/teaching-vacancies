@@ -59,6 +59,9 @@ variable "google_drive_json_key" {
 
 variable "audit_spreadsheet_id" {}
 variable "audit_vacancies_worksheet_gid" {}
+variable "audit_feedback_worksheet_gid" {}
+variable "audit_express_interest_worksheet_gid" {}
+
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 
@@ -93,6 +96,10 @@ variable "sessions_trim_task_command" {
 }
 
 variable "reindex_vacancies_task_command" {
+  type = "list"
+}
+
+variable "backfill_audit_data_for_vacancy_publish_events" {
   type = "list"
 }
 

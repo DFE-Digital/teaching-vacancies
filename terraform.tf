@@ -88,6 +88,8 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
+  backfill_audit_data_for_vacancy_publish_events = "${var.backfill_audit_data_for_vacancy_publish_events}"
+
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
@@ -128,6 +130,8 @@ module "ecs" {
   google_drive_json_key            = "${var.google_drive_json_key}"
   audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
   audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
+  audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+  audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"

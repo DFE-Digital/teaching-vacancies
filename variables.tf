@@ -189,6 +189,11 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
+variable "backfill_audit_data_for_vacancy_publish_events" {
+  description = "The Entrypoint for the data:backfill:audit_data:vacancy_publishing task"
+  default     = ["rake", "verbose", "data:backfill:audit_data:vacancy_publishing"]
+}
+
 variable "performance_platform_submit_task_command" {
   description = "The Entrypoint for the performance_platform_submit task"
   default     = ["rake", "verbose", "performance_platform:submit"]
@@ -344,6 +349,9 @@ variable "google_api_json_key" {
 variable "google_analytics_profile_id" {}
 
 variable "audit_vacancies_worksheet_gid" {}
+variable "audit_feedback_worksheet_gid" {}
+variable "audit_express_interest_worksheet_gid" {}
+
 variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
