@@ -98,6 +98,10 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
+variable "backfill_audit_data_for_vacancy_publish_events" {
+  type = "list"
+}
+
 variable "performance_platform_submit_task_command" {
   type = "list"
 }

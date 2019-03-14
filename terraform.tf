@@ -88,6 +88,8 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
+  backfill_audit_data_for_vacancy_publish_events = "${var.backfill_audit_data_for_vacancy_publish_events}"
+
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
