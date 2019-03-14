@@ -60,6 +60,10 @@
       {
         "name": "AWS_ELASTICSEARCH_SECRET",
         "value": "${aws_elasticsearch_secret}"
+      },
+      {
+        "name": "ROLLBAR_ACCESS_TOKEN",
+        "value": "${rollbar_access_token}"
       }
     ]
   }
