@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AlertMailer, type: :mailer do
-  let(:body_lines) { mail.body.raw_source.lines }
+  include DateHelper
+  let(:body) { mail.body.raw_source }
   let(:subscription) do
     create(:daily_subscription, email: 'an@email.com',
                                 reference: 'a-reference',
@@ -29,14 +30,16 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.one'))
         expect(mail.to).to eq([subscription.email])
 
-        expect(body_lines[0]).to match(/# #{I18n.t('app.title')}/)
-        expect(body_lines[1]).to match(/# #{I18n.t('alerts.email.daily.summary.one')}/)
-        expect(body_lines[3]).to match(/---/)
-        expect(body_lines[5]).to eql(
-          "[#{vacancy_presenter.job_title}](#{vacancy_presenter.share_url(campaign_params)})\r\n"
-        )
-        expect(body_lines[6]).to match(/#{vacancy_presenter.school_name}/)
-        expect(body_lines[7]).to match(/Salary: #{vacancy_presenter.salary_range}/)
+        expect(body).to match(/# #{I18n.t('app.title')}/)
+        expect(body).to match(/# #{I18n.t('alerts.email.daily.summary.one')}/)
+        expect(body).to match(/---/)
+        expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
+        expect(body).to match(/#{vacancy_presenter.location}/)
+        expect(body).to match(/Salary: #{vacancy_presenter.salary_range}/)
+
+        expect(body).to match(/#{vacancy_presenter.working_pattern}/)
+
+        expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
       end
     end
 
@@ -49,19 +52,19 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.other', count: vacancies.count))
         expect(mail.to).to eq([subscription.email])
 
-        expect(body_lines[5]).to match(/\[#{first_vacancy_presenter.job_title}\]/)
-        expect(body_lines[5]).to eql(
-          "[#{first_vacancy_presenter.job_title}](#{first_vacancy_presenter.share_url(campaign_params)})\r\n"
-        )
-        expect(body_lines[6]).to match(/#{first_vacancy_presenter.school_name}/)
-        expect(body_lines[7]).to match(/Salary: #{first_vacancy_presenter.salary_range}/)
+        expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
+        expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(campaign_params))}/)
+        expect(body).to match(/#{first_vacancy_presenter.location}/)
+        expect(body).to match(/Salary: #{first_vacancy_presenter.salary_range}/)
+        expect(body).to match(/#{first_vacancy_presenter.working_pattern}/)
+        expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
 
-        expect(body_lines[9]).to match(/\[#{second_vacancy_presenter.job_title}\]/)
-        expect(body_lines[9]).to eql(
-          "[#{second_vacancy_presenter.job_title}](#{second_vacancy_presenter.share_url(campaign_params)})\r\n"
-        )
-        expect(body_lines[10]).to match(/#{second_vacancy_presenter.school_name}/)
-        expect(body_lines[11]).to match(/Salary: #{second_vacancy_presenter.salary_range}/)
+        expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
+        expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(campaign_params))}/)
+        expect(body).to match(/#{second_vacancy_presenter.location}/)
+        expect(body).to match(/Salary: #{second_vacancy_presenter.salary_range}/)
+        expect(body).to match(/#{second_vacancy_presenter.working_pattern}/)
+        expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
       end
     end
   end
