@@ -61,4 +61,16 @@ RSpec.describe 'rake data:backfill:audit_data:vacancy_publishing', type: :task d
       expect(AuditData.last.data).to include('status' => vacancy.status)
     end
   end
+
+  context 'when the vacancy cannot be found' do
+    it 'does not error or create an AuditData' do
+      vacancy = create(:vacancy, :published)
+      PublicActivity::Activity.create(key: 'vacancy.publish', trackable: vacancy)
+      vacancy.destroy # We aren't show why, but this has happened in production
+
+      expect { task.execute }.not_to raise_error
+
+      expect(AuditData.count).to eq(0)
+    end
+  end
 end

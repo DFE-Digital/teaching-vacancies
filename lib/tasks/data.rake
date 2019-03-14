@@ -12,7 +12,11 @@ namespace :data do
     namespace :audit_data do
       task vacancy_publishing: :environment do
         PublicActivity::Activity.where(key: 'vacancy.publish').map do |audit|
-          vacancy = Vacancy.find(audit.trackable_id)
+          begin
+            vacancy = Vacancy.find(audit.trackable_id)
+          rescue ActiveRecord::RecordNotFound
+            next
+          end
 
           if AuditData.where("data->>'id' = ?", vacancy.id).count.zero?
             row = VacancyPresenter.new(vacancy).to_row

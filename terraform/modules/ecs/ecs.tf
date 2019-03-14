@@ -190,6 +190,7 @@ data "template_file" "import_schools_container_definition" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
     entrypoint               = "${jsonencode(var.import_schools_task_command)}"
   }
 }
@@ -216,6 +217,7 @@ data "template_file" "update_spreadsheets_container_definition" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
     entrypoint               = "${jsonencode(var.update_spreadsheets_task_command)}"
   }
 }
@@ -242,6 +244,7 @@ data "template_file" "sessions_trim_container_definition" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
     entrypoint               = "${jsonencode(var.sessions_trim_task_command)}"
   }
 }
@@ -268,6 +271,7 @@ data "template_file" "reindex_vacancies_container_definition" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
     entrypoint               = "${jsonencode(var.reindex_vacancies_task_command)}"
   }
 }
@@ -294,6 +298,7 @@ data "template_file" "backfill_audit_data_for_vacancy_publish_events_container_d
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
     entrypoint               = "${jsonencode(var.backfill_audit_data_for_vacancy_publish_events)}"
   }
 }

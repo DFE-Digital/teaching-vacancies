@@ -15,6 +15,7 @@ RSpec.describe AuditSearchEventJob, type: :job do
   end
 
   it 'writes to the spreadsheet' do
+    pending 'Temporarily turn off this auditing until we decide what to do with it'
     stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
     spreadsheet = double(:mock)
     expect(Spreadsheet::Writer).to receive(:new)
