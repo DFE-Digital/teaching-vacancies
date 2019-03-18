@@ -44,8 +44,8 @@ RSpec.describe Indexing do
   context 'When no GOOGLE_API key is set' do
     it 'logs an error and aborts execution' do
       stub_const('GOOGLE_API_JSON_KEY', '')
-
-      expect { Indexing.new(url) }.to raise_error(SystemExit, 'No Google API key set.')
+      expect(Indexing::API::IndexingService).not_to receive(:new)
+      Indexing.new(url)
     end
   end
 end
