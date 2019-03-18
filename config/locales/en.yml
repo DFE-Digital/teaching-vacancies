@@ -268,7 +268,7 @@ en:
       resubscribe_link_text: resubscribe here
     back_to_search_results: 'Return to your search results'
     email:
-      unsubscribe_text_html: "Don't want to recieve these email alerts? %{link}"
+      unsubscribe_text_html: "Don't want to receive these email alerts? %{link}"
       unsubscribe_link_text: Unsubscribe here
       confirmation:
         subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
