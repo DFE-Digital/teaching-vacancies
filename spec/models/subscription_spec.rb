@@ -37,24 +37,11 @@ RSpec.describe Subscription, type: :model do
     before(:each) do
       create_list(:subscription, 3, frequency: :daily)
       create_list(:subscription, 5, frequency: :daily, expires_on: Time.zone.yesterday)
-      create_list(:subscription, 2, status: :trashed, frequency: :daily)
-    end
-
-    context 'active' do
-      it 'retrieves all subscriptions with an active status' do
-        expect(Subscription.active.count).to eq(8)
-      end
     end
 
     context 'daily' do
       it 'retrieves all subscriptions with frequency set to :daily' do
-        expect(Subscription.daily.count).to eq(10)
-      end
-    end
-
-    context 'trashed' do
-      it 'retrieves all subscriptions with status set to :trashed' do
-        expect(Subscription.trashed.count).to eq(2)
+        expect(Subscription.daily.count).to eq(8)
       end
     end
 
@@ -63,12 +50,6 @@ RSpec.describe Subscription, type: :model do
         expect(Subscription.ongoing.count).to eq(3)
       end
     end
-  end
-
-  it 'defaults the status to active' do
-    subscription = create(:subscription, frequency: :daily)
-
-    expect(subscription.status).to eq('active')
   end
 
   context 'reference' do

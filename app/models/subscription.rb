@@ -1,7 +1,6 @@
 class Subscription < ApplicationRecord
   include Auditor::Model
 
-  enum status: %i[active trashed]
   enum frequency: %i[daily]
 
   has_many :alert_runs
@@ -10,9 +9,9 @@ class Subscription < ApplicationRecord
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
 
-  scope :ongoing, -> { active.where('expires_on >= current_date') }
-
   before_save :set_reference
+
+  scope :ongoing, -> { where('expires_on >= current_date') }
 
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET

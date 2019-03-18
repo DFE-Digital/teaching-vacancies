@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_27_175205) do
+ActiveRecord::Schema.define(version: 2019_03_18_181006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -34,13 +34,6 @@ ActiveRecord::Schema.define(version: 2019_02_27_175205) do
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
 
-  create_table "audit_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "category"
-    t.json "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-  
   create_table "alert_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "subscription_id"
     t.date "run_on"
@@ -49,6 +42,13 @@ ActiveRecord::Schema.define(version: 2019_02_27_175205) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
+  end
+
+  create_table "audit_data", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "category"
+    t.json "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -151,12 +151,10 @@ ActiveRecord::Schema.define(version: 2019_02_27_175205) do
     t.string "email"
     t.integer "frequency"
     t.date "expires_on"
-    t.integer "status", default: 0
     t.jsonb "search_criteria"
     t.string "reference", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email", "search_criteria", "status", "frequency", "expires_on"], name: "sub_email_search_criteria_status_frequency_expires_on_index"
   end
 
   create_table "transaction_auditors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
