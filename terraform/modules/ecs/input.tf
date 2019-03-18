@@ -77,6 +77,7 @@ variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
 variable "notify_subscription_confirmation_template" {}
+variable "notify_subscription_daily_template" {}
 
 variable "subscription_key_generator_secret" {}
 variable "subscription_key_generator_salt" {}
@@ -93,6 +94,10 @@ variable "worker_command" {
 }
 
 variable "import_schools_task_command" {
+  type = "list"
+}
+
+variable "send_job_alerts_daily_email_command" {
   type = "list"
 }
 
@@ -123,6 +128,8 @@ variable "update_spreadsheets_task_command" {
   type = "list"
 }
 variable "update_spreadsheets_task_schedule" {}
+variable "send_job_alerts_daily_email_schedule" {}
+
 variable "vacancies_pageviews_refresh_cache_task_command" {
   type = "list"
 }

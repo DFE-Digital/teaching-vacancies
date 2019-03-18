@@ -113,6 +113,10 @@
         "value": "${notify_subscription_confirmation_template}"
       },
       {
+        "name": "NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE",
+        "value": "${notify_subscription_daily_template}"
+      },
+      {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
       },

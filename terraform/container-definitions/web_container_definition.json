@@ -170,6 +170,10 @@
         "value": "${notify_subscription_confirmation_template}"
       },
       {
+        "name": "NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE",
+        "value": "${notify_subscription_daily_template}"
+      },
+      {
         "name": "SUBSCRIPTION_KEY_GENERATOR_SECRET",
         "value": "${subscription_key_generator_secret}"
       },

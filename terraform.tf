@@ -83,6 +83,9 @@ module "ecs" {
   update_spreadsheets_task_command = "${var.update_spreadsheets_task_command}"
   update_spreadsheets_task_schedule = "${var.update_spreadsheets_task_schedule}"
 
+  send_job_alerts_daily_email_command  = "${var.send_job_alerts_daily_email_command}"
+  send_job_alerts_daily_email_schedule  = "${var.send_job_alerts_daily_email_schedule}"
+
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
@@ -144,6 +147,7 @@ module "ecs" {
   skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
   notify_key                                = "${var.notify_key}"
   notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
+  notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
   feature_email_alerts                      = "${var.feature_email_alerts}"
 }
 
