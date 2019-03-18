@@ -96,14 +96,15 @@ RSpec.feature 'Copying a vacancy' do
     end
   end
 
-  context 'when the publish on date is set in the past' do
-    scenario 'it renders a form error instead of a 500 error' do
-      original_vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
-      original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+  describe 'validations' do
+    let!(:original_vacancy) do
+      vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
+      vacancy.save(validate: false) # Validation prevents publishing on a past date
+      vacancy
+    end
+    let(:new_vacancy) { build(:vacancy, original_vacancy.attributes.merge(new_attributes)) }
 
-      new_vacancy = original_vacancy.dup
-      new_vacancy.publish_on = 1.day.ago
-
+    before do
       visit school_path
 
       within('table.vacancies') do
@@ -115,8 +116,38 @@ RSpec.feature 'Copying a vacancy' do
         fill_in_copy_vacancy_form_fields(new_vacancy)
         click_on I18n.t('buttons.save_and_continue')
       end
+    end
 
-      expect(page).to have_content("Publish on can't be before today")
+    context 'when publish on is blank' do
+      let(:new_attributes) { { publish_on: nil } }
+
+      it 'shows an error' do
+        expect(page).to have_content("Publish on can't be blank")
+      end
+    end
+
+    context 'when publish on date is in the past' do
+      let(:new_attributes) { { publish_on: 1.day.ago } }
+
+      it 'shows an error' do
+        expect(page).to have_content("Publish on can't be before today")
+      end
+    end
+
+    context 'when expires on is blank' do
+      let(:new_attributes) { { expires_on: nil } }
+
+      it 'shows an error' do
+        expect(page).to have_content("Expires on can't be blank")
+      end
+    end
+
+    context 'when job title is blank' do
+      let(:new_attributes) { { job_title: nil } }
+
+      it 'shows an error' do
+        expect(page).to have_content("Job title can't be blank")
+      end
     end
   end
 end
