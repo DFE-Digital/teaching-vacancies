@@ -1,5 +1,5 @@
 class SendDailyAlertEmailJob < ApplicationJob
-  queue_as :daily_alert_email
+  queue_as :queue_daily_alerts
 
   def perform
     Subscription.all.each do |s|
@@ -11,7 +11,7 @@ class SendDailyAlertEmailJob < ApplicationJob
 
       Rails.logger.info("Sidekiq: Sending vacancy alerts for #{vacancies.count} vacancies")
 
-      AlertMailer.daily_alert(s.id, vacancies.pluck(:id)).deliver_later
+      AlertMailer.daily_alert(s.id, vacancies.pluck(:id)).deliver_later(queue: :email_daily_alerts)
     end
   end
 

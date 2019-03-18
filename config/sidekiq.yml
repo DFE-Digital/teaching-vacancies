@@ -1,6 +1,7 @@
 :queues:
-  - [ daily_alert_email, 1 ]
   - [ mailers, 3 ]
+  - [ queue_daily_alerts, 3 ]
+  - [ email_daily_alerts, 4 ]
   - [ page_view_collector, 2 ]
   - [ performance_platform, 2 ]
   - [ google_indexing, 2]
