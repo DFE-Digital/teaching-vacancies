@@ -35,8 +35,8 @@ class VacancyFilters
   end
 
   def any?
-    filters = to_hash
-    filters.delete_if { |k, v| k.eql?(:radius) || v.nil? }
+    filters = only_active_to_hash
+    filters.delete_if { |k, _| k.eql?(:radius) }
     filters.any?
   end
 
