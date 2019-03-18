@@ -105,6 +105,10 @@
         "value": "${audit_express_interest_worksheet_gid}"
       },
       {
+        "name": "DOMAIN",
+        "value": "${domain}"
+      },
+      {
         "name": "NOTIFY_KEY",
         "value": "${notify_key}"
       },
