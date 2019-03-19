@@ -15,6 +15,11 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
+  resources :subscriptions, only: %i[new create] do
+    get :unsubscribe
+    resource :confirmation, only: [:show]
+  end
+
   namespace :api do
     scope 'v:api_version', api_version: /[1]/ do
       resources :jobs, only: %i[index show], controller: 'vacancies'

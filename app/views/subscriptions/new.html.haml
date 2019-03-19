@@ -1,0 +1,47 @@
+- content_for :page_title_prefix do
+  = t('subscriptions.new')
+
+- content_for :page_description do
+  = t('subscriptions.new')
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    %h1.govuk-heading-xl
+      = t('subscriptions.new')
+
+.govuk-grid-row
+  .govuk-grid-column-one
+
+    - if @subscription.errors.any?
+      #errors.govuk-error-summary{role: 'alert', tabindex: '-1'}
+        %h2.govuk-heading-m.govuk-error-summary-heading
+          = t('errors.feedback.errors_present')
+        %ul.govuk-list.govuk-error-summary__list
+          - @subscription.errors.each do |attribute, error|
+            %li= @subscription.errors.full_message(attribute, error)
+
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    %p.govuk-body-l=t('subscriptions.intro')
+
+    = simple_form_for @subscription do |f|
+      = f.input :search_criteria, as: :hidden
+      %div.govuk-inset-text
+        %ul.govuk-list
+          - @subscription.filtered_search_criteria.each_pair do |filter, value|
+            %li
+              - if filter.present?
+                %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
+              = value
+      = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true
+      = f.input :reference, as: :string, input_html: { class: 'govuk-input', placeholder: 'eg Maths jobs in Manchester' }
+
+
+      .govuk-warning-text
+        %span.govuk-warning-text__icon{'aria-hidden': "true"}
+          = '!'
+        %strong.govuk-warning-text__text
+          %span.govuk-warning-text__assistive Warning
+          = t('subscriptions.info')
+
+      = f.button :submit, 'Subscribe'

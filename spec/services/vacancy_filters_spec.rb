@@ -70,7 +70,7 @@ RSpec.describe VacancyFilters do
       expect(result).to eql(
         location: 'location',
         keyword: 'keyword',
-        radius: '20km',
+        radius: '20',
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
         newly_qualified_teacher: false,

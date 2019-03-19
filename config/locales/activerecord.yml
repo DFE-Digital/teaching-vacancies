@@ -13,6 +13,8 @@ en:
         invalid_format: 'must be entered in one of the following formats: 25000 or 25000.00'
         lower_than_minimum_payscale: 'must be at least %{minimum_salary}'
       year_invalid: must include a 4-digit year
+      email:
+        invalid: is not a valid email address
   activerecord:
     errors:
       models:
@@ -56,3 +58,11 @@ en:
           attributes:
             task:
               taken: must have a unique entry for a date
+  simple_form:
+    labels:
+      subscription:
+        email: 'Email address'
+        reference: 'Your reference'
+    hints:
+      defaults:
+        reference: Save a description for this job alert. If you don’t choose a reference we'll generate a reference number for you.

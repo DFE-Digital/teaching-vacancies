@@ -1,4 +1,7 @@
 :queues:
+  - [ mailers, 3 ]
+  - [ queue_daily_alerts, 3 ]
+  - [ email_daily_alerts, 4 ]
   - [ page_view_collector, 2 ]
   - [ performance_platform, 2 ]
   - [ google_indexing, 2]
@@ -21,3 +24,7 @@ audit_feedback:
   :concurrency: 1
 audit_spreadsheet:
   :concurrency: 1
+audit_toc_acceptance_event:
+  :concurrency: 1
+mailers:
+  :concurrency: 2

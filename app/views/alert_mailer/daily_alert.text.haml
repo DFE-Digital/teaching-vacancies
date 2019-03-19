@@ -1,0 +1,21 @@
+\# #{t('app.title')}
+\## #{t('alerts.email.daily.summary', count: @vacancies.count)}
+\
+\---
+\
+- @vacancies.each do |vacancy|
+  = notify_link(vacancy.share_url(source: 'subscription', medium: 'email', campaign: 'daily_alert'), vacancy.job_title).html_safe
+  = vacancy.location
+  \
+  = "Salary: #{vacancy.salary_range}"
+  = "Working pattern: #{vacancy.working_pattern}"
+  = "Closing date: #{format_date(vacancy.expires_on)}" 
+  \
+  \---
+  \
+\
+Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} - the free service for schools in England to list teaching roles and for jobseekers to find them.
+
+\---
+
+= t('subscriptions.email.unsubscribe_text_html', link: unsubscribe_link(@unsubscribe_token))

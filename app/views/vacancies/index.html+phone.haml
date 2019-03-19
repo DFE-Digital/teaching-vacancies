@@ -5,12 +5,13 @@
 .govuk-grid-row
 
   .govuk-grid-column-two-thirds
-    %p.govuk-heading-m.mt0
-      %p.govuk-heading-m.mb0= @vacancies.total_count_message
+    .govuk-grid-column-full.vacancies-count{class: @vacancies.user_search? ? 'search-made' : ''}
+      %p.govuk-heading-l.mb0= @vacancies.total_count_message
       - if @vacancies.user_search?
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
-      .mt1
-        = link_to 'Refine your search?', '#filters', class: 'govuk-link'
+        = render(partial: 'subscribe_link', locals: { search_criteria: @filters.only_active_to_hash }) if EmailAlertsFeature.enabled?
+    .mt1
+      = link_to 'Refine your search?', '#filters', class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
         = t('jobs.sort_by')
