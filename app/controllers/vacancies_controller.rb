@@ -17,8 +17,12 @@ class VacanciesController < ApplicationController
   def index
     @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    records = Vacancy.public_search(filters: @filters, sort: @sort).page(page_number).records(includes: [:school])
-    audit_search_event(records, @filters) if @filters.any?
+
+    records = if @filters.any?
+                Vacancy.public_search(filters: @filters, sort: @sort).page(page_number).records(includes: [:school])
+              else
+                Vacancy.live.order(@sort.column => @sort.order).includes(:school).page(page_number)
+              end
 
     @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
 
