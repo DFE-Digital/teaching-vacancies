@@ -26,6 +26,8 @@ class VacanciesController < ApplicationController
 
     @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
 
+    audit_search_event if @filters.any?
+
     expires_in 5.minutes, public: true
   end
 
@@ -55,10 +57,10 @@ class VacanciesController < ApplicationController
     request.path != job_path(vacancy) && !request.format.json?
   end
 
-  def audit_search_event(records, filters)
+  def audit_search_event
     AuditSearchEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                       records.total_count,
-                                       *filters.to_hash.values])
+                                       @vacancies.total_count,
+                                       *@filters.to_hash.values])
   end
 
   def id

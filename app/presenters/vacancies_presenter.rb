@@ -70,16 +70,16 @@ class VacanciesPresenter < BasePresenter
 
   private
 
+  def total_count
+    @total_count ||= model.total_count
+  end
+
   def json_api_params
     {
       format: :json,
       api_version: 1,
       protocol: 'https'
     }
-  end
-
-  def total_count
-    model.total_count
   end
 
   # rubocop:disable Metrics/AbcSize
