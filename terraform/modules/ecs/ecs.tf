@@ -196,6 +196,7 @@ data "template_file" "send_job_alerts_daily_email_container_definition" {
     aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
     entrypoint               = "${jsonencode(var.send_job_alerts_daily_email_command)}"
   }
 }
