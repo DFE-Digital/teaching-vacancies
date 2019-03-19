@@ -162,8 +162,9 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       expect(page).to have_content('3 jobs match your search')
 
       activities = PublicActivity::Activity.all
-      expect(activities[0].key).to eq('subscription.daily_alert.new')
-      expect(activities[1].key).to eq('subscription.daily_alert.create')
+      keys = activities.pluck(:key)
+      expect(keys).to include('subscription.daily_alert.new')
+      expect(keys).to include('subscription.daily_alert.create')
     end
   end
 end
