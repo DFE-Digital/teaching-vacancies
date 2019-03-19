@@ -29,6 +29,7 @@ RSpec.describe SaveJobPostingToVacancyJob, type: :job do
 
   context 'when the vacancy fails to save' do
     let(:vacancy) { double(:vacancy, errors: double(messages: ['Education can’t be blank'])) }
+
     it 'logs the errors' do
       allow(vacancy).to receive(:save) { false }
       expect(Rails.logger).to receive(:warn)
