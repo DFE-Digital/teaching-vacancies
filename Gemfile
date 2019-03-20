@@ -32,7 +32,7 @@ gem 'redis-objects'
 gem 'skylight'
 
 gem 'omniauth', '~> 1.8'
-gem 'omniauth_openid_connect', '~> 0.1'
+gem 'omniauth_openid_connect', '~> 0.2'
 
 gem 'breasal', '~> 0.0.1'
 
