@@ -275,16 +275,20 @@ en:
         expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
     manage: Manage your subscription
     unsubscribe: Unsubscribe
-  alerts:
-    email:
-      daily:
-        subject:
-          one: "We've found a new job for you"
-          other: "We've found %{count} new jobs for you"
-        summary:
-          one: "A new job matching your search criteria was posted yesterday."
-          other: "%{count} new jobs matching your search criteria were posted yesterday."
-        unsubscribe: Follow this link to unsubscribe.
+  job_alerts:
+    confirmation:
+      email:
+        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
+    alert:
+      email:
+        daily:
+          subject:
+            one: "Teaching Vacancies job alert for '%{reference}'"
+            many: "Teaching Vacancies job alerts for '%{reference}'"
+          summary:
+            one: "A new job matching your search criteria was posted yesterday."
+            other: "%{count} new jobs matching your search criteria were posted yesterday."
+          unsubscribe: Follow this link to unsubscribe.
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'

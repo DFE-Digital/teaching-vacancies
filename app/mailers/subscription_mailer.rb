@@ -10,7 +10,7 @@ class SubscriptionMailer < ApplicationMailer
     view_mail(
       NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE,
       to: subscription.email,
-      subject: "Teaching Vacancies subscription confirmation: #{subscription.reference}",
+      subject: I18n.t('job_alerts.confirmation.email.subject', reference: subscription.reference),
     )
   end
 end

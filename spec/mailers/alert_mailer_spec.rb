@@ -27,11 +27,16 @@ RSpec.describe AlertMailer, type: :mailer do
       let(:vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
 
       it 'shows a vacancy' do
-        expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.one'))
+        expect(mail.subject).to eq(
+          I18n.t(
+            'job_alerts.alert.email.daily.subject.one',
+            reference: subscription.reference
+          )
+        )
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/# #{I18n.t('alerts.email.daily.summary.one')}/)
+        expect(body).to match(/# #{I18n.t('job_alerts.alert.email.daily.summary.one')}/)
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{vacancy_presenter.location}/)
@@ -49,7 +54,12 @@ RSpec.describe AlertMailer, type: :mailer do
       let(:second_vacancy_presenter) { VacancyPresenter.new(vacancies.last) }
 
       it 'shows vacancies' do
-        expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.other', count: vacancies.count))
+        expect(mail.subject).to eq(
+          I18n.t(
+            'job_alerts.alert.email.daily.subject.many',
+            reference: subscription.reference
+          )
+        )
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
