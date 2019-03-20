@@ -5,7 +5,9 @@ module PerformancePlatform
     attr_reader :headers
 
     def initialize(token = nil)
-      token || abort('No token set. Note that this task should only be executed in production.')
+      return unless Rails.env.production?
+      raise ArgumentError, 'No token set. Note that this task should only be executed in production.' if token.nil?
+
       @headers = { 'Authorization' => "Bearer #{token}",
                    'Content-Type' => 'application/json' }
     end

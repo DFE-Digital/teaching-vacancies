@@ -9,7 +9,7 @@ class Analytics
   attr_reader :service, :path, :start_date, :end_date
 
   def initialize(path, start_date = '30daysAgo', end_date = 'today')
-    abort('No Google API key set.') if api_key_empty?
+    return if api_key_empty?
 
     @service = API::AnalyticsService.new
     @start_date = start_date
