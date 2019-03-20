@@ -12,7 +12,8 @@ RSpec.feature 'School deleting vacancies' do
     vacancy2 = create(:vacancy, school: school)
 
     visit school_path(school)
-    within("tr#vacancy_#{vacancy1.id}") do
+
+    within("tr#school_vacancy_presenter_#{vacancy1.id}") do
       click_on 'Delete'
     end
 
@@ -25,7 +26,7 @@ RSpec.feature 'School deleting vacancies' do
     vacancy = create(:vacancy, school: school)
 
     visit school_path(school)
-    within("tr#vacancy_#{vacancy.id}") do
+    within("tr#school_vacancy_presenter_#{vacancy.id}") do
       click_on 'Delete'
     end
 
@@ -37,7 +38,7 @@ RSpec.feature 'School deleting vacancies' do
 
     visit school_path(school)
 
-    within("tr#vacancy_#{vacancy.id}") do
+    within("tr#school_vacancy_presenter_#{vacancy.id}") do
       click_on 'Delete'
     end
 
@@ -54,7 +55,7 @@ RSpec.feature 'School deleting vacancies' do
 
     visit school_path(school)
 
-    within("tr#vacancy_#{vacancy.id}") do
+    within("tr#school_vacancy_presenter_#{vacancy.id}") do
       click_on 'Delete'
     end
   end
