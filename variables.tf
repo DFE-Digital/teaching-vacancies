@@ -203,6 +203,11 @@ variable "backfill_audit_data_for_vacancy_publish_events" {
   default     = ["rake", "verbose", "data:backfill:audit_data:vacancy_publishing"]
 }
 
+variable "seed_vacancies_from_api" {
+  description = "The Entrypoint for the data:seed_from_api:vacancies task"
+  default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
+}
+
 variable "performance_platform_submit_task_command" {
   description = "The Entrypoint for the performance_platform_submit task"
   default     = ["rake", "verbose", "performance_platform:submit"]
