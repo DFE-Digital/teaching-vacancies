@@ -12,10 +12,12 @@ class AlertMailer < ApplicationMailer
     @unsubscribe_token = subscription.token
     @vacancies = VacanciesPresenter.new(vacancies, searched: false)
 
+    subject_key = @vacancies.many? ? 'alerts.email.daily.subject.many' : 'alerts.email.daily.subject.one'
+
     view_mail(
       NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE,
       to: subscription.email,
-      subject: I18n.t('alerts.email.daily.subject', count: vacancies.count),
+      subject: I18n.t(subject_key, reference: subscription.reference),
     )
   end
 end

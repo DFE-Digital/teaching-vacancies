@@ -27,7 +27,7 @@ RSpec.describe AlertMailer, type: :mailer do
       let(:vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
 
       it 'shows a vacancy' do
-        expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.one'))
+        expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.one', reference: subscription.reference))
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/# #{I18n.t('app.title')}/)
@@ -49,7 +49,7 @@ RSpec.describe AlertMailer, type: :mailer do
       let(:second_vacancy_presenter) { VacancyPresenter.new(vacancies.last) }
 
       it 'shows vacancies' do
-        expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.other', count: vacancies.count))
+        expect(mail.subject).to eq(I18n.t('alerts.email.daily.subject.many', reference: subscription.reference))
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)

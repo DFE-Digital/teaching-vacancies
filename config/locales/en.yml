@@ -279,8 +279,8 @@ en:
     email:
       daily:
         subject:
-          one: "We've found a new job for you"
-          other: "We've found %{count} new jobs for you"
+          one: "Teaching Vacancies job alert for '%{reference}'"
+          many: "Teaching Vacancies job alerts for '%{reference}'"
         summary:
           one: "A new job matching your search criteria was posted yesterday."
           other: "%{count} new jobs matching your search criteria were posted yesterday."
