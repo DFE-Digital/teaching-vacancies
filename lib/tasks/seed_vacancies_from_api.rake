@@ -11,6 +11,8 @@ namespace :data do
       job_postings.each do |job_posting|
         SaveJobPostingToVacancyJob.perform_later(job_posting)
       end
+    rescue HTTParty::ResponseError => e
+      Rails.logger.warn("Teaching Vacancies API response error: #{e.message}")
     end
   end
 end
