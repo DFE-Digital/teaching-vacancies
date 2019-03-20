@@ -8,6 +8,7 @@
                     %th.govuk-table__header= t('jobs.job_title')
                     %th.govuk-table__header= t('jobs.publish_on')
                     %th.govuk-table__header= t('jobs.expires_on')
+                    %th.govuk-table__header= t('jobs.page_views')
                     %th.govuk-table__header{ colspan: 3}= t('jobs.actions')
             %tbody.govuk-table__body
                 - presenter.vacancies.each do |vacancy|
