@@ -2,6 +2,10 @@ class SchoolVacancyPresenter < BasePresenter
   include DateHelper
   include ActionView::Helpers::UrlHelper
 
+  def page_views
+    model.total_pageviews || 0
+  end
+
   def publish_on
     format_date(model.publish_on)
   end
