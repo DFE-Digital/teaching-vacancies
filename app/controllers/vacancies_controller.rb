@@ -1,4 +1,6 @@
 class VacanciesController < ApplicationController
+  include ParameterSanitiser
+
   DEFAULT_RADIUS = 20
 
   helper_method :location,
@@ -34,10 +36,7 @@ class VacanciesController < ApplicationController
   end
 
   def params
-    sanitised_params = super.each_pair do |key, value|
-      super[key] = Sanitize.fragment(value)
-    end
-    ActionController::Parameters.new(sanitised_params)
+    @params ||= ParameterSanitiser.call(super)
   end
 
   private

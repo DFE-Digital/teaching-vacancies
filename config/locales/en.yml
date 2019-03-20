@@ -2,6 +2,10 @@ en:
   date:
     formats:
       hinttext: "%d %-m %Y"
+      default: '%e %B %Y'
+  datetime:
+    formats:
+      default: '%e %B %Y %H:%M'
   number:
     currency:
       format:
@@ -242,6 +246,49 @@ en:
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
+  subscriptions:
+    button: 'Sign up for a job alert matching your search'
+    intro: 'You’ll be sent an email listing new jobs that match the following search criteria:'
+    new: Sign up for a job alert
+    info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 3 months or can be cancelled using the link at the bottom of alert emails.
+    location_text: Within %{radius} miles of %{location}
+    reference: Your reference
+    confirmation:
+      header: Your email subscription has started
+      receipt_confirmation: We have sent you a confirmation email
+      next_step: 'What happens next'
+      unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
+      next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 3 months, until %{date}.'
+    deletion:
+      title: Subscription deleted
+      header: Your email subscription has been deleted
+      confirmation: You will no longer recieve updates for this alert.
+      confirmation_with_reference: You will no longer recieve updates for your '%{reference}' alert.
+      resubscribe_html: If you unsubscribed accidentally, you can %{link}.
+      resubscribe_link_text: resubscribe here
+    back_to_search_results: 'Return to your search results'
+    email:
+      unsubscribe_text_html: "Don't want to receive these email alerts? %{link}"
+      unsubscribe_link_text: Unsubscribe here
+      confirmation:
+        subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
+        expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
+    manage: Manage your subscription
+    unsubscribe: Unsubscribe
+  job_alerts:
+    confirmation:
+      email:
+        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
+    alert:
+      email:
+        daily:
+          subject:
+            one: "Teaching Vacancies job alert for '%{reference}'"
+            many: "Teaching Vacancies job alerts for '%{reference}'"
+          summary:
+            one: "A new job matching your search criteria was posted yesterday."
+            other: "%{count} new jobs matching your search criteria were posted yesterday."
+          unsubscribe: Follow this link to unsubscribe.
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
@@ -278,6 +325,8 @@ en:
       signed_out: You've been signed out.
     feedback:
       submitted: Your feedback has been successfully submitted
+    subscriptions:
+      created: Email subscription created successfully.
 
   errors:
     jobs:
@@ -290,6 +339,8 @@ en:
     feedback:
       errors_present: Please correct the following error
       already_submitted: Feedback for this job listing has already been submitted
+    subscriptions:
+      already_exists: You are already subscribed to a daily email with these search criteria
 
   error_pages:
     unauthorised: We were unable to authorise your request.

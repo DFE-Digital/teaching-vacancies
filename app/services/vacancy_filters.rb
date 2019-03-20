@@ -8,7 +8,7 @@ class VacancyFilters
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
 
     @location = args[:location]
-    @radius = args[:radius]
+    @radius = args[:radius].to_s if args[:radius].present?
     @keyword = args[:keyword]
     @minimum_salary = args[:minimum_salary]
     @maximum_salary = args[:maximum_salary]
@@ -20,7 +20,7 @@ class VacancyFilters
   def to_hash
     {
       location: location,
-      radius: "#{radius}km",
+      radius: radius,
       keyword: keyword,
       minimum_salary: minimum_salary,
       maximum_salary: maximum_salary,
@@ -30,9 +30,13 @@ class VacancyFilters
     }
   end
 
+  def only_active_to_hash
+    to_hash.delete_if { |_, v| v.blank? }
+  end
+
   def any?
-    filters = to_hash
-    filters.delete_if { |k, v| k.eql?(:radius) || v.nil? }
+    filters = only_active_to_hash
+    filters.delete_if { |k, _| k.eql?(:radius) }
     filters.any?
   end
 

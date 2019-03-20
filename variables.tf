@@ -153,6 +153,15 @@ variable "ecs_service_worker_container_definition_file_path" {
   description = "Worker container definition"
   default     = "./terraform/container-definitions/worker_container_definition.json"
 }
+variable "send_job_alerts_daily_email_command" {
+  description = "The Entrypoint for the send_job_alerts_daily_email task"
+  default     = ["rake", "verbose", "daily_emails:send"]
+}
+
+variable "send_job_alerts_daily_email_schedule" {
+  description = "send_job_alerts_daily_email schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 08 * * ? *)"
+}
 
 variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
@@ -347,7 +356,6 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
-
 variable "audit_vacancies_worksheet_gid" {}
 variable "audit_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
@@ -358,3 +366,9 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {
   default = "ApplicationController#check"
 }
+variable "notify_key" {}
+variable "feature_email_alerts" {}
+variable "notify_subscription_confirmation_template" {}
+variable "notify_subscription_daily_template" {}
+variable "subscription_key_generator_secret" {}
+variable "subscription_key_generator_salt" {}
