@@ -22,7 +22,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   let(:body_lines) { mail.body.raw_source.lines }
 
   it 'sends a confirmation email' do
-    expect(mail.subject).to eq("Teaching Vacancies subscription confirmation: #{subscription.reference}")
+    expect(mail.subject).to eq(I18n.t('job_alerts.confirmation.email.subject', reference: subscription.reference))
     expect(mail.to).to eq([subscription.email])
     expect(body_lines[0]).to match(/# #{I18n.t('app.title')}/)
     expect(body_lines[1]).to match(/# #{subscription.reference}/)

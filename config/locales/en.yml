@@ -278,7 +278,7 @@ en:
   job_alerts:
     confirmation:
       email:
-        subject: ""
+        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
     alert:
       email:
         daily:
