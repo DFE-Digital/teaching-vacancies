@@ -1,5 +1,5 @@
 \# #{t('app.title')}
-\## #{t('alerts.email.daily.summary', count: @vacancies.count)}
+\## #{t('job_alerts.alert.email.daily.summary', count: @vacancies.count)}
 \
 \---
 \
@@ -9,7 +9,7 @@
   \
   = "Salary: #{vacancy.salary_range}"
   = "Working pattern: #{vacancy.working_pattern}"
-  = "Closing date: #{format_date(vacancy.expires_on)}" 
+  = "Closing date: #{format_date(vacancy.expires_on)}"
   \
   \---
   \

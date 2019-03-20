@@ -36,7 +36,7 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/# #{I18n.t('alerts.email.daily.summary.one')}/)
+        expect(body).to match(/# #{I18n.t('job_alerts.alert.email.daily.summary.one')}/)
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{vacancy_presenter.location}/)
