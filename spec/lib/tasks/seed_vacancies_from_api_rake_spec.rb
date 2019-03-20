@@ -10,6 +10,17 @@ RSpec.describe 'rake data:seed_from_api:vacancies', type: :task do
       expect(SaveJobPostingToVacancyJob).to receive(:perform_later).with(vacancy)
     end
 
-    task.invoke
+    task.execute
+  end
+
+  context 'when in production' do
+    before { allow(Rails.env).to receive(:production?).and_return(true) }
+
+    it 'returns early and doesn’t call the API at all' do
+      expect(TeachingVacancies::API).not_to receive(:new)
+      expect(SaveJobPostingToVacancyJob).not_to receive(:perform_later)
+
+      task.execute
+    end
   end
 end
