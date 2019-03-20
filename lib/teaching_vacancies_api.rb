@@ -6,6 +6,8 @@ module TeachingVacancies
       response = HTTParty.get(api_url('jobs.json'))
       json = JSON.parse(response.body)
       json['data'].take(limit)
+    rescue HTTParty::ResponseError => e
+      Rails.logger.warn("Teaching Vacancies API response error: #{e.message}")
     end
 
     private

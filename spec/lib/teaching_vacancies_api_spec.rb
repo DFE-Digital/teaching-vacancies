@@ -26,5 +26,16 @@ RSpec.describe TeachingVacancies::API do
         expect(teaching_vacancies_api.jobs(limit: 1)).to eql([job_postings.first])
       end
     end
+
+    context 'when there is a response error' do
+      before do
+        allow(HTTParty).to receive(:get).with(endpoint).and_raise(HTTParty::ResponseError, 'foo')
+      end
+
+      it 'logs the error' do
+        expect(Rails.logger).to receive(:warn).with('Teaching Vacancies API response error: foo')
+        teaching_vacancies_api.jobs
+      end
+    end
   end
 end
