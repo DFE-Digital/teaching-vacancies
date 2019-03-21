@@ -86,6 +86,7 @@ class Vacancy < ApplicationRecord
   belongs_to :min_pay_scale, class_name: 'PayScale', optional: true
   belongs_to :max_pay_scale, class_name: 'PayScale', optional: true
   belongs_to :leadership, optional: true
+  has_and_belongs_to_many :working_patterns, optional: false
 
   has_one :feedback
 

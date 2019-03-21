@@ -2,6 +2,7 @@ require 'rails_helper'
 RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school) }
+  it { should have_and_belong_to_many(:working_patterns) }
 
   describe '.public_search' do
     context 'when there were no results' do
@@ -28,7 +29,6 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'validations' do
     context 'a new record' do
-      it { should validate_presence_of(:working_pattern) }
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_description) }
       it { should validate_presence_of(:minimum_salary) }
