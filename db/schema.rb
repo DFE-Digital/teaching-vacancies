@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_19_151242) do
+ActiveRecord::Schema.define(version: 2019_03_21_173047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -209,6 +209,8 @@ ActiveRecord::Schema.define(version: 2019_03_19_151242) do
     t.datetime "total_pageviews_updated_at"
     t.uuid "first_supporting_subject_id"
     t.uuid "second_supporting_subject_id"
+    t.integer "total_get_more_info_clicks"
+    t.datetime "total_get_more_info_clicks_updated_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
@@ -217,6 +219,19 @@ ActiveRecord::Schema.define(version: 2019_03_19_151242) do
     t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
+  end
+
+  create_table "vacancies_working_patterns", id: false, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.uuid "working_pattern_id", null: false
+    t.index ["vacancy_id", "working_pattern_id"], name: "vacancy_working_pattern", unique: true
+    t.index ["working_pattern_id"], name: "working_pattern_vacancy"
+  end
+
+  create_table "working_patterns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "label", null: false
+    t.string "slug", null: false
+    t.index ["slug"], name: "index_working_patterns_on_slug", unique: true
   end
 
   add_foreign_key "schools", "detailed_school_types"
