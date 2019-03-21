@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Teaching Vacancies stats', type: :request do
   context 'returns a JSON of useful information about the app' do
     context 'default usage' do
-      it 'it includes all audited information' do
+      it 'includes all audited information' do
         job = create(:vacancy)
         6.times { Auditor::Audit.new(nil, 'dfe-sign-in.authentication.success', 'sample').log_without_association }
         3.times { Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.success', 'sample').log_without_association }
