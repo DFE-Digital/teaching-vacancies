@@ -25,7 +25,8 @@ en:
   sign_in:
     title: 'Sign in to Teaching Vacancies'
     link: 'Sign in'
-    guidance: 'Once you have received an email invitation from Teaching Vacancies you can sign in to this service. %{link}'
+    intro: You must have an account to sign into this service.
+    guidance: 'You can get one if you work at a publicly funded school or trust providing primary or secondary education in England and have been authorised by your headteacher or CEO. Just ask them to send your full name and email address to %{email}. Or email us your details directly, copying in your headteacher or CEO.'
     organisation:
       title: 'Select your organisation'
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
