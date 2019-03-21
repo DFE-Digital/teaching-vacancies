@@ -24,6 +24,16 @@ RSpec.describe 'Teaching Vacancies stats', type: :request do
 
         expect(response).to have_http_status(:ok)
       end
+
+      it 'includes job alert stats' do
+        subscription = create(:subscription)
+        _sent_alert_runs = create_list(:alert_run, 2, status: :sent, subscription: subscription)
+
+        get stats_path, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+
+        json = JSON.parse(response.body)['teaching_jobs']['summary']
+        expect(json['job_alert.sent']).to eq(2)
+      end
     end
   end
 end
