@@ -17,16 +17,7 @@ class VacanciesController < ApplicationController
   def index
     @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-
-    records = if @filters.any?
-                Vacancy.public_search(filters: @filters, sort: @sort).page(page_number).records(includes: [:school])
-              else
-                Vacancy.live.order(@sort.column => @sort.order).includes(:school).page(page_number)
-              end
-
-    @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
-
-    audit_search_event if @filters.any?
+    @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
 
     expires_in 5.minutes, public: true
   end
@@ -55,12 +46,6 @@ class VacanciesController < ApplicationController
 
   def old_vacancy_path?(vacancy)
     request.path != job_path(vacancy) && !request.format.json?
-  end
-
-  def audit_search_event
-    AuditSearchEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                       @vacancies.total_count,
-                                       *@filters.to_hash.values])
   end
 
   def id
