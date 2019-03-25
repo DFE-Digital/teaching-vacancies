@@ -118,6 +118,10 @@ variable "seed_vacancies_from_api" {
   type = "list"
 }
 
+variable "backfill_info_clicks_for_vacancies_command" {
+  type = "list"
+}
+
 variable "performance_platform_submit_task_command" {
   type = "list"
 }

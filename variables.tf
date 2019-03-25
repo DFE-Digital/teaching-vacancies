@@ -208,6 +208,11 @@ variable "seed_vacancies_from_api" {
   default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
 }
 
+variable "backfill_info_clicks_for_vacancies_command" {
+  description = "The Entrypoint for the vacancies:statistics:backfill:info_clicks task"
+  default     = ["rake", "verbose", "vacancies:statistics:backfill:info_clicks"]
+}
+
 variable "performance_platform_submit_task_command" {
   description = "The Entrypoint for the performance_platform_submit task"
   default     = ["rake", "verbose", "performance_platform:submit"]
