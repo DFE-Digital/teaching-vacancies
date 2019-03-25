@@ -6,4 +6,16 @@ namespace :data do
       UpdateSchoolsDataFromSourceJob.perform_later
     end
   end
+
+  desc 'Migrate working pattern to array enum'
+  namespace :working_pattern do
+    task migrate: :environment do
+      Vacancy.where(working_patterns: nil)
+             .where.not(working_pattern: nil)
+             .each do |vacancy|
+        vacancy.working_patterns = [vacancy.working_pattern]
+        vacancy.save
+      end
+    end
+  end
 end
