@@ -16,6 +16,11 @@ Rails:
 Rails/HasManyOrHasOneDependent:
     Enabled: false
 
+Rails/HasAndBelongsToMany:
+    Exclude:
+      - 'app/models/vacancy.rb'
+      - 'app/models/working_pattern.rb'
+
 Bundler/OrderedGems:
     Enabled: false
 
