@@ -128,6 +128,17 @@ SimpleForm.setup do |config|
     checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'govuk-hint' }
   end
 
+  config.wrappers :checkboxes, tag: 'div',
+                               class: 'govuk-form-group',
+                               error_class: 'govuk-form-group--error' do |checkboxes|
+    checkboxes.use :html5
+    checkboxes.wrapper tag: 'div', class: 'govuk-checkboxes' do |field|
+      field.use :hint, wrap_with: {tag: 'div', class: 'govuk-hint'}
+      field.use :error, wrap_with: {tag: 'div', class: 'govuk-error-message'}
+      field.use :input, class: 'govuk-checkboxes__input'
+    end
+  end
+
   config.wrappers :money, tag: 'div',
                                 class: 'salary_field govuk-form-group',
                                 error_class: 'govuk-form-group--error' do |field|

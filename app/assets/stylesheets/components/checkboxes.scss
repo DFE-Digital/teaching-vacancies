@@ -1,0 +1,6 @@
+.govuk-checkboxes {
+  .collection_check_boxes {
+    @extend .govuk-label;
+    @extend .govuk-checkboxes__label;
+  }
+}
