@@ -150,6 +150,7 @@ module "ecs" {
   notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
   notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
   feature_email_alerts                      = "${var.feature_email_alerts}"
+  feature_import_vacancies                  = "${var.feature_import_vacancies}"
 }
 
 module "logs" {

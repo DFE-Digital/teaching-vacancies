@@ -373,6 +373,9 @@ variable "skylight_ignored_endpoints" {
 }
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+variable "feature_import_vacancies" {
+  default = "false"
+}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "subscription_key_generator_secret" {}
