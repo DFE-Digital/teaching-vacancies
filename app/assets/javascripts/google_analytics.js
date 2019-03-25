@@ -15,3 +15,11 @@ $(document).on('click', '.vacancy-apply-link', function() {
     gtag('event', 'vacancy_applied');
   }
 );
+
+// Track when someone shares a vacancy on social media
+$(document).on('click', '.vacancy-share-link', function() {
+    gtag('event', 'vacancy_shared', {
+      'event_label': $(this).data('target')
+    });
+  }
+);

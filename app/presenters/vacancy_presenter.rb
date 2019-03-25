@@ -150,6 +150,10 @@ class VacancyPresenter < BasePresenter
     }
   end
 
+  def job_title_and_school
+    "#{job_title} at #{school_name}"
+  end
+
   private
 
   def pay_scale_range_label

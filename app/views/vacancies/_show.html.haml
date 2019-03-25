@@ -52,6 +52,10 @@
 
       %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
+    %h2.govuk-heading-m.share-this-job
+      = t('jobs.share_this_job')
+    = render partial: '/shared/vacancy/share_buttons'
+    
   .govuk-grid-column-one-third
     %aside.vacancy--metadata
       - if @vacancy.application_link.present?
