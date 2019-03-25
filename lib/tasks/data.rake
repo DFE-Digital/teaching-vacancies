@@ -26,4 +26,17 @@ namespace :data do
       end
     end
   end
+
+  desc 'Migrate working pattern to many-to-many association'
+  namespace :working_pattern do
+    task migrate: :environment do
+      Vacancy.all.each do |vacancy|
+        working_pattern = WorkingPattern.find_by(label: vacancy.working_pattern.humanize, slug: vacancy.working_pattern)
+        vacancy.working_patterns << working_pattern if working_pattern.present?
+        vacancy.save
+      rescue ActiveRecord::RecordNotUnique
+        next
+      end
+    end
+  end
 end
