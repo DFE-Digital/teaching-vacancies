@@ -5,6 +5,7 @@ namespace :data do
   namespace :seed_from_api do
     task vacancies: :environment do
       next if Rails.env.production?
+      next unless ImportVacanciesFeature.enabled?
 
       Rails.logger.debug("Seeding vacancies from Teaching Vacancies API in #{Rails.env}")
       job_postings = TeachingVacancies::API.new.jobs(limit: 50)

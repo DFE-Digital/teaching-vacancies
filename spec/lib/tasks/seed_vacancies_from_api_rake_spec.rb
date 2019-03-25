@@ -3,7 +3,11 @@ require 'teaching_vacancies_api'
 
 RSpec.describe 'rake data:seed_from_api:vacancies', type: :task do
   let(:teaching_vacancies_api) { instance_double(TeachingVacancies::API) }
-  before { allow(TeachingVacancies::API).to receive(:new).and_return(teaching_vacancies_api) }
+  let(:feature_enabled?) { true }
+  before do
+    allow(TeachingVacancies::API).to receive(:new).and_return(teaching_vacancies_api)
+    allow(ImportVacanciesFeature).to receive(:enabled?).and_return(feature_enabled?)
+  end
 
   it 'queues jobs to add vacancies from the Teaching Vacancies API' do
     vacancies = [double]
@@ -18,6 +22,17 @@ RSpec.describe 'rake data:seed_from_api:vacancies', type: :task do
 
   context 'when in production' do
     before { allow(Rails.env).to receive(:production?).and_return(true) }
+
+    it 'returns early and doesn’t call the API at all' do
+      expect(teaching_vacancies_api).not_to receive(:jobs)
+      expect(SaveJobPostingToVacancyJob).not_to receive(:perform_later)
+
+      task.execute
+    end
+  end
+
+  context 'when the import vacancies feature is NOT enabled' do
+    let(:feature_enabled?) { false }
 
     it 'returns early and doesn’t call the API at all' do
       expect(teaching_vacancies_api).not_to receive(:jobs)
