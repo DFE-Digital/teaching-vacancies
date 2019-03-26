@@ -1,18 +1,27 @@
 #!/bin/sh
 
 echo "Remove all unused images before we build new ones…"
+echo "\n\033[36m===> docker image prune -f\033[0m\n"
 docker image prune -f
 
 echo "Rebuilding the test server…"
+echo "\n\033[36m===> docker-compose --file=docker-compose.test.yml down -v --remove-orphans\033[0m\n"
 docker-compose --file=docker-compose.test.yml down -v --remove-orphans
+echo "\n\033[36m===> docker-compose --file=docker-compose.test.yml build\033[0m\n"
 docker-compose --file=docker-compose.test.yml build
+echo "\n\033[36m===> bin/dtest-server\033[0m\n"
 bin/dtest-server
 echo "Rebuilt and started the testing server for TVS."
 
 echo "Rebuilding the web server…"
+echo "\n\033[36m===> docker-compose down -v --remove-orphans\033[0m\n"
 docker-compose down -v --remove-orphans
+echo "\n\033[36m===> docker-compose build\033[0m\n"
 docker-compose build
+echo "\n\033[36m===> docker-compose run --rm web rake db:seed\033[0m\n"
 docker-compose run --rm web rake db:seed
+echo "\n\033[36m===> bin/drake elasticsearch:vacancies:index\033[0m\n"
 bin/drake elasticsearch:vacancies:index
 echo "Rebuilt and starting the web server for TVS."
+echo "\n\033[36m===> bin/dstart\033[0m\n"
 bin/dstart
