@@ -42,4 +42,11 @@ RSpec.feature 'School viewing vacancies' do
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
   end
+
+  scenario 'clicking on more information should not increment the counter' do
+    vacancy = create(:vacancy, school: school, status: 'published')
+    visit school_job_path(vacancy.id)
+
+    expect { click_on 'Get more information' }.to change { vacancy.get_more_info_counter.to_i }.by(0)
+  end
 end
