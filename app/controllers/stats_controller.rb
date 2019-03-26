@@ -1,7 +1,9 @@
 class StatsController < ApplicationController
   def index
-    @audit_summary = PublicActivity::Activity.order(:key)
-                                             .group(:key).count
+    @stats = PublicActivity::Activity.order(:key)
+                                     .group(:key).count
+
+    @stats['job_alert.sent'] = AlertRun.sent.count
 
     expires_in 60.minutes, public: true
   end
