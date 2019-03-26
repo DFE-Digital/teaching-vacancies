@@ -8,7 +8,7 @@ FactoryBot.define do
 
     job_title { Faker::Lorem.sentence[1...30].strip }
     working_pattern { :full_time }
-    working_patterns { [build(:working_pattern, :full_time)] }
+    working_patterns { [WorkingPattern.find_or_create_by(label: 'Full time', slug: 'full_time')] }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }
     qualifications { Faker::Lorem.paragraph(4) }

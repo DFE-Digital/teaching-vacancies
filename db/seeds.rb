@@ -33,6 +33,9 @@ SchoolType.create(label: 'Free School', code: '11')
 SchoolType.create(label: 'LA Maintained School', code: '4')
 SchoolType.create(label: 'Special School', code: '5')
 
+full_time = WorkingPattern.find_or_create_by(label: 'Full time', slug: 'full_time')
+part_time = WorkingPattern.find_or_create_by(label: 'Part time', slug: 'part_time')
+
 
 ealing_school = FactoryBot.create(:school, name: 'Macmillan Academy ',
                                    school_type: academy,
@@ -73,32 +76,32 @@ FactoryBot.create(:vacancy,
                    job_title: 'Maths Teacher',
                    subject: Subject.last,
                    school: bromley_school,
-                   working_pattern: :part_time,
                    minimum_salary: 30000,
                    maximum_salary: 35000,
                    min_pay_scale: payscale,
-                   leadership: leadership)
+                   leadership: leadership,
+                   working_patterns: [part_time])
 
 FactoryBot.create(:vacancy,
                    job_title: 'PE Teacher',
                    subject: Subject.last,
                    school: ealing_school,
-                   working_pattern: :part_time,
                    minimum_salary: 30000,
                    maximum_salary: 35000,
                    min_pay_scale: payscale,
-                   leadership: leadership)
+                   leadership: leadership,
+                   working_patterns: [part_time])
 
 FactoryBot.create(:vacancy,
                    job_title: 'Geography Teacher',
                    subject: Subject.last,
                    school: ealing_school,
-                   working_pattern: :part_time,
                    minimum_salary: 30000,
                    maximum_salary: 35000,
                    min_pay_scale: payscale,
                    status: 1,
-                   leadership: leadership)
+                   leadership: leadership,
+                   working_patterns: [part_time])
 
 # pending vacancy
 FactoryBot.create(:vacancy,

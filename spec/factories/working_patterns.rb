@@ -1,19 +1,13 @@
 FactoryBot.define do
   factory :working_pattern do
-    labels = ['Full time', 'Part time', 'Job share']
+    slug { 'full_time' }
+    label { 'Full time' }
 
-    label { labels.sample }
-
-    trait :full_time do
-      label { labels[0] }
-    end
+    trait(:full_time) {}
 
     trait :part_time do
-      label { labels[1] }
-    end
-
-    trait :job_share do
-      label { labels[2] }
+      slug { 'part_time' }
+      label { 'Part time' }
     end
   end
 end
