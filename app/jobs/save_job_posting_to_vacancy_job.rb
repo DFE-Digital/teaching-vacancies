@@ -7,8 +7,10 @@ class SaveJobPostingToVacancyJob < ApplicationJob
     job_posting = JobPosting.new(data)
     vacancy = job_posting.to_vacancy
 
-    return if vacancy.save
-
-    Rails.logger.warn("Failed to save vacancy from JobPosting: #{vacancy.errors.messages.inspect}")
+    if vacancy.save
+      Rails.logger.info("Saved vacancy from JobPosting. Vacancy ID: #{vacancy.id}")
+    else
+      Rails.logger.warn("Failed to save vacancy from JobPosting: #{vacancy.errors.messages.inspect}")
+    end
   end
 end
