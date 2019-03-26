@@ -2,11 +2,16 @@ require 'rails_helper'
 require 'performance_platform'
 
 RSpec.describe PerformancePlatform::TransactionsByChannel do
-  context 'when no TOKEN Is set' do
+  before(:each) do
+    allow(Rails).to receive(:env)
+      .and_return(ActiveSupport::StringInquirer.new('production'))
+  end
+
+  context 'when no TOKEN is set' do
     it 'aborts execution' do
       expect do
         PerformancePlatform::TransactionsByChannel.new(nil)
-      end.to raise_error(SystemExit, 'No token set. Note that this task should only be executed in production.')
+      end.to raise_error(ArgumentError, 'No token set. Note that this task should only be executed in production.')
     end
   end
 
@@ -45,11 +50,16 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
 end
 
 RSpec.describe PerformancePlatform::UserSatisfaction do
+  before(:each) do
+    allow(Rails).to receive(:env)
+      .and_return(ActiveSupport::StringInquirer.new('production'))
+  end
+
   context 'when no TOKEN Is set' do
     it 'aborts execution' do
       expect do
         PerformancePlatform::UserSatisfaction.new(nil)
-      end.to raise_error(SystemExit, 'No token set. Note that this task should only be executed in production.')
+      end.to raise_error(ArgumentError, 'No token set. Note that this task should only be executed in production.')
     end
   end
 

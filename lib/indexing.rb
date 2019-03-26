@@ -9,7 +9,7 @@ class Indexing
   attr_reader :service, :url
 
   def initialize(url)
-    abort('No Google API key set.') if api_key_empty?
+    return if api_key_empty?
 
     @service = API::IndexingService.new
     @url = url
