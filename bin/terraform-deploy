@@ -41,10 +41,10 @@ terraform workspace select "$TERRAFORM_WORKSPACE"
 
 echo "-> Fetching latest git changes …"
 git fetch
-git pull origin $GIT_BRANCH
 
-echo "-> Checking out branch $GIT_BRANCH …"
+echo "-> Checking out and pulling branch $GIT_BRANCH …"
 git checkout $GIT_BRANCH
+git pull origin $GIT_BRANCH
 
 echo "-> Applying Terraform command on the $TERRAFORM_WORKSPACE workspace …"
 terraform apply -var-file="workspace-variables/$TERRAFORM_WORKSPACE.tfvars"
