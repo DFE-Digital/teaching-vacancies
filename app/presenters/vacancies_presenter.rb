@@ -21,6 +21,10 @@ class VacanciesPresenter < BasePresenter
     decorated_collection.each(&block)
   end
 
+  def any?
+    decorated_collection.count.nonzero?
+  end
+
   def total_count_message
     if total_count == 1
       return I18n.t('jobs.job_count_without_search', count: total_count) unless @searched
@@ -70,16 +74,16 @@ class VacanciesPresenter < BasePresenter
 
   private
 
+  def total_count
+    @total_count ||= model.total_count
+  end
+
   def json_api_params
     {
       format: :json,
       api_version: 1,
       protocol: 'https'
     }
-  end
-
-  def total_count
-    model.total_count
   end
 
   # rubocop:disable Metrics/AbcSize

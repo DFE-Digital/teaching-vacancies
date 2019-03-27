@@ -2,9 +2,11 @@ require 'rails_helper'
 RSpec.describe VacanciesPresenter do
   describe '#each' do
     it 'is delegated to the decorated collection' do
-      vacancies = create_list(:vacancy, 3)
+      create_list(:vacancy, 3)
+      vacancies = Vacancy.all.page(1)
       searched = true
       decorated_vacancies = vacancies.map { |v| VacancyPresenter.new(v) }
+
       vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
       allow(vacancies_presenter).to receive(:decorated_collection).and_return(decorated_vacancies)
 
@@ -92,7 +94,7 @@ RSpec.describe VacanciesPresenter do
 
   describe '#previous_api_url' do
     let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false) }
-    let(:vacancies) { double(:vacancies, map: [], prev_page: prev_page) }
+    let(:vacancies) { double(:vacancies, map: [], prev_page: prev_page, total_count: 0) }
 
     context 'when there is a previous page' do
       let(:prev_page) { 4 }
@@ -113,7 +115,7 @@ RSpec.describe VacanciesPresenter do
 
   describe '#next_api_url' do
     let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false) }
-    let(:vacancies) { double(:vacancies, map: [], next_page: next_page) }
+    let(:vacancies) { double(:vacancies, map: [], next_page: next_page, total_count: 0) }
 
     context 'when there is a next page' do
       let(:next_page) { 2 }

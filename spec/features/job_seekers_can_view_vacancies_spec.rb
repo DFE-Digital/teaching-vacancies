@@ -32,7 +32,6 @@ RSpec.feature 'Viewing vacancies' do
     already_published.send :set_slug
     already_published.save(validate: false)
 
-    Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
     expect(page).to have_content(valid_vacancy.job_title)
