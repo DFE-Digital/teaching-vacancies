@@ -198,11 +198,6 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
-variable "backfill_audit_data_for_vacancy_publish_events" {
-  description = "The Entrypoint for the data:backfill:audit_data:vacancy_publishing task"
-  default     = ["rake", "verbose", "data:backfill:audit_data:vacancy_publishing"]
-}
-
 variable "seed_vacancies_from_api" {
   description = "The Entrypoint for the data:seed_from_api:vacancies task"
   default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
