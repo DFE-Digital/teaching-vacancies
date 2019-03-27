@@ -197,6 +197,7 @@ data "template_file" "send_job_alerts_daily_email_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
     entrypoint               = "${jsonencode(var.send_job_alerts_daily_email_command)}"
   }
 }
@@ -224,6 +225,7 @@ data "template_file" "import_schools_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
     entrypoint               = "${jsonencode(var.import_schools_task_command)}"
   }
 }
@@ -251,6 +253,7 @@ data "template_file" "update_spreadsheets_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
     entrypoint               = "${jsonencode(var.update_spreadsheets_task_command)}"
   }
 }
@@ -278,6 +281,7 @@ data "template_file" "sessions_trim_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
     entrypoint               = "${jsonencode(var.sessions_trim_task_command)}"
   }
 }
@@ -305,6 +309,7 @@ data "template_file" "reindex_vacancies_container_definition" {
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
     entrypoint               = "${jsonencode(var.reindex_vacancies_task_command)}"
   }
 }
@@ -332,7 +337,36 @@ data "template_file" "backfill_audit_data_for_vacancy_publish_events_container_d
     aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
     aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
     rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
     entrypoint               = "${jsonencode(var.backfill_audit_data_for_vacancy_publish_events)}"
+  }
+}
+
+/* seed_vacancies_from_api_container_definition task definition*/
+data "template_file" "seed_vacancies_from_api_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    redis_cache_url          = "${var.redis_cache_url}"
+    redis_queue_url          = "${var.redis_queue_url}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
+    entrypoint               = "${jsonencode(var.seed_vacancies_from_api)}"
   }
 }
 
@@ -360,6 +394,7 @@ data "template_file" "performance_platform_submit_container_definition" {
     aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
+    feature_import_vacancies         = "${var.feature_import_vacancies}"
     entrypoint                       = "${jsonencode(var.performance_platform_submit_task_command)}"
   }
 }
@@ -388,6 +423,7 @@ data "template_file" "performance_platform_submit_all_container_definition" {
     aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
+    feature_import_vacancies         = "${var.feature_import_vacancies}"
     entrypoint                       = "${jsonencode(var.performance_platform_submit_all_task_command)}"
   }
 }
@@ -414,6 +450,7 @@ data "template_file" "vacancies_pageviews_refresh_cache_container_definition" {
     aws_elasticsearch_secret    = "${var.aws_elasticsearch_secret}"
     google_api_json_key         = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id = "${var.google_analytics_profile_id}"
+    feature_import_vacancies    = "${var.feature_import_vacancies}"
     entrypoint                  = "${jsonencode(var.vacancies_pageviews_refresh_cache_task_command)}"
     redis_cache_url             = "${var.redis_cache_url}"
     redis_queue_url             = "${var.redis_queue_url}"
@@ -597,6 +634,17 @@ resource "aws_ecs_task_definition" "reindex_vacancies_task" {
 resource "aws_ecs_task_definition" "backfill_audit_data_for_vacancy_publish_events_task" {
   family                   = "${var.ecs_service_web_task_name}_backfill_audit_data_for_vacancy_publish_events_task"
   container_definitions    = "${data.template_file.backfill_audit_data_for_vacancy_publish_events_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_ecs_task_definition" "seed_vacancies_from_api_task" {
+  family                   = "${var.ecs_service_web_task_name}_seed_vacancies_from_api_task"
+  container_definitions    = "${data.template_file.seed_vacancies_from_api_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"

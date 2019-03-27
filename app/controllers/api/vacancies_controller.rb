@@ -9,6 +9,7 @@ class Api::VacanciesController < Api::ApplicationController
                      .published
                      .page(page_number)
                      .per(MAX_API_RESULTS_PER_PAGE)
+                     .order(publish_on: :desc)
     @vacancies = VacanciesPresenter.new(records, searched: false)
 
     respond_to do |format|
