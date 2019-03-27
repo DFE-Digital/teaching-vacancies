@@ -39,9 +39,6 @@ fi
 echo "-> Checking out terraform workspace $TERRAFORM_WORKSPACE …"
 terraform workspace select "$TERRAFORM_WORKSPACE"
 
-echo "-> Fetching latest git changes …"
-git fetch
-
 echo "-> Checking out and pulling branch $GIT_BRANCH …"
 git checkout $GIT_BRANCH
 git pull origin $GIT_BRANCH
