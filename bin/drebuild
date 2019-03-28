@@ -11,7 +11,6 @@ run_with_pretty_print 'docker image prune -f'
 
 echo "Rebuilding the test server…"
 run_with_pretty_print 'docker-compose --file=docker-compose.test.yml down -v --remove-orphans'
-run_with_pretty_print 'docker-compose --file=docker-compose.test.yml build'
 run_with_pretty_print 'bin/dtest-server'
 echo "Rebuilt and started the testing server for TVS."
 
