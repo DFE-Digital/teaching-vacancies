@@ -58,6 +58,7 @@ gem 'google_drive', require: false
 gem 'google-api-client'
 gem 'browser'
 gem 'mail-notify'
+gem 'deep_cloneable', '~> 2.4.0'
 
 gem 'sidekiq'
 
