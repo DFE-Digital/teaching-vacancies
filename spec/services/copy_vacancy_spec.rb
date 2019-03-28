@@ -5,7 +5,7 @@ RSpec.describe CopyVacancy do
     it 'creates a new vacancy as draft' do
       original_vacancy = FactoryBot.build(:vacancy, job_title: 'Maths teacher')
       original_vacancy.save
-      new_vacancy = original_vacancy.dup
+      new_vacancy = original_vacancy.deep_clone(include: :working_patterns)
 
       result = described_class.new(proposed_vacancy: new_vacancy)
                               .call
@@ -21,7 +21,7 @@ RSpec.describe CopyVacancy do
       Timecop.freeze(Time.zone.local(2008, 9, 1, 12, 0, 0))
 
       original_vacancy = FactoryBot.create(:vacancy, job_title: 'Maths teacher')
-      new_vacancy = original_vacancy.dup
+      new_vacancy = original_vacancy.deep_clone(include: :working_patterns)
 
       described_class.new(proposed_vacancy: new_vacancy)
                      .call
@@ -35,7 +35,7 @@ RSpec.describe CopyVacancy do
     context 'when a new job_title is provided' do
       it 'creates a new vacancy with a new job title' do
         original_vacancy = FactoryBot.create(:vacancy, job_title: 'Maths teacher')
-        new_vacancy = original_vacancy.dup
+        new_vacancy = original_vacancy.deep_clone(include: :working_patterns)
         new_vacancy.job_title = 'English teacher'
 
         result = described_class.new(proposed_vacancy: new_vacancy)
@@ -48,7 +48,7 @@ RSpec.describe CopyVacancy do
     context 'when new dates are provided' do
       it 'creates a new vacancy with the new dates' do
         original_vacancy = FactoryBot.create(:vacancy, job_title: 'Maths teacher')
-        new_vacancy = original_vacancy.dup
+        new_vacancy = original_vacancy.deep_clone(include: :working_patterns)
         new_vacancy.starts_on = 60.days.from_now
         new_vacancy.ends_on = 100.days.from_now
         new_vacancy.publish_on = 0.days.from_now

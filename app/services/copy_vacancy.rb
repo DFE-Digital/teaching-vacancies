@@ -4,7 +4,7 @@ class CopyVacancy
   end
 
   def call
-    new_vacancy = @proposed_vacancy.dup
+    new_vacancy = @proposed_vacancy.deep_clone(include: :working_patterns)
     new_vacancy.job_title = @proposed_vacancy.job_title
     new_vacancy.starts_on = @proposed_vacancy.starts_on
     new_vacancy.ends_on = @proposed_vacancy.ends_on
