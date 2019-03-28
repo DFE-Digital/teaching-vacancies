@@ -121,11 +121,11 @@ class VacancyPresenter < BasePresenter
   # rubocop:enable Rails/OutputSafety
 
   def working_pattern
-    model.working_pattern.sub('_', ' ').humanize
+    model.working_patterns.pluck(:label).join(', ')
   end
 
   def working_pattern_for_job_schema
-    model.working_pattern.upcase
+    model.working_patterns.pluck(:slug).join(', ').upcase
   end
 
   def review_page_title

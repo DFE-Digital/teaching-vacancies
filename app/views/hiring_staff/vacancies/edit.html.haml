@@ -64,7 +64,7 @@
         %dt.app-check-your-answers__question
           = t('jobs.working_pattern')
         %dd.app-check-your-answers__answer
-          = @vacancy.working_pattern.humanize
+          = @vacancy.working_pattern
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern'), class: 'govuk-link'
 
