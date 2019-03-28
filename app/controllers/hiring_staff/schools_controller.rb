@@ -2,7 +2,8 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
-    @vacancy_presenter = SchoolVacanciesPresenter.new(@school, params[:type])
+    @sort = VacancySort.new.update(column: params[:sort_column], order: params[:sort_order])
+    @vacancy_presenter = SchoolVacanciesPresenter.new(@school, @sort, params[:type])
   end
 
   def edit

@@ -1,8 +1,9 @@
 require 'rails_helper'
 RSpec.describe SchoolVacanciesPresenter do
   let(:school) { create(:school) }
+  let(:sort) { VacancySort.new }
   let(:type) { 'published' }
-  let(:presenter) { described_class.new(school, type) }
+  let(:presenter) { described_class.new(school, sort, type) }
 
   let!(:draft_vacancies) { create_list(:vacancy, 5, :draft, school: school) }
   let!(:pending_vacancies) { create_list(:vacancy, 2, :future_publish, school: school) }
