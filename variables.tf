@@ -223,13 +223,13 @@ variable "performance_platform_submit_all_task_command" {
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
 }
 
-variable "vacancies_pageviews_refresh_cache_task_command" {
-  description = "The Entrypoint for the vacancies_pageviews_refresh_cache task"
-  default     = ["rake", "verbose", "vacancies:pageviews:refresh_cache"]
+variable "vacancies_statistics_refresh_cache_task_command" {
+  description = "The Entrypoint for the vacancies_statistics_refresh_cache task"
+  default     = ["rake", "verbose", "vacancies:statistics:refresh_cache"]
 }
 
-variable "vacancies_pageviews_refresh_cache_task_schedule" {
-  description = "vacancies_pageviews_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+variable "vacancies_statistics_refresh_cache_task_schedule" {
+  description = "vacancies_statistics_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 02 * * ? *)"
 }
 

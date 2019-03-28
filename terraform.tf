@@ -98,8 +98,8 @@ module "ecs" {
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
 
-  vacancies_pageviews_refresh_cache_task_command  = "${var.vacancies_pageviews_refresh_cache_task_command}"
-  vacancies_pageviews_refresh_cache_task_schedule = "${var.vacancies_pageviews_refresh_cache_task_schedule}"
+  vacancies_statistics_refresh_cache_task_command  = "${var.vacancies_statistics_refresh_cache_task_command}"
+  vacancies_statistics_refresh_cache_task_schedule = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 
   # Module inputs
 
