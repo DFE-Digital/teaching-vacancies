@@ -13,8 +13,18 @@ RSpec.describe VacanciesHelper, type: :helper do
   end
 
   describe '#working_pattern_options' do
-    it 'returns an array of vacancy working patterns' do
-      expect(helper.working_pattern_options).to eq([['Full time', 'full_time'], ['Part time', 'part_time']])
+    let!(:full_time) { create(:working_pattern, :full_time) }
+    let!(:part_time) { create(:working_pattern, :part_time) }
+    it 'returns an array of vacancy working patterns for vacancy form' do
+      expect(helper.working_pattern_options).to eq([[full_time.label, full_time.id], [part_time.label, part_time.id]])
+    end
+  end
+
+  describe '#working_pattern_filters' do
+    let!(:full_time) { create(:working_pattern, :full_time) }
+    let!(:part_time) { create(:working_pattern, :part_time) }
+    it 'returns an array of vacancy working patterns for search filters' do
+      expect(helper.working_pattern_filters).to eq([['Full time', 'full_time'], ['Part time', 'part_time']])
     end
   end
 

@@ -12,6 +12,10 @@ module VacanciesHelper
     WorkingPattern.all.map { |working_pattern| [working_pattern.label, working_pattern.id] }
   end
 
+  def working_pattern_filters
+    WorkingPattern.all.map { |working_pattern| [working_pattern.label, working_pattern.slug] }
+  end
+
   def school_phase_options
     School.phases.keys.map { |key| [key.humanize, key] }
   end

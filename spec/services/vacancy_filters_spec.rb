@@ -22,6 +22,7 @@ RSpec.describe VacancyFilters do
     end
 
     it 'sets the working pattern filter if provided and valid' do
+      create(:working_pattern, :full_time)
       vacancy_filters = VacancyFilters.new(working_pattern: 'full_time')
       expect(vacancy_filters.working_pattern).to eq('full_time')
     end
