@@ -17,7 +17,6 @@ class JobPosting
       education: @schema['educationRequirements'],
       qualifications: @schema['qualifications'],
       experience: @schema['experienceRequirements'],
-      working_pattern: @schema['employmentType'].downcase.to_sym,
       status: :published,
       weekly_hours: @schema['workHours'],
       application_link: @schema['url'],
@@ -26,7 +25,8 @@ class JobPosting
       maximum_salary: @schema.dig('baseSalary', 'value', 'maxValue'),
       publish_on: publish_on_or_today,
       expires_on: expires_on_or_future,
-      school: school_by_urn_or_random
+      school: school_by_urn_or_random,
+      working_patterns: working_patterns
     }
   end
 
@@ -46,5 +46,11 @@ class JobPosting
   def expires_on_or_future
     expires_on = Time.zone.parse(@schema['validThrough'])
     expires_on.future? ? expires_on : 4.months.from_now
+  end
+
+  def working_patterns
+    @schema['employmentType'].split(', ').map do |working_pattern|
+      WorkingPattern.find_or_create_by(label: working_pattern.tr('_', ' ').capitalize, slug: working_pattern.downcase)
+    end
   end
 end

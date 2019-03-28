@@ -12,7 +12,7 @@ RSpec.describe JobPosting do
       'educationRequirements' => '<p>Relevant degree</p>',
       'qualifications' => '<p>Qualified Teacher Status</p>',
       'experienceRequirements' => '<p>Excellent classroom practitioner</p>',
-      'employmentType' => 'FULL_TIME',
+      'employmentType' => 'FULL_TIME, PART_TIME',
       'industry' => 'Education',
       'url' => 'https://teaching-vacancies.service.gov.uk/jobs/teacher-of-english-gosforth-academy',
       'baseSalary' => {
