@@ -31,7 +31,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     end
 
     session[:current_step] = :review
-    store_vacancy_attributes(@vacancy.attributes.compact)
+    store_vacancy_attributes(vacancy_attributes)
     @vacancy = VacancyPresenter.new(@vacancy)
     @vacancy.valid? if params[:source]&.eql?('publish')
   end
@@ -83,5 +83,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def set_vacancy
     @vacancy = school.vacancies.active.find(vacancy_id)
+  end
+
+  def vacancy_attributes
+    @vacancy.attributes.compact.merge!(working_pattern_ids: @vacancy.working_patterns.pluck(:id))
   end
 end

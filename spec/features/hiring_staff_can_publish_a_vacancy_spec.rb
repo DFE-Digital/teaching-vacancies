@@ -26,6 +26,7 @@ RSpec.feature 'Creating a vacancy' do
     let!(:pay_scales) { create_list(:pay_scale, 3) }
     let!(:subjects) { create_list(:subject, 3) }
     let!(:leaderships) { create_list(:leadership, 3) }
+    let!(:working_patterns) { [create(:working_pattern, :full_time)] }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  min_pay_scale: pay_scales.sample,
@@ -33,7 +34,8 @@ RSpec.feature 'Creating a vacancy' do
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
-                                 leadership: leaderships.sample))
+                                 leadership: leaderships.sample,
+                                 working_patterns: working_patterns))
     end
 
     scenario 'redirects to step 1, job specification' do
@@ -66,7 +68,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
         end
 
-        within_row_for(text: I18n.t('jobs.working_pattern')) do
+        within_row_for(element: 'legend', text: I18n.t('jobs.working_pattern')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
         end
       end

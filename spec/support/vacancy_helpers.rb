@@ -2,7 +2,9 @@ module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
-    select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
+    vacancy.working_patterns.each do |working_pattern|
+      check working_pattern.label
+    end
     select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
     select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
@@ -62,7 +64,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
-    expect(page).to have_content(vacancy.working_pattern)
+    vacancy.working_patterns.each do |working_pattern|
+      expect(page).to have_content(working_pattern.label)
+    end
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page).to have_content('Suitable')
     expect(page.html).to include(vacancy.benefits)

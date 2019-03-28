@@ -56,7 +56,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def retrieve_job_from_db
-    school.vacancies.published.find(vacancy_id).attributes
+    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy.attributes.merge!(working_pattern_ids: vacancy.working_patterns.pluck(:id))
   end
 
   def source_update?

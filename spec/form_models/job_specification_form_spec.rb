@@ -6,12 +6,12 @@ RSpec.describe JobSpecificationForm, type: :model do
     it { should validate_presence_of(:job_title) }
     it { should validate_presence_of(:job_description) }
     it { should validate_presence_of(:minimum_salary) }
-    it { should validate_presence_of(:working_pattern) }
+    it { should validate_presence_of(:working_pattern_ids) }
 
     describe '#maximum_salary' do
       let(:job_specification) do
         JobSpecificationForm.new(job_title: 'job title',
-                                 job_description: 'description', working_pattern: :full_time,
+                                 job_description: 'description',
                                  minimum_salary: 20, maximum_salary: 10)
       end
 
@@ -94,11 +94,12 @@ RSpec.describe JobSpecificationForm, type: :model do
     let(:max_pay_scale) { create(:pay_scale) }
     let(:main_subject) { create(:subject) }
     let(:leadership) { create(:leadership) }
+    let(:full_time) { create(:working_pattern, :full_time) }
 
     it 'a JobSpecificationForm can be converted to a vacancy' do
       job_specification_form = JobSpecificationForm.new(job_title: 'English Teacher',
                                                         job_description: 'description',
-                                                        working_pattern: :full_time,
+                                                        working_pattern_ids: [full_time.id],
                                                         minimum_salary: 20000, maximum_salary: 40000,
                                                         benefits: 'benefits', subject_id: main_subject.id,
                                                         min_pay_scale_id: min_pay_scale.id,
@@ -109,7 +110,7 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_description).to eq('description')
-      expect(job_specification_form.vacancy.working_pattern).to eq('full_time')
+      expect(job_specification_form.vacancy.working_pattern_ids).to eq([full_time.id])
       expect(job_specification_form.vacancy.minimum_salary).to eq('20000')
       expect(job_specification_form.vacancy.maximum_salary).to eq('40000')
       expect(job_specification_form.vacancy.benefits).to eq('benefits')

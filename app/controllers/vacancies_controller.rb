@@ -18,7 +18,6 @@ class VacanciesController < ApplicationController
     @filters = VacancyFilters.new(search_params)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
-
     expires_in 5.minutes, public: true
   end
 

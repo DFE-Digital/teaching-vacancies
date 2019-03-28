@@ -10,7 +10,7 @@ module VacancyJobSpecificationValidations
     validates :minimum_salary, salary: { presence: true, minimum_value: false }
     validates :maximum_salary, salary: { presence: false }, if: :minimum_valid_and_maximum_salary_present?
     validate :maximum_salary_greater_than_minimum, if: :minimum_and_maximum_salary_present_and_valid?
-    validates :working_pattern, presence: true
+    validates :working_pattern_ids, presence: true
     validate :working_hours
 
     validate :starts_on_in_future?, if: :starts_on?
