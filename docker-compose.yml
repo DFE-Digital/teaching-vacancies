@@ -10,6 +10,8 @@ services:
     container_name: teacher-vacancy-service_web_1
     environment:
       RAILS_ENV: "development"
+      DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
     env_file:
       - docker-compose.env
     depends_on:
