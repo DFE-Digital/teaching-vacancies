@@ -1,5 +1,5 @@
 class PersistVacancyGetMoreInfoClickJob < ApplicationJob
-  queue_as :page_view_collector
+  queue_as :vacancy_statistics
 
   def perform(vacancy_id)
     vacancy = Vacancy.find(vacancy_id)
