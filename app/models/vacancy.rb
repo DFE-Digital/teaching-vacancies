@@ -59,6 +59,10 @@ class Vacancy < ApplicationRecord
         indexes :name, type: :text
       end
 
+      indexes :working_patterns do
+        indexes :slug, type: :keyword
+      end
+
       indexes :expires_on, type: :date
       indexes :starts_on, type: :date
       indexes :updated_at, type: :date
@@ -146,7 +150,8 @@ class Vacancy < ApplicationRecord
         school: { only: %i[phase name postcode address town] },
         subject: { only: %i[name] },
         first_supporting_subject: { only: %i[name] },
-        second_supporting_subject: { only: %i[name] }
+        second_supporting_subject: { only: %i[name] },
+        working_patterns: { only: %i[slug] },
       }
     )
   end
