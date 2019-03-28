@@ -51,6 +51,7 @@
                 required: false
       %fieldset.govuk-fieldset#working_patterns
         %legend.govuk-label.govuk-label= t('jobs.working_pattern')
+        %span.govuk-hint= t('jobs.form_hints.working_pattern')
         .govuk-form-group
           = f.input :working_pattern_ids,
                     collection: working_pattern_options,

@@ -178,6 +178,7 @@ en:
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
+      working_pattern: 'Select which would be considered for the role'
       flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
       pay_scale_range: 'What pay scale range does the job’s salary fall in?'
