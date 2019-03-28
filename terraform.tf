@@ -97,6 +97,7 @@ module "ecs" {
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
+  migrate_vacancy_working_pattern = "${var.migrate_vacancy_working_pattern}"
 
   backfill_jobseeker_alert_data_command = "${var.backfill_jobseeker_alert_data_command}"
 

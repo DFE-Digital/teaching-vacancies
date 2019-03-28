@@ -208,6 +208,11 @@ variable "seed_vacancies_from_api" {
   default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
 }
 
+variable "migrate_vacancy_working_pattern" {
+  description = "The Entrypoint for the data:working_pattern:migrate task"
+  default     = ["rake", "verbose", "data:working_pattern:migrate"]
+}
+
 variable "performance_platform_submit_task_command" {
   description = "The Entrypoint for the performance_platform_submit task"
   default     = ["rake", "verbose", "performance_platform:submit"]
