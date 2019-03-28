@@ -118,6 +118,10 @@ variable "seed_vacancies_from_api" {
   type = "list"
 }
 
+variable "migrate_vacancy_working_pattern" {
+  type = "list"
+}
+
 variable "performance_platform_submit_task_command" {
   type = "list"
 }

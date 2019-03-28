@@ -90,6 +90,7 @@ module "ecs" {
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
+  migrate_vacancy_working_pattern = "${var.migrate_vacancy_working_pattern}"
 
   backfill_audit_data_for_vacancy_publish_events = "${var.backfill_audit_data_for_vacancy_publish_events}"
   seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
