@@ -7,7 +7,7 @@
             %thead.govuk-table__head
                 %tr.govuk-table__row
                     %th.govuk-table__header= table_header_sort_by(t('jobs.job_title'), 'expired', column: 'job_title', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.date_to_be_posted'), 'expired', column: 'date_to_be_posted', sort: @sort)
+                    %th.govuk-table__header= table_header_sort_by(t('jobs.publish_on'), 'expired', column: 'publish_on', sort: @sort)
                     %th.govuk-table__header= table_header_sort_by(t('jobs.expired_on'), 'expired', column: 'expired_on', sort: @sort)
                     %th.govuk-table__header= table_header_sort_by(t('jobs.page_views'), 'expired', column: 'page_views', sort: @sort)
                     %th.govuk-table__header= table_header_sort_by(t('jobs.get_more_info_clicks'), 'expired', column: 'get_more_info_clicks', sort: @sort)
