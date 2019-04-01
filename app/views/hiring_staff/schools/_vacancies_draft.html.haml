@@ -6,8 +6,8 @@
             %thead.govuk-table__head
                 %tr.govuk-table__row
                     %th.govuk-table__header= table_header_sort_by(t('jobs.job_title'), 'draft', column: 'job_title', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.draft.time_created'), 'draft', column: 'draft.time_created', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.draft.time_updated'), 'draft', column: 'draft.time_updated', sort: @sort)
+                    %th.govuk-table__header= table_header_sort_by(t('jobs.draft.time_created'), 'draft', column: 'created_at', sort: @sort)
+                    %th.govuk-table__header= table_header_sort_by(t('jobs.draft.time_updated'), 'draft', column: 'updated_at', sort: @sort)
                     %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
             %tbody.govuk-table__body
                 - presenter.vacancies.each do |vacancy|
