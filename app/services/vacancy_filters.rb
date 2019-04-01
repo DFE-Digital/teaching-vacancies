@@ -45,6 +45,6 @@ class VacancyFilters
   private
 
   def extract_working_pattern(params)
-    Vacancy.working_patterns.include?(params[:working_pattern]) ? params[:working_pattern] : nil
+    Vacancy::WORKING_PATTERN_OPTIONS.include?(params[:working_pattern]) ? params[:working_pattern] : nil
   end
 end

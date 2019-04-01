@@ -2,6 +2,8 @@ require 'elasticsearch/model'
 require 'auditor'
 
 class Vacancy < ApplicationRecord
+  WORKING_PATTERN_OPTIONS = { 'full_time' => 0, 'part_time' => 1 }.freeze
+
   include ApplicationHelper
   include Auditor::Model
 
@@ -80,7 +82,7 @@ class Vacancy < ApplicationRecord
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time]
-  array_enum working_patterns: {'full_time' => 0, 'part_time' => 1}
+  array_enum working_patterns: WORKING_PATTERN_OPTIONS
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
