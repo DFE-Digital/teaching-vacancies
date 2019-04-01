@@ -7,7 +7,7 @@ RSpec.describe HiringStaff::SchoolsHelper, type: :helper do
       result = helper.table_header_sort_by('foo', column: 'job_title', sort: sort)
 
       expect(result).to eq(
-        '<a class="govuk-link sortby--asc" aria-label="Sort jobs by foo in ascending order" '\
+        '<a class="govuk-link sortable-link sortby--asc" aria-label="Sort jobs by foo in ascending order" '\
         'href="/school/jobs?sort_column=job_title&amp;sort_order=asc">foo</a>'
       )
     end
@@ -18,7 +18,7 @@ RSpec.describe HiringStaff::SchoolsHelper, type: :helper do
         result = helper.table_header_sort_by('foo', column: 'job_title', sort: sort)
 
         expect(result).to eq(
-          '<a class="govuk-link sortby--desc active" aria-label="Sort jobs by foo in descending order" '\
+          '<a class="govuk-link sortable-link sortby--desc active" aria-label="Sort jobs by foo in descending order" '\
           'href="/school/jobs?sort_column=job_title&amp;sort_order=desc">foo</a>'
         )
       end

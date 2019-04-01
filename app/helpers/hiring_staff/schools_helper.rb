@@ -9,7 +9,7 @@ module HiringStaff::SchoolsHelper
 
     link_to title,
             jobs_with_type_school_path(school_vacancy_params(sort_column: column, sort_order: order)),
-            class: "govuk-link sortby--#{order}#{active_class || ''}",
+            class: "govuk-link sortable-link sortby--#{order}#{active_class || ''}",
             'aria-label': "Sort jobs by #{title} in #{order}ending order"
   end
 
