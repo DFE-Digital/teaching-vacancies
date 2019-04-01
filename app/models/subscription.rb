@@ -6,10 +6,9 @@ class Subscription < ApplicationRecord
   has_many :alert_runs
 
   validates :email, email_address: { presence: true }
+  validates :reference, presence: true
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
-
-  before_save :set_reference
 
   scope :ongoing, -> { where('expires_on >= current_date') }
 
@@ -36,15 +35,6 @@ class Subscription < ApplicationRecord
 
   def search_criteria_to_h
     @search_criteria_hash = JSON.parse(search_criteria)
-  end
-
-  def set_reference
-    return if reference.present?
-
-    self.reference = loop do
-      reference = SecureRandom.hex(8)
-      break reference unless self.class.exists?(email: email, reference: reference)
-    end
   end
 
   def token(expiration_in_days: 2)

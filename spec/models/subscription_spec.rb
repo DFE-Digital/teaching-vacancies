@@ -20,6 +20,15 @@ RSpec.describe Subscription, type: :model do
       end
     end
 
+    context 'reference' do
+      it 'ensures a reference is set' do
+        subscription = Subscription.new
+
+        expect(subscription.valid?).to eq(false)
+        expect(subscription.errors.messages[:reference]).to eq(['can\'t be blank'])
+      end
+    end
+
     context 'unique index' do
       it 'validates uniqueness of email, expires_on, frequency and search_criteria' do
         create(:subscription, email: 'jane@doe.com',
@@ -49,21 +58,6 @@ RSpec.describe Subscription, type: :model do
       it 'retrieves all valid active subscriptions' do
         expect(Subscription.ongoing.count).to eq(3)
       end
-    end
-  end
-
-  context 'reference' do
-    it 'generates a reference if one is not set' do
-      expect(SecureRandom).to receive(:hex).and_return('ABCDEF')
-      subscription = create(:subscription, frequency: :daily)
-
-      expect(subscription.reference).to eq('ABCDEF')
-    end
-
-    it 'does not generate a reference if one is set' do
-      subscription = create(:subscription, reference: 'A-reference', frequency: :daily)
-
-      expect(subscription.reference).to eq('A-reference')
     end
   end
 

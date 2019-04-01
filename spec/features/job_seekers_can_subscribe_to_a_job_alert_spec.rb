@@ -31,6 +31,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
     scenario 'subscribing to a search creates a new daily subscription audit' do
       visit new_subscription_path(search_criteria: { keyword: 'test' })
       fill_in 'subscription[email]', with: 'jane.doe@example.com'
+      fill_in 'subscription[reference]', with: 'a reference'
       click_on 'Subscribe'
 
       activity = PublicActivity::Activity.last
@@ -41,6 +42,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       scenario 'when the email address is valid' do
         visit new_subscription_path(search_criteria: { keyword: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription[reference]', with: 'a reference'
         click_on 'Subscribe'
 
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
@@ -52,6 +54,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
         visit new_subscription_path(search_criteria: { keyword: 'math teacher' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription[reference]', with: 'a reference'
         click_on 'Subscribe'
 
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
@@ -64,23 +67,13 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
         visit new_subscription_path(search_criteria: { keyword: 'teacher' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription[reference]', with: 'a reference'
         click_on 'Subscribe'
 
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       context 'and is redirected to the confirmation page' do
-        scenario 'without setting a reference number' do
-          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
-          fill_in 'subscription[email]', with: 'jane.doe@example.com'
-          click_on 'Subscribe'
-
-          expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
-          expect(page).to have_content('jane.doe@example.com')
-          expect(page).to have_content(/Your reference [a-z]*/)
-          expect(page).to have_content('Keyword: teacher')
-        end
-
         scenario 'when setting a reference number' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
@@ -94,6 +87,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher',
                                                          newly_qualified_teacher: 'true' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          fill_in 'subscription[reference]', with: 'a reference'
           click_on 'Subscribe'
 
           click_on 'Return to your search results'
@@ -108,10 +102,20 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       scenario 'when the email address is invalid' do
         visit new_subscription_path(search_criteria: { keyword: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example'
+        fill_in 'subscription[reference]', with: 'a reference'
         click_on 'Subscribe'
 
         expect(page).to have_content('Please correct the following error')
         expect(page).to have_content('Email is not a valid email address')
+      end
+
+      scenario 'when no reference is set' do
+        visit new_subscription_path(search_criteria: { keyword: 'test' })
+        fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        click_on 'Subscribe'
+
+        expect(page).to have_content('Please correct the following error')
+        expect(page).to have_content('Reference can\'t be blank')
       end
 
       scenario 'when an active subcsription with the same search_criteria exists' do
@@ -122,6 +126,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
         visit new_subscription_path(search_criteria: search_criteria)
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription[reference]', with: 'a reference'
         click_on 'Subscribe'
 
         expect(page).to have_content('You are already subscribed to a daily email with these search criteria')
