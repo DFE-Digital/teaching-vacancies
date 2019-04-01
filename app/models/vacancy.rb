@@ -65,6 +65,7 @@ class Vacancy < ApplicationRecord
       indexes :publish_on, type: :date
       indexes :status, type: :keyword
       indexes :working_pattern, type: :keyword
+      indexes :working_patterns, type: :keyword
       indexes :minimum_salary, type: :integer
       indexes :maximum_salary, type: :integer
       indexes :coordinates, type: :geo_point, ignore_malformed: true
@@ -73,11 +74,13 @@ class Vacancy < ApplicationRecord
   end
 
   extend FriendlyId
+  extend ArrayEnum
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time]
+  array_enum working_patterns: {'full_time' => 0, 'part_time' => 1}
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
