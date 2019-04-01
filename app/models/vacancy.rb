@@ -187,6 +187,7 @@ class Vacancy < ApplicationRecord
   end
 
   def part_time?
+    working_patterns == ['part_time']
   end
 
   private
