@@ -31,7 +31,7 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
                   'Content-Type' => 'application/json' }
 
       sample_data = {
-        _timestamp: now.utc.iso8601,
+        _timestamp: now.iso8601,
         service: 'teaching_jobs_listings',
         channel: 'digital',
         count: 2,

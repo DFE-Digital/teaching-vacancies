@@ -14,7 +14,7 @@ module PerformancePlatform
   end
 
   class TransactionsByChannel < Base
-    def submit_transactions(count, timestamp = Time.zone.now.utc.iso8601, period = 'day')
+    def submit_transactions(count, timestamp = Time.zone.now.iso8601, period = 'day')
       HTTParty.post("#{PP_DOMAIN}#{transaction_endpoint}",
                     body: data(timestamp, period, count),
                     headers: headers)
