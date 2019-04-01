@@ -17,25 +17,18 @@ class SchoolVacanciesPresenter < BasePresenter
   private
 
   def draft
-    sort_vacancies(@school.vacancies.draft)
+    @school.vacancies.draft.order(sort.column => sort.order)
   end
 
   def pending
-    sort_vacancies(@school.vacancies.pending)
+    @school.vacancies.pending.order(sort.column => sort.order)
   end
 
   def expired
-    sort_vacancies(@school.vacancies.expired)
+    @school.vacancies.expired.order(sort.column => sort.order)
   end
 
   def published
-    sort_vacancies(@school.vacancies.live)
-  end
-
-  def sort_vacancies(vacancies)
-    vacancies = vacancies.sort_by { |vacancy| vacancy[sort.column] }
-    vacancies = vacancies.reverse! if sort.order == 'desc'
-
-    vacancies
+    @school.vacancies.live.order(sort.column => sort.order)
   end
 end
