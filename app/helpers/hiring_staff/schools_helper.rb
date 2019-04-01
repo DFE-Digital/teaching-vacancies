@@ -1,5 +1,5 @@
 module HiringStaff::SchoolsHelper
-  def table_header_sort_by(title, column:, sort:)
+  def table_header_sort_by(title, type, column:, sort:)
     if column == sort.column
       order = sort.reverse_order
       active_class = ' active'
@@ -8,7 +8,7 @@ module HiringStaff::SchoolsHelper
     end
 
     link_to title,
-            jobs_with_type_school_path(school_vacancy_params(sort_column: column, sort_order: order)),
+            jobs_with_type_school_path(type, school_vacancy_params(sort_column: column, sort_order: order)),
             class: "govuk-link sortable-link sortby--#{order}#{active_class || ''}",
             'aria-label': "Sort jobs by #{title} in #{order}ending order"
   end
