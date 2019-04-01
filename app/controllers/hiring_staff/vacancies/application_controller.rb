@@ -18,7 +18,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
   end
 
-  def store_vacancy_attributes(vacancy_attributes)
+  def store_vacancy_attributes(vacancy)
+    vacancy_attributes = vacancy.attributes.compact.merge!(working_patterns: vacancy.working_patterns)
     session[:vacancy_attributes] ||= {}
     session[:vacancy_attributes].merge!(vacancy_attributes)
   end
@@ -56,7 +57,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def retrieve_job_from_db
-    school.vacancies.published.find(vacancy_id).attributes
+    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy.attributes.merge!(working_patterns: vacancy.working_patterns)
   end
 
   def source_update?

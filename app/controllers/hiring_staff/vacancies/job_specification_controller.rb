@@ -9,11 +9,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def create
     @job_specification_form = JobSpecificationForm.new(job_specification_form)
-    store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact)
+    store_vacancy_attributes(@job_specification_form.vacancy)
 
     if @job_specification_form.valid?
       vacancy = session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
-      store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
+      store_vacancy_attributes(@job_specification_form.vacancy)
 
       redirect_to_next_step(vacancy)
     else
@@ -30,7 +30,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form.valid?
   end
 
-  # rubocop:disable Metrics/AbcSize
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
     @job_specification_form = JobSpecificationForm.new(job_specification_form)
@@ -42,13 +41,12 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       update_google_index(vacancy) if vacancy.listed?
       redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
-      store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
+      store_vacancy_attributes(@job_specification_form.vacancy)
       redirect_to edit_school_job_job_specification_path(vacancy.id,
                                                          anchor: 'errors',
                                                          source: 'update')
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
