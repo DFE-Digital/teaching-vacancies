@@ -186,6 +186,9 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = salary.to_s.strip
   end
 
+  def part_time?
+  end
+
   private
 
   def slug_candidates
