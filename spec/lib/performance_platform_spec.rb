@@ -79,7 +79,7 @@ RSpec.describe PerformancePlatform::UserSatisfaction do
                   'Content-Type' => 'application/json' }
 
       sample_rating_counts = { 1 => 1, 2 => 2, 3 => 0, 4 => 1, 5 => 4 }
-      expected_data = { _timestamp: now.utc.iso8601,
+      expected_data = { _timestamp: now.iso8601,
                         rating_1: 1,
                         rating_2: 2,
                         rating_3: 0,

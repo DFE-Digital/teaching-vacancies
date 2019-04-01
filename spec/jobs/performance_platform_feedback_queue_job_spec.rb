@@ -28,7 +28,7 @@ RSpec.describe PerformancePlatformFeedbackQueueJob, type: :job do
     expect(PerformancePlatform::UserSatisfaction).to receive(:new)
       .with('user-satisfaction-token')
       .and_return(user_satisfaction)
-    expect(user_satisfaction).to receive(:submit).with(ratings, date.utc.iso8601)
+    expect(user_satisfaction).to receive(:submit).with(ratings, date.iso8601)
 
     perform_enqueued_jobs { job }
   end
