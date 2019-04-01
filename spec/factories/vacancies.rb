@@ -7,7 +7,7 @@ FactoryBot.define do
     association :school
 
     job_title { Faker::Lorem.sentence[1...30].strip }
-    working_pattern { :full_time }
+    working_patterns { ['full_time'] }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }
     qualifications { Faker::Lorem.paragraph(4) }
