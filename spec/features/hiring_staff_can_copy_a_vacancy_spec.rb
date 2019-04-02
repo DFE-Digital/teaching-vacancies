@@ -102,7 +102,7 @@ RSpec.feature 'Copying a vacancy' do
       vacancy.save(validate: false) # Validation prevents publishing on a past date
       vacancy
     end
-    let(:new_vacancy) { build(:vacancy, original_vacancy.attributes.merge(new_attributes)) }
+    let(:new_vacancy) { build(:vacancy, original_vacancy.all_attributes.merge(new_attributes)) }
 
     before do
       visit school_path

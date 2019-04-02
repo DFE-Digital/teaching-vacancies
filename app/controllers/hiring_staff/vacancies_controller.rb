@@ -61,13 +61,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def step_2_valid?
-    valid = CandidateSpecificationForm.new(@vacancy.attributes).completed?
+    valid = CandidateSpecificationForm.new(@vacancy.all_attributes).completed?
     clear_cache_and_step unless valid
     valid
   end
 
   def step_3_valid?
-    valid = ApplicationDetailsForm.new(@vacancy.attributes).completed?
+    valid = ApplicationDetailsForm.new(@vacancy.all_attributes).completed?
     clear_cache_and_step unless valid
     valid
   end

@@ -190,6 +190,10 @@ class Vacancy < ApplicationRecord
     working_patterns == ['part_time']
   end
 
+  def all_attributes
+    attributes.compact.merge!(working_patterns: working_patterns)
+  end
+
   private
 
   def slug_candidates
