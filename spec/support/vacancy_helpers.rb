@@ -2,7 +2,7 @@ module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
-    select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
+    vacancy.working_patterns.each { |working_pattern| check working_pattern.humanize }
     select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
     select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
