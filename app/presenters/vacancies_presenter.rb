@@ -95,7 +95,7 @@ class VacanciesPresenter < BasePresenter
      vacancy.education,
      vacancy.qualifications,
      vacancy.experience,
-     vacancy.working_pattern_for_job_schema,
+     vacancy.working_pattern_for_job_schema.to_s,
      vacancy.school.town,
      vacancy.school&.region&.name,
      vacancy.school.address,
