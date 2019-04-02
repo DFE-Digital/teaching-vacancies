@@ -17,7 +17,7 @@ class JobPosting
       education: @schema['educationRequirements'],
       qualifications: @schema['qualifications'],
       experience: @schema['experienceRequirements'],
-      working_pattern: @schema['employmentType'].downcase.to_sym,
+      working_patterns: working_patterns,
       status: :published,
       weekly_hours: @schema['workHours'],
       application_link: @schema['url'],
@@ -46,5 +46,9 @@ class JobPosting
   def expires_on_or_future
     expires_on = Time.zone.parse(@schema['validThrough'])
     expires_on.future? ? expires_on : 4.months.from_now
+  end
+
+  def working_patterns
+    @schema['employmentType'].map { |type| type.downcase.to_sym }
   end
 end
