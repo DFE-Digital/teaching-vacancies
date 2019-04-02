@@ -10,11 +10,12 @@ RSpec.describe AWSIpRanges do
         .to_return(body: aws_ip_ranges, status: 200)
     end
 
-    it 'returns the CLOUDFRONT ip in the GLOBAL area' do
+    it 'returns the CLOUDFRONT ip in the GLOBAL or eu-west-2 area' do
       expected_result = [
         '13.32.0.0/15',
         '13.35.0.0/16',
         '52.46.0.0/18',
+        '52.56.127.0/25',
         '52.84.0.0/15',
         '52.124.128.0/17',
         '52.222.128.0/17',
