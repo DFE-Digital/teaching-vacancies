@@ -125,7 +125,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def working_pattern_for_job_schema
-    model.working_pattern.upcase
+    model.working_patterns.map(&:upcase)
   end
 
   def review_page_title

@@ -200,16 +200,25 @@ RSpec.describe Api::VacanciesController, type: :controller do
         it 'FULL_TIME' do
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          employment_type = { 'employmentType': 'FULL_TIME' }
+          employment_type = { 'employmentType': ['FULL_TIME'] }
           expect(json.to_h).to include(employment_type)
         end
 
         it 'PART_TIME' do
-          vacancy = create(:vacancy, working_pattern: :part_time)
+          vacancy = create(:vacancy, working_patterns: ['part_time'])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          employment_type = { 'employmentType': 'PART_TIME' }
+          employment_type = { 'employmentType': ['PART_TIME'] }
+          expect(json.to_h).to include(employment_type)
+        end
+
+        it 'both FULL_TIME and PART_TIME' do
+          vacancy = create(:vacancy, working_patterns: %w[full_time part_time])
+
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          employment_type = { 'employmentType': %w[FULL_TIME PART_TIME] }
           expect(json.to_h).to include(employment_type)
         end
       end
