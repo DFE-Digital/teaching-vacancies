@@ -257,7 +257,24 @@ RSpec.feature 'Creating a vacancy' do
                    :complete,
                    :draft,
                    school_id: school.id,
-                   working_pattern: :part_time)
+                   working_patterns: ['part_time'])
+          )
+          visit school_job_review_path(vacancy.id)
+
+          expect(page).to have_content("Review the job for #{school.name}")
+
+          verify_all_vacancy_details(vacancy)
+        end
+      end
+
+      context 'when the listing is full-time and part-time' do
+        scenario 'lists all the full-time and part-time vacancy details correctly' do
+          vacancy = VacancyPresenter.new(
+            create(:vacancy,
+                   :complete,
+                   :draft,
+                   school_id: school.id,
+                   working_patterns: ['full_time', 'part_time'])
           )
           visit school_job_review_path(vacancy.id)
 
@@ -475,7 +492,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is part-time' do
         scenario 'view the part-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :part_time)
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['part_time'])
 
           visit school_job_review_path(vacancy.id)
 
