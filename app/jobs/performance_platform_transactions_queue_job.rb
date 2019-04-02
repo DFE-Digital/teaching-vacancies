@@ -3,13 +3,14 @@ class PerformancePlatformTransactionsQueueJob < ApplicationJob
   queue_as :performance_platform
 
   def perform(time_to_s)
-    date = Time.zone.parse(time_to_s)
+    time = Time.zone.parse(time_to_s)
+    date = time.to_date
 
     return if TransactionAuditor::Logger.new('performance_platform:submit_transactions', date).performed?
 
     no_of_transactions = Vacancy.published_on_count(date)
     PerformancePlatform::TransactionsByChannel.new(PP_TRANSACTIONS_BY_CHANNEL_TOKEN)
-                                              .submit_transactions(no_of_transactions, date.utc.iso8601)
+                                              .submit_transactions(no_of_transactions, time.iso8601)
 
     TransactionAuditor::Logger.new('performance_platform:submit_transactions', date).log_success
   rescue StandardError => e
