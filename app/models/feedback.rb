@@ -4,7 +4,7 @@ class Feedback < ApplicationRecord
 
   validates :rating, presence: true
 
-  scope :published_on, (->(date) { where('date(created_at) = ?', date) })
+  scope :published_on, (->(date) { where(created_at: date.all_day) })
 
   def to_row
     [
