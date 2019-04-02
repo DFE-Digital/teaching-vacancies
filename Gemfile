@@ -89,6 +89,7 @@ end
 group :test do
   gem 'capybara', '~> 3.12'
   gem 'database_cleaner'
+  gem 'mock_redis'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
   gem 'webmock', '~> 3.5'

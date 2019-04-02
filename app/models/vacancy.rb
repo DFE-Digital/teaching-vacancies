@@ -111,6 +111,7 @@ class Vacancy < ApplicationRecord
   end
 
   counter :page_view_counter
+  counter :get_more_info_counter
 
   def location
     @location ||= SchoolPresenter.new(school).location

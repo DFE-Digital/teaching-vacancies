@@ -118,6 +118,10 @@ variable "seed_vacancies_from_api" {
   type = "list"
 }
 
+variable "backfill_info_clicks_for_vacancies_command" {
+  type = "list"
+}
+
 variable "performance_platform_submit_task_command" {
   type = "list"
 }
@@ -135,8 +139,8 @@ variable "update_spreadsheets_task_command" {
 variable "update_spreadsheets_task_schedule" {}
 variable "send_job_alerts_daily_email_schedule" {}
 
-variable "vacancies_pageviews_refresh_cache_task_command" {
+variable "vacancies_statistics_refresh_cache_task_command" {
   type = "list"
 }
 
-variable "vacancies_pageviews_refresh_cache_task_schedule" {}
+variable "vacancies_statistics_refresh_cache_task_schedule" {}

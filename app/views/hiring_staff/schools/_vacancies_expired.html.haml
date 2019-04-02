@@ -2,16 +2,18 @@
 %section.govuk-tabs__panel
     %h2.govuk-heading-m= t("jobs.expired_jobs")
 
-    - if presenter.expired.any?
+    - if presenter.vacancies.any?
         %table{class: 'vacancies govuk-table govuk-!-margin-top-4'}
             %thead.govuk-table__head
                 %tr.govuk-table__row
                     %th.govuk-table__header= t('jobs.job_title')
                     %th.govuk-table__header= t('jobs.date_to_be_posted')
                     %th.govuk-table__header= t('jobs.expired_on')
+                    %th.govuk-table__header= t('jobs.page_views')
+                    %th.govuk-table__header= t('jobs.get_more_info_clicks')
                     %th.govuk-table__header{ colspan: 2 }= t('jobs.actions')
             %tbody.govuk-table__body
-                - presenter.expired.each do |vacancy|
+                - presenter.vacancies.each do |vacancy|
                     = render partial: 'vacancy_expired', locals: { vacancy: vacancy, school: presenter.school }
     - else
         %p= t("jobs.no_expired_jobs")
