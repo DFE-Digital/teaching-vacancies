@@ -1,11 +1,12 @@
 require 'rails_helper'
 RSpec.describe SchoolVacanciesPresenter do
   let(:school) { create(:school) }
+  let(:sort) { VacancySort.new }
   let(:type) { 'published' }
-  let(:presenter) { described_class.new(school, type) }
+  let(:presenter) { described_class.new(school, sort, type) }
 
   let!(:draft_vacancies) { create_list(:vacancy, 5, :draft, school: school) }
-  let!(:pending_vacancies) { create_list(:vacancy, 2, :future_publish, school: school) }
+  let!(:pending_vacancies) { create_list(:vacancy, 4, :future_publish, school: school) }
   let!(:expired_vacancies) do
     expired_vacancies = []
     3.times do
@@ -15,7 +16,7 @@ RSpec.describe SchoolVacanciesPresenter do
     end
     expired_vacancies
   end
-  let!(:live_vacancies) { create_list(:vacancy, 7, :published, school: school) }
+  let!(:published_vacancies) { create_list(:vacancy, 7, :published, school: school) }
 
   it 'returns the school' do
     expect(presenter.school).to eq(school)
@@ -31,6 +32,11 @@ RSpec.describe SchoolVacanciesPresenter do
     it 'returns draft vacancies' do
       expect(presenter.vacancies.count).to eq(draft_vacancies.count)
     end
+
+    it 'returns sorted draft vacancies' do
+      sort.update(column: 'job_title', order: 'desc')
+      expect(presenter.vacancies).to eq(draft_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
+    end
   end
 
   context 'when type is pending' do
@@ -40,8 +46,13 @@ RSpec.describe SchoolVacanciesPresenter do
       expect(presenter.vacancy_type).to eq(:pending)
     end
 
-    it 'returns draft vacancies' do
+    it 'returns pending vacancies' do
       expect(presenter.vacancies.count).to eq(pending_vacancies.count)
+    end
+
+    it 'returns sorted pending vacancies' do
+      sort.update(column: 'job_title', order: 'desc')
+      expect(presenter.vacancies).to eq(pending_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
     end
   end
 
@@ -55,6 +66,11 @@ RSpec.describe SchoolVacanciesPresenter do
     it 'returns expired vacancies' do
       expect(presenter.vacancies.count).to eq(expired_vacancies.count)
     end
+
+    it 'returns sorted expired vacancies' do
+      sort.update(column: 'job_title', order: 'desc')
+      expect(presenter.vacancies).to eq(expired_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
+    end
   end
 
   context 'when type is published' do
@@ -64,8 +80,13 @@ RSpec.describe SchoolVacanciesPresenter do
       expect(presenter.vacancy_type).to eq(:published)
     end
 
-    it 'returns draft vacancies' do
-      expect(presenter.vacancies.count).to eq(live_vacancies.count)
+    it 'returns published vacancies' do
+      expect(presenter.vacancies.count).to eq(published_vacancies.count)
+    end
+
+    it 'returns sorted published vacancies' do
+      sort.update(column: 'job_title', order: 'desc')
+      expect(presenter.vacancies).to eq(published_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
     end
   end
 

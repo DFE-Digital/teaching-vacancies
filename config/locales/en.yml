@@ -175,6 +175,7 @@ en:
       application_link_url: 'Link for more information (link opens external website in a new window) — %{url}'
       flexible_working: 'Flexible working (optional)'
       newly_qualified_teacher: 'Newly qualified teacher (optional)'
+      sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
