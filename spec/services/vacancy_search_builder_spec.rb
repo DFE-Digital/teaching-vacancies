@@ -84,7 +84,7 @@ RSpec.describe VacancySearchBuilder do
         bool: {
           filter: {
             terms: {
-              working_pattern: ['part_time'],
+              working_patterns: ['part_time'],
             },
           },
         },

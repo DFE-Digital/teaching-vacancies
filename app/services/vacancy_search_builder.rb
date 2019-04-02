@@ -146,7 +146,7 @@ class VacancySearchBuilder
       bool: {
         filter: {
           terms: {
-            working_pattern: [working_pattern.to_s],
+            working_patterns: [working_pattern.to_s],
           },
         },
       },
