@@ -146,4 +146,21 @@ RSpec.describe VacancyPresenter do
       expect(vacancy.to_row[:status]).to eq('published')
     end
   end
+
+  describe '#working_pattern' do
+    let(:vacancy) { VacancyPresenter.new(create(:vacancy, working_patterns: working_patterns)) }
+    let(:working_patterns) { ['full_time'] }
+
+    it 'shows the working pattern in a human readable way' do
+      expect(vacancy.working_pattern).to eq('Full time')
+    end
+
+    context 'when there’s more than one working pattern' do
+      let(:working_patterns) { ['full_time', 'part_time'] }
+
+      it 'shows all the working patterns in a human readable way' do
+        expect(vacancy.working_pattern).to eq('Full time, Part time')
+      end
+    end
+  end
 end

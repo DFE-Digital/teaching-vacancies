@@ -121,7 +121,7 @@ class VacancyPresenter < BasePresenter
   # rubocop:enable Rails/OutputSafety
 
   def working_pattern
-    model.working_patterns.join(', ').sub('_', ' ').humanize
+    model.working_patterns.map(&:humanize).join(', ')
   end
 
   def working_pattern_for_job_schema
