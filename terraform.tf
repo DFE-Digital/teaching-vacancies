@@ -1,5 +1,10 @@
 provider "aws" {
   region = "${var.region}"
+  version = "~> 1.36.0"
+}
+
+provider "template" {
+  version = "~> 1.0.0"
 }
 
 /*
@@ -7,6 +12,8 @@ Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
 */
 terraform {
+  required_version = "~> 0.11.11"
+
   backend "s3" {
     bucket  = "terraform-state-002"
     key     = "tvs/terraform.tfstate" # When using workspaces this changes to ':env/{terraform.workspace}/tvs/terraform.tfstate'
