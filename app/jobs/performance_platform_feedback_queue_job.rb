@@ -8,7 +8,7 @@ class PerformancePlatformFeedbackQueueJob < ApplicationJob
 
     data = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }.merge!(Feedback.published_on(date).group(:rating).count)
     PerformancePlatform::UserSatisfaction.new(PP_USER_SATISFACTION_TOKEN)
-                                         .submit(data, date.utc.iso8601)
+                                         .submit(data, date.iso8601)
     TransactionAuditor::Logger.new('performance_platform:submit_user_satisfaction', date).log_success
   rescue StandardError => e
     TransactionAuditor::Logger.new('performance_platform:submit_user_satisfaction', date).log_failure

@@ -27,7 +27,8 @@ class VacanciesController < ApplicationController
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
 
     @vacancy = VacancyPresenter.new(vacancy)
-    TrackVacancyPageViewJob.perform_later(vacancy.id) unless authenticated?
+
+    VacancyPageView.new(vacancy).track unless authenticated?
 
     expires_in 5.minutes, public: true
   end

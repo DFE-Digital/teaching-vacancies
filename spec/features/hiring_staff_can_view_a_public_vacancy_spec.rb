@@ -6,8 +6,6 @@ RSpec.feature 'Hiring staff can view a public vacancy' do
     vacancy = create(:vacancy, :published)
     stub_hiring_staff_auth(urn: school.urn)
 
-    expect(TrackVacancyPageViewJob).not_to receive(:perform_later)
-
-    visit job_path(vacancy)
+    expect { visit job_path(vacancy) }.to change { vacancy.page_view_counter.to_i }.by(0)
   end
 end
