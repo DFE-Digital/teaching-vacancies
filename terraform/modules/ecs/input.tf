@@ -110,10 +110,6 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
-variable "backfill_audit_data_for_vacancy_publish_events" {
-  type = "list"
-}
-
 variable "seed_vacancies_from_api" {
   type = "list"
 }
