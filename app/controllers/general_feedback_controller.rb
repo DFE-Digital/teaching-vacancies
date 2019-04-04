@@ -4,8 +4,7 @@ class GeneralFeedbackController < ApplicationController
   end
 
   def create
-    @feedback = GeneralFeedback.create(rating: general_feedback_params[:rating],
-                                       comment: general_feedback_params[:comment])
+    @feedback = GeneralFeedback.create(general_feedback_params)
 
     return render 'new' unless @feedback.save
 
@@ -17,6 +16,6 @@ class GeneralFeedbackController < ApplicationController
   private
 
   def general_feedback_params
-    params.require(:general_feedback).permit(:rating, :comment)
+    params.require(:general_feedback).permit(:visit_purpose, :visit_purpose_comment, :rating, :comment, :email)
   end
 end
