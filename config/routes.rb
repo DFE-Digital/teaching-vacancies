@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :interests, only: %i[new]
   end
 
+  resource :feedback, controller: 'general_feedback', only: %i[new create]
+
   resources :subscriptions, only: %i[new create] do
     get :unsubscribe
     resource :confirmation, only: [:show]
