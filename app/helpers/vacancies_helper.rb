@@ -36,14 +36,6 @@ module VacanciesHelper
     params.merge(overwrite).permit(vacancy_params_whitelist)
   end
 
-  def rating_options
-    [['Very satisfied', 5],
-     ['Satisfied', 4],
-     ['Neither satisfied or dissatisfied', 3],
-     ['Dissatisfied', 2],
-     ['Very dissatisfied', 1]]
-  end
-
   def radius_filter_options
     [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 200].inject([]) do |radii, radius|
       radii << ["Within #{radius} miles", radius]
