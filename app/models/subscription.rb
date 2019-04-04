@@ -34,7 +34,14 @@ class Subscription < ApplicationRecord
   end
 
   def search_criteria_to_h
-    @search_criteria_hash = JSON.parse(search_criteria)
+    parsed_criteria = (JSON.parse(search_criteria) if search_criteria.present?)
+    @search_criteria_hash = if parsed_criteria.is_a?(Hash)
+                              parsed_criteria
+                            else
+                              {}
+                            end
+  rescue JSON::ParserError
+    @search_criteria_hash = {}
   end
 
   def token(expiration_in_days: 2)
