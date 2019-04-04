@@ -8,7 +8,19 @@ class SubscriptionPresenter < BasePresenter
     end.stringify_keys
   end
 
+  def to_row
+    extended_search_criteria.merge(reference: reference)
+  end
+
   private
+
+  def extended_search_criteria
+    available_filter_hash.merge(search_criteria_to_h.symbolize_keys)
+  end
+
+  def available_filter_hash
+    Hash[VacancyFilters::AVAILABLE_FILTERS.collect { |v| [v, nil] }]
+  end
 
   def add_search_criteria_field(field, value)
     return if field.eql?('radius')
