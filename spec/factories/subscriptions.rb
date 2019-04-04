@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :subscription do
     expires_on { Time.zone.today.strftime('%Y-%m-%d') }
     email { Faker::Internet.email }
-    reference { SecureRandom.hex(8) }
+    reference { Faker::Lorem.sentence }
     frequency { :daily }
 
     factory :daily_subscription do

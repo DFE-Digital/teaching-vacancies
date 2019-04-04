@@ -12,6 +12,8 @@ class Subscription < ApplicationRecord
 
   scope :ongoing, -> { where('expires_on >= current_date') }
 
+  after_initialize :default_reference
+
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
@@ -68,5 +70,42 @@ class Subscription < ApplicationRecord
 
   def expired?
     expires_on < Time.zone.today
+  end
+
+  private
+
+  def needs_reference?
+    new_record? && reference.blank?
+  end
+
+  def keyword_reference_part
+    search_criteria_to_h if @search_criteria_hash.nil?
+
+    @search_criteria_hash['keyword'].strip.split(/\s+/).join(' ') if @search_criteria_hash.key?('keyword')
+  end
+
+  def location_reference_part
+    search_criteria_to_h if @search_criteria_hash.nil?
+
+    has_location = ['location', 'radius'].all? { |key| @search_criteria_hash.key?(key) }
+
+    "within #{@search_criteria_hash['radius']} miles of #{@search_criteria_hash['location'].strip}" if has_location
+  end
+
+  def default_reference
+    return unless needs_reference?
+
+    keyword_part = keyword_reference_part
+    location_part = location_reference_part
+
+    return if keyword_part.blank? && location_part.blank?
+
+    self.reference = if keyword_part.present?
+                       "#{keyword_part.upcase_first} jobs"
+                     else
+                       'Jobs'
+                     end
+
+    self.reference += " #{location_part}" if location_part.present?
   end
 end
