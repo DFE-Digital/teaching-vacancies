@@ -13,7 +13,7 @@ RSpec.feature 'A job seeker can manage their subscription' do
     end
   end
 
-  context 'with an expired token' do
+  context 'with an old token' do
     let(:token) do
       Timecop.travel(-7.days) { subscription.token }
     end
@@ -21,7 +21,7 @@ RSpec.feature 'A job seeker can manage their subscription' do
     scenario 'cannot see subscription details' do
       visit subscription_path(token)
 
-      expect(page).to have_text('Page not found')
+      expect(page).to have_text('Manage your subscription')
     end
   end
 end
