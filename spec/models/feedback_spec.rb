@@ -4,6 +4,11 @@ RSpec.describe Feedback, type: :model do
   it { should belong_to(:vacancy) }
   it { should belong_to(:user) }
 
+  describe 'validations' do
+    it { should validate_presence_of :rating }
+    it { should validate_length_of(:comment).is_at_most(1200) }
+  end
+
   describe '#published_on(date)' do
     it 'retrieves feedback submitted on the given date' do
       feedback_today = create_list(:feedback, 3)

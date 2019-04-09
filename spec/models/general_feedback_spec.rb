@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe GeneralFeedback, type: :model do
+  describe 'validations' do
+    it { should validate_presence_of :visit_purpose }
+    it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
+    it { should validate_presence_of :rating }
+    it { should validate_length_of(:comment).is_at_most(1200) }
+  end
+
   describe '#published_on(date)' do
     it 'retrieves feedback submitted on the given date' do
       feedback_today = create_list(:general_feedback, 3)

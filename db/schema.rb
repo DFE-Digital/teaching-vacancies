@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_04_092137) do
+ActiveRecord::Schema.define(version: 2019_04_09_163658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2019_04_04_092137) do
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "vacancy_id"
     t.integer "rating"
-    t.string "comment"
+    t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 2019_04_04_092137) do
 
   create_table "general_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "rating"
-    t.string "comment"
+    t.text "comment"
     t.integer "visit_purpose"
-    t.string "visit_purpose_comment"
+    t.text "visit_purpose_comment"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
