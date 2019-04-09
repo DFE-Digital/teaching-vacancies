@@ -5,5 +5,6 @@ namespace :spreadsheets do
     AddAuditDataToSpreadsheetJob.perform_later('interest_expression')
     AddAuditDataToSpreadsheetJob.perform_later('subscription_creation')
     AddFeedbackToSpreadsheetJob.perform_later
+    AddGeneralFeedbackToSpreadsheetJob.perform_later
   end
 end

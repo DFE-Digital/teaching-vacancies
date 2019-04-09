@@ -4,7 +4,6 @@ RSpec.describe AddFeedbackToSpreadsheetJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later }
-  let(:data) { [Time.zone.now.to_s, 'vacancy-id', '010101', 5, 'feedback note'] }
 
   it 'queues the job' do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)

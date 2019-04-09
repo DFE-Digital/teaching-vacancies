@@ -4,6 +4,7 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
     {
       vacancies: 'some-gid',
       feedback: 'feedback-gid',
+      general_feedback: 'general-feedback-gid',
       interest_expression: 'interest-expression-gid'
     }
   end
