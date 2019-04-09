@@ -17,7 +17,7 @@ RSpec.describe GeneralFeedback, type: :model do
 
   describe '#to_row' do
     let(:created_at) { '2019-01-01T00:00:00+00:00' }
-    let(:visit_purpose) { 3 }
+    let(:visit_purpose) { :other_purpose }
     let(:visit_purpose_comment) { 'For reasons...' }
     let(:rating) { 5 }
     let(:comment) { 'Great!' }
@@ -35,7 +35,7 @@ RSpec.describe GeneralFeedback, type: :model do
 
     it 'returns an array of data' do
       expect(feedback.to_row[0]).to eq(Time.zone.now.to_s)
-      expect(feedback.to_row[1]).to eq(visit_purpose)
+      expect(feedback.to_row[1]).to eq(visit_purpose.to_s)
       expect(feedback.to_row[2]).to eq(visit_purpose_comment)
       expect(feedback.to_row[3]).to eq(rating)
       expect(feedback.to_row[4]).to eq(comment)

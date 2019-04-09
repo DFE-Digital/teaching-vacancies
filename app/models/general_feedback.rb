@@ -1,6 +1,8 @@
 class GeneralFeedback < ApplicationRecord
   include Auditor::Model
 
+  enum visit_purpose: %i[other_purpose find_teaching_job list_teaching_job]
+
   validates :visit_purpose, presence: true
   validates :rating, presence: true
 

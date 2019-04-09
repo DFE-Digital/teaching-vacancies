@@ -1,8 +1,8 @@
 module FeedbackHelper
   def visit_purpose_options
-    [['Find a job in teaching', 1],
-     ['List a teaching job on the service', 2],
-     ['Something else (tell us in the box below)', 3]]
+    [['Find a job in teaching', :find_teaching_job],
+     ['List a teaching job on the service', :list_teaching_job],
+     ['Something else (tell us in the box below)', :other_purpose]]
   end
 
   def rating_options
