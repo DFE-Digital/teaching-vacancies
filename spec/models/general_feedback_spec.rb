@@ -6,6 +6,13 @@ RSpec.describe GeneralFeedback, type: :model do
     it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
     it { should validate_presence_of :rating }
     it { should validate_length_of(:comment).is_at_most(1200) }
+
+    it 'ensures a valid email address is used' do
+      feedback = GeneralFeedback.new(email: 'inv@al@.id.email.com')
+
+      expect(feedback.valid?).to eq(false)
+      expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
+    end
   end
 
   describe '#published_on(date)' do
