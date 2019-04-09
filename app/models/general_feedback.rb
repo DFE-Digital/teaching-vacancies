@@ -1,4 +1,6 @@
 class GeneralFeedback < ApplicationRecord
+  include Auditor::Model
+
   validates :visit_purpose, presence: true
   validates :rating, presence: true
 
