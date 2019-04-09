@@ -1,6 +1,12 @@
 RSpec.shared_examples_for 'ExportToSpreadsheet' do
   let(:worksheet) { double(num_rows: 2, save: nil) }
-  let(:gids) { { vacancies: 'some-gid', feedback: 'feedback-gid' } }
+  let(:gids) do
+    {
+      vacancies: 'some-gid',
+      feedback: 'feedback-gid',
+      interest_expression: 'interest-expression-gid'
+    }
+  end
 
   before do
     stub_const(spreadsheet_id, 'abc1-def2')
