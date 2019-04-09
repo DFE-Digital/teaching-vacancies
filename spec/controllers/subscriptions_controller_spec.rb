@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
+  before do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
   describe '#new' do
     subject { get :new, params: { search_criteria: { keyword: 'english' } } }
 
@@ -26,25 +30,39 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe '#create' do
     context 'when feature is enabled' do
       before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
+      let(:params) do
+        {
+          subscription: {
+            email: 'foo@email.com',
+            search_criteria: { keyword: 'english' }.to_json
+          }
+        }
+      end
+      let(:subject) { post :create, params: params }
 
       it 'returns 200' do
-        post :create, params: { subscription: { email: 'foo@email.com' } }
+        subject
         expect(response.code).to eq('200')
       end
 
-      it 'does not allow unsafe parameters' do
-        params = {
-          subscription: {
-            email: '<script>foo@email.com</script>',
-            search_criteria: "<body onload=alert('test1')>Text</body>",
-            frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
+      it 'queues a job to audit the subscription' do
+        expect { subject }.to have_enqueued_job(AuditSubscriptionCreationJob)
+      end
+
+      context 'with unsafe params' do
+        let(:params) do
+          {
+            subscription: {
+              email: '<script>foo@email.com</script>',
+              search_criteria: "<body onload=alert('test1')>Text</body>",
+              frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
+            }
           }
-        }
+        end
 
-        post :create, params: params
-
-        subscription = Subscription.last
-        expect(subscription).to be_nil
+        it 'does not create a subscription' do
+          expect { subject }.to change { Subscription.count }.by(0)
+        end
       end
     end
 
