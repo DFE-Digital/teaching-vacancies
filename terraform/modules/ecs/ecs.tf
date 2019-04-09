@@ -504,6 +504,7 @@ data "template_file" "worker_container_definition" {
     audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
     audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
     audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
+    audit_subscription_creation_gid = "${var.audit_subscription_creation_gid}"
     notify_key                       = "${var.notify_key}"
     notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
     notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
