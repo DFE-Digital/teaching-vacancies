@@ -98,6 +98,8 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
+  backfill_jobseeker_alert_data_command = "${var.backfill_jobseeker_alert_data_command}"
+
   seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
 
   backfill_info_clicks_for_vacancies_command = "${var.backfill_info_clicks_for_vacancies_command}"

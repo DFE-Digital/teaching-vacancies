@@ -158,6 +158,11 @@ variable "send_job_alerts_daily_email_command" {
   default     = ["rake", "verbose", "daily_emails:send"]
 }
 
+variable "backfill_jobseeker_alert_data_command" {
+  description = "The Entrypoint for the backfill_jobseeker_alert_data task"
+  default     = ["rake", "verbose", "jobseeker_alerts:statistics:backfill:alert_data"]
+}
+
 variable "send_job_alerts_daily_email_schedule" {
   description = "send_job_alerts_daily_email schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 08 * * ? *)"
