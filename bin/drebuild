@@ -1,18 +1,24 @@
 #!/bin/sh
 
+run_with_pretty_print()
+{
+  echo "\n\033[36m===> $1\033[0m\n"
+  eval $1
+}
+
 echo "Remove all unused images before we build new ones…"
-docker image prune -f
+run_with_pretty_print 'docker image prune -f'
 
 echo "Rebuilding the test server…"
-docker-compose --file=docker-compose.test.yml down -v --remove-orphans
-docker-compose --file=docker-compose.test.yml build
-bin/dtest-server
+run_with_pretty_print 'docker-compose --file=docker-compose.test.yml down -v --remove-orphans'
+run_with_pretty_print 'bin/dtest-server'
 echo "Rebuilt and started the testing server for TVS."
 
 echo "Rebuilding the web server…"
-docker-compose down -v --remove-orphans
-docker-compose build
-docker-compose run --rm web rake db:seed
-bin/drake elasticsearch:vacancies:index
+run_with_pretty_print 'docker-compose down -v --remove-orphans'
+run_with_pretty_print 'docker-compose build'
+run_with_pretty_print 'docker-compose run web bin/dsetup'
+run_with_pretty_print 'docker-compose run web rake db:seed'
+run_with_pretty_print 'bin/drake elasticsearch:vacancies:index'
 echo "Rebuilt and starting the web server for TVS."
-bin/dstart
+run_with_pretty_print 'bin/dstart'

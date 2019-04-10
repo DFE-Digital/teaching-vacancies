@@ -1,5 +1,10 @@
 provider "aws" {
   region = "${var.region}"
+  version = "~> 1.36.0"
+}
+
+provider "template" {
+  version = "~> 1.0.0"
 }
 
 /*
@@ -7,6 +12,8 @@ Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
 */
 terraform {
+  required_version = "~> 0.11.11"
+
   backend "s3" {
     bucket  = "terraform-state-002"
     key     = "tvs/terraform.tfstate" # When using workspaces this changes to ':env/{terraform.workspace}/tvs/terraform.tfstate'
@@ -91,14 +98,16 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
-  backfill_audit_data_for_vacancy_publish_events = "${var.backfill_audit_data_for_vacancy_publish_events}"
+  seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
+
+  backfill_info_clicks_for_vacancies_command = "${var.backfill_info_clicks_for_vacancies_command}"
 
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
 
-  vacancies_pageviews_refresh_cache_task_command  = "${var.vacancies_pageviews_refresh_cache_task_command}"
-  vacancies_pageviews_refresh_cache_task_schedule = "${var.vacancies_pageviews_refresh_cache_task_schedule}"
+  vacancies_statistics_refresh_cache_task_command  = "${var.vacancies_statistics_refresh_cache_task_command}"
+  vacancies_statistics_refresh_cache_task_schedule = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 
   # Module inputs
 
@@ -149,6 +158,7 @@ module "ecs" {
   notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
   notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
   feature_email_alerts                      = "${var.feature_email_alerts}"
+  feature_import_vacancies                  = "${var.feature_import_vacancies}"
 }
 
 module "logs" {

@@ -25,7 +25,7 @@ module VacanciesHelper
             jobs_path(vacancy_params(sort_column: column,
                                      sort_order: order)),
             class: "govuk-link sortby--#{order}#{active_class || ''}",
-            'aria-label': "Sort jobs by #{title} in #{order}ending order"
+            'aria-label': t('jobs.aria_labels.sort_by_link', column: title, order: order)
   end
 
   def vacancy_params_whitelist

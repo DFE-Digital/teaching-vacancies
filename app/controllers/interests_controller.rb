@@ -1,6 +1,13 @@
 class InterestsController < ApplicationController
   def new
-    vacancy = Vacancy.find(vacancy_id)
+    audit_click unless authenticated?
+    redirect_to(vacancy.application_link)
+  end
+
+  private
+
+  def audit_click
+    VacancyGetMoreInfoClick.new(vacancy).track
     Auditor::Audit.new(vacancy, 'vacancy.get_more_information', nil).log
     AuditExpressInterestEventJob.perform_later(
       datestamp: Time.zone.now.iso8601.to_s,
@@ -8,10 +15,11 @@ class InterestsController < ApplicationController
       school_urn: vacancy.school.urn,
       application_link: vacancy.application_link
     )
-    redirect_to(vacancy.application_link)
   end
 
-  private
+  def vacancy
+    @vacancy ||= Vacancy.find(vacancy_id)
+  end
 
   def vacancy_id
     return params.require(:vacancy_id) if params.key?('vacancy_id')

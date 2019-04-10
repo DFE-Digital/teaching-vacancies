@@ -11,7 +11,7 @@ RSpec.describe PersistVacancyPageViewJob, type: :job do
   end
 
   it 'is in the page view collector queue' do
-    expect(job.queue_name).to eq('page_view_collector')
+    expect(job.queue_name).to eq('vacancy_statistics')
   end
 
   it 'executes perform' do

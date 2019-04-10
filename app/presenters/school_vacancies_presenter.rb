@@ -1,30 +1,34 @@
 class SchoolVacanciesPresenter < BasePresenter
-  attr_reader :vacancy_type
-  attr_reader :school
+  attr_reader :vacancy_type, :school, :sort, :vacancies
 
-  def initialize(school, vacancy_type)
+  def initialize(school, sort, vacancy_type)
     @vacancy_type = vacancy_type&.to_sym || :published
     @school = school
+    @sort = sort
     raise ArgumentError unless self.class.valid_types.include?(@vacancy_type)
+
+    @vacancies = send(@vacancy_type).map { |v| SchoolVacancyPresenter.new(v) }
   end
 
   def self.valid_types
     %i[published pending draft expired]
   end
 
+  private
+
   def draft
-    @school.vacancies.draft
+    @school.vacancies.draft.order(sort.column => sort.order)
   end
 
   def pending
-    @school.vacancies.pending
+    @school.vacancies.pending.order(sort.column => sort.order)
   end
 
   def expired
-    @school.vacancies.expired
+    @school.vacancies.expired.order(sort.column => sort.order)
   end
 
   def published
-    @school.vacancies.live
+    @school.vacancies.live.order(sort.column => sort.order)
   end
 end

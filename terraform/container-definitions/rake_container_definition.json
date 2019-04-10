@@ -64,6 +64,10 @@
       {
         "name": "ROLLBAR_ACCESS_TOKEN",
         "value": "${rollbar_access_token}"
+      },
+      {
+        "name": "FEATURE_IMPORT_VACANCIES",
+        "value": "${feature_import_vacancies}"
       }
     ]
   }

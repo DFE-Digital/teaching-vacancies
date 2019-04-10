@@ -76,6 +76,7 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+variable "feature_import_vacancies" {}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 
@@ -109,7 +110,11 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
-variable "backfill_audit_data_for_vacancy_publish_events" {
+variable "seed_vacancies_from_api" {
+  type = "list"
+}
+
+variable "backfill_info_clicks_for_vacancies_command" {
   type = "list"
 }
 
@@ -130,8 +135,8 @@ variable "update_spreadsheets_task_command" {
 variable "update_spreadsheets_task_schedule" {}
 variable "send_job_alerts_daily_email_schedule" {}
 
-variable "vacancies_pageviews_refresh_cache_task_command" {
+variable "vacancies_statistics_refresh_cache_task_command" {
   type = "list"
 }
 
-variable "vacancies_pageviews_refresh_cache_task_schedule" {}
+variable "vacancies_statistics_refresh_cache_task_schedule" {}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_18_181006) do
+ActiveRecord::Schema.define(version: 2019_03_21_142008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_03_18_181006) do
     t.text "easting"
     t.text "northing"
     t.point "geolocation"
+    t.index ["detailed_school_type_id"], name: "index_schools_on_detailed_school_type_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
@@ -208,10 +209,15 @@ ActiveRecord::Schema.define(version: 2019_03_18_181006) do
     t.datetime "total_pageviews_updated_at"
     t.uuid "first_supporting_subject_id"
     t.uuid "second_supporting_subject_id"
+    t.integer "total_get_more_info_clicks"
+    t.datetime "total_get_more_info_clicks_updated_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
+    t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
+    t.index ["max_pay_scale_id"], name: "index_vacancies_on_max_pay_scale_id"
     t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"
+    t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
   end
 

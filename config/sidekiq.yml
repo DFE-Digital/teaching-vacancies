@@ -2,7 +2,7 @@
   - [ mailers, 3 ]
   - [ queue_daily_alerts, 3 ]
   - [ email_daily_alerts, 4 ]
-  - [ page_view_collector, 2 ]
+  - [ vacancy_statistics, 2 ]
   - [ performance_platform, 2 ]
   - [ google_indexing, 2]
   - [ import_school_data, 1 ]
@@ -12,6 +12,7 @@
   - [ audit_search_event, 1 ]
   - [ audit_feedback, 1 ]
   - [ audit_spreadsheet, 1 ]
+  - [ seed_vacancies_from_api, 1 ]
 update_vacancy_spreadsheet:
   :concurrency: 1
 audit_published_vacancy:
@@ -24,7 +25,7 @@ audit_feedback:
   :concurrency: 1
 audit_spreadsheet:
   :concurrency: 1
-audit_toc_acceptance_event:
-  :concurrency: 1
 mailers:
+  :concurrency: 2
+seed_vacancies_from_api:
   :concurrency: 2

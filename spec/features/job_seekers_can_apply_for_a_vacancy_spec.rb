@@ -19,6 +19,13 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     expect(activity.session_id).to eq(nil)
   end
 
+  scenario 'it increments the get_more_info_counter' do
+    vacancy = create(:vacancy, :published)
+    visit job_path(vacancy)
+
+    expect { click_on 'Get more information' }.to change { vacancy.get_more_info_counter.to_i }.by(1)
+  end
+
   scenario 'it triggers a job to write an express_interest_event to the audit Spreadsheet' do
     vacancy = create(:vacancy, :published)
     visit job_path(vacancy)
