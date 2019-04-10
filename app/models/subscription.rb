@@ -70,32 +70,11 @@ class Subscription < ApplicationRecord
 
   private
 
-  def needs_reference?
-    new_record? && reference.blank?
-  end
-
-  def keyword_reference_part
-    search_criteria_hash = search_criteria_to_h
-
-    search_criteria_hash['keyword'].strip.split(/\s+/).join(' ') if search_criteria_hash.key?('keyword')
-  end
-
-  def location_reference_part
-    search_criteria_hash = search_criteria_to_h
-    has_location = ['location', 'radius'].all? { |key| search_criteria_hash.key?(key) }
-
-    "within #{search_criteria_hash['radius']} miles of #{search_criteria_hash['location'].strip}" if has_location
-  end
-
   def default_reference
-    return unless needs_reference?
+    return unless new_record? && reference.blank?
 
-    keyword_part = keyword_reference_part
-    location_part = location_reference_part
+    generator = SubscriptionReferenceGenerator.new(search_criteria: search_criteria_to_h)
 
-    return if keyword_part.blank? && location_part.blank?
-
-    self.reference = keyword_part.present? ? "#{keyword_part.upcase_first} jobs" : 'Jobs'
-    self.reference += " #{location_part}" if location_part.present?
+    self.reference = generator.generate
   end
 end
