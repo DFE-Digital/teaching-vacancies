@@ -36,14 +36,10 @@ class Subscription < ApplicationRecord
   end
 
   def search_criteria_to_h
-    parsed_criteria = (JSON.parse(search_criteria) if search_criteria.present?)
-    @search_criteria_hash = if parsed_criteria.is_a?(Hash)
-                              parsed_criteria
-                            else
-                              {}
-                            end
+    parsed_criteria = JSON.parse(search_criteria) if search_criteria.present?
+    parsed_criteria.is_a?(Hash) ? parsed_criteria : {}
   rescue JSON::ParserError
-    @search_criteria_hash = {}
+    {}
   end
 
   def token(expiration_in_days: 2)
@@ -79,17 +75,16 @@ class Subscription < ApplicationRecord
   end
 
   def keyword_reference_part
-    search_criteria_to_h if @search_criteria_hash.nil?
+    search_criteria_hash = search_criteria_to_h
 
-    @search_criteria_hash['keyword'].strip.split(/\s+/).join(' ') if @search_criteria_hash.key?('keyword')
+    search_criteria_hash['keyword'].strip.split(/\s+/).join(' ') if search_criteria_hash.key?('keyword')
   end
 
   def location_reference_part
-    search_criteria_to_h if @search_criteria_hash.nil?
+    search_criteria_hash = search_criteria_to_h
+    has_location = ['location', 'radius'].all? { |key| search_criteria_hash.key?(key) }
 
-    has_location = ['location', 'radius'].all? { |key| @search_criteria_hash.key?(key) }
-
-    "within #{@search_criteria_hash['radius']} miles of #{@search_criteria_hash['location'].strip}" if has_location
+    "within #{search_criteria_hash['radius']} miles of #{search_criteria_hash['location'].strip}" if has_location
   end
 
   def default_reference
@@ -100,12 +95,7 @@ class Subscription < ApplicationRecord
 
     return if keyword_part.blank? && location_part.blank?
 
-    self.reference = if keyword_part.present?
-                       "#{keyword_part.upcase_first} jobs"
-                     else
-                       'Jobs'
-                     end
-
+    self.reference = keyword_part.present? ? "#{keyword_part.upcase_first} jobs" : 'Jobs'
     self.reference += " #{location_part}" if location_part.present?
   end
 end
