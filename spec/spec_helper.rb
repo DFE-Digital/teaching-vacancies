@@ -9,6 +9,7 @@ RSpec.configure do |config|
     'es', # Required for CI. Defined in ./buildspec.yml
     'pg', # Required for CI. Defined in ./buildspec.yml
   ]
+
   WebMock.disable_net_connect!(allow: allowed_http_requests)
 
   config.expect_with :rspec do |expectations|

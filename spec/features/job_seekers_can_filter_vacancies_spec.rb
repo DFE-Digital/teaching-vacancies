@@ -32,7 +32,7 @@ RSpec.feature 'Filtering vacancies' do
       end
     end
 
-    scenario 'Search results can be filtered by the selected location and radius' do
+    scenario 'Search results can be filtered by the selected location and radius', :vcr do
       expect(Geocoder).to receive(:coordinates).with('enfield', params: { region: 'uk' })
                                                .and_return([51.6622925, -0.1180655])
       enfield_vacancy = create(:vacancy, :published,

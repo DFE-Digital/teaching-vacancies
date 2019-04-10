@@ -21,5 +21,17 @@ FactoryBot.define do
     trait :secondary do
       phase { :secondary }
     end
+
+    trait :with_live_vacancies do
+      after(:create) do |school, _evaluator|
+        create_list(:vacancy, 2, :published, school: school)
+      end
+    end
+
+    trait :with_expired_vacancies do
+      after(:create) do |school, _evaluator|
+        create_list(:vacancy, 2, :expired, school: school)
+      end
+    end
   end
 end
