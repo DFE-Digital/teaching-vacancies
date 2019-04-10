@@ -54,6 +54,7 @@ gem 'rubocop', '~> 0.65.0', require: false # Not in Test group due to: https://g
 gem 'activerecord-session_store'
 gem 'public_activity'
 gem 'high_voltage', '~> 3.1'
+gem 'geokit-rails'
 gem 'google_drive', require: false
 gem 'google-api-client'
 gem 'browser'

@@ -143,6 +143,10 @@ GEM
     friendly_id (5.2.5)
       activerecord (>= 4.0.0)
     geocoder (1.5.1)
+    geokit (1.13.1)
+    geokit-rails (2.3.1)
+      geokit (~> 1.5)
+      rails (>= 3.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.25.0)
@@ -510,6 +514,7 @@ DEPENDENCIES
   figaro
   friendly_id
   geocoder
+  geokit-rails
   google-api-client
   google_drive
   gov_uk_date_fields!
