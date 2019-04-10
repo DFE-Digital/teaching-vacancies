@@ -217,15 +217,12 @@ en:
     label: 'How could we improve this service?'
     hint_text: "Please don't include any personal or financial information, for example your National Insurance or credit card numbers. (Limit is 1,200 characters)"
     submit: 'Submit feedback'
-  general_feedback: 
+  general_feedback:
     page_title: 'General feedback'
     heading: 'Give feedback'
     visit_purpose_legend: 'What did you come to Teaching Vacancies to do?'
-    visit_purpose_hint_text: 'Please tell us what you came here to do. 
+    visit_purpose_hint_text: 'Please tell us what you came here to do.
     (Limit is 1,200 characters)'
-    improve_service_legend: 'Will you help us improve the service?'
-    improve_service_hint: 'Please enter your email address if you’d consider participating in one of our user research sessions. We’ll contact you with more information.'
-    email_label: 'Email address'
   schools:
     about: 'About'
     address: 'Address'

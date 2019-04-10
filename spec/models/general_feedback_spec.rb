@@ -6,13 +6,6 @@ RSpec.describe GeneralFeedback, type: :model do
     it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
     it { should validate_presence_of :rating }
     it { should validate_length_of(:comment).is_at_most(1200) }
-
-    it 'ensures a valid email address is used' do
-      feedback = GeneralFeedback.new(email: 'inv@al@.id.email.com')
-
-      expect(feedback.valid?).to eq(false)
-      expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
-    end
   end
 
   describe '#published_on(date)' do
@@ -35,15 +28,13 @@ RSpec.describe GeneralFeedback, type: :model do
     let(:visit_purpose_comment) { 'For reasons...' }
     let(:rating) { 5 }
     let(:comment) { 'Great!' }
-    let(:email) { 'jane.doe@example.com' }
 
     let(:feedback) do
       Timecop.freeze(created_at) do
         create(:general_feedback, visit_purpose: visit_purpose,
                                   visit_purpose_comment: visit_purpose_comment,
                                   rating: rating,
-                                  comment: comment,
-                                  email: email)
+                                  comment: comment)
       end
     end
 
@@ -53,8 +44,7 @@ RSpec.describe GeneralFeedback, type: :model do
       expect(feedback.to_row[2]).to eq(visit_purpose_comment)
       expect(feedback.to_row[3]).to eq(rating)
       expect(feedback.to_row[4]).to eq(comment)
-      expect(feedback.to_row[5]).to eq(email)
-      expect(feedback.to_row[6]).to eq(feedback.created_at.to_s)
+      expect(feedback.to_row[5]).to eq(feedback.created_at.to_s)
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_09_163658) do
+ActiveRecord::Schema.define(version: 2019_04_10_110530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(version: 2019_04_09_163658) do
     t.text "comment"
     t.integer "visit_purpose"
     t.text "visit_purpose_comment"
-    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

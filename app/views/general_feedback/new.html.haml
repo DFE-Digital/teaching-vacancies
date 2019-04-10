@@ -52,14 +52,4 @@
                 hint: t('feedback.hint_text'),
                 input_html: { class: 'form-control form-control-4-4', rows: '5' }
 
-      .govuk-form-group.general-feedback-group
-        %fieldset.govuk-fieldset
-          %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-            %h2.govuk-fieldset__heading
-              = t('general_feedback.improve_service_legend')
-          = f.input :email,
-                    label: t('general_feedback.email_label'),
-                    hint: t('general_feedback.improve_service_hint'),
-                    input_html: { class: 'form-control form-control-4-4', type: 'email', autocomplete: 'email' }
-
       = f.submit t('feedback.submit'), class: 'govuk-button'

@@ -7,7 +7,6 @@ class GeneralFeedback < ApplicationRecord
   validates :visit_purpose_comment, length: { maximum: 1200 }, if: :visit_purpose_comment?
   validates :rating, presence: true
   validates :comment, length: { maximum: 1200 }, if: :comment?
-  validates :email, email_address: true, if: :email?
 
   scope :published_on, (->(date) { where(created_at: date.all_day) })
 
@@ -18,7 +17,6 @@ class GeneralFeedback < ApplicationRecord
       visit_purpose_comment,
       rating,
       comment,
-      email,
       created_at.to_s
     ]
   end
