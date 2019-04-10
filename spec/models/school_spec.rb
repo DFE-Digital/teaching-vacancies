@@ -20,15 +20,17 @@ RSpec.describe School, type: :model do
           school.easting = 533498
           school.northing = 181201
 
-          expect(school.geolocation.x).to eql(51.51396894535262)
-          expect(school.geolocation.y).to eql(-0.07751626505544208)
+          expect(school.latitude).to eql(51.51396894535262)
+          expect(school.longitude).to eql(-0.07751626505544208)
         end
       end
 
       context 'when setting just a GB easting' do
         it 'should not set a geolocation' do
           school.easting = 533498
-          expect(school.geolocation).to eql(nil)
+
+          expect(school.latitude).to eql(nil)
+          expect(school.longitude).to eql(nil)
         end
       end
 
@@ -36,7 +38,8 @@ RSpec.describe School, type: :model do
         it 'should not set a geolocation' do
           school.northing = 308885
 
-          expect(school.geolocation).to eql(nil)
+          expect(school.latitude).to eql(nil)
+          expect(school.longitude).to eql(nil)
         end
       end
     end
@@ -49,8 +52,8 @@ RSpec.describe School, type: :model do
           school.easting = 533498
           school.northing = 181201
 
-          expect(school.geolocation.x).to eql(51.51396894535262)
-          expect(school.geolocation.y).to eql(-0.07751626505544208)
+          expect(school.latitude).to eql(51.51396894535262)
+          expect(school.longitude).to eql(-0.07751626505544208)
         end
       end
 
@@ -59,7 +62,8 @@ RSpec.describe School, type: :model do
           school.easting = 533498
           school.northing = nil
 
-          expect(school.geolocation).to eql(nil)
+          expect(school.latitude).to eql(nil)
+          expect(school.longitude).to eql(nil)
         end
       end
 
@@ -68,7 +72,8 @@ RSpec.describe School, type: :model do
           school.northing = 308885
           school.easting = nil
 
-          expect(school.geolocation).to eql(nil)
+          expect(school.latitude).to eql(nil)
+          expect(school.longitude).to eql(nil)
         end
       end
     end

@@ -90,7 +90,8 @@ class Vacancy < ApplicationRecord
   has_one :feedback
 
   delegate :name, to: :school, prefix: true, allow_nil: false
-  delegate :geolocation, to: :school, prefix: true, allow_nil: true
+  delegate :latitude, to: :school, prefix: true, allow_nil: true
+  delegate :longitude, to: :school, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :ends_on, :publish_on, :expires_on
 
@@ -118,11 +119,11 @@ class Vacancy < ApplicationRecord
   end
 
   def coordinates
-    return if school_geolocation.nil?
+    return if school_latitude.nil? && school_longitude.nil?
 
     {
-      lat: school_geolocation.x.to_f,
-      lon: school_geolocation.y.to_f
+      lat: school_latitude.to_f,
+      lon: school_longitude.to_f
     }
   end
 

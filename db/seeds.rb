@@ -43,7 +43,8 @@ ealing_school = FactoryBot.create(:school, name: 'Macmillan Academy ',
                                    postcode: 'TS5 4AG',
                                    url: 'http://www.macmillan-academy.org.uk',
                                    region: london,
-                                   geolocation: '(54.565770,-1.264489)')
+                                   latitude: 54.565770,
+                                   longitude: -1.264489)
 
 bromley_school = FactoryBot.create(:school,
                                     name: 'Burnsfield Infant School',
@@ -55,7 +56,8 @@ bromley_school = FactoryBot.create(:school,
                                     county: 'Cambridgeshire',
                                     postcode: 'PE16 6ET',
                                     region: se,
-                                    geolocation: '(52.455421,0.043325)')
+                                    latitude: 52.455421,
+                                    longitude: 0.043325)
 
 payscale = PayScale.limit(5).sample(1).first
 leadership = Leadership.limit(1).sample(1).first

@@ -23,11 +23,11 @@
 
     = render partial: 'school_details'
 
-    - if @vacancy.school.geolocation
+    - if @vacancy.school.latitude && @vacancy.school.longitude
       #map_zoom{style: 'height: 200px; margin-bottom: 20px;'}
       = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
-                                                            lat: @vacancy.school_geolocation.x,
-                                                            lng: @vacancy.school_geolocation.y }
+                                                            lat: @vacancy.school.latitude,
+                                                            lng: @vacancy.school.longitude }
 
       %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap" }
 
@@ -111,7 +111,7 @@
     %h2.govuk-heading-m.share-this-job
       = t('jobs.share_this_job')
     = render partial: '/shared/vacancy/share_buttons'
-    
+
     %aside.vacancy--metadata
       - if @vacancy.application_link.present?
         %p.govuk-body-s=t('jobs.aria_labels.apply_link')

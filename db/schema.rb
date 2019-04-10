@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_21_142008) do
+ActiveRecord::Schema.define(version: 2019_04_08_143457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -127,7 +127,8 @@ ActiveRecord::Schema.define(version: 2019_03_21_142008) do
     t.uuid "detailed_school_type_id"
     t.text "easting"
     t.text "northing"
-    t.point "geolocation"
+    t.float "latitude"
+    t.float "longitude"
     t.index ["detailed_school_type_id"], name: "index_schools_on_detailed_school_type_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"

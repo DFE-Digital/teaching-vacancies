@@ -34,16 +34,21 @@ class School < ApplicationRecord
   private
 
   def set_geolocation_from_easting_and_northing
-    if easting && northing
-      wgs84 = Breasal::EastingNorthing.new(
-        easting: easting.to_i,
-        northing: northing.to_i,
-        type: :gb
-      ).to_wgs84
+    self.latitude = wgs84[:latitude]
+    self.longitude = wgs84[:longitude]
+  end
 
-      geolocation = [wgs84[:latitude], wgs84[:longitude]]
-    end
+  def wgs84
+    return {} if invalid_coords?
 
-    self.geolocation = geolocation
+    Breasal::EastingNorthing.new(
+      easting: easting.to_i,
+      northing: northing.to_i,
+      type: :gb
+    ).to_wgs84
+  end
+
+  def invalid_coords?
+    easting.blank? || northing.blank?
   end
 end

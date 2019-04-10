@@ -38,7 +38,8 @@ RSpec.feature 'Filtering vacancies' do
       enfield_vacancy = create(:vacancy, :published,
                                school: build(:school, name: 'St James School',
                                                       town: 'Enfield',
-                                                      geolocation: '(51.6580645, -0.0448643)'))
+                                                      latitude: 51.6580645,
+                                                      longitude: -0.0448643))
       penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
                                                                              town: 'Penzance'))
 

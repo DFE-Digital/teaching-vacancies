@@ -5,7 +5,8 @@ RSpec.feature 'Viewing a vacancy' do
     school = create(:school,
                     easting: '537224',
                     northing: '177395',
-                    geolocation: '51.4788757883318, 0.0253328559417984')
+                    latitude: 51.4788757883318,
+                    longitude: 0.0253328559417984)
     vacancy = create(:vacancy, school: school)
     visit job_path(vacancy)
     expect(page).to have_css('div#map_zoom')
