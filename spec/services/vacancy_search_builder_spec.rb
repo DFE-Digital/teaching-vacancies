@@ -93,7 +93,7 @@ RSpec.describe VacancySearchBuilder do
     end
 
     context 'salary query' do
-      it 'only includes the minimum salary when no maximum is provided' do
+      it 'only includes the minimum salary' do
         sort = OpenStruct.new(column: :expires_on, order: :desc)
         filters = OpenStruct.new(minimum_salary: 20000)
         builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
@@ -105,80 +105,6 @@ RSpec.describe VacancySearchBuilder do
             }
           }
         }
-
-        expect(builder).to be_a(Hash)
-        expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-      end
-
-      it 'includes both the minimum and maximum salary when both are provided' do
-        sort = OpenStruct.new(column: :expires_on, order: :desc)
-        filters = OpenStruct.new(minimum_salary: 200, maximum_salary: 20000)
-        builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
-
-        expected_hash = [
-          {
-            range: {
-              minimum_salary: {
-                gte: 200
-              }
-            }
-          }, {
-            bool: {
-              should: [{
-                range: {
-                  maximum_salary: {
-                    lte: 20000
-                  }
-                }
-              }, {
-                bool: {
-                  must_not: {
-                    exists: {
-                      field: 'maximum_salary'
-                    }
-                  }
-                }
-              }]
-            }
-          }
-        ]
-
-        expect(builder).to be_a(Hash)
-        expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-      end
-
-      it 'includes only the maximum salary value when no minimum is provided' do
-        sort = OpenStruct.new(column: :expires_on, order: :desc)
-        filters = OpenStruct.new(minimum_salary: nil, maximum_salary: 20000)
-        builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
-
-        expected_hash = [
-          {
-            range: {
-              minimum_salary: {
-                lte: 20000
-              }
-            }
-          }, {
-            bool: {
-              should: [{
-                range: {
-                  maximum_salary: {
-                    lte: 20000
-                  }
-                }
-              }, {
-                bool: {
-                  must_not: {
-                    exists: {
-                      field: 'maximum_salary'
-                    }
-                  }
-                }
-              }]
-            }
-          }
-        ]
 
         expect(builder).to be_a(Hash)
         expect(builder[:search_query][:bool][:must]).to include(expected_hash)
