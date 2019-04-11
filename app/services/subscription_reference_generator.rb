@@ -25,8 +25,12 @@ class SubscriptionReferenceGenerator
   end
 
   def location_part
-    has_location = ['location', 'radius'].all? { |key| @search_criteria.key?(key) }
+    return unless location?
 
-    "within #{@search_criteria['radius']} miles of #{@search_criteria['location'].strip}" if has_location
+    "within #{@search_criteria['radius']} miles of #{@search_criteria['location'].strip}"
+  end
+
+  def location?
+    ['location', 'radius'].all? { |key| @search_criteria.key?(key) }
   end
 end
