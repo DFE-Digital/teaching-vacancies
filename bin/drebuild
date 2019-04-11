@@ -25,8 +25,8 @@ pretty_print "Rebuilt and started the testing server for TVS."
 
 pretty_print "Rebuilding the web server…"
 run_with_pretty_print 'docker-compose build'
-run_with_pretty_print 'docker-compose run web bin/dsetup'
-run_with_pretty_print 'docker-compose run web rake db:seed'
+run_with_pretty_print 'docker-compose run --rm web bin/dsetup'
+run_with_pretty_print 'docker-compose run --rm web rake db:seed'
 run_with_pretty_print 'bin/drake elasticsearch:vacancies:index'
 pretty_print "Rebuilt and starting the web server for TVS…"
 run_with_pretty_print 'bin/dstart'
