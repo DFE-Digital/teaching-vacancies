@@ -6,7 +6,6 @@ class VacanciesController < ApplicationController
   helper_method :location,
                 :keyword,
                 :minimum_salary,
-                :maximum_salary,
                 :working_pattern,
                 :phase,
                 :newly_qualified_teacher,
@@ -41,8 +40,8 @@ class VacanciesController < ApplicationController
 
   def search_params
     params.permit(:keyword, :location, :radius,
-                  :minimum_salary, :maximum_salary, :phase,
-                  :phase, :working_pattern, :newly_qualified_teacher).to_hash
+                  :minimum_salary, :phase, :working_pattern,
+                  :newly_qualified_teacher).to_hash
   end
 
   def old_vacancy_path?(vacancy)
@@ -69,10 +68,6 @@ class VacanciesController < ApplicationController
 
   def minimum_salary
     params[:minimum_salary]
-  end
-
-  def maximum_salary
-    params[:maximum_salary]
   end
 
   def working_pattern

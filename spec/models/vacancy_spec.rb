@@ -14,7 +14,6 @@ RSpec.describe Vacancy, type: :model do
                 radius: nil,
                 keyword: 'a-non-matching-search-term',
                 minimum_salary: nil,
-                maximum_salary: nil,
                 working_pattern: nil,
                 newly_qualified_teacher: nil,
                 phase: nil)

@@ -17,7 +17,6 @@ RSpec.describe VacanciesController, type: :controller do
             keyword: "<body onload=alert('test1')>Text</body>",
             location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
             minimum_salary: '<xml>Foo</xml',
-            maximum_salary: '<style>Foo</style>',
             phase: '<iframe>Foo</iframe>',
             working_pattern: '<script>Foo</script>',
           }
@@ -28,7 +27,6 @@ RSpec.describe VacanciesController, type: :controller do
             'keyword' => 'Text',
             'location' => '',
             'minimum_salary' => 'Foo',
-            'maximum_salary' => '',
             'phase' => '',
             'working_pattern' => '',
           }

@@ -104,120 +104,6 @@ RSpec.feature 'Filtering vacancies' do
     expect(page).not_to have_content(lower_paid_vacancy.job_title)
   end
 
-  context 'Filterable by maximum salary', elasticsearch: true do
-    scenario 'when a job\'s maximum salary is set', elasticsearch: true do
-      lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
-      higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        select '£40,000', from: 'maximum_salary'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(lower_paid_vacancy.job_title)
-      expect(page).not_to have_content(higher_paid_vacancy.job_title)
-    end
-
-    scenario 'when a job\'s maximum salary is not  set', elasticsearch: true do
-      no_maximum = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: nil)
-      higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        select '£40,000', from: 'maximum_salary'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(no_maximum.job_title)
-      expect(page).not_to have_content(higher_paid_vacancy.job_title)
-    end
-  end
-
-  context 'Filterable by both minimum and maximum salary', elasticsearch: true do
-    scenario 'when a job\'s salary is within the specified salary range', elasticsearch: true do
-      no_match = create(:vacancy, :published, minimum_salary: 30000, maximum_salary: 41000)
-      other_higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 125000)
-      higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 40000, maximum_salary: 41000)
-      other_paid_vacancy = create(:vacancy, :published, minimum_salary: 40000, maximum_salary: 50000)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        select '£40,000', from: 'minimum_salary'
-        select '£50,000', from: 'maximum_salary'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).not_to have_content(no_match.job_title)
-      expect(page).not_to have_content(other_higher_paid_vacancy.job_title)
-      expect(page).to have_content(higher_paid_vacancy.job_title)
-      expect(page).to have_content(other_paid_vacancy.job_title)
-    end
-
-    scenario 'when a job\'s salary is not within the specified salary range', elasticsearch: true do
-      no_match = create(:vacancy, :published, minimum_salary: 30000, maximum_salary: 41000)
-      other_paid_vacancy = create(:vacancy, :published, minimum_salary: 40000, maximum_salary: 50000)
-      create(:vacancy, :published, minimum_salary: 40000, maximum_salary: 60000)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        select '£40,000', from: 'minimum_salary'
-        select '£50,000', from: 'maximum_salary'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(I18n.t('jobs.job_count', count: 1))
-      expect(page).not_to have_content(no_match.job_title)
-      expect(page).to have_content(other_paid_vacancy.job_title)
-    end
-
-    scenario 'when a job\'s maximum salary is not set', elasticsearch: true do
-      lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 20000, maximum_salary: nil)
-      higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 39000, maximum_salary: 45000)
-      create(:vacancy, :published, minimum_salary: 45000, maximum_salary: 65000)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        select '£20,000', from: 'minimum_salary'
-        select '£50,000', from: 'maximum_salary'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(I18n.t('jobs.job_count_plural', count: 2))
-      expect(page).to have_content(higher_paid_vacancy.job_title)
-      expect(page).to have_content(lower_paid_vacancy.job_title)
-    end
-
-    scenario 'a user clears their search', elasticsearch: true do
-      create(:vacancy, :published, job_title: 'Physics Teacher')
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      expect(page).not_to have_content(I18n.t('jobs.filters.clear_filters'))
-
-      within '.filters-form' do
-        fill_in 'keyword', with: 'Physics'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
-
-      click_on I18n.t('jobs.filters.clear_filters')
-      expect(current_path).to eq root_path
-    end
-  end
-
   context 'Filterable by newly qualified teacher', elasticsearch: true do
     scenario 'Suitable for NQTs' do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
@@ -263,7 +149,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 3, '', '20', 'Physics', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 3, '', '20', 'Physics', '', nil, nil, 'true']
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)
@@ -285,7 +171,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 12, '', '20', 'Math', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 12, '', '20', 'Math', '', nil, nil, 'true']
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)

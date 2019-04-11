@@ -23,7 +23,6 @@ class VacancyFilters
       radius: radius,
       keyword: keyword,
       minimum_salary: minimum_salary,
-      maximum_salary: maximum_salary,
       working_pattern: working_pattern,
       phase: phase,
       newly_qualified_teacher: newly_qualified_teacher,

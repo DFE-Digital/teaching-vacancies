@@ -59,7 +59,6 @@ RSpec.describe VacancyFilters do
         keyword: 'keyword',
         radius: 20,
         minimum_salary: 'minimum_salary',
-        maximum_salary: 'maximum_salary',
         working_pattern: 'working_pattern',
         newly_qualified_teacher: false,
         phase: 'phase',
@@ -72,7 +71,6 @@ RSpec.describe VacancyFilters do
         keyword: 'keyword',
         radius: '20',
         minimum_salary: 'minimum_salary',
-        maximum_salary: 'maximum_salary',
         newly_qualified_teacher: false,
         working_pattern: nil,
         phase: nil
