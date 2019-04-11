@@ -58,10 +58,10 @@ RSpec.describe Subscription, type: :model do
     context 'when common search criteria is provided' do
       it 'generates a reference on initialization' do
         subscription = Subscription.new(search_criteria: {
-          location: 'Somewhere', radius: 30, keyword: 'some keywords'
+          location: 'Somewhere', radius: 30, subject: 'english maths science'
         }.to_json)
 
-        expect(subscription.reference).to eq('Some keywords jobs within 30 miles of Somewhere')
+        expect(subscription.reference).to eq('English maths science jobs within 30 miles of Somewhere')
       end
     end
 

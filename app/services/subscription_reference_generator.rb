@@ -6,26 +6,31 @@ class SubscriptionReferenceGenerator
   end
 
   def generate
-    keyword = keyword_part
+    job_type = job_type_part
     location = location_part
 
-    return if keyword.blank? && location.blank?
+    return if job_type.blank? && location.blank?
 
-    reference = keyword.present? ? "#{keyword.upcase_first} jobs" : 'Jobs'
+    reference = job_type.present? ? "#{job_type.upcase_first} jobs" : 'Jobs'
     reference += " #{location}" if location.present?
     reference
   end
 
   private
 
-  def keyword_part
-    return unless keyword?
+  def job_type_part
+    return unless job_type?
 
-    search_criteria['keyword'].strip.split(/\s+/).join(' ')
+    parts = []
+
+    parts.push(search_criteria['subject'].strip.split(/\s+/).join(' ')) if search_criteria.key?('subject')
+    parts.push(search_criteria['job_title'].strip.split(/\s+/).join(' ')) if search_criteria.key?('job_title')
+
+    parts.join(' ')
   end
 
-  def keyword?
-    search_criteria.key?('keyword')
+  def job_type?
+    ['subject', 'job_title'].any? { |key| search_criteria.key?(key) }
   end
 
   def location_part
