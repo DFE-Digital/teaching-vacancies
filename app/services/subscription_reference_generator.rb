@@ -1,4 +1,6 @@
 class SubscriptionReferenceGenerator
+  attr_reader :search_criteria
+
   def initialize(search_criteria:)
     @search_criteria = search_criteria
   end
@@ -17,16 +19,16 @@ class SubscriptionReferenceGenerator
   private
 
   def keyword_part
-    @search_criteria['keyword'].strip.split(/\s+/).join(' ') if @search_criteria.key?('keyword')
+    search_criteria['keyword'].strip.split(/\s+/).join(' ') if search_criteria.key?('keyword')
   end
 
   def location_part
     return unless location?
 
-    "within #{@search_criteria['radius']} miles of #{@search_criteria['location'].strip}"
+    "within #{search_criteria['radius']} miles of #{search_criteria['location'].strip}"
   end
 
   def location?
-    ['location', 'radius'].all? { |key| @search_criteria.key?(key) }
+    ['location', 'radius'].all? { |key| search_criteria.key?(key) }
   end
 end
