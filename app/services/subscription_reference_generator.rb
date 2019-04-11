@@ -1,9 +1,5 @@
 class SubscriptionReferenceGenerator
   def initialize(search_criteria:)
-    update(search_criteria)
-  end
-
-  def update(search_criteria)
     @search_criteria = search_criteria
   end
 
