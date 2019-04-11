@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 run_with_pretty_print()
 {
