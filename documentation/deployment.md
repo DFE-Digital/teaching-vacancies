@@ -14,6 +14,7 @@ There are currently 4 long standing environments that the team have been using, 
 - pull request - requires at least 1 peer review
 - force push - ask the rest of the team if you can take control of an environment
 - testing - is only updated manually by developers on the request of user researchers in order to ensure stability during sessions
+
 ## Infrastructure
 
 As we use Terraform to make 95% of our changes to the infrastructure they too should be made in the form of pull requests into the relevant git branch. [You can read about what's not covered in our set up docs](../terraform/README.md).
