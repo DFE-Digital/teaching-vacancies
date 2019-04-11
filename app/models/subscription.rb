@@ -6,12 +6,13 @@ class Subscription < ApplicationRecord
   has_many :alert_runs
 
   validates :email, email_address: { presence: true }
+  validates :reference, presence: true
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
 
-  before_save :set_reference
-
   scope :ongoing, -> { where('expires_on >= current_date') }
+
+  after_initialize :default_reference
 
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
@@ -35,16 +36,10 @@ class Subscription < ApplicationRecord
   end
 
   def search_criteria_to_h
-    @search_criteria_hash = JSON.parse(search_criteria)
-  end
-
-  def set_reference
-    return if reference.present?
-
-    self.reference = loop do
-      reference = SecureRandom.hex(8)
-      break reference unless self.class.exists?(email: email, reference: reference)
-    end
+    parsed_criteria = JSON.parse(search_criteria) if search_criteria.present?
+    parsed_criteria.is_a?(Hash) ? parsed_criteria : {}
+  rescue JSON::ParserError
+    {}
   end
 
   def token(expiration_in_days: 2)
@@ -71,5 +66,15 @@ class Subscription < ApplicationRecord
 
   def expired?
     expires_on < Time.zone.today
+  end
+
+  private
+
+  def default_reference
+    return unless new_record? && reference.blank?
+
+    generator = SubscriptionReferenceGenerator.new(search_criteria: search_criteria_to_h)
+
+    self.reference = generator.generate
   end
 end
