@@ -200,6 +200,7 @@ en:
       title: 'Search job listings'
       location: 'Location'
       location_hint: 'Postcode'
+      radius: 'Radius'
       keyword: 'Keyword'
       keyword_hint: 'Role or subject, for example'
       subject: 'Subject'
