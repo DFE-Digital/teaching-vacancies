@@ -19,7 +19,13 @@ class SubscriptionReferenceGenerator
   private
 
   def keyword_part
-    search_criteria['keyword'].strip.split(/\s+/).join(' ') if search_criteria.key?('keyword')
+    return unless keyword?
+
+    search_criteria['keyword'].strip.split(/\s+/).join(' ')
+  end
+
+  def keyword?
+    search_criteria.key?('keyword')
   end
 
   def location_part
