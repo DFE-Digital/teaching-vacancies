@@ -45,11 +45,13 @@ class School < ApplicationRecord
   private
 
   def set_geolocation_from_easting_and_northing
+    wgs84 = easting_northing_to_latlng
+
     self.latitude = wgs84[:latitude]
     self.longitude = wgs84[:longitude]
   end
 
-  def wgs84
+  def easting_northing_to_latlng
     return {} if invalid_coords?
 
     Breasal::EastingNorthing.new(
