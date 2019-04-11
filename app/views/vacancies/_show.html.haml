@@ -44,7 +44,7 @@
 
     = render partial: 'school_details'
 
-    - if @vacancy.school.latitude && @vacancy.school.longitude
+    - if @vacancy.school.geolocation?
       %div#map_zoom
       = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
                                                             lat: @vacancy.school.latitude,

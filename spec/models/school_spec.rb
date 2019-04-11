@@ -78,4 +78,24 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe '#geolocation?' do
+    let(:school) { create(:school, latitude: 51.5139689453526, longitude: -0.07751626505544208) }
+
+    context 'when there is a latitude and longitude' do
+      it { expect(school.geolocation?).to eq(true) }
+    end
+
+    context 'when there is no latitude' do
+      before { school.latitude = nil }
+
+      it { expect(school.geolocation?).to eq(false) }
+    end
+
+    context 'when there is no longitude' do
+      before { school.longitude = nil }
+
+      it { expect(school.geolocation?).to eq(false) }
+    end
+  end
 end

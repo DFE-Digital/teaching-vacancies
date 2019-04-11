@@ -38,6 +38,10 @@ class School < ApplicationRecord
     GoogleDistanceMatrix::Place.new(lat: latitude, lng: longitude)
   end
 
+  def geolocation?
+    (latitude && longitude).present?
+  end
+
   private
 
   def set_geolocation_from_easting_and_northing
