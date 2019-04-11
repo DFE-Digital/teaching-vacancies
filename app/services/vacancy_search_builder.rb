@@ -1,7 +1,10 @@
 require 'geocoding'
+
 class VacancySearchBuilder
   attr_accessor :filters,
                 :keyword,
+                :subject,
+                :job_title,
                 :working_pattern,
                 :phase,
                 :newly_qualified_teacher,
@@ -14,6 +17,8 @@ class VacancySearchBuilder
   def initialize(filters:, sort:, expired: false, status: :published)
     self.filters = filters
     self.keyword = filters.keyword.to_s.strip
+    self.subject = filters.subject.to_s.strip
+    self.job_title = filters.job_title.to_s.strip
     self.working_pattern = filters.working_pattern
     self.phase = filters.phase
     self.newly_qualified_teacher = filters.newly_qualified_teacher
@@ -61,6 +66,8 @@ class VacancySearchBuilder
   def must_query_clause
     [
       keyword_query,
+      subject_query,
+      job_title_query,
       phase_query,
       newly_qualified_teacher_query,
       working_pattern_query,
@@ -72,10 +79,22 @@ class VacancySearchBuilder
   end
 
   def keyword_query
-    if keyword.empty?
+    optional_query(keyword) { |keyword| keyword_multi_match(keyword) }
+  end
+
+  def subject_query
+    optional_query(subject) { |subject| subject_multi_match(subject) }
+  end
+
+  def job_title_query
+    optional_query(job_title) { |job_title| job_title_multi_match(job_title) }
+  end
+
+  def optional_query(query)
+    if query.blank?
       match_all_hash
     else
-      keyword_multi_match(keyword)
+      yield query
     end
   end
 
@@ -195,6 +214,31 @@ class VacancySearchBuilder
         operator: 'and',
         fuzziness: 2,
         prefix_length: 1
+      },
+    }
+  end
+
+  def subject_multi_match(subject)
+    {
+      multi_match: {
+        query: subject,
+        type: 'best_fields',
+        fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
+        operator: 'or',
+        minimum_should_match: 1,
+        fuzziness: 'AUTO'
+      },
+    }
+  end
+
+  def job_title_multi_match(job_title)
+    {
+      match: {
+        job_title: {
+          query: job_title,
+          operator: 'and',
+          fuzziness: 'AUTO',
+        }
       },
     }
   end

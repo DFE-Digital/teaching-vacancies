@@ -13,6 +13,12 @@
       = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
       = search_field_tag :keyword, keyword, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
     .govuk-form-group
+      = label_tag 'subject', t('jobs.filters.subject'), class: 'govuk-label'
+      = search_field_tag :subject, subject, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.subject_hint')
+    .govuk-form-group
+      = label_tag 'job_title', t('jobs.filters.job_title'), class: 'govuk-label'
+      = search_field_tag :job_title, job_title, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.job_title_hint')
+    .govuk-form-group
       = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
       = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
     .govuk-form-group

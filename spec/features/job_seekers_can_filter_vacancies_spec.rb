@@ -56,6 +56,50 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
+  scenario 'Filterable by subject', elasticsearch: true do
+    headmaster = create(:vacancy, :published, job_title: 'Headmaster')
+    languages_teacher = create(:vacancy, :published, job_title: 'English Language')
+    english_teacher = create(:vacancy, job_title: 'Foo Tutor', subject: create(:subject, name: 'English'))
+    arts_teacher = create(:vacancy, job_title: 'Arts Tutor', subject: create(:subject, name: 'Arts'),
+                                    first_supporting_subject: create(:subject, name: 'English'))
+    maths_teacher = create(:vacancy, job_title: 'Maths Subject Leader', subject: create(:subject, name: 'Maths'))
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+    within '.filters-form' do
+      fill_in 'subject', with: 'English'
+      page.find('.govuk-button[type=submit]').click
+    end
+
+    expect(page).not_to have_content(headmaster.job_title)
+    expect(page).not_to have_content(maths_teacher.job_title)
+    expect(page).to have_content(languages_teacher.job_title)
+    expect(page).to have_content(arts_teacher.job_title)
+    expect(page).to have_content(english_teacher.job_title)
+  end
+
+  scenario 'Filterable by job title', elasticsearch: true do
+    headmaster = create(:vacancy, :published, job_title: 'Headmaster')
+    languages_teacher = create(:vacancy, :published, job_title: 'English Language')
+    english_teacher = create(:vacancy, job_title: 'Foo Tutor', subject: create(:subject, name: 'English'))
+    arts_teacher = create(:vacancy, job_title: 'Arts Tutor', subject: create(:subject, name: 'Arts'),
+                                    first_supporting_subject: create(:subject, name: 'English'))
+    maths_teacher = create(:vacancy, job_title: 'Maths Subject Leader', subject: create(:subject, name: 'Maths'))
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+    within '.filters-form' do
+      fill_in 'job_title', with: 'Tutor'
+      page.find('.govuk-button[type=submit]').click
+    end
+
+    expect(page).not_to have_content(headmaster.job_title)
+    expect(page).not_to have_content(maths_teacher.job_title)
+    expect(page).not_to have_content(languages_teacher.job_title)
+    expect(page).to have_content(arts_teacher.job_title)
+    expect(page).to have_content(english_teacher.job_title)
+  end
+
   scenario 'Filterable by working pattern', elasticsearch: true do
     part_time_vacancy = create(:vacancy, :published, working_pattern: :part_time)
     full_time_vacancy = create(:vacancy, :published, working_pattern: :full_time)
@@ -263,7 +307,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 3, '', '20', 'Physics', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 3, '', '20', 'Physics', '', '', '', '', nil, nil, 'true']
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)
@@ -285,7 +329,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 12, '', '20', 'Math', '', '', nil, nil, 'true']
+      data = [timestamp.to_s, 12, '', '20', 'Math', '', '', '', '', nil, nil, 'true']
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)

@@ -6,6 +6,16 @@ RSpec.describe VacancyFilters do
       expect(vacancy_filters.keyword).to eq('geography')
     end
 
+    it 'sets the subject filter if provided' do
+      vacancy_filters = VacancyFilters.new(subject: 'geography')
+      expect(vacancy_filters.subject).to eq('geography')
+    end
+
+    it 'sets the job title filter if provided' do
+      vacancy_filters = VacancyFilters.new(job_title: 'headteacher')
+      expect(vacancy_filters.job_title).to eq('headteacher')
+    end
+
     it 'sets the location filter if provided' do
       vacancy_filters = VacancyFilters.new(location: 'durham')
       expect(vacancy_filters.location).to eq('durham')
@@ -57,12 +67,14 @@ RSpec.describe VacancyFilters do
       filters = described_class.new(
         location: 'location',
         keyword: 'keyword',
+        subject: 'subject',
+        job_title: 'job_title',
         radius: 20,
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
-        working_pattern: 'working_pattern',
+        working_pattern: :full_time,
         newly_qualified_teacher: false,
-        phase: 'phase',
+        phase: :primary,
       )
 
       result = filters.to_hash
@@ -70,12 +82,14 @@ RSpec.describe VacancyFilters do
       expect(result).to eql(
         location: 'location',
         keyword: 'keyword',
+        subject: 'subject',
+        job_title: 'job_title',
         radius: '20',
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
+        working_pattern: :full_time,
         newly_qualified_teacher: false,
-        working_pattern: nil,
-        phase: nil
+        phase: :primary,
       )
     end
   end

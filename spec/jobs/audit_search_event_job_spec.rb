@@ -4,7 +4,6 @@ RSpec.describe AuditSearchEventJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later(data) }
-  let(:data) { [Time.zone.now.iso8601.to_s, 1, '', '20km', 'Physics', '', '', nil, nil, nil] }
 
   it 'queues the job' do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)

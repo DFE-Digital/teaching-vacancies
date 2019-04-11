@@ -5,6 +5,8 @@ class VacanciesController < ApplicationController
 
   helper_method :location,
                 :keyword,
+                :subject,
+                :job_title,
                 :minimum_salary,
                 :maximum_salary,
                 :working_pattern,
@@ -40,7 +42,7 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(:keyword, :location, :radius,
+    params.permit(:keyword, :subject, :job_title, :location, :radius,
                   :minimum_salary, :maximum_salary, :phase,
                   :phase, :working_pattern, :newly_qualified_teacher).to_hash
   end
@@ -65,6 +67,14 @@ class VacanciesController < ApplicationController
 
   def keyword
     params[:keyword]
+  end
+
+  def subject
+    params[:subject]
+  end
+
+  def job_title
+    params[:job_title]
   end
 
   def minimum_salary
