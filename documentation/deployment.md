@@ -20,7 +20,7 @@ There are currently 4 long standing environments that the team have been using, 
 As we use Terraform to make 95% of our changes to the infrastructure they too should be made in the form of pull requests into the relevant git branch. [You can read about what's not covered in our set up docs](../terraform/README.md).
 
 ### Before you start
-Get a local copy of the Terraform variables from the 1Password vault and move them into `/workspace-variables`, eg. `/workspace-variables/edge.tfvars`
+1. Get a local copy of the Terraform variables from the 1Password vault and move them into `/workspace-variables`, eg. `/workspace-variables/edge.tfvars`
 
 ### Running a deployment
 This is a manual process that we've scripted to help avoid common mistakes. To know when Terraform needs to be deployed, we've included a Terraform option in our pull request templates so it's the responsibility of the author to let the merger know that this step is needed on merge.
