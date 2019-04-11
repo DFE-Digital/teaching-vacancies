@@ -4,8 +4,10 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
   before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
 
   let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
+  let(:reference) { 'A reference' }
   let(:subscription) do
     create(:subscription,
+           reference: reference,
            frequency: :daily,
            search_criteria: search_criteria.to_json)
   end
@@ -42,24 +44,21 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
     end
 
     context 'with a generated reference' do
+      let(:reference) { SecureRandom.hex(8) }
+
       it 'does not show the reference' do
-        expect(page).to_not have_content(subscription.reference)
+        expect(page).to_not have_content(reference)
         expect(page).to have_content(I18n.t('subscriptions.deletion.confirmation'))
       end
     end
 
     context 'with a custom reference' do
-      let(:subscription) do
-        create(:subscription,
-               frequency: :daily,
-               search_criteria: search_criteria.to_json,
-               reference: 'English teacher jobs')
-      end
+      let(:reference) { 'English teacher jobs' }
 
       it 'shows my reference' do
-        expect(page).to have_content(subscription.reference)
+        expect(page).to have_content(reference)
         expect(page).to have_content(I18n.t('subscriptions.deletion.confirmation_with_reference',
-                                            reference: subscription.reference))
+                                            reference: reference))
       end
     end
   end

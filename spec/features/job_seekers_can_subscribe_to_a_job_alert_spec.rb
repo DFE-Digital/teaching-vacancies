@@ -69,18 +69,15 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
+      scenario 'when no reference is set' do
+        visit new_subscription_path(search_criteria: { keyword: 'test' })
+        fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        click_on 'Subscribe'
+
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+      end
+
       context 'and is redirected to the confirmation page' do
-        scenario 'without setting a reference number' do
-          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
-          fill_in 'subscription[email]', with: 'jane.doe@example.com'
-          click_on 'Subscribe'
-
-          expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
-          expect(page).to have_content('jane.doe@example.com')
-          expect(page).to have_content(/Your reference [a-z]*/)
-          expect(page).to have_content('Keyword: teacher')
-        end
-
         scenario 'when setting a reference number' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'

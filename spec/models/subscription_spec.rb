@@ -23,8 +23,10 @@ RSpec.describe Subscription, type: :model do
     context 'unique index' do
       it 'validates uniqueness of email, expires_on, frequency and search_criteria' do
         create(:subscription, email: 'jane@doe.com',
+                              reference: 'A reference',
                               frequency: :daily)
         subscription = build(:subscription, email: 'jane@doe.com',
+                                            reference: 'B reference',
                                             frequency: :daily)
 
         expect(subscription.valid?).to eq(false)
@@ -53,17 +55,28 @@ RSpec.describe Subscription, type: :model do
   end
 
   context 'reference' do
-    it 'generates a reference if one is not set' do
-      expect(SecureRandom).to receive(:hex).and_return('ABCDEF')
-      subscription = create(:subscription, frequency: :daily)
+    context 'when common search criteria is provided' do
+      it 'generates a reference on initialization' do
+        subscription = Subscription.new(search_criteria: {
+          location: 'Somewhere', radius: 30, keyword: 'some keywords'
+        }.to_json)
 
-      expect(subscription.reference).to eq('ABCDEF')
+        expect(subscription.reference).to eq('Some keywords jobs within 30 miles of Somewhere')
+      end
     end
 
-    it 'does not generate a reference if one is set' do
-      subscription = create(:subscription, reference: 'A-reference', frequency: :daily)
+    context 'when no common search criteria is provided' do
+      it 'does not set a default reference' do
+        subscription = Subscription.new(search_criteria: { radius: 20, phase: 'primary' }.to_json)
 
-      expect(subscription.reference).to eq('A-reference')
+        expect(subscription.reference).to be_nil
+      end
+    end
+
+    it 'uses a reference passed to it' do
+      subscription = create(:subscription, reference: 'A specific reference')
+
+      expect(subscription.reference).to eq('A specific reference')
     end
   end
 
