@@ -7,6 +7,7 @@ class AuditData < ApplicationRecord
     interest_expression
     search_event
     toc_acceptance
+    subscription_creation
   ]
 
   def to_row

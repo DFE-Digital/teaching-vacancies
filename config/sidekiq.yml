@@ -11,6 +11,7 @@
   - [ audit_express_interest_event, 1 ]
   - [ audit_search_event, 1 ]
   - [ audit_feedback, 1 ]
+  - [ audit_subscription_creation, 1 ]
   - [ audit_spreadsheet, 1 ]
   - [ seed_vacancies_from_api, 1 ]
 update_vacancy_spreadsheet:
@@ -22,6 +23,8 @@ audit_express_interest_event:
 audit_search_event:
   :concurrency: 1
 audit_feedback:
+  :concurrency: 1
+audit_subscription_creation:
   :concurrency: 1
 audit_spreadsheet:
   :concurrency: 1
