@@ -11,7 +11,7 @@ class PerformancePlatformTransactionsQueueJob < ApplicationJob
 
     no_of_transactions = Vacancy.published_on_count(date)
     PerformancePlatform::TransactionsByChannel.new(PP_TRANSACTIONS_BY_CHANNEL_TOKEN)
-                                              .submit_transactions(no_of_transactions, date.iso8601)
+                                              .submit(no_of_transactions, date.iso8601)
 
     TransactionAuditor::Logger.new(LOG_SOURCE, date).log_success
   rescue StandardError => e

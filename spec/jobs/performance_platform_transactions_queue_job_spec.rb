@@ -40,7 +40,7 @@ RSpec.describe PerformancePlatformTransactionsQueueJob, type: :job do
     ]
 
     expect(PerformancePlatform::TransactionsByChannel).to receive(:new).with('not-nil').and_return(pp)
-    expect(pp).to receive(:submit_transactions).with(jobs_published_yesterday.count, date_to_upload.iso8601)
+    expect(pp).to receive(:submit).with(jobs_published_yesterday.count, date_to_upload.iso8601)
 
     perform_enqueued_jobs { job }
   end
