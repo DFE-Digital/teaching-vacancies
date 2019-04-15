@@ -51,7 +51,8 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
       click_on I18n.t('buttons.accept_and_continue')
 
       current_user.reload
-      expect(page).to have_content(I18n.t('errors.feedback.errors_present'))
+
+      expect(page).to have_content(I18n.t('errors.terms_and_conditions.errors_present'))
       expect(current_user).not_to be_accepted_terms_and_conditions
     end
 
