@@ -37,6 +37,7 @@ class Vacancy < ApplicationRecord
     mappings dynamic: 'false' do
       indexes :job_title, type: :text, analyzer: :stopwords
       indexes :job_description, analyzer: 'english'
+      indexes :school_id, type: :keyword
 
       indexes :school do
         indexes :name, analyzer: 'english'
@@ -67,7 +68,6 @@ class Vacancy < ApplicationRecord
       indexes :working_pattern, type: :keyword
       indexes :minimum_salary, type: :integer
       indexes :maximum_salary, type: :integer
-      indexes :coordinates, type: :geo_point, ignore_malformed: true
       indexes :newly_qualified_teacher, type: :boolean
     end
   end
@@ -90,6 +90,7 @@ class Vacancy < ApplicationRecord
   has_one :feedback
 
   delegate :name, to: :school, prefix: true, allow_nil: false
+  delegate :id, to: :school, prefix: true, allow_nil: false
   delegate :latitude, to: :school, prefix: true, allow_nil: true
   delegate :longitude, to: :school, prefix: true, allow_nil: true
 

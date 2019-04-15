@@ -44,22 +44,17 @@ class VacancySearchBuilder
     1
   end
 
-  def location_filters
-    geocoded_location.present? ? location_geo_distance : {}
-  end
-
   def search_query
-    query = {
+    {
       bool: {
         must: must_query_clause,
       }
     }
-    query[:bool][:filter] = location_filters unless location_filters.empty?
-    query
   end
 
   def must_query_clause
     [
+      schools_query,
       keyword_query,
       phase_query,
       newly_qualified_teacher_query,
@@ -79,15 +74,23 @@ class VacancySearchBuilder
     end
   end
 
-  def location_geo_distance
+  def schools_in_area
+    SchoolsInArea.new(lat: geocoded_location[0],
+                      lng: geocoded_location[1],
+                      radius: radius).results.pluck(:id)
+  end
+
+  def schools_query
+    return if geocoded_location.nil?
+
     {
-      geo_distance: {
-        distance: "#{radius}mi",
-        coordinates: {
-          lat: geocoded_location.first,
-          lon: geocoded_location.last
-        }
-      }
+      bool: {
+        filter: {
+          terms: {
+            school_id: schools_in_area,
+          },
+        },
+      },
     }
   end
 

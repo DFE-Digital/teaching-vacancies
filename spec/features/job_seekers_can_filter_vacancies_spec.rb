@@ -32,7 +32,7 @@ RSpec.feature 'Filtering vacancies' do
       end
     end
 
-    scenario 'Search results can be filtered by the selected location and radius', :vcr do
+    scenario 'Search results can be filtered by the selected location and radius' do
       expect(Geocoder).to receive(:coordinates).with('enfield', params: { region: 'uk' })
                                                .and_return([51.6622925, -0.1180655])
       enfield_vacancy = create(:vacancy, :published,
@@ -42,6 +42,8 @@ RSpec.feature 'Filtering vacancies' do
                                                       longitude: -0.0448643))
       penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
                                                                              town: 'Penzance'))
+
+      allow(SchoolsInArea).to receive_message_chain(:new, :results) { [enfield_vacancy.school] }
 
       Vacancy.__elasticsearch__.client.indices.flush
       visit jobs_path
@@ -54,6 +56,37 @@ RSpec.feature 'Filtering vacancies' do
 
       expect(page).to have_content(enfield_vacancy.job_title)
       expect(page).not_to have_content(penzance_vacancy.job_title)
+    end
+
+    scenario 'Jobseekers should not see vacancies that are unreachable by road' do
+      expect(Geocoder).to receive(:coordinates).with('cardiff', params: { region: 'uk' })
+                                               .and_return([51.481583, -3.179090])
+
+      cardiff_vacancy = create(:vacancy, :published,
+                               school: build(:school, name: 'Kings Monkton School',
+                                                      town: 'Cardiff',
+                                                      latitude: 51.485785,
+                                                      longitude: -3.169818))
+
+      weston_vacancy = create(:vacancy, :published,
+                              school: build(:school, name: 'Walliscote Primary School',
+                                                     town: 'Weston-Super-Mare',
+                                                     latitude: '51.344998',
+                                                     longitude: '-2.977506'))
+
+      allow(SchoolsInArea).to receive_message_chain(:new, :results) { [cardiff_vacancy.school] }
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'location', with: 'cardiff'
+        select 'Within 25 miles'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(cardiff_vacancy.job_title)
+      expect(page).not_to have_content(weston_vacancy.job_title)
     end
   end
 

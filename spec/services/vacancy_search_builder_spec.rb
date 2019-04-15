@@ -33,25 +33,32 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-    it 'builds a location query when a location is provided' do
+    it 'builds a schools query when a location is provided' do
+      schools = create_list(:school, 4)
+
       expect(Geocoding).to receive_message_chain(:new, :coordinates) { [54.32, -1.2332] }
+      expect(SchoolsInArea).to receive(:new).with(lat: 54.32, lng: -1.2332, radius: 1) {
+        stub = double(SchoolsInArea)
+        expect(stub).to receive(:results) { schools }
+        stub
+      }
 
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(location: 'TR2 56D')
       builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
 
       expected_hash = {
-        geo_distance: {
-          distance: '1mi',
-          coordinates: {
-            lat: 54.32,
-            lon: -1.2332
-          }
-        }
+        bool: {
+          filter: {
+            terms: {
+              school_id: schools.pluck(:id),
+            },
+          },
+        },
       }
 
       expect(builder).to be_a(Hash)
-      expect(builder[:search_query][:bool][:filter]).to include(expected_hash)
+      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
     it 'builds a working pattern query when one is provided' do
