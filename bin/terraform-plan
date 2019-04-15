@@ -12,7 +12,7 @@ TERRAFORM_WORKSPACE=$1
 echo "Planning…"
 echo "* Terraform workspace: $TERRAFORM_WORKSPACE"
 
-read -r -p "Continue (y/n)?" CONT
+read -r -p "Continue? [y/N] " CONT
 if [ "$CONT" = "y" ]; then
   echo
 else
