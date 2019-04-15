@@ -41,9 +41,7 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(:subject, :job_title, :location, :radius,
-                  :minimum_salary, :maximum_salary, :phase,
-                  :phase, :working_pattern, :newly_qualified_teacher).to_hash
+    params.permit(*VacancyFilters::AVAILABLE_FILTERS).to_hash
   end
 
   def old_vacancy_path?(vacancy)
