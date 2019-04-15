@@ -423,9 +423,6 @@ en:
       introductory_message:
         title: Our introductory message
         about: You may see a pop-up welcome message when you first visit 'Teaching Vacancies'. We'll store a cookie so that your computer knows you've seen it and knows not to show it again.
-      feedback_survey:
-        title: Our feedback survey
-        about: <a href='https://www.surveymonkey.com/' target='_blank' class='govuk-link'>SurveyMonkey</a> is used to collect responses to our feedback survey. If you take part, SurveyMonkey will save extra cookies to your computer to track your progress through it.
       types:
         ga:
           purpose: This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before
