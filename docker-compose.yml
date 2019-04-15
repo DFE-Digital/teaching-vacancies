@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 services:
   web:
     build:
@@ -70,10 +70,12 @@ services:
       context: .
       args:
         RAILS_ENV: "development"
-    env_file:
-      - docker-compose.env
     environment:
       RAILS_ENV: "development"
+      DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    env_file:
+      - docker-compose.env
     command: bundle exec sidekiq -C config/sidekiq.yml
     depends_on:
       - redis_queue
