@@ -213,13 +213,11 @@ en:
   feedback:
     page_title: 'Feedback'
     heading: 'Give feedback'
-    legend: 'Overall, how did you feel about the service you received today?'
-    label: 'How could we improve this service?'
-    hint_text: "Please don't include any personal or financial information, for example your National Insurance or credit card numbers. (Limit is 1,200 characters)"
+    rating_legend: 'Overall, how did you feel about the service you received today?'
+    comment_label: 'How could we improve this service?'
+    comment_hint_text: "Please don't include any personal or financial information, for example your National Insurance or credit card numbers. (Limit is 1,200 characters)"
     submit: 'Submit feedback'
   general_feedback:
-    page_title: 'General feedback'
-    heading: 'Give feedback'
     visit_purpose_legend: 'What did you come to Teaching Vacancies to do?'
     visit_purpose_hint_text: 'Please tell us what you came here to do.
     (Limit is 1,200 characters)'
