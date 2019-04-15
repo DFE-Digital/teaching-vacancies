@@ -26,11 +26,11 @@ module PerformancePlatform
       '/data/teaching-jobs-job-listings/transactions-by-channel'
     end
 
-    def data_map(timestamp, period, data)
+    def data_map(timestamp, period, count)
       { _timestamp: timestamp,
         service: 'teaching_jobs_listings',
         channel: 'digital',
-        count: data,
+        count: count,
         dataType: 'transactions-by-channel',
         period: period }.to_json
     end
@@ -43,15 +43,15 @@ module PerformancePlatform
       '/data/teaching-jobs-job-listings/user-satisfaction'
     end
 
-    def data_map(timestamp, period, data)
+    def data_map(timestamp, period, rating_counts)
       { _timestamp: timestamp,
-        rating_1: data[1],
-        rating_2: data[2],
-        rating_3: data[3],
-        rating_4: data[4],
-        rating_5: data[5],
+        rating_1: rating_counts[1],
+        rating_2: rating_counts[2],
+        rating_3: rating_counts[3],
+        rating_4: rating_counts[4],
+        rating_5: rating_counts[5],
         service: 'teaching_jobs_listings',
-        total: data.values.inject(:+),
+        total: rating_counts.values.inject(:+),
         dataType: 'user-satisfaction',
         period: period }.to_json
     end
