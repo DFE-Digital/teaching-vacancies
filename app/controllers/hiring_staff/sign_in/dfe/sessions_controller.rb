@@ -16,7 +16,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     permissions = TeacherVacancyAuthorisation::Permissions.new
     permissions.authorise(identifier, selected_school_urn)
 
-    log_succesful_authentication
+    audit_successful_authentication
 
     if permissions.authorised?
       update_session(permissions.school_urn, permissions)
@@ -29,14 +29,16 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   private
 
   def not_authorised
-    log_failed_authorisation
+    audit_failed_authorisation
+    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
+
     @identifier = identifier
     render 'user-not-authorised'
   end
 
   def update_session(school_urn, permissions)
     session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)
-    log_succesful_authorisation
+    audit_successful_authorisation
   end
 
   def auth_hash
