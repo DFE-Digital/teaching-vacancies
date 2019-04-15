@@ -14,14 +14,16 @@ RSpec.describe AuditSearchEventJob, type: :job do
     expect(job.queue_name).to eq('audit_search_event')
   end
 
-  it 'writes to the spreadsheet' do
-    pending 'Temporarily turn off this auditing until we decide what to do with it'
-    stub_const('AUDIT_SPREADSHEET_ID', 'abc1-def2')
-    spreadsheet = double(:mock)
-    expect(Spreadsheet::Writer).to receive(:new)
-      .with('abc1-def2', AuditSearchEventJob::WORKSHEET_POSITION).and_return(spreadsheet)
-    expect(spreadsheet).to receive(:append_row).with(data)
+  it 'creates an AuditData record' do
+    expect { perform_enqueued_jobs { job } }.to change { AuditData.all.count }.by(1)
+  end
 
+  it 'adds the correct data' do
     perform_enqueued_jobs { job }
+
+    audit_data = AuditData.last
+
+    expect(audit_data.category).to eq('search_event')
+    expect(audit_data.data).to eq(data)
   end
 end
