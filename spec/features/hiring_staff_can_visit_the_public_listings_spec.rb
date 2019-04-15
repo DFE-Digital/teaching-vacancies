@@ -30,7 +30,7 @@ RSpec.feature 'School viewing public listings' do
       )
 
       mock_response = double(code: '200', body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
-      allow(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      allow(Authorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
 
       ENV['SIGN_IN_WITH_DFE'] = 'true'

@@ -1,5 +1,5 @@
 module AuthHelpers
-  class MockPermissions < TeacherVacancyAuthorisation::Permissions
+  class MockPermissions < Authorisation::Permissions
     def initialize(response)
       @response = response
     end

@@ -13,7 +13,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   def create
     Rails.logger.warn("Hiring staff signed in: #{oid}")
 
-    permissions = TeacherVacancyAuthorisation::Permissions.new
+    permissions = Authorisation::Permissions.new
     permissions.authorise(identifier, selected_school_urn)
 
     audit_successful_authentication

@@ -1,6 +1,6 @@
 require 'rails_helper'
-RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
-  let(:service) { TeacherVacancyAuthorisation::Permissions.new }
+RSpec.describe 'Authorisation::Permissions' do
+  let(:service) { Authorisation::Permissions.new }
   let(:headers) { { 'Authorization' => 'Token token=test-token', 'Content-Type' => 'application/json' } }
   let(:request) { double(:request, path: '') }
   let(:mock_http) { double(:http, request: double(:reponse, code: '200', body: { user: { permissions: [] } }.to_json)) }

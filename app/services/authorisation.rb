@@ -1,5 +1,5 @@
 require 'net/http'
-module TeacherVacancyAuthorisation
+module Authorisation
   class Permissions
     attr_reader :response, :headers, :http
 

@@ -111,7 +111,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
           }
         }
       )
-      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      expect(Authorisation::Permissions).to receive(:new)
         .and_return(mock_permissions)
     end
 
@@ -147,7 +147,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
               }
             }
           )
-          expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+          expect(Authorisation::Permissions).to receive(:new)
             .and_return(mock_permissions)
           click_on 'Change organisation'
 
@@ -179,7 +179,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         }
       }.to_json)
 
-      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      expect(Authorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
@@ -216,7 +216,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         }
       }.to_json)
 
-      expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
+      expect(Authorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
     end
 
