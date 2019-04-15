@@ -10,7 +10,7 @@
   - [audit_published_vacancy, 1]
   - [audit_express_interest_event, 1]
   - [audit_search_event, 1]
-  - [audit_feedback, 1]
+  - [audit_vacancy_publish_feedback, 1]
   - [audit_general_feedback, 1]
   - [audit_subscription_creation, 1]
   - [audit_spreadsheet, 1]
@@ -23,7 +23,7 @@ audit_express_interest_event:
   :concurrency: 1
 audit_search_event:
   :concurrency: 1
-audit_feedback:
+audit_vacancy_publish_feedback:
   :concurrency: 1
 audit_general_feedback:
   :concurrency: 1

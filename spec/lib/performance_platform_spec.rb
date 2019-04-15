@@ -69,7 +69,7 @@ RSpec.describe PerformancePlatform::UserSatisfaction do
       expect(user_satisfaction.headers).to include('Authorization' => 'Bearer satisfaction-token')
     end
 
-    it 'posts feedback  data to the Performance Platform' do
+    it 'posts feedback data to the Performance Platform' do
       now = Time.zone.now
       expect(Time).to receive_message_chain(:zone, :now).and_return(now)
 

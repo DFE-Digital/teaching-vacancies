@@ -73,11 +73,11 @@ RSpec.describe PerformancePlatformSender::Base do
       today = Date.current.beginning_of_day.in_time_zone
       two_days_ago = today - 2.days
 
-      create_list(:feedback, 3, rating: 1, created_at: today)
-      create_list(:feedback, 4, rating: 4, created_at: two_days_ago)
+      create_list(:vacancy_publish_feedback, 3, rating: 1, created_at: today)
+      create_list(:vacancy_publish_feedback, 4, rating: 4, created_at: two_days_ago)
 
-      rating3 = create_list(:feedback, 2, rating: 3, created_at: date_to_upload)
-      rating5 = create_list(:feedback, 3, rating: 5, created_at: date_to_upload)
+      rating3 = create_list(:vacancy_publish_feedback, 2, rating: 3, created_at: date_to_upload)
+      rating5 = create_list(:vacancy_publish_feedback, 3, rating: 5, created_at: date_to_upload)
 
       ratings = {
         1 => 0,

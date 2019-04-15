@@ -362,7 +362,7 @@ variable "google_api_json_key" {
 
 variable "google_analytics_profile_id" {}
 variable "audit_vacancies_worksheet_gid" {}
-variable "audit_feedback_worksheet_gid" {}
+variable "audit_vacancy_publish_feedback_worksheet_gid" {}
 variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
 variable "audit_subscription_creation_worksheet_gid" {}

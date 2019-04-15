@@ -142,7 +142,7 @@ module "ecs" {
   google_drive_json_key            = "${var.google_drive_json_key}"
   audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
   audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
-  audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+  audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
   audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
   audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
   audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_110530) do
+ActiveRecord::Schema.define(version: 2019_04_15_121556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -55,17 +55,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_110530) do
     t.string "code"
     t.text "label"
     t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
-  end
-
-  create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "vacancy_id"
-    t.integer "rating"
-    t.text "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "user_id"
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
-    t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -228,6 +217,17 @@ ActiveRecord::Schema.define(version: 2019_04_10_110530) do
     t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
+  end
+
+  create_table "vacancy_publish_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id"
+    t.integer "rating"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_vacancy_publish_feedbacks_on_user_id"
+    t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
   end
 
   add_foreign_key "schools", "detailed_school_types"

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Feedback, type: :model do
+RSpec.describe VacancyPublishFeedback, type: :model do
   it { should belong_to(:vacancy) }
   it { should belong_to(:user) }
 
@@ -11,15 +11,15 @@ RSpec.describe Feedback, type: :model do
 
   describe '#published_on(date)' do
     it 'retrieves feedback submitted on the given date' do
-      feedback_today = create_list(:feedback, 3)
-      feedback_yesterday = create_list(:feedback, 2, created_at: 1.day.ago)
-      feedback_the_other_day = create_list(:feedback, 4, created_at: 2.days.ago)
-      feedback_some_other_day = create_list(:feedback, 6, created_at: 1.month.ago)
+      feedback_today = create_list(:vacancy_publish_feedback, 3)
+      feedback_yesterday = create_list(:vacancy_publish_feedback, 2, created_at: 1.day.ago)
+      feedback_the_other_day = create_list(:vacancy_publish_feedback, 4, created_at: 2.days.ago)
+      feedback_some_other_day = create_list(:vacancy_publish_feedback, 6, created_at: 1.month.ago)
 
-      expect(Feedback.published_on(Time.zone.today).all).to match_array(feedback_today)
-      expect(Feedback.published_on(1.day.ago)).to match_array(feedback_yesterday)
-      expect(Feedback.published_on(2.days.ago)).to match_array(feedback_the_other_day)
-      expect(Feedback.published_on(1.month.ago)).to match_array(feedback_some_other_day)
+      expect(VacancyPublishFeedback.published_on(Time.zone.today).all).to match_array(feedback_today)
+      expect(VacancyPublishFeedback.published_on(1.day.ago)).to match_array(feedback_yesterday)
+      expect(VacancyPublishFeedback.published_on(2.days.ago)).to match_array(feedback_the_other_day)
+      expect(VacancyPublishFeedback.published_on(1.month.ago)).to match_array(feedback_some_other_day)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Feedback, type: :model do
 
     let(:feedback) do
       Timecop.freeze(created_at) do
-        create(:feedback, user: user, vacancy: vacancy, rating: rating, comment: comment)
+        create(:vacancy_publish_feedback, user: user, vacancy: vacancy, rating: rating, comment: comment)
       end
     end
 

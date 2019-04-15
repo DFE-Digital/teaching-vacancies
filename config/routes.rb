@@ -62,7 +62,7 @@ Rails.application.routes.draw do
       resource :application_details, only: %i[edit update],
                                      controller: 'hiring_staff/vacancies/application_details'
 
-      resource :feedback, controller: 'hiring_staff/vacancies/feedback', only: %i[new create]
+      resource :feedback, controller: 'hiring_staff/vacancies/vacancy_publish_feedback', only: %i[new create]
       resource :copy, only: %i[new create],
                       controller: 'hiring_staff/vacancies/copy'
     end

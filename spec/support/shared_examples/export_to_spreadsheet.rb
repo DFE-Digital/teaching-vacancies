@@ -3,7 +3,7 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
   let(:gids) do
     {
       vacancies: 'some-gid',
-      feedback: 'feedback-gid',
+      vacancy_publish_feedback: 'vacancy-creation-feedback-gid',
       general_feedback: 'general-feedback-gid',
       interest_expression: 'interest-expression-gid'
     }

@@ -1,4 +1,4 @@
-class Feedback < ApplicationRecord
+class VacancyPublishFeedback < ApplicationRecord
   belongs_to :vacancy
   belongs_to :user
 
