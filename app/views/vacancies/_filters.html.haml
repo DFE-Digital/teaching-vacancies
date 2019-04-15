@@ -10,9 +10,6 @@
       = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
       = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'govuk-select form-control form-control-block'
     .govuk-form-group
-      = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
-      = search_field_tag :keyword, keyword, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
-    .govuk-form-group
       = label_tag 'subject', t('jobs.filters.subject'), class: 'govuk-label'
       = search_field_tag :subject, subject, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.subject_hint')
     .govuk-form-group

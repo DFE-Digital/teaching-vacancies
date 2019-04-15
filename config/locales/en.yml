@@ -201,8 +201,6 @@ en:
       location: 'Location'
       location_hint: 'Postcode'
       radius: 'Radius'
-      keyword: 'Keyword'
-      keyword_hint: 'Role or subject, for example'
       subject: 'Subject'
       subject_hint: 'e.g. Maths'
       job_title: 'Job title'

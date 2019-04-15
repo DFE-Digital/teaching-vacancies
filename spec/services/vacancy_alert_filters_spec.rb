@@ -1,7 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe VacancyFilters do
+RSpec.describe VacancyAlertFilters do
   describe '#initialize' do
+    it 'sets the keyword filter if provided' do
+      vacancy_filters = described_class.new(keyword: 'geography')
+      expect(vacancy_filters.keyword).to eq('geography')
+    end
+
     it 'sets the subject filter if provided' do
       vacancy_filters = described_class.new(subject: 'geography')
       expect(vacancy_filters.subject).to eq('geography')
@@ -62,6 +67,7 @@ RSpec.describe VacancyFilters do
     it 'returns a hash of the reader attributes' do
       filters = described_class.new(
         location: 'location',
+        keyword: 'keyword',
         subject: 'subject',
         job_title: 'job_title',
         radius: 20,
@@ -76,6 +82,7 @@ RSpec.describe VacancyFilters do
 
       expect(result).to eql(
         location: 'location',
+        keyword: 'keyword',
         subject: 'subject',
         job_title: 'job_title',
         radius: '20',

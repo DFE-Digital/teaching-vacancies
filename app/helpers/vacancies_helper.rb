@@ -29,7 +29,7 @@ module VacanciesHelper
   end
 
   def vacancy_params_whitelist
-    %i[sort_column sort_order page location radius keyword subject job_title
+    %i[sort_column sort_order page location radius subject job_title
        minimum_salary maximum_salary working_pattern phase newly_qualified_teacher]
   end
 

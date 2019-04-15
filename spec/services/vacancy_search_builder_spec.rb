@@ -15,25 +15,6 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-    it 'builds a keyword search when a keyword is provided' do
-      sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(keyword: 'german')
-      builder = described_class.new(filters: filters, sort: sort).call
-
-      expected_hash = {
-        multi_match: {
-          query: 'german',
-          fields: %w[job_title^3 subject.name first_supporting_subject.name second_supporting_subject.name],
-          operator: 'and',
-          fuzziness: 2,
-          prefix_length: 1
-        },
-      }
-
-      expect(builder).to be_a(Hash)
-      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-    end
-
     it 'builds a subject search when a subject is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(subject: 'german')

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SubscriptionReferenceGenerator do
   describe '.new' do
     it 'should be initialised with a hash of search criteria' do
-      service = described_class.new(search_criteria: { 'keyword' => 'Maths', 'radius' => 20 })
+      service = described_class.new(search_criteria: { 'subject' => 'Maths', 'radius' => 20 })
       expect(service).to be_an_instance_of(described_class)
     end
   end

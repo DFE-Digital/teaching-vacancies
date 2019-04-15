@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
   before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
 
-  let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
+  let(:search_criteria) { { subject: 'English', location: 'SW1A1AA', radius: 20 } }
   let(:reference) { 'A reference' }
   let(:subscription) do
     create(:subscription,
@@ -23,24 +23,48 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
   context 'with the correct token' do
     let(:token) { subscription.token }
 
-    scenario 'unsubscribes successfully' do
+    it 'unsubscribes successfully' do
       expect(page).to have_content(I18n.t('subscriptions.deletion.header'))
     end
 
-    scenario 'deletes the subscription' do
+    it 'deletes the subscription' do
       expect { subscription.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    scenario 'audits the unsubscription' do
+    it 'audits the unsubscription' do
       activity = subscription.activities.last
       expect(activity.key).to eq('subscription.daily_alert.delete')
     end
 
-    scenario 'allows me to resubscribe' do
+    it 'allows me to resubscribe' do
       click_on I18n.t('subscriptions.deletion.resubscribe_link_text')
 
-      expect(page).to have_content('Keyword: English')
+      expect(page).to have_content('Subject: English')
       expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
+    end
+
+    context 'with deprecated search criteria' do
+      let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
+
+      it 'unsubscribes successfully' do
+        expect(page).to have_content(I18n.t('subscriptions.deletion.header'))
+      end
+
+      it 'deletes the subscription' do
+        expect { subscription.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'audits the unsubscription' do
+        activity = subscription.activities.last
+        expect(activity.key).to eq('subscription.daily_alert.delete')
+      end
+
+      it 'allows me to resubscribe' do
+        click_on I18n.t('subscriptions.deletion.resubscribe_link_text')
+
+        expect(page).to have_content('Keyword: English')
+        expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
+      end
     end
 
     context 'with a generated reference' do
@@ -66,7 +90,7 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
   context 'with the incorrect token' do
     let(:token) { subscription.id }
 
-    scenario 'returns not found' do
+    it 'returns not found' do
       expect(page.status_code).to eq(404)
     end
   end
@@ -76,7 +100,7 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
       Timecop.travel(-3.days) { subscription.token }
     end
 
-    scenario 'returns not found' do
+    it 'returns not found' do
       expect(page.status_code).to eq(404)
     end
   end

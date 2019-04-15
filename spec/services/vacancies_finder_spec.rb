@@ -6,7 +6,7 @@ RSpec.describe VacanciesFinder do
   let(:subject) { described_class.new(filters, sort, page_number) }
 
   context 'when parameters are given' do
-    let(:filters) { VacancyFilters.new(keyword: 'English') }
+    let(:filters) { VacancyFilters.new(subject: 'English') }
 
     it 'calls ElasticSearch' do
       expect(Vacancy).to receive(:__elasticsearch__).and_call_original
