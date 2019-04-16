@@ -1,4 +1,4 @@
-class AuditSearchEventJob < SpreadsheetWriterJob
+class AuditSearchEventJob < ApplicationJob
   queue_as :audit_search_event
 
   def perform(data)
