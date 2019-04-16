@@ -65,4 +65,4 @@ en:
         reference: 'Your reference'
     hints:
       defaults:
-        reference: Enter a short description for this job alert. This will appear in the subject line of the email we send you when a new job matches your criteria.
+        reference: This text will appear in the subject line of the email we send you when a new job matches your criteria. Feel free to change it.
