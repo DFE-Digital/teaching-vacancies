@@ -34,48 +34,51 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  scenario 'Filterable by subject', elasticsearch: true do
-    headmaster = create(:vacancy, :published, job_title: 'Headmaster')
-    languages_teacher = create(:vacancy, :published, job_title: 'English Language')
-    english_teacher = create(:vacancy, job_title: 'Foo Tutor', subject: create(:subject, name: 'English'))
-    arts_teacher = create(:vacancy, job_title: 'Arts Tutor', subject: create(:subject, name: 'Arts'),
-                                    first_supporting_subject: create(:subject, name: 'English'))
-    maths_teacher = create(:vacancy, job_title: 'Maths Subject Leader', subject: create(:subject, name: 'Maths'))
-
-    Vacancy.__elasticsearch__.client.indices.flush
-    visit jobs_path
-    within '.filters-form' do
-      fill_in 'subject', with: 'English'
-      page.find('.govuk-button[type=submit]').click
+  context 'with jobs with various job titles and subjects', elasticsearch: true do
+    let!(:headmaster_vacancy) { create(:vacancy, :published, job_title: 'Headmaster') }
+    let!(:english_title_vacancy) { create(:vacancy, :published, job_title: 'English Language') }
+    let!(:english_subject_vacancy) do
+      create(:vacancy, job_title: 'Foo Tutor', subject: create(:subject, name: 'English'))
+    end
+    let!(:arts_vacancy) do
+      create(:vacancy, job_title: 'Arts Tutor', subject: create(:subject, name: 'Arts'),
+                       first_supporting_subject: create(:subject, name: 'English'))
+    end
+    let!(:maths_vacancy) do
+      create(:vacancy, job_title: 'Maths Subject Leader', subject: create(:subject, name: 'Maths'))
     end
 
-    expect(page).not_to have_content(headmaster.job_title)
-    expect(page).not_to have_content(maths_teacher.job_title)
-    expect(page).to have_content(languages_teacher.job_title)
-    expect(page).to have_content(arts_teacher.job_title)
-    expect(page).to have_content(english_teacher.job_title)
-  end
+    before(:each) { Vacancy.__elasticsearch__.client.indices.flush }
 
-  scenario 'Filterable by job title', elasticsearch: true do
-    headmaster = create(:vacancy, :published, job_title: 'Headmaster')
-    languages_teacher = create(:vacancy, :published, job_title: 'English Language')
-    english_teacher = create(:vacancy, job_title: 'Foo Tutor', subject: create(:subject, name: 'English'))
-    arts_teacher = create(:vacancy, job_title: 'Arts Tutor', subject: create(:subject, name: 'Arts'),
-                                    first_supporting_subject: create(:subject, name: 'English'))
-    maths_teacher = create(:vacancy, job_title: 'Maths Subject Leader', subject: create(:subject, name: 'Maths'))
+    scenario 'Filterable by subject' do
+      visit jobs_path
 
-    Vacancy.__elasticsearch__.client.indices.flush
-    visit jobs_path
-    within '.filters-form' do
-      fill_in 'job_title', with: 'Tutor'
-      page.find('.govuk-button[type=submit]').click
+      within '.filters-form' do
+        fill_in 'subject', with: 'English'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).not_to have_content(headmaster_vacancy.job_title)
+      expect(page).not_to have_content(maths_vacancy.job_title)
+      expect(page).to have_content(english_title_vacancy.job_title)
+      expect(page).to have_content(arts_vacancy.job_title)
+      expect(page).to have_content(english_subject_vacancy.job_title)
     end
 
-    expect(page).not_to have_content(headmaster.job_title)
-    expect(page).not_to have_content(maths_teacher.job_title)
-    expect(page).not_to have_content(languages_teacher.job_title)
-    expect(page).to have_content(arts_teacher.job_title)
-    expect(page).to have_content(english_teacher.job_title)
+    scenario 'Filterable by job title' do
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'job_title', with: 'Tutor'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).not_to have_content(headmaster_vacancy.job_title)
+      expect(page).not_to have_content(maths_vacancy.job_title)
+      expect(page).not_to have_content(english_title_vacancy.job_title)
+      expect(page).to have_content(arts_vacancy.job_title)
+      expect(page).to have_content(english_subject_vacancy.job_title)
+    end
   end
 
   scenario 'Filterable by working pattern', elasticsearch: true do
