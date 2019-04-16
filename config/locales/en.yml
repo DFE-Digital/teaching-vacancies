@@ -214,6 +214,11 @@ en:
     page_title: 'Feedback'
     heading: 'Give feedback'
     rating_legend: 'Overall, how did you feel about the service you received today?'
+    rating1_option: Very dissatisfied
+    rating2_option: Dissatisfied
+    rating3_option: Neither satisfied or dissatisfied
+    rating4_option: Satisfied
+    rating5_option: Very satisfied
     comment_label: 'How could we improve this service?'
     comment_hint_text: "Please don't include any personal or financial information, for example your National Insurance or credit card numbers. (Limit is 1,200 characters)"
     submit: 'Submit feedback'
@@ -221,6 +226,10 @@ en:
     visit_purpose_legend: 'What did you come to Teaching Vacancies to do?'
     visit_purpose_hint_text: 'Please tell us what you came here to do.
     (Limit is 1,200 characters)'
+    visit_purpose_options:
+      find_teaching_job: Find a job in teaching
+      list_teaching_job: List a teaching job on the service
+      other_purpose: Something else (tell us in the box below)
   schools:
     about: 'About'
     address: 'Address'

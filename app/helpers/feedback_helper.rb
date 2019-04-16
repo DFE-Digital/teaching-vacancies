@@ -1,15 +1,15 @@
 module FeedbackHelper
   def visit_purpose_options
-    [['Find a job in teaching', :find_teaching_job],
-     ['List a teaching job on the service', :list_teaching_job],
-     ['Something else (tell us in the box below)', :other_purpose]]
+    [[t('general_feedback.visit_purpose_options.find_teaching_job'), :find_teaching_job],
+     [t('general_feedback.visit_purpose_options.list_teaching_job'), :list_teaching_job],
+     [t('general_feedback.visit_purpose_options.other_purpose'), :other_purpose]]
   end
 
   def rating_options
-    [['Very satisfied', 5],
-     ['Satisfied', 4],
-     ['Neither satisfied or dissatisfied', 3],
-     ['Dissatisfied', 2],
-     ['Very dissatisfied', 1]]
+    [[t('feedback.rating5_option'), 5],
+     [t('feedback.rating4_option'), 4],
+     [t('feedback.rating3_option'), 3],
+     [t('feedback.rating2_option'), 2],
+     [t('feedback.rating1_option'), 1]]
   end
 end
