@@ -53,4 +53,24 @@ RSpec.describe 'SchoolsInArea' do
       expect(results).to include(school2)
     end
   end
+
+  context 'when there more than 25 schools' do
+    let(:schools) { build_list(:school, 55, :with_live_vacancies) }
+    let(:route) { double(GoogleDistanceMatrix::Route, distance_in_meters: 1000) }
+
+    before do
+      allow(subject).to receive(:schools) { schools }
+      allow(subject).to receive(:find_school_from_place) { route }
+      allow(subject).to receive(:distance_in_miles) { 20 }
+    end
+
+    it 'splits schools into batches' do
+      expect(subject).to receive(:filter_schools_by_distance).exactly(3).times
+      subject.results
+    end
+
+    it 'gets the expected results' do
+      expect(subject.results).to match_array(schools)
+    end
+  end
 end

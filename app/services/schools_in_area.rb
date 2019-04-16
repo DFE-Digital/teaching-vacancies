@@ -8,13 +8,23 @@ class SchoolsInArea
   end
 
   def results
+    schools.each_slice(25).map do |school_slice|
+      filter_schools_by_distance(school_slice)
+    end.flatten
+  end
+
+  private
+
+  def filter_schools_by_distance(schools)
     schools.select do |s|
-      place = data.find { |d| d.destination == s.place }
+      place = find_school_from_place(s)
       distance_in_miles(place.distance_in_meters) <= radius
     end
   end
 
-  private
+  def find_school_from_place(school)
+    data.find { |d| d.destination == school.place }
+  end
 
   def distance_in_miles(metres)
     metres * 0.00062137
