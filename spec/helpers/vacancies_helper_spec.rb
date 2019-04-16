@@ -65,7 +65,8 @@ RSpec.describe VacanciesHelper, type: :helper do
         page
         location
         radius
-        keyword
+        subject
+        job_title
         minimum_salary
         working_pattern
         phase

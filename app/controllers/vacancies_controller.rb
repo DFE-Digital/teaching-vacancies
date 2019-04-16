@@ -4,7 +4,8 @@ class VacanciesController < ApplicationController
   DEFAULT_RADIUS = 20
 
   helper_method :location,
-                :keyword,
+                :subject,
+                :job_title,
                 :minimum_salary,
                 :working_pattern,
                 :phase,
@@ -39,9 +40,7 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(:keyword, :location, :radius,
-                  :minimum_salary, :phase, :working_pattern,
-                  :newly_qualified_teacher).to_hash
+    params.permit(*VacancyFilters::AVAILABLE_FILTERS).to_hash
   end
 
   def old_vacancy_path?(vacancy)
@@ -62,8 +61,12 @@ class VacanciesController < ApplicationController
     params[:location]
   end
 
-  def keyword
-    params[:keyword]
+  def subject
+    params[:subject]
+  end
+
+  def job_title
+    params[:job_title]
   end
 
   def minimum_salary

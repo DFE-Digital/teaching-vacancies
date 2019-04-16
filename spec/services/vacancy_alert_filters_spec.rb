@@ -1,7 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe VacancyFilters do
+RSpec.describe VacancyAlertFilters do
   describe '#initialize' do
+    it 'sets the keyword filter if provided' do
+      vacancy_filters = described_class.new(keyword: 'geography')
+      expect(vacancy_filters.keyword).to eq('geography')
+    end
+
     it 'sets the subject filter if provided' do
       vacancy_filters = described_class.new(subject: 'geography')
       expect(vacancy_filters.subject).to eq('geography')
@@ -20,6 +25,11 @@ RSpec.describe VacancyFilters do
     it 'sets the minimum salary filter if provided' do
       vacancy_filters = described_class.new(minimum_salary: 10000)
       expect(vacancy_filters.minimum_salary).to eq(10000)
+    end
+
+    it 'sets the maximum salary filter if provided' do
+      vacancy_filters = described_class.new(maximum_salary: 20000)
+      expect(vacancy_filters.maximum_salary).to eq(20000)
     end
 
     it 'sets the working pattern filter if provided and valid' do
@@ -57,11 +67,13 @@ RSpec.describe VacancyFilters do
     it 'returns a hash of the reader attributes' do
       filters = described_class.new(
         location: 'location',
+        keyword: 'keyword',
         subject: 'subject',
         job_title: 'job_title',
         radius: 20,
         minimum_salary: 'minimum_salary',
-        working_pattern: 'full_time',
+        maximum_salary: 'maximum_salary',
+        working_pattern: :full_time,
         newly_qualified_teacher: false,
         phase: :primary,
       )
@@ -70,11 +82,13 @@ RSpec.describe VacancyFilters do
 
       expect(result).to eql(
         location: 'location',
+        keyword: 'keyword',
         subject: 'subject',
         job_title: 'job_title',
         radius: '20',
         minimum_salary: 'minimum_salary',
-        working_pattern: 'full_time',
+        maximum_salary: 'maximum_salary',
+        working_pattern: :full_time,
         newly_qualified_teacher: false,
         phase: :primary,
       )

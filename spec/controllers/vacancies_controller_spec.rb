@@ -14,7 +14,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'search params' do
         let(:params) do
           {
-            keyword: "<body onload=alert('test1')>Text</body>",
+            subject: "<body onload=alert('test1')>Text</body>",
             location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
             minimum_salary: '<xml>Foo</xml',
             phase: '<iframe>Foo</iframe>',
@@ -24,7 +24,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it 'passes only safe values to VacancyFilters' do
           expected_safe_values = {
-            'keyword' => 'Text',
+            'subject' => 'Text',
             'location' => '',
             'minimum_salary' => 'Foo',
             'phase' => '',
@@ -68,7 +68,7 @@ RSpec.describe VacanciesController, type: :controller do
         before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
 
         it 'shows the subscribe link' do
-          get :index, params: { keyword: 'English' }
+          get :index, params: { subject: 'English' }
           expect(response.body).to match(I18n.t('subscriptions.button'))
         end
       end
@@ -77,7 +77,7 @@ RSpec.describe VacanciesController, type: :controller do
         before { allow(EmailAlertsFeature).to receive(:enabled?) { false } }
 
         it 'does not show the subscribe link' do
-          get :index, params: { keyword: 'English' }
+          get :index, params: { subject: 'English' }
           expect(response.body).to_not match(I18n.t('subscriptions.button'))
         end
       end

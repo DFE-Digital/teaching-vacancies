@@ -13,14 +13,16 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
     scenario 'can view the search criteria' do
       visit new_subscription_path(search_criteria: { newly_qualified_teacher: 'true',
-                                                     keyword: 'teacher',
+                                                     subject: 'physics',
+                                                     job_title: 'teacher',
                                                      location: 'EC2 9AN',
                                                      radius: '10',
                                                      working_pattern: 'full_time',
                                                      minimum_salary: '20000',
                                                      maximum_salary: '30000' })
 
-      expect(page).to have_content('Keyword: teacher')
+      expect(page).to have_content('Subject: physics')
+      expect(page).to have_content('Job title: teacher')
       expect(page).to have_content('Suitable for NQTs')
       expect(page).to have_content('Location: Within 10 miles of EC2 9AN')
       expect(page).to have_content('Working pattern: Full time')
@@ -29,7 +31,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
     end
 
     scenario 'subscribing to a search creates a new daily subscription audit' do
-      visit new_subscription_path(search_criteria: { keyword: 'test' })
+      visit new_subscription_path(search_criteria: { job_title: 'test' })
       fill_in 'subscription[email]', with: 'jane.doe@example.com'
       click_on 'Subscribe'
 
@@ -39,7 +41,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
     context 'can create a new subscription' do
       scenario 'when the email address is valid' do
-        visit new_subscription_path(search_criteria: { keyword: 'test' })
+        visit new_subscription_path(search_criteria: { job_title: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
@@ -48,9 +50,9 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
       scenario 'when the email address is associated with other active subscriptions' do
         create(:daily_subscription, email: 'jane.doe@example.com',
-                                    search_criteria: { keyword: 'teacher' }.to_json)
+                                    search_criteria: { job_title: 'teacher' }.to_json)
 
-        visit new_subscription_path(search_criteria: { keyword: 'math teacher' })
+        visit new_subscription_path(search_criteria: { job_title: 'math teacher' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
@@ -60,9 +62,9 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       scenario 'when the email address is associated with the same inactive subscriptions' do
         create(:daily_subscription, email: 'jane.doe@example.com',
                                     expires_on: 1.day.ago,
-                                    search_criteria: { keyword: 'teacher' }.to_json)
+                                    search_criteria: { job_title: 'teacher' }.to_json)
 
-        visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+        visit new_subscription_path(search_criteria: { job_title: 'teacher' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
@@ -70,7 +72,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       end
 
       scenario 'when no reference is set' do
-        visit new_subscription_path(search_criteria: { keyword: 'test' })
+        visit new_subscription_path(search_criteria: { job_title: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
@@ -79,23 +81,23 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
       context 'and is redirected to the confirmation page' do
         scenario 'when setting a reference number' do
-          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+          visit new_subscription_path(search_criteria: { job_title: 'teacher' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
           fill_in 'subscription[reference]', with: 'Daily alert reference'
           click_on 'Subscribe'
 
-          expect(page).to have_content(/Your reference Daily alert reference/)
+          expect(page).to have_content(/Your reference: Daily alert reference/)
         end
 
         scenario 'where they can go back to the filtered search' do
-          visit new_subscription_path(search_criteria: { keyword: 'teacher',
+          visit new_subscription_path(search_criteria: { job_title: 'teacher',
                                                          newly_qualified_teacher: 'true' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
           click_on 'Subscribe'
 
           click_on 'Return to your search results'
 
-          expect(page.find('#keyword').value).to eq('teacher')
+          expect(page.find('#job_title').value).to eq('teacher')
           expect(page.find('#newly_qualified_teacher').checked?).to eq(true)
         end
       end
@@ -103,7 +105,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
     context 'is not able to create a new subscription' do
       scenario 'when the email address is invalid' do
-        visit new_subscription_path(search_criteria: { keyword: 'test' })
+        visit new_subscription_path(search_criteria: { job_title: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example'
         click_on 'Subscribe'
 
@@ -125,7 +127,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       end
     end
 
-    scenario 'can succesfuly subscribe to a new alert', elasticsearch: true do
+    scenario 'can successfuly subscribe to a new alert', elasticsearch: true do
       create_list(:vacancy, 5, :published, job_title: 'Math')
       create_list(:vacancy, 3, :published, job_title: 'English')
 
@@ -134,7 +136,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'keyword', with: 'English'
+        fill_in 'subject', with: 'English'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -143,7 +145,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       click_on 'Sign up for a job alert matching your search'
 
       expect(page).to have_content(I18n.t('subscriptions.new'))
-      expect(page).to have_content('Keyword: English')
+      expect(page).to have_content('Subject: English')
 
       fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
       fill_in 'subscription[reference]', with: 'Daily alerts for: English'

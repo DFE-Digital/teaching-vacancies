@@ -8,13 +8,13 @@ namespace :performance_platform do
   end
 
   task submit_transactions: :environment do
-    yesteday = Date.current.beginning_of_day.in_time_zone - 1.day
-    PerformancePlatformFeedbackQueueJob.perform_later(yesteday.to_s)
+    yesterday = Date.current.beginning_of_day.in_time_zone - 1.day
+    PerformancePlatformTransactionsQueueJob.perform_later(yesterday.to_s)
   end
 
   task submit_user_satisfaction: :environment do
     yesterday = Date.current.beginning_of_day.in_time_zone - 1.day
-    PerformancePlatformTransactionsQueueJob.perform_later(yesterday.to_s)
+    PerformancePlatformFeedbackQueueJob.perform_later(yesterday.to_s)
   end
 
   task submit_data_up_to_today: :environment do

@@ -102,8 +102,6 @@ module "ecs" {
 
   seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
 
-  backfill_info_clicks_for_vacancies_command = "${var.backfill_info_clicks_for_vacancies_command}"
-
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"

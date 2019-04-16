@@ -53,8 +53,8 @@ RSpec.describe SubscriptionPresenter do
     let(:extended_search_criteria) { presenter.send(:extended_search_criteria) }
 
     it 'adds all possible search criteria to subscription criteria' do
-      expect(extended_search_criteria.count).to eq(VacancyFilters::AVAILABLE_FILTERS.count)
-      expect(extended_search_criteria.keys).to eq(VacancyFilters::AVAILABLE_FILTERS)
+      expect(extended_search_criteria.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count)
+      expect(extended_search_criteria.keys).to match_array(VacancyAlertFilters::AVAILABLE_FILTERS)
       expect(extended_search_criteria[:keyword]).to eq(search_criteria[:keyword])
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe SubscriptionPresenter do
     let(:to_row) { presenter.to_row }
 
     it 'returns the right number of keys' do
-      expect(to_row.count).to eq(VacancyFilters::AVAILABLE_FILTERS.count + 1)
+      expect(to_row.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count + 1)
     end
 
     it 'returns the reference' do

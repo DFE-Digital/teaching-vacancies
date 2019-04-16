@@ -19,7 +19,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def available_filter_hash
-    Hash[VacancyFilters::AVAILABLE_FILTERS.collect { |v| [v, nil] }]
+    Hash[VacancyAlertFilters::AVAILABLE_FILTERS.collect { |v| [v, nil] }]
   end
 
   def add_search_criteria_field(field, value)

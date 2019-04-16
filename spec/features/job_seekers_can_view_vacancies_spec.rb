@@ -71,7 +71,7 @@ RSpec.feature 'Viewing vacancies' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
     within '.filters-form' do
-      fill_in 'keyword', with: 'English'
+      fill_in 'subject', with: 'English'
       page.find('.govuk-button[type=submit]').click
     end
     expect(page).to have_content(I18n.t('jobs.job_count', count: vacancies.count))
@@ -82,7 +82,7 @@ RSpec.feature 'Viewing vacancies' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
     within '.filters-form' do
-      fill_in 'keyword', with: 'English'
+      fill_in 'subject', with: 'English'
       page.find('.govuk-button[type=submit]').click
     end
     expect(page).to have_content(I18n.t('jobs.job_count_plural', count: vacancies.count))
@@ -107,7 +107,7 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'keyword', with: 'English'
+      fill_in 'subject', with: 'English'
       click_on I18n.t('buttons.apply_filters')
     end
 
@@ -156,7 +156,7 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'keyword', with: 'Maths'
+      fill_in 'subject', with: 'Maths'
       click_button('Search')
     end
 
@@ -184,7 +184,7 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'keyword', with: 'English'
+      fill_in 'subject', with: 'English'
       expect(find('.govuk-button').value).to eq('Search')
       click_on I18n.t('buttons.apply_filters')
     end

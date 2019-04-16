@@ -6,7 +6,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#new' do
-    subject { get :new, params: { search_criteria: { keyword: 'english' } } }
+    subject { get :new, params: { search_criteria: { subject: 'english' } } }
 
     context 'when feature is disabled' do
       before { allow(EmailAlertsFeature).to receive(:enabled?) { false } }
@@ -34,7 +34,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         {
           subscription: {
             email: 'foo@email.com',
-            search_criteria: { keyword: 'english' }.to_json
+            search_criteria: { subject: 'english' }.to_json
           }
         }
       end
@@ -70,7 +70,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       before { allow(EmailAlertsFeature).to receive(:enabled?) { false } }
 
       it 'returns 404' do
-        post :create, params: { search_criteria: { keyword: 'english' } }
+        post :create, params: { search_criteria: { subject: 'english' } }
         expect(response.code).to eq('404')
       end
     end
