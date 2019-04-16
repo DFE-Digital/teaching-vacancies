@@ -19,7 +19,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     audit_successful_authentication
 
     if permissions.authorised?
-      update_session(permissions.school_urn, permissions)
+      update_session
       redirect_to school_path
     else
       not_authorised
@@ -30,14 +30,14 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def not_authorised
     audit_failed_authorisation
-    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
+    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{school_urn}")
 
     @identifier = identifier
     render 'user-not-authorised'
   end
 
-  def update_session(school_urn, permissions)
-    session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)
+  def update_session
+    session.update(session_id: oid, urn: school_urn)
     audit_successful_authorisation
   end
 
@@ -53,7 +53,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     auth_hash['info']['email']
   end
 
-  def selected_school_urn
+  def school_urn
     auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
   end
 end
