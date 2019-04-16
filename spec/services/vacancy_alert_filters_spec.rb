@@ -73,7 +73,7 @@ RSpec.describe VacancyAlertFilters do
         radius: 20,
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
-        working_pattern: :full_time,
+        working_pattern: 'full_time',
         newly_qualified_teacher: false,
         phase: :primary,
       )
@@ -88,7 +88,7 @@ RSpec.describe VacancyAlertFilters do
         radius: '20',
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
-        working_pattern: :full_time,
+        working_pattern: 'full_time',
         newly_qualified_teacher: false,
         phase: :primary,
       )
