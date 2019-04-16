@@ -84,7 +84,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
           fill_in 'subscription[reference]', with: 'Daily alert reference'
           click_on 'Subscribe'
 
-          expect(page).to have_content(/Your reference Daily alert reference/)
+          expect(page).to have_content(/Your reference: Daily alert reference/)
         end
 
         scenario 'where they can go back to the filtered search' do
