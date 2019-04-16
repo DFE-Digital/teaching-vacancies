@@ -5,5 +5,5 @@ AUDIT_GIDS = {
   vacancies: ENV['AUDIT_VACANCIES_WORKSHEET_GID'],
   feedback: ENV['AUDIT_FEEDBACK_WORKSHEET_GID'],
   interest_expression: ENV['AUDIT_EXPRESS_INTEREST_WORKSHEET_GID'],
-  subscription_creation: ENV['AUDIT_SUBSCRIPTION_CREATION_GID']
+  subscription_creation: ENV['AUDIT_SUBSCRIPTION_CREATION_WORKSHEET_GID']
 }.freeze
