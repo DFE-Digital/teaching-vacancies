@@ -66,7 +66,6 @@ class Vacancy < ApplicationRecord
       indexes :updated_at, type: :date
       indexes :publish_on, type: :date
       indexes :status, type: :keyword
-      indexes :working_pattern, type: :keyword
       indexes :working_patterns, type: :keyword
       indexes :minimum_salary, type: :integer
       indexes :maximum_salary, type: :integer
