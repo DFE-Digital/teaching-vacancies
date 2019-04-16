@@ -37,14 +37,14 @@ RSpec.describe VacancyAlertFilters do
       expect(vacancy_filters.working_pattern).to eq('full_time')
     end
 
-    it 'sets the newly qualified teacher filter if provided' do
-      vacancy_filters = described_class.new(newly_qualified_teacher: true)
-      expect(vacancy_filters.newly_qualified_teacher).to eq(true)
-    end
-
     it 'does not set the working pattern filter if invalid' do
       vacancy_filters = described_class.new(working_pattern: 'home_time')
       expect(vacancy_filters.working_pattern).to be_nil
+    end
+
+    it 'sets the newly qualified teacher filter if provided' do
+      vacancy_filters = described_class.new(newly_qualified_teacher: true)
+      expect(vacancy_filters.newly_qualified_teacher).to eq(true)
     end
 
     it 'sets the education phase filter if provided and valid' do
