@@ -46,7 +46,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def search_criteria
-    params.require(:search_criteria).permit(*VacancyFilters::AVAILABLE_FILTERS)
+    params.require(:search_criteria).permit(*VacancyAlertFilters::AVAILABLE_FILTERS)
   end
 
   def check_feature_flag

@@ -7,7 +7,7 @@ RSpec.describe AlertMailer, type: :mailer do
     create(:daily_subscription, email: 'an@email.com',
                                 reference: 'a-reference',
                                 search_criteria: {
-                                  keyword: 'English',
+                                  subject: 'English',
                                   minimum_salary: 20000,
                                   maximum_salary: 40000,
                                   newly_qualified_teacher: 'true'

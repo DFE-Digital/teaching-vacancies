@@ -1,5 +1,5 @@
 class VacancyFilters
-  AVAILABLE_FILTERS = %i[location radius keyword minimum_salary maximum_salary working_pattern
+  AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary maximum_salary working_pattern
                          phase newly_qualified_teacher].freeze
 
   attr_reader(*AVAILABLE_FILTERS)
@@ -9,7 +9,8 @@ class VacancyFilters
 
     @location = args[:location]
     @radius = args[:radius].to_s if args[:radius].present?
-    @keyword = args[:keyword]
+    @subject = args[:subject]
+    @job_title = args[:job_title]
     @minimum_salary = args[:minimum_salary]
     @maximum_salary = args[:maximum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
@@ -21,7 +22,8 @@ class VacancyFilters
     {
       location: location,
       radius: radius,
-      keyword: keyword,
+      subject: subject,
+      job_title: job_title,
       minimum_salary: minimum_salary,
       maximum_salary: maximum_salary,
       working_pattern: working_pattern,

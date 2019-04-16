@@ -6,13 +6,14 @@ RSpec.describe Vacancy, type: :model do
   describe '.public_search' do
     context 'when there were no results' do
       it 'records the event in Rollbar' do
-        filters = VacancyFilters.new(keyword: 'a-non-matching-search-term')
+        filters = VacancyFilters.new(subject: 'subject', job_title: 'job title')
         expect(Rollbar).to receive(:log)
           .with(:info,
                 'A search returned 0 results',
                 location: nil,
                 radius: nil,
-                keyword: 'a-non-matching-search-term',
+                subject: 'subject',
+                job_title: 'job title',
                 minimum_salary: nil,
                 maximum_salary: nil,
                 working_pattern: nil,
