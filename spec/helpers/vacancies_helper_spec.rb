@@ -59,21 +59,10 @@ RSpec.describe VacanciesHelper, type: :helper do
 
   describe '#vacancy_params_whitelist' do
     it 'should include all available filtering params' do
-      filters = %i[
-        sort_column
-        sort_order
-        page
-        location
-        radius
-        subject
-        job_title
-        minimum_salary
-        working_pattern
-        phase
-        newly_qualified_teacher
-      ]
+      filters = %i[sort_column sort_order page]
+      filters.push(*VacancyFilters::AVAILABLE_FILTERS)
 
-      expect(helper.vacancy_params_whitelist).to eq(filters)
+      expect(helper.vacancy_params_whitelist).to match_array(filters)
     end
   end
 end
