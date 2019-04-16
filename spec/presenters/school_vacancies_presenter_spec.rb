@@ -35,7 +35,8 @@ RSpec.describe SchoolVacanciesPresenter do
 
     it 'returns sorted draft vacancies' do
       sort.update(column: 'job_title', order: 'desc')
-      expect(presenter.vacancies).to eq(draft_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
+      vacancy_ids = draft_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse.pluck(:id)
+      expect(presenter.vacancies.pluck(:id)).to eq(vacancy_ids)
     end
   end
 
@@ -52,7 +53,8 @@ RSpec.describe SchoolVacanciesPresenter do
 
     it 'returns sorted pending vacancies' do
       sort.update(column: 'job_title', order: 'desc')
-      expect(presenter.vacancies).to eq(pending_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
+      vacancy_ids = pending_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse.pluck(:id)
+      expect(presenter.vacancies.pluck(:id)).to eq(vacancy_ids)
     end
   end
 
@@ -69,7 +71,8 @@ RSpec.describe SchoolVacanciesPresenter do
 
     it 'returns sorted expired vacancies' do
       sort.update(column: 'job_title', order: 'desc')
-      expect(presenter.vacancies).to eq(expired_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
+      vacancy_ids = expired_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse.pluck(:id)
+      expect(presenter.vacancies.pluck(:id)).to eq(vacancy_ids)
     end
   end
 
@@ -86,7 +89,8 @@ RSpec.describe SchoolVacanciesPresenter do
 
     it 'returns sorted published vacancies' do
       sort.update(column: 'job_title', order: 'desc')
-      expect(presenter.vacancies).to eq(published_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse)
+      vacancy_ids = published_vacancies.sort_by { |vacancy| vacancy['job_title'] }.reverse.pluck(:id)
+      expect(presenter.vacancies.pluck(:id)).to match_array(vacancy_ids)
     end
   end
 
