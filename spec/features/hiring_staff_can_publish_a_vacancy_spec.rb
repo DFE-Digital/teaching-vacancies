@@ -240,7 +240,7 @@ RSpec.feature 'Creating a vacancy' do
                    :complete,
                    :draft,
                    school_id: school.id,
-                   working_pattern: :full_time)
+                   working_patterns: ['full_time'])
           )
           visit school_job_review_path(vacancy.id)
 
@@ -477,7 +477,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is full-time' do
         scenario 'view the full-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :full_time)
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time'])
 
           visit school_job_review_path(vacancy.id)
 
