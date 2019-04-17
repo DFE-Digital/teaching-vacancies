@@ -9,7 +9,8 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   describe '#index' do
-    let(:subject) { get :index, params: params }
+    subject { get :index, params: params }
+
     context 'when parameters include syntax' do
       context 'search params' do
         let(:params) do
@@ -80,6 +81,37 @@ RSpec.describe VacanciesController, type: :controller do
           get :index, params: { subject: 'English' }
           expect(response.body).to_not match(I18n.t('subscriptions.button'))
         end
+      end
+    end
+  end
+
+  describe '#show' do
+    subject { get :show, params: params }
+
+    context 'when vacancy is trashed' do
+      let(:vacancy) { create(:vacancy, :trashed) }
+      let(:params) { { id: vacancy.id } }
+
+      it 'renders errors/trashed_vacancy_found' do
+        expect(subject).to render_template('errors/trashed_vacancy_found')
+      end
+
+      it 'returns not found' do
+        subject
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when vacancy does not exist' do
+      let(:params) { { id: 'missing-id' } }
+
+      it 'renders errors/not_found' do
+        expect(subject).to render_template('errors/not_found')
+      end
+
+      it 'returns not found' do
+        subject
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
