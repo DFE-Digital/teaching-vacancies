@@ -51,6 +51,16 @@ module AuthHelpers
     ).to_return(body: authorisation_response, status: 200)
   end
 
+  def stub_authorisation_step_with_external_error
+    authorisation_response = File.read(
+      Rails.root.join('spec', 'fixtures', 'dfe_sign_in_authorisation_external_error.json')
+    )
+
+    stub_request(
+      :get,
+      'https://test-url.local/services/test-service-id/organisations/939eac36-0777-48c2-9c2c-b87c948a9ee0/users/161d1f6a-44f1-4a1a-940d-d1088c439da7'
+    ).to_return(body: authorisation_response, status: 500)
+  end
 end
 
 RSpec.shared_examples 'basic auth' do

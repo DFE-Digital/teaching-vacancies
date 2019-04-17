@@ -124,6 +124,22 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
                                         email: 'another_email@example.com'
   end
 
+  context 'when there is was an error with DfE Sign-in' do
+    before(:each) do
+      stub_authentication_step
+      stub_authorisation_step_with_external_error
+    end
+
+    it 'renders an error page advising of a problem with DSI rather than this service' do
+      visit root_path
+
+      click_on(I18n.t('nav.sign_in'))
+      click_on(I18n.t('sign_in.link'))
+
+      expect(page).to have_content(I18n.t('error_pages.external_server_error.dfe_sign_in'))
+    end
+  end
+
   def stub_accepted_terms_and_condition
     create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
   end

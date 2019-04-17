@@ -21,6 +21,11 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     else
       not_authorised
     end
+  rescue Authorisation::ExternalServerError => error
+    Rollbar.log(:error, error)
+    respond_to do |format|
+      format.html { render 'errors/external_server_error', status: :server_error }
+    end
   end
 
   private

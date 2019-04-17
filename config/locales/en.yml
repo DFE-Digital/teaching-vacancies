@@ -405,6 +405,8 @@ en:
     not_found: Page not found.
     trashed_vacancy_found: Page not found.
     server_error: Something went wrong at our end.
+    external_server_error:
+      dfe_sign_in: There was a problem with DfE Sign-in, please try again in a moment.
 
   help:
     email: teaching.vacancies@education.gov.uk

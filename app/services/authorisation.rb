@@ -1,4 +1,6 @@
 class Authorisation
+  class ExternalServerError < StandardError; end
+
   attr_accessor :organisation_id,
                 :user_id,
                 :role_ids,
@@ -27,6 +29,8 @@ class Authorisation
     response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
       http.request(request)
     end
+
+    raise ExternalServerError if response.code.eql?('500')
 
     if response.code.eql?('200')
       body_hash = JSON.parse(response.body)

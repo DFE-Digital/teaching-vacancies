@@ -58,6 +58,15 @@ RSpec.describe Authorisation do
 
       subject.call
     end
+    context 'when the external response status is 500' do
+      before(:each) do
+        stub_authorisation_step_with_external_error
+      end
+
+      it 'raises an external server error' do
+        expect { subject.call }.to raise_error(Authorisation::ExternalServerError)
+      end
+    end
   end
 
   describe '#authorised?' do
