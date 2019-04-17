@@ -11,7 +11,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def create
-    Rails.logger.warn("Hiring staff signed in: #{oid}")
+    Rails.logger.warn("Hiring staff signed in: #{user_id}")
 
     permissions = Authorisation::Permissions.new
     permissions.authorise(identifier, selected_school_urn)
@@ -30,14 +30,14 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def not_authorised
     audit_failed_authorisation
-    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{school_urn}")
+    Rails.logger.warn("Hiring staff not authorised: #{user_id} for school: #{school_urn}")
 
     @identifier = identifier
     render 'user-not-authorised'
   end
 
   def update_session
-    session.update(session_id: oid, urn: school_urn)
+    session.update(session_id: user_id, urn: school_urn)
     audit_successful_authorisation
   end
 
@@ -45,7 +45,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     request.env['omniauth.auth']
   end
 
-  def oid
+  def user_id
     auth_hash['uid']
   end
 
