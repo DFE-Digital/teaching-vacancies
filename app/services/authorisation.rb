@@ -1,55 +1,55 @@
-require 'net/http'
-module Authorisation
-  class Permissions
-    attr_reader :response, :headers, :http
+class Authorisation
+  attr_accessor :organisation_id,
+                :user_id,
+                :role_ids,
+                :dfe_sign_in_url,
+                :dfe_sign_in_password,
+                :dfe_sign_in_service_id,
+                :dfe_sign_in_service_access_role_id
 
-    def initialize
-      uri = URI.parse(AUTHORISATION_SERVICE_URL)
-      @http = Net::HTTP.new(uri.host, uri.port)
-      @http.use_ssl = true
-      @headers = { 'Authorization' => "Token token=#{AUTHORISATION_SERVICE_TOKEN}",
-                   'Content-Type' => 'application/json' }
+  def initialize(organisation_id:, user_id:)
+    self.organisation_id = organisation_id
+    self.user_id = user_id
+    self.dfe_sign_in_url = DFE_SIGN_IN_URL
+    self.dfe_sign_in_password = DFE_SIGN_IN_PASSWORD
+    self.dfe_sign_in_service_id = DFE_SIGN_IN_SERVICE_ID
+    self.dfe_sign_in_service_access_role_id = DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID
+  end
+
+  def call
+    uri = URI(dfe_sign_in_url)
+    uri.path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
+
+    request = Net::HTTP::Get.new(uri)
+    request['Authorization'] = "bearer #{generate_jwt_token}"
+    request['Content-Type'] = 'application/json'
+
+    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
     end
 
-    def authorise(user_token, school_urn = nil)
-      request = Net::HTTP::Get.new("/users/#{user_token}", headers)
-      @response = http.request(request)
-      @school_urn = school_urn
-
-      user_permissions
+    if response.code.eql?('200')
+      body_hash = JSON.parse(response.body)
+      self.role_ids = body_hash['roles'].map { |role| role['id'] }
     end
 
-    def all_permissions
-      user_permissions
-    end
+    self
+  end
 
-    def school_urn
-      return nil unless user_permissions.any?
-      return user_permissions_for_school.first['school_urn'] if @school_urn.present?
+  def authorised?
+    return false if role_ids.blank?
 
-      user_permissions.first['school_urn']
-    end
+    role_ids.include?(dfe_sign_in_service_access_role_id)
+  end
 
-    def many?
-      user_permissions && user_permissions.count > 1
-    end
+  private
 
-    def authorised?
-      user_permissions_for_school.any?
-    end
-
-    private
-
-    def parsed_response
-      response.code == '200' ? JSON.parse(response.body) : nil
-    end
-
-    def user_permissions
-      @user_permissions ||= parsed_response.present? ? parsed_response['user']['permissions'] : []
-    end
-
-    def user_permissions_for_school
-      user_permissions.select { |permission| permission['school_urn'] == @school_urn }
-    end
+  def generate_jwt_token
+    payload = {
+      iss: 'schooljobs',
+      exp: (Time.now.getlocal + 60).to_i,
+      aud: 'signin.education.gov.uk'
+    }
+    JWT.encode(payload, dfe_sign_in_password, 'HS256')
   end
 end

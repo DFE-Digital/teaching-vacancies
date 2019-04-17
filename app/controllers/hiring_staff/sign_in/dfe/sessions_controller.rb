@@ -12,13 +12,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def create
     Rails.logger.warn("Hiring staff signed in: #{user_id}")
-
-    permissions = Authorisation::Permissions.new
-    permissions.authorise(identifier, selected_school_urn)
-
     audit_successful_authentication
 
-    if permissions.authorised?
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    if authorisation.authorised?
       update_session
       redirect_to school_path
     else
@@ -55,5 +52,9 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def school_urn
     auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
+  end
+
+  def organisation_id
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'id')
   end
 end

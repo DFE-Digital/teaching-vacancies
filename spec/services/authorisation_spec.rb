@@ -1,135 +1,92 @@
 require 'rails_helper'
-RSpec.describe 'Authorisation::Permissions' do
-  let(:service) { Authorisation::Permissions.new }
-  let(:headers) { { 'Authorization' => 'Token token=test-token', 'Content-Type' => 'application/json' } }
-  let(:request) { double(:request, path: '') }
-  let(:mock_http) { double(:http, request: double(:reponse, code: '200', body: { user: { permissions: [] } }.to_json)) }
+RSpec.describe Authorisation do
+  describe '.new' do
+    it 'requires an organisation_id and user_id' do
+      result = described_class.new(
+        organisation_id: '123', user_id: '456'
+      )
 
-  before(:each) do
-    stub_const('AUTHORISATION_SERVICE_URL', 'https://localhost:1357')
-    stub_const('AUTHORISATION_SERVICE_TOKEN', 'test-token')
-  end
-
-  describe '#initialize' do
-    it 'sets the correct headers' do
-      expect(service.headers).to eq(headers)
+      expect(result).to be_kind_of(described_class)
     end
   end
 
-  describe '#authorise' do
-    it 'parses the returned result' do
-      expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-      expect(mock_http).to receive(:use_ssl=).with(true)
-
-      expect(service.authorise('sample-token')).to eq([])
+  describe '#call' do
+    subject do
+      described_class.new(
+        organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
+        user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7'
+      )
     end
 
-    it 'does not parse the returned result if code is not 200' do
-      mock_http = double(:http, request: double(:reponse, code: '505'))
-      expect(Net::HTTP::Get).to receive(:new).with('/users/some invalid sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-      expect(mock_http).to receive(:use_ssl=).with(true)
-
-      expect(service.authorise('some invalid sample-token')).to eq([])
-    end
-  end
-
-  describe '#school_urn' do
-    it 'returns nil if no permissions are set for the given user token' do
-      expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-      expect(mock_http).to receive(:use_ssl=).with(true)
-
-      service.authorise('sample-token')
-      expect(service.school_urn).to eq(nil)
+    before(:each) do
+      stub_authorisation_step
     end
 
-    it 'returns the first school_urn for the user_token' do
-      response = { user: { permissions: [{ school_urn: '12345' }] } }.to_json
-      mock_http = double(:http, request: double(:reponse, code: '200', body: response))
-      expect(mock_http).to receive(:use_ssl=).with(true)
-      expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-
-      service.authorise('sample-token')
-      expect(service.school_urn).to eq('12345')
+    it 'stores the role_ids' do
+      result = subject.call
+      expect(result.role_ids).to eq(['test-role-id'])
     end
 
-    it 'returns the requested school_urn if given' do
-      response = { user: { permissions: [{ school_urn: '12345' }, { school_urn: '77777' }] } }.to_json
-      mock_http = double(:http, request: double(:reponse, code: '200', body: response))
-      expect(mock_http).to receive(:use_ssl=).with(true)
-      expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
+    it 'configure SSL to be used for this request' do
+      expect(Net::HTTP).to receive(:start)
+        .with(anything, anything, use_ssl: true)
+        .and_return(double(code: '200', body: '{ "roles": [] }'))
 
-      service.authorise('sample-token', '77777')
-      expect(service.school_urn).to eq('77777')
-    end
-  end
-
-  describe '#many?' do
-    it 'returns true if there are multiple schools that the user is authorised with' do
-      response = { user: { permissions: [{ school_urn: '12345' }, { school_urn: '23412' }] } }.to_json
-      mock_http = double(:http, request: double(:reponse, code: '200', body: response))
-
-      expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-      expect(mock_http).to receive(:use_ssl=).with(true)
-
-      service.authorise('sample-token')
-      expect(service.many?).to eq(true)
+      subject.call
     end
 
-    it 'returns false if there are multiple schools that the user is authorised with' do
-      response = { user: { permissions: [{ school_urn: '12345' }] } }.to_json
-      mock_http = double(:http, request: double(:reponse, code: '200', body: response))
+    it 'sets the request headers for authorisation and content' do
+      jwt_token = double
+      expect(JWT).to receive(:encode).with(
+        {
+          iss: 'schooljobs',
+          exp: (Time.now.getlocal + 60).to_i,
+          aud: 'signin.education.gov.uk'
+        },
+        'test-password',
+        'HS256'
+      ).and_return(jwt_token)
 
-      expect(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      expect(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-      expect(mock_http).to receive(:use_ssl=).with(true)
+      request_double = double(Net::HTTP::Get)
+      expect(Net::HTTP::Get).to receive(:new).and_return(request_double)
+      expect(request_double).to receive(:[]=).with('Content-Type', 'application/json')
+      expect(request_double).to receive(:[]=).with('Authorization', "bearer #{jwt_token}")
 
-      service.authorise('sample-token')
-      expect(service.many?).to eq(false)
+      expect_any_instance_of(Net::HTTP).to receive(:request)
+        .with(request_double)
+        .and_return(double(code: '200', body: '{ "roles": [] }'))
+
+      subject.call
     end
   end
 
   describe '#authorised?' do
-    subject(:authorised?) { service.authorised? }
-    let(:response) { { user: { permissions: permissions } }.to_json }
-    let(:mock_http) { double(:http, request: double(:reponse, code: '200', body: response)) }
-
-    before do
-      allow(Net::HTTP::Get).to receive(:new).with('/users/sample-token', headers).and_return(request)
-      allow(Net::HTTP).to receive(:new).with('localhost', 1357).and_return(mock_http)
-      allow(mock_http).to receive(:use_ssl=).with(true)
-
-      service.authorise('sample-token', school_urn)
+    subject do
+      described_class.new(
+        organisation_id: '123',
+        user_id: '456',
+      )
     end
 
-    context 'user has some permissions' do
-      let(:permissions) { [{ school_urn: '12345' }] }
-
-      context 'no school urn is given' do
-        let(:school_urn) { nil }
-        it { is_expected.to be false }
-      end
-
-      context 'school urn is given and matches a permission' do
-        let(:school_urn) { '12345' }
-        it { is_expected.to be true }
-      end
-
-      context 'school urn is given and doesn’t match permissions' do
-        let(:school_urn) { '99999' }
-        it { is_expected.to be false }
+    context 'when roles include a known role_id' do
+      it 'returns true' do
+        subject.role_ids = ['test-role-id']
+        expect(subject.authorised?).to be true
       end
     end
 
-    context 'user has no permissions' do
-      let(:permissions) { [] }
-      let(:school_urn) { nil }
-      it { is_expected.to be false }
+    context 'when roles do not include a known role_id' do
+      it 'returns true' do
+        subject.role_ids = ['unknown-role-id']
+        expect(subject.authorised?).to be false
+      end
+    end
+
+    context 'when there are no roles' do
+      it 'returns false' do
+        subject.role_ids = []
+        expect(subject.authorised?).to be false
+      end
     end
   end
 end

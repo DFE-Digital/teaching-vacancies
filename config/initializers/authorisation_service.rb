@@ -1,10 +1,11 @@
-AUTHORISATION_SERVICE_URL = ENV['AUTHORISATION_SERVICE_URL']
-AUTHORISATION_SERVICE_TOKEN = ENV['AUTHORISATION_SERVICE_TOKEN']
-
-if AUTHORISATION_SERVICE_URL.nil? && Rails.env.development?
-  Rails.logger.error('***No authorisation service url configured. To configure set AUTHORISATION_SERVICE_URL')
-end
-
-if AUTHORISATION_SERVICE_TOKEN.nil? && Rails.env.development?
-  Rails.logger.error('***No authorisation service token configured. To configure set AUTHORISATION_SERVICE_TOKEN')
+if Rails.env.test?
+  DFE_SIGN_IN_URL = 'https://test-url.local'.freeze
+  DFE_SIGN_IN_PASSWORD = 'test-password'.freeze
+  DFE_SIGN_IN_SERVICE_ID = 'test-service-id'.freeze
+  DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID = 'test-role-id'.freeze
+else
+  DFE_SIGN_IN_URL = ENV['DFE_SIGN_IN_URL']
+  DFE_SIGN_IN_PASSWORD = ENV['DFE_SIGN_IN_PASSWORD']
+  DFE_SIGN_IN_SERVICE_ID = ENV['DFE_SIGN_IN_SERVICE_ID']
+  DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID = ENV['DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID']
 end
