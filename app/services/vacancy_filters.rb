@@ -14,7 +14,7 @@ class VacancyFilters
     @minimum_salary = args[:minimum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
     @working_pattern = extract_working_pattern(args)
-    @phase = School.phases.include?(args[:phase]) ? args[:phase] : nil
+    @phase = extract_phase(args)
   end
 
   def to_hash
@@ -44,5 +44,9 @@ class VacancyFilters
 
   def extract_working_pattern(params)
     Vacancy.working_patterns.include?(params[:working_pattern]) ? params[:working_pattern] : nil
+  end
+
+  def extract_phase(params)
+    School.phases.include?(params[:phase]) ? params[:phase] : nil
   end
 end
