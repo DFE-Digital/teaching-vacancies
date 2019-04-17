@@ -32,12 +32,6 @@ RSpec.feature 'School viewing public listings' do
       mock_response = double(code: '200', body: { user: { permissions: [{ school_urn: '110627' }] } }.to_json)
       allow(Authorisation::Permissions).to receive(:new)
         .and_return(AuthHelpers::MockPermissions.new(mock_response))
-
-      ENV['SIGN_IN_WITH_DFE'] = 'true'
-    end
-
-    after(:each) do
-      ENV['SIGN_IN_WITH_DFE'] = 'false'
     end
 
     scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
