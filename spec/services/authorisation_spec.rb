@@ -58,6 +58,18 @@ RSpec.describe Authorisation do
 
       subject.call
     end
+
+    context 'when the response is a 404' do
+      it 'continues to return the authorisation object with no role_ids' do
+        stub_authorisation_step_with_not_found
+
+        result = subject.call
+
+        expect(result).to be_kind_of(Authorisation)
+        expect(result.role_ids).to be nil
+      end
+    end
+
     context 'when the external response status is 500' do
       before(:each) do
         stub_authorisation_step_with_external_error

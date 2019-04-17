@@ -116,7 +116,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   context 'with valid credentials but no authorisation' do
     before(:each) do
       stub_authentication_step
-      stub_missing_authorisation_step
+      stub_authorisation_step_with_not_found
     end
 
     it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
