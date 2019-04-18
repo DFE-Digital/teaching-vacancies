@@ -43,10 +43,12 @@ class VacancyFilters
   private
 
   def extract_working_pattern(params)
-    Vacancy.working_patterns.include?(params[:working_pattern]) ? params[:working_pattern] : nil
+    params[:working_pattern] if Vacancy.working_patterns.include?(params[:working_pattern])
   end
 
   def extract_phases(params)
-    [params[:phases]].select { |phase| School.phases.include?(phase) }.presence
+    return if params[:phases].blank?
+
+    JSON.parse(params[:phases]).select { |phase| School.phases.include?(phase) }.presence
   end
 end

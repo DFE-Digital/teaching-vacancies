@@ -46,11 +46,17 @@ module VacanciesHelper
     @pay_scale_options ||= PayScale.all
   end
 
-  def nqt_suitable_checked?(newly_qualified_teacher)
-    newly_qualified_teacher == 'true'
-  end
-
   def subject_options
     @subject_options ||= Subject.all
+  end
+
+  def phase_checked?(phase)
+    return false if phases.blank?
+
+    JSON.parse(phases).include?(phase)
+  end
+
+  def nqt_suitable_checked?(newly_qualified_teacher)
+    newly_qualified_teacher == 'true'
   end
 end
