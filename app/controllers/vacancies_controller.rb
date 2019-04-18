@@ -9,6 +9,7 @@ class VacanciesController < ApplicationController
                 :minimum_salary,
                 :working_pattern,
                 :phases,
+                :any_phase?,
                 :newly_qualified_teacher,
                 :radius,
                 :sort_column,
@@ -84,8 +85,16 @@ class VacanciesController < ApplicationController
     params[:working_pattern]
   end
 
+  def phases_to_a
+    raw_phases = params[:phases]
+    parsed_phases = JSON.parse(raw_phases) if raw_phases.present?
+    parsed_phases.is_a?(Array) ? parsed_phases : []
+  rescue JSON::ParserError
+    []
+  end
+
   def phases
-    params[:phases]
+    phases_to_a
   end
 
   def newly_qualified_teacher
@@ -102,6 +111,12 @@ class VacanciesController < ApplicationController
 
   def sort_order
     params[:sort_order]
+  end
+
+  def any_phase?
+    return true if phases_to_a.blank?
+
+    phases_to_a.select(&:present?).empty?
   end
 
   def set_headers

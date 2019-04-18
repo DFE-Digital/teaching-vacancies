@@ -97,20 +97,52 @@ RSpec.feature 'Filtering vacancies' do
     expect(page).not_to have_content(full_time_vacancy.job_title)
   end
 
-  scenario 'Filterable by education phase', elasticsearch: true do
-    primary_vacancy = create(:vacancy, :published, school: build(:school, :primary))
-    secondary_vacancy = create(:vacancy, :published, school: build(:school, :secondary))
+  context 'with jobs with education phases', elasticsearch: true do
+    let!(:nursery_vacancy) { create(:vacancy, :published, school: build(:school, :nursery)) }
+    let!(:primary_vacancy) { create(:vacancy, :published, school: build(:school, :primary)) }
+    let!(:secondary_vacancy) { create(:vacancy, :published, school: build(:school, :secondary)) }
 
-    Vacancy.__elasticsearch__.client.indices.flush
-    visit jobs_path
+    before(:each) { Vacancy.__elasticsearch__.client.indices.flush }
 
-    within '.filters-form' do
-      check 'Primary', name: 'phases[]'
-      page.find('.govuk-button[type=submit]').click
+    scenario 'Filterable by single education phase selection' do
+      visit jobs_path
+
+      within '.filters-form' do
+        check 'Primary', name: 'phases[]'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).not_to have_content(nursery_vacancy.job_title)
+      expect(page).to have_content(primary_vacancy.job_title)
+      expect(page).not_to have_content(secondary_vacancy.job_title)
     end
 
-    expect(page).to have_content(primary_vacancy.job_title)
-    expect(page).not_to have_content(secondary_vacancy.job_title)
+    scenario 'Filterable by multiple education phase selections' do
+      visit jobs_path
+
+      within '.filters-form' do
+        check 'Primary', name: 'phases[]'
+        check 'Secondary', name: 'phases[]'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).not_to have_content(nursery_vacancy.job_title)
+      expect(page).to have_content(primary_vacancy.job_title)
+      expect(page).to have_content(secondary_vacancy.job_title)
+    end
+
+    scenario 'Display all available jobs when "Any" education phase selected' do
+      visit jobs_path
+
+      within '.filters-form' do
+        check 'Any', name: 'phases[]'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(nursery_vacancy.job_title)
+      expect(page).to have_content(primary_vacancy.job_title)
+      expect(page).to have_content(secondary_vacancy.job_title)
+    end
   end
 
   scenario 'Filterable by minimum salary', elasticsearch: true do
