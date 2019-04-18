@@ -21,7 +21,6 @@ class VacancySearchBuilder
     self.phase = filters.phase
     self.newly_qualified_teacher = filters.newly_qualified_teacher
     self.minimum_salary = filters.minimum_salary
-    self.maximum_salary = filters.maximum_salary
     self.sort = sort
     self.expired = expired
     self.status = status
@@ -182,11 +181,7 @@ class VacancySearchBuilder
   end
 
   def salary_query
-    return if minimum_salary.blank? && maximum_salary.blank?
-    return greater_than(:minimum_salary, minimum_salary.to_i) if maximum_salary.blank?
-    return less_than_minimum_and_maximum_match if minimum_salary.blank?
-
-    [greater_than(:minimum_salary, minimum_salary.to_i), less_than_maximum_salary_or_no_match]
+    greater_than(:minimum_salary, minimum_salary.to_i) if minimum_salary.present?
   end
 
   def sort_query
@@ -242,26 +237,5 @@ class VacancySearchBuilder
         },
       },
     }
-  end
-
-  def less_than_maximum_salary_or_no_match
-    {
-      bool: {
-        should: [
-          less_than(:maximum_salary, maximum_salary.to_i),
-          bool: {
-            must_not: {
-              exists: {
-                field: 'maximum_salary'
-              }
-            }
-          }
-        ]
-      }
-    }
-  end
-
-  def less_than_minimum_and_maximum_match
-    [less_than(:minimum_salary, maximum_salary.to_i), less_than_maximum_salary_or_no_match]
   end
 end

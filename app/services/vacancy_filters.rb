@@ -1,5 +1,5 @@
 class VacancyFilters
-  AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary maximum_salary working_pattern
+  AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_pattern
                          phase newly_qualified_teacher].freeze
 
   attr_reader(*AVAILABLE_FILTERS)
@@ -25,7 +25,6 @@ class VacancyFilters
       subject: subject,
       job_title: job_title,
       minimum_salary: minimum_salary,
-      maximum_salary: maximum_salary,
       working_pattern: working_pattern,
       phase: phase,
       newly_qualified_teacher: newly_qualified_teacher,
