@@ -7,7 +7,6 @@ class VacanciesController < ApplicationController
                 :subject,
                 :job_title,
                 :minimum_salary,
-                :maximum_salary,
                 :working_pattern,
                 :phase,
                 :newly_qualified_teacher,
@@ -72,10 +71,6 @@ class VacanciesController < ApplicationController
 
   def minimum_salary
     params[:minimum_salary]
-  end
-
-  def maximum_salary
-    params[:maximum_salary]
   end
 
   def working_pattern

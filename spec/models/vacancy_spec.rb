@@ -15,7 +15,6 @@ RSpec.describe Vacancy, type: :model do
                 subject: 'subject',
                 job_title: 'job title',
                 minimum_salary: nil,
-                maximum_salary: nil,
                 working_pattern: nil,
                 newly_qualified_teacher: nil,
                 phase: nil)

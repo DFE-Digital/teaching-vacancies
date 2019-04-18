@@ -22,11 +22,6 @@ RSpec.describe VacancyFilters do
       expect(vacancy_filters.minimum_salary).to eq(10000)
     end
 
-    it 'sets the maximum salary filter if provided' do
-      vacancy_filters = described_class.new(maximum_salary: 20000)
-      expect(vacancy_filters.maximum_salary).to eq(20000)
-    end
-
     it 'sets the working pattern filter if provided and valid' do
       vacancy_filters = described_class.new(working_pattern: 'full_time')
       expect(vacancy_filters.working_pattern).to eq('full_time')
@@ -66,8 +61,7 @@ RSpec.describe VacancyFilters do
         job_title: 'job_title',
         radius: 20,
         minimum_salary: 'minimum_salary',
-        maximum_salary: 'maximum_salary',
-        working_pattern: :full_time,
+        working_pattern: 'full_time',
         newly_qualified_teacher: false,
         phase: :primary,
       )
@@ -80,8 +74,7 @@ RSpec.describe VacancyFilters do
         job_title: 'job_title',
         radius: '20',
         minimum_salary: 'minimum_salary',
-        maximum_salary: 'maximum_salary',
-        working_pattern: :full_time,
+        working_pattern: 'full_time',
         newly_qualified_teacher: false,
         phase: :primary,
       )

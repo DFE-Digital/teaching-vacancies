@@ -206,7 +206,6 @@ en:
       job_title: 'Job title'
       job_title_hint: 'e.g. Leader'
       minimum_salary: 'Minimum salary'
-      maximum_salary: 'Maximum salary'
       working_pattern: 'Working pattern'
       education_phase: 'Education phase'
       nqt_suitable: 'Suitable for NQTs'
