@@ -105,7 +105,7 @@ RSpec.feature 'Filtering vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      select 'Primary', from: 'phase'
+      select 'Primary', from: 'phases'
       page.find('.govuk-button[type=submit]').click
     end
 

@@ -22,8 +22,8 @@
       = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
       = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
     .govuk-form-group
-      = label_tag 'phase', t('jobs.filters.education_phase'), class: 'govuk-label'
-      = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
+      = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
+      = select_tag 'phases', options_for_select(school_phase_options, phases), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
     .govuk-form-group
       %fieldset.govuk-fieldset
         .govuk-checkboxes

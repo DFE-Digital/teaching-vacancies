@@ -10,7 +10,9 @@ RSpec.describe SubscriptionReferenceGenerator do
 
   describe '#generate' do
     context 'with no common fields in search criteria' do
-      let(:params) { { search_criteria: { 'radius' => 20, 'phase' => 'primary', 'working_pattern' => 'full_time' } } }
+      let(:params) do
+        { search_criteria: { 'radius' => 20, 'minimum_salary' => 30000, 'working_pattern' => 'full_time' } }
+      end
 
       it 'returns nil' do
         service = described_class.new(params)

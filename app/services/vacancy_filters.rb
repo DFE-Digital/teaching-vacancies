@@ -1,6 +1,6 @@
 class VacancyFilters
   AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_pattern
-                         phase newly_qualified_teacher].freeze
+                         phases newly_qualified_teacher].freeze
 
   attr_reader(*AVAILABLE_FILTERS)
 
@@ -14,7 +14,7 @@ class VacancyFilters
     @minimum_salary = args[:minimum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
     @working_pattern = extract_working_pattern(args)
-    @phase = extract_phase(args)
+    @phases = extract_phases(args)
   end
 
   def to_hash
@@ -25,7 +25,7 @@ class VacancyFilters
       job_title: job_title,
       minimum_salary: minimum_salary,
       working_pattern: working_pattern,
-      phase: phase,
+      phases: phases,
       newly_qualified_teacher: newly_qualified_teacher,
     }
   end
@@ -46,7 +46,7 @@ class VacancyFilters
     Vacancy.working_patterns.include?(params[:working_pattern]) ? params[:working_pattern] : nil
   end
 
-  def extract_phase(params)
-    School.phases.include?(params[:phase]) ? params[:phase] : nil
+  def extract_phases(params)
+    [params[:phases]].select { |phase| School.phases.include?(phase) }.presence
   end
 end

@@ -8,7 +8,7 @@ class VacanciesController < ApplicationController
                 :job_title,
                 :minimum_salary,
                 :working_pattern,
-                :phase,
+                :phases,
                 :newly_qualified_teacher,
                 :radius,
                 :sort_column,
@@ -84,8 +84,8 @@ class VacanciesController < ApplicationController
     params[:working_pattern]
   end
 
-  def phase
-    params[:phase]
+  def phases
+    params[:phases]
   end
 
   def newly_qualified_teacher
