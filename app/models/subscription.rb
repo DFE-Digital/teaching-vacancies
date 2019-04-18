@@ -26,10 +26,6 @@ class Subscription < ApplicationRecord
 
   def self.find_and_verify_by_token(token)
     data = encryptor.decrypt_and_verify(token)
-    expires = data[:expires]
-
-    raise ActiveRecord::RecordNotFound if Time.current > expires
-
     find(data[:id])
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     raise ActiveRecord::RecordNotFound
@@ -42,9 +38,8 @@ class Subscription < ApplicationRecord
     {}
   end
 
-  def token(expiration_in_days: 2)
-    expires = Time.current + expiration_in_days.days
-    token_values = { id: id, expires: expires }
+  def token
+    token_values = { id: id }
     self.class.encryptor.encrypt_and_sign(token_values)
   end
 

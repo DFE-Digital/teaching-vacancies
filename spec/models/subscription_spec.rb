@@ -100,13 +100,13 @@ RSpec.describe Subscription, type: :model do
         expect(result).to eq(subscription)
       end
 
-      context 'when token is expired' do
+      context 'when token is old' do
         let(:token) do
           Timecop.travel(-3.days) { subscription.token }
         end
 
-        it 'raises an error' do
-          expect { result }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'finds by token' do
+          expect(result).to eq(subscription)
         end
       end
 
@@ -115,6 +115,18 @@ RSpec.describe Subscription, type: :model do
 
         it 'raises an error' do
           expect { result }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+
+      context 'when token has extra data' do
+        let(:token) do
+          expires = Time.current + 2.days
+          token_values = { id: subscription.id, expires: expires }
+          Subscription.encryptor.encrypt_and_sign(token_values)
+        end
+
+        it 'finds by token' do
+          expect(result).to eq(subscription)
         end
       end
     end
