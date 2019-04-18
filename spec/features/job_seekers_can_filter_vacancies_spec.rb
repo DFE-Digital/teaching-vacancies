@@ -147,7 +147,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_field('newly_qualified_teacher', checked: true)
     end
 
-    scenario 'Display all available jobs when NQT suitable is unchecked' do
+    scenario 'Display all available jobs when NQT suitable is unchecked', elasticsearch: true do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
       not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
 
@@ -190,7 +190,7 @@ RSpec.feature 'Filtering vacancies' do
       end
     end
 
-    scenario 'correctly logs the total results when pagination is used' do
+    scenario 'correctly logs the total results when pagination is used', elasticsearch: true do
       create_list(:vacancy, 12, :published, job_title: 'Math', newly_qualified_teacher: true)
       timestamp = Time.zone.now.iso8601
 
@@ -213,7 +213,7 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  context 'Resetting search filters' do
+  context 'Resetting search filters', elasticsearch: true do
     it 'Hiring staff can reset search after filtering' do
       create(:vacancy, :published, job_title: 'Physics Teacher')
 
