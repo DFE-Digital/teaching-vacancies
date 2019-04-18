@@ -65,12 +65,14 @@ module "ecs" {
   ecs_service_web_container_definition_file_path = "${var.ecs_service_web_container_definition_file_path}"
   ecs_service_web_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_web_name}"
   ecs_service_web_task_name                      = "${var.project_name}_${terraform.workspace}_${var.ecs_service_web_task_name}"
+  ecs_service_web_task_revision                  = "${var.ecs_service_web_task_revision}"
   ecs_service_web_task_count                     = "${var.ecs_service_web_task_count}"
   ecs_service_web_task_port                      = "${var.ecs_service_web_task_port}"
 
   ecs_service_worker_container_definition_file_path = "${var.ecs_service_worker_container_definition_file_path}"
   ecs_service_worker_name                           = "${var.project_name}_${terraform.workspace}_${var.ecs_service_worker_name}"
   ecs_service_worker_task_name                      = "${var.project_name}_${terraform.workspace}_${var.ecs_service_worker_task_name}"
+  ecs_service_worker_task_revision                  = "${var.ecs_service_worker_task_revision}"
   ecs_service_worker_task_port                      = "${var.ecs_service_worker_task_port}"
 
   worker_command = "${var.worker_command}"
