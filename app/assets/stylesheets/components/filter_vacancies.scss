@@ -34,4 +34,22 @@
        }
     }
   }
+
+  .filters-form .checkbox-group {
+    &--scrollable {
+      height: 160px;
+      overflow: auto;
+    }
+    padding: 10px 10px 0 10px;
+    border: 2px solid govuk-colour("black");
+    label {
+      background: govuk-colour("white");
+      font-size: $small-font-size;
+    }
+  }
+  .filters-form .checkbox-group:after {
+    content: "";
+    height: 10px;
+    display: block;
+  }
 }
