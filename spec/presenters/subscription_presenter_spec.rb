@@ -55,6 +55,35 @@ RSpec.describe SubscriptionPresenter do
         expect(presenter.filtered_search_criteria['']).to eq('Suitable for NQTs')
       end
     end
+
+    context 'with unsorted filters' do
+      let(:search_criteria) do
+        {
+          phases: ['secondary', 'sixteen_plus'],
+          maximum_salary: '2000',
+          radius: '10',
+          job_title: 'leader',
+          newly_qualified_teacher: 'true',
+          location: 'EC2 9AN',
+          minimum_salary: '10',
+          working_pattern: 'part_time',
+          subject: 'maths'
+        }
+      end
+
+      it 'returns the filters in sort order' do
+        expect(presenter.filtered_search_criteria).to eq(
+          'location' => 'Within 10 miles of EC2 9AN',
+          'subject' => 'maths',
+          'job_title' => 'leader',
+          'minimum_salary' => '£10',
+          'maximum_salary' => '£2,000',
+          'working_pattern' => 'Part time',
+          'phases' => 'Secondary, Sixteen plus',
+          '' => 'Suitable for NQTs'
+        )
+      end
+    end
   end
 
   describe '#extended_search_criteria' do
