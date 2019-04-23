@@ -65,6 +65,7 @@ variable "audit_subscription_creation_worksheet_gid" {}
 
 variable "domain" {}
 variable "google_geocoding_api_key" {}
+variable "ordnance_survey_api_key" {}
 
 variable "google_api_json_key" {
   type = "map"
