@@ -37,14 +37,24 @@
 
   .filters-form .checkbox-group {
     &--scrollable {
-      height: 160px;
+      height: 170px;
       overflow: auto;
     }
     padding: 10px 10px 0 10px;
-    border: 2px solid govuk-colour("black");
+    border: 2px solid govuk-colour("grey-1");
+    box-sizing: border-box;
+    width: 100%;
     label {
       background: govuk-colour("white");
       font-size: $small-font-size;
+    }
+    &__divider {
+      $govuk-divider-size: 40px;
+      @include govuk-font($size: 19);
+      @include govuk-text-colour;
+      width: $govuk-divider-size;
+      margin-bottom: govuk-spacing(2);
+      text-align: center;
     }
   }
   .filters-form .checkbox-group:after {

@@ -208,6 +208,7 @@ en:
       minimum_salary: 'Minimum salary'
       working_pattern: 'Working pattern'
       education_phase: 'Education phase'
+      education_phase_divider: 'or'
       nqt_suitable: 'Suitable for NQTs'
       clear_filters: 'Reset search'
   feedback:

@@ -28,6 +28,8 @@
           .govuk-checkboxes__item
             = check_box_tag 'phases[]', '', any_phase?, id: 'phases_any', class: 'govuk-checkboxes__input'
             = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
+          .checkbox-group__divider 
+            = t('jobs.filters.education_phase_divider')
           - school_phase_options.each_with_index do |phase, i|
             .govuk-checkboxes__item
               = check_box_tag 'phases[]', phase[1], phase_checked?(phase[1]), id: 'phases_' + phase[1], class: 'govuk-checkboxes__input'
