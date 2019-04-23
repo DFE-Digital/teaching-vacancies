@@ -436,7 +436,7 @@ data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
     image                       = "${aws_ecr_repository.default.repository_url}"
     secret_key_base             = "${var.secret_key_base}"
     project_name                = "${var.project_name}"
-    task_name                   = "${var.ecs_service_web_task_name}_import_schools"
+    task_name                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
     environment                 = "${var.environment}"
     rails_env                   = "${var.rails_env}"
     region                      = "${var.region}"
