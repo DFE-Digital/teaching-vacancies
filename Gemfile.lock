@@ -6,6 +6,13 @@ GIT
     gov_uk_date_fields (3.0.0)
       rails (>= 5.0)
 
+GIT
+  remote: https://github.com/dxw/geocoder.git
+  revision: bc032c38c2e72645b04547c93b6f4e96415393f5
+  branch: add-os-name-support
+  specs:
+    geocoder (1.5.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -142,7 +149,6 @@ GEM
       thor (~> 0.14)
     friendly_id (5.2.5)
       activerecord (>= 4.0.0)
-    geocoder (1.5.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.25.0)
@@ -509,7 +515,7 @@ DEPENDENCIES
   faraday_middleware-aws-signers-v4
   figaro
   friendly_id
-  geocoder
+  geocoder!
   google-api-client
   google_drive
   gov_uk_date_fields!
