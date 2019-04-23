@@ -43,7 +43,7 @@ resource "aws_ecs_service" "web" {
   name            = "${var.ecs_service_web_name}"
   iam_role        = "${aws_iam_role.ecs_role.arn}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${replace("${aws_ecs_task_definition.web.arn}", "/:${aws_ecs_task_definition.web.revision}$$/", ":${var.ecs_service_web_task_revision}")}"
+  task_definition = "${aws_ecs_task_definition.web.arn}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -82,7 +82,7 @@ resource "aws_ecs_service" "logspout" {
 resource "aws_ecs_service" "worker" {
   name            = "${var.ecs_service_worker_name}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${replace("${aws_ecs_task_definition.worker.arn}", "/:${aws_ecs_task_definition.worker.revision}$$/", ":${var.ecs_service_worker_task_revision}")}"
+  task_definition = "${aws_ecs_task_definition.worker.arn}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
