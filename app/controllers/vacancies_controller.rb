@@ -1,6 +1,10 @@
 class VacanciesController < ApplicationController
   include ParameterSanitiser
 
+  PERMITTED_SEARCH_PARAMS = [phases: []]
+                            .concat(VacancyFilters::AVAILABLE_FILTERS)
+                            .uniq
+                            .freeze
   DEFAULT_RADIUS = 20
 
   helper_method :location,
@@ -16,7 +20,7 @@ class VacanciesController < ApplicationController
                 :sort_order
 
   def index
-    @filters = VacancyFilters.new(search_params)
+    @filters = VacancyFilters.new(search_params.to_hash)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
 
@@ -48,7 +52,7 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(*VacancyFilters::AVAILABLE_FILTERS).to_hash
+    params.permit(*PERMITTED_SEARCH_PARAMS)
   end
 
   def old_vacancy_path?(vacancy)
