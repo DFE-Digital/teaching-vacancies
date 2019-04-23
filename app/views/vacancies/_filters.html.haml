@@ -24,7 +24,7 @@
     .govuk-form-group
       %fieldset.govuk-fieldset
         = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
-        .govuk-checkboxes.checkbox-group.checkbox-group--scrollable
+        .govuk-checkboxes.checkbox-group{ class: ('checkbox-group--scrollable' if any_phase?) }
           .govuk-checkboxes__item
             = check_box_tag 'phases[]', '', any_phase?, id: 'phases_any', class: 'govuk-checkboxes__input'
             = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
