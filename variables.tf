@@ -218,6 +218,11 @@ variable "performance_platform_submit_all_task_command" {
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
 }
 
+variable "migrate_phase_to_phases_task_command" {
+  description = "The Entrypoint for the migrate_phase_to_phases task"
+  default     = ["rake", "verbose", "data:phase:migrate"]
+}
+
 variable "vacancies_statistics_refresh_cache_task_command" {
   description = "The Entrypoint for the vacancies_statistics_refresh_cache task"
   default     = ["rake", "verbose", "vacancies:statistics:refresh_cache"]
