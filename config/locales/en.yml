@@ -194,7 +194,7 @@ en:
       publication_date: 'For example, %{date}'
       benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
-      application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school’s or trust’s website.'
+      application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school or trust’s website.'
       pro_rata_warning: 'Part time roles must state a pro rata salary'
     filters:
       title: 'Search job listings'
