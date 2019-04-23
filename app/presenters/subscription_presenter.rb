@@ -3,7 +3,7 @@ class SubscriptionPresenter < BasePresenter
 
   def filtered_search_criteria
     @filtered_search_criteria ||= search_criteria_to_h.each_with_object({}) do |(field, value), criteria|
-      search_field = add_search_criteria_field(field, value)
+      search_field = search_criteria_field(field, value)
       criteria.merge!(search_field) if search_field.present?
     end.stringify_keys
   end
@@ -22,15 +22,19 @@ class SubscriptionPresenter < BasePresenter
     Hash[VacancyAlertFilters::AVAILABLE_FILTERS.collect { |v| [v, nil] }]
   end
 
-  def add_search_criteria_field(field, value)
+  # rubocop:disable Metrics/CyclomaticComplexity
+  def search_criteria_field(field, value)
     return if field.eql?('radius')
 
     return render_location_filter(value, search_criteria_to_h['radius']) if field.eql?('location')
     return render_salary_filter(field, value) if field.ends_with?('_salary')
+    return render_working_pattern_filter(value) if field.eql?('working_pattern')
+    return render_phases_filter(value) if field.eql?('phases')
     return render_nqt_filter(value) if field.eql?('newly_qualified_teacher')
 
-    field.eql?('working_pattern') ? render_working_pattern_filter(value) : { "#{field}": search_criteria_to_h[field] }
+    { "#{field}": value }
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def render_location_filter(location, radius)
     return if location.empty? || radius.empty?
@@ -42,11 +46,15 @@ class SubscriptionPresenter < BasePresenter
     { "#{field}": number_to_currency(value) }
   end
 
-  def render_nqt_filter(value)
-    { '': 'Suitable for NQTs' } if value.eql?('true')
-  end
-
   def render_working_pattern_filter(value)
     { working_pattern: value.humanize }
+  end
+
+  def render_phases_filter(value)
+    { phases: value.map(&:humanize).join(', ') }
+  end
+
+  def render_nqt_filter(value)
+    { '': 'Suitable for NQTs' } if value.eql?('true')
   end
 end

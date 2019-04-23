@@ -40,6 +40,14 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
+    context 'with the phases filter' do
+      let(:search_criteria) { { phases: ['secondary', 'sixteen_plus'] } }
+
+      it 'formats and returns the phases' do
+        expect(presenter.filtered_search_criteria['phases']).to eq('Secondary, Sixteen plus')
+      end
+    end
+
     context 'with the NQT filter' do
       let(:search_criteria) { { newly_qualified_teacher: 'true' } }
 
