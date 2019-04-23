@@ -99,11 +99,6 @@ variable "ecs_service_web_task_name" {
   default = "web"
 }
 
-variable "ecs_service_web_task_revision" {
-  description = "The revision of the web task definition to use"
-  default     = "latest"
-}
-
 variable "ecs_service_web_task_count" {
   description = "The number of containers to run for this service"
   default     = 1
@@ -120,11 +115,6 @@ variable "ecs_service_worker_name" {
 
 variable "ecs_service_worker_task_name" {
   default = "worker"
-}
-
-variable "ecs_service_worker_task_revision" {
-  description = "The revision of the worker task definition to use"
-  default     = "latest"
 }
 
 variable "ecs_service_worker_task_port" {
