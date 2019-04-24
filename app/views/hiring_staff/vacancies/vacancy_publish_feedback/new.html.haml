@@ -1,0 +1,10 @@
+= render partial: '/feedback/head'
+= render partial: '/feedback/errors', locals: { feedback: @feedback }
+
+= simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+
+      = render partial: '/feedback/fields', locals: { form: f }
+
+      = f.submit t('feedback.submit'), class: 'govuk-button'
