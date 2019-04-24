@@ -117,10 +117,6 @@ variable "seed_vacancies_from_api" {
   type = "list"
 }
 
-variable "backfill_jobseeker_alert_data_command" {
-  type = "list"
-}
-
 variable "performance_platform_submit_task_command" {
   type = "list"
 }
