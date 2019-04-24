@@ -5,8 +5,8 @@ RSpec.describe AlertResultFinder do
   let(:to_date) { Time.zone.yesterday.strftime('%Y-%m-%d') }
 
   it 'generates ES filters from the search_criteria', elasticsearch: true do
-    expect(VacancyFilters).to receive(:new).with({})
-                                           .and_return(VacancyFilters.new({}))
+    expect(VacancyAlertFilters).to receive(:new).with({})
+                                                .and_return(VacancyAlertFilters.new({}))
 
     AlertResultFinder.new({}, from_date, to_date).call
   end

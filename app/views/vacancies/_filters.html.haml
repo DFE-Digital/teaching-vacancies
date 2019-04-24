@@ -7,17 +7,17 @@
       = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
       = search_field_tag :location, location, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.location_hint')
     .govuk-form-group
-      = label_tag 'Radius', 'Radius', class: 'govuk-label'
+      = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
       = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'govuk-select form-control form-control-block'
     .govuk-form-group
-      = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
-      = search_field_tag :keyword, keyword, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
+      = label_tag 'subject', t('jobs.filters.subject'), class: 'govuk-label'
+      = search_field_tag :subject, subject, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.subject_hint')
+    .govuk-form-group
+      = label_tag 'job_title', t('jobs.filters.job_title'), class: 'govuk-label'
+      = search_field_tag :job_title, job_title, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.job_title_hint')
     .govuk-form-group
       = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
       = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
-    .govuk-form-group
-      = label_tag 'maximum_salary', t('jobs.filters.maximum_salary'), class: 'govuk-label'
-      = select_tag 'maximum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, maximum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
     .govuk-form-group
       = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
       = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'

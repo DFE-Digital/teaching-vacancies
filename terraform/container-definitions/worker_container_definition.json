@@ -105,6 +105,10 @@
         "value": "${audit_express_interest_worksheet_gid}"
       },
       {
+        "name": "AUDIT_SUBSCRIPTION_CREATION_WORKSHEET_GID",
+        "value": "${audit_subscription_creation_worksheet_gid}"
+      },
+      {
         "name": "DOMAIN",
         "value": "${domain}"
       },

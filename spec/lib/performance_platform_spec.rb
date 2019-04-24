@@ -44,7 +44,7 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
                                               headers: headers)
 
       performance_platform = PerformancePlatform::TransactionsByChannel.new('some-token')
-      performance_platform.submit_transactions(2)
+      performance_platform.submit(2)
     end
   end
 end

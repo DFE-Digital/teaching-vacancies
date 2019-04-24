@@ -6,12 +6,13 @@ class Subscription < ApplicationRecord
   has_many :alert_runs
 
   validates :email, email_address: { presence: true }
+  validates :reference, presence: true
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
 
-  before_save :set_reference
-
   scope :ongoing, -> { where('expires_on >= current_date') }
+
+  after_initialize :default_reference
 
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
@@ -25,31 +26,20 @@ class Subscription < ApplicationRecord
 
   def self.find_and_verify_by_token(token)
     data = encryptor.decrypt_and_verify(token)
-    expires = data[:expires]
-
-    raise ActiveRecord::RecordNotFound if Time.current > expires
-
     find(data[:id])
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     raise ActiveRecord::RecordNotFound
   end
 
   def search_criteria_to_h
-    @search_criteria_hash = JSON.parse(search_criteria)
+    parsed_criteria = JSON.parse(search_criteria) if search_criteria.present?
+    parsed_criteria.is_a?(Hash) ? parsed_criteria : {}
+  rescue JSON::ParserError
+    {}
   end
 
-  def set_reference
-    return if reference.present?
-
-    self.reference = loop do
-      reference = SecureRandom.hex(8)
-      break reference unless self.class.exists?(email: email, reference: reference)
-    end
-  end
-
-  def token(expiration_in_days: 2)
-    expires = Time.current + expiration_in_days.days
-    token_values = { id: id, expires: expires }
+  def token
+    token_values = { id: id }
     self.class.encryptor.encrypt_and_sign(token_values)
   end
 
@@ -71,5 +61,15 @@ class Subscription < ApplicationRecord
 
   def expired?
     expires_on < Time.zone.today
+  end
+
+  private
+
+  def default_reference
+    return unless new_record? && reference.blank?
+
+    generator = SubscriptionReferenceGenerator.new(search_criteria: search_criteria_to_h)
+
+    self.reference = generator.generate
   end
 end

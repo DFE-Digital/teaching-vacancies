@@ -200,10 +200,12 @@ en:
       title: 'Search job listings'
       location: 'Location'
       location_hint: 'Postcode'
-      keyword: 'Keyword'
-      keyword_hint: 'Role or subject, for example'
+      radius: 'Radius'
+      subject: 'Subject'
+      subject_hint: 'e.g. Maths'
+      job_title: 'Job title'
+      job_title_hint: 'e.g. Leader'
       minimum_salary: 'Minimum salary'
-      maximum_salary: 'Maximum salary'
       working_pattern: 'Working pattern'
       education_phase: 'Education phase'
       nqt_suitable: 'Suitable for NQTs'
@@ -258,10 +260,10 @@ en:
     new: Sign up for a job alert
     info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 3 months or can be cancelled using the link at the bottom of alert emails.
     location_text: Within %{radius} miles of %{location}
-    reference: Your reference
+    reference: 'Your reference:'
     confirmation:
       header: Your email subscription has started
-      receipt_confirmation: We have sent you a confirmation email
+      receipt_confirmation: We have sent you a confirmation email.
       next_step: 'What happens next'
       unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
       next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 3 months, until %{date}.'

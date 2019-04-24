@@ -384,7 +384,6 @@ resource "aws_autoscaling_policy" "ecs-autoscaling-up-policy" {
   cooldown                = 300
   autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
   policy_type             = "SimpleScaling"
-  metric_aggregation_type = "Average"
 }
 
 resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
@@ -394,7 +393,6 @@ resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
   cooldown                = 300
   autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
   policy_type             = "SimpleScaling"
-  metric_aggregation_type = "Minimum"
 }
 
 resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {

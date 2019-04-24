@@ -29,7 +29,7 @@ echo "Deploying…"
 echo "* Terraform workspace: $TERRAFORM_WORKSPACE"
 echo "* Git branch: $GIT_BRANCH"
 
-read -r -p "Continue (y/n)?" CONT
+read -r -p "Continue? [y/N] " CONT
 if [ "$CONT" = "y" ]; then
   echo
 else

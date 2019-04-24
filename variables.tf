@@ -158,6 +158,11 @@ variable "send_job_alerts_daily_email_command" {
   default     = ["rake", "verbose", "daily_emails:send"]
 }
 
+variable "backfill_jobseeker_alert_data_command" {
+  description = "The Entrypoint for the backfill_jobseeker_alert_data task"
+  default     = ["rake", "verbose", "jobseeker_alerts:statistics:backfill:alert_data"]
+}
+
 variable "send_job_alerts_daily_email_schedule" {
   description = "send_job_alerts_daily_email schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 08 * * ? *)"
@@ -201,11 +206,6 @@ variable "reindex_vacancies_task_command" {
 variable "seed_vacancies_from_api" {
   description = "The Entrypoint for the data:seed_from_api:vacancies task"
   default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
-}
-
-variable "backfill_info_clicks_for_vacancies_command" {
-  description = "The Entrypoint for the vacancies:statistics:backfill:info_clicks task"
-  default     = ["rake", "verbose", "vacancies:statistics:backfill:info_clicks"]
 }
 
 variable "performance_platform_submit_task_command" {
@@ -364,6 +364,7 @@ variable "google_analytics_profile_id" {}
 variable "audit_vacancies_worksheet_gid" {}
 variable "audit_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
+variable "audit_subscription_creation_worksheet_gid" {}
 
 variable "skylight_authentication" {}
 variable "skylight_env" {}

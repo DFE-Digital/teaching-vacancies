@@ -12,7 +12,7 @@ Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
 */
 terraform {
-  required_version = "~> 0.11.11"
+  required_version = "~> 0.11.13"
 
   backend "s3" {
     bucket  = "terraform-state-002"
@@ -98,9 +98,9 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
-  seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
+  backfill_jobseeker_alert_data_command = "${var.backfill_jobseeker_alert_data_command}"
 
-  backfill_info_clicks_for_vacancies_command = "${var.backfill_info_clicks_for_vacancies_command}"
+  seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
 
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
@@ -144,6 +144,7 @@ module "ecs" {
   audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
   audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
   audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
+  audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"

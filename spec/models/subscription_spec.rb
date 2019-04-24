@@ -23,8 +23,10 @@ RSpec.describe Subscription, type: :model do
     context 'unique index' do
       it 'validates uniqueness of email, expires_on, frequency and search_criteria' do
         create(:subscription, email: 'jane@doe.com',
+                              reference: 'A reference',
                               frequency: :daily)
         subscription = build(:subscription, email: 'jane@doe.com',
+                                            reference: 'B reference',
                                             frequency: :daily)
 
         expect(subscription.valid?).to eq(false)
@@ -53,17 +55,28 @@ RSpec.describe Subscription, type: :model do
   end
 
   context 'reference' do
-    it 'generates a reference if one is not set' do
-      expect(SecureRandom).to receive(:hex).and_return('ABCDEF')
-      subscription = create(:subscription, frequency: :daily)
+    context 'when common search criteria is provided' do
+      it 'generates a reference on initialization' do
+        subscription = Subscription.new(search_criteria: {
+          location: 'Somewhere', radius: 30, subject: 'english maths science'
+        }.to_json)
 
-      expect(subscription.reference).to eq('ABCDEF')
+        expect(subscription.reference).to eq('English maths science jobs within 30 miles of Somewhere')
+      end
     end
 
-    it 'does not generate a reference if one is set' do
-      subscription = create(:subscription, reference: 'A-reference', frequency: :daily)
+    context 'when no common search criteria is provided' do
+      it 'does not set a default reference' do
+        subscription = Subscription.new(search_criteria: { radius: 20, phase: 'primary' }.to_json)
 
-      expect(subscription.reference).to eq('A-reference')
+        expect(subscription.reference).to be_nil
+      end
+    end
+
+    it 'uses a reference passed to it' do
+      subscription = create(:subscription, reference: 'A specific reference')
+
+      expect(subscription.reference).to eq('A specific reference')
     end
   end
 
@@ -87,13 +100,13 @@ RSpec.describe Subscription, type: :model do
         expect(result).to eq(subscription)
       end
 
-      context 'when token is expired' do
+      context 'when token is old' do
         let(:token) do
           Timecop.travel(-3.days) { subscription.token }
         end
 
-        it 'raises an error' do
-          expect { result }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'finds by token' do
+          expect(result).to eq(subscription)
         end
       end
 
@@ -104,12 +117,24 @@ RSpec.describe Subscription, type: :model do
           expect { result }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
+
+      context 'when token has extra data' do
+        let(:token) do
+          expires = Time.current + 2.days
+          token_values = { id: subscription.id, expires: expires }
+          Subscription.encryptor.encrypt_and_sign(token_values)
+        end
+
+        it 'finds by token' do
+          expect(result).to eq(subscription)
+        end
+      end
     end
   end
 
   context 'vacancies_for_range' do
     let(:subscription) do
-      create(:subscription, frequency: :daily, search_criteria: { keyword: 'english' }.to_json)
+      create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
 
     let!(:old_matching_vacancies) do
