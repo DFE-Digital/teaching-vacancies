@@ -5,26 +5,10 @@ class SubscriptionPresenter < BasePresenter
                                   working_pattern phases newly_qualified_teacher].freeze
 
   def filtered_search_criteria
-    @filtered_search_criteria ||= begin
-                                    criteria = {}
-                                    sorted_criteria = search_criteria_to_h.sort do |(a, _), (b, _)|
-                                      a_index = SEARCH_CRITERIA_SORT_ORDER.find_index(a)
-                                      b_index = SEARCH_CRITERIA_SORT_ORDER.find_index(b)
-
-                                      next 0 if a_index.nil? && b_index.nil?
-                                      next 1 if a_index.nil?
-                                      next -1 if b_index.nil?
-
-                                      a_index <=> b_index
-                                    end
-
-                                    sorted_criteria.each do |field, value|
-                                      search_field = search_criteria_field(field, value)
-                                      criteria.merge!(search_field) if search_field.present?
-                                    end
-
-                                    criteria.stringify_keys
-                                  end
+    @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) do |(field, value), criteria|
+      search_field = search_criteria_field(field, value)
+      criteria.merge!(search_field) if search_field.present?
+    end.stringify_keys
   end
 
   def to_row
@@ -32,6 +16,19 @@ class SubscriptionPresenter < BasePresenter
   end
 
   private
+
+  def sorted_search_criteria
+    search_criteria_to_h.sort do |(a, _), (b, _)|
+      a_index = SEARCH_CRITERIA_SORT_ORDER.find_index(a)
+      b_index = SEARCH_CRITERIA_SORT_ORDER.find_index(b)
+
+      next 0 if a_index.nil? && b_index.nil?
+      next 1 if a_index.nil?
+      next -1 if b_index.nil?
+
+      a_index <=> b_index
+    end.to_h
+  end
 
   def extended_search_criteria
     available_filter_hash.merge(search_criteria_to_h.symbolize_keys)
