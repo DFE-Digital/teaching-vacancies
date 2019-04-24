@@ -86,13 +86,13 @@ RSpec.describe SubscriptionPresenter do
     end
   end
 
-  describe '#extended_search_criteria' do
-    let(:extended_search_criteria) { presenter.send(:extended_search_criteria) }
+  describe '#full_search_criteria' do
+    let(:full_search_criteria) { presenter.send(:full_search_criteria) }
 
     it 'adds all possible search criteria to subscription criteria' do
-      expect(extended_search_criteria.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count)
-      expect(extended_search_criteria.keys).to match_array(VacancyAlertFilters::AVAILABLE_FILTERS)
-      expect(extended_search_criteria[:keyword]).to eq(search_criteria[:keyword])
+      expect(full_search_criteria.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count)
+      expect(full_search_criteria.keys).to match_array(VacancyAlertFilters::AVAILABLE_FILTERS)
+      expect(full_search_criteria[:keyword]).to eq(search_criteria[:keyword])
     end
   end
 
@@ -111,6 +111,14 @@ RSpec.describe SubscriptionPresenter do
     it 'returns the search criteria' do
       expect(to_row[:working_pattern]).to eq(nil)
       expect(to_row.keys.last).to eq(:reference)
+    end
+
+    context 'when array values in search criteria' do
+      let(:search_criteria) { { phases: ['primary', 'secondary', 'sixteen_plus'] } }
+
+      it 'makes them human readable' do
+        expect(to_row[:phases]).to eq('primary, secondary, sixteen_plus')
+      end
     end
   end
 end

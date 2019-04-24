@@ -12,7 +12,10 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def to_row
-    extended_search_criteria.merge(reference: reference)
+    full_search_criteria.merge!(reference: reference)
+                        .transform_values! do |value|
+      value.is_a?(Array) ? value.join(', ') : value
+    end
   end
 
   private
@@ -30,8 +33,8 @@ class SubscriptionPresenter < BasePresenter
     end.to_h
   end
 
-  def extended_search_criteria
-    available_filter_hash.merge(search_criteria_to_h.symbolize_keys)
+  def full_search_criteria
+    available_filter_hash.merge(sorted_search_criteria.symbolize_keys)
   end
 
   def available_filter_hash
