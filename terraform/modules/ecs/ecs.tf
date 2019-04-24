@@ -43,7 +43,7 @@ resource "aws_ecs_service" "web" {
   name            = "${var.ecs_service_web_name}"
   iam_role        = "${aws_iam_role.ecs_role.arn}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${replace("${aws_ecs_task_definition.web.arn}", "/:${aws_ecs_task_definition.web.revision}$$/", ":${var.ecs_service_web_task_revision}")}"
+  task_definition = "${aws_ecs_task_definition.web.family}:${max("${aws_ecs_task_definition.web.revision}", "${data.aws_ecs_task_definition.web.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -67,7 +67,7 @@ resource "aws_ecs_service" "web" {
 resource "aws_ecs_service" "logspout" {
   name            = "logspout-${var.environment}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.logspout.arn}"
+  task_definition = "${aws_ecs_task_definition.logspout.family}:${max("${aws_ecs_task_definition.logspout.revision}", "${data.aws_ecs_task_definition.logspout.revision}")}"
   desired_count   = "${var.ecs_logspout_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -82,7 +82,7 @@ resource "aws_ecs_service" "logspout" {
 resource "aws_ecs_service" "worker" {
   name            = "${var.ecs_service_worker_name}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${replace("${aws_ecs_task_definition.worker.arn}", "/:${aws_ecs_task_definition.worker.revision}$$/", ":${var.ecs_service_worker_task_revision}")}"
+  task_definition = "${aws_ecs_task_definition.worker.family}:${max("${aws_ecs_task_definition.worker.revision}", "${data.aws_ecs_task_definition.worker.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -314,6 +314,33 @@ data "template_file" "reindex_vacancies_container_definition" {
   }
 }
 
+data "template_file" "backfill_jobseeker_alert_data_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_web_task_name}_backfill_jobseeker_alert_data"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    redis_cache_url          = "${var.redis_cache_url}"
+    redis_queue_url          = "${var.redis_queue_url}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
+    entrypoint               = "${jsonencode(var.backfill_jobseeker_alert_data_command)}"
+  }
+}
+
 /* seed_vacancies_from_api_container_definition task definition*/
 data "template_file" "seed_vacancies_from_api_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
@@ -498,6 +525,10 @@ resource "aws_ecs_task_definition" "web" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+data "aws_ecs_task_definition" "web" {
+  task_definition = "${aws_ecs_task_definition.web.family}"
+}
+
 resource "aws_ecs_task_definition" "worker" {
   family                   = "${var.ecs_service_worker_name}"
   container_definitions    = "${data.template_file.worker_container_definition.rendered}"
@@ -509,6 +540,10 @@ resource "aws_ecs_task_definition" "worker" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+data "aws_ecs_task_definition" "worker" {
+  task_definition = "${aws_ecs_task_definition.worker.family}"
+}
+
 resource "aws_ecs_task_definition" "logspout" {
   family                = "ecs-logspout-${var.environment}"
   container_definitions = "${data.template_file.logspout_container_definition.rendered}"
@@ -518,6 +553,10 @@ resource "aws_ecs_task_definition" "logspout" {
     name      = "dockersock"
     host_path = "/var/run/docker.sock"
   }
+}
+
+data "aws_ecs_task_definition" "logspout" {
+  task_definition = "${aws_ecs_task_definition.logspout.family}"
 }
 
 /*====
@@ -593,6 +632,18 @@ resource "aws_iam_role_policy_attachment" "ecs-instance-role-attachment" {
 /*====
 ECS ONE-OFF TASKS
 ======*/
+
+resource "aws_ecs_task_definition" "backfill_jobseeker_alert_data_task" {
+  family                   = "${var.ecs_service_web_task_name}_backfill_jobseeker_alert_data_task"
+  container_definitions    = "${data.template_file.backfill_jobseeker_alert_data_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
 
 resource "aws_ecs_task_definition" "reindex_vacancies_task" {
   family                   = "${var.ecs_service_web_task_name}_reindex_vacancies_task"

@@ -9,7 +9,6 @@ variable "ecs_service_web_container_definition_file_path" {}
 
 variable "ecs_service_web_name" {}
 variable "ecs_service_web_task_name" {}
-variable "ecs_service_web_task_revision" {}
 variable "ecs_service_web_task_count" {}
 variable "ecs_service_web_task_port" {}
 
@@ -18,7 +17,6 @@ variable "ecs_service_worker_container_definition_file_path" {}
 
 variable "ecs_service_worker_name" {}
 variable "ecs_service_worker_task_name" {}
-variable "ecs_service_worker_task_revision" {}
 variable "ecs_service_worker_task_port" {}
 
 # Rake task container definitions
