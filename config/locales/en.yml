@@ -97,9 +97,9 @@ en:
     confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
     submit: 'Confirm and submit job'
     apply: 'Get more information'
-    application_link: 'Link for more information'
+    application_link: 'Link for jobseekers to learn more and apply'
     no_application_link: 'No application link given'
-    application_link_url: 'Link for more information (link opens external website in a new window)'
+    application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window)'
     view_posted_job: 'Your job listing has been published. You can view it at:'
     preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
     actions: 'Actions'
@@ -172,7 +172,7 @@ en:
       change_application_deadline: 'Change application deadline'
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'
-      application_link_url: 'Link for more information (link opens external website in a new window) — %{url}'
+      application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}'
       flexible_working: 'Flexible working (optional)'
       newly_qualified_teacher: 'Newly qualified teacher (optional)'
       sort_by_link: Sort jobs by %{column} in %{order}ending order
@@ -194,7 +194,7 @@ en:
       publication_date: 'For example, %{date}'
       benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
-      application_link: 'This is the url linking the job to your existing application page'
+      application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school or trust’s website.'
       pro_rata_warning: 'Part time roles must state a pro rata salary'
     filters:
       title: 'Search job listings'
@@ -213,10 +213,23 @@ en:
   feedback:
     page_title: 'Feedback'
     heading: 'Give feedback'
-    legend: 'Overall, how did you feel about the service you received today?'
-    label: 'How could we improve this service?'
-    hint_text: "Limit is 200 characters. Please don't include any personal or financial information, for example your National Insurance or credit card numbers"
+    rating_legend: 'Overall, how did you feel about the service you received today?'
+    rating1_option: Very dissatisfied
+    rating2_option: Dissatisfied
+    rating3_option: Neither satisfied or dissatisfied
+    rating4_option: Satisfied
+    rating5_option: Very satisfied
+    comment_label: 'How could we improve this service?'
+    comment_hint_text: "Please don't include any personal or financial information, for example your National Insurance or credit card numbers. (Limit is 1,200 characters)"
     submit: 'Submit feedback'
+  general_feedback:
+    visit_purpose_legend: 'What did you come to Teaching Vacancies to do?'
+    visit_purpose_hint_text: 'Please tell us what you came here to do.
+    (Limit is 1,200 characters)'
+    visit_purpose_options:
+      find_teaching_job: Find a job in teaching
+      list_teaching_job: List a teaching job on the service
+      other_purpose: Something else (tell us in the box below)
   schools:
     about: 'About'
     address: 'Address'
@@ -344,8 +357,11 @@ en:
       failure: An unexpected error occured. We have been notified.
     url:
       invalid: is not a valid URL
+    terms_and_conditions:
+      errors_present: Please correct the following errors
     feedback:
-      errors_present: Please correct the following error
+      errors_present: Please correct the following errors
+    vacancy_publish_feedback:
       already_submitted: Feedback for this job listing has already been submitted
     subscriptions:
       already_exists: You are already subscribed to a daily email with these search criteria
@@ -354,6 +370,7 @@ en:
     unauthorised: We were unable to authorise your request.
     unprocessable_entity: We're unable to process your request.
     not_found: Page not found.
+    trashed_vacancy_found: Page not found.
     server_error: Something went wrong at our end.
 
   help:
@@ -414,9 +431,6 @@ en:
       introductory_message:
         title: Our introductory message
         about: You may see a pop-up welcome message when you first visit 'Teaching Vacancies'. We'll store a cookie so that your computer knows you've seen it and knows not to show it again.
-      feedback_survey:
-        title: Our feedback survey
-        about: <a href='https://www.surveymonkey.com/' target='_blank' class='govuk-link'>SurveyMonkey</a> is used to collect responses to our feedback survey. If you take part, SurveyMonkey will save extra cookies to your computer to track your progress through it.
       types:
         ga:
           purpose: This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before

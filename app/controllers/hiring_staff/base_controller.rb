@@ -14,10 +14,6 @@ class HiringStaff::BaseController < ApplicationController
     redirect_to terms_and_conditions_path unless current_user&.accepted_terms_and_conditions?
   end
 
-  def current_session_id
-    session[:session_id]
-  end
-
   def current_school
     @current_school ||= School.find_by!(urn: session[:urn])
   end
