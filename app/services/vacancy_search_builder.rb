@@ -79,7 +79,7 @@ class VacancySearchBuilder
   end
 
   def job_title_query
-    optional_query(job_title) { |job_title| job_title_multi_match(job_title) }
+    optional_query(job_title) { |job_title| job_title_match(job_title) }
   end
 
   def optional_query(query)
@@ -207,7 +207,7 @@ class VacancySearchBuilder
     }
   end
 
-  def job_title_multi_match(job_title)
+  def job_title_match(job_title)
     {
       match: {
         job_title: {
