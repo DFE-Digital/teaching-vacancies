@@ -354,6 +354,7 @@ en:
     unauthorised: We were unable to authorise your request.
     unprocessable_entity: We're unable to process your request.
     not_found: Page not found.
+    trashed_vacancy_found: Page not found.
     server_error: Something went wrong at our end.
 
   help:
