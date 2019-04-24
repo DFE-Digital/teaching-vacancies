@@ -99,7 +99,7 @@ en:
     apply: 'Get more information'
     application_link: 'Link for jobseekers to learn more and apply'
     no_application_link: 'No application link given'
-    application_link_url: '(link opens external website in a new window)'
+    application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window)'
     view_posted_job: 'Your job listing has been published. You can view it at:'
     preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
     actions: 'Actions'
