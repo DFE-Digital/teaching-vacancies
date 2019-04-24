@@ -332,6 +332,9 @@ variable "worker_command" {
 
 # Application
 variable "rails_env" {}
+variable "rails_max_threads" {
+  default = "5"
+}
 
 variable "override_school_urn" {}
 variable "http_user" {}

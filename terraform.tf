@@ -115,6 +115,7 @@ module "ecs" {
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
   # Application variables
   rails_env                        = "${var.rails_env}"
+  rails_max_threads                = "${var.rails_max_threads}"
   override_school_urn              = "${var.override_school_urn}"
   http_pass                        = "${var.http_pass}"
   http_user                        = "${var.http_user}"
