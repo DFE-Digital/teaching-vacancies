@@ -43,7 +43,7 @@ resource "aws_ecs_service" "web" {
   name            = "${var.ecs_service_web_name}"
   iam_role        = "${aws_iam_role.ecs_role.arn}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.web.arn}"
+  task_definition = "${aws_ecs_task_definition.web.family}:${max("${aws_ecs_task_definition.web.revision}", "${data.aws_ecs_task_definition.web.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -67,7 +67,7 @@ resource "aws_ecs_service" "web" {
 resource "aws_ecs_service" "logspout" {
   name            = "logspout-${var.environment}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.logspout.arn}"
+  task_definition = "${aws_ecs_task_definition.logspout.family}:${max("${aws_ecs_task_definition.logspout.revision}", "${data.aws_ecs_task_definition.logspout.revision}")}"
   desired_count   = "${var.ecs_logspout_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -82,7 +82,7 @@ resource "aws_ecs_service" "logspout" {
 resource "aws_ecs_service" "worker" {
   name            = "${var.ecs_service_worker_name}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.worker.arn}"
+  task_definition = "${aws_ecs_task_definition.worker.family}:${max("${aws_ecs_task_definition.worker.revision}", "${data.aws_ecs_task_definition.worker.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -436,7 +436,7 @@ data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
     image                       = "${aws_ecr_repository.default.repository_url}"
     secret_key_base             = "${var.secret_key_base}"
     project_name                = "${var.project_name}"
-    task_name                   = "${var.ecs_service_web_task_name}_import_schools"
+    task_name                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
     environment                 = "${var.environment}"
     rails_env                   = "${var.rails_env}"
     region                      = "${var.region}"
@@ -501,7 +501,8 @@ data "template_file" "worker_container_definition" {
     audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
-    audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+    audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
+    audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
     audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
     audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
     notify_key                       = "${var.notify_key}"
@@ -525,6 +526,10 @@ resource "aws_ecs_task_definition" "web" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+data "aws_ecs_task_definition" "web" {
+  task_definition = "${aws_ecs_task_definition.web.family}"
+}
+
 resource "aws_ecs_task_definition" "worker" {
   family                   = "${var.ecs_service_worker_name}"
   container_definitions    = "${data.template_file.worker_container_definition.rendered}"
@@ -536,6 +541,10 @@ resource "aws_ecs_task_definition" "worker" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+data "aws_ecs_task_definition" "worker" {
+  task_definition = "${aws_ecs_task_definition.worker.family}"
+}
+
 resource "aws_ecs_task_definition" "logspout" {
   family                = "ecs-logspout-${var.environment}"
   container_definitions = "${data.template_file.logspout_container_definition.rendered}"
@@ -545,6 +554,10 @@ resource "aws_ecs_task_definition" "logspout" {
     name      = "dockersock"
     host_path = "/var/run/docker.sock"
   }
+}
+
+data "aws_ecs_task_definition" "logspout" {
+  task_definition = "${aws_ecs_task_definition.logspout.family}"
 }
 
 /*====

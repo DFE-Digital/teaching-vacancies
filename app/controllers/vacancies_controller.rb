@@ -23,7 +23,14 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    vacancy = Vacancy.listed.friendly.find(id)
+    begin
+      vacancy = Vacancy.listed.friendly.find(id)
+    rescue ActiveRecord::RecordNotFound
+      raise unless Vacancy.trashed.friendly.exists?(id)
+
+      return render '/errors/trashed_vacancy_found', status: :not_found
+    end
+
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
 
     @vacancy = VacancyPresenter.new(vacancy)

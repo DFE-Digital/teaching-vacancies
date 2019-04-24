@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :feedback do
+  factory :vacancy_publish_feedback do
     rating { 1 }
     comment { 'Some feedback text' }
     vacancy

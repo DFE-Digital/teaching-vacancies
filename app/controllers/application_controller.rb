@@ -40,6 +40,10 @@ class ApplicationController < ActionController::Base
     request.variant = :phone if browser.device.mobile?
   end
 
+  def current_session_id
+    session[:session_id]
+  end
+
   private
 
   def http_user

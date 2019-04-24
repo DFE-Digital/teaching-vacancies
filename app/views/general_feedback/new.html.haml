@@ -1,37 +1,28 @@
-- content_for :page_title_prefix, t('feedback.page_title')
+= render partial: '/feedback/head'
+= render partial: '/feedback/errors', locals: { feedback: @feedback }
 
-%h1.govuk-heading-l
-  = t('feedback.heading')
-
-- if @feedback.errors.any?
-  #errors.govuk-error-summary{role: 'alert', tabindex: '-1'}
-    %h2.govuk-heading-m.govuk-error-summary-heading
-      = t('errors.feedback.errors_present')
-    %ul.govuk-error-summary-list
-      - @feedback.errors.each do |attribute, error|
-        %li= @feedback.errors.full_message(attribute, error)
-
-= simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
+= simple_form_for @feedback, action: :post, url: feedback_path do |f|
   .govuk-grid-row
     .govuk-grid-column-two-thirds
 
-      .govuk-form-group
+      .govuk-form-group.feedback-form-group
         %fieldset.govuk-fieldset
           %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
             %h2.govuk-fieldset__heading
-              = t('feedback.legend')
-          = f.collection_radio_buttons :rating, rating_options, :last, :first,
+              = t('general_feedback.visit_purpose_legend')
+          = f.collection_radio_buttons :visit_purpose, visit_purpose_options, :last, :first,
                                        collection_wrapper_tag: 'div',
                                        collection_wrapper_class: 'govuk-radios',
                                        item_wrapper_class: 'govuk-radios__item',
                                        item_wrapper_tag: 'div' do |field|
             = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
 
-
-      = f.input :comment, as: :text,
+      = f.input :visit_purpose_comment, as: :text,
                 wrapper: :textarea,
-                label: t('feedback.label'),
-                hint: t('feedback.hint_text'),
+                label: false,
+                hint: t('general_feedback.visit_purpose_hint_text'),
                 input_html: { class: 'form-control form-control-4-4', rows: '5' }
+
+      = render partial: '/feedback/fields', locals: { form: f }
 
       = f.submit t('feedback.submit'), class: 'govuk-button'
