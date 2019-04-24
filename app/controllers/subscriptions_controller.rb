@@ -1,12 +1,6 @@
 class SubscriptionsController < ApplicationController
   include ParameterSanitiser
 
-  PERMITTED_SEARCH_CRITERIA_PARAMS = []
-                                     .concat(VacancyAlertFilters::AVAILABLE_FILTERS)
-                                     .concat(VacanciesController::PERMITTED_SEARCH_PARAMS)
-                                     .uniq
-                                     .freeze
-
   before_action :check_feature_flag, except: :unsubscribe
 
   def new
@@ -52,7 +46,13 @@ class SubscriptionsController < ApplicationController
   end
 
   def search_criteria_params
-    params.require(:search_criteria).permit(*PERMITTED_SEARCH_CRITERIA_PARAMS)
+    params.require(:search_criteria).permit(*permitted_search_criteria_params)
+  end
+
+  def permitted_search_criteria_params
+    [].concat(VacancyAlertFilters::AVAILABLE_FILTERS)
+      .concat(VacanciesController::PERMITTED_SEARCH_PARAMS)
+      .uniq
   end
 
   def check_feature_flag
