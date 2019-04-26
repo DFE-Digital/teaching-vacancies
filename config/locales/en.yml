@@ -271,7 +271,7 @@ en:
     button: 'Sign up for a job alert matching your search'
     intro: 'You’ll be sent an email listing new jobs that match the following search criteria:'
     new: Sign up for a job alert
-    info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 3 months or can be cancelled using the link at the bottom of alert emails.
+    info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 6 months or can be cancelled using the link at the bottom of alert emails.
     location_text: Within %{radius} miles of %{location}
     reference: 'Your reference:'
     confirmation:
@@ -279,7 +279,7 @@ en:
       receipt_confirmation: We have sent you a confirmation email.
       next_step: 'What happens next'
       unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
-      next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 3 months, until %{date}.'
+      next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 6 months, until %{date}.'
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
