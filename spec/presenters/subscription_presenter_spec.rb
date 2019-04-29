@@ -84,6 +84,31 @@ RSpec.describe SubscriptionPresenter do
         )
       end
     end
+
+    context 'with unknown filters' do
+      let(:search_criteria) do
+        {
+          radius: '10',
+          something: 'test',
+          job_title: 'leader',
+          newly_qualified_teacher: 'true',
+          something_else: 'testing',
+          location: 'EC2 9AN',
+          subject: 'maths'
+        }
+      end
+
+      it 'returns the unknown filters last' do
+        expect(presenter.filtered_search_criteria).to eq(
+          'location' => 'Within 10 miles of EC2 9AN',
+          'subject' => 'maths',
+          'job_title' => 'leader',
+          '' => 'Suitable for NQTs',
+          'something' => 'test',
+          'something_else' => 'testing'
+        )
+      end
+    end
   end
 
   describe '#full_search_criteria' do

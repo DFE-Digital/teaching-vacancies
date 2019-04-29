@@ -21,15 +21,8 @@ class SubscriptionPresenter < BasePresenter
   private
 
   def sorted_search_criteria
-    search_criteria_to_h.sort do |(a, _), (b, _)|
-      a_index = SEARCH_CRITERIA_SORT_ORDER.find_index(a)
-      b_index = SEARCH_CRITERIA_SORT_ORDER.find_index(b)
-
-      next 0 if a_index.nil? && b_index.nil?
-      next 1 if a_index.nil?
-      next -1 if b_index.nil?
-
-      a_index <=> b_index
+    search_criteria_to_h.sort_by do |(key, _)|
+      SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count
     end.to_h
   end
 
