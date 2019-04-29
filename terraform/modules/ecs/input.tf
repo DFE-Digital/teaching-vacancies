@@ -116,7 +116,7 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
-variable "seed_vacancies_from_api" {
+variable "seed_vacancies_from_api_task_command" {
   type = "list"
 }
 

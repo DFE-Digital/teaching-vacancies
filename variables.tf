@@ -199,7 +199,7 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
-variable "seed_vacancies_from_api" {
+variable "seed_vacancies_from_api_task_command" {
   description = "The Entrypoint for the data:seed_from_api:vacancies task"
   default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
 }
