@@ -153,6 +153,7 @@ variable "ecs_service_worker_container_definition_file_path" {
   description = "Worker container definition"
   default     = "./terraform/container-definitions/worker_container_definition.json"
 }
+
 variable "send_job_alerts_daily_email_command" {
   description = "The Entrypoint for the send_job_alerts_daily_email task"
   default     = ["rake", "verbose", "daily_emails:send"]
@@ -332,6 +333,7 @@ variable "worker_command" {
 
 # Application
 variable "rails_env" {}
+
 variable "rails_max_threads" {
   default = "5"
 }
@@ -377,14 +379,18 @@ variable "audit_search_event_worksheet_gid" {}
 variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
+
 variable "skylight_ignored_endpoints" {
   default = "ApplicationController#check"
 }
+
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+
 variable "feature_import_vacancies" {
   default = "false"
 }
+
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "subscription_key_generator_secret" {}

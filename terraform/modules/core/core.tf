@@ -378,21 +378,21 @@ resource "aws_iam_role_policy" "ecs_autoscale_role_policy" {
 }
 
 resource "aws_autoscaling_policy" "ecs-autoscaling-up-policy" {
-  name                    = "${var.project_name}-${var.environment}-${var.asg_name}-scale-up"
-  scaling_adjustment      = 2
-  adjustment_type         = "ChangeInCapacity"
-  cooldown                = 300
-  autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
-  policy_type             = "SimpleScaling"
+  name                   = "${var.project_name}-${var.environment}-${var.asg_name}-scale-up"
+  scaling_adjustment     = 2
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  policy_type            = "SimpleScaling"
 }
 
 resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
-  name                    = "${var.project_name}-${var.environment}-${var.asg_name}-scale-down"
-  scaling_adjustment      = -1
-  adjustment_type         = "ChangeInCapacity"
-  cooldown                = 300
-  autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
-  policy_type             = "SimpleScaling"
+  name                   = "${var.project_name}-${var.environment}-${var.asg_name}-scale-down"
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  policy_type            = "SimpleScaling"
 }
 
 resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {
