@@ -40,6 +40,9 @@
         padding: 0 1em;
         color: $govuk-link-colour;
         text-decoration: none;
+        @include govuk-media-query($until: tablet) {
+          padding: 0 0.5em;
+        }
 
         &:visited {
           color: $govuk-link-colour;
