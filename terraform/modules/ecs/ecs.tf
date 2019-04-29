@@ -231,6 +231,34 @@ module "performance_platform_rake_container_definition" {
   pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
 }
 
+module "google_api_rake_container_definition" {
+  source = "../container-definitions/google-api-rake-container-definition"
+
+  template_file_path = "${var.google_api_rake_container_definition_file_path}"
+
+  image                    = "${aws_ecr_repository.default.repository_url}"
+  secret_key_base          = "${var.secret_key_base}"
+  project_name             = "${var.project_name}"
+  environment              = "${var.environment}"
+  rails_env                = "${var.rails_env}"
+  rails_max_threads        = "${var.rails_max_threads}"
+  redis_cache_url          = "${var.redis_cache_url}"
+  redis_queue_url          = "${var.redis_queue_url}"
+  region                   = "${var.region}"
+  log_group                = "${var.aws_cloudwatch_log_group_name}"
+  database_user            = "${var.rds_username}"
+  database_password        = "${var.rds_password}"
+  database_url             = "${var.rds_address}"
+  elastic_search_url       = "${var.es_address}"
+  aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+  aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+  aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+  feature_import_vacancies = "${var.feature_import_vacancies}"
+
+  google_api_json_key         = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
+  google_analytics_profile_id = "${var.google_analytics_profile_id}"
+}
+
 data "template_file" "send_job_alerts_daily_email_container_definition" {
   template = "${module.rake_container_definition.template}"
 
@@ -312,33 +340,12 @@ data "template_file" "performance_platform_submit_all_container_definition" {
   }
 }
 
-/* vacancies pageviews refresh cache task definition*/
 data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
-  template = "${file(var.google_api_rake_container_definition_file_path)}"
+  template = "${module.google_api_rake_container_definition.template}"
 
   vars {
-    image                       = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base             = "${var.secret_key_base}"
-    project_name                = "${var.project_name}"
-    task_name                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
-    environment                 = "${var.environment}"
-    rails_env                   = "${var.rails_env}"
-    rails_max_threads           = "${var.rails_max_threads}"
-    region                      = "${var.region}"
-    log_group                   = "${var.aws_cloudwatch_log_group_name}"
-    database_user               = "${var.rds_username}"
-    database_password           = "${var.rds_password}"
-    database_url                = "${var.rds_address}"
-    elastic_search_url          = "${var.es_address}"
-    aws_elasticsearch_region    = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key       = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret    = "${var.aws_elasticsearch_secret}"
-    google_api_json_key         = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
-    google_analytics_profile_id = "${var.google_analytics_profile_id}"
-    feature_import_vacancies    = "${var.feature_import_vacancies}"
-    entrypoint                  = "${jsonencode(var.vacancies_statistics_refresh_cache_task_command)}"
-    redis_cache_url             = "${var.redis_cache_url}"
-    redis_queue_url             = "${var.redis_queue_url}"
+    task_name  = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
+    entrypoint = "${jsonencode(var.vacancies_statistics_refresh_cache_task_command)}"
   }
 }
 
