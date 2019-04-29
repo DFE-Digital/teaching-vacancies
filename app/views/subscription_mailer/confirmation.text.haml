@@ -6,7 +6,7 @@
 - @search_criteria.each_pair do |k, v|
   * #{[k&.titleize, v].reject(&:blank?).join(': ')}
 \
-= t('subscriptions.email.confirmation.expiry_text_html', distance: '3 months', date: l(@expires_on))
+= t('subscriptions.email.confirmation.expiry_text_html', distance: '6 months', date: l(@expires_on))
 
 \---
 

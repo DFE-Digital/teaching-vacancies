@@ -41,7 +41,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def daily_subscription_params
-    subscription_params.merge(expires_on: 3.months.from_now,
+    subscription_params.merge(expires_on: 6.months.from_now,
                               frequency: :daily)
   end
 
