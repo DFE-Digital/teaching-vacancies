@@ -551,13 +551,18 @@ resource "aws_cloudwatch_metric_alarm" "web-memory-utilisation-high" {
 Launch configuration
 ======*/
 
+resource "aws_key_pair" "ecs" {
+  key_name_prefix = "${var.ecs_cluster_name}"
+  public_key      = "${var.ecs_ssh_public_key}"
+}
+
 resource "aws_launch_configuration" "ecs-launch-configuration" {
   image_id                    = "${var.image_id}"
   instance_type               = "${var.instance_type}"
   iam_instance_profile        = "${var.aws_iam_ecs_instance_profile_name}"
   security_groups             = ["${aws_security_group.default.id}", "${aws_security_group.ecs.id}"]
   associate_public_ip_address = "true"
-  key_name                    = "${var.ecs_key_pair_name}"
+  key_name                    = "${aws_key_pair.ecs.key_name}"
   user_data                   = "${data.template_file.ecs-launch-configuration-user-data.rendered}"
 
   lifecycle {

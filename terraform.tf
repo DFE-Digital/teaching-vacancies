@@ -39,7 +39,6 @@ module "core" {
   alb_certificate_arn      = "${var.alb_certificate_arn}"
   image_id                 = "${var.image_id}"
   instance_type            = "${var.ecs_instance_type}"
-  ecs_key_pair_name        = "${var.ecs_key_pair_name}"
 
   asg_name         = "${var.asg_name}"
   asg_max_size     = "${var.asg_max_size}"
@@ -52,6 +51,8 @@ module "core" {
   ecs_cluster_name                  = "${module.ecs.cluster_name}"
   ecs_service_web_name              = "${module.ecs.web_service_name}"
   aws_iam_ecs_instance_profile_name = "${module.ecs.aws_iam_ecs_instance_profile_name}"
+
+  ecs_ssh_public_key = "${var.ecs_ssh_public_key}"
 }
 
 module "ecs" {

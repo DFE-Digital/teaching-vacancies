@@ -49,10 +49,6 @@ variable "availability_zones" {
   default = ["eu-west-2a", "eu-west-2b"]
 }
 
-variable "ecs_key_pair_name" {
-  description = "This key will be placed onto the machines by Terraform to allow SSH"
-}
-
 variable "image_id" {
   default = "ami-67cbd003" # Make sure this AWS AMI is valid for the chosen region.
 }
@@ -90,6 +86,10 @@ variable "redirect_old_teachingjobs_traffic" {}
 
 # ECS
 variable "ecs_cluster_name" {}
+
+variable "ecs_ssh_public_key" {
+  description = "This key will be placed onto the machines by Terraform to allow SSH"
+}
 
 variable "ecs_service_web_name" {
   default = "default-web"
