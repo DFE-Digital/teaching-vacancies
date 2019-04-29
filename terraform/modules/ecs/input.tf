@@ -5,23 +5,23 @@ variable "ecs_cluster_name" {}
 variable "aws_alb_target_group_arn" {}
 
 # Web service (running Puma)
-variable "ecs_service_web_container_definition_file_path" {}
 
+variable "ecs_service_web_container_definition_file_path" {}
 variable "ecs_service_web_name" {}
 variable "ecs_service_web_task_name" {}
 variable "ecs_service_web_task_count" {}
 variable "ecs_service_web_task_port" {}
 
 # Worker service (running Sidekiq)
-variable "ecs_service_worker_container_definition_file_path" {}
 
+variable "ecs_service_worker_container_definition_file_path" {}
 variable "ecs_service_worker_name" {}
 variable "ecs_service_worker_task_name" {}
 variable "ecs_service_worker_task_port" {}
 
 # Rake task container definitions
-variable "ecs_service_rake_container_definition_file_path" {}
 
+variable "ecs_service_rake_container_definition_file_path" {}
 variable "performance_platform_rake_container_definition_file_path" {}
 variable "google_api_rake_container_definition_file_path" {}
 
