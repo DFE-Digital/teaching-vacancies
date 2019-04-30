@@ -36,10 +36,33 @@ terraform state mv module.ecs.aws_ecs_task_definition.performance_platform_submi
 # Scheduled ECS rake tasks
 
 terraform state mv module.ecs.aws_ecs_task_definition.sessions_trim_task module.ecs.module.sessions_trim_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.module.sessions_trim_task.aws_ecs_task_definition.main module.ecs.module.sessions_trim_task.module.task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_cloudwatch_event_rule.sessions_trim_task module.ecs.module.sessions_trim_task.aws_cloudwatch_event_rule.task || true
+terraform state mv module.ecs.aws_cloudwatch_event_target.sessions_trim_task_event module.ecs.module.sessions_trim_task.aws_cloudwatch_event_target.task || true
+
 terraform state mv module.ecs.aws_ecs_task_definition.send_job_alerts_daily_email_task module.ecs.module.send_job_alerts_daily_email_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.module.send_job_alerts_daily_email_task.aws_ecs_task_definition.main module.ecs.module.send_job_alerts_daily_email_task.module.task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_cloudwatch_event_rule.send_job_alerts_daily_email_task module.ecs.module.send_job_alerts_daily_email_task.aws_cloudwatch_event_rule.task || true
+terraform state mv module.ecs.aws_cloudwatch_event_target.send_job_alerts_daily_email_task_event module.ecs.module.send_job_alerts_daily_email_task.aws_cloudwatch_event_target.task || true
+
 terraform state mv module.ecs.aws_ecs_task_definition.import_schools_task module.ecs.module.import_schools_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.module.import_schools_task.aws_ecs_task_definition.main module.ecs.module.import_schools_task.module.task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_cloudwatch_event_rule.import_schools_task module.ecs.module.import_schools_task.aws_cloudwatch_event_rule.task || true
+terraform state mv module.ecs.aws_cloudwatch_event_target.import_schools_task_event module.ecs.module.import_schools_task.aws_cloudwatch_event_target.task || true
+
 terraform state mv module.ecs.aws_ecs_task_definition.update_spreadsheets_task module.ecs.module.update_spreadsheets_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.module.update_spreadsheets_task.aws_ecs_task_definition.main module.ecs.module.update_spreadsheets_task.module.task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_cloudwatch_event_rule.update_spreadsheets_task module.ecs.module.update_spreadsheets_task.aws_cloudwatch_event_rule.task || true
+terraform state mv module.ecs.aws_cloudwatch_event_target.update_spreadsheets_task_event module.ecs.module.update_spreadsheets_task.aws_cloudwatch_event_target.task || true
+
 terraform state mv module.ecs.aws_ecs_task_definition.performance_platform_submit_task module.ecs.module.performance_platform_submit_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.module.performance_platform_submit_task.aws_ecs_task_definition.main module.ecs.module.performance_platform_submit_task.module.task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_cloudwatch_event_rule.performance_platform_submit_task module.ecs.module.performance_platform_submit_task.aws_cloudwatch_event_rule.task || true
+terraform state mv module.ecs.aws_cloudwatch_event_target.performance_platform_submit_task_event module.ecs.module.performance_platform_submit_task.aws_cloudwatch_event_target.task || true
+
 terraform state mv module.ecs.aws_ecs_task_definition.vacancies_statistics_refresh_cache_task module.ecs.module.vacancies_statistics_refresh_cache_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.module.vacancies_statistics_refresh_cache_task.aws_ecs_task_definition.main module.ecs.module.vacancies_statistics_refresh_cache_task.module.task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_cloudwatch_event_rule.vacancies_statistics_refresh_cache_task module.ecs.module.vacancies_statistics_refresh_cache_task.aws_cloudwatch_event_rule.task || true
+terraform state mv module.ecs.aws_cloudwatch_event_target.vacancies_statistics_refresh_cache_task_event module.ecs.module.vacancies_statistics_refresh_cache_task.aws_cloudwatch_event_target.task || true
 
 # End 2019-04-30

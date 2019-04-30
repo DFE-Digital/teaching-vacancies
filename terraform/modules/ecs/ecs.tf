@@ -494,181 +494,103 @@ ECS SCHEDULED TASKS
 ======*/
 
 module "sessions_trim_task" {
-  source = "../ecs-task"
+  source = "../scheduled-ecs-task"
 
-  task_name    = "${var.ecs_service_web_task_name}_sessions_trim"
-  task_command = "${var.sessions_trim_task_command}"
+  task_name        = "${var.ecs_service_web_task_name}_sessions_trim"
+  task_description = "Trim sessions"
+  task_command     = "${var.sessions_trim_task_command}"
+  task_schedule    = "${var.sessions_trim_task_schedule}"
 
   container_definition_template = "${module.rake_container_definition.template}"
 
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "sessions_trim_task" {
-  name                = "${module.sessions_trim_task.family}"
-  description         = "Run sessions trim at a scheduled time"
-  schedule_expression = "${var.sessions_trim_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "sessions_trim_task_event" {
-  target_id = "${module.sessions_trim_task.family}"
-  rule      = "${aws_cloudwatch_event_rule.sessions_trim_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = "${module.sessions_trim_task.arn}"
-  }
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
 module "send_job_alerts_daily_email_task" {
-  source = "../ecs-task"
+  source = "../scheduled-ecs-task"
 
-  task_name    = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
-  task_command = "${var.send_job_alerts_daily_email_task_command}"
+  task_name        = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
+  task_description = "Send daily job alert emails"
+  task_command     = "${var.send_job_alerts_daily_email_task_command}"
+  task_schedule    = "${var.send_job_alerts_daily_email_task_schedule}"
 
   container_definition_template = "${module.rake_container_definition.template}"
 
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "send_job_alerts_daily_email_task" {
-  name                = "${module.send_job_alerts_daily_email_task.family}"
-  description         = "Send daily job alerts emails"
-  schedule_expression = "${var.send_job_alerts_daily_email_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "send_job_alerts_daily_email_task_event" {
-  target_id = "${module.send_job_alerts_daily_email_task.family}"
-  rule      = "${aws_cloudwatch_event_rule.send_job_alerts_daily_email_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = "${module.send_job_alerts_daily_email_task.arn}"
-  }
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
 module "import_schools_task" {
-  source = "../ecs-task"
+  source = "../scheduled-ecs-task"
 
-  task_name    = "${var.ecs_service_web_task_name}_import_schools"
-  task_command = "${var.import_schools_task_command}"
+  task_name        = "${var.ecs_service_web_task_name}_import_schools"
+  task_description = "Import school data"
+  task_command     = "${var.import_schools_task_command}"
+  task_schedule    = "${var.import_schools_task_schedule}"
 
   container_definition_template = "${module.rake_container_definition.template}"
 
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "import_schools_task" {
-  name                = "${module.import_schools_task.family}"
-  description         = "Run school import at a scheduled time"
-  schedule_expression = "${var.import_schools_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "import_schools_task_event" {
-  target_id = "${module.import_schools_task.family}"
-  rule      = "${aws_cloudwatch_event_rule.import_schools_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = "${module.import_schools_task.arn}"
-  }
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
 module "update_spreadsheets_task" {
-  source = "../ecs-task"
+  source = "../scheduled-ecs-task"
 
-  task_name    = "${var.ecs_service_web_task_name}_update_spreadsheets"
-  task_command = "${var.update_spreadsheets_task_command}"
+  task_name        = "${var.ecs_service_web_task_name}_update_spreadsheets"
+  task_description = "Update spreadsheets"
+  task_command     = "${var.update_spreadsheets_task_command}"
+  task_schedule    = "${var.update_spreadsheets_task_schedule}"
 
   container_definition_template = "${module.rake_container_definition.template}"
 
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "update_spreadsheets_task" {
-  name                = "${module.update_spreadsheets_task.family}"
-  description         = "Run spreadsheet update at a scheduled time"
-  schedule_expression = "${var.update_spreadsheets_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "update_spreadsheets_task_event" {
-  target_id = "${module.update_spreadsheets_task.family}"
-  rule      = "${aws_cloudwatch_event_rule.update_spreadsheets_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = "${module.update_spreadsheets_task.arn}"
-  }
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
 module "performance_platform_submit_task" {
-  source = "../ecs-task"
+  source = "../scheduled-ecs-task"
 
-  task_name    = "${var.ecs_service_web_task_name}_performance_platform_submit"
-  task_command = "${var.performance_platform_submit_task_command}"
+  task_name        = "${var.ecs_service_web_task_name}_performance_platform_submit"
+  task_description = "Submit Performance Platform data"
+  task_command     = "${var.performance_platform_submit_task_command}"
+  task_schedule    = "${var.performance_platform_submit_task_schedule}"
 
   container_definition_template = "${module.performance_platform_rake_container_definition.template}"
 
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "performance_platform_submit_task" {
-  name                = "${module.performance_platform_submit_task.family}"
-  description         = "Submits all required data to the performance platform"
-  schedule_expression = "${var.performance_platform_submit_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" {
-  target_id = "${module.performance_platform_submit_task.family}"
-  rule      = "${aws_cloudwatch_event_rule.performance_platform_submit_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = "${module.performance_platform_submit_task.arn}"
-  }
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
 module "vacancies_statistics_refresh_cache_task" {
-  source = "../ecs-task"
+  source = "../scheduled-ecs-task"
 
-  task_name    = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
-  task_command = "${var.vacancies_statistics_refresh_cache_task_command}"
+  task_name        = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
+  task_description = "Refresh vacancy statistic cache"
+  task_command     = "${var.vacancies_statistics_refresh_cache_task_command}"
+  task_schedule    = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 
   container_definition_template = "${module.google_api_rake_container_definition.template}"
 
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
   execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "vacancies_statistics_refresh_cache_task" {
-  name                = "${module.vacancies_statistics_refresh_cache_task.family}"
-  description         = "Run vacancy statistic cache refresh at a scheduled time"
-  schedule_expression = "${var.vacancies_statistics_refresh_cache_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "vacancies_statistics_refresh_cache_task_event" {
-  target_id = "${module.vacancies_statistics_refresh_cache_task.family}"
-  rule      = "${aws_cloudwatch_event_rule.vacancies_statistics_refresh_cache_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = 1
-    task_definition_arn = "${module.vacancies_statistics_refresh_cache_task.arn}"
-  }
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
