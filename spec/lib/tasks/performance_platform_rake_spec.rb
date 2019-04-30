@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe 'rake performance_platform:submit_transactions', type: :task do
   it 'Submits job publication transactions for the previous day' do
     today = Date.current.beginning_of_day.in_time_zone

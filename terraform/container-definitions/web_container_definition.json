@@ -19,6 +19,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "RAILS_MAX_THREADS",
+        "value": "${rails_max_threads}"
+      },
+      {
         "name": "OVERRIDE_SCHOOL_URN",
         "value": "${override_school_urn}"
       },

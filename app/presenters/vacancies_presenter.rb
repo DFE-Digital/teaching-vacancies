@@ -1,6 +1,7 @@
 class VacanciesPresenter < BasePresenter
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
   attr_reader :searched
   alias_method :user_search?, :searched
@@ -31,9 +32,9 @@ class VacanciesPresenter < BasePresenter
 
       I18n.t('jobs.job_count', count: total_count)
     else
-      return I18n.t('jobs.job_count_plural_without_search', count: total_count) unless @searched
+      return I18n.t('jobs.job_count_plural_without_search', count: number_with_delimiter(total_count)) unless @searched
 
-      I18n.t('jobs.job_count_plural', count: total_count)
+      I18n.t('jobs.job_count_plural', count: number_with_delimiter(total_count))
     end
   end
 

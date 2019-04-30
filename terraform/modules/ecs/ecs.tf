@@ -140,6 +140,7 @@ data "template_file" "web_container_definition" {
     task_port                        = "${var.ecs_service_web_task_port}"
     environment                      = "${var.environment}"
     rails_env                        = "${var.rails_env}"
+    rails_max_threads                = "${var.rails_max_threads}"
     region                           = "${var.region}"
     log_group                        = "${var.aws_cloudwatch_log_group_name}"
     database_user                    = "${var.rds_username}"
@@ -185,6 +186,7 @@ data "template_file" "send_job_alerts_daily_email_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -213,6 +215,7 @@ data "template_file" "import_schools_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_import_schools"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -241,6 +244,7 @@ data "template_file" "update_spreadsheets_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_update_spreadsheets"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -269,6 +273,7 @@ data "template_file" "sessions_trim_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_sessions_trim"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -297,6 +302,7 @@ data "template_file" "reindex_vacancies_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_reindex_vacancies"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -314,33 +320,6 @@ data "template_file" "reindex_vacancies_container_definition" {
   }
 }
 
-data "template_file" "backfill_jobseeker_alert_data_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_backfill_jobseeker_alert_data"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.backfill_jobseeker_alert_data_command)}"
-  }
-}
-
 /* seed_vacancies_from_api_container_definition task definition*/
 data "template_file" "seed_vacancies_from_api_container_definition" {
   template = "${file(var.ecs_service_rake_container_definition_file_path)}"
@@ -352,6 +331,7 @@ data "template_file" "seed_vacancies_from_api_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -380,6 +360,7 @@ data "template_file" "performance_platform_submit_container_definition" {
     task_name                        = "${var.ecs_service_web_task_name}_performance_platform_submit"
     environment                      = "${var.environment}"
     rails_env                        = "${var.rails_env}"
+    rails_max_threads                = "${var.rails_max_threads}"
     redis_cache_url                  = "${var.redis_cache_url}"
     redis_queue_url                  = "${var.redis_queue_url}"
     region                           = "${var.region}"
@@ -409,6 +390,7 @@ data "template_file" "performance_platform_submit_all_container_definition" {
     task_name                        = "${var.ecs_service_web_task_name}_performance_platform_submit_all"
     environment                      = "${var.environment}"
     rails_env                        = "${var.rails_env}"
+    rails_max_threads                = "${var.rails_max_threads}"
     redis_cache_url                  = "${var.redis_cache_url}"
     redis_queue_url                  = "${var.redis_queue_url}"
     region                           = "${var.region}"
@@ -436,9 +418,10 @@ data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
     image                       = "${aws_ecr_repository.default.repository_url}"
     secret_key_base             = "${var.secret_key_base}"
     project_name                = "${var.project_name}"
-    task_name                   = "${var.ecs_service_web_task_name}_import_schools"
+    task_name                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
     environment                 = "${var.environment}"
     rails_env                   = "${var.rails_env}"
+    rails_max_threads           = "${var.rails_max_threads}"
     region                      = "${var.region}"
     log_group                   = "${var.aws_cloudwatch_log_group_name}"
     database_user               = "${var.rds_username}"
@@ -479,6 +462,7 @@ data "template_file" "worker_container_definition" {
 
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     region                   = "${var.region}"
     log_group                = "${var.aws_cloudwatch_log_group_name}"
     database_user            = "${var.rds_username}"
@@ -501,7 +485,8 @@ data "template_file" "worker_container_definition" {
     audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
-    audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+    audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
+    audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
     audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
     audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
     notify_key                       = "${var.notify_key}"
@@ -632,18 +617,6 @@ resource "aws_iam_role_policy_attachment" "ecs-instance-role-attachment" {
 /*====
 ECS ONE-OFF TASKS
 ======*/
-
-resource "aws_ecs_task_definition" "backfill_jobseeker_alert_data_task" {
-  family                   = "${var.ecs_service_web_task_name}_backfill_jobseeker_alert_data_task"
-  container_definitions    = "${data.template_file.backfill_jobseeker_alert_data_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
 
 resource "aws_ecs_task_definition" "reindex_vacancies_task" {
   family                   = "${var.ecs_service_web_task_name}_reindex_vacancies_task"

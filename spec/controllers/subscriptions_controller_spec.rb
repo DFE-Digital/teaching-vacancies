@@ -39,6 +39,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         }
       end
       let(:subject) { post :create, params: params }
+      let(:subscription) { Subscription.last }
 
       it 'returns 200' do
         subject
@@ -47,6 +48,13 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it 'queues a job to audit the subscription' do
         expect { subject }.to have_enqueued_job(AuditSubscriptionCreationJob)
+      end
+
+      it 'creates a subscription' do
+        expect { subject }.to change { Subscription.count }.by(1)
+        expect(subscription.email).to eq(params[:subscription][:email])
+        expect(subscription.search_criteria).to eq(params[:subscription][:search_criteria])
+        expect(subscription.expires_on).to eq(6.months.from_now.to_date)
       end
 
       context 'with unsafe params' do

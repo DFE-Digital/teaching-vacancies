@@ -7,6 +7,7 @@ class VacancyAlertFilters < VacancyFilters
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
 
     @keyword = args[:keyword]
+    @maximum_salary = args[:maximum_salary]
 
     super(args)
   end

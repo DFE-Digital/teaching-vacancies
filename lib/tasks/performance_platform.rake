@@ -3,8 +3,8 @@ require 'performance_platform'
 namespace :performance_platform do
   desc 'Performance Platform transaction submission'
   task submit: :environment do
-    Rake::Task['performance_platform:submit_transactions'].invoke
     Rake::Task['performance_platform:submit_user_satisfaction'].invoke
+    Rake::Task['performance_platform:submit_transactions'].invoke
   end
 
   task submit_transactions: :environment do
