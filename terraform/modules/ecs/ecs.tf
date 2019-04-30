@@ -420,6 +420,7 @@ data "template_file" "migrate_phase_to_phases_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_migrate_phase_to_phases"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
