@@ -22,13 +22,23 @@
       = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
       = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
     .govuk-form-group
-      = label_tag 'phase', t('jobs.filters.education_phase'), class: 'govuk-label'
-      = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
+      %fieldset.govuk-fieldset
+        = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
+        .govuk-checkboxes.checkbox-group{ class: ('checkbox-group--scrollable' if any_phase?) }
+          .govuk-checkboxes__item
+            = check_box_tag 'phases[]', '', any_phase?, id: 'phases_any', class: 'govuk-checkboxes__input'
+            = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
+          .checkbox-group__divider 
+            = t('jobs.filters.education_phase_divider')
+          - school_phase_options.each_with_index do |phase, i|
+            .govuk-checkboxes__item
+              = check_box_tag 'phases[]', phase[1], phase_checked?(phase[1]), id: 'phases_' + phase[1], class: 'govuk-checkboxes__input'
+              = label_tag 'phases[]', phase[0], for: 'phases_' + phase[1], class: 'govuk-label govuk-checkboxes__label'
     .govuk-form-group
       %fieldset.govuk-fieldset
         .govuk-checkboxes
           .govuk-checkboxes__item
-            = check_box_tag :newly_qualified_teacher, 'true', nqt_suitable_checked?(newly_qualified_teacher), class: 'govuk-checkboxes__input'
+            = check_box_tag 'newly_qualified_teacher', 'true', nqt_suitable_checked?(newly_qualified_teacher), class: 'govuk-checkboxes__input'
             = label_tag 'newly_qualified_teacher', t('jobs.filters.nqt_suitable'), class: 'govuk-label govuk-checkboxes__label'
 
     = hidden_field_tag :sort_column, sort_column

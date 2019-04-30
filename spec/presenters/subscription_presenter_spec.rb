@@ -40,6 +40,14 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
+    context 'with the phases filter' do
+      let(:search_criteria) { { phases: ['secondary', 'sixteen_plus'] } }
+
+      it 'formats and returns the phases' do
+        expect(presenter.filtered_search_criteria['phases']).to eq('Secondary, Sixteen plus')
+      end
+    end
+
     context 'with the NQT filter' do
       let(:search_criteria) { { newly_qualified_teacher: 'true' } }
 
@@ -47,15 +55,69 @@ RSpec.describe SubscriptionPresenter do
         expect(presenter.filtered_search_criteria['']).to eq('Suitable for NQTs')
       end
     end
+
+    context 'with unsorted filters' do
+      let(:search_criteria) do
+        {
+          phases: ['secondary', 'sixteen_plus'],
+          maximum_salary: '2000',
+          radius: '10',
+          job_title: 'leader',
+          newly_qualified_teacher: 'true',
+          location: 'EC2 9AN',
+          minimum_salary: '10',
+          working_pattern: 'part_time',
+          subject: 'maths'
+        }
+      end
+
+      it 'returns the filters in sort order' do
+        expect(presenter.filtered_search_criteria).to eq(
+          'location' => 'Within 10 miles of EC2 9AN',
+          'subject' => 'maths',
+          'job_title' => 'leader',
+          'minimum_salary' => '£10',
+          'maximum_salary' => '£2,000',
+          'working_pattern' => 'Part time',
+          'phases' => 'Secondary, Sixteen plus',
+          '' => 'Suitable for NQTs'
+        )
+      end
+    end
+
+    context 'with unknown filters' do
+      let(:search_criteria) do
+        {
+          radius: '10',
+          something: 'test',
+          job_title: 'leader',
+          newly_qualified_teacher: 'true',
+          something_else: 'testing',
+          location: 'EC2 9AN',
+          subject: 'maths'
+        }
+      end
+
+      it 'returns the unknown filters last' do
+        expect(presenter.filtered_search_criteria).to eq(
+          'location' => 'Within 10 miles of EC2 9AN',
+          'subject' => 'maths',
+          'job_title' => 'leader',
+          '' => 'Suitable for NQTs',
+          'something' => 'test',
+          'something_else' => 'testing'
+        )
+      end
+    end
   end
 
-  describe '#extended_search_criteria' do
-    let(:extended_search_criteria) { presenter.send(:extended_search_criteria) }
+  describe '#full_search_criteria' do
+    let(:full_search_criteria) { presenter.send(:full_search_criteria) }
 
     it 'adds all possible search criteria to subscription criteria' do
-      expect(extended_search_criteria.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count)
-      expect(extended_search_criteria.keys).to match_array(VacancyAlertFilters::AVAILABLE_FILTERS)
-      expect(extended_search_criteria[:keyword]).to eq(search_criteria[:keyword])
+      expect(full_search_criteria.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count)
+      expect(full_search_criteria.keys).to match_array(VacancyAlertFilters::AVAILABLE_FILTERS)
+      expect(full_search_criteria[:keyword]).to eq(search_criteria[:keyword])
     end
   end
 
@@ -74,6 +136,14 @@ RSpec.describe SubscriptionPresenter do
     it 'returns the search criteria' do
       expect(to_row[:working_pattern]).to eq(nil)
       expect(to_row.keys.last).to eq(:reference)
+    end
+
+    context 'when array values in search criteria' do
+      let(:search_criteria) { { phases: ['primary', 'secondary', 'sixteen_plus'] } }
+
+      it 'makes them human readable' do
+        expect(to_row[:phases]).to eq('primary, secondary, sixteen_plus')
+      end
     end
   end
 end

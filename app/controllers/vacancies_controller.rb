@@ -1,6 +1,10 @@
 class VacanciesController < ApplicationController
   include ParameterSanitiser
 
+  PERMITTED_SEARCH_PARAMS = [phases: []]
+                            .concat(VacancyFilters::AVAILABLE_FILTERS)
+                            .uniq
+                            .freeze
   DEFAULT_RADIUS = 20
 
   helper_method :location,
@@ -8,14 +12,15 @@ class VacanciesController < ApplicationController
                 :job_title,
                 :minimum_salary,
                 :working_pattern,
-                :phase,
+                :phases,
+                :any_phase?,
                 :newly_qualified_teacher,
                 :radius,
                 :sort_column,
                 :sort_order
 
   def index
-    @filters = VacancyFilters.new(search_params)
+    @filters = VacancyFilters.new(search_params.to_hash)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
 
@@ -47,7 +52,7 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(*VacancyFilters::AVAILABLE_FILTERS).to_hash
+    params.permit(*PERMITTED_SEARCH_PARAMS)
   end
 
   def old_vacancy_path?(vacancy)
@@ -84,8 +89,16 @@ class VacanciesController < ApplicationController
     params[:working_pattern]
   end
 
-  def phase
-    params[:phase]
+  def phases_to_a
+    raw_phases = params[:phases]
+    parsed_phases = JSON.parse(raw_phases) if raw_phases.present?
+    parsed_phases.is_a?(Array) ? parsed_phases : []
+  rescue JSON::ParserError
+    []
+  end
+
+  def phases
+    phases_to_a
   end
 
   def newly_qualified_teacher
@@ -102,6 +115,12 @@ class VacanciesController < ApplicationController
 
   def sort_order
     params[:sort_order]
+  end
+
+  def any_phase?
+    return true if phases_to_a.blank?
+
+    phases_to_a.reject(&:blank?).any?
   end
 
   def set_headers

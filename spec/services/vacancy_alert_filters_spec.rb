@@ -48,13 +48,13 @@ RSpec.describe VacancyAlertFilters do
     end
 
     it 'sets the education phase filter if provided and valid' do
-      vacancy_filters = described_class.new(phase: 'primary')
-      expect(vacancy_filters.phase).to eq('primary')
+      vacancy_filters = described_class.new(phases: '["primary"]')
+      expect(vacancy_filters.phases).to eq(['primary'])
     end
 
     it 'does not set the education phase filter if invalid' do
-      vacancy_filters = described_class.new(phase: 'kindergarten')
-      expect(vacancy_filters.phase).to be_nil
+      vacancy_filters = described_class.new(phases: '["kindergarten"]')
+      expect(vacancy_filters.phases).to be_nil
     end
 
     it 'does not set filters for any other given params' do
@@ -73,9 +73,9 @@ RSpec.describe VacancyAlertFilters do
         radius: 20,
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
-        working_pattern: :full_time,
+        working_pattern: 'full_time',
         newly_qualified_teacher: false,
-        phase: :primary,
+        phases: '["primary"]',
       )
 
       result = filters.to_hash
@@ -88,9 +88,9 @@ RSpec.describe VacancyAlertFilters do
         radius: '20',
         minimum_salary: 'minimum_salary',
         maximum_salary: 'maximum_salary',
-        working_pattern: :full_time,
+        working_pattern: 'full_time',
         newly_qualified_teacher: false,
-        phase: :primary,
+        phases: ['primary'],
       )
     end
   end
