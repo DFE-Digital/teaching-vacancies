@@ -1,0 +1,22 @@
+- content_for :page_title_prefix, 'Subscription updated'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-panel.govuk-panel--confirmation
+      %h1.govuk-panel__title= t('subscriptions.updated.header')
+      .govuk-panel__body
+        = t('subscriptions.reference')
+        %br
+        %strong= @subscription.reference
+
+    %h3.govuk-heading-m=t('subscriptions.confirmation.next_step')
+    %p.govuk-body=t('subscriptions.confirmation.next_step_details', email: @subscription.email, date: l(@subscription.expires_on))
+    %div.govuk-inset-text
+      %ul.govuk-list
+        - @subscription.filtered_search_criteria.each_pair do |filter, value|
+          %li
+            - if filter.present?
+              %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
+            = value
+
+    %p.govuk-body= t('subscriptions.confirmation.unsubscribe')

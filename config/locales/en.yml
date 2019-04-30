@@ -300,6 +300,11 @@ en:
         expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
     manage: Manage your subscription
     unsubscribe: Unsubscribe
+    resubscribe:
+      title: Resubscribe to your alert
+      intro: Click 'resubscribe' below to extend your subscription to the following search criteria. You can also update the reference or email if you need to
+    updated:
+      header: Your email subscription has been renewed
   job_alerts:
     confirmation:
       email:

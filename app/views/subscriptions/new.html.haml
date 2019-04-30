@@ -25,17 +25,7 @@
     %p.govuk-body-l=t('subscriptions.intro')
 
     = simple_form_for @subscription do |f|
-      = f.input :search_criteria, as: :hidden
-      %div.govuk-inset-text
-        %ul.govuk-list
-          - @subscription.filtered_search_criteria.each_pair do |filter, value|
-            %li
-              - if filter.present?
-                %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
-              = value
-      = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true
-      = f.input :reference, as: :string, input_html: { class: 'govuk-input', placeholder: 'e.g. Maths jobs within 20 miles of Oxford' }
-
+      = render partial: 'form', locals: { form: f, subscription: @subscription }
 
       .govuk-warning-text
         %span.govuk-warning-text__icon{'aria-hidden': "true"}

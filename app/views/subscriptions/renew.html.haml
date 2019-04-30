@@ -1,0 +1,19 @@
+- content_for :page_title_prefix do
+  = t('subscriptions.resubscribe.title')
+
+- content_for :page_description do
+  = t('subscriptions.resubscribe.title')
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    %h1.govuk-heading-xl
+      = t('subscriptions.resubscribe.title')
+
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    %p.govuk-body-l=t('subscriptions.resubscribe.intro')
+
+    = simple_form_for @subscription, url: subscription_update_path(subscription_id: @subscription.token), method: :patch do |f|
+      = render partial: 'form', locals: { form: f, subscription: @subscription }
+
+      = f.button :submit, 'Resubscribe'

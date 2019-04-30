@@ -2,6 +2,7 @@ class SubscriptionsController < ApplicationController
   include ParameterSanitiser
 
   before_action :check_feature_flag, except: :unsubscribe
+  before_action :fetch_subscription_from_token, only: %i[renew unsubscribe update]
 
   def new
     subscription = Subscription.new(search_criteria: search_criteria_params.to_json)
@@ -25,9 +26,17 @@ class SubscriptionsController < ApplicationController
     render 'new'
   end
 
+  def renew
+    @subscription = SubscriptionPresenter.new(@subscription)
+  end
+
+  def update
+    @subscription.update(daily_subscription_params)
+    @subscription = SubscriptionPresenter.new(@subscription)
+    render 'updated'
+  end
+
   def unsubscribe
-    token = ParameterSanitiser.call(params).require(:subscription_id)
-    @subscription = Subscription.find_and_verify_by_token(token)
     @subscription.delete
     Auditor::Audit.new(@subscription, 'subscription.daily_alert.delete', current_session_id).log
   end
@@ -41,7 +50,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def daily_subscription_params
-    subscription_params.merge(expires_on: 6.months.from_now,
+    subscription_params.merge(expires_on: Subscription.default_expiry_period,
                               frequency: :daily)
   end
 
@@ -57,5 +66,9 @@ class SubscriptionsController < ApplicationController
 
   def check_feature_flag
     not_found unless EmailAlertsFeature.enabled?
+  end
+
+  def fetch_subscription_from_token
+    @subscription = Subscription.find_and_verify_by_token(params[:subscription_id])
   end
 end

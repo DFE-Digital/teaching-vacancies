@@ -31,6 +31,10 @@ class Subscription < ApplicationRecord
     raise ActiveRecord::RecordNotFound
   end
 
+  def self.default_expiry_period
+    6.months.from_now
+  end
+
   def search_criteria_to_h
     parsed_criteria = JSON.parse(search_criteria) if search_criteria.present?
     parsed_criteria.is_a?(Hash) ? parsed_criteria : {}

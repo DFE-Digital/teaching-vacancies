@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   resource :feedback, controller: 'general_feedback', only: %i[new create]
 
   resources :subscriptions, only: %i[new create] do
+    patch :update, path: '/'
     get :unsubscribe
+    get :renew
     resource :confirmation, only: [:show]
   end
 
