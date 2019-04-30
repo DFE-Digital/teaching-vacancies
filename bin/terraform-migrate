@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e
+
+if [ $# -eq 0 ]
+then
+  echo "No terraform workspace supplied, aborting."
+  exit 1
+fi
+
+TERRAFORM_WORKSPACE=$1
+
+echo "Migrating…"
+echo "* Terraform workspace: $TERRAFORM_WORKSPACE"
+
+read -r -p "Continue? [y/N] " CONT
+if [ "$CONT" = "y" ]; then
+  echo
+else
+  exit 1
+fi
+
+echo "-> Checking out terraform workspace $TERRAFORM_WORKSPACE …"
+terraform workspace select "$TERRAFORM_WORKSPACE"
+
+echo "-> Migrating Terraform changes for the $TERRAFORM_WORKSPACE workspace …"
+
+# Start 2019-04-30
+
+# One-off ECS rake tasks
+
+terraform state mv module.ecs.aws_ecs_task_definition.reindex_vacancies_task module.ecs.module.reindex_vacancies_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.seed_vacancies_from_api_task module.ecs.module.seed_vacancies_from_api_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.migrate_phase_to_phases_task module.ecs.module.migrate_phase_to_phases_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.performance_platform_submit_all_task module.ecs.module.performance_platform_submit_all_task.aws_ecs_task_definition.main || true
+
+# Scheduled ECS rake tasks
+
+terraform state mv module.ecs.aws_ecs_task_definition.sessions_trim_task module.ecs.module.sessions_trim_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.send_job_alerts_daily_email_task module.ecs.module.send_job_alerts_daily_email_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.import_schools_task module.ecs.module.import_schools_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.update_spreadsheets_task module.ecs.module.update_spreadsheets_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.performance_platform_submit_task module.ecs.module.performance_platform_submit_task.aws_ecs_task_definition.main || true
+terraform state mv module.ecs.aws_ecs_task_definition.vacancies_statistics_refresh_cache_task module.ecs.module.vacancies_statistics_refresh_cache_task.aws_ecs_task_definition.main || true
+
+# End 2019-04-30

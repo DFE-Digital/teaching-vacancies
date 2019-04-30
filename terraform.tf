@@ -91,8 +91,8 @@ module "ecs" {
   update_spreadsheets_task_command  = "${var.update_spreadsheets_task_command}"
   update_spreadsheets_task_schedule = "${var.update_spreadsheets_task_schedule}"
 
-  send_job_alerts_daily_email_command  = "${var.send_job_alerts_daily_email_command}"
-  send_job_alerts_daily_email_schedule = "${var.send_job_alerts_daily_email_schedule}"
+  send_job_alerts_daily_email_task_command  = "${var.send_job_alerts_daily_email_task_command}"
+  send_job_alerts_daily_email_task_schedule = "${var.send_job_alerts_daily_email_task_schedule}"
 
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"

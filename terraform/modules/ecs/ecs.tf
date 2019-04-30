@@ -259,78 +259,6 @@ module "google_api_rake_container_definition" {
   google_analytics_profile_id = "${var.google_analytics_profile_id}"
 }
 
-data "template_file" "send_job_alerts_daily_email_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
-    entrypoint = "${jsonencode(var.send_job_alerts_daily_email_command)}"
-  }
-}
-
-data "template_file" "sessions_trim_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_sessions_trim"
-    entrypoint = "${jsonencode(var.sessions_trim_task_command)}"
-  }
-}
-
-data "template_file" "reindex_vacancies_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_reindex_vacancies"
-    entrypoint = "${jsonencode(var.reindex_vacancies_task_command)}"
-  }
-}
-
-data "template_file" "seed_vacancies_from_api_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
-    entrypoint = "${jsonencode(var.seed_vacancies_from_api_task_command)}"
-  }
-}
-
-data "template_file" "migrate_phase_to_phases_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_migrate_phase_to_phases"
-    entrypoint = "${jsonencode(var.migrate_phase_to_phases_task_command)}"
-  }
-}
-
-data "template_file" "performance_platform_submit_container_definition" {
-  template = "${module.performance_platform_rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_performance_platform_submit"
-    entrypoint = "${jsonencode(var.performance_platform_submit_task_command)}"
-  }
-}
-
-data "template_file" "performance_platform_submit_all_container_definition" {
-  template = "${module.performance_platform_rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_performance_platform_submit_all"
-    entrypoint = "${jsonencode(var.performance_platform_submit_all_task_command)}"
-  }
-}
-
-data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
-  template = "${module.google_api_rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
-    entrypoint = "${jsonencode(var.vacancies_statistics_refresh_cache_task_command)}"
-  }
-}
-
 data "template_file" "logspout_container_definition" {
   template = "${file(var.ecs_service_logspout_container_definition_file_path)}"
 
@@ -513,220 +441,234 @@ resource "aws_iam_role_policy_attachment" "ecs-instance-role-attachment" {
 ECS ONE-OFF TASKS
 ======*/
 
-resource "aws_ecs_task_definition" "reindex_vacancies_task" {
-  family                   = "${var.ecs_service_web_task_name}_reindex_vacancies_task"
-  container_definitions    = "${data.template_file.reindex_vacancies_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "reindex_vacancies_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_reindex_vacancies"
+  task_command = "${var.reindex_vacancies_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "seed_vacancies_from_api_task" {
-  family                   = "${var.ecs_service_web_task_name}_seed_vacancies_from_api_task"
-  container_definitions    = "${data.template_file.seed_vacancies_from_api_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "seed_vacancies_from_api_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
+  task_command = "${var.seed_vacancies_from_api_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "migrate_phase_to_phases_task" {
-  family                   = "${var.ecs_service_web_task_name}_migrate_phase_to_phases_task"
-  container_definitions    = "${data.template_file.migrate_phase_to_phases_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "migrate_phase_to_phases_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_migrate_phase_to_phases"
+  task_command = "${var.migrate_phase_to_phases_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "performance_platform_submit_all_task" {
-  family                   = "${var.ecs_service_web_task_name}_performance_platform_submit_all_task"
-  container_definitions    = "${data.template_file.performance_platform_submit_all_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "performance_platform_submit_all_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_performance_platform_submit_all"
+  task_command = "${var.performance_platform_submit_all_task_command}"
+
+  container_definition_template = "${module.performance_platform_rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 /*====
 ECS SCHEDULED TASKS
 ======*/
 
-resource "aws_ecs_task_definition" "sessions_trim_task" {
-  family                   = "${var.ecs_service_web_task_name}_sessions_trim_task"
-  container_definitions    = "${data.template_file.sessions_trim_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "sessions_trim_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_sessions_trim"
+  task_command = "${var.sessions_trim_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 resource "aws_cloudwatch_event_rule" "sessions_trim_task" {
-  name                = "${var.ecs_service_web_task_name}_sessions_trim_task"
+  name                = "${module.sessions_trim_task.family}"
   description         = "Run sessions trim at a scheduled time"
   schedule_expression = "${var.sessions_trim_task_schedule}"
 }
 
 resource "aws_cloudwatch_event_target" "sessions_trim_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_sessions_trim_task"
+  target_id = "${module.sessions_trim_task.family}"
   rule      = "${aws_cloudwatch_event_rule.sessions_trim_task.name}"
   arn       = "${aws_ecs_cluster.cluster.arn}"
   role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
 
   ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.sessions_trim_task.arn}"
+    task_count          = 1
+    task_definition_arn = "${module.sessions_trim_task.arn}"
   }
 }
 
-resource "aws_ecs_task_definition" "performance_platform_submit_task" {
-  family                   = "${var.ecs_service_web_task_name}_performance_platform_submit_task"
-  container_definitions    = "${data.template_file.performance_platform_submit_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
+module "send_job_alerts_daily_email_task" {
+  source = "../ecs-task"
 
-resource "aws_cloudwatch_event_rule" "performance_platform_submit_task" {
-  name                = "${var.ecs_service_web_task_name}_performance_platform_submit_task"
-  description         = "Submits all required data to the performance platform"
-  schedule_expression = "${var.performance_platform_submit_task_schedule}"
-}
+  task_name    = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
+  task_command = "${var.send_job_alerts_daily_email_task_command}"
 
-resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_performance_platform_submit_task"
-  rule      = "${aws_cloudwatch_event_rule.performance_platform_submit_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+  container_definition_template = "${module.rake_container_definition.template}"
 
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.performance_platform_submit_task.arn}"
-  }
-}
-
-resource "aws_ecs_task_definition" "send_job_alerts_daily_email_task" {
-  family                   = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email_task"
-  container_definitions    = "${data.template_file.send_job_alerts_daily_email_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 resource "aws_cloudwatch_event_rule" "send_job_alerts_daily_email_task" {
-  name                = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email_task"
+  name                = "${module.send_job_alerts_daily_email_task.family}"
   description         = "Send daily job alerts emails"
-  schedule_expression = "${var.send_job_alerts_daily_email_schedule}"
+  schedule_expression = "${var.send_job_alerts_daily_email_task_schedule}"
 }
 
 resource "aws_cloudwatch_event_target" "send_job_alerts_daily_email_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email_task"
+  target_id = "${module.send_job_alerts_daily_email_task.family}"
   rule      = "${aws_cloudwatch_event_rule.send_job_alerts_daily_email_task.name}"
   arn       = "${aws_ecs_cluster.cluster.arn}"
   role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
 
   ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.send_job_alerts_daily_email_task.arn}"
+    task_count          = 1
+    task_definition_arn = "${module.send_job_alerts_daily_email_task.arn}"
   }
 }
 
-resource "aws_ecs_task_definition" "import_schools_task" {
-  family                   = "${var.ecs_service_web_task_name}_import_schools_task"
-  container_definitions    = "${data.template_file.import_schools_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "import_schools_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_import_schools"
+  task_command = "${var.import_schools_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 resource "aws_cloudwatch_event_rule" "import_schools_task" {
-  name                = "${var.ecs_service_web_task_name}_import_schools_task"
+  name                = "${module.import_schools_task.family}"
   description         = "Run school import at a scheduled time"
   schedule_expression = "${var.import_schools_task_schedule}"
 }
 
 resource "aws_cloudwatch_event_target" "import_schools_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_import_schools_task"
+  target_id = "${module.import_schools_task.family}"
   rule      = "${aws_cloudwatch_event_rule.import_schools_task.name}"
   arn       = "${aws_ecs_cluster.cluster.arn}"
   role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
 
   ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.import_schools_task.arn}"
+    task_count          = 1
+    task_definition_arn = "${module.import_schools_task.arn}"
   }
 }
 
-resource "aws_ecs_task_definition" "update_spreadsheets_task" {
-  family                   = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
-  container_definitions    = "${data.template_file.update_spreadsheets_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "update_spreadsheets_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_update_spreadsheets"
+  task_command = "${var.update_spreadsheets_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 resource "aws_cloudwatch_event_rule" "update_spreadsheets_task" {
-  name                = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
+  name                = "${module.update_spreadsheets_task.family}"
   description         = "Run spreadsheet update at a scheduled time"
   schedule_expression = "${var.update_spreadsheets_task_schedule}"
 }
 
 resource "aws_cloudwatch_event_target" "update_spreadsheets_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
+  target_id = "${module.update_spreadsheets_task.family}"
   rule      = "${aws_cloudwatch_event_rule.update_spreadsheets_task.name}"
   arn       = "${aws_ecs_cluster.cluster.arn}"
   role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
 
   ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.update_spreadsheets_task.arn}"
+    task_count          = 1
+    task_definition_arn = "${module.update_spreadsheets_task.arn}"
   }
 }
 
-resource "aws_ecs_task_definition" "vacancies_statistics_refresh_cache_task" {
-  family                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
-  container_definitions    = "${data.template_file.vacancies_statistics_refresh_cache_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "performance_platform_submit_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_performance_platform_submit"
+  task_command = "${var.performance_platform_submit_task_command}"
+
+  container_definition_template = "${module.performance_platform_rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_cloudwatch_event_rule" "performance_platform_submit_task" {
+  name                = "${module.performance_platform_submit_task.family}"
+  description         = "Submits all required data to the performance platform"
+  schedule_expression = "${var.performance_platform_submit_task_schedule}"
+}
+
+resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" {
+  target_id = "${module.performance_platform_submit_task.family}"
+  rule      = "${aws_cloudwatch_event_rule.performance_platform_submit_task.name}"
+  arn       = "${aws_ecs_cluster.cluster.arn}"
+  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+
+  ecs_target {
+    task_count          = 1
+    task_definition_arn = "${module.performance_platform_submit_task.arn}"
+  }
+}
+
+module "vacancies_statistics_refresh_cache_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
+  task_command = "${var.vacancies_statistics_refresh_cache_task_command}"
+
+  container_definition_template = "${module.google_api_rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 resource "aws_cloudwatch_event_rule" "vacancies_statistics_refresh_cache_task" {
-  name                = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
-  description         = "Run vacancy pageviews cache refresh at a scheduled time"
+  name                = "${module.vacancies_statistics_refresh_cache_task.family}"
+  description         = "Run vacancy statistic cache refresh at a scheduled time"
   schedule_expression = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 }
 
 resource "aws_cloudwatch_event_target" "vacancies_statistics_refresh_cache_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
+  target_id = "${module.vacancies_statistics_refresh_cache_task.family}"
   rule      = "${aws_cloudwatch_event_rule.vacancies_statistics_refresh_cache_task.name}"
   arn       = "${aws_ecs_cluster.cluster.arn}"
   role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
 
   ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.vacancies_statistics_refresh_cache_task.arn}"
+    task_count          = 1
+    task_definition_arn = "${module.vacancies_statistics_refresh_cache_task.arn}"
   }
 }
