@@ -268,24 +268,6 @@ data "template_file" "send_job_alerts_daily_email_container_definition" {
   }
 }
 
-data "template_file" "import_schools_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_import_schools"
-    entrypoint = "${jsonencode(var.import_schools_task_command)}"
-  }
-}
-
-data "template_file" "update_spreadsheets_container_definition" {
-  template = "${module.rake_container_definition.template}"
-
-  vars {
-    task_name  = "${var.ecs_service_web_task_name}_update_spreadsheets"
-    entrypoint = "${jsonencode(var.update_spreadsheets_task_command)}"
-  }
-}
-
 data "template_file" "sessions_trim_container_definition" {
   template = "${module.rake_container_definition.template}"
 
@@ -458,6 +440,7 @@ data "aws_ecs_task_definition" "logspout" {
 /*====
 IAM service role
 ======*/
+
 data "aws_iam_policy_document" "ecs_service_role" {
   statement {
     effect  = "Allow"
@@ -503,6 +486,7 @@ resource "aws_iam_instance_profile" "ecs-instance-profile" {
 /*====
 ECS SERVICE ROLE
 ======*/
+
 resource "aws_iam_role" "ecs-instance-role" {
   name               = "${var.project_name}-${var.environment}-ecs-instance-role"
   path               = "/"
@@ -576,6 +560,7 @@ resource "aws_ecs_task_definition" "performance_platform_submit_all_task" {
 /*====
 ECS SCHEDULED TASKS
 ======*/
+
 resource "aws_ecs_task_definition" "sessions_trim_task" {
   family                   = "${var.ecs_service_web_task_name}_sessions_trim_task"
   container_definitions    = "${data.template_file.sessions_trim_container_definition.rendered}"
@@ -587,7 +572,7 @@ resource "aws_ecs_task_definition" "sessions_trim_task" {
 
 resource "aws_cloudwatch_event_rule" "sessions_trim_task" {
   name                = "${var.ecs_service_web_task_name}_sessions_trim_task"
-  description         = "Run sessions trim at a scheuled time"
+  description         = "Run sessions trim at a scheduled time"
   schedule_expression = "${var.sessions_trim_task_schedule}"
 }
 
@@ -672,7 +657,7 @@ resource "aws_ecs_task_definition" "import_schools_task" {
 
 resource "aws_cloudwatch_event_rule" "import_schools_task" {
   name                = "${var.ecs_service_web_task_name}_import_schools_task"
-  description         = "Run school import at a scheuled time"
+  description         = "Run school import at a scheduled time"
   schedule_expression = "${var.import_schools_task_schedule}"
 }
 
@@ -701,7 +686,7 @@ resource "aws_ecs_task_definition" "update_spreadsheets_task" {
 
 resource "aws_cloudwatch_event_rule" "update_spreadsheets_task" {
   name                = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
-  description         = "Run spreadsheet update at a scheuled time"
+  description         = "Run spreadsheet update at a scheduled time"
   schedule_expression = "${var.update_spreadsheets_task_schedule}"
 }
 
@@ -730,7 +715,7 @@ resource "aws_ecs_task_definition" "vacancies_statistics_refresh_cache_task" {
 
 resource "aws_cloudwatch_event_rule" "vacancies_statistics_refresh_cache_task" {
   name                = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
-  description         = "Run vacacncy pageviews cache redresh at a scheuled time"
+  description         = "Run vacancy pageviews cache refresh at a scheduled time"
   schedule_expression = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 }
 
