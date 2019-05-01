@@ -13,4 +13,18 @@ class SubscriptionMailer < ApplicationMailer
       subject: I18n.t('job_alerts.confirmation.email.subject', reference: subscription.reference),
     )
   end
+
+  def first_expiry_warning(subscription_id)
+    subscription = Subscription.find(subscription_id)
+
+    @subscription_reference = subscription.reference
+    @expiry_date = subscription.expires_on
+    @subscription_token = subscription.token
+
+    view_mail(
+      NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE,
+      to: subscription.email,
+      subject: I18n.t('job_alerts.expiry.email.first_warning.subject', reference: subscription.reference)
+    )
+  end
 end
