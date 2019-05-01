@@ -15,6 +15,7 @@
   - [audit_subscription_creation, 1]
   - [audit_spreadsheet, 1]
   - [seed_vacancies_from_api, 1]
+  - [send_expiry_alerts, 1]
 update_vacancy_spreadsheet:
   :concurrency: 1
 audit_published_vacancy:
