@@ -1,0 +1,7 @@
+= t('job_alerts.expiry.email.final_warning.first_line', reference: @subscription_reference).html_safe
+\
+= notify_link(t('job_alerts.expiry.email.resubscribe'), subscription_renew_url(subscription_id: @subscription_token))
+\
+Kind regards,
+\
+The Teaching Vacancies team

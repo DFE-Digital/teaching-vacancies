@@ -8,6 +8,10 @@ class SubscriptionPreview < ActionMailer::Preview
     SubscriptionMailer.first_expiry_warning(subscription.id)
   end
 
+  def final_expiry_warning
+    SubscriptionMailer.final_expiry_warning(subscription.id)
+  end
+
   private
 
   def subscription

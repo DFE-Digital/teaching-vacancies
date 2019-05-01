@@ -321,11 +321,14 @@ en:
           unsubscribe: Follow this link to unsubscribe.
     expiry:
       email:
+        resubscribe: Resubscribe now
         first_warning:
           subject: "Job alert for '%{reference}' expiring - resubscribe now"
           first_line: "Your job alert for your alert '%{reference}' on Teaching Vacancies will expire on %{expiry_date}. After this date you will no longer receive emails alerting you to new jobs that match these criteria."
           reset_instructions: "You can resubscribe to this job alert for another 6 months by clicking the 'resubscribe' link below."
-          resubscribe: Resubscribe now
+        final_warning:
+          subject: "Job alert for '%{reference}' ends today - resubscribe now"
+          first_line: "Your job alert for your alert '%{reference}' on Teaching Vacancies will expire at midnight tonight. If you would like to resubscribe to this alert for another 3 months click the 'resubscribe' link below. Otherwise you will no longer receive alerts for jobs matching these criteria."
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
