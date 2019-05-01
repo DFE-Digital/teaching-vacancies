@@ -11,6 +11,7 @@ class Subscription < ApplicationRecord
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
 
   scope :ongoing, -> { where('expires_on >= current_date') }
+  scope :expiring_in_7_days, -> { where('expires_on = ?', 1.week.from_now) }
 
   after_initialize :default_reference
 
