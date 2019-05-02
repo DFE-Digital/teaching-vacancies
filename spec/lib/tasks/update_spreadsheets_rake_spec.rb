@@ -17,6 +17,10 @@ RSpec.describe 'rake spreadsheets:update', type: :task do
     expect { task.execute }.to have_enqueued_job(AddAuditDataToSpreadsheetJob).with('subscription_creation')
   end
 
+  it 'queues the search event job' do
+    expect { task.execute }.to have_enqueued_job(AddAuditDataToSpreadsheetJob).with('search_event')
+  end
+
   it 'queues the vacancy creation feedback job' do
     expect { task.execute }.to have_enqueued_job(AddVacancyPublishFeedbackToSpreadsheetJob)
   end

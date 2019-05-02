@@ -65,6 +65,8 @@ variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
 variable "audit_subscription_creation_worksheet_gid" {}
 
+variable "audit_search_event_worksheet_gid" {}
+
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 variable "ordnance_survey_api_key" {}

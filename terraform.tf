@@ -147,6 +147,7 @@ module "ecs" {
   audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
   audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
   audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
+  audit_search_event_worksheet_gid = "${var.audit_search_event_worksheet_gid}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
   ordnance_survey_api_key             = "${var.ordnance_survey_api_key}"

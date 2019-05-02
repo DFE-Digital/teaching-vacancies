@@ -117,6 +117,10 @@
         "value": "${audit_subscription_creation_worksheet_gid}"
       },
       {
+        "name": "AUDIT_SEARCH_EVENT_WORKSHEET_GID",
+        "value": "${audit_search_event_worksheet_gid}"
+      },
+      {
         "name": "DOMAIN",
         "value": "${domain}"
       },
