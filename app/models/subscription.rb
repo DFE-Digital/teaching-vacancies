@@ -12,6 +12,7 @@ class Subscription < ApplicationRecord
 
   scope :ongoing, -> { where('expires_on >= current_date') }
   scope :expiring_in_7_days, -> { where('expires_on = ?', 1.week.from_now) }
+  scope :expiring_tomorrow, -> { where('expires_on = ?', 1.day.from_now) }
 
   after_initialize :default_reference
 

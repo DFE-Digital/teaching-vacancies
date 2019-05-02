@@ -233,4 +233,13 @@ RSpec.describe Subscription, type: :model do
       expect(Subscription.expiring_in_7_days).to eq(expiring_next_week)
     end
   end
+
+  describe 'expiring_tomorrow' do
+    let!(:expiring_next_week) { create_list(:subscription, 3, expires_on: 1.week.from_now) }
+    let!(:expiring_tomorrow) { create_list(:subscription, 3, expires_on: 1.day.from_now) }
+
+    it 'gets all subscriptions expiring tomorrow' do
+      expect(Subscription.expiring_tomorrow).to eq(expiring_tomorrow)
+    end
+  end
 end
