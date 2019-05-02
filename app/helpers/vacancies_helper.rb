@@ -36,14 +36,6 @@ module VacanciesHelper
     params.merge(overwrite).permit(vacancy_params_whitelist)
   end
 
-  def rating_options
-    [['Very satisfied', 5],
-     ['Satisfied', 4],
-     ['Neither satisfied or dissatisfied', 3],
-     ['Dissatisfied', 2],
-     ['Very dissatisfied', 1]]
-  end
-
   def radius_filter_options
     [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 200].inject([]) do |radii, radius|
       radii << ["Within #{radius} miles", radius]
@@ -54,11 +46,17 @@ module VacanciesHelper
     @pay_scale_options ||= PayScale.all
   end
 
-  def nqt_suitable_checked?(newly_qualified_teacher)
-    newly_qualified_teacher == 'true'
-  end
-
   def subject_options
     @subject_options ||= Subject.all
+  end
+
+  def phase_checked?(phase)
+    return false if phases.blank?
+
+    phases.include?(phase)
+  end
+
+  def nqt_suitable_checked?(newly_qualified_teacher)
+    newly_qualified_teacher == 'true'
   end
 end

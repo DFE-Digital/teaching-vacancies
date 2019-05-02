@@ -98,13 +98,13 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
-  backfill_jobseeker_alert_data_command = "${var.backfill_jobseeker_alert_data_command}"
-
   seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
 
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
+
+  migrate_phase_to_phases_task_command = "${var.migrate_phase_to_phases_task_command}"
 
   vacancies_statistics_refresh_cache_task_command  = "${var.vacancies_statistics_refresh_cache_task_command}"
   vacancies_statistics_refresh_cache_task_schedule = "${var.vacancies_statistics_refresh_cache_task_schedule}"
@@ -115,6 +115,7 @@ module "ecs" {
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
   # Application variables
   rails_env                        = "${var.rails_env}"
+  rails_max_threads                = "${var.rails_max_threads}"
   override_school_urn              = "${var.override_school_urn}"
   http_pass                        = "${var.http_pass}"
   http_user                        = "${var.http_user}"
@@ -142,7 +143,8 @@ module "ecs" {
   google_drive_json_key            = "${var.google_drive_json_key}"
   audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
   audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
-  audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+  audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
+  audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
   audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
   audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
   domain                           = "${var.domain}"

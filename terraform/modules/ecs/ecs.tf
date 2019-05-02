@@ -43,7 +43,7 @@ resource "aws_ecs_service" "web" {
   name            = "${var.ecs_service_web_name}"
   iam_role        = "${aws_iam_role.ecs_role.arn}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.web.arn}"
+  task_definition = "${aws_ecs_task_definition.web.family}:${max("${aws_ecs_task_definition.web.revision}", "${data.aws_ecs_task_definition.web.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -67,7 +67,7 @@ resource "aws_ecs_service" "web" {
 resource "aws_ecs_service" "logspout" {
   name            = "logspout-${var.environment}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.logspout.arn}"
+  task_definition = "${aws_ecs_task_definition.logspout.family}:${max("${aws_ecs_task_definition.logspout.revision}", "${data.aws_ecs_task_definition.logspout.revision}")}"
   desired_count   = "${var.ecs_logspout_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -82,7 +82,7 @@ resource "aws_ecs_service" "logspout" {
 resource "aws_ecs_service" "worker" {
   name            = "${var.ecs_service_worker_name}"
   cluster         = "${aws_ecs_cluster.cluster.id}"
-  task_definition = "${aws_ecs_task_definition.worker.arn}"
+  task_definition = "${aws_ecs_task_definition.worker.family}:${max("${aws_ecs_task_definition.worker.revision}", "${data.aws_ecs_task_definition.worker.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
   deployment_minimum_healthy_percent = 50
@@ -140,6 +140,7 @@ data "template_file" "web_container_definition" {
     task_port                        = "${var.ecs_service_web_task_port}"
     environment                      = "${var.environment}"
     rails_env                        = "${var.rails_env}"
+    rails_max_threads                = "${var.rails_max_threads}"
     region                           = "${var.region}"
     log_group                        = "${var.aws_cloudwatch_log_group_name}"
     database_user                    = "${var.rds_username}"
@@ -186,6 +187,7 @@ data "template_file" "send_job_alerts_daily_email_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -214,6 +216,7 @@ data "template_file" "import_schools_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_import_schools"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -242,6 +245,7 @@ data "template_file" "update_spreadsheets_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_update_spreadsheets"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -270,6 +274,7 @@ data "template_file" "sessions_trim_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_sessions_trim"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -298,6 +303,7 @@ data "template_file" "reindex_vacancies_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_reindex_vacancies"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -326,6 +332,7 @@ data "template_file" "seed_vacancies_from_api_container_definition" {
     task_name                = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     redis_cache_url          = "${var.redis_cache_url}"
     redis_queue_url          = "${var.redis_queue_url}"
     region                   = "${var.region}"
@@ -354,6 +361,7 @@ data "template_file" "performance_platform_submit_container_definition" {
     task_name                        = "${var.ecs_service_web_task_name}_performance_platform_submit"
     environment                      = "${var.environment}"
     rails_env                        = "${var.rails_env}"
+    rails_max_threads                = "${var.rails_max_threads}"
     redis_cache_url                  = "${var.redis_cache_url}"
     redis_queue_url                  = "${var.redis_queue_url}"
     region                           = "${var.region}"
@@ -383,6 +391,7 @@ data "template_file" "performance_platform_submit_all_container_definition" {
     task_name                        = "${var.ecs_service_web_task_name}_performance_platform_submit_all"
     environment                      = "${var.environment}"
     rails_env                        = "${var.rails_env}"
+    rails_max_threads                = "${var.rails_max_threads}"
     redis_cache_url                  = "${var.redis_cache_url}"
     redis_queue_url                  = "${var.redis_queue_url}"
     region                           = "${var.region}"
@@ -401,6 +410,34 @@ data "template_file" "performance_platform_submit_all_container_definition" {
   }
 }
 
+/* migrate_phase_to_phases task definition*/
+data "template_file" "migrate_phase_to_phases_container_definition" {
+  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+
+  vars {
+    image                    = "${aws_ecr_repository.default.repository_url}"
+    secret_key_base          = "${var.secret_key_base}"
+    project_name             = "${var.project_name}"
+    task_name                = "${var.ecs_service_web_task_name}_migrate_phase_to_phases"
+    environment              = "${var.environment}"
+    rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
+    redis_cache_url          = "${var.redis_cache_url}"
+    redis_queue_url          = "${var.redis_queue_url}"
+    region                   = "${var.region}"
+    log_group                = "${var.aws_cloudwatch_log_group_name}"
+    database_user            = "${var.rds_username}"
+    database_password        = "${var.rds_password}"
+    database_url             = "${var.rds_address}"
+    elastic_search_url       = "${var.es_address}"
+    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+    rollbar_access_token     = "${var.rollbar_access_token}"
+    feature_import_vacancies = "${var.feature_import_vacancies}"
+    entrypoint               = "${jsonencode(var.migrate_phase_to_phases_task_command)}"
+  }
+}
 
 /* vacancies pageviews refresh cache task definition*/
 data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
@@ -410,9 +447,10 @@ data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
     image                       = "${aws_ecr_repository.default.repository_url}"
     secret_key_base             = "${var.secret_key_base}"
     project_name                = "${var.project_name}"
-    task_name                   = "${var.ecs_service_web_task_name}_import_schools"
+    task_name                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
     environment                 = "${var.environment}"
     rails_env                   = "${var.rails_env}"
+    rails_max_threads           = "${var.rails_max_threads}"
     region                      = "${var.region}"
     log_group                   = "${var.aws_cloudwatch_log_group_name}"
     database_user               = "${var.rds_username}"
@@ -453,6 +491,7 @@ data "template_file" "worker_container_definition" {
 
     environment              = "${var.environment}"
     rails_env                = "${var.rails_env}"
+    rails_max_threads        = "${var.rails_max_threads}"
     region                   = "${var.region}"
     log_group                = "${var.aws_cloudwatch_log_group_name}"
     database_user            = "${var.rds_username}"
@@ -475,7 +514,8 @@ data "template_file" "worker_container_definition" {
     audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
-    audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+    audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
+    audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
     audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
     audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
     notify_key                       = "${var.notify_key}"
@@ -499,6 +539,10 @@ resource "aws_ecs_task_definition" "web" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+data "aws_ecs_task_definition" "web" {
+  task_definition = "${aws_ecs_task_definition.web.family}"
+}
+
 resource "aws_ecs_task_definition" "worker" {
   family                   = "${var.ecs_service_worker_name}"
   container_definitions    = "${data.template_file.worker_container_definition.rendered}"
@@ -510,6 +554,10 @@ resource "aws_ecs_task_definition" "worker" {
   task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
+data "aws_ecs_task_definition" "worker" {
+  task_definition = "${aws_ecs_task_definition.worker.family}"
+}
+
 resource "aws_ecs_task_definition" "logspout" {
   family                = "ecs-logspout-${var.environment}"
   container_definitions = "${data.template_file.logspout_container_definition.rendered}"
@@ -519,6 +567,10 @@ resource "aws_ecs_task_definition" "logspout" {
     name      = "dockersock"
     host_path = "/var/run/docker.sock"
   }
+}
+
+data "aws_ecs_task_definition" "logspout" {
+  task_definition = "${aws_ecs_task_definition.logspout.family}"
 }
 
 /*====
@@ -620,6 +672,17 @@ resource "aws_ecs_task_definition" "seed_vacancies_from_api_task" {
 resource "aws_ecs_task_definition" "performance_platform_submit_all_task" {
   family                   = "${var.ecs_service_web_task_name}_performance_platform_submit_all_task"
   container_definitions    = "${data.template_file.performance_platform_submit_all_container_definition.rendered}"
+  requires_compatibilities = ["EC2"]
+  network_mode             = "bridge"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+}
+
+resource "aws_ecs_task_definition" "migrate_phase_to_phases_task" {
+  family                   = "${var.ecs_service_web_task_name}_migrate_phase_to_phases_task"
+  container_definitions    = "${data.template_file.migrate_phase_to_phases_container_definition.rendered}"
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   cpu                      = "256"

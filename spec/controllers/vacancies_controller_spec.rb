@@ -9,7 +9,8 @@ RSpec.describe VacanciesController, type: :controller do
   end
 
   describe '#index' do
-    let(:subject) { get :index, params: params }
+    subject { get :index, params: params }
+
     context 'when parameters include syntax' do
       context 'search params' do
         let(:params) do
@@ -17,7 +18,7 @@ RSpec.describe VacanciesController, type: :controller do
             subject: "<body onload=alert('test1')>Text</body>",
             location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
             minimum_salary: '<xml>Foo</xml',
-            phase: '<iframe>Foo</iframe>',
+            phases: '<iframe>Foo</iframe>',
             working_pattern: '<script>Foo</script>',
           }
         end
@@ -27,7 +28,7 @@ RSpec.describe VacanciesController, type: :controller do
             'subject' => 'Text',
             'location' => '',
             'minimum_salary' => 'Foo',
-            'phase' => '',
+            'phases' => '',
             'working_pattern' => '',
           }
 
@@ -80,6 +81,37 @@ RSpec.describe VacanciesController, type: :controller do
           get :index, params: { subject: 'English' }
           expect(response.body).to_not match(I18n.t('subscriptions.button'))
         end
+      end
+    end
+  end
+
+  describe '#show' do
+    subject { get :show, params: params }
+
+    context 'when vacancy is trashed' do
+      let(:vacancy) { create(:vacancy, :trashed) }
+      let(:params) { { id: vacancy.id } }
+
+      it 'renders errors/trashed_vacancy_found' do
+        expect(subject).to render_template('errors/trashed_vacancy_found')
+      end
+
+      it 'returns not found' do
+        subject
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when vacancy does not exist' do
+      let(:params) { { id: 'missing-id' } }
+
+      it 'renders errors/not_found' do
+        expect(subject).to render_template('errors/not_found')
+      end
+
+      it 'returns not found' do
+        subject
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

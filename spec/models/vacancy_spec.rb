@@ -17,7 +17,7 @@ RSpec.describe Vacancy, type: :model do
                 minimum_salary: nil,
                 working_pattern: nil,
                 newly_qualified_teacher: nil,
-                phase: nil)
+                phases: nil)
 
         results = Vacancy.public_search(filters: filters, sort: VacancySort.new)
 

@@ -28,6 +28,7 @@ variable "google_api_rake_container_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}
+variable "rails_max_threads" {}
 variable "override_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
@@ -59,7 +60,8 @@ variable "google_drive_json_key" {
 
 variable "audit_spreadsheet_id" {}
 variable "audit_vacancies_worksheet_gid" {}
-variable "audit_feedback_worksheet_gid" {}
+variable "audit_vacancy_publish_feedback_worksheet_gid" {}
+variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
 variable "audit_subscription_creation_worksheet_gid" {}
 
@@ -116,15 +118,15 @@ variable "seed_vacancies_from_api" {
   type = "list"
 }
 
-variable "backfill_jobseeker_alert_data_command" {
-  type = "list"
-}
-
 variable "performance_platform_submit_task_command" {
   type = "list"
 }
 
 variable "performance_platform_submit_all_task_command" {
+  type = "list"
+}
+
+variable "migrate_phase_to_phases_task_command" {
   type = "list"
 }
 

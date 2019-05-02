@@ -158,11 +158,6 @@ variable "send_job_alerts_daily_email_command" {
   default     = ["rake", "verbose", "daily_emails:send"]
 }
 
-variable "backfill_jobseeker_alert_data_command" {
-  description = "The Entrypoint for the backfill_jobseeker_alert_data task"
-  default     = ["rake", "verbose", "jobseeker_alerts:statistics:backfill:alert_data"]
-}
-
 variable "send_job_alerts_daily_email_schedule" {
   description = "send_job_alerts_daily_email schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 08 * * ? *)"
@@ -221,6 +216,11 @@ variable "performance_platform_submit_task_schedule" {
 variable "performance_platform_submit_all_task_command" {
   description = "The Entrypoint for the performance_platform_submit_all task"
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
+}
+
+variable "migrate_phase_to_phases_task_command" {
+  description = "The Entrypoint for the migrate_phase_to_phases task"
+  default     = ["rake", "verbose", "data:phase:migrate"]
 }
 
 variable "vacancies_statistics_refresh_cache_task_command" {
@@ -332,6 +332,9 @@ variable "worker_command" {
 
 # Application
 variable "rails_env" {}
+variable "rails_max_threads" {
+  default = "5"
+}
 
 variable "override_school_urn" {}
 variable "http_user" {}
@@ -362,7 +365,8 @@ variable "google_api_json_key" {
 
 variable "google_analytics_profile_id" {}
 variable "audit_vacancies_worksheet_gid" {}
-variable "audit_feedback_worksheet_gid" {}
+variable "audit_vacancy_publish_feedback_worksheet_gid" {}
+variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
 variable "audit_subscription_creation_worksheet_gid" {}
 

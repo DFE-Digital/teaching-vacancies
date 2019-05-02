@@ -5,7 +5,7 @@ class VacancySearchBuilder
                 :subject,
                 :job_title,
                 :working_pattern,
-                :phase,
+                :phases,
                 :newly_qualified_teacher,
                 :minimum_salary,
                 :maximum_salary,
@@ -18,7 +18,7 @@ class VacancySearchBuilder
     self.subject = filters.subject.to_s.strip
     self.job_title = filters.job_title.to_s.strip
     self.working_pattern = filters.working_pattern
-    self.phase = filters.phase
+    self.phases = filters.phases
     self.newly_qualified_teacher = filters.newly_qualified_teacher
     self.minimum_salary = filters.minimum_salary
     self.sort = sort
@@ -79,7 +79,7 @@ class VacancySearchBuilder
   end
 
   def job_title_query
-    optional_query(job_title) { |job_title| job_title_multi_match(job_title) }
+    optional_query(job_title) { |job_title| job_title_match(job_title) }
   end
 
   def optional_query(query)
@@ -167,13 +167,13 @@ class VacancySearchBuilder
   end
 
   def phase_query
-    return if phase.blank?
+    return if phases.blank?
 
     {
       bool: {
         filter: {
           terms: {
-            'school.phase': [phase.to_s],
+            'school.phase': phases.map(&:to_s),
           },
         }
       }
@@ -207,7 +207,7 @@ class VacancySearchBuilder
     }
   end
 
-  def job_title_multi_match(job_title)
+  def job_title_match(job_title)
     {
       match: {
         job_title: {

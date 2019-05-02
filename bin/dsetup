@@ -1,4 +1,4 @@
-rake db:create
+rake db:create db:environment:set
 
 if rake db:migrate:status &> /dev/null; then
   rake db:migrate
