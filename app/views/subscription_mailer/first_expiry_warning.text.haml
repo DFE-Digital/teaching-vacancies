@@ -2,7 +2,7 @@
 \
 = t('job_alerts.expiry.email.first_warning.reset_instructions').html_safe
 \
-= notify_link(t('job_alerts.expiry.email.resubscribe'), subscription_renew_url(subscription_id: @subscription_token))
+= notify_link(subscription_renew_url(subscription_id: @subscription_token), t('job_alerts.expiry.email.resubscribe'))
 \
 Kind regards,
 \
