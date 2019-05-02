@@ -155,6 +155,7 @@ data "template_file" "web_container_definition" {
     authorisation_service_url        = "${var.authorisation_service_url}"
     authorisation_service_token      = "${var.authorisation_service_token}"
     google_geocoding_api_key         = "${var.google_geocoding_api_key}"
+    ordnance_survey_api_key             = "${var.ordnance_survey_api_key}"
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
     pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
     google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
