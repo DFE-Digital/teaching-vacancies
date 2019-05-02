@@ -355,6 +355,9 @@ variable "google_drive_json_key" {
 
 variable "audit_spreadsheet_id" {}
 variable "google_geocoding_api_key" {}
+
+variable "ordnance_survey_api_key" {}
+
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
 variable "pp_user_satisfaction_token" {}
