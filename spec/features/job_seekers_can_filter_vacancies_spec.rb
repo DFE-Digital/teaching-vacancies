@@ -206,7 +206,19 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 3, '', '20', 'Physics', '', '', nil, nil, 'true']
+      data = {
+        total_count: 3,
+        location: '',
+        radius: '20',
+        keyword: nil,
+        minimum_salary: '',
+        maximum_salary: nil,
+        working_pattern: nil,
+        phases: nil,
+        newly_qualified_teacher: 'true',
+        subject: 'Physics',
+        job_title: ''
+      }
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)
@@ -228,7 +240,19 @@ RSpec.feature 'Filtering vacancies' do
 
       Vacancy.__elasticsearch__.client.indices.flush
 
-      data = [timestamp.to_s, 12, '', '20', 'Math', '', '', nil, nil, 'true']
+      data = {
+        total_count: 12,
+        location: '',
+        radius: '20',
+        keyword: nil,
+        minimum_salary: '',
+        maximum_salary: nil,
+        working_pattern: nil,
+        phases: nil,
+        newly_qualified_teacher: 'true',
+        subject: 'Math',
+        job_title: ''
+      }
 
       expect(AuditSearchEventJob).to receive(:perform_later)
         .with(data)

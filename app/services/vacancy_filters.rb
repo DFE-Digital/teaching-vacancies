@@ -30,6 +30,21 @@ class VacancyFilters
     }
   end
 
+  def audit_hash
+    {
+      location: location,
+      radius: radius,
+      keyword: nil,
+      minimum_salary: minimum_salary,
+      maximum_salary: nil,
+      working_pattern: working_pattern,
+      phases: phases,
+      newly_qualified_teacher: newly_qualified_teacher,
+      subject: subject,
+      job_title: job_title
+    }
+  end
+
   def only_active_to_hash
     to_hash.delete_if { |_, v| v.blank? }
   end
