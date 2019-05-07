@@ -1,3 +1,8 @@
+\# #{t('app.title')}
+\## #{t('job_alerts.expiry.email.first_warning.subject', reference: @subscription_reference).html_safe}
+\
+\---
+\
 = t('job_alerts.expiry.email.first_warning.first_line', reference: @subscription_reference, expiry_date: @expiry_date.strftime('%e %B %Y')).html_safe
 \
 = t('job_alerts.expiry.email.first_warning.reset_instructions').html_safe

@@ -1,3 +1,8 @@
+\# #{t('app.title')}
+\## #{t('job_alerts.expiry.email.final_warning.subject', reference: @subscription_reference).html_safe}
+\
+\---
+\
 = t('job_alerts.expiry.email.final_warning.first_line', reference: @subscription_reference).html_safe
 \
 = notify_link(subscription_renew_url(subscription_id: @subscription_token), t('job_alerts.expiry.email.resubscribe'))
