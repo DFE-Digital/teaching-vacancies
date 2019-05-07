@@ -35,8 +35,10 @@ class VacanciesFinder
   end
 
   def audit_search_event
-    AuditSearchEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                       vacancies.total_count,
-                                       *filters.to_hash.values])
+    AuditSearchEventJob.perform_later(audit_row)
+  end
+
+  def audit_row
+    { total_count: vacancies.total_count }.merge(filters.audit_hash)
   end
 end
