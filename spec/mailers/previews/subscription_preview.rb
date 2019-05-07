@@ -15,6 +15,10 @@ class SubscriptionPreview < ActionMailer::Preview
   private
 
   def subscription
-    Subscription.count.zero? ? FactoryBot.create(:subscription, search_criteria: { subject: 'english' }.to_json) : Subscription.last
+    if Subscription.count.zero?
+      FactoryBot.create(:subscription, search_criteria: { subject: 'english' }.to_json)
+    else
+      Subscription.last
+    end
   end
 end
