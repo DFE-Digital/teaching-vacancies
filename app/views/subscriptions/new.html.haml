@@ -23,6 +23,7 @@
 .govuk-grid-row
   .govuk-grid-column-one-half
     %p.govuk-body-l=t('subscriptions.intro')
+    = render partial: 'criteria', locals: { subscription: @subscription }
 
     = simple_form_for @subscription do |f|
       = render partial: 'form', locals: { form: f, subscription: @subscription }

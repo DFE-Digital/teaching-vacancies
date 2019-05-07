@@ -10,7 +10,7 @@
         %strong= @subscription.reference
 
     %h3.govuk-heading-m=t('subscriptions.confirmation.next_step')
-    %p.govuk-body=t('subscriptions.confirmation.next_step_details', email: @subscription.email, date: l(@subscription.expires_on))
+    %p.govuk-body=t('subscriptions.updated.next_step_details', email: @subscription.email, date: l(@subscription.expires_on))
     %div.govuk-inset-text
       %ul.govuk-list
         - @subscription.filtered_search_criteria.each_pair do |filter, value|
@@ -19,4 +19,6 @@
               %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
             = value
 
-    %p.govuk-body= t('subscriptions.confirmation.unsubscribe')
+    %p.govuk-body= t('subscriptions.updated.what_to_expect')
+
+    %p.govuk-body= t('subscriptions.updated.unsubscribe', date: @subscription.expires_on.to_s(:default))

@@ -1,0 +1,7 @@
+%div.govuk-inset-text
+  %ul.govuk-list
+    - subscription.filtered_search_criteria.each_pair do |filter, value|
+      %li
+        - if filter.present?
+          %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
+        = value

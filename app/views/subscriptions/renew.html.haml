@@ -13,6 +13,14 @@
   .govuk-grid-column-one-half
     %p.govuk-body-l=t('subscriptions.resubscribe.intro')
 
+    = render partial: 'criteria', locals: { subscription: @subscription }
+
+    %p.govuk-body=t('subscriptions.resubscribe.end_date', date: @subscription.expires_on.to_s(:default))
+
+    %p.govuk-body=t('subscriptions.resubscribe.continue')
+
+    %p.govuk-body=t('subscriptions.resubscribe.change_instructions')
+
     = simple_form_for @subscription, url: subscription_update_path(subscription_id: @subscription.token), method: :patch do |f|
       = render partial: 'form', locals: { form: f, subscription: @subscription }
 
