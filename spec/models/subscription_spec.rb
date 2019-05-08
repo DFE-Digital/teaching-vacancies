@@ -130,6 +130,42 @@ RSpec.describe Subscription, type: :model do
         end
       end
     end
+
+    describe 'token_attributes' do
+      let(:token) { subscription.token_attributes }
+      let(:decrypted_token) { Subscription.encryptor.decrypt_and_verify(token) }
+
+      it 'encrypts all attributes in a token' do
+        expect(decrypted_token[:email]).to eq(subscription.email)
+        expect(decrypted_token[:frequency]).to eq(subscription.frequency)
+        expect(decrypted_token[:search_criteria]).to eq(subscription.search_criteria)
+        expect(decrypted_token[:reference]).to eq(subscription.reference)
+      end
+
+      context 'find_or_initialize_by_token' do
+        let(:new_subscription) { Subscription.find_or_initialize_by_token(token) }
+
+        context 'when a subscription exists' do
+          it 'returns the same subscription' do
+            expect(new_subscription.id).to_not eq(nil)
+            expect(new_subscription).to eq(subscription)
+          end
+        end
+
+        context 'when the subscription has been deleted' do
+          before { subscription.delete }
+
+          it 'initializes a new subscription' do
+            expect(new_subscription).to be_a(Subscription)
+            expect(new_subscription.id).to eq(nil)
+            expect(new_subscription.email).to eq(decrypted_token[:email])
+            expect(new_subscription.frequency).to eq(decrypted_token[:frequency])
+            expect(new_subscription.search_criteria).to eq(decrypted_token[:search_criteria])
+            expect(new_subscription.reference).to eq(decrypted_token[:reference])
+          end
+        end
+      end
+    end
   end
 
   context 'vacancies_for_range' do

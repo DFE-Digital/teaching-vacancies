@@ -33,6 +33,13 @@ class Subscription < ApplicationRecord
     raise ActiveRecord::RecordNotFound
   end
 
+  def self.find_or_initialize_by_token(token)
+    data = encryptor.decrypt_and_verify(token)
+    find_or_initialize_by(data)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    raise ActiveRecord::RecordNotFound
+  end
+
   def self.default_expiry_period
     6.months.from_now
   end
@@ -47,6 +54,15 @@ class Subscription < ApplicationRecord
   def token
     token_values = { id: id }
     self.class.encryptor.encrypt_and_sign(token_values)
+  end
+
+  def token_attributes
+    self.class.encryptor.encrypt_and_sign(
+      email: email,
+      frequency: frequency,
+      search_criteria: search_criteria,
+      reference: reference
+    )
   end
 
   def vacancies_for_range(date_from, date_to)
