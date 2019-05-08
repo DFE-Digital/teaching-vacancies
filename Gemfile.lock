@@ -108,7 +108,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
-    css_parser (1.6.0)
+    css_parser (1.7.0)
       addressable
     database_cleaner (1.7.0)
     declarative (0.0.10)
@@ -299,7 +299,7 @@ GEM
       railties (>= 3.0.0)
     public_suffix (3.0.3)
     puma (3.12.0)
-    rack (2.0.6)
+    rack (2.0.7)
     rack-oauth2 (1.9.3)
       activesupport
       attr_required
@@ -357,11 +357,11 @@ GEM
     request_store (1.4.1)
       rack (>= 1.4)
     retriable (3.1.2)
-    roadie (3.4.0)
+    roadie (3.5.0)
       css_parser (~> 1.4)
-      nokogiri (~> 1.5)
-    roadie-rails (1.3.0)
-      railties (>= 3.0, < 5.3)
+      nokogiri (~> 1.8)
+    roadie-rails (2.1.0)
+      railties (>= 5.1, < 6.1)
       roadie (~> 3.1)
     rollbar (2.18.2)
       multi_json
