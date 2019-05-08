@@ -13,7 +13,7 @@ class VacanciesController < ApplicationController
                 :minimum_salary,
                 :working_pattern,
                 :phases,
-                :any_phase?,
+                :specific_phases?,
                 :newly_qualified_teacher,
                 :radius,
                 :sort_column,
@@ -117,10 +117,10 @@ class VacanciesController < ApplicationController
     params[:sort_order]
   end
 
-  def any_phase?
-    return true if phases_to_a.blank?
+  def specific_phases?
+    return false if phases_to_a.blank?
 
-    phases_to_a.reject(&:blank?).empty?
+    phases_to_a.reject(&:blank?).any?
   end
 
   def set_headers

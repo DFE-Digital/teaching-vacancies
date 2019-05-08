@@ -24,11 +24,11 @@
     .govuk-form-group
       %fieldset.govuk-fieldset
         = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
-        .govuk-checkboxes.checkbox-group{ class: ('checkbox-group--scrollable' if any_phase?) }
+        .govuk-checkboxes.checkbox-group{ class: ('checkbox-group--scrollable' unless specific_phases?) }
           .govuk-checkboxes__item
-            = check_box_tag 'phases[]', '', any_phase?, id: 'phases_any', class: 'govuk-checkboxes__input'
+            = check_box_tag 'phases[]', '', !specific_phases?, id: 'phases_any', class: 'govuk-checkboxes__input'
             = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
-          .checkbox-group__divider 
+          .checkbox-group__divider
             = t('jobs.filters.education_phase_divider')
           - school_phase_options.each_with_index do |phase, i|
             .govuk-checkboxes__item
