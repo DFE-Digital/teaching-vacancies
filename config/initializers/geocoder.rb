@@ -1,5 +1,5 @@
 redis = Redis.new(url: ENV['REDIS_CACHE_URL'])
-key = ENV.fetch('ORDNANCE_SURVEY_API_KEY', '')
+key = ENV.fetch('ORDNANCE_SURVEY_API_KEY', nil)
 
 Geocoder.configure(
   lookup: :os_names,
