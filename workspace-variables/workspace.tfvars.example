@@ -8,7 +8,7 @@ availability_zones = ["eu-west-2a","eu-west-2b"]
 project_name = "tvs"
 ecs_service_web_name = "tvs2-service"
 ecs_cluster_name = "tvs-cluster"
-ecs_key_pair_name =
+ecs_ssh_public_key =
 instance_type = "t2.micro"
 
 # ALB

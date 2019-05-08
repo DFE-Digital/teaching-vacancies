@@ -378,21 +378,21 @@ resource "aws_iam_role_policy" "ecs_autoscale_role_policy" {
 }
 
 resource "aws_autoscaling_policy" "ecs-autoscaling-up-policy" {
-  name                    = "${var.project_name}-${var.environment}-${var.asg_name}-scale-up"
-  scaling_adjustment      = 2
-  adjustment_type         = "ChangeInCapacity"
-  cooldown                = 300
-  autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
-  policy_type             = "SimpleScaling"
+  name                   = "${var.project_name}-${var.environment}-${var.asg_name}-scale-up"
+  scaling_adjustment     = 2
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  policy_type            = "SimpleScaling"
 }
 
 resource "aws_autoscaling_policy" "ecs-autoscaling-down-policy" {
-  name                    = "${var.project_name}-${var.environment}-${var.asg_name}-scale-down"
-  scaling_adjustment      = -1
-  adjustment_type         = "ChangeInCapacity"
-  cooldown                = 300
-  autoscaling_group_name  = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
-  policy_type             = "SimpleScaling"
+  name                   = "${var.project_name}-${var.environment}-${var.asg_name}-scale-down"
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = "${aws_autoscaling_group.ecs-autoscaling-group.name}"
+  policy_type            = "SimpleScaling"
 }
 
 resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-high" {
@@ -551,13 +551,18 @@ resource "aws_cloudwatch_metric_alarm" "web-memory-utilisation-high" {
 Launch configuration
 ======*/
 
+resource "aws_key_pair" "ecs" {
+  key_name_prefix = "${var.ecs_cluster_name}"
+  public_key      = "${var.ecs_ssh_public_key}"
+}
+
 resource "aws_launch_configuration" "ecs-launch-configuration" {
   image_id                    = "${var.image_id}"
   instance_type               = "${var.instance_type}"
   iam_instance_profile        = "${var.aws_iam_ecs_instance_profile_name}"
   security_groups             = ["${aws_security_group.default.id}", "${aws_security_group.ecs.id}"]
   associate_public_ip_address = "true"
-  key_name                    = "${var.ecs_key_pair_name}"
+  key_name                    = "${aws_key_pair.ecs.key_name}"
   user_data                   = "${data.template_file.ecs-launch-configuration-user-data.rendered}"
 
   lifecycle {
