@@ -525,6 +525,7 @@ data "template_file" "worker_container_definition" {
     subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
     feature_email_alerts              = "${var.feature_email_alerts}"
+    ordnance_survey_api_key             = "${var.ordnance_survey_api_key}"
     worker_command = "${jsonencode(var.worker_command)}"
   }
 }

@@ -141,6 +141,10 @@
         "value": "${google_drive_json_key}"
       },
       {
+        "name": "ORDNANCE_SURVEY_API_KEY",
+        "value": "${ordnance_survey_api_key}"
+      },
+      {
         "name": "SUBSCRIPTION_KEY_GENERATOR_SECRET",
         "value": "${subscription_key_generator_secret}"
       },
