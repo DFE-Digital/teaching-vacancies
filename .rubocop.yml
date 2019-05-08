@@ -3,7 +3,6 @@ AllCops:
     Exclude:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
-      - 'db/seeds.rb'
       - 'bin/**/*'
       - 'config/initializers/simple_form.rb'
       - 'config/initializers/assets.rb'
