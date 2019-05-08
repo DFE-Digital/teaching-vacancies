@@ -108,6 +108,10 @@
       %h2.govuk-heading-m= t('jobs.benefits')
       %p= @vacancy.benefits
 
+    %h2.govuk-heading-m.share-this-job
+      = t('jobs.share_this_job')
+    = render partial: '/shared/vacancy/share_buttons'
+    
     %aside.vacancy--metadata
       - if @vacancy.application_link.present?
         %p.govuk-body-s=t('jobs.aria_labels.apply_link')

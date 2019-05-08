@@ -6,18 +6,18 @@ RSpec.describe Vacancy, type: :model do
   describe '.public_search' do
     context 'when there were no results' do
       it 'records the event in Rollbar' do
-        filters = VacancyFilters.new(keyword: 'a-non-matching-search-term')
+        filters = VacancyFilters.new(subject: 'subject', job_title: 'job title')
         expect(Rollbar).to receive(:log)
           .with(:info,
                 'A search returned 0 results',
                 location: nil,
                 radius: nil,
-                keyword: 'a-non-matching-search-term',
+                subject: 'subject',
+                job_title: 'job title',
                 minimum_salary: nil,
-                maximum_salary: nil,
                 working_pattern: nil,
                 newly_qualified_teacher: nil,
-                phase: nil)
+                phases: nil)
 
         results = Vacancy.public_search(filters: filters, sort: VacancySort.new)
 
@@ -366,8 +366,9 @@ RSpec.describe Vacancy, type: :model do
     end
 
     describe '#live' do
+      let!(:live) { create_list(:vacancy, 5, :published) }
+
       it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
-        live = create_list(:vacancy, 5, :published)
         expired = build(:vacancy, :expired)
         expired.send :set_slug
         expired.save(validate: false)
@@ -375,7 +376,13 @@ RSpec.describe Vacancy, type: :model do
         create_list(:vacancy, 4, :trashed)
 
         expect(Vacancy.live.count).to eq(live.count)
-        expect(live).to_not include(expired)
+        expect(Vacancy.live).to_not include(expired)
+      end
+
+      it 'includes vacancies that expire today' do
+        expires_today = create(:vacancy, status: :published, expires_on: Time.zone.today)
+
+        expect(Vacancy.live).to include(expires_today)
       end
     end
 

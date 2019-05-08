@@ -1,10 +1,11 @@
 require 'rails_helper'
+
 RSpec.describe VacancySearchBuilder do
   describe '#call' do
-    it 'returns the default keyword query with no parameters' do
+    it 'returns the default match all query with no parameters' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         match_all: {},
@@ -14,18 +15,38 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-    it 'builds a keyword search when a keyword is provided' do
+    it 'builds a subject search when a subject is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(keyword: 'german')
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      filters = OpenStruct.new(subject: 'german')
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         multi_match: {
           query: 'german',
-          fields: %w[job_title^3 subject.name first_supporting_subject.name second_supporting_subject.name],
-          operator: 'and',
-          fuzziness: 2,
-          prefix_length: 1
+          type: 'best_fields',
+          fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
+          operator: 'or',
+          minimum_should_match: 1,
+          fuzziness: 'AUTO'
+        },
+      }
+
+      expect(builder).to be_a(Hash)
+      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
+    end
+
+    it 'builds a job title search when a job title is provided' do
+      sort = OpenStruct.new(column: :expires_on, order: :desc)
+      filters = OpenStruct.new(job_title: 'teacher')
+      builder = described_class.new(filters: filters, sort: sort).call
+
+      expected_hash = {
+        match: {
+          job_title: {
+            query: 'teacher',
+            operator: 'and',
+            fuzziness: 'AUTO'
+          }
         },
       }
 
@@ -38,7 +59,7 @@ RSpec.describe VacancySearchBuilder do
 
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(location: 'TR2 56D')
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         geo_distance: {
@@ -57,7 +78,7 @@ RSpec.describe VacancySearchBuilder do
     it 'builds a working pattern query when one is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(working_pattern: 'part_time')
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         bool: {
@@ -75,8 +96,8 @@ RSpec.describe VacancySearchBuilder do
 
     it 'builds an education phase query when one is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(phase: 'primary')
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      filters = OpenStruct.new(phases: ['primary'])
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         bool: {
@@ -93,10 +114,10 @@ RSpec.describe VacancySearchBuilder do
     end
 
     context 'salary query' do
-      it 'only includes the minimum salary when no maximum is provided' do
+      it 'only includes the minimum salary' do
         sort = OpenStruct.new(column: :expires_on, order: :desc)
         filters = OpenStruct.new(minimum_salary: 20000)
-        builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+        builder = described_class.new(filters: filters, sort: sort).call
 
         expected_hash = {
           range: {
@@ -109,86 +130,12 @@ RSpec.describe VacancySearchBuilder do
         expect(builder).to be_a(Hash)
         expect(builder[:search_query][:bool][:must]).to include(expected_hash)
       end
-
-      it 'includes both the minimum and maximum salary when both are provided' do
-        sort = OpenStruct.new(column: :expires_on, order: :desc)
-        filters = OpenStruct.new(minimum_salary: 200, maximum_salary: 20000)
-        builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
-
-        expected_hash = [
-          {
-            range: {
-              minimum_salary: {
-                gte: 200
-              }
-            }
-          }, {
-            bool: {
-              should: [{
-                range: {
-                  maximum_salary: {
-                    lte: 20000
-                  }
-                }
-              }, {
-                bool: {
-                  must_not: {
-                    exists: {
-                      field: 'maximum_salary'
-                    }
-                  }
-                }
-              }]
-            }
-          }
-        ]
-
-        expect(builder).to be_a(Hash)
-        expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-      end
-
-      it 'includes only the maximum salary value when no minimum is provided' do
-        sort = OpenStruct.new(column: :expires_on, order: :desc)
-        filters = OpenStruct.new(minimum_salary: nil, maximum_salary: 20000)
-        builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
-
-        expected_hash = [
-          {
-            range: {
-              minimum_salary: {
-                lte: 20000
-              }
-            }
-          }, {
-            bool: {
-              should: [{
-                range: {
-                  maximum_salary: {
-                    lte: 20000
-                  }
-                }
-              }, {
-                bool: {
-                  must_not: {
-                    exists: {
-                      field: 'maximum_salary'
-                    }
-                  }
-                }
-              }]
-            }
-          }
-        ]
-
-        expect(builder).to be_a(Hash)
-        expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-      end
     end
 
     it 'builds a published status query by default' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         bool: {
@@ -207,7 +154,7 @@ RSpec.describe VacancySearchBuilder do
     it 'builds a published_on query by default' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
-      builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+      builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
         range: {
@@ -225,7 +172,7 @@ RSpec.describe VacancySearchBuilder do
   it 'builds a status query by if one is provided' do
     sort = OpenStruct.new(column: :expires_on, order: :desc)
     filters = OpenStruct.new
-    builder = VacancySearchBuilder.new(filters: filters, sort: sort, status: :draft).call
+    builder = described_class.new(filters: filters, sort: sort, status: :draft).call
 
     expected_hash = {
       bool: {
@@ -244,7 +191,7 @@ RSpec.describe VacancySearchBuilder do
   it 'builds a sort query' do
     sort = OpenStruct.new(column: :expires_on, order: :desc)
     filters = OpenStruct.new
-    builder = VacancySearchBuilder.new(filters: filters, sort: sort).call
+    builder = described_class.new(filters: filters, sort: sort).call
 
     expected_sort_query = [{ expires_on: { order: :desc } }]
 

@@ -390,7 +390,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation correctly when an invalid link is entered' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Link for more information')
+          click_link_in_container_with_text('Link for jobseekers to learn more and apply')
 
           expect(page).to have_content('Step 3 of 3')
 

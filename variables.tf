@@ -198,9 +198,9 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
-variable "backfill_audit_data_for_vacancy_publish_events" {
-  description = "The Entrypoint for the data:backfill:audit_data:vacancy_publishing task"
-  default     = ["rake", "verbose", "data:backfill:audit_data:vacancy_publishing"]
+variable "seed_vacancies_from_api" {
+  description = "The Entrypoint for the data:seed_from_api:vacancies task"
+  default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
 }
 
 variable "performance_platform_submit_task_command" {
@@ -218,13 +218,18 @@ variable "performance_platform_submit_all_task_command" {
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
 }
 
-variable "vacancies_pageviews_refresh_cache_task_command" {
-  description = "The Entrypoint for the vacancies_pageviews_refresh_cache task"
-  default     = ["rake", "verbose", "vacancies:pageviews:refresh_cache"]
+variable "migrate_phase_to_phases_task_command" {
+  description = "The Entrypoint for the migrate_phase_to_phases task"
+  default     = ["rake", "verbose", "data:phase:migrate"]
 }
 
-variable "vacancies_pageviews_refresh_cache_task_schedule" {
-  description = "vacancies_pageviews_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+variable "vacancies_statistics_refresh_cache_task_command" {
+  description = "The Entrypoint for the vacancies_statistics_refresh_cache task"
+  default     = ["rake", "verbose", "vacancies:statistics:refresh_cache"]
+}
+
+variable "vacancies_statistics_refresh_cache_task_schedule" {
+  description = "vacancies_statistics_refresh_cache schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 02 * * ? *)"
 }
 
@@ -327,6 +332,9 @@ variable "worker_command" {
 
 # Application
 variable "rails_env" {}
+variable "rails_max_threads" {
+  default = "5"
+}
 
 variable "override_school_urn" {}
 variable "http_user" {}
@@ -347,6 +355,9 @@ variable "google_drive_json_key" {
 
 variable "audit_spreadsheet_id" {}
 variable "google_geocoding_api_key" {}
+
+variable "ordnance_survey_api_key" {}
+
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
 variable "pp_user_satisfaction_token" {}
@@ -357,9 +368,12 @@ variable "google_api_json_key" {
 
 variable "google_analytics_profile_id" {}
 variable "audit_vacancies_worksheet_gid" {}
-variable "audit_feedback_worksheet_gid" {}
+variable "audit_vacancy_publish_feedback_worksheet_gid" {}
+variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
+variable "audit_subscription_creation_worksheet_gid" {}
 
+variable "audit_search_event_worksheet_gid" {}
 variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
@@ -368,6 +382,9 @@ variable "skylight_ignored_endpoints" {
 }
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+variable "feature_import_vacancies" {
+  default = "false"
+}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "subscription_key_generator_secret" {}

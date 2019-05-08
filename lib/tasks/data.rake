@@ -7,22 +7,21 @@ namespace :data do
     end
   end
 
-  desc 'Backfill AuditData for past vacancy.publish events'
-  namespace :backfill do
-    namespace :audit_data do
-      task vacancy_publishing: :environment do
-        PublicActivity::Activity.where(key: 'vacancy.publish').map do |audit|
-          begin
-            vacancy = Vacancy.find(audit.trackable_id)
-          rescue ActiveRecord::RecordNotFound
-            next
-          end
+  desc 'Migrate phase to phases'
+  namespace :phase do
+    task migrate: :environment do
+      Rails.logger.debug("Running phase migration task in #{Rails.env}")
 
-          if AuditData.where("data->>'id' = ?", vacancy.id).count.zero?
-            row = VacancyPresenter.new(vacancy).to_row
-            AuditData.create(category: :vacancies, data: row)
-          end
-        end
+      Subscription.all.each do |subscription|
+        search_criteria = subscription.search_criteria_to_h
+
+        next unless search_criteria.key?('phase')
+        next if search_criteria.key?('phases')
+
+        search_criteria['phases'] = [search_criteria['phase']]
+        search_criteria.delete('phase')
+
+        subscription.update!(search_criteria: search_criteria.to_json)
       end
     end
   end

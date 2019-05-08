@@ -28,6 +28,7 @@ variable "google_api_rake_container_definition_file_path" {}
 variable "aws_cloudwatch_log_group_name" {}
 
 variable "rails_env" {}
+variable "rails_max_threads" {}
 variable "override_school_urn" {}
 variable "http_user" {}
 variable "http_pass" {}
@@ -59,11 +60,16 @@ variable "google_drive_json_key" {
 
 variable "audit_spreadsheet_id" {}
 variable "audit_vacancies_worksheet_gid" {}
-variable "audit_feedback_worksheet_gid" {}
+variable "audit_vacancy_publish_feedback_worksheet_gid" {}
+variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
+variable "audit_subscription_creation_worksheet_gid" {}
+
+variable "audit_search_event_worksheet_gid" {}
 
 variable "domain" {}
 variable "google_geocoding_api_key" {}
+variable "ordnance_survey_api_key" {}
 
 variable "google_api_json_key" {
   type = "map"
@@ -76,6 +82,7 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+variable "feature_import_vacancies" {}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 
@@ -109,7 +116,7 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
-variable "backfill_audit_data_for_vacancy_publish_events" {
+variable "seed_vacancies_from_api" {
   type = "list"
 }
 
@@ -121,17 +128,23 @@ variable "performance_platform_submit_all_task_command" {
   type = "list"
 }
 
+variable "migrate_phase_to_phases_task_command" {
+  type = "list"
+}
+
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
+
 variable "update_spreadsheets_task_command" {
   type = "list"
 }
+
 variable "update_spreadsheets_task_schedule" {}
 variable "send_job_alerts_daily_email_schedule" {}
 
-variable "vacancies_pageviews_refresh_cache_task_command" {
+variable "vacancies_statistics_refresh_cache_task_command" {
   type = "list"
 }
 
-variable "vacancies_pageviews_refresh_cache_task_schedule" {}
+variable "vacancies_statistics_refresh_cache_task_schedule" {}

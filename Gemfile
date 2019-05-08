@@ -26,13 +26,13 @@ gem 'sanitize', '~> 5.0'
 gem 'lograge'
 gem 'colorize'
 gem 'ipaddr'
-gem 'geocoder'
+gem 'geocoder', github: 'dxw/geocoder', branch: 'add-os-name-support'
 gem 'redis'
 gem 'redis-objects'
 gem 'skylight'
 
 gem 'omniauth', '~> 1.8'
-gem 'omniauth_openid_connect', '~> 0.1'
+gem 'omniauth_openid_connect', '~> 0.2'
 
 gem 'breasal', '~> 0.0.1'
 
@@ -89,6 +89,7 @@ end
 group :test do
   gem 'capybara', '~> 3.12'
   gem 'database_cleaner'
+  gem 'mock_redis'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
   gem 'webmock', '~> 3.5'

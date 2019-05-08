@@ -19,6 +19,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "RAILS_MAX_THREADS",
+        "value": "${rails_max_threads}"
+      },
+      {
         "name": "OVERRIDE_SCHOOL_URN",
         "value": "${override_school_urn}"
       },
@@ -137,6 +141,10 @@
       {
         "name": "GOOGLE_GEOCODING_API_KEY",
         "value": "${google_geocoding_api_key}"
+      },
+      {
+        "name": "ORDNANCE_SURVEY_API_KEY",
+        "value": "${ordnance_survey_api_key}"
       },
       {
         "name": "GOOGLE_API_JSON_KEY",

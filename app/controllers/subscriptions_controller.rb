@@ -4,9 +4,9 @@ class SubscriptionsController < ApplicationController
   before_action :check_feature_flag, except: :unsubscribe
 
   def new
-    subscription = Subscription.new(search_criteria: search_criteria.to_json)
+    subscription = Subscription.new(search_criteria: search_criteria_params.to_json)
     @subscription = SubscriptionPresenter.new(subscription)
-    Auditor::Audit.new(nil, 'subscription.daily_alert.new', nil).log_without_association
+    Auditor::Audit.new(nil, 'subscription.daily_alert.new', current_session_id).log_without_association
   end
 
   def create
@@ -16,7 +16,8 @@ class SubscriptionsController < ApplicationController
     if SubscriptionFinder.new(daily_subscription_params).exists?
       flash.now[:error] = I18n.t('errors.subscriptions.already_exists')
     elsif subscription.save
-      Auditor::Audit.new(subscription, 'subscription.daily_alert.create', nil).log
+      Auditor::Audit.new(subscription, 'subscription.daily_alert.create', current_session_id).log
+      AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
       return render 'confirm'
     end
@@ -28,7 +29,7 @@ class SubscriptionsController < ApplicationController
     token = ParameterSanitiser.call(params).require(:subscription_id)
     @subscription = Subscription.find_and_verify_by_token(token)
     @subscription.delete
-    Auditor::Audit.new(@subscription, 'subscription.daily_alert.delete', nil).log
+    Auditor::Audit.new(@subscription, 'subscription.daily_alert.delete', current_session_id).log
   end
 
   private
@@ -40,12 +41,18 @@ class SubscriptionsController < ApplicationController
   end
 
   def daily_subscription_params
-    subscription_params.merge(expires_on: 3.months.from_now,
+    subscription_params.merge(expires_on: 6.months.from_now,
                               frequency: :daily)
   end
 
-  def search_criteria
-    params.require(:search_criteria).permit(*VacancyFilters::AVAILABLE_FILTERS)
+  def search_criteria_params
+    params.require(:search_criteria).permit(*permitted_search_criteria_params)
+  end
+
+  def permitted_search_criteria_params
+    [].concat(VacancyAlertFilters::AVAILABLE_FILTERS)
+      .concat(VacanciesController::PERMITTED_SEARCH_PARAMS)
+      .uniq
   end
 
   def check_feature_flag

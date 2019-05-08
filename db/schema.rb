@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_18_181006) do
+ActiveRecord::Schema.define(version: 2019_04_15_121556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -57,17 +57,6 @@ ActiveRecord::Schema.define(version: 2019_03_18_181006) do
     t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
   end
 
-  create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "vacancy_id"
-    t.integer "rating"
-    t.string "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "user_id"
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
-    t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id", unique: true
-  end
-
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.uuid "sluggable_id", null: false
@@ -78,6 +67,15 @@ ActiveRecord::Schema.define(version: 2019_03_18_181006) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "general_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "rating"
+    t.text "comment"
+    t.integer "visit_purpose"
+    t.text "visit_purpose_comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -128,6 +126,7 @@ ActiveRecord::Schema.define(version: 2019_03_18_181006) do
     t.text "easting"
     t.text "northing"
     t.point "geolocation"
+    t.index ["detailed_school_type_id"], name: "index_schools_on_detailed_school_type_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
@@ -208,11 +207,27 @@ ActiveRecord::Schema.define(version: 2019_03_18_181006) do
     t.datetime "total_pageviews_updated_at"
     t.uuid "first_supporting_subject_id"
     t.uuid "second_supporting_subject_id"
+    t.integer "total_get_more_info_clicks"
+    t.datetime "total_get_more_info_clicks_updated_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
+    t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
+    t.index ["max_pay_scale_id"], name: "index_vacancies_on_max_pay_scale_id"
     t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"
+    t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
+  end
+
+  create_table "vacancy_publish_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id"
+    t.integer "rating"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.index ["user_id"], name: "index_vacancy_publish_feedbacks_on_user_id"
+    t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
   end
 
   add_foreign_key "schools", "detailed_school_types"

@@ -1,5 +1,10 @@
 provider "aws" {
   region = "${var.region}"
+  version = "~> 1.36.0"
+}
+
+provider "template" {
+  version = "~> 1.0.0"
 }
 
 /*
@@ -7,6 +12,8 @@ Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
 */
 terraform {
+  required_version = "~> 0.11.13"
+
   backend "s3" {
     bucket  = "terraform-state-002"
     key     = "tvs/terraform.tfstate" # When using workspaces this changes to ':env/{terraform.workspace}/tvs/terraform.tfstate'
@@ -91,14 +98,16 @@ module "ecs" {
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
-  backfill_audit_data_for_vacancy_publish_events = "${var.backfill_audit_data_for_vacancy_publish_events}"
+  seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
 
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
   performance_platform_submit_all_task_command = "${var.performance_platform_submit_all_task_command}"
 
-  vacancies_pageviews_refresh_cache_task_command  = "${var.vacancies_pageviews_refresh_cache_task_command}"
-  vacancies_pageviews_refresh_cache_task_schedule = "${var.vacancies_pageviews_refresh_cache_task_schedule}"
+  migrate_phase_to_phases_task_command = "${var.migrate_phase_to_phases_task_command}"
+
+  vacancies_statistics_refresh_cache_task_command  = "${var.vacancies_statistics_refresh_cache_task_command}"
+  vacancies_statistics_refresh_cache_task_schedule = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 
   # Module inputs
 
@@ -106,6 +115,7 @@ module "ecs" {
   aws_cloudwatch_log_group_name = "${module.logs.aws_cloudwatch_log_group_name}"
   # Application variables
   rails_env                        = "${var.rails_env}"
+  rails_max_threads                = "${var.rails_max_threads}"
   override_school_urn              = "${var.override_school_urn}"
   http_pass                        = "${var.http_pass}"
   http_user                        = "${var.http_user}"
@@ -133,10 +143,14 @@ module "ecs" {
   google_drive_json_key            = "${var.google_drive_json_key}"
   audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
   audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
-  audit_feedback_worksheet_gid     = "${var.audit_feedback_worksheet_gid}"
+  audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
+  audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
   audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
+  audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
+  audit_search_event_worksheet_gid = "${var.audit_search_event_worksheet_gid}"
   domain                           = "${var.domain}"
   google_geocoding_api_key         = "${var.google_geocoding_api_key}"
+  ordnance_survey_api_key             = "${var.ordnance_survey_api_key}"
   google_api_json_key              = "${var.google_api_json_key}"
   google_analytics_profile_id      = "${var.google_analytics_profile_id}"
   subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
@@ -149,6 +163,7 @@ module "ecs" {
   notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
   notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
   feature_email_alerts                      = "${var.feature_email_alerts}"
+  feature_import_vacancies                  = "${var.feature_import_vacancies}"
 }
 
 module "logs" {

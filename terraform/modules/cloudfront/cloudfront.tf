@@ -49,7 +49,9 @@ resource "aws_cloudfront_distribution" "default" {
         "Accept-Charset",
         "Accept-DateTime",
         "Accept-Encoding",
-        "Accept-Language"
+        "Accept-Language",
+        "CloudFront-Forwarded-Proto",
+        "User-Agent",
       ]
 
       cookies {

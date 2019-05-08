@@ -1,36 +1,46 @@
 class VacanciesController < ApplicationController
   include ParameterSanitiser
 
+  PERMITTED_SEARCH_PARAMS = [phases: []]
+                            .concat(VacancyFilters::AVAILABLE_FILTERS)
+                            .uniq
+                            .freeze
   DEFAULT_RADIUS = 20
 
   helper_method :location,
-                :keyword,
+                :subject,
+                :job_title,
                 :minimum_salary,
-                :maximum_salary,
                 :working_pattern,
-                :phase,
+                :phases,
+                :any_phase?,
                 :newly_qualified_teacher,
                 :radius,
                 :sort_column,
                 :sort_order
 
   def index
-    @filters = VacancyFilters.new(search_params)
+    @filters = VacancyFilters.new(search_params.to_hash)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    records = Vacancy.public_search(filters: @filters, sort: @sort).page(page_number).records(includes: [:school])
-    audit_search_event(records, @filters) if @filters.any?
-
-    @vacancies = VacanciesPresenter.new(records, searched: @filters.any?)
+    @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
 
     expires_in 5.minutes, public: true
   end
 
   def show
-    vacancy = Vacancy.listed.friendly.find(id)
+    begin
+      vacancy = Vacancy.listed.friendly.find(id)
+    rescue ActiveRecord::RecordNotFound
+      raise unless Vacancy.trashed.friendly.exists?(id)
+
+      return render '/errors/trashed_vacancy_found', status: :not_found
+    end
+
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
 
     @vacancy = VacancyPresenter.new(vacancy)
-    TrackVacancyPageViewJob.perform_later(vacancy.id) unless authenticated?
+
+    VacancyPageView.new(vacancy).track unless authenticated?
 
     expires_in 5.minutes, public: true
   end
@@ -42,19 +52,11 @@ class VacanciesController < ApplicationController
   private
 
   def search_params
-    params.permit(:keyword, :location, :radius,
-                  :minimum_salary, :maximum_salary, :phase,
-                  :phase, :working_pattern, :newly_qualified_teacher).to_hash
+    params.permit(*PERMITTED_SEARCH_PARAMS)
   end
 
   def old_vacancy_path?(vacancy)
     request.path != job_path(vacancy) && !request.format.json?
-  end
-
-  def audit_search_event(records, filters)
-    AuditSearchEventJob.perform_later([Time.zone.now.iso8601.to_s,
-                                       records.total_count,
-                                       *filters.to_hash.values])
   end
 
   def id
@@ -71,24 +73,32 @@ class VacanciesController < ApplicationController
     params[:location]
   end
 
-  def keyword
-    params[:keyword]
+  def subject
+    params[:subject]
+  end
+
+  def job_title
+    params[:job_title]
   end
 
   def minimum_salary
     params[:minimum_salary]
   end
 
-  def maximum_salary
-    params[:maximum_salary]
-  end
-
   def working_pattern
     params[:working_pattern]
   end
 
-  def phase
-    params[:phase]
+  def phases_to_a
+    raw_phases = params[:phases]
+    parsed_phases = JSON.parse(raw_phases) if raw_phases.present?
+    parsed_phases.is_a?(Array) ? parsed_phases : []
+  rescue JSON::ParserError
+    []
+  end
+
+  def phases
+    phases_to_a
   end
 
   def newly_qualified_teacher
@@ -105,6 +115,12 @@ class VacanciesController < ApplicationController
 
   def sort_order
     params[:sort_order]
+  end
+
+  def any_phase?
+    return true if phases_to_a.blank?
+
+    phases_to_a.reject(&:blank?).any?
   end
 
   def set_headers

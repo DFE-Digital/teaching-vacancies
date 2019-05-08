@@ -25,24 +25,15 @@ module VacanciesHelper
             jobs_path(vacancy_params(sort_column: column,
                                      sort_order: order)),
             class: "govuk-link sortby--#{order}#{active_class || ''}",
-            'aria-label': "Sort jobs by #{title} in #{order}ending order"
+            'aria-label': t('jobs.aria_labels.sort_by_link', column: title, order: order)
   end
 
   def vacancy_params_whitelist
-    %i[sort_column sort_order page location radius keyword minimum_salary
-       maximum_salary working_pattern phase newly_qualified_teacher]
+    %i[sort_column sort_order page].concat(VacancyFilters::AVAILABLE_FILTERS)
   end
 
   def vacancy_params(overwrite = {})
     params.merge(overwrite).permit(vacancy_params_whitelist)
-  end
-
-  def rating_options
-    [['Very satisfied', 5],
-     ['Satisfied', 4],
-     ['Neither satisfied or dissatisfied', 3],
-     ['Dissatisfied', 2],
-     ['Very dissatisfied', 1]]
   end
 
   def radius_filter_options
@@ -55,11 +46,17 @@ module VacanciesHelper
     @pay_scale_options ||= PayScale.all
   end
 
-  def nqt_suitable_checked?(newly_qualified_teacher)
-    newly_qualified_teacher == 'true'
-  end
-
   def subject_options
     @subject_options ||= Subject.all
+  end
+
+  def phase_checked?(phase)
+    return false if phases.blank?
+
+    phases.include?(phase)
+  end
+
+  def nqt_suitable_checked?(newly_qualified_teacher)
+    newly_qualified_teacher == 'true'
   end
 end

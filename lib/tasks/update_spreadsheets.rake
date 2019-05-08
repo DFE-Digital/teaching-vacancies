@@ -3,6 +3,9 @@ namespace :spreadsheets do
   task update: :environment do
     AddAuditDataToSpreadsheetJob.perform_later('vacancies')
     AddAuditDataToSpreadsheetJob.perform_later('interest_expression')
-    AddFeedbackToSpreadsheetJob.perform_later
+    AddAuditDataToSpreadsheetJob.perform_later('subscription_creation')
+    AddAuditDataToSpreadsheetJob.perform_later('search_event')
+    AddVacancyPublishFeedbackToSpreadsheetJob.perform_later
+    AddGeneralFeedbackToSpreadsheetJob.perform_later
   end
 end

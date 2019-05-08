@@ -7,28 +7,38 @@
       = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
       = search_field_tag :location, location, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.location_hint')
     .govuk-form-group
-      = label_tag 'Radius', 'Radius', class: 'govuk-label'
+      = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
       = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'govuk-select form-control form-control-block'
     .govuk-form-group
-      = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
-      = search_field_tag :keyword, keyword, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.keyword_hint')
+      = label_tag 'subject', t('jobs.filters.subject'), class: 'govuk-label'
+      = search_field_tag :subject, subject, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.subject_hint')
+    .govuk-form-group
+      = label_tag 'job_title', t('jobs.filters.job_title'), class: 'govuk-label'
+      = search_field_tag :job_title, job_title, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.job_title_hint')
     .govuk-form-group
       = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
       = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
     .govuk-form-group
-      = label_tag 'maximum_salary', t('jobs.filters.maximum_salary'), class: 'govuk-label'
-      = select_tag 'maximum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, maximum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
-    .govuk-form-group
       = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
       = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
     .govuk-form-group
-      = label_tag 'phase', t('jobs.filters.education_phase'), class: 'govuk-label'
-      = select_tag 'phase', options_for_select(school_phase_options, phase), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
+      %fieldset.govuk-fieldset
+        = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
+        .govuk-checkboxes.checkbox-group{ class: ('checkbox-group--scrollable' if any_phase?) }
+          .govuk-checkboxes__item
+            = check_box_tag 'phases[]', '', any_phase?, id: 'phases_any', class: 'govuk-checkboxes__input'
+            = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
+          .checkbox-group__divider 
+            = t('jobs.filters.education_phase_divider')
+          - school_phase_options.each_with_index do |phase, i|
+            .govuk-checkboxes__item
+              = check_box_tag 'phases[]', phase[1], phase_checked?(phase[1]), id: 'phases_' + phase[1], class: 'govuk-checkboxes__input'
+              = label_tag 'phases[]', phase[0], for: 'phases_' + phase[1], class: 'govuk-label govuk-checkboxes__label'
     .govuk-form-group
       %fieldset.govuk-fieldset
         .govuk-checkboxes
           .govuk-checkboxes__item
-            = check_box_tag :newly_qualified_teacher, 'true', nqt_suitable_checked?(newly_qualified_teacher), class: 'govuk-checkboxes__input'
+            = check_box_tag 'newly_qualified_teacher', 'true', nqt_suitable_checked?(newly_qualified_teacher), class: 'govuk-checkboxes__input'
             = label_tag 'newly_qualified_teacher', t('jobs.filters.nqt_suitable'), class: 'govuk-label govuk-checkboxes__label'
 
     = hidden_field_tag :sort_column, sort_column

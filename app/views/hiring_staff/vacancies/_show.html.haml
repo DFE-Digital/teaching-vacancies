@@ -17,6 +17,7 @@
         .share-url-no-js.mb1
           %h2.govuk-heading-s.mt0 Share this job
           #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
+        = render partial: '/shared/vacancy/share_buttons'
       .govuk-grid-column-one-half
         .og-preview
           .og_image= image_tag 'og_image.jpg'
@@ -84,6 +85,10 @@
                                                               lng: @vacancy.school_geolocation.y }
 
         %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap" }
+
+      %h2.govuk-heading-m.share-this-job
+        = t('jobs.share_this_job')
+      = render partial: '/shared/vacancy/share_buttons'
 
     .govuk-grid-column-one-third
       %aside.vacancy--metadata

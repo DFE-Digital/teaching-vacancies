@@ -21,6 +21,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "RAILS_MAX_THREADS",
+        "value": "${rails_max_threads}"
+      },
+      {
         "name": "ROLLBAR_ENV",
         "value": "${environment}"
       },
@@ -97,12 +101,24 @@
         "value": "${audit_vacancies_worksheet_gid}"
       },
       {
-        "name": "AUDIT_FEEDBACK_WORKSHEET_GID",
-        "value": "${audit_feedback_worksheet_gid}"
+        "name": "AUDIT_VACANCY_PUBLISH_FEEDBACK_WORKSHEET_GID",
+        "value": "${audit_vacancy_publish_feedback_worksheet_gid}"
+      },
+      {
+        "name": "AUDIT_GENERAL_FEEDBACK_WORKSHEET_GID",
+        "value": "${audit_general_feedback_worksheet_gid}"
       },
       {
         "name": "AUDIT_EXPRESS_INTEREST_WORKSHEET_GID",
         "value": "${audit_express_interest_worksheet_gid}"
+      },
+      {
+        "name": "AUDIT_SUBSCRIPTION_CREATION_WORKSHEET_GID",
+        "value": "${audit_subscription_creation_worksheet_gid}"
+      },
+      {
+        "name": "AUDIT_SEARCH_EVENT_WORKSHEET_GID",
+        "value": "${audit_search_event_worksheet_gid}"
       },
       {
         "name": "DOMAIN",
@@ -123,6 +139,10 @@
       {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
+      },
+      {
+        "name": "ORDNANCE_SURVEY_API_KEY",
+        "value": "${ordnance_survey_api_key}"
       },
       {
         "name": "SUBSCRIPTION_KEY_GENERATOR_SECRET",

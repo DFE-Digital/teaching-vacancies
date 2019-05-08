@@ -87,7 +87,7 @@ class Vacancy < ApplicationRecord
   belongs_to :max_pay_scale, class_name: 'PayScale', optional: true
   belongs_to :leadership, optional: true
 
-  has_one :feedback
+  has_one :publish_feedback, class_name: 'VacancyPublishFeedback'
 
   delegate :name, to: :school, prefix: true, allow_nil: false
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
@@ -97,10 +97,10 @@ class Vacancy < ApplicationRecord
   scope :applicable, (-> { where('expires_on >= ?', Time.zone.today) })
   scope :active, (-> { where(status: %i[published draft]) })
   scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
-  scope :published_on_count, (->(date) { published.where('date(publish_on) = ?', date).count })
+  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
   scope :expired, (-> { published.where('expires_on < ?', Time.zone.today) })
-  scope :live, (-> { published.where('publish_on <= ?', Time.zone.today).where('expires_on > ?', Time.zone.today) })
+  scope :live, (-> { published.where('publish_on <= ?', Time.zone.today).where('expires_on >= ?', Time.zone.today) })
 
   paginates_per 10
 
@@ -111,6 +111,15 @@ class Vacancy < ApplicationRecord
   end
 
   counter :page_view_counter
+  counter :get_more_info_counter
+
+  def self.public_search(filters:, sort:)
+    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
+    results = ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
+
+    Rollbar.log(:info, 'A search returned 0 results', filters.to_hash) if results.count.zero?
+    results
+  end
 
   def location
     @location ||= SchoolPresenter.new(school).location
@@ -123,14 +132,6 @@ class Vacancy < ApplicationRecord
       lat: school_geolocation.x.to_f,
       lon: school_geolocation.y.to_f
     }
-  end
-
-  def self.public_search(filters:, sort:)
-    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
-    results = ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
-
-    Rollbar.log(:info, 'A search returned 0 results', filters.to_hash) if results.count.zero?
-    results
   end
 
   def listed?

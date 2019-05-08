@@ -65,4 +65,4 @@ en:
         reference: 'Your reference'
     hints:
       defaults:
-        reference: Save a description for this job alert. If you don’t choose a reference we'll generate a reference number for you.
+        reference: This text will appear in the subject line of the email we send you when a new job matches your criteria. Feel free to change it.

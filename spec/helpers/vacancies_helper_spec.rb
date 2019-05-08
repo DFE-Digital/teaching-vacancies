@@ -62,7 +62,7 @@ RSpec.describe VacanciesHelper, type: :helper do
       filters = %i[sort_column sort_order page]
       filters.push(*VacancyFilters::AVAILABLE_FILTERS)
 
-      expect(helper.vacancy_params_whitelist). to eq(filters)
+      expect(helper.vacancy_params_whitelist).to match_array(filters)
     end
   end
 end

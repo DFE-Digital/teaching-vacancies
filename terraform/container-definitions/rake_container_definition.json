@@ -14,6 +14,10 @@
         "value": "${rails_env}"
       },
       {
+        "name": "RAILS_MAX_THREADS",
+        "value": "${rails_max_threads}"
+      },
+      {
         "name": "ROLLBAR_ENV",
         "value": "${environment}"
       },
@@ -64,6 +68,10 @@
       {
         "name": "ROLLBAR_ACCESS_TOKEN",
         "value": "${rollbar_access_token}"
+      },
+      {
+        "name": "FEATURE_IMPORT_VACANCIES",
+        "value": "${feature_import_vacancies}"
       }
     ]
   }

@@ -31,7 +31,7 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
                   'Content-Type' => 'application/json' }
 
       sample_data = {
-        _timestamp: now.utc.iso8601,
+        _timestamp: now.iso8601,
         service: 'teaching_jobs_listings',
         channel: 'digital',
         count: 2,
@@ -44,7 +44,7 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
                                               headers: headers)
 
       performance_platform = PerformancePlatform::TransactionsByChannel.new('some-token')
-      performance_platform.submit_transactions(2)
+      performance_platform.submit(2)
     end
   end
 end
@@ -69,7 +69,7 @@ RSpec.describe PerformancePlatform::UserSatisfaction do
       expect(user_satisfaction.headers).to include('Authorization' => 'Bearer satisfaction-token')
     end
 
-    it 'posts feedback  data to the Performance Platform' do
+    it 'posts feedback data to the Performance Platform' do
       now = Time.zone.now
       expect(Time).to receive_message_chain(:zone, :now).and_return(now)
 
@@ -79,7 +79,7 @@ RSpec.describe PerformancePlatform::UserSatisfaction do
                   'Content-Type' => 'application/json' }
 
       sample_rating_counts = { 1 => 1, 2 => 2, 3 => 0, 4 => 1, 5 => 4 }
-      expected_data = { _timestamp: now.utc.iso8601,
+      expected_data = { _timestamp: now.iso8601,
                         rating_1: 1,
                         rating_2: 2,
                         rating_3: 0,

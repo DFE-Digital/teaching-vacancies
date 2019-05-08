@@ -19,7 +19,7 @@ setup_database()
     else
       echo "ENTRYPOINT: Environment is in non-production, attempting to automatically create the database…"
       echo "ENTRYPOINT: Running db:create db:schema:load…"
-      rake db:create db:schema:load
+      rake db:create db:environment:set db:schema:load
     fi
   fi
   echo "ENTRYPOINT: Finished database setup."
