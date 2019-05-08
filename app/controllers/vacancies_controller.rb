@@ -120,7 +120,7 @@ class VacanciesController < ApplicationController
   def any_phase?
     return true if phases_to_a.blank?
 
-    phases_to_a.reject(&:blank?).any?
+    phases_to_a.reject(&:blank?).empty?
   end
 
   def set_headers
