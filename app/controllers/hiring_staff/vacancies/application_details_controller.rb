@@ -8,7 +8,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   def create
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
-    store_vacancy_attributes(@application_details_form.vacancy.attributes.compact!)
+    store_vacancy_attributes(@application_details_form.vacancy)
 
     if @application_details_form.valid?
       vacancy = update_vacancy(application_details_form)
@@ -27,7 +27,6 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     @application_details_form.valid?
   end
 
-  # rubocop:disable Metrics/AbcSize
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
     @application_details_form = ApplicationDetailsForm.new(application_details_form)
@@ -40,13 +39,12 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
       update_google_index(vacancy) if vacancy.listed?
       redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
-      store_vacancy_attributes(@application_details_form.vacancy.attributes.compact!)
+      store_vacancy_attributes(@application_details_form.vacancy)
       redirect_to edit_school_job_application_details_path(vacancy.id,
                                                            anchor: 'errors',
                                                            source: 'update')
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
