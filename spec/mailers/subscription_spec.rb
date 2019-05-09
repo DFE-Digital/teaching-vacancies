@@ -20,11 +20,14 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     # The hashing algorithm uses a random initialization vector to encrypt the token,
     # so is different every time, so we stub the token to be the same every time, so
     # it's clearer what we're testing when we test the unsubscribe link
+    token_attributes = subscription.token_attributes
     token = subscription.token
     allow_any_instance_of(Subscription).to receive(:token) { token }
+    allow_any_instance_of(Subscription).to receive(:token_attributes) { token_attributes }
     subscription
   end
   let(:body_lines) { mail.body.raw_source.lines }
+  let(:renew_link) { %r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token_attributes}\/renew} }
 
   describe '#confirmation' do
     let(:mail) { SubscriptionMailer.confirmation(subscription.id) }
@@ -55,9 +58,9 @@ RSpec.describe SubscriptionMailer, type: :mailer do
         I18n.t('job_alerts.expiry.email.first_warning.subject', reference: subscription.reference)
       )
       expect(mail.to).to eq([subscription.email])
-      expect(body_lines[0]).to match(/#{subscription.reference}/)
-      expect(body_lines[2]).to match(/#{I18n.t('job_alerts.expiry.email.first_warning.reset_instructions')}/)
-      expect(body_lines[4]).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/renew})
+      expect(body_lines[5]).to match(/#{subscription.reference}/)
+      expect(body_lines[7]).to match(/#{I18n.t('job_alerts.expiry.email.first_warning.reset_instructions')}/)
+      expect(body_lines[9]).to match(renew_link)
     end
   end
 
@@ -69,8 +72,8 @@ RSpec.describe SubscriptionMailer, type: :mailer do
         I18n.t('job_alerts.expiry.email.final_warning.subject', reference: subscription.reference)
       )
       expect(mail.to).to eq([subscription.email])
-      expect(body_lines[0]).to match(/#{subscription.reference}/)
-      expect(body_lines[2]).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/renew})
+      expect(body_lines[5]).to match(/#{subscription.reference}/)
+      expect(body_lines[7]).to match(renew_link)
     end
   end
 end

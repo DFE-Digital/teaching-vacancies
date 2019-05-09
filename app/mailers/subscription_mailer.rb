@@ -29,7 +29,7 @@ class SubscriptionMailer < ApplicationMailer
 
     @subscription_reference = subscription.reference
     @expiry_date = subscription.expires_on
-    @subscription_token = subscription.token
+    @subscription_token = subscription.token_attributes
 
     subject_translation = "job_alerts.expiry.email.#{type}_warning.subject"
 
