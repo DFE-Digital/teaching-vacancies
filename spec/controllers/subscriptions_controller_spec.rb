@@ -83,4 +83,44 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
     end
   end
+
+  describe '#renew' do
+    let(:subscription) { create(:subscription, search_criteria: { subject: 'english' }.to_json) }
+    let(:token) { subscription.token_attributes }
+
+    subject { get :renew, params: { subscription_id: token } }
+
+    context 'when subscription still exists' do
+      before do
+        token = subscription.token
+        allow_any_instance_of(Subscription).to receive(:token) { token }
+      end
+
+      it 'fetches the subscription' do
+        subject
+        expect(assigns(:subscription).id).to eq(subscription.id)
+      end
+
+      it 'sets the path to update' do
+        subject
+        expect(assigns(:path)).to eq(subscription_update_path(subscription_id: subscription.token))
+        expect(assigns(:method)).to eq(:patch)
+      end
+    end
+
+    context 'when subscription has been deleted' do
+      before { subscription.delete }
+
+      it 'intializes a subscription' do
+        subject
+        expect(assigns(:subscription).id).to eq(nil)
+      end
+
+      it 'sets the path to create' do
+        subject
+        expect(assigns(:path)).to eq(subscriptions_path(update: true))
+        expect(assigns(:method)).to eq(:post)
+      end
+    end
+  end
 end

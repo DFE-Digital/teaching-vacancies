@@ -303,6 +303,7 @@ en:
     resubscribe:
       title: Resubscribe to job alert
       intro: 'You are subscribed to email alerts for jobs matching the following criteria:'
+      expired: This job alert subscription has now ended
       end_date: This job alert subscription ends on %{date}
       continue: To continue receiving these alerts for another 6 months, just resubscribe at the bottom of this page.
       change_instructions: "If you're resubscribing and want to change your email address or reference, just update them in the following fields:"

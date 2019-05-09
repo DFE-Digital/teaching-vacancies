@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
   include ParameterSanitiser
 
   before_action :check_feature_flag, except: :unsubscribe
-  before_action :fetch_subscription_from_token, only: %i[renew unsubscribe update]
+  before_action :fetch_subscription_from_token, only: %i[unsubscribe update]
 
   def new
     subscription = Subscription.new(search_criteria: search_criteria_params.to_json)
@@ -27,7 +27,9 @@ class SubscriptionsController < ApplicationController
   end
 
   def renew
-    @subscription = SubscriptionPresenter.new(@subscription)
+    subscription = Subscription.find_or_initialize_by_token(token)
+    @subscription = SubscriptionPresenter.new(subscription)
+    set_renew_method_and_path
   end
 
   def update
@@ -42,6 +44,12 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def renewal_path
+    return subscriptions_path(update: true) if @subscription.id.nil?
+
+    subscription_update_path(subscription_id: @subscription.token)
+  end
 
   def subscription_params
     ParameterSanitiser.call(
@@ -69,6 +77,15 @@ class SubscriptionsController < ApplicationController
   end
 
   def fetch_subscription_from_token
-    @subscription = Subscription.find_and_verify_by_token(params[:subscription_id])
+    @subscription = Subscription.find_and_verify_by_token(token)
+  end
+
+  def set_renew_method_and_path
+    @path = renewal_path
+    @method = @subscription.id.nil? ? :post : :patch
+  end
+
+  def token
+    params[:subscription_id]
   end
 end
