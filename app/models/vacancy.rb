@@ -190,6 +190,10 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = salary.to_s.strip
   end
 
+  def attributes
+    super().merge(working_patterns: working_patterns)
+  end
+
   private
 
   def slug_candidates
