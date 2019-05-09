@@ -101,7 +101,6 @@ class Vacancy < ApplicationRecord
     hired_tvs
     hired_other_free
     hired_paid
-    hired_free
     not_filled_ongoing
     not_filled_readvertised
     not_filled_not_looking
