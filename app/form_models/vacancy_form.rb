@@ -7,7 +7,7 @@ class VacancyForm
   delegate :save, to: :vacancy
 
   def initialize(params = {})
-    @vacancy = ::Vacancy.new(params)
+    @vacancy = Vacancy.new(params)
   end
 
   def school

@@ -8,11 +8,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def create
-    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
     store_vacancy_attributes(@job_specification_form.vacancy)
 
     if @job_specification_form.valid?
-      vacancy = session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
+      vacancy = session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy)
 
       redirect_to_next_step(vacancy)
@@ -32,12 +32,12 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
-    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
     @job_specification_form.id = vacancy.id
 
     if @job_specification_form.valid?
       reset_session_vacancy!
-      update_vacancy(job_specification_form, vacancy)
+      update_vacancy(job_specification_form_params, vacancy)
       update_google_index(vacancy) if vacancy.listed?
       redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
@@ -50,7 +50,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   private
 
-  def job_specification_form
+  def job_specification_form_params
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
                                                    :minimum_salary, :maximum_salary, :working_pattern,
                                                    :benefits, :weekly_hours, :subject_id, :min_pay_scale_id,
