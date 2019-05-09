@@ -35,7 +35,6 @@ class SubscriptionsController < ApplicationController
   def update
     @subscription.update(daily_subscription_params)
     @subscription = SubscriptionPresenter.new(@subscription)
-    render 'updated'
   end
 
   def unsubscribe
