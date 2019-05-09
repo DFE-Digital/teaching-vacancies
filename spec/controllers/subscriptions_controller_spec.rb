@@ -57,6 +57,14 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect(subscription.expires_on).to eq(6.months.from_now.to_date)
       end
 
+      it 'sends a confirmation' do
+        message_delivery = instance_double(ActionMailer::MessageDelivery)
+        expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
+        expect(message_delivery).to receive(:deliver_later)
+
+        subject
+      end
+
       context 'with unsafe params' do
         let(:params) do
           {
@@ -70,6 +78,40 @@ RSpec.describe SubscriptionsController, type: :controller do
 
         it 'does not create a subscription' do
           expect { subject }.to change { Subscription.count }.by(0)
+        end
+      end
+
+      context 'when update is set' do
+        render_views
+
+        let(:params) do
+          {
+            update: true,
+            subscription: {
+              email: 'foo@email.com',
+              search_criteria: { subject: 'english' }.to_json
+            }
+          }
+        end
+
+        it 'renders the update view' do
+          expect(subject).to render_template(:update)
+        end
+
+        it 'does not queue an audit job' do
+          expect { subject }.to_not have_enqueued_job(AuditSubscriptionCreationJob)
+        end
+
+        it 'creates a subscription' do
+          expect { subject }.to change { Subscription.count }.by(1)
+          expect(subscription.email).to eq(params[:subscription][:email])
+          expect(subscription.search_criteria).to eq(params[:subscription][:search_criteria])
+          expect(subscription.expires_on).to eq(6.months.from_now.to_date)
+        end
+
+        it 'does not send an email' do
+          expect(SubscriptionMailer).to_not receive(:confirmation)
+          subject
         end
       end
     end

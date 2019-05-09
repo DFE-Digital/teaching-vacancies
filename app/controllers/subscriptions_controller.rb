@@ -17,6 +17,8 @@ class SubscriptionsController < ApplicationController
     if SubscriptionFinder.new(daily_subscription_params).exists?
       flash.now[:error] = I18n.t('errors.subscriptions.already_exists')
     elsif subscription.save
+      return render 'update' if params[:update]
+
       Auditor::Audit.new(subscription, 'subscription.daily_alert.create', current_session_id).log
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
