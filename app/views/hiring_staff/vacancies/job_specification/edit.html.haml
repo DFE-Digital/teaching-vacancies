@@ -49,6 +49,7 @@
                 wrapper_html: {id: 'second_supporting_subject'},
                 collection: subject_options,
                 required: false
+
       = f.input :working_patterns,
                 as: :check_boxes,
                 wrapper: :checkboxes,
@@ -57,6 +58,8 @@
                 wrapper_html: { id: 'working_patterns' },
                 collection: working_pattern_options,
                 required: true
+
+      = render partial: 'working_pattern_warning'
 
       %fieldset.govuk-fieldset#pay_scale_range
         %legend.form-label.govuk-label= "#{t('jobs.pay_scale_range')} (optional)"
@@ -108,11 +111,6 @@
                 wrapper: :inline_checkbox,
                 wrapper_html: { id: 'newly_qualified_teacher' },
                 input_html: { 'aria-label': t('jobs.aria_labels.newly_qualified_teacher') }
-      = f.input :flexible_working, as: :boolean,
-                hint: t('jobs.form_hints.flexible_working'),
-                wrapper: :inline_checkbox,
-                wrapper_html: { id: 'flexible_working' },
-                input_html: { 'aria-label': t('jobs.aria_labels.flexible_working') }
       = f.input :weekly_hours,
                 label: t('jobs.weekly_hours'),
                 as: :decimal,

@@ -40,6 +40,9 @@
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question= t('jobs.working_patterns')
         %dd.app-check-your-answers__answer= @vacancy.working_patterns
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question= t('jobs.flexible_working')
+        %dd.app-check-your-answers__answer= @vacancy.flexible_working
       - if @vacancy.only_part_time? && @vacancy.weekly_hours.present?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.weekly_hours')
@@ -48,10 +51,6 @@
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.newly_qualified_teacher')
           %dd.app-check-your-answers__answer= @vacancy.newly_qualified_teacher
-      - if @vacancy.flexible_working?
-        .app-check-your-answers__contents
-          %dt.app-check-your-answers__question= t('jobs.flexible_working')
-          %dd.app-check-your-answers__answer= @vacancy.flexible_working
       - if @vacancy.starts_on.present?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.starts_on')

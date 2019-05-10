@@ -9,7 +9,7 @@ module VacanciesHelper
   }.freeze
 
   def working_pattern_options
-    Vacancy::WORKING_PATTERN_OPTIONS.keys.map { |key| [key.humanize, key] }
+    Vacancy::WORKING_PATTERN_OPTIONS.map { |key| [key.humanize, key] }
   end
 
   def school_phase_options

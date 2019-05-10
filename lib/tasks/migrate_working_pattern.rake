@@ -9,6 +9,13 @@ namespace :data do
         vacancy.working_patterns = [vacancy.working_pattern]
         vacancy.working_pattern = nil
 
+        # Needed to preserve behaviour for existing listings.
+        vacancy.flexible_working = false if vacancy.flexible_working.nil?
+
+        if vacancy.working_patterns == ['part_time']
+          vacancy.flexible_working = nil if vacancy.flexible_working == true
+        end
+
         vacancy.save!
       end
     end

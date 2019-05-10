@@ -103,15 +103,15 @@ RSpec.describe VacancyPresenter do
   end
 
   describe '#flexible_working' do
-    it 'shows nothing if flexible working is not available' do
+    it 'shows nothing if no flexible working pattern is available' do
       school = create(:school)
-      vacancy = VacancyPresenter.new(build(:vacancy, school: school, flexible_working: false))
+      vacancy = VacancyPresenter.new(create(:vacancy, school: school, working_patterns: ['full_time']))
       expect(vacancy.flexible_working).to eq('No')
     end
 
-    it 'shows a link to email the school if flexible working is available' do
+    it 'shows a link to email the school if flexible working pattern is available' do
       school = create(:school, name: 'Smith High School')
-      vacancy = VacancyPresenter.new(build(:vacancy, school: school, flexible_working: true))
+      vacancy = VacancyPresenter.new(create(:vacancy, school: school, working_patterns: ['full_time', 'part_time']))
       expect(vacancy.flexible_working).to include('Smith High School')
     end
   end

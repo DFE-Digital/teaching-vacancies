@@ -2,11 +2,8 @@ require 'elasticsearch/model'
 require 'auditor'
 
 class Vacancy < ApplicationRecord
-  WORKING_PATTERN_OPTIONS = %w[full_time part_time job_share compressed_hours remote_working]
-                            .each_with_index
-                            .map { |pattern, index| [pattern, index] }
-                            .to_h
-                            .freeze
+  FLEXIBLE_WORKING_PATTERN_OPTIONS = %w[part_time job_share compressed_hours remote_working].freeze
+  WORKING_PATTERN_OPTIONS = %w[full_time].concat(FLEXIBLE_WORKING_PATTERN_OPTIONS).freeze
 
   include ApplicationHelper
   include Auditor::Model
@@ -85,7 +82,9 @@ class Vacancy < ApplicationRecord
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time] # Deprecated
-  array_enum working_patterns: WORKING_PATTERN_OPTIONS
+  array_enum working_patterns: WORKING_PATTERN_OPTIONS.each_with_index
+                                                      .map { |pattern, index| [pattern, index] }
+                                                      .to_h
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
@@ -192,6 +191,12 @@ class Vacancy < ApplicationRecord
 
   def only_part_time?
     working_patterns == ['part_time']
+  end
+
+  def flexible_working?
+    return flexible_working unless flexible_working.nil?
+
+    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.include?(working_pattern) }.any?
   end
 
   def attributes

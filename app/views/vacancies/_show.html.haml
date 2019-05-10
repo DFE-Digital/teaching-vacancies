@@ -66,6 +66,9 @@
         %dt= t('jobs.working_patterns')
         %dd= @vacancy.working_patterns
 
+        %dt= t('jobs.flexible_working')
+        %dd= @vacancy.flexible_working
+
         - if @vacancy.pay_scale_range.present?
           %dt= t('jobs.pay_scale_range')
           %dd= @vacancy.pay_scale_range
@@ -81,10 +84,6 @@
         - if @vacancy.newly_qualified_teacher?
           %dt= t('jobs.newly_qualified_teacher')
           %dd= @vacancy.newly_qualified_teacher
-
-        - if @vacancy.flexible_working?
-          %dt= t('jobs.flexible_working')
-          %dd= @vacancy.flexible_working
 
         %dt= t('jobs.expires_on')
         %dd= format_date(@vacancy.expires_on)

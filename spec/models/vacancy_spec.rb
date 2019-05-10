@@ -496,4 +496,56 @@ RSpec.describe Vacancy, type: :model do
       expect(job.maximum_salary).to eq(SalaryValidator::MIN_SALARY_ALLOWED)
     end
   end
+
+  context '#flexible_working?' do
+    context 'when no flexible working options are available' do
+      let(:flexible_working) { nil }
+      let(:job) { create(:vacancy, working_patterns: ['full_time'], flexible_working: flexible_working) }
+
+      it 'returns false' do
+        expect(job.flexible_working?).to eq(false)
+      end
+
+      context 'when flexible_working is set to true' do
+        let(:flexible_working) { true }
+
+        it 'returns true' do
+          expect(job.flexible_working?).to eq(true)
+        end
+      end
+
+      context 'when flexible_working is set to false' do
+        let(:flexible_working) { false }
+
+        it 'returns false' do
+          expect(job.flexible_working?).to eq(false)
+        end
+      end
+    end
+
+    context 'when flexible working options are available' do
+      let(:flexible_working) { nil }
+      let(:job) { create(:vacancy, working_patterns: ['full_time', 'part_time'], flexible_working: flexible_working) }
+
+      it 'returns true' do
+        expect(job.flexible_working?).to eq(true)
+      end
+
+      context 'when flexible_working is set to true' do
+        let(:flexible_working) { true }
+
+        it 'returns true' do
+          expect(job.flexible_working?).to eq(true)
+        end
+      end
+
+      context 'when flexible_working is set to false' do
+        let(:flexible_working) { false }
+
+        it 'returns false' do
+          expect(job.flexible_working?).to eq(false)
+        end
+      end
+    end
+  end
 end

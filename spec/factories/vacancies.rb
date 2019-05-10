@@ -56,7 +56,6 @@ FactoryBot.define do
       ends_on { Faker::Time.between(Time.zone.today + 30.days, Time.zone.today + 60.days) }
       expires_on { Faker::Time.between(Time.zone.today + 2.days, Time.zone.today + 9.days) }
       publish_on { Faker::Time.between(Time.zone.today, Time.zone.today + 1.day) }
-      flexible_working { true }
     end
 
     trait :draft do

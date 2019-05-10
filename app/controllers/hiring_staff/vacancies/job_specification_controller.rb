@@ -56,7 +56,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                                                    :benefits, :weekly_hours, :subject_id, :min_pay_scale_id,
                                                    :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
                                                    :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
-                                                   :flexible_working, :newly_qualified_teacher,
+                                                   :newly_qualified_teacher,
                                                    :first_supporting_subject_id, :second_supporting_subject_id,
                                                    working_patterns: [])
   end
