@@ -70,7 +70,6 @@ class Vacancy < ApplicationRecord
       indexes :updated_at, type: :date
       indexes :publish_on, type: :date
       indexes :status, type: :keyword
-      indexes :working_pattern, type: :keyword
       indexes :working_patterns, type: :keyword
       indexes :minimum_salary, type: :integer
       indexes :maximum_salary, type: :integer
@@ -85,7 +84,7 @@ class Vacancy < ApplicationRecord
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: %i[published draft trashed]
-  enum working_pattern: %i[full_time part_time]
+  enum working_pattern: %i[full_time part_time] # Deprecated
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
 
   belongs_to :school, optional: false
@@ -114,6 +113,7 @@ class Vacancy < ApplicationRecord
   paginates_per 10
 
   validates :slug, presence: true
+  validates :working_pattern, absence: true
 
   after_commit on: %i[create update] do
     __elasticsearch__.index_document
@@ -190,8 +190,12 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = salary.to_s.strip
   end
 
+  def only_part_time?
+    working_patterns == ['part_time']
+  end
+
   def attributes
-    super().merge(working_patterns: working_patterns)
+    super().merge('working_patterns' => working_patterns)
   end
 
   private

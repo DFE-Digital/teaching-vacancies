@@ -29,6 +29,8 @@ en:
             maximum_salary:
               greater_than_minimum_salary: must be higher than the minimum salary
             working_pattern:
+              present: must be blank
+            working_patterns:
               blank: can't be blank
             experience:
               blank: can't be blank

@@ -82,8 +82,9 @@ RSpec.feature 'Filtering vacancies' do
   end
 
   scenario 'Filterable by working pattern', elasticsearch: true do
-    part_time_vacancy = create(:vacancy, :published, working_pattern: :part_time)
-    full_time_vacancy = create(:vacancy, :published, working_pattern: :full_time)
+    part_time_vacancy = create(:vacancy, :published, working_patterns: ['part_time'])
+    full_time_vacancy = create(:vacancy, :published, working_patterns: ['full_time'])
+    full_and_part_time_vacancy = create(:vacancy, :published, working_patterns: ['full_time', 'part_time'])
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
@@ -94,6 +95,7 @@ RSpec.feature 'Filtering vacancies' do
     end
 
     expect(page).to have_content(part_time_vacancy.job_title)
+    expect(page).to have_content(full_and_part_time_vacancy.job_title)
     expect(page).not_to have_content(full_time_vacancy.job_title)
   end
 

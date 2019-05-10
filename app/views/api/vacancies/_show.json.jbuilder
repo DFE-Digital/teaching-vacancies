@@ -10,7 +10,7 @@ json.educationRequirements vacancy.education
 json.qualifications vacancy.qualifications
 json.experienceRequirements vacancy.experience
 
-json.employmentType vacancy.working_pattern_for_job_schema
+json.employmentType vacancy.working_patterns_for_job_schema
 
 json.industry 'Education'
 json.jobLocation do

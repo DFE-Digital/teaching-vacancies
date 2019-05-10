@@ -57,11 +57,13 @@
                   collection: subject_options,
                   required: false
 
-      = f.input :working_pattern,
-                wrapper: 'select',
-                label: t('jobs.working_pattern'),
+      = f.input :working_patterns,
+                as: :check_boxes,
+                wrapper: :checkboxes,
+                label: t('jobs.working_patterns'),
+                hint: t('jobs.form_hints.working_patterns'),
+                wrapper_html: { id: 'working_patterns' },
                 collection: working_pattern_options,
-                wrapper_html: {id: 'working_pattern'},
                 required: true
 
       %fieldset.govuk-fieldset#pay_scale_range

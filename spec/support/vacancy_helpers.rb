@@ -2,7 +2,6 @@ module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
-    select vacancy.working_pattern, from: 'job_specification_form[working_pattern]'
     select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
     select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
@@ -21,6 +20,10 @@ module VacancyHelpers
     fill_in 'job_specification_form[ends_on_dd]', with: vacancy.ends_on.day
     fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
     fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year
+
+    vacancy.working_patterns.split(', ').each do |working_pattern|
+      check working_pattern, name: 'job_specification_form[working_patterns][]'
+    end
   end
 
   def fill_in_candidate_specification_form_fields(vacancy)
@@ -62,7 +65,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
-    expect(page).to have_content(vacancy.working_pattern)
+    expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page).to have_content('Suitable')
     expect(page.html).to include(vacancy.benefits)
@@ -88,12 +91,12 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
-    expect(page).to have_content(vacancy.working_pattern)
+    expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content('Flexible working') if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
-    expect(page).to have_content(vacancy.weekly_hours) if vacancy.part_time?
+    expect(page).to have_content(vacancy.weekly_hours) if vacancy.only_part_time?
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
 
@@ -113,7 +116,7 @@ module VacancyHelpers
     expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
     expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
     expect(page.find('.vacancy')).to have_content(vacancy.starts_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.working_pattern)
+    expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
   end
 
   def expect_schema_property_to_match_value(key, value)
@@ -135,7 +138,7 @@ module VacancyHelpers
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,
-      'employmentType': vacancy.working_pattern_for_job_schema,
+      'employmentType': vacancy.working_patterns_for_job_schema,
       'industry': 'Education',
       'jobLocation': {
         '@type': 'Place',

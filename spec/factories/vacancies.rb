@@ -7,12 +7,12 @@ FactoryBot.define do
     association :school
 
     job_title { Faker::Lorem.sentence[1...30].strip }
-    working_pattern { :full_time }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }
     qualifications { Faker::Lorem.paragraph(4) }
     experience { Faker::Lorem.paragraph(4) }
     status { :published }
+    working_patterns { ['full_time'] }
     expires_on { Faker::Time.forward(14) }
     publish_on { Time.zone.today }
     minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }

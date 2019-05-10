@@ -22,7 +22,7 @@ class VacancyPresenter < BasePresenter
 
     "#{number_to_currency(model.minimum_salary)} #{del} "\
     "#{number_to_currency(model.maximum_salary)}"\
-    "#{model.part_time? ? ' per year pro rata' : ' per year'}"
+    "#{model.only_part_time? ? ' per year pro rata' : ' per year'}"
   end
 
   def job_description
@@ -120,12 +120,12 @@ class VacancyPresenter < BasePresenter
   end
   # rubocop:enable Rails/OutputSafety
 
-  def working_pattern
-    model.working_pattern.sub('_', ' ').humanize
+  def working_patterns
+    model.working_patterns.map(&:humanize).join(', ')
   end
 
-  def working_pattern_for_job_schema
-    model.working_pattern.upcase
+  def working_patterns_for_job_schema
+    model.working_patterns.map(&:upcase).join(', ')
   end
 
   def review_page_title

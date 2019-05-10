@@ -83,7 +83,7 @@ RSpec.describe VacanciesPresenter do
       expect(vacancies_csv[1]).to eq([vacancy.job_title, vacancy.job_description,
                                       vacancy.benefits, vacancy.publish_on.to_time.iso8601, vacancy.education,
                                       vacancy.qualifications, vacancy.experience,
-                                      vacancy.working_pattern_for_job_schema, vacancy.school.town,
+                                      vacancy.working_patterns_for_job_schema, vacancy.school.town,
                                       vacancy.school&.region&.name, vacancy.school.address,
                                       vacancy.school.postcode,
                                       Rails.application.routes.url_helpers.job_url(vacancy, protocol: 'https'),
