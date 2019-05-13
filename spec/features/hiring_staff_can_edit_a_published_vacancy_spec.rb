@@ -55,7 +55,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Job title can\'t be blank')
       end
 
-      scenario 'can be succesfuly edited' do
+      scenario 'can be successfully edited' do
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text('Job title')
 
@@ -123,7 +123,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited' do
+      scenario 'can be successfully edited' do
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
 
@@ -177,7 +177,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be succesfuly edited' do
+      scenario 'can be successfully edited' do
         vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_job_path(vacancy.id)
 
