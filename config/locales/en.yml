@@ -378,7 +378,7 @@ en:
 
   static_pages:
     not_authorised:
-      title: The email you're signed in with hasn't been authorised to list jobs for this school
+      title: The email you're signed in with isn't authorised to list jobs for this school
       without_email:
         text:
           - You can register your interest to use the service by emailing %{mailto_url}. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
@@ -388,13 +388,13 @@ en:
         text:
           - You've tried to sign in with %{email}, which is not authorised to list jobs for this school. If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in, then sign into Teaching Vacancies with your authorised email. You can do this at %{signin_url}
 
-          - If you don't have a Teaching Vacancies account you will need to wait for an invitation for one. Invitations are being sent out gradually, by region. When you have accepted the invitation and created your account you will be able to start listing roles at your school.
+          - <h2 class="govuk-heading-m">If you are signing in with an authorised email</h2>
 
-          - Read the Teaching Vacancies %{blog_url} to learn when schools in your area will be invited.
+          - If you know the email you’ve signed in with is authorised then there could be a technical issue. Please try using a different web browser to sign in or, if this fails, email %{mailto_url} with 'help' in the subject line.
 
-          - If your Teaching Vacancies account has already been set up but you are unable to sign in, email %{mailto_url} with "help" in the subject line.
+          - <h2 class="govuk-heading-m">If you need an account</h2>
 
-          - The Teaching Vacancies team
+          - If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a publicly funded school or trust providing primary or secondary education in England and have your headteacher or CEO’s approval. Just ask them to send your full name and email address to %{mailto_url}. Or email us your details directly, copying in your headteacher or CEO.
     cookies:
       title: Cookies
       name: Name
