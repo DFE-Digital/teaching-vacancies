@@ -28,6 +28,7 @@ RSpec.feature 'Creating a vacancy' do
     let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
+                                 school: school,
                                  min_pay_scale: pay_scales.sample,
                                  max_pay_scale: pay_scales.sample,
                                  subject: subjects[0],
