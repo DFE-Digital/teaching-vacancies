@@ -115,14 +115,14 @@ To enable CI to give us test feedback on our GitHub pull requests we can do a sm
 
 The `cloudwatch_slack_hook_url` and `cloudwatch_ops_genie_api_key` variables need to be in an encrypted and base64 encoded format. There currently isn't a way to do this with Terraform, so to work around this:
 
-1. Set them as their clear text values and apply
-2. Go to the Lambda function settings within the AWS Console
-3. Under 'Environment Variables', expand 'Encryption configuration' and select 'Enable helpers for encryption in transit'
-4. Select the 'tvs2-\<env\>-cloudwatch-lambda' key
-5. Select 'Encrypt' on both the `opsGenieApiKey` and `slackHookUrl`
-6. Click 'Save'
+1. Set `cloudwatch_slack_hook_url` and `cloudwatch_ops_genie_api_key` as their clear text values and apply, making sure to strip the protocol off `cloudwatch_slack_hook_url`.
+2. Go to the Lambda function settings within the AWS Console.
+3. Under 'Environment Variables', expand 'Encryption configuration' and select 'Enable helpers for encryption in transit'.
+4. Select the 'tvs2-\<env\>-cloudwatch-lambda' key.
+5. Select 'Encrypt' on both the `opsGenieApiKey` and `slackHookUrl` (or if editing, the one that's changed).
+6. Click 'Save'.
 7. Reload the page, and copy both of the (now encrypted) values, and replace `cloudwatch_slack_hook_url` and `cloudwatch_ops_genie_api_key` in your variables file.
-8. Run a terraform plan to ensure everything has been done correctly (You should not have any changes required for the lambda resource)
+8. Run a terraform plan to ensure everything has been done correctly (You should not have any changes required for the lambda resource).
 
 ## Being offline
 
