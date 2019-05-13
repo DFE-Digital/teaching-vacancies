@@ -127,7 +127,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#renew' do
-    let(:subscription) { create(:subscription, search_criteria: { subject: 'english' }.to_json) }
+    let!(:subscription) { create(:subscription, search_criteria: { subject: 'english' }.to_json) }
     let(:token) { subscription.token_attributes }
 
     subject { get :renew, params: { subscription_id: token } }
