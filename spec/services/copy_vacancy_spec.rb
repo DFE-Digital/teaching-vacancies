@@ -5,8 +5,7 @@ RSpec.describe CopyVacancy do
     it 'creates a new vacancy as draft' do
       vacancy = create(:vacancy, job_title: 'Maths teacher')
 
-      result = described_class.new(proposed_vacancy: vacancy)
-                              .call
+      result = described_class.new(vacancy).call
 
       expect(result).to be_kind_of(Vacancy)
       expect(Vacancy.count).to eq(2)
@@ -20,8 +19,7 @@ RSpec.describe CopyVacancy do
 
       vacancy = create(:vacancy, job_title: 'Maths teacher')
 
-      described_class.new(proposed_vacancy: vacancy)
-                     .call
+      described_class.new(vacancy).call
 
       expect(Vacancy.find(vacancy.id).attributes == vacancy.attributes)
         .to eq(true)
