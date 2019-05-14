@@ -14,8 +14,8 @@ RSpec.describe SendFinalSubscriptionExpiryAlertsJob, type: :job do
   end
 
   context 'when job is run' do
-    let!(:expiring_next_week) { create_list(:subscription, 3, expires_on: 1.week.from_now) }
-    let!(:expiring_tomorrow) { create_list(:subscription, 3, expires_on: 1.day.from_now) }
+    let!(:expiring_next_week) { create_list(:subscription, 3, expires_on: 1.week.from_now.to_date) }
+    let!(:expiring_tomorrow) { create_list(:subscription, 3, expires_on: 1.day.from_now.to_date) }
     let(:mailer) { double(:mailer) }
 
     it 'sends emails to the right subscriptions' do
