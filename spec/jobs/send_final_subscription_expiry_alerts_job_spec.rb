@@ -15,11 +15,11 @@ RSpec.describe SendFinalSubscriptionExpiryAlertsJob, type: :job do
 
   context 'when job is run' do
     let!(:expiring_next_week) { create_list(:subscription, 3, expires_on: 1.week.from_now.to_date) }
-    let!(:expiring_tomorrow) { create_list(:subscription, 3, expires_on: 1.day.from_now.to_date) }
+    let!(:due_final_expiry_notice) { create_list(:subscription, 3, expires_on: 1.day.from_now.to_date) }
     let(:mailer) { double(:mailer) }
 
     it 'sends emails to the right subscriptions' do
-      expiring_tomorrow.each do |s|
+      due_final_expiry_notice.each do |s|
         expect(SubscriptionMailer).to receive(:final_expiry_warning).with(s.id) { mailer }
         expect(mailer).to receive(:deliver_later)
       end

@@ -261,21 +261,33 @@ RSpec.describe Subscription, type: :model do
     end
   end
 
-  describe 'expiring_in_7_days' do
+  describe 'due_first_expiry_notice' do
     let!(:expiring_next_week) { create_list(:subscription, 3, expires_on: 1.week.from_now.to_date) }
     let!(:expiring_next_month) { create_list(:subscription, 3, expires_on: 1.month.from_now.to_date) }
+    let!(:expiring_but_sent) do
+      create_list(:subscription, 3, expires_on: 6.days.from_now.to_date, first_reminder_sent: true)
+    end
+    let!(:expiring_and_not_sent) do
+      create_list(:subscription, 3, expires_on: 6.days.from_now.to_date, first_reminder_sent: false)
+    end
 
-    it 'gets all subscriptions expiring in 7 days' do
-      expect(Subscription.expiring_in_7_days).to eq(expiring_next_week)
+    it 'gets all subscriptions that are due an expiry notice' do
+      expect(Subscription.due_first_expiry_notice).to match_array(expiring_next_week + expiring_and_not_sent)
     end
   end
 
-  describe 'expiring_tomorrow' do
+  describe 'due_final_expiry_notice' do
     let!(:expiring_next_week) { create_list(:subscription, 3, expires_on: 1.week.from_now.to_date) }
-    let!(:expiring_tomorrow) { create_list(:subscription, 3, expires_on: 1.day.from_now.to_date) }
+    let!(:due_final_expiry_notice) { create_list(:subscription, 3, expires_on: 1.day.from_now.to_date) }
+    let!(:expired_but_sent) do
+      create_list(:subscription, 3, expires_on: 1.day.ago.to_date, final_reminder_sent: true)
+    end
+    let!(:expired_and_not_sent) do
+      create_list(:subscription, 3, expires_on: 1.day.ago.to_date, final_reminder_sent: false)
+    end
 
     it 'gets all subscriptions expiring tomorrow' do
-      expect(Subscription.expiring_tomorrow).to eq(expiring_tomorrow)
+      expect(Subscription.due_final_expiry_notice).to match_array(due_final_expiry_notice + expired_and_not_sent)
     end
   end
 end

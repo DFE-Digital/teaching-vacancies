@@ -11,8 +11,10 @@ class Subscription < ApplicationRecord
   validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
 
   scope :ongoing, -> { where('expires_on >= current_date') }
-  scope :expiring_in_7_days, -> { where('expires_on = ?', 1.week.from_now.to_date) }
-  scope :expiring_tomorrow, -> { where('expires_on = ?', 1.day.from_now.to_date) }
+  scope :first_reminder_not_sent, -> { where(first_reminder_sent: false) }
+  scope :final_reminder_not_sent, -> { where(final_reminder_sent: false) }
+  scope :due_first_expiry_notice, -> { first_reminder_not_sent.where('expires_on <= ?', 1.week.from_now.to_date) }
+  scope :due_final_expiry_notice, -> { final_reminder_not_sent.where('expires_on <= ?', 1.day.from_now.to_date) }
 
   after_initialize :default_reference
 
