@@ -24,10 +24,10 @@ class VacancyPresenter < BasePresenter
     range += "#{number_to_currency(model.maximum_salary)} "
     range += if model.pro_rata_salary?
                I18n.t('jobs.per_year_pro_rata')
-             elsif model.only_full_time?
-               I18n.t('jobs.per_year')
-             else
+             elsif model.flexible_working?
                I18n.t('jobs.per_year_fte')
+             else
+               I18n.t('jobs.per_year')
              end
     range
   end

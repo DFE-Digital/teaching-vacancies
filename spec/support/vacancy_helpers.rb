@@ -12,13 +12,14 @@ module VacancyHelpers
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[benefits]', with: vacancy.benefits
-    fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
     fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
     fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year
     fill_in 'job_specification_form[ends_on_dd]', with: vacancy.ends_on.day
     fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
     fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year
+
+    fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours if vacancy.weekly_hours?
 
     vacancy.working_patterns.split(', ').each do |working_pattern|
       check working_pattern, name: 'job_specification_form[working_patterns][]'
@@ -75,7 +76,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
-    expect(page).to have_content(vacancy.weekly_hours)
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
 
@@ -88,6 +88,12 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.application_link)
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
+
+    if vacancy.weekly_hours?
+      expect(page).to have_content(vacancy.weekly_hours)
+    elsif vacancy.weekly_hours.present?
+      expect(page).not_to have_content(vacancy.weekly_hours)
+    end
   end
 
   def verify_vacancy_show_page_details(vacancy)
@@ -101,7 +107,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
-    expect(page).to have_content(vacancy.weekly_hours) if vacancy.only_part_time?
     expect(page).to have_content(vacancy.starts_on)
     expect(page).to have_content(vacancy.ends_on)
 
@@ -113,6 +118,12 @@ module VacancyHelpers
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
+
+    if vacancy.weekly_hours?
+      expect(page).to have_content(vacancy.weekly_hours)
+    elsif vacancy.weekly_hours.present?
+      expect(page).not_to have_content(vacancy.weekly_hours)
+    end
   end
 
   def verify_vacancy_list_page_details(vacancy)
@@ -133,7 +144,7 @@ module VacancyHelpers
   end
 
   def vacancy_json_ld(vacancy)
-    {
+    json = {
       '@context': 'http://schema.org',
       '@type': 'JobPosting',
       'title': vacancy.job_title,
@@ -172,7 +183,9 @@ module VacancyHelpers
         'identifier': vacancy.school.urn,
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
-      'workHours': vacancy.weekly_hours,
     }
+
+    json['workHours'] = vacancy.weekly_hours if vacancy.weekly_hours?
+    json
   end
 end

@@ -19,7 +19,6 @@ FactoryBot.define do
     maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
-    weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
     newly_qualified_teacher { true }
     reference { SecureRandom.uuid }
@@ -99,6 +98,7 @@ FactoryBot.define do
     end
 
     trait :job_schema do
+      working_patterns { ['full_time', 'part_time'] }
       weekly_hours { '8.5' }
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }

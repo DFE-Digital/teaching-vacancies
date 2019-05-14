@@ -110,7 +110,7 @@
           %dt= t('jobs.flexible_working')
           %dd= @vacancy.flexible_working
 
-          - if @vacancy.only_part_time? && @vacancy.weekly_hours.present?
+          - if @vacancy.weekly_hours?
             %dt= t('jobs.weekly_hours')
             %dd= @vacancy.weekly_hours
 

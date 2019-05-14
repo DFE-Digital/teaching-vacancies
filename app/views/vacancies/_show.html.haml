@@ -69,6 +69,10 @@
         %dt= t('jobs.flexible_working')
         %dd= @vacancy.flexible_working
 
+        - if @vacancy.weekly_hours?
+          %dt= t('jobs.weekly_hours')
+          %dd= @vacancy.weekly_hours
+
         - if @vacancy.pay_scale_range.present?
           %dt= t('jobs.pay_scale_range')
           %dd= @vacancy.pay_scale_range
@@ -76,10 +80,6 @@
         %dt= t('jobs.salary')
         %dd
           = @vacancy.salary_range
-
-        - if @vacancy.only_part_time? && @vacancy.weekly_hours.present?
-          %dt= t('jobs.weekly_hours')
-          %dd= @vacancy.weekly_hours
 
         - if @vacancy.newly_qualified_teacher?
           %dt= t('jobs.newly_qualified_teacher')

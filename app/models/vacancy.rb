@@ -191,18 +191,14 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = salary.to_s.strip
   end
 
-  def only_full_time?
-    working_patterns == ['full_time']
-  end
-
-  def only_part_time?
-    working_patterns == ['part_time']
+  def weekly_hours?
+    weekly_hours.present? && derived_flexible_working?
   end
 
   def flexible_working?
     return flexible_working unless flexible_working.nil?
 
-    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.include?(working_pattern) }.any?
+    derived_flexible_working?
   end
 
   def attributes
@@ -219,11 +215,15 @@ class Vacancy < ApplicationRecord
     ]
   end
 
+  def derived_flexible_working?
+    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.include?(working_pattern) }.any?
+  end
+
   def update_pro_rata_salary
     self.pro_rata_salary = nil if pro_rata_salary.blank?
 
     return if pro_rata_salary.nil?
 
-    self.pro_rata_salary = only_part_time? ? true : nil
+    self.pro_rata_salary = working_patterns == ['part_time'] ? true : nil
   end
 end

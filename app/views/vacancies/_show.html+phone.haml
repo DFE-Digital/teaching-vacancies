@@ -43,7 +43,7 @@
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question= t('jobs.flexible_working')
         %dd.app-check-your-answers__answer= @vacancy.flexible_working
-      - if @vacancy.only_part_time? && @vacancy.weekly_hours.present?
+      - if @vacancy.weekly_hours?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.weekly_hours')
           %dd.app-check-your-answers__answer= @vacancy.weekly_hours
