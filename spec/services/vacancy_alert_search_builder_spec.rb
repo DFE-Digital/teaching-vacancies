@@ -74,28 +74,44 @@ RSpec.describe VacancyAlertSearchBuilder do
 
     expected_hash = [
       {
-        range: {
-          minimum_salary: {
-            gte: 200
-          }
-        }
-      }, {
         bool: {
-          should: [{
-            range: {
-              maximum_salary: {
-                lte: 20000
-              }
-            }
-          }, {
-            bool: {
-              must_not: {
-                exists: {
-                  field: 'maximum_salary'
+          should: [
+            {
+              range: {
+                minimum_salary: {
+                  gte: 200
                 }
               }
             }
-          }]
+          ]
+        }
+      },
+      {
+        bool: {
+          should: [
+            {
+              bool: {
+                should: [
+                  {
+                    range: {
+                      maximum_salary: {
+                        lte: 20000
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              bool: {
+                must_not: {
+                  exists: {
+                    field: 'maximum_salary'
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     ]
@@ -110,28 +126,44 @@ RSpec.describe VacancyAlertSearchBuilder do
 
     expected_hash = [
       {
-        range: {
-          minimum_salary: {
-            lte: 20000
-          }
-        }
-      }, {
         bool: {
-          should: [{
-            range: {
-              maximum_salary: {
-                lte: 20000
-              }
-            }
-          }, {
-            bool: {
-              must_not: {
-                exists: {
-                  field: 'maximum_salary'
+          should: [
+            {
+              range: {
+                maximum_salary: {
+                  lte: 20000
                 }
               }
             }
-          }]
+          ]
+        }
+      },
+      {
+        bool: {
+          should: [
+            {
+              bool: {
+                should: [
+                  {
+                    range: {
+                      maximum_salary: {
+                        lte: 20000
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              bool: {
+                must_not: {
+                  exists: {
+                    field: 'maximum_salary'
+                  }
+                }
+              }
+            }
+          ]
         }
       }
     ]

@@ -142,10 +142,16 @@ RSpec.describe VacancySearchBuilder do
         builder = described_class.new(filters: filters, sort: sort).call
 
         expected_hash = {
-          range: {
-            minimum_salary: {
-              gte: 20000
-            }
+          bool: {
+            should: [
+              {
+                range: {
+                  minimum_salary: {
+                    gte: 20000
+                  }
+                }
+              }
+            ]
           }
         }
 

@@ -60,6 +60,20 @@ RSpec.describe 'rake data:working_pattern:migrate', type: :task do
         end
       end
     end
+
+    it 'sets pro_rata_salary to true for part time vacancies only' do
+      task.execute
+
+      vacancies.each do |vacancy|
+        new_vacancy = Vacancy.find(vacancy.id)
+
+        if new_vacancy.working_patterns == ['part_time']
+          expect(new_vacancy.pro_rata_salary).to eq(true)
+        else
+          expect(new_vacancy.pro_rata_salary).to eq(nil)
+        end
+      end
+    end
   end
 
   context 'when vacancies without working_pattern set exist' do

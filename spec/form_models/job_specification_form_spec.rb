@@ -1,12 +1,13 @@
 require 'rails_helper'
+
 RSpec.describe JobSpecificationForm, type: :model do
   subject { JobSpecificationForm.new({}) }
 
   context 'validations' do
     it { should validate_presence_of(:job_title) }
     it { should validate_presence_of(:job_description) }
-    it { should validate_presence_of(:minimum_salary) }
     it { should validate_presence_of(:working_patterns) }
+    it { should validate_presence_of(:minimum_salary) }
 
     describe '#maximum_salary' do
       let(:job_specification) do

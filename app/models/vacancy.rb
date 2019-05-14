@@ -114,6 +114,8 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validates :working_pattern, absence: true
 
+  before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
+
   after_commit on: %i[create update] do
     __elasticsearch__.index_document
   end
@@ -189,6 +191,10 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = salary.to_s.strip
   end
 
+  def only_full_time?
+    working_patterns == ['full_time']
+  end
+
   def only_part_time?
     working_patterns == ['part_time']
   end
@@ -211,5 +217,13 @@ class Vacancy < ApplicationRecord
       %i[job_title school_name],
       %i[job_title location],
     ]
+  end
+
+  def update_pro_rata_salary
+    self.pro_rata_salary = nil if pro_rata_salary.blank?
+
+    return if pro_rata_salary.nil?
+
+    self.pro_rata_salary = only_part_time? ? true : nil
   end
 end

@@ -104,7 +104,7 @@
                     wrapper_html: { id: 'maximum_salary' },
                     input_html: { class: 'govuk-!-width-one-half', 'aria-label': t('jobs.aria_labels.maximum_salary') }
 
-      = render partial: 'pro_rata_warning'
+      = render partial: 'salary_warning', locals: { pro_rata_salary: @job_specification_form.pro_rata_salary }
 
       = f.input :newly_qualified_teacher, as: :boolean,
                 hint: t('jobs.form_hints.newly_qualified_teacher'),

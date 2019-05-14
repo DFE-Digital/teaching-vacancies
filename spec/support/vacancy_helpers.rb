@@ -10,9 +10,9 @@ module VacancyHelpers
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
     check 'job_specification_form[newly_qualified_teacher]' if vacancy.newly_qualified_teacher
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
+    fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[benefits]', with: vacancy.benefits
     fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours
-    fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
     fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
     fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year
@@ -34,9 +34,11 @@ module VacancyHelpers
   def fill_in_application_details_form_fields(vacancy)
     fill_in 'application_details_form[contact_email]', with: vacancy.contact_email
     fill_in 'application_details_form[application_link]', with: vacancy.application_link
+
     fill_in 'application_details_form[expires_on_dd]', with: vacancy.expires_on.day
     fill_in 'application_details_form[expires_on_mm]', with: vacancy.expires_on.strftime('%m')
     fill_in 'application_details_form[expires_on_yyyy]', with: vacancy.expires_on.year
+
     fill_in 'application_details_form[publish_on_dd]', with: vacancy.publish_on.day
     fill_in 'application_details_form[publish_on_mm]', with: vacancy.publish_on.strftime('%m')
     fill_in 'application_details_form[publish_on_yyyy]', with: vacancy.publish_on.year
@@ -44,15 +46,19 @@ module VacancyHelpers
 
   def fill_in_copy_vacancy_form_fields(vacancy)
     fill_in 'copy_vacancy_form[job_title]', with: vacancy.job_title
+
     fill_in 'copy_vacancy_form[starts_on_dd]', with: vacancy.starts_on.day
     fill_in 'copy_vacancy_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
     fill_in 'copy_vacancy_form[starts_on_yyyy]', with: vacancy.starts_on.year
+
     fill_in 'copy_vacancy_form[ends_on_dd]', with: vacancy.ends_on.day
     fill_in 'copy_vacancy_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
     fill_in 'copy_vacancy_form[ends_on_yyyy]', with: vacancy.ends_on.year
+
     fill_in 'copy_vacancy_form[expires_on_dd]', with: vacancy.expires_on&.day
     fill_in 'copy_vacancy_form[expires_on_mm]', with: vacancy.expires_on&.strftime('%m')
     fill_in 'copy_vacancy_form[expires_on_yyyy]', with: vacancy.expires_on&.year
+
     fill_in 'copy_vacancy_form[publish_on_dd]', with: vacancy.publish_on&.day
     fill_in 'copy_vacancy_form[publish_on_mm]', with: vacancy.publish_on&.strftime('%m')
     fill_in 'copy_vacancy_form[publish_on_yyyy]', with: vacancy.publish_on&.year

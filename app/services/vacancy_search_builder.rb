@@ -193,30 +193,44 @@ class VacancySearchBuilder
   end
 
   def salary_query
-    greater_than(:minimum_salary, minimum_salary.to_i) if minimum_salary.present?
+    return if minimum_salary.blank?
+
+    greater_than(minimum_salary: minimum_salary.to_i)
   end
 
   def sort_query
     sort.present? ? [{ sort.column.to_sym => { order: sort.order.to_sym } }] : []
   end
 
-  def greater_than(field, value)
+  def greater_than(field_value_hash)
     {
-      range: {
-        "#{field.to_s}": {
-          'gte': value
-        },
-      },
+      bool: {
+        should: field_value_hash.map do |field, value|
+                  {
+                    range: {
+                      "#{field}": {
+                        gte: value
+                      }
+                    }
+                  }
+                end
+      }
     }
   end
 
-  def less_than(field, value)
+  def less_than(field_value_hash)
     {
-      range: {
-        "#{field.to_s}": {
-          'lte': value,
-        },
-      },
+      bool: {
+        should: field_value_hash.map do |field, value|
+                  {
+                    range: {
+                      "#{field}": {
+                        lte: value
+                      }
+                    }
+                  }
+                end
+      }
     }
   end
 end

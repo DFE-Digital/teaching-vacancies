@@ -101,7 +101,7 @@ class VacanciesPresenter < BasePresenter
      vacancy.school&.region&.name,
      vacancy.school.address,
      vacancy.school.postcode,
-     Rails.application.routes.url_helpers.job_url(vacancy, protocol: 'https'),
+     job_url(vacancy, protocol: 'https'),
      'GBP',
      vacancy.minimum_salary,
      vacancy.maximum_salary,

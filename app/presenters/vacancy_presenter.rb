@@ -20,9 +20,16 @@ class VacancyPresenter < BasePresenter
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
 
-    "#{number_to_currency(model.minimum_salary)} #{del} "\
-    "#{number_to_currency(model.maximum_salary)}"\
-    "#{model.only_part_time? ? ' per year pro rata' : ' per year'}"
+    range = "#{number_to_currency(model.minimum_salary)} #{del} "
+    range += "#{number_to_currency(model.maximum_salary)} "
+    range += if model.pro_rata_salary?
+               I18n.t('jobs.per_year_pro_rata')
+             elsif model.only_full_time?
+               I18n.t('jobs.per_year')
+             else
+               I18n.t('jobs.per_year_fte')
+             end
+    range
   end
 
   def job_description

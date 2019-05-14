@@ -30,9 +30,9 @@ RSpec.describe Vacancy, type: :model do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_description) }
-      it { should validate_presence_of(:minimum_salary) }
       it { should validate_absence_of(:working_pattern) }
       it { should validate_presence_of(:working_patterns) }
+      it { should validate_presence_of(:minimum_salary) }
     end
 
     context 'a record saved with job spec details' do
@@ -116,7 +116,7 @@ RSpec.describe Vacancy, type: :model do
 
     context '#minimum_salary and #maximum_salary combined validations' do
       it 'present minimum_salary and no maximum_salary' do
-        job = build(:vacancy, minimum_salary: '20', maximum_salary: nil)
+        job = build(:vacancy, minimum_salary: 20, maximum_salary: nil)
 
         expect(job.valid?).to be true
         expect(job.errors.messages[:minimum_salary]).to be_empty
@@ -167,7 +167,7 @@ RSpec.describe Vacancy, type: :model do
       end
 
       it 'valid minimum_salary and invalid maximum_salary' do
-        job = build(:vacancy, minimum_salary: '20000', maximum_salary: 'A20000')
+        job = build(:vacancy, minimum_salary: 20000, maximum_salary: 'A20000')
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary]).to be_empty
@@ -176,7 +176,7 @@ RSpec.describe Vacancy, type: :model do
       end
 
       it 'valid minimum_salary and greater than allowed maximum_salary' do
-        job = build(:vacancy, minimum_salary: '20000', maximum_salary: 200000000000)
+        job = build(:vacancy, minimum_salary: 20000, maximum_salary: 200000000000)
 
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary]).to be_empty
@@ -184,8 +184,17 @@ RSpec.describe Vacancy, type: :model do
           .to eq(['must not be more than £200000'])
       end
 
+      it 'greater than allowed minimum_salary and greater than allowed maximum_salary' do
+        job = build(:vacancy, minimum_salary: 20000000000000, maximum_salary: 2000000000000000)
+
+        expect(job).to_not be_valid
+        expect(job.errors.messages[:minimum_salary])
+          .to eq(['must not be more than £200000'])
+        expect(job.errors.messages[:maximum_salary]).to be_empty
+      end
+
       it 'greater than allowed minimum_salary and no maximum_salary' do
-        job = build(:vacancy, minimum_salary: '20000000000000', maximum_salary: 200000000000)
+        job = build(:vacancy, minimum_salary: 20000000000000, maximum_salary: nil)
 
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary])
@@ -218,7 +227,7 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    describe '#working_hours_validation' do
+    describe '#working_hours' do
       it 'can not accept non-numeric values' do
         vacancy = build(:vacancy, weekly_hours: 'eight and a half')
 
@@ -435,7 +444,7 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  context 'Content sanitization' do
+  context 'content sanitization' do
     it '#job_description' do
       html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
       vacancy = build(:vacancy, job_description: html)
@@ -544,6 +553,172 @@ RSpec.describe Vacancy, type: :model do
 
         it 'returns false' do
           expect(job.flexible_working?).to eq(false)
+        end
+      end
+    end
+  end
+
+  context 'pro rata salary' do
+    context 'when salary is pro rata' do
+      context 'and working pattern is part time' do
+        let(:job) { create(:vacancy, working_patterns: ['part_time'], pro_rata_salary: true) }
+
+        context 'and changing working patterns to include full time' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'part_time']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to include other flexible working patterns' do
+          it 'leaves pro_rata_salary unchanged' do
+            job.working_patterns = ['part_time', 'job_share']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(job.pro_rata_salary)
+          end
+        end
+
+        context 'and changing working patterns to remove part time' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'job_share']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and not changing working patterns' do
+          it 'leaves pro_rata_salary unchanged' do
+            job.job_title = 'new title'
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(job.pro_rata_salary)
+          end
+        end
+      end
+
+      context 'and working pattern is full time' do
+        let(:job) { create(:vacancy, working_patterns: ['full_time'], pro_rata_salary: true) }
+
+        context 'and changing working patterns to part time only' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['part_time']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to include part time' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'part_time']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to include flexible working patterns' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'job_share']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and not changing working patterns' do
+          it 'leaves pro_rata_salary unchanged' do
+            job.job_title = 'new title'
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(job.pro_rata_salary)
+          end
+        end
+      end
+    end
+
+    context 'when salary is not pro rata' do
+      context 'and working pattern is part time' do
+        let(:job) { create(:vacancy, working_patterns: ['part_time'], pro_rata_salary: false) }
+
+        context 'and changing working patterns to include full time' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'part_time']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to include other flexible working patterns' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['part_time', 'job_share']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to remove part time' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'job_share']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and not changing working patterns' do
+          it 'clears pro_rata_salary' do
+            job.job_title = 'new title'
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+      end
+
+      context 'and working pattern is full time' do
+        let(:job) { create(:vacancy, working_patterns: ['full_time'], pro_rata_salary: false) }
+
+        context 'and changing working patterns to part time only' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['part_time']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to include part time' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'part_time']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and changing working patterns to include flexible working patterns' do
+          it 'clears pro_rata_salary' do
+            job.working_patterns = ['full_time', 'job_share']
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(nil)
+          end
+        end
+
+        context 'and not changing working patterns' do
+          it 'leaves pro_rata_salary unchanged' do
+            job.job_title = 'new title'
+            job.save
+
+            expect(Vacancy.find(job.id).pro_rata_salary).to eq(job.pro_rata_salary)
+          end
         end
       end
     end

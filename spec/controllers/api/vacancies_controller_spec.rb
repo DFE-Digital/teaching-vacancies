@@ -179,6 +179,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
         it 'when no maximum salary is set' do
           vacancy = create(:vacancy, maximum_salary: nil)
+
           get :show, params: { id: vacancy.id, api_version: 1 }
 
           salary = {

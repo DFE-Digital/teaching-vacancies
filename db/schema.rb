@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_165227) do
+ActiveRecord::Schema.define(version: 2019_05_16_213012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -179,7 +179,6 @@ ActiveRecord::Schema.define(version: 2019_05_08_165227) do
     t.string "maximum_salary"
     t.text "benefits"
     t.integer "working_pattern"
-    t.float "full_time_equivalent"
     t.string "weekly_hours"
     t.date "starts_on"
     t.date "ends_on"
@@ -210,6 +209,7 @@ ActiveRecord::Schema.define(version: 2019_05_08_165227) do
     t.integer "total_get_more_info_clicks"
     t.datetime "total_get_more_info_clicks_updated_at"
     t.integer "working_patterns", array: true
+    t.boolean "pro_rata_salary"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
