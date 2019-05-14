@@ -164,6 +164,8 @@ variable "send_job_alerts_daily_email_task_schedule" {
   default     = "cron(0 08 * * ? *)"
 }
 
+# send_expiry_alerts_schedule should be set to run after send_job_alerts_daily_email_schedule
+# so the final reminder is sent after a user has recieved their last alert)
 variable "send_expiry_alerts_schedule" {
   description = "send_expiry_alerts schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 10 * * ? *)"
