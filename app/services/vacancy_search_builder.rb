@@ -8,7 +8,6 @@ class VacancySearchBuilder
                 :phases,
                 :newly_qualified_teacher,
                 :minimum_salary,
-                :maximum_salary,
                 :sort,
                 :expired,
                 :status

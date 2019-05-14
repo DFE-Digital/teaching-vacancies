@@ -1,5 +1,6 @@
 class VacancyAlertSearchBuilder < VacancySearchBuilder
-  attr_accessor :keyword, :maximum_salary
+  attr_accessor :keyword,
+                :maximum_salary
 
   def initialize(filters:, from:, to:)
     @from = from
