@@ -19,7 +19,7 @@ RSpec.feature 'Job seekers can renew their subscription' do
     scenario 'shows a confirmation page' do
       click_on 'Resubscribe'
 
-      expect(page).to have_text(I18n.t('subscriptions.updated.header'))
+      expect(page).to have_text(I18n.t('subscriptions.update.header'))
     end
 
     scenario 'can change their email' do
@@ -60,7 +60,7 @@ RSpec.feature 'Job seekers can renew their subscription' do
     scenario 'shows a confirmation page' do
       click_on 'Resubscribe'
 
-      expect(page).to have_text(I18n.t('subscriptions.updated.header'))
+      expect(page).to have_text(I18n.t('subscriptions.update.header'))
     end
 
     scenario 'can change their email' do

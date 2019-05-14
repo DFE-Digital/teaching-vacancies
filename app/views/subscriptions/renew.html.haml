@@ -1,28 +1,28 @@
 - content_for :page_title_prefix do
-  = t('subscriptions.resubscribe.title')
+  = t('subscriptions.renew.title')
 
 - content_for :page_description do
-  = t('subscriptions.resubscribe.title')
+  = t('subscriptions.renew.title')
 
 .govuk-grid-row
   .govuk-grid-column-full
     %h1.govuk-heading-xl
-      = t('subscriptions.resubscribe.title')
+      = t('subscriptions.renew.title')
 
 .govuk-grid-row
   .govuk-grid-column-one-half
-    %p.govuk-body-l=t('subscriptions.resubscribe.intro')
+    %p.govuk-body-l=t('subscriptions.renew.intro')
 
     = render partial: 'criteria', locals: { subscription: @subscription }
 
     - if @subscription.expires_on.nil?
-      %p.govuk-body=t('subscriptions.resubscribe.expired')
+      %p.govuk-body=t('subscriptions.renew.expired')
     - else
-      %p.govuk-body=t('subscriptions.resubscribe.end_date', date: @subscription.expires_on.to_s(:default))
+      %p.govuk-body=t('subscriptions.renew.end_date', date: @subscription.expires_on.to_s(:default))
 
-    %p.govuk-body=t('subscriptions.resubscribe.continue')
+    %p.govuk-body=t('subscriptions.renew.continue')
 
-    %p.govuk-body=t('subscriptions.resubscribe.change_instructions')
+    %p.govuk-body=t('subscriptions.renew.change_instructions')
 
     = simple_form_for @subscription, url: @path, method: @method do |f|
       = render partial: 'form', locals: { form: f, subscription: @subscription }

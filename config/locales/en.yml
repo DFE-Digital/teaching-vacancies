@@ -300,14 +300,14 @@ en:
         expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
     manage: Manage your subscription
     unsubscribe: Unsubscribe
-    resubscribe:
+    renew:
       title: Resubscribe to job alert
       intro: 'You are subscribed to email alerts for jobs matching the following criteria:'
       expired: This job alert subscription has now ended
       end_date: This job alert subscription ends on %{date}
       continue: To continue receiving these alerts for another 6 months, just resubscribe at the bottom of this page.
       change_instructions: "If you're resubscribing and want to change your email address or reference, just update them in the following fields:"
-    updated:
+    update:
       header: You have resubscribed to a job alert
       next_step_details: 'You will be emailed details of any new jobs that match the following search criteria:'
       what_to_expect: You'll only be sent one job alert email per day, at the end of any day when 1 or more jobs match your criteria.
