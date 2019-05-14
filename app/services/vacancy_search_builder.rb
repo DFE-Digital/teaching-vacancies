@@ -52,7 +52,7 @@ class VacancySearchBuilder
   def search_query
     query = {
       bool: {
-        must: must_query_clause,
+        must: must_query_clause.presence || { match_all: {} }
       }
     }
     query[:bool][:filter] = location_filters unless location_filters.empty?
@@ -70,23 +70,36 @@ class VacancySearchBuilder
       expired_query,
       status_query,
       published_on_query
-    ].compact
+    ].compact.uniq
   end
 
   def subject_query
-    optional_query(subject) { |subject| subject_multi_match(subject) }
+    return if subject.blank?
+
+    {
+      multi_match: {
+        query: subject,
+        type: 'best_fields',
+        fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
+        operator: 'or',
+        minimum_should_match: 1,
+        fuzziness: 'AUTO'
+      }
+    }
   end
 
   def job_title_query
-    optional_query(job_title) { |job_title| job_title_match(job_title) }
-  end
+    return if job_title.blank?
 
-  def optional_query(query)
-    if query.blank?
-      match_all_hash
-    else
-      yield query
-    end
+    {
+      match: {
+        job_title: {
+          query: job_title,
+          operator: 'and',
+          fuzziness: 'AUTO',
+        }
+      }
+    }
   end
 
   def location_geo_distance
@@ -185,37 +198,6 @@ class VacancySearchBuilder
 
   def sort_query
     sort.present? ? [{ sort.column.to_sym => { order: sort.order.to_sym } }] : []
-  end
-
-  def match_all_hash
-    {
-      match_all: {},
-    }
-  end
-
-  def subject_multi_match(subject)
-    {
-      multi_match: {
-        query: subject,
-        type: 'best_fields',
-        fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
-        operator: 'or',
-        minimum_should_match: 1,
-        fuzziness: 'AUTO'
-      },
-    }
-  end
-
-  def job_title_match(job_title)
-    {
-      match: {
-        job_title: {
-          query: job_title,
-          operator: 'and',
-          fuzziness: 'AUTO',
-        }
-      },
-    }
   end
 
   def greater_than(field, value)

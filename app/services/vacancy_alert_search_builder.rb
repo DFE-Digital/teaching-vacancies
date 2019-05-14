@@ -16,14 +16,12 @@ class VacancyAlertSearchBuilder < VacancySearchBuilder
   private
 
   def must_query_clause
-    super().concat([keyword_query]).compact
+    super().concat([keyword_query]).compact.uniq
   end
 
   def keyword_query
-    optional_query(keyword) { |keyword| keyword_multi_match(keyword) }
-  end
+    return if keyword.blank?
 
-  def keyword_multi_match(keyword)
     {
       multi_match: {
         query: keyword,
@@ -31,7 +29,7 @@ class VacancyAlertSearchBuilder < VacancySearchBuilder
         operator: 'and',
         fuzziness: 2,
         prefix_length: 1
-      },
+      }
     }
   end
 
