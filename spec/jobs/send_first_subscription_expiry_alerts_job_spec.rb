@@ -20,12 +20,12 @@ RSpec.describe SendFirstSubscriptionExpiryAlertsJob, type: :job do
 
     it 'sends emails to the right subscriptions' do
       expiring_next_week.each do |s|
-        expect(SubscriptionMailer).to receive(:first_expiry_warning).with(s.id) { mailer }
+        expect(SubscriptionExpiryMailer).to receive(:first_expiry_warning).with(s.id) { mailer }
         expect(mailer).to receive(:deliver_later)
       end
 
       expiring_next_month.each do |s|
-        expect(SubscriptionMailer).to_not receive(:first_expiry_warning).with(s.id)
+        expect(SubscriptionExpiryMailer).to_not receive(:first_expiry_warning).with(s.id)
       end
 
       perform_enqueued_jobs { job }

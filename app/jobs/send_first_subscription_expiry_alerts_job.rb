@@ -3,7 +3,7 @@ class SendFirstSubscriptionExpiryAlertsJob < ApplicationJob
 
   def perform
     Subscription.due_first_expiry_notice.each do |s|
-      SubscriptionMailer.first_expiry_warning(s.id).deliver_later
+      SubscriptionExpiryMailer.first_expiry_warning(s.id).deliver_later
     end
   end
 end
