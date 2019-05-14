@@ -6,7 +6,6 @@ AllCops:
       - 'bin/**/*'
       - 'config/initializers/simple_form.rb'
       - 'config/initializers/assets.rb'
-      - 'spec/rails_helper.rb'
 
 Rails:
     Enabled: true
