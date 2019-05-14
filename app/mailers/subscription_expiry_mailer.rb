@@ -1,4 +1,6 @@
 class SubscriptionExpiryMailer < ApplicationMailer
+  self.delivery_job = SubscriptionExpiryMailerJob
+
   def first_expiry_warning(subscription_id)
     send_alert(subscription_id, 'first')
   end
