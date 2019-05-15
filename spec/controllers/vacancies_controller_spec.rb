@@ -18,7 +18,7 @@ RSpec.describe VacanciesController, type: :controller do
             subject: "<body onload=alert('test1')>Text</body>",
             location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
             minimum_salary: '<xml>Foo</xml',
-            phase: '<iframe>Foo</iframe>',
+            phases: '<iframe>Foo</iframe>',
             working_pattern: '<script>Foo</script>',
           }
         end
@@ -28,7 +28,7 @@ RSpec.describe VacanciesController, type: :controller do
             'subject' => 'Text',
             'location' => '',
             'minimum_salary' => 'Foo',
-            'phase' => '',
+            'phases' => '',
             'working_pattern' => '',
           }
 

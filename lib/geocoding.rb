@@ -1,13 +1,12 @@
 class Geocoding
   attr_reader :params, :location
 
-  def initialize(location, params = { params: { region: 'uk' } })
+  def initialize(location)
     @location = location
-    @params = params
   end
 
   def coordinates
-    Geocoder.coordinates(location, params) || no_match
+    Geocoder.coordinates(location) || no_match
   end
 
   private

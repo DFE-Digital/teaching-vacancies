@@ -65,8 +65,11 @@ variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
 variable "audit_subscription_creation_worksheet_gid" {}
 
+variable "audit_search_event_worksheet_gid" {}
+
 variable "domain" {}
 variable "google_geocoding_api_key" {}
+variable "ordnance_survey_api_key" {}
 
 variable "google_api_json_key" {
   type = "map"
@@ -122,6 +125,10 @@ variable "performance_platform_submit_task_command" {
 }
 
 variable "performance_platform_submit_all_task_command" {
+  type = "list"
+}
+
+variable "migrate_phase_to_phases_task_command" {
   type = "list"
 }
 

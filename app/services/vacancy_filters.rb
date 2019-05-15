@@ -1,6 +1,6 @@
 class VacancyFilters
   AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_pattern
-                         phase newly_qualified_teacher].freeze
+                         phases newly_qualified_teacher].freeze
 
   attr_reader(*AVAILABLE_FILTERS)
 
@@ -14,7 +14,7 @@ class VacancyFilters
     @minimum_salary = args[:minimum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
     @working_pattern = extract_working_pattern(args)
-    @phase = School.phases.include?(args[:phase]) ? args[:phase] : nil
+    @phases = extract_phases(args)
   end
 
   def to_hash
@@ -25,8 +25,23 @@ class VacancyFilters
       job_title: job_title,
       minimum_salary: minimum_salary,
       working_pattern: working_pattern,
-      phase: phase,
+      phases: phases,
       newly_qualified_teacher: newly_qualified_teacher,
+    }
+  end
+
+  def audit_hash
+    {
+      location: location,
+      radius: radius,
+      keyword: nil,
+      minimum_salary: minimum_salary,
+      maximum_salary: nil,
+      working_pattern: working_pattern,
+      phases: phases,
+      newly_qualified_teacher: newly_qualified_teacher,
+      subject: subject,
+      job_title: job_title
     }
   end
 
@@ -43,6 +58,12 @@ class VacancyFilters
   private
 
   def extract_working_pattern(params)
-    Vacancy.working_patterns.include?(params[:working_pattern]) ? params[:working_pattern] : nil
+    params[:working_pattern] if Vacancy.working_patterns.include?(params[:working_pattern])
+  end
+
+  def extract_phases(params)
+    return if params[:phases].blank?
+
+    JSON.parse(params[:phases]).select { |phase| School.phases.include?(phase) }.presence
   end
 end

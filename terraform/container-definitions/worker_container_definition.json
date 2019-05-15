@@ -117,6 +117,10 @@
         "value": "${audit_subscription_creation_worksheet_gid}"
       },
       {
+        "name": "AUDIT_SEARCH_EVENT_WORKSHEET_GID",
+        "value": "${audit_search_event_worksheet_gid}"
+      },
+      {
         "name": "DOMAIN",
         "value": "${domain}"
       },
@@ -135,6 +139,10 @@
       {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
+      },
+      {
+        "name": "ORDNANCE_SURVEY_API_KEY",
+        "value": "${ordnance_survey_api_key}"
       },
       {
         "name": "SUBSCRIPTION_KEY_GENERATOR_SECRET",

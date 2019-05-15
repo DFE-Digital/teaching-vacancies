@@ -96,7 +96,7 @@ RSpec.describe VacancySearchBuilder do
 
     it 'builds an education phase query when one is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(phase: 'primary')
+      filters = OpenStruct.new(phases: ['primary'])
       builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {

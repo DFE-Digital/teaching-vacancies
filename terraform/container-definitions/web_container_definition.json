@@ -143,6 +143,10 @@
         "value": "${google_geocoding_api_key}"
       },
       {
+        "name": "ORDNANCE_SURVEY_API_KEY",
+        "value": "${ordnance_survey_api_key}"
+      },
+      {
         "name": "GOOGLE_API_JSON_KEY",
         "value": "${google_api_json_key}"
       },

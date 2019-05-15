@@ -14,6 +14,10 @@ FactoryBot.define do
     easting { '1' }
     northing { '1' }
 
+    trait :nursery do
+      phase { :nursery }
+    end
+
     trait :primary do
       phase { :primary }
     end

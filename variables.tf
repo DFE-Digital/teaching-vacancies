@@ -49,10 +49,6 @@ variable "availability_zones" {
   default = ["eu-west-2a", "eu-west-2b"]
 }
 
-variable "ecs_key_pair_name" {
-  description = "This key will be placed onto the machines by Terraform to allow SSH"
-}
-
 variable "image_id" {
   default = "ami-67cbd003" # Make sure this AWS AMI is valid for the chosen region.
 }
@@ -90,6 +86,10 @@ variable "redirect_old_teachingjobs_traffic" {}
 
 # ECS
 variable "ecs_cluster_name" {}
+
+variable "ecs_ssh_public_key" {
+  description = "This key will be placed onto the machines by Terraform to allow SSH"
+}
 
 variable "ecs_service_web_name" {
   default = "default-web"
@@ -153,6 +153,7 @@ variable "ecs_service_worker_container_definition_file_path" {
   description = "Worker container definition"
   default     = "./terraform/container-definitions/worker_container_definition.json"
 }
+
 variable "send_job_alerts_daily_email_command" {
   description = "The Entrypoint for the send_job_alerts_daily_email task"
   default     = ["rake", "verbose", "daily_emails:send"]
@@ -216,6 +217,11 @@ variable "performance_platform_submit_task_schedule" {
 variable "performance_platform_submit_all_task_command" {
   description = "The Entrypoint for the performance_platform_submit_all task"
   default     = ["rake", "verbose", "performance_platform:submit_data_up_to_today"]
+}
+
+variable "migrate_phase_to_phases_task_command" {
+  description = "The Entrypoint for the migrate_phase_to_phases task"
+  default     = ["rake", "verbose", "data:phase:migrate"]
 }
 
 variable "vacancies_statistics_refresh_cache_task_command" {
@@ -327,6 +333,7 @@ variable "worker_command" {
 
 # Application
 variable "rails_env" {}
+
 variable "rails_max_threads" {
   default = "5"
 }
@@ -350,6 +357,9 @@ variable "google_drive_json_key" {
 
 variable "audit_spreadsheet_id" {}
 variable "google_geocoding_api_key" {}
+
+variable "ordnance_survey_api_key" {}
+
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
 variable "pp_user_satisfaction_token" {}
@@ -365,17 +375,22 @@ variable "audit_general_feedback_worksheet_gid" {}
 variable "audit_express_interest_worksheet_gid" {}
 variable "audit_subscription_creation_worksheet_gid" {}
 
+variable "audit_search_event_worksheet_gid" {}
 variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
+
 variable "skylight_ignored_endpoints" {
   default = "ApplicationController#check"
 }
+
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+
 variable "feature_import_vacancies" {
   default = "false"
 }
+
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "subscription_key_generator_secret" {}

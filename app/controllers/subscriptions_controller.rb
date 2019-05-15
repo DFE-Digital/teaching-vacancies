@@ -4,7 +4,7 @@ class SubscriptionsController < ApplicationController
   before_action :check_feature_flag, except: :unsubscribe
 
   def new
-    subscription = Subscription.new(search_criteria: search_criteria.to_json)
+    subscription = Subscription.new(search_criteria: search_criteria_params.to_json)
     @subscription = SubscriptionPresenter.new(subscription)
     Auditor::Audit.new(nil, 'subscription.daily_alert.new', current_session_id).log_without_association
   end
@@ -45,8 +45,14 @@ class SubscriptionsController < ApplicationController
                               frequency: :daily)
   end
 
-  def search_criteria
-    params.require(:search_criteria).permit(*VacancyAlertFilters::AVAILABLE_FILTERS)
+  def search_criteria_params
+    params.require(:search_criteria).permit(*permitted_search_criteria_params)
+  end
+
+  def permitted_search_criteria_params
+    [].concat(VacancyAlertFilters::AVAILABLE_FILTERS)
+      .concat(VacanciesController::PERMITTED_SEARCH_PARAMS)
+      .uniq
   end
 
   def check_feature_flag
