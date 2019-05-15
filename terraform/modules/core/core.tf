@@ -27,7 +27,8 @@ resource "aws_internet_gateway" "ig" {
 
 /* Elastic IP for NAT */
 resource "aws_eip" "nat_eip" {
-  vpc        = true
+  vpc = true
+
   depends_on = ["aws_internet_gateway.ig"]
 }
 
@@ -35,12 +36,13 @@ resource "aws_eip" "nat_eip" {
 resource "aws_nat_gateway" "nat" {
   allocation_id = "${aws_eip.nat_eip.id}"
   subnet_id     = "${element(aws_subnet.public_subnet.*.id, count.index)}"
-  depends_on    = ["aws_internet_gateway.ig"]
 
   tags {
     Name        = "${var.project_name}-${var.environment}-${element(var.availability_zones, count.index)}-nat"
     Environment = "${var.environment}"
   }
+
+  depends_on = ["aws_internet_gateway.ig"]
 }
 
 /* Public subnet */
@@ -144,8 +146,6 @@ resource "aws_security_group" "default" {
     Name        = "${var.project_name}-${var.environment}"
     Environment = "${var.environment}"
   }
-
-  depends_on = ["aws_vpc.vpc"]
 }
 
 /* ECS agents need to communicate with AWS to register to the cluster */
@@ -179,8 +179,6 @@ resource "aws_security_group" "ecs" {
     Name        = "${var.project_name}-${var.environment}"
     Environment = "${var.environment}"
   }
-
-  depends_on = ["aws_vpc.vpc"]
 }
 
 /*====
@@ -206,8 +204,6 @@ resource "aws_alb_listener" "default" {
     target_group_arn = "${aws_alb_target_group.alb_target_group.arn}"
     type             = "forward"
   }
-
-  depends_on = ["aws_alb_target_group.alb_target_group"]
 }
 
 resource "aws_lb_listener_rule" "redirect_all_http_requests_to_https" {
@@ -241,8 +237,6 @@ resource "aws_alb_listener" "default_https" {
     target_group_arn = "${aws_alb_target_group.alb_target_group.arn}"
     type             = "forward"
   }
-
-  depends_on = ["aws_alb_target_group.alb_target_group"]
 }
 
 resource "aws_lb_listener_rule" "redirect_old_teachingjobs_https_traffic" {
@@ -433,14 +427,19 @@ resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-low" {
 
 resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   # Naming important to tie it to launch configuration: https://github.com/hashicorp/terraform/issues/532#issuecomment-272263827
-  name                 = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
-  availability_zones   = "${var.availability_zones}"
-  max_size             = "${var.asg_max_size}"
-  min_size             = "${var.asg_min_size}"
-  desired_capacity     = "${var.asg_desired_size}"
-  vpc_zone_identifier  = ["${aws_subnet.public_subnet.*.id}"]
+  name = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
+
+  availability_zones  = "${var.availability_zones}"
+  vpc_zone_identifier = ["${aws_subnet.public_subnet.*.id}"]
+
+  max_size         = "${var.asg_max_size}"
+  min_size         = "${var.asg_min_size}"
+  desired_capacity = "${var.asg_desired_size}"
+  min_elb_capacity = "${var.asg_min_size}"
+
   launch_configuration = "${aws_launch_configuration.ecs-launch-configuration.name}"
-  health_check_type    = "ELB"
+
+  health_check_type = "ELB"
 
   tags = [
     {
@@ -450,12 +449,12 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
     },
   ]
 
-  depends_on = ["aws_vpc.vpc", "aws_launch_configuration.ecs-launch-configuration", "aws_security_group.default", "aws_security_group.ecs"]
-
-  # Requires commenting out if the `asg_desired_size` variable in .tfvars is changed
-  # in either direction.
   lifecycle {
+    # Requires commenting out if the `asg_desired_size` variable in .tfvars is changed in either direction.
+    # Also requires commenting out if changing the connected launch configuration. See https://github.com/terraform-providers/terraform-provider-aws/issues/8638.
     ignore_changes = ["desired_capacity"]
+
+    create_before_destroy = true
   }
 }
 
@@ -552,8 +551,8 @@ Launch configuration
 ======*/
 
 resource "aws_key_pair" "ecs" {
-  key_name   = "${var.ecs_cluster_name}"
-  public_key = "${var.ecs_ssh_public_key}"
+  key_name_prefix = "${var.ecs_cluster_name}-"
+  public_key      = "${var.ecs_ssh_public_key}"
 }
 
 resource "aws_launch_configuration" "ecs-launch-configuration" {
@@ -568,8 +567,6 @@ resource "aws_launch_configuration" "ecs-launch-configuration" {
   lifecycle {
     create_before_destroy = true
   }
-
-  depends_on = ["aws_vpc.vpc", "aws_security_group.default", "aws_security_group.ecs"]
 }
 
 data "template_file" "ecs-launch-configuration-user-data" {
