@@ -427,14 +427,19 @@ resource "aws_cloudwatch_metric_alarm" "cluster-cpu-reservation-low" {
 
 resource "aws_autoscaling_group" "ecs-autoscaling-group" {
   # Naming important to tie it to launch configuration: https://github.com/hashicorp/terraform/issues/532#issuecomment-272263827
-  name                 = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
-  availability_zones   = "${var.availability_zones}"
-  max_size             = "${var.asg_max_size}"
-  min_size             = "${var.asg_min_size}"
-  desired_capacity     = "${var.asg_desired_size}"
-  vpc_zone_identifier  = ["${aws_subnet.public_subnet.*.id}"]
+  name = "${var.project_name}-${var.environment}-${var.asg_name}-${aws_launch_configuration.ecs-launch-configuration.name}"
+
+  availability_zones  = "${var.availability_zones}"
+  vpc_zone_identifier = ["${aws_subnet.public_subnet.*.id}"]
+
+  max_size         = "${var.asg_max_size}"
+  min_size         = "${var.asg_min_size}"
+  desired_capacity = "${var.asg_desired_size}"
+  min_elb_capacity = "${var.asg_min_size}"
+
   launch_configuration = "${aws_launch_configuration.ecs-launch-configuration.name}"
-  health_check_type    = "ELB"
+
+  health_check_type = "ELB"
 
   tags = [
     {
@@ -444,10 +449,12 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
     },
   ]
 
-  # Requires commenting out if the `asg_desired_size` variable in .tfvars is changed
-  # in either direction.
   lifecycle {
+    # Requires commenting out if the `asg_desired_size` variable in .tfvars is changed in either direction.
+    # Also requires commenting out if changing the connected launch configuration. See https://github.com/terraform-providers/terraform-provider-aws/issues/8638.
     ignore_changes = ["desired_capacity"]
+
+    create_before_destroy = true
   }
 }
 
