@@ -101,7 +101,7 @@ resource "aws_codepipeline" "pipeline" {
       output_artifacts = ["source"]
 
       configuration {
-        Owner      = "dxw"
+        Owner      = "DFE-Digital"
         Repo       = "teacher-vacancy-service"
         Branch     = "${var.git_branch_to_track}"
         OAuthToken = "${var.github_token}"
