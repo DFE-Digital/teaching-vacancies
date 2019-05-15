@@ -551,8 +551,8 @@ Launch configuration
 ======*/
 
 resource "aws_key_pair" "ecs" {
-  key_name   = "${var.ecs_cluster_name}"
-  public_key = "${var.ecs_ssh_public_key}"
+  key_name_prefix = "${var.ecs_cluster_name}-"
+  public_key      = "${var.ecs_ssh_public_key}"
 }
 
 resource "aws_launch_configuration" "ecs-launch-configuration" {
