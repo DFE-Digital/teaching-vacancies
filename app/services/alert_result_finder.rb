@@ -3,8 +3,8 @@ class AlertResultFinder
 
   attr_reader :query, :results
 
-  def initialize(search_criteria, from_date, to_date)
-    filters = VacancyAlertFilters.new(search_criteria)
+  def initialize(search_criteria_h, from_date, to_date)
+    filters = VacancyAlertFilters.new(search_criteria_h)
     @query = VacancyAlertSearchBuilder.new(filters: filters,
                                            from: from_date, to: to_date).call
   end

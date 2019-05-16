@@ -13,8 +13,8 @@ class VacancyFilters
     @job_title = args[:job_title]
     @minimum_salary = args[:minimum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
-    @working_pattern = extract_working_pattern(args)
-    @phases = extract_phases(args)
+    @working_pattern = extract_working_pattern(args[:working_pattern])
+    @phases = extract_phases(args[:phases])
   end
 
   def to_hash
@@ -57,13 +57,15 @@ class VacancyFilters
 
   private
 
-  def extract_working_pattern(params)
-    params[:working_pattern] if Vacancy.working_patterns.include?(params[:working_pattern])
+  def extract_working_pattern(working_pattern)
+    working_pattern if Vacancy.working_patterns.include?(working_pattern)
   end
 
-  def extract_phases(params)
-    return if params[:phases].blank?
+  def extract_phases(phases)
+    return if phases.blank?
 
-    JSON.parse(params[:phases]).select { |phase| School.phases.include?(phase) }.presence
+    phases = JSON.parse(phases) if phases.is_a?(String)
+
+    phases.select { |phase| School.phases.include?(phase) }.presence
   end
 end
