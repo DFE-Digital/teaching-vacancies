@@ -134,6 +134,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
     context 'when subscription still exists' do
       before do
+        allow(EmailAlertsFeature).to receive(:enabled?) { true }
         token = subscription.token
         allow_any_instance_of(Subscription).to receive(:token) { token }
       end
@@ -151,7 +152,10 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context 'when subscription has been deleted' do
-      before { subscription.delete }
+      before do
+        allow(EmailAlertsFeature).to receive(:enabled?) { true }
+        subscription.delete
+      end
 
       it 'intializes a subscription' do
         subject
