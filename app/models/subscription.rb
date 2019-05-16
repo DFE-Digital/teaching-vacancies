@@ -8,7 +8,7 @@ class Subscription < ApplicationRecord
   validates :email, email_address: { presence: true }
   validates :reference, presence: true
   validates :frequency, presence: true
-  validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
+  validates :search_criteria, presence: true, uniqueness: { scope: %i[email expires_on frequency] }
 
   scope :ongoing, -> { where('expires_on >= current_date') }
 

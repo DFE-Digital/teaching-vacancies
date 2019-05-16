@@ -4,14 +4,12 @@ RSpec.describe Subscription, type: :model do
   it { should have_many(:alert_runs) }
 
   context 'validations' do
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:reference) }
+    it { should validate_presence_of(:frequency) }
+    it { should validate_presence_of(:search_criteria) }
+
     context 'email' do
-      it 'ensures an email is set' do
-        subscription = Subscription.new
-
-        expect(subscription.valid?).to eq(false)
-        expect(subscription.errors.messages[:email]).to eq(['can\'t be blank'])
-      end
-
       it 'ensures a valid email address is used' do
         subscription = Subscription.new email: 'inv@al@.id.email.com'
 
@@ -23,11 +21,15 @@ RSpec.describe Subscription, type: :model do
     context 'unique index' do
       it 'validates uniqueness of email, expires_on, frequency and search_criteria' do
         create(:subscription, email: 'jane@doe.com',
-                              reference: 'A reference',
-                              frequency: :daily)
+                              expires_on: 3.months.from_now.to_date,
+                              frequency: :daily,
+                              search_criteria: { radius: 20, subject: 'English' },
+                              reference: 'A reference')
         subscription = build(:subscription, email: 'jane@doe.com',
-                                            reference: 'B reference',
-                                            frequency: :daily)
+                                            expires_on: 3.months.from_now.to_date,
+                                            frequency: :daily,
+                                            search_criteria: { radius: 20, subject: 'English' },
+                                            reference: 'B reference')
 
         expect(subscription.valid?).to eq(false)
         expect(subscription.errors.messages[:search_criteria]).to eq(['has already been taken'])

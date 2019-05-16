@@ -5,15 +5,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
 
   subject(:job) { described_class.perform_later }
 
-  let(:search_criteria) do
-    {
-      subject: 'English',
-      working_pattern: 'full_time',
-      phases: ['primary', 'secondary']
-    }.to_json
-  end
-
-  let!(:subscription) { create(:subscription, search_criteria: search_criteria, frequency: :daily) }
+  let!(:subscription) { create(:subscription, frequency: :daily) }
   let!(:vacancies) { create_list(:vacancy, 5, :published_slugged) }
 
   let(:mail) { double(:mail) }
@@ -73,9 +65,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
   end
 
   context 'when a subscription is expired' do
-    let!(:subscription) do
-      create(:daily_subscription, search_criteria: search_criteria, expires_on: Time.zone.today - 1.day)
-    end
+    let!(:subscription) { create(:daily_subscription, expires_on: Time.zone.today - 1.day) }
 
     it 'deletes the subscription' do
       expect { perform_enqueued_jobs { job } }.to change { Subscription.all.count }.by(-1)
@@ -83,9 +73,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
   end
 
   context 'when a subscription is not expired' do
-    let!(:subscription) do
-      create(:daily_subscription, search_criteria: search_criteria, expires_on: Time.zone.today + 5.days)
-    end
+    let!(:subscription) { create(:daily_subscription, expires_on: Time.zone.today + 5.days) }
 
     it 'does not delete the subscription' do
       expect { perform_enqueued_jobs { job } }.to change { Subscription.all.count }.by(0)

@@ -9,7 +9,7 @@ RSpec.describe SubscriptionFinder do
   end
 
   describe '#exists?' do
-    let(:params) { { email: 'foo@email.com', search_criteria: 'bar', frequency: 'daily' } }
+    let(:params) { { email: 'foo@email.com', search_criteria: { radius: 20 }.to_json, frequency: 'daily' } }
     context 'when there are no existing subscriptions' do
       it 'returns false' do
         service = described_class.new(params)
@@ -22,7 +22,7 @@ RSpec.describe SubscriptionFinder do
         create(
           :daily_subscription,
           email: 'foo@email.com',
-          search_criteria: 'bar',
+          search_criteria: { radius: 20 }.to_json,
           frequency: 'daily'
         )
       end
