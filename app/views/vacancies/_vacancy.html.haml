@@ -6,10 +6,12 @@
     %dd.double
       = vacancy.salary_range
     %dt= t('jobs.publish_on')
-    %dd= format_date(vacancy.publish_on)
+    %dd.double
+      = format_date(vacancy.publish_on)
     %dt= t('jobs.expires_on')
     %dd= format_date(vacancy.expires_on)
-    %dt= t('jobs.working_patterns')
-    %dd= vacancy.working_patterns
     %dt= t('jobs.starts_on')
     %dd= format_date(vacancy.starts_on)
+    %dt= t('jobs.working_patterns')
+    %dd.double
+      = vacancy.working_patterns
