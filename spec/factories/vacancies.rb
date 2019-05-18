@@ -108,5 +108,11 @@ FactoryBot.define do
     trait :expire_tomorrow do
       expires_on { Time.zone.tomorrow.end_of_day }
     end
+
+    trait :without_working_patterns do
+      to_create { |instance| instance.save(validate: false) }
+      sequence(:slug) { |n| "slug-#{n}" }
+      working_patterns { nil }
+    end
   end
 end
