@@ -29,7 +29,7 @@ RSpec.describe VacancyPresenter do
       end
 
       it 'should state the salary is full time equivalent' do
-        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year (full time equivalent)')
+        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year (full-time equivalent)')
       end
     end
   end

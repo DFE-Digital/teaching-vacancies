@@ -90,7 +90,7 @@ RSpec.feature 'Filtering vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      select 'Part time', from: 'working_pattern'
+      select 'Part-time', from: 'working_pattern'
       page.find('.govuk-button[type=submit]').click
     end
 

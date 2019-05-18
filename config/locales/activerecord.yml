@@ -16,6 +16,10 @@ en:
       email:
         invalid: is not a valid email address
   activerecord:
+    attributes:
+      vacancy/working_patterns:
+        full_time: Full-time
+        part_time: Part-time
     errors:
       models:
         vacancy:

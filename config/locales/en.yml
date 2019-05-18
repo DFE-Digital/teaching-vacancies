@@ -77,7 +77,7 @@ en:
     salary_range: 'Salary range'
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
-    per_year_fte: 'per year (full time equivalent)'
+    per_year_fte: 'per year (full-time equivalent)'
     publish_heading: 'Publish a job for %{school}'
     copy_page_title: 'Copy your %{job_title} job'
     review_page_title: 'Review the job details — Publish a job for %{school}'
@@ -196,9 +196,9 @@ en:
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school or trust’s website.'
     form_warnings:
-      working_pattern: If you select flexible working patterns (anything other than 'full time') candidates will be asked to email you for details.
-      pro_rata_salary: Enter a pro-rata salary if the job is only available part time, otherwise enter the full time equivalent salary
-      fte_salary: Enter the full time equivalent salary (for example 30000 for a half time role that pays £15,000)
+      working_pattern: If you select flexible working patterns (anything other than 'full-time') candidates will be asked to email you for details.
+      pro_rata_salary: Enter a pro-rata salary if the job is only available part-time, otherwise enter the full-time equivalent salary
+      fte_salary: Enter the full-time equivalent salary (for example 30000 for a half time role that pays £15,000)
     filters:
       title: 'Search job listings'
       location: 'Location'
