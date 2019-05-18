@@ -2,7 +2,7 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
-  delegate :total_pages, to: :model
+  delegate :working_patterns, to: :model, prefix: true
 
   def share_url(source: nil, medium: nil, campaign: nil, content: nil)
     params = { protocol: 'https' }
@@ -116,25 +116,30 @@ class VacancyPresenter < BasePresenter
     model.newly_qualified_teacher? ? 'Suitable' : 'Not suitable'
   end
 
-  # rubocop:disable Rails/OutputSafety
   def flexible_working
-    if model.flexible_working?
-      mailto = mail_to(model.contact_email, model.school.name, class: 'govuk-link')
-      @flexible_working = safe_join([I18n.t('jobs.flexible_working_info', mailto: mailto).html_safe])
-    else
-      'No'
-    end
+    return unless model.flexible_working?
+
+    mailto = mail_to(model.contact_email, model.school.name, class: 'govuk-link')
+
+    # rubocop:disable Rails/OutputSafety
+    I18n.t('jobs.flexible_working_info', mailto: mailto).html_safe
+    # rubocop:enable Rails/OutputSafety
   end
-  # rubocop:enable Rails/OutputSafety
 
   def working_patterns
-    model.working_patterns
-         .map { |working_pattern| Vacancy.human_attribute_name("working_patterns.#{working_pattern}") }
-         .join(', ')
+    patterns = model_working_patterns.map do |working_pattern|
+      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
+    end.join(', ')
+
+    if model_working_patterns.count > 1
+      I18n.t('jobs.working_patterns_info', patterns: patterns)
+    else
+      patterns.capitalize
+    end
   end
 
   def working_patterns_for_job_schema
-    model.working_patterns.map(&:upcase).join(', ')
+    model_working_patterns.map(&:upcase).join(', ')
   end
 
   def review_page_title

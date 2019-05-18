@@ -68,13 +68,14 @@
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
 
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
-          = t('jobs.flexible_working')
-        %dd.app-check-your-answers__answer
-          = @vacancy.flexible_working
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_flexible_working'), class: 'govuk-link'
+      - if @vacancy.flexible_working?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question
+            = t('jobs.flexible_working')
+          %dd.app-check-your-answers__answer
+            = @vacancy.flexible_working
+          %dd.app-check-your-answers__change
+            = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_flexible_working'), class: 'govuk-link'
 
       - if @vacancy.weekly_hours?
         .app-check-your-answers__contents

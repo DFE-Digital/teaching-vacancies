@@ -90,7 +90,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         visit edit_school_job_path(vacancy.id)
 
-        click_link_in_container_with_text(I18n.t('jobs.flexible_working'))
+        click_link_in_container_with_text(I18n.t('jobs.working_patterns'))
 
         click_on 'Update job'
 

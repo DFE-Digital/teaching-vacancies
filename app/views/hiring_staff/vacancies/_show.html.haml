@@ -107,8 +107,9 @@
           %dt= t('jobs.working_patterns')
           %dd= @vacancy.working_patterns
 
-          %dt= t('jobs.flexible_working')
-          %dd= @vacancy.flexible_working
+          - if @vacancy.flexible_working?
+            %dt= t('jobs.flexible_working')
+            %dd= @vacancy.flexible_working
 
           - if @vacancy.weekly_hours?
             %dt= t('jobs.weekly_hours')

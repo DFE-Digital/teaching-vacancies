@@ -40,9 +40,10 @@
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question= t('jobs.working_patterns')
         %dd.app-check-your-answers__answer= @vacancy.working_patterns
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question= t('jobs.flexible_working')
-        %dd.app-check-your-answers__answer= @vacancy.flexible_working
+      - if @vacancy.flexible_working?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question= t('jobs.flexible_working')
+          %dd.app-check-your-answers__answer= @vacancy.flexible_working
       - if @vacancy.weekly_hours?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.weekly_hours')

@@ -21,8 +21,9 @@ module VacancyHelpers
 
     fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours if vacancy.weekly_hours?
 
-    vacancy.working_patterns.split(', ').each do |working_pattern|
-      check working_pattern, name: 'job_specification_form[working_patterns][]'
+    vacancy.model_working_patterns.each do |working_pattern|
+      check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
+            name: 'job_specification_form[working_patterns][]'
     end
   end
 
@@ -72,7 +73,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page.html).to include(vacancy.flexible_working)
+    expect(page.html).to include(vacancy.flexible_working) if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
@@ -103,7 +104,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page.html).to include(vacancy.flexible_working)
+    expect(page.html).to include(vacancy.flexible_working) if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
