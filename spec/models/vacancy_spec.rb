@@ -558,6 +558,106 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
+  context 'flexible working' do
+    context 'when flexible_working is true and no flexible working options are available' do
+      let(:job) { create(:vacancy, working_patterns: ['full_time'], flexible_working: true) }
+
+      context 'and changing working patterns to part time only' do
+        it 'clears flexible_working' do
+          job.working_patterns = ['part_time']
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(nil)
+        end
+      end
+
+      context 'and changing working patterns to include part time' do
+        it 'clears flexible_working' do
+          job.working_patterns = ['full_time', 'part_time']
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(nil)
+        end
+      end
+
+      context 'and changing working patterns to include flexible working patterns' do
+        it 'clears flexible_working' do
+          job.working_patterns = ['full_time', 'job_share']
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(nil)
+        end
+      end
+
+      context 'and changing flexible_working to false' do
+        it 'clears flexible_working' do
+          job.flexible_working = false
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(nil)
+        end
+      end
+
+      context 'and not changing working_patterns or flexible_working' do
+        it 'leaves flexible_working unchanged' do
+          job.job_title = 'new title'
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(job.flexible_working)
+        end
+      end
+    end
+
+    context 'when flexible_working is false and flexible working options are available' do
+      let(:job) { create(:vacancy, working_patterns: ['part_time'], flexible_working: false) }
+
+      context 'and changing working patterns to include full time' do
+        it 'leaves flexible_working unchanged' do
+          job.working_patterns = ['full_time', 'part_time']
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(job.flexible_working)
+        end
+      end
+
+      context 'and changing working patterns to include other flexible working patterns' do
+        it 'leaves flexible_working unchanged' do
+          job.working_patterns = ['part_time', 'job_share']
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(job.flexible_working)
+        end
+      end
+
+      context 'and changing working patterns to full time only' do
+        it 'clears flexible_working' do
+          job.working_patterns = ['full_time']
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(nil)
+        end
+      end
+
+      context 'and changing flexible_working to true' do
+        it 'clears flexible_working' do
+          job.flexible_working = true
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(nil)
+        end
+      end
+
+      context 'and not changing working_patterns or flexible_working' do
+        it 'leaves flexible_working unchanged' do
+          job.job_title = 'new title'
+          job.save
+
+          expect(Vacancy.find(job.id).flexible_working).to eq(job.flexible_working)
+        end
+      end
+    end
+  end
+
   context 'pro rata salary' do
     context 'when salary is pro rata' do
       context 'and working pattern is part time' do

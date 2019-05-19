@@ -59,7 +59,14 @@
                 collection: working_pattern_options,
                 required: true
 
-      = render partial: 'working_pattern_warning'
+      - if @job_specification_form.flexible_working.nil?
+        = render partial: 'working_pattern_warning'
+      - else
+        = f.input :flexible_working, as: :boolean,
+                  hint: t('jobs.form_hints.flexible_working'),
+                  wrapper: :inline_checkbox,
+                  wrapper_html: { id: 'flexible_working' },
+                  input_html: { 'aria-label': t('jobs.aria_labels.flexible_working') }
 
       - if @job_specification_form.weekly_hours?
         = f.input :weekly_hours,

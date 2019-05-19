@@ -19,6 +19,7 @@ namespace :data do
           vacancy.flexible_working = nil if vacancy.flexible_working == true
         end
 
+        vacancy.skip_update_callbacks
         vacancy.save!(validate: false)
       end
     end

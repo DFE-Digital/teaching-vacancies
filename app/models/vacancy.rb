@@ -114,6 +114,7 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validates :working_pattern, absence: true
 
+  before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
   before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
 
   after_commit on: %i[create update] do
@@ -205,6 +206,14 @@ class Vacancy < ApplicationRecord
     super().merge('working_patterns' => working_patterns)
   end
 
+  def skip_update_callbacks(value = true)
+    @skip_update_callbacks = value
+  end
+
+  def skip_update_callbacks?
+    @skip_update_callbacks.present?
+  end
+
   private
 
   def slug_candidates
@@ -219,7 +228,20 @@ class Vacancy < ApplicationRecord
     working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.include?(working_pattern) }.any?
   end
 
+  def will_save_change_to_working_patterns_or_flexible_working?
+    will_save_change_to_working_patterns? || will_save_change_to_flexible_working?
+  end
+
+  def update_flexible_working
+    return if skip_update_callbacks?
+    return if flexible_working.nil?
+
+    self.flexible_working = nil if flexible_working == derived_flexible_working?
+  end
+
   def update_pro_rata_salary
+    return if skip_update_callbacks?
+
     self.pro_rata_salary = nil if pro_rata_salary.blank?
 
     return if pro_rata_salary.nil?
