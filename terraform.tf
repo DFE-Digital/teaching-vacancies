@@ -91,15 +91,15 @@ module "ecs" {
   update_spreadsheets_task_command  = "${var.update_spreadsheets_task_command}"
   update_spreadsheets_task_schedule = "${var.update_spreadsheets_task_schedule}"
 
-  send_job_alerts_daily_email_command  = "${var.send_job_alerts_daily_email_command}"
-  send_job_alerts_daily_email_schedule = "${var.send_job_alerts_daily_email_schedule}"
+  send_job_alerts_daily_email_task_command  = "${var.send_job_alerts_daily_email_task_command}"
+  send_job_alerts_daily_email_task_schedule = "${var.send_job_alerts_daily_email_task_schedule}"
 
   sessions_trim_task_command  = "${var.sessions_trim_task_command}"
   sessions_trim_task_schedule = "${var.sessions_trim_task_schedule}"
 
   reindex_vacancies_task_command = "${var.reindex_vacancies_task_command}"
 
-  seed_vacancies_from_api = "${var.seed_vacancies_from_api}"
+  seed_vacancies_from_api_task_command = "${var.seed_vacancies_from_api_task_command}"
 
   performance_platform_submit_task_command     = "${var.performance_platform_submit_task_command}"
   performance_platform_submit_task_schedule    = "${var.performance_platform_submit_task_schedule}"
