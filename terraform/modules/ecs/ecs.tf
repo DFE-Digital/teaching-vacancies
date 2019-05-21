@@ -123,350 +123,140 @@ data "template_file" "web_container_definition" {
   template = "${file(var.ecs_service_web_container_definition_file_path)}"
 
   vars {
-    image                            = "${aws_ecr_repository.default.repository_url}"
-    override_school_urn              = "${var.override_school_urn}"
-    http_user                        = "${var.http_user}"
-    http_pass                        = "${var.http_pass}"
-    dfe_sign_in_issuer               = "${var.dfe_sign_in_issuer}"
-    dfe_sign_in_redirect_url         = "${var.dfe_sign_in_redirect_url}"
-    dfe_sign_in_identifier           = "${var.dfe_sign_in_identifier}"
-    dfe_sign_in_secret               = "${var.dfe_sign_in_secret}"
-    google_maps_api_key              = "${var.google_maps_api_key}"
-    google_analytics                 = "${var.google_analytics}"
-    rollbar_access_token             = "${var.rollbar_access_token}"
-    secret_key_base                  = "${var.secret_key_base}"
-    project_name                     = "${var.project_name}"
-    task_name                        = "${var.ecs_service_web_task_name}"
-    task_port                        = "${var.ecs_service_web_task_port}"
-    environment                      = "${var.environment}"
-    rails_env                        = "${var.rails_env}"
-    rails_max_threads                = "${var.rails_max_threads}"
-    region                           = "${var.region}"
-    log_group                        = "${var.aws_cloudwatch_log_group_name}"
-    database_user                    = "${var.rds_username}"
-    database_password                = "${var.rds_password}"
-    database_url                     = "${var.rds_address}"
-    elastic_search_url               = "${var.es_address}"
-    aws_elasticsearch_region         = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key            = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
-    redis_cache_url                  = "${var.redis_cache_url}"
-    redis_queue_url                  = "${var.redis_queue_url}"
-    authorisation_service_url        = "${var.authorisation_service_url}"
-    authorisation_service_token      = "${var.authorisation_service_token}"
-    google_geocoding_api_key         = "${var.google_geocoding_api_key}"
-    ordnance_survey_api_key             = "${var.ordnance_survey_api_key}"
-    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
-    google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
-    audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
-    domain                           = "${var.domain}"
-    google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
-    google_analytics_profile_id      = "${var.google_analytics_profile_id}"
-    skylight_authentication          = "${var.skylight_authentication}"
-    skylight_env                     = "${var.skylight_env}"
-    skylight_enabled                 = "${var.skylight_enabled}"
-    skylight_ignored_endpoints       = "${var.skylight_ignored_endpoints}"
-    notify_key                       = "${var.notify_key}"
+    image                                     = "${aws_ecr_repository.default.repository_url}"
+    override_school_urn                       = "${var.override_school_urn}"
+    http_user                                 = "${var.http_user}"
+    http_pass                                 = "${var.http_pass}"
+    dfe_sign_in_issuer                        = "${var.dfe_sign_in_issuer}"
+    dfe_sign_in_redirect_url                  = "${var.dfe_sign_in_redirect_url}"
+    dfe_sign_in_identifier                    = "${var.dfe_sign_in_identifier}"
+    dfe_sign_in_secret                        = "${var.dfe_sign_in_secret}"
+    google_maps_api_key                       = "${var.google_maps_api_key}"
+    google_analytics                          = "${var.google_analytics}"
+    rollbar_access_token                      = "${var.rollbar_access_token}"
+    secret_key_base                           = "${var.secret_key_base}"
+    project_name                              = "${var.project_name}"
+    task_name                                 = "${var.ecs_service_web_task_name}"
+    task_port                                 = "${var.ecs_service_web_task_port}"
+    environment                               = "${var.environment}"
+    rails_env                                 = "${var.rails_env}"
+    rails_max_threads                         = "${var.rails_max_threads}"
+    region                                    = "${var.region}"
+    log_group                                 = "${var.aws_cloudwatch_log_group_name}"
+    database_user                             = "${var.rds_username}"
+    database_password                         = "${var.rds_password}"
+    database_url                              = "${var.rds_address}"
+    elastic_search_url                        = "${var.es_address}"
+    aws_elasticsearch_region                  = "${var.aws_elasticsearch_region}"
+    aws_elasticsearch_key                     = "${var.aws_elasticsearch_key}"
+    aws_elasticsearch_secret                  = "${var.aws_elasticsearch_secret}"
+    redis_cache_url                           = "${var.redis_cache_url}"
+    redis_queue_url                           = "${var.redis_queue_url}"
+    authorisation_service_url                 = "${var.authorisation_service_url}"
+    authorisation_service_token               = "${var.authorisation_service_token}"
+    google_geocoding_api_key                  = "${var.google_geocoding_api_key}"
+    ordnance_survey_api_key                   = "${var.ordnance_survey_api_key}"
+    pp_transactions_by_channel_token          = "${var.pp_transactions_by_channel_token}"
+    pp_user_satisfaction_token                = "${var.pp_user_satisfaction_token}"
+    google_drive_json_key                     = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    audit_spreadsheet_id                      = "${var.audit_spreadsheet_id}"
+    domain                                    = "${var.domain}"
+    google_api_json_key                       = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    google_analytics_profile_id               = "${var.google_analytics_profile_id}"
+    skylight_authentication                   = "${var.skylight_authentication}"
+    skylight_env                              = "${var.skylight_env}"
+    skylight_enabled                          = "${var.skylight_enabled}"
+    skylight_ignored_endpoints                = "${var.skylight_ignored_endpoints}"
+    notify_key                                = "${var.notify_key}"
     notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
-    notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
-    subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
-    subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
-    feature_email_alerts              = "${var.feature_email_alerts}"
+    notify_subscription_daily_template        = "${var.notify_subscription_daily_template}"
+    subscription_key_generator_salt           = "${var.subscription_key_generator_salt}"
+    subscription_key_generator_secret         = "${var.subscription_key_generator_secret}"
+    feature_email_alerts                      = "${var.feature_email_alerts}"
   }
 }
 
-/* send_job_alerts_daily_email task definition*/
-data "template_file" "send_job_alerts_daily_email_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+module "rake_container_definition" {
+  source = "../container-definitions/rake-container-definition"
 
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.send_job_alerts_daily_email_command)}"
-  }
+  template_file_path = "${var.ecs_service_rake_container_definition_file_path}"
+
+  image                    = "${aws_ecr_repository.default.repository_url}"
+  secret_key_base          = "${var.secret_key_base}"
+  project_name             = "${var.project_name}"
+  environment              = "${var.environment}"
+  rails_env                = "${var.rails_env}"
+  rails_max_threads        = "${var.rails_max_threads}"
+  redis_cache_url          = "${var.redis_cache_url}"
+  redis_queue_url          = "${var.redis_queue_url}"
+  region                   = "${var.region}"
+  log_group                = "${var.aws_cloudwatch_log_group_name}"
+  database_user            = "${var.rds_username}"
+  database_password        = "${var.rds_password}"
+  database_url             = "${var.rds_address}"
+  elastic_search_url       = "${var.es_address}"
+  aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+  aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+  aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+  feature_import_vacancies = "${var.feature_import_vacancies}"
+
+  rollbar_access_token = "${var.rollbar_access_token}"
 }
 
-/* import_schools task definition*/
-data "template_file" "import_schools_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+module "performance_platform_rake_container_definition" {
+  source = "../container-definitions/performance-platform-rake-container-definition"
 
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_import_schools"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.import_schools_task_command)}"
-  }
+  template_file_path = "${var.performance_platform_rake_container_definition_file_path}"
+
+  image                    = "${aws_ecr_repository.default.repository_url}"
+  secret_key_base          = "${var.secret_key_base}"
+  project_name             = "${var.project_name}"
+  environment              = "${var.environment}"
+  rails_env                = "${var.rails_env}"
+  rails_max_threads        = "${var.rails_max_threads}"
+  redis_cache_url          = "${var.redis_cache_url}"
+  redis_queue_url          = "${var.redis_queue_url}"
+  region                   = "${var.region}"
+  log_group                = "${var.aws_cloudwatch_log_group_name}"
+  database_user            = "${var.rds_username}"
+  database_password        = "${var.rds_password}"
+  database_url             = "${var.rds_address}"
+  elastic_search_url       = "${var.es_address}"
+  aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+  aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+  aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+  feature_import_vacancies = "${var.feature_import_vacancies}"
+
+  pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
+  pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
 }
 
-/* update_spreadsheets task definition*/
-data "template_file" "update_spreadsheets_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+module "google_api_rake_container_definition" {
+  source = "../container-definitions/google-api-rake-container-definition"
 
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_update_spreadsheets"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.update_spreadsheets_task_command)}"
-  }
-}
+  template_file_path = "${var.google_api_rake_container_definition_file_path}"
 
-/* trim sessions task definition*/
-data "template_file" "sessions_trim_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
+  image                    = "${aws_ecr_repository.default.repository_url}"
+  secret_key_base          = "${var.secret_key_base}"
+  project_name             = "${var.project_name}"
+  environment              = "${var.environment}"
+  rails_env                = "${var.rails_env}"
+  rails_max_threads        = "${var.rails_max_threads}"
+  redis_cache_url          = "${var.redis_cache_url}"
+  redis_queue_url          = "${var.redis_queue_url}"
+  region                   = "${var.region}"
+  log_group                = "${var.aws_cloudwatch_log_group_name}"
+  database_user            = "${var.rds_username}"
+  database_password        = "${var.rds_password}"
+  database_url             = "${var.rds_address}"
+  elastic_search_url       = "${var.es_address}"
+  aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
+  aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
+  aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
+  feature_import_vacancies = "${var.feature_import_vacancies}"
 
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_sessions_trim"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.sessions_trim_task_command)}"
-  }
-}
-
-/* reindex_vacancies task definition*/
-data "template_file" "reindex_vacancies_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_reindex_vacancies"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.reindex_vacancies_task_command)}"
-  }
-}
-
-/* seed_vacancies_from_api_container_definition task definition*/
-data "template_file" "seed_vacancies_from_api_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.seed_vacancies_from_api)}"
-  }
-}
-
-/* performance_platform_submit task definition*/
-data "template_file" "performance_platform_submit_container_definition" {
-  template = "${file(var.performance_platform_rake_container_definition_file_path)}"
-
-  vars {
-    image                            = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base                  = "${var.secret_key_base}"
-    project_name                     = "${var.project_name}"
-    task_name                        = "${var.ecs_service_web_task_name}_performance_platform_submit"
-    environment                      = "${var.environment}"
-    rails_env                        = "${var.rails_env}"
-    rails_max_threads                = "${var.rails_max_threads}"
-    redis_cache_url                  = "${var.redis_cache_url}"
-    redis_queue_url                  = "${var.redis_queue_url}"
-    region                           = "${var.region}"
-    log_group                        = "${var.aws_cloudwatch_log_group_name}"
-    database_user                    = "${var.rds_username}"
-    database_password                = "${var.rds_password}"
-    database_url                     = "${var.rds_address}"
-    elastic_search_url               = "${var.es_address}"
-    aws_elasticsearch_region         = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key            = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
-    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
-    feature_import_vacancies         = "${var.feature_import_vacancies}"
-    entrypoint                       = "${jsonencode(var.performance_platform_submit_task_command)}"
-  }
-}
-
-/* performance_platform_submit_all task definition*/
-data "template_file" "performance_platform_submit_all_container_definition" {
-  template = "${file(var.performance_platform_rake_container_definition_file_path)}"
-
-  vars {
-    image                            = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base                  = "${var.secret_key_base}"
-    project_name                     = "${var.project_name}"
-    task_name                        = "${var.ecs_service_web_task_name}_performance_platform_submit_all"
-    environment                      = "${var.environment}"
-    rails_env                        = "${var.rails_env}"
-    rails_max_threads                = "${var.rails_max_threads}"
-    redis_cache_url                  = "${var.redis_cache_url}"
-    redis_queue_url                  = "${var.redis_queue_url}"
-    region                           = "${var.region}"
-    log_group                        = "${var.aws_cloudwatch_log_group_name}"
-    database_user                    = "${var.rds_username}"
-    database_password                = "${var.rds_password}"
-    database_url                     = "${var.rds_address}"
-    elastic_search_url               = "${var.es_address}"
-    aws_elasticsearch_region         = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key            = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret         = "${var.aws_elasticsearch_secret}"
-    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
-    feature_import_vacancies         = "${var.feature_import_vacancies}"
-    entrypoint                       = "${jsonencode(var.performance_platform_submit_all_task_command)}"
-  }
-}
-
-/* migrate_phase_to_phases task definition*/
-data "template_file" "migrate_phase_to_phases_container_definition" {
-  template = "${file(var.ecs_service_rake_container_definition_file_path)}"
-
-  vars {
-    image                    = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base          = "${var.secret_key_base}"
-    project_name             = "${var.project_name}"
-    task_name                = "${var.ecs_service_web_task_name}_migrate_phase_to_phases"
-    environment              = "${var.environment}"
-    rails_env                = "${var.rails_env}"
-    rails_max_threads        = "${var.rails_max_threads}"
-    redis_cache_url          = "${var.redis_cache_url}"
-    redis_queue_url          = "${var.redis_queue_url}"
-    region                   = "${var.region}"
-    log_group                = "${var.aws_cloudwatch_log_group_name}"
-    database_user            = "${var.rds_username}"
-    database_password        = "${var.rds_password}"
-    database_url             = "${var.rds_address}"
-    elastic_search_url       = "${var.es_address}"
-    aws_elasticsearch_region = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key    = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret = "${var.aws_elasticsearch_secret}"
-    rollbar_access_token     = "${var.rollbar_access_token}"
-    feature_import_vacancies = "${var.feature_import_vacancies}"
-    entrypoint               = "${jsonencode(var.migrate_phase_to_phases_task_command)}"
-  }
-}
-
-/* vacancies pageviews refresh cache task definition*/
-data "template_file" "vacancies_statistics_refresh_cache_container_definition" {
-  template = "${file(var.google_api_rake_container_definition_file_path)}"
-
-  vars {
-    image                       = "${aws_ecr_repository.default.repository_url}"
-    secret_key_base             = "${var.secret_key_base}"
-    project_name                = "${var.project_name}"
-    task_name                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
-    environment                 = "${var.environment}"
-    rails_env                   = "${var.rails_env}"
-    rails_max_threads           = "${var.rails_max_threads}"
-    region                      = "${var.region}"
-    log_group                   = "${var.aws_cloudwatch_log_group_name}"
-    database_user               = "${var.rds_username}"
-    database_password           = "${var.rds_password}"
-    database_url                = "${var.rds_address}"
-    elastic_search_url          = "${var.es_address}"
-    aws_elasticsearch_region    = "${var.aws_elasticsearch_region}"
-    aws_elasticsearch_key       = "${var.aws_elasticsearch_key}"
-    aws_elasticsearch_secret    = "${var.aws_elasticsearch_secret}"
-    google_api_json_key         = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
-    google_analytics_profile_id = "${var.google_analytics_profile_id}"
-    feature_import_vacancies    = "${var.feature_import_vacancies}"
-    entrypoint                  = "${jsonencode(var.vacancies_statistics_refresh_cache_task_command)}"
-    redis_cache_url             = "${var.redis_cache_url}"
-    redis_queue_url             = "${var.redis_queue_url}"
-  }
+  google_api_json_key         = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
+  google_analytics_profile_id = "${var.google_analytics_profile_id}"
 }
 
 data "template_file" "logspout_container_definition" {
@@ -506,27 +296,27 @@ data "template_file" "worker_container_definition" {
     redis_cache_url      = "${var.redis_cache_url}"
     redis_queue_url      = "${var.redis_queue_url}"
 
-    pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
-    google_api_json_key              = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
-    google_analytics_profile_id      = "${var.google_analytics_profile_id}"
-    domain                           = "${var.domain}"
-    audit_spreadsheet_id             = "${var.audit_spreadsheet_id}"
-    google_drive_json_key            = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
-    audit_vacancies_worksheet_gid    = "${var.audit_vacancies_worksheet_gid}"
+    pp_transactions_by_channel_token             = "${var.pp_transactions_by_channel_token}"
+    pp_user_satisfaction_token                   = "${var.pp_user_satisfaction_token}"
+    google_api_json_key                          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    google_analytics_profile_id                  = "${var.google_analytics_profile_id}"
+    domain                                       = "${var.domain}"
+    audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
+    google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"
     audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
-    audit_general_feedback_worksheet_gid = "${var.audit_general_feedback_worksheet_gid}"
-    audit_express_interest_worksheet_gid = "${var.audit_express_interest_worksheet_gid}"
-    audit_subscription_creation_worksheet_gid = "${var.audit_subscription_creation_worksheet_gid}"
-    audit_search_event_worksheet_gid           = "${var.audit_search_event_worksheet_gid}"
-    notify_key                       = "${var.notify_key}"
-    notify_subscription_confirmation_template = "${var.notify_subscription_confirmation_template}"
-    notify_subscription_daily_template = "${var.notify_subscription_daily_template}"
-    subscription_key_generator_salt = "${var.subscription_key_generator_salt}"
-    subscription_key_generator_secret = "${var.subscription_key_generator_secret}"
-    feature_email_alerts              = "${var.feature_email_alerts}"
-    ordnance_survey_api_key             = "${var.ordnance_survey_api_key}"
-    worker_command = "${jsonencode(var.worker_command)}"
+    audit_general_feedback_worksheet_gid         = "${var.audit_general_feedback_worksheet_gid}"
+    audit_express_interest_worksheet_gid         = "${var.audit_express_interest_worksheet_gid}"
+    audit_subscription_creation_worksheet_gid    = "${var.audit_subscription_creation_worksheet_gid}"
+    audit_search_event_worksheet_gid             = "${var.audit_search_event_worksheet_gid}"
+    notify_key                                   = "${var.notify_key}"
+    notify_subscription_confirmation_template    = "${var.notify_subscription_confirmation_template}"
+    notify_subscription_daily_template           = "${var.notify_subscription_daily_template}"
+    subscription_key_generator_salt              = "${var.subscription_key_generator_salt}"
+    subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
+    feature_email_alerts                         = "${var.feature_email_alerts}"
+    ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
+    worker_command                               = "${jsonencode(var.worker_command)}"
   }
 }
 
@@ -578,6 +368,7 @@ data "aws_ecs_task_definition" "logspout" {
 /*====
 IAM service role
 ======*/
+
 data "aws_iam_policy_document" "ecs_service_role" {
   statement {
     effect  = "Allow"
@@ -623,6 +414,7 @@ resource "aws_iam_instance_profile" "ecs-instance-profile" {
 /*====
 ECS SERVICE ROLE
 ======*/
+
 resource "aws_iam_role" "ecs-instance-role" {
   name               = "${var.project_name}-${var.environment}-ecs-instance-role"
   path               = "/"
@@ -649,219 +441,156 @@ resource "aws_iam_role_policy_attachment" "ecs-instance-role-attachment" {
 ECS ONE-OFF TASKS
 ======*/
 
-resource "aws_ecs_task_definition" "reindex_vacancies_task" {
-  family                   = "${var.ecs_service_web_task_name}_reindex_vacancies_task"
-  container_definitions    = "${data.template_file.reindex_vacancies_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "reindex_vacancies_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_reindex_vacancies"
+  task_command = "${var.reindex_vacancies_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "seed_vacancies_from_api_task" {
-  family                   = "${var.ecs_service_web_task_name}_seed_vacancies_from_api_task"
-  container_definitions    = "${data.template_file.seed_vacancies_from_api_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "seed_vacancies_from_api_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_seed_vacancies_from_api"
+  task_command = "${var.seed_vacancies_from_api_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "performance_platform_submit_all_task" {
-  family                   = "${var.ecs_service_web_task_name}_performance_platform_submit_all_task"
-  container_definitions    = "${data.template_file.performance_platform_submit_all_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "migrate_phase_to_phases_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_migrate_phase_to_phases"
+  task_command = "${var.migrate_phase_to_phases_task_command}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "migrate_phase_to_phases_task" {
-  family                   = "${var.ecs_service_web_task_name}_migrate_phase_to_phases_task"
-  container_definitions    = "${data.template_file.migrate_phase_to_phases_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "performance_platform_submit_all_task" {
+  source = "../ecs-task"
+
+  task_name    = "${var.ecs_service_web_task_name}_performance_platform_submit_all"
+  task_command = "${var.performance_platform_submit_all_task_command}"
+
+  container_definition_template = "${module.performance_platform_rake_container_definition.template}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
 /*====
 ECS SCHEDULED TASKS
 ======*/
-resource "aws_ecs_task_definition" "sessions_trim_task" {
-  family                   = "${var.ecs_service_web_task_name}_sessions_trim_task"
-  container_definitions    = "${data.template_file.sessions_trim_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+
+module "sessions_trim_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_sessions_trim"
+  task_description = "Trim sessions"
+  task_command     = "${var.sessions_trim_task_command}"
+  task_schedule    = "${var.sessions_trim_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
-resource "aws_cloudwatch_event_rule" "sessions_trim_task" {
-  name                = "${var.ecs_service_web_task_name}_sessions_trim_task"
-  description         = "Run sessions trim at a scheuled time"
-  schedule_expression = "${var.sessions_trim_task_schedule}"
+module "send_job_alerts_daily_email_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email"
+  task_description = "Send daily job alert emails"
+  task_command     = "${var.send_job_alerts_daily_email_task_command}"
+  task_schedule    = "${var.send_job_alerts_daily_email_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
-resource "aws_cloudwatch_event_target" "sessions_trim_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_sessions_trim_task"
-  rule      = "${aws_cloudwatch_event_rule.sessions_trim_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+module "import_schools_task" {
+  source = "../scheduled-ecs-task"
 
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.sessions_trim_task.arn}"
-  }
+  task_name        = "${var.ecs_service_web_task_name}_import_schools"
+  task_description = "Import school data"
+  task_command     = "${var.import_schools_task_command}"
+  task_schedule    = "${var.import_schools_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
-resource "aws_ecs_task_definition" "performance_platform_submit_task" {
-  family                   = "${var.ecs_service_web_task_name}_performance_platform_submit_task"
-  container_definitions    = "${data.template_file.performance_platform_submit_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
+module "update_spreadsheets_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_update_spreadsheets"
+  task_description = "Update spreadsheets"
+  task_command     = "${var.update_spreadsheets_task_command}"
+  task_schedule    = "${var.update_spreadsheets_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
-resource "aws_cloudwatch_event_rule" "performance_platform_submit_task" {
-  name                = "${var.ecs_service_web_task_name}_performance_platform_submit_task"
-  description         = "Submits all required data to the performance platform"
-  schedule_expression = "${var.performance_platform_submit_task_schedule}"
+module "performance_platform_submit_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_performance_platform_submit"
+  task_description = "Submit Performance Platform data"
+  task_command     = "${var.performance_platform_submit_task_command}"
+  task_schedule    = "${var.performance_platform_submit_task_schedule}"
+
+  container_definition_template = "${module.performance_platform_rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
-resource "aws_cloudwatch_event_target" "performance_platform_submit_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_performance_platform_submit_task"
-  rule      = "${aws_cloudwatch_event_rule.performance_platform_submit_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
+module "vacancies_statistics_refresh_cache_task" {
+  source = "../scheduled-ecs-task"
 
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.performance_platform_submit_task.arn}"
-  }
-}
+  task_name        = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache"
+  task_description = "Refresh vacancy statistic cache"
+  task_command     = "${var.vacancies_statistics_refresh_cache_task_command}"
+  task_schedule    = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 
-resource "aws_ecs_task_definition" "send_job_alerts_daily_email_task" {
-  family                   = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email_task"
-  container_definitions    = "${data.template_file.send_job_alerts_daily_email_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
+  container_definition_template = "${module.google_api_rake_container_definition.template}"
 
-resource "aws_cloudwatch_event_rule" "send_job_alerts_daily_email_task" {
-  name                = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email_task"
-  description         = "Send daily job alerts emails"
-  schedule_expression = "${var.send_job_alerts_daily_email_schedule}"
-}
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
 
-resource "aws_cloudwatch_event_target" "send_job_alerts_daily_email_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_send_job_alerts_daily_email_task"
-  rule      = "${aws_cloudwatch_event_rule.send_job_alerts_daily_email_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.send_job_alerts_daily_email_task.arn}"
-  }
-}
-
-resource "aws_ecs_task_definition" "import_schools_task" {
-  family                   = "${var.ecs_service_web_task_name}_import_schools_task"
-  container_definitions    = "${data.template_file.import_schools_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "import_schools_task" {
-  name                = "${var.ecs_service_web_task_name}_import_schools_task"
-  description         = "Run school import at a scheuled time"
-  schedule_expression = "${var.import_schools_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "import_schools_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_import_schools_task"
-  rule      = "${aws_cloudwatch_event_rule.import_schools_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.import_schools_task.arn}"
-  }
-}
-
-resource "aws_ecs_task_definition" "update_spreadsheets_task" {
-  family                   = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
-  container_definitions    = "${data.template_file.update_spreadsheets_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "update_spreadsheets_task" {
-  name                = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
-  description         = "Run spreadsheet update at a scheuled time"
-  schedule_expression = "${var.update_spreadsheets_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "update_spreadsheets_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_update_spreadsheets_task"
-  rule      = "${aws_cloudwatch_event_rule.update_spreadsheets_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.update_spreadsheets_task.arn}"
-  }
-}
-
-resource "aws_ecs_task_definition" "vacancies_statistics_refresh_cache_task" {
-  family                   = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
-  container_definitions    = "${data.template_file.vacancies_statistics_refresh_cache_container_definition.rendered}"
-  requires_compatibilities = ["EC2"]
-  network_mode             = "bridge"
-  cpu                      = "256"
-  memory                   = "512"
-  execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
-resource "aws_cloudwatch_event_rule" "vacancies_statistics_refresh_cache_task" {
-  name                = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
-  description         = "Run vacacncy pageviews cache redresh at a scheuled time"
-  schedule_expression = "${var.vacancies_statistics_refresh_cache_task_schedule}"
-}
-
-resource "aws_cloudwatch_event_target" "vacancies_statistics_refresh_cache_task_event" {
-  target_id = "${var.ecs_service_web_task_name}_vacancies_statistics_refresh_cache_task"
-  rule      = "${aws_cloudwatch_event_rule.vacancies_statistics_refresh_cache_task.name}"
-  arn       = "${aws_ecs_cluster.cluster.arn}"
-  role_arn  = "${aws_iam_role.scheduled_task_role.arn}"
-
-  ecs_target {
-    task_count          = "1"
-    task_definition_arn = "${aws_ecs_task_definition.vacancies_statistics_refresh_cache_task.arn}"
-  }
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }

@@ -154,12 +154,12 @@ variable "ecs_service_worker_container_definition_file_path" {
   default     = "./terraform/container-definitions/worker_container_definition.json"
 }
 
-variable "send_job_alerts_daily_email_command" {
+variable "send_job_alerts_daily_email_task_command" {
   description = "The Entrypoint for the send_job_alerts_daily_email task"
   default     = ["rake", "verbose", "daily_emails:send"]
 }
 
-variable "send_job_alerts_daily_email_schedule" {
+variable "send_job_alerts_daily_email_task_schedule" {
   description = "send_job_alerts_daily_email schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
   default     = "cron(0 08 * * ? *)"
 }
@@ -199,7 +199,7 @@ variable "reindex_vacancies_task_command" {
   default     = ["rake", "verbose", "elasticsearch:vacancies:index"]
 }
 
-variable "seed_vacancies_from_api" {
+variable "seed_vacancies_from_api_task_command" {
   description = "The Entrypoint for the data:seed_from_api:vacancies task"
   default     = ["rake", "verbose", "data:seed_from_api:vacancies"]
 }

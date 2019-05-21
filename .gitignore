@@ -37,6 +37,7 @@ docker-compose.env
 .terraform/environment
 terraform.tfplan
 terraform.tfstate
+terraform.tfstate.d/
 ./*.tfstate
 .terraform/
 .terraform.tfstate.lock.info

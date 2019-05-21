@@ -5,23 +5,23 @@ variable "ecs_cluster_name" {}
 variable "aws_alb_target_group_arn" {}
 
 # Web service (running Puma)
-variable "ecs_service_web_container_definition_file_path" {}
 
+variable "ecs_service_web_container_definition_file_path" {}
 variable "ecs_service_web_name" {}
 variable "ecs_service_web_task_name" {}
 variable "ecs_service_web_task_count" {}
 variable "ecs_service_web_task_port" {}
 
 # Worker service (running Sidekiq)
-variable "ecs_service_worker_container_definition_file_path" {}
 
+variable "ecs_service_worker_container_definition_file_path" {}
 variable "ecs_service_worker_name" {}
 variable "ecs_service_worker_task_name" {}
 variable "ecs_service_worker_task_port" {}
 
 # Rake task container definitions
-variable "ecs_service_rake_container_definition_file_path" {}
 
+variable "ecs_service_rake_container_definition_file_path" {}
 variable "performance_platform_rake_container_definition_file_path" {}
 variable "google_api_rake_container_definition_file_path" {}
 
@@ -104,7 +104,7 @@ variable "import_schools_task_command" {
   type = "list"
 }
 
-variable "send_job_alerts_daily_email_command" {
+variable "send_job_alerts_daily_email_task_command" {
   type = "list"
 }
 
@@ -116,7 +116,7 @@ variable "reindex_vacancies_task_command" {
   type = "list"
 }
 
-variable "seed_vacancies_from_api" {
+variable "seed_vacancies_from_api_task_command" {
   type = "list"
 }
 
@@ -141,7 +141,7 @@ variable "update_spreadsheets_task_command" {
 }
 
 variable "update_spreadsheets_task_schedule" {}
-variable "send_job_alerts_daily_email_schedule" {}
+variable "send_job_alerts_daily_email_task_schedule" {}
 
 variable "vacancies_statistics_refresh_cache_task_command" {
   type = "list"
