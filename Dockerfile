@@ -53,7 +53,10 @@ RUN \
 
 COPY . $INSTALL_PATH
 
-RUN RAILS_ENV=production bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
+RUN \
+  if [ ! "$RAILS_ENV" = "development" ] && [ ! "$RAILS_ENV" = "test" ]; then \
+    RAILS_ENV=production bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile; \
+  fi
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
