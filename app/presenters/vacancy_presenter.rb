@@ -131,11 +131,8 @@ class VacancyPresenter < BasePresenter
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     end.join(', ')
 
-    if model_working_patterns.count > 1
-      I18n.t('jobs.working_patterns_info', patterns: patterns)
-    else
-      patterns.capitalize
-    end
+    I18n.t("jobs.working_patterns_info_#{model_working_patterns.count > 1 ? 'many' : 'one'}", patterns: patterns)
+        .capitalize
   end
 
   def working_patterns_for_job_schema
