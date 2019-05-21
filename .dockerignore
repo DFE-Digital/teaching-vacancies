@@ -1,18 +1,3 @@
-.git
-.env
-.dockerignore
 config/application.yml
-
-# Terraform
-*.tfstate
-*.tfstate.backup
-.terraform/environment
-terraform.tfplan
-terraform.tfstate
-./*.tfstate
-.terraform/
-.terraform.tfstate.lock.info
-
-# Certificates
 config/localhost/https/*.key
 config/localhost/https/*.crt
