@@ -28,6 +28,7 @@ esac
 echo "Deploying…"
 echo "* Terraform workspace: $TERRAFORM_WORKSPACE"
 echo "* Git branch: $GIT_BRANCH"
+echo
 
 read -r -p "Continue? [y/N] " CONT
 if [ "$CONT" = "y" ]; then
@@ -36,12 +37,12 @@ else
   exit 1
 fi
 
-echo "-> Checking out terraform workspace $TERRAFORM_WORKSPACE …"
+echo "-> Checking out terraform workspace ${TERRAFORM_WORKSPACE}…"
 terraform workspace select "$TERRAFORM_WORKSPACE"
 
-echo "-> Checking out and pulling branch $GIT_BRANCH …"
+echo "-> Checking out and pulling branch ${GIT_BRANCH}…"
 git checkout $GIT_BRANCH
 git pull origin $GIT_BRANCH
 
-echo "-> Applying Terraform command on the $TERRAFORM_WORKSPACE workspace …"
+echo "-> Applying Terraform command on the $TERRAFORM_WORKSPACE workspace…"
 terraform apply -var-file="workspace-variables/$TERRAFORM_WORKSPACE.tfvars"
