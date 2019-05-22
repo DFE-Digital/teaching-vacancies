@@ -9,7 +9,7 @@
         %br
         %strong= @subscription.reference
 
-    %h3.govuk-heading-m=t('subscriptions.confirmation.next_step')
+    %h3.govuk-heading-m=t('subscriptions.update.next_step')
     %p.govuk-body=t('subscriptions.update.next_step_details', email: @subscription.email, date: l(@subscription.expires_on))
     %div.govuk-inset-text
       %ul.govuk-list

@@ -309,6 +309,7 @@ en:
       change_instructions: "If you're resubscribing and want to change your email address or reference, just update them in the following fields:"
     update:
       header: You have resubscribed to a job alert
+      next_step: 'What happens next'
       next_step_details: 'You will be emailed details of any new jobs that match the following search criteria:'
       what_to_expect: You'll only be sent one job alert email per day, at the end of any day when 1 or more jobs match your criteria.
       unsubscribe: This job alert subscription will now end on %{date}. You can cancel it at any time using the link found at the bottom of job alert emails.
