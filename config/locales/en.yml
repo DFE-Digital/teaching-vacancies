@@ -256,6 +256,7 @@ en:
         mandatory:
           - 'a job title'
           - 'a job description'
+          - 'working patterns'
           - 'a salary range'
           - 'educational requirements'
           - 'qualifications required'
@@ -267,8 +268,6 @@ en:
           - 'details of employee benefits'
           - 'the main subject'
           - 'a pay scale'
-          - 'a working pattern'
-          - 'weekly hours'
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
