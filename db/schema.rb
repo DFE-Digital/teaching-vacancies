@@ -154,6 +154,8 @@ ActiveRecord::Schema.define(version: 2019_05_16_213012) do
     t.string "reference", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "first_reminder_sent", default: false
+    t.boolean "final_reminder_sent", default: false
   end
 
   create_table "transaction_auditors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
