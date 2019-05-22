@@ -11,13 +11,8 @@
 
     %h3.govuk-heading-m=t('subscriptions.update.next_step')
     %p.govuk-body=t('subscriptions.update.next_step_details', email: @subscription.email, date: l(@subscription.expires_on))
-    %div.govuk-inset-text
-      %ul.govuk-list
-        - @subscription.filtered_search_criteria.each_pair do |filter, value|
-          %li
-            - if filter.present?
-              %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
-            = value
+
+    = render partial: 'criteria', locals: { subscription: @subscription }
 
     %p.govuk-body= t('subscriptions.update.what_to_expect')
 
