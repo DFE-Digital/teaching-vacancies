@@ -38,7 +38,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       expect(body_lines[5]).to match(/\* Subject: English/)
       expect(body_lines[6]).to match(/\* Minimum Salary: £20,000/)
       expect(body_lines[7]).to match(/\* Maximum Salary: £40,000/)
-      expect(body_lines[8]).to match(/\Suitable for NQTs/)
+      expect(body_lines[8]).to match(/Suitable for NQTs/)
       expect(body_lines[10]).to match(/1 April 2019/)
     end
 
