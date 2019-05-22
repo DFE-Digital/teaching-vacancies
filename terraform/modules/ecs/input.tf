@@ -143,6 +143,12 @@ variable "update_spreadsheets_task_command" {
 variable "update_spreadsheets_task_schedule" {}
 variable "send_job_alerts_daily_email_task_schedule" {}
 
+variable "send_expiry_alerts_schedule" {}
+
+variable "send_expiry_alerts_command" {
+  type = "list"
+}
+
 variable "vacancies_statistics_refresh_cache_task_command" {
   type = "list"
 }

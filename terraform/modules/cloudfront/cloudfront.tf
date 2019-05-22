@@ -40,7 +40,8 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      headers      = [
+
+      headers = [
         "Host",
         "Authorization",
         "Origin",

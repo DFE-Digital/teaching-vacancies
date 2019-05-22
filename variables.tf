@@ -164,6 +164,16 @@ variable "send_job_alerts_daily_email_task_schedule" {
   default     = "cron(0 08 * * ? *)"
 }
 
+variable "send_expiry_alerts_schedule" {
+  description = "send_expiry_alerts schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 10 * * ? *)"
+}
+
+variable "send_expiry_alerts_command" {
+  description = "The Entrypoint for the send_expiry_alerts task"
+  default     = ["rake", "verbose", "subscription:expiry_alerts:send"]
+}
+
 variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
   default     = ["rake", "verbose", "data:schools:import"]

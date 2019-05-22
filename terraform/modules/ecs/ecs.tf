@@ -527,6 +527,23 @@ module "send_job_alerts_daily_email_task" {
   event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
+module "send_expiry_alerts_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_send_expiry_alerts"
+  task_description = "Send alerts to subscribers who have subscriptions that are about to expire"
+  task_command     = "${var.send_expiry_alerts_command}"
+  task_schedule    = "${var.send_expiry_alerts_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
+}
+
 module "import_schools_task" {
   source = "../scheduled-ecs-task"
 
