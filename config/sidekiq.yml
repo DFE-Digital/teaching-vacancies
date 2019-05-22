@@ -36,3 +36,5 @@ mailers:
   :concurrency: 2
 seed_vacancies_from_api:
   :concurrency: 2
+send_expiry_alerts:
+  :concurrency: 1
