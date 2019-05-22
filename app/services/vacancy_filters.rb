@@ -58,7 +58,7 @@ class VacancyFilters
   private
 
   def extract_working_pattern(working_pattern)
-    working_pattern if Vacancy::WORKING_PATTERN_OPTIONS.include?(working_pattern)
+    working_pattern if Vacancy::WORKING_PATTERN_OPTIONS.key?(working_pattern)
   end
 
   def extract_phases(phases)

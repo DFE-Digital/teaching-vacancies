@@ -2,8 +2,16 @@ require 'elasticsearch/model'
 require 'auditor'
 
 class Vacancy < ApplicationRecord
-  FLEXIBLE_WORKING_PATTERN_OPTIONS = %w[part_time job_share compressed_hours remote_working].freeze
-  WORKING_PATTERN_OPTIONS = %w[full_time].concat(FLEXIBLE_WORKING_PATTERN_OPTIONS).freeze
+  FLEXIBLE_WORKING_PATTERN_OPTIONS = {
+    'part_time' => 100,
+    'job_share' => 101,
+    'compressed_hours' => 102,
+    'remote_working' => 103
+  }.freeze
+
+  WORKING_PATTERN_OPTIONS = {
+    'full_time' => 0
+  }.merge(FLEXIBLE_WORKING_PATTERN_OPTIONS).freeze
 
   include ApplicationHelper
   include Auditor::Model
@@ -82,9 +90,7 @@ class Vacancy < ApplicationRecord
 
   enum status: %i[published draft trashed]
   enum working_pattern: %i[full_time part_time] # Deprecated
-  array_enum working_patterns: WORKING_PATTERN_OPTIONS.each_with_index
-                                                      .map { |pattern, index| [pattern, index] }
-                                                      .to_h
+  array_enum working_patterns: WORKING_PATTERN_OPTIONS
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
@@ -225,7 +231,7 @@ class Vacancy < ApplicationRecord
   end
 
   def derived_flexible_working?
-    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.include?(working_pattern) }.any?
+    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.key?(working_pattern) }.any?
   end
 
   def will_save_change_to_working_patterns_or_flexible_working?
