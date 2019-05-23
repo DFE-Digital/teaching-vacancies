@@ -33,10 +33,12 @@ RSpec.describe 'rake data:working_pattern:migrate', type: :task do
       end
     end
 
-    it 'clears working_pattern' do
+    it 'leaves working_pattern unchanged' do
       task.execute
 
-      expect(Vacancy.where.not(working_pattern: nil).count).to eq(0)
+      vacancies.each do |vacancy|
+        expect(Vacancy.find(vacancy.id).working_pattern).to eq(vacancy.working_pattern)
+      end
     end
 
     it 'changes nil flexible_working values to false' do
@@ -93,11 +95,27 @@ RSpec.describe 'rake data:working_pattern:migrate', type: :task do
       end
     end
 
+    it 'leaves working_pattern unchanged' do
+      task.execute
+
+      vacancies.each do |vacancy|
+        expect(Vacancy.find(vacancy.id).working_pattern).to eq(vacancy.working_pattern)
+      end
+    end
+
     it 'leaves flexible_working unchanged' do
       task.execute
 
       vacancies.each do |vacancy|
         expect(Vacancy.find(vacancy.id).flexible_working).to eq(vacancy.flexible_working)
+      end
+    end
+
+    it 'leaves pro_rata_salary unchanged' do
+      task.execute
+
+      vacancies.each do |vacancy|
+        expect(Vacancy.find(vacancy.id).pro_rata_salary).to eq(vacancy.pro_rata_salary)
       end
     end
   end

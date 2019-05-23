@@ -5,10 +5,8 @@ namespace :data do
       Rails.logger.debug("Running vacancy working pattern migration task in #{Rails.env}")
 
       Vacancy.where(working_patterns: [])
-             .where.not(working_pattern: nil)
              .each do |vacancy|
-        vacancy.working_patterns = [vacancy.working_pattern]
-        vacancy.working_pattern = nil
+        vacancy.working_patterns = [vacancy.working_pattern].flatten
 
         # Needed to preserve behaviour for existing listings.
         vacancy.flexible_working = false if vacancy.flexible_working.nil?
