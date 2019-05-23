@@ -126,6 +126,45 @@ RSpec.describe VacancyPresenter do
     end
   end
 
+  describe '#working_patterns' do
+    it 'returns nil if working_patterns is unset' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            :without_working_patterns,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_pattern: :full_time))
+
+      expect(vacancy.working_patterns).to be_nil
+    end
+
+    it 'returns a working patterns string if working_patterns is set' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_patterns: ['full_time', 'part_time']))
+
+      expect(vacancy.working_patterns).to eq(I18n.t('jobs.working_patterns_info_many',
+                                                    patterns: 'full-time, part-time'))
+    end
+  end
+
+  describe '#working_patterns_for_job_schema' do
+    it 'returns nil if working_patterns is unset' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            :without_working_patterns,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_pattern: :full_time))
+
+      expect(vacancy.working_patterns_for_job_schema).to be_nil
+    end
+
+    it 'returns a working patterns string if working_patterns is set' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_patterns: ['full_time', 'part_time']))
+
+      expect(vacancy.working_patterns_for_job_schema).to eq('FULL_TIME, PART_TIME')
+    end
+  end
+
   describe '#share_url' do
     it 'returns the absolute public url for the job post' do
       vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'PE Teacher'))

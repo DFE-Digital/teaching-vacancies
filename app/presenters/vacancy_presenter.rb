@@ -126,7 +126,13 @@ class VacancyPresenter < BasePresenter
     # rubocop:enable Rails/OutputSafety
   end
 
+  def working_patterns?
+    model_working_patterns.present?
+  end
+
   def working_patterns
+    return unless working_patterns?
+
     patterns = model_working_patterns.map do |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     end.join(', ')
@@ -136,6 +142,8 @@ class VacancyPresenter < BasePresenter
   end
 
   def working_patterns_for_job_schema
+    return unless working_patterns?
+
     model_working_patterns.map(&:upcase).join(', ')
   end
 

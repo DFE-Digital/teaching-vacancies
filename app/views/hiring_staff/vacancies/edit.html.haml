@@ -60,15 +60,16 @@
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'second_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
 
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
-          = t('jobs.working_patterns')
-        %dd.app-check-your-answers__answer
-          = @vacancy.working_patterns
-          - if @vacancy.flexible_working?
-            = @vacancy.flexible_working
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
+      - if @vacancy.working_patterns?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question
+            = t('jobs.working_patterns')
+          %dd.app-check-your-answers__answer
+            = @vacancy.working_patterns
+            - if @vacancy.flexible_working?
+              = @vacancy.flexible_working
+          %dd.app-check-your-answers__change
+            = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
 
       - if @vacancy.weekly_hours?
         .app-check-your-answers__contents
