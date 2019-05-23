@@ -118,7 +118,6 @@ class Vacancy < ApplicationRecord
   paginates_per 10
 
   validates :slug, presence: true
-  validates :working_pattern, absence: true
 
   before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
   before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?

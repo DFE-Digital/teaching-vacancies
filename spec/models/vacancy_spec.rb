@@ -30,7 +30,6 @@ RSpec.describe Vacancy, type: :model do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_description) }
-      it { should validate_absence_of(:working_pattern) }
       it { should validate_presence_of(:working_patterns) }
       it { should validate_presence_of(:minimum_salary) }
     end
