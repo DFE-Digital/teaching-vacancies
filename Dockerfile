@@ -51,9 +51,27 @@ RUN \
     bundle install --without development test --retry 10; \
   fi
 
-COPY . $INSTALL_PATH
+RUN mkdir -p $INSTALL_PATH/log
+RUN mkdir -p $INSTALL_PATH/tmp
 
-RUN RAILS_ENV=production bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile
+COPY .rspec $INSTALL_PATH/.rspec
+COPY .rubocop.yml $INSTALL_PATH/.rubocop.yml
+COPY config.ru $INSTALL_PATH/config.ru
+COPY Rakefile $INSTALL_PATH/Rakefile
+
+COPY public $INSTALL_PATH/public
+COPY vendor $INSTALL_PATH/vendor
+COPY lib $INSTALL_PATH/lib
+COPY bin $INSTALL_PATH/bin
+COPY config $INSTALL_PATH/config
+COPY db $INSTALL_PATH/db
+COPY spec $INSTALL_PATH/spec
+COPY app $INSTALL_PATH/app
+
+RUN \
+  if [ ! "$RAILS_ENV" = "development" ] && [ ! "$RAILS_ENV" = "test" ]; then \
+    RAILS_ENV=production bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile; \
+  fi
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

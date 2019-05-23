@@ -59,7 +59,7 @@ resource "aws_lambda_function" "cloudwatch_to_slack" {
   function_name    = "${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
   role             = "${aws_iam_role.slack_lambda_role.arn}"
   handler          = "lambda_function.lambda_handler"
-  source_code_hash = "${base64sha256(file("lambda_cloudwatch_to_slack_opsgenie_payload.zip"))}"
+  source_code_hash = "${base64sha256(file("terraform/lambda/lambda_cloudwatch_to_slack_opsgenie_payload.zip"))}"
   runtime          = "python3.6"
   timeout          = "10"
   kms_key_arn      = "${aws_kms_key.cloudwatch_lambda.arn}"
