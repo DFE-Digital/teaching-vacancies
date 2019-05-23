@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'factory_bot_rails'
 require 'database_cleaner_helper'
 require 'browser_test_helper'
+require 'geocoder_helper'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
