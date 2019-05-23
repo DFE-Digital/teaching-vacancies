@@ -71,4 +71,5 @@ en:
         reference: Your reference
     hints:
       defaults:
+        email: We'll only use this to send you job alerts.
         reference: This text will appear in the subject line of the email we send you when a new job matches your criteria. Feel free to change it.
