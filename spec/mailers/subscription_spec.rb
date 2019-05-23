@@ -8,8 +8,9 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
   after(:each) { Timecop.return }
 
+  let(:email) { 'an@email.com' }
   let(:subscription) do
-    subscription = create(:daily_subscription, email: 'an@email.com',
+    subscription = create(:daily_subscription, email: email,
                                                reference: 'a-reference',
                                                search_criteria: {
                                                  subject: 'English',
@@ -31,8 +32,8 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     expect(mail.subject).to eq(I18n.t('job_alerts.confirmation.email.subject', reference: subscription.reference))
     expect(mail.to).to eq([subscription.email])
     expect(body_lines[0]).to match(/# #{I18n.t('app.title')}/)
-    expect(body_lines[1]).to match(/# #{subscription.reference}/)
-    expect(body_lines[3]).to match(/#{I18n.t('subscriptions.email.confirmation.subheading')}/)
+    expect(body_lines[1]).to match(/You have subscribed to a job alert for &#39;#{subscription.reference}&#39;/)
+    expect(body_lines[3]).to match(/#{I18n.t('subscriptions.email.confirmation.subheading', email: email)}/)
     expect(body_lines[5]).to match(/\* Subject: English/)
     expect(body_lines[6]).to match(/\* Minimum Salary: £20,000/)
     expect(body_lines[7]).to match(/\* Maximum Salary: £40,000/)

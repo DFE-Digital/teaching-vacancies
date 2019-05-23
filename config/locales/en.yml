@@ -301,13 +301,13 @@ en:
     new: Sign up for a job alert
     info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 6 months or can be cancelled using the link at the bottom of alert emails.
     location_text: Within %{radius} miles of %{location}
-    reference: 'Your reference:'
+    reference: 'for'
     confirmation:
-      header: Your email subscription has started
+      header: 'You have subscribed to <span class="nobreak">a job alert</span>'
       receipt_confirmation: We have sent you a confirmation email.
       next_step: 'What happens next'
-      unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
-      next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 6 months, until %{date}.'
+      unsubscribe: "Your job alert subscription will end on %{date}. You can unsubscribe from or renew your subscription by following the links at the end of any job alert email."
+      next_step_details: 'Job details will be emailed to %{email} on any day when 1 or more new jobs matching the following criteria are published:'
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
@@ -317,11 +317,12 @@ en:
       resubscribe_link_text: resubscribe here
     back_to_search_results: 'Return to your search results'
     email:
-      unsubscribe_text_html: "Don't want to receive these email alerts? %{link}"
-      unsubscribe_link_text: Unsubscribe here
+      unsubscribe_text_html: "You can %{unsubscribe_link} from job alerts or renew your subscription at any time. "
+      unsubscribe_link_text: unsubscribe
       confirmation:
-        subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
-        expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
+        subject: "You have subscribed to a job alert for '%{reference}'"
+        subheading: 'Job details will be emailed to %{email} on any day when 1 or more new jobs matching the following criteria are published to Teaching Vacancies:'
+        expiry_text_html: 'Your job alert subscription will end on %{date}.'
     manage: Manage your subscription
     unsubscribe: Unsubscribe
   job_alerts:
