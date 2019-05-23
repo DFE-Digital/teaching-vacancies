@@ -3,7 +3,7 @@ class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::Applic
     vacancy = Vacancy.find(vacancy_id)
     return redirect_to school_job_path(vacancy.id), notice: I18n.t('jobs.already_published') if vacancy.published?
 
-    if PublishVacancy.new(vacancy: vacancy).call
+    if PublishVacancy.new(vacancy).call
       Auditor::Audit.new(vacancy, 'vacancy.publish', current_session_id).log
       AuditPublishedVacancyJob.perform_later(vacancy.id)
       update_google_index(vacancy) if vacancy.listed?

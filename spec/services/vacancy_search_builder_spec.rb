@@ -2,17 +2,39 @@ require 'rails_helper'
 
 RSpec.describe VacancySearchBuilder do
   describe '#call' do
-    it 'returns the default match all query with no parameters' do
+    it 'returns the default query with no parameters given' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new
       builder = described_class.new(filters: filters, sort: sort).call
 
-      expected_hash = {
-        match_all: {},
-      }
+      expected_hash = [
+        {
+          range: {
+            expires_on: {
+              gte: 'now/d'
+            }
+          }
+        },
+        {
+          bool: {
+            filter: {
+              terms: {
+                status: ['published']
+              }
+            }
+          }
+        },
+        {
+          range: {
+            publish_on: {
+              lte: 'now/d'
+            }
+          }
+        }
+      ]
 
       expect(builder).to be_a(Hash)
-      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
+      expect(builder[:search_query][:bool][:must]).to eq(expected_hash)
     end
 
     it 'builds a subject search when a subject is provided' do
@@ -84,7 +106,7 @@ RSpec.describe VacancySearchBuilder do
         bool: {
           filter: {
             terms: {
-              working_pattern: ['part_time'],
+              working_patterns: ['part_time'],
             },
           },
         },
@@ -120,10 +142,16 @@ RSpec.describe VacancySearchBuilder do
         builder = described_class.new(filters: filters, sort: sort).call
 
         expected_hash = {
-          range: {
-            minimum_salary: {
-              gte: 20000
-            }
+          bool: {
+            should: [
+              {
+                range: {
+                  minimum_salary: {
+                    gte: 20000
+                  }
+                }
+              }
+            ]
           }
         }
 

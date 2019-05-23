@@ -59,7 +59,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_working_pattern_filter(value)
-    { working_pattern: value.humanize }
+    { working_pattern: Vacancy.human_attribute_name("working_patterns.#{value}") }
   end
 
   def render_phases_filter(value)

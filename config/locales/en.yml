@@ -42,10 +42,11 @@ en:
     expires_on: 'Closing date'
     page_views: 'Total views'
     get_more_info_clicks: 'Total get more info clicks'
-    working_pattern: 'Working pattern'
+    working_patterns: 'Working pattern'
+    working_patterns_info_one: '%{patterns} only.'
+    working_patterns_info_many: 'Will consider %{patterns}.'
+    flexible_working_info: 'Email %{mailto} for further details.'
     newly_qualified_teacher: 'Newly qualified teacher'
-    flexible_working: 'Flexible working'
-    flexible_working_info: 'Yes. Email %{mailto} for more information.'
     starts_on: 'Expected start date'
     ends_on: 'End date'
     expired: 'This job post has expired'
@@ -77,6 +78,7 @@ en:
     salary_range: 'Salary range'
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
+    per_year_fte: 'per year (full-time equivalent)'
     publish_heading: 'Publish a job for %{school}'
     copy_page_title: 'Copy your %{job_title} job'
     review_page_title: 'Review the job details — Publish a job for %{school}'
@@ -153,9 +155,8 @@ en:
       change_second_supporting_subject: 'Change second supporting subject'
       change_pay_scale: 'Change pay scale'
       change_salary_range: 'Change salary range'
-      change_working_pattern: 'Change working pattern'
+      change_working_patterns: 'Change working pattern'
       change_newly_qualified_teacher: 'Change newly qualified teacher'
-      change_flexible_working: 'Change flexible working'
       change_employee_benefits: 'Change employee benefits'
       change_weekly_hours: 'Change weekly hours'
       change_leadership_level: 'Change leadership level'
@@ -181,7 +182,8 @@ en:
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
-      flexible_working: 'Tick this box if any flexible working arrangements are possible (job sharing or compressed hours, for example). Candidates will be asked to email for further information.'
+      working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
+      flexible_working: Tick this box if flexible working options are available. Candidates will be asked to email for further information.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
       pay_scale_range: 'What pay scale range does the job’s salary fall in?'
       weekly_hours: 'Number of hours to be worked each week'
@@ -195,7 +197,10 @@ en:
       benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school or trust’s website.'
-      pro_rata_warning: 'Part time roles must state a pro rata salary'
+    form_warnings:
+      working_pattern: If you select flexible working patterns (anything other than 'full-time') candidates will be asked to email you for details.
+      pro_rata_salary: Enter a pro-rata salary if the job is only available part-time, otherwise enter the full-time equivalent salary
+      fte_salary: Enter the full-time equivalent salary (for example 30000 for a half time role that pays £15,000)
     filters:
       title: 'Search job listings'
       location: 'Location'
@@ -251,6 +256,7 @@ en:
         mandatory:
           - 'a job title'
           - 'a job description'
+          - 'working patterns'
           - 'a salary range'
           - 'educational requirements'
           - 'qualifications required'
@@ -262,8 +268,6 @@ en:
           - 'details of employee benefits'
           - 'the main subject'
           - 'a pay scale'
-          - 'a working pattern'
-          - 'weekly hours'
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'

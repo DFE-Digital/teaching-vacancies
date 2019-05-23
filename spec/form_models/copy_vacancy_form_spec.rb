@@ -13,9 +13,11 @@ RSpec.describe CopyVacancyForm, type: :model do
     expect(form_object.publish_on).to eq(original_vacancy.publish_on)
   end
 
-  it 'doesn’t copy any dates for expired vacancies' do
+  it 'doesn\'t copy any dates for expired vacancies' do
     expired_vacancy = build(:vacancy, :expired)
+
     form_object = described_class.new(vacancy: expired_vacancy)
+
     expect(form_object.starts_on).to be_nil
     expect(form_object.ends_on).to be_nil
     expect(form_object.expires_on).to be_nil

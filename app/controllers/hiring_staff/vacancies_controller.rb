@@ -31,7 +31,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     end
 
     session[:current_step] = :review
-    store_vacancy_attributes(@vacancy.attributes.compact)
+    store_vacancy_attributes(@vacancy)
     @vacancy = VacancyPresenter.new(@vacancy)
     @vacancy.valid? if params[:source]&.eql?('publish')
   end

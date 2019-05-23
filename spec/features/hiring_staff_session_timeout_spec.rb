@@ -22,7 +22,7 @@ RSpec.feature 'Hiring staff session' do
     expect(page.current_path).to eq new_identifications_path
   end
 
-  it 'does\'nt expire before 8 hours' do
+  it 'doesn\'t expire before 8 hours' do
     visit new_school_job_path
 
     Timecop.travel(1.hour)

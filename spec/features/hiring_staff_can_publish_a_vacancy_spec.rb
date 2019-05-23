@@ -28,12 +28,14 @@ RSpec.feature 'Creating a vacancy' do
     let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
+                                 school: school,
                                  min_pay_scale: pay_scales.sample,
                                  max_pay_scale: pay_scales.sample,
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
-                                 leadership: leaderships.sample))
+                                 leadership: leaderships.sample,
+                                 working_patterns: ['full_time', 'part_time']))
     end
 
     scenario 'redirects to step 1, job specification' do
@@ -66,8 +68,8 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
         end
 
-        within_row_for(text: I18n.t('jobs.working_pattern')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_pattern.blank'))
+        within_row_for(text: I18n.t('jobs.working_patterns')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_patterns.blank'))
         end
       end
 
@@ -157,7 +159,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to the vacancy review page when submitted succesfuly' do
+      scenario 'redirects to the vacancy review page when submitted succesfully' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -240,7 +242,7 @@ RSpec.feature 'Creating a vacancy' do
                    :complete,
                    :draft,
                    school_id: school.id,
-                   working_pattern: :full_time)
+                   working_patterns: ['full_time'])
           )
           visit school_job_review_path(vacancy.id)
 
@@ -257,7 +259,24 @@ RSpec.feature 'Creating a vacancy' do
                    :complete,
                    :draft,
                    school_id: school.id,
-                   working_pattern: :part_time)
+                   working_patterns: ['part_time'])
+          )
+          visit school_job_review_path(vacancy.id)
+
+          expect(page).to have_content("Review the job for #{school.name}")
+
+          verify_all_vacancy_details(vacancy)
+        end
+      end
+
+      context 'when the listing is both full- and part-time' do
+        scenario 'lists all the working pattern vacancy details correctly' do
+          vacancy = VacancyPresenter.new(
+            create(:vacancy,
+                   :complete,
+                   :draft,
+                   school_id: school.id,
+                   working_patterns: ['full_time', 'part_time'])
           )
           visit school_job_review_path(vacancy.id)
 
@@ -460,7 +479,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is full-time' do
         scenario 'view the full-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :full_time)
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time'])
 
           visit school_job_review_path(vacancy.id)
 
@@ -475,7 +494,22 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is part-time' do
         scenario 'view the part-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_pattern: :part_time)
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['part_time'])
+
+          visit school_job_review_path(vacancy.id)
+
+          click_on 'Confirm and submit job'
+          save_page
+
+          click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+
+          verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
+        end
+      end
+
+      context 'when the listing is both full- and part-time' do
+        scenario 'view the full- and part-time published listing as a job seeker' do
+          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time', 'part_time'])
 
           visit school_job_review_path(vacancy.id)
 

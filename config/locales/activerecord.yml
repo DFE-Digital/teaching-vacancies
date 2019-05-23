@@ -1,6 +1,6 @@
 en:
   errors:
-    title: 'Please correct the following %{errors} in your listing:'
+    title: "Please correct the following %{errors} in your listing:"
     messages:
       too_short:
         other: is too short (minimum is %{count} characters)
@@ -10,12 +10,16 @@ en:
       taken: has already been taken
       blank: can't be blank
       salary:
-        invalid_format: 'must be entered in one of the following formats: 25000 or 25000.00'
-        lower_than_minimum_payscale: 'must be at least %{minimum_salary}'
+        invalid_format: "must be entered in one of the following formats: 25000 or 25000.00"
+        lower_than_minimum_payscale: must be at least %{minimum_salary}
       year_invalid: must include a 4-digit year
       email:
         invalid: is not a valid email address
   activerecord:
+    attributes:
+      vacancy/working_patterns:
+        full_time: Full-time
+        part_time: Part-time
     errors:
       models:
         vacancy:
@@ -29,6 +33,8 @@ en:
             maximum_salary:
               greater_than_minimum_salary: must be higher than the minimum salary
             working_pattern:
+              present: must be blank
+            working_patterns:
               blank: can't be blank
             experience:
               blank: can't be blank
@@ -61,8 +67,8 @@ en:
   simple_form:
     labels:
       subscription:
-        email: 'Email address'
-        reference: 'Your reference'
+        email: Email address
+        reference: Your reference
     hints:
       defaults:
         reference: This text will appear in the subject line of the email we send you when a new job matches your criteria. Feel free to change it.

@@ -1,5 +1,6 @@
 class VacancyAlertSearchBuilder < VacancySearchBuilder
-  attr_accessor :keyword, :maximum_salary
+  attr_accessor :keyword,
+                :maximum_salary
 
   def initialize(filters:, from:, to:)
     @from = from
@@ -15,14 +16,12 @@ class VacancyAlertSearchBuilder < VacancySearchBuilder
   private
 
   def must_query_clause
-    super().concat([keyword_query]).compact
+    super().concat([keyword_query]).compact.uniq
   end
 
   def keyword_query
-    optional_query(keyword) { |keyword| keyword_multi_match(keyword) }
-  end
+    return if keyword.blank?
 
-  def keyword_multi_match(keyword)
     {
       multi_match: {
         query: keyword,
@@ -30,7 +29,7 @@ class VacancyAlertSearchBuilder < VacancySearchBuilder
         operator: 'and',
         fuzziness: 2,
         prefix_length: 1
-      },
+      }
     }
   end
 
@@ -47,21 +46,23 @@ class VacancyAlertSearchBuilder < VacancySearchBuilder
 
   def salary_query
     return if minimum_salary.blank? && maximum_salary.blank?
-    return greater_than(:minimum_salary, minimum_salary.to_i) if maximum_salary.blank?
+    return greater_than(minimum_salary: minimum_salary.to_i) if maximum_salary.blank?
     return less_than_minimum_and_maximum_match if minimum_salary.blank?
 
-    [greater_than(:minimum_salary, minimum_salary.to_i), less_than_maximum_salary_or_no_match]
+    [greater_than(minimum_salary: minimum_salary.to_i),
+     less_than_maximum_salary_or_no_match]
   end
 
   def less_than_minimum_and_maximum_match
-    [less_than(:minimum_salary, maximum_salary.to_i), less_than_maximum_salary_or_no_match]
+    [less_than(maximum_salary: maximum_salary.to_i),
+     less_than_maximum_salary_or_no_match]
   end
 
   def less_than_maximum_salary_or_no_match
     {
       bool: {
         should: [
-          less_than(:maximum_salary, maximum_salary.to_i),
+          less_than(maximum_salary: maximum_salary.to_i),
           bool: {
             must_not: {
               exists: {
