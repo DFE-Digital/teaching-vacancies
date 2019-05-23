@@ -4,7 +4,8 @@ namespace :data do
     task migrate: :environment do
       Rails.logger.debug("Running vacancy working pattern migration task in #{Rails.env}")
 
-      Vacancy.where.not(working_pattern: nil)
+      Vacancy.where(working_patterns: [])
+             .where.not(working_pattern: nil)
              .each do |vacancy|
         vacancy.working_patterns = [vacancy.working_pattern]
         vacancy.working_pattern = nil
