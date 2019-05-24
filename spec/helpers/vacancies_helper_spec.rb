@@ -14,13 +14,16 @@ RSpec.describe VacanciesHelper, type: :helper do
 
   describe '#working_pattern_options' do
     it 'returns an array of vacancy working patterns' do
-      expect(helper.working_pattern_options).to eq([
-                                                     ['Full-time', 'full_time'],
-                                                     ['Part-time', 'part_time'],
-                                                     ['Job share', 'job_share'],
-                                                     ['Compressed hours', 'compressed_hours'],
-                                                     ['Remote working', 'remote_working']
-                                                   ])
+      expect(helper.working_pattern_options).to eq(
+        [
+          ['Full-time', 'full_time'],
+          ['Part-time', 'part_time'],
+          ['Job share', 'job_share'],
+          ['Compressed hours', 'compressed_hours'],
+          ['Staggered hours', 'staggered_hours'],
+          ['Remote working', 'remote_working']
+        ]
+      )
     end
   end
 
