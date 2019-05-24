@@ -10,7 +10,7 @@ RUN npm set progress=false && npm config set depth 0
 RUN npm install --only=production
 
 FROM ruby:2.6.1 as release
-MAINTAINER dxw <rails@dxw.com>
+LABEL maintainer="teaching.vacancies@education.gov.uk"
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
   nodejs \
