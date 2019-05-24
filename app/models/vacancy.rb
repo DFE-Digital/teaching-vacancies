@@ -6,8 +6,7 @@ class Vacancy < ApplicationRecord
     'part_time' => 100,
     'job_share' => 101,
     'compressed_hours' => 102,
-    'staggered_hours' => 104,
-    'remote_working' => 103
+    'staggered_hours' => 103
   }.freeze
 
   WORKING_PATTERN_OPTIONS = {
