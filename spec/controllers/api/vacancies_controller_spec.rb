@@ -230,20 +230,20 @@ RSpec.describe Api::VacanciesController, type: :controller do
           expect(json.to_h).to include('employmentType': 'COMPRESSED_HOURS')
         end
 
-        it 'maps staggered_hours working pattern to STAGGERED_HOURS' do
-          vacancy = create(:vacancy, working_patterns: ['staggered_hours'])
+        it 'maps remote_working working pattern to REMOTE_WORKING' do
+          vacancy = create(:vacancy, working_patterns: ['remote_working'])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          expect(json.to_h).to include('employmentType': 'STAGGERED_HOURS')
+          expect(json.to_h).to include('employmentType': 'REMOTE_WORKING')
         end
 
         it 'maps multiple values to an array' do
-          vacancy = create(:vacancy, working_patterns: ['part_time', 'job_share', 'staggered_hours'])
+          vacancy = create(:vacancy, working_patterns: ['part_time', 'job_share', 'remote_working'])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          expect(json.to_h).to include('employmentType': 'PART_TIME, JOB_SHARE, STAGGERED_HOURS')
+          expect(json.to_h).to include('employmentType': 'PART_TIME, JOB_SHARE, REMOTE_WORKING')
         end
       end
 
