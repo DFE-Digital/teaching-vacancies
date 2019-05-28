@@ -9,7 +9,7 @@ We recommend you install Docker from the link above, _not_ using homebrew.
 
 ### Setting up the project
 
-1. Copy the docker environment variables and fill in any missing secrets from the TeachingJobs 1Password vault:
+1. Copy the docker environment variables and fill in any missing secrets from the [secrets repository][secret-docker-compose]:
 
 ```bash
 $ cp docker-compose.env.sample docker-compose.env
@@ -28,6 +28,8 @@ bin/drebuild
 ```bash
 bin/dstart
 ```
+
+[secret-docker-compose]: https://github.com/DFE-Digital/teaching-vacancies-service-secrets/blob/master/secrets/dev/docker-compose.env.gpg
 
 ## User accounts & data
 

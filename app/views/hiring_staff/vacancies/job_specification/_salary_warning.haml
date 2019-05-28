@@ -2,4 +2,7 @@
   %span.govuk-warning-text__icon{"aria-hidden" => "true"} !
   %strong.govuk-warning-text__text
     %span.govuk-warning-text__assistive Warning
-    = t('jobs.form_hints.pro_rata_warning')
+    - if pro_rata_salary.present?
+      = t('jobs.form_warnings.pro_rata_salary')
+    - else
+      = t('jobs.form_warnings.fte_salary')

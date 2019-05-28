@@ -76,6 +76,9 @@ services:
       ELASTICSEARCH_URL: "http://elasticsearch:9200"
     env_file:
       - docker-compose.env
+    volumes:
+      - .:/srv/dfe-tvs:cached
+      - node_modules:/srv/dfe-tvs/node_modules
     command: bundle exec sidekiq -C config/sidekiq.yml
     depends_on:
       - redis_queue

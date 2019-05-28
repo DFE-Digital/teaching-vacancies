@@ -8,7 +8,6 @@ class VacancySearchBuilder
                 :phases,
                 :newly_qualified_teacher,
                 :minimum_salary,
-                :maximum_salary,
                 :sort,
                 :expired,
                 :status
@@ -53,7 +52,7 @@ class VacancySearchBuilder
   def search_query
     query = {
       bool: {
-        must: must_query_clause,
+        must: must_query_clause.presence || { match_all: {} }
       }
     }
     query[:bool][:filter] = location_filters unless location_filters.empty?
@@ -71,23 +70,36 @@ class VacancySearchBuilder
       expired_query,
       status_query,
       published_on_query
-    ].compact
+    ].compact.uniq
   end
 
   def subject_query
-    optional_query(subject) { |subject| subject_multi_match(subject) }
+    return if subject.blank?
+
+    {
+      multi_match: {
+        query: subject,
+        type: 'best_fields',
+        fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
+        operator: 'or',
+        minimum_should_match: 1,
+        fuzziness: 'AUTO'
+      }
+    }
   end
 
   def job_title_query
-    optional_query(job_title) { |job_title| job_title_match(job_title) }
-  end
+    return if job_title.blank?
 
-  def optional_query(query)
-    if query.blank?
-      match_all_hash
-    else
-      yield query
-    end
+    {
+      match: {
+        job_title: {
+          query: job_title,
+          operator: 'and',
+          fuzziness: 'AUTO',
+        }
+      }
+    }
   end
 
   def location_geo_distance
@@ -145,7 +157,7 @@ class VacancySearchBuilder
       bool: {
         filter: {
           terms: {
-            working_pattern: [working_pattern.to_s],
+            working_patterns: [working_pattern.to_s],
           },
         },
       },
@@ -181,61 +193,44 @@ class VacancySearchBuilder
   end
 
   def salary_query
-    greater_than(:minimum_salary, minimum_salary.to_i) if minimum_salary.present?
+    return if minimum_salary.blank?
+
+    greater_than(minimum_salary: minimum_salary.to_i)
   end
 
   def sort_query
     sort.present? ? [{ sort.column.to_sym => { order: sort.order.to_sym } }] : []
   end
 
-  def match_all_hash
+  def greater_than(field_value_hash)
     {
-      match_all: {},
+      bool: {
+        should: field_value_hash.map do |field, value|
+                  {
+                    range: {
+                      "#{field}": {
+                        gte: value
+                      }
+                    }
+                  }
+                end
+      }
     }
   end
 
-  def subject_multi_match(subject)
+  def less_than(field_value_hash)
     {
-      multi_match: {
-        query: subject,
-        type: 'best_fields',
-        fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
-        operator: 'or',
-        minimum_should_match: 1,
-        fuzziness: 'AUTO'
-      },
-    }
-  end
-
-  def job_title_match(job_title)
-    {
-      match: {
-        job_title: {
-          query: job_title,
-          operator: 'and',
-          fuzziness: 'AUTO',
-        }
-      },
-    }
-  end
-
-  def greater_than(field, value)
-    {
-      range: {
-        "#{field.to_s}": {
-          'gte': value
-        },
-      },
-    }
-  end
-
-  def less_than(field, value)
-    {
-      range: {
-        "#{field.to_s}": {
-          'lte': value,
-        },
-      },
+      bool: {
+        should: field_value_hash.map do |field, value|
+                  {
+                    range: {
+                      "#{field}": {
+                        lte: value
+                      }
+                    }
+                  }
+                end
+      }
     }
   end
 end

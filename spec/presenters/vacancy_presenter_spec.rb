@@ -1,29 +1,35 @@
 require 'rails_helper'
 RSpec.describe VacancyPresenter do
   describe '#salary_range' do
+    let(:vacancy) { VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000)) }
+
     it 'return the formatted minimum to maximum salary' do
-      vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000))
       expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year')
     end
 
     it 'returns the formatted minumum to maximum salary with the specified delimiter' do
-      vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000))
       expect(vacancy.salary_range('to')).to eq('£30,000 to £40,000 per year')
     end
 
     context 'when no maximum salary is set' do
+      let(:vacancy) { VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: nil)) }
+
       it 'should just return the minimum salary' do
-        vacancy = VacancyPresenter.new(create(:vacancy, minimum_salary: 20000, maximum_salary: nil))
-        expect(vacancy.salary_range).to eq('£20,000')
+        expect(vacancy.salary_range).to eq('£30,000')
       end
     end
 
     context 'when the vacancy is part time' do
-      it 'should state the salary is pro rata' do
-        vacancy = VacancyPresenter.new(
-          create(:vacancy, minimum_salary: 30000, maximum_salary: 40000, working_pattern: :part_time)
+      let(:vacancy) do
+        VacancyPresenter.new(
+          create(:vacancy,
+                 working_patterns: ['part_time'],
+                 minimum_salary: 30000, maximum_salary: 40000)
         )
-        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year pro rata')
+      end
+
+      it 'should state the salary is full time equivalent' do
+        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year (full-time equivalent)')
       end
     end
   end
@@ -103,16 +109,59 @@ RSpec.describe VacancyPresenter do
   end
 
   describe '#flexible_working' do
-    it 'shows nothing if flexible working is not available' do
-      school = create(:school)
-      vacancy = VacancyPresenter.new(build(:vacancy, school: school, flexible_working: false))
-      expect(vacancy.flexible_working).to eq('No')
+    it 'is blank if no flexible working pattern is available' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            school: create(:school),
+                                            working_patterns: ['full_time']))
+
+      expect(vacancy.flexible_working).to be_blank
     end
 
-    it 'shows a link to email the school if flexible working is available' do
-      school = create(:school, name: 'Smith High School')
-      vacancy = VacancyPresenter.new(build(:vacancy, school: school, flexible_working: true))
+    it 'includes a link to email the school if flexible working pattern is available' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_patterns: ['full_time', 'part_time']))
+
       expect(vacancy.flexible_working).to include('Smith High School')
+    end
+  end
+
+  describe '#working_patterns' do
+    it 'returns nil if working_patterns is unset' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            :without_working_patterns,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_pattern: :full_time))
+
+      expect(vacancy.working_patterns).to be_nil
+    end
+
+    it 'returns a working patterns string if working_patterns is set' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_patterns: ['full_time', 'part_time']))
+
+      expect(vacancy.working_patterns).to eq(I18n.t('jobs.working_patterns_info_many',
+                                                    patterns: 'full-time, part-time'))
+    end
+  end
+
+  describe '#working_patterns_for_job_schema' do
+    it 'returns nil if working_patterns is unset' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            :without_working_patterns,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_pattern: :full_time))
+
+      expect(vacancy.working_patterns_for_job_schema).to be_nil
+    end
+
+    it 'returns a working patterns string if working_patterns is set' do
+      vacancy = VacancyPresenter.new(create(:vacancy,
+                                            school: create(:school, name: 'Smith High School'),
+                                            working_patterns: ['full_time', 'part_time']))
+
+      expect(vacancy.working_patterns_for_job_schema).to eq('FULL_TIME, PART_TIME')
     end
   end
 

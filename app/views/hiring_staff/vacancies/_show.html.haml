@@ -104,20 +104,19 @@
           %dt= t('jobs.salary')
           %dd= @vacancy.salary_range
 
-          %dt= t('jobs.working_pattern')
-          %dd= @vacancy.working_pattern
+          - if @vacancy.working_patterns?
+            %dt= t('jobs.working_patterns')
+            %dd= @vacancy.working_patterns
+            - if @vacancy.flexible_working?
+              %dd= @vacancy.flexible_working
 
-          - if @vacancy.part_time? && @vacancy.weekly_hours.present?
+          - if @vacancy.weekly_hours?
             %dt= t('jobs.weekly_hours')
             %dd= @vacancy.weekly_hours
 
           - if @vacancy.newly_qualified_teacher?
             %dt= t('jobs.newly_qualified_teacher')
             %dd= @vacancy.newly_qualified_teacher
-
-          - if @vacancy.flexible_working?
-            %dt= t('jobs.flexible_working')
-            %dd= @vacancy.flexible_working
 
           %dt= t('jobs.expires_on')
           %dd= format_date(@vacancy.expires_on)

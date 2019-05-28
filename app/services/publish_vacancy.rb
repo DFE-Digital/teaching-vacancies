@@ -1,5 +1,5 @@
 class PublishVacancy
-  def initialize(vacancy:)
+  def initialize(vacancy)
     @vacancy = vacancy
   end
 

@@ -7,10 +7,10 @@ namespace :data do
     end
   end
 
-  desc 'Migrate phase to phases'
+  desc 'Migrate subscription search criteria phase'
   namespace :phase do
     task migrate: :environment do
-      Rails.logger.debug("Running phase migration task in #{Rails.env}")
+      Rails.logger.debug("Running subscription search criteria phase migration task in #{Rails.env}")
 
       Subscription.all.each do |subscription|
         search_criteria = subscription.search_criteria_to_h

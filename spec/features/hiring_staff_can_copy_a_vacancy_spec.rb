@@ -7,7 +7,7 @@ RSpec.feature 'Copying a vacancy' do
   end
 
   scenario 'a job can be successfully copied and published' do
-    original_vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
+    original_vacancy = build(:vacancy, :past_publish, school: school)
     original_vacancy.save(validate: false) # Validation prevents publishing on a past date
 
     new_vacancy = original_vacancy.dup
@@ -50,7 +50,7 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when the original job is pending/scheduled/future_publish' do
     scenario 'a job can be successfully copied' do
-      original_vacancy = FactoryBot.create(:vacancy, :future_publish, school: school)
+      original_vacancy = create(:vacancy, :future_publish, school: school)
 
       visit school_path
 
@@ -70,7 +70,7 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when the original job has expired' do
     scenario 'a job can be successfully copied' do
-      original_vacancy = FactoryBot.create(:vacancy, :expired, school: school)
+      original_vacancy = create(:vacancy, :expired, school: school)
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
@@ -98,7 +98,7 @@ RSpec.feature 'Copying a vacancy' do
 
   describe 'validations' do
     let!(:original_vacancy) do
-      vacancy = FactoryBot.build(:vacancy, :past_publish, school: school)
+      vacancy = build(:vacancy, :past_publish, school: school)
       vacancy.save(validate: false) # Validation prevents publishing on a past date
       vacancy
     end

@@ -8,7 +8,8 @@
   = vacancy.location
   \
   = "Salary: #{vacancy.salary_range}"
-  = "Working pattern: #{vacancy.working_pattern}"
+  - if vacancy.working_patterns?
+    = "Working pattern: #{vacancy.working_patterns}"
   = "Closing date: #{format_date(vacancy.expires_on)}"
   \
   \---

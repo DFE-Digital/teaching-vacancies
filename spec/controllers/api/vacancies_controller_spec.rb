@@ -179,6 +179,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
         it 'when no maximum salary is set' do
           vacancy = create(:vacancy, maximum_salary: nil)
+
           get :show, params: { id: vacancy.id, api_version: 1 }
 
           salary = {
@@ -197,20 +198,52 @@ RSpec.describe Api::VacanciesController, type: :controller do
       end
 
       context '#employment_type' do
-        it 'FULL_TIME' do
+        it 'maps full_time working pattern to FULL_TIME' do
+          vacancy = create(:vacancy, working_patterns: ['full_time'])
+
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          employment_type = { 'employmentType': 'FULL_TIME' }
-          expect(json.to_h).to include(employment_type)
+          expect(json.to_h).to include('employmentType': 'FULL_TIME')
         end
 
-        it 'PART_TIME' do
-          vacancy = create(:vacancy, working_pattern: :part_time)
+        it 'maps part_time working pattern to PART_TIME' do
+          vacancy = create(:vacancy, working_patterns: ['part_time'])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
-          employment_type = { 'employmentType': 'PART_TIME' }
-          expect(json.to_h).to include(employment_type)
+          expect(json.to_h).to include('employmentType': 'PART_TIME')
+        end
+
+        it 'maps job_share working pattern to JOB_SHARE' do
+          vacancy = create(:vacancy, working_patterns: ['job_share'])
+
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          expect(json.to_h).to include('employmentType': 'JOB_SHARE')
+        end
+
+        it 'maps compressed_hours working pattern to COMPRESSED_HOURS' do
+          vacancy = create(:vacancy, working_patterns: ['compressed_hours'])
+
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          expect(json.to_h).to include('employmentType': 'COMPRESSED_HOURS')
+        end
+
+        it 'maps staggered_hours working pattern to STAGGERED_HOURS' do
+          vacancy = create(:vacancy, working_patterns: ['staggered_hours'])
+
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          expect(json.to_h).to include('employmentType': 'STAGGERED_HOURS')
+        end
+
+        it 'maps multiple values to an array' do
+          vacancy = create(:vacancy, working_patterns: ['part_time', 'job_share', 'staggered_hours'])
+
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          expect(json.to_h).to include('employmentType': 'PART_TIME, JOB_SHARE, STAGGERED_HOURS')
         end
       end
 

@@ -7,7 +7,7 @@ https://github.com/DFE-Digital/login.dfe.oidc
 
 ## Getting set up for development
 
-You will need 4 files for this task. Ask the dev team for a copy of them or access the TeachingJobs vault:
+You will need 4 files for this task. Access them from the [secrets repository][secrets-repository]:
 
 - RootCA.pem
 - RootCA.key
@@ -26,6 +26,8 @@ To do it without Docker you could run:
 ```
 rails s -b 'ssl://localhost:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'
 ```
+
+[secrets-repository]: https://github.com/DFE-Digital/teaching-vacancies-service-secrets/tree/master/secrets/dev
 
 ## Repeating the process
 This guide was used to create the required components and configure a development machine properly of which only the local.crt and local.key have been committed to source control: https://medium.freecodecamp.org/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec

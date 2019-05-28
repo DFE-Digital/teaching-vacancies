@@ -60,13 +60,25 @@
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'second_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
 
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
-          = t('jobs.working_pattern')
-        %dd.app-check-your-answers__answer
-          = @vacancy.working_pattern.humanize
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_pattern'), 'aria-label': t('jobs.aria_labels.change_working_pattern'), class: 'govuk-link'
+      - if @vacancy.working_patterns?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question
+            = t('jobs.working_patterns')
+          %dd.app-check-your-answers__answer
+            = @vacancy.working_patterns
+            - if @vacancy.flexible_working?
+              = @vacancy.flexible_working
+          %dd.app-check-your-answers__change
+            = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
+
+      - if @vacancy.weekly_hours?
+        .app-check-your-answers__contents
+          %dt.app-check-your-answers__question
+            = t('jobs.weekly_hours')
+          %dd.app-check-your-answers__answer
+            = @vacancy.weekly_hours
+          %dd.app-check-your-answers__change
+            = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'weekly_hours'), 'aria-label': t('jobs.aria_labels.change_weekly_hours'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
@@ -94,27 +106,11 @@
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
-          = t('jobs.flexible_working')
-        %dd.app-check-your-answers__answer
-          = @vacancy.flexible_working
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'flexible_working'), 'aria-label': t('jobs.aria_labels.change_flexible_working'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
           = t('jobs.benefits')
         %dd.app-check-your-answers__answer
           = @vacancy.benefits
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'benefits'), 'aria-label': t('jobs.aria_labels.change_employee_benefits'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
-          = t('jobs.weekly_hours')
-        %dd.app-check-your-answers__answer
-          = @vacancy.weekly_hours
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'weekly_hours'), 'aria-label': t('jobs.aria_labels.change_weekly_hours'), class: 'govuk-link'
 
       .app-check-your-answers__contents
         %dt.app-check-your-answers__question
