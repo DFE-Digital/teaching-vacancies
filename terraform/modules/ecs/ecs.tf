@@ -477,18 +477,6 @@ module "migrate_phase_to_phases_task" {
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
 }
 
-module "migrate_working_pattern_task" {
-  source = "../ecs-task"
-
-  task_name    = "${var.ecs_service_web_task_name}_migrate_working_pattern"
-  task_command = "${var.migrate_working_pattern_task_command}"
-
-  container_definition_template = "${module.rake_container_definition.template}"
-
-  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-}
-
 module "performance_platform_submit_all_task" {
   source = "../ecs-task"
 

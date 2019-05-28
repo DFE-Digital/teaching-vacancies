@@ -107,8 +107,6 @@ module "ecs" {
 
   migrate_phase_to_phases_task_command = "${var.migrate_phase_to_phases_task_command}"
 
-  migrate_working_pattern_task_command = "${var.migrate_working_pattern_task_command}"
-
   vacancies_statistics_refresh_cache_task_command  = "${var.vacancies_statistics_refresh_cache_task_command}"
   vacancies_statistics_refresh_cache_task_schedule = "${var.vacancies_statistics_refresh_cache_task_schedule}"
 

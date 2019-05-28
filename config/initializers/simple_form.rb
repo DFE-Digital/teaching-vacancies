@@ -43,7 +43,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
 
     ## Inputs
-    b.use :label, class: 'govuk-label'
+    b.use :label, class: 'govuk-label govuk-label'
     b.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
     b.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
     b.use :input, class: 'govuk-input'
@@ -98,9 +98,9 @@ SimpleForm.setup do |config|
   config.item_wrapper_tag = :div
 
   config.wrappers :select, tag: 'div',
-                           class: 'govuk-form-group',
-                           error_class: 'govuk-form-group--error' do |field|
-    field.use :label, wrap_with: { tag: 'span', class: 'govuk-label' }
+                             class: 'govuk-form-group',
+                             error_class: 'govuk-form-group--error' do |field|
+    field.use :label, wrap_with: { tag: 'span', class: 'govuk-label govuk-label' }
     field.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
     field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
     field.use :input, as: :select, class: 'govuk-select'
@@ -109,44 +109,28 @@ SimpleForm.setup do |config|
   config.wrappers :textarea, tag: 'div',
                              class: 'govuk-form-group',
                              error_class: 'govuk-form-group--error' do |field|
-    field.use :label, wrap_with: { tag: 'span', class: 'govuk-label' }
+    field.use :label, wrap_with: { tag: 'span', class: 'govuk-label govuk-label' }
     field.use :hint, wrap_with: { tag: 'div', class: 'govuk-hint' }
     field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
     field.use :input, as: :text, class: 'govuk-textarea'
   end
 
-  config.wrappers :inline_checkbox, tag: 'div',
-                                    class: 'govuk-form-group',
-                                    error_class: 'govuk-form-group--error' do |checkbox|
+  config.wrappers :inline_checkbox, :tag => 'div',
+                                    :class => 'govuk-form-group',
+                                    :error_class => 'error' do |checkbox|
     checkbox.use :html5
-    checkbox.wrapper class: 'govuk-checkboxes__item' do |field|
-      field.use :input, class: 'govuk-input govuk-checkboxes__input'
-      field.use :label_text, wrap_with: { tag: 'label', class: 'govuk-label govuk-checkboxes__label' }
+    checkbox.wrapper :class => 'govuk-checkboxes__item' do |field|
+      field.use :input, class: 'govuk-checkboxes__input'
+      field.use :label_text, wrap_with: { tag: 'label', class: 'govuk-label govuk-label govuk-checkboxes__label' }
     end
 
-    checkbox.use :error, wrap_with: { tag: 'div', class: 'help-inline' }
-    checkbox.use :hint,  wrap_with: { tag: 'div', class: 'govuk-hint' }
-  end
-
-  config.wrappers :checkboxes, tag: 'div',
-                               class: 'govuk-form-group',
-                               error_class: 'govuk-form-group--error',
-                               item_wrapper_class: 'govuk-checkboxes__item',
-                               include_hidden: false do |checkboxes|
-    checkboxes.use :html5
-
-    checkboxes.use :label, class: 'govuk-label'
-    checkboxes.use :hint,  wrap_with: { tag: 'div', class: 'govuk-hint' }
-    checkboxes.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
-
-    checkboxes.wrapper class: 'govuk-checkboxes' do |field|
-      field.use :input, class: 'govuk-input govuk-checkboxes__input'
-    end
+    checkbox.use :error, :wrap_with => { :tag => 'div', :class => 'help-inline' }
+    checkbox.use :hint,  :wrap_with => { :tag => 'div', :class => 'govuk-hint' }
   end
 
   config.wrappers :money, tag: 'div',
-                          class: 'salary_field govuk-form-group',
-                          error_class: 'govuk-form-group--error' do |field|
+                                class: 'salary_field govuk-form-group',
+                                error_class: 'govuk-form-group--error' do |field|
     field.use :html5
     field.use :hint,  wrap_with: { tag: 'div', class: 'govuk-hint' }
     field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
@@ -158,7 +142,7 @@ SimpleForm.setup do |config|
   # config.item_wrapper_class = nil
 
   # How the label text should be generated altogether with the required text.
-  config.label_text = ->(label, required, _explicit_label) { required.present? ? label.to_s : "#{label} (optional)" }
+  config.label_text = lambda { |label, required, explicit_label| required.present? ? "#{label}" : "#{label} (optional)" }
 
   # You can define the class to use on all labels. Default is nil.
   # config.label_class = 'form-label'

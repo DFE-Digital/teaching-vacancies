@@ -132,10 +132,6 @@ variable "migrate_phase_to_phases_task_command" {
   type = "list"
 }
 
-variable "migrate_working_pattern_task_command" {
-  type = "list"
-}
-
 variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}

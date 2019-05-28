@@ -8,9 +8,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   end
 
   context 'attempting to edit a draft vacancy' do
-    let(:vacancy) { create(:vacancy, :draft, school: school) }
-
     scenario 'redirects to the review vacancy page' do
+      vacancy = create(:vacancy, :draft, school: school)
       visit edit_school_job_path(vacancy.id)
 
       expect(page).to have_content("Review the job for #{school.name}")
@@ -28,15 +27,16 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   end
 
   context 'editing a published vacancy' do
-    let(:vacancy) { create(:vacancy, :published, school: school) }
+    scenario 'All vacancy information is shown' do
+      vacancy = create(:vacancy, :published, school: school)
 
-    scenario 'shows all vacancy information' do
       visit edit_school_job_path(vacancy.id)
 
       verify_all_vacancy_details(VacancyPresenter.new(vacancy))
     end
 
     scenario 'takes you to the edit page' do
+      vacancy = create(:vacancy, :published, school: school)
       visit edit_school_job_path(vacancy.id)
 
       expect(page).to have_content("Edit job for #{school.name}")
@@ -44,10 +44,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
     context '#job_specification' do
       scenario 'can not be edited when validation fails' do
+        vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
 
         expect(page).to have_content("Edit job for #{school.name}")
-        click_link_in_container_with_text(I18n.t('jobs.job_title'))
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: ''
         click_on 'Update job'
@@ -55,9 +56,10 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Job title can\'t be blank')
       end
 
-      scenario 'can be successfully edited' do
+      scenario 'can be succesfuly edited' do
+        vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.job_title'))
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on 'Update job'
@@ -69,7 +71,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'ensures the vacancy slug is updated when the title is saved' do
         vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
         visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.job_title'))
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on 'Update job'
@@ -81,36 +83,12 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page.current_path).to eq('/jobs/assistant-head-teacher')
       end
 
-      scenario 'clears flexible_working when working_patterns match' do
-        vacancy = create(:vacancy,
-                         :published,
-                         school: school,
-                         working_patterns: ['full_time'],
-                         flexible_working: true)
-
-        visit edit_school_job_path(vacancy.id)
-
-        click_link_in_container_with_text(I18n.t('jobs.working_patterns'))
-
-        check Vacancy.human_attribute_name('working_patterns.part_time'),
-              name: 'job_specification_form[working_patterns][]'
-        click_on 'Update job'
-
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
-
-        updated_vacancy = Vacancy.find(vacancy.id)
-
-        expect(updated_vacancy.working_patterns).to eq(['full_time', 'part_time'])
-        expect(updated_vacancy.flexible_working).to eq(nil)
-
-        expect(page.html).to include(VacancyPresenter.new(updated_vacancy).flexible_working)
-      end
-
       scenario 'tracks the vacancy update' do
+        vacancy = create(:vacancy, :published, school: school)
         job_title = vacancy.job_title
 
         visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.job_title'))
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on 'Update job'
@@ -122,11 +100,13 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'notifies the Google index service' do
+        vacancy = create(:vacancy, :published, school: school)
+
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.job_title'))
+        click_link_in_container_with_text('Job title')
 
         fill_in 'job_specification_form[job_description]', with: 'Sample description'
         click_on 'Update job'
@@ -135,6 +115,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
     context '#candidate_specification' do
       scenario 'can not be edited when validation fails' do
+        vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
 
         expect(page).to have_content("Edit job for #{school.name}")
@@ -148,7 +129,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be successfully edited' do
+      scenario 'can be succesfuly edited' do
+        vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.qualifications'))
 
@@ -160,6 +142,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'tracks the vacancy update' do
+        vacancy = create(:vacancy, :published, school: school)
         qualifications = vacancy.qualifications
 
         visit edit_school_job_path(vacancy.id)
@@ -176,6 +159,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'adds a job to update the Google index in the queue' do
+        vacancy = create(:vacancy, :published, school: school)
+
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
@@ -189,6 +174,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
     context '#application_details' do
       scenario 'can not be edited when validation fails' do
+        vacancy = create(:vacancy, :published, school: school)
         visit edit_school_job_path(vacancy.id)
 
         expect(page).to have_content("Edit job for #{school.name}")
@@ -202,7 +188,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can be successfully edited' do
+      scenario 'can be succesfuly edited' do
+        vacancy = create(:vacancy, :published, school: school)
+        vacancy = VacancyPresenter.new(vacancy)
         visit edit_school_job_path(vacancy.id)
 
         click_link_in_container_with_text(I18n.t('jobs.application_link'))
@@ -212,8 +200,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_on 'Update job'
 
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
-
-        verify_all_vacancy_details(VacancyPresenter.new(vacancy))
+        verify_all_vacancy_details(vacancy)
       end
 
       context 'if the job post has already been published' do
@@ -261,6 +248,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'tracks the vacancy update' do
+        vacancy = create(:vacancy, :published, school: school)
         application_link = vacancy.application_link
 
         visit edit_school_job_path(vacancy.id)
@@ -277,6 +265,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'adds a job to update the Google index in the queue' do
+        vacancy = create(:vacancy, :published, school: school)
+
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 

@@ -7,18 +7,19 @@ FactoryBot.define do
     association :school
 
     job_title { Faker::Lorem.sentence[1...30].strip }
+    working_pattern { :full_time }
     job_description { Faker::Lorem.paragraph(4) }
     education { Faker::Lorem.paragraph(4) }
     qualifications { Faker::Lorem.paragraph(4) }
     experience { Faker::Lorem.paragraph(4) }
     status { :published }
-    working_patterns { ['full_time'] }
     expires_on { Faker::Time.forward(14) }
     publish_on { Time.zone.today }
     minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
     maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
+    weekly_hours { '8.5' }
     benefits { Faker::Lorem.sentence }
     newly_qualified_teacher { true }
     reference { SecureRandom.uuid }
@@ -55,6 +56,7 @@ FactoryBot.define do
       ends_on { Faker::Time.between(Time.zone.today + 30.days, Time.zone.today + 60.days) }
       expires_on { Faker::Time.between(Time.zone.today + 2.days, Time.zone.today + 9.days) }
       publish_on { Faker::Time.between(Time.zone.today, Time.zone.today + 1.day) }
+      flexible_working { true }
     end
 
     trait :draft do
@@ -98,7 +100,6 @@ FactoryBot.define do
     end
 
     trait :job_schema do
-      working_patterns { ['full_time', 'part_time'] }
       weekly_hours { '8.5' }
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
@@ -106,12 +107,6 @@ FactoryBot.define do
 
     trait :expire_tomorrow do
       expires_on { Time.zone.tomorrow.end_of_day }
-    end
-
-    trait :without_working_patterns do
-      to_create { |instance| instance.save(validate: false) }
-      sequence(:slug) { |n| "slug-#{n}" }
-      working_patterns { nil }
     end
   end
 end

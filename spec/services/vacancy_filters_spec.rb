@@ -92,8 +92,8 @@ RSpec.describe VacancyFilters do
 
     it 'returns true if any filters are set' do
       filters = described_class.new(
-        location: 'location',
-        minimum_salary: 'minimum_salary'
+        minimum_salary: 'minimum_salary',
+        maximum_salary: 'maximum_salary',
       )
 
       expect(filters.any?).to be true

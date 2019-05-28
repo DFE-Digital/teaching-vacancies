@@ -68,8 +68,6 @@ GEM
     aes_key_wrap (1.0.1)
     ansi (1.5.0)
     arel (9.0.0)
-    array_enum (1.0.1)
-      activemodel
     ast (2.4.0)
     attr_required (1.0.1)
     aws-sdk-core (2.11.109)
@@ -502,7 +500,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord-session_store
   addressable
-  array_enum
   breasal (~> 0.0.1)
   browser
   bullet

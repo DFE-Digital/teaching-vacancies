@@ -2,7 +2,7 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
-  delegate :working_patterns, to: :model, prefix: true
+  delegate :total_pages, to: :model
 
   def share_url(source: nil, medium: nil, campaign: nil, content: nil)
     params = { protocol: 'https' }
@@ -20,16 +20,9 @@ class VacancyPresenter < BasePresenter
   def salary_range(del = 'to')
     return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
 
-    range = "#{number_to_currency(model.minimum_salary)} #{del} "
-    range += "#{number_to_currency(model.maximum_salary)} "
-    range += if model.pro_rata_salary?
-               I18n.t('jobs.per_year_pro_rata')
-             elsif model.flexible_working?
-               I18n.t('jobs.per_year_fte')
-             else
-               I18n.t('jobs.per_year')
-             end
-    range
+    "#{number_to_currency(model.minimum_salary)} #{del} "\
+    "#{number_to_currency(model.maximum_salary)}"\
+    "#{model.part_time? ? ' per year pro rata' : ' per year'}"
   end
 
   def job_description
@@ -116,35 +109,23 @@ class VacancyPresenter < BasePresenter
     model.newly_qualified_teacher? ? 'Suitable' : 'Not suitable'
   end
 
+  # rubocop:disable Rails/OutputSafety
   def flexible_working
-    return unless model.flexible_working?
+    if model.flexible_working?
+      mailto = mail_to(model.contact_email, model.school.name, class: 'govuk-link')
+      @flexible_working = safe_join([I18n.t('jobs.flexible_working_info', mailto: mailto).html_safe])
+    else
+      'No'
+    end
+  end
+  # rubocop:enable Rails/OutputSafety
 
-    mailto = mail_to(model.contact_email, model.school.name, class: 'govuk-link')
-
-    # rubocop:disable Rails/OutputSafety
-    I18n.t('jobs.flexible_working_info', mailto: mailto).html_safe
-    # rubocop:enable Rails/OutputSafety
+  def working_pattern
+    model.working_pattern.sub('_', ' ').humanize
   end
 
-  def working_patterns?
-    model_working_patterns.present?
-  end
-
-  def working_patterns
-    return unless working_patterns?
-
-    patterns = model_working_patterns.map do |working_pattern|
-      Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    end.join(', ')
-
-    I18n.t("jobs.working_patterns_info_#{model_working_patterns.count > 1 ? 'many' : 'one'}", patterns: patterns)
-        .capitalize
-  end
-
-  def working_patterns_for_job_schema
-    return unless working_patterns?
-
-    model_working_patterns.map(&:upcase).join(', ')
+  def working_pattern_for_job_schema
+    model.working_pattern.upcase
   end
 
   def review_page_title

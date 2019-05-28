@@ -7,12 +7,10 @@ module VacancyJobSpecificationValidations
     validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
     validates :job_description, length: { minimum: 10, maximum: 50_000 }, if: :job_description?
 
-    validates :minimum_salary, salary: { presence: true, minimum_value: true }
+    validates :minimum_salary, salary: { presence: true, minimum_value: false }
     validates :maximum_salary, salary: { presence: false }, if: :minimum_valid_and_maximum_salary_present?
     validate :maximum_salary_greater_than_minimum, if: :minimum_and_maximum_salary_present_and_valid?
-
-    validates :working_patterns, presence: true
-
+    validates :working_pattern, presence: true
     validate :working_hours
 
     validate :starts_on_in_future?, if: :starts_on?
@@ -85,9 +83,11 @@ module VacancyJobSpecificationValidations
   end
 
   def maximum_salary_greater_than_minimum
-    return unless maximum_lower_than_minimum_salary?
+    errors.add(:maximum_salary, maximum_salary_must_be_greater_than_minimum_error) if maximum_lower_than_minimum_salary?
+  end
 
-    errors.add(:maximum_salary, maximum_salary_must_be_greater_than_minimum_error)
+  def minimum_salary_greater_than_minimum_payscale
+    errors.add(:minimum_salary, min_salary_lower_than_minimum_payscale_error) unless minimum_at_least_minimum_payscale?
   end
 
   # rubocop:disable Lint/Void

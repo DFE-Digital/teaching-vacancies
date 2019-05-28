@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Filtering vacancies' do
-  context 'when filtering by location', elasticsearch: true do
-    scenario 'search radius defaults to 20' do
+  context 'Filterable by location', elasticsearch: true do
+    scenario 'The search radius defaults to 20' do
       visit jobs_path
 
       within '.filters-form' do
@@ -10,7 +10,7 @@ RSpec.feature 'Filtering vacancies' do
       end
     end
 
-    scenario 'search results can be filtered by the selected location and radius' do
+    scenario 'Search results can be filtered by the selected location and radius' do
       expect(Geocoder).to receive(:coordinates).with('enfield')
                                                .and_return([51.6622925, -0.1180655])
       enfield_vacancy = create(:vacancy, :published,
@@ -50,7 +50,7 @@ RSpec.feature 'Filtering vacancies' do
 
     before(:each) { Vacancy.__elasticsearch__.client.indices.flush }
 
-    scenario 'is filterable by subject' do
+    scenario 'Filterable by subject' do
       visit jobs_path
 
       within '.filters-form' do
@@ -65,7 +65,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(english_subject_vacancy.job_title)
     end
 
-    scenario 'is filterable by job title' do
+    scenario 'Filterable by job title' do
       visit jobs_path
 
       within '.filters-form' do
@@ -81,21 +81,19 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  scenario 'is filterable by working pattern', elasticsearch: true do
-    part_time_vacancy = create(:vacancy, :published, working_patterns: ['part_time'])
-    full_time_vacancy = create(:vacancy, :published, working_patterns: ['full_time'])
-    full_and_part_time_vacancy = create(:vacancy, :published, working_patterns: ['full_time', 'part_time'])
+  scenario 'Filterable by working pattern', elasticsearch: true do
+    part_time_vacancy = create(:vacancy, :published, working_pattern: :part_time)
+    full_time_vacancy = create(:vacancy, :published, working_pattern: :full_time)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
     within '.filters-form' do
-      select 'Part-time', from: 'working_pattern'
+      select 'Part time', from: 'working_pattern'
       page.find('.govuk-button[type=submit]').click
     end
 
     expect(page).to have_content(part_time_vacancy.job_title)
-    expect(page).to have_content(full_and_part_time_vacancy.job_title)
     expect(page).not_to have_content(full_time_vacancy.job_title)
   end
 
@@ -106,7 +104,7 @@ RSpec.feature 'Filtering vacancies' do
 
     before(:each) { Vacancy.__elasticsearch__.client.indices.flush }
 
-    scenario 'is filterable by single education phase selection' do
+    scenario 'Filterable by single education phase selection' do
       visit jobs_path
 
       within '.filters-form' do
@@ -119,7 +117,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).not_to have_content(secondary_vacancy.job_title)
     end
 
-    scenario 'is filterable by multiple education phase selections' do
+    scenario 'Filterable by multiple education phase selections' do
       visit jobs_path
 
       within '.filters-form' do
@@ -133,7 +131,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(secondary_vacancy.job_title)
     end
 
-    scenario 'displays all available jobs when "Any" education phase selected' do
+    scenario 'Display all available jobs when "Any" education phase selected' do
       visit jobs_path
 
       within '.filters-form' do
@@ -147,9 +145,9 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  scenario 'is filterable by minimum salary', elasticsearch: true do
-    low_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
-    high_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
+  scenario 'Filterable by minimum salary', elasticsearch: true do
+    lower_paid_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 20000)
+    higher_paid_vacancy = create(:vacancy, :published, minimum_salary: 42000, maximum_salary: 45000)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
@@ -159,12 +157,12 @@ RSpec.feature 'Filtering vacancies' do
       page.find('.govuk-button[type=submit]').click
     end
 
-    expect(page).to have_content(high_paid_vacancy.job_title)
-    expect(page).not_to have_content(low_paid_vacancy.job_title)
+    expect(page).to have_content(higher_paid_vacancy.job_title)
+    expect(page).not_to have_content(lower_paid_vacancy.job_title)
   end
 
-  context 'when filtering by newly qualified teacher', elasticsearch: true do
-    scenario 'search results can be filtered by NQT suitability' do
+  context 'Filterable by newly qualified teacher', elasticsearch: true do
+    scenario 'Suitable for NQTs' do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
       not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
 
@@ -181,7 +179,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_field('newly_qualified_teacher', checked: true)
     end
 
-    scenario 'displays all available jobs when NQT suitable is unchecked', elasticsearch: true do
+    scenario 'Display all available jobs when NQT suitable is unchecked', elasticsearch: true do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
       not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
 
@@ -200,7 +198,7 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  context 'when searching triggers a job to write a search_event to the audit Spreadsheet', elasticsearch: true do
+  context 'Searching triggers a job to write a search_event to the audit Spreadsheet', elasticsearch: true do
     scenario 'correctly logs the number of non-paginated results' do
       create_list(:vacancy, 3, :published, job_title: 'Physics', newly_qualified_teacher: true)
       create(:vacancy, :published, newly_qualified_teacher: false)
@@ -271,8 +269,8 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  context 'when resetting search filters', elasticsearch: true do
-    it 'hiring staff can reset search after filtering' do
+  context 'Resetting search filters', elasticsearch: true do
+    it 'Hiring staff can reset search after filtering' do
       create(:vacancy, :published, job_title: 'Physics Teacher')
 
       Vacancy.__elasticsearch__.client.indices.flush
@@ -288,7 +286,7 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
     end
 
-    it 'hiring staff can reset search after adding any filter params to the url' do
+    it 'Hiring staff can reset search after adding any filter params to the url' do
       create(:vacancy, :published, job_title: 'Physics Teacher')
       Vacancy.__elasticsearch__.client.indices.flush
 

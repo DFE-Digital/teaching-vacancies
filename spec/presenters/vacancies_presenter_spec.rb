@@ -63,9 +63,8 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe '#to_csv' do
-    let!(:vacancy) { VacancyPresenter.new(create(:vacancy, job_title: 'School teacher')) }
-
-    it 'returns the correct data', elasticsearch: true do
+    it 'returns the correct number for multiple vacancies', elasticsearch: true do
+      vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'School teacher'))
       Vacancy.__elasticsearch__.client.indices.flush
 
       vacancies = Vacancy.search('Teacher').records
@@ -81,26 +80,15 @@ RSpec.describe VacanciesPresenter do
                                         baseSalary.unitText hiringOrganization.type hiringOrganization.name
                                         hiringOrganization.identifier])
 
-      expect(vacancies_csv[1]).to eq([vacancy.job_title,
-                                      vacancy.job_description,
-                                      vacancy.benefits,
-                                      vacancy.publish_on.to_time.iso8601,
-                                      vacancy.education,
-                                      vacancy.qualifications,
-                                      vacancy.experience,
-                                      vacancy.working_patterns_for_job_schema,
-                                      vacancy.school.town,
-                                      vacancy.school&.region&.name,
-                                      vacancy.school.address,
+      expect(vacancies_csv[1]).to eq([vacancy.job_title, vacancy.job_description,
+                                      vacancy.benefits, vacancy.publish_on.to_time.iso8601, vacancy.education,
+                                      vacancy.qualifications, vacancy.experience,
+                                      vacancy.working_pattern_for_job_schema, vacancy.school.town,
+                                      vacancy.school&.region&.name, vacancy.school.address,
                                       vacancy.school.postcode,
                                       Rails.application.routes.url_helpers.job_url(vacancy, protocol: 'https'),
-                                      'GBP',
-                                      vacancy.minimum_salary,
-                                      vacancy.maximum_salary,
-                                      'YEAR',
-                                      'School',
-                                      vacancy.school.name,
-                                      vacancy.school.urn])
+                                      'GBP', vacancy.minimum_salary, vacancy.maximum_salary, 'YEAR',
+                                      'School', vacancy.school.name, vacancy.school.urn])
     end
   end
 

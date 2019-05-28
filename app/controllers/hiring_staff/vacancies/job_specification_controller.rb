@@ -8,12 +8,12 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def create
-    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
-    store_vacancy_attributes(@job_specification_form.vacancy)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form)
+    store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact)
 
     if @job_specification_form.valid?
-      vacancy = session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
-      store_vacancy_attributes(@job_specification_form.vacancy)
+      vacancy = session_vacancy_id ? update_vacancy(job_specification_form) : save_vacancy_without_validation
+      store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
 
       redirect_to_next_step(vacancy)
     else
@@ -30,35 +30,36 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @job_specification_form.valid?
   end
 
+  # rubocop:disable Metrics/AbcSize
   def update
     vacancy = school.vacancies.published.find(vacancy_id)
-    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
+    @job_specification_form = JobSpecificationForm.new(job_specification_form)
     @job_specification_form.id = vacancy.id
 
     if @job_specification_form.valid?
       reset_session_vacancy!
-      update_vacancy(job_specification_form_params, vacancy)
+      update_vacancy(job_specification_form, vacancy)
       update_google_index(vacancy) if vacancy.listed?
       redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
-      store_vacancy_attributes(@job_specification_form.vacancy)
+      store_vacancy_attributes(@job_specification_form.vacancy.attributes.compact!)
       redirect_to edit_school_job_job_specification_path(vacancy.id,
                                                          anchor: 'errors',
                                                          source: 'update')
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
-  def job_specification_form_params
+  def job_specification_form
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
-                                                   :minimum_salary, :maximum_salary,
+                                                   :minimum_salary, :maximum_salary, :working_pattern,
                                                    :benefits, :weekly_hours, :subject_id, :min_pay_scale_id,
                                                    :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
                                                    :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                                                    :flexible_working, :newly_qualified_teacher,
-                                                   :first_supporting_subject_id, :second_supporting_subject_id,
-                                                   working_patterns: [])
+                                                   :first_supporting_subject_id, :second_supporting_subject_id)
   end
 
   def save_vacancy_without_validation

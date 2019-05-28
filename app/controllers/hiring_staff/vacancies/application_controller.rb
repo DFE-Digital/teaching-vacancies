@@ -18,9 +18,9 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
   end
 
-  def store_vacancy_attributes(vacancy)
+  def store_vacancy_attributes(vacancy_attributes)
     session[:vacancy_attributes] ||= {}
-    session[:vacancy_attributes].merge!(vacancy.attributes.compact)
+    session[:vacancy_attributes].merge!(vacancy_attributes)
   end
 
   def update_vacancy(attributes, vacancy = nil)

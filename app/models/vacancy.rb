@@ -2,17 +2,6 @@ require 'elasticsearch/model'
 require 'auditor'
 
 class Vacancy < ApplicationRecord
-  FLEXIBLE_WORKING_PATTERN_OPTIONS = {
-    'part_time' => 100,
-    'job_share' => 101,
-    'compressed_hours' => 102,
-    'remote_working' => 103
-  }.freeze
-
-  WORKING_PATTERN_OPTIONS = {
-    'full_time' => 0
-  }.merge(FLEXIBLE_WORKING_PATTERN_OPTIONS).freeze
-
   include ApplicationHelper
   include Auditor::Model
 
@@ -75,7 +64,7 @@ class Vacancy < ApplicationRecord
       indexes :updated_at, type: :date
       indexes :publish_on, type: :date
       indexes :status, type: :keyword
-      indexes :working_patterns, type: :keyword
+      indexes :working_pattern, type: :keyword
       indexes :minimum_salary, type: :integer
       indexes :maximum_salary, type: :integer
       indexes :coordinates, type: :geo_point, ignore_malformed: true
@@ -84,13 +73,11 @@ class Vacancy < ApplicationRecord
   end
 
   extend FriendlyId
-  extend ArrayEnum
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: %i[published draft trashed]
-  enum working_pattern: %i[full_time part_time] # Deprecated
-  array_enum working_patterns: WORKING_PATTERN_OPTIONS
+  enum working_pattern: %i[full_time part_time]
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
@@ -118,9 +105,6 @@ class Vacancy < ApplicationRecord
   paginates_per 10
 
   validates :slug, presence: true
-
-  before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
-  before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
 
   after_commit on: %i[create update] do
     __elasticsearch__.index_document
@@ -197,28 +181,6 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = salary.to_s.strip
   end
 
-  def weekly_hours?
-    weekly_hours.present? && derived_flexible_working?
-  end
-
-  def flexible_working?
-    return flexible_working unless flexible_working.nil?
-
-    derived_flexible_working?
-  end
-
-  def attributes
-    super().merge('working_patterns' => working_patterns)
-  end
-
-  def skip_update_callbacks(value = true)
-    @skip_update_callbacks = value
-  end
-
-  def skip_update_callbacks?
-    @skip_update_callbacks.present?
-  end
-
   private
 
   def slug_candidates
@@ -227,30 +189,5 @@ class Vacancy < ApplicationRecord
       %i[job_title school_name],
       %i[job_title location],
     ]
-  end
-
-  def derived_flexible_working?
-    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.key?(working_pattern) }.any?
-  end
-
-  def will_save_change_to_working_patterns_or_flexible_working?
-    will_save_change_to_working_patterns? || will_save_change_to_flexible_working?
-  end
-
-  def update_flexible_working
-    return if skip_update_callbacks?
-    return if flexible_working.nil?
-
-    self.flexible_working = nil if flexible_working == derived_flexible_working?
-  end
-
-  def update_pro_rata_salary
-    return if skip_update_callbacks?
-
-    self.pro_rata_salary = nil if pro_rata_salary.blank?
-
-    return if pro_rata_salary.nil?
-
-    self.pro_rata_salary = working_patterns == ['part_time'] ? true : nil
   end
 end

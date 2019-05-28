@@ -42,7 +42,7 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{vacancy_presenter.location}/)
         expect(body).to match(/Salary: #{vacancy_presenter.salary_range}/)
 
-        expect(body).to match(/#{vacancy_presenter.working_patterns}/)
+        expect(body).to match(/#{vacancy_presenter.working_pattern}/)
 
         expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
       end
@@ -66,14 +66,14 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{first_vacancy_presenter.location}/)
         expect(body).to match(/Salary: #{first_vacancy_presenter.salary_range}/)
-        expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
+        expect(body).to match(/#{first_vacancy_presenter.working_pattern}/)
         expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
 
         expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{second_vacancy_presenter.location}/)
         expect(body).to match(/Salary: #{second_vacancy_presenter.salary_range}/)
-        expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
+        expect(body).to match(/#{second_vacancy_presenter.working_pattern}/)
         expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
       end
     end

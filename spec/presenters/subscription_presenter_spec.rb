@@ -36,7 +36,7 @@ RSpec.describe SubscriptionPresenter do
       let(:search_criteria) { { working_pattern: 'part_time' } }
 
       it 'formats and returns the working pattern' do
-        expect(presenter.filtered_search_criteria['working_pattern']).to eq('Part-time')
+        expect(presenter.filtered_search_criteria['working_pattern']).to eq('Part time')
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe SubscriptionPresenter do
           'job_title' => 'leader',
           'minimum_salary' => '£10',
           'maximum_salary' => '£2,000',
-          'working_pattern' => 'Part-time',
+          'working_pattern' => 'Part time',
           'phases' => 'Secondary, Sixteen plus',
           '' => 'Suitable for NQTs'
         )

@@ -73,7 +73,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     end
 
     scenario 'does not see the Weekly hours label for part time roles that don\'t have weekly hours set' do
-      vacancy = build(:vacancy, :published_slugged, working_patterns: ['part_time'], weekly_hours: nil)
+      vacancy = build(:vacancy, :published_slugged, working_pattern: :part_time, weekly_hours: nil)
       vacancy.save(validate: false)
 
       visit job_path(vacancy)
@@ -82,7 +82,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     end
 
     scenario 'can see the Weekly hours label for part time roles do have weekly hours set' do
-      vacancy = build(:vacancy, :published_slugged, working_patterns: ['part_time'], weekly_hours: 30)
+      vacancy = build(:vacancy, :published_slugged, working_pattern: :part_time, weekly_hours: 30)
       vacancy.save(validate: false)
 
       visit job_path(vacancy)
