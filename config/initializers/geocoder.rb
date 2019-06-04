@@ -1,4 +1,4 @@
-redis = Redis.new(url: ENV['REDIS_CACHE_URL'])
+redis = Redis::Objects.redis
 key = ENV.fetch('ORDNANCE_SURVEY_API_KEY', nil)
 
 Geocoder.configure(
