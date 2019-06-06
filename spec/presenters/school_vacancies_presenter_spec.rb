@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe SchoolVacanciesPresenter do
-  before(:all) do
+  before do
     @school = create(:school)
     @draft_vacancies = create_list(:vacancy, 5, :draft, school: @school)
     @pending_vacancies = create_list(:vacancy, 4, :future_publish, school: @school)
