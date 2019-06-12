@@ -56,7 +56,7 @@ RSpec.feature 'Adding feedback to a vacancy', js: true do
       expect(vacancy.listed_elsewhere).to eq('listed_paid')
     end
 
-    scenario 'when an option is not selected', js: false do
+    scenario 'when an option is not selected in a javascript disabled browser', js: false do
       visit jobs_with_type_school_path(type: :awaiting_feedback)
 
       within('tr', text: vacancy.job_title) do
@@ -67,8 +67,49 @@ RSpec.feature 'Adding feedback to a vacancy', js: true do
       expect(page).to have_content(I18n.t('jobs.feedback_error'))
       expect(page).to have_content(vacancy.job_title)
 
+      expect(page).to_not have_content(I18n.t('jobs.inline_feedback_error'))
+
       expect(vacancy.hired_status).to eq(nil)
       expect(vacancy.listed_elsewhere).to eq(nil)
+    end
+
+    scenario 'when an option is not selected in a javascript enabled browser' do
+      visit jobs_with_type_school_path(type: :awaiting_feedback)
+
+      within('tr', text: vacancy.job_title) do
+        select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
+        click_on I18n.t('buttons.submit')
+      end
+
+      expect(page).to have_content(I18n.t('jobs.inline_feedback_error'))
+      expect(page).to have_content(vacancy.job_title)
+
+      expect(page).to_not have_content(I18n.t('jobs.feedback_error'))
+
+      expect(vacancy.hired_status).to eq(nil)
+      expect(vacancy.listed_elsewhere).to eq(nil)
+    end
+
+    scenario 'input error styling only displays on blank selection field(s)' do
+      visit jobs_with_type_school_path(type: :awaiting_feedback)
+
+      within('tr', text: vacancy.job_title) do
+        click_on I18n.t('buttons.submit')
+      end
+
+      expect(page).to have_content(I18n.t('jobs.inline_feedback_error'), count: 2)
+
+      within('tr', text: vacancy.job_title) do
+        select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
+        click_on I18n.t('buttons.submit')
+
+        select '--', from: 'vacancy_hired_status'
+
+        select I18n.t('jobs.feedback.listed_elsewhere.listed_paid'), from: 'vacancy_listed_elsewhere'
+        click_on I18n.t('buttons.submit')
+      end
+
+      expect(page).to have_content(I18n.t('jobs.inline_feedback_error'), count: 1)
     end
 
     scenario 'When all feedback has been submitted' do
