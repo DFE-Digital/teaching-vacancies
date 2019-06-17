@@ -21,6 +21,6 @@ module HiringStaff::SchoolsHelper
   def awaiting_feedback_badge(count)
     return if count.zero?
 
-    tag.span count, class: 'notification'
+    tag.span count, class: 'notification', 'data-test': 'expired-vacancies-with-feedback-outstanding'
   end
 end

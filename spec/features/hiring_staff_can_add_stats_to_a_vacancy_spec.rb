@@ -1,6 +1,9 @@
 require 'rails_helper'
 require 'sanitize'
-RSpec.feature 'Adding feedback to a vacancy', js: true do
+RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true do
+  NOTIFICATION_BADGE_SELECTOR = "[data-test='expired-vacancies-with-feedback-outstanding']".freeze
+  JOB_TITLE_LINK_SELECTOR = '#job-title.view-vacancy-link'.freeze
+
   let(:school) { create(:school) }
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn)
@@ -8,22 +11,13 @@ RSpec.feature 'Adding feedback to a vacancy', js: true do
   end
 
   context 'when there are vacancies awaiting feedback' do
-    let!(:vacancy) do
-      vacancy = build(:vacancy, :expired, school: school)
-      vacancy.save(validate: false)
-      vacancy
-    end
-
-    let!(:another_vacancy) do
-      vacancy = build(:vacancy, :expired, school: school)
-      vacancy.save(validate: false)
-      vacancy
-    end
+    let!(:vacancy) { create(:vacancy, :expired, school: school) }
+    let!(:another_vacancy) { create(:vacancy, :expired, school: school) }
 
     scenario 'hiring staff can see notification badge' do
       visit school_path
 
-      expect(page).to have_selector('span.notification', text: 2)
+      expect(page).to have_selector(NOTIFICATION_BADGE_SELECTOR, text: 2)
     end
 
     scenario 'hiring staff can see notice of vacancies awaiting feedback' do
@@ -35,9 +29,9 @@ RSpec.feature 'Adding feedback to a vacancy', js: true do
     scenario 'feedback can be added to a vacancy' do
       visit jobs_with_type_school_path(type: :awaiting_feedback)
 
-      expect(page).to have_selector('#job-title.view-vacancy-link', count: 2)
-      expect(page).to have_selector('#job-title.view-vacancy-link', text: vacancy.job_title)
-      expect(page).to have_selector('#job-title.view-vacancy-link', text: another_vacancy.job_title)
+      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 2)
+      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: vacancy.job_title)
+      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: another_vacancy.job_title)
 
       within('tr', text: vacancy.job_title) do
         select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
@@ -140,7 +134,7 @@ RSpec.feature 'Adding feedback to a vacancy', js: true do
     scenario 'hiring staff can not see notification badge' do
       visit school_path
 
-      expect(page).to_not have_selector('span.notification')
+      expect(page).to_not have_selector(NOTIFICATION_BADGE_SELECTOR)
     end
   end
 end
