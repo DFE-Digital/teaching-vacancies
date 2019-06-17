@@ -271,8 +271,8 @@ class Vacancy < ApplicationRecord
     self.pro_rata_salary = working_patterns == ['part_time'] ? true : nil
   end
 
-  def update_stats
-    return unless self.listed_elsewhere_changed? && self.hired_status_changed?
+  def on_expired_vacancy_feedback_submitted_update_stats_updated_at
+    return unless listed_elsewhere_changed? && hired_status_changed?
 
     self.stats_updated_at = Time.zone.now
   end
