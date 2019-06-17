@@ -667,6 +667,29 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
+  context 'stats updated at' do
+    let(:expired_job) { create(:vacancy,:expired) }
+    let(:stats_updated_at) { Vacancy.find(expired_job.id).stats_updated_at }
+
+    it { expect(stats_updated_at).to be_nil }
+
+    it 'saves the time that the stats updated at' do
+      Timecop.freeze(2019, 01, 01, 10, 04, 03) do
+        expired_job.update(listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
+
+        expect(stats_updated_at).to eq(Time.now)
+      end
+    end
+
+    it 'does not update the stats when you are updating the job description' do
+      Timecop.freeze(2019, 01, 01, 10, 04, 03) do
+        expired_job.update(job_description: "I am description")
+
+        expect(stats_updated_at).to be_nil
+      end
+    end
+  end
+
   context 'pro rata salary' do
     context 'when salary is pro rata' do
       context 'and working pattern is part time' do

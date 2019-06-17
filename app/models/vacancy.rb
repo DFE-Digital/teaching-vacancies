@@ -137,6 +137,7 @@ class Vacancy < ApplicationRecord
 
   before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
   before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
+  before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
 
   after_commit on: %i[create update] do
     __elasticsearch__.index_document
@@ -268,5 +269,11 @@ class Vacancy < ApplicationRecord
     return if pro_rata_salary.nil?
 
     self.pro_rata_salary = working_patterns == ['part_time'] ? true : nil
+  end
+
+  def update_stats
+    return unless self.listed_elsewhere_changed? && self.hired_status_changed?
+
+    self.stats_updated_at = Time.zone.now
   end
 end
