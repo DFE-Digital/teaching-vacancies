@@ -11,6 +11,7 @@ TERRAFORM_WORKSPACE=$1
 
 echo "Planning…"
 echo "* Terraform workspace: $TERRAFORM_WORKSPACE"
+echo
 
 read -r -p "Continue? [y/N] " CONT
 if [ "$CONT" = "y" ]; then
@@ -19,7 +20,7 @@ else
   exit 1
 fi
 
-echo "-> Checking out terraform workspace $TERRAFORM_WORKSPACE …"
+echo "-> Checking out terraform workspace ${TERRAFORM_WORKSPACE}…"
 terraform workspace select "$TERRAFORM_WORKSPACE"
 
 echo "-> Planning Terraform changes against the $TERRAFORM_WORKSPACE workspace …"

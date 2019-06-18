@@ -89,7 +89,6 @@ class Vacancy < ApplicationRecord
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: %i[published draft trashed]
-  enum working_pattern: %i[full_time part_time] # Deprecated
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
 
   belongs_to :school, optional: false

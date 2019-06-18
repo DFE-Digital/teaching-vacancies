@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_16_213012) do
+ActiveRecord::Schema.define(version: 2019_06_18_091607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -178,7 +178,6 @@ ActiveRecord::Schema.define(version: 2019_05_16_213012) do
     t.string "minimum_salary", null: false
     t.string "maximum_salary"
     t.text "benefits"
-    t.integer "working_pattern"
     t.string "weekly_hours"
     t.date "starts_on"
     t.date "ends_on"

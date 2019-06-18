@@ -462,7 +462,7 @@ en:
       title: 'Privacy Notice: Teaching Vacancies'
       who_we_are:
         title: Who we are
-        about: This work is being carried out by Department for Education (DfE) Digital, which is a part of DfE. DfE engages the private company dxw to help improve and provide the service. For the purpose of data protection legislation, the DfE is the data controller for the personal data processed as part of Teaching Vacancies. Teaching Vacancies is a free and optional service for schools to list teaching roles.
+        about: This work is being carried out by the Department for Education (DfE) Digital, which is a part of DfE. DfE engages the private company Made Tech to help improve and provide the service. For the purpose of data protection legislation, DfE is the data controller for the personal data processed as part of Teaching Vacancies. Teaching Vacancies is a free and optional service for schools to list teaching roles.
       when_we_collect:
         title: When we collect personal information
         about: 'We receive your personal data when you submit it:'
@@ -484,7 +484,7 @@ en:
       how_we_use:
         title: How we will use your information
         text:
-          - If you contact us, DfE and (where applicable) dxw will use your name and contact information for the purpose of responding to you and providing support. We will not share this information with any other parties.
+          - If you contact us, DfE and (where applicable) Made Tech will use your name and contact information for the purpose of responding to you and providing support. We will not share this information with any other parties.
           - If you sign up for a job alert your email address will be used exclusively for the purpose of sending you an email when a job meeting your chosen search criteria is published to the service.
           - To list jobs on the service, hiring staff at schools need a Teaching Vacancies account, which requires them to supply their name and email address. Names and email addresses shared with us for this purpose are not shared by us with other parties.
           - Information published in job listings may be used by third party job listing sites that use our job listing data via an application programming interface (API), as described in our Terms and Conditions. We are not responsible for how a third party handles any personal information you choose to include in a job listing.
@@ -494,16 +494,15 @@ en:
       who_we_make_available_to:
         title: Who we will make your personal data available to
         line_1: We sometimes need to make personal data available to other organisations. These might include contracted partners (who we have employed to process your personal data on our behalf) and/or other organisations (with whom we need to share your personal data for specific purposes).
-        line_2: Where we need to share your personal data with others, we ensure that this data sharing complies with data protection legislation. We share specific types of personal data with dxw, who have been contracted by DfE to manage the delivery of the digital service.
-        line_3: 'The firm dxw uses your data:'
+        line_2: Where we need to share your personal data with others, we ensure that this data sharing complies with data protection legislation. We share specific types of personal data with dxw and Made Tech, who have been contracted by DfE to manage the delivery and hosting of the digital service.
+        line_3: 'The firms dxw and Made Tech use your data:'
         list:
-          - for user research that informs development of the service, where you have shared your name, email address and/or phone number for this purpose
-          - 'for security purposes: dxw collects part of the IP addresses of people visiting the Teaching Vacancies website (for example, if we were receiving continuous direct denial of service attacks from an IP address range then we could block it)'
-          - 'to enable users to use the service and receive updates: dxw collects the emails of those publishing job listings on Teaching Vacancies and those signing up to job alerts'
+          - 'for security purposes: collecting part of the IP addresses of people visiting the Teaching Vacancies website (for example, if we were receiving continuous direct denial of service attacks from an IP address range then we could block it)'
+          - 'to enable users to use the service and receive updates: collecting the emails of those publishing job listings on Teaching Vacancies and those signing up to job alerts'
       how_long:
         title: How long we will keep your personal data
         text:
-          - Neither DfE nor dxw will keep your personal data longer than we need it for the purpose(s) of research, security and/or delivery of the service, and in any case not longer than 7 years. Your data will be deleted when DfE and dxw no longer need it for these purposes, or when 7 years have passed, whichever comes first.
+          - Neither DfE nor its delivery partners will keep your personal data longer than we need it for the purpose(s) of research, security and/or delivery of the service, and in any case not longer than 7 years. Your data will be deleted when DfE and its delivery partners no longer need it for these purposes, or when 7 years have passed, whichever comes first.
           - Partial IP addresses will be deleted after 7 days unless their request caused an error, in which case they remain in our logs for 30 days.
           - If you share personal information in a job listing we will retain this while the job vacancy is live and for one year after it has expired.
       your_rights:
@@ -527,7 +526,7 @@ en:
         ico: Information Commissioner’s Office (ICO)
       last_updated:
         title: Last updated
-        line_1: We may need to update this privacy notice periodically so we recommend that you revisit this information from time to time. This version was last updated on 25 February 2019.
+        line_1: We may need to update this privacy notice periodically so we recommend that you revisit this information from time to time. This version was last updated on 18 June 2019.
     terms_and_conditions:
       title: Terms and Conditions
       all_users:
