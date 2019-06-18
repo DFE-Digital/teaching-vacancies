@@ -130,8 +130,7 @@ RSpec.describe VacancyPresenter do
     it 'returns nil if working_patterns is unset' do
       vacancy = VacancyPresenter.new(create(:vacancy,
                                             :without_working_patterns,
-                                            school: create(:school, name: 'Smith High School'),
-                                            working_pattern: :full_time))
+                                            school: create(:school, name: 'Smith High School')))
 
       expect(vacancy.working_patterns).to be_nil
     end
@@ -150,8 +149,7 @@ RSpec.describe VacancyPresenter do
     it 'returns nil if working_patterns is unset' do
       vacancy = VacancyPresenter.new(create(:vacancy,
                                             :without_working_patterns,
-                                            school: create(:school, name: 'Smith High School'),
-                                            working_pattern: :full_time))
+                                            school: create(:school, name: 'Smith High School')))
 
       expect(vacancy.working_patterns_for_job_schema).to be_nil
     end
