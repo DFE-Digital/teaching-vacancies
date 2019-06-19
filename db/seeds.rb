@@ -87,7 +87,9 @@ FactoryBot.create(:vacancy,
                   minimum_salary: 30000,
                   maximum_salary: 35000,
                   min_pay_scale: payscale,
-                  leadership: leadership)
+                  leadership: leadership,
+                  total_pageviews: 4,
+                  total_get_more_info_clicks: 2)
 
 FactoryBot.create(:vacancy,
                   job_title: 'Chemistry Teacher',
