@@ -41,7 +41,7 @@ $(document).on('turbolinks:load', function(){
       if (count == 1) {
         notice_count.text('1 job');
       } else {
-        notice_count.text(count + ' vacancies'); // TODO: Why is this vacancies and where is it appearing?
+        notice_count.text(count + ' jobs');
       }
       notification.text(count);
       text = form.data('successMessage');
