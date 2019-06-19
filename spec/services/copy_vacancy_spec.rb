@@ -28,25 +28,51 @@ RSpec.describe CopyVacancy do
     end
 
     context 'not all fields are copied' do
-      it 'should not copy fields that should be unique' do
-        vacancy = create(:vacancy,
-                         job_title: 'Maths teacher',
-                         slug: 'maths-teacher',
-                         weekly_pageviews: 4,
-                         total_pageviews: 4,
-                         weekly_pageviews_updated_at: Time.zone.today - 5.days,
-                         total_pageviews_updated_at: Time.zone.today - 5.days,
-                         total_get_more_info_clicks: 6,
-                         total_get_more_info_clicks_updated_at: Time.zone.today - 5.days)
+      let(:vacancy) do
+        create(:vacancy,
+               job_title: 'Maths teacher',
+               slug: 'maths-teacher',
+               weekly_pageviews: 4,
+               total_pageviews: 4,
+               weekly_pageviews_updated_at: Time.zone.today - 5.days,
+               total_pageviews_updated_at: Time.zone.today - 5.days,
+               total_get_more_info_clicks: 6,
+               total_get_more_info_clicks_updated_at: Time.zone.today - 5.days)
+      end
+      let(:result) { described_class.new(vacancy).call }
 
-        result = described_class.new(vacancy).call
-        expect(Vacancy.find(result.id).slug).to_not eq('maths_teacher')
+      it 'should not copy the slug of a vacancy' do
+        expect(Vacancy.find(result.id).slug).to_not eq('maths-teacher')
+      end
+
+      it 'should not copy the weekly page views of a vacancy' do
         expect(Vacancy.find(result.id).weekly_pageviews).to eq(0)
-        expect(Vacancy.find(result.id).weekly_pageviews_updated_at).to_not eq(Time.zone.today - 5.days)
+      end
+
+      it 'should not copy the weekly page views update time of a vacancy' do
+        Timecop.freeze(Time.zone.today - 5.days) do
+          expect(Vacancy.find(result.id).weekly_pageviews_updated_at).to eq(Time.zone.now)
+        end
+      end
+
+      it 'should not copy the weekly page views of a vacancy' do
         expect(Vacancy.find(result.id).total_pageviews).to eq(0)
-        expect(Vacancy.find(result.id).total_pageviews_updated_at).to_not eq(Time.zone.today - 5.days)
+      end
+
+      it 'should not copy the weekly page views update time of a vacancy' do
+        Timecop.freeze(Time.zone.today - 5.days) do
+          expect(Vacancy.find(result.id).total_pageviews_updated_at).to eq(Time.zone.now)
+        end
+      end
+
+      it 'should not copy the weekly page views of a vacancy' do
         expect(Vacancy.find(result.id).total_get_more_info_clicks).to eq(0)
-        expect(Vacancy.find(result.id).total_get_more_info_clicks_updated_at).to_not eq(Time.zone.today - 5.days)
+      end
+
+      it 'should not copy the weekly page views update time of a vacancy' do
+        Timecop.freeze(Time.zone.today - 5.days) do
+          expect(Vacancy.find(result.id).total_get_more_info_clicks_updated_at).to eq(Time.zone.now)
+        end
       end
     end
   end
