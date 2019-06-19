@@ -90,22 +90,22 @@ class Vacancy < ApplicationRecord
 
   enum status: %i[published draft trashed]
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
-  enum listed_elsewhere: %i[
-    listed_paid
-    listed_free
-    listed_mix
-    not_listed
-    listed_dont_know
-  ]
-  enum hired_status: %i[
-    hired_tvs
-    hired_other_free
-    hired_paid
-    not_filled_ongoing
-    not_filled_readvertised
-    not_filled_not_looking
-    hired_dont_know
-  ]
+  enum listed_elsewhere: {
+    listed_paid: 0,
+    listed_free: 1,
+    listed_mix: 2,
+    not_listed: 3,
+    listed_dont_know: 4
+  }
+  enum hired_status: {
+    hired_tvs: 0,
+    hired_other_free: 1,
+    hired_paid: 2,
+    not_filled_ongoing: 3,
+    not_filled_readvertised: 4,
+    not_filled_not_looking: 5,
+    hired_dont_know: 6
+  }
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
