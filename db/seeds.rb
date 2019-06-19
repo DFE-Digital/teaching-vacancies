@@ -153,4 +153,18 @@ expired_two = FactoryBot.build(:vacancy,
 expired_two.send :set_slug
 expired_two.save(validate: false)
 
+expired_three = FactoryBot.build(:vacancy,
+                                 job_title: 'Subject lead in Maths',
+                                 subject: Subject.find_by!(name: 'Maths'),
+                                 school: academy,
+                                 working_patterns: ['full_time', 'part_time', 'job_share'],
+                                 minimum_salary: 30000,
+                                 maximum_salary: 35000,
+                                 min_pay_scale: payscale,
+                                 leadership: leadership,
+                                 publish_on: Time.zone.today - 5.days,
+                                 expires_on: Time.zone.today - 2.days)
+expired_three.send :set_slug
+expired_three.save(validate: false)
+
 20.times { FactoryBot.create(:vacancy) }
