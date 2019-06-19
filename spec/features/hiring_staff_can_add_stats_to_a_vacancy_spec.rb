@@ -140,7 +140,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       end
 
       within('tr', text: another_vacancy.job_title) do
-        select I18n.t('jobs.feedback.hired_status.not_filled_readvertised'), from: 'vacancy_hired_status'
+        select I18n.t('jobs.feedback.hired_status.not_filled_ongoing'), from: 'vacancy_hired_status'
         select I18n.t('jobs.feedback.listed_elsewhere.listed_dont_know'), from: 'vacancy_listed_elsewhere'
         click_on I18n.t('buttons.submit')
       end

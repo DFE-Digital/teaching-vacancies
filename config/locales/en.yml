@@ -49,7 +49,7 @@ en:
     job_filled: 'Job filled on Teaching Vacancies?'
     listed_elsewhere: 'Listed elsewhere?'
     page_views: 'Total views'
-    get_more_info_clicks: 'Total get more info clicks'
+    get_more_info_clicks: "Total 'get more info' clicks"
     working_patterns: 'Working pattern'
     working_patterns_info_one: '%{patterns} only.'
     working_patterns_info_many: 'Will consider %{patterns}.'
@@ -236,9 +236,9 @@ en:
         hired_tvs: 'Yes'
         hired_other_free: 'No, we hired through another free listing'
         hired_paid: 'No, we hired through a paid service'
+        hired_no_listing: 'No, we hired, but not through a listing or service'
         not_filled_ongoing: 'No, recruitment is ongoing'
-        not_filled_readvertised: 'No, the job was re-advertised'
-        not_filled_not_looking: 'No, we no longer want to fill the job'
+        not_filled_not_looking: "No, we're no longer recruiting for the job"
         hired_dont_know: "I don't know"
   feedback:
     page_title: 'Feedback'
