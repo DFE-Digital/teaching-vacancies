@@ -90,6 +90,22 @@ class Vacancy < ApplicationRecord
 
   enum status: %i[published draft trashed]
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
+  enum listed_elsewhere: {
+    listed_paid: 0,
+    listed_free: 1,
+    listed_mix: 2,
+    not_listed: 3,
+    listed_dont_know: 4
+  }
+  enum hired_status: {
+    hired_tvs: 0,
+    hired_other_free: 1,
+    hired_paid: 2,
+    hired_no_listing: 3,
+    not_filled_ongoing: 4,
+    not_filled_not_looking: 5,
+    hired_dont_know: 6
+  }
 
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
@@ -113,6 +129,7 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
   scope :expired, (-> { published.where('expires_on < ?', Time.zone.today) })
   scope :live, (-> { published.where('publish_on <= ?', Time.zone.today).where('expires_on >= ?', Time.zone.today) })
+  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
 
   paginates_per 10
 
@@ -120,6 +137,7 @@ class Vacancy < ApplicationRecord
 
   before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
   before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
+  before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
 
   after_commit on: %i[create update] do
     __elasticsearch__.index_document
@@ -251,5 +269,11 @@ class Vacancy < ApplicationRecord
     return if pro_rata_salary.nil?
 
     self.pro_rata_salary = working_patterns == ['part_time'] ? true : nil
+  end
+
+  def on_expired_vacancy_feedback_submitted_update_stats_updated_at
+    return unless listed_elsewhere_changed? && hired_status_changed?
+
+    self.stats_updated_at = Time.zone.now
   end
 end

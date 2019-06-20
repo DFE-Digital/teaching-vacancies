@@ -411,6 +411,16 @@ RSpec.describe Vacancy, type: :model do
         expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
       end
     end
+
+    describe '#awaiting_feedback' do
+      it 'gets all vacancies awaiting feedback' do
+        expired_and_awaiting = create_list(:vacancy, 2, :expired)
+        create_list(:vacancy, 3, :expired, listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
+        create_list(:vacancy, 3, :published_slugged)
+
+        expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
+      end
+    end
   end
 
   describe 'delegate school_name' do
@@ -653,6 +663,29 @@ RSpec.describe Vacancy, type: :model do
 
           expect(Vacancy.find(job.id).flexible_working).to eq(job.flexible_working)
         end
+      end
+    end
+  end
+
+  context 'stats updated at' do
+    let(:expired_job) { create(:vacancy, :expired) }
+    let(:stats_updated_at) { Vacancy.find(expired_job.id).stats_updated_at }
+
+    it { expect(stats_updated_at).to be_nil }
+
+    it 'saves the time that the stats updated at' do
+      Timecop.freeze(2019, 1, 1, 10, 4, 3) do
+        expired_job.update(listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
+
+        expect(stats_updated_at).to eq(Time.current)
+      end
+    end
+
+    it 'does not update the stats when you are updating the job description' do
+      Timecop.freeze(2019, 1, 1, 10, 4, 3) do
+        expired_job.update(job_description: 'I am description')
+
+        expect(stats_updated_at).to be_nil
       end
     end
   end
