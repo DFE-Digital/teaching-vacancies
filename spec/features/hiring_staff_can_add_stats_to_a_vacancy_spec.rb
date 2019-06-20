@@ -158,9 +158,10 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
 
   context 'when there are no vacancies awaiting feedback' do
     scenario 'hiring staff can not see notification badge' do
-      visit school_path
+      visit jobs_with_type_school_path(type: :awaiting_feedback)
 
       expect(page).to_not have_selector(NOTIFICATION_BADGE_SELECTOR)
+      expect(page).to have_content(I18n.t('jobs.no_awaiting_feedback'))
     end
   end
 end
