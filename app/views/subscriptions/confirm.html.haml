@@ -5,13 +5,12 @@
     .govuk-panel.govuk-panel--confirmation
       %h1.govuk-panel__title= t('subscriptions.confirmation.header').html_safe
       .govuk-panel__body
-        = t('subscriptions.reference')
-        %strong= "'#{@subscription.reference}'"
+        %strong= t('subscriptions.confirmation.reference', reference: @subscription.reference)
 
-    %p.govuk-body=t('subscriptions.confirmation.receipt_confirmation')
+    %p.govuk-body=t('subscriptions.confirmation.receipt_confirmation', email: @subscription.email)
 
     %h3.govuk-heading-m=t('subscriptions.confirmation.next_step')
-    %p.govuk-body=t('subscriptions.confirmation.next_step_details', email: @subscription.email)
+    %p.govuk-body=t('subscriptions.confirmation.next_step_details')
     %div.govuk-inset-text
       %ul.govuk-list
         - @subscription.filtered_search_criteria.each_pair do |filter, value|
@@ -20,6 +19,7 @@
               %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
             = value
 
-    %p.govuk-body= t('subscriptions.confirmation.unsubscribe', date: l(@subscription.expires_on))
+    %p.govuk-body=t('subscriptions.next_steps')
+    %p.govuk-body= t('subscriptions.confirmation.unsubscribe')
     %p.govuk-body
       = link_to t('subscriptions.back_to_search_results'), root_path(@subscription.search_criteria_to_h), class: 'govuk-link'
