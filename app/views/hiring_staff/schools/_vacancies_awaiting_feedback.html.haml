@@ -9,7 +9,7 @@
     %table{class: 'vacancies govuk-table govuk-!-margin-top-4', id: 'awaiting_feedback'}
       %thead.govuk-table__head
         %tr.govuk-table__row
-          %th.govuk-table__header= table_header_sort_by(t('jobs.job_title'), 'awaiting_feedback', column: 'job_title', sort: @sort)
+          %th{class: 'govuk-table__header job-title-table-header'}= table_header_sort_by(t('jobs.job_title'), 'awaiting_feedback', column: 'job_title', sort: @sort)
           %th.govuk-table__header= table_header_sort_by(t('jobs.publish_on'), 'awaiting_feedback', column: 'publish_on', sort: @sort)
           %th.govuk-table__header= table_header_sort_by(t('jobs.expired_on'), 'awaiting_feedback', column: 'expires_on', sort: @sort)
           %th{class: 'govuk-table__header govuk-!-width-one-quarter'}= t('jobs.job_filled')
