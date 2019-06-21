@@ -319,12 +319,12 @@ en:
       resubscribe_link_text: resubscribe here
     back_to_search_results: 'Return to your search results'
     email:
-      unsubscribe_text_html: "You can %{unsubscribe_link} from job alerts or renew your subscription at any time. "
-      unsubscribe_link_text: unsubscribe
+      unsubscribe_text_html: "You can unsubscribe by following the link at the bottom of these emails."
+      unsubscribe_link_text: "%{unsubscribe_link}"
       confirmation:
-        subject: "You have subscribed to a job alert for '%{reference}'"
-        subheading: 'Job details will be emailed to %{email} on any day when 1 or more new jobs matching the following criteria are published to Teaching Vacancies:'
-        expiry_text_html: 'Your job alert subscription will end on %{date}.'
+        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
+        subheading: 'We’ll email you details of any new jobs that match the following search criteria:'
+        expiry_text_html: "Your job alert subscription will end on %{date}."
     manage: Manage your subscription
     unsubscribe: Unsubscribe
   job_alerts:

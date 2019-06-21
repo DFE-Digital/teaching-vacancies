@@ -6,8 +6,10 @@
 - @subscription.filtered_search_criteria.each_pair do |k, v|
   * #{[k&.titleize, v].reject(&:blank?).join(': ')}
 \
-= t('subscriptions.email.confirmation.expiry_text_html', date: l(@subscription.expires_on))
+= t('subscriptions.next_steps')
+\
+= t('subscriptions.email.unsubscribe_text_html')
 
 \---
 
-= t('subscriptions.email.unsubscribe_text_html', unsubscribe_link: unsubscribe_link(@subscription.token))
+= t('subscriptions.email.unsubscribe_link_text', unsubscribe_link: unsubscribe_link(@subscription.token))

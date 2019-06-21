@@ -32,16 +32,17 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     expect(mail.subject).to eq(I18n.t('job_alerts.confirmation.email.subject', reference: subscription.reference))
     expect(mail.to).to eq([subscription.email])
     expect(body_lines[0]).to match(/# #{I18n.t('app.title')}/)
-    expect(body_lines[1]).to match(/You have subscribed to a job alert for &#39;#{subscription.reference}&#39;/)
+    expect(body_lines[1]).to match(/Teaching Vacancies job alert confirmation for &#39;#{subscription.reference}&#39;/)
     expect(body_lines[3]).to match(/#{I18n.t('subscriptions.email.confirmation.subheading', email: email)}/)
     expect(body_lines[5]).to match(/\* Subject: English/)
     expect(body_lines[6]).to match(/\* Minimum Salary: £20,000/)
     expect(body_lines[7]).to match(/\* Maximum Salary: £40,000/)
     expect(body_lines[8]).to match(/\Suitable for NQTs/)
-    expect(body_lines[10]).to match(/1 April 2019/)
+    expect(body_lines[10]).to include('You&#39;ll receive a single job alert email at the end of any day')
   end
 
   it 'has an unsubscribe link' do
-    expect(body_lines[12]).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/unsubscribe})
+    expect(body_lines[12]).to match(/You can unsubscribe by following the link at the bottom of these emails./)
+    expect(body_lines[14]).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/unsubscribe})
   end
 end
