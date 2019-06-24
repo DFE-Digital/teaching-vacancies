@@ -28,7 +28,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '3 jobs')
     end
 
-    scenario 'feedback can be added to any number of vacancies' do
+    scenario 'continously displays the number of vacancies awaiting feedback' do
       visit jobs_with_type_school_path(type: :awaiting_feedback)
 
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 3)
@@ -36,37 +36,21 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: another_vacancy.job_title)
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: third_vacancy.job_title)
 
-      within('tr', text: vacancy.job_title) do
-        select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
-        select I18n.t('jobs.feedback.listed_elsewhere.listed_paid'), from: 'vacancy_listed_elsewhere'
-        click_on I18n.t('buttons.submit')
-      end
-
-      expect(page).to have_content(I18n.t('jobs.feedback_submitted'))
-      expect(page).to_not have_content(vacancy.job_title)
-
+      submit_feedback_for(vacancy)
       expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '2 jobs')
 
-      vacancy.reload
+      submit_feedback_for(another_vacancy)
+      expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '1 job')
+    end
 
+    scenario 'when adding feedback, it saves feedback to the model' do
+      visit jobs_with_type_school_path(type: :awaiting_feedback)
+
+      submit_feedback_for(vacancy)
+
+      vacancy.reload
       expect(vacancy.hired_status).to eq('hired_tvs')
       expect(vacancy.listed_elsewhere).to eq('listed_paid')
-
-      within('tr', text: another_vacancy.job_title) do
-        select I18n.t('jobs.feedback.hired_status.hired_other_free'), from: 'vacancy_hired_status'
-        select I18n.t('jobs.feedback.listed_elsewhere.listed_free'), from: 'vacancy_listed_elsewhere'
-        click_on I18n.t('buttons.submit')
-      end
-
-      expect(page).to have_content(I18n.t('jobs.feedback_submitted'))
-      expect(page).to_not have_content(vacancy.job_title)
-
-      expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '1 job')
-
-      another_vacancy.reload
-
-      expect(another_vacancy.hired_status).to eq('hired_other_free')
-      expect(another_vacancy.listed_elsewhere).to eq('listed_free')
     end
 
     scenario 'when an option is not selected in a javascript disabled browser', js: false do
@@ -125,34 +109,31 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       expect(page).to have_content(I18n.t('jobs.inline_feedback_error'), count: 1)
     end
 
-    scenario 'When all feedback has been submitted' do
+    scenario 'when all feedback has been submitted' do
       visit jobs_with_type_school_path(type: :awaiting_feedback)
 
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 3)
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: vacancy.job_title)
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: another_vacancy.job_title)
-      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: third_vacancy.job_title)
 
-      within('tr', text: vacancy.job_title) do
-        select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
-        select I18n.t('jobs.feedback.listed_elsewhere.listed_paid'), from: 'vacancy_listed_elsewhere'
-        click_on I18n.t('buttons.submit')
-      end
-
-      within('tr', text: another_vacancy.job_title) do
-        select I18n.t('jobs.feedback.hired_status.not_filled_ongoing'), from: 'vacancy_hired_status'
-        select I18n.t('jobs.feedback.listed_elsewhere.listed_dont_know'), from: 'vacancy_listed_elsewhere'
-        click_on I18n.t('buttons.submit')
-      end
-
-      within('tr', text: third_vacancy.job_title) do
-        select I18n.t('jobs.feedback.hired_status.not_filled_ongoing'), from: 'vacancy_hired_status'
-        select I18n.t('jobs.feedback.listed_elsewhere.listed_mix'), from: 'vacancy_listed_elsewhere'
-        click_on I18n.t('buttons.submit')
-      end
+      submit_feedback_for(vacancy)
+      submit_feedback_for(another_vacancy)
+      submit_feedback_for(third_vacancy)
 
       expect(page).to have_content(Sanitize.clean(I18n.t('jobs.feedback_all_submitted')))
       expect(page).to_not have_content(I18n.t('jobs.awaiting_feedback_intro'))
+      expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 0)
+    end
+
+    scenario 'when adding feedback to an invalid vacancy, it saves the feedback to the model' do
+      invalid_starts_on_date = 10.days.ago
+      invalid_vacancy = create(:vacancy, :expired, starts_on: invalid_starts_on_date, school: school)
+      expect(invalid_vacancy.valid?).to eq(false)
+
+      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      submit_feedback_for(invalid_vacancy)
+
+      invalid_vacancy.reload
+      expect(invalid_vacancy.hired_status).to eq('hired_tvs')
+      expect(invalid_vacancy.listed_elsewhere).to eq('listed_paid')
     end
   end
 
@@ -163,5 +144,16 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       expect(page).to_not have_selector(NOTIFICATION_BADGE_SELECTOR)
       expect(page).to have_content(I18n.t('jobs.no_awaiting_feedback'))
     end
+  end
+
+  def submit_feedback_for(vacancy)
+    within('tr', text: vacancy.job_title) do
+      select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
+      select I18n.t('jobs.feedback.listed_elsewhere.listed_paid'), from: 'vacancy_listed_elsewhere'
+      click_on I18n.t('buttons.submit')
+    end
+
+    expect(page).to have_content(I18n.t('jobs.feedback_submitted'))
+    expect(page).to_not have_content(vacancy.job_title)
   end
 end

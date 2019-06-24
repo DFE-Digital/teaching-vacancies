@@ -2,7 +2,7 @@ class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::App
   def update
     if valid?
       vacancy = Vacancy.find(vacancy_id)
-      vacancy.update(statistics_params)
+      update_vacancy(vacancy)
 
       flash_type = :success
       flash_message = I18n.t('jobs.feedback_submitted')
@@ -18,6 +18,15 @@ class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::App
   end
 
   private
+
+  def update_vacancy(vacancy)
+    vacancy.listed_elsewhere = statistics_params[:listed_elsewhere]
+    vacancy.hired_status = statistics_params[:hired_status]
+
+    # The expired vacancy can be invalid, if validations have been
+    # added which weren't in place at time of publication.
+    vacancy.save(validate: false)
+  end
 
   def valid?
     statistics_params[:listed_elsewhere].present? && statistics_params[:hired_status].present?
