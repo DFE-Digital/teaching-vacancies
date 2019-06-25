@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   resource :terms_and_conditions, only: %i[show update], controller: 'hiring_staff/terms_and_conditions'
 
   resource :school, only: %i[show edit update], controller: 'hiring_staff/schools' do
-    scope constraints: { type: /(published|draft|pending|expired)/ } do
+    scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
       get 'jobs(/:type)', to: 'hiring_staff/schools#show', defaults: { type: :published }, as: :jobs_with_type
     end
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
@@ -63,6 +63,7 @@ Rails.application.routes.draw do
                                      controller: 'hiring_staff/vacancies/application_details'
 
       resource :feedback, controller: 'hiring_staff/vacancies/vacancy_publish_feedback', only: %i[new create]
+      resource :statistics, controller: 'hiring_staff/vacancies/statistics', only: %i[update]
       resource :copy, only: %i[new create],
                       controller: 'hiring_staff/vacancies/copy'
     end
