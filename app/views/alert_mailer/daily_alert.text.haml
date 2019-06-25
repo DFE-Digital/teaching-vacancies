@@ -1,5 +1,5 @@
 \# #{t('app.title')}
-\## #{t('job_alerts.alert.email.daily.summary', count: @vacancies.count)}
+\## #{t('job_alerts.alert.email.daily.summary', count: @vacancies.count, reference: @subscription.reference)}
 \
 \---
 \
@@ -15,8 +15,8 @@
   \---
   \
 \
-Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} - the free service for schools in England to list teaching roles and for jobseekers to find them.
+Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} -  the free service for schools in England to list teaching roles and for jobseekers to find them.
 
 \---
 
-= t('subscriptions.email.unsubscribe_text_html', unsubscribe_link: unsubscribe_link(@subscription.token))
+= t('job_alerts.alert.email.daily.unsubscribe', unsubscribe_link: unsubscribe_link(@subscription.token))

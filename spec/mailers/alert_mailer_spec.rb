@@ -36,7 +36,9 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/# #{I18n.t('job_alerts.alert.email.daily.summary.one')}/)
+        expect(body).to match(
+          /A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted yesterday/
+        )
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{vacancy_presenter.location}/)
@@ -45,6 +47,9 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
         expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
+        expect(body).to match(
+          /Don&#39;t want to receive these email alerts? Unsubscribe here/
+        )
       end
     end
 

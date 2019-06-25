@@ -338,9 +338,9 @@ en:
             one: "Teaching Vacancies job alert for '%{reference}'"
             many: "Teaching Vacancies job alerts for '%{reference}'"
           summary:
-            one: "A new job matching your search criteria was posted yesterday."
-            other: "%{count} new jobs matching your search criteria were posted yesterday."
-          unsubscribe: Follow this link to unsubscribe.
+            one: "A new job matching your search criteria '%{reference}' was posted yesterday."
+            other: "%{count} new jobs matching your search criteria '%{reference}' were posted yesterday."
+          unsubscribe: Don’t want to receive these email alerts? <a href= '%{unsubscribe_link}'>Unsubscribe here.</a>
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
