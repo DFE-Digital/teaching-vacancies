@@ -32,6 +32,8 @@ services:
     image: postgres
     volumes:
       - pg_data:/var/lib/postgresql/data/:cached
+    ports:
+      - "15432:5432"
     restart: on-failure
 
   elasticsearch:
