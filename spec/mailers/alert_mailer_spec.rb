@@ -2,16 +2,20 @@ require 'rails_helper'
 
 RSpec.describe AlertMailer, type: :mailer do
   include DateHelper
+
   let(:body) { mail.body.raw_source }
   let(:subscription) do
-    create(:daily_subscription, email: 'an@email.com',
-                                reference: 'a-reference',
-                                search_criteria: {
-                                  subject: 'English',
-                                  minimum_salary: 20000,
-                                  maximum_salary: 40000,
-                                  newly_qualified_teacher: 'true'
-                                }.to_json)
+    subscription = create(:daily_subscription, email: 'an@email.com',
+                                               reference: 'a-reference',
+                                               search_criteria: {
+                                                 subject: 'English',
+                                                 minimum_salary: 20000,
+                                                 maximum_salary: 40000,
+                                                 newly_qualified_teacher: 'true'
+                                               }.to_json)
+    token = subscription.token
+    allow_any_instance_of(Subscription).to receive(:token) { token }
+    subscription
   end
 
   describe 'daily_alert' do
@@ -47,9 +51,8 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
         expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
-        expect(body).to match(
-          /Don&#39;t want to receive these email alerts? Unsubscribe here/
-        )
+
+        expect(body).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/unsubscribe})
       end
     end
 
