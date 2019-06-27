@@ -3,7 +3,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-panel.govuk-panel--confirmation
-      %h1.govuk-panel__title= t('subscriptions.confirmation.header').html_safe
+      %h1.govuk-panel__title= t('subscriptions.confirmation.header')
       .govuk-panel__body
         %strong= t('subscriptions.confirmation.reference', reference: @subscription.reference)
 
