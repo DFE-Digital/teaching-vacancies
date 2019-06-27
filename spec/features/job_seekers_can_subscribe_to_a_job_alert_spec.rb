@@ -45,7 +45,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page.html).to include(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       scenario 'when the email address is associated with other active subscriptions' do
@@ -56,7 +56,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page.html).to include(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       scenario 'when the email address is associated with the same inactive subscriptions' do
@@ -68,7 +68,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page.html).to include(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       scenario 'when no reference is set' do
@@ -76,7 +76,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page.html).to include(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
       context 'and is redirected to the confirmation page' do
@@ -155,7 +155,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       expect(message_delivery).to receive(:deliver_later)
       click_on 'Subscribe'
 
-      expect(page.html).to include(I18n.t('subscriptions.confirmation.header'))
+      expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       click_on 'Return to your search results'
 
       expect(page).to have_content('3 jobs match your search')
