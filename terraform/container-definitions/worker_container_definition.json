@@ -155,6 +155,10 @@
       {
         "name": "FEATURE_EMAIL_ALERTS",
         "value": "${feature_email_alerts}"
+      },
+      {
+        "name": "FEATURE_DFE_SIGN_IN_AUTHORISATION",
+        "value": "${feature_dfe_sign_in_authorisation}"
       }
     ]
   }
