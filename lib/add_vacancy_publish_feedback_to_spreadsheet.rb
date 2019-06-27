@@ -10,4 +10,8 @@ class AddVacancyPublishFeedbackToSpreadsheet < ExportToSpreadsheet
   def query
     VacancyPublishFeedback.all
   end
+
+  def present(vacancy_publish_feedback)
+    vacancy_publish_feedback.to_row
+  end
 end

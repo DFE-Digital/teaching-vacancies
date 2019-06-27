@@ -30,8 +30,7 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
     end
 
     it 'adds the new data to the spreadsheet' do
-      data = new_data.map(&:to_row)
-      expect(worksheet).to receive(:append_rows).with(data)
+      expect(worksheet).to receive(:append_rows).with(expected_spreadsheet_rows)
       subject.run!
     end
   end
@@ -59,7 +58,7 @@ RSpec.shared_examples_for 'ExportToSpreadsheet' do
     end
 
     it 'adds all the data to the spreadsheet' do
-      data = (existing_data + new_data).map(&:to_row)
+      data = (existing_data + new_data).map(&subject.method(:present))
       expect(worksheet).to receive(:append_rows).with(data)
       subject.run!
     end

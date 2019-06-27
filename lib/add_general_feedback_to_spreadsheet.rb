@@ -10,4 +10,8 @@ class AddGeneralFeedbackToSpreadsheet < ExportToSpreadsheet
   def query
     GeneralFeedback.all
   end
+
+  def present(general_feedback)
+    general_feedback.to_row
+  end
 end

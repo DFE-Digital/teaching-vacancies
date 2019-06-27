@@ -8,6 +8,7 @@ RSpec.describe AddAuditDataToSpreadsheet do
   let!(:existing_data) { Timecop.freeze(2.days.ago) { create_list(:audit_data, 3, category: 'vacancies') } }
   let!(:new_data) { create_list(:audit_data, 3, category: 'vacancies') }
   let!(:other_data) { create_list(:audit_data, 3, category: 'sign_in_events') }
+  let(:expected_spreadsheet_rows) { new_data.map(&:to_row) }
 
   subject { described_class.new(category) }
 

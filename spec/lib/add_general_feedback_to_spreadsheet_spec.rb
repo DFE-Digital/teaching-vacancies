@@ -7,6 +7,7 @@ RSpec.describe AddGeneralFeedbackToSpreadsheet do
 
   let!(:existing_data) { Timecop.freeze(2.days.ago) { create_list(:general_feedback, 3) } }
   let!(:new_data) { create_list(:general_feedback, 3) }
+  let(:expected_spreadsheet_rows) { new_data.map(&:to_row) }
 
   subject { described_class.new }
 
