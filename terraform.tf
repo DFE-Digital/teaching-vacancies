@@ -165,6 +165,7 @@ module "ecs" {
   notify_subscription_daily_template           = "${var.notify_subscription_daily_template}"
   feature_email_alerts                         = "${var.feature_email_alerts}"
   feature_import_vacancies                     = "${var.feature_import_vacancies}"
+  feature_dfe_sign_in_authorisation            = "${var.feature_dfe_sign_in_authorisation}"
 }
 
 module "logs" {
