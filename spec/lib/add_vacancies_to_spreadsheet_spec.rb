@@ -7,7 +7,7 @@ RSpec.describe AddVacanciesToSpreadsheet do
 
   let!(:existing_data) { Timecop.freeze(2.days.ago) { create_list(:vacancy, 3) } }
   let!(:new_data) { create_list(:vacancy, 3) }
-  let(:expected_spreadsheet_rows) do
+  let(:expected_new_spreadsheet_rows) do
     new_data.map do |vacancy|
       [
         Time.zone.now.to_s,

@@ -7,7 +7,7 @@ RSpec.describe AddVacancyPublishFeedbackToSpreadsheet do
 
   let!(:existing_data) { Timecop.freeze(2.days.ago) { create_list(:vacancy_publish_feedback, 3) } }
   let!(:new_data) { create_list(:vacancy_publish_feedback, 3) }
-  let(:expected_spreadsheet_rows) { new_data.map(&:to_row) }
+  let(:expected_new_spreadsheet_rows) { new_data.map(&:to_row) }
 
   subject { described_class.new }
 
