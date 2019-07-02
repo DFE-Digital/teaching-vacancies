@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'add_vacancies_to_spreadsheet'
 
 RSpec.describe AddVacanciesToSpreadsheet do
-  let(:category) { 'vacancy' }
+  let(:category) { 'vacancies' }
   let(:spreadsheet_id) { 'VACANCY_FEEDBACK_SPREADSHEET_ID' }
 
   let!(:existing_data) { Timecop.freeze(2.days.ago) { create_list(:vacancy, 3) } }

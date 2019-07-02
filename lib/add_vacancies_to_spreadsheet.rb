@@ -2,7 +2,7 @@ require 'export_to_spreadsheet'
 
 class AddVacanciesToSpreadsheet < ExportToSpreadsheet
   def initialize
-    @category = 'vacancy'
+    @category = 'vacancies'
   end
 
   private
