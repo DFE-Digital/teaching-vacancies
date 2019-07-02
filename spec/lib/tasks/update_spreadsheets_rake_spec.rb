@@ -6,7 +6,7 @@ RSpec.describe 'rake spreadsheets:update', type: :task do
   end
 
   it 'queues the vacancy job' do
-    expect { task.execute }.to have_enqueued_job(AddAuditDataToSpreadsheetJob).with('vacancies')
+    expect { task.execute }.to have_enqueued_job(AddVacanciesToSpreadsheetJob)
   end
 
   it 'queues the interest expression job' do
