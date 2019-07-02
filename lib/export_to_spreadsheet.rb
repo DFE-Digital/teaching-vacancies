@@ -20,7 +20,7 @@ class ExportToSpreadsheet
   end
 
   def data_array
-    results.map(&:to_row)
+    results.map(&method(:present))
   end
 
   def results

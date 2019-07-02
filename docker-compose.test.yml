@@ -29,6 +29,8 @@ services:
       - pg_test_data:/var/lib/postgresql/data/:cached
     networks:
       - tests
+    ports:
+      - "25432:5432"
     restart: on-failure
 
   elasticsearch-test:
