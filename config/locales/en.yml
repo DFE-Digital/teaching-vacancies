@@ -323,6 +323,7 @@ en:
       unsubscribe_link_text: "Unsubscribe here"
       confirmation:
         subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
+        heading: "You have subscribed to a job alert for '%{reference}'."
         subheading: 'We’ll email you details of any new jobs that match the following search criteria:'
         expiry_text_html: "Your job alert subscription will end on %{date}."
     manage: Manage your subscription
