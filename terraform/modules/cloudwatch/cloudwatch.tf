@@ -106,6 +106,25 @@ resource "aws_cloudwatch_metric_alarm" "cpu" {
   }
 }
 
+resource "aws_cloudwatch_metric_alarm" "redis-cache-free-memory" {
+  alarm_name          = "${var.project_name}-${var.environment}-redis-cache-free-memory"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "FreeableMemory"
+  namespace           = "AWS/ElastiCache"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "512000000" # Move this into a variable file?
+
+  alarm_description = "This metric monitors the redis cache freeable memory for ${aws_elasticache_cluster.redis_cache.cluster_id}"
+  alarm_actions     = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
+  ok_actions        = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
+
+  dimensions {
+    CacheClusterId = "${aws_elasticache_cluster.redis_cache.cluster_id}"
+  }
+}
+
 resource "aws_cloudwatch_event_rule" "code_pipeline_fail" {
   name        = "${var.project_name}-${var.environment}-code-pipeline-fail"
   description = "Notify on CodePipeline Failures"
