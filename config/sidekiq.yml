@@ -8,6 +8,7 @@
   - [import_school_data, 1]
   - [update_vacancy_spreadsheet, 1]
   - [audit_published_vacancy, 1]
+  - [audit_vacancies, 1]
   - [audit_express_interest_event, 1]
   - [audit_search_event, 1]
   - [audit_vacancy_publish_feedback, 1]
@@ -18,6 +19,8 @@
 update_vacancy_spreadsheet:
   :concurrency: 1
 audit_published_vacancy:
+  :concurrency: 1
+audit_vacancies:
   :concurrency: 1
 audit_express_interest_event:
   :concurrency: 1
