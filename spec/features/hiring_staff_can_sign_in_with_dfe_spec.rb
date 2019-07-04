@@ -61,86 +61,89 @@ RSpec.shared_examples 'a failed sign in' do |options|
 end
 
 RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
-  before(:each) do
-    stub_accepted_terms_and_condition
-    OmniAuth.config.test_mode = true
-  end
-
-  after(:each) do
-    OmniAuth.config.mock_auth[:default] = nil
-    OmniAuth.config.mock_auth[:dfe] = nil
-    OmniAuth.config.test_mode = false
-  end
-
-  context 'with valid credentials that match a school' do
-    let!(:school) { create(:school, urn: '110627') }
-
+  context 'when the dfe sign in authorisation feature flag is enabled' do
     before(:each) do
-      stub_authentication_step
-      stub_authorisation_step
-
-      visit root_path
-
-      click_on(I18n.t('nav.sign_in'))
-      click_on(I18n.t('sign_in.link'))
+      allow(DfeSignInAuthorisationFeature).to receive(:enabled?) { true }
+      stub_accepted_terms_and_condition
+      OmniAuth.config.test_mode = true
     end
 
-    it_behaves_like 'a successful sign in'
-
-    scenario 'it redirects the sign in page to the school page' do
-      visit new_identifications_path
-      expect(page).to have_content("Jobs at #{school.name}")
-      expect(current_path).to eql(school_path)
+    after(:each) do
+      OmniAuth.config.mock_auth[:default] = nil
+      OmniAuth.config.mock_auth[:dfe] = nil
+      OmniAuth.config.test_mode = false
     end
 
-    context 'the user can switch between organisations' do
-      let!(:other_school) { create(:school, urn: '101010') }
+    context 'with valid credentials that match a school' do
+      let!(:school) { create(:school, urn: '110627') }
 
-      scenario 'allows the user to switch between organisations' do
+      before(:each) do
+        stub_authentication_step
+        stub_authorisation_step
+
+        visit root_path
+
+        click_on(I18n.t('nav.sign_in'))
+        click_on(I18n.t('sign_in.link'))
+      end
+
+      it_behaves_like 'a successful sign in'
+
+      scenario 'it redirects the sign in page to the school page' do
+        visit new_identifications_path
         expect(page).to have_content("Jobs at #{school.name}")
+        expect(current_path).to eql(school_path)
+      end
 
-        # Mock switching organisations from within DfE Sign In
-        stub_authentication_step(
-          organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-          school_urn: '101010'
-        )
-        stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-                                fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')
+      context 'the user can switch between organisations' do
+        let!(:other_school) { create(:school, urn: '101010') }
 
-        click_on 'Change organisation'
-        expect(page).to have_content("Jobs at #{other_school.name}")
+        scenario 'allows the user to switch between organisations' do
+          expect(page).to have_content("Jobs at #{school.name}")
+
+          # Mock switching organisations from within DfE Sign In
+          stub_authentication_step(
+            organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
+            school_urn: '101010'
+          )
+          stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
+                                  fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')
+
+          click_on 'Change organisation'
+          expect(page).to have_content("Jobs at #{other_school.name}")
+        end
       end
     end
-  end
 
-  context 'with valid credentials but no authorisation' do
-    before(:each) do
-      stub_authentication_step
-      stub_authorisation_step_with_not_found
+    context 'with valid credentials but no authorisation' do
+      before(:each) do
+        stub_authentication_step
+        stub_authorisation_step_with_not_found
+      end
+
+      it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
+                                          school_urn: '110627',
+                                          email: 'another_email@example.com'
     end
 
-    it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
-                                        school_urn: '110627',
-                                        email: 'another_email@example.com'
-  end
+    context 'when there is was an error with DfE Sign-in' do
+      before(:each) do
+        stub_authentication_step
+        stub_authorisation_step_with_external_error
+      end
 
-  context 'when there is was an error with DfE Sign-in' do
-    before(:each) do
-      stub_authentication_step
-      stub_authorisation_step_with_external_error
+      it 'renders an error page advising of a problem with DSI rather than this service' do
+        visit root_path
+
+        click_on(I18n.t('nav.sign_in'))
+        click_on(I18n.t('sign_in.link'))
+
+        expect(page).to have_content(I18n.t('error_pages.external_server_error.dfe_sign_in'))
+      end
     end
 
-    it 'renders an error page advising of a problem with DSI rather than this service' do
-      visit root_path
-
-      click_on(I18n.t('nav.sign_in'))
-      click_on(I18n.t('sign_in.link'))
-
-      expect(page).to have_content(I18n.t('error_pages.external_server_error.dfe_sign_in'))
+    def stub_accepted_terms_and_condition
+      create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
     end
-  end
-
-  def stub_accepted_terms_and_condition
-    create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
   end
 end
