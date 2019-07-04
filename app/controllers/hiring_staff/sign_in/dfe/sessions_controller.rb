@@ -12,14 +12,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def create
     Rails.logger.warn("Hiring staff signed in: #{user_id}")
-    audit_successful_authentication
-
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
-    if authorisation.authorised?
-      update_session
-      redirect_to school_path
+    if DfeSignInAuthorisationFeature.enabled?
+      perform_dfe_sign_in_auth
     else
-      not_authorised
+      perform_old_sign_in_auth
     end
   rescue Authorisation::ExternalServerError => error
     Rollbar.log(:error, error)
@@ -43,6 +39,11 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     audit_successful_authorisation
   end
 
+  def update_session_old(school_urn, permissions)
+    session.update(session_id: user_id, urn: school_urn, multiple_schools: permissions.many?)
+    audit_successful_authorisation
+  end
+
   def auth_hash
     request.env['omniauth.auth']
   end
@@ -61,5 +62,31 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def organisation_id
     auth_hash.dig('extra', 'raw_info', 'organisation', 'id')
+  end
+
+  def perform_dfe_sign_in_auth
+    audit_successful_authentication
+
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    if authorisation.authorised?
+      update_session
+      redirect_to school_path
+    else
+      not_authorised
+    end
+  end
+
+  def perform_old_sign_in_auth
+    permissions = TeacherVacancyAuthorisation::Permissions.new
+    permissions.authorise(identifier, school_urn)
+
+    audit_successful_authentication
+
+    if permissions.authorised?
+      update_session_old(permissions.school_urn, permissions)
+      redirect_to school_path
+    else
+      not_authorised
+    end
   end
 end
