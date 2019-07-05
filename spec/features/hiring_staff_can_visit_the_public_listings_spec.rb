@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'School viewing public listings' do
+  def set_up_omniauth_config
+    OmniAuth.config.test_mode = false
+    OmniAuth.config.mock_auth[:default] = nil
+    OmniAuth.config.mock_auth[:dfe] = nil
+  end
+
   context 'when the Dfe Sign In Authorisation feature flag is enabled' do
     before do
       allow(DfeSignInAuthorisationFeature).to receive(:enabled?) { true }
@@ -8,9 +14,7 @@ RSpec.feature 'School viewing public listings' do
     end
 
     after(:each) do
-      OmniAuth.config.test_mode = false
-      OmniAuth.config.mock_auth[:default] = nil
-      OmniAuth.config.mock_auth[:dfe] = nil
+      set_up_omniauth_config
     end
 
     let!(:school) { create(:school, urn: '110627') }
@@ -25,17 +29,9 @@ RSpec.feature 'School viewing public listings' do
       scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
         visit root_path
 
-        click_on(I18n.t('nav.sign_in'))
-        click_on(I18n.t('sign_in.link'))
+        sign_in_with_click
 
-        expect(page).to have_content("Jobs at #{school.name}")
-        within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
-
-        click_on(I18n.t('app.title'))
-        expect(page).to have_content(I18n.t('jobs.heading'))
-
-        click_on(I18n.t('nav.school_page_link'))
-        expect(page).to have_content("Jobs at #{school.name}")
+        link_to_dashboard_is_visible_to_hiring_staff?
       end
     end
 
@@ -51,9 +47,7 @@ RSpec.feature 'School viewing public listings' do
     end
 
     after(:each) do
-      OmniAuth.config.test_mode = false
-      OmniAuth.config.mock_auth[:default] = nil
-      OmniAuth.config.mock_auth[:dfe] = nil
+      set_up_omniauth_config
     end
 
     let!(:school) { create(:school, urn: '110627') }
@@ -82,18 +76,26 @@ RSpec.feature 'School viewing public listings' do
       scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
         visit root_path
 
-        click_on(I18n.t('nav.sign_in'))
-        click_on(I18n.t('sign_in.link'))
+        sign_in_with_click
 
-        expect(page).to have_content("Jobs at #{school.name}")
-        within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
-
-        click_on(I18n.t('app.title'))
-        expect(page).to have_content(I18n.t('jobs.heading'))
-
-        click_on(I18n.t('nav.school_page_link'))
-        expect(page).to have_content("Jobs at #{school.name}")
+        link_to_dashboard_is_visible_to_hiring_staff?
       end
     end
+  end
+
+  def sign_in_with_click
+    click_on(I18n.t('nav.sign_in'))
+    click_on(I18n.t('sign_in.link'))
+  end
+
+  def link_to_dashboard_is_visible_to_hiring_staff?
+    expect(page).to have_content("Jobs at #{school.name}")
+    within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+
+    click_on(I18n.t('app.title'))
+    expect(page).to have_content(I18n.t('jobs.heading'))
+
+    click_on(I18n.t('nav.school_page_link'))
+    expect(page).to have_content("Jobs at #{school.name}")
   end
 end
