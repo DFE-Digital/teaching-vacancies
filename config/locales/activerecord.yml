@@ -71,4 +71,5 @@ en:
         reference: Your reference
     hints:
       defaults:
-        reference: This text will appear in the subject line of the email we send you when a new job matches your criteria. Feel free to change it.
+        email: Enter your email address. We'll only use it to send you job alerts.
+        reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.

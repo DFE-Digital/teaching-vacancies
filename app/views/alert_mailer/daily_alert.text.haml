@@ -1,5 +1,5 @@
 \# #{t('app.title')}
-\## #{t('job_alerts.alert.email.daily.summary', count: @vacancies.count)}
+\## #{t('job_alerts.alert.email.daily.summary', count: @vacancies.count, reference: @subscription.reference)}
 \
 \---
 \
@@ -19,4 +19,4 @@ Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))
 
 \---
 
-= t('subscriptions.email.unsubscribe_text_html', link: unsubscribe_link(@unsubscribe_token))
+= t('job_alerts.alert.email.daily.unsubscribe', unsubscribe_link: unsubscribe_link(@subscription.token))
