@@ -5,3 +5,4 @@ variable "slack_channel" {}
 variable "ops_genie_api_key" {}
 variable "autoscaling_group_name" {}
 variable "pipeline_name" {}
+variable "redis_cache_cluster_id" {}

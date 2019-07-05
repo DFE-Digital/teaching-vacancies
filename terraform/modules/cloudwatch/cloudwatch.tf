@@ -116,12 +116,12 @@ resource "aws_cloudwatch_metric_alarm" "redis-cache-free-memory" {
   statistic           = "Average"
   threshold           = "512000000" # Move this into a variable file?
 
-  alarm_description = "This metric monitors the redis cache freeable memory for ${aws_elasticache_cluster.redis_cache.cluster_id}"
+  alarm_description = "This metric monitors the redis cache freeable memory for ${var.redis_cache_cluster_id}"
   alarm_actions     = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
   ok_actions        = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
 
   dimensions {
-    CacheClusterId = "${aws_elasticache_cluster.redis_cache.cluster_id}"
+    CacheClusterId = "${var.redis_cache_cluster_id}"
   }
 }
 
