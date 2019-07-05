@@ -2,16 +2,20 @@ require 'rails_helper'
 
 RSpec.describe AlertMailer, type: :mailer do
   include DateHelper
+
   let(:body) { mail.body.raw_source }
   let(:subscription) do
-    create(:daily_subscription, email: 'an@email.com',
-                                reference: 'a-reference',
-                                search_criteria: {
-                                  subject: 'English',
-                                  minimum_salary: 20000,
-                                  maximum_salary: 40000,
-                                  newly_qualified_teacher: 'true'
-                                }.to_json)
+    subscription = create(:daily_subscription, email: 'an@email.com',
+                                               reference: 'a-reference',
+                                               search_criteria: {
+                                                 subject: 'English',
+                                                 minimum_salary: 20000,
+                                                 maximum_salary: 40000,
+                                                 newly_qualified_teacher: 'true'
+                                               }.to_json)
+    token = subscription.token
+    allow_any_instance_of(Subscription).to receive(:token) { token }
+    subscription
   end
 
   describe 'daily_alert' do
@@ -36,7 +40,9 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/# #{I18n.t('job_alerts.alert.email.daily.summary.one')}/)
+        expect(body).to match(
+          /A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted yesterday/
+        )
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{vacancy_presenter.location}/)
@@ -45,6 +51,8 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
         expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
+
+        expect(body).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/unsubscribe})
       end
     end
 

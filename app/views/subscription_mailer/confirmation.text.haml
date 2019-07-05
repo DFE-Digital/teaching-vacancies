@@ -1,13 +1,15 @@
 \# #{t('app.title')}
-\# #{@subscription_reference}
+\## #{t('subscriptions.email.confirmation.heading', reference: @subscription.reference)}
 \
-= t('subscriptions.email.confirmation.subheading')
+= t('subscriptions.email.confirmation.subheading', email: @subscription.email)
 \
-- @search_criteria.each_pair do |k, v|
+- @subscription.filtered_search_criteria.each_pair do |k, v|
   * #{[k&.titleize, v].reject(&:blank?).join(': ')}
 \
-= t('subscriptions.email.confirmation.expiry_text_html', distance: '6 months', date: l(@expires_on))
+= t('subscriptions.next_steps')
+\
+= t('subscriptions.email.unsubscribe_text_html')
 
 \---
 
-= t('subscriptions.email.unsubscribe_text_html', link: unsubscribe_link(@unsubscribe_token))
+= unsubscribe_link(@subscription.token)

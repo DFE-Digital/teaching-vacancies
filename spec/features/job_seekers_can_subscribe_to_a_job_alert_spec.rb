@@ -86,7 +86,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
           fill_in 'subscription[reference]', with: 'Daily alert reference'
           click_on 'Subscribe'
 
-          expect(page).to have_content(/Your reference: Daily alert reference/)
+          expect(page).to have_content(/Daily alert reference/)
         end
 
         scenario 'where they can go back to the filtered search' do
@@ -155,7 +155,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       expect(message_delivery).to receive(:deliver_later)
       click_on 'Subscribe'
 
-      expect(page).to have_content('Your email subscription has started')
+      expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       click_on 'Return to your search results'
 
       expect(page).to have_content('3 jobs match your search')

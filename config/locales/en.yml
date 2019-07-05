@@ -297,17 +297,19 @@ en:
           - 'end date (for fixed-term jobs)'
   subscriptions:
     button: 'Sign up for a job alert matching your search'
-    intro: 'You’ll be sent an email listing new jobs that match the following search criteria:'
+    intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     new: Sign up for a job alert
-    info: Subscribers will be emailed new listings that match their search criteria. Subscriptions expire after 6 months or can be cancelled using the link at the bottom of alert emails.
+    info: You can unsubscribe at any time using the link at the bottom of any email you receive for this job alert.
     location_text: Within %{radius} miles of %{location}
-    reference: 'Your reference:'
+    reference: 'for'
+    next_steps: "You'll receive a single job alert email at the end of any day when 1 or more matching jobs are first published."
     confirmation:
-      header: Your email subscription has started
-      receipt_confirmation: We have sent you a confirmation email.
+      header: 'Your email subscription has started'
+      receipt_confirmation: We have sent a confirmation email to %{email}.
       next_step: 'What happens next'
-      unsubscribe: "You can unsubscribe from this subscription at any time by following the 'stop receiving emails for this search' link in the email."
-      next_step_details: 'We will run a search matching your search criteria and send a daily email with the results to %{email} for the next 6 months, until %{date}.'
+      reference: 'Your reference: %{reference}'
+      unsubscribe: "You can unsubscribe by following the link at the bottom of these emails."
+      next_step_details: 'We’ll email you details of any new jobs that match the following search criteria:'
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
@@ -317,11 +319,13 @@ en:
       resubscribe_link_text: resubscribe here
     back_to_search_results: 'Return to your search results'
     email:
-      unsubscribe_text_html: "Don't want to receive these email alerts? %{link}"
-      unsubscribe_link_text: Unsubscribe here
+      unsubscribe_text_html: "You can unsubscribe by following the link at the bottom of these emails."
+      unsubscribe_link_text: "Unsubscribe here"
       confirmation:
-        subheading: 'You have subscribed to email notifications for jobs that match the following search criteria:'
-        expiry_text_html: Your subscription will expire in %{distance}, on the %{date}.
+        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
+        heading: "You have subscribed to a job alert for '%{reference}'."
+        subheading: 'We’ll email you details of any new jobs that match the following search criteria:'
+        expiry_text_html: "Your job alert subscription will end on %{date}."
     manage: Manage your subscription
     unsubscribe: Unsubscribe
   job_alerts:
@@ -335,9 +339,9 @@ en:
             one: "Teaching Vacancies job alert for '%{reference}'"
             many: "Teaching Vacancies job alerts for '%{reference}'"
           summary:
-            one: "A new job matching your search criteria was posted yesterday."
-            other: "%{count} new jobs matching your search criteria were posted yesterday."
-          unsubscribe: Follow this link to unsubscribe.
+            one: "A new job matching your search criteria '%{reference}' was posted yesterday."
+            other: "%{count} new jobs matching your search criteria '%{reference}' were posted yesterday."
+          unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
