@@ -23,8 +23,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
   scenario 'it does not sign-in the user, and tells the user what to do' do
     visit root_path
 
-    click_on(I18n.t('nav.sign_in'))
-    click_on(I18n.t('sign_in.link'))
+    sign_in_with_click
 
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
     expect(page).to have_content(options['email'])
@@ -34,8 +33,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
   scenario 'adds entries in the audit log' do
     visit root_path
 
-    click_on(I18n.t('nav.sign_in'))
-    click_on(I18n.t('sign_in.link'))
+    sign_in_with_click
 
     authentication = PublicActivity::Activity.first
     expect(authentication.key).to eq('dfe-sign-in.authentication.success')
@@ -55,8 +53,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
 
     visit root_path
 
-    click_on(I18n.t('nav.sign_in'))
-    click_on(I18n.t('sign_in.link'))
+    sign_in_with_click
   end
 end
 
@@ -83,8 +80,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
         visit root_path
 
-        click_on(I18n.t('nav.sign_in'))
-        click_on(I18n.t('sign_in.link'))
+        sign_in_with_click
       end
 
       it_behaves_like 'a successful sign in'
@@ -135,8 +131,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       it 'renders an error page advising of a problem with DSI rather than this service' do
         visit root_path
 
-        click_on(I18n.t('nav.sign_in'))
-        click_on(I18n.t('sign_in.link'))
+        sign_in_with_click
 
         expect(page).to have_content(I18n.t('error_pages.external_server_error.dfe_sign_in'))
       end
@@ -201,9 +196,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       context 'successful events' do
         before(:each) do
           visit root_path
-          click_on(I18n.t('nav.sign_in'))
-          # binding.pry
-          click_on(I18n.t('sign_in.link'))
+          sign_in_with_click
         end
 
         it_behaves_like 'a successful sign in'
@@ -308,6 +301,11 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
                                           school_urn: '',
                                           email: 'an-email@example.com'
     end
+  end
+
+  def sign_in_with_click
+    click_on(I18n.t('nav.sign_in'))
+    click_on(I18n.t('sign_in.link'))
   end
 
   def stub_accepted_terms_and_condition
