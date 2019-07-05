@@ -40,7 +40,7 @@ class VacanciesController < ApplicationController
 
     @vacancy = VacancyPresenter.new(vacancy)
 
-    VacancyPageView.new(vacancy).track unless authenticated?
+    VacancyPageView.new(vacancy).track unless authenticated? || smoke_test?
 
     expires_in 5.minutes, public: true
   end
@@ -125,5 +125,9 @@ class VacanciesController < ApplicationController
 
   def set_headers
     response.set_header('X-Robots-Tag', 'noarchive')
+  end
+
+  def smoke_test?
+    cookies[:smoke_test] != nil
   end
 end

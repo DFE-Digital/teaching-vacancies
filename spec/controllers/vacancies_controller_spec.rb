@@ -114,5 +114,25 @@ RSpec.describe VacanciesController, type: :controller do
         expect(response).to have_http_status(:not_found)
       end
     end
+
+    context 'when using cookies' do
+      let(:vacancy) { create(:vacancy) }
+      let(:params) { { id: vacancy.slug } }
+      let(:vacancy_page_view) { instance_double(VacancyPageView) }
+
+      it 'should call the track method if cookies not set' do
+        expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
+        expect(vacancy_page_view).to receive(:track)
+
+        subject
+      end
+
+      it 'should not call the track method if smoke_test cookies set' do
+        expect(VacancyPageView).not_to receive(:new).with(vacancy)
+        cookies[:smoke_test] = '1'
+
+        subject
+      end
+    end
   end
 end
