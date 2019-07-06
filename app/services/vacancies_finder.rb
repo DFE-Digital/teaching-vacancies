@@ -6,7 +6,6 @@ class VacanciesFinder
     @sort = sort
     @page_number = page_number
     @vacancies = VacanciesPresenter.new(records, searched: search_filters_given?)
-    audit_search_event if search_filters_given?
   end
 
   private
@@ -32,13 +31,5 @@ class VacanciesFinder
            .order(sort.column => sort.order)
            .includes(:school)
            .page(page_number)
-  end
-
-  def audit_search_event
-    AuditSearchEventJob.perform_later(audit_row)
-  end
-
-  def audit_row
-    { total_count: vacancies.total_count }.merge(filters.audit_hash)
   end
 end

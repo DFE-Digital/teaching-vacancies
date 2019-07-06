@@ -23,7 +23,7 @@ class VacanciesController < ApplicationController
     @filters = VacancyFilters.new(search_params.to_hash)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
-
+    AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
   end
 
@@ -129,5 +129,13 @@ class VacanciesController < ApplicationController
 
   def smoke_test?
     cookies[:smoke_test] != nil
+  end
+
+  def valid_search?
+    @filters.any? && !smoke_test?
+  end
+
+  def audit_row
+    { total_count: @vacancies.total_count }.merge(@filters.audit_hash)
   end
 end

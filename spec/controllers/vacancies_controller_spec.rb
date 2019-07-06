@@ -60,6 +60,33 @@ RSpec.describe VacanciesController, type: :controller do
           subject
         end
       end
+
+      context 'search audiotor' do
+        let(:params) do
+          {
+            subject: 'foo'
+          }
+        end
+
+        it 'should call the search auditor' do
+          expect(AuditSearchEventJob).to receive(:perform_later)
+
+          subject
+        end
+
+        it 'should not call the search auditor if its a smoke test' do
+          cookies[:smoke_test] = 1
+          expect(AuditSearchEventJob).to_not receive(:perform_later)
+
+          subject
+        end
+
+        it 'should not call the search auditor if no search parameters are given' do
+          expect(AuditSearchEventJob).to_not receive(:perform_later)
+
+          get :index
+        end
+      end
     end
 
     context 'feature flagging' do
