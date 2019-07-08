@@ -61,15 +61,22 @@ RSpec.describe VacanciesController, type: :controller do
         end
       end
 
-      context 'search audiotor' do
+      context 'search auditor' do
         let(:params) do
           {
-            subject: 'foo'
+            job_title: 'Should have three match'
           }
         end
 
-        it 'should call the search auditor' do
-          expect(AuditSearchEventJob).to receive(:perform_later)
+        it 'should call the search auditor', elasticsearch: true do
+          3.times { create(:vacancy, job_title: 'Should have three match') }
+          Vacancy.__elasticsearch__.client.indices.flush
+          expect(AuditSearchEventJob).to receive(:perform_later).with(
+            hash_including(
+              total_count: 3,
+              job_title: 'Should have three match'
+            )
+          )
 
           subject
         end
