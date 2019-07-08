@@ -15,7 +15,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     if DfeSignInAuthorisationFeature.enabled?
       perform_dfe_sign_in_authorisation
     else
-      perform_non_dsi_authorisation
+      perform_non_dfe_sign_in_authorisation
     end
   rescue Authorisation::ExternalServerError => error
     Rollbar.log(:error, error)
@@ -76,7 +76,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     end
   end
 
-  def perform_non_dsi_authorisation
+  def perform_non_dfe_sign_in_authorisation
     permissions = TeacherVacancyAuthorisation::Permissions.new
     permissions.authorise(identifier, school_urn)
 

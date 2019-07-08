@@ -19,16 +19,7 @@ class Authorisation
   end
 
   def call
-    uri = URI(dfe_sign_in_url)
-    uri.path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
-
-    request = Net::HTTP::Get.new(uri)
-    request['Authorization'] = "bearer #{generate_jwt_token}"
-    request['Content-Type'] = 'application/json'
-
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(request)
-    end
+    response = build_response
 
     raise ExternalServerError if response.code.eql?('500')
 
@@ -55,5 +46,18 @@ class Authorisation
       aud: 'signin.education.gov.uk'
     }
     JWT.encode(payload, dfe_sign_in_password, 'HS256')
+  end
+
+  def build_response
+    uri = URI(dfe_sign_in_url)
+    uri.path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
+
+    request = Net::HTTP::Get.new(uri)
+    request['Authorization'] = "bearer #{generate_jwt_token}"
+    request['Content-Type'] = 'application/json'
+
+    Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
   end
 end
