@@ -23,4 +23,8 @@ module SignInAuditConcerns
   def audit_failed_authorisation
     Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
   end
+
+  def user_dsi_id
+    oid || ''
+  end
 end
