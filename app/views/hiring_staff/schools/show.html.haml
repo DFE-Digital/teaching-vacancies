@@ -8,10 +8,14 @@
   .govuk-grid-column-full
     %h1.govuk-heading-l.mb0
       = t('schools.jobs.index', school: @school.name)
-
-    = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
-    %br
-    %br
+    - if @multiple_schools && !(DfeSignInAuthorisationFeature.enabled?)
+      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
+      %br
+      %br
+    - if DfeSignInAuthorisationFeature.enabled?
+      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
+      %br
+      %br
 
 .govuk-grid-row
   .govuk-grid-column-full
