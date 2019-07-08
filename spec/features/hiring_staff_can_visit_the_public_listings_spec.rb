@@ -29,7 +29,7 @@ RSpec.feature 'School viewing public listings' do
       scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
         visit root_path
 
-        sign_in_with_click
+        sign_in_user
 
         link_to_dashboard_is_visible_to_hiring_staff?
       end
@@ -76,14 +76,14 @@ RSpec.feature 'School viewing public listings' do
       scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do
         visit root_path
 
-        sign_in_with_click
+        sign_in_user
 
         link_to_dashboard_is_visible_to_hiring_staff?
       end
     end
   end
 
-  def sign_in_with_click
+  def sign_in_user
     click_on(I18n.t('nav.sign_in'))
     click_on(I18n.t('sign_in.link'))
   end
