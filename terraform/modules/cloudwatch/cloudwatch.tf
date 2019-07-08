@@ -114,7 +114,7 @@ resource "aws_cloudwatch_metric_alarm" "redis-cache-free-memory" {
   namespace           = "AWS/ElastiCache"
   period              = "120"
   statistic           = "Average"
-  threshold           = "512000000" # Move this into a variable file?
+  threshold           = "512000000"
 
   alarm_description = "This metric monitors the redis cache freeable memory for ${var.redis_cache_cluster_id}"
   alarm_actions     = ["${aws_sns_topic.cloudwatch_alerts.arn}"]
