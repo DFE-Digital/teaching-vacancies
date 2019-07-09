@@ -166,6 +166,10 @@ module "ecs" {
   feature_email_alerts                         = "${var.feature_email_alerts}"
   feature_import_vacancies                     = "${var.feature_import_vacancies}"
   feature_dfe_sign_in_authorisation            = "${var.feature_dfe_sign_in_authorisation}"
+  dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
+  dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
+  dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
+  dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
 }
 
 module "logs" {

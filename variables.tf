@@ -393,3 +393,8 @@ variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "subscription_key_generator_secret" {}
 variable "subscription_key_generator_salt" {}
+
+variable "dfe_sign_in_url" {}
+variable "dfe_sign_in_password" {}
+variable "dfe_sign_in_service_access_role_id" {}
+variable "dfe_sign_in_service_id" {}
