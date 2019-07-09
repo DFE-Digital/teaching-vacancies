@@ -60,6 +60,40 @@ RSpec.describe VacanciesController, type: :controller do
           subject
         end
       end
+
+      context 'search auditor' do
+        let(:params) do
+          {
+            job_title: 'Should have three match'
+          }
+        end
+
+        it 'should call the search auditor', elasticsearch: true do
+          3.times { create(:vacancy, job_title: 'Should have three match') }
+          Vacancy.__elasticsearch__.client.indices.flush
+          expect(AuditSearchEventJob).to receive(:perform_later).with(
+            hash_including(
+              total_count: 3,
+              job_title: 'Should have three match'
+            )
+          )
+
+          subject
+        end
+
+        it 'should not call the search auditor if its a smoke test' do
+          cookies[:smoke_test] = 1
+          expect(AuditSearchEventJob).to_not receive(:perform_later)
+
+          subject
+        end
+
+        it 'should not call the search auditor if no search parameters are given' do
+          expect(AuditSearchEventJob).to_not receive(:perform_later)
+
+          get :index
+        end
+      end
     end
 
     context 'feature flagging' do
@@ -112,6 +146,26 @@ RSpec.describe VacanciesController, type: :controller do
       it 'returns not found' do
         subject
         expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when using cookies' do
+      let(:vacancy) { create(:vacancy) }
+      let(:params) { { id: vacancy.slug } }
+      let(:vacancy_page_view) { instance_double(VacancyPageView) }
+
+      it 'should call the track method if cookies not set' do
+        expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
+        expect(vacancy_page_view).to receive(:track)
+
+        subject
+      end
+
+      it 'should not call the track method if smoke_test cookies set' do
+        expect(VacancyPageView).not_to receive(:new).with(vacancy)
+        cookies[:smoke_test] = '1'
+
+        subject
       end
     end
   end

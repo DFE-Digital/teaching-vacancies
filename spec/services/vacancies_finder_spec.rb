@@ -32,7 +32,6 @@ RSpec.describe VacanciesFinder do
       expect(Vacancy).to receive(:public_search).ordered.and_return(elasticsearch_response)
       expect(elasticsearch_response).to receive(:page).ordered.and_return(elasticsearch_response)
       expect(elasticsearch_response).to receive(:records).ordered.and_return(records)
-      expect(records).to receive(:total_count) { 0 }
       expect(records).to receive(:map)
 
       subject
