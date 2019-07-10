@@ -200,19 +200,19 @@
       },
       {
         "name": "DFE_SIGN_IN_URL",
-        "value": "dfe_sign_in_url"
+        "value": "${dfe_sign_in_url}"
       },
       {
         "name": "DFE_SIGN_IN_PASSWORD",
-        "value": "dfe_sign_in_password"
+        "value": "${dfe_sign_in_password}"
       },
       {
         "name": "DFE_SIGN_IN_SERVICE_ACCESS_ROLE_ID",
-        "value": "dfe_sign_in_service_access_role_id"
+        "value": "${dfe_sign_in_service_access_role_id}"
       },
       {
         "name": "DFE_SIGN_IN_SERVICE_ID",
-        "value": "dfe_sign_in_service_id"
+        "value": "${dfe_sign_in_service_id}"
       }
     ]
   }
