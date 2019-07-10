@@ -12,17 +12,16 @@ module SignInAuditConcerns
     MessageEncryptor.new(data).encrypt
   end
 
-  def log_succesful_authentication
+  def audit_successful_authentication
     Auditor::Audit.new(nil, 'dfe-sign-in.authentication.success', current_session_id).log_without_association
   end
 
-  def log_succesful_authorisation
+  def audit_successful_authorisation
     Auditor::Audit.new(current_school, 'dfe-sign-in.authorisation.success', current_session_id).log
   end
 
-  def log_failed_authorisation
+  def audit_failed_authorisation
     Auditor::Audit.new(nil, 'dfe-sign-in.authorisation.failure', current_session_id).log_without_association
-    Rails.logger.warn("Hiring staff not authorised: #{oid} for school: #{selected_school_urn}")
   end
 
   def user_dsi_id

@@ -11,39 +11,44 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def create
-    Rails.logger.warn("Hiring staff signed in: #{oid}")
-
-    permissions = TeacherVacancyAuthorisation::Permissions.new
-    permissions.authorise(identifier, selected_school_urn)
-
-    log_succesful_authentication
-
-    if permissions.authorised?
-      update_session(permissions.school_urn, permissions)
-      redirect_to school_path
+    Rails.logger.warn("Hiring staff signed in: #{user_id}")
+    if DfeSignInAuthorisationFeature.enabled?
+      perform_dfe_sign_in_authorisation
     else
-      not_authorised
+      perform_non_dfe_sign_in_authorisation
+    end
+  rescue Authorisation::ExternalServerError => error
+    Rollbar.log(:error, error)
+    respond_to do |format|
+      format.html { render 'errors/external_server_error', status: :server_error }
     end
   end
 
   private
 
   def not_authorised
-    log_failed_authorisation
+    audit_failed_authorisation
+    Rails.logger.warn("Hiring staff not authorised: #{user_id} for school: #{school_urn}")
+
     @identifier = identifier
     render 'user-not-authorised'
   end
 
-  def update_session(school_urn, permissions)
-    session.update(session_id: oid, urn: school_urn, multiple_schools: permissions.many?)
-    log_succesful_authorisation
+  def update_session
+    session.update(session_id: user_id, urn: school_urn)
+    audit_successful_authorisation
+  end
+
+  def update_non_dsi_session(school_urn, permissions)
+    session.update(session_id: user_id, urn: school_urn, multiple_schools: permissions.many?)
+    audit_successful_authorisation
   end
 
   def auth_hash
     request.env['omniauth.auth']
   end
 
-  def oid
+  def user_id
     auth_hash['uid']
   end
 
@@ -51,7 +56,37 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     auth_hash['info']['email']
   end
 
-  def selected_school_urn
+  def school_urn
     auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
+  end
+
+  def organisation_id
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'id')
+  end
+
+  def perform_dfe_sign_in_authorisation
+    audit_successful_authentication
+
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    if authorisation.authorised?
+      update_session
+      redirect_to school_path
+    else
+      not_authorised
+    end
+  end
+
+  def perform_non_dfe_sign_in_authorisation
+    permissions = TeacherVacancyAuthorisation::Permissions.new
+    permissions.authorise(identifier, school_urn)
+
+    audit_successful_authentication
+
+    if permissions.authorised?
+      update_non_dsi_session(permissions.school_urn, permissions)
+      redirect_to school_path
+    else
+      not_authorised
+    end
   end
 end

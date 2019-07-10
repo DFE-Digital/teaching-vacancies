@@ -64,6 +64,18 @@ domain = # "tvs.dxw.net"
 pp_transactions_by_channel_token =
 pp_user_satisfaction_token =
 
+# DfE Sign-in authentication
+dfe_sign_in_issuer =
+dfe_sign_in_redirect_url =
+dfe_sign_in_identifier =
+dfe_sign_in_secret =
+
+# DfE Sign-in authorisation
+dfe_sign_in_url =
+dfe_sign_in_password =
+dfe_sign_in_service_access_role_id =
+dfe_sign_in_service_id =
+
 google_api_json_key = {}
 google_analytics_profile_id = ""
 
