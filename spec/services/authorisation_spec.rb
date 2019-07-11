@@ -110,4 +110,20 @@ RSpec.describe Authorisation do
       end
     end
   end
+
+  describe '#many?' do
+    subject do
+      described_class.new(
+        organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
+        user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7'
+      )
+    end
+
+    before(:each) do
+      stub_sign_in_with_multiple_organisations
+    end
+    it 'should be true if user is part of multiple organisations' do
+      expect(subject.many?).to be(true)
+    end
+  end
 end

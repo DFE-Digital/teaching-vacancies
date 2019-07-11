@@ -1,0 +1,48 @@
+[
+  {
+      "id": "939eac36-0777-48c2-9c2c-b87c948a9ee0",
+      "name": "Organisation Foo",
+      "category": {
+          "id": "001",
+          "name": "Early Year Setting"
+      },
+      "urn": "org-urn",
+      "uid": null,
+      "ukprn": null,
+      "establishmentNumber": null,
+      "status": {
+          "id": 1,
+          "name": "Open"
+      },
+      "closedOn": null,
+      "address": null,
+      "telephone": null,
+      "statutoryLowAge": null,
+      "statutoryHighAge": null,
+      "legacyId": "legacy-id",
+      "companyRegistrationNumber": null
+  },
+    {
+      "id": "E8C509A2-3AD8-485C-957F-BEE7047FDA8D",
+      "name": "Organisation Bar",
+      "category": {
+          "id": "1112",
+          "name": "Early Year Setting"
+      },
+      "urn": "org-urn",
+      "uid": null,
+      "ukprn": null,
+      "establishmentNumber": null,
+      "status": {
+          "id": 1,
+          "name": "Open"
+      },
+      "closedOn": null,
+      "address": null,
+      "telephone": null,
+      "statutoryLowAge": null,
+      "statutoryHighAge": null,
+      "legacyId": "legacy-id",
+      "companyRegistrationNumber": null
+  }
+]

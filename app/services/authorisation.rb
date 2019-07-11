@@ -37,6 +37,13 @@ class Authorisation
     role_ids.include?(dfe_sign_in_service_access_role_id)
   end
 
+  def many?
+    response = JSON.parse(retrieve_organisations.body)
+    return true if response.count > 1
+
+    false
+  end
+
   private
 
   def generate_jwt_token
@@ -51,6 +58,20 @@ class Authorisation
   def build_response
     uri = URI(dfe_sign_in_url)
     uri.path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
+
+    request = Net::HTTP::Get.new(uri)
+    request['Authorization'] = "bearer #{generate_jwt_token}"
+    request['Content-Type'] = 'application/json'
+
+    Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(request)
+    end
+  end
+
+  def retrieve_organisations
+    uri = URI(dfe_sign_in_url)
+    # "https://test-url.local/users/#{user_id}/organisations"
+    uri.path = "/users/#{user_id}/organisations"
 
     request = Net::HTTP::Get.new(uri)
     request['Authorization'] = "bearer #{generate_jwt_token}"
