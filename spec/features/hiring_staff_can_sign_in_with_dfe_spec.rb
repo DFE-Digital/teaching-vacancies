@@ -128,12 +128,10 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         stub_authorisation_step_with_external_error
       end
 
-      it 'renders an error page advising of a problem with DSI rather than this service' do
+      it 'raises an error' do
         visit root_path
 
-        sign_in_user
-
-        expect(page).to have_content(I18n.t('error_pages.external_server_error.dfe_sign_in'))
+        expect { sign_in_user }.to raise_error(Authorisation::ExternalServerError)
       end
     end
   end
