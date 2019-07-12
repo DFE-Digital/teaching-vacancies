@@ -19,7 +19,8 @@ class Authorisation
   end
 
   def call
-    response = build_response
+    auth_user_api_path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
+    response = get_dfe_sign_in_api_response(auth_user_api_path)
 
     raise ExternalServerError if response.code.eql?('500')
 
@@ -38,7 +39,8 @@ class Authorisation
   end
 
   def many?
-    response = JSON.parse(retrieve_organisations.body)
+    org_api_path = "/users/#{user_id}/organisations"
+    response = JSON.parse(get_dfe_sign_in_api_response(org_api_path).body)
     return true if response.count > 1
 
     false
@@ -55,23 +57,9 @@ class Authorisation
     JWT.encode(payload, dfe_sign_in_password, 'HS256')
   end
 
-  def build_response
+  def get_dfe_sign_in_api_response(uri_path)
     uri = URI(dfe_sign_in_url)
-    uri.path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
-
-    request = Net::HTTP::Get.new(uri)
-    request['Authorization'] = "bearer #{generate_jwt_token}"
-    request['Content-Type'] = 'application/json'
-
-    Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(request)
-    end
-  end
-
-  def retrieve_organisations
-    uri = URI(dfe_sign_in_url)
-    # "https://test-url.local/users/#{user_id}/organisations"
-    uri.path = "/users/#{user_id}/organisations"
+    uri.path = uri_path
 
     request = Net::HTTP::Get.new(uri)
     request['Authorization'] = "bearer #{generate_jwt_token}"

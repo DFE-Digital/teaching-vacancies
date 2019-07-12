@@ -122,7 +122,7 @@ RSpec.describe Authorisation do
     before(:each) do
       stub_sign_in_with_multiple_organisations
     end
-    it 'should be true if user is part of multiple organisations' do
+    it 'should check if the user is a member of multiple organisations' do
       expect(subject.many?).to be(true)
     end
   end
