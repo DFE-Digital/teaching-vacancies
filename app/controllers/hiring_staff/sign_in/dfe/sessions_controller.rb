@@ -29,8 +29,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     render 'user-not-authorised'
   end
 
-  def update_session
-    session.update(session_id: user_id, urn: school_urn)
+  def update_session(authorisation)
+    session.update(session_id: user_id, urn: school_urn, multiple_schools: authorisation.many?)
     audit_successful_authorisation
   end
 
@@ -62,9 +62,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   def perform_dfe_sign_in_authorisation
     audit_successful_authentication
 
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
+    authorisation.call
     if authorisation.authorised?
-      update_session
+      update_session(authorisation)
       redirect_to school_path
     else
       not_authorised

@@ -84,7 +84,7 @@ module AuthHelpers
   end
 
   def stub_sign_in_with_multiple_organisations(user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
-                                              fixture_file: 'dfe_sign_in_user_organisations_response.json')
+                                               fixture_file: 'dfe_sign_in_user_organisations_response.json')
 
     authorisation_response = File.read(Rails.root.join('spec', 'fixtures', fixture_file))
 
