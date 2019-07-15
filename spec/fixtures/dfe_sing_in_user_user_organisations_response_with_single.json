@@ -1,0 +1,25 @@
+[
+  {
+      "id": "939eac36-0777-48c2-9c2c-b87c948a9ee0",
+      "name": "Organisation Foo",
+      "category": {
+          "id": "001",
+          "name": "Early Year Setting"
+      },
+      "urn": "org-urn",
+      "uid": null,
+      "ukprn": null,
+      "establishmentNumber": null,
+      "status": {
+          "id": 1,
+          "name": "Open"
+      },
+      "closedOn": null,
+      "address": null,
+      "telephone": null,
+      "statutoryLowAge": null,
+      "statutoryHighAge": null,
+      "legacyId": "legacy-id",
+      "companyRegistrationNumber": null
+  }
+]

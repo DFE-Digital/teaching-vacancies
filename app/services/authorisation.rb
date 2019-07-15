@@ -40,8 +40,8 @@ class Authorisation
 
   def many?
     org_api_path = "/users/#{user_id}/organisations"
-    response = JSON.parse(get_dfe_sign_in_api_response(org_api_path).body)
-    return true if response.count > 1
+    response = get_dfe_sign_in_api_response(org_api_path)
+    return JSON.parse(response.body).count > 1 if response.code.eql?('200')
 
     false
   end
