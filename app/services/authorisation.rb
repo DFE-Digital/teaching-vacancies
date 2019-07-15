@@ -19,7 +19,8 @@ class Authorisation
   end
 
   def call
-    response = build_response
+    auth_user_api_path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
+    response = get_dfe_sign_in_api_response(auth_user_api_path)
 
     raise ExternalServerError if response.code.eql?('500')
 
@@ -37,6 +38,14 @@ class Authorisation
     role_ids.include?(dfe_sign_in_service_access_role_id)
   end
 
+  def many_schools?
+    org_api_path = "/users/#{user_id}/organisations"
+    response = get_dfe_sign_in_api_response(org_api_path)
+    return JSON.parse(response.body).count > 1 if response.code.eql?('200')
+
+    nil
+  end
+
   private
 
   def generate_jwt_token
@@ -48,9 +57,9 @@ class Authorisation
     JWT.encode(payload, dfe_sign_in_password, 'HS256')
   end
 
-  def build_response
+  def get_dfe_sign_in_api_response(uri_path)
     uri = URI(dfe_sign_in_url)
-    uri.path = "/services/#{dfe_sign_in_service_id}/organisations/#{organisation_id}/users/#{user_id}"
+    uri.path = uri_path
 
     request = Net::HTTP::Get.new(uri)
     request['Authorization'] = "bearer #{generate_jwt_token}"

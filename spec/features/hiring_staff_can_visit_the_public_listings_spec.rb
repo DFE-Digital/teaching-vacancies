@@ -24,6 +24,7 @@ RSpec.feature 'School viewing public listings' do
         stub_accepted_terms_and_condition
         stub_authentication_step(school_urn: '110627')
         stub_authorisation_step
+        stub_sign_in_with_multiple_organisations
       end
 
       scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do

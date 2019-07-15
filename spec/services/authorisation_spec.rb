@@ -110,4 +110,49 @@ RSpec.describe Authorisation do
       end
     end
   end
+
+  describe '#many_schools?' do
+    subject do
+      described_class.new(
+        organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
+        user_id: user_id
+      )
+    end
+    let(:user_id) { 'default_id' }
+
+    context 'user is a member of multiple organisations' do
+      let(:user_id) { '161d1f6a-44f1-4a1a-940d-d1088c439da7' }
+      it 'has many' do
+        stub_sign_in_with_multiple_organisations(user_id: user_id)
+        expect(subject.many_schools?).to be(true)
+      end
+    end
+
+    context 'another user is a member of multiple organisations' do
+      let(:user_id) { 'another_user_id' }
+      it 'has many' do
+        stub_sign_in_with_multiple_organisations(user_id: user_id)
+        expect(subject.many_schools?).to be(true)
+      end
+    end
+
+    context 'user is member of a single organisation' do
+      let(:user_id) { 'another_user_id' }
+      it 'does not have many' do
+        stub_sign_in_with_single_organisation(user_id: user_id)
+        expect(subject.many_schools?).to be(false)
+      end
+    end
+
+    context 'DfE sign-in has an internal server error' do
+      let(:user_id) { 'another_user_id' }
+      it 'is nil' do
+        stub_request(
+          :get,
+          "https://test-url.local/users/#{user_id}/organisations"
+        ).to_return(status: 500)
+        expect(subject.many_schools?).to be(nil)
+      end
+    end
+  end
 end

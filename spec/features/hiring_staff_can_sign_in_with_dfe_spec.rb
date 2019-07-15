@@ -77,6 +77,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       before(:each) do
         stub_authentication_step
         stub_authorisation_step
+        stub_sign_in_with_multiple_organisations
 
         visit root_path
 
