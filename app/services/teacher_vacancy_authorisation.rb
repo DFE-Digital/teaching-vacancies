@@ -30,7 +30,7 @@ module TeacherVacancyAuthorisation
       user_permissions.first['school_urn']
     end
 
-    def many?
+    def many_schools?
       user_permissions && user_permissions.count > 1
     end
 

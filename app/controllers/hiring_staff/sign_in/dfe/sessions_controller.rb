@@ -32,7 +32,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def update_session(authorisation_permissions)
-    session.update(session_id: user_id, urn: school_urn, multiple_schools: authorisation_permissions.many?)
+    session.update(session_id: user_id, urn: school_urn, multiple_schools: authorisation_permissions.many_schools?)
     audit_successful_authorisation
   end
 
