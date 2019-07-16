@@ -12,6 +12,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def create
     Rails.logger.warn("Hiring staff signed in: #{user_id}")
+    audit_successful_authentication
+
     if DfeSignInAuthorisationFeature.enabled?
       perform_dfe_sign_in_authorisation
     else
@@ -29,13 +31,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     render 'user-not-authorised'
   end
 
-  def update_session
-    session.update(session_id: user_id, urn: school_urn)
-    audit_successful_authorisation
-  end
-
-  def update_non_dsi_session(school_urn, permissions)
-    session.update(session_id: user_id, urn: school_urn, multiple_schools: permissions.many?)
+  def update_session(authorisation_permissions)
+    session.update(session_id: user_id, urn: school_urn, multiple_schools: authorisation_permissions.many_schools?)
     audit_successful_authorisation
   end
 
@@ -60,25 +57,20 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def perform_dfe_sign_in_authorisation
-    audit_successful_authentication
-
-    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id).call
-    if authorisation.authorised?
-      update_session
-      redirect_to school_path
-    else
-      not_authorised
-    end
+    authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
+    authorisation.call
+    check_authorisation(authorisation)
   end
 
   def perform_non_dfe_sign_in_authorisation
     permissions = TeacherVacancyAuthorisation::Permissions.new
     permissions.authorise(identifier, school_urn)
+    check_authorisation(permissions)
+  end
 
-    audit_successful_authentication
-
-    if permissions.authorised?
-      update_non_dsi_session(permissions.school_urn, permissions)
+  def check_authorisation(authorisation_permissions)
+    if authorisation_permissions.authorised?
+      update_session(authorisation_permissions)
       redirect_to school_path
     else
       not_authorised

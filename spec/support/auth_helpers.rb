@@ -82,6 +82,28 @@ module AuthHelpers
       'https://test-url.local/services/test-service-id/organisations/939eac36-0777-48c2-9c2c-b87c948a9ee0/users/161d1f6a-44f1-4a1a-940d-d1088c439da7'
     ).to_return(body: authorisation_response, status: 500)
   end
+
+  def stub_sign_in_with_multiple_organisations(user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
+                                               fixture_file: 'dfe_sign_in_user_organisations_response.json')
+
+    authorisation_response = File.read(Rails.root.join('spec', 'fixtures', fixture_file))
+
+    stub_request(
+      :get,
+      "https://test-url.local/users/#{user_id}/organisations"
+    ).to_return(body: authorisation_response, status: 200)
+  end
+
+  def stub_sign_in_with_single_organisation(user_id: 'some-user-id',
+                                            fixture_file:
+                                            'dfe_sing_in_user_user_organisations_response_with_single.json')
+    authorisation_response = File.read(Rails.root.join('spec', 'fixtures', fixture_file))
+
+    stub_request(
+      :get,
+      "https://test-url.local/users/#{user_id}/organisations"
+    ).to_return(body: authorisation_response, status: 200)
+  end
 end
 
 RSpec.shared_examples 'basic auth' do

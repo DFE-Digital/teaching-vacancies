@@ -68,7 +68,7 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
     end
   end
 
-  describe '#many?' do
+  describe '#many_schools?' do
     it 'returns true if there are multiple schools that the user is authorised with' do
       response = { user: { permissions: [{ school_urn: '12345' }, { school_urn: '23412' }] } }.to_json
       mock_http = double(:http, request: double(:reponse, code: '200', body: response))
@@ -78,7 +78,7 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
       expect(mock_http).to receive(:use_ssl=).with(true)
 
       service.authorise('sample-token')
-      expect(service.many?).to eq(true)
+      expect(service.many_schools?).to eq(true)
     end
 
     it 'returns false if there are multiple schools that the user is authorised with' do
@@ -90,7 +90,7 @@ RSpec.describe 'TeacherVacancyAuthorisation::Permissions' do
       expect(mock_http).to receive(:use_ssl=).with(true)
 
       service.authorise('sample-token')
-      expect(service.many?).to eq(false)
+      expect(service.many_schools?).to eq(false)
     end
   end
 
