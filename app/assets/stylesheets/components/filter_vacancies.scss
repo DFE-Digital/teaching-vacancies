@@ -25,6 +25,10 @@
     background: govuk-colour("white");
     .govuk-checkboxes__item {
       max-height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
     }
     label {
       background: govuk-colour("grey-3");
@@ -39,6 +43,9 @@
     &--scrollable {
       height: 220px;
       overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     padding: 10px 10px 0 10px;
     border: 2px solid govuk-colour("grey-1");
