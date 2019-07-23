@@ -464,6 +464,16 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#publish' do
+      scenario 'adds the current user as a contact for feedback on the published vacancy' do
+        current_user = User.find_by(oid: session_id)
+        vacancy = create(:vacancy, :draft, school: school)
+
+        expect(PublishVacancy).to receive(:new).with(vacancy, current_user).and_call_original
+
+        visit school_job_review_path(vacancy.id)
+        click_on 'Confirm and submit job'
+      end
+
       scenario 'view the published listing as a job seeker' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
 
