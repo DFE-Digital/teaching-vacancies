@@ -614,7 +614,11 @@ en:
           title: Applicable Law and Jurisdiction
           line_1: These General Terms are governed by the laws of England and Wales. Any dispute arising under these General Terms will be subject to the exclusive jurisdiction of the courts of England and Wales.
       for_schools:
-        title: Terms and Conditions for Schools
+        title: Terms and Conditions for Schools and Trusts
+        approving_user_accounts:
+          title: Approving user accounts
+          text:
+            - Users must be approved before they are given a Teaching Vacancies account for the purposes of publishing or managing job listings for a school or trust. Each school or trust has a nominated 'approver' who has the ability to approve user accounts for that school or trust. An approver must only allow someone working for their school or trust to publish or manage job listings for their school or trust. They must not create accounts for or allow third parties to publish or manage job listings on behalf of their school or trust on the service. If the Teaching Vacancies team detects or is alerted to any account held by or used by third parties then that account will be deleted immediately.
         using_the_service:
           title: Using the Service
           text:
@@ -626,6 +630,7 @@ en:
           list:
             - listings for teaching vacancies that aren’t relevant to the service, such as but not limited to non-teaching roles, supply teaching roles and unpaid positions
             - listings for unconfirmed or non-existent vacancies
+            - listings for any school or trust that is not state funded, that is not in England or that does not teach primary or secondary pupils
             - offensive or inappropriate language, including but not limited to profanities or language pejorative of any group, such as racist, sexist or homophobic comments
             - "discriminatory content: you must not state or imply in a job advert that you will discriminate against anyone (subject to certain exceptions under the Equality Act 2010 particularly those applying to schools with a religious character); for further information see GOV.UK’s <a href='https://www.gov.uk/employer-preventing-discrimination/recruitment' target='_blank' class='govuk-link'>guidance on discrimination in job adverts</a>"
             - material that infringes any intellectual property rights, such as copyright and trademarks (this means generally that you must own the rights in everything you submit or must obtain permission from the rights owner to submit the material)
