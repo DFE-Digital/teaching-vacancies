@@ -5,6 +5,7 @@ FactoryBot.define do
     association :subject
     association :leadership
     association :school
+    association :publisher_user, factory: :user
 
     job_title { Faker::Lorem.sentence[1...30].strip }
     job_description { Faker::Lorem.paragraph(4) }

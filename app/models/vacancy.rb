@@ -23,6 +23,8 @@ class Vacancy < ApplicationRecord
   include Elasticsearch::Model
   include Redis::Objects
 
+  belongs_to :publisher_user, class_name: 'User', optional: true
+
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
   document_type 'vacancy'
   settings index: {
