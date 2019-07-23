@@ -57,6 +57,10 @@
     %p=t('static_pages.terms_and_conditions.all_users.applicable_law.line_1')
 
     %h2.govuk-heading-l=t('static_pages.terms_and_conditions.for_schools.title')
+    %h3.govuk-heading-m=t('static_pages.terms_and_conditions.for_schools.approving_user_accounts.title')
+    -t('static_pages.terms_and_conditions.for_schools.approving_user_accounts.text').each do |p|
+      %p=p.html_safe
+
     %h3.govuk-heading-m=t('static_pages.terms_and_conditions.for_schools.using_the_service.title')
     -t('static_pages.terms_and_conditions.for_schools.using_the_service.text').each do |p|
       %p=p.html_safe
