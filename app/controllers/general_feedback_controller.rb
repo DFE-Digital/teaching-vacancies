@@ -16,6 +16,6 @@ class GeneralFeedbackController < ApplicationController
   private
 
   def general_feedback_params
-    params.require(:general_feedback).permit(:visit_purpose, :visit_purpose_comment, :rating, :comment)
+    params.require(:general_feedback).permit(:visit_purpose, :visit_purpose_comment, :comment)
   end
 end
