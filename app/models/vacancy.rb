@@ -107,6 +107,7 @@ class Vacancy < ApplicationRecord
     hired_dont_know: 6
   }
 
+  belongs_to :publisher_user, class_name: 'User', optional: true
   belongs_to :school, optional: false
   belongs_to :subject, optional: true
   belongs_to :first_supporting_subject, class_name: 'Subject', optional: true

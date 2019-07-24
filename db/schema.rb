@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_18_093245) do
+ActiveRecord::Schema.define(version: 2019_07_22_142115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 2019_06_18_093245) do
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "oid"
     t.datetime "accepted_terms_at"
+    t.string "email"
     t.index ["oid"], name: "index_users_on_oid", unique: true
   end
 
@@ -212,11 +213,13 @@ ActiveRecord::Schema.define(version: 2019_06_18_093245) do
     t.integer "listed_elsewhere"
     t.integer "hired_status"
     t.datetime "stats_updated_at"
+    t.uuid "publisher_user_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["max_pay_scale_id"], name: "index_vacancies_on_max_pay_scale_id"
     t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
+    t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
@@ -234,4 +237,5 @@ ActiveRecord::Schema.define(version: 2019_06_18_093245) do
   end
 
   add_foreign_key "schools", "detailed_school_types"
+  add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end
