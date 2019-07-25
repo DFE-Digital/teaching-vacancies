@@ -5,7 +5,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
 
-      .govuk-form-group.general-feedback-form-group
+      .govuk-form-group.feedback-form-group
         %fieldset.govuk-fieldset
           %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
             %h2.govuk-fieldset__heading
@@ -23,15 +23,15 @@
                 hint: t('general_feedback.visit_purpose_hint_text').html_safe,
                 input_html: { class: 'form-control form-control-4-4', rows: '5' }
 
-      .govuk-form-group.general-feedback-form-group
+      .govuk-form-group.feedback-form-group
         %fieldset.govuk-fieldset
           %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
             %h2.govuk-fieldset__heading
               = t('feedback.comment_label')
 
-      = f.input :comment, as: :text,
-                  wrapper: :textarea,
-                  label: false,
-                  input_html: { class: 'form-control form-control-4-4', rows: '5' }
+        = f.input :comment, as: :text,
+                    wrapper: :textarea,
+                    label: false,
+                    input_html: { class: 'form-control form-control-4-4', rows: '5' }
 
       = f.submit t('feedback.submit'), class: 'govuk-button'
