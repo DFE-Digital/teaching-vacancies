@@ -29,11 +29,10 @@ git push --force-with-lease origin edge / git push --force-with-lease origin tes
 As we use Terraform to make 95% of our changes to the infrastructure they too should be made in the form of pull requests into the relevant git branch. [You can read about what's not covered in our set up docs](../terraform/README.md).
 
 ### Before you start
-1. Install the the Terraform client on your machine:
-  * [Directly from Hashicorp](https://releases.hashicorp.com/terraform/) (recommended) - select the highest _patch_ for the [_minor_ version we're pinned to](terraform.tf)
-  * [Using Brew](https://formulae.brew.sh/formula/terraform) - be mindful that there is no current way to pick what version you have with Brew so this latest version may well put you above [the version we're pinned to](terraform.tf)
-2. [Configure AWS on your machine](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html ) so that Terraform has permission to talk to the AWS API
-3. Get a local copy of the Terraform variables from the 1Password vault and move them into `/workspace-variables`, eg. `/workspace-variables/edge.tfvars`
+1. Install the [tfenv](https://formulae.brew.sh/formula/tfenv) software on your machine.
+2. Run `tfenv install` from within the root of this project to install the required version of Terraform, using the `.terraform-version` file.
+3. [Configure AWS on your machine](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html ) so that Terraform has permission to talk to the AWS API
+4. Get a local copy of the Terraform variables from the `teaching-vacancies-service-secrets` repository, `secrets/tfvars/*` and move them into `/workspace-variables`, eg. `/workspace-variables/edge.tfvars`
 
 ### Running a deployment
 This is a manual process that we've scripted to help avoid common mistakes. To know when Terraform needs to be deployed, we've included a Terraform option in our pull request templates so it's the responsibility of the author to let the merger know that this step is needed on merge.
