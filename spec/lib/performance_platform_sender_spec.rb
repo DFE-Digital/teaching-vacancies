@@ -79,18 +79,18 @@ RSpec.describe PerformancePlatformSender::Base do
       vacancy_publish_rating3 = create_list(:vacancy_publish_feedback, 3, rating: 3, created_at: date_to_upload)
       vacancy_publish_rating5 = create_list(:vacancy_publish_feedback, 5, rating: 5, created_at: date_to_upload)
 
-      create_list(:general_feedback, 2, rating: 1, created_at: today)
-      create_list(:general_feedback, 2, rating: 4, created_at: two_days_ago)
+      create_list(:general_feedback, 2, created_at: today)
+      create_list(:general_feedback, 2, created_at: two_days_ago)
 
-      general_rating3 = create_list(:general_feedback, 6, rating: 3, created_at: date_to_upload)
-      general_rating5 = create_list(:general_feedback, 8, rating: 5, created_at: date_to_upload)
+      create_list(:general_feedback, 6, created_at: date_to_upload)
+      create_list(:general_feedback, 8, created_at: date_to_upload)
 
       ratings = {
         1 => 0,
         2 => 0,
-        3 => vacancy_publish_rating3.count + general_rating3.count,
+        3 => vacancy_publish_rating3.count,
         4 => 0,
-        5 => vacancy_publish_rating5.count + general_rating5.count
+        5 => vacancy_publish_rating5.count
       }
 
       user_feedback = instance_double(PerformancePlatform::UserSatisfaction)
