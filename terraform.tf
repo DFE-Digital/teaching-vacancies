@@ -163,6 +163,7 @@ module "ecs" {
   notify_key                                   = "${var.notify_key}"
   notify_subscription_confirmation_template    = "${var.notify_subscription_confirmation_template}"
   notify_subscription_daily_template           = "${var.notify_subscription_daily_template}"
+  notify_prompt_feedback_for_expired_vacancies = "${var.notify_prompt_feedback_for_expired_vacancies}"
   feature_email_alerts                         = "${var.feature_email_alerts}"
   feature_import_vacancies                     = "${var.feature_import_vacancies}"
   feature_dfe_sign_in_authorisation            = "${var.feature_dfe_sign_in_authorisation}"

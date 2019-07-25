@@ -137,6 +137,10 @@
         "value": "${notify_subscription_daily_template}"
       },
       {
+        "name": "NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES",
+        "value": "${notify_prompt_feedback_for_expired_vacancies}"
+      },
+      {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
       },
