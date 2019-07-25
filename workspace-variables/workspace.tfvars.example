@@ -86,6 +86,7 @@ skylight_enabled = "false"
 
 notify_key = ''
 notify_subscription_confirmation_template = ''
+notify_prompt_feedback_for_expired_vacancies= ''
 subscription_key_generator_secret = ''
 subscription_key_generator_salt = ''
 feature_email_alerts = ''
