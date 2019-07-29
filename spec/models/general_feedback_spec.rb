@@ -25,14 +25,12 @@ RSpec.describe GeneralFeedback, type: :model do
     let(:created_at) { '2019-01-01T00:00:00+00:00' }
     let(:visit_purpose) { :other_purpose }
     let(:visit_purpose_comment) { 'For reasons...' }
-    let(:rating) { 5 }
     let(:comment) { 'Great!' }
 
     let(:feedback) do
       Timecop.freeze(created_at) do
         create(:general_feedback, visit_purpose: visit_purpose,
                                   visit_purpose_comment: visit_purpose_comment,
-                                  rating: rating,
                                   comment: comment)
       end
     end
@@ -41,7 +39,7 @@ RSpec.describe GeneralFeedback, type: :model do
       expect(feedback.to_row[0]).to eq(Time.zone.now.to_s)
       expect(feedback.to_row[1]).to eq(visit_purpose.to_s)
       expect(feedback.to_row[2]).to eq(visit_purpose_comment)
-      expect(feedback.to_row[3]).to eq(rating)
+      expect(feedback.to_row[3]).to eq(nil) # Rating column: we no longer take these as feedback
       expect(feedback.to_row[4]).to eq(comment)
       expect(feedback.to_row[5]).to eq(feedback.created_at.to_s)
     end

@@ -64,7 +64,6 @@ module PerformancePlatformSender
     def data
       { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
         .merge!(VacancyPublishFeedback.published_on(date).group(:rating).count) { |_, old, new| old + new }
-        .merge!(GeneralFeedback.published_on(date).group(:rating).count) { |_, old, new| old + new }
     end
   end
 end
