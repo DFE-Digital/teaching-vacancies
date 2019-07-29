@@ -5,12 +5,12 @@ RSpec.feature 'Creating a vacancy' do
   let(:session_id) { SecureRandom.uuid }
 
   before(:each) do
+    ActionMailer::Base.deliveries.clear
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id, email: 'test@mail.com')
   end
 
   after(:each) do
     Timecop.return
-    ActionMailer::Base.deliveries.clear
   end
 
   context 'Hiring staff has expired vacancy that is not older than 2 weeks' do
