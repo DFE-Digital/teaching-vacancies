@@ -25,10 +25,10 @@ module AuthHelpers
     allow(fake_env).to receive(env_field_for_password.to_sym).and_return(env_value_for_password)
   end
 
-  def stub_hiring_staff_auth(urn:, session_id: 'session_id')
+  def stub_hiring_staff_auth(urn:, session_id: 'session_id', email: nil)
     page.set_rack_session(urn: urn)
     page.set_rack_session(session_id: session_id)
-    create(:user, oid: session_id)
+    create(:user, oid: session_id, email: email)
   end
 
   def stub_authentication_step(organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
