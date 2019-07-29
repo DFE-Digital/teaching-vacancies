@@ -391,6 +391,7 @@ variable "feature_import_vacancies" {
 
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
+variable "notify_prompt_feedback_for_expired_vacancies" {}
 variable "subscription_key_generator_secret" {}
 variable "subscription_key_generator_salt" {}
 
