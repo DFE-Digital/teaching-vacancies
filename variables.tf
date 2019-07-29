@@ -174,7 +174,6 @@ variable "send_feedback_prompt_email_task_schedule" {
   default     = "cron(0 09 * * ? *)"
 }
 
-
 variable "import_schools_task_command" {
   description = "The Entrypoint for the import_schools task"
   default     = ["rake", "verbose", "data:schools:import"]
