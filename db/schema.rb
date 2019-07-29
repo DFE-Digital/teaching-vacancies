@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_22_142115) do
+ActiveRecord::Schema.define(version: 2019_07_29_095306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2019_07_22_142115) do
     t.text "visit_purpose_comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.integer "user_participation_response"
   end
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
