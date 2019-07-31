@@ -114,6 +114,10 @@ variable "send_job_alerts_daily_email_task_command" {
   type = "list"
 }
 
+variable "send_feedback_prompt_email_task_command" {
+  type = "list"
+}
+
 variable "sessions_trim_task_command" {
   type = "list"
 }
@@ -144,6 +148,7 @@ variable "update_spreadsheets_task_command" {
 
 variable "update_spreadsheets_task_schedule" {}
 variable "send_job_alerts_daily_email_task_schedule" {}
+variable "send_feedback_prompt_email_task_schedule" {}
 
 variable "vacancies_statistics_refresh_cache_task_command" {
   type = "list"

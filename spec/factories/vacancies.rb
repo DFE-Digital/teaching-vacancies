@@ -115,5 +115,10 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       working_patterns { nil }
     end
+
+    trait :with_feedback do
+      listed_elsewhere { :listed_paid }
+      hired_status { :hired_tvs }
+    end
   end
 end
