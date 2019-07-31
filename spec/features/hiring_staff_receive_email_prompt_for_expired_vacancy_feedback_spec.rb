@@ -113,8 +113,8 @@ RSpec.feature 'Creating a vacancy' do
         SendExpiredVacancyFeedbackEmailJob.new.perform
       end
 
-      expect(ApplicationMailer.deliveries.map(&:to)).to match(
-        [['another@user.com'], ['test@mail.com']]
+      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(
+        ['another@user.com'], ['test@mail.com']
       )
       expect(ApplicationMailer.deliveries.count).to eq(2)
     end
