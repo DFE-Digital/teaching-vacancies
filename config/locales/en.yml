@@ -259,6 +259,12 @@ en:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
       other_purpose: Something else (tell us in the box below)
+    user_participation_legend: 'Would you like to participate in our research?'
+    user_participation_options:
+      interested: 'Yes'
+      not_interested: 'No'
+    user_interested_email_heading: 'What is your email address?'
+    user_interested_email_text: "We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services."
   schools:
     about: 'About'
     address: 'Address'
