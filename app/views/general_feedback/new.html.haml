@@ -45,6 +45,13 @@
               = f.radio_button(:user_participation_response, :interested, class: 'govuk-radios__input')
               = f.label(t('general_feedback.user_participation_options.interested'), class: "govuk-label govuk-radios__label", required: true)
 
+              = f.input :email,
+                label: t('jobs.contact_email'),
+                hint: t('jobs.form_hints.contact_email'),
+                as: :email,
+                wrapper_html: {id: 'contact_email'},
+                required: true
+
             .govuk-radios__item
               = f.radio_button(:user_participation_response, :not_interested, class: 'govuk-radios__input')
               = f.label(t('general_feedback.user_participation_options.not_interested'), class: "govuk-label govuk-radios__label", required: true)

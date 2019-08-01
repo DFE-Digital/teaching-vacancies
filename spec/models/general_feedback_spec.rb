@@ -8,6 +8,18 @@ RSpec.describe GeneralFeedback, type: :model do
     it { should validate_presence_of :user_participation_response }
   end
 
+  describe '#email' do
+    context 'when user is interested in research participation' do
+      before { allow(subject).to receive(:user_is_interested?).and_return(true) }
+      it { is_expected.to validate_presence_of(:email) }
+    end
+
+    context 'when user is NOT interested in research participation' do
+      before { allow(subject).to receive(:user_is_interested?).and_return(false) }
+      it { is_expected.not_to validate_presence_of(:email) }
+    end
+  end
+
   describe '#published_on(date)' do
     it 'retrieves feedback submitted on the given date' do
       feedback_today = create_list(:general_feedback, 3)

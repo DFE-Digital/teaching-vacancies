@@ -34,5 +34,27 @@ RSpec.feature 'Giving general feedback for the service' do
 
       expect(page).to have_content('Your feedback has been successfully submitted')
     end
+
+    scenario 'must have an email when participation response is Yes' do
+      choose 'Find a job in teaching'
+      fill_in 'general_feedback_comment', with: 'Keep going!'
+      choose('general_feedback_user_participation_response_interested')
+
+      click_on 'Submit feedback'
+
+      expect(page).to have_content('Email can\'t be blank')
+    end
+
+    scenario 'successfully submitting feedback and interest in user research' do
+      choose 'Find a job in teaching'
+      fill_in 'general_feedback_comment', with: 'Keep going!'
+
+      choose('general_feedback_user_participation_response_interested')
+      fill_in 'email', with: 'test@test.com'
+
+      click_on 'Submit feedback'
+
+      expect(page).to have_content('Your feedback has been successfully submitted')
+    end
   end
 end
