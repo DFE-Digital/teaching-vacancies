@@ -9,7 +9,7 @@ RSpec.feature 'Giving general feedback for the service' do
   context 'when submitting feedback on the service' do
     scenario 'must have a visit purpose' do
       fill_in 'general_feedback_comment', with: 'Keep going!'
-      choose 'No'
+      choose('general_feedback_user_participation_response_not_interested')
 
       click_on 'Submit feedback'
 
@@ -28,7 +28,7 @@ RSpec.feature 'Giving general feedback for the service' do
     scenario 'successfully submitting feedback for the service' do
       choose 'Find a job in teaching'
       fill_in 'general_feedback_comment', with: 'Keep going!'
-      choose 'No'
+      choose('general_feedback_user_participation_response_not_interested')
 
       click_on 'Submit feedback'
 
