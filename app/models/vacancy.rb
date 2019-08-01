@@ -88,7 +88,7 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  enum status: %i[published draft trashed]
+  enum status: { published: 0, draft: 1, trashed: 2 }
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
   enum listed_elsewhere: {
     listed_paid: 0,

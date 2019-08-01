@@ -1,8 +1,8 @@
 class GeneralFeedback < ApplicationRecord
   include Auditor::Model
 
-  enum visit_purpose: %i[other_purpose find_teaching_job list_teaching_job]
-  enum user_participation_response: %i[interested not_interested]
+  enum visit_purpose: { other_purpose: 0, find_teaching_job: 1, list_teaching_job: 2 }
+  enum user_participation_response: { interested: 0, not_interested: 1 }
 
   validates :visit_purpose, presence: true
   validates :visit_purpose_comment, length: { maximum: 1200 }, if: :visit_purpose_comment?
