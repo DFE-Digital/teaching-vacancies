@@ -34,4 +34,26 @@
                     label: false,
                     input_html: { class: 'form-control form-control-4-4', rows: '5' }
 
+      .govuk-form-group.feedback-form-group
+        %fieldset.govuk-fieldset
+          %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+            %h2.govuk-fieldset__heading
+              = t('general_feedback.user_participation_legend')
+
+          .govuk-radios
+            .govuk-radios__item
+              = f.radio_button(:user_participation_response, :interested, class: 'govuk-radios__input')
+              = f.label(t('general_feedback.user_participation_options.interested'), class: "govuk-label govuk-radios__label", required: true)
+
+              = f.input :email, as: :email,
+                  label: t('general_feedback.user_interested_email_heading'),
+                  hint: t('general_feedback.user_interested_email_text'),
+                  wrapper_html: {id: 'email', class: "govuk-inset-text"},
+                  required: true
+
+            .govuk-radios__item
+              = f.radio_button(:user_participation_response, :not_interested, class: 'govuk-radios__input')
+              = f.label(t('general_feedback.user_participation_options.not_interested'), class: "govuk-label govuk-radios__label", required: true)
+
+
       = f.submit t('feedback.submit'), class: 'govuk-button'

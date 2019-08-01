@@ -5,6 +5,35 @@ RSpec.describe GeneralFeedback, type: :model do
     it { should validate_presence_of :visit_purpose }
     it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
     it { should validate_length_of(:comment).is_at_most(1200) }
+    it { should validate_presence_of :user_participation_response }
+  end
+
+  describe '#email' do
+    context 'when user is interested in research participation' do
+      before { allow(subject).to receive(:user_is_interested?).and_return(true) }
+      it { is_expected.to validate_presence_of(:email) }
+
+      it 'ensures an email is set' do
+        feedback = build(:general_feedback, user_participation_response: :interested)
+        feedback.save
+
+        expect(feedback.valid?).to eq(false)
+        expect(feedback.errors.messages[:email]).to eq(['can\'t be blank'])
+      end
+
+      it 'ensures a valid email address is used' do
+        feedback = build(:general_feedback, user_participation_response: :interested, email: 'inv@al@.id.email.com')
+        feedback.save
+
+        expect(feedback.valid?).to eq(false)
+        expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
+      end
+    end
+
+    context 'when user is NOT interested in research participation' do
+      before { allow(subject).to receive(:user_is_interested?).and_return(false) }
+      it { is_expected.not_to validate_presence_of(:email) }
+    end
   end
 
   describe '#published_on(date)' do
@@ -26,12 +55,16 @@ RSpec.describe GeneralFeedback, type: :model do
     let(:visit_purpose) { :other_purpose }
     let(:visit_purpose_comment) { 'For reasons...' }
     let(:comment) { 'Great!' }
+    let(:user_participation_response) { :interested }
+    let(:email) { 'hello@research.com' }
 
     let(:feedback) do
       Timecop.freeze(created_at) do
         create(:general_feedback, visit_purpose: visit_purpose,
                                   visit_purpose_comment: visit_purpose_comment,
-                                  comment: comment)
+                                  comment: comment,
+                                  user_participation_response: user_participation_response,
+                                  email: email)
       end
     end
 
@@ -42,6 +75,8 @@ RSpec.describe GeneralFeedback, type: :model do
       expect(feedback.to_row[3]).to eq(nil) # Rating column: we no longer take these as feedback
       expect(feedback.to_row[4]).to eq(comment)
       expect(feedback.to_row[5]).to eq(feedback.created_at.to_s)
+      expect(feedback.to_row[6]).to eq(user_participation_response.to_s)
+      expect(feedback.to_row[7]).to eq(email)
     end
   end
 end
