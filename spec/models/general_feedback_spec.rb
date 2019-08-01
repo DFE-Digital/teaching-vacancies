@@ -55,12 +55,16 @@ RSpec.describe GeneralFeedback, type: :model do
     let(:visit_purpose) { :other_purpose }
     let(:visit_purpose_comment) { 'For reasons...' }
     let(:comment) { 'Great!' }
+    let(:user_participation_response) { :interested }
+    let(:email) { 'hello@research.com' }
 
     let(:feedback) do
       Timecop.freeze(created_at) do
         create(:general_feedback, visit_purpose: visit_purpose,
                                   visit_purpose_comment: visit_purpose_comment,
-                                  comment: comment)
+                                  comment: comment,
+                                  user_participation_response: user_participation_response,
+                                  email: email)
       end
     end
 
@@ -71,6 +75,8 @@ RSpec.describe GeneralFeedback, type: :model do
       expect(feedback.to_row[3]).to eq(nil) # Rating column: we no longer take these as feedback
       expect(feedback.to_row[4]).to eq(comment)
       expect(feedback.to_row[5]).to eq(feedback.created_at.to_s)
+      expect(feedback.to_row[6]).to eq(user_participation_response.to_s)
+      expect(feedback.to_row[7]).to eq(email)
     end
   end
 end

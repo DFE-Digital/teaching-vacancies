@@ -23,7 +23,9 @@ class GeneralFeedback < ApplicationRecord
       visit_purpose_comment,
       rating,
       comment,
-      created_at.to_s
+      created_at.to_s,
+      user_participation_response,
+      email
     ]
   end
 end
