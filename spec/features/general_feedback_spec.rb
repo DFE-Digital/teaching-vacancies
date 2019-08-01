@@ -7,9 +7,12 @@ RSpec.feature 'Giving general feedback for the service' do
   end
 
   context 'when submitting feedback on the service' do
+    let(:choose_yes_to_participation) { choose('general_feedback_user_participation_response_interested') }
+    let(:choose_no_to_participation) { choose('general_feedback_user_participation_response_not_interested') }
+
     scenario 'must have a visit purpose' do
       fill_in 'general_feedback_comment', with: 'Keep going!'
-      choose('general_feedback_user_participation_response_not_interested')
+      choose_no_to_participation
 
       click_on 'Submit feedback'
 
@@ -28,7 +31,7 @@ RSpec.feature 'Giving general feedback for the service' do
     scenario 'successfully submitting feedback for the service' do
       choose 'Find a job in teaching'
       fill_in 'general_feedback_comment', with: 'Keep going!'
-      choose('general_feedback_user_participation_response_not_interested')
+      choose_no_to_participation
 
       click_on 'Submit feedback'
 
@@ -38,7 +41,7 @@ RSpec.feature 'Giving general feedback for the service' do
     scenario 'must have an email when participation response is Yes' do
       choose 'Find a job in teaching'
       fill_in 'general_feedback_comment', with: 'Keep going!'
-      choose('general_feedback_user_participation_response_interested')
+      choose_yes_to_participation
 
       click_on 'Submit feedback'
 
@@ -49,7 +52,7 @@ RSpec.feature 'Giving general feedback for the service' do
       choose 'Find a job in teaching'
       fill_in 'general_feedback_comment', with: 'Keep going!'
 
-      choose('general_feedback_user_participation_response_interested')
+      choose_yes_to_participation
       fill_in 'email', with: 'test@test.com'
 
       click_on 'Submit feedback'
