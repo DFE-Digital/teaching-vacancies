@@ -1,0 +1,19 @@
+\# #{t('app.title')}
+
+Dear vacancy publisher,
+\
+We’re constantly working to improve #{t('app.title')}. Our aim is to make the service the preferred resource for getting schools the teachers they need while saving them money on recruitment costs.
+\
+But to make effective improvements we need the insights of our users, including feedback from schools like yours on their expired job listings.
+\
+Please help us by answering a couple quick questions about the following expired listings:
+
+- @vacancies.each do |vacancy|
+  = "* #{vacancy.job_title}"
+
+\
+Just sign into your Teaching Vacancies account and select the ‘Jobs awaiting feedback’ tab. It will only take a minute and the data is essential to our efforts to improve Teaching Vacancies.
+\
+Kind regards,
+\
+#{t('app.title')}
