@@ -1,4 +1,4 @@
 class AlertRun < ApplicationRecord
-  enum status: %i[pending sent]
+  enum status: { pending: 0, sent: 1 }
   belongs_to :subscription
 end
