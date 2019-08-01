@@ -12,4 +12,11 @@ module FeedbackHelper
      [t('feedback.rating2_option'), 2],
      [t('feedback.rating1_option'), 1]]
   end
+
+  def participation_options
+    [
+      [t('general_feedback.user_participation_options.interested'), :interested],
+      [t('general_feedback.user_participation_options.not_interested'), :not_interested]
+    ]
+  end
 end

@@ -259,6 +259,10 @@ en:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
       other_purpose: Something else (tell us in the box below)
+    user_participation_legend: 'Would you like to participate in our research?'
+    user_participation_options:
+      interested: 'Yes'
+      not_interested: 'No'
   schools:
     about: 'About'
     address: 'Address'
