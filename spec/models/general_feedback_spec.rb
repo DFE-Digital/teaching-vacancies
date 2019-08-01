@@ -12,6 +12,22 @@ RSpec.describe GeneralFeedback, type: :model do
     context 'when user is interested in research participation' do
       before { allow(subject).to receive(:user_is_interested?).and_return(true) }
       it { is_expected.to validate_presence_of(:email) }
+
+      it 'ensures an email is set' do
+        feedback = build(:general_feedback, user_participation_response: :interested)
+        feedback.save
+
+        expect(feedback.valid?).to eq(false)
+        expect(feedback.errors.messages[:email]).to eq(['can\'t be blank'])
+      end
+
+      it 'ensures a valid email address is used' do
+        feedback = build(:general_feedback, user_participation_response: :interested, email: 'inv@al@.id.email.com')
+        feedback.save
+
+        expect(feedback.valid?).to eq(false)
+        expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
+      end
     end
 
     context 'when user is NOT interested in research participation' do
