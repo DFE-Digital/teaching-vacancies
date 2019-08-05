@@ -4,7 +4,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', "#{ENV['GOOGLE_ANALYTICS']}", { 'anonymize_ip': true, 'linker': {
+  gtag('config', "#{ENV['GOOGLE_ANALYTICS']}", { 'optimize_id': "#{ENV['GOOGLE_OPTIMIZE_ID']}", 'anonymize_ip': true, 'linker': {
      'domains': ['gov.uk/find-teaching-job', 'gov.uk/guidance/list-a-teaching-job-at-your-school-on-teaching-vacancies'],
     'accept_incoming': 'true' }
   });
