@@ -63,6 +63,10 @@
         "value": "${google_analytics}"
       },
       {
+        "name": "GOOGLE_OPTIMIZE_ID",
+        "value": "${google_optimize_id}"
+      },
+      {
         "name": "ROLLBAR_ACCESS_TOKEN",
         "value": "${rollbar_access_token}"
       },
