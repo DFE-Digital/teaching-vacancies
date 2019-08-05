@@ -1,7 +1,7 @@
 class Subscription < ApplicationRecord
   include Auditor::Model
 
-  enum frequency: %i[daily]
+  enum frequency: { daily: 0 }
 
   has_many :alert_runs
 
