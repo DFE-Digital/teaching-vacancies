@@ -16,6 +16,7 @@ en:
     title: 'Teaching Vacancies'
     menu: 'Menu'
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
+    govuk: 'GOV.UK'
   nav:
     sign_in: 'List a teaching job at your school'
     sign_out: 'Sign out'
