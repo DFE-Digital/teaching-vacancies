@@ -42,8 +42,7 @@ gem 'roadie-rails'
 gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version due to CVE-2018-3741
 
-gem 'gov_uk_date_fields', git: 'https://github.com/despo/gov_uk_date_fields.git',
-                          branch: 'trigger-iphone-numeric-keyboard-for-new-gov-uk-ds'
+gem 'gov_uk_date_fields', git: 'https://github.com/DFE-Digital/gov_uk_date_fields.git'
 
 gem 'xml-sitemap'
 
