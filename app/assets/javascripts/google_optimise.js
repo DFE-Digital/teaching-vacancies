@@ -1,4 +1,4 @@
-const google_optimize_activate = function() {
+var google_optimize_activate = function() {
   dataLayer.push({'event': 'optimize.activate'});
 };
 

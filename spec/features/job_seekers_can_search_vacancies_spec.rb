@@ -216,10 +216,8 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page.current_url).to include('subject=Maths')
     end
   end
-end
 
-RSpec.feature 'Searching vacancies by subject', js: true do
-  context 'when back button uses js method' do
+  context 'when back button uses js method', js: true do
     scenario 'back link navigates back to the presisted search page' do
       create(:vacancy, job_title: 'Biology Teacher')
 
