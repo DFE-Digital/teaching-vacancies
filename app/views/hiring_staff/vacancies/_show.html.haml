@@ -93,7 +93,6 @@
     .govuk-grid-column-one-third
       %aside.vacancy--metadata
         - if @vacancy.application_link.present?
-          %p.govuk-body-s=t('jobs.aria_labels.apply_link')
           = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
 
         %dl

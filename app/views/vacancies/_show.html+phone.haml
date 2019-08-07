@@ -16,6 +16,10 @@
       %span.govuk-caption-l
         = @vacancy.location
 
+    - if (@vacancy.application_link.present? && params[:apply_button] == 'top')
+      %aside.vacancy--metadata
+        = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link', 'aria-label': t('jobs.aria_labels.apply_link')
+
     %h2.govuk-heading-m
       = t('schools.about')
       = @vacancy.school.name
@@ -111,7 +115,7 @@
       = t('jobs.share_this_job')
     = render partial: '/shared/vacancy/share_buttons'
 
-    %aside.vacancy--metadata
-      - if @vacancy.application_link.present?
-        %p.govuk-body-s=t('jobs.aria_labels.apply_link')
+    
+    - if (@vacancy.application_link.present? && params[:apply_button] != 'top')
+      %aside.vacancy--metadata
         = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link', 'aria-label': t('jobs.aria_labels.apply_link')
