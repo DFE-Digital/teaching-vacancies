@@ -13,6 +13,11 @@
       margin-top: $govuk-gutter;
     }
 
+    margin-bottom: $govuk-gutter;
+    .vacancy-apply-link {
+      margin-bottom: 0px;
+    }
+
     dl {
       dt {
         @include govuk-font(19, $weight: bold);
