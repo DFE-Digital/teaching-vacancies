@@ -13,10 +13,10 @@
       .govuk-grid-column-one-half
         .share-url.mb1.display-none
           %h2.govuk-heading-m.mt0 Share this job
-          #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', id: 'share-url', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
+          #{link_to t('jobs.view_public_link'), @vacancy.share_url, class: 'govuk-link', 'aria-label': t('jobs.view_public_link')}, or #{link_to t('jobs.copy_public_url'), '#', class: 'govuk-link copy-to-clipboard', 'data-clipboard-text': @vacancy.share_url, 'aria-label': t('jobs.copy_public_url')}
         .share-url-no-js.mb1
           %h2.govuk-heading-s.mt0 Share this job
-          #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link', id: 'share-url'}
+          #{link_to "#{t('jobs.view_public_link')} (#{@vacancy.share_url})", job_path(@vacancy), class: 'govuk-link'}
         = render partial: '/shared/vacancy/share_buttons'
       .govuk-grid-column-one-half
         .og-preview
@@ -93,7 +93,6 @@
     .govuk-grid-column-one-third
       %aside.vacancy--metadata
         - if @vacancy.application_link.present?
-          %p.govuk-body-s=t('jobs.aria_labels.apply_link')
           = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
 
         %dl

@@ -216,4 +216,25 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page.current_url).to include('subject=Maths')
     end
   end
+
+  context 'when back button uses js method', js: true do
+    scenario 'back link navigates back to the presisted search page' do
+      create(:vacancy, job_title: 'Biology Teacher')
+
+      Vacancy.__elasticsearch__.client.indices.flush
+
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'subject', with: 'Biology'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      page.find('.view-vacancy-link').click
+      expect(page).to have_content('Biology Teacher')
+
+      page.find('.govuk-back-link').click
+      expect(page.current_url).to include('subject=Biology')
+    end
+  end
 end
