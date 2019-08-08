@@ -1,4 +1,5 @@
 var google_optimize_activate = function() {
+  window.dataLayer = window.dataLayer || [];
   dataLayer.push({'event': 'optimize.activate'});
 };
 
