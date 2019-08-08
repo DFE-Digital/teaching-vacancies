@@ -22,6 +22,7 @@ en:
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
     jobseekers_index_link: 'View public jobs'
+    find_job: 'Find a job'
     back: 'Back'
   sign_in:
     title: 'Sign in to Teaching Vacancies'
@@ -684,3 +685,11 @@ en:
           title: Terms and Conditions for API users
           line_1: "You are free to reuse job listing data under the terms of the <a href='https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/' target='_blank' class='govuk-link'>Open Government Licence</a> for public sector information with the following exception:"
           list: you may not charge a school any fee or commission for contacting, interviewing or hiring a respondent to your advertisement or listing if it is based on Teaching Vacancies data that you have reused.
+  footer:
+      request_support: "Report problems via email"
+      provide_feedback: "Feedback about the service"
+      for_job_seekers: "For job seekers"
+      search_teaching_vacancies: "Search teaching vacancies"
+      for_schools: "For schools"
+      list_a_teaching_job: "List a teaching job at your school"
+      service_support: "Service support"
