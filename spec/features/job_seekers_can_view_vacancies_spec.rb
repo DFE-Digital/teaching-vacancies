@@ -228,10 +228,10 @@ RSpec.feature 'Viewing vacancies' do
   end
 
   context 'when the user is on mobile' do
-    scenario 'they should see the \'refine your search\' link' do
+    scenario 'they should see the \'Show more filters\' link' do
       page.driver.header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
       visit jobs_path
-      expect(page).to have_content('Refine your search')
+      expect(page).to have_content('Show more filters')
     end
   end
 end
