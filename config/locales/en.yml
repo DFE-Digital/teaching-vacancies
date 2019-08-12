@@ -240,7 +240,7 @@ en:
     filters:
       title: 'Search job listings'
       location: 'Location'
-      location_hint: 'Postcode'
+      location_hint: 'Enter a city, town or postcode'
       radius: 'Radius'
       subject: 'Subject'
       subject_hint: 'e.g. Maths'
