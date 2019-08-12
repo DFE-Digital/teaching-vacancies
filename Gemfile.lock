@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/DFE-Digital/gov_uk_date_fields.git
-  revision: 61bf06ee258c633f4d477781f65734cd9d54f3c0
-  specs:
-    gov_uk_date_fields (3.0.0)
-      rails (>= 5.0)
-
-GIT
   remote: https://github.com/dxw/geocoder.git
   revision: bc032c38c2e72645b04547c93b6f4e96415393f5
   branch: add-os-name-support
@@ -171,6 +164,8 @@ GEM
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
       signet (~> 0.7)
+    gov_uk_date_fields (4.0.1)
+      rails (>= 5.0)
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
@@ -520,7 +515,7 @@ DEPENDENCIES
   geocoder!
   google-api-client
   google_drive
-  gov_uk_date_fields!
+  gov_uk_date_fields
   haml-rails
   high_voltage (~> 3.1)
   httparty
