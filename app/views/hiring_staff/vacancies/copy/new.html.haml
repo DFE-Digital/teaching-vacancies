@@ -21,31 +21,21 @@
 
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,
-                              legend_text: "#{t('jobs.starts_on')} (optional)",
-                              legend_class: 'govuk-label',
-                              form_hint_text: t('jobs.form_hints.start_date',
-                                                date: l(Date.today + 3.months, format: :hinttext))
+                              legend_options: { page_heading: false, class: "govuk-label" }
+
       %div.govuk-form-group#ends_on
         = f.gov_uk_date_field :ends_on,
-                              legend_text: "#{t('jobs.ends_on')} (optional)",
-                              legend_class: 'govuk-label',
-                              form_hint_text: t('jobs.form_hints.end_date',
-                                                date: l(Date.today + 6.months, format: :hinttext))
+                              legend_options: { page_heading: false, class: "govuk-label" }
+
       %h2.govuk-heading-m
         = t('jobs.application_details')
 
       %div.govuk-form-group#publish_on
         = f.gov_uk_date_field :publish_on,
-                              legend_text: t('jobs.publication_date'),
-                              legend_class: 'govuk-label',
-                              form_hint_text: t('jobs.form_hints.publication_date',
-                                              date: l(Date.today, format: :hinttext))
+                              legend_options: { page_heading: false, class: "govuk-label" }
 
       %div.govuk-form-group#expires_on
         = f.gov_uk_date_field :expires_on,
-                              legend_text: t('jobs.deadline_date'),
-                              legend_class: 'govuk-label',
-                              form_hint_text: t('jobs.form_hints.deadline_date',
-                                                date: l(Date.today + 2.months, format: :hinttext))
+                              legend_options: { page_heading: false, class: "govuk-label" }
 
       = f.button :submit, t('buttons.save_and_continue')

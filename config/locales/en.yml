@@ -34,6 +34,31 @@ en:
       change: 'Change organisation'
   identification:
     find_school_information: Find your school's official area
+  helpers:
+    fieldset:
+      job_specification_form:
+        starts_on: 'Expected start date (optional)'
+        ends_on: 'End date (optional)'
+      application_details_form:
+        publish_on: 'Date role will be listed'
+        expires_on: 'Application deadline'
+      copy_vacancy_form:
+        starts_on: 'Expected start date (optional)'
+        ends_on: 'End date (optional)'
+        publish_on: 'Date role will be listed'
+        expires_on: 'Application deadline'
+    hint:
+      job_specification_form:
+        starts_on: 'For example, 01 01 2020'
+        ends_on: 'For example, 01 08 2020'
+      application_details_form:
+        publish_on: 'For example, 01 01 2020'
+        expires_on: 'For example, 01 08 2020'
+      copy_vacancy_form:
+        starts_on: 'For example, 01 01 2020'
+        ends_on: 'For example, 01 08 2020'
+        publish_on: 'For example, 01 01 2020'
+        expires_on: 'For example, 01 08 2020'
   jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
@@ -568,10 +593,10 @@ en:
       all_users:
         title: All Users
         using_the_website:
-          title: Using the website
+          title: Using the Service
           text:
-            - Please read these Terms of Use (“General Terms”) carefully before using this Teaching Vacancies website (the “Service”).
-            - This Service is maintained for your personal use and viewing. Access and use by you of this Service constitutes your acceptance of these General Terms . This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
+            - Access and use by you of the Teaching Vacancies website (the "Service") constitutes your acceptance of these Terms and Conditions ("General Terms"). This takes effect from the date on which you first use the Service. If you do not agree to these General Terms, you must not use this website.
+            - By using Teaching Vacancies you agree to abide by the following terms and conditions.
             - If we change these General Terms we will post the revised document here with an updated effective date. If we make significant changes to these terms, we may notify you by other means such as sending an email or posting a notice on our home page.
         information_about_us:
           title: Information About Us
@@ -625,7 +650,7 @@ en:
         approving_user_accounts:
           title: Approving user accounts
           text:
-            - Users must be approved before they are given a Teaching Vacancies account for the purposes of publishing or managing job listings for a school or trust. Each school or trust has a nominated 'approver' who has the ability to approve user accounts for that school or trust. An approver must only allow someone working for their school or trust to publish or manage job listings for their school or trust. They must not create accounts for or allow third parties to publish or manage job listings on behalf of their school or trust on the service. If the Teaching Vacancies team detects or is alerted to any account held by or used by third parties then that account will be deleted immediately.
+            - Users must be approved before they are given a Teaching Vacancies account for the purposes of publishing or managing job listings for a school or trust. Each school or trust must have a nominated 'approver' who is responsible for approving Teaching Vacancies accounts for users at that school or trust. An approver must only allow someone working for their school or trust to publish or manage job listings for their school or trust. Approvers must not create accounts for or allow third parties to publish or manage job listings on behalf of their school or trust. If the Teaching Vacancies team detects or is alerted to any account held by or used by third parties then that account will be deleted immediately.
         using_the_service:
           title: Using the Service
           text:
