@@ -2,6 +2,6 @@
   "name": "teacher-vacancy-service",
   "private": true,
   "dependencies": {
-    "govuk-frontend": "^1.1.1"
+    "govuk-frontend": "3.0.0"
   }
 }

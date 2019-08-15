@@ -1,7 +1,7 @@
 .filter-vacancies {
   margin-bottom: 0;
   padding: $govuk-gutter-half;
-  background-color: govuk-colour("grey-3");
+  background-color: govuk-colour("light-grey");
   h2 {
     margin: 0 0 $govuk-gutter-half 0;
   }
@@ -9,7 +9,7 @@
     margin-bottom: $govuk-gutter-half;
   }
   .form-control {
-    border-color: govuk-colour("grey-1");
+    border-color: govuk-colour("dark-grey");
   }
 
   @include govuk-media-query($until: tablet) {
@@ -24,7 +24,7 @@
       max-height: 40px;
     }
     label {
-      background: govuk-colour("grey-3");
+      background: govuk-colour("light-grey");
       padding: 12px 15px 8px;
        @include govuk-media-query($from: desktop) {
          padding: 10px 15px 5px;
@@ -38,7 +38,7 @@
       overflow: auto;
     }
     padding: 10px 10px 0 10px;
-    border: 2px solid govuk-colour("grey-1");
+    border: 2px solid govuk-colour("dark-grey");
     box-sizing: border-box;
     width: 100%;
     label {
