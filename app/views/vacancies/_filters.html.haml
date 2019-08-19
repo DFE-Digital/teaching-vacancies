@@ -44,10 +44,10 @@
       = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
       = search_field_tag :location, location, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.location_hint')
     - if local_assigns.fetch :collapsible?, false
-      %details.govuk-details{"data-module": "govuk-details"}
+      %details.govuk-details{"data-module": "govuk-details", "data-summary-expanded": t('jobs.filters.summary_expanded'), "data-summary-collapsed": t('jobs.filters.summary_collapsed')}
         %summary.govuk-details__summary
           %span.govuk-details__summary-text
-            Show more filters
+            = t('jobs.filters.summary_nojs')
         %div
           = yield :advanced_filters
     - else

@@ -227,11 +227,11 @@ RSpec.feature 'Viewing vacancies' do
     end
   end
 
-  context 'when the user is on mobile' do
+  context 'when the user is on mobile', js: true do
     scenario 'they should see the \'Show more filters\' link' do
-      page.driver.header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
+      page.driver.add_header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
       visit jobs_path
-      expect(page).to have_content('Show more filters')
+      expect(page).to have_content(I18n.t('jobs.filters.summary_collapsed'))
     end
   end
 end

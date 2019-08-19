@@ -252,6 +252,9 @@ en:
       education_phase_divider: 'or'
       nqt_suitable: 'Suitable for NQTs'
       clear_filters: 'Reset search'
+      summary_expanded: 'Show fewer filters'
+      summary_collapsed: 'Show more filters'
+      summary_nojs: 'Advanced filters'
     feedback:
       listed_elsewhere:
         listed_paid: 'Yes, on one or more paid services'
