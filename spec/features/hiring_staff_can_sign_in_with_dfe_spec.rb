@@ -303,7 +303,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   end
 
   def sign_in_user
-    within('.govuk-header__navigation.mobile-header-menu-item') { click_on(I18n.t('nav.sign_in')) }
+    within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
     click_on(I18n.t('sign_in.link'))
   end
 

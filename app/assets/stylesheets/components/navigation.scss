@@ -58,14 +58,14 @@
   }
 }
 
-nav ul .mobile-header-text {
+nav ul .mobile-header-underline-text {
   @include govuk-media-query($until: desktop) {
     font-weight: normal;
     text-decoration: underline;
   }
 }
 
-.mobile-header-menu-item {
+.mobile-header-top-border {
   @include govuk-media-query($until: desktop) {
     border-top: 3px solid #ffffff;
     margin-top: 2px;
