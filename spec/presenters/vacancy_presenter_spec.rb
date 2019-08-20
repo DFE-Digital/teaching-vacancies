@@ -35,19 +35,35 @@ RSpec.describe VacancyPresenter do
   end
 
   describe '#expired?' do
-    it 'returns true when the vacancy has expired' do
-      vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 4.days.ago))
-      expect(vacancy).to be_expired
+    context 'when expiry time not given' do
+      it 'returns true when the vacancy has expired' do
+        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 4.days.ago))
+        expect(vacancy).to be_expired
+      end
+
+      it 'returns false when the vacancy expires today' do
+        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: Time.zone.today))
+        expect(vacancy).not_to be_expired
+      end
+
+      it 'returns false when the vacancy has yet to expire' do
+        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 6.days.from_now))
+        expect(vacancy).not_to be_expired
+      end
     end
 
-    it 'returns false when the vacancy expires today' do
-      vacancy = VacancyPresenter.new(build(:vacancy, expires_on: Time.zone.today))
-      expect(vacancy).not_to be_expired
-    end
+    context 'when expiry time given' do
+      it 'returns true when the vacancy has expired by now' do
+        vacancy = VacancyPresenter.new(build(:vacancy, expiry_time: DateTime.now - 1.hour))
 
-    it 'returns false when the vacancy has yet to expire' do
-      vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 6.days.from_now))
-      expect(vacancy).not_to be_expired
+        expect(vacancy).to be_expired
+      end
+
+      it 'returns false when the vacancy expires later today' do
+        vacancy = VacancyPresenter.new(build(:vacancy, expiry_time: DateTime.now + 1.hour))
+
+        expect(vacancy).not_to be_expired
+      end
     end
   end
 

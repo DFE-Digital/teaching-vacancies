@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(version: 2019_08_19_112757) do
     t.integer "hired_status"
     t.datetime "stats_updated_at"
     t.uuid "publisher_user_id"
-    t.time "expiry_time"
+    t.datetime "expiry_time"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
