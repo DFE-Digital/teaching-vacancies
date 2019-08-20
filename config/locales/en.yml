@@ -18,11 +18,11 @@ en:
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
   nav:
-    sign_in: 'List a teaching job at your school'
+    sign_in: 'List a teaching job'
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
     jobseekers_index_link: 'View public jobs'
-    find_job: 'Find a job'
+    find_job: 'Find a teaching job'
     back: 'Back'
   sign_in:
     title: 'Sign in to Teaching Vacancies'
@@ -689,7 +689,7 @@ en:
       request_support: "Report problems via email"
       provide_feedback: "Feedback about the service"
       for_job_seekers: "For job seekers"
-      search_teaching_vacancies: "Search teaching vacancies"
+      search_teaching_vacancies: "Find a teaching job"
       for_schools: "For schools"
-      list_a_teaching_job: "List a teaching job at your school"
+      list_a_teaching_job: "List a teaching job"
       service_support: "Service support"
