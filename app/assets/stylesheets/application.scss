@@ -46,3 +46,21 @@ p {
   height: 1px;
   overflow: hidden;
 }
+
+.hide-bullet-points {
+  list-style: none;
+}
+
+.hide-bullet-points li{
+  margin: 5px 0;
+}
+
+.navigation_heading{
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  
+  @include govuk-media-query($from: desktop) { 
+    display: none;
+  }
+}

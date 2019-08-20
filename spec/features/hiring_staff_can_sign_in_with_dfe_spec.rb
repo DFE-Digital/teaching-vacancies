@@ -4,8 +4,8 @@ require 'message_encryptor'
 RSpec.shared_examples 'a successful sign in' do
   scenario 'it signs in the user successfully' do
     expect(page).to have_content("Jobs at #{school.name}")
-    within('.app-navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
-    within('.app-navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
+    within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
+    within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'adds entries in the audit log' do
@@ -27,7 +27,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
 
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
     expect(page).to have_content(options['email'])
-    within('.app-navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
+    within('.govuk-header__navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
   scenario 'adds entries in the audit log' do
@@ -303,7 +303,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   end
 
   def sign_in_user
-    click_on(I18n.t('nav.sign_in'))
+    within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
     click_on(I18n.t('sign_in.link'))
   end
 
