@@ -1,8 +1,13 @@
-%nav.app-navigation.govuk-clearfix
-  %ul.app-navigation__list
+%nav
+  %ul.govuk-header__navigation.mobile-header-top-border{id: "navigation", "aria-label": "Top Level Navigation"}
     - if authenticated?
-      %li{class: active_link_class(school_path)}= link_to t('nav.school_page_link'), school_path, class: [active_link_class(school_path), 'govuk-link']
-      %li{class: active_link_class(root_path)}= link_to t('nav.jobseekers_index_link'), root_path, class: [active_link_class(root_path), 'govuk-link']
-      %li{class: active_link_class(sessions_path)}= link_to t('nav.sign_out'), sessions_path, method: :delete, class: 'govuk-link'
+      %li{class: active_link_class(school_path)}= link_to t('nav.school_page_link'), school_path, class: 'govuk-header__link'
+      %li{class: active_link_class(root_path)}= link_to t('nav.jobseekers_index_link'), root_path, class: 'govuk-header__link'
+      %li{class: active_link_class(sessions_path)}= link_to t('nav.sign_out'), sessions_path, method: :delete, class: 'govuk-header__link'
     - else
-      %li{class: active_link_class(new_identifications_path)}= link_to t('nav.sign_in'), new_identifications_path, class: 'govuk-link'
+      %label.govuk-label.navigation_heading
+        = I18n.t('footer.for_job_seekers')
+      %li{class: active_link_class(root_path)}= link_to t('nav.find_job'), root_path, class: 'govuk-header__link mobile-header-underline-text'
+      %label.govuk-label.navigation_heading
+        = I18n.t('footer.for_schools')
+      %li{class: active_link_class(new_identifications_path)}= link_to t('nav.sign_in'), new_identifications_path, class: 'govuk-header__link mobile-header-underline-text'

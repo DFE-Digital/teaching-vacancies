@@ -11,9 +11,6 @@
   .form-control {
     border-color: govuk-colour("grey-1");
   }
-  .govuk-button {
-    margin-top: $govuk-gutter-half;
-  }
 
   @include govuk-media-query($until: tablet) {
     margin-bottom: $govuk-gutter;

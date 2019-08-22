@@ -18,10 +18,11 @@ en:
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
   nav:
-    sign_in: 'List a teaching job at your school'
+    sign_in: 'List a teaching job'
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
     jobseekers_index_link: 'View public jobs'
+    find_job: 'Find a teaching job'
     back: 'Back'
   sign_in:
     title: 'Sign in to Teaching Vacancies'
@@ -239,7 +240,7 @@ en:
     filters:
       title: 'Search job listings'
       location: 'Location'
-      location_hint: 'Postcode'
+      location_hint: 'Enter a city, town or postcode'
       radius: 'Radius'
       subject: 'Subject'
       subject_hint: 'e.g. Maths'
@@ -251,6 +252,9 @@ en:
       education_phase_divider: 'or'
       nqt_suitable: 'Suitable for NQTs'
       clear_filters: 'Reset search'
+      summary_expanded: 'Show fewer filters'
+      summary_collapsed: 'Show more filters'
+      summary_nojs: 'Advanced filters'
     feedback:
       listed_elsewhere:
         listed_paid: 'Yes, on one or more paid services'
@@ -684,3 +688,11 @@ en:
           title: Terms and Conditions for API users
           line_1: "You are free to reuse job listing data under the terms of the <a href='https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/' target='_blank' class='govuk-link'>Open Government Licence</a> for public sector information with the following exception:"
           list: you may not charge a school any fee or commission for contacting, interviewing or hiring a respondent to your advertisement or listing if it is based on Teaching Vacancies data that you have reused.
+  footer:
+      request_support: "Report problems via email"
+      provide_feedback: "Feedback about the service"
+      for_job_seekers: "For job seekers"
+      search_teaching_vacancies: "Find a teaching job"
+      for_schools: "For schools"
+      list_a_teaching_job: "List a teaching job"
+      service_support: "Service support"

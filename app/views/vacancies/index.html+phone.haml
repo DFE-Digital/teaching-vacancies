@@ -4,6 +4,8 @@
 %h1.govuk-heading-xl
   = t('jobs.heading')
 .govuk-grid-row
+  .govuk-grid-column-one-third
+    = render 'filters', collapsible?: true
 
   .govuk-grid-column-two-thirds
     .govuk-grid-column-full.vacancies-count{class: @vacancies.user_search? ? 'search-made' : ''}
@@ -11,8 +13,6 @@
       - if @vacancies.user_search?
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
         = render(partial: 'subscribe_link', locals: { search_criteria: @filters.only_active_to_hash }) if EmailAlertsFeature.enabled?
-    .mt1
-      = link_to 'Refine your search?', '#filters', class: 'govuk-link'
     - if @vacancies.any?
       %div.sortable-links
         = t('jobs.sort_by')
@@ -24,6 +24,3 @@
           = render partial: 'vacancy', locals: { vacancy: vacancy }
 
     = paginate @vacancies, window: 2
-
-  .govuk-grid-column-one-third#filters
-    = render 'filters'
