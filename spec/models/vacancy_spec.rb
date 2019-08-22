@@ -311,6 +311,14 @@ RSpec.describe Vacancy, type: :model do
   end
 
   context 'scopes' do
+    let(:expired_earlier_today) do
+      build(:vacancy, expires_on: Time.zone.today,
+                      expiry_time: Time.zone.now - 1.hour)
+    end
+    let(:expires_later_today) do
+      create(:vacancy, status: :published,
+                       expiry_time: Time.zone.now + 1.hour)
+    end
     describe '#applicable' do
       context 'when expiry time not given' do
         it 'finds current vacancies' do
@@ -329,12 +337,8 @@ RSpec.describe Vacancy, type: :model do
 
       context 'when expiry time given' do
         it 'finds current vacancies' do
-          expired_earlier_today = build(:vacancy, expires_on: Time.zone.today,
-                                                  expiry_time: Time.zone.now - 1.hour)
           expired_earlier_today.send :set_slug
           expired_earlier_today.save(validate: false)
-          expires_later_today = create(:vacancy, expires_on: Time.zone.today,
-                                                 expiry_time: Time.zone.now + 1.hour)
 
           results = Vacancy.applicable
           expect(results).to include(expires_later_today)
@@ -429,12 +433,6 @@ RSpec.describe Vacancy, type: :model do
 
       context 'when expiry time given' do
         it 'includes vacancies till expiry time' do
-          expired_earlier_today = create(:vacancy, status: :published,
-                                                   expiry_time: Time.zone.now - 1.hour)
-
-          expires_later_today = create(:vacancy, status: :published,
-                                                 expiry_time: Time.zone.now + 1.hour)
-
           expect(Vacancy.live).to include(expires_later_today)
           expect(Vacancy.live).to_not include(expired_earlier_today)
         end

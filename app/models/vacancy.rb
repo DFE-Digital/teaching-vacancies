@@ -124,25 +124,23 @@ class Vacancy < ApplicationRecord
   acts_as_gov_uk_date :starts_on, :ends_on, :publish_on, :expires_on
 
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
-  scope :applicable_by_time, (-> { where.not(expiry_time: nil).where('expiry_time >= ?', Time.zone.now) })
-  scope :applicable_by_date, (-> { where(expiry_time: nil).where('expires_on >= ?', Time.zone.today) })
+  scope :applicable_by_time, (-> { where('expiry_time IS NOT NULL AND expiry_time >= ?', Time.zone.now) })
+  scope :applicable_by_date, (-> { where('expiry_time IS NULL AND expires_on >= ?', Time.zone.today) })
   scope :active, (-> { where(status: %i[published draft]) })
   scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
   scope :expired, (-> { expired_by_time.or(expired_by_date) })
-  scope :expired_by_time, (-> { published.where.not(expiry_time: nil).where('expiry_time < ?', Time.zone.now) })
-  scope :expired_by_date, (-> { published.where(expiry_time: nil).where('expires_on < ?', Time.zone.today) })
+  scope :expired_by_time, (-> { published.where('expiry_time IS NOT NULL AND expiry_time < ?', Time.zone.now) })
+  scope :expired_by_date, (-> { published.where('expiry_time IS NULL AND expires_on < ?', Time.zone.today) })
   scope :live, (-> { live_by_date.or(live_by_time) })
   scope :live_by_time, (lambda {
-                          published.where.not(expiry_time: nil)
-                            .where('publish_on <= ?', Time.zone.today)
-                            .where('expiry_time >= ?', Time.zone.now)
+                          published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
+                                          Time.zone.today, Time.zone.now)
                         })
   scope :live_by_date, (lambda {
-                          published.where(expiry_time: nil)
-                            .where('publish_on <= ?', Time.zone.today)
-                            .where('expires_on >= ?', Time.zone.today)
+                          published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
+                                          Time.zone.today, Time.zone.today)
                         })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
 
