@@ -330,11 +330,11 @@ RSpec.describe Vacancy, type: :model do
       context 'when expiry time given' do
         it 'finds current vacancies' do
           expired_earlier_today = build(:vacancy, expires_on: Time.zone.today,
-                                                  expiry_time: DateTime.now - 1.hour)
+                                                  expiry_time: Time.zone.now - 1.hour)
           expired_earlier_today.send :set_slug
           expired_earlier_today.save(validate: false)
           expires_later_today = create(:vacancy, expires_on: Time.zone.today,
-                                                 expiry_time: DateTime.now + 1.hour)
+                                                 expiry_time: Time.zone.now + 1.hour)
 
           results = Vacancy.applicable
           expect(results).to include(expires_later_today)
@@ -396,7 +396,7 @@ RSpec.describe Vacancy, type: :model do
       context 'when expiry time given' do
         it 'retrieves vacancies that have a past expires_on date' do
           create_list(:vacancy, 5, :published)
-          expired = build(:vacancy, expiry_time: DateTime.now - 1.hour)
+          expired = build(:vacancy, expiry_time: Time.zone.now - 1.hour)
           expired.send :set_slug
           expired.save(validate: false)
 
@@ -430,10 +430,10 @@ RSpec.describe Vacancy, type: :model do
       context 'when expiry time given' do
         it 'includes vacancies till expiry time' do
           expired_earlier_today = create(:vacancy, status: :published,
-                                                   expiry_time: DateTime.now - 1.hour)
+                                                   expiry_time: Time.zone.now - 1.hour)
 
           expires_later_today = create(:vacancy, status: :published,
-                                                 expiry_time: DateTime.now + 1.hour)
+                                                 expiry_time: Time.zone.now + 1.hour)
 
           expect(Vacancy.live).to include(expires_later_today)
           expect(Vacancy.live).to_not include(expired_earlier_today)

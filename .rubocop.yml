@@ -52,9 +52,6 @@ Style/ClassAndModuleChildren:
 Metrics/ClassLength:
     Enabled: false
 
-Rails/TimeZone:
-    Enabled: false
-
 Metrics/MethodLength:
     Max: 50
     Exclude:
