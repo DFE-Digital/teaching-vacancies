@@ -7,7 +7,7 @@ end
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
-  config.before(:each, js: true) do
+  config.before(:each, js: true, :type => lambda {|v| v != :smoke_test}) do
     page.driver.clear_memory_cache
   end
 end
