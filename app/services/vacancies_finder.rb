@@ -29,6 +29,7 @@ class VacanciesFinder
   def all_vacancies
     Vacancy.live
            .order(sort.column => sort.order)
+           .order('expiry_time' => sort.order)
            .includes(:school)
            .page(page_number)
   end
