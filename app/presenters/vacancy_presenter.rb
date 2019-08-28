@@ -57,7 +57,9 @@ class VacancyPresenter < BasePresenter
   end
 
   def expired?
-    model.expires_on < Time.zone.today
+    return model.expires_on < Time.zone.today if model.expiry_time.nil?
+
+    model.expiry_time < Time.zone.now
   end
 
   def school

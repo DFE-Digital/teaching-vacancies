@@ -311,18 +311,39 @@ RSpec.describe Vacancy, type: :model do
   end
 
   context 'scopes' do
+    let(:expired_earlier_today) do
+      build(:vacancy, expires_on: Time.zone.today,
+                      expiry_time: Time.zone.now - 1.hour)
+    end
+    let(:expires_later_today) do
+      create(:vacancy, status: :published,
+                       expiry_time: Time.zone.now + 1.hour)
+    end
     describe '#applicable' do
-      it 'finds current vacancies' do
-        expired = build(:vacancy, :expired)
-        expired.send :set_slug
-        expired.save(validate: false)
-        expires_today = create(:vacancy, expires_on: Time.zone.today)
-        expires_future = create(:vacancy, expires_on: 3.months.from_now)
+      context 'when expiry time not given' do
+        it 'finds current vacancies' do
+          expired = build(:vacancy, :expired)
+          expired.send :set_slug
+          expired.save(validate: false)
+          expires_today = create(:vacancy, expires_on: Time.zone.today)
+          expires_future = create(:vacancy, expires_on: 3.months.from_now)
 
-        results = Vacancy.applicable
-        expect(results).to include(expires_today)
-        expect(results).to include(expires_future)
-        expect(results).to_not include(expired)
+          results = Vacancy.applicable
+          expect(results).to include(expires_today)
+          expect(results).to include(expires_future)
+          expect(results).to_not include(expired)
+        end
+      end
+
+      context 'when expiry time given' do
+        it 'finds current vacancies' do
+          expired_earlier_today.send :set_slug
+          expired_earlier_today.save(validate: false)
+
+          results = Vacancy.applicable
+          expect(results).to include(expires_later_today)
+          expect(results).to_not include(expired_earlier_today)
+        end
       end
     end
 
@@ -365,34 +386,56 @@ RSpec.describe Vacancy, type: :model do
     end
 
     describe '#expired' do
-      it 'retrieves vacancies that have a past expires_on date' do
-        create_list(:vacancy, 5, :published)
-        expired = build(:vacancy, :expired)
-        expired.send :set_slug
-        expired.save(validate: false)
+      context 'when expiry time not given' do
+        it 'retrieves vacancies that have a past expires_on date' do
+          create_list(:vacancy, 5, :published)
+          expired = build(:vacancy, :expired)
+          expired.send :set_slug
+          expired.save(validate: false)
 
-        expect(Vacancy.expired.count).to eq(1)
+          expect(Vacancy.expired.count).to eq(1)
+        end
+      end
+
+      context 'when expiry time given' do
+        it 'retrieves vacancies that have a past expires_on date' do
+          create_list(:vacancy, 5, :published)
+          expired = build(:vacancy, expiry_time: Time.zone.now - 1.hour)
+          expired.send :set_slug
+          expired.save(validate: false)
+
+          expect(Vacancy.expired.count).to eq(1)
+        end
       end
     end
 
     describe '#live' do
-      let!(:live) { create_list(:vacancy, 5, :published) }
+      context 'when expiry time not given' do
+        let!(:live) { create_list(:vacancy, 5, :published) }
 
-      it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
-        expired = build(:vacancy, :expired)
-        expired.send :set_slug
-        expired.save(validate: false)
-        create_list(:vacancy, 3, :future_publish)
-        create_list(:vacancy, 4, :trashed)
+        it 'retrieves vacancies that have a status of :published, a past publish_on date & a future expires_on date' do
+          expired = build(:vacancy, :expired)
+          expired.send :set_slug
+          expired.save(validate: false)
+          create_list(:vacancy, 3, :future_publish)
+          create_list(:vacancy, 4, :trashed)
 
-        expect(Vacancy.live.count).to eq(live.count)
-        expect(Vacancy.live).to_not include(expired)
+          expect(Vacancy.live.count).to eq(live.count)
+          expect(Vacancy.live).to_not include(expired)
+        end
+
+        it 'includes vacancies that expire today' do
+          expires_today = create(:vacancy, status: :published, expires_on: Time.zone.today)
+
+          expect(Vacancy.live).to include(expires_today)
+        end
       end
 
-      it 'includes vacancies that expire today' do
-        expires_today = create(:vacancy, status: :published, expires_on: Time.zone.today)
-
-        expect(Vacancy.live).to include(expires_today)
+      context 'when expiry time given' do
+        it 'includes vacancies till expiry time' do
+          expect(Vacancy.live).to include(expires_later_today)
+          expect(Vacancy.live).to_not include(expired_earlier_today)
+        end
       end
     end
 
