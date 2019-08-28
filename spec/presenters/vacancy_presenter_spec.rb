@@ -37,17 +37,17 @@ RSpec.describe VacancyPresenter do
   describe '#expired?' do
     context 'when expiry time not given' do
       it 'returns true when the vacancy has expired' do
-        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 4.days.ago))
+        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 4.days.ago, expiry_time: nil))
         expect(vacancy).to be_expired
       end
 
       it 'returns false when the vacancy expires today' do
-        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: Time.zone.today))
+        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: Time.zone.today, expiry_time: nil))
         expect(vacancy).not_to be_expired
       end
 
       it 'returns false when the vacancy has yet to expire' do
-        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 6.days.from_now))
+        vacancy = VacancyPresenter.new(build(:vacancy, expires_on: 6.days.from_now, expiry_time: nil))
         expect(vacancy).not_to be_expired
       end
     end

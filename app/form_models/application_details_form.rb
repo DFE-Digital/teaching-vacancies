@@ -1,7 +1,7 @@
 class ApplicationDetailsForm < VacancyForm
   delegate :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
            :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
-           :published?, :status, :publish_on_changed?, to: :vacancy
+           :published?, :status, :publish_on_changed?, :expiry_time, to: :vacancy
 
   include VacancyApplicationDetailValidations
 
@@ -10,6 +10,6 @@ class ApplicationDetailsForm < VacancyForm
   end
 
   def completed?
-    application_link && contact_email && publish_on && expires_on
+    application_link && contact_email && publish_on && expires_on && expiry_time
   end
 end
