@@ -10,6 +10,6 @@ class ApplicationDetailsForm < VacancyForm
   end
 
   def completed?
-    application_link && contact_email && publish_on && expires_on && expiry_time
+    application_link && contact_email && publish_on && expires_on
   end
 end
