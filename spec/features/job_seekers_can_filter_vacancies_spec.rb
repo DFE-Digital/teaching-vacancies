@@ -284,7 +284,7 @@ RSpec.feature 'Filtering vacancies' do
       end
 
       expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
-      click_on 'Closing date'
+      select I18n.t('jobs.closes_soon')
       expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
     end
 

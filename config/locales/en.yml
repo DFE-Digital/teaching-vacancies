@@ -63,6 +63,7 @@ en:
   jobs:
     heading: 'Find a job in teaching'
     sort_by: 'Sort by:'
+    sort_submit: 'Sort'
     key_info: 'Key information'
     awaiting_feedback_intro: 'Please tell us if you filled these expired jobs through Teaching Vacancies, and whether you listed them elsewhere. Your feedback will help us improve the service.'
     no_awaiting_feedback: 'There are no jobs waiting for your feedback at the moment.'
@@ -73,6 +74,10 @@ en:
     salary: 'Salary'
     publish_on: 'Date posted'
     expires_on: 'Closing date'
+    closes_soon: 'Least time to apply'
+    closes_later: 'Most time to apply'
+    latest_posting: 'Newest job listing'
+    oldest_posting: 'Oldest job listing'
     job_filled: 'Job filled on Teaching Vacancies?'
     listed_elsewhere: 'Listed elsewhere?'
     page_views: 'Total views'

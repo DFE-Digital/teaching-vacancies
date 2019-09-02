@@ -96,6 +96,52 @@ RSpec.describe VacanciesController, type: :controller do
       end
     end
 
+    context 'jobs_sort option' do
+      let(:search_params) do
+        {
+          subject: 'Business Studies',
+          location: 'Torquay',
+          minimum_salary: '1',
+        }
+      end
+
+      context 'when parameters include the latest_posted jobs_sort option' do
+        let(:params) { search_params.merge(jobs_sort: 'latest_posted') }
+
+        it 'redirects to the full search path' do
+          expanded_search_params = { sort_column: 'publish_on', sort_order: 'desc' }
+          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+        end
+      end
+
+      context 'when parameters include the oldest_posted jobs_sort option' do
+        let(:params) { search_params.merge(jobs_sort: 'oldest_posted') }
+
+        it 'redirects to the full search path' do
+          expanded_search_params = { sort_column: 'publish_on', sort_order: 'asc' }
+          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+        end
+      end
+
+      context 'when parameters include the closes_soon jobs_sort option' do
+        let(:params) { search_params.merge(jobs_sort: 'closes_soon') }
+
+        it 'redirects to the full search path' do
+          expanded_search_params = { sort_column: 'expires_on', sort_order: 'asc' }
+          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+        end
+      end
+
+      context 'when parameters include the closes_later jobs_sort option' do
+        let(:params) { search_params.merge(jobs_sort: 'closes_later') }
+
+        it 'redirects to the full search path' do
+          expanded_search_params = { sort_column: 'expires_on', sort_order: 'desc' }
+          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+        end
+      end
+    end
+
     context 'feature flagging' do
       render_views
 

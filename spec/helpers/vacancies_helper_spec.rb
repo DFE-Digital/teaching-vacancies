@@ -43,25 +43,25 @@ RSpec.describe VacanciesHelper, type: :helper do
     end
   end
 
-  describe '#link_to_sort_by' do
-    it 'should return a link to the vacancies index with the new parameters' do
-      sort = OpenStruct.new(column: 'maximum_salary')
-      result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
-      expect(result).to eq(
-        '<a class="govuk-link sortby--asc" aria-label="Sort jobs by foo in ascending order" '\
-        'href="/jobs?sort_column=starts_on&amp;sort_order=asc">foo</a>'
-      )
+  describe 'selected_sorting_method' do
+    it 'Returns :closes_soon' do
+      sort = VacancySort.new.update(column: 'expires_on', order: 'asc')
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:closes_soon)
     end
 
-    context 'when the current sort column is the same as the given column' do
-      it 'should output an active class and the reverse order of the sort object' do
-        sort = OpenStruct.new(column: 'starts_on', reverse_order: 'desc')
-        result = helper.link_to_sort_by('foo', column: 'starts_on', order: 'asc', sort: sort)
-        expect(result).to eq(
-          '<a class="govuk-link sortby--desc active" aria-label="Sort jobs by foo in descending order" '\
-          'href="/jobs?sort_column=starts_on&amp;sort_order=desc">foo</a>'
-        )
-      end
+    it 'Returns :closes_later' do
+      sort = VacancySort.new.update(column: 'expires_on', order: 'desc')
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:closes_later)
+    end
+
+    it 'Returns :latest_posted' do
+      sort = VacancySort.new.update(column: 'publish_on', order: 'desc')
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:latest_posted)
+    end
+
+    it 'Returns :oldest_posted' do
+      sort = VacancySort.new.update(column: 'publish_on', order: 'asc')
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:oldest_posted)
     end
   end
 

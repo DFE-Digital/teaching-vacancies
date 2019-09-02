@@ -26,17 +26,25 @@ module VacanciesHelper
     Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }
   end
 
-  def link_to_sort_by(title, column:, order:, sort:)
-    if column == sort.column
-      order = sort.reverse_order
-      active_class = ' active'
-    end
-    link_to title,
-            jobs_path(vacancy_params(sort_column: column,
-                                     sort_order: order)),
-            class: "govuk-link sortby--#{order}#{active_class || ''}",
-            'aria-label': t('jobs.aria_labels.sort_by_link', column: title, order: order)
+  def job_sorting_options
+    [
+      [t('jobs.closes_soon'), :closes_soon],
+      [t('jobs.closes_later'), :closes_later],
+      [t('jobs.latest_posting'), :latest_posted],
+      [t('jobs.oldest_posting'), :oldest_posted]
+    ]
   end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def selected_sorting_method(sort:)
+    return :oldest_posted if sort.column == 'publish_on' && sort.order == 'asc'
+    return :latest_posted if sort.column == 'publish_on' && sort.order == 'desc'
+    return :closes_soon if sort.column == 'expires_on' && sort.order == 'asc'
+    return :closes_later if sort.column == 'expires_on' && sort.order == 'desc'
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def vacancy_params_whitelist
     %i[sort_column sort_order page].concat(VacancyFilters::AVAILABLE_FILTERS)

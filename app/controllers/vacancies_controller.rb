@@ -19,13 +19,24 @@ class VacanciesController < ApplicationController
                 :sort_column,
                 :sort_order
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def index
+    redirect_with_sort(:expires_on, :asc) && return if params[:jobs_sort] == 'closes_soon'
+    redirect_with_sort(:expires_on, :desc) && return if params[:jobs_sort] == 'closes_later'
+    redirect_with_sort(:publish_on, :asc) && return if params[:jobs_sort] == 'oldest_posted'
+    redirect_with_sort(:publish_on, :desc) && return if params[:jobs_sort] == 'latest_posted'
+
     @filters = VacancyFilters.new(search_params.to_hash)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def show
     begin
@@ -50,6 +61,10 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  def redirect_with_sort(sort_column, sort_order)
+    redirect_to jobs_path(params: search_params.merge(sort_column: sort_column, sort_order: sort_order))
+  end
 
   def search_params
     params.permit(*PERMITTED_SEARCH_PARAMS)
