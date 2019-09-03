@@ -127,5 +127,11 @@ FactoryBot.define do
       listed_elsewhere { :listed_paid }
       hired_status { :hired_tvs }
     end
+
+    trait :with_no_expiry_time do
+      status { :published }
+      expires_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 20.days) }
+      expiry_time { nil }
+    end
   end
 end

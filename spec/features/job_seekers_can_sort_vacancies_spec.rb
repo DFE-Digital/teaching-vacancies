@@ -4,12 +4,9 @@ RSpec.feature 'Sorting vacancies' do
   scenario 'Default is to be sorted by expiry date and time but can be sorted by published date', elasticsearch: true do
     skip_vacancy_publish_on_validation
 
-    first_vacancy = create(:vacancy, :published, expires_on: 7.days.from_now, publish_on: 4.days.ago,
-                                                 expiry_time: nil)
-    second_vacancy = create(:vacancy, :published, expires_on: 6.days.from_now, publish_on: 10.days.ago,
-                                                  expiry_time: nil)
-    third_vacancy = create(:vacancy, :published, expires_on: 5.days.from_now, publish_on: 8.days.ago,
-                                                 expiry_time: nil)
+    first_vacancy = create(:vacancy, :with_no_expiry_time, expires_on: 7.days.from_now, publish_on: 4.days.ago)
+    second_vacancy = create(:vacancy, :with_no_expiry_time, expires_on: 6.days.from_now, publish_on: 10.days.ago)
+    third_vacancy = create(:vacancy, :with_no_expiry_time, expires_on: 5.days.from_now, publish_on: 8.days.ago)
     fourth_vacany = create(:vacancy, :published, expires_on: 5.days.from_now,
                                                  expiry_time: Time.zone.now + 5.days + 2.hours, publish_on: 10.days.ago)
     fifth_vacancy = create(:vacancy, :published, expires_on: 5.days.from_now,
