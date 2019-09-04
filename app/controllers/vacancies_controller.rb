@@ -23,10 +23,10 @@ class VacanciesController < ApplicationController
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def index
-    redirect_with_sort(:expires_on, :asc) && return if params[:jobs_sort] == 'closes_soon'
-    redirect_with_sort(:expires_on, :desc) && return if params[:jobs_sort] == 'closes_later'
-    redirect_with_sort(:publish_on, :asc) && return if params[:jobs_sort] == 'oldest_posted'
-    redirect_with_sort(:publish_on, :desc) && return if params[:jobs_sort] == 'latest_posted'
+    redirect_with_sort(:expires_on, :asc) && return if params[:jobs_sort] == 'sort_by_earliest_closing_date'
+    redirect_with_sort(:expires_on, :desc) && return if params[:jobs_sort] == 'sort_by_furthest_closing_date'
+    redirect_with_sort(:publish_on, :asc) && return if params[:jobs_sort] == 'sort_by_most_ancient'
+    redirect_with_sort(:publish_on, :desc) && return if params[:jobs_sort] == 'sort_by_most_recent'
 
     @filters = VacancyFilters.new(search_params.to_hash)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)

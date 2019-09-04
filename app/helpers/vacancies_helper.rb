@@ -28,20 +28,20 @@ module VacanciesHelper
 
   def job_sorting_options
     [
-      [t('jobs.closes_soon'), :closes_soon],
-      [t('jobs.closes_later'), :closes_later],
-      [t('jobs.latest_posting'), :latest_posted],
-      [t('jobs.oldest_posting'), :oldest_posted]
+      [t('jobs.sort_by_earliest_closing_date'), :sort_by_earliest_closing_date],
+      [t('jobs.sort_by_furthest_closing_date'), :sort_by_furthest_closing_date],
+      [t('jobs.sort_by_most_recent'), :sort_by_most_recent],
+      [t('jobs.sort_by_most_ancient'), :sort_by_most_ancient]
     ]
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def selected_sorting_method(sort:)
-    return :oldest_posted if sort.column == 'publish_on' && sort.order == 'asc'
-    return :latest_posted if sort.column == 'publish_on' && sort.order == 'desc'
-    return :closes_soon if sort.column == 'expires_on' && sort.order == 'asc'
-    return :closes_later if sort.column == 'expires_on' && sort.order == 'desc'
+    return :sort_by_most_ancient if sort.column == 'publish_on' && sort.order == 'asc'
+    return :sort_by_most_recent if sort.column == 'publish_on' && sort.order == 'desc'
+    return :sort_by_earliest_closing_date if sort.column == 'expires_on' && sort.order == 'asc'
+    return :sort_by_furthest_closing_date if sort.column == 'expires_on' && sort.order == 'desc'
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity

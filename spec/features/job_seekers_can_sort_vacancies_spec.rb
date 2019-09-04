@@ -38,10 +38,10 @@ RSpec.feature 'Sorting vacancies' do
     end
 
     scenario 'Can be sorted by most recent listing when option is selected' do
-      select I18n.t('jobs.latest_posting')
+      select I18n.t('jobs.sort_by_most_recent')
       click_button I18n.t('jobs.sort_submit')
 
-      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.latest_posting'))
+      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_most_recent'))
       expect(page.find('.vacancy:eq(1)')).to have_content(first_vacancy.job_title)
       expect(page.find('.vacancy:eq(2)')).to have_content(third_vacancy.job_title)
       expect(page.find('.vacancy:eq(3)')).to have_content(second_vacancy.job_title)
@@ -50,10 +50,10 @@ RSpec.feature 'Sorting vacancies' do
     end
 
     scenario 'Can be sorted by oldest listings when option is selected' do
-      select I18n.t('jobs.oldest_posting')
+      select I18n.t('jobs.sort_by_most_ancient')
       click_button I18n.t('jobs.sort_submit')
 
-      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.oldest_posting'))
+      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_most_ancient'))
       expect(page.find('.vacancy:eq(1)')).to have_content(fifth_vacancy.job_title)
       expect(page.find('.vacancy:eq(2)')).to have_content(fourth_vacancy.job_title)
       expect(page.find('.vacancy:eq(3)')).to have_content(second_vacancy.job_title)
@@ -62,13 +62,13 @@ RSpec.feature 'Sorting vacancies' do
     end
 
     scenario 'Can be resorted by soonest expiry date and time when option is selected' do
-      select I18n.t('jobs.latest_posting')
+      select I18n.t('jobs.sort_by_most_recent')
       click_button I18n.t('jobs.sort_submit')
 
-      select I18n.t('jobs.closes_soon')
+      select I18n.t('jobs.sort_by_earliest_closing_date')
       click_button I18n.t('jobs.sort_submit')
 
-      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.closes_soon'))
+      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_earliest_closing_date'))
       expect(page.find('.vacancy:eq(1)')).to have_content(fifth_vacancy.job_title)
       expect(page.find('.vacancy:eq(2)')).to have_content(fourth_vacancy.job_title)
       expect(page.find('.vacancy:eq(3)')).to have_content(third_vacancy.job_title)
@@ -77,10 +77,10 @@ RSpec.feature 'Sorting vacancies' do
     end
 
     scenario 'Can be sorted by furthest expiry date and time when option is selected' do
-      select I18n.t('jobs.closes_later')
+      select I18n.t('jobs.sort_by_furthest_closing_date')
       click_button I18n.t('jobs.sort_submit')
 
-      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.closes_later'))
+      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_furthest_closing_date'))
       expect(page.find('.vacancy:eq(1)')).to have_content(first_vacancy.job_title)
       expect(page.find('.vacancy:eq(2)')).to have_content(second_vacancy.job_title)
       expect(page.find('.vacancy:eq(3)')).to have_content(third_vacancy.job_title)

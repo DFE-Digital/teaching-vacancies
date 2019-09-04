@@ -44,24 +44,24 @@ RSpec.describe VacanciesHelper, type: :helper do
   end
 
   describe 'selected_sorting_method' do
-    it 'Returns :closes_soon' do
+    it 'Returns :sort_by_earliest_closing_date' do
       sort = VacancySort.new.update(column: 'expires_on', order: 'asc')
-      expect(helper.selected_sorting_method(sort: sort)).to eq(:closes_soon)
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:sort_by_earliest_closing_date)
     end
 
-    it 'Returns :closes_later' do
+    it 'Returns :sort_by_furthest_closing_date' do
       sort = VacancySort.new.update(column: 'expires_on', order: 'desc')
-      expect(helper.selected_sorting_method(sort: sort)).to eq(:closes_later)
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:sort_by_furthest_closing_date)
     end
 
-    it 'Returns :latest_posted' do
+    it 'Returns :sort_by_most_recent' do
       sort = VacancySort.new.update(column: 'publish_on', order: 'desc')
-      expect(helper.selected_sorting_method(sort: sort)).to eq(:latest_posted)
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:sort_by_most_recent)
     end
 
-    it 'Returns :oldest_posted' do
+    it 'Returns :sort_by_most_ancient' do
       sort = VacancySort.new.update(column: 'publish_on', order: 'asc')
-      expect(helper.selected_sorting_method(sort: sort)).to eq(:oldest_posted)
+      expect(helper.selected_sorting_method(sort: sort)).to eq(:sort_by_most_ancient)
     end
   end
 

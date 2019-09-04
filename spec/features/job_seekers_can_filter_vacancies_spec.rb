@@ -285,7 +285,7 @@ RSpec.feature 'Filtering vacancies' do
 
       expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
 
-      select I18n.t('jobs.closes_soon')
+      select I18n.t('jobs.sort_by_earliest_closing_date')
       click_button I18n.t('jobs.sort_submit')
 
       expect(page).to have_content(I18n.t('jobs.filters.clear_filters'))
