@@ -220,6 +220,16 @@ RSpec.feature 'Viewing vacancies' do
     end
   end
 
+  context 'when viewing vacancies created without expiry time' do
+    scenario 'Vacancies do not display an expiry time' do
+      vacancy = create(:vacancy, :with_no_expiry_time)
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path(vacancy)
+
+      verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
+    end
+  end
+
   context 'when the user is not on mobile' do
     scenario 'they should not see the \'refine your search\' link' do
       visit jobs_path
