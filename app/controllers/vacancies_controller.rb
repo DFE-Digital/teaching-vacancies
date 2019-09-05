@@ -18,15 +18,8 @@ class VacanciesController < ApplicationController
                 :radius,
                 :sort_column,
                 :sort_order
-
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def index
-    redirect_with_sort(:expires_on, :asc) && return if params[:jobs_sort] == 'sort_by_earliest_closing_date'
-    redirect_with_sort(:expires_on, :desc) && return if params[:jobs_sort] == 'sort_by_furthest_closing_date'
-    redirect_with_sort(:publish_on, :asc) && return if params[:jobs_sort] == 'sort_by_most_ancient'
-    redirect_with_sort(:publish_on, :desc) && return if params[:jobs_sort] == 'sort_by_most_recent'
+    redirect_by_jobs_sort && return
 
     @filters = VacancyFilters.new(search_params.to_hash)
 
@@ -39,9 +32,6 @@ class VacanciesController < ApplicationController
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
   def show
     begin
@@ -66,6 +56,13 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  def redirect_by_jobs_sort
+    return redirect_with_sort(:expires_on, :asc) if params[:jobs_sort] == 'sort_by_earliest_closing_date'
+    return redirect_with_sort(:expires_on, :desc) if params[:jobs_sort] == 'sort_by_furthest_closing_date'
+    return redirect_with_sort(:publish_on, :asc) if params[:jobs_sort] == 'sort_by_most_ancient'
+    return redirect_with_sort(:publish_on, :desc) if params[:jobs_sort] == 'sort_by_most_recent'
+  end
 
   def redirect_with_sort(sort_column, sort_order)
     redirect_to jobs_path(params: search_params.merge(sort_column: sort_column, sort_order: sort_order))
