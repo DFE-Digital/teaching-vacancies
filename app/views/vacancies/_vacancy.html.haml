@@ -12,7 +12,7 @@
     - if vacancy.expiry_time.nil?
       %dd= format_date(vacancy.expires_on)
     - else 
-      %dd= format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime("%H:%M%P")
+      %dd= format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime('%-l:%M%P')
     %dt= t('jobs.starts_on')
     %dd= format_date(vacancy.starts_on)
     - if vacancy.working_patterns?

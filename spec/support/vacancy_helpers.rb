@@ -137,7 +137,7 @@ module VacancyHelpers
 
     # rubocop:disable Style/GuardClause
     unless vacancy.expiry_time.nil?
-      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%H:%M%P'))
+      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M%P'))
     end
     # rubocop:enable Style/GuardClause
   end
