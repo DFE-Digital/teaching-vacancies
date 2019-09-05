@@ -35,16 +35,20 @@ module VacanciesHelper
     ]
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def selected_sorting_method(sort:)
-    return :sort_by_most_ancient if sort.column == 'publish_on' && sort.order == 'asc'
-    return :sort_by_most_recent if sort.column == 'publish_on' && sort.order == 'desc'
-    return :sort_by_earliest_closing_date if sort.column == 'expires_on' && sort.order == 'asc'
-    return :sort_by_furthest_closing_date if sort.column == 'expires_on' && sort.order == 'desc'
+    return publish_on_selected_sorting_method(sort) if sort.column == 'publish_on'
+    return expires_on_selected_sorting_method(sort) if sort.column == 'expires_on'
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
+
+  def publish_on_selected_sorting_method(sort)
+    return :sort_by_most_ancient if sort.order == 'asc'
+    return :sort_by_most_recent if sort.order == 'desc'
+  end
+
+  def expires_on_selected_sorting_method(sort)
+    return :sort_by_earliest_closing_date if sort.order == 'asc'
+    return :sort_by_furthest_closing_date if sort.order == 'desc'
+  end
 
   def vacancy_params_whitelist
     %i[sort_column sort_order page].concat(VacancyFilters::AVAILABLE_FILTERS)
