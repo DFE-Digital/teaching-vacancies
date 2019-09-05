@@ -29,19 +29,7 @@ RSpec.feature 'Sorting vacancies' do
       visit jobs_path
     end
 
-    scenario 'Default view is to be sorted by closest expiry date and time' do
-      expect(page.find('.vacancy:nth-child(1)')).to have_content(fifth_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(2)')).to have_content(fourth_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(3)')).to have_content(third_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(4)')).to have_content(second_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(5)')).to have_content(first_vacancy.job_title)
-    end
-
-    scenario 'Can be sorted by most recent listing when option is selected' do
-      select I18n.t('jobs.sort_by_most_recent')
-      click_button I18n.t('jobs.sort_submit')
-
-      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_most_recent'))
+    scenario 'Default view is to be sorted by most recent listings' do
       expect(page.find('.vacancy:nth-child(1)')).to have_content(first_vacancy.job_title)
       expect(page.find('.vacancy:nth-child(2)')).to have_content(third_vacancy.job_title)
       expect(page.find('.vacancy:nth-child(3)')).to have_content(second_vacancy.job_title)
@@ -61,10 +49,7 @@ RSpec.feature 'Sorting vacancies' do
       expect(page.find('.vacancy:nth-child(5)')).to have_content(first_vacancy.job_title)
     end
 
-    scenario 'Can be resorted by soonest expiry date and time when option is selected' do
-      select I18n.t('jobs.sort_by_most_recent')
-      click_button I18n.t('jobs.sort_submit')
-
+    scenario 'Can be sorted by soonest expiry date and time when option is selected' do
       select I18n.t('jobs.sort_by_earliest_closing_date')
       click_button I18n.t('jobs.sort_submit')
 
@@ -88,14 +73,30 @@ RSpec.feature 'Sorting vacancies' do
       expect(page.find('.vacancy:nth-child(5)')).to have_content(fifth_vacancy.job_title)
     end
 
-    scenario 'Just selecting a dropdown option, sorts the page in javascript enabled browsers', js:true do
+    scenario 'Just selecting a dropdown option, sorts the page in javascript enabled browsers', js: true do
       select I18n.t('jobs.sort_by_furthest_closing_date')
-      #In JS enabled browsers, the sort button is hidden. When a dropdown option is selected, the form is submitted using Javascript.
+      # In JS enabled browsers, the sort button is hidden.
+      # When a dropdown option is selected, the form is submitted using Javascript.
 
       expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_furthest_closing_date'))
-      expect(page.find(".vacancy:nth-child(1)")).to have_content(first_vacancy.job_title)
+      expect(page.find('.vacancy:nth-child(1)')).to have_content(first_vacancy.job_title)
       expect(page.find('.vacancy:nth-child(2)')).to have_content(second_vacancy.job_title)
       expect(page.find('.vacancy:nth-child(3)')).to have_content(third_vacancy.job_title)
+      expect(page.find('.vacancy:nth-child(4)')).to have_content(fourth_vacancy.job_title)
+      expect(page.find('.vacancy:nth-child(5)')).to have_content(fifth_vacancy.job_title)
+    end
+
+    scenario 'Can be resorted by most recent listing when option is selected' do
+      select I18n.t('jobs.sort_by_earliest_closing_date')
+      click_button I18n.t('jobs.sort_submit')
+
+      select I18n.t('jobs.sort_by_most_recent')
+      click_button I18n.t('jobs.sort_submit')
+
+      expect(page).to have_select(I18n.t('jobs.sort_by'), selected: I18n.t('jobs.sort_by_most_recent'))
+      expect(page.find('.vacancy:nth-child(1)')).to have_content(first_vacancy.job_title)
+      expect(page.find('.vacancy:nth-child(2)')).to have_content(third_vacancy.job_title)
+      expect(page.find('.vacancy:nth-child(3)')).to have_content(second_vacancy.job_title)
       expect(page.find('.vacancy:nth-child(4)')).to have_content(fourth_vacancy.job_title)
       expect(page.find('.vacancy:nth-child(5)')).to have_content(fifth_vacancy.job_title)
     end

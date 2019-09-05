@@ -29,7 +29,12 @@ class VacanciesController < ApplicationController
     redirect_with_sort(:publish_on, :desc) && return if params[:jobs_sort] == 'sort_by_most_recent'
 
     @filters = VacancyFilters.new(search_params.to_hash)
-    @sort = VacancySort.new.update(column: sort_column, order: sort_order)
+
+    @sort = VacancySort.new(
+      default_column: 'publish_on',
+      default_order: 'desc'
+    ).update(column: sort_column, order: sort_order)
+
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true

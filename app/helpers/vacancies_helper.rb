@@ -28,10 +28,10 @@ module VacanciesHelper
 
   def job_sorting_options
     [
-      [t('jobs.sort_by_earliest_closing_date'), :sort_by_earliest_closing_date],
-      [t('jobs.sort_by_furthest_closing_date'), :sort_by_furthest_closing_date],
       [t('jobs.sort_by_most_recent'), :sort_by_most_recent],
-      [t('jobs.sort_by_most_ancient'), :sort_by_most_ancient]
+      [t('jobs.sort_by_most_ancient'), :sort_by_most_ancient],
+      [t('jobs.sort_by_earliest_closing_date'), :sort_by_earliest_closing_date],
+      [t('jobs.sort_by_furthest_closing_date'), :sort_by_furthest_closing_date]
     ]
   end
 
