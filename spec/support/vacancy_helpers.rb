@@ -134,6 +134,12 @@ module VacancyHelpers
     expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
     expect(page.find('.vacancy')).to have_content(vacancy.starts_on)
     expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
+
+    # rubocop:disable Style/GuardClause
+    unless vacancy.expiry_time.nil?
+      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%H:%M%P'))
+    end
+    # rubocop:enable Style/GuardClause
   end
 
   def expect_schema_property_to_match_value(key, value)
