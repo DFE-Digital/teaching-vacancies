@@ -36,4 +36,28 @@
         = f.gov_uk_date_field :expires_on,
                               legend_options: { page_heading: false, class: "govuk-label" }
 
+      %div.govuk-form-group#expiry_time{:class => ("govuk-form-group--error" if @application_details_form.errors[:expiry_time].present?)}
+        %fieldset.govuk-fieldset
+          %legend.govuk-fieldset__legend
+            = t('jobs.deadline_time')
+          %span.govuk-hint
+            = t('jobs.form_hints.application_deadline_time')
+          = f.error :expiry_time 
+          %govuk-date-input
+            .govuk-date-input__item
+              .govuk-form-group
+                = f.input :expiry_time_hh, label: t('jobs.application_deadline_hour'), required: true, as: :integer,
+                    input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'}
+            .govuk-date-input__item
+              .govuk-form-group
+                = f.input :expiry_time_mm, label: t('jobs.application_deadline_min'), required: true, as: :integer,
+                    input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'}
+            .govuk-date-input__item
+              .govuk-form-group
+                = f.input :expiry_time_meridian,
+                          collection: ['am', 'pm'], 
+                          label: t('jobs.application_deadline_meridian'), 
+                          input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'},
+                          required: true
+
       = f.button :submit, t('buttons.update_job')
