@@ -143,7 +143,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.govuk-error-summary') do
-          expect(page).to have_content('Please correct the following 4 errors in your listing:')
+          expect(page).to have_content('Please correct the following 5 errors in your listing:')
         end
 
         within_row_for(text: I18n.t('jobs.contact_email')) do
@@ -152,6 +152,10 @@ RSpec.feature 'Creating a vacancy' do
 
         within_row_for(element: 'legend', text: I18n.t('jobs.deadline_date')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
+        end
+
+        within_row_for(element: 'legend', text: I18n.t('jobs.deadline_time')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'))
         end
 
         within_row_for(element: 'legend', text: I18n.t('jobs.publication_date')) do
@@ -168,7 +172,6 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
-
         expect(page).to have_content(I18n.t('jobs.review'))
         verify_all_vacancy_details(vacancy)
       end
@@ -223,7 +226,8 @@ RSpec.feature 'Creating a vacancy' do
 
       scenario 'enables the user to resolve cross-form errors' do
         vacancy = build(:vacancy, :draft, :complete, slug: 'vacancy-slug', school_id: school.id,
-                                                     starts_on: Time.zone.today)
+                                                     starts_on: Time.zone.today,
+                                                     expiry_time: Time.zone.now + 5.days)
         vacancy.save(validate: false)
 
         visit school_job_review_path(vacancy.id)
@@ -557,13 +561,14 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
       end
 
-      scenario 'displays the expiration date on the confirmation page' do
-        vacancy = create(:vacancy, :draft, school_id: school.id)
+      scenario 'displays the expiration date and time on the confirmation page' do
+        vacancy = create(:vacancy, :draft, school_id: school.id, expiry_time: Time.zone.now + 5.days)
         visit school_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
         expect(page).to have_content(
-          "The listing will appear on the service until #{format_date(vacancy.expires_on)}, " \
+          'The listing will appear on the service until ' \
+          "#{format_date(vacancy.expires_on)} at #{format_time(vacancy.expiry_time)}, " \
           'after which it will no longer be visible to jobseekers.'
         )
       end
