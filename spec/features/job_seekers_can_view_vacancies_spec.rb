@@ -52,9 +52,12 @@ RSpec.feature 'Viewing vacancies' do
 
   scenario 'Vacancies should paginate when over per-page limit', elasticsearch: true do
     allow(Vacancy).to receive(:default_per_page).and_return(2)
-    first_vacancy = create(:vacancy, expires_on: 5.days.from_now)
-    second_vacancy = create(:vacancy, expires_on: 6.days.from_now)
-    third_vacancy = create(:vacancy, expires_on: 7.days.from_now)
+
+    skip_vacancy_publish_on_validation
+
+    first_vacancy = create(:vacancy, :published, publish_on: 4.days.ago)
+    second_vacancy = create(:vacancy, :published, publish_on: 5.days.ago)
+    third_vacancy = create(:vacancy, :published, publish_on: 9.days.ago)
 
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path

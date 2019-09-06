@@ -13,10 +13,7 @@
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
         = render(partial: 'subscribe_link', locals: { search_criteria: @filters.only_active_to_hash }) if EmailAlertsFeature.enabled?
     - if @vacancies.any?
-      %div.sortable-links
-        = t('jobs.sort_by')
-        = link_to_sort_by t('jobs.expires_on'), column: 'expires_on', order: 'asc', sort: @sort
-        = link_to_sort_by t('jobs.publish_on'), column: 'publish_on', order: 'desc', sort: @sort
+      = render partial: 'sorting_options', locals: { search_criteria: @filters.only_active_to_hash, sort: @sort }
 
       %ul.vacancies
         - @vacancies.each do |vacancy|

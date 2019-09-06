@@ -26,16 +26,28 @@ module VacanciesHelper
     Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }
   end
 
-  def link_to_sort_by(title, column:, order:, sort:)
-    if column == sort.column
-      order = sort.reverse_order
-      active_class = ' active'
-    end
-    link_to title,
-            jobs_path(vacancy_params(sort_column: column,
-                                     sort_order: order)),
-            class: "govuk-link sortby--#{order}#{active_class || ''}",
-            'aria-label': t('jobs.aria_labels.sort_by_link', column: title, order: order)
+  def job_sorting_options
+    [
+      [t('jobs.sort_by_most_recent'), :sort_by_most_recent],
+      [t('jobs.sort_by_most_ancient'), :sort_by_most_ancient],
+      [t('jobs.sort_by_earliest_closing_date'), :sort_by_earliest_closing_date],
+      [t('jobs.sort_by_furthest_closing_date'), :sort_by_furthest_closing_date]
+    ]
+  end
+
+  def selected_sorting_method(sort:)
+    return publish_on_selected_sorting_method(sort) if sort.column == 'publish_on'
+    return expires_on_selected_sorting_method(sort) if sort.column == 'expires_on'
+  end
+
+  def publish_on_selected_sorting_method(sort)
+    return :sort_by_most_ancient if sort.order == 'asc'
+    return :sort_by_most_recent if sort.order == 'desc'
+  end
+
+  def expires_on_selected_sorting_method(sort)
+    return :sort_by_earliest_closing_date if sort.order == 'asc'
+    return :sort_by_furthest_closing_date if sort.order == 'desc'
   end
 
   def vacancy_params_whitelist
