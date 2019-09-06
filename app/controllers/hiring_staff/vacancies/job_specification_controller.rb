@@ -9,11 +9,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def create
     @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
-    store_vacancy_attributes(@job_specification_form.vacancy)
+    store_vacancy_attributes(@job_specification_form.vacancy.attributes)
 
     if @job_specification_form.valid?
       vacancy = session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
-      store_vacancy_attributes(@job_specification_form.vacancy)
+      store_vacancy_attributes(@job_specification_form.vacancy.attributes)
 
       redirect_to_next_step(vacancy)
     else
@@ -41,7 +41,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       update_google_index(vacancy) if vacancy.listed?
       redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
     else
-      store_vacancy_attributes(@job_specification_form.vacancy)
+      store_vacancy_attributes(@job_specification_form.vacancy.attributes)
       redirect_to edit_school_job_job_specification_path(vacancy.id,
                                                          anchor: 'errors',
                                                          source: 'update')
