@@ -11,6 +11,12 @@ module DateHelper
     date.to_s(format).lstrip
   end
 
+  def format_time(time)
+    return '' if time.nil?
+
+    time.strftime('%-l:%M %P')
+  end
+
   def date_format_error_message(format, date_formats)
     "Unknown format: #{format} should be one of #{date_formats}"
   end

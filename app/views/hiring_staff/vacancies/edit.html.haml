@@ -214,5 +214,7 @@
           = t('jobs.deadline_date')
         %dd.app-check-your-answers__answer
           = format_date @vacancy.expires_on
+          = t('jobs.time_at') unless @vacancy.expiry_time.nil?
+          = format_time @vacancy.expiry_time 
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'expires_on'), 'aria-label': t('jobs.aria_labels.change_application_deadline'), class: 'govuk-link'
