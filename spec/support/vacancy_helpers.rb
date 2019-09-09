@@ -43,7 +43,7 @@ module VacancyHelpers
 
     fill_in 'application_details_form[expiry_time_hh]', with: vacancy.expiry_time.strftime('%-l')
     fill_in 'application_details_form[expiry_time_mm]', with: vacancy.expiry_time.strftime('%-M')
-    select vacancy.expiry_time.strftime('%P'), from: 'application_details_form[expiry_time_meridian]'
+    select vacancy.expiry_time.strftime('%P'), from: 'application_details_form[expiry_time_meridiem]'
 
     fill_in 'application_details_form[publish_on_dd]', with: vacancy.publish_on.day
     fill_in 'application_details_form[publish_on_mm]', with: vacancy.publish_on.strftime('%m')

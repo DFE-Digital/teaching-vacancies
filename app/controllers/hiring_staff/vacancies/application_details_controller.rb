@@ -52,7 +52,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     params.require(:application_details_form).permit(:application_link, :contact_email, :expiry_time,
                                                      :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
                                                      :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
-                                                     :expiry_time_hh, :expiry_time_mm, :expiry_time_meridian)
+                                                     :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
   end
 
   def next_step(vacancy)

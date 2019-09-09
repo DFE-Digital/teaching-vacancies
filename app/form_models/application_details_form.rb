@@ -5,7 +5,7 @@ class ApplicationDetailsForm < VacancyForm
            :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
            :published?, :status, :publish_on_changed?, :expiry_time, to: :vacancy
 
-  attr_accessor :params, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridian
+  attr_accessor :params, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
 
   include VacancyApplicationDetailValidations
 
@@ -13,7 +13,7 @@ class ApplicationDetailsForm < VacancyForm
     @params = params
     @expiry_time_hh = params.delete(:expiry_time_hh) || params[:expiry_time]&.strftime('%-l')
     @expiry_time_mm = params.delete(:expiry_time_mm) || params[:expiry_time]&.strftime('%-M')
-    @expiry_time_meridian = params.delete(:expiry_time_meridian) || params[:expiry_time]&.strftime('%P')
+    @expiry_time_meridiem = params.delete(:expiry_time_meridiem) || params[:expiry_time]&.strftime('%P')
 
     super(params)
   end
@@ -26,19 +26,12 @@ class ApplicationDetailsForm < VacancyForm
     application_link && contact_email && publish_on && expires_on && expiry_time
   end
 
-  def validate_expiry_time
-    return blank_error if expiry_time_hh.blank? || expiry_time_mm.blank?
-    return wrong_format_error unless in_range?(expiry_time_hh, 1, 12)
-    return wrong_format_error unless in_range?(expiry_time_mm, 0, 59)
-    return meridiem_error if expiry_time_meridian.blank?
-  end
-
   def attributes
     vacancy_attributes = @vacancy.attributes
     vacancy_attributes.merge!(
       expiry_time_hh: expiry_time_hh,
       expiry_time_mm: expiry_time_mm,
-      expiry_time_meridian: expiry_time_meridian,
+      expiry_time_meridiem: expiry_time_meridiem,
     )
     vacancy_attributes
   end
@@ -50,11 +43,20 @@ class ApplicationDetailsForm < VacancyForm
     params_with_expiry_time
   end
 
+  private
+
+  def validate_expiry_time
+    return blank_error if expiry_time_hh.blank? || expiry_time_mm.blank?
+    return wrong_format_error unless in_range?(expiry_time_hh, 1, 12)
+    return wrong_format_error unless in_range?(expiry_time_mm, 0, 59)
+    return meridiem_error if expiry_time_meridiem.blank?
+  end
+
   def compose_expiry_time
-    return nil if [expiry_time_hh, expiry_time_mm, expiry_time_meridian].any? { |attr| attr.to_s.empty? }
+    return nil if [expiry_time_hh, expiry_time_mm, expiry_time_meridiem].any? { |attr| attr.to_s.empty? }
 
     expiry_time_string = "#{expires_on_dd}-#{expires_on_mm}-#{expires_on_yyyy}" \
-                         " #{expiry_time_hh}:#{expiry_time_mm} #{expiry_time_meridian}"
+                         " #{expiry_time_hh}:#{expiry_time_mm} #{expiry_time_meridiem}"
 
     Time.zone.parse(expiry_time_string)
   end

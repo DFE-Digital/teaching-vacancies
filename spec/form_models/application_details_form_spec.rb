@@ -22,13 +22,13 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       before(:each) do
         subject.expiry_time_hh = '11'
         subject.expiry_time_mm = '11'
-        subject.expiry_time_meridian = 'am'
+        subject.expiry_time_meridiem = 'am'
       end
 
       it 'displays error if all fields are blank' do
         subject.expiry_time_hh = nil
         subject.expiry_time_mm = nil
-        subject.expiry_time_meridian = nil
+        subject.expiry_time_meridiem = nil
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to eq(['can\'t be blank'])
       end
@@ -64,7 +64,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       end
 
       it 'displays error if am/pm field is blank' do
-        subject.expiry_time_meridian = ''
+        subject.expiry_time_meridiem = ''
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to eq(['must be am or pm'])
       end
@@ -72,14 +72,14 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'displays only one error message at a time' do
         subject.expiry_time_hh = '14'
         subject.expiry_time_mm = '66'
-        subject.expiry_time_meridian = nil
+        subject.expiry_time_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(['is in wrong format'])
+        expect(subject.errors.messages[:expiry_time].count).to eq(1)
       end
 
-      it 'displays one error if minutes or meridian are invalid' do
+      it 'displays wrong format error if minutes and meridiem are invalid' do
         subject.expiry_time_mm = '66'
-        subject.expiry_time_meridian = nil
+        subject.expiry_time_meridiem = nil
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to eq(['is in wrong format'])
       end
@@ -87,24 +87,24 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'does not display error if all fields are correct' do
         subject.expiry_time_hh = '01'
         subject.expiry_time_mm = '01'
-        subject.expiry_time_meridian = 'am'
+        subject.expiry_time_meridiem = 'am'
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to be_empty
       end
 
-      it 'should accept an existing AM value' do
+      it 'can display 24 hours format in 12 hours format AM' do
         application_details = ApplicationDetailsForm.new(expiry_time: Time.parse('6:34').getlocal)
         expect(application_details.expiry_time_hh).to eq('6')
         expect(application_details.expiry_time_mm).to eq('34')
-        expect(application_details.expiry_time_meridian).to eq('am')
+        expect(application_details.expiry_time_meridiem).to eq('am')
         expect(subject.errors.messages[:expiry_time]).to be_empty
       end
 
-      it 'should accept an existing PM value' do
+      it 'can display 24 hours format in 12 hours format PM' do
         application_details = ApplicationDetailsForm.new(expiry_time: Time.parse('18:00').getlocal)
         expect(application_details.expiry_time_hh).to eq('6')
         expect(application_details.expiry_time_mm).to eq('0')
-        expect(application_details.expiry_time_meridian).to eq('pm')
+        expect(application_details.expiry_time_meridiem).to eq('pm')
         expect(subject.errors.messages[:expiry_time]).to be_empty
       end
     end
@@ -147,14 +147,14 @@ RSpec.describe ApplicationDetailsForm, type: :model do
     it 'cannot save expiry time if fields are incomplete' do
       application_details = ApplicationDetailsForm.new(contact_email: 'some@email.com', expiry_time_hh: '9')
 
-      expect(application_details.params_to_save).to eq(contact_email: 'some@email.com')
+      expect(application_details.params_to_save).not_to include(expiry_time_hh: '9')
     end
 
     it 'can save expiry time if time fields are complete' do
       application_details = ApplicationDetailsForm.new(contact_email: 'some@email.com',
                                                        expiry_time_hh: '9',
                                                        expiry_time_mm: '15',
-                                                       expiry_time_meridian: 'am')
+                                                       expiry_time_meridiem: 'am')
       params = application_details.params_to_save
       expect(params.count).to eq(2)
       expect(params[:expiry_time].hour).to eq(9)
@@ -169,7 +169,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
                                                        expires_on: Time.zone.today + 1.week,
                                                        publish_on: Time.zone.today,
                                                        expiry_time_hh: '9', expiry_time_mm: '1',
-                                                       expiry_time_meridian: 'am')
+                                                       expiry_time_meridiem: 'am')
 
       expect(application_details.valid?).to be true
       expect(application_details.vacancy.contact_email).to eq('some@email.com')
