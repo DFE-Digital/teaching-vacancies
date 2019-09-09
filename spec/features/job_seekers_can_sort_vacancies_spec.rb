@@ -4,9 +4,15 @@ RSpec.feature 'Sorting vacancies' do
   context 'when sorting the vacancy listings', elasticsearch: true do
     before { skip_vacancy_publish_on_validation }
 
-    let!(:first_vacancy) { create(:vacancy, :published, expires_on: 7.days.from_now, publish_on: 4.days.ago) }
-    let!(:second_vacancy) { create(:vacancy, :published, expires_on: 6.days.from_now, publish_on: 10.days.ago) }
-    let!(:third_vacancy) { create(:vacancy, :published, expires_on: 5.days.from_now, publish_on: 8.days.ago) }
+    let!(:first_vacancy) do
+      create(:vacancy, :with_no_expiry_time, expires_on: 7.days.from_now, publish_on: 4.days.ago)
+    end
+    let!(:second_vacancy) do
+      create(:vacancy, :with_no_expiry_time, expires_on: 6.days.from_now, publish_on: 10.days.ago)
+    end
+    let!(:third_vacancy) do
+      create(:vacancy, :with_no_expiry_time, expires_on: 5.days.from_now, publish_on: 8.days.ago)
+    end
 
     let!(:fourth_vacancy) do
       create(:vacancy,

@@ -206,7 +206,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
 
         expect(page).to have_content("Edit job for #{school.name}")
-        click_link_in_container_with_text(I18n.t('jobs.deadline_date'))
+        click_link_in_container_with_text(I18n.t('jobs.application_deadline'))
 
         fill_in 'application_details_form[expiry_time_hh]', with: '88'
         click_on 'Update job'
