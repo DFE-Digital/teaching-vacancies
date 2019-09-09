@@ -30,7 +30,7 @@ class ApplicationDetailsForm < VacancyForm
     return create_blank_error if expiry_time_hh.blank? || expiry_time_mm.blank?
     return create_wrong_format_error unless in_range?(expiry_time_hh, 1, 12)
     return create_wrong_format_error unless in_range?(expiry_time_mm, 0, 59)
-    return create_meridiem_error if expiry_time_meridian.blank?
+    return create_meridian_error if expiry_time_meridian.blank?
   end
 
   def attributes
@@ -75,7 +75,7 @@ class ApplicationDetailsForm < VacancyForm
     errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'))
   end
 
-  def create_meridiem_error
+  def create_meridian_error
     errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm'))
   end
 end
