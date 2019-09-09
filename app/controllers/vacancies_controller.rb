@@ -18,10 +18,16 @@ class VacanciesController < ApplicationController
                 :radius,
                 :sort_column,
                 :sort_order
-
   def index
+    redirect_by_jobs_sort && return
+
     @filters = VacancyFilters.new(search_params.to_hash)
-    @sort = VacancySort.new.update(column: sort_column, order: sort_order)
+
+    @sort = VacancySort.new(
+      default_column: 'publish_on',
+      default_order: 'desc'
+    ).update(column: sort_column, order: sort_order)
+
     @vacancies = VacanciesFinder.new(@filters, @sort, page_number).vacancies
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
@@ -50,6 +56,17 @@ class VacanciesController < ApplicationController
   end
 
   private
+
+  def redirect_by_jobs_sort
+    return redirect_with_sort(:expires_on, :asc) if params[:jobs_sort] == 'sort_by_earliest_closing_date'
+    return redirect_with_sort(:expires_on, :desc) if params[:jobs_sort] == 'sort_by_furthest_closing_date'
+    return redirect_with_sort(:publish_on, :asc) if params[:jobs_sort] == 'sort_by_most_ancient'
+    return redirect_with_sort(:publish_on, :desc) if params[:jobs_sort] == 'sort_by_most_recent'
+  end
+
+  def redirect_with_sort(sort_column, sort_order)
+    redirect_to jobs_path(params: search_params.merge(sort_column: sort_column, sort_order: sort_order))
+  end
 
   def search_params
     params.permit(*PERMITTED_SEARCH_PARAMS)
