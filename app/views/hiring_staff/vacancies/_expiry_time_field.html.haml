@@ -6,18 +6,25 @@
       = t('jobs.form_hints.application_deadline_time')
     = f.error :expiry_time 
     %govuk-date-input
+      .govuk-date-input__item.add-colon-positioned-next-to-element
+        = f.input :expiry_time_hh, 
+          label: t('jobs.application_deadline_hour'), 
+          required: true, 
+          as: :integer,
+          input_html: {class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (@application_details_form.errors[:expiry_time].present? ? "govuk-input--error" : '' )}
       .govuk-date-input__item
-        .govuk-form-group
-          = f.input :expiry_time_hh, label: t('jobs.application_deadline_hour'), required: true, as: :integer,
-              input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'}
+        = f.input :expiry_time_mm, 
+          label: t('jobs.application_deadline_min'), 
+          required: true, 
+          as: :integer,
+           input_html: {class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (@application_details_form.errors[:expiry_time].present? ? "govuk-input--error" : '' )}
       .govuk-date-input__item
-        .govuk-form-group
-          = f.input :expiry_time_mm, label: t('jobs.application_deadline_min'), required: true, as: :integer,
-              input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'}
-      .govuk-date-input__item
-        .govuk-form-group
-          = f.input :expiry_time_meridiem,
-                    collection: ['am', 'pm'], 
-                    label: t('jobs.application_deadline_meridiem'), 
-                    input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'},
-                    required: true
+        = f.input :expiry_time_meridiem,
+                  as: :select,
+                  wrapper: :select,
+                  collection: ['am', 'pm'], 
+                  label: t('jobs.application_deadline_meridiem'), 
+                  input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'},
+                  required: true,
+                  include_blank: '- -',
+                  input_html: {class: ("govuk-input--error" if @application_details_form.errors[:expiry_time].present?)}
