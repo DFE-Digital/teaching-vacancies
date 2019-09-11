@@ -1,6 +1,4 @@
 class ApplicationDetailsForm < VacancyForm
-  validate :validate_expiry_time
-
   delegate :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
            :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
            :published?, :status, :publish_on_changed?, :expiry_time, to: :vacancy
@@ -8,6 +6,7 @@ class ApplicationDetailsForm < VacancyForm
   attr_accessor :params, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
 
   include VacancyApplicationDetailValidations
+  include VacancyExpiryTimeFieldValidations
 
   def initialize(params)
     @params = params
@@ -45,13 +44,6 @@ class ApplicationDetailsForm < VacancyForm
 
   private
 
-  def validate_expiry_time
-    return blank_error if expiry_time_hh.blank? || expiry_time_mm.blank?
-    return wrong_format_error unless in_range?(expiry_time_hh, 1, 12)
-    return wrong_format_error unless in_range?(expiry_time_mm, 0, 59)
-    return meridiem_error if expiry_time_meridiem.blank?
-  end
-
   def compose_expiry_time
     return nil if [expiry_time_hh, expiry_time_mm, expiry_time_meridiem].any? { |attr| attr.to_s.empty? }
 
@@ -59,25 +51,5 @@ class ApplicationDetailsForm < VacancyForm
                          " #{expiry_time_hh}:#{expiry_time_mm} #{expiry_time_meridiem}"
 
     Time.zone.parse(expiry_time_string)
-  end
-
-  def in_range?(value, min, max)
-    number?(value) && value.to_i >= min && value.to_i <= max
-  end
-
-  def number?(value)
-    /\A[+-]?\d+\z/.match?(value)
-  end
-
-  def wrong_format_error
-    errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format'))
-  end
-
-  def blank_error
-    errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'))
-  end
-
-  def meridiem_error
-    errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm'))
   end
 end

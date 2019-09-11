@@ -10,6 +10,7 @@ RSpec.describe CopyVacancyForm, type: :model do
     expect(form_object.starts_on).to eq(original_vacancy.starts_on)
     expect(form_object.ends_on).to eq(original_vacancy.ends_on)
     expect(form_object.expires_on).to eq(original_vacancy.expires_on)
+    expect(form_object.expiry_time).to eq(original_vacancy.expiry_time)
     expect(form_object.publish_on).to eq(original_vacancy.publish_on)
   end
 

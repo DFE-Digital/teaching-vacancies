@@ -15,7 +15,7 @@ RSpec.feature 'Copying a vacancy' do
     new_vacancy.starts_on = 35.days.from_now
     new_vacancy.ends_on = 100.days.from_now
     new_vacancy.publish_on = 0.days.from_now
-    new_vacancy.expires_on = 30.days.from_now
+    new_vacancy.expiry_time = new_vacancy.expires_on = 30.days.from_now
 
     visit school_path
 
@@ -39,13 +39,14 @@ RSpec.feature 'Copying a vacancy' do
     expect(page).to have_content(new_vacancy.starts_on)
     expect(page).to have_content(new_vacancy.ends_on)
     expect(page).to have_content(new_vacancy.publish_on)
-    expect(page).to have_content(new_vacancy.expires_on)
-
     expect(page).not_to have_content(original_vacancy.job_title)
     expect(page).not_to have_content(original_vacancy.starts_on)
     expect(page).not_to have_content(original_vacancy.ends_on)
     expect(page).not_to have_content(original_vacancy.publish_on)
     expect(page).not_to have_content(original_vacancy.expires_on)
+
+    new_application_deadline = format_date(new_vacancy.expires_on) + ' at ' + format_time(new_vacancy.expiry_time)
+    expect(page).to have_content(new_application_deadline)
   end
 
   context 'when the original job is pending/scheduled/future_publish' do
