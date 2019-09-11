@@ -1,0 +1,68 @@
+- content_for :page_title_prefix  do
+  =t('static_pages.accessibility.page_title')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-xl=t('static_pages.accessibility.page_title')
+
+    %h2.govuk-heading-l=t('static_pages.accessibility.title')
+    %p.govuk-body
+      =t('static_pages.accessibility.mission.opening_text')
+      %ul.govuk-list.govuk-list--bullet
+        -t('static_pages.accessibility.mission.list').each do |li|
+          %li=li.html_safe
+    %p.govuk-body=t('static_pages.accessibility.mission.closing_text')
+
+    %h3.govuk-heading-m=t('static_pages.accessibility.how_accessible.title')
+    %p.govuk-body=t('static_pages.accessibility.how_accessible.text').html_safe
+
+    %h3.govuk-heading-m=t('static_pages.accessibility.reporting_accessibility_problems.title')
+    %p.govuk-body=t('static_pages.accessibility.reporting_accessibility_problems.text', help_email: t('help.email')).html_safe
+
+    %h3.govuk-heading-m=t('static_pages.accessibility.enforcement_procedure.title')
+    %p.govuk-body=t('static_pages.accessibility.enforcement_procedure.text').html_safe
+
+    %h2.govuk-heading-l=t('static_pages.accessibility.technical_information.title')
+    -t('static_pages.accessibility.technical_information.text').each do |p|
+      %p.govuk-body=p.html_safe
+
+    %h3.govuk-heading-m=t('static_pages.accessibility.non_accesssible.title')
+    %p.govuk-body=t('static_pages.accessibility.non_accesssible.text')
+
+    %h3.govuk-heading-m=t('static_pages.accessibility.non_compliance.title')
+    %p.govuk-body=t('static_pages.accessibility.non_compliance.text')
+
+    %h4.govuk-heading-s=t('static_pages.accessibility.non_compliance.perceivable.heading')
+    %p.govuk-body=t('static_pages.accessibility.non_compliance.perceivable.principle')
+    -t('static_pages.accessibility.non_compliance.perceivable.issue.text').each do |p|
+      %p.govuk-body=p.html_safe
+
+    %h4.govuk-heading-s=t('static_pages.accessibility.non_compliance.operable.heading')
+    %p.govuk-body=t('static_pages.accessibility.non_compliance.operable.principle')
+    -t('static_pages.accessibility.non_compliance.operable.issue.text').each do |p|
+      %p.govuk-body=p.html_safe
+
+    %h4.govuk-heading-s=t('static_pages.accessibility.non_compliance.robust.heading')
+    %p.govuk-body=t('static_pages.accessibility.non_compliance.robust.principle')
+    -t('static_pages.accessibility.non_compliance.robust.issue.text').each do |p|
+      %p.govuk-body=p.html_safe
+
+    %h4.govuk-heading-s=t('static_pages.accessibility.non_compliance.not_in_scope.heading')
+    %p.govuk-body=t('static_pages.accessibility.non_compliance.not_in_scope.text')
+    -t('static_pages.accessibility.non_compliance.not_in_scope.issue.text').each do |p|
+      %p.govuk-body=p.html_safe
+
+    %h3.govuk-heading-m=t('static_pages.accessibility.how_we_tested.title')
+    -t('static_pages.accessibility.how_we_tested.opening_text').each do |p|
+      %p.govuk-body=p.html_safe
+    %ul.govuk-list.govuk-list--bullet
+      -t('static_pages.accessibility.how_we_tested.list').each do |li|
+        %li=li.html_safe
+
+    %p.govuk-body
+      =t('static_pages.accessibility.how_we_tested.closing_text.text').html_safe
+      %ul.govuk-list.govuk-list--bullet
+        -t('static_pages.accessibility.how_we_tested.closing_text.list').each do |li|
+          %li=li.html_safe
+
+    %p.govuk-body=t('static_pages.accessibility.date_reviewed').html_safe
