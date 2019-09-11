@@ -134,6 +134,7 @@ data "template_file" "web_container_definition" {
     google_maps_api_key                          = "${var.google_maps_api_key}"
     google_analytics                             = "${var.google_analytics}"
     google_optimize_id                           = "${var.google_optimize_id}"
+    google_tag_manager_container_id              = "${var.google_tag_manager_container_id}"
     rollbar_access_token                         = "${var.rollbar_access_token}"
     secret_key_base                              = "${var.secret_key_base}"
     project_name                                 = "${var.project_name}"

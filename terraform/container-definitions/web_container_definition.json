@@ -67,6 +67,10 @@
         "value": "${google_optimize_id}"
       },
       {
+        "name": "GOOGLE_TAG_MANAGER_CONTAINER_ID",
+        "value": "${google_tag_manager_container_id}"
+      },
+      {
         "name": "ROLLBAR_ACCESS_TOKEN",
         "value": "${rollbar_access_token}"
       },
