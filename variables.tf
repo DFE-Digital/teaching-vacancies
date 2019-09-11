@@ -353,6 +353,7 @@ variable "dfe_sign_in_secret" {}
 variable "google_maps_api_key" {}
 variable "google_analytics" {}
 variable "google_optimize_id" {}
+variable "google_tag_manager_container_id" {}
 variable "secret_key_base" {}
 variable "authorisation_service_url" {}
 variable "authorisation_service_token" {}

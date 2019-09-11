@@ -4,6 +4,7 @@
 %html.govuk-template.app-html-class{lang: "en"}
   /<![endif]
   %head
+    = render partial: 'shared/google_tag_manager_head'
     = render partial: 'shared/gtag'
     = render partial: 'shared/open_graph'
     = render partial: 'shared/meta'
@@ -29,6 +30,7 @@
     %meta{content: asset_path("govuk-opengraph-image.png"), property: "og:image"}/
     = csrf_meta_tags
   %body{class: body_class}
+    = render partial: 'shared/google_tag_manager_body'
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     %a.govuk-skip-link{href: "#main-content"} Skip to main content
