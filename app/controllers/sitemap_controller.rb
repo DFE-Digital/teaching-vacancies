@@ -13,6 +13,7 @@ class SitemapController < ApplicationController
       m.add page_path('privacy-policy', protocol: 'https'), period: 'weekly'
       m.add page_path('terms-and-conditions', protocol: 'https'), period: 'weekly'
       m.add page_path('cookies', protocol: 'https'), period: 'weekly'
+      m.add page_path('accessibility', protocol: 'https'), period: 'weekly'
     end
 
     expires_in 3.hours

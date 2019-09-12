@@ -10,7 +10,7 @@ RSpec.feature 'Application sitemap', sitemap: true do
       document = Nokogiri::XML::Document.parse(body)
       nodes = document.search('url')
 
-      expect(nodes.count).to eq(9)
+      expect(nodes.count).to eq(10)
       expect(nodes.search("loc[text()='#{root_url(protocol: 'https')}']").text)
         .to eq(root_url(protocol: 'https'))
 
@@ -25,6 +25,8 @@ RSpec.feature 'Application sitemap', sitemap: true do
         .to eq(page_url('cookies', protocol: 'https'))
       expect(nodes.search("loc:contains('#{page_url('privacy-policy', protocol: 'https')}')").text)
         .to eq(page_url('privacy-policy', protocol: 'https'))
+      expect(nodes.search("loc:contains('#{page_url('accessibility', protocol: 'https')}')").text)
+        .to eq(page_url('accessibility', protocol: 'https'))
     end
   end
 end
