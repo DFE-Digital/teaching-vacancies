@@ -9,9 +9,12 @@ module VacancyExpiryTimeFieldValidations
 
   def validate_time_format
     return blank_error if expiry_time_hh.blank? || expiry_time_mm.blank?
-    return wrong_format_error unless in_range?(expiry_time_hh, 1, 12)
-    return wrong_format_error unless in_range?(expiry_time_mm, 0, 59)
+    return wrong_format_error unless time_in_correct_range?
     return meridiem_error if expiry_time_meridiem.blank?
+  end
+
+  def time_in_correct_range?
+    in_range?(expiry_time_hh, 1, 12) && in_range?(expiry_time_mm, 0, 59)
   end
 
   def in_range?(value, min, max)
