@@ -24,7 +24,6 @@
                   wrapper: :select,
                   collection: ['am', 'pm'], 
                   label: t('jobs.application_deadline_meridiem'), 
-                  input_html: {class: 'govuk-input govuk-date-input__input govuk-input--width-2'},
                   required: true,
                   include_blank: '- -',
                   input_html: {class: ("govuk-input--error" if form.errors[:expiry_time].present?)}
