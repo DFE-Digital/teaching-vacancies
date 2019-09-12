@@ -45,7 +45,7 @@ RSpec.feature 'Copying a vacancy' do
     expect(page).not_to have_content(original_vacancy.publish_on)
     expect(page).not_to have_content(original_vacancy.expires_on)
 
-    new_application_deadline = format_date(new_vacancy.expires_on) + ' at ' + format_time(new_vacancy.expiry_time)
+    new_application_deadline = "#{format_date(new_vacancy.expires_on)} at #{format_time(new_vacancy.expiry_time)}"
     expect(page).to have_content(new_application_deadline)
   end
 

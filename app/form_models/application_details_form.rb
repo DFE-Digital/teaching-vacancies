@@ -7,6 +7,7 @@ class ApplicationDetailsForm < VacancyForm
 
   include VacancyApplicationDetailValidations
   include VacancyExpiryTimeFieldValidations
+  include DateHelper
 
   def initialize(params)
     @params = params
@@ -37,19 +38,18 @@ class ApplicationDetailsForm < VacancyForm
 
   def params_to_save
     params_with_expiry_time = @params
-    params_with_expiry_time[:expiry_time] = compose_expiry_time if compose_expiry_time
+
+    expiry_time_attr = {
+      day: expires_on_dd,
+      month: expires_on_mm,
+      year: expires_on_yyyy,
+      hour: expiry_time_hh,
+      min: expiry_time_mm,
+      meridiem: expiry_time_meridiem
+    }
+    expiry_time = compose_expiry_time(expiry_time_attr)
+    params_with_expiry_time[:expiry_time] = expiry_time unless expiry_time.nil?
 
     params_with_expiry_time
-  end
-
-  private
-
-  def compose_expiry_time
-    return nil if [expiry_time_hh, expiry_time_mm, expiry_time_meridiem].any? { |attr| attr.to_s.empty? }
-
-    expiry_time_string = "#{expires_on_dd}-#{expires_on_mm}-#{expires_on_yyyy}" \
-                         " #{expiry_time_hh}:#{expiry_time_mm} #{expiry_time_meridiem}"
-
-    Time.zone.parse(expiry_time_string)
   end
 end

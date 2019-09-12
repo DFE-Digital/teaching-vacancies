@@ -10,6 +10,9 @@ RSpec.describe CopyVacancyForm, type: :model do
     expect(form_object.starts_on).to eq(original_vacancy.starts_on)
     expect(form_object.ends_on).to eq(original_vacancy.ends_on)
     expect(form_object.expires_on).to eq(original_vacancy.expires_on)
+    expect(form_object.expiry_time_hh).to eq(original_vacancy.expiry_time&.strftime('%-l'))
+    expect(form_object.expiry_time_mm).to eq(original_vacancy.expiry_time&.strftime('%-M'))
+    expect(form_object.expiry_time_meridiem).to eq(original_vacancy.expiry_time&.strftime('%P'))
     expect(form_object.expiry_time).to eq(original_vacancy.expiry_time)
     expect(form_object.publish_on).to eq(original_vacancy.publish_on)
   end
@@ -34,8 +37,15 @@ RSpec.describe CopyVacancyForm, type: :model do
         starts_on: 20.days.from_now.to_date,
         ends_on: 30.days.from_now.to_date,
         expires_on: 5.days.from_now.to_date,
+        expiry_time_hh: 11,
+        expiry_time_mm: 11,
+        expiry_time_meridiem: 'am',
         publish_on: 0.days.from_now.to_date,
       }
+
+      expiry_time_string = "#{new_choices[:expires_on]} #{new_choices[:expiry_time_hh]}" \
+                         ":#{new_choices[:expiry_time_mm]} #{new_choices[:expiry_time_meridiem]}"
+      new_expiry_time = Time.zone.parse(expiry_time_string)
 
       new_vacancy = described_class.new(vacancy: original_vacancy)
                                    .apply_changes!(new_choices)
@@ -46,6 +56,7 @@ RSpec.describe CopyVacancyForm, type: :model do
       expect(new_vacancy.ends_on).to eq(new_choices[:ends_on])
       expect(new_vacancy.expires_on).to eq(new_choices[:expires_on])
       expect(new_vacancy.publish_on).to eq(new_choices[:publish_on])
+      expect(new_vacancy.expiry_time).to eq(new_expiry_time)
     end
 
     it 'does not make changes to the form_object so the form can be repopulated on error' do

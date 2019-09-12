@@ -1,6 +1,7 @@
 class CopyVacancyForm < VacancyForm
   include ActiveModel::Model
   include VacancyExpiryTimeFieldValidations
+  include DateHelper
 
   delegate :starts_on_yyyy, :starts_on_mm, :starts_on_dd,
            :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
@@ -33,20 +34,22 @@ class CopyVacancyForm < VacancyForm
   def apply_changes!(params = {})
     assign_attributes(params.extract!(:expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem))
     vacancy.assign_attributes(params)
-    vacancy.expiry_time = compose_expiry_time
+
+    expiry_time_attr = {
+      day: expires_on_dd,
+      month: expires_on_mm,
+      year: expires_on_yyyy,
+      hour: expiry_time_hh,
+      min: expiry_time_mm,
+      meridiem: expiry_time_meridiem
+    }
+    expiry_time = compose_expiry_time(expiry_time_attr)
+    vacancy.expiry_time = expiry_time unless expiry_time.nil?
+
     vacancy
   end
 
   private
-
-  def compose_expiry_time
-    return nil if [expiry_time_hh, expiry_time_mm, expiry_time_meridiem].any? { |attr| attr.to_s.empty? }
-
-    expiry_time_string = "#{expires_on_dd}-#{expires_on_mm}-#{expires_on_yyyy}" \
-                         " #{expiry_time_hh}:#{expiry_time_mm} #{expiry_time_meridiem}"
-
-    Time.zone.parse(expiry_time_string)
-  end
 
   def reset_date_fields
     self.starts_on  = nil

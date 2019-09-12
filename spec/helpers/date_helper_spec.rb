@@ -18,4 +18,31 @@ RSpec.describe DateHelper, type: :helper do
       expect { helper.format_date(Date.new(2017, 10, 7), :invalid) }.to raise_error(DateHelper::FormatDateError)
     end
   end
+
+  describe '#compose_expiry_time' do
+    it 'returns nil if any of the fields are blank' do
+      time_attr = {
+        day: 10,
+        month: 10,
+        year: 2012,
+        hour: 12,
+        min: 12,
+        meridiem: ''
+      }
+      expect(helper.compose_expiry_time(time_attr)).to eq nil
+    end
+
+    it 'creates a date time from of the attributes' do
+      expected_date_time = Time.zone.parse('7-10-2017 12:12 pm')
+      time_attr = {
+        day: 7,
+        month: 10,
+        year: 2017,
+        hour: 12,
+        min: 12,
+        meridiem: 'pm'
+      }
+      expect(helper.compose_expiry_time(time_attr)).to eq(expected_date_time)
+    end
+  end
 end
