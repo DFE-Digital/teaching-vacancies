@@ -7,7 +7,7 @@ RSpec.feature 'A visitor to the website can access the support links' do
 
     expect(page).to have_content('Cookies')
     expect(page).to have_content("'Teaching Vacancies' puts small files (known as 'cookies') onto your computer " \
-                                 'to collect information about how you use the site.')
+                                 'to collect information about how you use the service.')
   end
 
   scenario 'the privacy policy' do
