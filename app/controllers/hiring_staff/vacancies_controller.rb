@@ -78,7 +78,12 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def clear_cache_and_step
     flash.clear
-    session[:current_step] = ''
+    session[:vacancy_attributes] = @vacancy.attributes if vacancy_is_not_in_current_session?
+  end
+
+  def vacancy_is_not_in_current_session?
+    return session[:vacancy_attributes].nil? 
+    # session[:vacancy_attributes]['id'] =! @vacancy.id
   end
 
   def set_vacancy
