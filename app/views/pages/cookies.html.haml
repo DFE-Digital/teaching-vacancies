@@ -50,6 +50,10 @@
         %td.govuk-table__cell _gid
         %td.govuk-table__cell=t('static_pages.cookies.types.gid.purpose')
         %td.govuk-table__cell=t('static_pages.cookies.types.gid.expires')
+      %tr.govuk-table__row
+        %td.govuk-table__cell _gat
+        %td.govuk-table__cell=t('static_pages.cookies.types.gat.purpose')
+        %td.govuk-table__cell=t('static_pages.cookies.types.gat.expires')
 
     %p=t('static_pages.cookies.how_we_use.analytics.you_can_opt_out', opt_out_url: link_to(t('static_pages.cookies.how_we_use.analytics.opt_out'), 'https://tools.google.com/dlpage/gaoptout', class: 'govuk-link')).html_safe
 
