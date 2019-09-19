@@ -37,15 +37,8 @@ RSpec.describe CopyVacancyForm, type: :model do
         starts_on: 20.days.from_now.to_date,
         ends_on: 30.days.from_now.to_date,
         expires_on: 5.days.from_now.to_date,
-        expiry_time_hh: 11,
-        expiry_time_mm: 11,
-        expiry_time_meridiem: 'am',
         publish_on: 0.days.from_now.to_date,
       }
-
-      expiry_time_string = "#{new_choices[:expires_on]} #{new_choices[:expiry_time_hh]}" \
-                         ":#{new_choices[:expiry_time_mm]} #{new_choices[:expiry_time_meridiem]}"
-      new_expiry_time = Time.zone.parse(expiry_time_string)
 
       new_vacancy = described_class.new(vacancy: original_vacancy)
                                    .apply_changes!(new_choices)
@@ -56,7 +49,31 @@ RSpec.describe CopyVacancyForm, type: :model do
       expect(new_vacancy.ends_on).to eq(new_choices[:ends_on])
       expect(new_vacancy.expires_on).to eq(new_choices[:expires_on])
       expect(new_vacancy.publish_on).to eq(new_choices[:publish_on])
-      expect(new_vacancy.expiry_time).to eq(new_expiry_time)
+    end
+
+    describe '#update_expiry_time' do
+      it 'updates the original vacancy with the users new preferences' do
+        vacancy = build(:vacancy)
+
+        new_choices = {
+          expires_on_dd: 5.days.from_now.to_date.day.to_s,
+          expires_on_mm: 5.days.from_now.to_date.month.to_s,
+          expires_on_yyyy: 5.days.from_now.to_date.year.to_s,
+          expiry_time_hh: 11,
+          expiry_time_mm: 11,
+          expiry_time_meridiem: 'am',
+        }
+
+        expiry_time_string = "#{new_choices[:expires_on_dd]}-#{new_choices[:expires_on_mm]}-"\
+                            "#{new_choices[:expires_on_yyyy]} #{new_choices[:expiry_time_hh]}" \
+                           ":#{new_choices[:expiry_time_mm]} #{new_choices[:expiry_time_meridiem]}"
+        new_expiry_time = Time.zone.parse(expiry_time_string)
+
+        described_class.new(vacancy: vacancy)
+                       .update_expiry_time(vacancy, new_choices)
+
+        expect(vacancy.expiry_time).to eq(new_expiry_time)
+      end
     end
 
     it 'does not make changes to the form_object so the form can be repopulated on error' do

@@ -35,18 +35,20 @@ class CopyVacancyForm < VacancyForm
     assign_attributes(params.extract!(:expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem))
     vacancy.assign_attributes(params)
 
+    vacancy
+  end
+
+  def update_expiry_time(vacancy, params)
     expiry_time_attr = {
-      day: expires_on_dd,
-      month: expires_on_mm,
-      year: expires_on_yyyy,
-      hour: expiry_time_hh,
-      min: expiry_time_mm,
-      meridiem: expiry_time_meridiem
+      day: params[:expires_on_dd],
+      month: params[:expires_on_mm],
+      year: params[:expires_on_yyyy],
+      hour: params[:expiry_time_hh],
+      min: params[:expiry_time_mm],
+      meridiem: params[:expiry_time_meridiem]
     }
     expiry_time = compose_expiry_time(expiry_time_attr)
     vacancy.expiry_time = expiry_time unless expiry_time.nil?
-
-    vacancy
   end
 
   private
