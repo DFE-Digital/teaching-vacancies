@@ -205,6 +205,29 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content('Step 3 of 3')
         end
+
+        scenario 'redirects to appropriate step when clicked on change on review page' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_candidate_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_application_details_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          click_link_in_container_with_text('Essential qualifications')
+
+          expect(page).to have_content('Step 2 of 3')
+
+          click_on 'Save and continue'
+
+          click_link_in_container_with_text('Job description')
+
+          expect(page).to have_content('Step 1 of 3')
+        end
       end
 
       scenario 'is not available for published vacancies' do
