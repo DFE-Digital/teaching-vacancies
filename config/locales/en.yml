@@ -520,6 +520,9 @@ en:
         gid:
           purpose: This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before
           expires: After 24 hours
+        gat:
+          purpose: This helps us limit the number of page view requests that Google records per minute
+          expires: After 1 minute
         teachingvacancies_session:
           purpose: Stores session data
           expires: After 1 hour
