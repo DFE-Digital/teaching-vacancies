@@ -325,8 +325,8 @@ RSpec.describe Vacancy, type: :model do
           expired = build(:vacancy, :expired)
           expired.send :set_slug
           expired.save(validate: false)
-          expires_today = create(:vacancy, expires_on: Time.zone.today)
-          expires_future = create(:vacancy, expires_on: 3.months.from_now)
+          expires_today = create(:vacancy, :with_no_expiry_time, expires_on: Time.zone.today)
+          expires_future = create(:vacancy, :with_no_expiry_time, expires_on: 3.months.from_now)
 
           results = Vacancy.applicable
           expect(results).to include(expires_today)
@@ -425,7 +425,7 @@ RSpec.describe Vacancy, type: :model do
         end
 
         it 'includes vacancies that expire today' do
-          expires_today = create(:vacancy, status: :published, expires_on: Time.zone.today)
+          expires_today = create(:vacancy, :with_no_expiry_time, expires_on: Time.zone.today)
 
           expect(Vacancy.live).to include(expires_today)
         end

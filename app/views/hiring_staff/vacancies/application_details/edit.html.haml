@@ -35,5 +35,7 @@
       %div.govuk-form-group#deadline
         = f.gov_uk_date_field :expires_on,
                               legend_options: { page_heading: false, class: "govuk-label" }
+      
+      = render 'hiring_staff/vacancies/expiry_time_field', f: f, form: @application_details_form
 
       = f.button :submit, t('buttons.update_job')

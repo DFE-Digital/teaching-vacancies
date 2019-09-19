@@ -42,12 +42,12 @@ en:
         ends_on: 'End date (optional)'
       application_details_form:
         publish_on: 'Date role will be listed'
-        expires_on: 'Application deadline'
+        expires_on: 'Date application is due'
       copy_vacancy_form:
         starts_on: 'Expected start date (optional)'
         ends_on: 'End date (optional)'
         publish_on: 'Date role will be listed'
-        expires_on: 'Application deadline'
+        expires_on: 'Date application is due'
     hint:
       job_specification_form:
         starts_on: 'For example, 01 01 2020'
@@ -78,6 +78,7 @@ en:
     sort_by_furthest_closing_date: 'Most time to apply'
     sort_by_most_recent: 'Newest job listing'
     sort_by_most_ancient: 'Oldest job listing'
+    application_deadline: 'Application deadline'
     job_filled: 'Job filled on Teaching Vacancies?'
     listed_elsewhere: 'Listed elsewhere?'
     page_views: 'Total views'
@@ -131,7 +132,9 @@ en:
     contact_email: 'Job contact email'
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: 'Regarding the job at %{url}'
-    deadline_date: 'Application deadline'
+    deadline_date: 'Date application is due'
+    deadline_time: 'Time application is due'
+    time_at: ' at '
     publication_date: 'Date role will be listed'
     review: 'Review the job details and make any necessary changes before submitting it for publication below.'
     edit: 'Edit the job details.'
@@ -142,6 +145,9 @@ en:
     application_link: 'Link for jobseekers to learn more and apply'
     no_application_link: 'No application link given'
     application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window)'
+    application_deadline_hour: 'Hour'
+    application_deadline_min: 'Minute'
+    application_deadline_meridiem: 'am or pm'
     view_posted_job: 'Your job listing has been published. You can view it at:'
     preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
     actions: 'Actions'
@@ -178,7 +184,7 @@ en:
       dashboard_link: 'You can also view, amend or delete it on %{link}'
       next_step: 'What happens next'
       date_posted: 'Your job listing will be posted on %{date}.'
-      date_expires: 'The listing will appear on the service until %{date}, after which it will no longer be visible to jobseekers.'
+      date_expires: 'The listing will appear on the service until %{application_deadline}, after which it will no longer be visible to jobseekers.'
       feedback_link: 'What did you think of this service?'
       feedback_time: '(takes 30 seconds)'
     aria_labels:
@@ -238,6 +244,7 @@ en:
       benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school or trust’s website.'
+      application_deadline_time: 'For example, 9:00 am or 5:00 pm'
     form_warnings:
       working_pattern: If you select flexible working patterns (anything other than 'full-time') candidates will be asked to email you for details.
       pro_rata_salary: Enter a pro-rata salary if the job is only available part-time, otherwise enter the full-time equivalent salary

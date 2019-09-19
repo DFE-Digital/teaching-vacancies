@@ -14,7 +14,7 @@ FactoryBot.define do
     status { :published }
     working_patterns { ['full_time'] }
     expires_on { Faker::Time.forward(14) }
-    expiry_time { Faker::Time.forward(14) }
+    expiry_time { expires_on&.change(sec: 0) }
     publish_on { Time.zone.today }
     minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
     maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
@@ -57,7 +57,6 @@ FactoryBot.define do
       starts_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 30.days) }
       ends_on { Faker::Time.between(Time.zone.today + 30.days, Time.zone.today + 60.days) }
       expires_on { Faker::Time.between(Time.zone.today + 2.days, Time.zone.today + 9.days) }
-      expiry_time { Faker::Time.between(Time.zone.now + 2.days, Time.zone.now + 9.days) }
       publish_on { Faker::Time.between(Time.zone.today, Time.zone.today + 1.day) }
     end
 
@@ -72,7 +71,6 @@ FactoryBot.define do
     trait :published do
       status { :published }
       expires_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 20.days) }
-      expiry_time { Faker::Time.between(Time.zone.now + 10.days, Time.zone.now + 20.days) }
     end
 
     trait :published_slugged do
@@ -86,13 +84,11 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.between(Time.zone.today - 14.days, Time.zone.today - 7.days) }
       expires_on { Faker::Time.backward(6) }
-      expiry_time { Faker::Time.backward(6) }
     end
 
     trait :future_publish do
       publish_on { Time.zone.today + 2.days }
       expires_on { Time.zone.today + 2.months }
-      expiry_time { Time.zone.now + 2.months }
     end
 
     trait :past_publish do
@@ -100,7 +96,6 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Time.zone.yesterday }
       expires_on { Time.zone.today + 2.months }
-      expiry_time { Time.zone.now + 2.months }
       starts_on { Time.zone.today + 3.months }
       ends_on { Time.zone.today + 4.months }
     end
@@ -114,7 +109,6 @@ FactoryBot.define do
 
     trait :expire_tomorrow do
       expires_on { Time.zone.tomorrow.end_of_day }
-      expiry_time { Time.zone.tomorrow.end_of_day }
     end
 
     trait :without_working_patterns do

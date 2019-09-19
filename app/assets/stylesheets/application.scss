@@ -55,6 +55,19 @@ p {
   margin: 5px 0;
 }
 
+.add-colon-positioned-next-to-element {
+  position: relative;
+
+  &::after {
+    content: ':';
+    position: absolute;
+    right: -13px;
+    bottom: 10px;
+    font-size: 21px;
+    font-weight: bold;
+  }
+}
+
 .navigation_heading{
   color: white;
   font-weight: bold;
