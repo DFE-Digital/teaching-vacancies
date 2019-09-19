@@ -10,6 +10,10 @@ RSpec.describe CopyVacancyForm, type: :model do
     expect(form_object.starts_on).to eq(original_vacancy.starts_on)
     expect(form_object.ends_on).to eq(original_vacancy.ends_on)
     expect(form_object.expires_on).to eq(original_vacancy.expires_on)
+    expect(form_object.expiry_time_hh).to eq(original_vacancy.expiry_time&.strftime('%-l'))
+    expect(form_object.expiry_time_mm).to eq(original_vacancy.expiry_time&.strftime('%-M'))
+    expect(form_object.expiry_time_meridiem).to eq(original_vacancy.expiry_time&.strftime('%P'))
+    expect(form_object.expiry_time).to eq(original_vacancy.expiry_time)
     expect(form_object.publish_on).to eq(original_vacancy.publish_on)
   end
 
@@ -45,6 +49,31 @@ RSpec.describe CopyVacancyForm, type: :model do
       expect(new_vacancy.ends_on).to eq(new_choices[:ends_on])
       expect(new_vacancy.expires_on).to eq(new_choices[:expires_on])
       expect(new_vacancy.publish_on).to eq(new_choices[:publish_on])
+    end
+
+    describe '#update_expiry_time' do
+      it 'updates the original vacancy with the users new preferences' do
+        vacancy = build(:vacancy)
+
+        new_choices = {
+          expires_on_dd: 5.days.from_now.to_date.day.to_s,
+          expires_on_mm: 5.days.from_now.to_date.month.to_s,
+          expires_on_yyyy: 5.days.from_now.to_date.year.to_s,
+          expiry_time_hh: 11,
+          expiry_time_mm: 11,
+          expiry_time_meridiem: 'am',
+        }
+
+        expiry_time_string = "#{new_choices[:expires_on_dd]}-#{new_choices[:expires_on_mm]}-"\
+                            "#{new_choices[:expires_on_yyyy]} #{new_choices[:expiry_time_hh]}" \
+                           ":#{new_choices[:expiry_time_mm]} #{new_choices[:expiry_time_meridiem]}"
+        new_expiry_time = Time.zone.parse(expiry_time_string)
+
+        described_class.new(vacancy: vacancy)
+                       .update_expiry_time(vacancy, new_choices)
+
+        expect(vacancy.expiry_time).to eq(new_expiry_time)
+      end
     end
 
     it 'does not make changes to the form_object so the form can be repopulated on error' do

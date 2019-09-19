@@ -18,13 +18,14 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
   end
 
-  def store_vacancy_attributes(vacancy)
+  def store_vacancy_attributes(attributes)
     session[:vacancy_attributes] ||= {}
-    session[:vacancy_attributes].merge!(vacancy.attributes.compact)
+    session[:vacancy_attributes].merge!(attributes.compact)
   end
 
   def update_vacancy(attributes, vacancy = nil)
     vacancy ||= school.vacancies.find(session_vacancy_id)
+
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do

@@ -202,6 +202,20 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
+      scenario 'can not be saved when expiry time validation fails' do
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content("Edit job for #{school.name}")
+        click_link_in_container_with_text(I18n.t('jobs.application_deadline'))
+
+        fill_in 'application_details_form[expiry_time_hh]', with: '88'
+        click_on 'Update job'
+
+        within_row_for(text: I18n.t('jobs.application_link')) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format'))
+        end
+      end
+
       scenario 'can be successfully edited' do
         visit edit_school_job_path(vacancy.id)
 

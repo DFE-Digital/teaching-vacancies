@@ -42,4 +42,27 @@ RSpec.describe SchoolVacancyPresenter do
       end
     end
   end
+
+  describe 'application_deadline' do
+    let(:vacancy) { create(:vacancy, expires_on: deadline_date, expiry_time: deadline_time) }
+    let(:deadline_date) { Time.zone.today + 5.days }
+
+    context 'when expiry time is not present' do
+      let(:deadline_time) { nil }
+      let(:expected_deadline) { format_date(deadline_date) }
+
+      it 'displays the application deadline date' do
+        expect(presenter.application_deadline).to eq(expected_deadline)
+      end
+    end
+
+    context 'when expiry time present' do
+      let(:deadline_time) { Time.zone.now + 5.days }
+      let(:expected_deadline) { format_date(deadline_date) + ' at ' + format_time(deadline_time) }
+
+      it 'displays the application deadline date' do
+        expect(presenter.application_deadline).to eq(expected_deadline)
+      end
+    end
+  end
 end

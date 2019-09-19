@@ -13,6 +13,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
     proposed_vacancy = @copy_form.apply_changes!(copy_form_params)
 
     if proposed_vacancy.valid? && @copy_form.valid?
+      @copy_form.update_expiry_time(proposed_vacancy, copy_form_params)
       new_vacancy = CopyVacancy.new(proposed_vacancy).call
       Auditor::Audit.new(new_vacancy, 'vacancy.copy', current_session_id).log
       redirect_to review_path(new_vacancy)
@@ -28,6 +29,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
                                               :starts_on_dd, :starts_on_mm, :starts_on_yyyy,
                                               :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                                               :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
+                                              :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem,
                                               :publish_on_dd, :publish_on_mm, :publish_on_yyyy)
   end
 

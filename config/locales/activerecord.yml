@@ -17,6 +17,7 @@ en:
         invalid: is not a valid email address
   activerecord:
     attributes:
+      vacancy/expiry_time: Application deadline (time)
       vacancy/working_patterns:
         full_time: Full-time
         part_time: Part-time
@@ -47,6 +48,10 @@ en:
             expires_on:
               blank: can't be blank
               before_publish_date: can't be before the publish date
+            expiry_time:
+              blank: Enter the time the application is due
+              wrong_format: Enter the time the application is due in the correct format
+              must_be_am_pm: Enter am or pm
             publish_on:
               blank: can't be blank
               before_today: can't be before today
