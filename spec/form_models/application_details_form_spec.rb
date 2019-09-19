@@ -30,14 +30,14 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         subject.expiry_time_mm = nil
         subject.expiry_time_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(['can\'t be blank'])
+        expect(subject.errors.messages[:expiry_time]).to eq(['Enter the time the application is due'])
       end
 
       validate_expiry_time_hours = [
-        { value: nil, errors: ['can\'t be blank'] },
-        { value: 'not a number', errors: ['is in wrong format'] },
-        { value: '14', errors: ['is in wrong format'] },
-        { value: '0', errors: ['is in wrong format'] },
+        { value: nil, errors: ['Enter the time the application is due'] },
+        { value: 'not a number', errors: ['Enter the time the application is due in the correct format'] },
+        { value: '14', errors: ['Enter the time the application is due in the correct format'] },
+        { value: '0', errors: ['Enter the time the application is due in the correct format'] },
       ]
 
       validate_expiry_time_hours.each do |h|
@@ -49,10 +49,10 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       end
 
       validate_expiry_time_minutes = [
-        { value: nil, errors: ['can\'t be blank'] },
-        { value: 'not a number', errors: ['is in wrong format'] },
-        { value: '-6', errors: ['is in wrong format'] },
-        { value: '66', errors: ['is in wrong format'] },
+        { value: nil, errors: ['Enter the time the application is due'] },
+        { value: 'not a number', errors: ['Enter the time the application is due in the correct format'] },
+        { value: '-6', errors: ['Enter the time the application is due in the correct format'] },
+        { value: '66', errors: ['Enter the time the application is due in the correct format'] },
       ]
 
       validate_expiry_time_minutes.each do |m|
@@ -66,7 +66,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'displays error if am/pm field is blank' do
         subject.expiry_time_meridiem = ''
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(['must be am or pm'])
+        expect(subject.errors.messages[:expiry_time]).to eq(['Enter am or pm'])
       end
 
       it 'displays only one error message at a time' do
@@ -81,7 +81,9 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         subject.expiry_time_mm = '66'
         subject.expiry_time_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(['is in wrong format'])
+        expect(subject.errors.messages[:expiry_time]).to eq(
+          ['Enter the time the application is due in the correct format']
+        )
       end
 
       it 'does not display error if all fields are correct' do

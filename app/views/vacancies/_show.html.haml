@@ -84,8 +84,8 @@
           %dt= t('jobs.newly_qualified_teacher')
           %dd= @vacancy.newly_qualified_teacher
 
-        %dt= t('jobs.expires_on')
-        %dd= format_date(@vacancy.expires_on)
+        %dt= t('jobs.application_deadline')
+        %dd=SchoolVacancyPresenter.new(@vacancy).application_deadline
 
         - if @vacancy.starts_on.present?
           %dt= t('jobs.starts_on')
