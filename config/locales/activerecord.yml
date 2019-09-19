@@ -49,9 +49,9 @@ en:
               blank: can't be blank
               before_publish_date: can't be before the publish date
             expiry_time:
-              blank: can't be blank
-              wrong_format: is in wrong format
-              must_be_am_pm: must be am or pm
+              blank: Enter the time the application is due
+              wrong_format: Enter the time the application is due in the correct format
+              must_be_am_pm: Enter am or pm
             publish_on:
               blank: can't be blank
               before_today: can't be before today
