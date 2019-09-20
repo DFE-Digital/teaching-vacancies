@@ -17,6 +17,11 @@ RSpec.shared_examples 'a successful sign in' do
     expect(authorisation.key).to eq('dfe-sign-in.authorisation.success')
     expect(authorisation.trackable.urn).to eq(school.urn)
   end
+
+  scenario 'updates the user record with the DfE Sign In email address' do
+    user_record = User.find_by(oid: user_oid)
+    expect(user_record.email).to eq(dsi_email_address)
+  end
 end
 
 RSpec.shared_examples 'a failed sign in' do |options|
@@ -58,6 +63,9 @@ RSpec.shared_examples 'a failed sign in' do |options|
 end
 
 RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
+  let(:user_oid) { '161d1f6a-44f1-4a1a-940d-d1088c439da7' }
+  let(:dsi_email_address) { Faker::Internet.email }
+
   context 'when the dfe sign in authorisation feature flag is enabled' do
     before(:each) do
       allow(DfeSignInAuthorisationFeature).to receive(:enabled?) { true }
@@ -75,7 +83,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       let!(:school) { create(:school, urn: '110627') }
 
       before(:each) do
-        stub_authentication_step
+        stub_authentication_step email: dsi_email_address
         stub_authorisation_step
         stub_sign_in_with_multiple_organisations
 
@@ -150,9 +158,10 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       OmniAuth.config.test_mode = false
     end
 
+    let(:user_oid) { 'an-unknown-oid' }
     let!(:school) { create(:school, urn: '110627') }
     let!(:other_school) { create(:school, urn: '101010') }
-    let!(:user) { create(:user, oid: 'an-unknown-oid') }
+    let!(:user) { create(:user, oid: user_oid) }
 
     context 'with valid credentials that do match a school' do
       let(:mock_response) do
@@ -174,13 +183,14 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         }.to_json)
       end
       let(:mock_permissions) { AuthHelpers::MockPermissions.new(mock_response) }
+      let(:dsi_email_address) { Faker::Internet.email }
 
       before(:each) do
         OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
           provider: 'dfe',
-          uid: 'an-unknown-oid',
+          uid: user_oid,
           info: {
-            email: 'an-email@example.com',
+            email: dsi_email_address,
           },
           extra: {
             raw_info: {
@@ -215,7 +225,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
               provider: 'dfe',
               uid: 'an-unknown-oid',
               info: {
-                email: 'an-email@example.com',
+                email: dsi_email_address,
               },
               extra: {
                 raw_info: {
