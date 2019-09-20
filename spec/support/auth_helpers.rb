@@ -32,12 +32,13 @@ module AuthHelpers
   end
 
   def stub_authentication_step(organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
-                               school_urn: '110627')
+                               school_urn: '110627',
+                               email: 'an-email@example.com')
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
       uid: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
       info: {
-        email: 'an-email@example.com',
+        email: email,
       },
       extra: {
         raw_info: {
