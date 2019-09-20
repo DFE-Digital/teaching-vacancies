@@ -59,14 +59,6 @@
         "value": "${google_maps_api_key}"
       },
       {
-        "name": "GOOGLE_ANALYTICS",
-        "value": "${google_analytics}"
-      },
-      {
-        "name": "GOOGLE_OPTIMIZE_ID",
-        "value": "${google_optimize_id}"
-      },
-      {
         "name": "GOOGLE_TAG_MANAGER_CONTAINER_ID",
         "value": "${google_tag_manager_container_id}"
       },
