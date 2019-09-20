@@ -37,8 +37,6 @@ variable "dfe_sign_in_redirect_url" {}
 variable "dfe_sign_in_identifier" {}
 variable "dfe_sign_in_secret" {}
 variable "google_maps_api_key" {}
-variable "google_analytics" {}
-variable "google_optimize_id" {}
 variable "google_tag_manager_container_id" {}
 variable "rollbar_access_token" {}
 variable "pp_transactions_by_channel_token" {}
