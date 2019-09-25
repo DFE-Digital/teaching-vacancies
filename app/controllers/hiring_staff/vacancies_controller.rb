@@ -24,6 +24,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def review
     return redirect_to school_job_path(@vacancy.id), notice: already_published_message if @vacancy.published?
+    reset_session_vacancy!
+    store_vacancy_attributes(@vacancy.attributes)
 
     unless @vacancy.valid?
       return redirect_to candidate_specification_school_job_path unless step_2_valid?
@@ -31,7 +33,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     end
 
     session[:current_step] = :review
-    store_vacancy_attributes(@vacancy)
     @vacancy = VacancyPresenter.new(@vacancy)
     @vacancy.valid? if params[:source]&.eql?('publish')
   end
@@ -78,12 +79,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def clear_cache_and_step
     flash.clear
-    session[:vacancy_attributes] = @vacancy.attributes if vacancy_is_not_in_current_session?
-  end
-
-  def vacancy_is_not_in_current_session?
-    return session[:vacancy_attributes].nil? 
-    # session[:vacancy_attributes]['id'] =! @vacancy.id
+    session[:current_step] = ''
   end
 
   def set_vacancy
