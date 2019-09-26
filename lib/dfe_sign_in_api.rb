@@ -1,4 +1,7 @@
 module DFESignIn
+  class ExternalServerError < StandardError; end
+  class ForbiddenRequestError < StandardError; end
+
   class API
     def users(page: 1)
       token = generate_jwt_token
@@ -6,7 +9,11 @@ module DFESignIn
         api_url(page),
         headers: { 'Authorization' => "Bearer #{token}" }
       )
-      JSON.parse(response)
+
+      raise ExternalServerError if response.code.eql?(500)
+      raise ForbiddenRequestError if response.code.eql?(403)
+
+      JSON.parse(response) if response.code.eql?(200)
     end
 
     private
