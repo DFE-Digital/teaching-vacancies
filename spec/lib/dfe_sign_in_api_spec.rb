@@ -22,25 +22,22 @@ RSpec.describe DFESignIn::API do
     end
 
     it 'sets a token in the header of the request' do
-      jwt_token = double
-      expect(JWT).to receive(:encode).with(
-        {
+      Timecop.freeze(Time.zone.now) do
+        payload = {
           iss: 'schooljobs',
           exp: (Time.now.getlocal + 60).to_i,
           aud: 'signin.education.gov.uk'
-        },
-        'test-password',
-        'HS256'
-      ).and_return(jwt_token)
+        }
 
-      stub_api_response_with_token(jwt_token)
+        expected_token = JWT.encode(payload, DFE_SIGN_IN_PASSWORD, 'HS256')
 
-      expect(HTTParty).to receive(:get)
-        .with('https://test-url.local/users?page=1&pageSize=25',
-              headers: { 'Authorization' => "Bearer #{jwt_token}" })
-        .and_return(response_file(1))
+        stub_api_response_for_page(2)
+        described_class.new.users(page: 2)
 
-      described_class.new.users
+        expect(a_request(:get, "#{DFE_SIGN_IN_URL}/users?page=2&pageSize=25")
+          .with(headers: { 'Authorization' => "Bearer #{expected_token}" }))
+          .to have_been_made
+      end
     end
 
     def response_file(page)
@@ -55,14 +52,6 @@ RSpec.describe DFESignIn::API do
       stub_request(:get,
                    "#{DFE_SIGN_IN_URL}/users?page=#{page}&pageSize=25")
         .to_return(body: response_file(page))
-    end
-
-    def stub_api_response_with_token(token)
-      stub_request(:get,
-                   "#{DFE_SIGN_IN_URL}/users?page=1&pageSize=25")
-        .with(headers: {
-                'Authorization' => "Bearer #{token}]"
-              }).to_return(body: response_file(1))
     end
   end
 end

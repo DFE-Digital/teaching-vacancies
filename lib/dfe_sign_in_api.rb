@@ -1,13 +1,5 @@
 module DFESignIn
   class API
-    BASE_URL = DFE_SIGN_IN_URL
-
-    attr_accessor :dfe_sign_in_password
-
-    def initialize
-      self.dfe_sign_in_password = DFE_SIGN_IN_PASSWORD
-    end
-
     def users(page: 1)
       token = generate_jwt_token
       response = HTTParty.get(
@@ -19,8 +11,8 @@ module DFESignIn
 
     private
 
-    def api_url(page = 1, records = 25)
-      "#{DFE_SIGN_IN_URL}/users?page=#{page}&pageSize=#{records}"
+    def api_url(page = 1)
+      "#{DFE_SIGN_IN_URL}/users?page=#{page}&pageSize=25"
     end
 
     def generate_jwt_token
@@ -29,7 +21,8 @@ module DFESignIn
         exp: (Time.now.getlocal + 60).to_i,
         aud: 'signin.education.gov.uk'
       }
-      JWT.encode(payload, dfe_sign_in_password, 'HS256')
+
+      JWT.encode(payload, DFE_SIGN_IN_PASSWORD, 'HS256')
     end
   end
 end
