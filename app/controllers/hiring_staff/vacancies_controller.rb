@@ -25,13 +25,15 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def review
     return redirect_to school_job_path(@vacancy.id), notice: already_published_message if @vacancy.published?
 
+    reset_session_vacancy!
+    store_vacancy_attributes(@vacancy.attributes)
+
     unless @vacancy.valid?
       return redirect_to candidate_specification_school_job_path unless step_2_valid?
       return redirect_to application_details_school_job_path unless step_3_valid?
     end
 
     session[:current_step] = :review
-    store_vacancy_attributes(@vacancy.attributes)
     @vacancy = VacancyPresenter.new(@vacancy)
     @vacancy.valid? if params[:source]&.eql?('publish')
   end
