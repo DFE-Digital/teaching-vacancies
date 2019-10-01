@@ -77,12 +77,24 @@ RSpec.describe AddDSIUsersToSpreadsheet do
         AddDSIUsersToSpreadsheet.new.all_service_users
       end
 
-      scenario 'when a request for a page fails, raises an error' do
+      scenario 'when an error is raised, it continues with next page' do
         allow(DFESignIn::API).to receive(:new).and_return(dfe_sign_in_api)
         allow(dfe_sign_in_api).to receive(:users).and_return(response_json_3)
         allow(dfe_sign_in_api).to receive(:users).with(page: 2).and_raise(DFESignIn::ExternalServerError)
 
-        expect { AddDSIUsersToSpreadsheet.new.all_service_users }.to raise_error(DFESignIn::ExternalServerError)
+        expect(dfe_sign_in_api).to receive(:users).with(page: 1)
+        expect(dfe_sign_in_api).to receive(:users).with(page: 3)
+
+        AddDSIUsersToSpreadsheet.new.all_service_users
+      end
+
+      scenario 'when there is a error response, logs the error message' do
+        allow(DFESignIn::API).to receive(:new).and_return(dfe_sign_in_api)
+        allow(dfe_sign_in_api).to receive(:users).and_return(response_json_3)
+        allow(dfe_sign_in_api).to receive(:users).with(page: 2).and_raise(DFESignIn::ExternalServerError)
+
+        expect(Rails.logger).to receive(:warn).with('DSI API failed to respond at page 2')
+        AddDSIUsersToSpreadsheet.new.all_service_users
       end
     end
   end
