@@ -34,7 +34,7 @@ module Spreadsheet
 
       number_of_rows = (worksheet.num_rows - 1)
 
-      worksheet.delete_rows(1, number_of_rows)
+      worksheet.delete_rows(2, number_of_rows)
       worksheet.save
     end
 

@@ -166,13 +166,13 @@ RSpec.describe 'Spreadsheet::Writer' do
         # The first row would contain the column titles.
         # We do not want to delete these, only the column values.
 
-        expect(worksheet).to_not receive(:delete_rows).with(0, 9)
+        expect(worksheet).to_not receive(:delete_rows).with(1, 9)
 
         Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
       end
 
       it 'deletes all the rows with data' do
-        expect(worksheet).to receive(:delete_rows).with(1, 9)
+        expect(worksheet).to receive(:delete_rows).with(2, 9)
         expect(worksheet).to receive(:save).once
 
         Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
