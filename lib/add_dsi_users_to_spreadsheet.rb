@@ -11,17 +11,23 @@ class AddDSIUsersToSpreadsheet
     total_page_num = total_page_number
     (1..total_page_num).each do |page|
       response = DFESignIn::API.new.users(page: page)
-      unless response.with_indifferent_access[:users].first.empty?
-        rows = response_to_rows(response)
-        @worksheet.append_rows(rows)
-      end
+      raise error_message_for(response) if users_nil_or_empty?(response)
+
+      rows = response_to_rows(response)
+      @worksheet.append_rows(rows)
+
     rescue StandardError => e
       Rails.logger.warn("DSI API failed to respond at page #{page} with error: #{e.message}")
     end
   end
 
+  private
+
   def total_page_number
-    DFESignIn::API.new.users.with_indifferent_access[:numberOfPages]
+    num = DFESignIn::API.new.users['numberOfPages']
+    return 1 if num.nil?
+
+    num
   end
 
   def response_to_rows(users_response)
@@ -44,5 +50,16 @@ class AddDSIUsersToSpreadsheet
         user['organisation']['updatedAt']
       ]
     end
+  end
+
+  def users_nil_or_empty?(response)
+    response['users'].nil? ||
+      response['users'].first.empty?
+  end
+
+  def error_message_for(response)
+    return response['message'] if response['message']
+
+    'DSI API failed to respond with users'
   end
 end
