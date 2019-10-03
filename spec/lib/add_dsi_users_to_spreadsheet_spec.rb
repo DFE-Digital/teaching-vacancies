@@ -116,12 +116,15 @@ RSpec.describe AddDSIUsersToSpreadsheet do
     end
 
     context 'when there is unsuccessful response' do
-      scenario 'has error on first request' do
+      scenario 'has error on first request, does not clear spreadsheet' do
         stub_dsi_user_api_initial_call(unsuccesful_response_json)
         stub_spreadsheet_writer
 
-        expect(Rails.logger).to receive(:warn).with('DSI API failed to respond at page 1 ' \
+        expect(Rails.logger).to receive(:warn).with('DSI API failed to respond ' \
           'with error: ' + unsuccesful_response_json['message'])
+
+        expect(worksheet).to_not receive(:clear_all_rows)
+        expect(worksheet).to_not receive(:append_rows)
         subject.all_service_users
       end
     end
