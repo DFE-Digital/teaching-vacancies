@@ -13,7 +13,7 @@ module DFESignIn
       raise ExternalServerError if response.code.eql?(500)
       raise ForbiddenRequestError if response.code.eql?(403)
 
-      JSON.parse(response) if response.code.eql?(200)
+      JSON.parse(response&.body) if response.code.eql?(200)
     end
 
     private
