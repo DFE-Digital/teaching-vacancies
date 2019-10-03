@@ -1,11 +1,10 @@
 - content_for :page_title_prefix do
   = t('sign_in.title')
 
+%h1.govuk-heading-l
+  = t('sign_in.title')
 .govuk-grid-row
-
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-l= t('sign_in.title')
-
     = simple_form_for :identifications, url: identifications_path, :defaults => { :input_html => { :class => "text" } }, method: :post do |f|
       .govuk-form-group
         %p= t('sign_in.intro')
