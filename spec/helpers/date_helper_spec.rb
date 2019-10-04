@@ -45,4 +45,16 @@ RSpec.describe DateHelper, type: :helper do
       expect(helper.compose_expiry_time(time_attr)).to eq(expected_date_time)
     end
   end
+
+  describe '#format_datetime_with_seconds' do
+    it 'returns nil if string is nil' do
+      expect(helper.format_datetime_with_seconds(nil)).to eq(nil)
+    end
+
+    it 'formats a date to d Month YYYY HH:MM:SS' do
+      string_date = '2019-06-19T15:09:58.683Z'
+      expected_date_time = '19 June 2019 16:09:58'
+      expect(helper.format_datetime_with_seconds(string_date)).to eq(expected_date_time)
+    end
+  end
 end

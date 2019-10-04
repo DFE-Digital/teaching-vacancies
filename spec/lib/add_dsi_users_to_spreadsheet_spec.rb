@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'add_dsi_users_to_spreadsheet'
+require 'date_helper'
 
 RSpec.describe AddDSIUsersToSpreadsheet do
   let(:worksheet) { double(num_rows: 2, save: nil) }
@@ -201,8 +202,8 @@ RSpec.describe AddDSIUsersToSpreadsheet do
       [
         user['roleName'],
         user['userId'],
-        user['approvedAt'],
-        user['updatedAt'],
+        format_datetime_with_seconds(user['approvedAt']),
+        format_datetime_with_seconds(user['updatedAt']),
         user['givenName'],
         user['familyName'],
         user['email'],
@@ -212,8 +213,8 @@ RSpec.describe AddDSIUsersToSpreadsheet do
         user['organisation']['phaseOfEducation'],
         user['organisation']['telephone'],
         user['organisation']['regionCode'],
-        user['organisation']['createdAt'],
-        user['organisation']['updatedAt']
+        format_datetime_with_seconds(user['organisation']['createdAt']),
+        format_datetime_with_seconds(user['organisation']['updatedAt'])
       ]
     end
   end
