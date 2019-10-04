@@ -179,6 +179,7 @@ data "template_file" "web_container_definition" {
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
     dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
+    big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
   }
 }
 
@@ -309,6 +310,7 @@ data "template_file" "worker_container_definition" {
     domain                                       = "${var.domain}"
     audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
     google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    big_query_api_json_key                           = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"
     audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
     audit_general_feedback_worksheet_gid         = "${var.audit_general_feedback_worksheet_gid}"
