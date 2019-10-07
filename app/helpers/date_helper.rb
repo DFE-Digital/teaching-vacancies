@@ -31,4 +31,11 @@ module DateHelper
 
     Time.zone.parse(expiry_time_string)
   end
+
+  def format_datetime_with_seconds(str)
+    return nil if str.nil?
+
+    date_time = Time.zone.parse(str)
+    "#{date_time}:#{date_time.strftime('%S')}"
+  end
 end

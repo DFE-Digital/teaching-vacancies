@@ -1,7 +1,10 @@
 require 'dfe_sign_in_api'
 require 'spreadsheet_writer'
+require 'date_helper'
 
 class AddDSIUsersToSpreadsheet
+  include DateHelper
+
   def initialize
     @worksheet = Spreadsheet::Writer.new(DSI_USER_SPREADSHEET_ID, DSI_USER_WORKSHEET_GID, true)
   end
@@ -33,13 +36,14 @@ class AddDSIUsersToSpreadsheet
     response['numberOfPages']
   end
 
+  # rubocop:disable Metrics/AbcSize
   def response_to_rows(users_response)
     users_response['users'].map do |user|
       [
         user['roleName'],
         user['userId'],
-        user['approvedAt'],
-        user['updatedAt'],
+        format_datetime_with_seconds(user['approvedAt']),
+        format_datetime_with_seconds(user['updatedAt']),
         user['givenName'],
         user['familyName'],
         user['email'],
@@ -49,11 +53,12 @@ class AddDSIUsersToSpreadsheet
         user['organisation']['phaseOfEducation'],
         user['organisation']['telephone'],
         user['organisation']['regionCode'],
-        user['organisation']['createdAt'],
-        user['organisation']['updatedAt']
+        format_datetime_with_seconds(user['organisation']['createdAt']),
+        format_datetime_with_seconds(user['organisation']['updatedAt'])
       ]
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def users_nil_or_empty?(response)
     response['users'].nil? || response['users'].first.empty?

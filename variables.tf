@@ -361,6 +361,10 @@ variable "google_drive_json_key" {
 }
 
 variable "audit_spreadsheet_id" {}
+
+variable "dsi_user_spreadsheet_id" {}
+variable "dsi_user_worksheet_gid" {}
+
 variable "google_geocoding_api_key" {}
 
 variable "ordnance_survey_api_key" {}

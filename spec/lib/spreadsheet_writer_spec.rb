@@ -155,7 +155,7 @@ RSpec.describe 'Spreadsheet::Writer' do
     end
 
     context 'when a spreadsheet has data in it' do
-      let(:worksheet) { double(num_rows: 10, save: nil) }
+      let(:worksheet) { double(num_rows: 10, save: nil, reload: nil) }
 
       before(:each) do
         allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
@@ -174,6 +174,7 @@ RSpec.describe 'Spreadsheet::Writer' do
       it 'deletes all the rows with data' do
         expect(worksheet).to receive(:delete_rows).with(2, 9)
         expect(worksheet).to receive(:save).once
+        expect(worksheet).to receive(:reload).once
 
         Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
       end
