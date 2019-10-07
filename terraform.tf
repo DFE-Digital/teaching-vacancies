@@ -174,6 +174,7 @@ module "ecs" {
   dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
   dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
   dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
+  big_query_api_json_key                       = "${var.big_query_api_json_key}"
 }
 
 module "logs" {
