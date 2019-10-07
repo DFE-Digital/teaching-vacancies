@@ -15,6 +15,7 @@
   - [audit_general_feedback, 1]
   - [audit_subscription_creation, 1]
   - [audit_spreadsheet, 1]
+  - [dsi_user_data, 1]
   - [seed_vacancies_from_api, 1]
 update_vacancy_spreadsheet:
   :concurrency: 1
@@ -33,6 +34,8 @@ audit_general_feedback:
 audit_subscription_creation:
   :concurrency: 1
 audit_spreadsheet:
+  :concurrency: 1
+dsi_user_data: 
   :concurrency: 1
 mailers:
   :concurrency: 2
