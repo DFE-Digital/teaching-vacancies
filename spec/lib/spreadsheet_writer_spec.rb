@@ -145,4 +145,46 @@ RSpec.describe 'Spreadsheet::Writer' do
       end
     end
   end
+
+  describe '#clear_all_rows' do
+    it 'creates a new instance of a Google Drive session' do
+      expect(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
+      expect(session).to receive(:spreadsheet_by_key).and_return(spreadsheet)
+
+      Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
+    end
+
+    context 'when a spreadsheet has data in it' do
+      let(:worksheet) { double(num_rows: 10, save: nil) }
+
+      before(:each) do
+        allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
+        allow(session).to receive(:spreadsheet_by_key).and_return(spreadsheet)
+      end
+
+      it 'ignores the first row' do
+        # The first row would contain the column titles.
+        # We do not want to delete these, only the column values.
+
+        expect(worksheet).to_not receive(:delete_rows).with(1, 9)
+
+        Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
+      end
+
+      it 'deletes all the rows with data' do
+        expect(worksheet).to receive(:delete_rows).with(2, 9)
+        expect(worksheet).to receive(:save).once
+
+        Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
+      end
+    end
+
+    context 'when a spreadsheet has no data in it' do
+      let(:worksheet) { double(num_rows: 0, save: nil) }
+
+      it 'does not attempt to clear it' do
+        expect(worksheet).to_not receive(:delete_rows).with(0, 0)
+      end
+    end
+  end
 end

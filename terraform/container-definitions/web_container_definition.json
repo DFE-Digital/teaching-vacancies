@@ -217,6 +217,10 @@
       {
         "name": "DFE_SIGN_IN_SERVICE_ID",
         "value": "${dfe_sign_in_service_id}"
+      },
+      {
+        "name": "BIG_QUERY_API_JSON_KEY",
+        "value": "${big_query_api_json_key}"
       }
     ]
   }

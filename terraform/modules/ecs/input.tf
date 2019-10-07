@@ -93,6 +93,9 @@ variable "dfe_sign_in_url" {}
 variable "dfe_sign_in_password" {}
 variable "dfe_sign_in_service_access_role_id" {}
 variable "dfe_sign_in_service_id" {}
+variable "big_query_api_json_key" {
+  type = "map"
+}
 
 variable "ecs_service_logspout_container_definition_file_path" {}
 

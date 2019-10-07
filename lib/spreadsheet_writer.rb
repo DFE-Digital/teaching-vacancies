@@ -29,6 +29,15 @@ module Spreadsheet
       worksheet.rows[worksheet.num_rows - 1]
     end
 
+    def clear_all_rows
+      return if worksheet.num_rows <= 1
+
+      number_of_rows = (worksheet.num_rows - 1)
+
+      worksheet.delete_rows(2, number_of_rows)
+      worksheet.save
+    end
+
     private
 
     def key
