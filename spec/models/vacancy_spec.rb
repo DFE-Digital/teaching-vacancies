@@ -58,21 +58,6 @@ RSpec.describe Vacancy, type: :model do
         expect(subject.errors.messages[:job_description].first)
           .to eq(I18n.t('errors.messages.too_short.other', count: 10))
       end
-
-      it '#experience' do
-        expect(subject.errors.messages[:experience].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
-      end
-
-      it '#education' do
-        expect(subject.errors.messages[:education].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
-      end
-
-      it '#qualifications' do
-        expect(subject.errors.messages[:qualifications].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
-      end
     end
 
     context 'restrict maximum length of string fields' do
