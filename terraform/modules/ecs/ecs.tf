@@ -312,6 +312,8 @@ data "template_file" "worker_container_definition" {
     audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
     dsi_user_spreadsheet_id                      = "${var.dsi_user_spreadsheet_id}"
     dsi_user_worksheet_gid                       = "${var.dsi_user_worksheet_gid}"
+    dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
+    dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     big_query_api_json_key                           = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"

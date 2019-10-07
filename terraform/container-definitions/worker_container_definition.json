@@ -129,6 +129,14 @@
         "value": "${dsi_user_worksheet_gid}"
       },
       {
+        "name": "DFE_SIGN_IN_URL",
+        "value": "${dfe_sign_in_url}"
+      },
+      {
+        "name": "DFE_SIGN_IN_PASSWORD",
+        "value": "${dfe_sign_in_password}"
+      },
+      {
         "name": "DOMAIN",
         "value": "${domain}"
       },
