@@ -28,4 +28,8 @@ RSpec.describe 'rake spreadsheets:update', type: :task do
   it 'queues the general feedback job' do
     expect { task.execute }.to have_enqueued_job(AddGeneralFeedbackToSpreadsheetJob)
   end
+
+  it 'queues the add dsi users to spreadsheet job' do
+    expect { task.execute }.to have_enqueued_job(AddDSIUsersToSpreadsheetJob)
+  end
 end

@@ -1,4 +1,5 @@
 require 'google_drive'
+
 module Spreadsheet
   class Writer
     def initialize(spreadsheet_id, worksheet_pos = 0, use_gid = false)
@@ -36,6 +37,7 @@ module Spreadsheet
 
       worksheet.delete_rows(2, number_of_rows)
       worksheet.save
+      worksheet.reload
     end
 
     private

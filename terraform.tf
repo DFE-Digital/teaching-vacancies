@@ -152,6 +152,8 @@ module "ecs" {
   audit_express_interest_worksheet_gid         = "${var.audit_express_interest_worksheet_gid}"
   audit_subscription_creation_worksheet_gid    = "${var.audit_subscription_creation_worksheet_gid}"
   audit_search_event_worksheet_gid             = "${var.audit_search_event_worksheet_gid}"
+  dsi_user_spreadsheet_id                      = "${var.dsi_user_spreadsheet_id}"
+  dsi_user_worksheet_gid                       = "${var.dsi_user_worksheet_gid}"
   domain                                       = "${var.domain}"
   google_geocoding_api_key                     = "${var.google_geocoding_api_key}"
   ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
