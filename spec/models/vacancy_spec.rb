@@ -186,6 +186,35 @@ RSpec.describe Vacancy, type: :model do
           .to eq(['must not be more than £200000'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
+
+      it 'can accept salary format with comma' do
+        job = build(:vacancy, minimum_salary: '20,000')
+
+        expect(job.valid?).to be true
+        expect(job.minimum_salary).to eq '20000'
+      end
+
+      it 'can tolerate salary format with decimal points at the end' do
+        job = build(:vacancy, minimum_salary: '20,000.')
+
+        expect(job.valid?).to be true
+        expect(job.minimum_salary).to eq '20000'
+      end
+
+      it 'can accept salary format with two decimal points' do
+        job = build(:vacancy, minimum_salary: '20,000.23')
+
+        expect(job.valid?).to be true
+        expect(job.minimum_salary).to eq '20000.23'
+      end
+
+      it 'can not accept salary format with more than two decimal points' do
+        job = build(:vacancy, minimum_salary: '20,000.2323232')
+
+        expect(job.valid?).to be false
+        expect(job.errors.messages[:minimum_salary])
+          .to eq(['must be entered in one of the following formats: 25000 or 25000.00'])
+      end
     end
 
     context 'a record saved with job spec and candidate spec details, ' \
