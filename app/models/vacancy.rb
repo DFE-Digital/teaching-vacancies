@@ -291,7 +291,9 @@ class Vacancy < ApplicationRecord
   end
 
   def format_salary(salary)
-    salary = salary.to_s[0..-2] if salary.to_s[-1] == '.'
-    salary.to_s.strip.delete(',')
+    salary = salary.to_s.strip
+    return salary.delete(',') if salary[SalaryValidator::SALARY_FORMAT]
+
+    salary
   end
 end

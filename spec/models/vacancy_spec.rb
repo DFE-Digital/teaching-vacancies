@@ -194,11 +194,21 @@ RSpec.describe Vacancy, type: :model do
         expect(job.minimum_salary).to eq '20000'
       end
 
-      it 'can tolerate salary format with decimal points at the end' do
+      it 'rejects salary format with incorrect comma placement' do
+        incorrect_salary_format = ['20,,000', '200,00', ',200'].sample
+        job = build(:vacancy, minimum_salary: incorrect_salary_format)
+
+        expect(job.valid?).to be false
+        expect(job.errors.messages[:minimum_salary])
+          .to eq(['must be entered in one of the following formats: 25000 or 25000.00'])
+      end
+
+      it 'rejects salary format with decimal points at the end' do
         job = build(:vacancy, minimum_salary: '20,000.')
 
-        expect(job.valid?).to be true
-        expect(job.minimum_salary).to eq '20000'
+        expect(job.valid?).to be false
+        expect(job.errors.messages[:minimum_salary])
+          .to eq(['must be entered in one of the following formats: 25000 or 25000.00'])
       end
 
       it 'can accept salary format with two decimal points' do
@@ -206,6 +216,14 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be true
         expect(job.minimum_salary).to eq '20000.23'
+      end
+
+      it 'rejects salary format with one decimal point' do
+        job = build(:vacancy, minimum_salary: '20,000.2')
+
+        expect(job.valid?).to be false
+        expect(job.errors.messages[:minimum_salary])
+          .to eq(['must be entered in one of the following formats: 25000 or 25000.00'])
       end
 
       it 'can not accept salary format with more than two decimal points' do
