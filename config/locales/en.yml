@@ -228,7 +228,7 @@ en:
       job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
-      salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
+      salary_range: 'Enter annual pay before tax'
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       flexible_working: Tick this box if flexible working options are available. Candidates will be asked to email for further information.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
