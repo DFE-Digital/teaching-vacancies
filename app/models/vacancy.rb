@@ -220,11 +220,11 @@ class Vacancy < ApplicationRecord
   end
 
   def minimum_salary=(salary)
-    self[:minimum_salary] = salary.to_s.strip
+    self[:minimum_salary] = format_salary(salary)
   end
 
   def maximum_salary=(salary)
-    self[:maximum_salary] = salary.to_s.strip
+    self[:maximum_salary] = format_salary(salary)
   end
 
   def weekly_hours?
@@ -288,5 +288,12 @@ class Vacancy < ApplicationRecord
     return unless listed_elsewhere_changed? && hired_status_changed?
 
     self.stats_updated_at = Time.zone.now
+  end
+
+  def format_salary(salary)
+    salary = salary.to_s.strip
+    return salary.delete(',') if salary[SalaryValidator::SALARY_FORMAT]
+
+    salary
   end
 end

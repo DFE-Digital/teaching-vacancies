@@ -5,7 +5,7 @@ class SalaryValidator < ActiveModel::EachValidator
 
   rescue_from ArgumentError, with: :invalid_format_message
 
-  SALARY_FORMAT = /^\d+\.{0,1}\d{2}{0,1}$/.freeze
+  SALARY_FORMAT = /^(\d+|\d{1,3}(,\d{3})*)(\.\d{2})?$/.freeze
   MIN_SALARY_ALLOWED = 0
   MAX_SALARY_ALLOWED = 200000
 
