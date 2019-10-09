@@ -33,7 +33,7 @@
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     %a.govuk-skip-link{href: "#main-content"} Skip to main content
-    %header.govuk-header{"data-module": "header", role: "banner"}
+    %header.govuk-header{"data-module": "govuk-header", role: "banner"}
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
           %a.govuk-header__link.govuk-header__link--homepage{href: 'https://www.gov.uk'}
@@ -46,7 +46,7 @@
         .govuk-header__content
           %a.govuk-header__link.govuk-header__link--service-name{href: "/"}
             = t('app.title')
-          %button.govuk-header__menu-button.js-header-toggle{type: "button", role: "button", "aria-controls": "navigation", "aria-label": "Show or hide Top Level Navigation"}
+          %button.govuk-header__menu-button.govuk-js-header-toggle{"data-module": "govuk-button", type: "button", role: "button", "aria-controls": "navigation", "aria-label": "Show or hide Top Level Navigation"}
             Menu
           = render partial: 'shared/navigation'
 
