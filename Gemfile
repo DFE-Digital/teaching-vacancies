@@ -40,7 +40,7 @@ gem 'haml-rails'
 gem 'kaminari'
 gem 'roadie-rails'
 gem 'simple_form'
-gem 'rails-html-sanitizer', '~> 1.0.4', '>= 1.0.4' # Must be above this version due to CVE-2018-3741
+gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
 
 gem 'gov_uk_date_fields'
 

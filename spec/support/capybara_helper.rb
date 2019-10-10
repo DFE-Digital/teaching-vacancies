@@ -11,4 +11,8 @@ module CapybaraHelper
     element = page.find(element, text: text).find(:xpath, '../..')
     within(element, &block)
   end
+
+  def strip_tags(text)
+    ActionView::Base.full_sanitizer.sanitize(text)
+  end
 end

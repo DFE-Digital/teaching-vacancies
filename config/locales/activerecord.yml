@@ -10,7 +10,7 @@ en:
       taken: has already been taken
       blank: can't be blank
       salary:
-        invalid_format: "must be entered in one of the following formats: 25000 or 25000.00"
+        invalid_format: "must be entered in one of the following formats: 25000, 25,000 or 25000.00"
         lower_than_minimum_payscale: must be at least %{minimum_salary}
       year_invalid: must include a 4-digit year
       email:

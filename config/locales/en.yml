@@ -38,16 +38,16 @@ en:
   helpers:
     fieldset:
       job_specification_form:
-        starts_on: 'Expected start date (optional)'
-        ends_on: 'End date (optional)'
+        starts_on: 'Expected start date'
+        ends_on: 'End date'
       application_details_form:
-        publish_on: 'Date role will be listed'
-        expires_on: 'Date application is due'
+        publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
+        expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
       copy_vacancy_form:
-        starts_on: 'Expected start date (optional)'
-        ends_on: 'End date (optional)'
-        publish_on: 'Date role will be listed'
-        expires_on: 'Date application is due'
+        starts_on: 'Expected start date'
+        ends_on: 'End date'
+        publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
+        expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
     hint:
       job_specification_form:
         starts_on: 'For example, 01 01 2020'
@@ -116,7 +116,7 @@ en:
       - 'Schools have listed %{count} jobs but they have since expired.'
     job_title: 'Job title'
     benefits: 'Employee benefits'
-    salary_range: 'Salary range'
+    salary_range_html: "Salary range (<span class='text-red'>Required</span>)"
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
     per_year_fte: 'per year (full-time equivalent)'
@@ -133,7 +133,7 @@ en:
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: 'Regarding the job at %{url}'
     deadline_date: 'Date application is due'
-    deadline_time: 'Time application is due'
+    deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
     time_at: ' at '
     publication_date: 'Date role will be listed'
     review: 'Review the job details and make any necessary changes before submitting it for publication below.'
@@ -191,8 +191,8 @@ en:
       content: Content
       minimum_salary: 'Minimum salary'
       maximum_salary: 'Maximum salary'
-      minimum_pay_scale_range: 'Minimum pay scale range (optional)'
-      maximum_pay_scale_range: 'Maximum pay scale range (optional)'
+      minimum_pay_scale_range: 'Minimum pay scale range'
+      maximum_pay_scale_range: 'Maximum pay scale range'
       change_job_specification: 'Change job specification'
       change_job_title: 'Change job title'
       change_job_description: 'Change job description'
@@ -221,14 +221,14 @@ en:
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'
       application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}'
-      flexible_working: 'Flexible working (optional)'
-      newly_qualified_teacher: 'Newly qualified teacher (optional)'
+      flexible_working: 'Flexible working'
+      newly_qualified_teacher: 'Newly qualified teacher'
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
-      salary_range: 'Enter annual pay before tax, without commas or decimal points (for example 30000)'
+      salary_range: 'Enter annual pay before tax'
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       flexible_working: Tick this box if flexible working options are available. Candidates will be asked to email for further information.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
