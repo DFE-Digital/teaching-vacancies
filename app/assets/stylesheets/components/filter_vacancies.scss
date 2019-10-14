@@ -8,9 +8,6 @@
   .govuk-form-group {
     margin-bottom: $govuk-gutter-half;
   }
-  .form-control {
-    border-color: govuk-colour("dark-grey");
-  }
 
   @include govuk-media-query($until: tablet) {
     margin-bottom: $govuk-gutter;
