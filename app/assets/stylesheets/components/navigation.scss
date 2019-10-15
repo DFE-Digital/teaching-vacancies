@@ -1,6 +1,6 @@
 .app-navigation {
   $navigation-height: 53px;
-  border-bottom: 1px solid govuk-colour("grey-2");
+  border-bottom: 1px solid govuk-colour("mid-grey");
   font-weight: bold;
 
   @include clearfix;

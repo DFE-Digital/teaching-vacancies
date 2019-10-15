@@ -67,7 +67,7 @@ ul.pagination {
 
   &:hover,
   &:focus {
-    background: govuk-colour("grey-4");
+    background: govuk-colour("light-grey");
     outline: 3px solid $govuk-focus-colour;
   }
 }

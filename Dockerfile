@@ -28,7 +28,7 @@ RUN mkdir -p $INSTALL_PATH
 
 # This must be ordered before rake assets:precompile
 COPY --from=dependencies ./deps/node_modules $INSTALL_PATH/node_modules
-COPY --from=dependencies ./deps/node_modules/govuk-frontend/assets $INSTALL_PATH/app/assets
+COPY --from=dependencies ./deps/node_modules/govuk-frontend/govuk/assets $INSTALL_PATH/app/assets
 
 WORKDIR $INSTALL_PATH
 
