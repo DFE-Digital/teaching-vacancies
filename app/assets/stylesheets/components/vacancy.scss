@@ -6,7 +6,7 @@
   }
 
   &--metadata {
-    background-color: govuk-colour("grey-3");
+    background-color: govuk-colour("light-grey");
     padding: $govuk-gutter-half;
     margin-top: $govuk-gutter*3;
     @include govuk-media-query($until: tablet) {

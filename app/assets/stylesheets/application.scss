@@ -25,9 +25,10 @@ $govuk-image-url-function: 'image-url';
 @import 'components/og-preview';
 @import 'components/hiring-staff';
 @import 'components/select';
-@import 'components/tabs';
 @import 'components/checkboxes';
 @import 'components/awaiting_feedback_vacancies';
+@import 'components/location_finder';
+@import 'components/loader';
 @import 'ie';
 
 input[type='search'] {
@@ -72,8 +73,8 @@ p {
   color: white;
   font-weight: bold;
   margin-top: 20px;
-  
-  @include govuk-media-query($from: desktop) { 
+
+  @include govuk-media-query($from: desktop) {
     display: none;
   }
 }

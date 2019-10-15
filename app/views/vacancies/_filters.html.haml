@@ -1,30 +1,30 @@
 - content_for :advanced_filters do
   .govuk-form-group
     = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
-    = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'govuk-select form-control form-control-block'
+    = select_tag 'radius', options_for_select(radius_filter_options, radius), class: 'govuk-select govuk-!-width-full'
   .govuk-form-group
     = label_tag 'subject', t('jobs.filters.subject'), class: 'govuk-label'
-    = search_field_tag :subject, subject, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.subject_hint')
+    = search_field_tag :subject, subject, class: 'govuk-input', placeholder: t('jobs.filters.subject_hint')
   .govuk-form-group
     = label_tag 'job_title', t('jobs.filters.job_title'), class: 'govuk-label'
-    = search_field_tag :job_title, job_title, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.job_title_hint')
+    = search_field_tag :job_title, job_title, class: 'govuk-input', placeholder: t('jobs.filters.job_title_hint')
   .govuk-form-group
     = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
-    = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select form-control form-control-block', include_blank: 'None'
+    = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select govuk-!-width-full', include_blank: 'None'
   .govuk-form-group
     = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
-    = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select form-control form-control-block', include_blank: 'Any'
+    = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select govuk-!-width-full', include_blank: 'Any'
   .govuk-form-group
     %fieldset.govuk-fieldset
       = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
       .govuk-checkboxes.checkbox-group{ class: ('checkbox-group--scrollable' unless specific_phases?) }
-        .govuk-checkboxes__item
+        .govuk-checkboxes__item{ class: 'govuk-!-padding-right-0 govuk-!-padding-top-0 govuk-!-padding-bottom-0'}
           = check_box_tag 'phases[]', '', !specific_phases?, id: 'phases_any', class: 'govuk-checkboxes__input'
           = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
         .checkbox-group__divider
           = t('jobs.filters.education_phase_divider')
         - school_phase_options.each_with_index do |phase, i|
-          .govuk-checkboxes__item
+          .govuk-checkboxes__item{ class: 'govuk-!-padding-right-0 govuk-!-padding-top-0 govuk-!-padding-bottom-0'}
             = check_box_tag 'phases[]', phase[1], phase_checked?(phase[1]), id: 'phases_' + phase[1], class: 'govuk-checkboxes__input'
             = label_tag 'phases[]', phase[0], for: 'phases_' + phase[1], class: 'govuk-label govuk-checkboxes__label'
   .govuk-form-group
@@ -41,8 +41,13 @@
 
   = form_tag jobs_path, class: 'filters-form', method: :get do
     .govuk-form-group
-      = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
-      = search_field_tag :location, location, class: 'govuk-input form-control form-control-block', placeholder: t('jobs.filters.location_hint')
+      .js-location-finder
+        = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
+        .js-location-finder__input-container#js-location-finder__input-container
+          = search_field_tag :location, location, class: 'govuk-input js-location-finder__input', placeholder: t('jobs.filters.location_hint')
+        .js-location-finder__link.govuk-body-s
+          or
+          = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
     - if local_assigns.fetch :collapsible?, false
       %details.govuk-details{"data-module": "govuk-details", "data-summary-expanded": t('jobs.filters.summary_expanded'), "data-summary-collapsed": t('jobs.filters.summary_collapsed')}
         %summary.govuk-details__summary
