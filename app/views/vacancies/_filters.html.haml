@@ -41,8 +41,13 @@
 
   = form_tag jobs_path, class: 'filters-form', method: :get do
     .govuk-form-group
-      = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
-      = search_field_tag :location, location, class: 'govuk-input', placeholder: t('jobs.filters.location_hint')
+      .js-location-finder
+        = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'
+        .js-location-finder__input-container#js-location-finder__input-container
+          = search_field_tag :location, location, class: 'govuk-input js-location-finder__input', placeholder: t('jobs.filters.location_hint')
+        .js-location-finder__link.govuk-body-s
+          or
+          = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
     - if local_assigns.fetch :collapsible?, false
       %details.govuk-details{"data-module": "govuk-details", "data-summary-expanded": t('jobs.filters.summary_expanded'), "data-summary-collapsed": t('jobs.filters.summary_collapsed')}
         %summary.govuk-details__summary
