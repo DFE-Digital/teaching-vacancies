@@ -7,6 +7,15 @@ Rollbar.configure do |config|
   # Here we'll disable in 'test':
   config.enabled = false if Rails.env.test? || Rails.env.development?
 
+  config.js_enabled = true
+  config.js_options = {
+    accessToken: ENV.fetch('ROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN', ''),
+    captureUncaught: true,
+    payload: {
+      environment: ENV['ROLLBAR_ENV'].presence || Rails.env
+    }
+  }
+
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,
   # `username`, and `email` methods to fetch those properties. To customize:
