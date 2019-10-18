@@ -10,18 +10,22 @@
           %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
             %h2.govuk-fieldset__heading
               = t('general_feedback.visit_purpose_legend')
-          = f.collection_radio_buttons :visit_purpose, visit_purpose_options, :last, :first,
-                                       collection_wrapper_tag: 'div',
-                                       collection_wrapper_class: 'govuk-radios',
-                                       item_wrapper_class: 'govuk-radios__item',
-                                       item_wrapper_tag: 'div' do |field|
-            = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
+          .govuk-radios.govuk-radios--conditional{ "data-module": "govuk-radios"}
+            = f.collection_radio_buttons :visit_purpose, visit_purpose_options, :last, :first,
+                                         item_wrapper_class: 'govuk-radios__item',
+                                         item_wrapper_tag: 'div' do |field|
+              - if field.value == :other_purpose
+                = field.radio_button(class: 'govuk-radios__input', "data-aria-controls": 'conditional_visit_purpose_comment') + field.label(:class => "govuk-label govuk-radios__label") 
+              - else
+                = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
 
-      = f.input :visit_purpose_comment, as: :text,
-                wrapper: :textarea,
-                label: false,
-                hint: t('general_feedback.visit_purpose_hint_text').html_safe,
-                input_html: { class: 'form-control form-control-4-4', rows: '5' }
+            #conditional_visit_purpose_comment.govuk-radios__conditional.govuk-radios__conditional--hidden
+              = f.input :visit_purpose_comment, as: :text,
+                        wrapper: :textarea,
+                        label: false,
+                        hint: t('general_feedback.visit_purpose_hint_text').html_safe,
+                        input_html: { class: 'form-control form-control-4-4', rows: '5' }
+      
 
       .govuk-form-group.feedback-form-group
         %fieldset.govuk-fieldset
