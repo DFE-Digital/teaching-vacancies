@@ -130,6 +130,7 @@ module "ecs" {
   google_maps_api_key                          = "${var.google_maps_api_key}"
   google_tag_manager_container_id              = "${var.google_tag_manager_container_id}"
   rollbar_access_token                         = "${var.rollbar_access_token}"
+  rollbar_client_errors_access_token           = "${var.rollbar_client_errors_access_token}"
   pp_transactions_by_channel_token             = "${var.pp_transactions_by_channel_token}"
   pp_user_satisfaction_token                   = "${var.pp_user_satisfaction_token}"
   secret_key_base                              = "${var.secret_key_base}"

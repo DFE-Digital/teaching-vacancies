@@ -11,12 +11,15 @@
 
   .govuk-grid-row
     .govuk-grid-column-one-half
-      = f.input :job_title,
-                label: t('jobs.job_title'),
-                hint: t('jobs.form_hints.job_title'),
-                wrapper_html: {id: 'job_title'},
-                input_html: {class: 'govuk-input'},
-                required: true
+      .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
+        = f.input :job_title,
+                  label: t('jobs.job_title'),
+                  hint: t('jobs.form_hints.job_title'),
+                  wrapper_html: {id: 'job_title'},
+                  input_html: {class: 'govuk-js-character-count'},
+                  required: true
+        %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
+          You can enter up to 100 characters
       = f.input :job_description,
                 wrapper: 'textarea',
                 as: :text,

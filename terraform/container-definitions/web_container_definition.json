@@ -67,6 +67,10 @@
         "value": "${rollbar_access_token}"
       },
       {
+        "name": "ROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN",
+        "value": "${rollbar_client_errors_access_token}"
+      },
+      {
         "name": "PP_TRANSACTIONS_BY_CHANNEL_TOKEN",
         "value": "${pp_transactions_by_channel_token}"
       },
