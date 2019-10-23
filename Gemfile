@@ -31,7 +31,7 @@ gem 'redis'
 gem 'redis-objects'
 gem 'skylight'
 
-gem 'omniauth', '~> 1.8'
+gem 'omniauth', '~> 1.9'
 gem 'omniauth_openid_connect', '~> 0.2'
 
 gem 'breasal', '~> 0.0.1'
@@ -93,7 +93,7 @@ group :test do
   gem 'mock_redis'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
-  gem 'webmock', '~> 3.5'
+  gem 'webmock', '~> 3.7'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rack_session_access'
 end
