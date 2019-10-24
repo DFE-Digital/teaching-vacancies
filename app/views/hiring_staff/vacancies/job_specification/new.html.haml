@@ -5,7 +5,7 @@
   %span.govuk-caption-l
     Step 1 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
-= simple_form_for @job_specification_form, html: { class: 'vacancy-form' }, action: :post, url: job_specification_school_job_path(school_id: @school.id) do |f|
+= simple_form_for @job_specification_form, action: :post, url: job_specification_school_job_path(school_id: @school.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.job_specification')
 
@@ -105,23 +105,14 @@
 
       %fieldset.govuk-fieldset#salary_range
         %legend.form-label.govuk-label= t('jobs.salary_range_html')
-        .govuk-form-group
-          = f.input :minimum_salary,
-                    wrapper: 'money',
-                    hint: t('jobs.form_hints.salary_range'),
-                    label: '£',
-                    wrapper_html: { id: 'minimum_salary' },
-                    input_html: { class: 'govuk-!-width-one-half', 'aria-label': t('jobs.aria_labels.minimum_salary') }
+        %span.govuk-hint= t('jobs.form_hints.salary_range')
+        = f.input :minimum_salary,
+                  input_html: { class: 'govuk-input--width-10' },
+                  as: :currency
 
-          %p.value-to-value to
-
-          = f.input :maximum_salary,
-                    wrapper: 'money',
-                    label: '£',
-                    wrapper_html: { id: 'maximum_salary' },
-                    input_html: { class: 'govuk-!-width-one-half', 'aria-label': t('jobs.aria_labels.maximum_salary') }
-
-      = render partial: 'salary_warning', locals: { pro_rata_salary: @job_specification_form.pro_rata_salary }
+        = f.input :maximum_salary,
+                  input_html: { class: 'govuk-input--width-10' },
+                  as: :currency
 
       = f.input :newly_qualified_teacher, as: :boolean,
                 hint: t('jobs.form_hints.newly_qualified_teacher'),
