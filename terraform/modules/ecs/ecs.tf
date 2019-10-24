@@ -158,7 +158,6 @@ data "template_file" "web_container_definition" {
     google_geocoding_api_key                     = "${var.google_geocoding_api_key}"
     ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
     pp_transactions_by_channel_token             = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token                   = "${var.pp_user_satisfaction_token}"
     google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
     dsi_user_spreadsheet_id                      = "${var.dsi_user_spreadsheet_id}"
@@ -237,7 +236,6 @@ module "performance_platform_rake_container_definition" {
   feature_import_vacancies = "${var.feature_import_vacancies}"
 
   pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
-  pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
 }
 
 module "google_api_rake_container_definition" {
@@ -306,7 +304,6 @@ data "template_file" "worker_container_definition" {
     redis_queue_url      = "${var.redis_queue_url}"
 
     pp_transactions_by_channel_token             = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token                   = "${var.pp_user_satisfaction_token}"
     google_api_json_key                          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id                  = "${var.google_analytics_profile_id}"
     domain                                       = "${var.domain}"

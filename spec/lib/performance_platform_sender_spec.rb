@@ -61,46 +61,4 @@ RSpec.describe PerformancePlatformSender::Base do
       expect(TransactionAuditor.last.success?).to be false
     end
   end
-
-  context 'feedback' do
-    let(:type) { :feedback }
-
-    subject { described_class.by_type(type).call(date: date_to_upload) }
-
-    it 'will submit feedback data' do
-      stub_const('PP_USER_SATISFACTION_TOKEN', 'not-nil')
-
-      today = Date.current.beginning_of_day.in_time_zone
-      two_days_ago = today - 2.days
-
-      create_list(:vacancy_publish_feedback, 3, rating: 1, created_at: today)
-      create_list(:vacancy_publish_feedback, 4, rating: 4, created_at: two_days_ago)
-
-      vacancy_publish_rating3 = create_list(:vacancy_publish_feedback, 3, rating: 3, created_at: date_to_upload)
-      vacancy_publish_rating5 = create_list(:vacancy_publish_feedback, 5, rating: 5, created_at: date_to_upload)
-
-      create_list(:general_feedback, 2, created_at: today)
-      create_list(:general_feedback, 2, created_at: two_days_ago)
-
-      create_list(:general_feedback, 6, created_at: date_to_upload)
-      create_list(:general_feedback, 8, created_at: date_to_upload)
-
-      ratings = {
-        1 => 0,
-        2 => 0,
-        3 => vacancy_publish_rating3.count,
-        4 => 0,
-        5 => vacancy_publish_rating5.count
-      }
-
-      user_feedback = instance_double(PerformancePlatform::UserSatisfaction)
-      expect(PerformancePlatform::UserSatisfaction)
-        .to receive(:new).with('not-nil').and_return(user_feedback)
-      expect(user_feedback).to receive(:submit).with(ratings, parsed_date)
-
-      subject
-
-      expect(TransactionAuditor.last.success?).to be true
-    end
-  end
 end

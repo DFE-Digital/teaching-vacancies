@@ -132,7 +132,6 @@ module "ecs" {
   rollbar_access_token                         = "${var.rollbar_access_token}"
   rollbar_client_errors_access_token           = "${var.rollbar_client_errors_access_token}"
   pp_transactions_by_channel_token             = "${var.pp_transactions_by_channel_token}"
-  pp_user_satisfaction_token                   = "${var.pp_user_satisfaction_token}"
   secret_key_base                              = "${var.secret_key_base}"
   rds_username                                 = "${var.rds_username}"
   rds_password                                 = "${var.rds_password}"
