@@ -220,7 +220,8 @@
         %dd.app-check-your-answers__change
           = link_to t('buttons.change'), application_details_school_job_path(anchor: 'expires_on'), 'aria-label': t('jobs.aria_labels.change_application_deadline'), class: 'govuk-link'
 
-    %h2.govuk-heading-m Now submit your job
-    %p= t('jobs.confirmation_summary')
+    %h2.govuk-heading-m 
+      = t('jobs.publish_for') + @vacancy.job_title
+    %p= t('jobs.confirmation_summary').html_safe
 
     = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
