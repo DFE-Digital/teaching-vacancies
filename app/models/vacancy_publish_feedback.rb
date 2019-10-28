@@ -1,4 +1,8 @@
 class VacancyPublishFeedback < ApplicationRecord
+  include FeedbackValidations
+
+  enum user_participation_response: { interested: 0, not_interested: 1 }
+
   belongs_to :vacancy
   belongs_to :user
 
@@ -15,7 +19,9 @@ class VacancyPublishFeedback < ApplicationRecord
       vacancy.school.urn,
       rating,
       comment,
-      created_at.to_s
+      created_at.to_s,
+      user_participation_response,
+      email
     ]
   end
 end
