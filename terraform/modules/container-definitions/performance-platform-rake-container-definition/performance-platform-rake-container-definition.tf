@@ -22,7 +22,6 @@ data "template_file" "container_definition_template" {
     feature_import_vacancies = "${var.feature_import_vacancies}"
 
     pp_transactions_by_channel_token = "${var.pp_transactions_by_channel_token}"
-    pp_user_satisfaction_token       = "${var.pp_user_satisfaction_token}"
 
     # We are creating a partially rendered template from a template file.
     # These values are escaped to create a new template with the same vars.

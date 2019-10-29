@@ -77,10 +77,6 @@
         "value": "${pp_transactions_by_channel_token}"
       },
       {
-        "name": "PP_USER_SATISFACTION_TOKEN",
-        "value": "${pp_user_satisfaction_token}"
-      },
-      {
         "name": "GOOGLE_API_JSON_KEY",
         "value": "${google_api_json_key}"
       },

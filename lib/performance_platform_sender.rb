@@ -47,23 +47,4 @@ module PerformancePlatformSender
       Vacancy.published_on_count(date)
     end
   end
-
-  class Feedback < Base
-    private
-
-    def log_source
-      'performance_platform:submit_user_satisfaction'
-    end
-
-    def send_data
-      PerformancePlatform::UserSatisfaction
-        .new(PP_USER_SATISFACTION_TOKEN)
-        .submit(data, date.iso8601)
-    end
-
-    def data
-      { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 }
-        .merge!(VacancyPublishFeedback.published_on(date).group(:rating).count) { |_, old, new| old + new }
-    end
-  end
 end

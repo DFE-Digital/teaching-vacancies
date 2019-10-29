@@ -41,7 +41,6 @@ variable "google_tag_manager_container_id" {}
 variable "rollbar_access_token" {}
 variable "rollbar_client_errors_access_token" {}
 variable "pp_transactions_by_channel_token" {}
-variable "pp_user_satisfaction_token" {}
 variable "secret_key_base" {}
 variable "rds_username" {}
 variable "rds_password" {}

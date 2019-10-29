@@ -1,0 +1,20 @@
+.currency-input {
+  position: relative;
+
+  input {
+    padding-left: 40px;
+  }
+}
+
+.currency-input__symbol {
+  @extend .govuk-input;
+  position: absolute;
+  width: auto;
+  font-weight: bold;
+  padding: 9px 10px 0;
+  background-color: govuk-colour("light-grey");
+
+  @include govuk-media-query($from: tablet) {
+    padding-top: 6px;
+  }
+}

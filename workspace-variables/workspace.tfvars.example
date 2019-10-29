@@ -62,7 +62,6 @@ rollbar_access_token =
 rollbar_client_errors_access_token =
 domain = # "tvs.dxw.net"
 pp_transactions_by_channel_token =
-pp_user_satisfaction_token =
 
 # DfE Sign-in authentication
 dfe_sign_in_issuer =
