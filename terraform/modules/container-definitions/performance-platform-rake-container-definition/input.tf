@@ -20,4 +20,3 @@ variable "aws_elasticsearch_secret" {}
 variable "feature_import_vacancies" {}
 
 variable "pp_transactions_by_channel_token" {}
-variable "pp_user_satisfaction_token" {}
