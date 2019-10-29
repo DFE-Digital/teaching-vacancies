@@ -64,6 +64,7 @@ module VacanciesHelper
     end
   end
 
+  # rubocop:disable Rails/HelperInstanceVariable:
   def pay_scale_options
     @pay_scale_options ||= PayScale.all
   end
@@ -71,6 +72,7 @@ module VacanciesHelper
   def subject_options
     @subject_options ||= Subject.all
   end
+  # rubocop:enable Rails/HelperInstanceVariable:
 
   def phase_checked?(phase)
     return false if phases.blank?

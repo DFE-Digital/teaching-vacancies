@@ -15,8 +15,8 @@ module AWSIpRanges
 
       return parse_json_for_ips(response.body)
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
-           Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => error
-      Rails.logger.warn("Unable to setup Rack Proxies to acquire the correct remote_ip: #{error.class}")
+           Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+      Rails.logger.warn("Unable to setup Rack Proxies to acquire the correct remote_ip: #{e.class}")
       return []
     end
   end
