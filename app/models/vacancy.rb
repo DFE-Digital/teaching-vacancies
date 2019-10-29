@@ -184,8 +184,7 @@ class Vacancy < ApplicationRecord
     published? && !publish_on.future? && expires_on.future?
   end
 
-  # rubocop:disable Naming/UncommunicativeMethodParamName
-  def as_indexed_json(_ = {})
+  def as_indexed_json(_arg = {})
     as_json(
       methods: %i[coordinates],
       include: {
@@ -196,7 +195,6 @@ class Vacancy < ApplicationRecord
       }
     )
   end
-  # rubocop:enable Naming/UncommunicativeMethodParamName
 
   def trash!
     self.status = :trashed
