@@ -144,16 +144,6 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :money, tag: 'div',
-                          class: 'salary_field govuk-form-group',
-                          error_class: 'govuk-form-group--error' do |field|
-    field.use :html5
-    field.use :hint,  wrap_with: { tag: 'div', class: 'govuk-hint' }
-    field.use :error, wrap_with: { tag: 'div', class: 'govuk-error-message' }
-    field.use :label, wrap_with: { tag: 'span', class: 'pound_sign' }
-    field.use :input, class: 'govuk-input', pattern: '\d*'
-  end
-
   # You can define a class to use in all item wrappers. Defaulting to none.
   # config.item_wrapper_class = nil
 

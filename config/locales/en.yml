@@ -228,7 +228,7 @@ en:
       job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
-      salary_range: 'Enter annual pay before tax'
+      salary_range: 'Enter full-time equivalent annual salary, before tax (for example, 30,000 for a half-time role that pays £15,000 per year)'
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       flexible_working: Tick this box if flexible working options are available. Candidates will be asked to email for further information.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
@@ -247,8 +247,6 @@ en:
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
     form_warnings:
       working_pattern: If you select flexible working patterns (anything other than 'full-time') candidates will be asked to email you for details.
-      pro_rata_salary: Enter a pro-rata salary if the job is only available part-time, otherwise enter the full-time equivalent salary
-      fte_salary: Enter the full-time equivalent salary (for example 30000 for a half time role that pays £15,000)
     filters:
       title: 'Search job listings'
       location: 'Location'
