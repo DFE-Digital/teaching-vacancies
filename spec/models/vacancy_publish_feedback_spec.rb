@@ -9,6 +9,36 @@ RSpec.describe VacancyPublishFeedback, type: :model do
     it { should validate_length_of(:comment).is_at_most(1200) }
   end
 
+  describe '#email' do
+    context 'when user is interested in research participation' do
+      before { allow(subject).to receive(:user_is_interested?).and_return(true) }
+      it { is_expected.to validate_presence_of(:email) }
+
+      it 'ensures an email is set' do
+        feedback = build(:vacancy_publish_feedback, user_participation_response: :interested)
+        feedback.save
+
+        expect(feedback.valid?).to eq(false)
+        expect(feedback.errors.messages[:email]).to eq(['can\'t be blank'])
+      end
+
+      it 'ensures a valid email address is used' do
+        feedback = build(:vacancy_publish_feedback,
+                         user_participation_response: :interested,
+                         email: 'inv@al@.id.email.com')
+        feedback.save
+
+        expect(feedback.valid?).to eq(false)
+        expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
+      end
+    end
+
+    context 'when user is NOT interested in research participation' do
+      before { allow(subject).to receive(:user_is_interested?).and_return(false) }
+      it { is_expected.not_to validate_presence_of(:email) }
+    end
+  end
+
   describe '#published_on(date)' do
     it 'retrieves feedback submitted on the given date' do
       feedback_today = create_list(:vacancy_publish_feedback, 3)
@@ -30,10 +60,13 @@ RSpec.describe VacancyPublishFeedback, type: :model do
     let(:vacancy) { create(:vacancy, school: school) }
     let(:rating) { 5 }
     let(:comment) { 'Great!' }
+    let(:user_participation_response) { :interested }
+    let(:email) { 'user@email.com' }
 
     let(:feedback) do
       Timecop.freeze(created_at) do
-        create(:vacancy_publish_feedback, user: user, vacancy: vacancy, rating: rating, comment: comment)
+        create(:vacancy_publish_feedback, user: user, vacancy: vacancy, rating: rating, comment: comment,
+                                          user_participation_response: user_participation_response, email: email)
       end
     end
 
@@ -45,6 +78,8 @@ RSpec.describe VacancyPublishFeedback, type: :model do
       expect(feedback.to_row[4]).to eq(rating)
       expect(feedback.to_row[5]).to eq(comment)
       expect(feedback.to_row[6]).to eq(feedback.created_at.to_s)
+      expect(feedback.to_row[7]).to eq(user_participation_response.to_s)
+      expect(feedback.to_row[8]).to eq(email)
     end
   end
 end

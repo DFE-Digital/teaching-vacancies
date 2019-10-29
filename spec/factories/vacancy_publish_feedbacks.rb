@@ -4,6 +4,8 @@ FactoryBot.define do
     comment { 'Some feedback text' }
     vacancy
     user
+    user_participation_response { :not_interested }
+    email { nil }
 
     trait :old_with_no_user do
       to_create { |instance| instance.save(validate: false) }
