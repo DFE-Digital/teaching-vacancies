@@ -1,15 +1,3 @@
-.govuk-form-group.feedback-form-group
-  %fieldset.govuk-fieldset
-    %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-      %h2.govuk-fieldset__heading
-        = t('feedback.rating_legend')
-    = form.collection_radio_buttons :rating, rating_options, :last, :first,
-                                    collection_wrapper_tag: 'div',
-                                    collection_wrapper_class: 'govuk-radios',
-                                    item_wrapper_class: 'govuk-radios__item',
-                                    item_wrapper_tag: 'div' do |field|
-      = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
-
 = form.input :comment, as: :text,
              wrapper: :textarea,
              label: t('feedback.comment_label'),
