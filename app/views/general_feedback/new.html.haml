@@ -1,5 +1,5 @@
 = render partial: '/feedback/head'
-= render partial: '/feedback/errors', locals: { feedback: @feedback }
+= render partial: '/feedback/errors', locals: { errors: @feedback.errors }
 
 = simple_form_for @feedback, action: :post, url: feedback_path do |f|
   .govuk-grid-row
