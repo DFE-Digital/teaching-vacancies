@@ -1,7 +1,3 @@
-= form.input :comment, as: :text,
-             wrapper: :textarea,
-             label: t('feedback.comment_label'),
-             hint: t('feedback.comment_hint_text').html_safe,
-             input_html: { class: 'form-control form-control-4-4', rows: '5' }
+= render partial: 'shared/feedback_comment', locals: { f: form }
 
 = render partial: 'shared/user_participation', locals: { f: form }

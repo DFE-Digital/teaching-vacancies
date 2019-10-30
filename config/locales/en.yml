@@ -290,7 +290,7 @@ en:
     rating3_option: Neither satisfied or dissatisfied
     rating4_option: Satisfied
     rating5_option: Very satisfied
-    comment_label: 'How could we improve this service?'
+    comment_label_html: "How could we improve this service? (<span class='text-red'>Required</span>)"
     comment_hint_text: '<p>Please do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
     submit: 'Submit feedback'
   general_feedback:
@@ -300,7 +300,7 @@ en:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
       other_purpose: Something else (tell us in the box below)
-    user_participation_legend: 'Would you like to participate in our research?'
+    user_participation_legend_html: "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
     user_participation_options:
       interested: 'Yes'
       not_interested: 'No'
