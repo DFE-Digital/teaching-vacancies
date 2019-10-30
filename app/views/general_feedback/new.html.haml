@@ -1,5 +1,5 @@
 = render partial: '/feedback/head'
-= render partial: '/feedback/errors', locals: { feedback: @feedback }
+= render partial: '/feedback/errors', locals: { errors: @feedback.errors }
 
 = simple_form_for @feedback, action: :post, url: feedback_path do |f|
   .govuk-grid-row
@@ -15,7 +15,7 @@
                                          item_wrapper_class: 'govuk-radios__item',
                                          item_wrapper_tag: 'div' do |field|
               - if field.value == :other_purpose
-                = field.radio_button(class: 'govuk-radios__input', "data-aria-controls": 'conditional_visit_purpose_comment') + field.label(:class => "govuk-label govuk-radios__label") 
+                = field.radio_button(class: 'govuk-radios__input', "data-aria-controls": 'conditional_visit_purpose_comment') + field.label(:class => "govuk-label govuk-radios__label")
               - else
                 = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
 
@@ -25,40 +25,10 @@
                         label: false,
                         hint: t('general_feedback.visit_purpose_hint_text').html_safe,
                         input_html: { class: 'form-control form-control-4-4', rows: '5' }
-      
 
-      .govuk-form-group.feedback-form-group
-        %fieldset.govuk-fieldset
-          %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-            %h2.govuk-fieldset__heading
-              = t('feedback.comment_label')
 
-        = f.input :comment, as: :text,
-                    wrapper: :textarea,
-                    label: false,
-                    input_html: { class: 'form-control form-control-4-4', rows: '5' }
+      = render partial: 'shared/feedback_comment', locals: { f: f }
 
-      .govuk-form-group.feedback-form-group
-        %fieldset.govuk-fieldset
-          %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-            %h2.govuk-fieldset__heading
-              = t('general_feedback.user_participation_legend')
-
-          .govuk-radios.govuk-radios--conditional{'data-module': 'govuk-radios'}
-            .govuk-radios__item
-              = f.radio_button(:user_participation_response, :interested, class: 'govuk-radios__input', "data-aria-controls": 'conditional_email')
-              = f.label(t('general_feedback.user_participation_options.interested'), class: "govuk-label govuk-radios__label", required: true)
-
-            #conditional_email.govuk-radios__conditional.govuk-radios__conditional--hidden
-              = f.input :email, as: :email,
-                  label: t('general_feedback.user_interested_email_heading'),
-                  hint: t('general_feedback.user_interested_email_text'),
-                  wrapper_html: {id: 'email'},
-                  required: true
-
-            .govuk-radios__item
-              = f.radio_button(:user_participation_response, :not_interested, class: 'govuk-radios__input')
-              = f.label(t('general_feedback.user_participation_options.not_interested'), class: "govuk-label govuk-radios__label", required: true)
-
+      = render partial: 'shared/user_participation', locals: { f: f }
 
       = f.submit t('feedback.submit'), class: 'govuk-button'

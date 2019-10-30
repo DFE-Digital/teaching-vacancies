@@ -1,7 +1,8 @@
-- if feedback.errors.any?
+- if errors.any?
   #errors.govuk-error-summary{role: 'alert', tabindex: '-1'}
-    %h2.govuk-heading-m.govuk-error-summary-heading
+    %h2.govuk-error-summary__title
       = t('errors.feedback.errors_present')
-    %ul.govuk-error-summary-list
-      - feedback.errors.each do |attribute, error|
-        %li= feedback.errors.full_message(attribute, error)
+    .govuk-error-summary__body
+      %ul.govuk-list.govuk-error-summary__list
+        - errors.each do |attribute, error|
+          %li= link_to errors.full_message(attribute, error), "##{attribute}"

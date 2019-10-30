@@ -48,7 +48,8 @@ gem 'xml-sitemap'
 
 gem 'rollbar', '~> 2.18'
 
-gem 'rubocop', '~> 0.65.0', require: false # Not in Test group due to: https://github.com/chapmanu/imposter/issues/4
+gem 'rubocop', '~> 0.75.1'
+gem 'rubocop-rails_config', '~> 0.7.3'
 
 gem 'activerecord-session_store'
 gem 'public_activity'

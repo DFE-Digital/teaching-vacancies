@@ -2,6 +2,8 @@ require 'rails_helper'
 RSpec.feature 'Vacancy publish feedback' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
+  let(:choose_yes_to_participation) { choose('vacancy_publish_feedback_user_participation_response_interested') }
+  let(:choose_no_to_participation) { choose('vacancy_publish_feedback_user_participation_response_not_interested') }
 
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
@@ -32,20 +34,29 @@ RSpec.feature 'Vacancy publish feedback' do
   context 'Submiting feedback for a published vacancy' do
     let(:published_job) { create(:vacancy, :complete, school_id: school.id) }
 
-    scenario 'must have a rating specified' do
+    scenario 'must have a participation response' do
       visit new_school_job_feedback_path(published_job.id)
-
       fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
 
       click_on 'Submit feedback'
-      expect(page).to have_content('Rating can\'t be blank')
+
+      expect(page).to have_content('User participation response can\'t be blank')
+    end
+
+    scenario 'must have an email when participation response is Yes' do
+      visit new_school_job_feedback_path(published_job.id)
+      choose_yes_to_participation
+
+      click_on 'Submit feedback'
+
+      expect(page).to have_content('Email can\'t be blank')
     end
 
     scenario 'Can be successfully submitted for a published vacancy' do
       visit new_school_job_feedback_path(published_job.id)
 
-      choose 'Very satisfied'
       fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      choose_no_to_participation
 
       click_on 'Submit feedback'
       expect(page).to have_content('Your feedback has been successfully submitted')
@@ -54,24 +65,25 @@ RSpec.feature 'Vacancy publish feedback' do
     scenario 'creates a feedback record' do
       visit new_school_job_feedback_path(published_job.id)
 
-      choose 'Very satisfied'
       fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      choose_yes_to_participation
+      fill_in 'vacancy_publish_feedback_email', with: 'user@email.com'
 
       click_on 'Submit feedback'
 
       feedback = VacancyPublishFeedback.last
 
       expect(feedback).to_not be_nil
-      expect(feedback.rating).to eq(5)
       expect(feedback.comment).to eq('Perfect!')
       expect(feedback.user).to eq(User.find_by(oid: session_id))
+      expect(feedback.email).to eq('user@email.com')
     end
 
     scenario 'logs an audit activity' do
       visit new_school_job_feedback_path(published_job.id)
 
-      choose 'Very satisfied'
       fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      choose_no_to_participation
 
       click_on 'Submit feedback'
       expect(page).to have_content('Your feedback has been successfully submitted')

@@ -1,3 +1,7 @@
+inherit_gem:
+  rubocop-rails_config:
+    - config/rails.yml
+
 AllCops:
     TargetRubyVersion: 2.6
     Exclude:
@@ -30,6 +34,9 @@ Layout/TrailingBlankLines:
 
 Style/TrailingCommaInArguments:
     Enabled: false
+
+Style/StringLiterals:
+    EnforcedStyle: single_quotes
 
 Style/TrailingCommaInHashLiteral:
     Enabled: false
@@ -76,3 +83,12 @@ Metrics/BlockLength:
     Exclude:
       - 'spec/**/*'
       - 'config/routes.rb'
+
+Layout/EmptyLinesAroundAccessModifier:
+    Enabled: false
+
+Layout/SpaceInsideBlockBraces:
+    EnforcedStyleForEmptyBraces: no_space
+
+Layout/IndentationWidth:
+    Enabled: false

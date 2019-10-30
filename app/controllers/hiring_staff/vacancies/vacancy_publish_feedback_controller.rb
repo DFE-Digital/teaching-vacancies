@@ -25,6 +25,6 @@ class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Va
   private
 
   def vacancy_publish_feedback_params
-    params.require(:vacancy_publish_feedback).permit(:rating, :comment)
+    params.require(:vacancy_publish_feedback).permit(:comment, :user_participation_response, :email)
   end
 end

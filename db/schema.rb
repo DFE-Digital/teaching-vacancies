@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_23_081145) do
+ActiveRecord::Schema.define(version: 2019_10_28_145259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -236,6 +236,8 @@ ActiveRecord::Schema.define(version: 2019_08_23_081145) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+    t.string "email"
+    t.integer "user_participation_response"
     t.index ["user_id"], name: "index_vacancy_publish_feedbacks_on_user_id"
     t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
   end

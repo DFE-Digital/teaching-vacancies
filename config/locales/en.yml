@@ -290,7 +290,7 @@ en:
     rating3_option: Neither satisfied or dissatisfied
     rating4_option: Satisfied
     rating5_option: Very satisfied
-    comment_label: 'How could we improve this service?'
+    comment_label_html: "How could we improve this service? (<span class='text-red'>Required</span>)"
     comment_hint_text: '<p>Please do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
     submit: 'Submit feedback'
   general_feedback:
@@ -300,7 +300,7 @@ en:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
       other_purpose: Something else (tell us in the box below)
-    user_participation_legend: 'Would you like to participate in our research?'
+    user_participation_legend_html: "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
     user_participation_options:
       interested: 'Yes'
       not_interested: 'No'
@@ -568,6 +568,7 @@ en:
           - If you sign up for a job alert your email address will be used exclusively for the purpose of sending you an email when a job meeting your chosen search criteria is published to the service.
           - To list jobs on the service, hiring staff at schools need a Teaching Vacancies account, which requires them to supply their name and email address. Names and email addresses shared with us for this purpose are not shared by us with other parties.
           - Information published in job listings may be used by third party job listing sites that use our job listing data via an application programming interface (API), as described in our Terms and Conditions. We are not responsible for how a third party handles any personal information you choose to include in a job listing.
+          - If you indicate in the feedback form that we can contact you for user research then we may use your email for that purpose. It will not be shared with third parties.
       why_its_lawful:
         title: Why our use of your personal data is lawful
         about: In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation. For the purpose of this project, your consent forms the basis of this as stated under GDPR Article 6 (1)(a).
