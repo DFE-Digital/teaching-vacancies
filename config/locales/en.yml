@@ -137,11 +137,14 @@ en:
     time_at: ' at '
     publication_date: 'Date role will be listed'
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
+    review_future: 'Review your entries for each section below, making any changes before you submit the listing for publication.'
     edit: 'Edit the job details.'
     copy_of: 'Copy of'
     publish_for: 'Publish this listing for '
+    publish_for_future: 'Submit this listing for publication on '
     confirmation_summary: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
     submit: 'Publish now'
+    submit_future: 'Confirm and submit job'
     apply: 'Get more information'
     application_link: 'Link for jobseekers to learn more and apply'
     no_application_link: 'No application link given'
@@ -230,7 +233,7 @@ en:
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter full-time equivalent annual salary, before tax (for example, 30,000 for a half-time role that pays £15,000 per year)'
-      supporting_subject: 'What other subject will the teacher focus on?'
+      supporting_subject: 'What other subject will the teacher focus on? (leave blank if none)'
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       flexible_working: Tick this box if flexible working options are available. Candidates will be asked to email for further information.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'

@@ -6,7 +6,10 @@
     %h1.govuk-heading-l
       = t('jobs.review_heading', school: @vacancy.school.name)
     %p.govuk-body-l
-      = t('jobs.review')
+      - if @vacancy.publish_on.today?
+        = t('jobs.review')
+      - else 
+        = t('jobs.review_future')
     = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
 
 .vacancy.govuk-grid-row
@@ -221,7 +224,13 @@
           = link_to t('buttons.change'), application_details_school_job_path(anchor: 'expires_on'), 'aria-label': t('jobs.aria_labels.change_application_deadline'), class: 'govuk-link'
 
     %h2.govuk-heading-m 
-      = t('jobs.publish_for') + @vacancy.job_title
+      - if @vacancy.publish_on.today?
+        = t('jobs.publish_for') + @vacancy.job_title
+      - else 
+        = t('jobs.publish_for_future') + @vacancy.publish_on.to_s
     %p= t('jobs.confirmation_summary').html_safe
 
-    = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
+    - if @vacancy.publish_on.today?
+      = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
+    - else 
+      = link_to t('jobs.submit_future'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
