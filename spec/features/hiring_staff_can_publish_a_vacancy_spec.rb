@@ -35,7 +35,8 @@ RSpec.feature 'Creating a vacancy' do
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
                                  leadership: leaderships.sample,
-                                 working_patterns: ['full_time', 'part_time']))
+                                 working_patterns: ['full_time', 'part_time'],
+                                 publish_on: Time.zone.today))
     end
 
     scenario 'redirects to step 1, job specification' do
@@ -394,7 +395,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'fails validation until values are set correctly' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id, publish_on: Time.zone.tomorrow)
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Essential educational requirements')
 
@@ -408,7 +409,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'candidate_specification_form[education]', with: 'essential requirements'
           click_on 'Save and continue'
 
-          expect(page).to have_content('Publish now')
+          expect(page).to have_content('Confirm and submit job')
           expect(page).to have_content('essential requirements')
         end
       end
@@ -565,7 +566,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy.save(validate: false)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Publish now'
+        click_on 'Confirm and submit job'
 
         expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
         expect(page).to have_content(
@@ -577,7 +578,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Publish now'
+        click_on 'Confirm and submit job'
 
         expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
         visit school_job_path(vacancy.id)
@@ -600,7 +601,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Publish now'
+        click_on 'Confirm and submit job'
 
         activity = vacancy.activities.last
         expect(activity.session_id).to eq(session_id)
@@ -611,7 +612,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Publish now'
+        click_on 'Confirm and submit job'
         expect(page).to have_content('The job listing has been completed')
 
         visit school_job_publish_path(vacancy.id)
@@ -628,7 +629,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
-        click_on 'Publish now'
+        click_link('vacancy-review-submit')
         expect(page).to have_content('Preview your job listing')
 
         visit candidate_specification_school_job_path

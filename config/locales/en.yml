@@ -142,7 +142,7 @@ en:
     copy_of: 'Copy of'
     publish_for: 'Publish this listing for '
     publish_for_future: 'Submit this listing for publication on '
-    confirmation_summary: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
+    confirmation_summary_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
     submit: 'Publish now'
     submit_future: 'Confirm and submit job'
     apply: 'Get more information'

@@ -228,9 +228,9 @@
         = t('jobs.publish_for') + @vacancy.job_title
       - else 
         = t('jobs.publish_for_future') + @vacancy.publish_on.to_s
-    %p= t('jobs.confirmation_summary').html_safe
+    %p= t('jobs.confirmation_summary_html')
 
     - if @vacancy.publish_on.today?
-      = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
+      = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button", id: "vacancy-review-submit"
     - else 
-      = link_to t('jobs.submit_future'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button"
+      = link_to t('jobs.submit_future'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button", id: "vacancy-review-submit"
