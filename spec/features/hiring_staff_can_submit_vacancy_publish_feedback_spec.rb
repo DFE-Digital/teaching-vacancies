@@ -40,7 +40,7 @@ RSpec.feature 'Vacancy publish feedback' do
 
       click_on 'Submit feedback'
 
-      expect(page).to have_content('User participation response can\'t be blank')
+      expect(page).to have_content("Please indicate if you'd like to participate in user research")
     end
 
     scenario 'must have an email when participation response is Yes' do
@@ -49,7 +49,7 @@ RSpec.feature 'Vacancy publish feedback' do
 
       click_on 'Submit feedback'
 
-      expect(page).to have_content('Email can\'t be blank')
+      expect(page).to have_content('Enter your email address')
     end
 
     scenario 'Can be successfully submitted for a published vacancy' do

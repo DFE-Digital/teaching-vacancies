@@ -2,24 +2,29 @@ require 'rails_helper'
 
 RSpec.describe GeneralFeedback, type: :model do
   describe 'validations' do
-    it { should validate_presence_of :visit_purpose }
-    it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
-    it { should validate_presence_of :comment }
-    it { should validate_length_of(:comment).is_at_most(1200) }
-    it { should validate_presence_of :user_participation_response }
+    it { should validate_presence_of(:visit_purpose).with_message('Enter the reason for your visit') }
+    it { should validate_length_of(:visit_purpose_comment).is_at_most(1200).
+        with_message('Purpose of visit must not be more than 1,200 characters') }
+
+    it { should validate_presence_of(:comment).with_message('Enter your feedback') }
+    it { should validate_length_of(:comment).is_at_most(1200).
+      with_message('Feedback must not be more than 1,200 characters')}
+
+    it { should validate_presence_of(:user_participation_response).
+        with_message("Please indicate if you'd like to participate in user research") }
   end
 
   describe '#email' do
     context 'when user is interested in research participation' do
       before { allow(subject).to receive(:user_is_interested?).and_return(true) }
-      it { is_expected.to validate_presence_of(:email) }
+      it { is_expected.to validate_presence_of(:email).with_message('Enter your email address') }
 
       it 'ensures an email is set' do
         feedback = build(:general_feedback, user_participation_response: :interested)
         feedback.save
 
         expect(feedback.valid?).to eq(false)
-        expect(feedback.errors.messages[:email]).to eq(['can\'t be blank'])
+        expect(feedback.errors.messages[:email]).to eq(['Enter your email address'])
       end
 
       it 'ensures a valid email address is used' do
@@ -27,7 +32,9 @@ RSpec.describe GeneralFeedback, type: :model do
         feedback.save
 
         expect(feedback.valid?).to eq(false)
-        expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
+        expect(feedback.errors.messages[:email]).to eq(
+          ['Enter an email address in the correct format, like name@example.com']
+        )
       end
     end
 
