@@ -7,7 +7,6 @@ class GeneralFeedback < ApplicationRecord
 
   validates :visit_purpose, presence: true
   validates :visit_purpose_comment, length: { maximum: 1200 }, if: :visit_purpose_comment?
-  validates :comment, length: { maximum: 1200 }, if: :comment?
 
   scope :published_on, (->(date) { where(created_at: date.all_day) })
 
