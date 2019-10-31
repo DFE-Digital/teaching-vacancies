@@ -18,7 +18,10 @@
           = t('errors.feedback.errors_present')
         %ul.govuk-list.govuk-error-summary__list
           - @subscription.errors.each do |attribute, error|
-            %li= @subscription.errors.full_message(attribute, error)
+            - if attribute == :email
+              %li= error
+            - else
+              %li= @subscription.errors.full_message(attribute, error)
 
 .govuk-grid-row
   .govuk-grid-column-one-half
