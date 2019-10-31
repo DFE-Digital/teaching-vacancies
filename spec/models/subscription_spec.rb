@@ -9,14 +9,16 @@ RSpec.describe Subscription, type: :model do
         subscription = Subscription.new
 
         expect(subscription.valid?).to eq(false)
-        expect(subscription.errors.messages[:email]).to eq(['can\'t be blank'])
+        expect(subscription.errors.messages[:email]).to eq(['Enter your email address'])
       end
 
       it 'ensures a valid email address is used' do
         subscription = Subscription.new email: 'inv@al@.id.email.com'
 
         expect(subscription.valid?).to eq(false)
-        expect(subscription.errors.messages[:email]).to eq(['is not a valid email address'])
+        expect(subscription.errors.messages[:email]).to eq(
+          ['Enter an email address in the correct format, like name@example.com']
+        )
       end
     end
 

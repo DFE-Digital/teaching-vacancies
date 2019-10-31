@@ -5,4 +5,4 @@
     .govuk-error-summary__body
       %ul.govuk-list.govuk-error-summary__list
         - errors.each do |attribute, error|
-          %li= link_to errors.full_message(attribute, error), "##{attribute}"
+          %li= link_to error, "##{attribute}"

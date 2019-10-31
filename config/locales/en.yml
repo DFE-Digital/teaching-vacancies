@@ -294,7 +294,7 @@ en:
     comment_hint_text: '<p>Please do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
     submit: 'Submit feedback'
   general_feedback:
-    visit_purpose_legend: 'What did you come to Teaching Vacancies to do?'
+    visit_purpose_legend_html: "What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)"
     visit_purpose_hint_text: '<p>Please tell us what you came here to do. Do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
     visit_purpose_options:
       find_teaching_job: Find a job in teaching

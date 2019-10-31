@@ -110,7 +110,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         click_on 'Subscribe'
 
         expect(page).to have_content('Please correct the following error')
-        expect(page).to have_content('Email is not a valid email address')
+        expect(page).to have_content('Enter an email address in the correct format, like name@example.com')
       end
 
       scenario 'when an active subcsription with the same search_criteria exists' do
