@@ -292,9 +292,6 @@ en:
     rating5_option: Very satisfied
     comment_label_html: "How could we improve this service? (<span class='text-red'>Required</span>)"
     comment_hint_text: '<p>Please do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
-    comment_errors:
-      blank: 'Enter your feedback'
-      over_max_length: 'Feedback must not be more than 1,200 characters'
     submit: 'Submit feedback'
   general_feedback:
     visit_purpose_legend_html: "What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)"
@@ -303,20 +300,12 @@ en:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
       other_purpose: Something else (tell us in the box below)
-    visit_purpose_errors:
-      blank: 'Enter the reason for your visit'
-      over_max_length: 'Purpose of visit must not be more than 1,200 characters'
     user_participation_legend_html: "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
     user_participation_options:
       interested: 'Yes'
       not_interested: 'No'
-    user_participation_errors:
-      blank: "Please indicate if you'd like to participate in user research"
     user_interested_email_heading: 'What is your email address?'
     user_interested_email_text: "We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services."
-    user_interested_email_errors:
-      blank: 'Enter your email address'
-      incorrect_format: 'Enter an email address in the correct format, like name@example.com'
   schools:
     about: 'About'
     address: 'Address'

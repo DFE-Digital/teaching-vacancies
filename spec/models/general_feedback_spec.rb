@@ -2,22 +2,19 @@ require 'rails_helper'
 
 RSpec.describe GeneralFeedback, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:visit_purpose).with_message('Enter the reason for your visit') }
-    it { should validate_length_of(:visit_purpose_comment).is_at_most(1200).
-        with_message('Purpose of visit must not be more than 1,200 characters') }
+    it { should validate_presence_of(:visit_purpose) }
+    it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
 
-    it { should validate_presence_of(:comment).with_message('Enter your feedback') }
-    it { should validate_length_of(:comment).is_at_most(1200).
-      with_message('Feedback must not be more than 1,200 characters')}
+    it { should validate_presence_of(:comment) }
+    it { should validate_length_of(:comment).is_at_most(1200) }
 
-    it { should validate_presence_of(:user_participation_response).
-        with_message("Please indicate if you'd like to participate in user research") }
+    it { should validate_presence_of(:user_participation_response) }
   end
 
   describe '#email' do
     context 'when user is interested in research participation' do
       before { allow(subject).to receive(:user_is_interested?).and_return(true) }
-      it { is_expected.to validate_presence_of(:email).with_message('Enter your email address') }
+      it { is_expected.to validate_presence_of(:email) }
 
       it 'ensures an email is set' do
         feedback = build(:general_feedback, user_participation_response: :interested)

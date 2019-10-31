@@ -5,15 +5,14 @@ RSpec.describe VacancyPublishFeedback, type: :model do
   it { should belong_to(:user) }
 
   describe 'validations' do
-    it { should validate_presence_of(:comment).with_message('Enter your feedback') }
-    it { should validate_length_of(:comment).is_at_most(1200).
-      with_message('Feedback must not be more than 1,200 characters')}
+    it { should validate_presence_of(:comment) }
+    it { should validate_length_of(:comment).is_at_most(1200) }
   end
 
   describe '#email' do
     context 'when user is interested in research participation' do
       before { allow(subject).to receive(:user_is_interested?).and_return(true) }
-      it { is_expected.to validate_presence_of(:email).with_message('Enter your email address') }
+      it { is_expected.to validate_presence_of(:email) }
 
       it 'ensures an email is set' do
         feedback = build(:vacancy_publish_feedback, user_participation_response: :interested)
