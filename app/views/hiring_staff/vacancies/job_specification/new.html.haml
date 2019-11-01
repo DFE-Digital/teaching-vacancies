@@ -108,7 +108,8 @@
         %span.govuk-hint= t('jobs.form_hints.salary_range')
         = f.input :minimum_salary,
                   input_html: { class: 'govuk-input--width-10' },
-                  as: :currency
+                  as: :currency,
+                  wrapper_html: {id: 'minimum_salary'}
 
         = f.input :maximum_salary,
                   input_html: { class: 'govuk-input--width-10' },
