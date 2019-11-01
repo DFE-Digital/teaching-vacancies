@@ -123,7 +123,7 @@ en:
     publish_heading: 'Publish a job for %{school}'
     copy_page_title: 'Copy your %{job_title} job'
     review_page_title: 'Review the job details — Publish a job for %{school}'
-    review_heading: 'Review the job for %{school}'
+    review_heading: 'Review this job for %{school}'
     edit_heading: 'Edit job for %{school}'
     job_specification: 'Job specification'
     candidate_specification: 'Candidate specification'
@@ -136,11 +136,15 @@ en:
     deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
     time_at: ' at '
     publication_date: 'Date role will be listed'
-    review: 'Review the job details and make any necessary changes before submitting it for publication below.'
+    review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
+    review_future: 'Review your entries for each section below, making any changes before you submit the listing for publication.'
     edit: 'Edit the job details.'
     copy_of: 'Copy of'
-    confirmation_summary: 'By submitting you are confirming that to the best of your knowledge, the details you are providing are correct.'
-    submit: 'Confirm and submit job'
+    publish_for: 'Publish this listing for '
+    publish_for_future: 'Submit this listing for publication on '
+    confirmation_summary_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
+    submit: 'Publish now'
+    submit_future: 'Confirm and submit job'
     apply: 'Get more information'
     application_link: 'Link for jobseekers to learn more and apply'
     no_application_link: 'No application link given'
@@ -229,6 +233,7 @@ en:
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter full-time equivalent annual salary, before tax (for example, 30,000 for a half-time role that pays £15,000 per year)'
+      supporting_subject: 'What other subject will the teacher focus on?'
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       flexible_working: Tick this box if flexible working options are available. Candidates will be asked to email for further information.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
@@ -243,7 +248,7 @@ en:
       publication_date: 'For example, %{date}'
       benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
-      application_link: 'Enter the URL for the webpage that gives details of this job and how to apply. This should be a page on your school or trust’s website.'
+      application_link: 'Enter the URL for the page on your school or trust’s website that gives further details on the job and how to apply.'
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
     form_warnings:
       working_pattern: If you select flexible working patterns (anything other than 'full-time') candidates will be asked to email you for details.
