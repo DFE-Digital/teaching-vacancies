@@ -123,7 +123,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
         click_on 'Subscribe'
 
-        expect(page).to have_content('You are already subscribed to a daily email with these search criteria')
+        expect(page).to have_content("You're already subscribed to an alert for these search criteria")
       end
     end
 
