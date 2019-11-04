@@ -16,7 +16,7 @@ RSpec.feature 'Giving general feedback for the service' do
 
       click_on 'Submit feedback'
 
-      expect(page).to have_content('Visit purpose can\'t be blank')
+      expect(page).to have_content('Enter the reason for your visit')
     end
 
     scenario 'must have a participation response' do
@@ -25,7 +25,7 @@ RSpec.feature 'Giving general feedback for the service' do
 
       click_on 'Submit feedback'
 
-      expect(page).to have_content('User participation response can\'t be blank')
+      expect(page).to have_content("Please indicate if you'd like to participate in user research")
     end
 
     scenario 'successfully submitting feedback for the service' do
@@ -45,7 +45,7 @@ RSpec.feature 'Giving general feedback for the service' do
 
       click_on 'Submit feedback'
 
-      expect(page).to have_content('Email can\'t be blank')
+      expect(page).to have_content('Enter your email address')
     end
 
     scenario 'successfully submitting feedback and interest in user research' do

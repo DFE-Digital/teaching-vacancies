@@ -65,6 +65,30 @@ en:
             weekly_hours:
               negative: can't be negative
               invalid: must be a valid number
+        vacancy_publish_feedback:
+          attributes:
+            user_participation_response:
+              blank: Please indicate if you'd like to participate in user research
+            email:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+            comment:
+              blank: Enter your feedback
+              too_long: Feedback must not be more than 1,200 characters
+        general_feedback:
+          attributes:
+            user_participation_response:
+              blank: Please indicate if you'd like to participate in user research
+            email:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+            comment:
+              blank: Enter your feedback
+              too_long: Feedback must not be more than 1,200 characters
+            visit_purpose:
+              blank: Enter the reason for your visit
+            visit_purpose_comment:
+              too_long: Purpose of visit must not be more than 1,200 characters
         transaction_auditor:
           attributes:
             task:

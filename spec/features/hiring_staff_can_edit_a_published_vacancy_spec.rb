@@ -13,7 +13,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     scenario 'redirects to the review vacancy page' do
       visit edit_school_job_path(vacancy.id)
 
-      expect(page).to have_content("Review the job for #{school.name}")
+      expect(page).to have_content("Review this job for #{school.name}")
     end
   end
 

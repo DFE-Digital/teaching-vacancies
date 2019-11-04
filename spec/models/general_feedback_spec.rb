@@ -2,11 +2,13 @@ require 'rails_helper'
 
 RSpec.describe GeneralFeedback, type: :model do
   describe 'validations' do
-    it { should validate_presence_of :visit_purpose }
+    it { should validate_presence_of(:visit_purpose) }
     it { should validate_length_of(:visit_purpose_comment).is_at_most(1200) }
-    it { should validate_presence_of :comment }
+
+    it { should validate_presence_of(:comment) }
     it { should validate_length_of(:comment).is_at_most(1200) }
-    it { should validate_presence_of :user_participation_response }
+
+    it { should validate_presence_of(:user_participation_response) }
   end
 
   describe '#email' do
@@ -19,7 +21,7 @@ RSpec.describe GeneralFeedback, type: :model do
         feedback.save
 
         expect(feedback.valid?).to eq(false)
-        expect(feedback.errors.messages[:email]).to eq(['can\'t be blank'])
+        expect(feedback.errors.messages[:email]).to eq(['Enter your email address'])
       end
 
       it 'ensures a valid email address is used' do
@@ -27,7 +29,9 @@ RSpec.describe GeneralFeedback, type: :model do
         feedback.save
 
         expect(feedback.valid?).to eq(false)
-        expect(feedback.errors.messages[:email]).to eq(['is not a valid email address'])
+        expect(feedback.errors.messages[:email]).to eq(
+          ['Enter an email address in the correct format, like name@example.com']
+        )
       end
     end
 

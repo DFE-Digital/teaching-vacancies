@@ -35,7 +35,8 @@ RSpec.feature 'Creating a vacancy' do
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
                                  leadership: leaderships.sample,
-                                 working_patterns: ['full_time', 'part_time']))
+                                 working_patterns: ['full_time', 'part_time'],
+                                 publish_on: Time.zone.today))
     end
 
     scenario 'redirects to step 1, job specification' do
@@ -242,7 +243,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
         visit school_job_review_path(vacancy.id)
 
-        expect(page).to have_content("Review the job for #{school.name}")
+        expect(page).to have_content("Review this job for #{school.name}")
 
         verify_all_vacancy_details(vacancy)
       end
@@ -273,7 +274,7 @@ RSpec.feature 'Creating a vacancy' do
           )
           visit school_job_review_path(vacancy.id)
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
 
           verify_all_vacancy_details(vacancy)
         end
@@ -290,7 +291,7 @@ RSpec.feature 'Creating a vacancy' do
           )
           visit school_job_review_path(vacancy.id)
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
 
           verify_all_vacancy_details(vacancy)
         end
@@ -307,7 +308,7 @@ RSpec.feature 'Creating a vacancy' do
           )
           visit school_job_review_path(vacancy.id)
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
 
           verify_all_vacancy_details(vacancy)
         end
@@ -324,7 +325,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('An edited job title')
         end
 
@@ -359,7 +360,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('A new job title')
         end
       end
@@ -375,7 +376,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('Teaching diploma')
         end
 
@@ -394,7 +395,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'fails validation until values are set correctly' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete, school_id: school.id, publish_on: Time.zone.tomorrow)
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Essential educational requirements')
 
@@ -429,7 +430,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('a@valid.email')
         end
 
@@ -448,7 +449,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[application_link]', with: 'www.valid-domain.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('www.valid-domain.com')
         end
 
@@ -462,7 +463,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review the job for #{school.name}")
+          expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('an@email.com')
         end
 
@@ -484,7 +485,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'redirects to the school vacancy page when published' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
         visit school_job_review_path(vacancy.id)
-        click_on 'Confirm and submit job'
+        click_on 'Publish now'
 
         expect(page).to have_content('Preview your job listing')
       end
@@ -496,7 +497,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = create(:vacancy, :draft, school: school)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Confirm and submit job'
+        click_on 'Publish now'
 
         expect(vacancy.reload.publisher_user_id).to eq(current_user.id)
       end
@@ -506,7 +507,7 @@ RSpec.feature 'Creating a vacancy' do
 
         visit school_job_review_path(vacancy.id)
 
-        click_on 'Confirm and submit job'
+        click_on 'Publish now'
         save_page
 
         click_on I18n.t('jobs.confirmation_page.preview_posted_job')
@@ -520,7 +521,7 @@ RSpec.feature 'Creating a vacancy' do
 
           visit school_job_review_path(vacancy.id)
 
-          click_on 'Confirm and submit job'
+          click_on 'Publish now'
           save_page
 
           click_on I18n.t('jobs.confirmation_page.preview_posted_job')
@@ -535,7 +536,7 @@ RSpec.feature 'Creating a vacancy' do
 
           visit school_job_review_path(vacancy.id)
 
-          click_on 'Confirm and submit job'
+          click_on 'Publish now'
           save_page
 
           click_on I18n.t('jobs.confirmation_page.preview_posted_job')
@@ -550,7 +551,7 @@ RSpec.feature 'Creating a vacancy' do
 
           visit school_job_review_path(vacancy.id)
 
-          click_on 'Confirm and submit job'
+          click_on 'Publish now'
           save_page
 
           click_on I18n.t('jobs.confirmation_page.preview_posted_job')
@@ -587,7 +588,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'displays the expiration date and time on the confirmation page' do
         vacancy = create(:vacancy, :draft, school_id: school.id, expiry_time: Time.zone.now + 5.days)
         visit school_job_review_path(vacancy.id)
-        click_on 'Confirm and submit job'
+        click_on 'Publish now'
 
         expect(page).to have_content(
           'The listing will appear on the service until ' \
@@ -628,7 +629,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
-        click_on 'Confirm and submit job'
+        click_link('vacancy-review-submit')
         expect(page).to have_content('Preview your job listing')
 
         visit candidate_specification_school_job_path
@@ -646,7 +647,7 @@ RSpec.feature 'Creating a vacancy' do
             .to receive(:update_google_index).with(vacancy)
 
           visit school_job_review_path(vacancy.id)
-          click_on 'Confirm and submit job'
+          click_on 'Publish now'
         end
       end
 
@@ -657,7 +658,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)
 
           visit school_job_review_path(vacancy.id)
-          click_on 'Confirm and submit job'
+          click_on 'Publish now'
         end
       end
     end

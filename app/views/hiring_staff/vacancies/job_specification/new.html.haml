@@ -48,14 +48,14 @@
         = f.input :first_supporting_subject_id,
                   wrapper: 'select',
                   label: t('jobs.first_supporting_subject'),
-                  hint: t('jobs.form_hints.subject'),
+                  hint: t('jobs.form_hints.supporting_subject'),
                   wrapper_html: {id: 'first_supporting_subject'},
                   collection: subject_options,
                   required: false
         = f.input :second_supporting_subject_id,
                   wrapper: 'select',
                   label: t('jobs.second_supporting_subject'),
-                  hint: t('jobs.form_hints.subject'),
+                  hint: t('jobs.form_hints.supporting_subject'),
                   wrapper_html: {id: 'second_supporting_subject'},
                   collection: subject_options,
                   required: false
@@ -108,7 +108,8 @@
         %span.govuk-hint= t('jobs.form_hints.salary_range')
         = f.input :minimum_salary,
                   input_html: { class: 'govuk-input--width-10' },
-                  as: :currency
+                  as: :currency,
+                  wrapper_html: {id: 'minimum_salary'}
 
         = f.input :maximum_salary,
                   input_html: { class: 'govuk-input--width-10' },

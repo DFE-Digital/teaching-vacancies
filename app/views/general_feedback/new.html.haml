@@ -5,11 +5,11 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
 
-      .govuk-form-group.feedback-form-group
+      .govuk-form-group.feedback-form-group#visit_purpose
         %fieldset.govuk-fieldset
           %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
             %h2.govuk-fieldset__heading
-              = t('general_feedback.visit_purpose_legend')
+              = t('general_feedback.visit_purpose_legend_html')
           .govuk-radios.govuk-radios--conditional{ "data-module": "govuk-radios"}
             = f.collection_radio_buttons :visit_purpose, visit_purpose_options, :last, :first,
                                          item_wrapper_class: 'govuk-radios__item',
