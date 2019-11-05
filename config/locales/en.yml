@@ -365,7 +365,8 @@ en:
   subscriptions:
     button: 'Sign up for a job alert matching your search'
     intro: 'We’ll email you details of any new jobs that match the following search criteria:'
-    new: Sign up for a job alert
+    new:
+      page_description: Sign up for a job alert
     info: You can unsubscribe at any time using the link at the bottom of any email you receive for this job alert.
     location_text: Within %{radius} miles of %{location}
     reference: 'for'
