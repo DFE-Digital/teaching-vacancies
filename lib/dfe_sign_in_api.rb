@@ -5,9 +5,19 @@ module DFESignIn
 
   class API
     def users(page: 1)
+      perform_request('/users', page)
+    end
+
+    def approvers(page: 1)
+      perform_request('/users/approvers', page)
+    end
+
+    private
+
+    def perform_request(endpoint, page)
       token = generate_jwt_token
       response = HTTParty.get(
-        api_url(page),
+        "#{DFE_SIGN_IN_URL}#{endpoint}?page=#{page}&pageSize=25",
         headers: { 'Authorization' => "Bearer #{token}" }
       )
 
@@ -16,12 +26,6 @@ module DFESignIn
       raise UnknownResponseError unless response.code.eql?(200)
 
       JSON.parse(response.body)
-    end
-
-    private
-
-    def api_url(page = 1)
-      "#{DFE_SIGN_IN_URL}/users?page=#{page}&pageSize=25"
     end
 
     def generate_jwt_token
