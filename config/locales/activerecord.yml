@@ -60,22 +60,30 @@ en:
             contact_email:
               blank: can't be blank
             expires_on:
-              blank: can't be blank
-              before_publish_date: can't be before the publish date
+              blank: Enter the date the application is due
+              before_publish_date: Application cannot be due before the job has been listed
+              invalid: Enter an application due date in the correct format
+              invalid_year: Expires on on must include a 4-digit year
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Enter the time the application is due in the correct format
               must_be_am_pm: Enter am or pm
             publish_on:
-              blank: can't be blank
-              before_today: can't be before today
+              blank: Enter the date the role will be listed
+              before_today: Date role will be listed must be either today or a date in the future
+              invalid: Enter the date the role will be listed in the correct format
+              invalid_year: Publish on must include a 4-digit year
             starts_on:
               past: Start date must be in the future
               after_ends_on: Start date must be before end date
-              before_expires_on: must be after the closing date
+              before_expires_on: Start date must be after application deadline
+              invalid: Enter the start date in the correct format
+              invalid_year: Starts on must include a 4-digit year
             ends_on:
               past: End date must be in the future
-              before_expires_on: must be after the closing date
+              before_expires_on: End date must be after application deadline
+              invalid: Enter the end date in the correct format
+              invalid_year: Ends on must include a 4-digit year
             weekly_hours:
               negative: can't be negative
               invalid: must be a valid number

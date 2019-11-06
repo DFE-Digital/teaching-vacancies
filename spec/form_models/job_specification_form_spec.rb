@@ -147,7 +147,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:starts_on)
       expect(job_specification_form.errors.messages[:starts_on][0])
-        .to eq('must be after the closing date')
+        .to eq('Start date must be after application deadline')
     end
   end
 
@@ -175,7 +175,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:ends_on)
       expect(job_specification_form.errors.messages[:ends_on][0])
-        .to eq('must be after the closing date')
+        .to eq('End date must be after application deadline')
     end
   end
 
