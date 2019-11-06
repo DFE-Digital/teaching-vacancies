@@ -1,6 +1,7 @@
 module DFESignIn
   class ExternalServerError < StandardError; end
   class ForbiddenRequestError < StandardError; end
+  class UnknownResponseError < StandardError; end
 
   class API
     def users(page: 1)
@@ -12,8 +13,9 @@ module DFESignIn
 
       raise ExternalServerError if response.code.eql?(500)
       raise ForbiddenRequestError if response.code.eql?(403)
+      raise UnknownResponseError unless response.code.eql?(200)
 
-      JSON.parse(response&.body) if response.code.eql?(200)
+      JSON.parse(response.body)
     end
 
     private

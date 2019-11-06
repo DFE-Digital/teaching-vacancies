@@ -52,6 +52,17 @@ RSpec.describe DFESignIn::API do
       end
     end
 
+    context 'when the response status is unknown' do
+      before do
+        stub_request(:get,
+          "#{DFE_SIGN_IN_URL}/users?page=1&pageSize=25")
+          .to_return(body: '', status: 499)
+      end
+      it 'raises an unknown response error' do
+        expect { described_class.new.users }.to raise_error(DFESignIn::UnknownResponseError)
+      end
+    end
+
     def response_file(page)
       File.read(Rails.root.join(
                   'spec',
