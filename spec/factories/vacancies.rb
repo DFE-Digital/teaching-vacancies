@@ -17,7 +17,7 @@ FactoryBot.define do
     expiry_time { expires_on&.change(sec: 0) }
     publish_on { Time.zone.today }
     minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
-    maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED }
+    maximum_salary { SalaryValidator::MAX_SALARY_LIMIT - 100 }
     contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
     benefits { Faker::Lorem.sentence }
@@ -40,17 +40,17 @@ FactoryBot.define do
       experience { Faker::Lorem.characters(1010) }
       education { Faker::Lorem.characters(1005) }
       qualifications { Faker::Lorem.characters(1002) }
-      minimum_salary { (SalaryValidator::MAX_SALARY_ALLOWED + 100) }
-      maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
+      minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
+      maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
     end
 
     trait :fail_minimum_salary_max_validation do
-      minimum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
+      minimum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
     end
 
     trait :fail_maximum_salary_max_validation do
       minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
-      maximum_salary { SalaryValidator::MAX_SALARY_ALLOWED + 100 }
+      maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
     end
 
     trait :complete do
