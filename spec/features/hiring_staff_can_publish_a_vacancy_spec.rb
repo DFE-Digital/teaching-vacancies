@@ -355,7 +355,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: ''
           click_on 'Save and continue'
 
-          expect(page).to have_content('Job title can\'t be blank')
+          expect(page).to have_content('Enter a job title')
 
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
           click_on 'Save and continue'

@@ -52,7 +52,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_specification_form[job_title]', with: ''
         click_on 'Update job'
 
-        expect(page).to have_content('Job title can\'t be blank')
+        expect(page).to have_content('Enter a job title')
       end
 
       scenario 'can be successfully edited' do
