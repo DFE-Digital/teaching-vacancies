@@ -339,6 +339,7 @@ en:
     search_heading: 'Publish a job'
     search_subheading: 'Which school is the job job for?'
     info: 'About %{school}'
+    map_aria_label: 'Interactive map showing school location'
     jobs:
       index: 'Jobs at %{school}'
     no_jobs:
