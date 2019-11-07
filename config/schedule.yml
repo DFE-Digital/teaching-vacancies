@@ -1,0 +1,19 @@
+daily_alerts:
+  cron: '0 08 * * *'
+  class: 'SendDailyAlertEmailJob'
+  queue: queue_daily_alerts
+
+import_school_data:
+  cron: '0 07 * * *'
+  class: 'UpdateSchoolsDataFromSourceJob'
+  queue: import_school_data
+
+export_dsi_users:
+  cron: '0 01 * * *'
+  class: 'ExportDsiUsersToBigQueryJob'
+  queue: export_users
+
+export_tables:
+  cron: '0 03 * * *'
+  class: 'ExportTablesToBigQueryJob'
+  queue: export_tables

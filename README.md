@@ -130,7 +130,7 @@ small VM or a slow machine and docker would introduce an unnecessarily high over
 #### Baseline
 
 ```bash
-Ruby 2.6.5
+Ruby 2.6.6
 ```
 
 #### Services

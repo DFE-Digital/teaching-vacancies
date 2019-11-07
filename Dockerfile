@@ -1,4 +1,4 @@
-FROM ruby:2.6.5 as release
+FROM ruby:2.6.6 as release
 LABEL maintainer="teaching.vacancies@education.gov.uk"
 
 RUN apt-get update && apt-get install -qq -y \
