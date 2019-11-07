@@ -58,7 +58,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(text: I18n.t('jobs.job_title')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
+          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank')))
         end
 
         within_row_for(text: I18n.t('jobs.description')) do
@@ -152,7 +152,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(element: 'legend', text: I18n.t('jobs.deadline_date')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
+          expect(page).to have_content(I18n.t('errors.messages.blank'))
         end
 
         within_row_for(element: 'legend', text: strip_tags(I18n.t('jobs.deadline_time_html'))) do
@@ -160,7 +160,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(element: 'legend', text: I18n.t('jobs.publication_date')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
+          expect(page).to have_content(I18n.t('errors.messages.blank'))
         end
       end
 

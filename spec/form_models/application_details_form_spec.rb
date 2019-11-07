@@ -130,7 +130,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'the expiry date must be greater than the publish date' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:expires_on][0])
-          .to eq('can\'t be before the publish date')
+        .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date'))
       end
     end
 
@@ -140,7 +140,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'the publish date must be present' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:publish_on][0])
-          .to eq('can\'t be before today')
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
       end
     end
   end

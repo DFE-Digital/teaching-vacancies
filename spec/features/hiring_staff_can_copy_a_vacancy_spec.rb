@@ -123,7 +123,7 @@ RSpec.feature 'Copying a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
       end
 
-      expect(page).to have_content('Expires on Invalid date')
+      expect(page).to have_content('Enter an application due date in the correct format')
     end
   end
 
@@ -153,7 +153,7 @@ RSpec.feature 'Copying a vacancy' do
       let(:new_attributes) { { publish_on: nil } }
 
       it 'shows an error' do
-        expect(page).to have_content("Publish on can't be blank")
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
       end
     end
 
@@ -161,7 +161,7 @@ RSpec.feature 'Copying a vacancy' do
       let(:new_attributes) { { publish_on: 1.day.ago } }
 
       it 'shows an error' do
-        expect(page).to have_content("Publish on can't be before today")
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
       end
     end
 
@@ -169,7 +169,7 @@ RSpec.feature 'Copying a vacancy' do
       let(:new_attributes) { { expires_on: nil } }
 
       it 'shows an error' do
-        expect(page).to have_content("Expires on can't be blank")
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
       end
     end
 
@@ -177,7 +177,7 @@ RSpec.feature 'Copying a vacancy' do
       let(:new_attributes) { { job_title: nil } }
 
       it 'shows an error' do
-        expect(page).to have_content('Enter a job title')
+        expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
       end
     end
   end
