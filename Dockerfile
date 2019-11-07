@@ -9,7 +9,7 @@ COPY package-lock.json ./package-lock.json
 RUN npm set progress=false && npm config set depth 0
 RUN npm install --only=production
 
-FROM ruby:2.6.1 as release
+FROM ruby:2.6.5 as release
 LABEL maintainer="teaching.vacancies@education.gov.uk"
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
