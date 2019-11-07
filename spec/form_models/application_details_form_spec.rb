@@ -4,9 +4,10 @@ RSpec.describe ApplicationDetailsForm, type: :model do
   subject { ApplicationDetailsForm.new({}) }
 
   context 'validations' do
-    it { should validate_presence_of(:contact_email) }
-    it { should validate_presence_of(:publish_on) }
-    it { should validate_presence_of(:expires_on) }
+    it { should validate_presence_of(:contact_email).with_message('Enter a contact email') }
+    it { should validate_presence_of(:publish_on).with_message('Enter the date the role will be listed') }
+    it { should validate_presence_of(:expires_on).with_message('Enter the date the application is due') }
+    it { should validate_presence_of(:application_link).with_message('Enter a link for jobseekers to apply') }
 
     describe '#application_link' do
       let(:application_details) { ApplicationDetailsForm.new(application_link: 'not a url') }
@@ -14,7 +15,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'checks for a valid url' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:application_link][0])
-          .to eq('is not a valid URL')
+          .to eq('Enter an application link in the correct format, like http://www.school.ac.uk')
       end
     end
 
@@ -66,7 +67,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'displays error if am/pm field is blank' do
         subject.expiry_time_meridiem = ''
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(['Enter am or pm'])
+        expect(subject.errors.messages[:expiry_time]).to eq(['Select am or pm'])
       end
 
       it 'displays only one error message at a time' do
@@ -117,7 +118,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'checks for a valid email format' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:contact_email][0])
-          .to eq('is invalid')
+          .to eq('Enter an email address in the correct format, like name@example.com')
       end
     end
 
