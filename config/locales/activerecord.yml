@@ -12,6 +12,23 @@ en:
       blank: Enter a minimum salary
     working_patterns:
       blank: Select a working pattern
+  application_details_errors: &application_details_errors
+    contact_email:
+      blank: Enter a contact email
+      invalid: Enter an email address in the correct format, like name@example.com
+    application_link:
+      blank: Enter a link for jobseekers to apply
+      url: Enter an application link in the correct format, like http://www.school.ac.uk
+    expires_on:
+      blank: Enter the date the application is due
+      before_publish_date: Application cannot be due before the job has been listed
+      invalid: Enter an application due date in the correct format
+      invalid_year: Expires on on must include a 4-digit year
+    publish_on:
+      blank: Enter the date the role will be listed
+      before_today: Date role will be listed must be either today or a date in the future
+      invalid: Enter the date the role will be listed in the correct format
+      invalid_year: Publish on must include a 4-digit year
   errors:
     number:
     # format: "%{message}"
@@ -40,16 +57,7 @@ en:
               more_than_maxiumum: "%{salary} must be less than %{count}"
         application_details_form:
           attributes:
-            contact_email:
-              blank: Enter a contact email
-              invalid: Enter an email address in the correct format, like name@example.com
-            application_link:
-              blank: Enter a link for jobseekers to apply
-              url: Enter an application link in the correct format, like http://www.school.ac.uk
-            expires_on:
-              blank: Enter the date the application is due
-            publish_on:
-              blank: Enter the date the role will be listed
+            <<: *application_details_errors
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
@@ -61,6 +69,7 @@ en:
         vacancy:
           attributes:
             <<: *vacancy_errors_labels
+            <<: *application_details_errors
             maximum_salary:
               greater_than_minimum_salary: Maximum salary must be more than the minimum salary
             experience:
@@ -69,22 +78,10 @@ en:
               blank: can't be blank
             qualifications:
               blank: can't be blank
-            contact_email:
-              blank: can't be blank
-            expires_on:
-              blank: Enter the date the application is due
-              before_publish_date: Application cannot be due before the job has been listed
-              invalid: Enter an application due date in the correct format
-              invalid_year: Expires on on must include a 4-digit year
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Enter the time the application is due in the correct format
               must_be_am_pm: Select am or pm
-            publish_on:
-              blank: Enter the date the role will be listed
-              before_today: Date role will be listed must be either today or a date in the future
-              invalid: Enter the date the role will be listed in the correct format
-              invalid_year: Publish on must include a 4-digit year
             starts_on:
               past: Start date must be in the future
               after_ends_on: Start date must be before end date
