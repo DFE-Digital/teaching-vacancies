@@ -22,11 +22,11 @@ en:
     expires_on:
       blank: Enter the date the application is due
       before_publish_date: Application cannot be due before the job has been listed
-      invalid: Enter an application due date in the correct format
+      invalid: Use the correct format for the time the application is due
       invalid_year: Expires on on must include a 4-digit year
     publish_on:
       blank: Enter the date the role will be listed
-      before_today: Date role will be listed must be either today or a date in the future
+      before_today: Date role will be listed must be either today or in the future
       invalid: Enter the date the role will be listed in the correct format
       invalid_year: Publish on must include a 4-digit year
   errors:
