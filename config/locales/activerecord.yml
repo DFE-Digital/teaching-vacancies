@@ -1,5 +1,20 @@
 en:
+  vacancy_errors: &vacancy_errors_labels
+    job_title:
+      blank: Enter a job title
+      too_short: Job title must be at least %{count} characters
+      too_long: Job title must not be more than %{count} characters
+    job_description:
+      blank: Enter a job description
+      too_short: Job description must be at least %{count} characters
+      too_long: Job description must be at least %{count} characters
+    minimum_salary:
+      blank: Enter a minimum salary
+    working_patterns:
+      blank: Select a working pattern
   errors:
+    number:
+    # format: "%{message}"
     title: "Please correct the following %{errors} in your listing:"
     messages:
       too_short:
@@ -15,6 +30,14 @@ en:
       year_invalid: must include a 4-digit year
       email:
         invalid: is not a valid email address
+  activemodel:
+    errors:
+      models:
+        job_specification_form:
+          attributes:
+            <<: *vacancy_errors_labels
+            salary:
+              more_than_maxiumum: "%{salary} must be less than %{count}"
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
@@ -25,18 +48,9 @@ en:
       models:
         vacancy:
           attributes:
-            job_title:
-              blank: can't be blank
-            job_description:
-              blank: can't be blank
-            minimum_salary:
-              blank: can't be blank
+            <<: *vacancy_errors_labels
             maximum_salary:
-              greater_than_minimum_salary: must be higher than the minimum salary
-            working_pattern:
-              present: must be blank
-            working_patterns:
-              blank: can't be blank
+              greater_than_minimum_salary: Maximum salary must be more than the minimum salary
             experience:
               blank: can't be blank
             education:
@@ -56,11 +70,11 @@ en:
               blank: can't be blank
               before_today: can't be before today
             starts_on:
-              past: can't be in the past
-              after_ends_on: can't be after the end date
+              past: Start date must be in the future
+              after_ends_on: Start date must be before end date
               before_expires_on: must be after the closing date
             ends_on:
-              past: can't be in the past
+              past: End date must be in the future
               before_expires_on: must be after the closing date
             weekly_hours:
               negative: can't be negative

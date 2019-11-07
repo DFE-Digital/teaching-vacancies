@@ -177,7 +177,7 @@ RSpec.feature 'Copying a vacancy' do
       let(:new_attributes) { { job_title: nil } }
 
       it 'shows an error' do
-        expect(page).to have_content("Job title can't be blank")
+        expect(page).to have_content('Enter a job title')
       end
     end
   end
