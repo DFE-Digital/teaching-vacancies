@@ -33,7 +33,7 @@ en:
       invalid: Enter the date the role will be listed in the correct format
       invalid_year: Publish on must include a 4-digit year
   errors:
-    # format: "%{message}"
+    format: "%{message}"
     title: "Please correct the following %{errors} in your listing:"
     messages:
       too_short:
@@ -91,11 +91,6 @@ en:
               blank: Enter essential educational requirements
             qualifications:
               blank: Enter essential qualifications
-            contact_email:
-              blank: can't be blank
-            expires_on:
-              blank: can't be blank
-              before_publish_date: can't be before the publish date
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Enter the time the application is due in the correct format
