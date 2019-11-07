@@ -1,0 +1,25 @@
+---
+defaults: &defaults
+  buildpacks: ['https://github.com/cloudfoundry/ruby-buildpack.git']
+  # disk_quota: 2G
+  # docker:
+  #   image: dfedigital/govuk-rails-boilerplate
+  #   username: dfedigital
+  # env:
+  #   RAILS_ENV: production
+  #   RAILS_SERVE_STATIC_FILES: true
+  # memory: 2G
+  services:
+    - teaching-vacancies-postgres
+    - teaching-vacancies-redis
+    - teaching-vacancies-elasticsearch
+
+applications:
+  - name: teaching-vacancies-staging
+    <<: *defaults
+
+  - name: teaching-vacancies-sidekiq-staging
+    <<: *defaults
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    health-check-type: process
+    no-route: true

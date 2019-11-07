@@ -39,6 +39,7 @@ COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock
 
 RUN gem install bundler
+RUN echo 'export PATH="/usr/local/bundle/bin:/usr/local/bin:$PATH"' >> $HOME/.bashrc
 
 # bundle ruby gems based on the current environment, default to production
 RUN echo $RAILS_ENV
