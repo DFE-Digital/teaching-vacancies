@@ -1,4 +1,7 @@
 en:
+  number:
+    format:
+      delimiter: ","
   vacancy_errors: &vacancy_errors_labels
     job_title:
       blank: Enter a job title
@@ -30,7 +33,6 @@ en:
       invalid: Enter the date the role will be listed in the correct format
       invalid_year: Publish on must include a 4-digit year
   errors:
-    number:
     # format: "%{message}"
     title: "Please correct the following %{errors} in your listing:"
     messages:
@@ -58,6 +60,17 @@ en:
         application_details_form:
           attributes:
             <<: *application_details_errors
+        candidate_specification_form:
+          attributes:
+            education:
+              blank: Enter essential educational requirements
+              too_long: Education must not be more than %{count} characters
+            experience:
+              blank: Enter essential skills and experience
+              too_long: Skills and experience must not be more than %{count} characters
+            qualifications:
+              blank: Enter essential qualifications
+              too_long: Qualifications must not be more than %{count} characters
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
@@ -73,11 +86,16 @@ en:
             maximum_salary:
               greater_than_minimum_salary: Maximum salary must be more than the minimum salary
             experience:
-              blank: can't be blank
+              blank: Enter essential skills and experience
             education:
-              blank: can't be blank
+              blank: Enter essential educational requirements
             qualifications:
+              blank: Enter essential qualifications
+            contact_email:
               blank: can't be blank
+            expires_on:
+              blank: can't be blank
+              before_publish_date: can't be before the publish date
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Enter the time the application is due in the correct format

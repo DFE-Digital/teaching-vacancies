@@ -407,7 +407,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'candidate_specification_form[education]', with: ''
           click_on 'Save and continue'
 
-          expect(page).to have_content('Education can\'t be blank')
+          expect(page).to have_content('Enter essential educational requirements')
 
           fill_in 'candidate_specification_form[education]', with: 'essential requirements'
           click_on 'Save and continue'

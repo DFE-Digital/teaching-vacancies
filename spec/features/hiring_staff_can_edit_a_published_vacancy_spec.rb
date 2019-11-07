@@ -144,7 +144,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_on 'Update job'
 
         within_row_for(text: I18n.t('jobs.experience')) do
-          expect(page).to have_content('can\'t be blank')
+          expect(page).to have_content('Enter essential skills and experience')
         end
       end
 
