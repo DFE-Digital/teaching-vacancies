@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+cf7 login -a $CF_API_ENDPOINT -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+cf7 push -f manifest-staging.yml

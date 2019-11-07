@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy to Production
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install cf client
+      env:
+        CF_CLI_VERSION: 7.0.0-beta.30
+      run: |
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        sudo cp /tmp/cf7 /usr/local/bin/cf7
+
+    - name: Deploy to production
+      env:
+        CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+        CF_SPACE: ${{ secrets.CF_SPACE }}
+        CF_ORG: ${{ secrets.CF_ORG }}
+      run: |
+        cf7 api $CF_API_ENDPOINT
+        cf7 auth
+        cf7 target -o $CF_ORG -s $CF_SPACE
+        cf7 push
