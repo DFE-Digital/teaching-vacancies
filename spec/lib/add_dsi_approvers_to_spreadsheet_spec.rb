@@ -210,8 +210,8 @@ RSpec.describe AddDSIApproversToSpreadsheet do
         user['organisation']['phaseOfEducation'],
         user['organisation']['telephone'],
         user['organisation']['regionCode'],
-        user['organisation']['createdAt'],
-        user['organisation']['updatedAt']
+        format_datetime_with_seconds(user['organisation']['createdAt']),
+        format_datetime_with_seconds(user['organisation']['updatedAt']),
       ]
     end
   end
