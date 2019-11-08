@@ -26,12 +26,10 @@ en:
       blank: Enter the date the application is due
       before_publish_date: Application cannot be due before the job has been listed
       invalid: Use the correct format for the time the application is due
-      invalid_year: Expires on on must include a 4-digit year
     publish_on:
       blank: Enter the date the role will be listed
       before_today: Date role will be listed must be either today or in the future
       invalid: Enter the date the role will be listed in the correct format
-      invalid_year: Publish on must include a 4-digit year
   errors:
     format: "%{message}"
     title: "Please correct the following %{errors} in your listing:"
@@ -46,7 +44,6 @@ en:
       salary:
         invalid_format: "must be entered in one of the following formats: 25000, 25,000 or 25000.00"
         lower_than_minimum_payscale: must be at least %{minimum_salary}
-      year_invalid: must include a 4-digit year
       email:
         invalid: is not a valid email address
   activemodel:
@@ -100,12 +97,10 @@ en:
               after_ends_on: Start date must be before end date
               before_expires_on: Start date must be after application deadline
               invalid: Enter the start date in the correct format
-              invalid_year: Starts on must include a 4-digit year
             ends_on:
               past: End date must be in the future
               before_expires_on: End date must be after application deadline
               invalid: Enter the end date in the correct format
-              invalid_year: Ends on must include a 4-digit year
             weekly_hours:
               negative: can't be negative
               invalid: must be a valid number

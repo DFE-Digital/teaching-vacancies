@@ -15,16 +15,14 @@ class DateFormatValidator < ActiveModel::Validator
     begin
       Date.parse("#{day}-#{month}-#{year}")
     rescue
-      record.errors.add(field, invalid_field_error(field))
+      invalid_field_error(field, record)
     end
-    record.errors.add(field, invalid_year_error(field)) if year.length > 4
+    invalid_field_error(field, record) unless year.length == 4
   end
 
-  def invalid_field_error(field)
-    I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.invalid")
-  end
-
-  def invalid_year_error(field)
-    I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.invalid_year")
+  def invalid_field_error(field, record)
+    record.errors.add(field,
+      I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.invalid")
+    )
   end
 end
