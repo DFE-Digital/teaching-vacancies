@@ -1,0 +1,37 @@
+{
+  "users": [
+      {
+          "organisation": {
+              "id": "13F20E54-79EA-4146-8E39-18197576F023",
+              "name": "Department for Education",
+              "Category": "002",
+              "Type": null,
+              "URN": null,
+              "UID": null,
+              "UKPRN": null,
+              "EstablishmentNumber": "001",
+              "Status": 1,
+              "ClosedOn": null,
+              "Address": null,
+              "phaseOfEducation": null,
+              "statutoryLowAge": null,
+              "statutoryHighAge": null,
+              "telephone": null,
+              "regionCode": null,
+              "legacyId": "1031237",
+              "companyRegistrationNumber": "1234567",
+              "createdAt": "2019-02-20T14:27:59.020Z",
+              "updatedAt": "2019-02-20T14:28:38.223Z"
+          },
+          "roleName": "Approver",
+          "roleId": 10000,
+          "userId": "21D62132-6570-4E63-9DCB-137CC35E7543",
+          "email": "foo@example.com",
+          "familyName": "Johnson",
+          "givenName": "Roger"
+      }
+  ],
+  "numberOfRecords": 1,
+  "page": 1,
+  "numberOfPages": 2
+}

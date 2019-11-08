@@ -41,10 +41,9 @@ RSpec.describe UpdateSchoolData do
     end
 
     it 'should raise an HTTP error' do
-      # rubocop:disable AmbiguousBlockAssociation
-      expect { UpdateSchoolData.new.run }
-        .to raise_error { HTTParty::ResponseError.new('School CSV file not found.') }
-      # rubocop:enable AmbiguousBlockAssociation
+      expect { UpdateSchoolData.new.run }.to raise_error do
+        HTTParty::ResponseError.new('School CSV file not found.')
+      end
     end
   end
 
@@ -55,10 +54,9 @@ RSpec.describe UpdateSchoolData do
     end
 
     it 'should raise an HTTP error' do
-      # rubocop:disable AmbiguousBlockAssociation
-      expect { UpdateSchoolData.new.run }
-        .to raise_error { HTTParty::ResponseError.new('Unexpected problem downloading School CSV file.') }
-      # rubocop:enable AmbiguousBlockAssociation
+      expect { UpdateSchoolData.new.run }.to raise_error do
+        HTTParty::ResponseError.new('Unexpected problem downloading School CSV file.')
+      end
     end
   end
 

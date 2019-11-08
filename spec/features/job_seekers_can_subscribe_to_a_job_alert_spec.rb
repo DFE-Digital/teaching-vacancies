@@ -8,7 +8,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       expect { visit(new_subscription_path) }.to raise_error(ActionController::ParameterMissing)
 
       visit new_subscription_path(search_criteria: { some_parameters: 'none' })
-      expect(page).to have_content(I18n.t('subscriptions.new'))
+      expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
     end
 
     scenario 'can view the search criteria' do
@@ -144,7 +144,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
       click_on 'Sign up for a job alert matching your search'
 
-      expect(page).to have_content(I18n.t('subscriptions.new'))
+      expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
       expect(page).to have_content('Subject: English')
 
       fill_in 'subscription[email]', with: 'john.doe@sample-email.com'

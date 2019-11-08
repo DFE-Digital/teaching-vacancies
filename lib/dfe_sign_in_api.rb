@@ -1,25 +1,31 @@
 module DFESignIn
   class ExternalServerError < StandardError; end
   class ForbiddenRequestError < StandardError; end
+  class UnknownResponseError < StandardError; end
 
   class API
     def users(page: 1)
+      perform_request('/users', page)
+    end
+
+    def approvers(page: 1)
+      perform_request('/users/approvers', page)
+    end
+
+    private
+
+    def perform_request(endpoint, page)
       token = generate_jwt_token
       response = HTTParty.get(
-        api_url(page),
+        "#{DFE_SIGN_IN_URL}#{endpoint}?page=#{page}&pageSize=25",
         headers: { 'Authorization' => "Bearer #{token}" }
       )
 
       raise ExternalServerError if response.code.eql?(500)
       raise ForbiddenRequestError if response.code.eql?(403)
+      raise UnknownResponseError unless response.code.eql?(200)
 
-      JSON.parse(response&.body) if response.code.eql?(200)
-    end
-
-    private
-
-    def api_url(page = 1)
-      "#{DFE_SIGN_IN_URL}/users?page=#{page}&pageSize=25"
+      JSON.parse(response.body)
     end
 
     def generate_jwt_token
