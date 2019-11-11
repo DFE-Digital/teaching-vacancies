@@ -11,7 +11,7 @@ class SalaryValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)
     return error_message(record, attribute, blank_minimum_salary_message) if check_presence? && value.blank?
-    return error_message(record, attribute, invalid_format_message) if value[SALARY_FORMAT].nil?
+    return error_message(record, attribute, invalid_format_message(attribute)) if value[SALARY_FORMAT].nil?
 
     salary = converted_salary(value)
     return error_message(record, attribute, must_be_higher_than_min_allowed_message) if less_than_min_allowed?(salary)
@@ -37,8 +37,8 @@ class SalaryValidator < ActiveModel::EachValidator
     I18n.t('activemodel.errors.models.job_specification_form.attributes.minimum_salary.blank')
   end
 
-  def invalid_format_message
-    I18n.t('errors.messages.salary.invalid_format')
+  def invalid_format_message(field_name)
+    I18n.t('errors.messages.salary.invalid_format', salary: Vacancy.human_attribute_name(field_name))
   end
 
   def must_be_less_than_max_salary_message(field_name)
