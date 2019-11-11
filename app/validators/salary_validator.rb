@@ -7,15 +7,16 @@ class SalaryValidator < ActiveModel::EachValidator
 
   SALARY_FORMAT = /^(\d+|\d{1,3}(,\d{3})*)(\.\d{2})?$/.freeze
   MIN_SALARY_ALLOWED = 0
-  MAX_SALARY_ALLOWED = 200000
+  MAX_SALARY_LIMIT = 200000
 
   def validate_each(record, attribute, value)
-    return error_message(record, attribute, cant_be_blank_message) if check_presence? && value.blank?
-    return error_message(record, attribute, invalid_format_message) if value[SALARY_FORMAT].nil?
+    return error_message(record, attribute, blank_minimum_salary_message) if check_presence? && value.blank?
+    return error_message(record, attribute, invalid_format_message(attribute)) if value[SALARY_FORMAT].nil?
 
     salary = converted_salary(value)
     return error_message(record, attribute, must_be_higher_than_min_allowed_message) if less_than_min_allowed?(salary)
-    return error_message(record, attribute, must_be_less_than_max_salary_message) if salary > MAX_SALARY_ALLOWED
+    return error_message(record, attribute, must_be_less_than_max_salary_message(attribute)) \
+      if salary >= MAX_SALARY_LIMIT
   end
 
   private
@@ -32,13 +33,19 @@ class SalaryValidator < ActiveModel::EachValidator
     BigDecimal(value)
   end
 
-  def invalid_format_message
-    I18n.t('errors.messages.salary.invalid_format')
+  def blank_minimum_salary_message
+    I18n.t('activemodel.errors.models.job_specification_form.attributes.minimum_salary.blank')
   end
 
-  def must_be_less_than_max_salary_message
-    I18n.t('errors.messages.less_than_or_equal_to',
-           count: number_to_currency(MAX_SALARY_ALLOWED, delimiter: ''))
+  def invalid_format_message(field_name)
+    I18n.t('errors.messages.salary.invalid_format', salary: Vacancy.human_attribute_name(field_name))
+  end
+
+  def must_be_less_than_max_salary_message(field_name)
+    I18n.t('activemodel.errors.models.job_specification_form.attributes.salary.more_than_maxiumum',
+           salary: Vacancy.human_attribute_name(field_name),
+           count: number_to_currency(MAX_SALARY_LIMIT, delimiter: ',')
+          )
   end
 
   def must_be_higher_than_min_allowed_message

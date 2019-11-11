@@ -121,7 +121,8 @@ class Vacancy < ApplicationRecord
   delegate :name, to: :school, prefix: true, allow_nil: false
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
 
-  acts_as_gov_uk_date :starts_on, :ends_on, :publish_on, :expires_on
+  acts_as_gov_uk_date :starts_on, :ends_on, :publish_on,
+                      :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
   scope :applicable_by_time, (-> { where('expiry_time IS NOT NULL AND expiry_time >= ?', Time.zone.now) })

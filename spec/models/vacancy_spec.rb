@@ -51,12 +51,12 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 4))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.too_short', count: 4))
       end
 
       it '#job_description' do
         expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('errors.messages.too_short.other', count: 10))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.too_short', count: 10))
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 100))
+          .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_long', count: 100))
       end
     end
 
@@ -80,22 +80,23 @@ RSpec.describe Vacancy, type: :model do
 
       it '#job_description' do
         expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 50_000))
+          .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_long',
+            count: 50000))
       end
 
       it '#experience' do
         expect(subject.errors.messages[:experience].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.experience.too_long', count: 1000))
       end
 
       it '#education' do
         expect(subject.errors.messages[:education].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.education.too_long', count: 1000))
       end
 
       it '#qualifications' do
         expect(subject.errors.messages[:qualifications].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.too_long', count: 1000))
       end
     end
 
@@ -112,7 +113,7 @@ RSpec.describe Vacancy, type: :model do
         job = build(:vacancy, minimum_salary: nil, maximum_salary: nil)
 
         expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary]).to eq(['can\'t be blank'])
+        expect(job.errors.messages[:minimum_salary]).to eq(['Enter a minimum salary'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -120,7 +121,7 @@ RSpec.describe Vacancy, type: :model do
         job = build(:vacancy, minimum_salary: nil, maximum_salary: 'not a number')
 
         expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary]).to eq(['can\'t be blank'])
+        expect(job.errors.messages[:minimum_salary]).to eq(['Enter a minimum salary'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -129,7 +130,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -138,7 +139,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -147,7 +148,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -157,7 +158,7 @@ RSpec.describe Vacancy, type: :model do
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary]).to be_empty
         expect(job.errors.messages[:maximum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Maximum salary')])
       end
 
       it 'valid minimum_salary and greater than allowed maximum_salary' do
@@ -166,7 +167,7 @@ RSpec.describe Vacancy, type: :model do
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary]).to be_empty
         expect(job.errors.messages[:maximum_salary])
-          .to eq(['must not be more than £200000'])
+          .to eq(['Maximum salary must be less than £200,000'])
       end
 
       it 'greater than allowed minimum_salary and greater than allowed maximum_salary' do
@@ -174,7 +175,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary])
-          .to eq(['must not be more than £200000'])
+          .to eq(['Minimum salary must be less than £200,000'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -183,7 +184,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job).to_not be_valid
         expect(job.errors.messages[:minimum_salary])
-          .to eq(['must not be more than £200000'])
+          .to eq(['Minimum salary must be less than £200,000'])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -200,7 +201,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
 
       it 'rejects salary format with decimal points at the end' do
@@ -208,7 +209,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
 
       it 'can accept salary format with two decimal points' do
@@ -223,7 +224,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
 
       it 'can not accept salary format with more than two decimal points' do
@@ -231,7 +232,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
     end
 
@@ -254,7 +255,7 @@ RSpec.describe Vacancy, type: :model do
         vacancy = build(:vacancy, minimum_salary: 20, maximum_salary: 10)
 
         expect(vacancy.valid?).to be false
-        expect(vacancy.errors.messages[:maximum_salary]).to eq(['must be higher than the minimum salary'])
+        expect(vacancy.errors.messages[:maximum_salary]).to eq(['Maximum salary must be more than the minimum salary'])
       end
     end
 
