@@ -125,6 +125,10 @@
         "value": "${dsi_user_worksheet_gid}"
       },
       {
+        "name": "DSI_APPROVER_WORKSHEET_GID",
+        "value": "${dsi_approver_worksheet_gid}"
+      },
+      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },

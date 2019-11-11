@@ -1,7 +1,9 @@
 require 'dfe_sign_in_api'
 require 'spreadsheet_writer'
+require 'date_helper'
 
 class AddDSIApproversToSpreadsheet
+  include DateHelper
   def initialize
     @worksheet = Spreadsheet::Writer.new(DSI_USER_SPREADSHEET_ID, DSI_APPROVER_WORKSHEET_GID, true)
   end
@@ -47,8 +49,8 @@ class AddDSIApproversToSpreadsheet
         user['organisation']['phaseOfEducation'],
         user['organisation']['telephone'],
         user['organisation']['regionCode'],
-        user['organisation']['createdAt'],
-        user['organisation']['updatedAt']
+        format_datetime_with_seconds(user['organisation']['createdAt']),
+        format_datetime_with_seconds(user['organisation']['updatedAt'])
       ]
     end
   end
