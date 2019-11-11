@@ -10,8 +10,4 @@ module ValidatorConcerns
   def error_message(record, attribute, message)
     record.errors[attribute] << message
   end
-
-  def cant_be_blank_message
-    I18n.t('errors.messages.blank')
-  end
 end

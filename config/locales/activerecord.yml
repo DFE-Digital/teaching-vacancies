@@ -1,8 +1,5 @@
 en:
-  number:
-    format:
-      delimiter: ","
-  vacancy_errors: &vacancy_errors_labels
+  job_specification_errors: &job_specification_errors
     job_title:
       blank: Enter a job title
       too_short: Job title must be at least %{count} characters
@@ -10,11 +7,13 @@ en:
     job_description:
       blank: Enter a job description
       too_short: Job description must be at least %{count} characters
-      too_long: Job description must be at least %{count} characters
+      too_long: Job description must not be more than %{count} characters
     minimum_salary:
       blank: Enter a minimum salary
     working_patterns:
       blank: Select a working pattern
+    salary:
+      more_than_maxiumum: "%{salary} must be less than %{count}"
   application_details_errors: &application_details_errors
     contact_email:
       blank: Enter a contact email
@@ -30,44 +29,37 @@ en:
       blank: Enter the date the role will be listed
       before_today: Date role will be listed must be either today or in the future
       invalid: Enter the date the role will be listed in the correct format
+  candidate_specification_errors: &candidate_specification_errors
+    education:
+      blank: Enter essential educational requirements
+      too_long: Education must not be more than %{count} characters
+    experience:
+      blank: Enter essential skills and experience
+      too_long: Skills and experience must not be more than %{count} characters
+    qualifications:
+      blank: Enter essential qualifications
+      too_long: Qualifications must not be more than %{count} characters
   errors:
     format: "%{message}"
     title: "Please correct the following %{errors} in your listing:"
     messages:
-      too_short:
-        other: is too short (minimum is %{count} characters)
-      too_long:
-        other: is too long (maximum is %{count} characters)
-      less_than_or_equal_to: must not be more than %{count}
       taken: has already been taken
       blank: can't be blank
       salary:
-        invalid_format: "must be entered in one of the following formats: 25000, 25,000 or 25000.00"
-        lower_than_minimum_payscale: must be at least %{minimum_salary}
-      email:
-        invalid: is not a valid email address
+        invalid_format: "%{salary} must be entered in one of the following formats: 25000, 25,000 or 25000.00"
+        lower_than_minimum_payscale: Minimum salary must be at least %{minimum_salary}
   activemodel:
     errors:
       models:
         job_specification_form:
           attributes:
-            <<: *vacancy_errors_labels
-            salary:
-              more_than_maxiumum: "%{salary} must be less than %{count}"
+            <<: *job_specification_errors
         application_details_form:
           attributes:
             <<: *application_details_errors
         candidate_specification_form:
           attributes:
-            education:
-              blank: Enter essential educational requirements
-              too_long: Education must not be more than %{count} characters
-            experience:
-              blank: Enter essential skills and experience
-              too_long: Skills and experience must not be more than %{count} characters
-            qualifications:
-              blank: Enter essential qualifications
-              too_long: Qualifications must not be more than %{count} characters
+            <<: *candidate_specification_errors
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
@@ -78,16 +70,11 @@ en:
       models:
         vacancy:
           attributes:
-            <<: *vacancy_errors_labels
+            <<: *job_specification_errors
+            <<: *candidate_specification_errors
             <<: *application_details_errors
             maximum_salary:
               greater_than_minimum_salary: Maximum salary must be more than the minimum salary
-            experience:
-              blank: Enter essential skills and experience
-            education:
-              blank: Enter essential educational requirements
-            qualifications:
-              blank: Enter essential qualifications
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Enter the time the application is due in the correct format

@@ -86,17 +86,17 @@ RSpec.describe Vacancy, type: :model do
 
       it '#experience' do
         expect(subject.errors.messages[:experience].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.experience.too_long', count: 1000))
       end
 
       it '#education' do
         expect(subject.errors.messages[:education].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.education.too_long', count: 1000))
       end
 
       it '#qualifications' do
         expect(subject.errors.messages[:qualifications].first)
-          .to eq(I18n.t('errors.messages.too_long.other', count: 1000))
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.too_long', count: 1000))
       end
     end
 
@@ -130,7 +130,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -139,7 +139,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -148,7 +148,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
         expect(job.errors.messages[:maximum_salary]).to be_empty
       end
 
@@ -158,7 +158,7 @@ RSpec.describe Vacancy, type: :model do
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary]).to be_empty
         expect(job.errors.messages[:maximum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Maximum salary')])
       end
 
       it 'valid minimum_salary and greater than allowed maximum_salary' do
@@ -201,7 +201,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
 
       it 'rejects salary format with decimal points at the end' do
@@ -209,7 +209,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
 
       it 'can accept salary format with two decimal points' do
@@ -224,7 +224,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
 
       it 'can not accept salary format with more than two decimal points' do
@@ -232,7 +232,7 @@ RSpec.describe Vacancy, type: :model do
 
         expect(job.valid?).to be false
         expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format')])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
       end
     end
 
