@@ -28,7 +28,7 @@ en:
     publish_on:
       blank: Enter the date the role will be listed
       before_today: Date role will be listed must be either today or in the future
-      invalid: Enter the date the role will be listed in the correct format
+      invalid: Use the correct format for the date the role will be listed
   candidate_specification_errors: &candidate_specification_errors
     education:
       blank: Enter essential educational requirements
