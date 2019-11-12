@@ -123,7 +123,7 @@ RSpec.feature 'Copying a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
       end
 
-      expect(page).to have_content('Use the correct format for the time the application is due')
+      expect(page).to have_content('Use the correct format for the date the application is due')
     end
   end
 

@@ -36,9 +36,9 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
       validate_expiry_time_hours = [
         { value: nil, errors: ['Enter the time the application is due'] },
-        { value: 'not a number', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '14', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '0', errors: ['Enter the time the application is due in the correct format'] },
+        { value: 'not a number', errors: ['Use the correct format for the time the application is due'] },
+        { value: '14', errors: ['Use the correct format for the time the application is due'] },
+        { value: '0', errors: ['Use the correct format for the time the application is due'] },
       ]
 
       validate_expiry_time_hours.each do |h|
@@ -51,9 +51,9 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
       validate_expiry_time_minutes = [
         { value: nil, errors: ['Enter the time the application is due'] },
-        { value: 'not a number', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '-6', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '66', errors: ['Enter the time the application is due in the correct format'] },
+        { value: 'not a number', errors: ['Use the correct format for the time the application is due'] },
+        { value: '-6', errors: ['Use the correct format for the time the application is due'] },
+        { value: '66', errors: ['Use the correct format for the time the application is due'] },
       ]
 
       validate_expiry_time_minutes.each do |m|
@@ -83,7 +83,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         subject.expiry_time_meridiem = nil
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to eq(
-          ['Enter the time the application is due in the correct format']
+          ['Use the correct format for the time the application is due']
         )
       end
 

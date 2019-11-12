@@ -24,7 +24,7 @@ en:
     expires_on:
       blank: Enter the date the application is due
       before_publish_date: Application cannot be due before the job has been listed
-      invalid: Use the correct format for the time the application is due
+      invalid: Use the correct format for the date the application is due
     publish_on:
       blank: Enter the date the role will be listed
       before_today: Date role will be listed must be either today or in the future
@@ -77,7 +77,7 @@ en:
               greater_than_minimum_salary: Maximum salary must be more than the minimum salary
             expiry_time:
               blank: Enter the time the application is due
-              wrong_format: Enter the time the application is due in the correct format
+              wrong_format: Use the correct format for the time the application is due
               must_be_am_pm: Select am or pm
             starts_on:
               past: Start date must be in the future
