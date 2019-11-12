@@ -45,7 +45,7 @@
     = render partial: 'school_details'
 
     - if @vacancy.school.geolocation
-      %div#map_zoom
+      %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
       = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
                                                             lat: @vacancy.school_geolocation.x,
                                                             lng: @vacancy.school_geolocation.y }
