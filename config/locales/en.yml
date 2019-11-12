@@ -176,6 +176,8 @@ en:
     view_public_link: 'View the public page for this job'
     copy_public_url: 'copy the public URL to the clipboard'
     share_on: Share on
+    share_on_facebook: Share to Facebook
+    share_on_twitter: Share to Twitter
     share_this_job: Share this job
     published_jobs: Published jobs
     pending_jobs: Scheduled jobs
