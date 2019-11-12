@@ -1,7 +1,2 @@
 %meta{name: 'title', content: "#{content_for :page_title_prefix}".strip}/
-- if content_for :page_description
-  %meta{name: 'description', content: "#{content_for :page_description}".strip}/
-- elsif I18n.exists?("#{controller_name}.#{action_name}.page_description")
-  %meta{name: 'description', content: t("#{controller_name}.#{action_name}.page_description") }/
-- else
-  %meta{name: 'description', content: I18n.t('app.description')}/
+%meta{name: 'description', content: meta_description}/

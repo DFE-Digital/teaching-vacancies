@@ -1,10 +1,5 @@
 %meta{content: request.original_url, property: "og:url"}/
 %meta{content: "article", property: "og:type"}/
 %meta{content: "#{content_for :page_title_prefix}".strip, property: "og:title"}/
-- if content_for :page_description
-  %meta{content: "#{content_for :page_description}".strip, property: "og:description"}/
-- elsif I18n.exists?("#{controller_name}.#{action_name}.page_description")
-  %meta{content: t("#{controller_name}.#{action_name}.page_description"), property: "og:description"}/
-- else
-  %meta{content: I18n.t('app.description'), property: "og:description"}/
+%meta{content: meta_description, property: "og:description"}/
 %meta{content: URI.join(root_url, image_path('og_image.jpg')), property: "og:image"}/
