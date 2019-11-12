@@ -43,7 +43,7 @@ RSpec.describe DateFormatValidator do
     it 'does not evaluate format when there are blank fields' do
       vacancy.valid?
       expect(vacancy.errors[:publish_on])
-      .not_to include('Enter the date the role will be listed in the correct format')
+      .not_to include('Use the correct format for the date the role will be listed')
     end
   end
 
