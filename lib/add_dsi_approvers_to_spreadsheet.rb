@@ -35,6 +35,7 @@ class AddDSIApproversToSpreadsheet
     response['numberOfPages']
   end
 
+  # rubocop:disable Metrics/AbcSize
   def response_to_rows(approvers_response)
     approvers_response['users'].map do |user|
       [
@@ -43,17 +44,23 @@ class AddDSIApproversToSpreadsheet
         user['givenName'],
         user['familyName'],
         user['email'],
-        user['organisation']['URN'],
+        user['organisation']['id'],
         user['organisation']['name'],
-        user['organisation']['Status'],
-        user['organisation']['phaseOfEducation'],
+        user['organisation']['category']['name'],
+        user['organisation']['type']['name'],
+        user['organisation']['urn'],
+        user['organisation']['status']['name'],
+        format_datetime_with_seconds(user['organisation']['closedOn']),
+        user['organisation']['address'],
         user['organisation']['telephone'],
-        user['organisation']['regionCode'],
-        format_datetime_with_seconds(user['organisation']['createdAt']),
-        format_datetime_with_seconds(user['organisation']['updatedAt'])
+        user['organisation']['region']['name'],
+        user['organisation']['phaseOfEducation']['name'],
+        user['organisation']['statutoryLowAge'],
+        user['organisation']['statutoryHighAge']
       ]
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def users_nil_or_empty?(response)
     response['users'].nil? || response['users'].first.empty?

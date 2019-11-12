@@ -9,7 +9,13 @@ RSpec.describe AddDSIApproversToSpreadsheet do
   let(:response_json_1) do
     json_response(
       "users": [{
-        "organisation": {}
+        "organisation": {
+          "category": {},
+          "type": {},
+          "status": {},
+          "region": {},
+          "phaseOfEducation": {}
+        }
       }],
       "numberOfPages": 1
     )
@@ -18,7 +24,13 @@ RSpec.describe AddDSIApproversToSpreadsheet do
   let(:response_json_2) do
     json_response(
       "users": [{
-        "organisation": {}
+        "organisation": {
+          "category": {},
+          "type": {},
+          "status": {},
+          "region": {},
+          "phaseOfEducation": {}
+        }
       }],
       "numberOfPages": 2
     )
@@ -27,7 +39,13 @@ RSpec.describe AddDSIApproversToSpreadsheet do
   let(:response_json_3) do
     json_response(
       "users": [{
-        "organisation": {}
+        "organisation": {
+          "category": {},
+          "type": {},
+          "status": {},
+          "region": {},
+          "phaseOfEducation": {}
+        }
       }],
       "numberOfPages": 3
     )
@@ -204,14 +222,19 @@ RSpec.describe AddDSIApproversToSpreadsheet do
         user['givenName'],
         user['familyName'],
         user['email'],
-        user['organisation']['URN'],
+        user['organisation']['id'],
         user['organisation']['name'],
-        user['organisation']['Status'],
-        user['organisation']['phaseOfEducation'],
+        user['organisation']['category']['name'],
+        user['organisation']['type']['name'],
+        user['organisation']['urn'],
+        user['organisation']['status']['name'],
+        format_datetime_with_seconds(user['organisation']['closedOn']),
+        user['organisation']['address'],
         user['organisation']['telephone'],
-        user['organisation']['regionCode'],
-        format_datetime_with_seconds(user['organisation']['createdAt']),
-        format_datetime_with_seconds(user['organisation']['updatedAt']),
+        user['organisation']['region']['name'],
+        user['organisation']['phaseOfEducation']['name'],
+        user['organisation']['statutoryLowAge'],
+        user['organisation']['statutoryHighAge']
       ]
     end
   end
