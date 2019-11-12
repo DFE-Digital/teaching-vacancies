@@ -1,34 +1,38 @@
 {
-  "users": [{
-    "organisation": {
-      "id": "13F20E54-79EA-4146-8E39-18197576F024",
-      "name": "Department for Education",
-      "Category": "002",
-      "Type": null,
-      "URN": null,
-      "UID": null,
-      "UKPRN": null,
-      "EstablishmentNumber": "001",
-      "Status": 1,
-      "ClosedOn": null,
-      "Address": null,
-      "phaseOfEducation": null,
-      "statutoryLowAge": null,
-      "statutoryHighAge": null,
-      "telephone": null,
-      "regionCode": null,
-      "legacyId": "1031237",
-      "companyRegistrationNumber": "1234567",
-      "createdAt": "2019-02-20T14:27:59.020Z",
-      "updatedAt": "2019-02-20T14:28:38.223Z"
-    },
-    "roleName": "Approver",
-    "roleId": 10000,
-    "userId": "BBB-222",
-    "email": "foo@example.com",
-    "familyName": "Johnson",
-    "givenName": "Roger"
-  }],
+  "users": [
+    {
+      "organisation": {
+        "id": "13F20E54-79EA-4146-8E39-18197576F024",
+        "name": "Department for Education",
+        "category": {
+          "name": "Establishment"
+        },
+        "type": {
+          "name": "Voluntary Aided School"
+        },
+        "urn": "000013",
+        "status": {
+          "name": "Open"
+        },
+        "closedOn": null, 
+        "address": "Some Address, Some Address, Some Address, Some Address, AAA BBX",
+        "telephone": "00000000001",
+        "region": {
+          "name": "West Midlands"
+        },
+        "phaseOfEducation": {
+          "name": "Primary"
+        },
+        "statutoryLowAge": 3,
+        "statutoryHighAge": 11
+      },
+      "roleName": "Approver",
+      "userId": "AAAA-CCC",
+      "email": "bar@example.com",
+      "familyName": "Boo",
+      "givenName": "Far"
+    }
+  ],
   "numberOfRecords": 1,
   "page": 2,
   "numberOfPages": 2

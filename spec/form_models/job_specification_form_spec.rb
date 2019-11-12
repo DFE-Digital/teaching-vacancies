@@ -4,10 +4,99 @@ RSpec.describe JobSpecificationForm, type: :model do
   subject { JobSpecificationForm.new({}) }
 
   context 'validations' do
-    it { should validate_presence_of(:job_title) }
-    it { should validate_presence_of(:job_description) }
-    it { should validate_presence_of(:working_patterns) }
-    it { should validate_presence_of(:minimum_salary) }
+    describe '#working_patterns' do
+      let(:job_specification) { JobSpecificationForm.new(working_patterns: nil) }
+
+      it 'requests an entry in the field' do
+        expect(job_specification.valid?).to be false
+        expect(job_specification.errors.messages[:working_patterns][0])
+          .to eq('Select a working pattern')
+      end
+    end
+
+    describe '#job_title' do
+      let(:job_specification) { JobSpecificationForm.new(job_title: job_title) }
+
+      context 'when title is blank' do
+        let(:job_title) { nil }
+
+        it 'requests an entry in the field' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_title][0])
+            .to eq('Enter a job title')
+        end
+      end
+
+      context 'when title is too short' do
+        let(:job_title) { 'aa' }
+
+        it 'validates minimum length' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_title][0])
+            .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_short', count: 4))
+        end
+      end
+
+      context 'when title is too long' do
+        let(:job_title) { 'Long title' * 100 }
+
+        it 'validates max length' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_title][0])
+            .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_long', count: 100))
+        end
+      end
+    end
+
+    describe '#job_description' do
+      let(:job_specification) { JobSpecificationForm.new(job_description: job_description) }
+
+      context 'when description is blank' do
+        let(:job_description) { nil }
+
+        it 'requests an entry in the field' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_description][0])
+            .to eq('Enter a job description')
+        end
+      end
+
+      context 'when description is too short' do
+        let(:job_description) { 'short' }
+
+        it 'validates minimum length' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_description][0])
+            .to eq(
+              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_short',
+                count: 10)
+              )
+        end
+      end
+
+      context 'when description is too long' do
+        let(:job_description) { 'Long text' * 10000 }
+
+        it 'validates max length' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_description][0])
+            .to eq(
+              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_long',
+                count: 50000)
+              )
+        end
+      end
+    end
+
+    describe '#minimum_salary' do
+      let(:job_specification) { JobSpecificationForm.new(minimum_salary: nil) }
+
+      it 'requests an entry in the field' do
+        expect(job_specification.valid?).to be false
+        expect(job_specification.errors.messages[:minimum_salary][0])
+          .to eq('Enter a minimum salary')
+      end
+    end
 
     describe '#maximum_salary' do
       let(:job_specification) do
@@ -19,7 +108,7 @@ RSpec.describe JobSpecificationForm, type: :model do
       it 'the maximum salary should be higher than the minimum salary' do
         expect(job_specification.valid?).to be false
         expect(job_specification.errors.messages[:maximum_salary][0])
-          .to eq('must be higher than the minimum salary')
+          .to eq('Maximum salary must be more than the minimum salary')
       end
     end
   end
@@ -38,7 +127,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:starts_on)
       expect(job_specification_form.errors.messages[:starts_on][0])
-        .to eq('can\'t be in the past')
+        .to eq('Start date must be in the future')
     end
 
     it 'must be before the ends_on date' do
@@ -48,7 +137,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:starts_on)
       expect(job_specification_form.errors.messages[:starts_on][0])
-        .to eq('can\'t be after the end date')
+        .to eq('Start date must be before end date')
     end
 
     it 'must be after the closing date' do
@@ -58,7 +147,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:starts_on)
       expect(job_specification_form.errors.messages[:starts_on][0])
-        .to eq('must be after the closing date')
+        .to eq('Start date must be after application deadline')
     end
   end
 
@@ -76,7 +165,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:ends_on)
       expect(job_specification_form.errors.messages[:ends_on][0])
-        .to eq('can\'t be in the past')
+        .to eq('End date must be in the future')
     end
 
     it 'must be after the closing date' do
@@ -86,7 +175,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form).to have(1).errors_on(:ends_on)
       expect(job_specification_form.errors.messages[:ends_on][0])
-        .to eq('must be after the closing date')
+        .to eq('End date must be after application deadline')
     end
   end
 

@@ -8,5 +8,6 @@ namespace :spreadsheets do
     AddVacancyPublishFeedbackToSpreadsheetJob.perform_later
     AddGeneralFeedbackToSpreadsheetJob.perform_later
     AddDSIUsersToSpreadsheetJob.perform_later
+    AddDSIApproversToSpreadsheetJob.perform_later
   end
 end

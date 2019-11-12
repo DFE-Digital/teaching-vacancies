@@ -11,28 +11,32 @@ RSpec.describe SalaryValidator do
         model.amount = '£123.33'
 
         expect(model).to_not be_valid
-        expect(model.errors.messages[:amount]).to eq([I18n.t('errors.messages.salary.invalid_format')])
+        expect(model.errors.messages[:amount])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Amount')])
       end
 
       it 'does not allow commas' do
         model.amount = '300,02'
 
         expect(model).to_not be_valid
-        expect(model.errors.messages[:amount]).to eq([I18n.t('errors.messages.salary.invalid_format')])
+        expect(model.errors.messages[:amount])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Amount')])
       end
 
       it 'does not allow fullstops if the decimal separation point is wrong' do
         model.amount = '300.330'
 
         expect(model).to_not be_valid
-        expect(model.errors.messages[:amount]).to eq([I18n.t('errors.messages.salary.invalid_format')])
+        expect(model.errors.messages[:amount])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Amount')])
       end
 
       it 'does not allow any non numeric characters' do
         model.amount = 'A300330'
 
         expect(model).to_not be_valid
-        expect(model.errors.messages[:amount]).to eq([I18n.t('errors.messages.salary.invalid_format')])
+        expect(model.errors.messages[:amount])
+          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Amount')])
       end
 
       it 'allows fullstops if the decimal separation point is correct' do
@@ -51,7 +55,7 @@ RSpec.describe SalaryValidator do
         model.amount = '200000000000000'
 
         expect(model).to_not be_valid
-        expect(model.errors.messages[:amount]).to eq(['must not be more than £200000'])
+        expect(model.errors.messages[:amount]).to eq(['Amount must be less than £200,000'])
       end
     end
 

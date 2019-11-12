@@ -32,4 +32,8 @@ RSpec.describe 'rake spreadsheets:update', type: :task do
   it 'queues the add dsi users to spreadsheet job' do
     expect { task.execute }.to have_enqueued_job(AddDSIUsersToSpreadsheetJob)
   end
+
+  it 'queues the add dsi approvers to spreadsheet job' do
+    expect { task.execute }.to have_enqueued_job(AddDSIApproversToSpreadsheetJob)
+  end
 end

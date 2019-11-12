@@ -58,7 +58,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(text: I18n.t('jobs.job_title')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank'))
+          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank')))
         end
 
         within_row_for(text: I18n.t('jobs.description')) do
@@ -148,11 +148,13 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(text: I18n.t('jobs.contact_email')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.contact_email.blank'))
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.application_details_form.attributes.contact_email.blank'))
         end
 
         within_row_for(element: 'legend', text: I18n.t('jobs.deadline_date')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'))
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.application_details_form.attributes.expires_on.blank'))
         end
 
         within_row_for(element: 'legend', text: strip_tags(I18n.t('jobs.deadline_time_html'))) do
@@ -160,7 +162,8 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(element: 'legend', text: I18n.t('jobs.publication_date')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'))
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.application_details_form.attributes.publish_on.blank'))
         end
       end
 
@@ -355,7 +358,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: ''
           click_on 'Save and continue'
 
-          expect(page).to have_content('Job title can\'t be blank')
+          expect(page).to have_content('Enter a job title')
 
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
           click_on 'Save and continue'
@@ -404,7 +407,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'candidate_specification_form[education]', with: ''
           click_on 'Save and continue'
 
-          expect(page).to have_content('Education can\'t be blank')
+          expect(page).to have_content('Enter essential educational requirements')
 
           fill_in 'candidate_specification_form[education]', with: 'essential requirements'
           click_on 'Save and continue'
@@ -425,7 +428,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'not a valid email'
           click_on 'Save and continue'
 
-          expect(page).to have_content('Contact email is invalid')
+          expect(page).to have_content('Enter an email address in the correct format, like name@example.com')
 
           fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
           click_on 'Save and continue'
@@ -444,7 +447,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content('Application link is not a valid URL')
+          expect(page).to have_content('Enter an application link in the correct format, like http://www.school.ac.uk')
 
           fill_in 'application_details_form[application_link]', with: 'www.valid-domain.com'
           click_on 'Save and continue'

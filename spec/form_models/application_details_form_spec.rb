@@ -4,9 +4,10 @@ RSpec.describe ApplicationDetailsForm, type: :model do
   subject { ApplicationDetailsForm.new({}) }
 
   context 'validations' do
-    it { should validate_presence_of(:contact_email) }
-    it { should validate_presence_of(:publish_on) }
-    it { should validate_presence_of(:expires_on) }
+    it { should validate_presence_of(:contact_email).with_message('Enter a contact email') }
+    it { should validate_presence_of(:publish_on).with_message('Enter the date the role will be listed') }
+    it { should validate_presence_of(:expires_on).with_message('Enter the date the application is due') }
+    it { should validate_presence_of(:application_link).with_message('Enter a link for jobseekers to apply') }
 
     describe '#application_link' do
       let(:application_details) { ApplicationDetailsForm.new(application_link: 'not a url') }
@@ -14,7 +15,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'checks for a valid url' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:application_link][0])
-          .to eq('is not a valid URL')
+          .to eq('Enter an application link in the correct format, like http://www.school.ac.uk')
       end
     end
 
@@ -35,9 +36,9 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
       validate_expiry_time_hours = [
         { value: nil, errors: ['Enter the time the application is due'] },
-        { value: 'not a number', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '14', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '0', errors: ['Enter the time the application is due in the correct format'] },
+        { value: 'not a number', errors: ['Use the correct format for the time the application is due'] },
+        { value: '14', errors: ['Use the correct format for the time the application is due'] },
+        { value: '0', errors: ['Use the correct format for the time the application is due'] },
       ]
 
       validate_expiry_time_hours.each do |h|
@@ -50,9 +51,9 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
       validate_expiry_time_minutes = [
         { value: nil, errors: ['Enter the time the application is due'] },
-        { value: 'not a number', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '-6', errors: ['Enter the time the application is due in the correct format'] },
-        { value: '66', errors: ['Enter the time the application is due in the correct format'] },
+        { value: 'not a number', errors: ['Use the correct format for the time the application is due'] },
+        { value: '-6', errors: ['Use the correct format for the time the application is due'] },
+        { value: '66', errors: ['Use the correct format for the time the application is due'] },
       ]
 
       validate_expiry_time_minutes.each do |m|
@@ -66,7 +67,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'displays error if am/pm field is blank' do
         subject.expiry_time_meridiem = ''
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(['Enter am or pm'])
+        expect(subject.errors.messages[:expiry_time]).to eq(['Select am or pm'])
       end
 
       it 'displays only one error message at a time' do
@@ -82,7 +83,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         subject.expiry_time_meridiem = nil
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to eq(
-          ['Enter the time the application is due in the correct format']
+          ['Use the correct format for the time the application is due']
         )
       end
 
@@ -117,7 +118,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'checks for a valid email format' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:contact_email][0])
-          .to eq('is invalid')
+          .to eq('Enter an email address in the correct format, like name@example.com')
       end
     end
 
@@ -130,7 +131,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'the expiry date must be greater than the publish date' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:expires_on][0])
-          .to eq('can\'t be before the publish date')
+        .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date'))
       end
     end
 
@@ -140,7 +141,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'the publish date must be present' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:publish_on][0])
-          .to eq('can\'t be before today')
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
       end
     end
   end
