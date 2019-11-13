@@ -9,13 +9,7 @@ RSpec.describe AddDSIApproversToSpreadsheet do
   let(:response_json_1) do
     json_response(
       "users": [{
-        "organisation": {
-          "category": {},
-          "type": {},
-          "status": {},
-          "region": {},
-          "phaseOfEducation": {}
-        }
+        "organisation": {}
       }],
       "numberOfPages": 1
     )
@@ -131,6 +125,17 @@ RSpec.describe AddDSIApproversToSpreadsheet do
 
         subject.all_service_approvers
       end
+
+      scenario 'when there is a missing key, it returns null for the field' do
+        stub_dsi_approver_api_initial_call(response_json_1)
+        stub_dsi_approver_api_response_for_page(1, response_json_1)
+        stub_spreadsheet_writer
+
+        expect(Rails.logger).not_to receive(:warn)
+        .with("DSI API failed to respond at page 1 with error: undefined method `[]' for nil:NilClass")
+
+        subject.all_service_approvers
+      end
     end
 
     context 'when there is unsuccessful response' do
@@ -222,19 +227,19 @@ RSpec.describe AddDSIApproversToSpreadsheet do
         user['givenName'],
         user['familyName'],
         user['email'],
-        user['organisation']['id'],
-        user['organisation']['name'],
-        user['organisation']['category']['name'],
-        user['organisation']['type']['name'],
-        user['organisation']['urn'],
-        user['organisation']['status']['name'],
-        format_datetime_with_seconds(user['organisation']['closedOn']),
-        user['organisation']['address'],
-        user['organisation']['telephone'],
-        user['organisation']['region']['name'],
-        user['organisation']['phaseOfEducation']['name'],
-        user['organisation']['statutoryLowAge'],
-        user['organisation']['statutoryHighAge']
+        user.dig('organisation', 'id'),
+        user.dig('organisation', 'name'),
+        user.dig('organisation', 'category', 'name'),
+        user.dig('organisation', 'type', 'name'),
+        user.dig('organisation', 'urn'),
+        user.dig('organisation', 'status', 'name'),
+        format_datetime_with_seconds(user.dig('organisation', 'closedOn')),
+        user.dig('organisation', 'address'),
+        user.dig('organisation', 'telephone'),
+        user.dig('organisation', 'region', 'name'),
+        user.dig('organisation', 'phaseOfEducation', 'name'),
+        user.dig('organisation', 'statutoryLowAge'),
+        user.dig('organisation', 'statutoryHighAge'),
       ]
     end
   end
