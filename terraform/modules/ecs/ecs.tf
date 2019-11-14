@@ -580,6 +580,23 @@ module "update_spreadsheets_task" {
   event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
 
+module "update_dsi_spreadsheets_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_update_dsi_spreadsheets"
+  task_description = "Update DSI spreadsheets"
+  task_command     = "${var.update_dsi_spreadsheets_task_command}"
+  task_schedule    = "${var.update_dsi_spreadsheets_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
+}
+
 module "performance_platform_submit_task" {
   source = "../scheduled-ecs-task"
 

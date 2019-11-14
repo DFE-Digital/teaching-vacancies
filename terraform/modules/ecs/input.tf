@@ -153,7 +153,12 @@ variable "update_spreadsheets_task_command" {
   type = "list"
 }
 
+variable "update_dsi_spreadsheets_task_command" {
+  type = "list"
+}
+
 variable "update_spreadsheets_task_schedule" {}
+variable "update_dsi_spreadsheets_task_schedule" {}
 variable "send_job_alerts_daily_email_task_schedule" {}
 variable "send_feedback_prompt_email_task_schedule" {}
 
