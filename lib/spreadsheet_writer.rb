@@ -9,14 +9,14 @@ module Spreadsheet
     end
 
     def append_rows(rows)
-      pos = worksheet.num_rows
+      pos = worksheet.max_rows
       rows.each_with_index do |row, i|
         append_row(row, pos + i, false)
       end
       worksheet.save
     end
 
-    def append_row(row, last_pos = worksheet.num_rows, save = true)
+    def append_row(row, last_pos = worksheet.max_rows, save = true)
       pos = last_pos + 1
       row.each_with_index do |cell, index|
         worksheet[pos, index + 1] = cell
@@ -25,19 +25,17 @@ module Spreadsheet
     end
 
     def last_row
-      return nil if worksheet.num_rows <= 1
+      return nil if worksheet.max_rows <= 1
 
-      worksheet.rows[worksheet.num_rows - 1]
+      worksheet.rows[worksheet.max_rows - 1]
     end
 
     def clear_all_rows
-      return if worksheet.num_rows <= 1
+      return if worksheet.max_rows <= 1
 
-      number_of_rows = (worksheet.num_rows - 1)
-
+      number_of_rows = (worksheet.max_rows - 1)
       worksheet.delete_rows(2, number_of_rows)
       worksheet.save
-      worksheet.reload
     end
 
     private

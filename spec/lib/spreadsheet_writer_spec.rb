@@ -6,13 +6,13 @@ RSpec.describe 'Spreadsheet::Writer' do
   end
 
   let(:session) { double(:session) }
-  let(:worksheet) { double(num_rows: 0, save: nil) }
+  let(:worksheet) { double(max_rows: 0, save: nil) }
   let(:spreadsheet) { double(worksheets: [worksheet]) }
 
   describe 'it writes to a specified worksheet' do
     it 'the worksheet position can be configured' do
-      worksheet = double(num_rows: 2)
-      spreadsheet = double(worksheets: [double(num_rows: 0, save: nil),
+      worksheet = double(max_rows: 2)
+      spreadsheet = double(worksheets: [double(max_rows: 0, save: nil),
                                         worksheet])
       worksheet_position = 1
 
@@ -25,7 +25,7 @@ RSpec.describe 'Spreadsheet::Writer' do
 
     context 'when use_gid? is set' do
       it 'the worksheet position can be configured' do
-        worksheet = double(num_rows: 2)
+        worksheet = double(max_rows: 2)
         spreadsheet = double
         gid = 2051310096
 
@@ -61,7 +61,7 @@ RSpec.describe 'Spreadsheet::Writer' do
     end
 
     context 'when there are already rows present' do
-      let(:worksheet) { double(num_rows: 100, save: nil) }
+      let(:worksheet) { double(max_rows: 100, save: nil) }
 
       it 'writes a row' do
         allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
@@ -102,7 +102,7 @@ RSpec.describe 'Spreadsheet::Writer' do
     end
 
     context 'when there are already rows present' do
-      let(:worksheet) { double(num_rows: 100, save: nil) }
+      let(:worksheet) { double(max_rows: 100, save: nil) }
 
       it 'writes the rows' do
         allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
@@ -123,7 +123,7 @@ RSpec.describe 'Spreadsheet::Writer' do
 
   describe '#last_row' do
     let(:data) { [['foo', 'bar'], ['fizz', 'buzz']] }
-    let(:worksheet) { double(num_rows: 2, save: nil, rows: double) }
+    let(:worksheet) { double(max_rows: 2, save: nil, rows: double) }
     let(:spreadsheet) { double(worksheets: [worksheet]) }
     let(:row) { Spreadsheet::Writer.new(:spreadsheet_id).last_row }
 
@@ -155,7 +155,7 @@ RSpec.describe 'Spreadsheet::Writer' do
     end
 
     context 'when a spreadsheet has data in it' do
-      let(:worksheet) { double(num_rows: 10, save: nil, reload: nil) }
+      let(:worksheet) { double(max_rows: 10, save: nil, reload: nil) }
 
       before(:each) do
         allow(GoogleDrive::Session).to receive(:from_service_account_key).and_return(session)
@@ -174,14 +174,13 @@ RSpec.describe 'Spreadsheet::Writer' do
       it 'deletes all the rows with data' do
         expect(worksheet).to receive(:delete_rows).with(2, 9)
         expect(worksheet).to receive(:save).once
-        expect(worksheet).to receive(:reload).once
 
         Spreadsheet::Writer.new(:spreadsheet_id).clear_all_rows
       end
     end
 
     context 'when a spreadsheet has no data in it' do
-      let(:worksheet) { double(num_rows: 0, save: nil) }
+      let(:worksheet) { double(max_rows: 0, save: nil) }
 
       it 'does not attempt to clear it' do
         expect(worksheet).to_not receive(:delete_rows).with(0, 0)
