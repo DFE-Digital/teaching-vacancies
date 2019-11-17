@@ -195,7 +195,32 @@ class VacancySearchBuilder
   def salary_query
     return if minimum_salary.blank?
 
-    greater_than(minimum_salary: minimum_salary.to_i)
+    {
+      bool: {
+        should: [
+          {
+            bool: {
+              must: [
+                range: {
+                  "maximum_salary": {
+                    gte: minimum_salary.to_i
+                  }
+                }
+              ]
+            }
+          },
+          {
+            bool: {
+              must_not: {
+                exists: {
+                  field: 'maximum_salary'
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
   end
 
   def sort_query
