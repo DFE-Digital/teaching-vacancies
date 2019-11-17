@@ -68,8 +68,8 @@ RSpec.describe VacancyAlertSearchBuilder do
     expect(builder[:search_sort]).to eq(expected_sort_query)
   end
 
-  it 'includes both the minimum and maximum salary when both are provided' do
-    filters = OpenStruct.new(minimum_salary: 200, maximum_salary: 20000)
+  it 'includes the minimum salary value when it is provided' do
+    filters = OpenStruct.new(minimum_salary: 20000)
     builder = VacancyAlertSearchBuilder.new(filters: filters, from: from_date, to: to_date).call
 
     expected_hash = [
@@ -77,78 +77,11 @@ RSpec.describe VacancyAlertSearchBuilder do
         bool: {
           should: [
             {
-              range: {
-                minimum_salary: {
-                  gte: 200
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        bool: {
-          should: [
-            {
               bool: {
-                should: [
-                  {
-                    range: {
-                      maximum_salary: {
-                        lte: 20000
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              bool: {
-                must_not: {
-                  exists: {
-                    field: 'maximum_salary'
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
-
-    expect(builder).to be_a(Hash)
-    expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-  end
-
-  it 'includes only the maximum salary value when no minimum is provided' do
-    filters = OpenStruct.new(minimum_salary: nil, maximum_salary: 20000)
-    builder = VacancyAlertSearchBuilder.new(filters: filters, from: from_date, to: to_date).call
-
-    expected_hash = [
-      {
-        bool: {
-          should: [
-            {
-              range: {
-                maximum_salary: {
-                  lte: 20000
-                }
-              }
-            }
-          ]
-        }
-      },
-      {
-        bool: {
-          should: [
-            {
-              bool: {
-                should: [
-                  {
-                    range: {
-                      maximum_salary: {
-                        lte: 20000
-                      }
+                must: [
+                  range: {
+                    maximum_salary: {
+                      gte: 20000
                     }
                   }
                 ]
