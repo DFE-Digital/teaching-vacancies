@@ -67,41 +67,4 @@ RSpec.describe VacancyAlertSearchBuilder do
 
     expect(builder[:search_sort]).to eq(expected_sort_query)
   end
-
-  it 'includes the minimum salary value when it is provided' do
-    filters = OpenStruct.new(minimum_salary: 20000)
-    builder = VacancyAlertSearchBuilder.new(filters: filters, from: from_date, to: to_date).call
-
-    expected_hash = [
-      {
-        bool: {
-          should: [
-            {
-              bool: {
-                must: [
-                  range: {
-                    maximum_salary: {
-                      gte: 20000
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              bool: {
-                must_not: {
-                  exists: {
-                    field: 'maximum_salary'
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
-
-    expect(builder).to be_a(Hash)
-    expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-  end
 end
