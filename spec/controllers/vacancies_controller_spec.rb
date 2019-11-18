@@ -105,39 +105,41 @@ RSpec.describe VacanciesController, type: :controller do
         }
       end
 
+      let(:search_path) { jobs_path(params: search_params.merge(expanded_search_params), anchor: 'jobs_sort') }
+
       context 'when parameters include the sort_by_most_recent jobs_sort option' do
         let(:params) { search_params.merge(jobs_sort: 'sort_by_most_recent') }
+        let(:expanded_search_params) { { sort_column: 'publish_on', sort_order: 'desc' } }
 
         it 'redirects to the full search path' do
-          expanded_search_params = { sort_column: 'publish_on', sort_order: 'desc' }
-          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+          expect(subject).to redirect_to(search_path)
         end
       end
 
       context 'when parameters include the sort_by_most_ancient jobs_sort option' do
         let(:params) { search_params.merge(jobs_sort: 'sort_by_most_ancient') }
+        let(:expanded_search_params) { { sort_column: 'publish_on', sort_order: 'asc' } }
 
         it 'redirects to the full search path' do
-          expanded_search_params = { sort_column: 'publish_on', sort_order: 'asc' }
-          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+          expect(subject).to redirect_to(search_path)
         end
       end
 
       context 'when parameters include the sort_by_earliest_closing_date jobs_sort option' do
         let(:params) { search_params.merge(jobs_sort: 'sort_by_earliest_closing_date') }
+        let(:expanded_search_params) { { sort_column: 'expires_on', sort_order: 'asc' } }
 
         it 'redirects to the full search path' do
-          expanded_search_params = { sort_column: 'expires_on', sort_order: 'asc' }
-          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+          expect(subject).to redirect_to(search_path)
         end
       end
 
       context 'when parameters include the sort_by_furthest_closing_date jobs_sort option' do
         let(:params) { search_params.merge(jobs_sort: 'sort_by_furthest_closing_date') }
+        let(:expanded_search_params) { { sort_column: 'expires_on', sort_order: 'desc' } }
 
         it 'redirects to the full search path' do
-          expanded_search_params = { sort_column: 'expires_on', sort_order: 'desc' }
-          expect(subject).to redirect_to(jobs_path(params: search_params.merge(expanded_search_params)))
+          expect(subject).to redirect_to(search_path)
         end
       end
     end

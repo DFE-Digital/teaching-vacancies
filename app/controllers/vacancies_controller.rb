@@ -65,7 +65,9 @@ class VacanciesController < ApplicationController
   end
 
   def redirect_with_sort(sort_column, sort_order)
-    redirect_to jobs_path(params: search_params.merge(sort_column: sort_column, sort_order: sort_order))
+    redirect_to jobs_path(params: search_params.merge(sort_column: sort_column,
+                                                      sort_order: sort_order),
+                                                      anchor: 'jobs_sort')
   end
 
   def search_params
