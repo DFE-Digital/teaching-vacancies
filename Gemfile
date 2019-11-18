@@ -89,7 +89,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 3.12'
+  gem 'capybara', '~> 3.29'
   gem 'database_cleaner'
   gem 'mock_redis'
   gem 'poltergeist'
