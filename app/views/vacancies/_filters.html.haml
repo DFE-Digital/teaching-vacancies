@@ -39,7 +39,7 @@
   %h2.govuk-heading-m
     =t('jobs.filters.title')
 
-  = form_tag jobs_path, class: 'filters-form', method: :get do
+  = form_tag jobs_path(anchor: 'vacancy-results'), class: 'filters-form', method: :get do
     .govuk-form-group
       .js-location-finder
         = label_tag 'location', t('jobs.filters.location'), class: 'govuk-label'

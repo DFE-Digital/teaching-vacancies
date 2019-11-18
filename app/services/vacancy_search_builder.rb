@@ -195,41 +195,42 @@ class VacancySearchBuilder
   def salary_query
     return if minimum_salary.blank?
 
-    greater_than(minimum_salary: minimum_salary.to_i)
+    {
+      bool: {
+        should: [
+          less_than_maximum_salary,
+          without_a_maximum_salary
+        ]
+      }
+    }
   end
 
   def sort_query
     sort.present? ? [{ sort.column.to_sym => { order: sort.order.to_sym } }] : []
   end
 
-  def greater_than(field_value_hash)
+  def less_than_maximum_salary
     {
       bool: {
-        should: field_value_hash.map do |field, value|
-                  {
-                    range: {
-                      "#{field}": {
-                        gte: value
-                      }
-                    }
-                  }
-                end
+        must: [
+          range: {
+            "maximum_salary": {
+              gte: minimum_salary.to_i
+            }
+          }
+        ]
       }
     }
   end
 
-  def less_than(field_value_hash)
+  def without_a_maximum_salary
     {
       bool: {
-        should: field_value_hash.map do |field, value|
-                  {
-                    range: {
-                      "#{field}": {
-                        lte: value
-                      }
-                    }
-                  }
-                end
+        must_not: {
+          exists: {
+            field: 'maximum_salary'
+          }
+        }
       }
     }
   end
