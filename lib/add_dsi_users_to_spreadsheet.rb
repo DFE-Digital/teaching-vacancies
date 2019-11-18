@@ -1,40 +1,15 @@
-require 'dfe_sign_in_api'
-require 'spreadsheet_writer'
-require 'date_helper'
+require 'dsi_api_response_to_spreadsheet'
 
-class AddDSIUsersToSpreadsheet
-  include DateHelper
-
+class AddDSIUsersToSpreadsheet < DsiAPIResponseToSpreadsheet
   def initialize
     @worksheet = Spreadsheet::Writer.new(DSI_USER_SPREADSHEET_ID, DSI_USER_WORKSHEET_GID, true)
   end
 
   def all_service_users
-    number_of_pages = total_page_number
-
-    @worksheet.clear_all_rows
-    (1..number_of_pages).each do |page|
-      response = DFESignIn::API.new.users(page: page)
-      raise error_message_for(response) if users_nil_or_empty?(response)
-
-      rows = response_to_rows(response)
-      @worksheet.append_rows(rows)
-
-    rescue StandardError => e
-      Rails.logger.warn("DSI API failed to respond at page #{page} with error: #{e.message}")
-    end
-  rescue StandardError => e
-    Rails.logger.warn("DSI API failed to respond with error: #{e.message}")
+    write_all_response_to_spreadsheet(:users)
   end
 
   private
-
-  def total_page_number
-    response = DFESignIn::API.new.users
-    raise error_message_for(response) if response['numberOfPages'].nil?
-
-    response['numberOfPages']
-  end
 
   # rubocop:disable Metrics/AbcSize
   def response_to_rows(users_response)
@@ -59,12 +34,4 @@ class AddDSIUsersToSpreadsheet
     end
   end
   # rubocop:enable Metrics/AbcSize
-
-  def users_nil_or_empty?(response)
-    response['users'].nil? || response['users'].first.empty?
-  end
-
-  def error_message_for(response)
-    response['message'] || 'failed request'
-  end
 end
