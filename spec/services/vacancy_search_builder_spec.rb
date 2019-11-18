@@ -135,29 +135,40 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
-    context 'salary query' do
-      it 'only includes the minimum salary' do
-        sort = OpenStruct.new(column: :expires_on, order: :desc)
-        filters = OpenStruct.new(minimum_salary: 20000)
-        builder = described_class.new(filters: filters, sort: sort).call
+    it 'builds a salary query when a minimum salary is provided' do
+      sort = OpenStruct.new(column: :expires_on, order: :desc)
+      filters = OpenStruct.new(minimum_salary: 20000)
+      builder = described_class.new(filters: filters, sort: sort).call
 
-        expected_hash = {
-          bool: {
-            should: [
-              {
-                range: {
-                  minimum_salary: {
-                    gte: 20000
+      expected_hash = {
+        bool: {
+          should: [
+            {
+              bool: {
+                must: [
+                  range: {
+                    maximum_salary: {
+                      gte: 20000
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              bool: {
+                must_not: {
+                  exists: {
+                    field: 'maximum_salary'
                   }
                 }
               }
-            ]
-          }
+            }
+          ]
         }
+      }
 
-        expect(builder).to be_a(Hash)
-        expect(builder[:search_query][:bool][:must]).to include(expected_hash)
-      end
+      expect(builder).to be_a(Hash)
+      expect(builder[:search_query][:bool][:must]).to include(expected_hash)
     end
 
     it 'builds a published status query by default' do
