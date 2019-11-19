@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -qq -y \
   libpq-dev \
   --fix-missing --no-install-recommends
 
+ENV OPENSSL_CONF=/etc/ssl/
 ENV PHANTOM_JS="phantomjs-2.1.1-linux-x86_64"
 RUN curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
 RUN tar xvjf $PHANTOM_JS.tar.bz2
