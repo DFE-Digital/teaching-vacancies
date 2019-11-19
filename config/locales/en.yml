@@ -459,8 +459,6 @@ en:
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
-    url:
-      invalid: is not a valid URL
     terms_and_conditions:
       errors_present: Please correct the following errors
     feedback:
