@@ -31,7 +31,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
     sign_in_user
 
     expect(page).to have_content(I18n.t('static_pages.not_authorised.title'))
-    expect(page).to have_content(options['email'])
+    expect(page).to have_content(options[:email])
     within('.govuk-header__navigation') { expect(page).not_to have_content(I18n.t('nav.school_page_link')) }
   end
 
@@ -122,7 +122,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
     context 'with valid credentials but no authorisation' do
       before(:each) do
-        stub_authentication_step
+        stub_authentication_step(email: 'another_email@example.com')
         stub_authorisation_step_with_not_found
       end
 
