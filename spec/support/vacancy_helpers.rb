@@ -85,8 +85,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
-    expect(page).to have_content(vacancy.starts_on)
-    expect(page).to have_content(vacancy.ends_on)
+    expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
+    expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
     expect(page.html).to include(vacancy.education)
     expect(page.html).to include(vacancy.qualifications)
@@ -116,8 +116,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
-    expect(page).to have_content(vacancy.starts_on)
-    expect(page).to have_content(vacancy.ends_on)
+    expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
+    expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
     expect(page.html).to include(vacancy.education)
     expect(page.html).to include(vacancy.qualifications)
@@ -140,7 +140,7 @@ module VacancyHelpers
     expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
     expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
     expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.starts_on)
+    expect(page.find('.vacancy')).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
 
     # rubocop:disable Style/GuardClause
