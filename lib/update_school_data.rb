@@ -24,6 +24,7 @@ class UpdateSchoolData
 
     set_properties(school, row)
     set_region(school, row)
+    set_location_categories(school, row)
     set_school_type(school, row)
 
     school
@@ -50,6 +51,18 @@ class UpdateSchoolData
     region = Region.find_or_initialize_by(code: row['GOR (code)'])
     region.name = row['GOR (name)']
     school.region = region
+  end
+
+  def set_location_categories(school, row)
+    return if school.region.name == 'Wales (pseudo)' || school.region.name == 'Not Applicable'
+
+    region_location_category = LocationCategory.find_or_initialize_by(name: school.region.name)
+
+    local_authority_or_county = school.region.name == 'London' ? row['LA (name)'] : row['County (name)']
+    local_authority_or_county_location_category =
+      local_authority_or_county.present? ? LocationCategory.find_or_initialize_by(name: local_authority_or_county) : nil
+
+    school.location_categories = [region_location_category, local_authority_or_county_location_category].compact
   end
 
   def set_school_type(school, row)

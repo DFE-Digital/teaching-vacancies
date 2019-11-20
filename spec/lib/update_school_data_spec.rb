@@ -20,6 +20,7 @@ RSpec.describe UpdateSchoolData do
                    address3: '?',
                    town: '?',
                    county: '?',
+                   local_authority: '?',
                    postcode: 'PO1 1QW',
                    local_authority: '?',
                    minimum_age: 0,
@@ -34,6 +35,10 @@ RSpec.describe UpdateSchoolData do
   let!(:la_maintained_school_type) { SchoolType.create!(label: 'LA maintained school', code: '4') }
   let!(:voluntary_aided_school) { DetailedSchoolType.create!(label: 'Voluntary aided school', code: '02') }
   let!(:london) { Region.create(name: 'London', code: 'H') }
+  let!(:london_location_category) { LocationCategory.create(name: 'London') }
+  let!(:city_of_london_location_category) { LocationCategory.create(name: 'City of London') }
+  let!(:east_of_england_location_category) { LocationCategory.create(name: 'East of England') }
+  let!(:essex_location_category) { LocationCategory.create(name: 'Essex') }
 
   context 'When the CSV is unavailable' do
     before do
@@ -106,6 +111,7 @@ RSpec.describe UpdateSchoolData do
         expect(school.school_type).to eql(la_maintained_school_type)
         expect(school.detailed_school_type).to eql(voluntary_aided_school)
         expect(school.region).to eql(london)
+        expect(school.location_categories).to include(london_location_category, city_of_london_location_category)
         expect(school.phase).to eql('primary')
         expect(school.easting).to eql('533498')
         expect(school.northing).to eql('181201')
@@ -129,11 +135,15 @@ RSpec.describe UpdateSchoolData do
         expect(school.detailed_school_type.label).to eql('Other independent school')
         expect(school.detailed_school_type.code).to eql('11')
         expect(school.region).to eql(london)
+        expect(school.location_categories).to include(london_location_category, city_of_london_location_category)
         expect(school.phase).to eql('not_applicable')
         expect(school.easting).to eql('532301')
         expect(school.northing).to eql('181746')
         expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51914791336013)
         expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.09455174037405477)
+
+        school = School.find_by(urn: '114969')
+        expect(school.location_categories).to include(essex_location_category, east_of_england_location_category)
 
         expect(School.find_by(urn: '100002')).to be_present
         expect(School.find_by(urn: '100003')).to be_present
@@ -164,6 +174,7 @@ RSpec.describe UpdateSchoolData do
         expect(school.school_type).to eql(la_maintained_school_type)
         expect(school.detailed_school_type).to eql(voluntary_aided_school)
         expect(school.region).to eql(london)
+        expect(school.location_categories).to include(london_location_category, city_of_london_location_category)
         expect(school.phase).to eql('primary')
       end
     end

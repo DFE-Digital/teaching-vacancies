@@ -7,6 +7,8 @@ class School < ApplicationRecord
   belongs_to :region
 
   has_many :vacancies
+  has_many :school_location_categories
+  has_many :location_categories, through: :school_location_categories
 
   validates :urn, uniqueness: true
 

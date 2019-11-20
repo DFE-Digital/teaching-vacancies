@@ -85,6 +85,11 @@ ActiveRecord::Schema.define(version: 2019_11_25_165700) do
     t.index ["title"], name: "index_leaderships_on_title", unique: true
   end
 
+  create_table "location_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.index ["name"], name: "index_location_categories_on_name"
+  end
+
   create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
     t.string "code"
@@ -97,6 +102,11 @@ ActiveRecord::Schema.define(version: 2019_11_25_165700) do
     t.text "code"
     t.index ["code"], name: "index_regions_on_code", unique: true
     t.index ["name"], name: "index_regions_on_name", unique: true
+  end
+
+  create_table "school_location_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id"
+    t.uuid "location_category_id"
   end
 
   create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
