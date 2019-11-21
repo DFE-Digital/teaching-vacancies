@@ -18,9 +18,11 @@ class DsiAPIResponseToSpreadsheet
 
     rescue StandardError => e
       Rails.logger.warn("DSI API #{endpoint} failed to respond at page #{page} with error: #{e.message}")
+      raise
     end
   rescue StandardError => e
     Rails.logger.warn("DSI API #{endpoint} failed to respond with error: #{e.message}")
+    raise
   end
 
   private
