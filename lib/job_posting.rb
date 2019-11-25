@@ -17,7 +17,7 @@ class JobPosting
       education: @schema['educationRequirements'],
       qualifications: @schema['qualifications'],
       experience: @schema['experienceRequirements'],
-      working_patterns: @schema['employmentType'].map(&:downcase),
+      working_patterns: @schema['employmentType'].split(', ').map(&:downcase),
       status: :published,
       weekly_hours: @schema['workHours'],
       application_link: @schema['url'],
