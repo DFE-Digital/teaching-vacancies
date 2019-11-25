@@ -1,9 +1,10 @@
 .govuk-grid-row.sortable-links
   .govuk-grid-column-one-half
     = form_tag('', method: :get) do
-      - search_criteria.each do |filter, value|  
+      - search_criteria.each do |filter, value|
         - if filter == :phases
-          = hidden_field_tag "phases[]", value
+          - phases.each do | phase |
+            = hidden_field_tag "phases[]", phase
         - else
           = hidden_field_tag filter, value
       = label_tag 'jobs_sort', t('jobs.sort_by'), class: "govuk-label inline"
