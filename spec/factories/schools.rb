@@ -9,6 +9,7 @@ FactoryBot.define do
     address { Faker::Address.street_name }
     town { Faker::Address.city }
     county { Faker::Address.state_abbr }
+    local_authority { Faker::Address.state_abbr }
     postcode { Faker::Address.postcode }
     phase { :secondary }
     easting { '1' }

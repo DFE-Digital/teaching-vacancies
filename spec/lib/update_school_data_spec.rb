@@ -21,6 +21,7 @@ RSpec.describe UpdateSchoolData do
                    town: '?',
                    county: '?',
                    postcode: 'PO1 1QW',
+                   local_authority: '?',
                    minimum_age: 0,
                    maximum_age: 99,
                    url: nil,
@@ -98,6 +99,7 @@ RSpec.describe UpdateSchoolData do
         expect(school.town).to eql('London')
         expect(school.county).to eql(nil)
         expect(school.postcode).to eql('EC3A 5DE')
+        expect(school.local_authority).to eql('City of London')
         expect(school.minimum_age).to eql(3)
         expect(school.maximum_age).to eql(11)
         expect(school.url).to eql('http://www.sirjohncassprimary.org')
@@ -118,6 +120,7 @@ RSpec.describe UpdateSchoolData do
         expect(school.town).to eql('London')
         expect(school.county).to eql(nil)
         expect(school.postcode).to eql('EC2Y 8BB')
+        expect(school.local_authority).to eql('City of London')
         expect(school.minimum_age).to eql(7)
         expect(school.maximum_age).to eql(18)
         expect(school.url).to eql('http://www.clsg.org.uk')
@@ -154,6 +157,7 @@ RSpec.describe UpdateSchoolData do
         expect(school.town).to eql('London')
         expect(school.county).to eql(nil)
         expect(school.postcode).to eql('EC3A 5DE')
+        expect(school.local_authority).to eql('City of London')
         expect(school.minimum_age).to eql(3)
         expect(school.maximum_age).to eql(11)
         expect(school.url).to eql('http://www.sirjohncassprimary.org')
