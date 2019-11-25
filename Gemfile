@@ -43,7 +43,7 @@ gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
 
 gem 'gov_uk_date_fields'
-
+gem 'validate_url', '~> 1.0.6'
 gem 'xml-sitemap'
 
 gem 'rollbar', '~> 2.18'
@@ -89,7 +89,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 3.12'
+  gem 'capybara', '~> 3.29'
   gem 'database_cleaner'
   gem 'mock_redis'
   gem 'poltergeist'
