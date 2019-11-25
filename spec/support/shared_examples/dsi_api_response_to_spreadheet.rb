@@ -86,29 +86,33 @@ RSpec.shared_examples 'a DFE API response to spreadsheet' do
         subject.send("all_service_#{endpoint}".to_sym)
       end
 
-      scenario 'when an error is raised, it continues with next page' do
+      scenario 'when an error is raised the task terminates at the faulty page' do
         stub_dsi_api_initial_call(response_json_3)
         stub_dsi_api_response_error_for_page(2)
         stub_spreadsheet_writer
 
         expect(dfe_sign_in_api).to receive(endpoint).with(page: 1)
-        expect(dfe_sign_in_api).to receive(endpoint).with(page: 3)
+        expect(dfe_sign_in_api).to receive(endpoint).with(page: 2)
+        expect(dfe_sign_in_api).not_to receive(endpoint).with(page: 3)
 
-        subject.send("all_service_#{endpoint}".to_sym)
+        expect { subject.send("all_service_#{endpoint}".to_sym) }
+        .to raise_error(DFESignIn::ExternalServerError)
       end
 
-      scenario 'when there is a error response, logs the error message' do
+      scenario 'when there is a error response, logs the error message and re-raises the error' do
         stub_dsi_api_initial_call(response_json_3)
         stub_dsi_api_response_for_page(1, response_json_1)
         stub_dsi_api_response_error_for_page(2)
         stub_spreadsheet_writer
 
         expect(Rails.logger).to receive(:warn).with("DSI API #{endpoint} failed to respond at page 2 " \
-           'with error: DFESignIn::ExternalServerError')
+        'with error: DFESignIn::ExternalServerError')
+        expect(Rails.logger).to receive(:warn)
+        .with("DSI API #{endpoint} failed to respond with error: DFESignIn::ExternalServerError")
 
-        expect(worksheet).to receive(:append_rows).twice
+        expect(worksheet).to receive(:append_rows).once
 
-        subject.send("all_service_#{endpoint}".to_sym)
+        expect { subject.send("all_service_#{endpoint}".to_sym) }.to raise_error(DFESignIn::ExternalServerError)
       end
 
       scenario 'when there is a missing key, it returns null for the field' do
@@ -119,7 +123,7 @@ RSpec.shared_examples 'a DFE API response to spreadsheet' do
         expect(Rails.logger).not_to receive(:warn)
         .with("DSI API #{endpoint} failed to respond at page 1 with error: undefined method `[]' for nil:NilClass")
 
-        subject.send("all_service_#{endpoint}".to_sym)
+        expect { subject.send("all_service_#{endpoint}".to_sym) }.not_to raise_error
       end
     end
 
@@ -134,7 +138,7 @@ RSpec.shared_examples 'a DFE API response to spreadsheet' do
         expect(worksheet).to_not receive(:clear_all_rows)
         expect(worksheet).to_not receive(:append_rows)
 
-        subject.send("all_service_#{endpoint}".to_sym)
+        expect { subject.send("all_service_#{endpoint}".to_sym) }.to raise_error(RuntimeError, /jwt expired/)
       end
     end
 
