@@ -10,6 +10,8 @@ class School < ApplicationRecord
 
   validates :urn, uniqueness: true
 
+  delegate :name, to: :region, prefix: true
+
   enum phase: {
     not_applicable: 0,
     nursery: 1,

@@ -17,6 +17,22 @@ RSpec.describe VacancyFilters do
       expect(vacancy_filters.location).to eq('durham')
     end
 
+    context 'when radius search' do
+      it 'sets the radius filter' do
+        vacancy_filters = described_class.new(location: 'durham', radius: 20)
+        expect(vacancy_filters.radius).to eq('20')
+      end
+    end
+
+    context 'when location category search' do
+      before { expect(LocationCategory).to receive(:include?).with('durham').and_return(true) }
+
+      it 'does not set the radius' do
+        vacancy_filters = described_class.new(location: 'durham', radius: 20)
+        expect(vacancy_filters.radius).to be_nil
+      end
+    end
+
     it 'sets the minimum salary filter if provided' do
       vacancy_filters = described_class.new(minimum_salary: 10000)
       expect(vacancy_filters.minimum_salary).to eq(10000)
@@ -97,6 +113,26 @@ RSpec.describe VacancyFilters do
       )
 
       expect(filters.any?).to be true
+    end
+  end
+
+  describe '#location_category_search?' do
+    let(:filters) { described_class.new(location: 'durham') }
+
+    context 'when location category search' do
+      before { expect(LocationCategory).to receive(:include?).with('durham').and_return(true) }
+
+      it 'returns true' do
+        expect(filters.location_category_search?).to be_truthy
+      end
+    end
+
+    context 'when not location category search' do
+      before { expect(LocationCategory).to receive(:include?).with('durham').and_return(false) }
+
+      it 'returns false' do
+        expect(filters.location_category_search?).to be_falsey
+      end
     end
   end
 end

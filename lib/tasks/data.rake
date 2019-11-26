@@ -6,4 +6,12 @@ namespace :data do
       UpdateSchoolsDataFromSourceJob.perform_later
     end
   end
+
+  desc 'Export location category data'
+  namespace :location_categories do
+    task export: :environment do
+      Rails.logger.debug("Running location category export task in #{Rails.env}")
+      LocationCategory.export
+    end
+  end
 end

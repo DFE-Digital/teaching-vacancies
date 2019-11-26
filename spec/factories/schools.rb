@@ -26,5 +26,13 @@ FactoryBot.define do
     trait :secondary do
       phase { :secondary }
     end
+
+    trait :in_london do
+      association :region, name: 'London'
+    end
+
+    trait :outside_london do
+      association :region, name: 'East of England'
+    end
   end
 end

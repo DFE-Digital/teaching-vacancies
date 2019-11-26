@@ -49,9 +49,11 @@ class SubscriptionPresenter < BasePresenter
   # rubocop:enable Metrics/CyclomaticComplexity
 
   def render_location_filter(location, radius)
-    return if location.empty? || radius.empty?
+    return if location.empty?
 
-    { location: I18n.t('subscriptions.location_text', radius: radius, location: location) }
+    return { location: I18n.t('subscriptions.location_radius_text', radius: radius, location: location) } if radius
+
+    { location: I18n.t('subscriptions.location_category_text', location: location) }
   end
 
   def render_salary_filter(field, value)

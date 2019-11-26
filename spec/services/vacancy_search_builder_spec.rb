@@ -97,6 +97,23 @@ RSpec.describe VacancySearchBuilder do
       expect(builder[:search_query][:bool][:filter]).to include(expected_hash)
     end
 
+    it 'builds a location category query when a location category is provided' do
+      sort = OpenStruct.new(column: :expires_on, order: :desc)
+      filters = OpenStruct.new(location: 'London', location_category_search?: true)
+      builder = described_class.new(filters: filters, sort: sort).call
+
+      expected_hash = {
+        should: [
+          { match: { 'school.region_name' => 'London' } },
+          { match: { 'school.county' => 'London' } },
+          { match: { 'school.local_authority' => 'London' } }
+        ]
+      }
+
+      expect(builder).to be_a(Hash)
+      expect(builder[:search_query][:bool][:must][3][:bool]).to include(expected_hash)
+    end
+
     it 'builds a working pattern query when one is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
       filters = OpenStruct.new(working_pattern: 'part_time')
