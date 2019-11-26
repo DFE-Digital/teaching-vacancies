@@ -14,11 +14,11 @@ RSpec.feature 'Filtering vacancies' do
       allow(LocationCategory).to receive(:include?).with('enfield').and_return(false)
       expect(Geocoder).to receive(:coordinates).with('enfield')
                                                .and_return([51.6622925, -0.1180655])
-      enfield_vacancy = create(:vacancy, :published,
+      camden_vacancy = create(:vacancy, :published,
                                school: build(:school, name: 'St James School',
                                                       town: 'Enfield',
                                                       geolocation: '(51.6580645, -0.0448643)'))
-      penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
+      victoria_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
                                                                              town: 'Penzance'))
 
       Vacancy.__elasticsearch__.client.indices.flush
@@ -30,8 +30,8 @@ RSpec.feature 'Filtering vacancies' do
         page.find('.govuk-button[type=submit]').click
       end
 
-      expect(page).to have_content(enfield_vacancy.job_title)
-      expect(page).not_to have_content(penzance_vacancy.job_title)
+      expect(page).to have_content(camden_vacancy.job_title)
+      expect(page).not_to have_content(victoria_vacancy.job_title)
     end
   end
 
