@@ -37,6 +37,7 @@ class UpdateSchoolData
     school.town = row['Town']
     school.county = row['County (name)'].presence
     school.postcode = row['Postcode']
+    school.local_authority = row['LA (name)']
     school.minimum_age = row['StatutoryLowAge']
     school.maximum_age = row['StatutoryHighAge']
     school.easting = row['Easting']
