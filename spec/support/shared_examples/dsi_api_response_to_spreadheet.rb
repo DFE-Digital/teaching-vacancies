@@ -96,7 +96,7 @@ RSpec.shared_examples 'a DFE API response to spreadsheet' do
         expect(dfe_sign_in_api).not_to receive(endpoint).with(page: 3)
 
         expect { subject.send("all_service_#{endpoint}".to_sym) }
-        .to raise_error(DFESignIn::ExternalServerError)
+        .to raise_error(RuntimeError, /DFESignIn::ExternalServerError, while writing data from DSI #{endpoint}/)
       end
 
       scenario 'when there is a error response, logs the error message and re-raises the error' do
@@ -105,14 +105,13 @@ RSpec.shared_examples 'a DFE API response to spreadsheet' do
         stub_dsi_api_response_error_for_page(2)
         stub_spreadsheet_writer
 
-        expect(Rails.logger).to receive(:warn).with("DSI API #{endpoint} failed to respond at page 2 " \
-        'with error: DFESignIn::ExternalServerError')
         expect(Rails.logger).to receive(:warn)
         .with("DSI API #{endpoint} failed to respond with error: DFESignIn::ExternalServerError")
 
         expect(worksheet).to receive(:append_rows).once
 
-        expect { subject.send("all_service_#{endpoint}".to_sym) }.to raise_error(DFESignIn::ExternalServerError)
+        expect { subject.send("all_service_#{endpoint}".to_sym) }
+        .to raise_error(RuntimeError, /DFESignIn::ExternalServerError, while writing data from DSI #{endpoint}/)
       end
 
       scenario 'when there is a missing key, it returns null for the field' do
