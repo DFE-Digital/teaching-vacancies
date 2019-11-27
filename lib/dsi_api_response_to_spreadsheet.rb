@@ -15,14 +15,10 @@ class DsiAPIResponseToSpreadsheet
 
       rows = response_to_rows(response)
       @worksheet.append_rows(rows)
-
-    rescue StandardError => e
-      Rails.logger.warn("DSI API #{endpoint} failed to respond at page #{page} with error: #{e.message}")
-      raise
     end
   rescue StandardError => e
     Rails.logger.warn("DSI API #{endpoint} failed to respond with error: #{e.message}")
-    raise
+    raise format_error(e, endpoint)
   end
 
   private
@@ -40,5 +36,9 @@ class DsiAPIResponseToSpreadsheet
 
   def error_message_for(response)
     response['message'] || 'failed request'
+  end
+
+  def format_error(error, endpoint)
+    "#{error.message}, while writing data from DSI #{endpoint} endpoint. Flag this to Steven + Comms team"
   end
 end
