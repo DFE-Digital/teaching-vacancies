@@ -14,11 +14,11 @@ RSpec.feature 'Filtering vacancies' do
       allow(LocationCategory).to receive(:include?).with('enfield').and_return(false)
       expect(Geocoder).to receive(:coordinates).with('enfield')
                                                .and_return([51.6622925, -0.1180655])
-      camden_vacancy = create(:vacancy, :published,
+      enfield_vacancy = create(:vacancy, :published,
                                school: build(:school, name: 'St James School',
                                                       town: 'Enfield',
                                                       geolocation: '(51.6580645, -0.0448643)'))
-      victoria_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
+      penzance_vacancy = create(:vacancy, :published, school: build(:school, name: 'St James School',
                                                                              town: 'Penzance'))
 
       Vacancy.__elasticsearch__.client.indices.flush
@@ -30,28 +30,48 @@ RSpec.feature 'Filtering vacancies' do
         page.find('.govuk-button[type=submit]').click
       end
 
-      expect(page).to have_content(camden_vacancy.job_title)
-      expect(page).not_to have_content(victoria_vacancy.job_title)
+      expect(page).to have_content(enfield_vacancy.job_title)
+      expect(page).not_to have_content(penzance_vacancy.job_title)
     end
   end
 
-  scenario 'search results can be filtered by the location category' do
-    london_region = Region.find_or_create_by(name: 'London')
-    camden_vacancy = create(:vacancy, :published,
-      school: build(:school, region: london_region, local_authority: 'Camden'))
-    victoria_vacancy = create(:vacancy, :published,
-      school: build(:school, region: london_region, local_authority: 'Victoria'))
-
-    Vacancy.__elasticsearch__.client.indices.flush
-    visit jobs_path
-
-    within '.filters-form' do
-      fill_in 'location', with: 'camden'
-      page.find('.govuk-button[type=submit]').click
+  context 'when filtering by a Location Category' do
+    let!(:london_region) { Region.find_or_create_by(name: 'London') }
+    let!(:camden_vacancy) do
+      create(:vacancy, :published,
+        school: build(:school, region: london_region, local_authority: 'Camden'))
     end
 
-    expect(page).to have_content(camden_vacancy.job_title)
-    expect(page).not_to have_content(victoria_vacancy.job_title)
+    let!(:victoria_vacancy) do
+      create(:vacancy, :published,
+        school: build(:school, region: london_region, local_authority: 'Victoria'))
+    end
+
+    before do
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        fill_in 'location', with: 'camden'
+        page.find('.govuk-button[type=submit]').click
+      end
+    end
+
+    scenario 'search results returned have been filtered by the location category' do
+      expect(page).to have_content(camden_vacancy.job_title)
+      expect(page).not_to have_content(victoria_vacancy.job_title)
+    end
+
+    scenario 'radius filter is disabled' do
+      expect(page).to have_field('radius', disabled: true)
+    end
+
+    scenario 'radius filter is re-enabled when the location field is clicked', js: true do
+      expect(page).to have_field('radius', disabled: true)
+      page.find('#location').click
+
+      expect(page).to have_field('radius', disabled: false)
+    end
   end
 
   context 'with jobs with various job titles and subjects', elasticsearch: true do
