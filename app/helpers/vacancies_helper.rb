@@ -8,6 +8,8 @@ module VacanciesHelper
     '£70,000' => 70000
   }.freeze
 
+  WORD_EXCEPTIONS = ['and', 'the', 'of', 'upon'].freeze
+
   def working_pattern_options
     Vacancy::WORKING_PATTERN_OPTIONS.map do |key, _value|
       [Vacancy.human_attribute_name("working_patterns.#{key}"), key]
@@ -82,5 +84,15 @@ module VacanciesHelper
 
   def nqt_suitable_checked?(newly_qualified_teacher)
     newly_qualified_teacher == 'true'
+  end
+
+  def format_location_name(location)
+    uncapitalize_words(location.titleize)
+  end
+
+  def uncapitalize_words(location_name)
+    array = location_name.split(' ')
+    array.map! { |word| WORD_EXCEPTIONS.include?(word.downcase) ? word.downcase : word }
+    array.join(' ')
   end
 end

@@ -38,6 +38,12 @@ class VacanciesPresenter < BasePresenter
     end
   end
 
+  def total_count_message_with_location(location)
+    return I18n.t('jobs.job_count_with_location_category', count: total_count, location: location) if total_count == 1
+    I18n.t('jobs.job_count_plural_with_location_category', \
+      count: number_with_delimiter(total_count), location: location)
+  end
+
   def apply_filters_button_text
     if @searched == true
       I18n.t('buttons.apply_filters_if_criteria')
