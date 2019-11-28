@@ -43,6 +43,10 @@ terraform.tfstate.d/
 .terraform.tfstate.lock.info
 workspace-variables/*.tfvars
 
+# ENV files
+.env
+.envrc
+
 # Certificates
 config/localhost/https/*.key
 config/localhost/https/*.crt
