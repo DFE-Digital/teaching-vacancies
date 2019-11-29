@@ -12,7 +12,7 @@ RSpec.feature 'Viewing a location category landing page' do
 
     Vacancy.__elasticsearch__.client.indices.flush
 
-    visit('/camden')
+    visit location_category_path('camden')
 
     expect(page).to have_content(camden_vacancy.job_title)
     expect(page).to_not have_content(victoria_vacancy.job_title)
