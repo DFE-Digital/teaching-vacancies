@@ -371,7 +371,8 @@ en:
     new:
       page_description: Sign up for a job alert
     info: You can unsubscribe at any time using the link at the bottom of any email you receive for this job alert.
-    location_text: Within %{radius} miles of %{location}
+    location_radius_text: Within %{radius} miles of %{location}
+    location_category_text: In %{location}
     reference: 'for'
     next_steps: "You'll receive a single job alert email at the end of any day when 1 or more matching jobs are first published."
     confirmation:

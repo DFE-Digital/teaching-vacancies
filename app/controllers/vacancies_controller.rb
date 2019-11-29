@@ -71,7 +71,8 @@ class VacanciesController < ApplicationController
   end
 
   def search_params
-    params.permit(*PERMITTED_SEARCH_PARAMS)
+    params.permit(*PERMITTED_SEARCH_PARAMS, :location_category)
+          .merge(location: params[:location] || params[:location_category])
   end
 
   def old_vacancy_path?(vacancy)
@@ -89,6 +90,8 @@ class VacanciesController < ApplicationController
   end
 
   def location
+    return params[:location_category] if params[:location_category]
+
     params[:location]
   end
 

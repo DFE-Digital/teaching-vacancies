@@ -8,7 +8,7 @@ class VacancyFilters
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
 
     @location = args[:location]
-    @radius = args[:radius].to_s if args[:radius].present?
+    @radius = args[:radius].to_s if args[:radius].present? && !location_category_search?
     @subject = args[:subject]
     @job_title = args[:job_title]
     @minimum_salary = args[:minimum_salary]
@@ -53,6 +53,10 @@ class VacancyFilters
     filters = only_active_to_hash
     filters.delete_if { |k, _| k.eql?(:radius) }
     filters.any?
+  end
+
+  def location_category_search?
+    @location_category_search ||= (location && LocationCategory.include?(location))
   end
 
   private

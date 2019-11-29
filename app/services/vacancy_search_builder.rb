@@ -32,7 +32,7 @@ class VacancySearchBuilder
   private
 
   def geocoded_location
-    return nil if filters.location.blank?
+    return if filters.location.blank? || filters.location_category_search?
 
     @geocoded_location ||= Geocoding.new(filters.location).coordinates
   end
@@ -69,7 +69,8 @@ class VacancySearchBuilder
       salary_query,
       expired_query,
       status_query,
-      published_on_query
+      published_on_query,
+      location_category_query
     ].compact.uniq
   end
 
@@ -231,6 +232,28 @@ class VacancySearchBuilder
             field: 'maximum_salary'
           }
         }
+      }
+    }
+  end
+
+  def location_category_query
+    return unless filters.location_category_search?
+
+    {
+      bool: {
+        should: [
+          match('school.region_name', filters.location),
+          match('school.county', filters.location),
+          match('school.local_authority', filters.location),
+        ]
+      }
+    }
+  end
+
+  def match(field, value)
+    {
+      match: {
+        field => value
       }
     }
   end

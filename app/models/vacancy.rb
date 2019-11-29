@@ -55,7 +55,9 @@ class Vacancy < ApplicationRecord
         indexes :postcode, type: :text
         indexes :town, type: :text
         indexes :county, type: :text
+        indexes :local_authority, type: :text
         indexes :address, type: :text
+        indexes :region_name, type: :text
       end
 
       indexes :subject do
@@ -189,7 +191,7 @@ class Vacancy < ApplicationRecord
     as_json(
       methods: %i[coordinates],
       include: {
-        school: { only: %i[phase name postcode address town] },
+        school: { methods: %i[region_name], only: %i[phase name postcode address town county local_authority] },
         subject: { only: %i[name] },
         first_supporting_subject: { only: %i[name] },
         second_supporting_subject: { only: %i[name] }

@@ -11,6 +11,7 @@ RSpec.feature 'Filtering vacancies' do
     end
 
     scenario 'search results can be filtered by the selected location and radius' do
+      allow(LocationCategory).to receive(:include?).with('enfield').and_return(false)
       expect(Geocoder).to receive(:coordinates).with('enfield')
                                                .and_return([51.6622925, -0.1180655])
       enfield_vacancy = create(:vacancy, :published,
@@ -32,6 +33,25 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).to have_content(enfield_vacancy.job_title)
       expect(page).not_to have_content(penzance_vacancy.job_title)
     end
+  end
+
+  scenario 'search results can be filtered by the location category' do
+    london_region = Region.find_or_create_by(name: 'London')
+    camden_vacancy = create(:vacancy, :published,
+      school: build(:school, region: london_region, local_authority: 'Camden'))
+    victoria_vacancy = create(:vacancy, :published,
+      school: build(:school, region: london_region, local_authority: 'Victoria'))
+
+    Vacancy.__elasticsearch__.client.indices.flush
+    visit jobs_path
+
+    within '.filters-form' do
+      fill_in 'location', with: 'camden'
+      page.find('.govuk-button[type=submit]').click
+    end
+
+    expect(page).to have_content(camden_vacancy.job_title)
+    expect(page).not_to have_content(victoria_vacancy.job_title)
   end
 
   context 'with jobs with various job titles and subjects', elasticsearch: true do
