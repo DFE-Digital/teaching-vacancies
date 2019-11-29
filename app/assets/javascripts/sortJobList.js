@@ -1,4 +1,4 @@
-$(document).on("turbolinks:load", function() {
+$(document).ready(function() {
   $("#jobs_sort").change(function() {
     this.form.submit();
   });
