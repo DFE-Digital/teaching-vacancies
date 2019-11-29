@@ -10,13 +10,19 @@ RSpec.feature 'Application sitemap', sitemap: true do
       document = Nokogiri::XML::Document.parse(body)
       nodes = document.search('url')
 
-      expect(nodes.count).to eq(10)
+      expect(nodes.count).to eq(106)
       expect(nodes.search("loc[text()='#{root_url(protocol: 'https')}']").text)
         .to eq(root_url(protocol: 'https'))
 
       published_jobs.each do |job|
         expect(nodes.search("loc:contains('#{job_path(job, protocol: 'https')}')").text)
           .to eq(job_url(job, protocol: 'https'))
+      end
+
+      ALL_LOCATION_CATEGORIES.each do |location_category|
+        url = location_category_url(location_category, protocol: 'https')
+        expect(nodes.search("loc:contains('#{url}')").first.text)
+          .to eq(url)
       end
 
       expect(nodes.search("loc:contains('#{page_url('terms-and-conditions', protocol: 'https')}')").text)
