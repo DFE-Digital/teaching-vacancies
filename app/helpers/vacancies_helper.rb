@@ -95,4 +95,8 @@ module VacanciesHelper
     array.map! { |word| WORD_EXCEPTIONS.include?(word.downcase) ? word.downcase : word }
     array.join(' ')
   end
+
+  def location_category_content?(filters)
+    filters.location_category_search? && filters.only_active_to_hash.one?
+  end
 end
