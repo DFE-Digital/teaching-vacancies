@@ -1,4 +1,7 @@
-- content_for :page_title_prefix, t('jobs.heading')
+- if @filters.location_category_search?
+  = content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@filters.location))
+- else
+  = content_for :page_title_prefix, t('jobs.heading')
 = render partial: 'head_links'
 
 %h1.govuk-heading-xl
@@ -8,7 +11,7 @@
     = render 'filters'
   .govuk-grid-column-two-thirds
     .govuk-grid-column-full.vacancies-count{class: @vacancies.user_search? ? 'search-made' : ''}
-      %p.govuk-heading-l.mt0.mb1.inline-block#vacancy-results= @vacancies.total_count_message
+      %p.govuk-heading-l.mt0.mb1.inline-block#vacancy-results= @filters.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@filters.location)) : @vacancies.total_count_message
       - if @vacancies.user_search?
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
         = render(partial: 'subscribe_link', locals: { search_criteria: @filters.only_active_to_hash }) if EmailAlertsFeature.enabled?
