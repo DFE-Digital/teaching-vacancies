@@ -14,6 +14,14 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
+    context 'with the location category filter' do
+      let(:search_criteria) { { location: 'Barnet' } }
+
+      it 'formats and returns the search criteria' do
+        expect(presenter.filtered_search_criteria['location']).to eq('In Barnet')
+      end
+    end
+
     context 'without location information' do
       let(:search_criteria) { { radius: '10' } }
 
