@@ -4,7 +4,7 @@ module DFESignIn
   class UnknownResponseError < StandardError; end
 
   class API
-    USERS_PAGE_SIZE = 100
+    USERS_PAGE_SIZE = 1000
     APPROVERS_PAGE_SIZE = 1000
 
     def users(page: 1)
