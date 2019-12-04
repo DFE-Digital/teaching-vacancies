@@ -1,4 +1,6 @@
 class VacancyFilters
+  include ActiveModel::Model
+
   AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_pattern
                          phases newly_qualified_teacher].freeze
 

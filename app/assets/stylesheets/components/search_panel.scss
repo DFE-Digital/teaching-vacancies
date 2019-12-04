@@ -1,0 +1,20 @@
+.search_panel {
+  @include govuk-responsive-padding(2);
+
+  background-color: $govuk-brand-colour;
+
+  h1, label, .govuk-accordion__section-button, .govuk-link--no-visited-state:visited, .js-location-finder__link {
+    color: govuk-colour('white');
+  }
+
+  .govuk-accordion__icon:before, .govuk-accordion__icon:after {
+    background-color: govuk-colour('white');
+  }
+
+  .govuk-form-group {
+    .govuk-button {
+      @include govuk-responsive-margin(2, "bottom");
+    }
+    @include govuk-responsive-margin(2, "bottom");
+  }
+}
