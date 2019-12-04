@@ -127,5 +127,13 @@ FactoryBot.define do
       expires_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 20.days) }
       expiry_time { nil }
     end
+
+    trait :first_supporting_subject do
+      association :first_supporting_subject, factory: :subject
+    end
+
+    trait :second_supporting_subject do
+      association :second_supporting_subject, factory: :subject
+    end
   end
 end
