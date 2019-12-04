@@ -1,1 +1,14 @@
-%h1.govuk-heading-xl Location Categories
+%h1.govuk-heading-xl Explore teaching jobs by location
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    %h2.govuk-heading-m English counties
+    %ul.govuk-list
+      - LocationCategory.counties.each do | county |
+        %li
+          = link_to county, location_category_path(county), class: 'govuk-link'
+  .govuk-grid-column-one-half 
+    %h2.govuk-heading-m London boroughs
+    %ul.govuk-list
+      - LocationCategory.boroughs.each do | borough |
+        %li
+          = link_to borough, location_category_path(borough), class: 'govuk-link'
