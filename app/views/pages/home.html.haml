@@ -3,9 +3,9 @@
 .govuk-width-container
   %main.govuk-main-wrapper
     .govuk-grid-row
-      .govuk-grid-column-two-thirds.search_panel
-        = render 'pages/home/search'
+      .govuk-grid-column-two-thirds
+        .search_panel= render 'pages/home/search'
       .govuk-grid-column-one-third
-        = render 'pages/home/signin'
+        .signin= render 'pages/home/signin'
     .govuk-grid-row
       = render 'pages/home/location_categories'
