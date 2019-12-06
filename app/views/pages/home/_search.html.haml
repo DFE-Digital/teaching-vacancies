@@ -1,1 +1,30 @@
-%h1.govuk-heading-xl Search
+%h1.govuk-heading-l= t('jobs.heading')
+
+= form_for VacancyFilters.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+  = render 'shared/location_search_tag', location: nil, extra_label_class: 'govuk-label--m'
+
+  :ruby
+    accordion_items = [
+      {
+        heading: { text: t('jobs.subject') },
+        content: {
+          html: f.govuk_text_field(:subject, label: { hidden: true, text: t('jobs.filters.subject') }, placeholder: t('jobs.filters.subject_hint'))
+        }
+      },
+      {
+        heading: { text: t('jobs.job_title') },
+        content: {
+          html: f.govuk_text_field(:job_title, label: { hidden: true, text: t('jobs.filters.job_title') }, placeholder: t('jobs.filters.job_title_hint'))
+        }
+      },
+      {
+        heading: { text: t('jobs.filters.education_phase') },
+        content: {
+          html: f.govuk_collection_check_boxes(:phases, school_phase_options, :second, :first, small: true)
+        }
+      }
+    ]
+
+  = render 'govuk_publishing_components/components/accordion', items: accordion_items
+
+  = f.govuk_submit
