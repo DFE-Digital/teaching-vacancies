@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     %h2.govuk-heading-m #{ t('.counties') }
 
-    - LocationCategory.counties.in_groups(2) do |group|
+    - COUNTIES.in_groups(2) do |group|
       .govuk-grid-column-one-half
         %ul.govuk-list
           - group.each do |county|
@@ -14,6 +14,6 @@
   .govuk-grid-column-one-third
     %h2.govuk-heading-m #{ t('.boroughs') }
     %ul.govuk-list
-      - LocationCategory.boroughs.each do |borough|
+      - BOROUGHS.each do |borough|
         %li
           = link_to borough, location_category_path(borough), class: 'govuk-link'
