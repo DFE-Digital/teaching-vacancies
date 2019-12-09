@@ -96,7 +96,7 @@ group :test do
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
   gem 'webmock', '~> 3.7'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.1'
   gem 'rack_session_access'
 end
 
