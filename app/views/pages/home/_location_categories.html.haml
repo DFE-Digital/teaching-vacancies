@@ -1,13 +1,13 @@
-%h1.govuk-heading-xl Explore teaching jobs by location
+%h1.govuk-heading-xl #{ t('.location_links_heading') }
 .govuk-grid-row
   .govuk-grid-column-one-half
-    %h2.govuk-heading-m English counties
+    %h2.govuk-heading-m #{ t('.counties') }
     %ul.govuk-list
       - LocationCategory.counties.each do | county |
         %li
           = link_to county, location_category_path(county), class: 'govuk-link'
   .govuk-grid-column-one-half 
-    %h2.govuk-heading-m London boroughs
+    %h2.govuk-heading-m #{ t('.boroughs') }
     %ul.govuk-list
       - LocationCategory.boroughs.each do | borough |
         %li
