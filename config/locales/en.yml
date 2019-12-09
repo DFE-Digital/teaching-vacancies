@@ -37,6 +37,11 @@ en:
       page_description: Find out what personal information Teaching Vacancies collects, how it is used, how long it is kept and what your data protection rights are.
     terms-and-conditions:
       page_description: Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
+    home:
+      location_categories:
+        location_links_heading: Explore teaching jobs by location
+        counties: English counties
+        boroughs: London boroughs
   sign_in:
     title: 'Sign in to Teaching Vacancies'
     link: 'Sign in'
