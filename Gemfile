@@ -43,7 +43,6 @@ gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
 
 gem 'govuk_design_system_formbuilder'
-gem 'govuk_publishing_components'
 gem 'gov_uk_date_fields'
 gem 'validate_url', '~> 1.0.8'
 gem 'xml-sitemap'
