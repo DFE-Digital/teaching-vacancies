@@ -1,14 +1,26 @@
 .search_panel {
-  @include govuk-responsive-padding(2);
+  @include govuk-responsive-padding(4);
 
   background-color: $govuk-brand-colour;
 
-  h1, label, .govuk-accordion__section-button, .govuk-link--no-visited-state:visited, .js-location-finder__link {
+  h1, label, .govuk-accordion__section-button, .govuk-link, .js-location-finder__link {
     color: govuk-colour('white');
   }
 
-  .govuk-accordion__icon:before, .govuk-accordion__icon:after {
+  .govuk-accordion__icon:before, .govuk-accordion__icon:after, .govuk-fieldset {
     background-color: govuk-colour('white');
+  }
+
+  .govuk-accordion__section-content {
+    padding-top: 0px;
+  }
+
+  .govuk-checkboxes__item, .govuk-checkboxes__item label {
+    color: govuk-colour('black');
+  }
+
+  .govuk-fieldset {
+    padding-left: 10px;
   }
 
   .govuk-form-group {
