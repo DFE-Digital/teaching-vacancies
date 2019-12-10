@@ -1,0 +1,8 @@
+%h1.govuk-heading-l= t('.title')
+
+%p= t('.description')
+
+= simple_form_for :identifications, url: identifications_path, defaults: { input_html: { class: 'text' } }, method: :post do |f|
+  = f.submit t('sign_in.link'), class: 'govuk-button'
+
+%p= t('.signin_guidance_html', link: link_to(t('.signin_link'), new_identifications_path))

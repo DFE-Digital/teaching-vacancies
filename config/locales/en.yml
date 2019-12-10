@@ -20,7 +20,9 @@ en:
   hiring_staff:
     identifications:
       new:
-        page_description: Sign in to Teaching Vacancies to list a teaching job at your school on the service or to manage existing jobs.
+        page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
+        request_account_title: Request an account
+        request_account_html: Don't have an account? You can get one if you work at a publicly funded school or trust in England, but you'll need your headteacher or senior leader to authorise you. Just ask them to send your full name and email address to %{mail_to}. Or email your details directly to that address, copying in your headteacher or senior leader.
   nav:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
@@ -33,6 +35,16 @@ en:
       page_description: Find out which areas of Teaching Vacancies are not yet fully accessible and when we plan to correct each issue.
     cookies:
       page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
+    home:
+      location_categories:
+        location_links_heading: Explore teaching jobs by location
+        counties: English counties
+        boroughs: London boroughs
+      signin:
+        title: List a teaching job
+        description: You must sign in to your Teaching Vacancies account to list a job at your school.
+        signin_link: how to get one
+        signin_guidance_html: Don't have an account? Find out %{link} if your school is eligible.
     privacy_policy:
       page_description: Find out what personal information Teaching Vacancies collects, how it is used, how long it is kept and what your data protection rights are.
     terms-and-conditions:

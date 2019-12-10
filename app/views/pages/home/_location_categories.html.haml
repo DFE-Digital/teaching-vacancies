@@ -1,0 +1,19 @@
+%h1.govuk-heading-l{class: 'govuk-!-margin-top-4'} #{ t('.location_links_heading') }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h2.govuk-heading-m #{ t('.counties') }
+
+    - COUNTIES.in_groups(2) do |group|
+      .govuk-grid-column-one-half
+        %ul.govuk-list
+          - group.each do |county|
+            %li
+              = link_to county, location_category_path(county), class: 'govuk-link'
+
+  .govuk-grid-column-one-third
+    %h2.govuk-heading-m #{ t('.boroughs') }
+    %ul.govuk-list
+      - BOROUGHS.each do |borough|
+        %li
+          = link_to borough, location_category_path(borough), class: 'govuk-link'

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.1'
+ruby '2.6.5'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 5.2.3'
 
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.3'
 gem 'pg', '~> 1.1'
 gem 'elasticsearch-model'
 gem 'faraday_middleware-aws-signers-v4'
@@ -42,6 +42,7 @@ gem 'roadie-rails'
 gem 'simple_form'
 gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
 
+gem 'govuk_design_system_formbuilder'
 gem 'gov_uk_date_fields'
 gem 'validate_url', '~> 1.0.8'
 gem 'xml-sitemap'

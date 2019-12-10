@@ -1,12 +1,17 @@
 - content_for :page_title_prefix do
   = t('sign_in.title')
 
-%h1.govuk-heading-l
-  = t('sign_in.title')
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = simple_form_for :identifications, url: identifications_path, :defaults => { :input_html => { :class => "text" } }, method: :post do |f|
-      .govuk-form-group
-        %p= t('sign_in.intro')
-        %p= t('sign_in.guidance', email: mail_to('teaching.vacancies@education.gov.uk', nil, class: 'govuk-link')).html_safe
-        = f.submit t('sign_in.link'), class: 'govuk-button'
+    %h1.govuk-heading-l= t('sign_in.title')
+
+    %p= t('pages.home.signin.description')
+
+    = simple_form_for :identifications, url: identifications_path, method: :post do |f|
+      = f.submit t('sign_in.link'), class: 'govuk-button'
+
+    %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+
+    %h2.govuk-heading-m= t('.request_account_title')
+
+    %p= t('.request_account_html', mail_to: mail_to(t('help.email'), t('help.email'), class: 'govuk-link'))
