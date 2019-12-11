@@ -57,3 +57,8 @@ strong, b {
   font-weight: normal;
   color: govuk-colour("red");
 }
+
+.two-column-list {
+  column-count: 2;
+  column-gap: 30px;
+}
