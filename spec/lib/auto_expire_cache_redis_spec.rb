@@ -3,7 +3,7 @@ require 'auto_expire_cache_redis'
 
 RSpec.describe AutoExpireCacheRedis do
   let(:mock_redis) { MockRedis.new }
-  let(:ttl) { Faker::Number.between(100, 1000) }
+  let(:ttl) { Faker::Number.between(from: 100, to: 1000) }
   subject { described_class.new(mock_redis, ttl) }
 
   before do
