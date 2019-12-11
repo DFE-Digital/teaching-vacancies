@@ -14,8 +14,6 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
     let(:dataset_stub) { instance_double('Google::Cloud::Bigquery::Dataset') }
 
     context 'with one vacancy' do
-      let(:vacancy) { create(:vacancy).reload }
-
       let(:expected_table_data) do
         [
           {
@@ -55,7 +53,19 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
       ]
       end
 
+      context 'with no subjects' do
+        let(:vacancy) { create(:vacancy, subject: nil).reload }
+        let(:subjects) { [] }
+
+        it 'inserts into big query with no subject' do
+          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
+
+          subject.run!
+        end
+      end
+
       context 'with only one subject' do
+        let(:vacancy) { create(:vacancy).reload }
         let(:subjects) { [vacancy.subject.name] }
 
         it 'inserts into big query with one subject' do
