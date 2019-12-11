@@ -1,2 +1,2 @@
---require spec_helper --tag ~smoke_test --fail-fast
+--require spec_helper --tag ~smoke_test
 

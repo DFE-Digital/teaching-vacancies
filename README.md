@@ -5,12 +5,12 @@
 ### Prerequisites
  - [Docker](https://docs.docker.com/docker-for-mac) greater than or equal to `18.03.1-ce-mac64 (24245)`
 
-We recommend you install Docker from the link above, _not_ using homebrew.
+     We recommend you install Docker from the link above, _not_ using homebrew.
 
 ### Setting up the project
 
 1. Copy the docker environment variables and fill in any missing secrets from the [secrets
-   repository][secret-docker-compose]:
+repository][secret-docker-compose]:
 
 ```bash
 $ cp docker-compose.env.sample docker-compose.env
@@ -147,26 +147,26 @@ Make sure you have the following services configured and running on your develop
 
 Once you have Postgresql running add a new user:
 
- ```bash
- createuser --interactive --pwprompt
- ```
+```bash
+createuser --interactive --pwprompt
+```
 
- For running local development and test environments, you can safely grant the user superuser access when asked.  **DO
- NOT** do this for production environments.
+For running local development and test environments, you can safely grant the user superuser access when asked.  **DO
+NOT** do this for production environments.
 
- Feel free to use any other method you are familiar with for adding postgres users. This is only an example.
+Feel free to use any other method you are familiar with for adding postgres users. This is only an example.
 
- Next, copy `dotenv.sample` to `.env`, edit it and change:
+Next, copy `dotenv.sample` to `.env`, edit it and change:
 
- ```bash
- DATABASE_URL=postgres://<user>:<password>@localhost/<desired-database-name>
- ```
+```bash
+DATABASE_URL=postgres://<user>:<password>@localhost/<desired-database-name>
+```
 
- Now, install your gem dependencies, then create and populate your database:
+Now, install your gem dependencies, then create and populate your database:
 
- ```bash
- bundle
- bundle exec rake db:create db:environment:set db:schema:load
+```bash
+bundle
+bundle exec rake db:create db:environment:set db:schema:load
 ```
 
 Finally, run your tests:
@@ -176,3 +176,20 @@ bundle exec rake
 ```
 
 If everything passes, you're ready to get to work.
+
+### Misc
+
+#### RSpec formatters - Fuubar
+
+Fuubar is a fast-failing progress bar formatter for RSpec. I've added the gem, but know from experience it isn't to
+everyone's taste. If you want to use it, either start RSpec with the formatter switch:
+
+```bash
+bundle exec rspec --format Fuubar
+```
+
+or add it to your global `~/.rspec`:
+
+```bash
+--format Fuubar
+```

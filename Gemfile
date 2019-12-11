@@ -93,6 +93,7 @@ end
 group :test do
   gem 'capybara', '~> 3.29'
   gem 'database_cleaner'
+  gem 'fuubar'
   gem 'mock_redis'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'
