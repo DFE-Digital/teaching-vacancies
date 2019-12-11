@@ -81,6 +81,7 @@ end
 group :development, :test do
   gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'dotenv-rails'
   gem 'elasticsearch-extensions'
   gem 'pry'
   gem 'rspec-rails'
