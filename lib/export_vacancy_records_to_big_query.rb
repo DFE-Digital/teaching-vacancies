@@ -106,6 +106,8 @@ class ExportVacancyRecordsToBigQuery
   end
 
   def subjects(vacancy)
+    return [] if vacancy.subject.nil?
+
     subjects = [vacancy.subject]
     subjects << vacancy.first_supporting_subject if vacancy.first_supporting_subject
     subjects << vacancy.second_supporting_subject if vacancy.second_supporting_subject
