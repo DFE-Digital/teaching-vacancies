@@ -101,6 +101,11 @@ variable "big_query_api_json_key" {
   type = "map"
 }
 
+variable "big_query_dataset" {
+  description = "Big Query dataset name"
+  type        = "string"
+}
+
 variable "ecs_service_logspout_container_definition_file_path" {}
 
 variable "logspout_command" {

@@ -427,3 +427,8 @@ variable "dfe_sign_in_service_id" {}
 variable "big_query_api_json_key" {
   type = "map"
 }
+
+variable "big_query_dataset" {
+  description = "Big Query dataset name"
+  type = "string"
+}
