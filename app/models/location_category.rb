@@ -4,18 +4,18 @@ class LocationCategory
     LONDON_REGION = 'London'
     OUT_OF_SCOPE_COUNTIES = ['Powys', 'Blaenau Gwent']
 
-    def all
-      regions + boroughs + counties
-    end
-
     def include?(location)
       ALL_LOCATION_CATEGORIES.include?(location.downcase)
     end
 
     def export
-      file_path = Rails.root.join('lib', 'tasks', 'data', 'location_categories.yml')
-      location_categories = all.map(&:downcase).sort.to_yaml
-      File.write(file_path, location_categories)
+      base_path = Rails.root.join('lib', 'tasks', 'data')
+
+      %w[regions counties boroughs].each do |location_category|
+        file_path = base_path.join("#{location_category}.yml")
+
+        File.write(file_path, public_send(location_category).to_yaml)
+      end
     end
 
     def regions

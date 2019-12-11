@@ -183,6 +183,10 @@
       {
         "name": "BIG_QUERY_API_JSON_KEY",
         "value": "${big_query_api_json_key}"
+      },
+      {
+        "name": "BIG_QUERY_DATASET",
+        "value": "${big_query_dataset}"
       }
     ]
   }
