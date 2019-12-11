@@ -4,14 +4,10 @@ RSpec.describe LocationCategory, type: :model do
   before do
     create(:school, :in_london, local_authority: 'Camden')
     create(:school, :outside_london, county: 'Somerset')
-    stub_const('ALL_LOCATION_CATEGORIES', described_class.all.map(&:downcase))
+    stub_const('ALL_LOCATION_CATEGORIES', all_location_categories)
   end
 
-  describe '.all' do
-    it 'returns all location categories' do
-      expect(described_class.all).to eq ['London', 'East of England', 'Camden', 'Somerset']
-    end
-  end
+  let(:all_location_categories) { ['London', 'East of England', 'Camden', 'Somerset'].map(&:downcase) }
 
   describe '.include?' do
     context 'when location is included' do
