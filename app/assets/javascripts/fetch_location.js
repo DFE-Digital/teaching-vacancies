@@ -1,9 +1,5 @@
 if (navigator.geolocation) {
-  if (window.Turbolinks != null && window.Turbolinks.supported) {
-    $(document).on('turbolinks:load', showLocationLink);
-  } else {
     $(showLocationLink);
-  }
 }
 
 var loader = new GOVUK.Loader();

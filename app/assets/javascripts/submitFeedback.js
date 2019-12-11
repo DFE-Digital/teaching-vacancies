@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function(){
+$(document).ready(function(){
 
 
   $('.submit_feedback').on('submit', function(event) {
