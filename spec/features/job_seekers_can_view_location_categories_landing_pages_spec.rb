@@ -43,4 +43,13 @@ RSpec.feature 'Viewing a location category landing page', elasticsearch: true do
 
     expect(page).to have_title('Teaching jobs in Camden')
   end
+
+  context 'meta tags' do
+    let(:description) { 'Find teaching jobs in Camden on Teaching Vacancies, the free national job site for teachers, with no recruitment fees for schools.' }
+
+    scenario'description' do
+      visit location_category_path('camden')
+      expect(page).to have_css("meta[name='description'][content=#{description}]", visible: false)
+    end
+  end
 end
