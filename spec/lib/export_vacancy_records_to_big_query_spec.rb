@@ -25,14 +25,14 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
           starts_on: vacancy.starts_on,
           ends_on: vacancy.ends_on,
           subjects: subjects,
-          min_pay_scale: vacancy.min_pay_scale.label,
-          max_pay_scale: vacancy.max_pay_scale.label,
+          min_pay_scale: vacancy.min_pay_scale&.label,
+          max_pay_scale: vacancy.max_pay_scale&.label,
           leadership: vacancy.leadership&.title,
           education: vacancy.education,
           qualifications: vacancy.qualifications,
           experience: vacancy.experience,
           status: vacancy.status,
-          expiry_time: format_date(vacancy.expiry_time), # TODO: Combine 2 fields
+          expiry_time: format_date(vacancy.expiry_time),
           publish_on: format_date(vacancy.publish_on),
           school: {
             urn: vacancy.school.urn,
