@@ -7,13 +7,13 @@ FactoryBot.define do
     association :school
 
     job_title { Faker::Lorem.sentence[1...30].strip }
-    job_description { Faker::Lorem.paragraph(4) }
-    education { Faker::Lorem.paragraph(4) }
-    qualifications { Faker::Lorem.paragraph(4) }
-    experience { Faker::Lorem.paragraph(4) }
+    job_description { Faker::Lorem.paragraph(sentence_count: 4) }
+    education { Faker::Lorem.paragraph(sentence_count: 4) }
+    qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
+    experience { Faker::Lorem.paragraph(sentence_count: 4) }
     status { :published }
     working_patterns { ['full_time'] }
-    expires_on { Faker::Time.forward(14) }
+    expires_on { Faker::Time.forward(days: 14) }
     expiry_time { expires_on&.change(sec: 0) }
     publish_on { Time.zone.today }
     minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
@@ -35,11 +35,11 @@ FactoryBot.define do
     end
 
     trait :fail_maximum_validation do
-      job_title { Faker::Lorem.characters(150) }
-      job_description { Faker::Lorem.characters(50001) }
-      experience { Faker::Lorem.characters(1010) }
-      education { Faker::Lorem.characters(1005) }
-      qualifications { Faker::Lorem.characters(1002) }
+      job_title { Faker::Lorem.characters(number: 150) }
+      job_description { Faker::Lorem.characters(number: 50001) }
+      experience { Faker::Lorem.characters(number: 1010) }
+      education { Faker::Lorem.characters(number: 1005) }
+      qualifications { Faker::Lorem.characters(number: 1002) }
       minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
       maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
     end
@@ -54,10 +54,10 @@ FactoryBot.define do
     end
 
     trait :complete do
-      starts_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 30.days) }
-      ends_on { Faker::Time.between(Time.zone.today + 30.days, Time.zone.today + 60.days) }
-      expires_on { Faker::Time.between(Time.zone.today + 2.days, Time.zone.today + 9.days) }
-      publish_on { Faker::Time.between(Time.zone.today, Time.zone.today + 1.day) }
+      starts_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 30.days) }
+      ends_on { Faker::Time.between(from: Time.zone.today + 30.days, to: Time.zone.today + 60.days) }
+      expires_on { Faker::Time.between(from: Time.zone.today + 2.days, to: Time.zone.today + 9.days) }
+      publish_on { Faker::Time.between(from: Time.zone.today, to: Time.zone.today + 1.day) }
     end
 
     trait :draft do
@@ -70,7 +70,7 @@ FactoryBot.define do
 
     trait :published do
       status { :published }
-      expires_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 20.days) }
+      expires_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 20.days) }
     end
 
     trait :published_slugged do
@@ -82,8 +82,8 @@ FactoryBot.define do
       to_create { |instance| instance.save(validate: false) }
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
-      publish_on { Faker::Time.between(Time.zone.today - 14.days, Time.zone.today - 7.days) }
-      expires_on { Faker::Time.backward(6) }
+      publish_on { Faker::Time.between(from: Time.zone.today - 14.days, to: Time.zone.today - 7.days) }
+      expires_on { Faker::Time.backward(days: 6) }
     end
 
     trait :future_publish do
@@ -124,7 +124,7 @@ FactoryBot.define do
 
     trait :with_no_expiry_time do
       status { :published }
-      expires_on { Faker::Time.between(Time.zone.today + 10.days, Time.zone.today + 20.days) }
+      expires_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 20.days) }
       expiry_time { nil }
     end
 

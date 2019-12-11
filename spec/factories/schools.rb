@@ -4,8 +4,8 @@ FactoryBot.define do
     association :region
 
     name { Faker::Educator.secondary_school.strip }
-    description { Faker::Lorem.paragraph(1) }
-    urn { Faker::Number.number(10) }
+    description { Faker::Lorem.paragraph(sentence_count: 1) }
+    urn { Faker::Number.number(digits: 10) }
     address { Faker::Address.street_name }
     town { Faker::Address.city }
     county { Faker::Address.state_abbr }
