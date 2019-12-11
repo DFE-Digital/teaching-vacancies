@@ -72,14 +72,14 @@ class ExportVacancyRecordsToBigQuery
         starts_on: v.starts_on,
         ends_on: v.ends_on,
         subjects: subjects(v),
-        min_pay_scale: v.min_pay_scale.label,
-        max_pay_scale: v.max_pay_scale.label,
+        min_pay_scale: v.min_pay_scale&.label,
+        max_pay_scale: v.max_pay_scale&.label,
         leadership: v.leadership&.title,
         education: v.education,
         qualifications: v.qualifications,
         experience: v.experience,
         status: v.status,
-        expiry_time: format_date(v.expiry_time), # TODO: Combine 2 fields
+        expiry_time: format_date(v.expiry_time),
         publish_on: format_date(v.publish_on),
         school: {
           urn: v.school.urn,
