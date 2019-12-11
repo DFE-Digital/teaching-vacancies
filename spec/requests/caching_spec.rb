@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Caching', type: :request do
   describe 'vacancies#index' do
     it 'sets the cache-control to 5 minutes' do
-      get root_path
+      get jobs_path
       expect(response.headers['cache-control']).to eq('max-age=300, public')
     end
   end
