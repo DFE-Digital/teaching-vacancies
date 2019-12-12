@@ -14,6 +14,8 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
     let(:dataset_stub) { instance_double('Google::Cloud::Bigquery::Dataset') }
 
     context 'with one vacancy' do
+      let(:expiry_time) { vacancy.expiry_time }
+
       let(:expected_table_data) do
         [
           {
@@ -32,7 +34,7 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
           qualifications: vacancy.qualifications,
           experience: vacancy.experience,
           status: vacancy.status,
-          expiry_time: format_date(vacancy.expiry_time),
+          expiry_time: expiry_time,
           publish_on: format_date(vacancy.publish_on),
           school: {
             urn: vacancy.school.urn,
@@ -51,6 +53,18 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
           publisher_user_id: vacancy.publisher_user&.oid,
         }
       ]
+      end
+
+      context 'when dealing with an old vacancy that has no expiry_time' do
+        let(:vacancy) { create(:vacancy, :with_no_expiry_time).reload }
+        let(:subjects) { [vacancy.subject.name] }
+        let(:expiry_time) { format_date(vacancy.expires_on) }
+
+        it 'inserts into big query with the expires_on' do
+          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
+
+          subject.run!
+        end
       end
 
       context 'with no subjects' do

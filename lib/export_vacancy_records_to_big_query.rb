@@ -79,7 +79,7 @@ class ExportVacancyRecordsToBigQuery
         qualifications: v.qualifications,
         experience: v.experience,
         status: v.status,
-        expiry_time: format_date(v.expiry_time),
+        expiry_time: expiry_time(v),
         publish_on: format_date(v.publish_on),
         school: {
           urn: v.school.urn,
@@ -103,6 +103,10 @@ class ExportVacancyRecordsToBigQuery
 
   def format_date(date)
     date.strftime('%FT%T%:z')
+  end
+
+  def expiry_time(vacancy)
+    vacancy.expiry_time || format_date(vacancy.expires_on)
   end
 
   def subjects(vacancy)
