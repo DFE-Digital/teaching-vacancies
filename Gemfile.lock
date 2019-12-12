@@ -378,8 +378,7 @@ GEM
     roadie-rails (2.1.0)
       railties (>= 5.1, < 6.1)
       roadie (~> 3.1)
-    rollbar (2.18.2)
-      multi_json
+    rollbar (2.22.1)
     rspec-collection_matchers (1.2.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.9.0)
@@ -569,7 +568,7 @@ DEPENDENCIES
   redis
   redis-objects
   roadie-rails
-  rollbar (~> 2.18)
+  rollbar (~> 2.22)
   rspec-collection_matchers
   rspec-rails
   rubocop (~> 0.75.1)

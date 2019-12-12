@@ -46,7 +46,7 @@ gem 'gov_uk_date_fields'
 gem 'validate_url', '~> 1.0.8'
 gem 'xml-sitemap'
 
-gem 'rollbar', '~> 2.18'
+gem 'rollbar', '~> 2.22'
 
 gem 'rubocop', '~> 0.75.1'
 gem 'rubocop-rails_config', '~> 0.7.3'
