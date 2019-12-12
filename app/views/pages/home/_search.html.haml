@@ -1,6 +1,8 @@
 %h1.govuk-heading-m= t('jobs.heading')
 
 = form_for VacancyFilters.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+  = f.hidden_field :radius, value: '20'
+
   = render 'shared/location_search_tag', location: nil, extra_label_class: 'govuk-label--s'
 
   #accordion-default.govuk-accordion{ data: { module: 'govuk-accordion' } }
