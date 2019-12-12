@@ -45,11 +45,14 @@ RSpec.feature 'Viewing a location category landing page', elasticsearch: true do
   end
 
   context 'meta tags' do
-    let(:description) { 'Find teaching jobs in Camden on Teaching Vacancies, the free national job site for teachers, with no recruitment fees for schools.' }
+    context 'name="description"' do
+      let(:expected) { 'in Camden' }
 
-    scenario'description' do
-      visit location_category_path('camden')
-      expect(page).to have_css("meta[name='description'][content=#{description}]", visible: false)
+      scenario 'content specifies location' do
+        visit location_category_path('camden')
+        # Location is the key element we are looking for here, so that is all we test for.
+        expect(page).to have_css("meta[name='description'][content*='#{expected}']", visible: false)
+      end
     end
   end
 end
