@@ -1,6 +1,14 @@
 require 'rails_helper'
 require 'export_vacancy_records_to_big_query'
 
+RSpec.shared_examples 'a successful Big Query export' do
+  it 'inserts into the dataset' do
+    expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
+
+    subject.run!
+  end
+end
+
 RSpec.describe ExportVacancyRecordsToBigQuery do
   describe '#run!' do
     before do
@@ -59,15 +67,11 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
       ]
       end
 
-      context 'when dealing with an old vacancy that has no expiry_time' do
+      context 'with no expiry_time' do
         let(:vacancy) { create(:vacancy, :with_no_expiry_time).reload }
         let(:expiry_time) { format_date_as_timestamp(vacancy.expires_on) }
 
-        it 'inserts into big query with the expires_on' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
 
       context 'when there is a starts_on and ends_on' do
@@ -75,43 +79,27 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
         let(:starts_on) { vacancy.starts_on.strftime('%F') }
         let(:ends_on) { vacancy.ends_on.strftime('%F') }
 
-        it 'inserts into big query with the expires_on' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
 
       context 'when a vacancy has no publish_on date' do
         let(:vacancy) { create(:vacancy, publish_on: nil).reload }
         let(:publish_on) { nil }
 
-        it 'inserts into big query with publish_on set as nil' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
 
       context 'with no subjects' do
         let(:vacancy) { create(:vacancy, subject: nil).reload }
         let(:subjects) { [] }
 
-        it 'inserts into big query with no subject' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
 
       context 'with only one subject' do
         let(:vacancy) { create(:vacancy).reload }
 
-        it 'inserts into big query with one subject' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
 
       context 'with multiple subjects' do
@@ -120,11 +108,7 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
           [vacancy.subject.name, vacancy.first_supporting_subject.name, vacancy.second_supporting_subject.name]
         end
 
-        it 'inserts into big query with multiple subjects' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
     end
 
