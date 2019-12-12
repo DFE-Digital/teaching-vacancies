@@ -37,14 +37,14 @@ RSpec.feature 'Filtering vacancies' do
 
   context 'when filtering by a Location Category' do
     let!(:london_region) { Region.find_or_create_by(name: 'London') }
-    let!(:camden_vacancy) do
+    let!(:east_sussex) do
       create(:vacancy, :published,
-        school: build(:school, region: london_region, local_authority: 'Camden'))
+        school: build(:school, county: 'East Sussex'))
     end
 
-    let!(:victoria_vacancy) do
+    let!(:west_sussex) do
       create(:vacancy, :published,
-        school: build(:school, region: london_region, local_authority: 'Victoria'))
+        school: build(:school, county: 'West Sussex'))
     end
 
     before do
@@ -52,14 +52,14 @@ RSpec.feature 'Filtering vacancies' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'location', with: 'camden'
+        fill_in 'location', with: 'west sussex'
         page.find('.govuk-button[type=submit]').click
       end
     end
 
     scenario 'search results returned have been filtered by the location category' do
-      expect(page).to have_content(camden_vacancy.job_title)
-      expect(page).not_to have_content(victoria_vacancy.job_title)
+      expect(page).to have_content(west_sussex.job_title)
+      expect(page).not_to have_content(east_sussex.job_title)
     end
 
     scenario 'radius filter is disabled' do
