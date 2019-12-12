@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'pages#home'
+  root 'vacancies#index'
 
   get 'check' => 'application#check'
   get 'sitemap' => 'sitemap#show', format: 'xml'

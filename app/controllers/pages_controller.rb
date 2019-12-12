@@ -6,12 +6,8 @@ class PagesController < ApplicationController
   end
 
   def set_headers
-    return super if root_path? || page_path.include?('user-not-authorised')
+    return super if page_path.include?('user-not-authorised')
 
     response.set_header('X-Robots-Tag', 'index, nofollow')
-  end
-
-  def root_path?
-    request.path == root_path
   end
 end
