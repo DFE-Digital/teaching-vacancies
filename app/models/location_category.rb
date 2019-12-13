@@ -9,7 +9,7 @@ class LocationCategory
     end
 
     def export
-      base_path = Rails.root.join('lib', 'tasks', 'data')
+      base_path = Rails.root.join('lib/tasks/data')
 
       %w[regions counties boroughs].each do |location_category|
         file_path = base_path.join("#{location_category}.yml")
