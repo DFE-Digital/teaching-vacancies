@@ -64,7 +64,7 @@ module AuthHelpers
 
   def stub_authorisation_step_with_not_found
     authorisation_response = File.read(
-      Rails.root.join('spec', 'fixtures', 'dfe_sign_in_missing_authorisation_response.html')
+      Rails.root.join('spec/fixtures/dfe_sign_in_missing_authorisation_response.html')
     )
 
     stub_request(
@@ -75,7 +75,7 @@ module AuthHelpers
 
   def stub_authorisation_step_with_external_error
     authorisation_response = File.read(
-      Rails.root.join('spec', 'fixtures', 'dfe_sign_in_authorisation_external_error.json')
+      Rails.root.join('spec/fixtures/dfe_sign_in_authorisation_external_error.json')
     )
 
     stub_request(
