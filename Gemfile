@@ -49,7 +49,7 @@ gem 'xml-sitemap'
 gem 'rollbar', '~> 2.22'
 
 gem 'rubocop', '~> 0.77.0'
-gem 'rubocop-rails_config', '~> 0.7.3'
+gem 'rubocop-rails_config', '~> 0.9.0'
 
 gem 'activerecord-session_store'
 gem 'public_activity'
