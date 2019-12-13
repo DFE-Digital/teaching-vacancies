@@ -12,82 +12,82 @@ services:
       RAILS_ENV: "development"
       DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
       ELASTICSEARCH_URL: "http://elasticsearch:9200"
-    env_file:
-      - docker-compose.env
-    depends_on:
-      - db
-      - elasticsearch
-      - redis_queue
-      - redis_cache
-      - sidekiq
-    tty: true
-    stdin_open: true
-    restart: on-failure
-    volumes:
-      - .:/srv/dfe-tvs:cached
-      - node_modules:/srv/dfe-tvs/node_modules
-    command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'"
+    #env_file:
+      #- docker-compose.env
+    #depends_on:
+      #- db
+      #- elasticsearch
+      #- redis_queue
+      #- redis_cache
+      #- sidekiq
+    #tty: true
+    #stdin_open: true
+    #restart: on-failure
+    #volumes:
+      #- .:/srv/dfe-tvs:cached
+      #- node_modules:/srv/dfe-tvs/node_modules
+    #command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'"
 
-  db:
-    image: postgres
-    volumes:
-      - pg_data:/var/lib/postgresql/data/:cached
-    ports:
-      - "15432:5432"
-    restart: on-failure
+  #db:
+    #image: postgres
+    #volumes:
+      #- pg_data:/var/lib/postgresql/data/:cached
+    #ports:
+      #- "15432:5432"
+    #restart: on-failure
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
-    depends_on:
-      - db
-    ports:
-      - "9200:9200"
-    environment:
-      - cluster.name=docker-dev-cluster
-      - node.name={{.Node.Hostname}}-elasticsearch
-      - network.host=0.0.0.0
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
-    restart: on-failure
+  #elasticsearch:
+    #image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
+    #depends_on:
+      #- db
+    #ports:
+      #- "9200:9200"
+    #environment:
+      #- cluster.name=docker-dev-cluster
+      #- node.name={{.Node.Hostname}}-elasticsearch
+      #- network.host=0.0.0.0
+      #- bootstrap.memory_lock=true
+      #- "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    #ulimits:
+      #memlock:
+        #soft: -1
+        #hard: -1
+    #volumes:
+      #- elasticsearch:/usr/share/elasticsearch/data
+    #restart: on-failure
 
-  redis_cache:
-    image: redis:latest
-    command: redis-server
-    restart: on-failure
+  #redis_cache:
+    #image: redis:latest
+    #command: redis-server
+    #restart: on-failure
 
-  redis_queue:
-    image: redis:latest
-    command: redis-server
-    restart: on-failure
+  #redis_queue:
+    #image: redis:latest
+    #command: redis-server
+    #restart: on-failure
 
-  sidekiq:
-    image: local/tvs_web
-    build:
-      context: .
-      args:
-        RAILS_ENV: "development"
-    environment:
-      RAILS_ENV: "development"
-      DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
-      ELASTICSEARCH_URL: "http://elasticsearch:9200"
-    env_file:
-      - docker-compose.env
-    volumes:
-      - .:/srv/dfe-tvs:cached
-      - node_modules:/srv/dfe-tvs/node_modules
-    command: bundle exec sidekiq -C config/sidekiq.yml
-    depends_on:
-      - redis_queue
-    restart: on-failure
+  #sidekiq:
+    #image: local/tvs_web
+    #build:
+      #context: .
+      #args:
+        #RAILS_ENV: "development"
+    #environment:
+      #RAILS_ENV: "development"
+      #DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
+      #ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    #env_file:
+      #- docker-compose.env
+    #volumes:
+      #- .:/srv/dfe-tvs:cached
+      #- node_modules:/srv/dfe-tvs/node_modules
+    #command: bundle exec sidekiq -C config/sidekiq.yml
+    #depends_on:
+      #- redis_queue
+    #restart: on-failure
 
-volumes:
-  pg_data: {}
-  elasticsearch:
-    driver: local
-  node_modules:
+#volumes:
+  #pg_data: {}
+  #elasticsearch:
+    #driver: local
+  #node_modules:
