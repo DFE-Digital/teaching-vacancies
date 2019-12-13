@@ -240,12 +240,12 @@ class VacancySearchBuilder
     return unless filters.location_category_search?
 
     {
-      bool: {
-        should: [
-          match('school.region_name', filters.location),
-          match('school.county', filters.location),
-          match('school.local_authority', filters.location),
-        ]
+      multi_match: {
+        query: filters.location,
+        type: 'phrase',
+        operator: 'and',
+        fields: %w[school.region_name school.county school.local_authority],
+        minimum_should_match: 1
       }
     }
   end
