@@ -273,7 +273,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
-    nokogumbo (2.0.1)
+    nokogumbo (2.0.2)
       nokogiri (~> 1.8, >= 1.8.4)
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
@@ -420,7 +420,7 @@ GEM
     ruby_parser (3.13.0)
       sexp_processor (~> 4.9)
     safe_yaml (1.0.5)
-    sanitize (5.0.0)
+    sanitize (5.1.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
@@ -573,7 +573,7 @@ DEPENDENCIES
   rspec-rails
   rubocop (~> 0.77.0)
   rubocop-rails_config (~> 0.9.0)
-  sanitize (~> 5.0)
+  sanitize (~> 5.1)
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
   sidekiq
