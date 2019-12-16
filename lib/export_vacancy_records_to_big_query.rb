@@ -34,7 +34,7 @@ class ExportVacancyRecordsToBigQuery
 
         schema.record 'school', mode: :nullable do |school|
           school.string 'urn', mode: :required
-          school.string 'county', mode: :required
+          school.string 'county', mode: :nullable
         end
 
         schema.timestamp 'created_at', mode: :required
