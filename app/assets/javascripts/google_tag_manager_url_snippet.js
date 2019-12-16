@@ -10,6 +10,6 @@ function removePIIfromURL(url) {
   return url.pathname;
 }
 
-$(document).on('turbolinks:load', function(){
+$(document).ready(function(){
   pushURLToDatalayer();
 });

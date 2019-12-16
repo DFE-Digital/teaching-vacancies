@@ -3,9 +3,9 @@ require 'update_school_data'
 require 'open-uri'
 
 RSpec.describe UpdateSchoolData do
-  let(:test_file_path) { Rails.root.join('spec', 'fixtures', 'example_schools_data.csv') }
+  let(:test_file_path) { Rails.root.join('spec/fixtures/example_schools_data.csv') }
   before(:each) do
-    temp_file_path = Rails.root.join('spec', 'fixtures', 'temp_schools_data.csv')
+    temp_file_path = Rails.root.join('spec/fixtures/temp_schools_data.csv')
     allow_any_instance_of(UpdateSchoolData)
       .to receive(:csv_file_location)
       .and_return(temp_file_path)

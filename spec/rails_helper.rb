@@ -11,12 +11,15 @@ require 'factory_bot_rails'
 require 'database_cleaner_helper'
 require 'browser_test_helper'
 
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
 user_agents ||= YAML.load_file(Browser.root.join('test/ua.yml')).freeze
 USER_AGENTS = user_agents
+
+# This keeps the startup message from appearing in the stdout of the test run.
+Capybara.server = :puma, { Silent: true, Threads: '0:1' }
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!

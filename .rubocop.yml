@@ -29,7 +29,7 @@ Style/FrozenStringLiteralComment:
 Style/NumericLiterals:
     Enabled: false
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
     Enabled: false
 
 Style/TrailingCommaInArguments:

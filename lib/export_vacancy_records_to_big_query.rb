@@ -69,18 +69,18 @@ class ExportVacancyRecordsToBigQuery
         job_title: v.job_title,
         minimum_salary: v.minimum_salary,
         maximum_salary: v.maximum_salary,
-        starts_on: v.starts_on,
-        ends_on: v.ends_on,
+        starts_on: format_as_date(v.starts_on),
+        ends_on: format_as_date(v.ends_on),
         subjects: subjects(v),
-        min_pay_scale: v.min_pay_scale.label,
-        max_pay_scale: v.max_pay_scale.label,
+        min_pay_scale: v.min_pay_scale&.label,
+        max_pay_scale: v.max_pay_scale&.label,
         leadership: v.leadership&.title,
         education: v.education,
         qualifications: v.qualifications,
         experience: v.experience,
         status: v.status,
-        expiry_time: format_date(v.expiry_time), # TODO: Combine 2 fields
-        publish_on: format_date(v.publish_on),
+        expiry_time: expiry_time(v),
+        publish_on: format_as_timestamp(v.publish_on),
         school: {
           urn: v.school.urn,
           county: v.school.county,
@@ -101,12 +101,22 @@ class ExportVacancyRecordsToBigQuery
   end
   # rubocop:enable Metrics/AbcSize
 
-  def format_date(date)
-    date.strftime('%FT%T%:z')
+  def format_as_date(date)
+    date&.strftime('%F')
+  end
+
+  def format_as_timestamp(datetime)
+    datetime&.strftime('%FT%T%:z')
+  end
+
+  def expiry_time(vacancy)
+    vacancy.expiry_time || format_as_timestamp(vacancy.expires_on)
   end
 
   def subjects(vacancy)
-    subjects = [vacancy.subject]
+    subjects = []
+
+    subjects << vacancy.subject if vacancy.subject
     subjects << vacancy.first_supporting_subject if vacancy.first_supporting_subject
     subjects << vacancy.second_supporting_subject if vacancy.second_supporting_subject
 

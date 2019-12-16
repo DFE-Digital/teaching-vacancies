@@ -2,15 +2,15 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: localhost
-  username: postgres
-  password:
   pool: <%= Integer(ENV.fetch('RAILS_MAX_THREADS') { 5 }) %>
 
 development:
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
+  database: tvs_development
 
 test:
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
+  database: tvs_test
 
 staging:
   url: <%= ENV['DATABASE_URL'] %>

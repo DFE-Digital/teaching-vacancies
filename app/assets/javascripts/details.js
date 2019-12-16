@@ -19,7 +19,7 @@ function addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(detailsElement) 
 }
 
 
-$( document ).on('turbolinks:load', function() {
+$( document ).ready(function() {
     $('details').each(function(_, details) {
         addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(details);
     });

@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 5.2.4'
 
 gem 'puma', '~> 4.3'
 gem 'pg', '~> 1.1'
@@ -18,7 +18,6 @@ gem 'figaro'
 gem 'httparty'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'turbolinks', '~> 5'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.9'
 gem 'addressable'
@@ -32,7 +31,7 @@ gem 'redis-objects'
 gem 'skylight'
 
 gem 'omniauth', '~> 1.9'
-gem 'omniauth_openid_connect', '~> 0.2'
+gem 'omniauth_openid_connect', '~> 0.3'
 
 gem 'breasal', '~> 0.0.1'
 
@@ -47,10 +46,10 @@ gem 'gov_uk_date_fields'
 gem 'validate_url', '~> 1.0.8'
 gem 'xml-sitemap'
 
-gem 'rollbar', '~> 2.18'
+gem 'rollbar', '~> 2.22'
 
-gem 'rubocop', '~> 0.75.1'
-gem 'rubocop-rails_config', '~> 0.7.3'
+gem 'rubocop', '~> 0.77.0'
+gem 'rubocop-rails_config', '~> 0.9.0'
 
 gem 'activerecord-session_store'
 gem 'public_activity'
@@ -81,6 +80,7 @@ end
 group :development, :test do
   gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'dotenv-rails'
   gem 'elasticsearch-extensions'
   gem 'pry'
   gem 'rspec-rails'
@@ -92,6 +92,7 @@ end
 group :test do
   gem 'capybara', '~> 3.29'
   gem 'database_cleaner'
+  gem 'fuubar'
   gem 'mock_redis'
   gem 'poltergeist'
   gem 'rspec-collection_matchers'

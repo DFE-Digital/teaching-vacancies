@@ -103,15 +103,17 @@ RSpec.describe VacancySearchBuilder do
       builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {
-        should: [
-          { match: { 'school.region_name' => 'London' } },
-          { match: { 'school.county' => 'London' } },
-          { match: { 'school.local_authority' => 'London' } }
-        ]
+        multi_match: {
+          query: filters.location,
+          type: 'phrase',
+          operator: 'and',
+          fields: %w[school.region_name school.county school.local_authority],
+          minimum_should_match: 1
+        }
       }
 
       expect(builder).to be_a(Hash)
-      expect(builder[:search_query][:bool][:must][3][:bool]).to include(expected_hash)
+      expect(builder[:search_query][:bool][:must][3]).to include(expected_hash)
     end
 
     it 'builds a working pattern query when one is provided' do

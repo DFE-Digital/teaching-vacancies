@@ -13,11 +13,11 @@ module AWSIpRanges
       http_connection.use_ssl = true
       response = http_connection.start { |http| http.get(uri.path) }
 
-      return parse_json_for_ips(response.body)
+      parse_json_for_ips(response.body)
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
            Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
       Rails.logger.warn("Unable to setup Rack Proxies to acquire the correct remote_ip: #{e.class}")
-      return []
+      []
     end
   end
 

@@ -24,9 +24,9 @@ module OmniAuth
                       'A sign-in callback was unauthorised',
                       session_id: session.id,
                       received_state: request.params['state'],)
-          return redirect('/401')
+          redirect('/401')
         elsif !request.params['code']
-          return fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
+          fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
         else
           options.issuer = issuer if options.issuer.blank?
           discover! if options.discovery

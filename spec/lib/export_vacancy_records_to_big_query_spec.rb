@@ -1,6 +1,14 @@
 require 'rails_helper'
 require 'export_vacancy_records_to_big_query'
 
+RSpec.shared_examples 'a successful Big Query export' do
+  it 'inserts into the dataset' do
+    expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
+
+    subject.run!
+  end
+end
+
 RSpec.describe ExportVacancyRecordsToBigQuery do
   describe '#run!' do
     before do
@@ -14,7 +22,11 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
     let(:dataset_stub) { instance_double('Google::Cloud::Bigquery::Dataset') }
 
     context 'with one vacancy' do
-      let(:vacancy) { create(:vacancy).reload }
+      let(:publish_on) { format_date_as_timestamp(vacancy.publish_on) }
+      let(:expiry_time) { vacancy.expiry_time }
+      let(:ends_on) { nil }
+      let(:starts_on) { nil }
+      let(:subjects) { [vacancy.subject.name] }
 
       let(:expected_table_data) do
         [
@@ -24,18 +36,18 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
           job_title: vacancy.job_title,
           minimum_salary: vacancy.minimum_salary,
           maximum_salary: vacancy.maximum_salary,
-          starts_on: vacancy.starts_on,
-          ends_on: vacancy.ends_on,
+          starts_on: starts_on,
+          ends_on: ends_on,
           subjects: subjects,
-          min_pay_scale: vacancy.min_pay_scale.label,
-          max_pay_scale: vacancy.max_pay_scale.label,
+          min_pay_scale: vacancy.min_pay_scale&.label,
+          max_pay_scale: vacancy.max_pay_scale&.label,
           leadership: vacancy.leadership&.title,
           education: vacancy.education,
           qualifications: vacancy.qualifications,
           experience: vacancy.experience,
           status: vacancy.status,
-          expiry_time: format_date(vacancy.expiry_time), # TODO: Combine 2 fields
-          publish_on: format_date(vacancy.publish_on),
+          expiry_time: expiry_time,
+          publish_on: publish_on,
           school: {
             urn: vacancy.school.urn,
             county: vacancy.school.county,
@@ -55,14 +67,39 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
       ]
       end
 
+      context 'with no expiry_time' do
+        let(:vacancy) { create(:vacancy, :with_no_expiry_time).reload }
+        let(:expiry_time) { format_date_as_timestamp(vacancy.expires_on) }
+
+        it_behaves_like 'a successful Big Query export'
+      end
+
+      context 'when there is a starts_on and ends_on' do
+        let(:vacancy) { create(:vacancy, :complete).reload }
+        let(:starts_on) { vacancy.starts_on.strftime('%F') }
+        let(:ends_on) { vacancy.ends_on.strftime('%F') }
+
+        it_behaves_like 'a successful Big Query export'
+      end
+
+      context 'when a vacancy has no publish_on date' do
+        let(:vacancy) { create(:vacancy, publish_on: nil).reload }
+        let(:publish_on) { nil }
+
+        it_behaves_like 'a successful Big Query export'
+      end
+
+      context 'with no subjects' do
+        let(:vacancy) { create(:vacancy, subject: nil).reload }
+        let(:subjects) { [] }
+
+        it_behaves_like 'a successful Big Query export'
+      end
+
       context 'with only one subject' do
-        let(:subjects) { [vacancy.subject.name] }
+        let(:vacancy) { create(:vacancy).reload }
 
-        it 'inserts into big query with one subject' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
 
       context 'with multiple subjects' do
@@ -71,11 +108,7 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
           [vacancy.subject.name, vacancy.first_supporting_subject.name, vacancy.second_supporting_subject.name]
         end
 
-        it 'inserts into big query with multiple subjects' do
-          expect(dataset_stub).to receive(:insert).with('vacancies', expected_table_data, autocreate: true)
-
-          subject.run!
-        end
+        it_behaves_like 'a successful Big Query export'
       end
     end
 
@@ -89,7 +122,7 @@ RSpec.describe ExportVacancyRecordsToBigQuery do
       end
     end
 
-    def format_date(date)
+    def format_date_as_timestamp(date)
       date.strftime('%FT%T%:z')
     end
   end
