@@ -6,12 +6,6 @@ class SchoolVacancyPresenter < BasePresenter
     model.total_pageviews || 0
   end
 
-  # rubocop:disable Naming/AccessorMethodName
-  def get_more_info_clicks
-    model.total_get_more_info_clicks || 0
-  end
-  # rubocop:enable Naming/AccessorMethodName
-
   def publish_on
     format_date(model.publish_on)
   end

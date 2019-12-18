@@ -23,26 +23,6 @@ RSpec.describe SchoolVacancyPresenter do
     end
   end
 
-  describe 'get_more_info_clicks' do
-    let(:vacancy) { create(:vacancy, total_get_more_info_clicks: get_more_info_clicks) }
-
-    context 'when get more info clicks are present' do
-      let(:get_more_info_clicks) { 100 }
-
-      it 'returns the number' do
-        expect(presenter.get_more_info_clicks).to eq(get_more_info_clicks)
-      end
-    end
-
-    context 'when get more info clicks are not present' do
-      let(:get_more_info_clicks) { nil }
-
-      it 'returns zero' do
-        expect(presenter.get_more_info_clicks).to eq(0)
-      end
-    end
-  end
-
   describe 'application_deadline' do
     let(:vacancy) { create(:vacancy, expires_on: deadline_date, expiry_time: deadline_time) }
     let(:deadline_date) { Time.zone.today + 5.days }

@@ -39,24 +39,6 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
         end
       end
     end
-
-    context 'get more info clicks are nil' do
-      scenario 'page views show zero' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[5]')).to have_content('0')
-        end
-      end
-    end
-
-    context 'get more info clicks are present' do
-      let(:total_get_more_info_clicks) { 100 }
-
-      scenario 'page views show the page view count' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[5]')).to have_content(total_get_more_info_clicks)
-        end
-      end
-    end
   end
 
   context 'when vacancy is expired' do
@@ -88,24 +70,6 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
       scenario 'page views show the page view count' do
         within("tr#school_vacancy_presenter_#{vacancy.id}") do
           expect(page.find('td[4]')).to have_content(total_pageviews)
-        end
-      end
-    end
-
-    context 'get more info clicks are nil' do
-      scenario 'page views show zero' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[5]')).to have_content('0')
-        end
-      end
-    end
-
-    context 'get more info clicks are present' do
-      let(:total_get_more_info_clicks) { 100 }
-
-      scenario 'page views show the page view count' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[5]')).to have_content(total_get_more_info_clicks)
         end
       end
     end
