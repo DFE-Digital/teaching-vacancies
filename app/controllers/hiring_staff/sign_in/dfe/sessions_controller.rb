@@ -14,11 +14,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     Rails.logger.warn("Hiring staff signed in: #{user_id}")
     audit_successful_authentication
 
-    if DfeSignInAuthorisationFeature.enabled?
-      perform_dfe_sign_in_authorisation
-    else
-      perform_non_dfe_sign_in_authorisation
-    end
+    perform_dfe_sign_in_authorisation
   end
 
   private
@@ -60,12 +56,6 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     authorisation = Authorisation.new(organisation_id: organisation_id, user_id: user_id)
     authorisation.call
     check_authorisation(authorisation)
-  end
-
-  def perform_non_dfe_sign_in_authorisation
-    permissions = TeacherVacancyAuthorisation::Permissions.new
-    permissions.authorise(identifier, school_urn)
-    check_authorisation(permissions)
   end
 
   def check_authorisation(authorisation_permissions)
