@@ -363,8 +363,6 @@ variable "dfe_sign_in_secret" {}
 variable "google_maps_api_key" {}
 variable "google_tag_manager_container_id" {}
 variable "secret_key_base" {}
-variable "authorisation_service_url" {}
-variable "authorisation_service_token" {}
 
 variable "google_drive_json_key" {
   type = "map"
@@ -405,9 +403,6 @@ variable "skylight_ignored_endpoints" {
 
 variable "notify_key" {}
 variable "feature_email_alerts" {}
-variable "feature_dfe_sign_in_authorisation" {
-  default = "false"
-}
 
 variable "feature_import_vacancies" {
   default = "false"
