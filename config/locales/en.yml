@@ -37,9 +37,10 @@ en:
       page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
     home:
       location_categories:
-        location_links_heading: Explore teaching jobs by location
-        counties: English counties
         boroughs: London boroughs
+        cities: Popular cities and towns
+        counties: English counties
+        location_links_heading: Explore teaching jobs by location
       signin:
         title: List a teaching job
         description: You must sign in to your Teaching Vacancies account to list a job at your school.

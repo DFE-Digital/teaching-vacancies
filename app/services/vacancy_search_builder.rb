@@ -244,7 +244,7 @@ class VacancySearchBuilder
         query: filters.location,
         type: 'phrase',
         operator: 'and',
-        fields: %w[school.region_name school.county school.local_authority],
+        fields: %w[school.region_name school.county school.town school.local_authority],
         minimum_should_match: 1
       }
     }
