@@ -66,249 +66,79 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   let(:user_oid) { '161d1f6a-44f1-4a1a-940d-d1088c439da7' }
   let(:dsi_email_address) { Faker::Internet.email }
 
-  context 'when the dfe sign in authorisation feature flag is enabled' do
+  before(:each) do
+    stub_accepted_terms_and_condition
+    OmniAuth.config.test_mode = true
+  end
+
+  after(:each) do
+    OmniAuth.config.mock_auth[:default] = nil
+    OmniAuth.config.mock_auth[:dfe] = nil
+    OmniAuth.config.test_mode = false
+  end
+
+  context 'with valid credentials that match a school' do
+    let!(:school) { create(:school, urn: '110627') }
+
     before(:each) do
-      allow(DfeSignInAuthorisationFeature).to receive(:enabled?) { true }
-      stub_accepted_terms_and_condition
-      OmniAuth.config.test_mode = true
+      stub_authentication_step email: dsi_email_address
+      stub_authorisation_step
+      stub_sign_in_with_multiple_organisations
+
+      visit root_path
+
+      sign_in_user
     end
 
-    after(:each) do
-      OmniAuth.config.mock_auth[:default] = nil
-      OmniAuth.config.mock_auth[:dfe] = nil
-      OmniAuth.config.test_mode = false
+    it_behaves_like 'a successful sign in'
+
+    scenario 'it redirects the sign in page to the school page' do
+      visit new_identifications_path
+      expect(page).to have_content("Jobs at #{school.name}")
+      expect(current_path).to eql(school_path)
     end
 
-    context 'with valid credentials that match a school' do
-      let!(:school) { create(:school, urn: '110627') }
+    context 'the user can switch between organisations' do
+      let!(:other_school) { create(:school, urn: '101010') }
 
-      before(:each) do
-        stub_authentication_step email: dsi_email_address
-        stub_authorisation_step
-        stub_sign_in_with_multiple_organisations
-
-        visit root_path
-
-        sign_in_user
-      end
-
-      it_behaves_like 'a successful sign in'
-
-      scenario 'it redirects the sign in page to the school page' do
-        visit new_identifications_path
+      scenario 'allows the user to switch between organisations' do
         expect(page).to have_content("Jobs at #{school.name}")
-        expect(current_path).to eql(school_path)
-      end
 
-      context 'the user can switch between organisations' do
-        let!(:other_school) { create(:school, urn: '101010') }
+        # Mock switching organisations from within DfE Sign In
+        stub_authentication_step(
+          organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
+          school_urn: '101010'
+        )
+        stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
+                                fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')
 
-        scenario 'allows the user to switch between organisations' do
-          expect(page).to have_content("Jobs at #{school.name}")
-
-          # Mock switching organisations from within DfE Sign In
-          stub_authentication_step(
-            organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-            school_urn: '101010'
-          )
-          stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-                                  fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')
-
-          click_on 'Change organisation'
-          expect(page).to have_content("Jobs at #{other_school.name}")
-        end
-      end
-    end
-
-    context 'with valid credentials but no authorisation' do
-      before(:each) do
-        stub_authentication_step(email: 'another_email@example.com')
-        stub_authorisation_step_with_not_found
-      end
-
-      it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
-                                          school_urn: '110627',
-                                          email: 'another_email@example.com'
-    end
-
-    context 'when there is was an error with DfE Sign-in' do
-      before(:each) do
-        stub_authentication_step
-        stub_authorisation_step_with_external_error
-      end
-
-      it 'raises an error' do
-        visit root_path
-
-        expect { sign_in_user }.to raise_error(Authorisation::ExternalServerError)
+        click_on 'Change organisation'
+        expect(page).to have_content("Jobs at #{other_school.name}")
       end
     end
   end
 
-  context 'when the dfe sign-in authorisation feature flag is disabled' do
+  context 'with valid credentials but no authorisation' do
     before(:each) do
-      allow(DfeSignInAuthorisationFeature).to receive(:enabled?) { false }
-      stub_accepted_terms_and_condition
-      OmniAuth.config.test_mode = true
+      stub_authentication_step(email: 'another_email@example.com')
+      stub_authorisation_step_with_not_found
     end
 
-    after(:each) do
-      OmniAuth.config.mock_auth[:default] = nil
-      OmniAuth.config.mock_auth[:dfe] = nil
-      OmniAuth.config.test_mode = false
+    it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
+                                        school_urn: '110627',
+                                        email: 'another_email@example.com'
+  end
+
+  context 'when there is was an error with DfE Sign-in' do
+    before(:each) do
+      stub_authentication_step
+      stub_authorisation_step_with_external_error
     end
 
-    let(:user_oid) { 'an-unknown-oid' }
-    let!(:school) { create(:school, urn: '110627') }
-    let!(:other_school) { create(:school, urn: '101010') }
-    let!(:user) { create(:user, oid: user_oid) }
+    it 'raises an error' do
+      visit root_path
 
-    context 'with valid credentials that do match a school' do
-      let(:mock_response) do
-        double(code: '200', body: {
-          user:
-          {
-            permissions:
-            [
-              {
-                user_token: 'an-email@example.com',
-                school_urn: '110627'
-              },
-              {
-                user_token: 'an-email@example.com',
-                school_urn: '101010'
-              }
-            ]
-          }
-        }.to_json)
-      end
-      let(:mock_permissions) { AuthHelpers::MockPermissions.new(mock_response) }
-      let(:dsi_email_address) { Faker::Internet.email }
-
-      before(:each) do
-        OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-          provider: 'dfe',
-          uid: user_oid,
-          info: {
-            email: dsi_email_address,
-          },
-          extra: {
-            raw_info: {
-              organisation: { urn: '110627' }
-            }
-          }
-        )
-        expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-          .and_return(mock_permissions)
-      end
-
-      context 'successful events' do
-        before(:each) do
-          visit root_path
-          sign_in_user
-        end
-
-        it_behaves_like 'a successful sign in'
-
-        scenario 'it redirects the sign in page to the school page' do
-          visit new_identifications_path
-          expect(page).to have_content("Jobs at #{school.name}")
-          expect(current_path).to eql(school_path)
-        end
-
-        context 'the user can switch between organisations' do
-          scenario 'allows the user to switch between organisations' do
-            expect(page).to have_content("Jobs at #{school.name}")
-
-            # Mock switching organisations on DfE Sign In
-            OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-              provider: 'dfe',
-              uid: 'an-unknown-oid',
-              info: {
-                email: dsi_email_address,
-              },
-              extra: {
-                raw_info: {
-                  organisation: { urn: '101010' }
-                }
-              }
-            )
-            expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-              .and_return(mock_permissions)
-            click_on 'Change organisation'
-
-            expect(page).to have_content("Jobs at #{other_school.name}")
-          end
-        end
-      end
-    end
-
-    context 'with valid credentials but no authorisation' do
-      before(:each) do
-        OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-          provider: 'dfe',
-          uid: 'an-unknown-oid',
-          info: {
-            email: 'another_email@example.com',
-          },
-          extra: {
-            raw_info: {
-              organisation: { urn: '110627' }
-            }
-          }
-        )
-
-        mock_authorisation_response = double(code: '200', body: {
-          user:
-          {
-            permissions: []
-          }
-        }.to_json)
-
-        expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-          .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
-      end
-
-      it_behaves_like 'a failed sign in', user_id: 'an-unknown-oid',
-                                          school_urn: '110627',
-                                          email: 'another_email@example.com'
-    end
-
-    context 'with valid credentials and no organisation in DfE Sign In but existing permissions' do
-      before(:each) do
-        OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
-          provider: 'dfe',
-          uid: 'an-unknown-oid',
-          info: {
-            email: 'an-email@example.com',
-          },
-          extra: {
-            raw_info: {
-              organisation: {}
-            }
-          }
-        )
-
-        mock_authorisation_response = double(code: '200', body: {
-          user:
-          {
-            permissions:
-            [
-              {
-                user_token: 'an-email@example.com',
-                school_urn: '110627'
-              }
-            ]
-          }
-        }.to_json)
-
-        expect(TeacherVacancyAuthorisation::Permissions).to receive(:new)
-          .and_return(AuthHelpers::MockPermissions.new(mock_authorisation_response))
-      end
-
-      it_behaves_like 'a failed sign in', user_id: 'an-unknown-oid',
-                                          school_urn: '',
-                                          email: 'an-email@example.com'
+      expect { sign_in_user }.to raise_error(Authorisation::ExternalServerError)
     end
   end
 

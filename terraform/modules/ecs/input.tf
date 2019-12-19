@@ -51,8 +51,6 @@ variable "aws_elasticsearch_key" {}
 variable "aws_elasticsearch_secret" {}
 variable "redis_cache_url" {}
 variable "redis_queue_url" {}
-variable "authorisation_service_url" {}
-variable "authorisation_service_token" {}
 
 variable "google_drive_json_key" {
   type = "map"
@@ -87,7 +85,6 @@ variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
 variable "feature_import_vacancies" {}
-variable "feature_dfe_sign_in_authorisation" {}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "notify_prompt_feedback_for_expired_vacancies" {}

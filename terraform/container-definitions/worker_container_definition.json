@@ -177,10 +177,6 @@
         "value": "${feature_email_alerts}"
       },
       {
-        "name": "FEATURE_DFE_SIGN_IN_AUTHORISATION",
-        "value": "${feature_dfe_sign_in_authorisation}"
-      },
-      {
         "name": "BIG_QUERY_API_JSON_KEY",
         "value": "${big_query_api_json_key}"
       },

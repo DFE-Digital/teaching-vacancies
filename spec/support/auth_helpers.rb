@@ -1,14 +1,4 @@
 module AuthHelpers
-  class MockPermissions < TeacherVacancyAuthorisation::Permissions
-    def initialize(response)
-      @response = response
-    end
-
-    def authorise(_identifier, school_urn = nil)
-      @school_urn = school_urn
-    end
-  end
-
   def stub_global_auth(return_value: true)
     allow_any_instance_of(ApplicationController)
       .to receive(:authenticate?)

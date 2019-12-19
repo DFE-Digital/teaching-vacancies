@@ -119,14 +119,6 @@
         "value": "${redis_queue_url}"
       },
       {
-        "name": "AUTHORISATION_SERVICE_URL",
-        "value": "${authorisation_service_url}"
-      },
-      {
-        "name": "AUTHORISATION_SERVICE_TOKEN",
-        "value": "${authorisation_service_token}"
-      },
-      {
         "name": "GOOGLE_DRIVE_JSON_KEY",
         "value": "${google_drive_json_key}"
       },
@@ -201,10 +193,6 @@
       {
         "name": "FEATURE_EMAIL_ALERTS",
         "value": "${feature_email_alerts}"
-      },
-      {
-        "name": "FEATURE_DFE_SIGN_IN_AUTHORISATION",
-        "value": "${feature_dfe_sign_in_authorisation}"
       },
       {
         "name": "DFE_SIGN_IN_URL",
