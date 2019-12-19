@@ -9,6 +9,7 @@ class ExportVacancyRecordsToBigQuery
 
   # rubocop:disable Metrics/AbcSize
   def run!(batch_size: 1_000)
+    delete_table
     Vacancy.all.find_in_batches batch_size: batch_size do |batch|
       dataset.insert 'vacancies', present_for_big_query(batch), autocreate: true do |schema|
         schema.string 'id', mode: :required
@@ -103,6 +104,12 @@ class ExportVacancyRecordsToBigQuery
 
   def format_as_date(date)
     date&.strftime('%F')
+  end
+
+  def delete_table
+    table = dataset.table 'vacancies'
+    return if table.nil?
+    dataset.reload! if table.delete
   end
 
   def format_as_timestamp(datetime)

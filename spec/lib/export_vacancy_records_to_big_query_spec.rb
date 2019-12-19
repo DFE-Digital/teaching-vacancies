@@ -10,16 +10,32 @@ RSpec.shared_examples 'a successful Big Query export' do
 end
 
 RSpec.describe ExportVacancyRecordsToBigQuery do
-  describe '#run!' do
-    before do
-      ENV['BIG_QUERY_DATASET'] = 'test_dataset'
-      expect(bigquery_stub).to receive(:dataset).with('test_dataset').and_return(dataset_stub)
+  before do
+    ENV['BIG_QUERY_DATASET'] = 'test_dataset'
+    expect(bigquery_stub).to receive(:dataset).with('test_dataset').and_return(dataset_stub)
+    expect(dataset_stub).to receive(:table).and_return(table_stub)
+  end
+
+  subject { ExportVacancyRecordsToBigQuery.new(bigquery: bigquery_stub) }
+
+  let(:bigquery_stub) { instance_double('Google::Cloud::Bigquery::Project') }
+  let(:dataset_stub) { instance_double('Google::Cloud::Bigquery::Dataset') }
+
+  context 'when the vacancy table exists in the dataset' do
+    let(:table_stub) { instance_double('Google::Cloud::Bigquery::Table') }
+    before { create(:vacancy) }
+
+    it 'deletes the table first before inserting new table data' do
+      expect(table_stub).to receive(:delete).and_return(true)
+      expect(dataset_stub).to receive(:reload!)
+      expect(dataset_stub).to receive(:insert)
+
+      subject.run!
     end
+  end
 
-    subject { ExportVacancyRecordsToBigQuery.new(bigquery: bigquery_stub) }
-
-    let(:bigquery_stub) { instance_double('Google::Cloud::Bigquery::Project') }
-    let(:dataset_stub) { instance_double('Google::Cloud::Bigquery::Dataset') }
+  context 'when the vacancy table does not exist in the dataset' do
+    let(:table_stub) { nil }
 
     context 'with one vacancy' do
       let(:publish_on) { format_date_as_timestamp(vacancy.publish_on) }
