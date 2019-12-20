@@ -38,6 +38,7 @@ RSpec.configure do |config|
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
   config.include DateHelper
+  config.include InspectRequests
   config.include VacancyHelpers
   config.include AuthHelpers
   config.include CapybaraHelper, type: :feature

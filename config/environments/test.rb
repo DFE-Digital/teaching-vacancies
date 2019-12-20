@@ -1,4 +1,9 @@
+require_relative '../../lib/gitlab/testing/request_blocker_middleware'
+require_relative '../../lib/gitlab/testing/request_inspector_middleware'
+
 Rails.application.configure do
+  config.middleware.insert_before(ActionDispatch::Static, Gitlab::Testing::RequestBlockerMiddleware)
+  config.middleware.insert_before(ActionDispatch::Static, Gitlab::Testing::RequestInspectorMiddleware)
   # Settings specified here will take precedence over those in
   # config/application.rb.
 
@@ -55,3 +60,5 @@ OmniAuth.config.on_failure = proc { |env|
 }
 
 Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['ELASTICSEARCH_URL']
+
+
