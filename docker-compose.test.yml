@@ -14,7 +14,6 @@ services:
       - docker-compose.env
     volumes:
       - .:/srv/dfe-tvs:cached
-      - node_modules:/srv/dfe-tvs/node_modules:cached
     depends_on:
       - db-test
       - elasticsearch-test
@@ -24,7 +23,7 @@ services:
       - tests
 
   db-test:
-    image: postgres
+    image: postgres:alpine
     volumes:
       - pg_test_data:/var/lib/postgresql/data/:cached
     networks:
