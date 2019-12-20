@@ -177,6 +177,21 @@ bundle exec rake
 
 If everything passes, you're ready to get to work.
 
+### Headless Chrome Test Dependencies
+
+These instructions assume that you already have an up-to-date version of chrome installed.
+
+Most TVS devs are going to be using the docker containers to run tests. However, if you want to run the tests directly
+in your own environment, you will need to install chromedriver to allow selenium to control chrome: 
+
+```bash
+# on OSX: 
+brew install chromedriver
+
+# on Debian or Ubuntu: 
+apt install chromium-chromedriver
+```
+
 ### Misc
 
 #### RSpec formatters - Fuubar

@@ -1,13 +1,11 @@
 require 'capybara/rspec'
-require 'capybara/poltergeist'
+require 'selenium-webdriver'
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, phantomjs_options: ['--load-images=false'])
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless disable-gpu no-sandbox]
+  )
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
-Capybara.javascript_driver = :poltergeist
 
-RSpec.configure do |config|
-  config.before(:each, js: true, type: ->(v) { v != :smoke_test }) do
-    page.driver.clear_memory_cache
-  end
-end
+Capybara.javascript_driver = :chrome
