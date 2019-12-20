@@ -11,6 +11,7 @@ RSpec.describe Authorisation do
   end
 
   describe '#call' do
+    let(:stubbed_time) { Time.zone.local(2019, 9, 1, 12, 0, 0) }
     subject do
       described_class.new(
         organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
@@ -20,6 +21,11 @@ RSpec.describe Authorisation do
 
     before(:each) do
       stub_authorisation_step
+      Timecop.travel(stubbed_time)
+    end
+
+    after(:each) do
+      Timecop.return
     end
 
     it 'stores the role_ids' do
@@ -40,7 +46,7 @@ RSpec.describe Authorisation do
       expect(JWT).to receive(:encode).with(
         {
           iss: 'schooljobs',
-          exp: (Time.now.getlocal + 60).to_i,
+          exp: (stubbed_time + 60).to_i,
           aud: 'signin.education.gov.uk'
         },
         'test-password',
