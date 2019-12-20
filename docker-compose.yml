@@ -19,19 +19,16 @@ services:
       - elasticsearch
       - redis_queue
       - redis_cache
-      #- sidekiq
+      - sidekiq
     tty: true
     stdin_open: true
     restart: on-failure
     volumes:
       - .:/srv/dfe-tvs:cached
-      - node_modules:/srv/dfe-tvs/node_modules
-    command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'"
+    command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=/etc/ssl/selfsigned.key&cert=/etc/ssl/selfsigned.crt'"
 
   db:
     image: postgres:alpine
-    volumes:
-      - pg_data:/var/lib/postgresql/data/:cached
     ports:
       - "15432:5432"
     restart: on-failure
@@ -66,28 +63,27 @@ services:
     command: redis-server
     restart: on-failure
 
-  #sidekiq:
-    #image: local/tvs_web
-    #build:
-      #context: .
-      #args:
-        #RAILS_ENV: "development"
-    #environment:
-      #RAILS_ENV: "development"
-      #DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
-      #ELASTICSEARCH_URL: "http://elasticsearch:9200"
-    #env_file:
-      #- docker-compose.env
-    #volumes:
-      #- .:/srv/dfe-tvs:cached
-      #- node_modules:/srv/dfe-tvs/node_modules
-    #command: bundle exec sidekiq -C config/sidekiq.yml
-    #depends_on:
-      #- redis_queue
-    #restart: on-failure
+  sidekiq:
+    image: local/tvs_web
+    build:
+      context: .
+      args:
+        RAILS_ENV: "development"
+    environment:
+      RAILS_ENV: "development"
+      DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    env_file:
+      - docker-compose.env
+    volumes:
+      - .:/srv/dfe-tvs:cached
+      - node_modules:/srv/dfe-tvs/node_modules
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    depends_on:
+      - redis_queue
+    restart: on-failure
 
 volumes:
-  pg_data: {}
   elasticsearch:
     driver: local
   node_modules:
