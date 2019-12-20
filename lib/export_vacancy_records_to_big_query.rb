@@ -7,56 +7,12 @@ class ExportVacancyRecordsToBigQuery
     @dataset = bigquery.dataset ENV.fetch('BIG_QUERY_DATASET')
   end
 
-  # rubocop:disable Metrics/AbcSize
   def run!(batch_size: 1_000)
+    delete_table
     Vacancy.all.find_in_batches batch_size: batch_size do |batch|
-      dataset.insert 'vacancies', present_for_big_query(batch), autocreate: true do |schema|
-        schema.string 'id', mode: :required
-        schema.string 'slug', mode: :required
-        schema.string 'job_title', mode: :required
-        schema.string 'minimum_salary', mode: :required
-        schema.string 'maximum_salary', mode: :nullable
-        schema.date 'starts_on', mode: :nullable
-        schema.date 'ends_on', mode: :nullable
-        schema.string 'subjects', mode: :repeated
-
-        schema.string 'min_pay_scale', mode: :nullable
-        schema.string 'max_pay_scale', mode: :nullable
-        schema.string 'leadership', mode: :nullable
-
-        schema.string 'education', mode: :nullable
-        schema.string 'qualifications', mode: :nullable
-        schema.string 'experience', mode: :nullable
-        schema.string 'status', mode: :required
-
-        schema.timestamp 'expiry_time', mode: :nullable
-        schema.timestamp 'publish_on', mode: :nullable
-
-        schema.record 'school', mode: :nullable do |school|
-          school.string 'urn', mode: :required
-          school.string 'county', mode: :nullable
-        end
-
-        schema.timestamp 'created_at', mode: :required
-        schema.timestamp 'updated_at', mode: :required
-
-        schema.string 'application_link', mode: :nullable
-
-        schema.boolean 'newly_qualified_teacher', mode: :required
-
-        schema.integer 'total_pageviews', mode: :nullable
-        schema.integer 'total_get_more_info_clicks', mode: :nullable
-        schema.string 'working_patterns', mode: :repeated
-
-        schema.string 'listed_elsewhere', mode: :nullable
-        schema.string 'hired_status', mode: :nullable
-        schema.boolean 'pro_rata_salary', mode: :nullable
-
-        schema.string 'publisher_user_id', mode: :nullable
-      end
+      insert_table_data(batch)
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -99,10 +55,63 @@ class ExportVacancyRecordsToBigQuery
       }
     end
   end
+
+  def insert_table_data(batch)
+    dataset.insert 'vacancies', present_for_big_query(batch), autocreate: true do |schema|
+      schema.string 'id', mode: :required
+      schema.string 'slug', mode: :required
+      schema.string 'job_title', mode: :required
+      schema.string 'minimum_salary', mode: :required
+      schema.string 'maximum_salary', mode: :nullable
+      schema.date 'starts_on', mode: :nullable
+      schema.date 'ends_on', mode: :nullable
+      schema.string 'subjects', mode: :repeated
+
+      schema.string 'min_pay_scale', mode: :nullable
+      schema.string 'max_pay_scale', mode: :nullable
+      schema.string 'leadership', mode: :nullable
+
+      schema.string 'education', mode: :nullable
+      schema.string 'qualifications', mode: :nullable
+      schema.string 'experience', mode: :nullable
+      schema.string 'status', mode: :required
+
+      schema.timestamp 'expiry_time', mode: :nullable
+      schema.timestamp 'publish_on', mode: :nullable
+
+      schema.record 'school', mode: :nullable do |school|
+        school.string 'urn', mode: :required
+        school.string 'county', mode: :nullable
+      end
+
+      schema.timestamp 'created_at', mode: :required
+      schema.timestamp 'updated_at', mode: :required
+
+      schema.string 'application_link', mode: :nullable
+
+      schema.boolean 'newly_qualified_teacher', mode: :required
+
+      schema.integer 'total_pageviews', mode: :nullable
+      schema.integer 'total_get_more_info_clicks', mode: :nullable
+      schema.string 'working_patterns', mode: :repeated
+
+      schema.string 'listed_elsewhere', mode: :nullable
+      schema.string 'hired_status', mode: :nullable
+      schema.boolean 'pro_rata_salary', mode: :nullable
+
+      schema.string 'publisher_user_id', mode: :nullable
+    end
+  end
   # rubocop:enable Metrics/AbcSize
 
   def format_as_date(date)
     date&.strftime('%F')
+  end
+
+  def delete_table
+    table = dataset.table 'vacancies'
+    return if table.nil?
+    dataset.reload! if table.delete
   end
 
   def format_as_timestamp(datetime)
