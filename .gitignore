@@ -48,6 +48,9 @@ workspace-variables/*.tfvars
 
 # ENV files
 .env
+.env.development
+.env.production
+.env.test
 .envrc
 
 # Certificates
