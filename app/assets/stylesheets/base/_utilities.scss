@@ -58,7 +58,10 @@ strong, b {
   color: govuk-colour("red");
 }
 
-.two-column-list {
-  column-count: 2;
-  column-gap: 30px;
+.four-column-list {
+  @include govuk-media-query($until: tablet) {
+    column-count: 2;
+  }
+
+  column-count: 4;
 }
