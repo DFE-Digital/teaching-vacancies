@@ -204,6 +204,16 @@ variable "update_dsi_spreadsheets_task_schedule" {
   default     = "cron(0 02 * * ? *)"
 }
 
+variable "update_database_records_in_big_query_task_command" {
+  description = "The Entrypoint for the update_database_records_in_big_query task"
+  default     = ["rake", "verbose", "database_records:in_big_query:update"]
+}
+
+variable "update_database_records_in_big_query_task_schedule" {
+  description = "update_database_records_in_big_query schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 03 * * ? *)"
+}
+
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "verbose", "db:sessions:trim"]
