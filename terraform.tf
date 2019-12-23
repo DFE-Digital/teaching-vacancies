@@ -94,6 +94,9 @@ module "ecs" {
   update_dsi_spreadsheets_task_command  = "${var.update_dsi_spreadsheets_task_command}"
   update_dsi_spreadsheets_task_schedule = "${var.update_dsi_spreadsheets_task_schedule}"
 
+  update_database_records_in_big_query_task_command = "${var.update_database_records_in_big_query_task_command}"
+  update_database_records_in_big_query_task_schedule = "${var.update_database_records_in_big_query_task_schedule}"
+
   send_job_alerts_daily_email_task_command  = "${var.send_job_alerts_daily_email_task_command}"
   send_job_alerts_daily_email_task_schedule = "${var.send_job_alerts_daily_email_task_schedule}"
 

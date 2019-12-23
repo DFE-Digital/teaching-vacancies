@@ -627,3 +627,20 @@ module "vacancies_statistics_refresh_cache_task" {
   task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
   event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
 }
+
+module "update_database_records_in_big_query_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_update_database_records_in_big_query"
+  task_description = "Update database records in Big Query"
+  task_command     = "${var.update_database_records_in_big_query_task_command}"
+  task_schedule    = "${var.update_database_records_in_big_query_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
+}
