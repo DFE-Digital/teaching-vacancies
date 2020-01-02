@@ -6,7 +6,11 @@ RSpec.feature 'Using the current location shortcut link', js: true do
   let(:dfe_lon) { -0.1323527 }
 
   before do
-    visit root_path
+    visit_path_with_simulated_location_api(root_path)
+  end
+
+  def visit_path_with_simulated_location_api(path)
+    visit path
     simulate_location
     page.execute_script "$('.js-location-finder').addClass('js-geolocation-supported');"
   end
@@ -44,6 +48,20 @@ RSpec.feature 'Using the current location shortcut link', js: true do
 
       find('#current-location').click
       expect(page).to have_field('location', with: 'SW1P 2LU')
+    end
+
+    context 'on location category page' do
+      before do
+        visit_path_with_simulated_location_api(location_category_path('camden'))
+      end
+
+      scenario 're-enables the radius field' do
+        mock_postcodes_io
+
+        expect(page).to have_field('radius', disabled: true)
+        find('#current-location').click
+        expect(page).to have_field('radius', disabled: false)
+      end
     end
   end
 
