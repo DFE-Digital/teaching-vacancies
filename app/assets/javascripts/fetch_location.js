@@ -39,6 +39,7 @@ function postcodeFromPosition(position) {
     success: function(response) {
       if (response.result) {
         $('#location').val(response.result[0].postcode);
+        $("#radius").prop("disabled", false);
       }
     },
     error: function(xhr) {
