@@ -54,7 +54,6 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect { subject }.to change { Subscription.count }.by(1)
         expect(subscription.email).to eq(params[:subscription][:email])
         expect(subscription.search_criteria).to eq(params[:subscription][:search_criteria])
-        expect(subscription.expires_on).to eq(6.months.from_now.to_date)
       end
 
       context 'with unsafe params' do

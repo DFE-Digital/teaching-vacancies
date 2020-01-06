@@ -71,24 +71,4 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
       job.vacancies_for_subscription(subscription)
     end
   end
-
-  context 'when a subscription is expired' do
-    let!(:subscription) do
-      create(:daily_subscription, search_criteria: search_criteria, expires_on: Time.zone.today - 1.day)
-    end
-
-    it 'deletes the subscription' do
-      expect { perform_enqueued_jobs { job } }.to change { Subscription.all.count }.by(-1)
-    end
-  end
-
-  context 'when a subscription is not expired' do
-    let!(:subscription) do
-      create(:daily_subscription, search_criteria: search_criteria, expires_on: Time.zone.today + 5.days)
-    end
-
-    it 'does not delete the subscription' do
-      expect { perform_enqueued_jobs { job } }.to change { Subscription.all.count }.by(0)
-    end
-  end
 end
