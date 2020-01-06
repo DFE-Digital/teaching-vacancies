@@ -8,9 +8,7 @@ class Subscription < ApplicationRecord
   validates :email, email_address: { presence: true }
   validates :reference, presence: true
   validates :frequency, presence: true
-  validates :search_criteria, uniqueness: { scope: %i[email expires_on frequency] }
-
-  scope :ongoing, -> { where('expires_on >= current_date') }
+  validates :search_criteria, uniqueness: { scope: %i[email frequency] }
 
   after_initialize :default_reference
 
@@ -57,10 +55,6 @@ class Subscription < ApplicationRecord
 
   def create_alert_run
     alert_runs.find_or_create_by(run_on: Time.zone.today)
-  end
-
-  def expired?
-    expires_on < Time.zone.today
   end
 
   private

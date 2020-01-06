@@ -7,7 +7,6 @@ class SubscriptionFinder
 
   def exists?
     Subscription
-      .ongoing
       .where(email: @sanitised_params[:email],
              search_criteria: @sanitised_params[:search_criteria],
              frequency: @sanitised_params[:frequency])

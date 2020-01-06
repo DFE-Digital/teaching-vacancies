@@ -23,7 +23,7 @@ RSpec.describe Subscription, type: :model do
     end
 
     context 'unique index' do
-      it 'validates uniqueness of email, expires_on, frequency and search_criteria' do
+      it 'validates uniqueness of email, frequency and search_criteria' do
         create(:subscription, email: 'jane@doe.com',
                               reference: 'A reference',
                               frequency: :daily)
@@ -40,18 +40,12 @@ RSpec.describe Subscription, type: :model do
   context 'scopes' do
     before(:each) do
       create_list(:subscription, 3, frequency: :daily)
-      create_list(:subscription, 5, frequency: :daily, expires_on: Time.zone.yesterday)
+      create_list(:subscription, 5, frequency: :daily)
     end
 
     context 'daily' do
       it 'retrieves all subscriptions with frequency set to :daily' do
         expect(Subscription.daily.count).to eq(8)
-      end
-    end
-
-    context 'ongoing' do
-      it 'retrieves all valid active subscriptions' do
-        expect(Subscription.ongoing.count).to eq(3)
       end
     end
   end
@@ -210,20 +204,6 @@ RSpec.describe Subscription, type: :model do
         expect(subscription.alert_runs.count).to eq(1)
         expect(subscription.alert_runs.first.id).to eq(alert_run.id)
       end
-    end
-  end
-
-  describe 'expired?' do
-    context 'when the expires_on date is in the future' do
-      let(:subscription) { build_stubbed(:daily_subscription, expires_on: Time.zone.today + 1.month) }
-
-      it { expect(subscription.expired?).to eq(false) }
-    end
-
-    context 'when the expires_on date is in the past' do
-      let(:subscription) { create(:daily_subscription, expires_on: Time.zone.today - 1.day) }
-
-      it { expect(subscription.expired?).to eq(true) }
     end
   end
 end
