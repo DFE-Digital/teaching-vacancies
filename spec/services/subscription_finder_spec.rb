@@ -42,9 +42,7 @@ RSpec.describe SubscriptionFinder do
         }
         empty_active_record_relation = Subscription.none
 
-        relation = double
-        expect(Subscription).to receive(:ongoing).and_return(relation)
-        expect(relation).to receive(:where)
+        expect(Subscription).to receive(:where)
           .with(
             email: '',
             search_criteria: 'Text',

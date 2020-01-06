@@ -59,18 +59,6 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
-      scenario 'when the email address is associated with the same inactive subscriptions' do
-        create(:daily_subscription, email: 'jane.doe@example.com',
-                                    expires_on: 1.day.ago,
-                                    search_criteria: { job_title: 'teacher' }.to_json)
-
-        visit new_subscription_path(search_criteria: { job_title: 'teacher' })
-        fill_in 'subscription[email]', with: 'jane.doe@example.com'
-        click_on 'Subscribe'
-
-        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
-      end
-
       scenario 'when no reference is set' do
         visit new_subscription_path(search_criteria: { job_title: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
