@@ -24,18 +24,28 @@ RUN apk add --update --virtual build-dependencies \
       libpq \
       npm \
       openssl \
-      tzdata
+      tzdata && \
+      gem install bundler -v 1.17.3
+
+RUN if [ "$RAILS_ENV" != "production" ]; \
+      then \
+      apk add --no-cache \
+      chromium \
+      chromium-chromedriver; \
+      fi
+
+RUN wget "https://github.com/eficode/wait-for/raw/master/wait-for" -O /bin/wait-for && \
+      chmod a+x /bin/wait-for
 
 RUN if [ "$RAILS_ENV" = "development" ] || [ "$RAILS_ENV" = "test" ]; \
       then \
-      bundle install --retry 10; \
+      bundle install --retry 10 --jobs 4; \
       else \
-      bundle install --without development test --retry 10; \
+      bundle install --without development test --retry 10 --jobs 4; \
       RAILS_ENV=production bundle exec rake DATABASE_URL=postgresql:does_not_exist --quiet assets:precompile; \
       fi
 
 RUN npm install --only=production && \
-      gem install bundler && \
       apk del build-dependencies
 
 RUN openssl req \
@@ -50,4 +60,4 @@ RUN openssl req \
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 EXPOSE 3000
-CMD ["rails", "server"]
+CMD sh -c "wait-for db:5432 -- rails server"

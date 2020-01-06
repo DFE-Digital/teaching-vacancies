@@ -17,10 +17,11 @@ services:
     depends_on:
       - db-test
       - elasticsearch-test
-    command: ["bundle", "exec", "./bin/dsetup && spring server"]
+    command: sh -c "wait-for db-test:5432 -- bundle exec spring server"
     restart: on-failure
     networks:
       - tests
+    shm_size: 1024mb
 
   db-test:
     image: postgres:alpine
@@ -31,6 +32,8 @@ services:
     ports:
       - "25432:5432"
     restart: on-failure
+    logging:
+      driver: "none"
 
   elasticsearch-test:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
@@ -51,6 +54,8 @@ services:
     networks:
       - tests
     restart: on-failure
+    logging:
+      driver: "none"
 
 networks:
   tests:
