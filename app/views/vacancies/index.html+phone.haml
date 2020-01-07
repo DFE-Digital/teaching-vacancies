@@ -11,7 +11,7 @@
     = render 'filters', collapsible?: true
 
   .govuk-grid-column-two-thirds
-    .govuk-grid-column-full.vacancies-count{class: @vacancies.user_search? ? 'search-made' : ''}
+    .govuk-grid-column-full.vacancies-count
       %p.govuk-heading-l.mb0= @filters.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@filters.location)) : @vacancies.total_count_message
       - if @vacancies.user_search?
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
@@ -22,5 +22,12 @@
       %ul.vacancies
         - @vacancies.each do |vacancy|
           = render partial: 'vacancy', locals: { vacancy: vacancy }
+
+    - elsif @vacancies.user_search?
+      %p
+        = t('jobs.no_jobs.intro')
+        %ul.govuk-list.govuk-list--bullet
+          - t('jobs.no_jobs.suggestions').each do |list_item|
+            %li= list_item
 
     = paginate @vacancies, window: 2

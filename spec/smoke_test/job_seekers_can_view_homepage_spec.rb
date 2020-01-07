@@ -13,7 +13,7 @@ RSpec.describe 'Page availability', js: true, smoke_test: true do
       page.fill_in I18n.t('jobs.filters.subject'), with: 'Maths', visible: false
       page.first('.govuk-button[type=submit]').click
 
-      expect(page).to have_content(I18n.t('subscriptions.button'))
+      expect(page).to have_content(I18n.t('subscriptions.link.text'))
 
       vacancy_page = page.first('.view-vacancy-link')
       unless vacancy_page.nil?

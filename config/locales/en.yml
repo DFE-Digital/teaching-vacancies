@@ -139,8 +139,11 @@ en:
     job_count_with_location_category: '%{count} teaching job in %{location}.'
     job_count_plural_with_location_category: '%{count} teaching jobs in %{location}.'
     no_jobs:
-      - 'Expanding your search may give more results.'
-      - 'There may be few jobs if this isn’t a busy period in the teacher recruitment cycle.'
+      intro: 'You might find matching jobs by:'
+      suggestions:
+        - 'increasing the search radius'
+        - 'using less specific search terms'
+        - 'using fewer search terms or filters'
     none_listed:
       - 'This may be because this isn’t a busy period in the teacher recruitment cycle.'
       - 'Schools have listed %{count} jobs but they have since expired.'
@@ -383,7 +386,9 @@ en:
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
   subscriptions:
-    button: 'Sign up for a job alert matching your search'
+    link:
+      text: 'Subscribe to a job alert.'
+      help_text: 'We’ll email you whenever a job matching this search is published.'
     intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     new:
       page_description: Sign up for a job alert

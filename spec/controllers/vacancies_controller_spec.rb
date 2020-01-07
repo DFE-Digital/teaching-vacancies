@@ -152,7 +152,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it 'shows the subscribe link' do
           get :index, params: { subject: 'English' }
-          expect(response.body).to match(I18n.t('subscriptions.button'))
+          expect(response.body).to match(I18n.t('subscriptions.link.text'))
         end
       end
 
@@ -161,7 +161,7 @@ RSpec.describe VacanciesController, type: :controller do
 
         it 'does not show the subscribe link' do
           get :index, params: { subject: 'English' }
-          expect(response.body).to_not match(I18n.t('subscriptions.button'))
+          expect(response.body).to_not match(I18n.t('subscriptions.link.text'))
         end
       end
     end
