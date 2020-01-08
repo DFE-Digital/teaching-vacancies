@@ -130,7 +130,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
       expect(page).to have_content('3 jobs match your search')
 
-      click_on 'Sign up for a job alert matching your search'
+      click_on I18n.t('subscriptions.link.text')
 
       expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
       expect(page).to have_content('Subject: English')
