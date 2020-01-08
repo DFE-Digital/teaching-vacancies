@@ -114,7 +114,7 @@ RSpec.feature 'Viewing vacancies' do
       click_on I18n.t('buttons.apply_filters')
     end
 
-    I18n.t('jobs.no_jobs').each do |sentence|
+    I18n.t('jobs.no_jobs.suggestions').each do |sentence|
       expect(page).to have_content(sentence)
     end
   end
@@ -125,7 +125,7 @@ RSpec.feature 'Viewing vacancies' do
     I18n.t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
       expect(page).to have_content(sentence)
     end
-    expect(page).not_to have_content(I18n.t('jobs.no_jobs'))
+    expect(page).not_to have_content(I18n.t('jobs.no_jobs.suggestions'))
   end
 
   context 'when a page number is manually added to the URL which does not return results' do
@@ -163,7 +163,7 @@ RSpec.feature 'Viewing vacancies' do
       click_button('Search')
     end
 
-    I18n.t('jobs.no_jobs').each do |sentence|
+    I18n.t('jobs.no_jobs.suggestions').each do |sentence|
       expect(page).to have_content(sentence)
     end
 
@@ -173,7 +173,7 @@ RSpec.feature 'Viewing vacancies' do
 
     click_button('Refine search')
 
-    I18n.t('jobs.no_jobs').each do |sentence|
+    I18n.t('jobs.no_jobs.suggestions').each do |sentence|
       expect(page).to have_content(sentence)
     end
 
