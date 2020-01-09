@@ -118,7 +118,7 @@ RSpec.describe VacancySearchBuilder do
 
     it 'builds a working pattern query when one is provided' do
       sort = OpenStruct.new(column: :expires_on, order: :desc)
-      filters = OpenStruct.new(working_pattern: 'part_time')
+      filters = OpenStruct.new(working_patterns: ['part_time'])
       builder = described_class.new(filters: filters, sort: sort).call
 
       expected_hash = {

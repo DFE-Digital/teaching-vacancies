@@ -1,7 +1,7 @@
 class VacanciesController < ApplicationController
   include ParameterSanitiser
 
-  PERMITTED_SEARCH_PARAMS = [phases: []]
+  PERMITTED_SEARCH_PARAMS = [phases: [], working_patterns: []]
                             .concat(VacancyFilters::AVAILABLE_FILTERS)
                             .uniq
                             .freeze
@@ -11,7 +11,7 @@ class VacanciesController < ApplicationController
                 :subject,
                 :job_title,
                 :minimum_salary,
-                :working_pattern,
+                :working_patterns,
                 :phases,
                 :specific_phases?,
                 :newly_qualified_teacher,
@@ -107,8 +107,16 @@ class VacanciesController < ApplicationController
     params[:minimum_salary]
   end
 
-  def working_pattern
-    params[:working_pattern]
+  def working_patterns_to_a
+    raw_working_patterns = params[:working_patterns]
+    parsed_working_patterns = JSON.parse(raw_working_patterns) if raw_working_patterns.present?
+    parsed_working_patterns.is_a?(Array) ? parsed_working_patterns : []
+  rescue JSON::ParserError
+    []
+  end
+
+  def working_patterns
+    working_patterns_to_a
   end
 
   def phases_to_a

@@ -2,7 +2,7 @@ class SubscriptionPresenter < BasePresenter
   include ApplicationHelper
 
   SEARCH_CRITERIA_SORT_ORDER = %w[location radius keyword subject job_title minimum_salary maximum_salary
-                                  working_pattern phases newly_qualified_teacher].freeze
+                                  working_patterns phases newly_qualified_teacher].freeze
 
   def filtered_search_criteria
     @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) do |(field, value), criteria|
@@ -40,7 +40,7 @@ class SubscriptionPresenter < BasePresenter
 
     return render_location_filter(value, search_criteria_to_h['radius']) if field.eql?('location')
     return render_salary_filter(field, value) if field.ends_with?('_salary')
-    return render_working_pattern_filter(value) if field.eql?('working_pattern')
+    return render_working_patterns_filter(value) if field.eql?('working_patterns')
     return render_phases_filter(value) if field.eql?('phases')
     return render_nqt_filter(value) if field.eql?('newly_qualified_teacher')
 
@@ -60,8 +60,8 @@ class SubscriptionPresenter < BasePresenter
     { "#{field}": number_to_currency(value) }
   end
 
-  def render_working_pattern_filter(value)
-    { working_pattern: Vacancy.human_attribute_name("working_patterns.#{value}") }
+  def render_working_patterns_filter(value)
+    { working_patterns: value.map(&:humanize).join(', ').gsub(/Part time/, 'Part-time').gsub(/Full time/, 'Full-time') }
   end
 
   def render_phases_filter(value)

@@ -39,18 +39,18 @@ RSpec.describe VacancyFilters do
     end
 
     it 'sets the working pattern filter if provided and valid' do
-      vacancy_filters = described_class.new(working_pattern: 'full_time')
-      expect(vacancy_filters.working_pattern).to eq('full_time')
+      vacancy_filters = described_class.new(working_patterns: '["full_time"]')
+      expect(vacancy_filters.working_patterns).to eq(['full_time'])
+    end
+
+    it 'does not set the working pattern filter if invalid' do
+      vacancy_filters = described_class.new(working_patterns: '["home_time"]')
+      expect(vacancy_filters.working_patterns).to be_nil
     end
 
     it 'sets the newly qualified teacher filter if provided' do
       vacancy_filters = described_class.new(newly_qualified_teacher: true)
       expect(vacancy_filters.newly_qualified_teacher).to eq(true)
-    end
-
-    it 'does not set the working pattern filter if invalid' do
-      vacancy_filters = described_class.new(working_pattern: 'home_time')
-      expect(vacancy_filters.working_pattern).to be_nil
     end
 
     it 'sets the education phase filter if provided and valid' do
@@ -77,7 +77,7 @@ RSpec.describe VacancyFilters do
         job_title: 'job_title',
         radius: 20,
         minimum_salary: 'minimum_salary',
-        working_pattern: 'full_time',
+        working_patterns: '["full_time"]',
         newly_qualified_teacher: false,
         phases: '["primary"]',
       )
@@ -90,7 +90,7 @@ RSpec.describe VacancyFilters do
         job_title: 'job_title',
         radius: '20',
         minimum_salary: 'minimum_salary',
-        working_pattern: 'full_time',
+        working_patterns: ['full_time'],
         newly_qualified_teacher: false,
         phases: ['primary'],
       )
