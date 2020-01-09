@@ -37,8 +37,10 @@ RSpec.describe UpdateSchoolData do
 
   context 'When the CSV is unavailable' do
     before do
-      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body: 'Not Found', status: 404)
+      stub_request(
+        :get,
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+      ).to_return(body: 'Not Found', status: 404)
     end
 
     it 'should raise an HTTP error' do
@@ -50,8 +52,10 @@ RSpec.describe UpdateSchoolData do
 
   context 'When the edubase returns an unexpected (not 200 or 404) status code' do
     before do
-      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body: 'Not Found', status: 500)
+      stub_request(
+        :get,
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+      ).to_return(body: 'Not Found', status: 500)
     end
 
     it 'should raise an HTTP error' do
@@ -63,8 +67,10 @@ RSpec.describe UpdateSchoolData do
 
   context 'where the CSV contains smart-quotes using Windows 1252 encoding' do
     before do
-      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body:
+      stub_request(
+        :get,
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+      ).to_return(body:
                    'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
                    'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                    "Town,Postcode\n" \
@@ -83,8 +89,10 @@ RSpec.describe UpdateSchoolData do
   context 'when the CSV is available' do
     before do
       csv = File.read(test_file_path)
-      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body: csv)
+      stub_request(
+        :get,
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+      ).to_return(body: csv)
     end
 
     context 'and the schools aren’t already in the database' do
@@ -171,8 +179,10 @@ RSpec.describe UpdateSchoolData do
 
   context 'where the CSV contains an incomplete school website URL' do
     it 'is converted to include the protocol' do
-      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body:
+      stub_request(
+        :get,
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+      ).to_return(body:
                    'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
                    'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                    "Town,Postcode\n" \
@@ -185,8 +195,10 @@ RSpec.describe UpdateSchoolData do
     end
 
     it 'does not return a value if the website is not set' do
-      stub_request(:get, "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv")
-        .to_return(body:
+      stub_request(
+        :get,
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+      ).to_return(body:
                    'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
                    'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                    "Town,Postcode\n" \
