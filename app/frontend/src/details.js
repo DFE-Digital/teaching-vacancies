@@ -1,4 +1,3 @@
-
 function addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(detailsElement) {
     var expandedText = detailsElement.getAttribute('data-summary-expanded');
     var collapsedText = detailsElement.getAttribute('data-summary-collapsed');
@@ -18,9 +17,12 @@ function addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(detailsElement) 
     }
 }
 
-
 $( document ).ready(function() {
     $('details').each(function(_, details) {
         addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(details);
     });
 });
+
+// Exposing function to window to let teaspoon specs pass
+// TODO: remove this after removing teaspoon
+window.addDynamicSummaryTextForExpandedAndCollapsedDetailsTag = addDynamicSummaryTextForExpandedAndCollapsedDetailsTag

@@ -1,5 +1,7 @@
+import './loader';
+
 if (navigator.geolocation) {
-    $(showLocationLink);
+  $(showLocationLink);
 }
 
 var loader = new GOVUK.Loader();

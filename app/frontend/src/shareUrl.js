@@ -1,3 +1,5 @@
+import ClipboardJS from 'clipboard'
+
 $(document).ready(function(){
   new ClipboardJS('.copy-to-clipboard');
 
