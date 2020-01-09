@@ -121,22 +121,41 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  scenario 'is filterable by working pattern', elasticsearch: true do
-    part_time_vacancy = create(:vacancy, :published, working_patterns: ['part_time'])
-    full_time_vacancy = create(:vacancy, :published, working_patterns: ['full_time'])
-    full_and_part_time_vacancy = create(:vacancy, :published, working_patterns: ['full_time', 'part_time'])
+  context 'when filtering by working patterns', elasticsearch: true do
+    let!(:part_time_vacancy) { create(:vacancy, :published, working_patterns: ['part_time']) }
+    let!(:full_time_vacancy) { create(:vacancy, :published, working_patterns: ['full_time']) }
+    let!(:job_share_vacancy) { create(:vacancy, :published, working_patterns: ['job_share']) }
+    let!(:full_and_part_time_vacancy) { create(:vacancy, :published, working_patterns: ['full_time', 'part_time']) }
 
-    Vacancy.__elasticsearch__.client.indices.flush
-    visit jobs_path
-
-    within '.filters-form' do
-      select 'Part-time', from: 'working_pattern'
-      page.find('.govuk-button[type=submit]').click
+    before(:each) do
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
     end
 
-    expect(page).to have_content(part_time_vacancy.job_title)
-    expect(page).to have_content(full_and_part_time_vacancy.job_title)
-    expect(page).not_to have_content(full_time_vacancy.job_title)
+    scenario 'is filterable by single working pattern selection', elasticsearch: true do
+      within '.filters-form' do
+        check 'Part-time', name: 'working_patterns[]'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(part_time_vacancy.job_title)
+      expect(page).to have_content(full_and_part_time_vacancy.job_title)
+      expect(page).not_to have_content(full_time_vacancy.job_title)
+      expect(page).not_to have_content(job_share_vacancy.job_title)
+    end
+
+    scenario 'is filterable by multiple working pattern selections', elasticsearch: true do
+      within '.filters-form' do
+        check 'Part-time', name: 'working_patterns[]'
+        check 'Full-time', name: 'working_patterns[]'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(part_time_vacancy.job_title)
+      expect(page).to have_content(full_and_part_time_vacancy.job_title)
+      expect(page).to have_content(full_time_vacancy.job_title)
+      expect(page).not_to have_content(job_share_vacancy.job_title)
+    end
   end
 
   context 'with jobs with education phases', elasticsearch: true do
@@ -277,7 +296,7 @@ RSpec.feature 'Filtering vacancies' do
         keyword: nil,
         minimum_salary: '',
         maximum_salary: nil,
-        working_pattern: nil,
+        working_patterns: nil,
         phases: nil,
         newly_qualified_teacher: 'true',
         subject: 'Physics',
@@ -311,7 +330,7 @@ RSpec.feature 'Filtering vacancies' do
         keyword: nil,
         minimum_salary: '',
         maximum_salary: nil,
-        working_pattern: nil,
+        working_patterns: nil,
         phases: nil,
         newly_qualified_teacher: 'true',
         subject: 'Math',

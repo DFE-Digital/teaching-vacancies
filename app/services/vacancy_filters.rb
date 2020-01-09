@@ -1,7 +1,7 @@
 class VacancyFilters
   include ActiveModel::Model
 
-  AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_pattern
+  AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_patterns
                          phases newly_qualified_teacher].freeze
 
   attr_reader(*AVAILABLE_FILTERS)
@@ -15,7 +15,7 @@ class VacancyFilters
     @job_title = args[:job_title]
     @minimum_salary = args[:minimum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
-    @working_pattern = extract_working_pattern(args[:working_pattern])
+    @working_patterns = extract_working_patterns(args[:working_patterns])
     @phases = extract_phases(args[:phases])
   end
 
@@ -26,7 +26,7 @@ class VacancyFilters
       subject: subject,
       job_title: job_title,
       minimum_salary: minimum_salary,
-      working_pattern: working_pattern,
+      working_patterns: working_patterns,
       phases: phases,
       newly_qualified_teacher: newly_qualified_teacher,
     }
@@ -39,7 +39,7 @@ class VacancyFilters
       keyword: nil,
       minimum_salary: minimum_salary,
       maximum_salary: nil,
-      working_pattern: working_pattern,
+      working_patterns: working_patterns,
       phases: phases,
       newly_qualified_teacher: newly_qualified_teacher,
       subject: subject,
@@ -63,8 +63,12 @@ class VacancyFilters
 
   private
 
-  def extract_working_pattern(working_pattern)
-    working_pattern if Vacancy::WORKING_PATTERN_OPTIONS.key?(working_pattern)
+  def extract_working_patterns(working_patterns)
+    return if working_patterns.blank?
+
+    working_patterns = JSON.parse(working_patterns) if working_patterns.is_a?(String)
+
+    working_patterns.select { |working_pattern| Vacancy::WORKING_PATTERN_OPTIONS.include?(working_pattern) }.presence
   end
 
   def extract_phases(phases)

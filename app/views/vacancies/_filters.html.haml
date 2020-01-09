@@ -12,8 +12,13 @@
     = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
     = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select govuk-!-width-full', include_blank: 'None'
   .govuk-form-group
-    = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
-    = select_tag 'working_pattern', options_for_select(working_pattern_options, working_pattern), class: 'govuk-select govuk-!-width-full', include_blank: 'Any'
+    %fieldset.govuk-fieldset
+      = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
+      .govuk-checkboxes.checkbox-group
+        - working_pattern_options.each_with_index do |working_pattern, i|
+          .govuk-checkboxes__item{ class: 'govuk-!-padding-right-0 govuk-!-padding-top-0 govuk-!-padding-bottom-0'}
+            = check_box_tag 'working_patterns[]', working_pattern[1], working_pattern_checked?(working_pattern[1]), id: 'working_patterns_' + working_pattern[1], class: 'govuk-checkboxes__input'
+            = label_tag 'working_patterns[]', working_pattern[0], for: 'working_patterns_' + working_pattern[1], class: 'govuk-label govuk-checkboxes__label'
   .govuk-form-group
     %fieldset.govuk-fieldset
       = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'

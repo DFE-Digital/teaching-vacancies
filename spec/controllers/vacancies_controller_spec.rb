@@ -19,7 +19,7 @@ RSpec.describe VacanciesController, type: :controller do
             location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
             minimum_salary: '<xml>Foo</xml',
             phases: ['<iframe>Foo</iframe>', 'Bar'],
-            working_pattern: '<script>Foo</script>',
+            working_patterns: ['<script>Foo</script>'],
           }
         end
 
@@ -29,7 +29,7 @@ RSpec.describe VacanciesController, type: :controller do
             'location' => '',
             'minimum_salary' => 'Foo',
             'phases' => '["", "Bar"]',
-            'working_pattern' => ''
+            'working_patterns' => '[""]'
           }
 
           expect(VacancyFilters).to receive(:new)
