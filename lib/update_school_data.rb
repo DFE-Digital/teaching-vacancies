@@ -84,7 +84,7 @@ class UpdateSchoolData
   end
 
   def csv_url
-    "http://ea-edubase-api-prod.azurewebsites.net/edubase/edubasealldata#{datestring}.csv"
+    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
   end
 
   def valid_website(url)
