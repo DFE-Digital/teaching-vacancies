@@ -1,0 +1,14 @@
+namespace :subscription_records do
+  desc 'converts old working pattern subscriptions to array style'
+  task convert_subscriptions: :environment do
+    Subscription.all.each do |s|
+      search_criteria_hash = s.search_criteria_to_h
+      search_criteria_hash.transform_keys! { |k| k.gsub(/working_pattern\b/, 'working_patterns') }
+                          .transform_values! {
+                            |v| search_criteria_hash.key(v) == 'working_patterns' && v.is_a?(String) ? [v] : v
+                          }
+      s.search_criteria = search_criteria_hash.to_json
+      s.save
+    end
+  end
+end
