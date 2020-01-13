@@ -197,6 +197,20 @@ RSpec.describe VacanciesController, type: :controller do
       end
     end
 
+    context 'when the vacancy is visited by a robot' do
+      before { request.env['HTTP_USER_AGENT'] = 'Googlebot' }
+
+      let(:vacancy) { create(:vacancy) }
+      let(:params) { { id: vacancy.slug } }
+      let(:vacancy_page_view) { instance_double(VacancyPageView) }
+
+      it 'should not call the track method' do
+        expect(VacancyPageView).not_to receive(:new).with(vacancy)
+
+        subject
+      end
+    end
+
     context 'when using cookies' do
       let(:vacancy) { create(:vacancy) }
       let(:params) { { id: vacancy.slug } }

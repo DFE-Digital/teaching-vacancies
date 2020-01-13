@@ -46,7 +46,7 @@ class VacanciesController < ApplicationController
 
     @vacancy = VacancyPresenter.new(vacancy)
 
-    VacancyPageView.new(vacancy).track unless authenticated? || smoke_test?
+    VacancyPageView.new(vacancy).track unless non_tracked_visit?
 
     expires_in 5.minutes, public: true
   end
@@ -167,5 +167,9 @@ class VacanciesController < ApplicationController
 
   def audit_row
     { total_count: @vacancies.total_count }.merge(@filters.audit_hash)
+  end
+
+  def non_tracked_visit?
+    authenticated? || smoke_test? || browser.bot?
   end
 end
