@@ -20,7 +20,7 @@
         = render partial: '/shared/vacancy/share_buttons'
       .govuk-grid-column-one-half
         .og-preview
-          .og_image= image_tag 'og_image.jpg'
+          .og_image= image_pack_tag 'og_image.jpg'
           .og_text
             .og_url= I18n.t('app.title')
             .og_title #{@vacancy.job_title} - #{@vacancy.school_name}
