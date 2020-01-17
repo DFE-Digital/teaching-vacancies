@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :check_staging_auth, except: :check
   before_action :set_headers
   before_action :detect_device_format
+  before_action :set_root_headers
 
   include AuthenticationConcerns
   include Ip
@@ -68,6 +69,10 @@ class ApplicationController < ActionController::Base
     super
     payload[:remote_ip] = request_ip
     payload[:session_id] = "#{session.id[0..7]}…" if session.id
+  end
+
+  def set_root_headers
+    response.set_header('X-Robots-Tag', 'index, nofollow') if request.path == root_path
   end
 
   def set_headers
