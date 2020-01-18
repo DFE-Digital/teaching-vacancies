@@ -34,3 +34,9 @@ drive treated it as if I had uploaded raw malware - when I attempted to download
 it violated their terms of service. I could not make google drive recognise eicar in a `.zip` file no matter how I
 uploaded or downloaded it.  I **think** this is a limitation of eicar, but need to do some additional research before I
 can say for certain. 
+
+I have just manually tried the `POC_phpinfo-metadata.jpg` from
+[here](https://github.com/fuzzdb-project/fuzzdb/tree/master/attack/file-upload/malicious-images) and Drive seems to
+reliably detect it. It allowed me to create a shared URL, but then showed me the ToS violation message when I tried to
+use the link in incognito mode. When I tried to download the file from Drive, directly, it gave me a virus warning. I
+believe this file will work for progressing my testing with the drive API.
