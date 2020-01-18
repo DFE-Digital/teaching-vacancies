@@ -25,3 +25,12 @@ format and the way eicar works and is not indicative of a failure on the part of
 here](https://community.mcafee.com/t5/Endpoint-Security-ENS/EICAR-file-detected-in-txt-but-not-in-doc-docx/m-p/606933).
 In order to ensure your testing does not generate false negatives, please use the
 [eicar.com](https://secure.eicar.org/eicar.com) or [eicar_com.zip](https://secure.eicar.org/eicar_com.zip) files.
+
+### Testing eicar.com uploads
+
+I used the `google_drive` gem, which is a simplified wrapper around the full Google API gem. I was able to upload
+`eicar.com`, but I was not able to download it again (`Google::Apis::ClientError: Invalid request`). However, google
+drive treated it as if I had uploaded raw malware - when I attempted to download if using chrome, I got a message saying
+it violated their terms of service. I could not make google drive recognise eicar in a `.zip` file no matter how I
+uploaded or downloaded it.  I **think** this is a limitation of eicar, but need to do some additional research before I
+can say for certain. 
