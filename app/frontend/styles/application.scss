@@ -1,7 +1,17 @@
-$govuk-font-url-function: 'font-url';
-$govuk-image-url-function: 'image-url';
+@function frontend-font-url($filename) {
+  @return url("~assets/fonts/" + $filename);
+}
 
-@import 'base/frontend';
+@function frontend-image-url($filename) {
+  @return url("~assets/images/" + $filename);
+}
+
+$govuk-font-url-function: frontend-font-url;
+$govuk-image-url-function: frontend-image-url;
+
+@import "~govuk-frontend/govuk/all";
+
+// @import 'base/frontend';
 @import 'global/variables';
 @import 'base/mixins';
 @import 'base/utilities';

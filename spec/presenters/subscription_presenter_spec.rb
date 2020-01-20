@@ -40,11 +40,11 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
-    context 'with the working_pattern filter' do
-      let(:search_criteria) { { working_pattern: 'part_time' } }
+    context 'with the working_patterns filter' do
+      let(:search_criteria) { { working_patterns: ['part_time'] } }
 
       it 'formats and returns the working pattern' do
-        expect(presenter.filtered_search_criteria['working_pattern']).to eq('Part-time')
+        expect(presenter.filtered_search_criteria['working_patterns']).to eq('Part-time')
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe SubscriptionPresenter do
           newly_qualified_teacher: 'true',
           location: 'EC2 9AN',
           minimum_salary: '10',
-          working_pattern: 'part_time',
+          working_patterns: ['part_time'],
           subject: 'maths'
         }
       end
@@ -86,7 +86,7 @@ RSpec.describe SubscriptionPresenter do
           'job_title' => 'leader',
           'minimum_salary' => '£10',
           'maximum_salary' => '£2,000',
-          'working_pattern' => 'Part-time',
+          'working_patterns' => 'Part-time',
           'phases' => 'Secondary, Sixteen plus',
           '' => 'Suitable for NQTs'
         )

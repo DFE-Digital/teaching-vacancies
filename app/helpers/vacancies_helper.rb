@@ -82,6 +82,12 @@ module VacanciesHelper
     phases.include?(phase)
   end
 
+  def working_pattern_checked?(working_pattern)
+    return false if working_patterns.blank?
+
+    working_patterns.include?(working_pattern)
+  end
+
   def nqt_suitable_checked?(newly_qualified_teacher)
     newly_qualified_teacher == 'true'
   end

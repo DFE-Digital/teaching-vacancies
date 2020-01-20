@@ -2,6 +2,15 @@
   "name": "teacher-vacancy-service",
   "private": true,
   "dependencies": {
-    "govuk-frontend": "3.4.0"
+    "@rails/webpacker": "4.2.2",
+    "clipboard": "^2.0.4",
+    "govuk-frontend": "3.4.0",
+    "jquery": "^3.4.1",
+    "rails-ujs": "^5.2.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
   }
 }

@@ -8,7 +8,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
   let(:search_criteria) do
     {
       subject: 'English',
-      working_pattern: 'full_time',
+      working_patterns: ['full_time'],
       phases: ['primary', 'secondary']
     }.to_json
   end

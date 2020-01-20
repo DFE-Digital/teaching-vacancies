@@ -1,6 +1,4 @@
 $(document).ready(function(){
-
-
   $('.submit_feedback').on('submit', function(event) {
     var valid = true;
     var id = $(event.target).attr('id');

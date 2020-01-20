@@ -1,16 +1,6 @@
-# Install dependencies into a seperate and isolated Docker stage
-# that is thrown away apart from any subsequent COPY commands
-FROM mkenney/npm:latest AS dependencies
-ENV INSTALL_PATH /deps
-RUN mkdir -p $INSTALL_PATH
-WORKDIR $INSTALL_PATH
-COPY package.json ./package.json
-COPY package-lock.json ./package-lock.json
-RUN npm set progress=false && npm config set depth 0
-RUN npm install --only=production
-
 FROM ruby:2.6.5 as release
 LABEL maintainer="teaching.vacancies@education.gov.uk"
+
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
   nodejs \
@@ -18,18 +8,18 @@ RUN apt-get update && apt-get install -qq -y \
   --fix-missing --no-install-recommends
 
 ENV OPENSSL_CONF=/etc/ssl/
+
 ENV PHANTOM_JS="phantomjs-2.1.1-linux-x86_64"
 RUN curl -OLk https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
 RUN tar xvjf $PHANTOM_JS.tar.bz2
 RUN mv $PHANTOM_JS/bin/phantomjs /usr/local/bin/phantomjs
 RUN rm -rf $PHANTOM_JS
 
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.12.1
+ENV PATH /root/.yarn/bin:/root/.config/yarn/global/node_modules/.bin:$PATH
+
 ENV INSTALL_PATH /srv/dfe-tvs
 RUN mkdir -p $INSTALL_PATH
-
-# This must be ordered before rake assets:precompile
-COPY --from=dependencies ./deps/node_modules $INSTALL_PATH/node_modules
-COPY --from=dependencies ./deps/node_modules/govuk-frontend/govuk/assets $INSTALL_PATH/app/assets
 
 WORKDIR $INSTALL_PATH
 
@@ -37,6 +27,13 @@ WORKDIR $INSTALL_PATH
 ARG RAILS_ENV
 ENV RAILS_ENV=${RAILS_ENV:-production}
 ENV RACK_ENV=${RAILS_ENV:-production}
+
+COPY package.json ./package.json
+COPY yarn.lock ./yarn.lock
+COPY postcss.config.js ./postcss.config.js
+COPY babel.config.js ./babel.config.js
+
+RUN yarn
 
 COPY Gemfile $INSTALL_PATH/Gemfile
 COPY Gemfile.lock $INSTALL_PATH/Gemfile.lock

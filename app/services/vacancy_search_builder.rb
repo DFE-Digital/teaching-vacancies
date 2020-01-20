@@ -4,7 +4,7 @@ class VacancySearchBuilder
   attr_accessor :filters,
                 :subject,
                 :job_title,
-                :working_pattern,
+                :working_patterns,
                 :phases,
                 :newly_qualified_teacher,
                 :minimum_salary,
@@ -16,7 +16,7 @@ class VacancySearchBuilder
     self.filters = filters
     self.subject = filters.subject.to_s.strip
     self.job_title = filters.job_title.to_s.strip
-    self.working_pattern = filters.working_pattern
+    self.working_patterns = filters.working_patterns
     self.phases = filters.phases
     self.newly_qualified_teacher = filters.newly_qualified_teacher
     self.minimum_salary = filters.minimum_salary
@@ -152,13 +152,13 @@ class VacancySearchBuilder
   end
 
   def working_pattern_query
-    return if working_pattern.blank?
+    return if working_patterns.blank?
 
     {
       bool: {
         filter: {
           terms: {
-            working_patterns: [working_pattern.to_s],
+            working_patterns: working_patterns.map(&:to_s),
           },
         },
       },

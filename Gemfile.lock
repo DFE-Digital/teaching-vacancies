@@ -89,9 +89,9 @@ GEM
       xpath (~> 3.2)
     cliver (0.3.2)
     coderay (1.1.2)
-    coffee-rails (4.2.2)
+    coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0)
+      railties (>= 5.2.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -323,6 +323,8 @@ GEM
       rack
     rack-protection (2.0.7)
       rack
+    rack-proxy (0.6.5)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rack_session_access (0.2.0)
@@ -424,17 +426,6 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.7)
-      railties (>= 4.0.0, < 6)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
     sexp_processor (4.12.0)
     shoulda-matchers (3.1.3)
       activesupport (>= 4.0.0)
@@ -482,8 +473,6 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uber (0.1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (1.6.0)
     uniform_notifier (1.13.0)
     validate_email (0.1.6)
@@ -504,6 +493,10 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webpacker (4.2.2)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -574,7 +567,6 @@ DEPENDENCIES
   rubocop (~> 0.77.0)
   rubocop-rails_config (~> 0.9.0)
   sanitize (~> 5.1)
-  sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
   sidekiq
   simple_form
@@ -584,10 +576,10 @@ DEPENDENCIES
   teaspoon-mocha
   timecop
   tzinfo-data
-  uglifier (>= 1.3.0)
   validate_url (~> 1.0.8)
   web-console (>= 3.3.0)
   webmock (~> 3.7)
+  webpacker
   xml-sitemap
 
 RUBY VERSION
