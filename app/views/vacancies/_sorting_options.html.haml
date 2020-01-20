@@ -3,9 +3,12 @@
     = form_tag('', method: :get) do
       - search_criteria.each do |filter, value|
         - if filter == :phases
-          - phases.each do | phase |
+          - phases.each do |phase|
             = hidden_field_tag "phases[]", phase
-        - else
+        - elsif filter == :working_patterns
+          - working_patterns.each do |working_pattern|
+            = hidden_field_tag "working_patterns[]", working_pattern
+        - else        
           = hidden_field_tag filter, value
       = label_tag 'jobs_sort', t('jobs.sort_by'), class: "govuk-label inline"
       = select_tag 'jobs_sort', options_for_select(job_sorting_options, selected_sorting_method(sort: sort)), class: 'govuk-select govuk-input--width-10'
