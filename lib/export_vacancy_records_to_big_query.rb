@@ -1,14 +1,8 @@
-require 'google/cloud/bigquery'
+require 'big_query_exporter'
 
-class ExportVacancyRecordsToBigQuery
-  attr_reader :dataset
-
-  def initialize(bigquery: Google::Cloud::Bigquery.new)
-    @dataset = bigquery.dataset ENV.fetch('BIG_QUERY_DATASET')
-  end
-
+class ExportVacancyRecordsToBigQuery < BigQueryExporter
   def run!(batch_size: 1_000)
-    delete_table
+    delete_table('vacancies')
     Vacancy.all.find_in_batches batch_size: batch_size do |batch|
       insert_table_data(batch)
     end
@@ -103,20 +97,6 @@ class ExportVacancyRecordsToBigQuery
     end
   end
   # rubocop:enable Metrics/AbcSize
-
-  def format_as_date(date)
-    date&.strftime('%F')
-  end
-
-  def delete_table
-    table = dataset.table 'vacancies'
-    return if table.nil?
-    dataset.reload! if table.delete
-  end
-
-  def format_as_timestamp(datetime)
-    datetime&.strftime('%FT%T%:z')
-  end
 
   def expiry_time(vacancy)
     vacancy.expiry_time || format_as_timestamp(vacancy.expires_on)
