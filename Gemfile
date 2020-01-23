@@ -56,6 +56,7 @@ gem 'high_voltage', '~> 3.1'
 gem 'google_drive', require: false
 gem 'google-api-client'
 gem 'google-cloud-bigquery'
+gem 'google-cloud-storage'
 gem 'browser'
 gem 'mail-notify'
 gem 'array_enum'
