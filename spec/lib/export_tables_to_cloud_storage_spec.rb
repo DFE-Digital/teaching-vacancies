@@ -4,11 +4,10 @@ require 'fileutils'
 
 RSpec.describe ExportTablesToCloudStorage do
   before do
-    FileUtils.rm_rf(Rails.root.join('tmp/csv_export'))
-
     create :user
 
-    expect(cloud_storage_stub).to receive(:bucket).with(ENV['CLOUD_STORAGE_BUCKET']).and_return(bucket_stub)
+    ENV['CLOUD_STORAGE_BUCKET'] = 'test_bucket'
+    expect(cloud_storage_stub).to receive(:bucket).with('test_bucket').and_return(bucket_stub)
   end
 
   subject { ExportTablesToCloudStorage.new(storage: cloud_storage_stub) }
@@ -22,11 +21,10 @@ RSpec.describe ExportTablesToCloudStorage do
     subject.run!
   end
 
-  it 'removes the folder from the file system' do
+  it 'removes the csv_export folder from the file system after uploading its content to the bucket' do
     expect(bucket_stub).to receive(:create_file).at_least(:once)
+    expect(FileUtils).to receive(:rm_rf).with(Rails.root.join('tmp/csv_export'))
 
     subject.run!
-
-    expect(File.exist?(Rails.root.join('tmp/csv_export'))).to be false
   end
 end

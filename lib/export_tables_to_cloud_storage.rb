@@ -23,7 +23,7 @@ class ExportTablesToCloudStorage
   attr_reader :bucket
 
   def initialize(storage: Google::Cloud::Storage.new)
-    @bucket = storage.bucket(ENV['CLOUD_STORAGE_BUCKET'])
+    @bucket = storage.bucket ENV.fetch('CLOUD_STORAGE_BUCKET')
   end
 
   def run!
