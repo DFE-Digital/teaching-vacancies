@@ -177,7 +177,9 @@ data "template_file" "web_container_definition" {
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
     dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
+    google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
   }
 }
 
@@ -311,8 +313,11 @@ data "template_file" "worker_container_definition" {
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
     big_query_dataset                            = "${var.big_query_dataset}"
+    cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
     audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"
     audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
     audit_general_feedback_worksheet_gid         = "${var.audit_general_feedback_worksheet_gid}"

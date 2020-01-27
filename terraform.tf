@@ -180,8 +180,11 @@ module "ecs" {
   dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
   dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
   dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
+  google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
   big_query_api_json_key                       = "${var.big_query_api_json_key}"
   big_query_dataset                            = "${var.big_query_dataset}"
+  cloud_storage_api_json_key                   = "${var.cloud_storage_api_json_key}"
+  cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
 }
 
 module "logs" {

@@ -183,6 +183,18 @@
       {
         "name": "BIG_QUERY_DATASET",
         "value": "${big_query_dataset}"
+      },
+      {
+        "name": "GOOGLE_CLOUD_PLATFORM_PROJECT_ID",
+        "value": "${google_cloud_platform_project_id}"
+      },
+      {
+        "name": "CLOUD_STORAGE_API_JSON_KEY",
+        "value": "${cloud_storage_api_json_key}"
+      },
+      {
+        "name": "CLOUD_STORAGE_BUCKET",
+        "value": "${cloud_storage_bucket}"
       }
     ]
   }
