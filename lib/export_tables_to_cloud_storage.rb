@@ -20,6 +20,8 @@ class ExportTablesToCloudStorage
       VacancyPublishFeedback
   ]
 
+  BATCH_SIZE = 1000
+
   attr_reader :bucket
 
   def initialize(storage: Google::Cloud::Storage.new)
@@ -45,8 +47,10 @@ class ExportTablesToCloudStorage
 
       CSV.open(file, 'w') do |csv|
         csv << records.first.attributes.keys
-        records.each do |row|
-          csv << row.attributes.values
+        records.find_in_batches batch_size: BATCH_SIZE do |batch|
+          batch.each do |row|
+            csv << row.attributes.values
+          end
         end
       end
     end
