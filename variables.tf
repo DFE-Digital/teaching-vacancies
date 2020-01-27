@@ -428,6 +428,7 @@ variable "dfe_sign_in_url" {}
 variable "dfe_sign_in_password" {}
 variable "dfe_sign_in_service_access_role_id" {}
 variable "dfe_sign_in_service_id" {}
+variable "google_cloud_platform_project_id" {}
 
 variable "big_query_api_json_key" {
   type = "map"
@@ -436,4 +437,13 @@ variable "big_query_api_json_key" {
 variable "big_query_dataset" {
   description = "Big Query dataset name"
   type = "string"
+}
+
+variable "cloud_storage_api_json_key" {
+  type = "map"
+}
+
+variable "cloud_storage_bucket" {
+  description = "Cloud Storage Bucket name"
+  type        = "string"
 }
