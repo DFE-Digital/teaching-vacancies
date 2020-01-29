@@ -1,4 +1,6 @@
 require 'import_csv_to_big_query'
+require 'rails_helper'
+
 RSpec.describe ImportCSVToBigQuery do
   let(:table) { double('table').as_null_object }
   let(:loaded_job) { double('loaded job').as_null_object }
@@ -7,7 +9,15 @@ RSpec.describe ImportCSVToBigQuery do
   let(:export_tables) { class_double(ExportTablesToCloudStorage, TABLES: %w[TestTable]) }
 
   it 'loads the dataset from ENV' do
+    allow(ENV).to receive(:[]).with('CLOUD_STORAGE_BUCKET')
     expect(ENV).to receive(:[]).with('BIG_QUERY_DATASET').and_return('test')
+    subject.load(bigquery: double('BigqueryClient').as_null_object)
+  end
+
+
+  it 'loads the bucket endpoint from ENV' do
+    expect(ENV).to receive(:[]).with('CLOUD_STORAGE_BUCKET').and_return('test').at_least(:once)
+    allow(ENV).to receive(:[]).with('BIG_QUERY_DATASET')
     subject.load(bigquery: double('BigqueryClient').as_null_object)
   end
 

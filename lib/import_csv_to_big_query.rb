@@ -7,8 +7,8 @@ class ImportCSVToBigQuery
     dataset = bigquery.dataset ENV['BIG_QUERY_DATASET']
 
     ExportTablesToCloudStorage::TABLES.each do |table_csv|
-      import_csv_uri = "gs://#{ENV['CLOUD_STORAGE_BUCKET']}/csv_export/#{underscore(table_csv)}.csv"
-      table_id = import_csv_uri.split('/').last.sub('.csv', '')
+      import_csv_uri = "gs://#{ENV['CLOUD_STORAGE_BUCKET']}/csv_export/#{table_csv.underscore}.csv"
+      table_id = table_csv.underscore
 
       load_job = dataset.load_job table_id, import_csv_uri, skip_leading: 1, autodetect: true, write: 'truncate'
 
