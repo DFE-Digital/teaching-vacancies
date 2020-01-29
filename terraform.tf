@@ -97,6 +97,9 @@ module "ecs" {
   update_database_records_in_big_query_task_command = "${var.update_database_records_in_big_query_task_command}"
   update_database_records_in_big_query_task_schedule = "${var.update_database_records_in_big_query_task_schedule}"
 
+  export_tables_as_csv_to_big_query_task_command = "${var.export_tables_as_csv_to_big_query_task_command}"
+  export_tables_as_csv_to_big_query_task_schedule = "${var.export_tables_as_csv_to_big_query_task_schedule}"
+
   send_job_alerts_daily_email_task_command  = "${var.send_job_alerts_daily_email_task_command}"
   send_job_alerts_daily_email_task_schedule = "${var.send_job_alerts_daily_email_task_schedule}"
 
