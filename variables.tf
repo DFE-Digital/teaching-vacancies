@@ -428,6 +428,10 @@ variable "feature_import_vacancies" {
   default = "false"
 }
 
+variable "feature_upload_documents" {
+  default = "false"
+}
+
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "notify_prompt_feedback_for_expired_vacancies" {}

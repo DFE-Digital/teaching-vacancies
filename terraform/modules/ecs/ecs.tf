@@ -173,6 +173,7 @@ data "template_file" "web_container_definition" {
     subscription_key_generator_salt              = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
     feature_email_alerts                         = "${var.feature_email_alerts}"
+    feature_upload_documents                     = "${var.upload_documents}"
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
@@ -331,6 +332,7 @@ data "template_file" "worker_container_definition" {
     subscription_key_generator_salt              = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
     feature_email_alerts                         = "${var.feature_email_alerts}"
+    feature_upload_documents                     = "${var.feature_upload_documents}"
     ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
     worker_command                               = "${jsonencode(var.worker_command)}"
   }
