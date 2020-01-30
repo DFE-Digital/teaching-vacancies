@@ -14,6 +14,10 @@ RSpec.describe ImportCSVToBigQueryJob, type: :job do
   end
 
   it 'calls the import csv to Big Query class' do
+    google_cloud_storage = double(:google_cloud_storage)
+    expect(ExportTablesToCloudStorage).to receive(:new) { google_cloud_storage }
+    expect(google_cloud_storage).to receive(:run!)
+
     csv_to_big_query = double(:csv_to_big_query)
     expect(ImportCSVToBigQuery).to receive(:new) { csv_to_big_query }
     expect(csv_to_big_query).to receive(:load)
