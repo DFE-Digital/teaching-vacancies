@@ -29,16 +29,16 @@ bin/pass secrets/dev/docker-compose.env > path/to/teacher-vacancy-service/docker
 bin/drebuild
 ```
 
+[secret-docker-compose]:
+https://github.com/DFE-Digital/teaching-vacancies-service-secrets/blob/master/secrets/dev/docker-compose.env.gpg
+[docs-to-read-secrets]:
+https://github.com/DFE-Digital/teaching-vacancies-service-secrets#reading-secrets
+
 ### Starting the application
 
 ```bash
 bin/dstart
 ```
-
-[secret-docker-compose]:
-https://github.com/DFE-Digital/teaching-vacancies-service-secrets/blob/master/secrets/dev/docker-compose.env.gpg
-[docs-to-read-secrets]:
-https://github.com/DFE-Digital/teaching-vacancies-service-secrets#reading-secrets
 
 ## User accounts & data
 
