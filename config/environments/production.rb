@@ -99,4 +99,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_dispatch.trusted_proxies = AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) }
+
+  # 2020-02-04 added this as a reminder and for completeness. At the time of writing, activation is blocked while
+  # Adrian, Renny and Connor look into directly connecing Google Drive.
+  # config.active_storage.service = :google_drive
 end
