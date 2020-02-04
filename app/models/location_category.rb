@@ -2,7 +2,7 @@ class LocationCategory
   class << self
     OUT_OF_SCOPE_REGIONS = ['Wales (pseudo)', 'Not Applicable']
     LONDON_REGION = 'London'
-    OUT_OF_SCOPE_COUNTIES = ['Powys', 'Blaenau Gwent', 'Avon', 'West Midlands']
+    OUT_OF_SCOPE_COUNTIES = ['Powys', 'Blaenau Gwent']
 
     def include?(location)
       ALL_LOCATION_CATEGORIES.include?(location.downcase)

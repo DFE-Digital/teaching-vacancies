@@ -214,6 +214,16 @@ variable "update_database_records_in_big_query_task_schedule" {
   default     = "cron(0 03 * * ? *)"
 }
 
+variable "export_tables_as_csv_to_big_query_task_command" {
+  description = "The Entrypoint for the export_tables_as_csv_to_big_query task"
+  default     = ["rake", "verbose", "tables_as_csv:to_big_query:export"]
+}
+
+variable "export_tables_as_csv_to_big_query_task_schedule" {
+  description = "export_tables_as_csv_to_big_query schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
+  default     = "cron(0 01 * * ? *)"
+}
+
 variable "sessions_trim_task_command" {
   description = "The Entrypoint for trimming old sessions"
   default     = ["rake", "verbose", "db:sessions:trim"]
@@ -418,6 +428,10 @@ variable "feature_import_vacancies" {
   default = "false"
 }
 
+variable "feature_upload_documents" {
+  default = "false"
+}
+
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "notify_prompt_feedback_for_expired_vacancies" {}
@@ -428,6 +442,7 @@ variable "dfe_sign_in_url" {}
 variable "dfe_sign_in_password" {}
 variable "dfe_sign_in_service_access_role_id" {}
 variable "dfe_sign_in_service_id" {}
+variable "google_cloud_platform_project_id" {}
 
 variable "big_query_api_json_key" {
   type = "map"
@@ -436,4 +451,13 @@ variable "big_query_api_json_key" {
 variable "big_query_dataset" {
   description = "Big Query dataset name"
   type = "string"
+}
+
+variable "cloud_storage_api_json_key" {
+  type = "map"
+}
+
+variable "cloud_storage_bucket" {
+  description = "Cloud Storage Bucket name"
+  type        = "string"
 }

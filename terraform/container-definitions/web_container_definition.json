@@ -195,6 +195,10 @@
         "value": "${feature_email_alerts}"
       },
       {
+        "name": "FEATURE_UPLOAD_DOCUMENTS",
+        "value": "${feature_upload_documents}"
+      },
+      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },
@@ -213,6 +217,14 @@
       {
         "name": "BIG_QUERY_API_JSON_KEY",
         "value": "${big_query_api_json_key}"
+      },
+      {
+        "name": "GOOGLE_CLOUD_PLATFORM_PROJECT_ID",
+        "value": "${google_cloud_platform_project_id}"
+      },
+      {
+        "name": "CLOUD_STORAGE_API_JSON_KEY",
+        "value": "${cloud_storage_api_json_key}"
       }
     ]
   }

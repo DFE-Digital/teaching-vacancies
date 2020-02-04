@@ -3,6 +3,7 @@ namespace :database_records do
   namespace :in_big_query do
     task update: :environment do
       ExportVacancyRecordsToBigQueryJob.perform_later
+      ExportUserRecordsToBigQueryJob.perform_later
     end
   end
 end

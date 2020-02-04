@@ -84,6 +84,7 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+variable "feature_upload_documents" {}
 variable "feature_import_vacancies" {}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
@@ -94,12 +95,23 @@ variable "dfe_sign_in_url" {}
 variable "dfe_sign_in_password" {}
 variable "dfe_sign_in_service_access_role_id" {}
 variable "dfe_sign_in_service_id" {}
+variable "google_cloud_platform_project_id" {}
+
 variable "big_query_api_json_key" {
   type = "map"
 }
 
 variable "big_query_dataset" {
   description = "Big Query dataset name"
+  type        = "string"
+}
+
+variable "cloud_storage_api_json_key" {
+  type = "map"
+}
+
+variable "cloud_storage_bucket" {
+  description = "Cloud Storage Bucket name"
   type        = "string"
 }
 
@@ -163,9 +175,14 @@ variable "update_database_records_in_big_query_task_command" {
   type = "list"
 }
 
+variable "export_tables_as_csv_to_big_query_task_command" {
+  type = "list"
+}
+
 variable "update_spreadsheets_task_schedule" {}
 variable "update_dsi_spreadsheets_task_schedule" {}
 variable "update_database_records_in_big_query_task_schedule" {}
+variable "export_tables_as_csv_to_big_query_task_schedule" {}
 variable "send_job_alerts_daily_email_task_schedule" {}
 variable "send_feedback_prompt_email_task_schedule" {}
 

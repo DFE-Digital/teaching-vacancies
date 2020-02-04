@@ -173,11 +173,14 @@ data "template_file" "web_container_definition" {
     subscription_key_generator_salt              = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
     feature_email_alerts                         = "${var.feature_email_alerts}"
+    feature_upload_documents                     = "${var.feature_upload_documents}"
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
     dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
+    google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
   }
 }
 
@@ -311,8 +314,11 @@ data "template_file" "worker_container_definition" {
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
+    google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
     big_query_dataset                            = "${var.big_query_dataset}"
+    cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
     audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"
     audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
     audit_general_feedback_worksheet_gid         = "${var.audit_general_feedback_worksheet_gid}"
@@ -326,6 +332,7 @@ data "template_file" "worker_container_definition" {
     subscription_key_generator_salt              = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
     feature_email_alerts                         = "${var.feature_email_alerts}"
+    feature_upload_documents                     = "${var.feature_upload_documents}"
     ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
     worker_command                               = "${jsonencode(var.worker_command)}"
   }
@@ -635,6 +642,23 @@ module "update_database_records_in_big_query_task" {
   task_description = "Update database records in Big Query"
   task_command     = "${var.update_database_records_in_big_query_task_command}"
   task_schedule    = "${var.update_database_records_in_big_query_task_schedule}"
+
+  container_definition_template = "${module.rake_container_definition.template}"
+
+  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
+
+  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
+  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
+}
+
+module "export_tables_as_csv_to_big_query_task" {
+  source = "../scheduled-ecs-task"
+
+  task_name        = "${var.ecs_service_web_task_name}_export_tables_as_csv_to_big_query"
+  task_description = "Exports CSV table data into Big Query tables"
+  task_command     = "${var.export_tables_as_csv_to_big_query_task_command}"
+  task_schedule    = "${var.export_tables_as_csv_to_big_query_task_schedule}"
 
   container_definition_template = "${module.rake_container_definition.template}"
 

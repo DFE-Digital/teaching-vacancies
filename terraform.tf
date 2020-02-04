@@ -97,6 +97,9 @@ module "ecs" {
   update_database_records_in_big_query_task_command = "${var.update_database_records_in_big_query_task_command}"
   update_database_records_in_big_query_task_schedule = "${var.update_database_records_in_big_query_task_schedule}"
 
+  export_tables_as_csv_to_big_query_task_command = "${var.export_tables_as_csv_to_big_query_task_command}"
+  export_tables_as_csv_to_big_query_task_schedule = "${var.export_tables_as_csv_to_big_query_task_schedule}"
+
   send_job_alerts_daily_email_task_command  = "${var.send_job_alerts_daily_email_task_command}"
   send_job_alerts_daily_email_task_schedule = "${var.send_job_alerts_daily_email_task_schedule}"
 
@@ -176,12 +179,16 @@ module "ecs" {
   notify_prompt_feedback_for_expired_vacancies = "${var.notify_prompt_feedback_for_expired_vacancies}"
   feature_email_alerts                         = "${var.feature_email_alerts}"
   feature_import_vacancies                     = "${var.feature_import_vacancies}"
+  feature_upload_documents                     = "${var.feature_upload_documents}"
   dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
   dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
   dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
   dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
+  google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
   big_query_api_json_key                       = "${var.big_query_api_json_key}"
   big_query_dataset                            = "${var.big_query_dataset}"
+  cloud_storage_api_json_key                   = "${var.cloud_storage_api_json_key}"
+  cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
 }
 
 module "logs" {

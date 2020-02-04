@@ -32,6 +32,7 @@ yarn-debug.log*
 # Ignore application configuration
 /config/application.yml
 /config/database.yml
+/config/storage.yml
 
 /spec/fixtures/temp_schools_data.csv
 
@@ -57,3 +58,6 @@ workspace-variables/*.tfvars
 # Certificates
 config/localhost/https/*.key
 config/localhost/https/*.crt
+
+# GCP development credentails
+serviceAccount.json
