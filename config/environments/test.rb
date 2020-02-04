@@ -45,7 +45,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.middleware.use RackSessionAccess::Middleware
-  config.active_storage.service = :test
 end
 
 # Avoid OmniAuth output in tests:
