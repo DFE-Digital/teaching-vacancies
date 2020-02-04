@@ -1,0 +1,16 @@
+%h1.govuk-heading-l
+  = t('jobs.publish_heading', school: @school.name)
+  %span.govuk-caption-l
+    Step 2 of 3
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h2.govuk-heading-m Supporting documents
+    %form{action: "#", method: "post", enctype: "multipart/form-data"}
+      .govuk-form-group.upload-group
+        %fieldset.govuk-fieldset{"aria-describedby": "upload-supporting-documents"}
+          %label.govuk-label.govuk-label--s{class: "govuk-!-margin-bottom-3", for: "file-upload"}
+            Upload a file
+          %button#file-upload.govuk-button.govuk-button--secondary{"data-module": "govuk-button"}
+            Choose files
+          %input#upload.hidden-input{type: "file", name: "upload", onchange: "form.submit()"}
+    %a.govuk-button{href: "#"} Save and continue
