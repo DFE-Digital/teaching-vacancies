@@ -19,6 +19,7 @@
   - [dsi_approver_data, 1]
   - [seed_vacancies_from_api, 1]
   - [export_vacancies, 1]
+  - [import_csv, 1]
 update_vacancy_spreadsheet:
   :concurrency: 1
 audit_published_vacancy:
@@ -46,4 +47,6 @@ mailers:
 seed_vacancies_from_api:
   :concurrency: 2
 export_vacancies:
+  :concurrency: 1
+import_csv:
   :concurrency: 1
