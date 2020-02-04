@@ -78,7 +78,12 @@ Rails.application.routes.draw do
       get :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#new'
       post :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#create'
       get :documents,
-        to: 'hiring_staff/vacancies/documents#index',
+        to: 'hiring_staff/vacancies/documents#new',
+        constraints: lambda {
+          |request| UploadDocumentsFeature.enabled?
+        }
+      post :documents,
+        to: 'hiring_staff/vacancies/documents#create',
         constraints: lambda {
           |request| UploadDocumentsFeature.enabled?
         }
