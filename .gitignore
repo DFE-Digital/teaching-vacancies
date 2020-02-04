@@ -32,6 +32,7 @@ yarn-debug.log*
 # Ignore application configuration
 /config/application.yml
 /config/database.yml
+/config/storage.yml
 
 /spec/fixtures/temp_schools_data.csv
 
