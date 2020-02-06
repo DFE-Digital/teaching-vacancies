@@ -7,7 +7,7 @@ RSpec.describe 'Hiring staff document upload routing' do
 
   context 'ENV["FEATURE_UPLOAD_DOCUMENTS"] == true' do
     before do
-      allow(ENV).to receive(:[]).with('FEATURE_UPLOAD_DOCUMENTS').and_return(true)
+      allow(UploadDocumentsFeature).to receive(:enabled?).and_return(true)
     end
 
     it {
@@ -20,7 +20,7 @@ RSpec.describe 'Hiring staff document upload routing' do
 
   context 'ENV["FEATURE_UPLOAD_DOCUMENTS"] == false' do
     before do
-      allow(ENV).to receive(:[]).with('FEATURE_UPLOAD_DOCUMENTS').and_return(false)
+      allow(UploadDocumentsFeature).to receive(:enabled?).and_return(false)
     end
 
     it {

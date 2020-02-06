@@ -1,9 +1,14 @@
 require 'rails_helper'
+
 RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
+  let(:feature_enabled?) { false }
+
   before(:each) do
+    allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
+
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
@@ -74,13 +79,30 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 2, candidate profile, when submitted succesfuly' do
-        visit new_school_job_path
+      context 'without feature upload documents enabled' do
+        scenario 'redirects to step 2, candidate profile, when submitted succesfully' do
+          visit new_school_job_path
 
-        fill_in_job_specification_form_fields(vacancy)
-        click_on 'Save and continue'
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
 
-        expect(page).to have_content('Step 2 of 3')
+          expect(page).to have_content('Step 2 of 3')
+          expect(page.current_path).to eq(candidate_specification_school_job_path)
+        end
+      end
+
+      context 'with feature upload documents enabled' do
+        let(:feature_enabled?) { true }
+
+        scenario 'redirects to step 2, supporting documents, when submitted succesfuly' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Step 2 of 3')
+          expect(page.current_path).to eq(supporting_documents_school_job_path)
+        end
       end
 
       scenario 'tracks the vacancy creation' do
@@ -130,6 +152,47 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         expect(page).to have_content('Step 3 of 3')
+      end
+    end
+
+    context '#supporting_documents' do
+      let(:feature_enabled?) { true }
+
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        click_on 'Save and continue' # submit empty form
+
+        expect(page)
+          .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.supporting_documents.inclusion'))
+      end
+
+      scenario 'redirects to step 2, candidate_specification, when choosing no' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        choose 'No'
+        click_on 'Save and continue'
+
+        expect(page).to have_content('Step 2 of 3')
+        expect(page.current_path).to eq(candidate_specification_school_job_path)
+      end
+
+      scenario 'redirects to step 2, upload_documents, when choosing yes' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        choose 'Yes'
+        click_on 'Save and continue'
+
+        expect(page.current_path).to eq(documents_school_job_path)
       end
     end
 

@@ -33,6 +33,10 @@ module VacancyHelpers
     fill_in 'candidate_specification_form[experience]', with: vacancy.experience
   end
 
+  def fill_in_supporting_documents_form_fields(vacancy)
+    choose 'Yes'
+  end
+
   def fill_in_application_details_form_fields(vacancy)
     fill_in 'application_details_form[contact_email]', with: vacancy.contact_email
     fill_in 'application_details_form[application_link]', with: vacancy.application_link
