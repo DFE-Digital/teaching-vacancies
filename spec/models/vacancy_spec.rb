@@ -3,6 +3,7 @@ RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school) }
   it { should belong_to(:publisher_user) }
+  it { should have_many(:document)}
 
   describe '.public_search' do
     context 'when there were no results' do
@@ -496,6 +497,14 @@ RSpec.describe Vacancy, type: :model do
 
         expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
       end
+    end
+  end
+
+  describe 'when supporting documents are provided' do
+    it 'should return the document name' do
+      document = create(:document, name: 'Test.txt')
+      vacancy = create(:vacancy, document: [document])
+      expect(vacancy.document.first.name).to eq('Test.txt')
     end
   end
 
