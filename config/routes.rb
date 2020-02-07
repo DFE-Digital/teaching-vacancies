@@ -57,6 +57,8 @@ Rails.application.routes.draw do
       get :publish, to: 'hiring_staff/vacancies/publish#create'
       resource :job_specification, only: %i[edit update],
                                    controller: 'hiring_staff/vacancies/job_specification'
+      resource :supporting_documents, only: %i[edit update],
+                                               controller: 'hiring_staff/vacancies/supporting_documents'
       resource :candidate_specification, only: %i[edit update],
                                          controller: 'hiring_staff/vacancies/candidate_specification'
       resource :application_details, only: %i[edit update],
@@ -71,12 +73,14 @@ Rails.application.routes.draw do
     resource :job, only: [] do
       get :application_details, to: 'hiring_staff/vacancies/application_details#new'
       post :application_details, to: 'hiring_staff/vacancies/application_details#create'
+      get :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#new'
+      post :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#create'
       get :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#new'
       post :candidate_specification, to: 'hiring_staff/vacancies/candidate_specification#create'
       get :documents,
         to: 'hiring_staff/vacancies/documents#index',
         constraints: lambda {
-          |request| ENV['FEATURE_UPLOAD_DOCUMENTS'] == true
+          |request| UploadDocumentsFeature.enabled?
         }
       get :job_specification, to: 'hiring_staff/vacancies/job_specification#new'
       post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'

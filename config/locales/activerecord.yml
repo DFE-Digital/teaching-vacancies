@@ -39,6 +39,9 @@ en:
     qualifications:
       blank: Enter essential qualifications
       too_long: Qualifications must not be more than %{count} characters
+  supporting_documents_errors: &supporting_documents_errors
+    supporting_documents:
+      inclusion: "Please indicate if you'd like to attach supporting documents"
   errors:
     format: "%{message}"
     title: "Please correct the following %{errors} in your listing:"
@@ -60,6 +63,9 @@ en:
         candidate_specification_form:
           attributes:
             <<: *candidate_specification_errors
+        supporting_documents_form:
+          attributes:
+            <<: *supporting_documents_errors
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
@@ -73,6 +79,7 @@ en:
             <<: *job_specification_errors
             <<: *candidate_specification_errors
             <<: *application_details_errors
+            <<: *supporting_documents_errors
             maximum_salary:
               greater_than_minimum_salary: Maximum salary must be more than the minimum salary
             expiry_time:
