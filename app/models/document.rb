@@ -1,3 +1,3 @@
 class Document < ApplicationRecord
-  belongs_to :vacancy, optional: true
+  belongs_to :vacancy
 end
