@@ -3,7 +3,7 @@ RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school) }
   it { should belong_to(:publisher_user) }
-  it { should have_many(:document)}
+  it { should have_many(:document) }
 
   describe '.public_search' do
     context 'when there were no results' do

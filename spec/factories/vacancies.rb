@@ -5,7 +5,7 @@ FactoryBot.define do
     association :subject
     association :leadership
     association :school
-    
+
     after :create do |vacancy|
       create_list :document, 3, vacancy: vacancy
     end
