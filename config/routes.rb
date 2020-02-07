@@ -85,15 +85,6 @@ Rails.application.routes.draw do
       post :documents,
         to: 'hiring_staff/vacancies/documents#create',
         constraints: lambda {
-          # Casting to a string as dotenv does not reliably cast this as a boolean on import. However, using an
-          # environment variable set in the normal way does cast it as a boolean. This ensures it works either way.
-          |request| UploadDocumentsFeature.enabled?
-        }
-      post :documents,
-        to: 'hiring_staff/vacancies/documents#create',
-        constraints: lambda {
-          # Casting to a string as dotenv does not reliably cast this as a boolean on import. However, using an
-          # environment variable set in the normal way does cast it as a boolean. This ensures it works either way.
           |request| UploadDocumentsFeature.enabled?
         }
       get :job_specification, to: 'hiring_staff/vacancies/job_specification#new'
