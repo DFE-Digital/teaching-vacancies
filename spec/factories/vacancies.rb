@@ -5,7 +5,10 @@ FactoryBot.define do
     association :subject
     association :leadership
     association :school
-    association :document
+    
+    after :create do |vacancy|
+      create_list :document, 3, vacancy: vacancy
+    end
 
     job_title { Faker::Lorem.sentence[1...30].strip }
     job_description { Faker::Lorem.paragraph(sentence_count: 4) }
