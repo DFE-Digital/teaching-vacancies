@@ -8,7 +8,8 @@ if GOOGLE_API_JSON_KEY.empty? || JSON.parse(GOOGLE_API_JSON_KEY).empty?
 end
 
 scope = ['https://www.googleapis.com/auth/indexing',
-         'https://www.googleapis.com/auth/analytics']
+         'https://www.googleapis.com/auth/analytics',
+         'https://www.googleapis.com/auth/drive']
 
 key = StringIO.new(GOOGLE_API_JSON_KEY)
 authorizer = Google::Auth::ServiceAccountCredentials.make_creds(json_key_io: key,
