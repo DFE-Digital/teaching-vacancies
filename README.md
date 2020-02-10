@@ -9,29 +9,36 @@
 
 ### Setting up the project
 
-1. Copy the docker environment variables and fill in any missing secrets from the [secrets
-repository][secret-docker-compose]:
+1. Copy the docker environment variables:
 
 ```bash
-$ cp docker-compose.env.sample docker-compose.env
+cp docker-compose.env.sample docker-compose.env
 ```
 
-2. Build the docker container and set up the database
+2. Navigate to the secrets repository, and [fill in][docs-to-read-secrets] any missing secrets from the [docker-compose.env.gpg][secret-docker-compose]. 
+
+```
+bin/pass secrets/dev/docker-compose.env > path/to/teacher-vacancy-service/docker-compose.env
+```
+
+3. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
+
+4. Build the docker container, set up the database, and start the application at https://localhost:3000
 
 ```bash
 bin/drebuild
 ```
 
-3. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
+[secret-docker-compose]:
+https://github.com/DFE-Digital/teaching-vacancies-service-secrets/blob/master/secrets/dev/docker-compose.env.gpg
+[docs-to-read-secrets]:
+https://github.com/DFE-Digital/teaching-vacancies-service-secrets#reading-secrets
 
-4. Start the application
+### Starting the application
 
 ```bash
 bin/dstart
 ```
-
-[secret-docker-compose]:
-https://github.com/DFE-Digital/teaching-vacancies-service-secrets/blob/master/secrets/dev/docker-compose.env.gpg
 
 ## User accounts & data
 
