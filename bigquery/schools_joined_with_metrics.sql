@@ -30,7 +30,7 @@ WITH
     GIAS.Trusts__name_ AS trust_name,
     COUNT(*) AS trust_size #count the total number of academies in the trust according to the latest GIAS download
   FROM
-    `teacher-vacancy-service.production_dataset.STATIC_GIAS_Feb20` AS GIAS
+    `teacher-vacancy-service.production_dataset.STATIC_GIAS_manual_download` AS GIAS
   GROUP BY
     GIAS.Trusts__name_ )
 SELECT
@@ -127,7 +127,7 @@ LEFT JOIN
 ON
   school_vacancy_metrics.urn=CAST(school.urn AS STRING)
 LEFT JOIN
-  `teacher-vacancy-service.production_dataset.STATIC_GIAS_Feb20` AS GIAS
+  `teacher-vacancy-service.production_dataset.STATIC_GIAS_manual_download` AS GIAS
 ON
   GIAS.URN=school.urn
 LEFT JOIN
