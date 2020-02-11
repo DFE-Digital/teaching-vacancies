@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe DocumentUpload do
-  subject { described_class.new(upload_path: upload_path) }
+  subject { described_class.new(upload_path: upload_path, name: name) }
 
   let(:drive_service_stub) { double(Google::Apis::DriveV3::DriveService) }
   let(:create_file) { double('create_file') }
   let(:upload_path) { 'test.pdf' }
+  let(:name) { 'Test file' }
 
   it 'raises MissingUploadPath error when called without an argument' do
     expect { described_class.new }.to raise_error(described_class::MissingUploadPath)
@@ -14,8 +15,8 @@ RSpec.describe DocumentUpload do
   context 'upload_hiring_staff_document' do
     it 'calls create_file on drive_service' do
       expect(subject.drive_service).to receive(:create_file).with(
-        { alt: 'media' },
-        fields: 'id, web_view_link, web_content_link',
+        { alt: 'media', name:  name },
+        fields: 'id, web_view_link, web_content_link, mime_type',
         upload_source: anything()
       )
       subject.upload_hiring_staff_document

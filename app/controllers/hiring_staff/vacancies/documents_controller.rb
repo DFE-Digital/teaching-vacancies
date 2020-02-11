@@ -11,7 +11,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def create
-    upload(params[:upload].tempfile.path)
+    upload(params[:upload].tempfile.path, params[:upload].original_filename)
 
     if @document_upload.safe_download
       add_document_to_vacancy
@@ -26,8 +26,8 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   private
 
-  def upload(temp_file_path)
-    @document_upload = DocumentUpload.new(upload_path: temp_file_path)
+  def upload(file_path, file_name)
+    @document_upload = DocumentUpload.new(upload_path: file_path, name: file_name)
     @document_upload.upload_hiring_staff_document
     @document_upload.set_public_permission_on_document
     @document_upload.google_drive_virus_check
