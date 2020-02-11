@@ -179,8 +179,8 @@ RSpec.feature 'Creating a vacancy' do
         choose 'No'
         click_on 'Save and continue'
 
-        expect(page).to have_content('Step 2 of 3')
-        expect(page.current_path).to eq(candidate_specification_school_job_path)
+        expect(page).to have_content('Step 3 of 3')
+        expect(page.current_path).to eq(application_details_school_job_path)
       end
 
       scenario 'redirects to step 2, upload_documents, when choosing yes' do
