@@ -168,6 +168,12 @@ en:
     upload_file: 'Upload files'
     choose_file: 'Choose a file'
     no_files_message: 'No files chosen'
+    upload_documents_table:
+      headers:
+        file_name: 'File name'
+        status: 'Status'
+        file_size: 'File size'
+        action: 'Action'
     application_details: 'Application details'
     no_contact_email: 'No job contact email given'
     contact_email: 'Job contact email'

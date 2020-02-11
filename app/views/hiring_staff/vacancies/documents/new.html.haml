@@ -20,5 +20,28 @@
                 = t('jobs.choose_file')
 
               %input#upload.hidden-input{type: "file", name: "upload", onchange: "form.submit()"}
+
+          %table.govuk-table
+            %thead.govuk-table__head
+              %tr.govuk-table__row
+                %th.govuk-table__header
+                  = t('jobs.upload_documents_table.headers.file_name')
+                %th.govuk-table__header
+                  = t('jobs.upload_documents_table.headers.status')
+                %th.govuk-table__header
+                  = t('jobs.upload_documents_table.headers.file_size')
+                %th.govuk-table__header
+                  = t('jobs.upload_documents_table.headers.action')
+              %tbody.govuk-table__body
+                %tr.govuk-table__row
+                  %td.govuk-table__cell
+                    File name
+                  %td.govuk-table__cell
+                    Uploaded
+                  %td.govuk-table__cell
+                    24.5 MB
+                  %td.govuk-table__cell
+                    %a.govuk-link{href: '#'}
+                      remove
       %a.govuk-button{href: "#"} 
         = t('buttons.save_and_continue')
