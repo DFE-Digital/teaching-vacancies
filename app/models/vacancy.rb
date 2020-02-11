@@ -120,7 +120,7 @@ class Vacancy < ApplicationRecord
 
   has_one :publish_feedback, class_name: 'VacancyPublishFeedback'
 
-  has_many :document
+  has_many :documents
 
   delegate :name, to: :school, prefix: true, allow_nil: false
   delegate :geolocation, to: :school, prefix: true, allow_nil: true

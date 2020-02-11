@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_160503) do
+ActiveRecord::Schema.define(version: 2020_02_11_085721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -58,10 +58,11 @@ ActiveRecord::Schema.define(version: 2020_02_06_160503) do
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.integer "size"
-    t.string "content_type"
-    t.string "download_url"
+    t.string "name", null: false
+    t.integer "size", null: false
+    t.string "content_type", null: false
+    t.string "download_url", null: false
+    t.string "google_drive_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "vacancy_id"

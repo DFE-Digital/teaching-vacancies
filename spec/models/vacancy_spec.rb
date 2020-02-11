@@ -502,9 +502,15 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'when supporting documents are provided' do
     it 'should return the document name' do
-      document = create(:document, name: 'Test.txt')
-      vacancy = create(:vacancy, document: [document])
-      expect(vacancy.document.first.name).to eq('Test.txt')
+      document = create(
+        :document, name: 'Test.png',
+        size: 1000,
+        content_type: 'image/png',
+        download_url: 'test/test.png',
+        google_drive_id: 'testid'
+      )
+      vacancy = create(:vacancy, documents: [document])
+      expect(vacancy.documents.first.name).to eq('Test.png')
     end
   end
 
