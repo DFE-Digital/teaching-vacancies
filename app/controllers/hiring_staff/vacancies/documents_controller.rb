@@ -12,7 +12,6 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def create
     upload(params[:upload].tempfile.path)
-    params[:upload].tempfile.delete
 
     if @document_upload.safe_download
       add_document_to_vacancy
@@ -20,6 +19,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     else
       redirect_to documents_school_job_path
     end
+
+    params[:upload].tempfile.close
+    params[:upload].tempfile.unlink
   end
 
   private
