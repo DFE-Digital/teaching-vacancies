@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_04_151802) do
+ActiveRecord::Schema.define(version: 2020_02_11_085721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -55,6 +55,18 @@ ActiveRecord::Schema.define(version: 2020_02_04_151802) do
     t.string "code"
     t.text "label"
     t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
+  end
+
+  create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "size", null: false
+    t.string "content_type", null: false
+    t.string "download_url", null: false
+    t.string "google_drive_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "vacancy_id"
+    t.index ["vacancy_id"], name: "index_documents_on_vacancy_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -244,6 +256,7 @@ ActiveRecord::Schema.define(version: 2020_02_04_151802) do
     t.index ["vacancy_id"], name: "index_vacancy_publish_feedbacks_on_vacancy_id", unique: true
   end
 
+  add_foreign_key "documents", "vacancies"
   add_foreign_key "schools", "detailed_school_types"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end
