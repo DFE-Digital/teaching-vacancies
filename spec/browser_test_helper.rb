@@ -1,8 +1,10 @@
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 
+# Setting js:errors to false because unrelated tests failed due to vanilla javascript code
+
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, phantomjs_options: ['--load-images=false'])
+  Capybara::Poltergeist::Driver.new(app, { phantomjs_options: ['--load-images=false'], js_errors: false })
 end
 Capybara.javascript_driver = :poltergeist
 

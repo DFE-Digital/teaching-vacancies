@@ -17,6 +17,7 @@ import 'src/shareUrl';
 import 'src/sortJobList';
 import 'src/submitFeedback';
 import 'src/vacancyShow';
+import 'src/uploadDocuments';
 
 import { initAll } from 'govuk-frontend';
 

@@ -82,6 +82,11 @@ Rails.application.routes.draw do
         constraints: lambda {
           |request| UploadDocumentsFeature.enabled?
         }
+      post :documents,
+        to: 'hiring_staff/vacancies/documents#create',
+        constraints: lambda {
+          |request| UploadDocumentsFeature.enabled?
+        }
       get :job_specification, to: 'hiring_staff/vacancies/job_specification#new'
       post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'
     end
