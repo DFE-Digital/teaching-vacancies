@@ -32,10 +32,10 @@ RSpec.feature 'Viewing a location category landing page', elasticsearch: true do
 
   scenario 'a specific heading for the landing page is displayed' do
     visit location_category_path('camden')
-    expect(page).to have_content('1 teaching job in Camden.')
+    expect(page).to have_content('1 teaching job in Camden')
 
     visit location_category_path('kensington and chelsea')
-    expect(page).to have_content('2 teaching jobs in Kensington and Chelsea.')
+    expect(page).to have_content('2 teaching jobs in Kensington and Chelsea')
   end
 
   scenario 'a specific page title for the landing page is displayed' do
