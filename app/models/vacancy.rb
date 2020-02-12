@@ -88,6 +88,8 @@ class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
 
+  attr_accessor :documents
+
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: { published: 0, draft: 1, trashed: 2 }

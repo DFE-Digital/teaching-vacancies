@@ -1,0 +1,42 @@
+- content_for :page_title_prefix, "Supporting documents — Publish a job for #{@school.name}"
+
+%h1.govuk-heading-l
+  = t('jobs.publish_heading', school: @school.name)
+  %span.govuk-caption-l
+    Step 2 of 3
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @documents_form, url: documents_school_job_path(school_id: @school.id), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary 'Please correct the following errors'
+
+      %h2.govuk-heading-m
+        = t('jobs.supporting_documents')
+
+      = f.govuk_file_field :documents,
+        label: { text: 'Upload files', size: 's' },
+        multiple: true,
+        enctype: 'multipart/form-data',
+        onchange: 'form.submit()' do
+
+        %button#file-upload.govuk-button.govuk-button--secondary.display-none
+          = t('jobs.choose_file')
+
+      - if @documents_form.vacancy.documents&.any?
+        %table.govuk-table
+          %thead.govuk-table__head
+            %tr.govuk-table__row
+              %th.govuk-table__header File name
+              %th.govuk-table__header Status
+              %th.govuk-table__header File size
+              %th.govuk-table__header Action
+          %tbody.govuk-table__body
+            - @documents_form.vacancy.documents.each do |document|
+              %tr.govuk-table__row
+                %th.govuk-table__header{ scope: 'row' } #{document.original_filename}
+                %td.govuk-table__cell
+                %td.govuk-table__cell
+                %td.govuk-table__cell
+                  %a{ href: '#' } Remove
+
+      = f.govuk_submit t('buttons.save_and_continue')
