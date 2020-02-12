@@ -1,6 +1,4 @@
-$(document).ready(function() {
-  $("#file-upload").on( "click", function(e) {
-    e.preventDefault();
-    $("#upload").click();
-  });
-});
+document.getElementById('file-upload').addEventListener("click", function(e) {
+  e.preventDefault();
+  document.getElementById('upload').click();
+})
