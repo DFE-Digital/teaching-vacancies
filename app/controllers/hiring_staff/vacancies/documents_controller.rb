@@ -1,8 +1,8 @@
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :school, :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :school, :redirect_unless_vacancy_session_id, only: %i[index create]
 
-  def new
+  def index
     unless session[:vacancy_attributes]['supporting_documents'] == 'yes'
       redirect_to supporting_documents_school_job_path
     end
