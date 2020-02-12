@@ -43,8 +43,8 @@ RSpec.feature 'Hiring staff can upload documents to a vacancy' do
       click_on 'Save and continue'
     end
 
-    scenario 'displays upload a file text' do
-      expect(page).to have_content('Upload a file')
+    scenario 'displays upload files text' do
+      expect(page).to have_content('Upload files')
     end
 
     scenario 'hiring staff can select a file for upload' do
