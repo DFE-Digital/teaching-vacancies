@@ -1,0 +1,15 @@
+%table.govuk-table
+  %thead.govuk-table__head
+    %tr.govuk-table__row
+      %th.govuk-table__header File name
+      %th.govuk-table__header Status
+      %th.govuk-table__header File size
+      %th.govuk-table__header Action
+  %tbody.govuk-table__body
+    - documents.each do |document|
+      %tr.govuk-table__row
+        %th.govuk-table__header{ scope: 'row' } #{document.original_filename}
+        %td.govuk-table__cell
+        %td.govuk-table__cell
+        %td.govuk-table__cell
+          %a{ href: '#' } Remove
