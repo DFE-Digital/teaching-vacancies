@@ -15,7 +15,7 @@ RSpec.feature 'Viewing vacancies' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
-    expect(page).to have_content("There are #{job_count} jobs listed.")
+    expect(page).to have_content("There are #{job_count} jobs listed")
     expect(page).to have_selector('.vacancy', count: Vacancy.default_per_page)
   end
 
