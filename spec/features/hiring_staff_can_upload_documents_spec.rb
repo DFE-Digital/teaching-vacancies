@@ -29,21 +29,22 @@ RSpec.feature 'Hiring staff can upload documents to a vacancy' do
     click_on 'Save and continue'
   end
 
-  context "without 'yes' previously selected for supporting documents" do
-    scenario 'redirects to step 2, supporting documents' do
+  context 'when the URL is accessed directly' do
+    scenario 'redirects the user to the supporting documents option select page' do
       visit documents_school_job_path
       expect(page.current_path).to eq(supporting_documents_school_job_path)
     end
   end
 
-  context "with 'yes' previously selected for supporting documents" do
+  context "when the user selects 'yes' in the previous step" do
     before do
       visit supporting_documents_school_job_path
       fill_in_supporting_documents_form_fields(vacancy)
       click_on 'Save and continue'
     end
 
-    scenario 'displays upload files text' do
+    scenario 'users lands on upload documents page' do
+      expect(page.current_path).to eq(documents_school_job_path)
       expect(page).to have_content('Upload files')
     end
 
