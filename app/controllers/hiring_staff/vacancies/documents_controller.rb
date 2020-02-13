@@ -1,81 +1,76 @@
 require 'google/apis/drive_v3'
 
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :school, :redirect_unless_vacancy_session_id, only: %i[index create]
 
   def index
     unless session[:vacancy_attributes]['supporting_documents'] == 'yes'
       redirect_to supporting_documents_school_job_path
     end
-
-    @documents_form = DocumentsForm.new(session[:vacancy_attributes] || documents_form_params)
+    @documents_form = DocumentsForm.new(documents_form_params)
+    @vacancy = Vacancy.find(session[:vacancy_attributes]['id'])
   end
 
   def create
-    @documents_form = DocumentsForm.new(documents_form_params)
-
-    @documents_form.errors.add(:base, 'One of the files contains a virus!')
-    @documents_form.errors.add(:documents, 'The selected file(s) could not be uploaded!')
-    # TODO: Write new function to add documents to vacancy
-    # store_vacancy_attributes(documents_form_params)
-    # vacancy = update_vacancy(documents_form_params)
-
+    @documents_form = DocumentsForm.new()
+    processed_documents_params = documents_form_params(upload=true)
+    @vacancy = add_documents(processed_documents_params)
+   
     render :index
 
-    # upload(params[:upload].tempfile.path, params[:upload].original_filename)
-
-    # if @document_upload.safe_download
-    #   add_document_to_vacancy
-    #   render json: @document_upload.uploaded.web_content_link
-    # else
-    #   redirect_to documents_school_job_path
-    # end
-
-    # params[:upload].tempfile.close
-    # params[:upload].tempfile.unlink
   end
 
   private
 
   def upload(file_path, file_name)
-    @document_upload = DocumentUpload.new(upload_path: file_path, name: file_name)
-    @document_upload.upload_hiring_staff_document
-    @document_upload.set_public_permission_on_document
-    @document_upload.google_drive_virus_check
-  end
-
-  def add_document_to_vacancy
-    @vac = Vacancy.find(session[:vacancy_attributes]['id'])
-    @vac.documents.create(
-      name: params[:upload].original_filename,
-      size: params[:upload].size,
-      content_type: params[:upload].content_type,
-      download_url: @document_upload.uploaded.web_content_link,
-      google_drive_id: @document_upload.uploaded.id
-    )
+    document_upload = DocumentUpload.new(upload_path: file_path, name: file_name)
+    document_upload.upload_hiring_staff_document
+    document_upload.set_public_permission_on_document
+    document_upload.google_drive_virus_check
+    document_upload
   end
   
-  def documents_form_params
-    valid_params = params.require(:documents_form).permit(documents: [])
+  def documents_form_params(upload=False)
+    if upload
+      processed_params = process_documents_params((params[:documents_form] || params).permit(documents: []))
+    else
+      processed_params = (params[:documents_form] || params).permit(documents: [])
+    end 
+  end
+
+  def process_documents_params(valid_params)
     documents_array = []
-
-    valid_params[:documents].each do |document_params|
-      # upload(document_params.tempfile.path, document_params.original_filename)
-      document_hash = {
-        name: document_params.original_filename,
-        size: document_params.size,
-        content_type: document_params.content_type,
-        # download_url: @document_upload.uploaded.web_content_link,
-        # google_drive_id: @document_upload.uploaded.id
-        download_url: 'test_url',
-        google_drive_id: 'test_id'
-      }
-      documents_array << document_hash
+    
+    if valid_params[:documents]&.any?
+      valid_params[:documents].each do |document_params|
+        document_upload = upload(document_params.tempfile.path, document_params.original_filename)
+        if document_upload.safe_download
+          document_hash = {
+            name: document_params.original_filename,
+            size: Integer(document_params.size),
+            content_type: document_params.content_type,
+            download_url: document_upload.uploaded.web_content_link,
+            google_drive_id: document_upload.uploaded.id
+            # download_url: 'test_url',
+            # google_drive_id: 'test_id'
+          }
+          documents_array << document_hash
+        else 
+          @documents_form.errors.add(:base, "#{document_params.original_filename} contains a virus!")
+          @documents_form.errors.add(:documents, 'The selected file(s) could not be uploaded!')
+        end
+      end
     end
-
     processed_params = {}
     processed_params[:documents_attributes] = documents_array
     processed_params
+  end
+
+  def add_documents(attributes)
+    vacancy ||= school.vacancies.find(session_vacancy_id)
+    attributes[:documents_attributes].each do |document|
+      vacancy.documents.create(document)
+    end
+    vacancy
   end
 end

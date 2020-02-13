@@ -38,8 +38,9 @@ class DocumentUpload
       drive_service.delete_file(uploaded.id)
       self.safe_download = false
     else
-      File.delete(download_path) if File.exist?(download_path)
       self.safe_download = true
+    ensure
+      File.delete(download_path) if File.exist?(download_path)
     end
   end
 end

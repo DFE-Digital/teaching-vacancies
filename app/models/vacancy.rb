@@ -88,8 +88,6 @@ class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
 
-  attr_accessor :documents
-
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: { published: 0, draft: 1, trashed: 2 }
@@ -123,7 +121,6 @@ class Vacancy < ApplicationRecord
   has_one :publish_feedback, class_name: 'VacancyPublishFeedback'
 
   has_many :documents
-  accepts_nested_attributes_for :documents
 
   delegate :name, to: :school, prefix: true, allow_nil: false
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
