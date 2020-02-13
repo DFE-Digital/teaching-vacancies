@@ -41,7 +41,7 @@ class ExportTablesToCloudStorage
 
     TABLES.each do |table|
       file = Rails.root.join("tmp/csv_export/#{table.underscore}.csv")
-      records = table.constantize.all
+      table == 'Vacancy' ? records = vacancy_records_with_removed_fields : records = table.constantize.all
 
       next unless records.any?
 
@@ -66,5 +66,9 @@ class ExportTablesToCloudStorage
 
   def remove_csv_folder
     FileUtils.rm_rf(Rails.root.join('tmp/csv_export'))
+  end
+
+  def vacancy_records_with_removed_fields
+    Vacancy.select(Vacancy.column_names - ['job_description', 'weekly_hours'].map(&:to_s))
   end
 end
