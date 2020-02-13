@@ -30,7 +30,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     document_upload
   end
   
-  def documents_form_params(upload=False)
+  def documents_form_params(upload=false)
     if upload
       processed_params = process_documents_params((params[:documents_form] || params).permit(documents: []))
     else
