@@ -49,8 +49,8 @@ RSpec.feature 'Hiring staff can upload documents to a vacancy' do
     end
 
     scenario 'hiring staff can select a file for upload' do
-      page.attach_file('upload', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
-      expect(page.find('#upload').value).to_not be nil
+      page.attach_file('documents-form-documents-field', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
+      expect(page.find('#documents-form-documents-field').value).to_not be nil
     end
   end
 end
