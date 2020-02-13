@@ -83,6 +83,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'elasticsearch-extensions'
   gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'teaspoon-mocha'
   gem 'coffee-rails'
