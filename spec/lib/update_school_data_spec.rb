@@ -28,20 +28,7 @@ RSpec.describe UpdateSchoolData do
                    school_type: SchoolType.new(label: 'Previous school type', code: '999'),
                    detailed_school_type: DetailedSchoolType.new(label: 'Previous detailed school type', code: '999'),
                    region: Region.new(name: 'Previous region', code: 'ZZZ'),
-                   phase: 'all_through',
-                   status: 'Open',
-                   trust_name: 'Fake Trust',
-                   number_of_pupils: '603',
-                   head_title: 'Ms',
-                   head_first_name: 'Helen',
-                   head_last_name: 'Pluckrose',
-                   religious_character: 'Church of England',
-                   rsc_region: '?',
-                   telephone: '02072831147',
-                   open_date: Date.new(1920, 01, 01),
-                   close_date: nil,
-                   last_ofsted_inspection_date: Date.new(1978, 01, 01),
-                   oftsed_rating: 'Outstanding')
+                   phase: 'all_through')
   end
 
   let!(:la_maintained_school_type) { SchoolType.create!(label: 'LA maintained school', code: '4') }
@@ -132,19 +119,6 @@ RSpec.describe UpdateSchoolData do
         expect(school.northing).to eql('181201')
         expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51396894535262)
         expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.07751626505544208)
-        expect(school.status).to eql('Open')
-        expect(school.trust_name).to eql('Fake Trust')
-        expect(school.number_of_pupils).to eql(276)
-        expect(school.head_title).to eql('Mr')
-        expect(school.head_first_name).to eql('Tim')
-        expect(school.head_last_name).to eql('Wilson')
-        expect(school.religious_character).to eql('Church of England')
-        expect(school.rsc_region).to eql('South Central & North West London')
-        expect(school.telephone).to eql('02072831147')
-        expect(school.open_date).to eql(nil)
-        expect(school.close_date).to eql(nil)
-        expect(school.last_ofsted_inspection_date).to eql(Date.new(2013, 04, 19))
-        expect(school.oftsed_rating).to eql('Outstanding')
 
         school = School.find_by(urn: '100001')
         expect(school.name).to eql('City of London School for Girls')
@@ -168,19 +142,6 @@ RSpec.describe UpdateSchoolData do
         expect(school.northing).to eql('181746')
         expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51914791336013)
         expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.09455174037405477)
-        expect(school.status).to eql('Open')
-        expect(school.trust_name).to eql('')
-        expect(school.number_of_pupils).to eql(727)
-        expect(school.head_title).to eql('Mrs')
-        expect(school.head_first_name).to eql('Ena')
-        expect(school.head_last_name).to eql('Harrop')
-        expect(school.religious_character).to eql('None')
-        expect(school.rsc_region).to eql('South Central & North West London')
-        expect(school.telephone).to eql('02078475500')
-        expect(school.open_date).to eql(Date.new(1920, 01, 01))
-        expect(school.close_date).to eql(nil)
-        expect(school.last_ofsted_inspection_date).to eql(nil)
-        expect(school.oftsed_rating).to eql('')
 
         expect(School.find_by(urn: '100002')).to be_present
         expect(School.find_by(urn: '100003')).to be_present
@@ -188,9 +149,6 @@ RSpec.describe UpdateSchoolData do
         expect(School.find_by(urn: '100006')).to be_present
         expect(School.find_by(urn: '100007')).to be_present
         expect(School.find_by(urn: '100008')).to be_present
-
-        closed_school = School.find_by(urn: '100004')
-        expect(closed_school).not_to be_present
       end
     end
 
@@ -215,23 +173,6 @@ RSpec.describe UpdateSchoolData do
         expect(school.detailed_school_type).to eql(voluntary_aided_school)
         expect(school.region).to eql(london)
         expect(school.phase).to eql('primary')
-        expect(school.easting).to eql('533498')
-        expect(school.northing).to eql('181201')
-        expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51396894535262)
-        expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.07751626505544208)
-        expect(school.status).to eql('Open')
-        expect(school.trust_name).to eql('Fake Trust')
-        expect(school.number_of_pupils).to eql(276)
-        expect(school.head_title).to eql('Mr')
-        expect(school.head_first_name).to eql('Tim')
-        expect(school.head_last_name).to eql('Wilson')
-        expect(school.religious_character).to eql('Church of England')
-        expect(school.rsc_region).to eql('South Central & North West London')
-        expect(school.telephone).to eql('02072831147')
-        expect(school.open_date).to eql(nil)
-        expect(school.close_date).to eql(nil)
-        expect(school.last_ofsted_inspection_date).to eql(Date.new(2013, 04, 19))
-        expect(school.oftsed_rating).to eql('Outstanding')
       end
     end
   end
