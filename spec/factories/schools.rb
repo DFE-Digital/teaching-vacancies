@@ -5,7 +5,7 @@ FactoryBot.define do
 
     name { Faker::Educator.secondary_school.strip }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
-    urn { Faker::Number.number(digits: 6) }
+    urn { Faker::Number.number(digits: 10) }
     address { Faker::Address.street_name }
     town { Faker::Address.city }
     county { Faker::Address.state_abbr }
@@ -14,19 +14,6 @@ FactoryBot.define do
     phase { :secondary }
     easting { '1' }
     northing { '1' }
-    status { 'Open' }
-    trust_name { 'Fake Trust' }
-    number_of_pupils { Faker::Number.number(digits: 3) }
-    head_title { 'Ms' }
-    head_first_name { 'Helen' }
-    head_last_name { 'Pluckrose' }
-    religious_character { 'Church of England' }
-    rsc_region { '?' }
-    telephone { Faker::Number.number(digits: 11).to_s }
-    open_date { Faker::Date.between(from: 100.days.ago, to: 10.days.ago) }
-    close_date { nil }
-    last_ofsted_inspection_date { Faker::Date.between(from: 9.days.ago, to: 5.days.ago) }
-    oftsed_rating { 'Outstanding' }
 
     trait :nursery do
       phase { :nursery }
