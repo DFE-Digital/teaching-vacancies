@@ -17,6 +17,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
     @documents_form.errors.add(:base, 'One of the files contains a virus!')
     @documents_form.errors.add(:documents, 'The selected file(s) could not be uploaded!')
+    # TODO: Write new function to add documents to vacancy
     # store_vacancy_attributes(documents_form_params)
     # vacancy = update_vacancy(documents_form_params)
 
@@ -56,6 +57,25 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
   
   def documents_form_params
-    params.require(:documents_form).permit(documents: [])
+    valid_params = params.require(:documents_form).permit(documents: [])
+    documents_array = []
+
+    valid_params[:documents].each do |document_params|
+      # upload(document_params.tempfile.path, document_params.original_filename)
+      document_hash = {
+        name: document_params.original_filename,
+        size: document_params.size,
+        content_type: document_params.content_type,
+        # download_url: @document_upload.uploaded.web_content_link,
+        # google_drive_id: @document_upload.uploaded.id
+        download_url: 'test_url',
+        google_drive_id: 'test_id'
+      }
+      documents_array << document_hash
+    end
+
+    processed_params = {}
+    processed_params[:documents_attributes] = documents_array
+    processed_params
   end
 end

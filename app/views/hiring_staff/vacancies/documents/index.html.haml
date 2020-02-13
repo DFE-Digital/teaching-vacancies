@@ -33,9 +33,9 @@
           %tbody.govuk-table__body
             - @documents_form.vacancy.documents.each do |document|
               %tr.govuk-table__row
-                %th.govuk-table__header{ scope: 'row' } #{document.original_filename}
+                %td.govuk-table__cell{ scope: 'row' } #{document[:name]}
                 %td.govuk-table__cell
-                %td.govuk-table__cell
+                %td.govuk-table__cell{ scope: 'row' } #{number_with_precision(document[:size] / 1024 / 1024, precision: 2)} MB
                 %td.govuk-table__cell
                   %a{ href: '#' } Remove
 
