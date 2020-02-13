@@ -8,20 +8,31 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     unless session[:vacancy_attributes]['supporting_documents'] == 'yes'
       redirect_to supporting_documents_school_job_path
     end
+
+    @documents_form = DocumentsForm.new(session[:vacancy_attributes] || documents_form_params)
   end
 
   def create
-    upload(params[:upload].tempfile.path, params[:upload].original_filename)
+    @documents_form = DocumentsForm.new(documents_form_params)
 
-    if @document_upload.safe_download
-      add_document_to_vacancy
-      render json: @document_upload.uploaded.web_content_link
-    else
-      redirect_to documents_school_job_path
-    end
+    @documents_form.errors.add(:base, 'One of the files contains a virus!')
+    @documents_form.errors.add(:documents, 'The selected file(s) could not be uploaded!')
+    # store_vacancy_attributes(documents_form_params)
+    # vacancy = update_vacancy(documents_form_params)
 
-    params[:upload].tempfile.close
-    params[:upload].tempfile.unlink
+    render :index
+
+    # upload(params[:upload].tempfile.path, params[:upload].original_filename)
+
+    # if @document_upload.safe_download
+    #   add_document_to_vacancy
+    #   render json: @document_upload.uploaded.web_content_link
+    # else
+    #   redirect_to documents_school_job_path
+    # end
+
+    # params[:upload].tempfile.close
+    # params[:upload].tempfile.unlink
   end
 
   private
@@ -42,5 +53,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       download_url: @document_upload.uploaded.web_content_link,
       google_drive_id: @document_upload.uploaded.id
     )
+  end
+  
+  def documents_form_params
+    params.require(:documents_form).permit(documents: [])
   end
 end
