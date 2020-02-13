@@ -29,6 +29,7 @@ class UpdateSchoolData
     school
   end
 
+  # rubocop:disable Metrics/AbcSize
   def set_properties(school, row)
     school.name = row['EstablishmentName']
     school.address = row['Street']
@@ -44,7 +45,21 @@ class UpdateSchoolData
     school.northing = row['Northing']
     school.url = valid_website(row['SchoolWebsite'])
     school.phase = row['PhaseOfEducation (code)'].to_i
+    school.status = row['EstablishmentStatus (name)']
+    school.trust_name = row['Trusts (name)']
+    school.number_of_pupils = row['NumberOfPupils']
+    school.head_title = row['HeadTitle (name)']
+    school.head_first_name = row['HeadFirstName']
+    school.head_last_name = row['HeadLastName']
+    school.religious_character = row['ReligiousCharacter (name)']
+    school.rsc_region = row['RSCRegion (name)']
+    school.telephone = row['TelephoneNum']
+    school.open_date = row['OpenDate']
+    school.close_date = row['CloseDate']
+    school.last_ofsted_inspection_date = row['OfstedLastInsp']
+    school.oftsed_rating = row['OfstedRating (name)']
   end
+  # rubocop:enable Metrics/AbcSize
 
   def set_region(school, row)
     region = Region.find_or_initialize_by(code: row['GOR (code)'])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_04_151802) do
+ActiveRecord::Schema.define(version: 2020_02_12_150214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -129,6 +129,19 @@ ActiveRecord::Schema.define(version: 2020_02_04_151802) do
     t.text "northing"
     t.point "geolocation"
     t.string "local_authority"
+    t.string "status"
+    t.string "trust_name"
+    t.integer "number_of_pupils"
+    t.string "head_title"
+    t.string "head_first_name"
+    t.string "head_last_name"
+    t.string "religious_character"
+    t.string "rsc_region"
+    t.string "telephone"
+    t.date "open_date"
+    t.date "close_date"
+    t.date "last_ofsted_inspection_date"
+    t.string "oftsed_rating"
     t.index ["detailed_school_type_id"], name: "index_schools_on_detailed_school_type_id"
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["school_type_id"], name: "index_schools_on_school_type_id"
