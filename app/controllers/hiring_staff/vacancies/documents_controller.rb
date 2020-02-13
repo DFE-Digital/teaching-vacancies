@@ -13,11 +13,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def create
     @documents_form = DocumentsForm.new()
-    processed_documents_params = documents_form_params(upload=true)
-    @vacancy = add_documents(processed_documents_params)
-   
-    render :index
+    @vacancy = add_documents(documents_form_params(upload: true))
 
+    render :index
   end
 
   private
@@ -29,18 +27,18 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     document_upload.google_drive_virus_check
     document_upload
   end
-  
-  def documents_form_params(upload=false)
+
+  def documents_form_params(upload: false)
     if upload
-      processed_params = process_documents_params((params[:documents_form] || params).permit(documents: []))
+      process_documents_params((params[:documents_form] || params).permit(documents: []))
     else
-      processed_params = (params[:documents_form] || params).permit(documents: [])
-    end 
+      (params[:documents_form] || params).permit(documents: [])
+    end
   end
 
   def process_documents_params(valid_params)
     documents_array = []
-    
+
     if valid_params[:documents]&.any?
       valid_params[:documents].each do |document_params|
         document_upload = upload(document_params.tempfile.path, document_params.original_filename)
@@ -55,7 +53,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
             # google_drive_id: 'test_id'
           }
           documents_array << document_hash
-        else 
+        else
           @documents_form.errors.add(:base, "#{document_params.original_filename} contains a virus!")
           @documents_form.errors.add(:documents, 'The selected file(s) could not be uploaded!')
         end
