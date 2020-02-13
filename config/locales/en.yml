@@ -166,7 +166,7 @@ en:
     candidate_specification: 'Candidate specification'
     supporting_documents: 'Supporting documents'
     upload_file: 'Upload files'
-    choose_file: 'Choose a file'
+    select_file: 'Select a file'
     no_files_message: 'No files chosen'
     application_details: 'Application details'
     no_contact_email: 'No job contact email given'
