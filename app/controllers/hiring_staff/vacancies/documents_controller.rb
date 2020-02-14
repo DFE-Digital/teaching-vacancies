@@ -40,43 +40,54 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def process_documents(params)
-    file_size_limit = 10 # MB
+    @file_size_limit = 10 # MB
+    @errors = false
     documents_array = []
-
     if params[:documents]&.any?
       params[:documents].each do |document_params|
-        document_upload = DocumentUpload.new(
-          upload_path: document_params.tempfile.path, 
-          name: document_params.original_filename
-        )
-        document_upload.upload
-
-        errors = false
-        document_hash = {}
-        document_hash[:name] = document_params.original_filename
-        document_hash[:size] = Integer(document_params.size)
-        document_hash[:content_type] = document_params.content_type
-        document_hash[:download_url] = document_upload.uploaded.web_content_link
-        document_hash[:google_drive_id] = document_upload.uploaded.id
-
-        if document_params.size / 1024.0 / 1024.0 > file_size_limit
-          errors = true
-          @documents_form.errors.add(:base, "#{document_params.original_filename} must be smaller than #{file_size_limit} MB")
-          @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
-        end
-
-        unless document_upload.safe_download
-          errors = true
-          @documents_form.errors.add(:base, "#{document_params.original_filename} contains a virus")
-          @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
-        end
-
-        unless errors
+        document_hash = upload_document(document_params)
+        unless @errors
           documents_array << document_hash
         end
       end
     end
-
     documents_array
+  end
+
+  def upload_document(document_params)
+    document_upload = DocumentUpload.new(
+      upload_path: document_params.tempfile.path,
+      name: document_params.original_filename
+    )
+    document_upload.upload
+    if document_params.size / 1024.0 / 1024.0 > @file_size_limit
+      file_size_error(document_params.original_filename)
+    end
+    unless document_upload.safe_download
+      virus_error(document_params.original_filename)
+    end
+    create_document_hash(document_params, document_upload)
+  end
+
+  def file_size_error(filename)
+    @errors = true
+    @documents_form.errors.add(:base, "#{filename} must be smaller than #{@file_size_limit} MB")
+    @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
+  end
+
+  def virus_error(filename)
+    @errors = true
+    @documents_form.errors.add(:base, "#{filename} contains a virus")
+    @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
+  end
+
+  def create_document_hash(params, upload)
+    {
+      name: params.original_filename,
+      size: Integer(params.size),
+      content_type: params.content_type,
+      download_url: upload.uploaded.web_content_link,
+      google_drive_id: upload.uploaded.id
+    }
   end
 end
