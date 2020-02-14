@@ -34,11 +34,11 @@
             - @vacancy.documents.each do |document|
               %tr.govuk-table__row
                 %td.govuk-table__cell{ scope: 'row' }
-                  %a{ href: document[:download_url] } #{document[:name]}
+                  %a.govuk-link{ href: document[:download_url], target: '_blank' } #{document[:name] }
                 %td.govuk-table__cell{ scope: 'row' }
                 %td.govuk-table__cell{ scope: 'row' } #{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
                 %td.govuk-table__cell
-                  %a{ href: '#' } Remove
+                  %a.govuk-link.govuk-link--no-visited-state{ href: '#' } Remove
       - else
         %p
           = t('jobs.no_files_message')
