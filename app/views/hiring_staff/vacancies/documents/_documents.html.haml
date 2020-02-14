@@ -5,7 +5,7 @@
       %th.govuk-table__header= t('jobs.upload_documents_table.headers.status')
       %th.govuk-table__header= t('jobs.upload_documents_table.headers.file_size')
       %th.govuk-table__header= t('jobs.upload_documents_table.headers.action')
-  %tbody.govuk-table__body
+  %tbody#table-body.govuk-table__body
     - documents.each do |document|
       %tr.govuk-table__row
         %td.govuk-table__cell{ scope: 'row' }

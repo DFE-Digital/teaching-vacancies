@@ -26,6 +26,6 @@
       - if @vacancy&.documents&.any?
         = render 'hiring_staff/vacancies/documents/documents', documents: @vacancy.documents
       - else
-        %p= t('jobs.no_files_message')
+        %p#no-files= t('jobs.no_files_message')
 
       = f.govuk_submit t('buttons.save_and_continue')
