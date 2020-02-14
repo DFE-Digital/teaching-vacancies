@@ -11,6 +11,12 @@ class DocumentUpload
     self.drive_service = Google::Apis::DriveV3::DriveService.new
   end
 
+  def upload
+    upload_hiring_staff_document
+    set_public_permission_on_document
+    google_drive_virus_check
+  end
+
   def upload_hiring_staff_document
     self.uploaded = drive_service.create_file(
       { alt: 'media', name: name },
