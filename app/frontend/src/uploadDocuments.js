@@ -1,8 +1,19 @@
-// This triggers a file input when the button is clicked
-
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('file-upload').addEventListener("click", function(e) {
+  const inputFileUpload = document.getElementsByClassName('govuk-file-upload')[0];
+  const selectFileButton = document.getElementsByClassName('govuk-button--secondary')[0];
+  const uploadFileButton = document.getElementsByClassName('govuk-button--secondary')[1];
+
+  selectFileButton.addEventListener('click', function(e) {
     e.preventDefault();
-    document.getElementById('upload').click();
+
+    inputFileUpload.click();
   });
-})
+
+  inputFileUpload.addEventListener('change', function(e) {
+    inputFileUpload.form.submit();
+  });
+
+  inputFileUpload.classList.add('display-none');
+  uploadFileButton.classList.add('display-none');
+  selectFileButton.classList.remove('display-none');
+});
