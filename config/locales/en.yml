@@ -166,7 +166,7 @@ en:
     candidate_specification: 'Candidate specification'
     supporting_documents: 'Supporting documents'
     upload_file: 'Upload files'
-    choose_file: 'Choose a file'
+    select_file: 'Select a file'
     no_files_message: 'No files chosen'
     file_input_error_message: 'The selected file(s) could not be uploaded'
     upload_documents_table:

@@ -52,5 +52,10 @@ RSpec.feature 'Hiring staff can upload documents to a vacancy' do
       page.attach_file('documents-form-documents-field', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
       expect(page.find('#documents-form-documents-field').value).to_not be nil
     end
+
+    scenario 'hiring staff can continue to next page' do
+      click_on 'Save and continue'
+      expect(page.current_path).to eq(application_details_school_job_path)
+    end
   end
 end
