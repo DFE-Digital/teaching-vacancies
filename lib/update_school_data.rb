@@ -3,6 +3,31 @@ require 'open-uri'
 require 'httparty'
 
 class UpdateSchoolData
+  # TODO: Refactor the transformation logic into the model.
+  # These are the attributes that require additional transformation before being added to the model. The first value of
+  # the array is the row key name, the second is the method used for the transformation.  URL is the exception, as it
+  # requires an external function call-this is handled in the method.
+  #
+  COMPLEX_MAPPINGS = {
+    address3: ['Address3', :presence],
+    county: ['County (name)', :presence],
+    locality: ['Locality', :presence],
+    phase: ['PhaseOfEducation (code)', :to_i],
+    url: ['SchoolWebsite', nil],
+  }
+
+  SIMPLE_MAPPINGS = {
+    address: 'Street',
+    easting: 'Easting',
+    local_authority: 'LA (name)',
+    maximum_age: 'StatutoryHighAge',
+    minimum_age: 'StatutoryLowAge',
+    name: 'EstablishmentName',
+    northing: 'Northing',
+    postcode: 'Postcode',
+    town: 'Town',
+  }
+
   def run
     save_csv_file
     CSV.foreach(csv_file_location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
@@ -22,28 +47,38 @@ class UpdateSchoolData
   def convert_to_school(row)
     school = School.find_or_initialize_by(urn: row['URN'])
 
-    set_properties(school, row)
+    set_complex_properties(school, row)
+    set_simple_properties(school, row)
     set_region(school, row)
     set_school_type(school, row)
+    set_gias_data_as_json(school, row)
 
     school
   end
 
-  def set_properties(school, row)
-    school.name = row['EstablishmentName']
-    school.address = row['Street']
-    school.locality = row['Locality'].presence
-    school.address3 = row['Address3'].presence
-    school.town = row['Town']
-    school.county = row['County (name)'].presence
-    school.postcode = row['Postcode']
-    school.local_authority = row['LA (name)']
-    school.minimum_age = row['StatutoryLowAge']
-    school.maximum_age = row['StatutoryHighAge']
-    school.easting = row['Easting']
-    school.northing = row['Northing']
-    school.url = valid_website(row['SchoolWebsite'])
-    school.phase = row['PhaseOfEducation (code)'].to_i
+  def set_complex_properties(school, row)
+    COMPLEX_MAPPINGS.each do |attribute_name, value|
+      row_key = value.first
+      transformation = value.last
+      if attribute_name == :url
+        # Addressable::URI ensures we store a valid URL.
+        school[attribute_name] = Addressable::URI.heuristic_parse(row[row_key]).to_s
+      else
+        school[attribute_name] = row[row_key].send(transformation)
+      end
+    end
+  end
+
+  def set_simple_properties(school, row)
+    SIMPLE_MAPPINGS.each do |attribute_name, column_name|
+      # Using `send` for this  because `easting` and `northing` are both overloaded setters that look up lat/long when
+      # you set them.
+      school.send("#{attribute_name}=", row[column_name])
+    end
+  end
+
+  def set_gias_data_as_json(school, row)
+    school.gias_data = row.to_json
   end
 
   def set_region(school, row)
@@ -85,9 +120,5 @@ class UpdateSchoolData
 
   def csv_url
     "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
-  end
-
-  def valid_website(url)
-    Addressable::URI.heuristic_parse(url).to_s
   end
 end
