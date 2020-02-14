@@ -7,7 +7,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def index
     @documents_form = DocumentsForm.new
-    # @vacancy = Vacancy.find(session[:vacancy_attributes]['id'])
+    @vacancy = Vacancy.find(session[:vacancy_attributes]['id'])
   end
 
   def create
