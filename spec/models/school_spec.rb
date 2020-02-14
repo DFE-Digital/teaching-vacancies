@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe School, type: :model do
+  it { expect(subject.attributes).to include('gias_data') }
+  it { expect(described_class.columns_hash['gias_data'].type).to eql(:json) }
+
   context 'when there is no previous geolocation' do
     let(:school) { create(:school, easting: nil, northing: nil) }
 
