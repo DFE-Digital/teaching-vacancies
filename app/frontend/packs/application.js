@@ -16,8 +16,8 @@ import 'src/removeCommaFromNumber';
 import 'src/shareUrl';
 import 'src/sortJobList';
 import 'src/submitFeedback';
-import 'src/vacancyShow';
 import 'src/uploadDocuments';
+import 'src/vacancyShow';
 
 import { initAll } from 'govuk-frontend';
 

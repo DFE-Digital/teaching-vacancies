@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @documents_form, url: documents_school_job_path(school_id: @school.id), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @documents_form, url: documents_school_job_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary 'Please correct the following errors'
 
       %h2.govuk-heading-m
@@ -23,9 +23,9 @@
 
       = f.govuk_submit t('jobs.upload_file'), secondary: true
 
-      - if @documents_form.vacancy.documents&.any?
-        = render 'hiring_staff/vacancies/documents/documents', documents: @documents_form.vacancy.documents
+      - if @vacancy&.documents&.any?
+        = render 'hiring_staff/vacancies/documents/documents', documents: @vacancy.documents
       - else
-        %p= t('jobs.no_files_message')
+        %p#no-files= t('jobs.no_files_message')
 
       = f.govuk_submit t('buttons.save_and_continue')

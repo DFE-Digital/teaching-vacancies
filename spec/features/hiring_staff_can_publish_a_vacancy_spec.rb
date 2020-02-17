@@ -196,6 +196,90 @@ RSpec.feature 'Creating a vacancy' do
       end
     end
 
+    context '#documents' do
+      let(:feature_enabled?) { true }
+
+      before do
+        visit new_school_job_path
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+      end
+
+      scenario 'redirects to step 2, supporting_documents, when that step has not been completed' do
+        visit documents_school_job_path
+        expect(page.current_path).to eq(supporting_documents_school_job_path)
+      end
+
+      scenario 'hiring staff can select a file for upload' do
+        fill_in_supporting_documents_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        page.attach_file('documents-form-documents-field', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
+        expect(page.find('#documents-form-documents-field').value).to_not be nil
+      end
+
+      scenario 'redirects to step 3, application_details, when submitted' do
+        fill_in_supporting_documents_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        click_on 'Save and continue'
+        expect(page.current_path).to eq(application_details_school_job_path)
+      end
+
+      context 'when uploading files' do
+        let(:document_upload) { double('document_upload') }
+
+        before do
+          allow(DocumentUpload).to receive(:new).and_return(document_upload)
+          allow(document_upload).to receive(:upload)
+          allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
+          allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
+          allow(document_upload).to receive(:safe_download).and_return(true)
+        end
+
+        scenario 'displays uploaded file in a table' do
+          fill_in_supporting_documents_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+
+          expect(page).to have_content('blank_job_spec.pdf')
+        end
+
+        scenario 'displays error message when large file is uploaded' do
+          fill_in_supporting_documents_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/large_blank_job_spec.pdf'
+          )
+
+          expect(page).to have_content('large_blank_job_spec.pdf must be smaller than')
+        end
+
+        scenario 'displays error message when virus file is uploaded' do
+          fill_in_supporting_documents_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          allow(document_upload).to receive(:safe_download).and_return(false)
+
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+
+          expect(page).to have_content('blank_job_spec.pdf contains a virus')
+        end
+      end
+    end
+
     context '#application_details' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_school_job_path
