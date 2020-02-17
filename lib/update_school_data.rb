@@ -78,7 +78,10 @@ class UpdateSchoolData
   end
 
   def set_gias_data_as_json(school, row)
-    school.gias_data = row.to_json
+    scratch = {}
+    row.each { |element| scratch[element.first] = element.last }
+    # The gias_data column is type `json`. It automatically converts the ruby hash to json.
+    school.gias_data = scratch
   end
 
   def set_region(school, row)
