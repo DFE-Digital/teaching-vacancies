@@ -158,17 +158,15 @@ module VacancyHelpers
 
   def verify_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).to have_content(vacancy.job_title)
+    expect(page.find('.vacancy')).to have_content(vacancy.location)
     expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
-    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.starts_on) if vacancy.starts_on?
+    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label)
     expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
+    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
 
-    # rubocop:disable Style/GuardClause
     unless vacancy.expiry_time.nil?
-      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M%P'))
+      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M %P'))
     end
-    # rubocop:enable Style/GuardClause
   end
 
   def expect_schema_property_to_match_value(key, value)
