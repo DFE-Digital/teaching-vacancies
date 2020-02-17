@@ -1,7 +1,7 @@
 SELECT
-  vacancies.id, #unique vacancy ID from the Teaching Vacancies database
-  vacancies.slug, #human readable dash-separated string that is probably also a unique vacancy ID (but can't trust this)
-  vacancies.expiry_time,
+  vacancy.id, #unique vacancy ID from the Teaching Vacancies database
+  vacancy.slug, #human readable dash-separated string that is probably also a unique vacancy ID (but can't trust this)
+  PARSE_TIMESTAMP("%e %B %E4Y %R",vacancy.expiry_time) AS expiry_time,
   SUM( #series of SUMIF statements that turn various Google Analytics event configurations into counts of the total number of events that occurred on this vacancy's page
   IF
     (events.event_Action="vacancy_visited",
@@ -50,7 +50,7 @@ SELECT
       events.Unique_Events,
       0)) AS twitter_shares,
 FROM
-  `teacher-vacancy-service.production_dataset.vacancies` AS vacancies
+  `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
 LEFT JOIN (
   SELECT
     SPLIT(SPLIT(Page_path_level_2,"/")[ #Convert the URL part from the Page_path_level_2 which comes in the form /slug into just the slug, which can be joined onto the slug field from the vacancies table in the database
@@ -64,13 +64,13 @@ LEFT JOIN (
   FROM
     `teacher-vacancy-service.production_dataset.GA_events_on_vacancies_page`) AS events
 ON
-  vacancies.slug=events.slug #matches the vacancy slug from our database with the vacancy slug from the part of the page URL recorded in Google Analytics - this is the critical part of this query
-WHERE vacancies.expiry_time < CURRENT_TIMESTAMP #only obtain vacancies which have expired
-AND vacancies.expiry_time > (SELECT MAX(expiry_time) FROM `teacher-vacancy-service.production_dataset.CALCULATED_vacancy_GA_event_counts`) #only select vacancies that expired since we last ran this query
+  vacancy.slug=events.slug #matches the vacancy slug from our database with the vacancy slug from the part of the page URL recorded in Google Analytics - this is the critical part of this query
+WHERE PARSE_TIMESTAMP("%e %B %E4Y %R",vacancy.expiry_time) < CURRENT_TIMESTAMP #only obtain vacancies which have expired
+AND PARSE_TIMESTAMP("%e %B %E4Y %R",vacancy.expiry_time) > (SELECT MAX(expiry_time) FROM `teacher-vacancy-service.production_dataset.CALCULATED_vacancy_GA_event_counts`) #only select vacancies that expired since we last ran this query
 AND status NOT IN ("trashed","draft")
 GROUP BY
-  vacancies.id,
-  vacancies.slug,
-  vacancies.expiry_time
+  vacancy.id,
+  vacancy.slug,
+  vacancy.expiry_time
 ORDER BY
-  vacancies.expiry_time DESC
+  vacancy.expiry_time DESC
