@@ -1,23 +1,26 @@
-%li.vacancy
+%li.vacancy.bottom-border{ class: 'govuk-!-padding-0'}
   %h2.govuk-heading-m.mb0= link_to vacancy.job_title, job_path(vacancy), class: 'govuk-link view-vacancy-link'
-  %p.govuk-body= vacancy.location
-  %dl
+  %p.govuk-body-s= vacancy.location
+  %dl{ class: 'govuk-!-font-size-14'}
     %dt= t('jobs.salary')
     %dd.double
       = vacancy.salary_range
-    %dt= t('jobs.publish_on')
-    %dd.double
-      = format_date(vacancy.publish_on)
+    %dt= t('jobs.school_type')
+    - if "vacancy.school.religious_character.nil?" # TODO: back end
+      %dd.double
+        = vacancy.school.school_type.label
+    - else
+      %dd.double
+        = vacancy.school.school_type.label + ", vacancy.school.religious_character" # TODO: back end
+
+    - if vacancy.working_patterns?
+      %dt= t('jobs.working_patterns')
+      %dd.double
+        = vacancy.working_patterns
     %dt= t('jobs.expires_on')
     - if vacancy.expiry_time.nil?
       %dd.double
         = format_date(vacancy.expires_on)
     - else 
       %dd.double
-        = format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime('%-l:%M%P')
-    %dt= t('jobs.starts_on')
-    %dd.double= format_date(vacancy.starts_on)
-    - if vacancy.working_patterns?
-      %dt= t('jobs.working_patterns')
-      %dd.double
-        = vacancy.working_patterns
+        = format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime('%-l:%M %P')
