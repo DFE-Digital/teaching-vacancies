@@ -14,17 +14,19 @@ WITH
     school.urn AS urn,
     COUNT(*) AS vacancies_published,
     #the total number of vacancies this school published over all time
-    COUNTIF(CAST(publish_on AS DATE) > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
-    COUNTIF(CAST(publish_on AS DATE) > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
+    COUNTIF(PARSE_DATE("%e %B %E4Y",publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
+    COUNTIF(PARSE_DATE("%e %B %E4Y",publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
     COUNTIF(status="published"
-      AND CAST(expiry_time AS DATE) > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
+      AND PARSE_DATE("%e %B %E4Y",expires_on) > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
   FROM
-    `teacher-vacancy-service.production_dataset.vacancies` AS vacancies
+    `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
+  INNER JOIN `teacher-vacancy-service.production_dataset.school` AS school
+    ON vacancy.school_id=school.id
   WHERE
     status != "trashed" #exclude deleted vacancies from the counts above
     AND status != "draft" #exclude vacancies which have not (yet) been published from the counts above
   GROUP BY
-    vacancies.school.urn ),
+    school.urn),
   mat_metrics AS ( #make a table of academy trusts (MATs and SATs) with current values of trust related metrics for inclusion in main query later
   SELECT
     GIAS.Trusts__name_ AS trust_name,
@@ -134,7 +136,7 @@ ON
 LEFT JOIN
   school_vacancy_metrics
 ON
-  school_vacancy_metrics.urn=CAST(school.urn AS STRING)
+  school_vacancy_metrics.urn=school.urn
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.STATIC_GIAS_manual_download` AS GIAS
 ON
