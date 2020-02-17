@@ -30,6 +30,10 @@ FROM (
         "listed_dont_know")) AS exclusive_hires_upperbound
   FROM
     `teacher-vacancy-service.production_dataset.vacancy`
+  WHERE
+    status NOT IN ("trashed",
+      "deleted",
+      "draft")
   GROUP BY
     month)
 WHERE
