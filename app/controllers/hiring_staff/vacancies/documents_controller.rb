@@ -73,13 +73,13 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def file_size_error(filename)
     @errors = true
-    @documents_form.errors.add(:base, "#{filename} must be smaller than #{@file_size_limit} MB")
+    @documents_form.errors.add(:base, t('jobs.file_size_error_message', filename: filename, size_limit: @file_size_limit))
     @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
   end
 
   def virus_error(filename)
     @errors = true
-    @documents_form.errors.add(:base, "#{filename} contains a virus")
+    @documents_form.errors.add(:base, t('jobs.file_virus_error_message', filename: filename))
     @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
   end
 

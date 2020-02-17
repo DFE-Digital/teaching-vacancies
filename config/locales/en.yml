@@ -169,6 +169,8 @@ en:
     select_file: 'Select a file'
     no_files_message: 'No files chosen'
     file_input_error_message: 'The selected file(s) could not be uploaded'
+    file_size_error_message: '%{filename} must be smaller than %{size_limit} MB'
+    file_virus_error_message: '%{filename} contains a virus'
     upload_documents_table:
       headers:
         file_name: 'File name'
