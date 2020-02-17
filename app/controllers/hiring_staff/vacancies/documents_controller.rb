@@ -73,7 +73,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def file_size_error(filename)
     @errors = true
-    @documents_form.errors.add(:base, t('jobs.file_size_error_message', filename: filename, size_limit: @file_size_limit))
+    @documents_form.errors.add(
+      :base, t('jobs.file_size_error_message', filename: filename, size_limit: @file_size_limit)
+    )
     @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
   end
 

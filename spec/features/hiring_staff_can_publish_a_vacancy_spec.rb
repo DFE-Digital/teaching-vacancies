@@ -241,8 +241,12 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_supporting_documents_form_fields(vacancy)
           click_on 'Save and continue'
 
-          upload_document('new_documents_form', 'documents-form-documents-field', 'spec/fixtures/files/blank_job_spec.pdf')
-  
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+
           expect(page).to have_content('blank_job_spec.pdf')
         end
 
@@ -250,8 +254,12 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_supporting_documents_form_fields(vacancy)
           click_on 'Save and continue'
 
-          upload_document('new_documents_form', 'documents-form-documents-field', 'spec/fixtures/files/large_blank_job_spec.pdf')
-  
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+
           expect(page).to have_content('large_blank_job_spec.pdf must be smaller than')
         end
 
@@ -261,8 +269,12 @@ RSpec.feature 'Creating a vacancy' do
 
           allow(document_upload).to receive(:safe_download).and_return(false)
 
-          upload_document('new_documents_form', 'documents-form-documents-field', 'spec/fixtures/files/blank_job_spec.pdf')
-  
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+
           expect(page).to have_content('blank_job_spec.pdf contains a virus')
         end
       end
