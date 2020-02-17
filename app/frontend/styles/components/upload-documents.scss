@@ -9,16 +9,16 @@
 .upload-progress {
   display: inline-block;
   position: relative;
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
 }
 .upload-progress div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 20px;
-  height: 20px;
-  margin: 3px;
+  width: 18px;
+  height: 18px;
+  margin: 0px;
   border: 3px solid green;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

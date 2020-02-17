@@ -49,7 +49,7 @@ injectDocumentsTable = function(documentsInput) {
             filesList[i].name +
           "</td>  \
           <td class='govuk-table__cell'>" + 
-            "Uploading..." + "<div class='upload-progress'><div></div><div></div><div></div><div></div></div>"
+            "Uploading&nbsp;&nbsp;" + "<div class='upload-progress'><div></div><div></div><div></div><div></div></div>" +
           "</td>  \
           <td class='govuk-table__cell' scope='row'>" + 
             (filesList[i].size / 1024.0 / 1024.0).toFixed(2) + " MB" +

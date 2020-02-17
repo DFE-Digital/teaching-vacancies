@@ -59,14 +59,16 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       upload_path: document_params.tempfile.path,
       name: document_params.original_filename
     )
-    document_upload.upload
     if document_params.size / 1024.0 / 1024.0 > @file_size_limit
       file_size_error(document_params.original_filename)
     end
-    unless document_upload.safe_download
-      virus_error(document_params.original_filename)
+    unless @errors
+      document_upload.upload
+      unless document_upload.safe_download
+        virus_error(document_params.original_filename)
+      end
+      create_document_hash(document_params, document_upload)
     end
-    create_document_hash(document_params, document_upload)
   end
 
   def file_size_error(filename)
