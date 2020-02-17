@@ -257,7 +257,7 @@ RSpec.feature 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            'spec/fixtures/files/blank_job_spec.pdf'
+            'spec/fixtures/files/large_blank_job_spec.pdf'
           )
 
           expect(page).to have_content('large_blank_job_spec.pdf must be smaller than')
