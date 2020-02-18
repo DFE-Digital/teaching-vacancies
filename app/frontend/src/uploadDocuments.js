@@ -4,24 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const uploadFileButton = document.getElementsByClassName('govuk-button--secondary')[1];
   const saveContinueButton = document.getElementsByName('commit')[1];
 
-  selectFileButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    inputFileUpload.click();
-  });
-
-  inputFileUpload.addEventListener('change', function(e) {
-    saveContinueButton.disabled = true;
-    injectDocumentsTable(inputFileUpload);
-    inputFileUpload.form.submit();
-  });
-
-  inputFileUpload.classList.add('display-none');
-  uploadFileButton.classList.add('display-none');
-  selectFileButton.classList.remove('display-none');
+  if (inputFileUpload && selectFileButton && uploadFileButton && saveContinueButton) {
+    selectFileButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      inputFileUpload.click();
+    });
+  
+    inputFileUpload.addEventListener('change', function(e) {
+      saveContinueButton.disabled = true;
+      injectDocumentsTable(inputFileUpload);
+      inputFileUpload.form.submit();
+    });
+  
+    inputFileUpload.classList.add('display-none');
+    uploadFileButton.classList.add('display-none');
+    selectFileButton.classList.remove('display-none');
+  }
 });
 
 injectDocumentsTable = function(documentsInput) {
-  var tableHTML = " \
+  const tableHTML = " \
     <table class='govuk-table'> \
       <thead class='govuk-table__head'> \
         <tr class='govuk-table__row'> \
@@ -35,15 +37,16 @@ injectDocumentsTable = function(documentsInput) {
       </tbody> \
     </table> \
   "
-  var p = document.getElementById('no-files');
-  var filesList = documentsInput.files;
+  const noFilesElement = document.getElementById('no-files');
+  const filesList = documentsInput.files;
 
-  if (filesList.length) {
-    if (p) {
-      p.insertAdjacentHTML("beforebegin", tableHTML);
+  if (filesList && filesList.length) {
+    if (noFilesElement) {
+      noFilesElement.insertAdjacentHTML("beforebegin", tableHTML);
+      noFilesElement.remove();
     }
-    for (var i = 0; i < filesList.length; i++) {
-      var rowHTML = " \
+    for (let i = 0; i < filesList.length; i++) {
+      const rowHTML = " \
         <tr class='govuk-table__row'> \
           <td class='govuk-table__cell' scope='row'>" +
             filesList[i].name +
@@ -59,11 +62,8 @@ injectDocumentsTable = function(documentsInput) {
           "</td>  \
         </tr> \
       "
-      var b = document.getElementById('table-body');
-      b.insertAdjacentHTML("beforeend", rowHTML);
-    }
-    if (p) {
-      p.remove();
+      const tableBody = document.getElementById('table-body');
+      tableBody.insertAdjacentHTML("beforeend", rowHTML);
     }
   }
 }

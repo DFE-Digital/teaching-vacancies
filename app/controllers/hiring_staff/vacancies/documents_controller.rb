@@ -12,7 +12,10 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def create
     @documents_form = DocumentsForm.new
-    @vacancy = add_documents(process_documents(documents_form_params))
+    @vacancy ||= school.vacancies.find(session_vacancy_id)
+    process_documents(documents_form_params).each do |document|
+      @vacancy.documents.create(document)
+    end
     render :index
   end
 
@@ -31,20 +34,12 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     redirect_to application_details_school_job_path if params[:commit] == 'Save and continue'
   end
 
-  def add_documents(documents_attributes)
-    vacancy ||= school.vacancies.find(session_vacancy_id)
-    documents_attributes.each do |document|
-      vacancy.documents.create(document)
-    end
-    vacancy
-  end
-
   def process_documents(params)
     @file_size_limit = 10 # MB
-    @errors = false
     documents_array = []
     if params[:documents]&.any?
       params[:documents].each do |document_params|
+        @errors = false
         document_hash = upload_document(document_params)
         unless @errors
           documents_array << document_hash
