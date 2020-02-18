@@ -1,7 +1,13 @@
 require 'dfe_sign_in_api'
-require 'big_query_exporter'
+require 'google/cloud/bigquery'
 
-class ExportUserRecordsToBigQuery < BigQueryExporter
+class ExportUserRecordsToBigQuery
+  attr_reader :dataset
+
+  def initialize(bigquery: Google::Cloud::Bigquery.new)
+    @dataset = bigquery.dataset ENV.fetch('BIG_QUERY_DATASET')
+  end
+
   def run!
     delete_table('users')
 
@@ -18,6 +24,12 @@ class ExportUserRecordsToBigQuery < BigQueryExporter
   end
 
   private
+
+  def delete_table(table_name)
+    table = dataset.table table_name
+    return if table.nil?
+    dataset.reload! if table.delete
+  end
 
   def present_for_big_query(batch)
     batch.map do |v|
