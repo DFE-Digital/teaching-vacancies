@@ -18,7 +18,7 @@
         multiple: true,
         enctype: 'multipart/form-data' do
 
-        %button#file-upload.govuk-button.govuk-button--secondary.display-none{ class: 'govuk-!-margin-top-2 govuk-!-margin-bottom-1' }
+        %button.govuk-button.govuk-button--secondary.display-none{ class: 'govuk-!-margin-top-2 govuk-!-margin-bottom-1' }
           = t('jobs.select_file')
 
       = f.govuk_submit t('jobs.upload_file'), secondary: true
