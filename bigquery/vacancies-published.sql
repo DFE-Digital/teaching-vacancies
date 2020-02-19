@@ -15,16 +15,16 @@ WITH
         DATE_ADD(year,INTERVAL 8 MONTH)) AS academic_year #converts the month into the corresponding academic year, storing this as the 1st September at the beginning of that academic year (the precise format doesn't matter; we just need a consistent way to represent the academic year so that the PARTITION BY above works)
     FROM (
       SELECT
-        CAST(TIMESTAMP_TRUNC(publish_on,MONTH) AS DATE) AS month, #use the first day of the month containing publish_on to represent the month (standard in data studio)
-        CAST(TIMESTAMP_TRUNC(publish_on,YEAR) AS DATE) AS year #use the first day of the year containing publish_on to represent the year (standard in data studio)
+        DATE_TRUNC(PARSE_DATE("%e %B %E4Y",publish_on),MONTH) AS month, #use the first day of the month containing publish_on to represent the month (standard in data studio)
+        DATE_TRUNC(PARSE_DATE("%e %B %E4Y",publish_on),YEAR) AS year #use the first day of the year containing publish_on to represent the year (standard in data studio)
       FROM
-        `teacher-vacancy-service.production_dataset.vacancies`
+        `teacher-vacancy-service.production_dataset.vacancy`
       WHERE
         status NOT IN ("trashed",
           "deleted",
           "draft") #excludes vacancies which were never published, or which were published and then subsequently deleted
         AND publish_on IS NOT NULL #also excludes vacancies which were never published (to be safe)
-        AND publish_on < CURRENT_TIMESTAMP() ) #excludes vacancies which have been published but are not yet visible on the site because their publication date is in the future
+        AND PARSE_DATE("%e %B %E4Y",publish_on) <= CURRENT_DATE() ) #excludes vacancies which have been published but are not yet visible on the site because their publication date is in the future
     GROUP BY
       month,
       year

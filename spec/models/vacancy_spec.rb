@@ -3,6 +3,7 @@ RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school) }
   it { should belong_to(:publisher_user) }
+  it { should have_many(:documents) }
 
   describe '.public_search' do
     context 'when there were no results' do
@@ -496,6 +497,20 @@ RSpec.describe Vacancy, type: :model do
 
         expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
       end
+    end
+  end
+
+  describe 'when supporting documents are provided' do
+    it 'should return the document name' do
+      document = create(
+        :document, name: 'Test.png',
+        size: 1000,
+        content_type: 'image/png',
+        download_url: 'test/test.png',
+        google_drive_id: 'testid'
+      )
+      vacancy = create(:vacancy, documents: [document])
+      expect(vacancy.documents.first.name).to eq('Test.png')
     end
   end
 

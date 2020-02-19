@@ -14,17 +14,19 @@ WITH
     school.urn AS urn,
     COUNT(*) AS vacancies_published,
     #the total number of vacancies this school published over all time
-    COUNTIF(CAST(publish_on AS DATE) > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
-    COUNTIF(CAST(publish_on AS DATE) > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
+    COUNTIF(PARSE_DATE("%e %B %E4Y",publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
+    COUNTIF(PARSE_DATE("%e %B %E4Y",publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
     COUNTIF(status="published"
-      AND CAST(expiry_time AS DATE) > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
+      AND PARSE_DATE("%e %B %E4Y",expires_on) > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
   FROM
-    `teacher-vacancy-service.production_dataset.vacancies` AS vacancies
+    `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
+  INNER JOIN `teacher-vacancy-service.production_dataset.school` AS school
+    ON vacancy.school_id=school.id
   WHERE
     status != "trashed" #exclude deleted vacancies from the counts above
     AND status != "draft" #exclude vacancies which have not (yet) been published from the counts above
   GROUP BY
-    vacancies.school.urn ),
+    school.urn),
   mat_metrics AS ( #make a table of academy trusts (MATs and SATs) with current values of trust related metrics for inclusion in main query later
   SELECT
     GIAS.Trusts__name_ AS trust_name,
@@ -37,7 +39,8 @@ SELECT
   school.id,
   school.name,
   school.urn,
-  school.address AS address1, #rename this as this is actually the first line of the address
+  school.address AS address1,
+  #rename this as this is actually the first line of the address
   school.locality,
   school.address3,
   school.town,
@@ -49,31 +52,38 @@ SELECT
       ""),IFNULL(CONCAT(school.town,"\n"),
       ""),IFNULL(CONCAT(school.county,"\n"),
       ""),IFNULL(school.postcode,
-      "")) AS address, #stick all the address components into a single string to save handling this in multiple dashboards further down the pipeline
+      "")) AS address,
+  #stick all the address components into a single string to save handling this in multiple dashboards further down the pipeline
   school.phase,
   school.url,
   school.minimum_age,
   school.maximum_age,
-  school_type.label AS school_type, #extract school type from reference data table
-  region.string_field_1 AS region, #extract region name from reference data table
+  school_type.label AS school_type,
+  #extract school type from reference data table
+  region.string_field_1 AS region,
+  #extract region name from reference data table
   school.created_at,
   school.updated_at,
-  detailed_school_type.label AS detailed_school_type, #extract detailed school type from reference data table
+  detailed_school_type.label AS detailed_school_type,
+  #extract detailed school type from reference data table
   school.local_authority,
 IF
   (historic_signups.School_been_added IS TRUE,
     historic_signups.Date_first_signed_up,
-    CAST(school_user_metrics.dsi_signup_date AS DATE)) AS signup_date, #In Nov 19 we switched to DSI for authorisation. Since then we can use DSI data to tell whether a school has signed up. If the school was signed up before then we have to use a historic data table. This uses the historic signup date if the school signed up pre-DSI authorisation, but uses the DSI date if it hadn't - and if it still hasn't passes on a null value.
+    CAST(school_user_metrics.dsi_signup_date AS DATE)) AS signup_date,
+  #In Nov 19 we switched to DSI for authorisation. Since then we can use DSI data to tell whether a school has signed up. If the school was signed up before then we have to use a historic data table. This uses the historic signup date if the school signed up pre-DSI authorisation, but uses the DSI date if it hadn't - and if it still hasn't passes on a null value.
 IF
   (historic_signups.School_been_added IS TRUE,
     TRUE,
   IF
     (school_user_metrics.number_of_users >0,
       TRUE,
-      FALSE)) AS signed_up, #similarly, if the school had signed up pre-DSI, sets signed_up to true; otherwise, work this out from the number of users the school has on DSI
+      FALSE)) AS signed_up,
+  #similarly, if the school had signed up pre-DSI, sets signed_up to true; otherwise, work this out from the number of users the school has on DSI
   school_user_metrics.number_of_users AS number_of_users,
   IFNULL(school_vacancy_metrics.vacancies_published,
-    0) AS vacancies_published, #convert null values for vacancies_published into zeros
+    0) AS vacancies_published,
+  #convert null values for vacancies_published into zeros
   IFNULL(school_vacancy_metrics.vacancies_published_in_the_last_year,
     0) AS vacancies_published_in_the_last_year,
   IFNULL(school_vacancy_metrics.vacancies_published_in_the_last_quarter,
@@ -90,7 +100,8 @@ IF
   GIAS.TelephoneNum AS telephone_number,
   GIAS.HeadFirstName AS head_first_name,
   GIAS.HeadLastName AS head_last_name,
-  CONCAT(GIAS.HeadFirstName," ",GIAS.HeadLastName) AS head_name, #stick these together for easy use in mailing lists etc. further down the pipeline
+  CONCAT(GIAS.HeadFirstName," ",GIAS.HeadLastName) AS head_name,
+  #stick these together for easy use in mailing lists etc. further down the pipeline
   GIAS.GOR__name_ AS GOR,
   GIAS.RSCRegion__name_ AS RSC_region,
 IF
@@ -125,7 +136,7 @@ ON
 LEFT JOIN
   school_vacancy_metrics
 ON
-  school_vacancy_metrics.urn=CAST(school.urn AS STRING)
+  school_vacancy_metrics.urn=school.urn
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.STATIC_GIAS_manual_download` AS GIAS
 ON
@@ -141,4 +152,16 @@ WHERE
   FROM
     `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)
   AND (GIAS.URN IS NOT NULL #ideally, we'd exclude schools that have status="closed" here, but we don't have this field in the nightly data from the database. So, we're assuming that the GIAS data download is limited to just schools in scope and excludes closed schools - and so excluding schools from the results if they're not in the GIAS download
-    OR number_of_users > 0) #the exception to this is schools which we now know are in scope because DSI has allowed them to authorise users to use TV. Schools with users are included in these results even though they have not yet appeared in the GIAS data - this will happen over time as the data gets out of date and does not include some newly opened or academised schools. These schools will have null values for the fields that can only be obtained from GIAS.
+    OR PARSE_DATETIME("%e %B %E4Y %H:%M",
+      #the exception to this is schools which have opened/academised - and so become in scope - since the last time we updated the Google Sheet with a manual download from GIAS. These schools will have null values for the fields that can only be obtained from GIAS, so would ordinarily be excluded, but we include them here by making an exception if they have a created date in the live data in our database that is later than the latest created date in our database of a school that we do have GIAS data for.
+      school.created_at) > (
+    SELECT
+      #work out the latest time that a school opened that we have data manually downloaded from GIAS for
+      MAX(PARSE_DATETIME("%e %B %E4Y %H:%M",
+          school.created_at))
+    FROM
+      `teacher-vacancy-service.production_dataset.STATIC_GIAS_manual_download` AS GIAS
+    LEFT JOIN
+      `teacher-vacancy-service.production_dataset.school` AS school
+    ON
+      GIAS.URN=school.urn))

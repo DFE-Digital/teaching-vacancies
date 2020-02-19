@@ -137,7 +137,7 @@ RSpec.feature 'Searching vacancies by subject' do
 
       expect(page.find('.vacancy:eq(1)')).to have_content('Science Teacher')
       expect(page.find('.vacancy:eq(2)')).to have_content('Physics Teacher')
-      expect(page).to have_content('2 jobs match your search.')
+      expect(page).to have_content('2 jobs match your search')
 
       within '.filters-form' do
         fill_in 'subject', with: 'Sceinc'
@@ -146,19 +146,19 @@ RSpec.feature 'Searching vacancies by subject' do
 
       expect(page.find('.vacancy:eq(1)')).to have_content('Science Teacher')
       expect(page.find('.vacancy:eq(2)')).to have_content('Physics Teacher')
-      expect(page).to have_content('2 jobs match your search.')
+      expect(page).to have_content('2 jobs match your search')
 
       within '.filters-form' do
         fill_in 'subject', with: 'Part'
         page.find('.govuk-button[type=submit]').click
       end
-      expect(page).to have_content('0 jobs match your search.')
+      expect(page).to have_content('0 jobs match your search')
 
       within '.filters-form' do
         fill_in 'subject', with: 'time'
         page.find('.govuk-button[type=submit]').click
       end
-      expect(page).to have_content('0 jobs match your search.')
+      expect(page).to have_content('0 jobs match your search')
     end
 
     scenario 'does not include results with words removed from the index in their title when searching by job title' do
@@ -172,7 +172,7 @@ RSpec.feature 'Searching vacancies by subject' do
       end
 
       expect(page.find('.vacancy:eq(1)')).to have_content('Science Teacher')
-      expect(page).to have_content('1 job matches your search.')
+      expect(page).to have_content('1 job matches your search')
 
       within '.filters-form' do
         fill_in 'job_title', with: 'Sceinc'
@@ -180,19 +180,19 @@ RSpec.feature 'Searching vacancies by subject' do
       end
 
       expect(page.find('.vacancy:eq(1)')).to have_content('Science Teacher')
-      expect(page).to have_content('1 job matches your search.')
+      expect(page).to have_content('1 job matches your search')
 
       within '.filters-form' do
         fill_in 'job_title', with: 'Part'
         page.find('.govuk-button[type=submit]').click
       end
-      expect(page).to have_content('0 jobs match your search.')
+      expect(page).to have_content('0 jobs match your search')
 
       within '.filters-form' do
         fill_in 'job_title', with: 'time'
         page.find('.govuk-button[type=submit]').click
       end
-      expect(page).to have_content('0 jobs match your search.')
+      expect(page).to have_content('0 jobs match your search')
     end
   end
 

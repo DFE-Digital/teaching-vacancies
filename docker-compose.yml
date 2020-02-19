@@ -29,7 +29,9 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'"
 
   db:
-    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    image: postgres:9.6-alpine
     volumes:
       - pg_data:/var/lib/postgresql/data/:cached
     ports:
@@ -57,12 +59,12 @@ services:
     restart: on-failure
 
   redis_cache:
-    image: redis:latest
+    image: redis:alpine
     command: redis-server
     restart: on-failure
 
   redis_queue:
-    image: redis:latest
+    image: redis:alpine
     command: redis-server
     restart: on-failure
 

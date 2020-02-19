@@ -1,0 +1,25 @@
+.upload-progress {
+  padding-left: 0.5rem;
+}
+
+.upload-progress-spinner {
+  box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  margin-top: 0.2rem;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #DEE0E2;
+  border-top-color: #1d70b8;
+  border-radius: 50%;
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

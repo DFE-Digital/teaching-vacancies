@@ -1,7 +1,9 @@
 require 'rails_helper'
 require 'update_school_data'
 require 'open-uri'
+require 'spec_helper'
 
+# TODO: Refactor this from a set of integration tests into a set of unit tests.
 RSpec.describe UpdateSchoolData do
   let(:test_file_path) { Rails.root.join('spec/fixtures/example_schools_data.csv') }
   before(:each) do
@@ -71,10 +73,10 @@ RSpec.describe UpdateSchoolData do
         :get,
         "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
       ).to_return(body:
-                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
-                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-                   "Town,Postcode\n" \
-                   "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
+                  'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                  'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
+                  "Town,Postcode\n" \
+                  "100000,St John\x92s School,999,999,ZZZ,http://test.com,?,?,?")
     end
 
     it 'should correct convert the file to UTF-8' do
@@ -96,83 +98,40 @@ RSpec.describe UpdateSchoolData do
     end
 
     context 'and the schools aren’t already in the database' do
-      it 'should add all the schools' do
-        UpdateSchoolData.new.run
+      it 'adds all the open schools' do
+        expect { UpdateSchoolData.new.run }.to change(School, :count).by(7)
+      end
 
-        school = School.find_by(urn: '100000')
-        expect(school.name).to eql("Sir John Cass's Foundation Primary School")
-        expect(school.address).to eql("St James's Passage")
-        expect(school.locality).to eql("Duke's Place")
-        expect(school.address3).to eql(nil)
-        expect(school.town).to eql('London')
-        expect(school.county).to eql(nil)
-        expect(school.postcode).to eql('EC3A 5DE')
-        expect(school.local_authority).to eql('City of London')
-        expect(school.minimum_age).to eql(3)
-        expect(school.maximum_age).to eql(11)
-        expect(school.url).to eql('http://www.sirjohncassprimary.org')
-        expect(school.school_type).to eql(la_maintained_school_type)
-        expect(school.detailed_school_type).to eql(voluntary_aided_school)
-        expect(school.region).to eql(london)
-        expect(school.phase).to eql('primary')
-        expect(school.easting).to eql('533498')
-        expect(school.northing).to eql('181201')
-        expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51396894535262)
-        expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.07751626505544208)
+      describe 'it loads the expected attributes' do
+        let(:example_school) { School.find_by(urn: '100000') }
+        before do
+          UpdateSchoolData.new.run
+        end
 
-        school = School.find_by(urn: '100001')
-        expect(school.name).to eql('City of London School for Girls')
-        expect(school.address).to eql("St Giles' Terrace")
-        expect(school.locality).to eql('Barbican')
-        expect(school.address3).to eql(nil)
-        expect(school.town).to eql('London')
-        expect(school.county).to eql(nil)
-        expect(school.postcode).to eql('EC2Y 8BB')
-        expect(school.local_authority).to eql('City of London')
-        expect(school.minimum_age).to eql(7)
-        expect(school.maximum_age).to eql(18)
-        expect(school.url).to eql('http://www.clsg.org.uk')
-        expect(school.school_type.label).to eql('Independent schools')
-        expect(school.school_type.code).to eql('3')
-        expect(school.detailed_school_type.label).to eql('Other independent school')
-        expect(school.detailed_school_type.code).to eql('11')
-        expect(school.region).to eql(london)
-        expect(school.phase).to eql('not_applicable')
-        expect(school.easting).to eql('532301')
-        expect(school.northing).to eql('181746')
-        expect(school.geolocation.x).to be_within(0.0000000000001).of(51.51914791336013)
-        expect(school.geolocation.y).to be_within(0.0000000000001).of(-0.09455174037405477)
+        it { expect(example_school).not_to be_blank }
+        it { expect(example_school.gias_data).not_to be_blank }
 
-        expect(School.find_by(urn: '100002')).to be_present
-        expect(School.find_by(urn: '100003')).to be_present
-        expect(School.find_by(urn: '100005')).to be_present
-        expect(School.find_by(urn: '100006')).to be_present
-        expect(School.find_by(urn: '100007')).to be_present
-        expect(School.find_by(urn: '100008')).to be_present
+        # TODO: Refactor this so that the transformations are part of the model, not this lib.
+        # All of the attributes tested here have transformations applied by the lib before being saved.
+        it { expect(example_school.address3).to be_nil }
+        it { expect(example_school.county).to be_nil }
+        it { expect(example_school.detailed_school_type).to eql(voluntary_aided_school) }
+        it { expect(example_school.locality).to eql("Duke's Place") }
+        it { expect(example_school.name).to eql("Sir John Cass's Foundation Primary School") }
+        it { expect(example_school.phase).to eql('primary') }
+        it { expect(example_school.region).to eql(london) }
+        it { expect(example_school.school_type).to eql(la_maintained_school_type) }
+        it { expect(example_school.url).to eql('http://www.sirjohncassprimary.org') }
       end
     end
 
     context 'and a school was already in the database' do
-      it 'should update the school details' do
-        UpdateSchoolData.new.run
-
-        school.reload # Re-fetch from the database
-
-        expect(school.name).to eql("Sir John Cass's Foundation Primary School")
-        expect(school.address).to eql("St James's Passage")
-        expect(school.locality).to eql("Duke's Place")
-        expect(school.address3).to eql(nil)
-        expect(school.town).to eql('London')
-        expect(school.county).to eql(nil)
-        expect(school.postcode).to eql('EC3A 5DE')
-        expect(school.local_authority).to eql('City of London')
-        expect(school.minimum_age).to eql(3)
-        expect(school.maximum_age).to eql(11)
-        expect(school.url).to eql('http://www.sirjohncassprimary.org')
-        expect(school.school_type).to eql(la_maintained_school_type)
-        expect(school.detailed_school_type).to eql(voluntary_aided_school)
-        expect(school.region).to eql(london)
-        expect(school.phase).to eql('primary')
+      # The assumption is that if a single change works as expected, they all will. This isn't strictly correct, but
+      # testing every expected attribute change does not substantially add to the quality of the tests.
+      it 'updates the school name' do
+        expect {
+          UpdateSchoolData.new.run; school.reload
+        }.to change(school, :name).from('?').to("Sir John Cass's Foundation Primary School")
       end
     end
   end
@@ -183,10 +142,10 @@ RSpec.describe UpdateSchoolData do
         :get,
         "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
       ).to_return(body:
-                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
-                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-                   "Town,Postcode\n" \
-                   "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
+                  'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                  'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
+                  "Town,Postcode\n" \
+                  "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
       UpdateSchoolData.new.run
 
       school.reload
@@ -199,10 +158,10 @@ RSpec.describe UpdateSchoolData do
         :get,
         "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
       ).to_return(body:
-                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
-                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
-                   "Town,Postcode\n" \
-                   "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
+                  'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
+                  'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
+                  "Town,Postcode\n" \
+                  "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
       UpdateSchoolData.new.run
 
       school.reload
