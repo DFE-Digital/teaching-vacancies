@@ -6,13 +6,12 @@
     %dd.double
       = vacancy.salary_range
     %dt= t('jobs.school_type')
-    - if ['None', 'Does not apply', nil].include?(vacancy.school.gias_data['religious_character'])
-      %dd.double
-        = vacancy.school.school_type.label
-    - else
+    - if vacancy.school.has_religious_character?
       %dd.double
         = vacancy.school.school_type.label + ", " + vacancy.school.gias_data['religious_character']
-
+    - else
+      %dd.double
+        = vacancy.school.school_type.label
     - if vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double
