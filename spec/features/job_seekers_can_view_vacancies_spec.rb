@@ -233,38 +233,6 @@ RSpec.feature 'Viewing vacancies' do
     end
   end
 
-  describe 'Displaying religious character' do
-    # The linking character links the school type and the religious character
-    # Therefore, if there is no religious character, we expect there to be no linking character
-    let(:linking_character) { ',' }
-
-    context 'when viewing vacancies belonging to a school with a religious character' do
-      scenario 'vacancies display the religious character' do
-        school_with_unique_religion = create(
-          :school,
-          gias_data: { religious_character: 'Unique Religion' })
-        create(:vacancy, school: school_with_unique_religion)
-        Vacancy.__elasticsearch__.client.indices.flush
-        visit jobs_path
-        expect(page).to have_content(linking_character + ' Unique Religion')
-      end
-    end
-
-    context 'when viewing vacancies belonging to a school without a religious character' do
-      scenario 'vacancies do not display the religious character after the school type' do
-        unique_school_type = create(:school_type, label: 'Unique School Type', code: 10)
-        school_with_no_religion = create(
-          :school,
-          school_type: unique_school_type,
-          gias_data: { religious_character: 'None' })
-        create(:vacancy, school: school_with_no_religion)
-        Vacancy.__elasticsearch__.client.indices.flush
-        visit jobs_path
-        expect(page).not_to have_content('Unique School Type' + linking_character)
-      end
-    end
-  end
-
   context 'when the user is not on mobile' do
     scenario 'they should not see the \'refine your search\' link' do
       visit jobs_path
