@@ -66,7 +66,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank')))
         end
 
-        within_row_for(text: I18n.t('jobs.description')) do
+        within_row_for(text: I18n.t('jobs.job_summary')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
         end
 
@@ -406,7 +406,7 @@ RSpec.feature 'Creating a vacancy' do
 
           click_on 'Save and continue'
 
-          click_link_in_container_with_text('Job description')
+          click_link_in_container_with_text('Job summary')
 
           expect(page).to have_content('Step 1 of 3')
         end
@@ -629,7 +629,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Job contact email')
+          click_link_in_container_with_text('Contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -667,7 +667,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Job contact email')
+          click_link_in_container_with_text('Contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -682,7 +682,7 @@ RSpec.feature 'Creating a vacancy' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           contact_email = vacancy.contact_email
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Job contact email')
+          click_link_in_container_with_text('Contact email')
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
