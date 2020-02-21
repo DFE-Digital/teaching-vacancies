@@ -362,6 +362,42 @@ RSpec.feature 'Creating a vacancy' do
           verify_all_vacancy_details(vacancy)
         end
       end
+
+      context 'with upload feature flag turned ON' do
+        let(:feature_enabled?) { true }
+        let(:document_upload) { double('document_upload') }
+
+        before do
+          allow(DocumentUpload).to receive(:new).and_return(document_upload)
+          allow(document_upload).to receive(:upload)
+          allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
+          allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
+          allow(document_upload).to receive(:safe_download).and_return(true)
+        end
+
+        scenario 'redirects to the vacancy review page when submitted successfully' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_supporting_documents_form_fields
+          click_on 'Save and continue'
+
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+          click_on 'Save and continue'
+
+          fill_in_application_details_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          expect(page).to have_content(I18n.t('jobs.review'))
+          verify_all_vacancy_details(vacancy)
+        end
+      end
     end
 
     context '#review' do
