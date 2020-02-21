@@ -80,7 +80,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       context 'without feature upload documents enabled' do
-        scenario 'redirects to step 2, candidate profile, when submitted succesfully' do
+        scenario 'redirects to step 2, candidate profile, when submitted successfully' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
@@ -143,7 +143,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 3, application_details profile, when submitted succesfuly' do
+      scenario 'redirects to step 3, application_details profile, when submitted successfully' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -170,7 +170,7 @@ RSpec.feature 'Creating a vacancy' do
           .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.supporting_documents.inclusion'))
       end
 
-      scenario 'redirects to step 2, candidate_specification, when choosing no' do
+      scenario 'redirects to step 3, application details, when choosing no' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -348,17 +348,19 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to the vacancy review page when submitted succesfully' do
-        visit new_school_job_path
+      context 'when the upload feature flag is OFF' do
+        scenario 'redirects to the vacancy review page when submitted successfully' do
+          visit new_school_job_path
 
-        fill_in_job_specification_form_fields(vacancy)
-        click_on 'Save and continue'
-        fill_in_candidate_specification_form_fields(vacancy)
-        click_on 'Save and continue'
-        fill_in_application_details_form_fields(vacancy)
-        click_on 'Save and continue'
-        expect(page).to have_content(I18n.t('jobs.review'))
-        verify_all_vacancy_details(vacancy)
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+          fill_in_candidate_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+          fill_in_application_details_form_fields(vacancy)
+          click_on 'Save and continue'
+          expect(page).to have_content(I18n.t('jobs.review'))
+          verify_all_vacancy_details(vacancy)
+        end
       end
     end
 
