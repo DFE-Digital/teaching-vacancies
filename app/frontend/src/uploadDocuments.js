@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       inputFileUpload.click();
     });
-  
+
     inputFileUpload.addEventListener('change', function(e) {
       saveContinueButton.disabled = true;
       injectDocumentsTable(inputFileUpload);
       inputFileUpload.form.submit();
     });
-  
+
     inputFileUpload.classList.add('display-none');
     uploadFileButton.classList.add('display-none');
     selectFileButton.classList.remove('display-none');
@@ -23,28 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 injectDocumentsTable = function(documentsInput) {
-  const tableHTML = " \
-    <table class='govuk-table'> \
-      <thead class='govuk-table__head'> \
-        <tr class='govuk-table__row'> \
-         <th class='govuk-table__header'>File name</> \
-         <th class='govuk-table__header'>Status</> \
-         <th class='govuk-table__header'>File size</> \
-         <th class='govuk-table__header'>Action</> \
-        </tr> \
-      </thead> \
-      <tbody id='table-body' class='govuk-table__body'> \
-      </tbody> \
-    </table> \
-  "
-  const noFilesElement = document.getElementById('no-files');
-  const filesList = documentsInput.files;
+  const filesList = documentsInput.files
 
   if (filesList && filesList.length) {
-    if (noFilesElement) {
-      noFilesElement.insertAdjacentHTML("beforebegin", tableHTML);
-      noFilesElement.remove();
-    }
+    const documentsContainerElement = document.querySelector('.js-documents')
+    const tableBodyElement = documentsContainerElement.querySelector('#js-documents__table-body')
+
+    documentsContainerElement.classList.remove('js-documents--empty')
+
     for (let i = 0; i < filesList.length; i++) {
       const rowHTML = " \
         <tr class='govuk-table__row'> \
@@ -54,14 +40,13 @@ injectDocumentsTable = function(documentsInput) {
           <td class='govuk-table__cell'>" +
             "Uploading" + "<span class='upload-progress'><div class='upload-progress-spinner'></span></div>" +
           "</td>  \
-          <td class='govuk-table__cell'</td>  \
           <td class='govuk-table__cell' scope='row'>" +
-            "<a href='#' class='govuk-link govuk-link--no-visited-state'>Cancel</a>" +
+            (filesList[i].size / 1024.0 / 1024.0).toFixed(2) + " MB" +
           "</td>  \
+          <td class='govuk-table__cell' scope='row'></td>  \
         </tr> \
       "
-      const tableBody = document.getElementById('table-body');
-      tableBody.insertAdjacentHTML("beforeend", rowHTML);
+      tableBodyElement.insertAdjacentHTML("beforeend", rowHTML);
     }
   }
 }
