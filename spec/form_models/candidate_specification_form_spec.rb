@@ -1,8 +1,11 @@
 require 'rails_helper'
 RSpec.describe CandidateSpecificationForm, type: :model do
   subject { CandidateSpecificationForm.new({}) }
+  let(:feature_enabled?) { false }
 
   describe 'validations' do
+    before { allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?) }
+
     describe '#education' do
       let(:candidate_specification_form) { CandidateSpecificationForm.new(education: education) }
 
