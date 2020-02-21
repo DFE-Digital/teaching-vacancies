@@ -6,12 +6,8 @@
     %dd.double
       = vacancy.salary_range
     %dt= t('jobs.school_type')
-    - if vacancy.school.has_religious_character?
-      %dd.double
-        = vacancy.school.school_type.label + ", " + vacancy.school.gias_data['religious_character']
-    - else
-      %dd.double
-        = vacancy.school.school_type.label
+    %dd.double
+      = vacancy.school.school_type_with_religious_character
     - if vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double
