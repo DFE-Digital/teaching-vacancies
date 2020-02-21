@@ -1,7 +1,12 @@
 require 'rails_helper'
 RSpec.feature 'Hiring staff can edit a draft vacancy' do
   let(:school) { create(:school) }
+
+  let(:feature_enabled?) { false }
+
   before do
+    allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
+
     stub_hiring_staff_auth(urn: school.urn)
   end
 
