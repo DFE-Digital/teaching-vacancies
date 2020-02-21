@@ -23,9 +23,8 @@
 
       = f.govuk_submit t('jobs.upload_file'), secondary: true
 
-      - if @vacancy&.documents&.any?
-        = render 'hiring_staff/vacancies/documents/documents', documents: @vacancy.documents
-      - else
-        %p#no-files= t('jobs.no_files_message')
+      .js-documents{ class: ('js-documents--empty' if @documents.empty?) }
+        = render 'hiring_staff/vacancies/documents/documents', documents: @documents
+        %p.js-documents__no-files= t('jobs.no_files_message')
 
       = f.govuk_submit t('buttons.save_and_continue')

@@ -211,7 +211,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'hiring staff can select a file for upload' do
-        fill_in_supporting_documents_form_fields(vacancy)
+        fill_in_supporting_documents_form_fields
         click_on 'Save and continue'
 
         page.attach_file('documents-form-documents-field', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
@@ -219,7 +219,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 3, application_details, when submitted' do
-        fill_in_supporting_documents_form_fields(vacancy)
+        fill_in_supporting_documents_form_fields
         click_on 'Save and continue'
 
         click_on 'Save and continue'
@@ -238,7 +238,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays uploaded file in a table' do
-          fill_in_supporting_documents_form_fields(vacancy)
+          fill_in_supporting_documents_form_fields
           click_on 'Save and continue'
 
           upload_document(
@@ -251,20 +251,21 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays error message when large file is uploaded' do
-          fill_in_supporting_documents_form_fields(vacancy)
+          stub_const("#{HiringStaff::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
+          fill_in_supporting_documents_form_fields
           click_on 'Save and continue'
 
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            'spec/fixtures/files/large_blank_job_spec.pdf'
+            'spec/fixtures/files/blank_job_spec.pdf'
           )
 
-          expect(page).to have_content('large_blank_job_spec.pdf must be smaller than')
+          expect(page).to have_content('blank_job_spec.pdf must be smaller than')
         end
 
         scenario 'displays error message when virus file is uploaded' do
-          fill_in_supporting_documents_form_fields(vacancy)
+          fill_in_supporting_documents_form_fields
           click_on 'Save and continue'
 
           allow(document_upload).to receive(:safe_download).and_return(false)
@@ -276,6 +277,39 @@ RSpec.feature 'Creating a vacancy' do
           )
 
           expect(page).to have_content('blank_job_spec.pdf contains a virus')
+        end
+      end
+
+      context 'when deleting uploaded files', js: true do
+        let(:document_delete) { double('document_upload') }
+
+        before do
+          allow(DocumentDelete).to receive(:new).and_return(document_delete)
+
+          create :document, vacancy: Vacancy.last, name: 'delete_me.pdf'
+
+          fill_in_supporting_documents_form_fields
+          click_on 'Save and continue'
+        end
+
+        scenario 'deletes them' do
+          allow(document_delete).to receive(:delete).and_return(true)
+
+          accept_alert do
+            click_on 'Remove'
+          end
+
+          expect(page).to have_content 'delete_me.pdf was removed'
+        end
+
+        scenario 'shows errors' do
+          allow(document_delete).to receive(:delete).and_return(false)
+
+          accept_alert do
+            click_on 'Remove'
+          end
+
+          expect(page).to have_content 'An error occurred while removing delete_me.pdf'
         end
       end
     end

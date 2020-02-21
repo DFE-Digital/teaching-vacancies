@@ -1,25 +1,52 @@
 require 'google/apis/drive_v3'
 
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
-  before_action :school, :redirect_unless_vacancy_session_id, only: %i[index create]
-  before_action :redirect_if_no_supporting_documents, only: %i[index create]
-  before_action :redirect_to_next_step_if_save_and_continue, only: :create
+  FILE_SIZE_LIMIT = 10.megabytes
 
-  def index
-    @documents_form = DocumentsForm.new
-    @vacancy = Vacancy.find(session[:vacancy_attributes]['id'])
-  end
+  before_action :school, :redirect_unless_vacancy_session_id, only: %i[index create destroy]
+
+  before_action :set_documents_form, only: %i[index create]
+  before_action :set_vacancy, only: %i[index create destroy]
+  before_action :set_documents, only: %i[index create destroy]
+
+  before_action :redirect_if_no_supporting_documents, only: %i[index create destroy]
+  before_action :redirect_to_next_step_if_save_and_continue, only: %i[create destroy]
+
+  def index; end
 
   def create
-    @documents_form = DocumentsForm.new
-    @vacancy ||= school.vacancies.find(session_vacancy_id)
     process_documents(documents_form_params).each do |document|
-      @vacancy.documents.create(document)
+      @documents.create(document)
     end
+
     render :index
   end
 
+  def destroy
+    document = @documents.find(params[:id])
+
+    if DocumentDelete.new(document).delete
+      flash[:success] = I18n.t('jobs.file_delete_success_message', filename: document.name)
+    else
+      flash[:error] = I18n.t('jobs.file_delete_error_message', filename: document.name)
+    end
+
+    redirect_to documents_school_job_path
+  end
+
   private
+
+  def set_documents_form
+    @documents_form = DocumentsForm.new
+  end
+
+  def set_vacancy
+    @vacancy = school.vacancies.find(session_vacancy_id)
+  end
+
+  def set_documents
+    @documents = @vacancy.documents
+  end
 
   def documents_form_params
     params.require(:documents_form).permit(documents: [])
@@ -35,33 +62,34 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def process_documents(params)
-    @file_size_limit = 10 # MB
-    documents_array = []
-    if params[:documents]&.any?
-      params[:documents].each do |document_params|
-        @errors = false
-        document_hash = upload_document(document_params)
-        unless @errors
-          documents_array << document_hash
-        end
-      end
+    return [] if params[:documents].empty?
+
+    params[:documents].each_with_object([]) do |document_params, documents_array|
+      @errors = false
+      document_hash = upload_document(document_params)
+      next if @errors
+
+      documents_array << document_hash
     end
-    documents_array
   end
 
   def upload_document(document_params)
+    if document_params.size > FILE_SIZE_LIMIT
+      file_size_error(document_params.original_filename)
+    end
+
     document_upload = DocumentUpload.new(
       upload_path: document_params.tempfile.path,
       name: document_params.original_filename
     )
-    if document_params.size / 1024.0 / 1024.0 > @file_size_limit
-      file_size_error(document_params.original_filename)
-    end
+
     unless @errors
       document_upload.upload
+
       unless document_upload.safe_download
         virus_error(document_params.original_filename)
       end
+
       create_document_hash(document_params, document_upload)
     end
   end
@@ -69,7 +97,10 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   def file_size_error(filename)
     @errors = true
     @documents_form.errors.add(
-      :base, t('jobs.file_size_error_message', filename: filename, size_limit: @file_size_limit)
+      :base,
+      t('jobs.file_size_error_message',
+      filename: filename,
+      size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT))
     )
     @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
   end
