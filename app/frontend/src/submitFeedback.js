@@ -44,7 +44,7 @@ $(document).ready(function(){
       notification.text(count);
       text = form.data('successMessage');
       row.html('<td class="govuk-table__cell" colspan="6">'+ text +'</td>');
-      row.fadeOut(3000, function() {
+      row.fadeOut(60000, function() {
         $(this).remove();
       })
     } else {
