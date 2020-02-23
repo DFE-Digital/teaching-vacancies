@@ -9,84 +9,77 @@ end
 
 gem 'rails', '~> 5.2.4'
 
-gem 'puma', '~> 4.3'
-gem 'pg', '~> 1.1'
+gem 'activerecord-session_store'
+gem 'addressable'
+gem 'array_enum'
+gem 'breasal', '~> 0.0.1'
+gem 'browser'
+gem 'colorize'
 gem 'elasticsearch-model'
 gem 'faraday_middleware-aws-signers-v4'
-gem 'friendly_id'
 gem 'figaro'
-gem 'httparty'
-gem 'jquery-rails'
-gem 'jbuilder', '~> 2.9'
-gem 'addressable'
-gem 'sanitize', '~> 5.1'
-gem 'lograge'
-gem 'colorize'
-gem 'ipaddr'
+gem 'friendly_id'
 gem 'geocoder', github: 'dxw/geocoder', branch: 'add-os-name-support'
-gem 'redis'
-gem 'redis-objects'
-gem 'skylight'
-gem 'webpacker'
-
-gem 'omniauth', '~> 1.9'
-gem 'omniauth_openid_connect', '~> 0.3'
-
-gem 'breasal', '~> 0.0.1'
-
-gem 'haml-rails'
-gem 'kaminari'
-gem 'roadie-rails'
-gem 'simple_form'
-gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
-
-gem 'govuk_design_system_formbuilder'
-gem 'gov_uk_date_fields'
-gem 'validate_url', '~> 1.0.8'
-gem 'xml-sitemap'
-
-gem 'rollbar', '~> 2.22'
-
-gem 'rubocop', '~> 0.77.0'
-gem 'rubocop-rails_config', '~> 0.9.0'
-
-gem 'activerecord-session_store'
-gem 'public_activity'
-gem 'high_voltage', '~> 3.1'
-gem 'google_drive', require: false
 gem 'google-api-client'
 gem 'google-cloud-bigquery'
 gem 'google-cloud-storage'
-gem 'browser'
+gem 'google_drive', require: false
+gem 'gov_uk_date_fields'
+gem 'govuk_design_system_formbuilder'
+gem 'haml-rails'
+gem 'high_voltage', '~> 3.1'
+gem 'httparty'
+gem 'ipaddr'
+gem 'jbuilder', '~> 2.9'
+gem 'jquery-rails'
+gem 'kaminari'
+gem 'lograge'
 gem 'mail-notify'
-gem 'array_enum'
-
+gem 'omniauth', '~> 1.9'
+gem 'omniauth_openid_connect', '~> 0.3'
+gem 'pg', '~> 1.1'
+gem 'public_activity'
+gem 'puma', '~> 4.3'
+gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
+gem 'redis'
+gem 'redis-objects'
+gem 'roadie-rails'
+gem 'rollbar', '~> 2.22'
+gem 'rubocop', '~> 0.77.0'
+gem 'rubocop-rails_config', '~> 0.9.0'
+gem 'sanitize', '~> 5.1'
 gem 'sidekiq'
+gem 'simple_form'
+gem 'skylight'
+gem 'validate_url', '~> 1.0.8'
+gem 'webpacker'
+gem 'xml-sitemap'
 
 group :test, :development, :staging do
-  gem 'faker'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'rails-controller-testing', '~> 1.0'
 end
 
 group :development do
+  gem 'launchy'
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'web-console', '>= 3.3.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'launchy'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'coffee-rails'
   gem 'dotenv-rails'
   gem 'elasticsearch-extensions'
   gem 'pry'
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'teaspoon-mocha'
-  gem 'coffee-rails'
   gem 'timecop'
 end
 
@@ -96,10 +89,10 @@ group :test do
   gem 'fuubar'
   gem 'mock_redis'
   gem 'poltergeist'
-  gem 'rspec-collection_matchers'
-  gem 'webmock', '~> 3.7'
-  gem 'shoulda-matchers', '~> 3.1'
   gem 'rack_session_access'
+  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'webmock', '~> 3.7'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
