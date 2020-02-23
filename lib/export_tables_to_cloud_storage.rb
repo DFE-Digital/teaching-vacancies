@@ -17,23 +17,21 @@ class ExportTablesToCloudStorage
     weekly_hours
   ].freeze
 
-  TABLES = %w[
-    AlertRun
-    AuditData
-    DetailedSchoolType
-    GeneralFeedback
-    Leadership
-    PayScale
-    Region
-    School
-    SchoolType
-    Subject
-    Subscription
-    TransactionAuditor
-    User
-    Vacancy
-    VacancyPublishFeedback
+  EXCLUDE_TABLES = %w[
+    activities
+    ar_internal_metadata
+    friendly_id_slugs
+    schema_migrations
+    sessions
   ].freeze
+
+  # singularize must come *after* camelize for the AuditData inflection rule to work correctly. The inflector wasn't
+  # correctly picking up the snake cased version.
+  TABLES = ApplicationRecord.connection.tables
+    .reject { |table| EXCLUDE_TABLES.include?(table) }
+    .sort
+    .map { |table| table.camelize.singularize }
+    .freeze
 
   BATCH_SIZE = 1000
 
