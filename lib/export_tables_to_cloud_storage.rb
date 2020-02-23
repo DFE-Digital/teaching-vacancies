@@ -2,6 +2,8 @@ require 'fileutils'
 require 'google/cloud/storage'
 
 class ExportTablesToCloudStorage
+  BUCKET = ENV.fetch('GOOGLE_CLOUD_STORAGE_BUCKET').freeze
+
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
   # Dropping gias_data as it is aliased in to data to permit handling records without associated gias data.
   DROP_THESE_ATTRIBUTES = %w[
@@ -37,7 +39,7 @@ class ExportTablesToCloudStorage
   attr_reader :bucket, :tmpdir, :data_field_normalizer
 
   def initialize(storage: Google::Cloud::Storage.new)
-    # @bucket = storage.bucket ENV.fetch('CLOUD_STORAGE_BUCKET')
+    @bucket = storage.bucket(BUCKET)
     @data_field_normalizer = {}
     @tmpdir = Dir.mktmpdir
   end
