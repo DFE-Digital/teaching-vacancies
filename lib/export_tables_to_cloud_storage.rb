@@ -5,7 +5,8 @@ class ExportTablesToCloudStorage
   BUCKET = ENV.fetch('GOOGLE_CLOUD_STORAGE_BUCKET').freeze
 
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
-  # Dropping gias_data as it is aliased in to data to permit handling records without associated gias data.
+  # Drop gias_data because it is aliased to data. This alias allows all records to be handled the same way and dropping
+  # gias_data removes duplication of data.
   DROP_THESE_ATTRIBUTES = %w[
     education
     experience
@@ -98,7 +99,7 @@ class ExportTablesToCloudStorage
   #
   # TODO: This would be much more sensibly done in an `#as_json` method on each model. However, we have a lot of models
   # and some dependencies that are not immediately obvious-like the RESTFUL API endpoints. It would be easy to break
-  # something by doing that so, until we've got more time to refactor, this is the safer approach. That said, even that
+  # something by doing so. Until we've got more time to refactor this is the safer approach. That said, even that
   # approach would have to traverse all the records to make sure it had captured the whole schema.
   def analyze_data_field(records, table_name)
     logging_details = { table: table_name, phase: 'json_analysis', status: 'starting' }
@@ -131,13 +132,21 @@ class ExportTablesToCloudStorage
           scratch[key] = record[key].to_s(:db)
         end
       elsif key.match?(/data/) # Flatten the data structure into one level
-        # These are 'bad' records. They normally have arrays instead of hashes and they break processing. The list was
-        # recorded in `analyze_data_field` so does not need to recorded again.
         if record.data.respond_to?(:keys)
           data_field_normalizer[table_name].each do |normalized_key|
             value = record.data[normalized_key]
-            # This is the only type in gias data that can be cast without running in to trouble with variations in the
-            # data. For example, trying to cast numbers reveals a wide variety of value types for DioceseCode.
+
+            # Dates are the only values in gias data that can be cast without running in to trouble with variations in
+            # the data. BigQuery already does this intelligently with every other column type. Miscast values are
+            # *sometimes* raised by BigQuery as errors (see next paragraph) and can be ignored if there are staistically
+            # insignificant numbers of them.
+            #
+            # Review the values on `data_Diocese_code` for a typical example - most are postcode-like strings, while a
+            # some are two or three digits numbers. Despite the presence of the two and three digit numbers, BigQuery
+            # sets the column type as sting and seems to be able to coerce the number-only values into strings. It does
+            # not do this reliably on every column of every table, however; it failed to coerce some larger numbers on
+            # the `School#address3` for example. That said, there are less than ten of these at the time of commit.
+            #
             value = Date.parse(value).to_s(:db) if value.match?(/^\d{2}\-\d{2}\-\d{4}$/)
             # I didn't use `#parameterize(separator: '_')` here because it is **SLOW** in contrast to this.
             scratch["data_#{normalized_key.chomp(')').gsub(/\W+/, '_')}"] = value.presence
