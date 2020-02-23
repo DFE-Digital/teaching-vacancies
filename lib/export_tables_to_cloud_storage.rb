@@ -16,6 +16,7 @@ class ExportTablesToCloudStorage
   # Drop gias_data because it is aliased to data. This alias allows all records to be handled the same way and dropping
   # gias_data removes duplication of data.
   DROP_THESE_ATTRIBUTES = %w[
+    benefits
     education
     experience
     gias_data
