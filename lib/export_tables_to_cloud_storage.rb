@@ -157,7 +157,7 @@ class ExportTablesToCloudStorage
             # not do this reliably on every column of every table, however; it failed to coerce some larger numbers on
             # the `School#address3` for example. That said, there are less than ten of these at the time of commit.
             #
-            value = Date.parse(value).to_s(:db) if value.match?(/^\d{2}\-\d{2}\-\d{4}$/)
+            value = Date.parse(value).to_s(:db) if (value.is_a?(String) && value.match?(/^\d{2}\-\d{2}\-\d{4}$/))
             # I didn't use `#parameterize(separator: '_')` here because it is **SLOW** in contrast to this.
             scratch["data_#{normalized_key.chomp(')').gsub(/\W+/, '_')}"] = value.presence
           end
