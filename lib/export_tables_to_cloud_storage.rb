@@ -37,17 +37,18 @@ class ExportTablesToCloudStorage
 
   BATCH_SIZE = 1000
 
-  attr_reader :bucket, :tmpdir, :data_field_normalizer
+  attr_reader :bucket, :data_field_normalizer, :runtime, :tmpdir
 
   def initialize(storage: Google::Cloud::Storage.new)
     @bucket = storage.bucket(BUCKET)
     @data_field_normalizer = {}
+    @runtime = DateTime.now.to_s(:db).parameterize
     @tmpdir = Dir.mktmpdir
   end
 
   def run!
     export
-    # upload_to_google_cloud_storage
+    upload_to_google_cloud_storage
     # FileUtils.rm_rf(Rails.root.join(tmpdir))
   end
 
@@ -103,6 +104,7 @@ class ExportTablesToCloudStorage
   # approach would have to traverse all the records to make sure it had captured the whole schema.
   def analyze_data_field(records, table_name)
     logging_details = { table: table_name, phase: 'json_analysis', status: 'starting' }
+
     Rails.logger.info(logging_details.to_json)
     bad_records = []
     data_field_normalizer[table_name] = SortedSet.new()
@@ -172,10 +174,10 @@ class ExportTablesToCloudStorage
     Dir.children(tmpdir).each do |file|
       logging_details = { file: file, status: 'uploading' }
       Rails.logger.info(logging_details.to_json)
-      local_path = Rails.root.join(tmpdir, "#{file}.json")
-      bucket_path = "json_export/#{file}.json"
-      bucket.create_file(local_path, bucket_path)
-      logging_details = { file: file, status: 'uploaded' }
+      local_path = Rails.root.join(tmpdir, file)
+      bucket_path = "json_export/#{runtime}/#{file}"
+      bucket.create_file(local_path.to_s, bucket_path)
+      logging_details = { file: file, status: 'uploaded', to: bucket_path }
       Rails.logger.info(logging_details.to_json)
     end
   end
