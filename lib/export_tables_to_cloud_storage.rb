@@ -6,9 +6,8 @@ require 'rollbar'
 class ExportTablesToCloudStorage
   include Google::Cloud
 
-  # The maximum number of bad records BigQuery will allow before raising an error.
-  BAD_RECORDS = 20.freeze
-  BAD_RECORD_RATE = 0.005.freeze
+  # The maximum percentage of bad records BigQuery will allow before raising an error.
+  BAD_RECORD_RATE = 0.01.freeze
 
   BIGQUERY_DATASET = ENV.fetch('GOOGLE_BIGQUERY_DATASET').freeze
   BUCKET = ENV.fetch('GOOGLE_CLOUD_STORAGE_BUCKET').freeze
@@ -46,7 +45,7 @@ class ExportTablesToCloudStorage
 
   BATCH_SIZE = 1000
 
-  attr_reader :bad_records, :bucket, :data_field_normalizer, :dataset, :runtime, :tmpdir
+  attr_reader :bad_records, :bucket, :data_field_normalizer, :dataset, :runtime, :tmpdir, :total_records
 
   def initialize(bigquery: Bigquery.new, storage: Storage.new)
     @bad_records = {}
@@ -55,13 +54,16 @@ class ExportTablesToCloudStorage
     @dataset = bigquery.dataset(BIGQUERY_DATASET)
     @runtime = DateTime.now.to_s(:db).parameterize
     @tmpdir = Dir.mktmpdir
+    @total_records = {}
   end
 
   def run!
+    Rails.logger.info({ status: 'started' }.to_json)
     export
     upload_to_google_cloud_storage
     load_to_bigquery
     FileUtils.rm_rf(Rails.root.join(tmpdir))
+    Rails.logger.info({ status: 'finished', removed: tmpdir }.to_json)
   end
 
   private
@@ -76,27 +78,19 @@ class ExportTablesToCloudStorage
         table: table
       })
 
-      Rails.logger.info(logging_details.to_json)
-
-      # This permits selective re-runs without needing to overwrite everything.
-      # Mostly to be used from the REPL or scripts
-      if File.exist?(file)
-        logging_details[:exists] = 'skipping'
-        Rails.logger.info(logging_details.to_json)
-        next
-      end
-
       fh = File.new(file, 'w')
 
       records = table.constantize
-      total_records = records.count
+      records_count = records.count
       logging_details = logging_details.merge({
-        record_count: total_records,
+        record_count: records_count,
         records_processed: 0
       })
 
-      bad_records["#{table.underscore}.json"] = (total_records * BAD_RECORD_RATE).to_i
+      bad_records["#{table.underscore}.json"] = (records_count * BAD_RECORD_RATE).to_i
+      total_records["#{table.underscore}.json"] = records_count
 
+      Rails.logger.info(logging_details.to_json)
       next if records.none?
 
       analyze_data_field(records, table.to_s) if records.all.first.respond_to?(:data)
@@ -106,12 +100,10 @@ class ExportTablesToCloudStorage
           fh.puts clean_record(row, table.to_s).to_json
         end
         logging_details[:records_processed] += batch.size
-        Rails.logger.info(logging_details.to_json)
       end
       fh.close
+      Rails.logger.info(logging_details.to_json)
     end
-
-    Rails.logger.info(logging_details.to_json)
   end
 
   # Ensure that all records have a consistent map of the data keys. This is to prevnet BigQuery breaking when importing
@@ -142,7 +134,6 @@ class ExportTablesToCloudStorage
         end
       end
       logging_details[:records_analyzed] += batch.size
-      Rails.logger.info(logging_details.to_json)
     end
 
     logging_details = logging_details.merge({
@@ -201,6 +192,8 @@ class ExportTablesToCloudStorage
 
   def upload_to_google_cloud_storage
     logging_details = { phase: 'upload to cloud storage' }
+    Rails.logger.info(logging_details.to_json)
+
     Dir.children(tmpdir).each do |file|
       bucket_path = "json_export/#{runtime}/#{file}"
       local_path = Rails.root.join(tmpdir, file)
@@ -210,7 +203,6 @@ class ExportTablesToCloudStorage
         to: bucket_path
       })
 
-      Rails.logger.info(logging_details.to_json)
       bucket.create_file(local_path.to_s, bucket_path)
 
       Rails.logger.info(logging_details.to_json)
@@ -226,14 +218,11 @@ class ExportTablesToCloudStorage
       table_id = file.sub('.json', '')
 
       logging_details = logging_details.merge({
-        bucket_endpoint: endpoint,
-        dataset: BIGQUERY_DATASET,
         file: file,
         maximum_bad_records_allowed: bad_records[file],
-        table_id: table_id,
+        records_in_our_database: total_records[file],
       })
-
-      Rails.logger.info(logging_details)
+      Rails.logger.info(logging_details.to_json)
 
       if dataset.load(
           table_id,
@@ -245,12 +234,14 @@ class ExportTablesToCloudStorage
       )
         table = dataset.table(table_id)
         logging_details = logging_details.merge({
-          records_loaded:  table.rows_count
+          dataset: BIGQUERY_DATASET,
+          records_loaded:  table.rows_count,
+          table_id: table_id,
         })
       else
         logging_details = logging_details.merge({ status: 'failed' })
       end
-      Rails.logger.info(logging_details)
+      Rails.logger.info(logging_details.to_json)
     end
   end
 end
