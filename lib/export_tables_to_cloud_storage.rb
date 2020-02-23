@@ -103,7 +103,13 @@ class ExportTablesToCloudStorage
   # something by doing so. Until we've got more time to refactor this is the safer approach. That said, even that
   # approach would have to traverse all the records to make sure it had captured the whole schema.
   def analyze_data_field(records, table_name)
-    logging_details = { table: table_name, phase: 'json_analysis', status: 'starting' }
+    logging_details = {
+      phase: 'json_analysis',
+      record_count: records.count,
+      records_analyzed: 0,
+      status: 'starting',
+      table: table_name,
+    }
 
     Rails.logger.info(logging_details.to_json)
     bad_records = []
@@ -116,6 +122,8 @@ class ExportTablesToCloudStorage
           bad_records << row.id
         end
       end
+      logging_details[:records_analyzed] += batch.size
+      Rails.logger.info(logging_details.to_json)
     end
     logging_details[:status] = 'finished'
     logging_details[:bad_records] = bad_records
