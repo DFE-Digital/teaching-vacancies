@@ -71,6 +71,7 @@ Metrics/AbcSize:
     Exclude:
       - 'spec/**/*'
       - 'app/jobs/performance_platform_feedback_queue_job.rb'
+      - 'lib/export_tables_to_cloud_storage.rb'
 
 Metrics/ModuleLength:
     Exclude:
