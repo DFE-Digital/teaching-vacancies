@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ExportTablesToCloudStorageJob, type: :job do
+RSpec.describe ExportTablesToBigQueryJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later }
@@ -13,9 +13,9 @@ RSpec.describe ExportTablesToCloudStorageJob, type: :job do
     expect(job.queue_name).to eq('export_tables')
   end
 
-  it 'calls the export tables to cloud storage class' do
+  it 'calls the export tables to big query class' do
     google_cloud_storage = double(:google_cloud_storage)
-    expect(ExportTablesToCloudStorage).to receive(:new) { google_cloud_storage }
+    expect(ExportTablesToBigQuery).to receive(:new) { google_cloud_storage }
     expect(google_cloud_storage).to receive(:run!)
 
     perform_enqueued_jobs { job }

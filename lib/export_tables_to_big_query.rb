@@ -1,9 +1,8 @@
 require 'fileutils'
 require 'google/cloud/bigquery'
 require 'google/cloud/storage'
-require 'rollbar'
 
-class ExportTablesToCloudStorage
+class ExportTablesToBigQuery
   include Google::Cloud
 
   # The maximum percentage of bad records BigQuery will allow before raising an error.
