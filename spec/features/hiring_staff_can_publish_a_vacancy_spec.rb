@@ -655,15 +655,6 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'editing the supporting_documents' do
         let(:feature_enabled?) { true }
-        let(:document_upload) { double('document_upload') }
-
-        before do
-          allow(DocumentUpload).to receive(:new).and_return(document_upload)
-          allow(document_upload).to receive(:upload)
-          allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
-          allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
-          allow(document_upload).to receive(:safe_download).and_return(true)
-        end
 
         scenario 'updates the vacancy details' do
           visit new_school_job_path
@@ -677,7 +668,7 @@ RSpec.feature 'Creating a vacancy' do
 
           fill_in_application_details_form_fields(vacancy)
           click_on 'Save and continue'
-          
+
           expect(page).to have_content('Review this job')
 
           within '#change-supporting-documents' do
@@ -686,10 +677,10 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content('Step 2 of 3')
           expect(page.current_path).to eq(documents_school_job_path)
-          
 
-          # expect(page).to have_content("Review this job for #{school.name}")
-          # expect(page).to have_content('Teaching diploma')
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review this job for #{school.name}")
         end
       end
 

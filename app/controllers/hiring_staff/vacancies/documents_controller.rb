@@ -55,8 +55,12 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     redirect_to supporting_documents_school_job_path unless supporting_documents
   end
 
+  def next_step
+    application_details_school_job_path
+  end
+
   def redirect_to_next_step_if_save_and_continue
-    redirect_to application_details_school_job_path if params[:commit] == 'Save and continue'
+    redirect_to_next_step(vacancy) if params[:commit] == 'Save and continue'
   end
 
   def process_documents
