@@ -151,7 +151,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
-    expect(page).to have_content(vacancy.expires_on)
+    expect(page).to have_content(vacancy.expires_on.to_s.strip)
     expect(page).to have_content(vacancy.publish_on)
 
     if vacancy.weekly_hours?
