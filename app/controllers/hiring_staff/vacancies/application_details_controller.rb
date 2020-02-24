@@ -1,5 +1,5 @@
 class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
-  before_action :school, :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :redirect_unless_vacancy_session_id, only: %i[new create]
 
   def new
     @application_details_form = ApplicationDetailsForm.new(session[:vacancy_attributes].with_indifferent_access)
@@ -22,13 +22,12 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
   def edit
     vacancy_attributes = source_update? ? session[:vacancy_attributes] : retrieve_job_from_db
 
-    @school = school
     @application_details_form = ApplicationDetailsForm.new(vacancy_attributes.with_indifferent_access)
     @application_details_form.valid?
   end
 
   def update
-    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy = current_school.vacancies.published.find(vacancy_id)
     @application_details_form = ApplicationDetailsForm.new(application_details_form_params)
     @application_details_form.status = vacancy.status
     @application_details_form.id = vacancy.id

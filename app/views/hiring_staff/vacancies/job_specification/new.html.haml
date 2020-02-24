@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Job specification — Publish a job for #{@school.name}"
+- content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Job specification — Publish a job for #{current_school.name}"
 
 %h1.govuk-heading-l
-  = t('jobs.publish_heading', school: @school.name)
+  = t('jobs.publish_heading', school: current_school.name)
   %span.govuk-caption-l
     Step 1 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
-= simple_form_for @job_specification_form, action: :post, url: job_specification_school_job_path(school_id: @school.id) do |f|
+= simple_form_for @job_specification_form, action: :post, url: job_specification_school_job_path(school_id: current_school.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.job_specification')
 

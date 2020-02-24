@@ -1,13 +1,11 @@
 class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::ApplicationController
   def new
     vacancy = Vacancy.find(vacancy_id)
-    @school = school
     @copy_form = CopyVacancyForm.new(vacancy: vacancy)
   end
 
   def create
     old_vacancy = Vacancy.find(vacancy_id)
-    @school = school
     @copy_form = CopyVacancyForm.new(vacancy: old_vacancy)
 
     proposed_vacancy = @copy_form.apply_changes!(copy_form_params)
