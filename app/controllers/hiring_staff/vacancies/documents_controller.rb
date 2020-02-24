@@ -3,19 +3,17 @@ require 'google/apis/drive_v3'
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
   FILE_SIZE_LIMIT = 10.megabytes
 
-  before_action :school, :redirect_unless_vacancy_session_id, only: %i[index create destroy]
-
-  before_action :set_documents_form, only: %i[index create]
-  before_action :set_vacancy, only: %i[index create destroy]
-  before_action :set_documents, only: %i[index create destroy]
-
+  before_action :redirect_unless_vacancy_session_id, only: %i[index create destroy]
   before_action :redirect_if_no_supporting_documents, only: %i[index create destroy]
   before_action :redirect_to_next_step_if_save_and_continue, only: %i[create destroy]
+
+  before_action :set_documents_form, only: %i[index create]
+  before_action :set_documents, only: %i[index create destroy]
 
   def index; end
 
   def create
-    process_documents(documents_form_params).each do |document|
+    process_documents.each do |document|
       @documents.create(document)
     end
 
@@ -40,12 +38,12 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     @documents_form = DocumentsForm.new
   end
 
-  def set_vacancy
-    @vacancy = school.vacancies.find(session_vacancy_id)
+  def vacancy
+    current_school.vacancies.find(session_vacancy_id)
   end
 
   def set_documents
-    @documents = @vacancy.documents
+    @documents = vacancy.documents
   end
 
   def documents_form_params
@@ -61,57 +59,52 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     redirect_to application_details_school_job_path if params[:commit] == 'Save and continue'
   end
 
-  def process_documents(params)
-    return [] if params[:documents].empty?
-
-    params[:documents].each_with_object([]) do |document_params, documents_array|
-      @errors = false
+  def process_documents
+    documents_form_params[:documents].each_with_object([]) do |document_params, documents_array|
       document_hash = upload_document(document_params)
-      next if @errors
+      next if errors_on_file?(document_params.original_filename)
 
       documents_array << document_hash
     end
   end
 
   def upload_document(document_params)
-    if document_params.size > FILE_SIZE_LIMIT
-      file_size_error(document_params.original_filename)
-    end
+    add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
 
     document_upload = DocumentUpload.new(
       upload_path: document_params.tempfile.path,
       name: document_params.original_filename
     )
 
-    unless @errors
-      document_upload.upload
+    return if errors_on_file?(document_params.original_filename)
 
-      unless document_upload.safe_download
-        virus_error(document_params.original_filename)
-      end
+    document_upload.upload
 
-      create_document_hash(document_params, document_upload)
-    end
+    add_virus_error(document_params.original_filename) unless document_upload.safe_download
+
+    document_attributes(document_params, document_upload)
   end
 
-  def file_size_error(filename)
-    @errors = true
+  def add_file_size_error(filename)
+    @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
     @documents_form.errors.add(
-      :base,
+      filename,
       t('jobs.file_size_error_message',
       filename: filename,
       size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT))
     )
-    @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
   end
 
-  def virus_error(filename)
-    @errors = true
-    @documents_form.errors.add(:base, t('jobs.file_virus_error_message', filename: filename))
+  def add_virus_error(filename)
     @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
+    @documents_form.errors.add(filename, t('jobs.file_virus_error_message', filename: filename))
   end
 
-  def create_document_hash(params, upload)
+  def errors_on_file?(filename)
+    @documents_form.errors.messages.keys.include?(filename.to_sym)
+  end
+
+  def document_attributes(params, upload)
     {
       name: params.original_filename,
       size: Integer(params.size),

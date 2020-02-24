@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Application details — Publish a job for #{@school.name}"
+- content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Application details — Publish a job for #{current_school.name}"
 
 %h1.govuk-heading-l
   = t('jobs.publish_heading', school: @application_details_form.school.name)
   %span.govuk-caption-l
     Step 3 of 3
 = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
-= simple_form_for @application_details_form, action: :post, url: application_details_school_job_path(school_id: @school.id) do |f|
+= simple_form_for @application_details_form, action: :post, url: application_details_school_job_path(school_id: current_school.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.application_details')
 
@@ -30,9 +30,8 @@
 
       %div.govuk-form-group#expires_on
         = f.gov_uk_date_field :expires_on,
-                              legend_options: { page_heading: false, class: "govuk-label" } 
-        
+                              legend_options: { page_heading: false, class: "govuk-label" }
+
       = render 'hiring_staff/vacancies/expiry_time_field', f: f, form: @application_details_form
 
       = f.button :submit, t('buttons.save_and_continue')
-      

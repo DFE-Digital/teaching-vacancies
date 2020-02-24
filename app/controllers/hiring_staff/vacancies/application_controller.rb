@@ -2,10 +2,6 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
-  def school
-    @school ||= School.find_by! urn: session[:urn]
-  end
-
   def school_id
     params.permit![:school_id]
   end
@@ -24,7 +20,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def update_vacancy(attributes, vacancy = nil)
-    vacancy ||= school.vacancies.find(session_vacancy_id)
+    vacancy ||= current_school.vacancies.find(session_vacancy_id)
 
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
@@ -45,7 +41,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def review_path(vacancy)
-    school_job_review_path(school_id: school.id, job_id: vacancy.id)
+    school_job_review_path(school_id: current_school.id, job_id: vacancy.id)
   end
 
   def review_path_with_errors(vacancy)
@@ -53,11 +49,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_unless_vacancy_session_id
-    redirect_to job_specification_school_job_path(school_id: school.id) unless session_vacancy_id
+    redirect_to job_specification_school_job_path(school_id: current_school.id) unless session_vacancy_id
   end
 
   def retrieve_job_from_db
-    school.vacancies.published.find(vacancy_id).attributes
+    current_school.vacancies.published.find(vacancy_id).attributes
   end
 
   def source_update?
