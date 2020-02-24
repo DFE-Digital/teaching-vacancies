@@ -64,7 +64,6 @@ GEM
       activemodel
     ast (2.4.0)
     attr_required (1.0.1)
-    awesome_print (1.8.0)
     aws-sdk-core (2.11.109)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
@@ -523,7 +522,6 @@ DEPENDENCIES
   activerecord-session_store
   addressable
   array_enum
-  awesome_print
   breasal (~> 0.0.1)
   browser
   bullet

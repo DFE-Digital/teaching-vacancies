@@ -70,7 +70,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'awesome_print'
   gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'coffee-rails'
