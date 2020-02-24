@@ -52,7 +52,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def redirect_if_no_supporting_documents
     supporting_documents = session[:vacancy_attributes]['supporting_documents']
-    redirect_to supporting_documents_school_job_path unless supporting_documents == 'yes'
+    redirect_to supporting_documents_school_job_path unless supporting_documents
   end
 
   def redirect_to_next_step_if_save_and_continue
