@@ -47,7 +47,6 @@ RSpec.feature 'Copying a vacancy' do
 
     expect(page).to have_content(new_vacancy.job_title)
     expect(page).to have_content(new_vacancy.starts_on)
-    expect(page).to have_content(new_vacancy.ends_on)
     expect(page).to have_content(new_vacancy.publish_on)
     expect(page).not_to have_content(original_vacancy.job_title)
     expect(page).not_to have_content(original_vacancy.starts_on)

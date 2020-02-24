@@ -215,32 +215,6 @@ RSpec.feature 'Viewing vacancies' do
     end
   end
 
-  context 'when the vacancy is part_time' do
-    scenario 'Shows the weekly hours if there are weekly_hours' do
-      vacancy = create(:vacancy, working_patterns: ['part_time'], weekly_hours: '5')
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit job_path(vacancy)
-      expect(page).to have_content(I18n.t('jobs.weekly_hours'))
-      expect(page).to have_content(vacancy.weekly_hours)
-    end
-
-    scenario 'does not show the weekly hours if they are not set' do
-      vacancy = create(:vacancy, working_patterns: ['part_time'], weekly_hours: nil)
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit job_path(vacancy)
-      expect(page).not_to have_content(I18n.t('jobs.weekly_hours'))
-    end
-  end
-
-  context 'when the vacancy is full_time' do
-    scenario 'Does not show the weekly hours even if weekly_hours is set' do
-      vacancy = create(:vacancy, working_patterns: ['full_time'], weekly_hours: '5')
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit job_path(vacancy)
-      expect(page).not_to have_content(I18n.t('jobs.weekly_hours'))
-    end
-  end
-
   context 'when viewing vacancies created without expiry time' do
     scenario 'Vacancies do not display an expiry time' do
       vacancy = create(:vacancy, :with_no_expiry_time)
