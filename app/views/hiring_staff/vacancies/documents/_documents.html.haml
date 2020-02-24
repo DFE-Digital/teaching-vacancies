@@ -6,7 +6,7 @@
       %th.govuk-table__header= t('jobs.upload_documents_table.headers.file_size')
       %th.govuk-table__header= t('jobs.upload_documents_table.headers.action')
   %tbody#js-documents__table-body.govuk-table__body
-    - documents.each do |document|
+    - @documents.each do |document|
       %tr.govuk-table__row.js-document-row{ data: { document_id: document.id } }
         %td.govuk-table__cell{ scope: 'row' }
           %a.govuk-link{ href: document[:download_url], target: '_blank' } #{document[:name]}
