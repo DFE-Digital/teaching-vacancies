@@ -7,9 +7,11 @@ class ExportTablesToCloudStorage
   include Google::Cloud
 
   # The maximum percentage of bad records BigQuery will allow before raising an error.
-  BAD_RECORD_RATE = 0.01.freeze
+  BAD_RECORD_RATE = 0.01
 
   BIGQUERY_DATASET = ENV.fetch('GOOGLE_BIGQUERY_DATASET').freeze
+  # This is to allow us to load new tables to the production dataset without disturbing the existing ones.
+  BIGQUERY_TABLE_PREFIX = 'feb20'.freeze
   BUCKET = ENV.fetch('GOOGLE_CLOUD_STORAGE_BUCKET').freeze
 
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
@@ -170,7 +172,7 @@ class ExportTablesToCloudStorage
             # not do this reliably on every column of every table, however; it failed to coerce some larger numbers on
             # the `School#address3` for example. That said, there are less than ten of these at the time of commit.
             #
-            value = Date.parse(value).to_s(:db) if (value.is_a?(String) && value.match?(/^\d{2}\-\d{2}\-\d{4}$/))
+            value = Date.parse(value).to_s(:db) if value.is_a?(String) && value.match?(/^\d{2}\-\d{2}\-\d{4}$/)
             # I didn't use `#parameterize(separator: '_')` here because it is **SLOW** in contrast to this.
             scratch["data_#{normalized_key.chomp(')').gsub(/\W+/, '_')}"] = value.presence
           end
@@ -179,6 +181,11 @@ class ExportTablesToCloudStorage
             scratch["data_#{normalized_key.chomp(')').gsub(/\W+/, '_')}"] = nil
           end
         end
+      elsif key == 'working_patterns'
+        # This attribute use the array_enum gem to map an array of integers to a text array. When the record is dumped
+        # using `as_json`, the gem does not do the conversion. Calling the non json version of the attribute ensures the
+        # data gets converted as expected.
+        scratch['working_patterns'] = record.working_patterns
       elsif DROP_THESE_ATTRIBUTES.include?(key)
         # noop - skip attributes that cannot be queried, we do not report on or that frequently break the import.
       else
@@ -216,7 +223,7 @@ class ExportTablesToCloudStorage
 
     Dir.children(tmpdir).each do |file|
       endpoint = "gs://#{BUCKET}/json_export/#{runtime}/#{file}"
-      table_id = file.sub('.json', '')
+      table_id = [BIGQUERY_TABLE_PREFIX, file.sub('.json', '')].join('_')
 
       logging_details = logging_details.merge({
         file: file,
@@ -226,7 +233,7 @@ class ExportTablesToCloudStorage
       Rails.logger.info(logging_details.to_json)
 
       if dataset.load(
-          table_id,
+        table_id,
           endpoint,
           autodetect: true,
           format: 'json',
