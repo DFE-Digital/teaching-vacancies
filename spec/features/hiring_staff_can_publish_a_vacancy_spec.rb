@@ -669,9 +669,10 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('Step 2 of 3')
           expect(page.current_path).to eq(documents_school_job_path)
           
+          # Omit the step of uploading a document as this is tested elsewhere
+          click_on 'Save and continue'
 
-          # expect(page).to have_content("Review this job for #{school.name}")
-          # expect(page).to have_content('Teaching diploma')
+          expect(page).to have_content("Review this job for #{school.name}")
         end
       end
 
