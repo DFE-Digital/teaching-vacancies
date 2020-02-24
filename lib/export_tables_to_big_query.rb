@@ -8,10 +8,10 @@ class ExportTablesToBigQuery
   # The maximum percentage of bad records BigQuery will allow before raising an error.
   BAD_RECORD_RATE = 0.01
 
-  BIGQUERY_DATASET = ENV.fetch('BIG_QUERY_DATASET').freeze
+  BIGQUERY_DATASET = ENV['BIG_QUERY_DATASET']
   # This is to allow us to load new tables to the production dataset without disturbing the existing ones.
   BIGQUERY_TABLE_PREFIX = 'feb20'.freeze
-  BUCKET = ENV.fetch('CLOUD_STORAGE_BUCKET').freeze
+  BUCKET = ENV['CLOUD_STORAGE_BUCKET']
 
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
   # Drop gias_data because it is aliased to data. This alias allows all records to be handled the same way and dropping
@@ -108,7 +108,7 @@ class ExportTablesToBigQuery
     end
   end
 
-  # Ensure that all records have a consistent map of the data keys. This is to prevnet BigQuery breaking when importing
+  # Ensure that all records have a consistent map of the data keys. This is to prevent BigQuery breaking when importing
   # records with flattened json columns that have differing numbers of attributes. This is a tradeoff between runtime
   # and maintainability.
   #
@@ -162,8 +162,8 @@ class ExportTablesToBigQuery
 
             # Dates are the only values in gias data that can be cast without running in to trouble with variations in
             # the data. BigQuery already does this intelligently with every other column type. Miscast values are
-            # *sometimes* raised by BigQuery as errors (see next paragraph) and can be ignored if there are staistically
-            # insignificant numbers of them.
+            # *sometimes* raised by BigQuery as errors (see next paragraph) and can be ignored if there are
+            # statistically insignificant numbers of them.
             #
             # Review the values on `data_Diocese_code` for a typical example - most are postcode-like strings, while a
             # some are two or three digits numbers. Despite the presence of the two and three digit numbers, BigQuery
