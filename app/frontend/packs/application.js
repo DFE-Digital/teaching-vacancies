@@ -7,7 +7,6 @@ import Rails from 'rails-ujs';
 
 import 'src/addTitleToGoogleMapsIframe';
 import 'src/deleteAccordionControl';
-import 'src/deleteDocument';
 import 'src/details';
 import 'src/enableRadiusFilter';
 import 'src/fetchLocation';
