@@ -14,6 +14,12 @@ class SchoolVacancyPresenter < BasePresenter
     format_date(model.created_at)
   end
 
+  def days_to_apply
+    days_left = (model.expires_on - Time.zone.today).to_i
+    return 'Deadline is today' if days_left <= 1
+    "#{days_left} days remaining to apply"
+  end
+
   def expires_on
     format_date(model.expires_on)
   end

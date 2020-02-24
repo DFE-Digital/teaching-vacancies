@@ -29,6 +29,9 @@
           Your job listing will appear on Facebook in a format similar to the above.
 
   .govuk-grid-row
+
+    = render '/vacancies/key_dates_sidebar'
+
     .govuk-grid-column-two-thirds
       %h1.govuk-heading-l
         = @vacancy.job_title
