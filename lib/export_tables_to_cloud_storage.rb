@@ -36,19 +36,10 @@ class ExportTablesToCloudStorage
     sessions
   ].freeze
 
-  # This ensures that new tables are automatically added to the BigQuery dataset.
-  #
-  # `#singularize` must come *after* `#camelize` in `#map` for the AuditData inflection rule to work correctly. The
-  # inflector wasn't correctly picking up the snake cased version.
-  TABLES = ApplicationRecord.connection.tables
-    .reject { |table| EXCLUDE_TABLES.include?(table) }
-    .sort
-    .map { |table| table.camelize.singularize }
-    .freeze
 
   BATCH_SIZE = 1000
 
-  attr_reader :bad_records, :bucket, :data_field_normalizer, :dataset, :runtime, :tmpdir, :total_records
+  attr_reader :bad_records, :bucket, :data_field_normalizer, :dataset, :runtime, :tables, :tmpdir, :total_records
 
   def initialize(bigquery: Bigquery.new, storage: Storage.new)
     @bad_records = {}
@@ -56,6 +47,15 @@ class ExportTablesToCloudStorage
     @data_field_normalizer = {}
     @dataset = bigquery.dataset(BIGQUERY_DATASET)
     @runtime = DateTime.now.to_s(:db).parameterize
+    # This ensures that new tables are automatically added to the BigQuery dataset.
+    #
+    # `#singularize` must come *after* `#camelize` in `#map` for the AuditData inflection rule to work correctly. The
+    # inflector wasn't correctly picking up the snake cased version.
+    @tables = ApplicationRecord.connection.tables
+      .reject { |table| EXCLUDE_TABLES.include?(table) }
+      .sort
+      .map { |table| table.camelize.singularize }
+      .freeze
     @tmpdir = Dir.mktmpdir
     @total_records = {}
   end
@@ -73,7 +73,7 @@ class ExportTablesToCloudStorage
 
   def export
     logging_details = { phase: 'local export' }
-    TABLES.each do |table|
+    tables.each do |table|
       file = Rails.root.join(tmpdir, "#{table.underscore}.json")
 
       logging_details = logging_details.merge({
