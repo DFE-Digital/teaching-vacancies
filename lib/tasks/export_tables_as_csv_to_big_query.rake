@@ -1,11 +1,10 @@
-require 'import_csv_to_big_query'
-require 'rollbar'
-
 namespace :tables_as_csv do
-  desc 'Exports CSV table data into Big Query tables'
+  desc 'Exports postgres tables to Big Query'
   namespace :to_big_query do
     task export: :environment do
-      ImportCSVToBigQueryJob.perform_later
+      # It doesn't use CSV anymore, but I'm not changing the task name for now to avoid having to change more of the
+      # infrasctructure than strictly necessary
+      ExportTablesToCloudStorageJob.perform_later
     end
   end
 end
