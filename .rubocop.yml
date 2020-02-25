@@ -21,7 +21,7 @@ Rails/HasManyOrHasOneDependent:
     Enabled: false
 
 Bundler/OrderedGems:
-    Enabled: false
+    Enabled: true
 
 Style/Alias:
     Enabled: false
