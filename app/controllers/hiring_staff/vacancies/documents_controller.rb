@@ -80,6 +80,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
     document_upload.upload
 
+    add_google_error(document_params.original_filename) if document_upload.google_error
     add_virus_error(document_params.original_filename) unless document_upload.safe_download
 
     document_attributes(document_params, document_upload)
@@ -93,6 +94,11 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       filename: filename,
       size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT))
     )
+  end
+
+  def add_google_error(filename)
+    @documents_form.errors.add(:documents, t('jobs.file_input_error_message', filename: filename))
+    @documents_form.errors.add(filename, t('jobs.file_google_error_message', filename: filename))
   end
 
   def add_virus_error(filename)

@@ -38,11 +38,9 @@ injectDocumentsTable = function(documentsInput) {
             filesList[i].name +
           "</td>  \
           <td class='govuk-table__cell'>" +
-            "Uploading" + "<span class='upload-progress'><div class='upload-progress-spinner'></span></div>" +
+            "Uploading" + "<span class='upload-progress'><div class='upload-progress-spinner'></div></span>" +
           "</td>  \
-          <td class='govuk-table__cell' scope='row'>" +
-            (filesList[i].size / 1024.0 / 1024.0).toFixed(2) + " MB" +
-          "</td>  \
+          <td class='govuk-table__cell' scope='row'></td>  \
           <td class='govuk-table__cell' scope='row'></td>  \
         </tr> \
       "
