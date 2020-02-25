@@ -380,8 +380,7 @@ RSpec.feature 'Creating a vacancy' do
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
-
-          fill_in_supporting_documents_form_fields(vacancy)
+          fill_in_supporting_documents_form_fields
           click_on 'Save and continue'
 
           upload_document(
