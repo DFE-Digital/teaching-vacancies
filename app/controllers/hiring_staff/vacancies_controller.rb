@@ -2,7 +2,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   before_action :set_vacancy, only: %i[review]
 
   def show
-    vacancy = school.vacancies.active.find(id)
+    vacancy = current_school.vacancies.active.find(id)
     unless vacancy.published?
       return redirect_to school_job_review_path(vacancy.id),
                          alert: I18n.t('messages.jobs.view.only_published')
@@ -16,7 +16,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def edit
-    vacancy = school.vacancies.find(id)
+    vacancy = current_school.vacancies.find(id)
     redirect_to school_job_review_path(vacancy.id) unless vacancy.published?
 
     @vacancy = VacancyPresenter.new(vacancy)
@@ -39,7 +39,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def destroy
-    @vacancy = school.vacancies.active.find(id)
+    @vacancy = current_school.vacancies.active.find(id)
     @vacancy.trash!
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
@@ -48,7 +48,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def summary
-    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy = current_school.vacancies.published.find(vacancy_id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -84,6 +84,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def set_vacancy
-    @vacancy = school.vacancies.active.find(vacancy_id)
+    @vacancy = current_school.vacancies.active.find(vacancy_id)
   end
 end

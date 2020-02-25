@@ -1,13 +1,13 @@
-- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — Publish a job for #{@school.name}"
+- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — Publish a job for #{current_school.name}"
 
 %h1.govuk-heading-l
-  = t('jobs.publish_heading', school: @school.name)
+  = t('jobs.publish_heading', school: current_school.name)
   %span.govuk-caption-l
     Step 2 of 3
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @supporting_documents_form, action: :post, url: supporting_documents_school_job_path(school_id: @school.id), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @supporting_documents_form, action: :post, url: supporting_documents_school_job_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary 'Please correct the following errors'
 
       %h2.govuk-heading-m

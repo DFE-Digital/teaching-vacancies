@@ -1,7 +1,7 @@
-- content_for :page_title_prefix, "Supporting documents — Publish a job for #{@school.name}"
+- content_for :page_title_prefix, "Supporting documents — Publish a job for #{current_school.name}"
 
 %h1.govuk-heading-l
-  = t('jobs.publish_heading', school: @school.name)
+  = t('jobs.publish_heading', school: current_school.name)
   %span.govuk-caption-l
     Step 2 of 3
 
@@ -23,9 +23,8 @@
 
       = f.govuk_submit t('jobs.upload_file'), secondary: true
 
-      - if @vacancy&.documents&.any?
-        = render 'hiring_staff/vacancies/documents/documents', documents: @vacancy.documents
-      - else
-        %p#no-files= t('jobs.no_files_message')
+      .js-documents{ class: ('js-documents--empty' if @documents.none?) }
+        = render 'hiring_staff/vacancies/documents/documents'
+        %p.js-documents__no-files= t('jobs.no_files_message')
 
       = f.govuk_submit t('buttons.save_and_continue')

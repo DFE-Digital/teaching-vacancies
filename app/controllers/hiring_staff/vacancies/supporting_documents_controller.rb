@@ -1,5 +1,5 @@
 class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacancies::ApplicationController
-  before_action :school, :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :redirect_unless_vacancy_session_id, only: %i[new create]
 
   def new
     redirect_to job_specification_school_job_path unless session_vacancy_id

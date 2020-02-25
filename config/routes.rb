@@ -59,7 +59,7 @@ Rails.application.routes.draw do
                                    controller: 'hiring_staff/vacancies/job_specification'
       resource :supporting_documents, only: %i[edit update],
                                                controller: 'hiring_staff/vacancies/supporting_documents'
-      resources :documents, only: %i[index create], controller: 'hiring_staff/vacancies/documents'
+      resources :documents, only: %i[index create destroy], controller: 'hiring_staff/vacancies/documents'
       resource :candidate_specification, only: %i[edit update],
                                          controller: 'hiring_staff/vacancies/candidate_specification'
       resource :application_details, only: %i[edit update],
@@ -85,6 +85,11 @@ Rails.application.routes.draw do
         }
       post :documents,
         to: 'hiring_staff/vacancies/documents#create',
+        constraints: lambda {
+          |request| UploadDocumentsFeature.enabled?
+        }
+      delete :document,
+        to: 'hiring_staff/vacancies/documents#destroy',
         constraints: lambda {
           |request| UploadDocumentsFeature.enabled?
         }

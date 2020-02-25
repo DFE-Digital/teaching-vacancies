@@ -1,6 +1,6 @@
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   def new
-    @job_specification_form = JobSpecificationForm.new(school_id: school.id)
+    @job_specification_form = JobSpecificationForm.new(school_id: current_school.id)
     return if session[:current_step].blank?
 
     @job_specification_form = JobSpecificationForm.new(session[:vacancy_attributes])
@@ -24,14 +24,13 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def edit
     vacancy_attributes = source_update? ? session[:vacancy_attributes] : retrieve_job_from_db
-    @school = school
 
     @job_specification_form = JobSpecificationForm.new(vacancy_attributes)
     @job_specification_form.valid?
   end
 
   def update
-    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy = current_school.vacancies.published.find(vacancy_id)
     @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
     @job_specification_form.id = vacancy.id
 
@@ -62,7 +61,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def save_vacancy_without_validation
-    @job_specification_form.vacancy.school_id = school.id
+    @job_specification_form.vacancy.school_id = current_school.id
     @job_specification_form.vacancy.send :set_slug
     @job_specification_form.vacancy.status = :draft
     Auditor::Audit.new(@job_specification_form.vacancy, 'vacancy.create', current_session_id).log do
