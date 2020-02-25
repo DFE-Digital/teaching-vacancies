@@ -8,7 +8,7 @@ module VacancyHelpers
     select vacancy.first_supporting_subject, from: 'job_specification_form[first_supporting_subject_id]'
     select vacancy.second_supporting_subject, from: 'job_specification_form[second_supporting_subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
-    check 'job_specification_form[newly_qualified_teacher]' if vacancy.newly_qualified_teacher
+    check 'job_specification_form[newly_qualified_teacher]', visible: false if vacancy.newly_qualified_teacher
     fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
     fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
     fill_in 'job_specification_form[benefits]', with: vacancy.benefits
@@ -23,7 +23,8 @@ module VacancyHelpers
 
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
-            name: 'job_specification_form[working_patterns][]'
+            name: 'job_specification_form[working_patterns][]',
+            visible: false
     end
   end
 
@@ -33,8 +34,8 @@ module VacancyHelpers
     fill_in 'candidate_specification_form[experience]', with: vacancy.experience
   end
 
-  def fill_in_supporting_documents_form_fields(vacancy)
-    choose 'Yes'
+  def fill_in_supporting_documents_form_fields
+    find('label[for="supporting-documents-form-supporting-documents-yes-field"]').click
   end
 
   def upload_document(form_id, input_name, filepath)

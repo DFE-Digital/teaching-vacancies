@@ -21,7 +21,7 @@ Rails/HasManyOrHasOneDependent:
     Enabled: false
 
 Bundler/OrderedGems:
-    Enabled: false
+    Enabled: true
 
 Style/Alias:
     Enabled: false
@@ -71,6 +71,7 @@ Metrics/AbcSize:
     Exclude:
       - 'spec/**/*'
       - 'app/jobs/performance_platform_feedback_queue_job.rb'
+      - 'lib/export_tables_to_big_query.rb'
 
 Metrics/ModuleLength:
     Exclude:

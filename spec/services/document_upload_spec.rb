@@ -86,7 +86,9 @@ RSpec.describe DocumentUpload do
     it 'calls delete_file on drive_service if Google::Apis::ClientError raised' do
       allow(create_file).to receive(:id)
       # This error needs to initialised with an argument in order to be raised.
-      allow(subject.drive_service).to receive(:get_file).and_raise(Google::Apis::ClientError.new(true))
+      allow(subject.drive_service).to receive(:get_file).and_raise(
+        Google::Apis::ClientError.new(true, status_code: 403)
+      )
       expect(subject.drive_service).to receive(:delete_file)
       subject.google_drive_virus_check
     end
@@ -94,7 +96,9 @@ RSpec.describe DocumentUpload do
     it 'calls delete_file with id returned by create_file call on drive_service if Google::Apis::ClientError raised' do
       expect(create_file).to receive(:id).exactly(3).times
       # This error needs to initialised with an argument in order to be raised.
-      allow(subject.drive_service).to receive(:get_file).and_raise(Google::Apis::ClientError.new(true))
+      allow(subject.drive_service).to receive(:get_file).and_raise(
+        Google::Apis::ClientError.new(true, status_code: 403)
+      )
       allow(subject.drive_service).to receive(:delete_file)
       subject.google_drive_virus_check
     end

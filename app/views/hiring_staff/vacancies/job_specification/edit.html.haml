@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Edit the Job specification"
 
 %h1.govuk-heading-l
-  = t('jobs.edit_heading', school: @school.name)
+  = t('jobs.edit_heading', school: current_school.name)
 = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
 = simple_form_for @job_specification_form, method: :put, url: school_job_job_specification_path(@job_specification_form.id) do |f|
   %h2.govuk-heading-m

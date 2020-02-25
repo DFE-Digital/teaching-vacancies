@@ -1,5 +1,5 @@
 class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Vacancies::ApplicationController
-  before_action :school, :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :redirect_unless_vacancy_session_id, only: %i[new create]
 
   def new
     redirect_to job_specification_school_job_path unless session_vacancy_id
@@ -24,13 +24,12 @@ class HiringStaff::Vacancies::CandidateSpecificationController < HiringStaff::Va
   def edit
     vacancy_attributes = source_update? ? session[:vacancy_attributes] : retrieve_job_from_db
 
-    @school = school
     @candidate_specification_form = CandidateSpecificationForm.new(vacancy_attributes)
     @candidate_specification_form.valid?
   end
 
   def update
-    vacancy = school.vacancies.published.find(vacancy_id)
+    vacancy = current_school.vacancies.published.find(vacancy_id)
     @candidate_specification_form = CandidateSpecificationForm.new(candidate_specification_form_params)
     @candidate_specification_form.id = vacancy.id
 
