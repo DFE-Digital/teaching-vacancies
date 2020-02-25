@@ -235,6 +235,7 @@ RSpec.feature 'Creating a vacancy' do
           allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
           allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
           allow(document_upload).to receive(:safe_download).and_return(true)
+          allow(document_upload).to receive(:google_error).and_return(false)
         end
 
         scenario 'displays uploaded file in a table' do
@@ -277,6 +278,21 @@ RSpec.feature 'Creating a vacancy' do
           )
 
           expect(page).to have_content('blank_job_spec.pdf contains a virus')
+        end
+
+        scenario 'displays error message when file not uploaded' do
+          fill_in_supporting_documents_form_fields
+          click_on 'Save and continue'
+
+          allow(document_upload).to receive(:google_error).and_return(true)
+
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            'spec/fixtures/files/blank_job_spec.pdf'
+          )
+
+          expect(page).to have_content('blank_job_spec.pdf could not be uploaded - try again')
         end
       end
 

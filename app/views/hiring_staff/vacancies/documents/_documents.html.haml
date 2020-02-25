@@ -10,7 +10,7 @@
       %tr.govuk-table__row.js-document-row{ data: { document_id: document.id } }
         %td.govuk-table__cell{ scope: 'row' }
           %a.govuk-link{ href: document[:download_url], target: '_blank' } #{document[:name]}
-        %td.govuk-table__cell= t('upload_documents_table.upload_status.uploaded')
+        %td.govuk-table__cell= t('jobs.upload_documents_table.upload_status.uploaded')
         %td.govuk-table__cell{ scope: 'row' } #{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
         %td.govuk-table__cell
           = document_remove_link(document)

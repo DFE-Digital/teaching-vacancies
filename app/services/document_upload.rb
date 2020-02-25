@@ -1,19 +1,26 @@
 require 'google/apis/drive_v3'
 
 class DocumentUpload
+  FILE_VIRUS_STATUS_CODE = 403 # 403 Permission denied when acknowledge_abuse: false
+
   class MissingUploadPath < StandardError; end
-  attr_accessor :drive_service, :upload_path, :name, :uploaded, :safe_download
+  attr_accessor :drive_service, :upload_path, :name, :uploaded, :safe_download, :google_error, :download_path
 
   def initialize(opts = {})
     raise MissingUploadPath if opts[:upload_path].nil?
     self.upload_path = opts[:upload_path]
     self.name = opts[:name]
     self.drive_service = Google::Apis::DriveV3::DriveService.new
+    self.safe_download = true
+    self.google_error = false
   end
 
   def upload
     upload_hiring_staff_document
     set_public_permission_on_document
+  rescue Google::Apis::Error
+    self.google_error = true
+  else
     google_drive_virus_check
   end
 
@@ -33,20 +40,20 @@ class DocumentUpload
   end
 
   def google_drive_virus_check
-    download_path = "#{uploaded.id}"
-    begin
-      drive_service.get_file(
-        uploaded.id,
-        acknowledge_abuse: false,
-        download_dest: download_path
-      )
-    rescue Google::Apis::ClientError
-      drive_service.delete_file(uploaded.id)
+    self.download_path = uploaded.id.to_s
+    drive_service.get_file(
+      uploaded.id,
+      acknowledge_abuse: false,
+      download_dest: download_path
+    )
+  rescue Google::Apis::ClientError => e
+    if e.status_code == FILE_VIRUS_STATUS_CODE
       self.safe_download = false
+      drive_service.delete_file(uploaded.id)
     else
-      self.safe_download = true
-    ensure
-      File.delete(download_path) if File.exist?(download_path)
+      self.google_error = true
     end
+  ensure
+    File.delete(download_path) if File.exist?(download_path)
   end
 end
