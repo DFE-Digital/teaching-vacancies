@@ -389,6 +389,7 @@ RSpec.feature 'Creating a vacancy' do
           allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
           allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
           allow(document_upload).to receive(:safe_download).and_return(true)
+          allow(document_upload).to receive(:google_error).and_return(false)
         end
 
         scenario 'redirects to the vacancy review page when submitted successfully' do
