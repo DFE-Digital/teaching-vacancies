@@ -568,7 +568,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('An edited job title')
         end
 
-        scenario 'tracks any changes to  the vacancy details' do
+        scenario 'tracks any changes to the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           current_title = vacancy.job_title
           current_slug = vacancy.slug
@@ -650,6 +650,37 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content('Confirm and submit job')
           expect(page).to have_content('essential requirements')
+        end
+      end
+
+      context 'editing the supporting_documents' do
+        let(:feature_enabled?) { true }
+
+        scenario 'updates the vacancy details' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          # Choose 'no'
+          find('label[for="supporting-documents-form-supporting-documents-no-field"]').click
+          click_on 'Save and continue'
+
+          fill_in_application_details_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          expect(page).to have_content('Review this job')
+
+          within '#change-supporting-documents' do
+            click_on 'Change'
+          end
+
+          expect(page).to have_content('Step 2 of 3')
+          expect(page.current_path).to eq(documents_school_job_path)
+
+          click_on 'Save and continue'
+
+          expect(page).to have_content("Review this job for #{school.name}")
         end
       end
 
