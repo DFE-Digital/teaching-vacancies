@@ -10,43 +10,43 @@ FactoryBot.define do
       create_list :document, 3, vacancy: vacancy
     end
 
-    job_title { Faker::Lorem.sentence[1...30].strip }
-    job_description { Faker::Lorem.paragraph(sentence_count: 4) }
-    education { Faker::Lorem.paragraph(sentence_count: 4) }
-    qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
-    experience { Faker::Lorem.paragraph(sentence_count: 4) }
-    status { :published }
-    working_patterns { ['full_time'] }
-    expires_on { Faker::Time.forward(days: 14) }
-    expiry_time { expires_on&.change(sec: 0) }
-    publish_on { Time.zone.today }
-    minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
-    maximum_salary { SalaryValidator::MAX_SALARY_LIMIT - 100 }
-    contact_email { Faker::Internet.email }
     application_link { Faker::Internet.url }
     benefits { Faker::Lorem.sentence }
-    newly_qualified_teacher { true }
-    reference { SecureRandom.uuid }
+    contact_email { Faker::Internet.email }
+    education { Faker::Lorem.paragraph(sentence_count: 4) }
+    experience { Faker::Lorem.paragraph(sentence_count: 4) }
+    expires_on { Faker::Time.forward(days: 14) }
+    expiry_time { expires_on&.change(sec: 0) }
     hired_status { nil }
+    job_description { Faker::Lorem.paragraph(sentence_count: 4) }
+    job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
+    maximum_salary { SalaryValidator::MAX_SALARY_LIMIT - 100 }
+    minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
+    newly_qualified_teacher { true }
+    publish_on { Time.zone.today }
+    qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
+    reference { SecureRandom.uuid }
+    status { :published }
     supporting_documents { 'yes' }
+    working_patterns { ['full_time'] }
 
     trait :fail_minimum_validation do
-      job_title { Faker::Job.title[0..2] }
-      job_description { Faker::Lorem.paragraph[0..5] }
-      experience { Faker::Lorem.paragraph[0..7] }
       education { Faker::Lorem.paragraph[0..8] }
+      experience { Faker::Lorem.paragraph[0..7] }
+      job_description { Faker::Lorem.paragraph[0..5] }
+      job_title { Faker::Job.title[0..2] }
       qualifications { Faker::Lorem.paragraph[0...8] }
     end
 
     trait :fail_maximum_validation do
-      job_title { Faker::Lorem.characters(number: 150) }
-      job_description { Faker::Lorem.characters(number: 50001) }
-      experience { Faker::Lorem.characters(number: 1010) }
       education { Faker::Lorem.characters(number: 1005) }
-      qualifications { Faker::Lorem.characters(number: 1002) }
-      minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
+      experience { Faker::Lorem.characters(number: 1010) }
+      job_description { Faker::Lorem.characters(number: 50001) }
+      job_title { Faker::Lorem.characters(number: 150) }
       maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
+      minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
+      qualifications { Faker::Lorem.characters(number: 1002) }
     end
 
     trait :fail_minimum_salary_max_validation do
