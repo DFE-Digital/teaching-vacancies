@@ -8,229 +8,28 @@
     %p.govuk-body-l
       - if @vacancy.publish_on.today?
         = t('jobs.review')
-      - else 
+      - else
         = t('jobs.review_future')
     = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
+    = render 'hiring_staff/vacancies/review_vacancy_sections/review_job_specification'
+    - if @vacancy.show_supporting_documents?
+      = render 'hiring_staff/vacancies/review_vacancy_sections/review_supporting_documents'
+    - if @vacancy.show_candidate_specification?
+      = render 'hiring_staff/vacancies/review_vacancy_sections/review_candidate_specification'
 
-    %h2.govuk-heading-m.mb0
-      = t('jobs.job_specification')
+    = render 'hiring_staff/vacancies/review_vacancy_sections/review_application_details'
 
-    .govuk-body-s.mb1
-      = link_to job_specification_school_job_path, class: 'govuk-link', 'aria-label': 'Change job specification' do
-        Change
-        %span.govuk-visually-hidden the job specification
-
-    %dl.app-check-your-answers.app-check-your-answers--short
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#job_title
-          = t('jobs.job_title')
-        %dd.app-check-your-answers__answer
-          = @vacancy.job_title
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_title'), 'aria-label': t('jobs.aria_labels.change_job_title'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#description
-          = t('jobs.description')
-        %dd.app-check-your-answers__answer
-          = @vacancy.job_description
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_description'), 'aria-label': t('jobs.aria_labels.change_job_description'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#main_subject
-          = t('jobs.main_subject')
-        %dd.app-check-your-answers__answer
-          = @vacancy.main_subject
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'main_subject'), 'aria-label': t('jobs.aria_labels.change_main_subject'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question
-          = t('jobs.other_subjects')
-        %dd.app-check-your-answers__answer
-          = @vacancy.other_subjects
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'other_subjects'), 'aria-label': t('jobs.aria_labels.change_other_subjects'), class: 'govuk-link'
-
-      - if @vacancy.working_patterns?
-        .app-check-your-answers__contents
-          %dt.app-check-your-answers__question#working_patterns
-            = t('jobs.working_patterns')
-          %dd.app-check-your-answers__answer
-            = @vacancy.working_patterns
-            - if @vacancy.flexible_working?
-              = @vacancy.flexible_working
-          %dd.app-check-your-answers__change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
-
-      - if @vacancy.weekly_hours?
-        .app-check-your-answers__contents
-          %dt.app-check-your-answers__question#weekly_hours
-            = t('jobs.weekly_hours')
-          %dd.app-check-your-answers__answer
-            = @vacancy.weekly_hours
-          %dd.app-check-your-answers__change
-            = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'weekly_hours'), 'aria-label': t('jobs.aria_labels.change_weekly_hours'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#pay_scale
-          = t('jobs.pay_scale')
-        %dd.app-check-your-answers__answer
-          =@vacancy.pay_scale_range
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'pay_scale_range'), 'aria-label': t('jobs.aria_labels.change_pay_scale'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#salary_range
-          = t('jobs.salary_range')
-        %dd.app-check-your-answers__answer
-          = @vacancy.salary_range("to")
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#newly_qualified_teacher
-          = t('jobs.newly_qualified_teacher')
-        %dd.app-check-your-answers__answer
-          = @vacancy.newly_qualified_teacher
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#benefits
-          = t('jobs.benefits')
-        %dd.app-check-your-answers__answer
-          = @vacancy.benefits
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'benefits'), 'aria-label': t('jobs.aria_labels.change_employee_benefits'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#leadership_level
-          = t('jobs.leadership_level')
-        %dd.app-check-your-answers__answer
-          - if @vacancy.leadership
-            =@vacancy.leadership.title
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'leadership'), 'aria-label': t('jobs.aria_labels.change_leadership_level'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#starts_on
-          = t('jobs.starts_on')
-        %dd.app-check-your-answers__answer
-          = format_date @vacancy.starts_on
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'starts_on'), 'aria-label': t('jobs.aria_labels.change_expected_start_date'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#ends_on
-          = t('jobs.ends_on')
-        %dd.app-check-your-answers__answer
-          = format_date @vacancy.ends_on
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'ends_on'), 'aria-label': t('jobs.aria_labels.change_end_date'), class: 'govuk-link'
-
-
-    %h2.govuk-heading-m.mb0
-      = t('jobs.candidate_specification')
-
-    .govuk-body-s.mb1
-      = link_to candidate_specification_school_job_path, class: 'govuk-link', 'aria-label': 'Change candidate specification' do
-        Change
-        %span.govuk-visually-hidden the candidate specification
-
-    %dl.app-check-your-answers.app-check-your-answers--short
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#education
-          = t('jobs.education')
-        %dd.app-check-your-answers__answer
-          = @vacancy.education
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), candidate_specification_school_job_path(anchor: 'education'), 'aria-label': t('jobs.aria_labels.change_essential_educational_requirements'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#qualifications
-          = t('jobs.qualifications')
-        %dd.app-check-your-answers__answer
-          = @vacancy.qualifications
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), candidate_specification_school_job_path(anchor: 'qualifications'), 'aria-label': t('jobs.aria_labels.change_essential_qualifications'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#experience
-          = t('jobs.experience')
-        %dd.app-check-your-answers__answer
-          = @vacancy.experience
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), candidate_specification_school_job_path(anchor: 'experience'), 'aria-label': t('jobs.aria_labels.change_essential_skills_and_experience'), class: 'govuk-link'
-
-    %h2.govuk-heading-m.mb0
-      = t('jobs.application_details')
-
-    .govuk-body-s.mb1
-      = link_to application_details_school_job_path, class: 'govuk-link', 'aria-label': 'Change application details' do
-        Change
-        %span.govuk-visually-hidden the application details
-
-    %dl.app-check-your-answers.app-check-your-answers--short
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#contact_email
-          = t('jobs.contact_email')
-        %dd.app-check-your-answers__answer
-          - if @vacancy.contact_email.present?
-            =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
-            %dd.app-check-your-answers__change
-              = link_to t('buttons.change'), application_details_school_job_path(anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email'), class: 'govuk-link'
-          - else
-            %span= t('jobs.no_contact_email')
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#application_link
-          = t('jobs.application_link')
-        %dd.app-check-your-answers__answer
-          - if @vacancy.application_link.present?
-            = link_to @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link) do
-              %span.govuk-body-m.govuk-link= t('jobs.application_link_url')
-              %br
-              %span.govuk-body-s.govuk-link= @vacancy.application_link
-          - else
-            %span= t('jobs.no_application_link')
-
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), application_details_school_job_path(anchor: 'application_link'), 'aria-label': t('jobs.aria_labels.change_application_link_URL'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#publish_on
-          = t('jobs.publication_date')
-        %dd.app-check-your-answers__answer
-          = format_date @vacancy.publish_on
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), application_details_school_job_path(anchor: 'publish_on'), 'aria-label': t('jobs.aria_labels.change_date_role_will_be_listed'), class: 'govuk-link'
-
-      .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#expires_on
-          = t('jobs.application_deadline')
-        %dd.app-check-your-answers__answer
-          = format_date @vacancy.expires_on
-          = t('jobs.time_at') unless @vacancy.expiry_time.nil?
-          = format_time @vacancy.expiry_time 
-        %dd.app-check-your-answers__change
-          = link_to t('buttons.change'), application_details_school_job_path(anchor: 'expires_on'), 'aria-label': t('jobs.aria_labels.change_application_deadline'), class: 'govuk-link'
-
-    %h2.govuk-heading-m 
+    %h2.govuk-heading-m
       - if @vacancy.publish_on.today?
         = t('jobs.publish_for') + @vacancy.job_title
-      - else 
+      - else
         = t('jobs.publish_for_future') + @vacancy.publish_on.to_s
     %p= t('jobs.confirmation_summary_html')
 
     - if @vacancy.publish_on.today?
       = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button", id: "vacancy-review-submit"
-    - else 
+    - else
       = link_to t('jobs.submit_future'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button", id: "vacancy-review-submit"

@@ -29,6 +29,10 @@ RSpec.describe Vacancy, type: :model do
   end
 
   describe 'validations' do
+    let(:feature_enabled?) { false }
+
+    before { allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?) }
+
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_description) }
@@ -39,9 +43,19 @@ RSpec.describe Vacancy, type: :model do
     context 'a record saved with job spec details' do
       subject { create(:vacancy) }
 
-      it { should validate_presence_of(:education) }
-      it { should validate_presence_of(:qualifications) }
-      it { should validate_presence_of(:experience) }
+      context 'when upload document feature is OFF, validates candidate specification fields' do
+        it { should validate_presence_of(:education) }
+        it { should validate_presence_of(:qualifications) }
+        it { should validate_presence_of(:experience) }
+      end
+
+      context 'when upload document feature is ON, does not validate candidate specification fields' do
+        let(:feature_enabled?) { true }
+
+        it { should_not validate_presence_of(:education) }
+        it { should_not validate_presence_of(:qualifications) }
+        it { should_not validate_presence_of(:experience) }
+      end
     end
 
     context 'set minimum length of mandatory fields' do
