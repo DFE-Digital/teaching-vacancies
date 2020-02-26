@@ -168,6 +168,7 @@ en:
     upload_file: 'Upload files'
     select_file: 'Select a file'
     no_files_message: 'No files chosen'
+    no_supporting_documents: 'No documents uploaded'
     file_delete_error_message: 'An error occurred while removing %{filename}'
     file_delete_success_message: '%{filename} was removed'
     file_google_error_message: '%{filename} could not be uploaded - try again'
