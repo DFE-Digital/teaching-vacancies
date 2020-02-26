@@ -384,19 +384,19 @@ RSpec.feature 'Creating a vacancy' do
         let(:document_upload) { double('document_upload') }
 
         before do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+        end
+
+        scenario 'redirects to the vacancy review page when submitted successfully WITH uploaded documents' do
           allow(DocumentUpload).to receive(:new).and_return(document_upload)
           allow(document_upload).to receive(:upload)
           allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
           allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
           allow(document_upload).to receive(:safe_download).and_return(true)
           allow(document_upload).to receive(:google_error).and_return(false)
-        end
-
-        scenario 'redirects to the vacancy review page when submitted successfully' do
-          visit new_school_job_path
-
-          fill_in_job_specification_form_fields(vacancy)
-          click_on 'Save and continue'
 
           fill_in_supporting_documents_form_fields
           click_on 'Save and continue'
@@ -406,13 +406,25 @@ RSpec.feature 'Creating a vacancy' do
             'documents-form-documents-field',
             'spec/fixtures/files/blank_job_spec.pdf'
           )
+
           click_on 'Save and continue'
 
           fill_in_application_details_form_fields(vacancy)
           click_on 'Save and continue'
 
           expect(page).to have_content(I18n.t('jobs.review'))
-          verify_all_vacancy_details(vacancy)
+          expect(page).to_not have_content(I18n.t('jobs.no_supporting_documents'))
+        end
+
+        scenario 'redirects to the vacancy review page when submitted successfully WITHOUT uploaded documents' do
+          select_no_for_supporting_documents
+          click_on 'Save and continue'
+
+          fill_in_application_details_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          expect(page).to have_content(I18n.t('jobs.review'))
+          expect(page).to have_content(I18n.t('jobs.no_supporting_documents'))
         end
       end
     end
@@ -568,7 +580,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('An edited job title')
         end
 
-        scenario 'tracks any changes to the vacancy details' do
+        scenario 'tracks any changes to  the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           current_title = vacancy.job_title
           current_slug = vacancy.slug
@@ -662,8 +674,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
 
-          # Choose 'no'
-          find('label[for="supporting-documents-form-supporting-documents-no-field"]').click
+          select_no_for_supporting_documents
           click_on 'Save and continue'
 
           fill_in_application_details_form_fields(vacancy)

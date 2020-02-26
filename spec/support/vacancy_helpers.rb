@@ -38,6 +38,10 @@ module VacancyHelpers
     find('label[for="supporting-documents-form-supporting-documents-yes-field"]').click
   end
 
+  def select_no_for_supporting_documents
+    find('label[for="supporting-documents-form-supporting-documents-no-field"]').click
+  end
+
   def upload_document(form_id, input_name, filepath)
     page.attach_file(input_name, Rails.root.join(filepath))
     # Submit form on file upload without requiring Javascript driver
@@ -100,9 +104,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
-    if UploadDocumentsFeature.enabled?
-      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-    else
+    expect(page).to have_content(I18n.t('jobs.supporting_documents')) if vacancy.show_supporting_documents?
+
+    if vacancy.show_candidate_specification?
       expect(page.html).to include(vacancy.education)
       expect(page.html).to include(vacancy.qualifications)
       expect(page.html).to include(vacancy.experience)

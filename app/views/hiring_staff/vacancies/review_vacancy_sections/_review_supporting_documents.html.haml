@@ -7,10 +7,15 @@
     %span.govuk-visually-hidden the supporting documents
 
 %dl.app-check-your-answers.app-check-your-answers--short
-  - @vacancy.documents.each_with_index do |document, index|
-    - index_from_one = index + 1
+  - if @vacancy.documents.none?
     .app-check-your-answers__contents
-      %dt.app-check-your-answers__question#supporting_documents
-        = "Document #{index_from_one}"
-      %dd.app-check-your-answers__answer
-        = document[:name]
+      %dt#supporting_documents{class: "govuk-!-font-weight-bold"}
+        = t('jobs.no_supporting_documents')
+  - else
+    - @vacancy.documents.each_with_index do |document, index|
+      - index_from_one = index + 1
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question#supporting_documents
+          = "Document #{index_from_one}"
+        %dd.app-check-your-answers__answer
+          = document[:name]
