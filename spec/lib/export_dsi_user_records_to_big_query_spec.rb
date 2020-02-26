@@ -1,15 +1,7 @@
 require 'rails_helper'
-require 'export_user_records_to_big_query'
+require 'export_dsi_users_to_big_query'
 
-RSpec.shared_examples 'a successful Big Query export' do
-  it 'inserts into the dataset' do
-    expect(dataset_stub).to receive(:insert).with('users', expected_table_data, autocreate: true)
-
-    subject.run!
-  end
-end
-
-RSpec.describe ExportUserRecordsToBigQuery do
+RSpec.describe ExportDsiUsersToBigQuery do
   before do
     ENV['BIG_QUERY_DATASET'] = 'test_dataset'
     expect(bigquery_stub).to receive(:dataset).with('test_dataset').and_return(dataset_stub)
@@ -19,7 +11,7 @@ RSpec.describe ExportUserRecordsToBigQuery do
     expect(dfe_sign_in_api).to receive(:users).at_least(:once).and_return(api_response)
   end
 
-  subject { ExportUserRecordsToBigQuery.new(bigquery: bigquery_stub) }
+  subject { ExportDsiUsersToBigQuery.new(bigquery: bigquery_stub) }
 
   let(:bigquery_stub) { instance_double('Google::Cloud::Bigquery::Project') }
   let(:dataset_stub) { instance_double('Google::Cloud::Bigquery::Dataset') }
@@ -86,7 +78,11 @@ RSpec.describe ExportUserRecordsToBigQuery do
     let(:table_stub) { nil }
 
     context 'when DSI API is up and running' do
-      it_behaves_like 'a successful Big Query export'
+      it 'invokes insert on the dataset' do
+        expect(dataset_stub).to receive(:insert).with('dsi_users', expected_table_data, autocreate: true)
+
+        subject.run!
+      end
     end
 
     context 'when DSI API fails' do
