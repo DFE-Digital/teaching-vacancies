@@ -11,11 +11,7 @@ RSpec.feature 'School deleting vacancies' do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
 
-    visit school_path(school)
-
-    within("tr#school_vacancy_presenter_#{vacancy1.id}") do
-      click_on 'Delete'
-    end
+    delete_vacancy(school, vacancy1.id)
 
     expect(page).not_to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
@@ -25,10 +21,7 @@ RSpec.feature 'School deleting vacancies' do
   scenario 'The last vacancy is deleted' do
     vacancy = create(:vacancy, school: school)
 
-    visit school_path(school)
-    within("tr#school_vacancy_presenter_#{vacancy.id}") do
-      click_on 'Delete'
-    end
+    delete_vacancy(school, vacancy.id)
 
     expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
   end
@@ -36,11 +29,7 @@ RSpec.feature 'School deleting vacancies' do
   scenario 'Audits the vacancy deletion' do
     vacancy = create(:vacancy, school: school)
 
-    visit school_path(school)
-
-    within("tr#school_vacancy_presenter_#{vacancy.id}") do
-      click_on 'Delete'
-    end
+    delete_vacancy(school, vacancy.id)
 
     activity = vacancy.activities.last
     expect(activity.session_id).to eq(session_id)
@@ -53,9 +42,13 @@ RSpec.feature 'School deleting vacancies' do
     expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
       .to receive(:remove_google_index).with(vacancy)
 
+    delete_vacancy(school, vacancy.id)
+  end
+
+  def delete_vacancy(school, vacancy_id)
     visit school_path(school)
 
-    within("tr#school_vacancy_presenter_#{vacancy.id}") do
+    within("tr#school_vacancy_presenter_#{vacancy_id}") do
       click_on 'Delete'
     end
   end

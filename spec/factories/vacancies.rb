@@ -29,6 +29,7 @@ FactoryBot.define do
     reference { SecureRandom.uuid }
     hired_status { nil }
     listed_elsewhere { nil }
+    supporting_documents { 'yes' }
 
     trait :fail_minimum_validation do
       job_title { Faker::Job.title[0..2] }
