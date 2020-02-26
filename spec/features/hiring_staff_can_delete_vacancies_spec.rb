@@ -18,6 +18,24 @@ RSpec.feature 'School deleting vacancies' do
     expect(page).to have_content('The job has been deleted')
   end
 
+  scenario 'Deleting a vacancy triggers deletion of its supporting documents' do
+    document1 = create(:document, name: 'document1.pdf')
+    document2 = create(:document, name: 'document2.pdf')
+    vacancy = create(:vacancy,
+      school: school,
+      documents: [document1, document2])
+
+    document1_delete = instance_double(DocumentDelete)
+    document2_delete = instance_double(DocumentDelete)
+    allow(DocumentDelete).to receive(:new).with(document1).and_return(document1_delete)
+    allow(DocumentDelete).to receive(:new).with(document2).and_return(document1_delete)
+
+    expect(document1_delete).to receive(:delete)
+    expect(document2_delete).to receive(:delete)
+
+    delete_vacancy(school, vacancy.id)
+  end
+
   scenario 'The last vacancy is deleted' do
     vacancy = create(:vacancy, school: school)
 
