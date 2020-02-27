@@ -37,4 +37,37 @@
     height: 400px;
     margin-top: 30px;
   }
+
+  div.supporting-docs {
+    margin-block-end: 1em;
+    padding: 15px;
+    border: 1px solid #b1b4b6;
+
+    ul {
+      margin:0;
+      padding: 0;
+      list-style-type: none;
+
+      li {
+        margin-bottom: 10px;
+        font-size: 1.1875rem;
+        line-height: 1.31579;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .document-link {
+          text-decoration: none;
+          word-wrap: break-word;
+
+          svg {
+            float: left;
+            margin-right: 0.5rem;
+            margin-top: 0.3rem;
+          }
+        }
+      }
+    }
+}
 }
