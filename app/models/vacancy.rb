@@ -262,7 +262,7 @@ class Vacancy < ApplicationRecord
   end
 
   def delete_documents
-    self.documents.each{ |document| DocumentDelete.new(document).delete }
+    self.documents.each { |document| DocumentDelete.new(document).delete }
   end
 
   private
