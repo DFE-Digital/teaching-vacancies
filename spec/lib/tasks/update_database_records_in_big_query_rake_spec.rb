@@ -6,6 +6,6 @@ RSpec.describe 'rake database_records:in_big_query:update', type: :task do
   end
 
   it 'queues the export vacancy records to big query job' do
-    expect { task.execute }.to have_enqueued_job(ExportUserRecordsToBigQueryJob)
+    expect { task.execute }.to have_enqueued_job(ExportDsiUsersToBigQueryJob)
   end
 end
