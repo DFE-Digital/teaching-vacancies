@@ -40,7 +40,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def destroy
     @vacancy = current_school.vacancies.active.find(id)
+    @vacancy.delete_documents
     @vacancy.trash!
+    # binding.pry
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
