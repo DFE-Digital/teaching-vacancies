@@ -80,7 +80,6 @@ class ExportTablesToBigQuery
         table: table
       })
 
-      fh = File.new(file, 'w')
 
       records = table.constantize
       records_count = records.count
@@ -94,6 +93,8 @@ class ExportTablesToBigQuery
 
       Rails.logger.info(logging_details.to_json)
       next if records.none?
+
+      fh = File.new(file, 'w')
 
       analyze_data_field(records, table.to_s) if records.all.first.respond_to?(:data)
 
