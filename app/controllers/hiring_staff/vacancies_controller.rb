@@ -2,7 +2,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   before_action :set_vacancy, only: %i[review]
 
   def show
-    vacancy = current_school.vacancies.active.find(id)
+    vacancy = find_active_vacancy_by_id
     unless vacancy.published?
       return redirect_to school_job_review_path(vacancy.id),
                          alert: I18n.t('messages.jobs.view.only_published')
@@ -39,10 +39,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def destroy
-    @vacancy = current_school.vacancies.active.find(id)
+    @vacancy = find_active_vacancy_by_id
     @vacancy.delete_documents
     @vacancy.trash!
-    # binding.pry
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
@@ -87,5 +86,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def set_vacancy
     @vacancy = current_school.vacancies.active.find(vacancy_id)
+  end
+
+  def find_active_vacancy_by_id
+    current_school.vacancies.active.find(id)
   end
 end
