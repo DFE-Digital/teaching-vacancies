@@ -261,6 +261,10 @@ class Vacancy < ApplicationRecord
     experience.present? && qualifications.present? && education.present?
   end
 
+  def delete_documents
+    self.documents.each{ |document| DocumentDelete.new(document).delete }
+  end
+
   private
 
   def slug_candidates
