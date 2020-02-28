@@ -180,6 +180,7 @@ module "ecs" {
   feature_email_alerts                         = "${var.feature_email_alerts}"
   feature_import_vacancies                     = "${var.feature_import_vacancies}"
   feature_upload_documents                     = "${var.feature_upload_documents}"
+  feature_key_info_search_snippet              = "${var.feature_key_info_search_snippet}"
   dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
   dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
   dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"

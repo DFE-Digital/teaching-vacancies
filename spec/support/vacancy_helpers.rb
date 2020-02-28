@@ -156,19 +156,6 @@ module VacancyHelpers
     end
   end
 
-  def verify_vacancy_list_page_details(vacancy)
-    expect(page.find('.vacancy')).to have_content(vacancy.job_title)
-    expect(page.find('.vacancy')).to have_content(vacancy.location)
-    expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
-    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label)
-    expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
-    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
-
-    unless vacancy.expiry_time.nil?
-      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M %P'))
-    end
-  end
-
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
   end
@@ -221,5 +208,34 @@ module VacancyHelpers
 
     json['workHours'] = vacancy.weekly_hours if vacancy.weekly_hours?
     json
+  end
+
+  def verify_vacancy_list_page_details_without_feature_enabled(vacancy)
+    expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
+    expect(page.find('.vacancy')).to have_content(vacancy.starts_on) if vacancy.starts_on?
+    expect(page.find('.vacancy')).not_to have_content(vacancy.school.school_type.label)
+
+    verify_shared_vacancy_list_page_details(vacancy)
+  end
+
+  def verify_vacancy_list_page_details_with_feature_enabled(vacancy)
+    expect(page.find('.vacancy')).not_to have_content(vacancy.publish_on)
+    expect(page.find('.vacancy')).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
+    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label)
+
+    verify_shared_vacancy_list_page_details(vacancy)
+  end
+
+  private
+
+  def verify_shared_vacancy_list_page_details(vacancy)
+    expect(page.find('.vacancy')).to have_content(vacancy.job_title)
+    expect(page.find('.vacancy')).to have_content(vacancy.location)
+    expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
+    expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
+    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
+    unless vacancy.expiry_time.nil?
+      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M %P'))
+    end
   end
 end

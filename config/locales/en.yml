@@ -107,6 +107,7 @@ en:
     school_type: 'School type'
     expires_on: 'Closing date'
     publish_on: 'Date posted'
+    start_on: 'Expected start date'
     sort_by_earliest_closing_date: 'Least time to apply'
     sort_by_furthest_closing_date: 'Most time to apply'
     sort_by_most_recent: 'Newest job listing'
