@@ -5,13 +5,13 @@ RSpec.describe School, type: :model do
   it { expect(described_class.columns_hash['gias_data'].type).to eql(:json) }
 
   describe '#has_religious_character?' do
+    before do
+      subject.gias_data = {}.to_json
+    end
+
     it 'returns false when the school has no gias_data' do
       subject.gias_data = nil
       expect(subject.has_religious_character?).to be false
-    end
-
-    before do
-      subject.gias_data = {}.to_json
     end
 
     it 'returns false when the school has no religious_character' do

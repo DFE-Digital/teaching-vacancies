@@ -46,18 +46,20 @@ RSpec.describe SchoolPresenter do
     end
   end
 
-  describe '#school_type_with_religious_character', type: :view do
+  describe '#school_type_with_religious_character' do
     it 'links the school type with the religious character' do
-      school = SchoolPresenter.new(create(:school, gias_data: { religious_character: 'Roman Catholic' }))
-      allow(school).to receive(:has_religious_character?).and_return(true)
-      expect(school.school_type_with_religious_character).to eq("#{school.school_type.label}, Roman Catholic")
+      catholic_school = build(:school, gias_data: { religious_character: 'Roman Catholic' })
+      school_presenter = SchoolPresenter.new(catholic_school)
+      expect(school_presenter.school_type_with_religious_character)
+        .to eq("#{catholic_school.school_type.label}, Roman Catholic")
     end
 
     context 'when the school has no religious character' do
       it 'returns only the school type' do
-        school = SchoolPresenter.new(create(:school))
-        allow(school).to receive(:has_religious_character?).and_return(false)
-        expect(school.school_type_with_religious_character).to eq("#{school.school_type.label}")
+        non_religious_school = build(:school, gias_data: { religious_character: 'Does not apply' })
+        school_presenter = SchoolPresenter.new(non_religious_school)
+        expect(school_presenter.school_type_with_religious_character)
+          .to eq(non_religious_school.school_type.label)
       end
     end
   end
