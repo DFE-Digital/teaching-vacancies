@@ -28,7 +28,7 @@ class SchoolVacancyPresenter < BasePresenter
   end
 
   def edit_path
-    url_helpers.edit_school_job_path(model.id)
+    url_helpers.school_job_edit_path(model.id)
   end
 
   def copy_path
@@ -36,7 +36,7 @@ class SchoolVacancyPresenter < BasePresenter
   end
 
   def delete_path
-    url_helpers.school_job_path(id: model.id)
+    url_helpers.school_job_path(job_id: model.id)
   end
 
   private

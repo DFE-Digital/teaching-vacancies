@@ -23,7 +23,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
     let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
 
     before do
-      visit new_school_job_path
+      visit new_school_jobs_path
       fill_in_job_specification_form_fields(vacancy)
       click_on I18n.t('buttons.save_and_continue')
     end
@@ -33,7 +33,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       draft_vacancy.qualifications = 'New Teacher Qualification'
       draft_vacancy.save(validate: false)
 
-      visit edit_school_job_path(id: draft_vacancy.id)
+      visit school_job_edit_path(job_id: draft_vacancy.id)
 
       expect(page).to have_content('Step 2 of 3')
       expect(page).to have_content(draft_vacancy.education)
@@ -47,13 +47,13 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'then editing the draft redirects to incomplete step' do
-        visit school_job_path(id: draft_vacancy.id)
+        visit school_job_path(job_id: draft_vacancy.id)
         expect(page).to have_content('Step 2 of 3')
       end
 
       def edit_a_published_vacancy
         published_vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_job_path(published_vacancy.id)
+        visit school_job_edit_path(published_vacancy.id)
         click_link_in_container_with_text(I18n.t('jobs.application_link'))
 
         fill_in 'application_details_form[application_link]', with: 'https://example.com'

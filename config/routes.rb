@@ -50,7 +50,11 @@ Rails.application.routes.draw do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
       get 'jobs(/:type)', to: 'hiring_staff/schools#show', defaults: { type: :published }, as: :jobs_with_type
     end
-    resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
+    resource :jobs, only: %i[new], controller: 'hiring_staff/vacancies'
+    resources :jobs, only: [], controller: 'hiring_staff/vacancies' do
+      get '', to: 'hiring_staff/vacancies#show', as: ''
+      delete '', to: 'hiring_staff/vacancies#destroy'
+      get :edit, to: 'hiring_staff/vacancies#edit'
       get 'review'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'

@@ -13,7 +13,7 @@ RSpec.feature 'Hiring staff session' do
   end
 
   it 'expires after 8 hours and redirects to login page' do
-    visit new_school_job_path
+    visit new_school_jobs_path
 
     Timecop.travel(8.hours)
 
@@ -23,7 +23,7 @@ RSpec.feature 'Hiring staff session' do
   end
 
   it 'doesn\'t expire before 8 hours' do
-    visit new_school_job_path
+    visit new_school_jobs_path
 
     Timecop.travel(1.hour)
 

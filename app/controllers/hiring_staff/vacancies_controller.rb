@@ -16,7 +16,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def edit
-    vacancy = current_school.vacancies.find(id)
+    vacancy = current_school.vacancies.find(vacancy_id)
     redirect_to school_job_review_path(vacancy.id) unless vacancy.published?
 
     @vacancy = VacancyPresenter.new(vacancy)
@@ -55,10 +55,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   private
 
-  def id
-    params.require(:id)
-  end
-
   def vacancy_id
     params.require(:job_id)
   end
@@ -85,10 +81,10 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def set_vacancy
-    @vacancy = current_school.vacancies.active.find(vacancy_id)
+    @vacancy = find_active_vacancy_by_id
   end
 
   def find_active_vacancy_by_id
-    current_school.vacancies.active.find(id)
+    current_school.vacancies.active.find(vacancy_id)
   end
 end

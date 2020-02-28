@@ -45,7 +45,7 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'redirects to step 1, job specification' do
-      visit new_school_job_path
+      visit new_school_jobs_path
 
       expect(page.current_path).to eq(job_specification_school_job_path)
       expect(page).to have_content("Publish a job for #{school.name}")
@@ -54,7 +54,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#job_specification' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         click_on 'Save and continue'
 
@@ -81,7 +81,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'without feature upload documents enabled' do
         scenario 'redirects to step 2, candidate profile, when submitted successfully' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -95,7 +95,7 @@ RSpec.feature 'Creating a vacancy' do
         let(:feature_enabled?) { true }
 
         scenario 'redirects to step 2, supporting documents, when submitted succesfuly' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -106,7 +106,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'tracks the vacancy creation' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -120,7 +120,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#candidate_profile' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -144,7 +144,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 3, application_details profile, when submitted successfully' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -159,7 +159,7 @@ RSpec.feature 'Creating a vacancy' do
       let(:feature_enabled?) { true }
 
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -171,7 +171,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 3, application details, when choosing no' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -184,7 +184,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 2, upload_documents, when choosing yes' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -200,7 +200,7 @@ RSpec.feature 'Creating a vacancy' do
       let(:feature_enabled?) { true }
 
       before do
-        visit new_school_job_path
+        visit new_school_jobs_path
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
       end
@@ -332,7 +332,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#application_details' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
@@ -366,7 +366,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the upload feature flag is OFF' do
         scenario 'redirects to the vacancy review page when submitted successfully' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -384,7 +384,7 @@ RSpec.feature 'Creating a vacancy' do
         let(:document_upload) { double('document_upload') }
 
         before do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -432,19 +432,19 @@ RSpec.feature 'Creating a vacancy' do
     context '#review' do
       context 'redirects the user back to the last incomplete step' do
         scenario 'redirects to step 2, candidate profile, when that step has not been completed' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit school_job_path(id: v.id)
+          visit school_job_path(job_id: v.id)
 
           expect(page).to have_content('Step 2 of 3')
         end
 
         scenario 'redirects to step 3, application details, when that step has not been completed' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -453,13 +453,13 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Save and continue'
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit school_job_path(id: v.id)
+          visit school_job_path(job_id: v.id)
 
           expect(page).to have_content('Step 3 of 3')
         end
 
         scenario 'redirects to appropriate step when clicked on change on review page' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -580,7 +580,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content('An edited job title')
         end
 
-        scenario 'tracks any changes to  the vacancy details' do
+        scenario 'tracks any changes to the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           current_title = vacancy.job_title
           current_slug = vacancy.slug
@@ -669,7 +669,7 @@ RSpec.feature 'Creating a vacancy' do
         let(:feature_enabled?) { true }
 
         scenario 'updates the vacancy details' do
-          visit new_school_job_path
+          visit new_school_jobs_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
@@ -902,7 +902,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'a published vacancy cannot be edited' do
-        visit new_school_job_path
+        visit new_school_jobs_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
