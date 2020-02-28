@@ -33,6 +33,7 @@ $(document).ready(function(){
     var notice = $('#awaiting_notice')
     var notice_count = notice.find('.count');
     var feedback_intro = $('#awaiting_feedback_intro')
+    const delayInMilliseconds = 60000
 
     if (count > 0) {
       row = form.parents('tr');
@@ -44,7 +45,7 @@ $(document).ready(function(){
       notification.text(count);
       text = form.data('successMessage');
       row.html('<td class="govuk-table__cell" colspan="6">'+ text +'</td>');
-      row.fadeOut(3000, function() {
+      row.fadeOut(delayInMilliseconds, function() {
         $(this).remove();
       })
     } else {

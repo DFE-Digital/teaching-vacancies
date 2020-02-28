@@ -3,7 +3,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
+  let(:feature_enabled?) { false }
+
   before(:each) do
+    allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
+
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 

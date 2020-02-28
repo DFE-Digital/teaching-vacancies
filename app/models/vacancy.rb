@@ -252,6 +252,15 @@ class Vacancy < ApplicationRecord
     @skip_update_callbacks.present?
   end
 
+  def show_supporting_documents?
+    UploadDocumentsFeature.enabled? && !show_candidate_specification?
+  end
+
+  def show_candidate_specification?
+    # TODO: This method should change when the behaviour for changing candidate specification is defined
+    experience.present? && qualifications.present? && education.present?
+  end
+
   private
 
   def slug_candidates
