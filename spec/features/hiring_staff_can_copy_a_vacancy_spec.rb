@@ -2,6 +2,16 @@ require 'rails_helper'
 RSpec.feature 'Copying a vacancy' do
   let(:school) { create(:school) }
 
+  let(:document_copy) { double('document_copy') }
+
+  before do
+    allow(DocumentCopy).to receive(:new).and_return(document_copy)
+    allow(document_copy).to receive(:copy).and_return(document_copy)
+    allow(document_copy).to receive_message_chain(:copied, :web_content_link).and_return('test_url')
+    allow(document_copy).to receive_message_chain(:copied, :id).and_return('test_id')
+    allow(document_copy).to receive(:google_error).and_return(false)
+  end
+
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn)
   end

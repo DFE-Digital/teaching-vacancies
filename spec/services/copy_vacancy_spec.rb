@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe CopyVacancy do
   describe '#call' do
+    let(:document_copy) { double('document_copy') }
+
+    before do
+      allow(DocumentCopy).to receive(:new).and_return(document_copy)
+      allow(document_copy).to receive(:copy).and_return(document_copy)
+      allow(document_copy).to receive_message_chain(:copied, :web_content_link).and_return('test_url')
+      allow(document_copy).to receive_message_chain(:copied, :id).and_return('test_id')
+      allow(document_copy).to receive(:google_error).and_return(false)
+    end
+
     it 'creates a new vacancy as draft' do
       vacancy = create(:vacancy, job_title: 'Maths teacher')
 
@@ -25,6 +35,21 @@ RSpec.describe CopyVacancy do
         .to eq(true)
 
       Timecop.return
+    end
+
+    it 'copies documents when copying a vacancy' do
+      document = create(:document,
+        name: 'Test.png',
+        size: 1000,
+        content_type: 'image/png',
+        download_url: 'test/test.png',
+        google_drive_id: 'testid'
+      )
+      vacancy = create(:vacancy, documents: [document])
+
+      result = described_class.new(vacancy).call
+
+      expect(result.documents.first.name).to eq(vacancy.documents.first.name)
     end
 
     context 'not all fields are copied' do
