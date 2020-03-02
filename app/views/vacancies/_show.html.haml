@@ -4,6 +4,12 @@
 - content_for :page_description do
   = strip_tags(@vacancy.job_description)
 
+.govuk-grid-row.govuk-grid-column-full
+  %h1.govuk-heading-l
+    = @vacancy.job_title
+    %span.govuk-caption-l
+      = @vacancy.location
+
 .vacancy.govuk-grid-row
   - if @vacancy.expired?
     .govuk-grid-column-full
@@ -13,10 +19,6 @@
   = render '/vacancies/key_dates_sidebar'
 
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-l
-      = @vacancy.job_title
-      %span.govuk-caption-l
-        = @vacancy.location
 
     .govuk-tabs{"data-module": "govuk-tabs"}
       %h2.govuk-tabs__title
