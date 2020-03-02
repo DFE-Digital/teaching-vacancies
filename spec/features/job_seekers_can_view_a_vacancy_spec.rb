@@ -50,6 +50,12 @@ RSpec.feature 'Viewing a single published vacancy' do
   end
 
   context 'A user viewing a vacancy' do
+    let(:feature_enabled?) { false }
+
+    before do
+      allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
+    end
+
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
       visit job_path(vacancy)
@@ -89,6 +95,90 @@ RSpec.feature 'Viewing a single published vacancy' do
 
       expect(page).to have_content(I18n.t('jobs.weekly_hours'))
       expect(page).to have_content(30)
+    end
+
+    context 'when the upload documents feature flag is OFF' do
+      before do
+        vacancy = create(:vacancy, :published)
+        visit job_path(vacancy)
+      end
+
+      scenario 'can not see the supporting documents section' do
+        expect(page).to_not have_content(I18n.t('jobs.supporting_documents'))
+      end
+
+      scenario 'can see the candidate specification sections' do
+        expect(page).to have_content(I18n.t('jobs.education'))
+        expect(page).to have_content(I18n.t('jobs.qualifications'))
+        expect(page).to have_content(I18n.t('jobs.experience'))
+      end
+    end
+
+    context 'when the upload documents feature flag is ON' do
+      let(:feature_enabled?) { true }
+
+      context 'for a vacancy published BEFORE the flag is switched on' do
+        before do
+          vacancy = create(:vacancy, :published)
+          visit job_path(vacancy)
+        end
+
+        scenario 'cannot see the supporting documents section' do
+          expect(page).to_not have_content(I18n.t('jobs.supporting_documents'))
+        end
+
+        scenario 'can see the candidate specification sections' do
+          expect(page).to have_content(I18n.t('jobs.education'))
+          expect(page).to have_content(I18n.t('jobs.qualifications'))
+          expect(page).to have_content(I18n.t('jobs.experience'))
+        end
+      end
+
+      context 'for a vacancy published AFTER the flag is switched on' do
+        context 'with supporting documents attached' do
+          before do
+            vacancy = create(:vacancy, :published)
+            vacancy.education = nil
+            vacancy.qualifications = nil
+            vacancy.experience = nil
+            vacancy.save
+            visit job_path(vacancy)
+          end
+
+          scenario 'can see the supporting documents section' do
+            expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+            expect(page).to have_content('Test.png')
+          end
+
+          scenario 'cannot see the candidate specification sections' do
+            expect(page).to_not have_content(I18n.t('jobs.education'))
+            expect(page).to_not have_content(I18n.t('jobs.qualifications'))
+            expect(page).to_not have_content(I18n.t('jobs.experience'))
+          end
+        end
+
+        context 'without supporting documents attached' do
+          before do
+            vacancy = create(:vacancy, :published)
+            vacancy.education = nil
+            vacancy.qualifications = nil
+            vacancy.experience = nil
+            vacancy.documents = []
+            vacancy.save
+            visit job_path(vacancy)
+          end
+
+          scenario 'cannot see the supporting documents section' do
+            expect(page).to_not have_content(I18n.t('jobs.supporting_documents'))
+          end
+
+          scenario 'cannot see the candidate specification sections' do
+            expect(page).to_not have_content(I18n.t('jobs.education'))
+            expect(page).to_not have_content(I18n.t('jobs.qualifications'))
+            expect(page).to_not have_content(I18n.t('jobs.experience'))
+          end
+        end
+      end
     end
 
     scenario 'the page view is tracked' do

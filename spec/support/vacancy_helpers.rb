@@ -140,9 +140,16 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
-    expect(page.html).to include(vacancy.education)
-    expect(page.html).to include(vacancy.qualifications)
-    expect(page.html).to include(vacancy.experience)
+    if vacancy.show_supporting_documents? && !vacancy.documents.none?
+      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+    end
+
+    if vacancy.show_candidate_specification?
+      expect(page.html).to include(vacancy.education)
+      expect(page.html).to include(vacancy.qualifications)
+      expect(page.html).to include(vacancy.experience)
+    end
+
     expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
