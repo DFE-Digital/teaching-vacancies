@@ -14,17 +14,17 @@ IF
       "Table not updated last month as expected",
     IF
       (table LIKE "%school"
-        AND row_count <28000,
+        AND row_count <28000, #sets a minimum threshold for the number of schools that should be in the database - this should not change much unless we change the scope, so going below this threshold most likely means the dataset in BQ is incomplete
         "Table appears incomplete",
         #check whether there are at least this many schools in the schools table
       IF
         (table = "dsi_users"
-          AND row_count <25000,
+          AND row_count <25000, #sets a minimum threshold for the number of users that should be in the DSI database - this should not decrease, so going below this threshold most likely means the dataset in BQ is incomplete
           "Table appears incomplete",
           #check whether there are at least this many users in the dsi_users table
         IF
           (table = "dsi_approvers"
-            AND row_count <35000,
+            AND row_count <35000, #sets a minimum threshold for the number of approvers that should be in the DSI database - this should not decrease, so going below this threshold most likely means the dataset in BQ is incomplete
             "Table appears incomplete",
             #check whether there are at least this many approvers in the dsi_approvers table
           IF
