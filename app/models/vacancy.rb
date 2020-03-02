@@ -265,6 +265,10 @@ class Vacancy < ApplicationRecord
     KeyInfoSearchSnippetFeature.enabled?
   end
 
+  def delete_documents
+    self.documents.each { |document| DocumentDelete.new(document).delete }
+  end
+
   private
 
   def slug_candidates

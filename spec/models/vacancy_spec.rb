@@ -516,15 +516,9 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'when supporting documents are provided' do
     it 'should return the document name' do
-      document = create(
-        :document, name: 'Test.png',
-        size: 1000,
-        content_type: 'image/png',
-        download_url: 'test/test.png',
-        google_drive_id: 'testid'
-      )
+      document = create(:document, name: 'Test_doc.png')
       vacancy = create(:vacancy, documents: [document])
-      expect(vacancy.documents.first.name).to eq('Test.png')
+      expect(vacancy.documents.first.name).to eq('Test_doc.png')
     end
   end
 
@@ -555,6 +549,26 @@ RSpec.describe Vacancy, type: :model do
         vacancy = create(:vacancy, application_link: 'www.example.com')
         expect(vacancy.application_link).to eql('http://www.example.com')
       end
+    end
+  end
+
+  describe '#delete_documents' do
+    it 'deletes all attached supporting documents' do
+      document1 = create(:document, name: 'document1.pdf')
+      document2 = create(:document, name: 'document2.pdf')
+
+      vacancy = create(:vacancy, documents: [document1, document2])
+
+      document1_delete = instance_double(DocumentDelete)
+      document2_delete = instance_double(DocumentDelete)
+
+      allow(DocumentDelete).to receive(:new).with(document1).and_return(document1_delete)
+      allow(DocumentDelete).to receive(:new).with(document2).and_return(document2_delete)
+
+      expect(document1_delete).to receive(:delete)
+      expect(document2_delete).to receive(:delete)
+
+      vacancy.delete_documents
     end
   end
 
