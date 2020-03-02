@@ -1,0 +1,33 @@
+%h2.govuk-heading-m.mb0
+  = t('jobs.candidate_specification')
+
+.govuk-body-s.mb1
+  = link_to edit_school_job_candidate_specification_path(@vacancy.id), class: 'govuk-link', 'aria-label': t('jobs.aria_labels.change_candidate_specification') do
+    Change
+    %span.govuk-visually-hidden the candidate specification
+
+%dl.app-check-your-answers.app-check-your-answers--short
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question
+      = t('jobs.education')
+    %dd.app-check-your-answers__answer
+      = @vacancy.education
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), edit_school_job_candidate_specification_path(@vacancy.id, anchor: 'education'), 'aria-label': t('jobs.aria_labels.change_essential_educational_requirements'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question
+      = t('jobs.qualifications')
+    %dd.app-check-your-answers__answer
+      = @vacancy.qualifications
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), edit_school_job_candidate_specification_path(@vacancy.id, anchor: 'qualifications'), 'aria-label': t('jobs.aria_labels.change_essential_qualifications'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question
+      = t('jobs.experience')
+    %dd.app-check-your-answers__answer
+      = @vacancy.experience
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), edit_school_job_candidate_specification_path(@vacancy.id, anchor: 'experience'), 'aria-label': t('jobs.aria_labels.change_essential_skills_and_experience'), class: 'govuk-link'
