@@ -6,7 +6,15 @@ WITH
     #the earliest date that a user is recorded as authorised for TV access in DSI - for schools who signed up *after* we moved to DSI for authorisation in Nov 2019 this is the date the school first signed up
     COUNT(*) AS number_of_users #the current number of users this school has authorised to access TV in DSI
   FROM
-    `teacher-vacancy-service.production_dataset.users` AS users
+    `teacher-vacancy-service.production_dataset.dsi_users` AS users
+  GROUP BY
+    school_urn ),
+  school_approver_metrics AS ( #work out current approver-related metric values for all individual schools for use in the main query later
+  SELECT
+    school_urn AS urn,
+    COUNT(*) AS number_of_approvers #the current number of approvers this school has to authorise access to services in DSI
+  FROM
+    `teacher-vacancy-service.production_dataset.dsi_approvers` AS approvers
   GROUP BY
     school_urn ),
   school_vacancy_metrics AS ( #work out current vacancy-related metric values for all individual schools for use in the main query later
@@ -14,14 +22,19 @@ WITH
     school.urn AS urn,
     COUNT(*) AS vacancies_published,
     #the total number of vacancies this school published over all time
-    COUNTIF(PARSE_DATE("%e %B %E4Y",publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
-    COUNTIF(PARSE_DATE("%e %B %E4Y",publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
+    COUNTIF(PARSE_DATE("%e %B %E4Y",
+        publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
+    COUNTIF(PARSE_DATE("%e %B %E4Y",
+        publish_on) > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
     COUNTIF(status="published"
-      AND PARSE_DATE("%e %B %E4Y",expires_on) > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
+      AND PARSE_DATE("%e %B %E4Y",
+        expires_on) > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
   FROM
     `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
-  INNER JOIN `teacher-vacancy-service.production_dataset.school` AS school
-    ON vacancy.school_id=school.id
+  INNER JOIN
+    `teacher-vacancy-service.production_dataset.school` AS school
+  ON
+    vacancy.school_id=school.id
   WHERE
     status != "trashed" #exclude deleted vacancies from the counts above
     AND status != "draft" #exclude vacancies which have not (yet) been published from the counts above
@@ -81,6 +94,7 @@ IF
       FALSE)) AS signed_up,
   #similarly, if the school had signed up pre-DSI, sets signed_up to true; otherwise, work this out from the number of users the school has on DSI
   school_user_metrics.number_of_users AS number_of_users,
+  school_approver_metrics.number_of_approvers AS number_of_approvers,
   IFNULL(school_vacancy_metrics.vacancies_published,
     0) AS vacancies_published,
   #convert null values for vacancies_published into zeros
@@ -129,6 +143,10 @@ LEFT JOIN
   school_user_metrics
 ON
   school_user_metrics.urn=school.urn
+LEFT JOIN
+  school_approver_metrics
+ON
+  school_approver_metrics.urn=school.urn
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.STATIC_schools_historic_pre201119` AS historic_signups
 ON

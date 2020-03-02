@@ -465,3 +465,7 @@ variable "cloud_storage_bucket" {
   description = "Cloud Storage Bucket name"
   type        = "string"
 }
+
+variable "feature_sign_in_alert" {
+  default = "false"
+}

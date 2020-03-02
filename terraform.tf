@@ -179,6 +179,7 @@ module "ecs" {
   notify_prompt_feedback_for_expired_vacancies = "${var.notify_prompt_feedback_for_expired_vacancies}"
   feature_email_alerts                         = "${var.feature_email_alerts}"
   feature_import_vacancies                     = "${var.feature_import_vacancies}"
+  feature_sign_in_alert                        = "${var.feature_sign_in_alert}"
   feature_upload_documents                     = "${var.feature_upload_documents}"
   feature_key_info_search_snippet              = "${var.feature_key_info_search_snippet}"
   dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
