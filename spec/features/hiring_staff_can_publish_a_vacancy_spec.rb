@@ -297,7 +297,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       context 'when deleting uploaded files', js: true do
-        let(:document_delete) { double('document_upload') }
+        let(:document_delete) { double('document_delete') }
 
         before do
           allow(DocumentDelete).to receive(:new).and_return(document_delete)
