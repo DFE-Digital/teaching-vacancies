@@ -91,9 +91,8 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def add_file_size_error(filename)
-    @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
     @documents_form.errors.add(
-      filename,
+      :documents,
       t('jobs.file_size_error_message',
       filename: filename,
       size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT))
@@ -101,17 +100,15 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def add_google_error(filename)
-    @documents_form.errors.add(:documents, t('jobs.file_input_error_message', filename: filename))
-    @documents_form.errors.add(filename, t('jobs.file_google_error_message', filename: filename))
+    @documents_form.errors.add(:documents, t('jobs.file_google_error_message', filename: filename))
   end
 
   def add_virus_error(filename)
-    @documents_form.errors.add(:documents, t('jobs.file_input_error_message'))
-    @documents_form.errors.add(filename, t('jobs.file_virus_error_message', filename: filename))
+    @documents_form.errors.add(:documents, t('jobs.file_virus_error_message', filename: filename))
   end
 
   def errors_on_file?(filename)
-    @documents_form.errors.messages.keys.include?(filename.to_sym)
+    @documents_form.errors.messages.values.join(' ').include?(filename)
   end
 
   def document_attributes(params, upload)
