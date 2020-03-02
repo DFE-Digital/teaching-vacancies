@@ -9,10 +9,10 @@ WITH
     `teacher-vacancy-service.production_dataset.dsi_users` AS users
   GROUP BY
     school_urn ),
-  school_approver_metrics AS ( #work out current user-related metric values for all individual schools for use in the main query later
+  school_approver_metrics AS ( #work out current approver-related metric values for all individual schools for use in the main query later
   SELECT
     school_urn AS urn,
-    COUNT(*) AS number_of_approvers #the current number of users this school has authorised to access TV in DSI
+    COUNT(*) AS number_of_approvers #the current number of approvers this school has to authorise access to services in DSI
   FROM
     `teacher-vacancy-service.production_dataset.dsi_approvers` AS approvers
   GROUP BY
