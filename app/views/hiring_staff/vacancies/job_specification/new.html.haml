@@ -15,8 +15,8 @@
         = f.input :job_title,
                   label: t('jobs.job_title'),
                   hint: t('jobs.form_hints.job_title'),
-                  wrapper_html: { id: 'job_title' },
-                  input_html: { class: 'govuk-js-character-count' },
+                  wrapper_html: {id: 'job_title'},
+                  input_html: {class: 'govuk-js-character-count'},
                   required: true
         %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
@@ -25,22 +25,22 @@
                 as: :text,
                 label: t('jobs.description'),
                 hint: t('jobs.form_hints.description'),
-                input_html: { rows: 10 },
-                wrapper_html: { id: 'job_description' },
+                input_html: {rows: 10},
+                wrapper_html: {id: 'job_description'},
                 required: true
       = f.input :benefits,
                 wrapper: 'textarea',
                 as: :text,
                 label: t('jobs.benefits'),
                 hint: t('jobs.form_hints.benefits').html_safe,
-                input_html: { rows: 5 },
-                wrapper_html: { id: 'benefits' },
+                input_html: {rows: 5},
+                wrapper_html: {id: 'benefits'},
                 required: false
       = f.input :subject_id,
                 wrapper: 'select',
                 label: t('jobs.main_subject'),
                 hint: t('jobs.form_hints.subject'),
-                wrapper_html: { id: 'main_subject' },
+                wrapper_html: {id: 'main_subject'},
                 collection: subject_options,
                 required: false
 
@@ -49,14 +49,14 @@
                   wrapper: 'select',
                   label: t('jobs.first_supporting_subject'),
                   hint: t('jobs.form_hints.supporting_subject'),
-                  wrapper_html: { id: 'first_supporting_subject' },
+                  wrapper_html: {id: 'first_supporting_subject'},
                   collection: subject_options,
                   required: false
         = f.input :second_supporting_subject_id,
                   wrapper: 'select',
                   label: t('jobs.second_supporting_subject'),
                   hint: t('jobs.form_hints.supporting_subject'),
-                  wrapper_html: { id: 'second_supporting_subject' },
+                  wrapper_html: {id: 'second_supporting_subject'},
                   collection: subject_options,
                   required: false
 
@@ -76,8 +76,8 @@
                   label: t('jobs.weekly_hours'),
                   as: :decimal,
                   hint: t('jobs.form_hints.weekly_hours'),
-                  wrapper_html: { id: 'weekly_hours' },
-                  input_html: { class: 'govuk-!-width-one-half' },
+                  wrapper_html: {id: 'weekly_hours'},
+                  input_html: {class: 'govuk-!-width-one-half'},
                   required: false
 
       %fieldset.govuk-fieldset#pay_scale_range
@@ -109,7 +109,7 @@
         = f.input :minimum_salary,
                   input_html: { class: 'govuk-input--width-10' },
                   as: :currency,
-                  wrapper_html: { id: 'minimum_salary' }
+                  wrapper_html: {id: 'minimum_salary'}
 
         = f.input :maximum_salary,
                   input_html: { class: 'govuk-input--width-10' },
@@ -124,7 +124,7 @@
                 wrapper: 'select',
                 label: t('jobs.leadership_level'),
                 collection: Leadership.order(:title),
-                wrapper_html: { id: 'leadership' },
+                wrapper_html: {id: 'leadership'},
                 required: false
 
       %div.govuk-form-group#starts_on

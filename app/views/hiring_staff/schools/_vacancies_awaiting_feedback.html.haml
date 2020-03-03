@@ -6,14 +6,14 @@
 
     %p.govuk-body#awaiting_feedback_intro=t('jobs.awaiting_feedback_intro')
 
-    %table{ class: 'vacancies govuk-table govuk-!-margin-top-4', id: 'awaiting_feedback' }
+    %table{class: 'vacancies govuk-table govuk-!-margin-top-4', id: 'awaiting_feedback'}
       %thead.govuk-table__head
         %tr.govuk-table__row
-          %th{ class: 'govuk-table__header job-title-table-header' }= table_header_sort_by(t('jobs.job_title'), 'awaiting_feedback', column: 'job_title', sort: @sort)
+          %th{class: 'govuk-table__header job-title-table-header'}= table_header_sort_by(t('jobs.job_title'), 'awaiting_feedback', column: 'job_title', sort: @sort)
           %th.govuk-table__header= table_header_sort_by(t('jobs.publish_on'), 'awaiting_feedback', column: 'publish_on', sort: @sort)
           %th.govuk-table__header= table_header_sort_by(t('jobs.expired_on'), 'awaiting_feedback', column: 'expires_on', sort: @sort)
-          %th{ class: 'govuk-table__header govuk-!-width-one-quarter' }= t('jobs.job_filled')
-          %th{ class: 'govuk-table__header govuk-!-width-one-quarter' }= t('jobs.listed_elsewhere')
+          %th{class: 'govuk-table__header govuk-!-width-one-quarter'}= t('jobs.job_filled')
+          %th{class: 'govuk-table__header govuk-!-width-one-quarter'}= t('jobs.listed_elsewhere')
           %th.govuk-table__header= t('jobs.actions')
       %tbody.govuk-table__body
         - presenter.vacancies.each do |vacancy|

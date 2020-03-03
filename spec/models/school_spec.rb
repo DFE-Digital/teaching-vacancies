@@ -4,27 +4,6 @@ RSpec.describe School, type: :model do
   it { expect(subject.attributes).to include('gias_data') }
   it { expect(described_class.columns_hash['gias_data'].type).to eql(:json) }
 
-  describe '#has_religious_character?' do
-    before do
-      subject.gias_data = {}.to_json
-    end
-
-    it 'returns false when the school has no gias_data' do
-      subject.gias_data = nil
-      expect(subject.has_religious_character?).to be false
-    end
-
-    it 'returns false when the school has no religious_character' do
-      allow(subject.gias_data).to receive(:[]).with('religious_character').and_return 'Does not apply'
-      expect(subject.has_religious_character?).to be false
-    end
-
-    it 'returns true when the school has a religious character' do
-      allow(subject.gias_data).to receive(:[]).with('religious_character').and_return 'Roman Catholic'
-      expect(subject.has_religious_character?).to be true
-    end
-  end
-
   context 'when there is no previous geolocation' do
     let(:school) { create(:school, easting: nil, northing: nil) }
 

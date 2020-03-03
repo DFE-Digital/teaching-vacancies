@@ -1,10 +1,4 @@
 class SchoolPresenter < BasePresenter
-  def school_type_with_religious_character
-    model.has_religious_character? ?
-      model.school_type.label + ', ' + model.gias_data['religious_character'] :
-      model.school_type.label
-  end
-
   def location
     [model.name, model.town, model.county].reject(&:blank?).join(', ')
   end

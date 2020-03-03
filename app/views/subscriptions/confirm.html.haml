@@ -16,7 +16,7 @@
         - @subscription.filtered_search_criteria.each_pair do |filter, value|
           %li
             - if filter.present?
-              %span{ class: 'govuk-!-font-weight-bold' } #{filter.humanize}:
+              %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
             = value
 
     %p.govuk-body=t('subscriptions.next_steps')

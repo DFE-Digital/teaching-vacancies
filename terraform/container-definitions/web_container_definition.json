@@ -199,10 +199,6 @@
         "value": "${feature_upload_documents}"
       },
       {
-        "name": "FEATURE_KEY_INFO_SEARCH_SNIPPET",
-        "value": "${feature_key_info_search_snippet}"
-      },
-      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },
