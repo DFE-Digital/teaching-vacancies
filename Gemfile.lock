@@ -205,7 +205,7 @@ GEM
       html2haml (>= 1.0.1)
       railties (>= 5.1)
     hashdiff (1.0.0)
-    hashie (3.6.0)
+    hashie (4.1.0)
     high_voltage (3.1.2)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
@@ -285,8 +285,8 @@ GEM
       nokogiri (~> 1.8, >= 1.8.4)
     notifications-ruby-client (2.9.0)
       jwt (>= 1.5, < 3)
-    omniauth (1.9.0)
-      hashie (>= 3.4.6, < 3.7.0)
+    omniauth (1.9.1)
+      hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
     omniauth_openid_connect (0.3.3)
       addressable (~> 2.5)
@@ -324,7 +324,7 @@ GEM
     public_suffix (4.0.1)
     puma (4.3.3)
       nio4r (~> 2.0)
-    rack (2.0.8)
+    rack (2.2.2)
     rack-oauth2 (1.10.1)
       activesupport
       attr_required
