@@ -12,8 +12,7 @@ SELECT
     feedback_available) AS exclusive_hires_rate_upperbound
 FROM (
   SELECT
-    DATE_TRUNC(PARSE_DATE("%e %B %E4Y",
-        publish_on),MONTH) AS month,
+    DATE_TRUNC(publish_on,MONTH) AS month,
     COUNT(*) AS vacancies_published,
     COUNTIF(hired_status IS NOT NULL
       AND listed_elsewhere IS NOT NULL) AS feedback_available,
@@ -29,7 +28,7 @@ FROM (
         "listed_free",
         "listed_dont_know")) AS exclusive_hires_upperbound
   FROM
-    `teacher-vacancy-service.production_dataset.vacancy`
+    `teacher-vacancy-service.production_dataset.feb20_vacancy`
   WHERE
     status NOT IN ("trashed",
       "deleted",
