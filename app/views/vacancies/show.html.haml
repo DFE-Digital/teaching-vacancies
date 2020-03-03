@@ -1,5 +1,5 @@
 = render partial: 'vacancies/back_link'
 = render partial: 'vacancies/show'
 
-%script.jobref{type: 'application/ld+json'}
-  = raw(render partial: 'api/vacancies/show.json.jbuilder', locals: {vacancy: @vacancy})
+%script.jobref{ type: 'application/ld+json' }
+  = raw(render partial: 'api/vacancies/show.json.jbuilder', locals: { vacancy: @vacancy })

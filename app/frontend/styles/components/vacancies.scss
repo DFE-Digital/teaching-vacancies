@@ -4,22 +4,25 @@
   list-style: none;
   h2 {
     font-weight: 700;
-    font-size: 22px;
+
+    @media (max-width: 642px) {
+      font-size: 22px;
+    }
   }
   p {
     margin-bottom: $govuk-gutter-half;
   }
   li {
-    border-bottom: 1px solid govuk-colour("light-grey");
-    padding-bottom: $govuk-gutter-half;
+    margin: 20px;
     margin-bottom: $govuk-gutter-half;
     dl {
       @include govuk-font(16);
+      margin-block-end: 0em;
     }
     dt, dd {
       display: inline-block;
       vertical-align: top;
-      padding-bottom: 5px;
+      padding-bottom: 15px;
     }
     dt {
       width: 25%;
@@ -38,5 +41,15 @@
         width: 24%;
       }
     }
+    // Creating a border from a background image.
+    // This lets us define the border's width
+    // with the first argument of background-size.
+    background-image: linear-gradient(
+      govuk-colour("dark-grey"),
+      govuk-colour("dark-grey")
+    );
+    background-repeat: no-repeat;
+    background-size: 80% 2px;
+    background-position: left bottom;
   }
 }

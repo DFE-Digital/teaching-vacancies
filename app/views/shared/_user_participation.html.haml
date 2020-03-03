@@ -4,7 +4,7 @@
       %h2.govuk-fieldset__heading
         = t('general_feedback.user_participation_legend_html')
 
-    .govuk-radios.govuk-radios--conditional{'data-module': 'govuk-radios'}
+    .govuk-radios.govuk-radios--conditional{ 'data-module': 'govuk-radios' }
       .govuk-radios__item
         = f.radio_button(:user_participation_response, :interested, class: 'govuk-radios__input', "data-aria-controls": 'conditional_email')
         = f.label(t('general_feedback.user_participation_options.interested'), class: "govuk-label govuk-radios__label")
@@ -13,7 +13,7 @@
         = f.input :email, as: :email,
             label: t('general_feedback.user_interested_email_heading'),
             hint: t('general_feedback.user_interested_email_text'),
-            wrapper_html: {id: 'email'},
+            wrapper_html: { id: 'email' },
             required: true
 
       .govuk-radios__item
