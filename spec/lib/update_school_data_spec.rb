@@ -98,8 +98,8 @@ RSpec.describe UpdateSchoolData do
     end
 
     context 'and the schools aren’t already in the database' do
-      it 'adds all the open schools' do
-        expect { UpdateSchoolData.new.run }.to change(School, :count).by(7)
+      it 'adds all the schools (open and closed)' do
+        expect { UpdateSchoolData.new.run }.to change(School, :count).by(8)
       end
 
       describe 'it loads the expected attributes' do
