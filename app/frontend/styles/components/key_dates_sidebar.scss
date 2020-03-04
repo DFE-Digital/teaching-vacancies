@@ -5,40 +5,49 @@ ul.key-dates-timeline {
   padding-left: 0;
   list-style-type: none;
 
-  &:before {
-      background-color: #1d70b8;
-      content: "";
-      height: 100%;
-      left: 0;
-      position: absolute;
+  li:first-of-type {
+    &:before {
       top: 10px;
-      width: 5px;
+    }
+  }
+
+  li:last-of-type {
+    &:before {
+      height: 10px;
+    }
   }
 
   .key-dates-timeline__item {
-      margin-bottom: 10px;
-      padding-left: 20px;
-      position: relative;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+
+    &:before {
+      background-color: #1d70b8;
+      content: "";
+      height: 130%;
+      left: 0;
+      position: absolute;
+      width: 5px;
+    }
+
+    .key-dates-timeline__title {
+      line-height: 1.31579;
+      display: inline;
 
       &:before {
-          background-color: #1d70b8;
-          content: "";
-          height: 5px;
-          left: 0;
-          position: absolute;
-          top: 10px;
-          width: 15px;
+        background-color: #1d70b8;
+        content: "";
+        height: 5px;
+        left: 0;
+        position: absolute;
+        top: 10px;
+        width: 15px;
       }
-      .key-dates-timeline__title {
-          line-height: 1.31579;
-          display: inline;
-      }
-      .key-dates-timeline__by {
-          margin: 0;
-
-      }
-
-
+    }
+    .key-dates-timeline__by {
+      margin: 0;
+    }
   }
 }
 
