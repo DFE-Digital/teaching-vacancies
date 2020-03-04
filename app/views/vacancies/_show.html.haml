@@ -25,10 +25,10 @@
         = t('jobs.key_information')
       %ul.govuk-tabs__list
         %li.govuk-tabs__list-item.govuk-tabs__list-item--selected
-          %a.govuk-tabs__tab.tab-links-override{:href => "#job-details"}
+          %a.govuk-tabs__tab.tab-links-override{ :href => "#job-details" }
             = t('jobs.job_details')
         %li.govuk-tabs__list-item
-          %a.govuk-tabs__tab.tab-links-override{:href => "#school-overview"}
+          %a.govuk-tabs__tab.tab-links-override{ :href => "#school-overview" }
             = t('schools.school_overview')
          
       = render '/vacancies/job_details_section'
