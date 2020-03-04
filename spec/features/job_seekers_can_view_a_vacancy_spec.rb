@@ -120,6 +120,8 @@ RSpec.feature 'Viewing a single published vacancy' do
       context 'for a vacancy published BEFORE the flag is switched on' do
         before do
           vacancy = create(:vacancy, :published)
+          vacancy.documents = []
+          vacancy.save
           visit job_path(vacancy)
         end
 

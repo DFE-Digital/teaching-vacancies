@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Hiring staff document upload routing' do
+  let(:vacancy) do
+    create(:vacancy)
+  end
+
   before do
     allow(ENV).to receive(:[])
   end
@@ -11,9 +15,10 @@ RSpec.describe 'Hiring staff document upload routing' do
     end
 
     it {
-      expect(get: '/school/job/documents').to route_to(
+      expect(get: school_job_documents_path(vacancy.id)).to route_to(
         controller: 'hiring_staff/vacancies/documents',
-        action: 'index',
+        action: 'show',
+        job_id: vacancy.id
       )
     }
   end
@@ -24,10 +29,10 @@ RSpec.describe 'Hiring staff document upload routing' do
     end
 
     it {
-      expect(get: '/school/job/documents').to route_to(
+      expect(get: school_job_documents_path(vacancy.id)).to route_to(
         controller: 'errors',
         action: 'not_found',
-        path: 'school/job/documents'
+        path: "school/jobs/#{vacancy.id}/documents"
       )
     }
   end

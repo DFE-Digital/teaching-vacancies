@@ -15,9 +15,9 @@
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     = render 'hiring_staff/vacancies/review_vacancy_sections/review_job_specification'
-    - if @vacancy.show_supporting_documents?
-      = render 'hiring_staff/vacancies/review_vacancy_sections/review_supporting_documents'
-    - if @vacancy.show_candidate_specification?
+    - if UploadDocumentsFeature.enabled?
+      = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
+    - else
       = render 'hiring_staff/vacancies/review_vacancy_sections/review_candidate_specification'
 
     = render 'hiring_staff/vacancies/review_vacancy_sections/review_application_details'

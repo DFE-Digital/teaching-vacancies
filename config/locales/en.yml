@@ -91,6 +91,8 @@ en:
       supporting_documents_form:
         supporting_documents: 'These could include, for example, a job description, person specification or application pack'
   jobs:
+    notification_labels:
+      new: 'new'
     heading: 'Find a job in teaching'
     location_description: 'Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers, with no recruitment fees for schools.'
     location_search_heading: 'Teaching jobs in %{location}'

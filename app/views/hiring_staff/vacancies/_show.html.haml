@@ -38,7 +38,7 @@
       %h2.govuk-heading-m= t('jobs.description')
       %p= @vacancy.job_description
 
-      - if @vacancy.show_candidate_specification?
+      - if !@vacancy.show_supporting_documents? && @vacancy.any_candidate_specification?
         - if @vacancy.education?
           %h2.govuk-heading-m= t('jobs.education')
           %p= @vacancy.education
@@ -55,7 +55,7 @@
         %h2.govuk-heading-m= t('jobs.benefits')
         %p= @vacancy.benefits
 
-      - if @vacancy.show_supporting_documents? && !@vacancy.documents.none?
+      - if @vacancy.show_supporting_documents?
         %h4.govuk-heading-m= t('jobs.supporting_documents')
         .supporting-docs
           %ul
