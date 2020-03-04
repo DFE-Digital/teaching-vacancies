@@ -793,7 +793,7 @@ RSpec.feature 'Creating a vacancy' do
 
         expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
         visit school_job_path(vacancy.id)
-        expect(page).to have_content('Date posted')
+        expect(page).to have_content('Date listed')
         expect(page).to have_content("#{format_date(vacancy.publish_on)}")
       end
 
