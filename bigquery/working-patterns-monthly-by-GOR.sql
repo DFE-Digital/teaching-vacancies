@@ -17,35 +17,36 @@ SELECT
 FROM (
   SELECT
     month,
-    regions.string_field_1 AS region,
+    regions.name AS region,
     COUNT(vacancy.id) AS number_of_vacancies,
-    COUNTIF(vacancy.working_patterns="[\"full_time\"]") AS number_of_full_time_only_vacancies,
-    COUNTIF(vacancy.working_patterns!="[\"full_time\"]") AS number_of_vacancies_offering_flexible_working,
-    COUNTIF(vacancy.working_patterns LIKE "%full_time%") AS number_of_vacancies_offering_full_time,
-    COUNTIF(vacancy.working_patterns LIKE "%part_time%") AS number_of_vacancies_offering_part_time,
-    COUNTIF(vacancy.working_patterns LIKE "%job_share%") AS number_of_vacancies_offering_job_share,
-    COUNTIF(vacancy.working_patterns LIKE "%compressed_hours%") AS number_of_vacancies_offering_compressed_hours,
-    COUNTIF(vacancy.working_patterns LIKE "%compressed_hours%") AS number_of_vacancies_offering_staggered_hours,
+    COUNTIF("full_time" IN UNNEST(vacancy.working_patterns)
+      AND ARRAY_LENGTH(vacancy.working_patterns)=1) AS number_of_full_time_only_vacancies,
+    COUNTIF("full_time" NOT IN UNNEST(vacancy.working_patterns)) AS number_of_vacancies_offering_flexible_working,
+    COUNTIF("full_time" IN UNNEST(vacancy.working_patterns)) AS number_of_vacancies_offering_full_time,
+    COUNTIF("part_time" IN UNNEST(vacancy.working_patterns)) AS number_of_vacancies_offering_part_time,
+    COUNTIF("job_share" IN UNNEST(vacancy.working_patterns)) AS number_of_vacancies_offering_job_share,
+    COUNTIF("compressed_hours" IN UNNEST(vacancy.working_patterns)) AS number_of_vacancies_offering_compressed_hours,
+    COUNTIF("staggered_hours" IN UNNEST(vacancy.working_patterns)) AS number_of_vacancies_offering_staggered_hours,
   FROM
     UNNEST(GENERATE_DATE_ARRAY('2018-08-01',DATE_TRUNC(CURRENT_DATE(),MONTH),INTERVAL 1 MONTH)) AS month
   LEFT JOIN
-    `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
+    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
   ON
-    DATE_TRUNC(PARSE_DATE("%e %B %E4Y",
-        vacancy.publish_on),MONTH)=month
+    DATE_TRUNC(vacancy.publish_on,MONTH)=month
   LEFT JOIN
-    `teacher-vacancy-service.production_dataset.school` AS school
+    `teacher-vacancy-service.production_dataset.feb20_school` AS school
   ON
     vacancy.school_id=school.id
   LEFT JOIN
-    `teacher-vacancy-service.production_dataset.region` AS regions
+    `teacher-vacancy-service.production_dataset.feb20_region` AS regions
   ON
-    school.region_id=regions.string_field_0
+    school.region_id=regions.id
   WHERE
     status != "draft"
     AND status != "trashed"
     AND status != "deleted"
   GROUP BY
-    month,region )
+    month,
+    region )
 ORDER BY
   month

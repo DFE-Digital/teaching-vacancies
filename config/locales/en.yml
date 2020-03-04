@@ -108,8 +108,10 @@ en:
     inline_feedback_error: Please select an option.
     feedback_all_submitted: 'You have provided feedback on all your expired jobs. Thank you for sharing this information, which will help us to improve the service. If you have general comments on the service you can share them with us using <a href="/feedback/new">this feedback form.</a>'
     salary: 'Salary'
-    publish_on: 'Date posted'
+    school_type: 'School type'
     expires_on: 'Closing date'
+    publish_on: 'Date posted'
+    start_on: 'Expected start date'
     sort_by_earliest_closing_date: 'Least time to apply'
     sort_by_furthest_closing_date: 'Most time to apply'
     sort_by_most_recent: 'Newest job listing'
@@ -120,8 +122,8 @@ en:
     page_views: 'Total views'
     get_more_info_clicks: "Total 'get more info' clicks"
     working_patterns: 'Working pattern'
-    working_patterns_info_one: '%{patterns} only.'
-    working_patterns_info_many: 'Will consider %{patterns}.'
+    working_patterns_info_one: '%{patterns} only'
+    working_patterns_info_many: 'Will consider %{patterns}'
     flexible_working_info: 'Email %{mailto} for further details.'
     newly_qualified_teacher: 'Newly qualified teacher'
     starts_on: 'Expected start date'

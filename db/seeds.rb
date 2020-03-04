@@ -33,28 +33,31 @@ SchoolType.create(label: 'Free School', code: '11')
 SchoolType.create(label: 'LA Maintained School', code: '4')
 SchoolType.create(label: 'Special School', code: '5')
 
-academy = FactoryBot.create(:school, name: 'Macmillan Academy',
-                                     school_type: academy_type,
-                                     urn: 137138,
-                                     address: 'Stockton Road',
-                                     phase: :secondary,
-                                     town: 'Middlesbrough',
-                                     postcode: 'TS5 4AG',
-                                     url: 'http://www.macmillan-academy.org.uk',
-                                     region: london,
-                                     geolocation: '(54.565770,-1.264489)')
+academy = FactoryBot.create(:school,
+                            address: 'Stockton Road',
+                            geolocation: '(54.565770,-1.264489)',
+                            gias_data: { religious_character: 'None' },
+                            name: 'Macmillan Academy',
+                            phase: :secondary,
+                            postcode: 'TS5 4AG',
+                            region: london,
+                            school_type: academy_type,
+                            town: 'Middlesbrough',
+                            url: 'http://www.macmillan-academy.org.uk',
+                            urn: 137138)
 
 community_school = FactoryBot.create(:school,
-                                     name: 'Burnsfield Infant School',
-                                     school_type: community_school_type,
-                                     urn: 110628,
                                      address: 'Burnsfield Estate',
-                                     phase: :primary,
-                                     town: 'Chatteris',
                                      county: 'Cambridgeshire',
+                                     geolocation: '(52.455421,0.043325)',
+                                     gias_data: { religious_character: 'Roman Catholic' },
+                                     name: 'Burnsfield Infant School',
+                                     phase: :primary,
                                      postcode: 'PE16 6ET',
                                      region: se,
-                                     geolocation: '(52.455421,0.043325)')
+                                     school_type: community_school_type,
+                                     town: 'Chatteris',
+                                     urn: 110628)
 
 payscale = PayScale.limit(5).sample(1).first
 leadership = Leadership.limit(1).sample(1).first

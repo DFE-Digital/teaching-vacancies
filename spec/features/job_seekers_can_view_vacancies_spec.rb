@@ -1,11 +1,29 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
+  let(:feature_enabled?) { false }
+
+  before do
+    allow(KeyInfoSearchSnippetFeature).to receive(:enabled?).and_return(feature_enabled?)
+  end
+
   scenario 'Vacancies are listed with summary information', elasticsearch: true do
     vacancy = create(:vacancy)
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
-    verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
+    verify_vacancy_list_page_details_without_feature_enabled(VacancyPresenter.new(vacancy))
+  end
+
+  context 'with key info search snippet feature enabled' do
+    let(:feature_enabled?) { true }
+
+    scenario 'Vacancies are listed with summary information', elasticsearch: true do
+      vacancy = create(:vacancy)
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      verify_vacancy_list_page_details_with_feature_enabled(VacancyPresenter.new(vacancy))
+    end
   end
 
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
@@ -229,7 +247,7 @@ RSpec.feature 'Viewing vacancies' do
       Vacancy.__elasticsearch__.client.indices.flush
       visit jobs_path(vacancy)
 
-      verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
+      verify_vacancy_list_page_details_without_feature_enabled(VacancyPresenter.new(vacancy))
     end
   end
 
