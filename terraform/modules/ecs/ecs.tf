@@ -184,6 +184,7 @@ data "template_file" "web_container_definition" {
     google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
     cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
   }
 }
 
