@@ -1,7 +1,8 @@
 .govuk-grid-column-one-third
   %aside.vacancy--metadata
-    %h3.govuk-heading-s
-      = SchoolVacancyPresenter.new(@vacancy).days_to_apply
+    - unless @vacancy.expired?
+      %h3.govuk-heading-s
+        = SchoolVacancyPresenter.new(@vacancy).days_to_apply
     %ul.key-dates-timeline   
       %li.key-dates-timeline__item
         %h3.key-dates-timeline__title.govuk-heading-s
