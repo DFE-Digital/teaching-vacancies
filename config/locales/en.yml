@@ -429,6 +429,10 @@ en:
           - 'leadership level'
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
+    size:
+      up_to: 'Up to'
+      pupils: 'pupil'
+      enrolled: 'enrolled'        
   subscriptions:
     link:
       text: 'Subscribe to a job alert.'
