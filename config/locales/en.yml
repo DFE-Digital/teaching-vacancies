@@ -486,17 +486,18 @@ en:
     title: Statistics
     intro: This page is an event log used by the service team to measure and monitor the stability and performance of Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018 (the date we began recording statistics).
   buttons:
+    accept_and_continue: 'Accept and continue'
     apply_filters: 'Search'
     apply_filters_if_criteria: 'Refine search'
-    save_and_continue: 'Save and continue'
-    accept_and_continue: 'Accept and continue'
-    update_job: 'Update job'
-    find: 'Find'
-    delete: 'Delete'
+    change: 'Change'
     continue: 'Continue'
     create_job: 'Create a job'
-    change: 'Change'
+    delete: 'Delete'
+    dismiss: 'Dismiss'
+    find: 'Find'
+    save_and_continue: 'Save and continue'
     submit: 'Submit'
+    update_job: 'Update job'
 
   messages:
     jobs:
@@ -858,6 +859,12 @@ en:
             - the hiring staff journey for listing a job on the service, available at <a href='https://teaching-vacancies.service.gov.uk/identifications/new' target='_blank' class='govuk-link'>https://teaching-vacancies.service.gov.uk/identifications/new</a>
             - the jobseeker journey for searching for a teaching job and signing up for a job alert, available at <a href='https://teaching-vacancies.service.gov.uk/' target='_blank' class='govuk-link'>https://teaching-vacancies.service.gov.uk/</a>
       date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
+  shared:
+    file_remove_confirmation_dialogue:
+      are_you_sure_html: "Are you sure you want to remove '<span id=\"js-gem-c-modal-dialogue__file-name\"></span>'?"
+      delete_error: 'An error occurred while removing the file.'
+      no_keep_file: 'No, keep file'
+      yes_remove_file: 'Yes, remove file'
   footer:
       request_support: "Report problems via email"
       provide_feedback: "Give feedback"
