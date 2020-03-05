@@ -66,7 +66,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank')))
         end
 
-        within_row_for(text: I18n.t('jobs.job_summary')) do
+        within_row_for(text: I18n.t('jobs.description')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
         end
 
@@ -406,7 +406,7 @@ RSpec.feature 'Creating a vacancy' do
 
           click_on 'Save and continue'
 
-          click_link_in_container_with_text('Job summary')
+          click_link_in_container_with_text('Job description')
 
           expect(page).to have_content('Step 1 of 3')
         end
