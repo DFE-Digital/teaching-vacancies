@@ -117,12 +117,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.application_link)
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
-
-    if vacancy.weekly_hours?
-      expect(page).to have_content(vacancy.weekly_hours)
-    elsif vacancy.weekly_hours.present?
-      expect(page).not_to have_content(vacancy.weekly_hours)
-    end
   end
 
   def verify_vacancy_show_page_details(vacancy)
