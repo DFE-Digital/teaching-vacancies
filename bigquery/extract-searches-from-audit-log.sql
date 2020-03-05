@@ -39,7 +39,7 @@ FROM (
   IF
     (REGEXP_CONTAINS(data_location,"[0-9]"),
       "postcode",
-      data_location) AS location,
+      TRIM(LOWER(data_location))) AS location,
     #if the location searched for contains a number anywhere, replace it with 'postcode' to anonymise it and allow all postcode searches to be counted together later
     data_radius AS radius,
   IF
