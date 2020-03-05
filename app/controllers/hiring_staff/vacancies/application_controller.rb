@@ -14,6 +14,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
   end
 
+  def set_vacancy
+    @vacancy = params[:job_id] ? current_school.vacancies.find(params[:job_id]) : nil
+  end
+
   def store_vacancy_attributes(attributes)
     session[:vacancy_attributes] ||= {}
     session[:vacancy_attributes].merge!(attributes.compact)
@@ -46,6 +50,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def review_path_with_errors(vacancy)
     school_job_review_path(job_id: vacancy.id, anchor: 'errors', source: 'publish')
+  end
+
+  def redirect_unless_vacancy
+    redirect_unless_vacancy_session_id unless @vacancy
   end
 
   def redirect_unless_vacancy_session_id

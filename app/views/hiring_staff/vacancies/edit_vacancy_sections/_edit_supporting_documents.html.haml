@@ -1,12 +1,12 @@
 %h2.govuk-heading-m.mb0
   = t('jobs.supporting_documents')
-  - if UploadDocumentsFeature.enabled? && @vacancy.documents.none?
+  - if UploadDocumentsFeature.enabled? && !@vacancy.supporting_documents
     .notification-tag
       %strong.govuk-tag.app-task-list__task-completed
-        = t('jobs.notfication_labels.new')
+        = t('jobs.notification_labels.new')
 
 .govuk-body-s.mb1#change-supporting-documents
-  = link_to school_job_documents_path(@vacancy.id), class: 'govuk-link', 'aria-label': 'Change supporting documents' do
+  = link_to school_job_documents_path(job_id: @vacancy.id, change: true), class: 'govuk-link', 'aria-label': 'Change the supporting documents' do
     Change
     %span.govuk-visually-hidden the supporting documents
 

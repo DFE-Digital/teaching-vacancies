@@ -191,6 +191,32 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
+    context '#supporting_documents' do
+      let(:feature_enabled?) { true }
+
+      scenario 'can edit documents for a legacy vacancy' do
+        vacancy.supporting_documents = nil
+        vacancy.documents = []
+        vacancy.save
+
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+        expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
+          .text).to include(I18n.t('jobs.notification_labels.new'))
+
+        find("[id='change-supporting-documents']").click_link('Change')
+
+        expect(page).to have_content(I18n.t('jobs.upload_file'))
+
+        click_on 'Update job'
+
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+        expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
+          .text).to_not include(I18n.t('jobs.notification_labels.new'))
+      end
+    end
+
     context '#application_details' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
