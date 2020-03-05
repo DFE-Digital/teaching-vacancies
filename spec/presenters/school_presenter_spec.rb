@@ -16,6 +16,26 @@ RSpec.describe SchoolPresenter do
     end
   end
 
+  describe '#school_size' do
+    it 'returns the number of pupils when available' do
+      school = SchoolPresenter.new(build(:school, gias_data: { 'NumberOfPupils': 17, 'SchoolCapacity': 20 }))
+
+      expect(school.school_size).to eq('17 pupils enrolled')
+    end
+
+    it 'falls back to returning the capacity of the school when number of pupils unavailable' do
+      school = SchoolPresenter.new(build(:school, gias_data: { 'SchoolCapacity': 20 }))
+
+      expect(school.school_size).to eq('Up to 20 pupils')
+    end
+
+    it 'defaults to a no-information message otherwise' do
+      school = SchoolPresenter.new(build(:school, gias_data: {}))
+
+      expect(school.school_size).to eq(I18n.t('schools.no_information'))
+    end
+  end
+
   describe '#full_address' do
     it 'should return a comma separated full address of the school' do
       school = SchoolPresenter.new(create(:school))

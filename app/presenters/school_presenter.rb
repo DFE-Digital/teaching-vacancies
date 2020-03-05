@@ -1,4 +1,8 @@
+require 'active_support/inflector'
+
 class SchoolPresenter < BasePresenter
+  OFSTED_REPORT_ENDPOINT = 'https://www.ofsted.gov.uk/oxedu_providers/full/(urn)/'
+
   def school_type_with_religious_character
     model.has_religious_character? ?
       model.school_type.label + ', ' + model.gias_data['religious_character'] :
@@ -11,15 +15,15 @@ class SchoolPresenter < BasePresenter
 
   def school_size
     if model.gias_data.present?
-      return model.gias_data['NumberOfPupils'] + ' pupils enrolled' if model.gias_data['NumberOfPupils'].present?
-      return 'Up to ' + model.gias_data['SchoolCapacity'] + 'pupils' if model.gias_data['SchoolCapacity'].present?
+      return number_of_pupils if model.gias_data['NumberOfPupils'].present?
+      return school_capacity if model.gias_data['SchoolCapacity'].present?
     end
     I18n.t('schools.no_information')
   end
 
   def ofsted_report
     if model.gias_data.present?
-      "https://www.ofsted.gov.uk/oxedu_providers/full/(urn)/#{model.gias_data['URN']}"
+      OFSTED_REPORT_ENDPOINT + model.gias_data['URN']
     end
   end
 
@@ -33,5 +37,19 @@ class SchoolPresenter < BasePresenter
     else
       I18n.t('schools.not_given')
     end
+  end
+
+  private
+
+  def number_of_pupils
+    [model.gias_data['NumberOfPupils'].to_s, pupils, I18n.t('schools.size.enrolled')].join(' ')
+  end
+
+  def school_capacity
+    [I18n.t('schools.size.up_to'), model.gias_data['SchoolCapacity'].to_s, pupils].join(' ')
+  end
+
+  def pupils
+    I18n.t('schools.size.pupils').pluralize
   end
 end
