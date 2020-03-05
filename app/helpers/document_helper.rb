@@ -4,7 +4,7 @@ module DocumentHelper
             '#',
             class: 'govuk-link govuk-link--no-visited-state',
             data: {
-              delete_path: document_school_job_path(id: document.id),
+              delete_path: school_job_documents_path(id: document.id, job_id: document.vacancy_id),
               document_id: document.id,
               file_name: document[:name],
               target: 'modal-default',

@@ -1,0 +1,25 @@
+%h2.govuk-heading-m.mb0
+  = t('jobs.supporting_documents')
+  - if UploadDocumentsFeature.enabled? && @vacancy.documents.none?
+    .notification-tag
+      %strong.govuk-tag.app-task-list__task-completed
+        = t('jobs.notfication_labels.new')
+
+.govuk-body-s.mb1#change-supporting-documents
+  = link_to school_job_documents_path(@vacancy.id), class: 'govuk-link', 'aria-label': 'Change supporting documents' do
+    Change
+    %span.govuk-visually-hidden the supporting documents
+
+%dl.app-check-your-answers.app-check-your-answers--short
+  - if @vacancy.documents.none?
+    .app-check-your-answers__contents
+      %dt#supporting_documents{ class: "govuk-!-font-weight-regular" }
+        = t('jobs.no_supporting_documents')
+  - else
+    - @vacancy.documents.each_with_index do |document, index|
+      - index_from_one = index + 1
+      .app-check-your-answers__contents
+        %dt.app-check-your-answers__question#supporting_documents
+          = "Document #{index_from_one}"
+        %dd.app-check-your-answers__answer
+          = document[:name]
