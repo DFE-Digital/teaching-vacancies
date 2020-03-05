@@ -6,16 +6,8 @@
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.type')
-        - if @vacancy.school.gias_data.present?
-          - if @vacancy.school.gias_data['ReligiousCharacter (name)'].present?
-            %td.govuk-table__cell
-              = @vacancy.school.gias_data['TypeOfEstablishment (name)'] + ', ' + @vacancy.school.gias_data['ReligiousCharacter (name)']
-          - else 
-            %td.govuk-table__cell
-              = @vacancy.school.gias_data['TypeOfEstablishment (name)']
-        - else 
-          %td.govuk-table__cell
-            = t('schools.no_information')
+        %td.govuk-table__cell
+          = @vacancy.school.school_type_with_religious_character
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
           = t('schools.phase')

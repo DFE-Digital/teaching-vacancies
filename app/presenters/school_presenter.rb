@@ -14,7 +14,7 @@ class SchoolPresenter < BasePresenter
       return model.gias_data['NumberOfPupils'] + ' pupils enrolled' if model.gias_data['NumberOfPupils'].present?
       return 'Up to ' + model.gias_data['SchoolCapacity'] + 'pupils' if model.gias_data['SchoolCapacity'].present?
     end
-    'No data available'
+    I18n.t('schools.no_information')
   end
 
   def ofsted_report

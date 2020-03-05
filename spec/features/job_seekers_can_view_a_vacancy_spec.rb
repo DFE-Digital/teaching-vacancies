@@ -77,7 +77,7 @@ RSpec.feature 'Viewing a single published vacancy' do
       expect(page).to_not have_content(I18n.t('jobs.experience'))
       expect(page).to_not have_content(I18n.t('jobs.benefits'))
     end
-    
+
     context 'when the upload documents feature flag is OFF' do
       before do
         vacancy = create(:vacancy, :published)
