@@ -84,7 +84,6 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
-variable "feature_upload_documents" {}
 variable "feature_key_info_search_snippet" {}
 variable "feature_import_vacancies" {}
 variable "feature_sign_in_alert" {}
