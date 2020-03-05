@@ -199,6 +199,10 @@
         "value": "${feature_upload_documents}"
       },
       {
+        "name": "FEATURE_KEY_INFO_SEARCH_SNIPPET",
+        "value": "${feature_key_info_search_snippet}"
+      },
+      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },
@@ -225,6 +229,10 @@
       {
         "name": "CLOUD_STORAGE_API_JSON_KEY",
         "value": "${cloud_storage_api_json_key}"
+      },
+      {
+        "name": "FEATURE_SIGN_IN_ALERT",
+        "value": "${feature_sign_in_alert}"
       }
     ]
   }

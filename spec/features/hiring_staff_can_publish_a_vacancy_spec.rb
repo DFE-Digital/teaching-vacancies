@@ -280,28 +280,31 @@ RSpec.feature 'Creating a vacancy' do
           allow(DocumentDelete).to receive(:new).and_return(document_delete)
 
           create :document, vacancy: documents_vacancy, name: 'delete_me.pdf'
+          create :document, vacancy: documents_vacancy, name: 'do_not_delete_me.pdf'
 
           visit school_job_documents_path(documents_vacancy.id)
+
+          find('[data-file-name="delete_me.pdf"]').click
         end
 
         scenario 'deletes them' do
           allow(document_delete).to receive(:delete).and_return(true)
 
-          accept_alert do
-            find(:xpath, "//tr[contains(.,'delete_me.pdf')]/td/a", text: 'Remove').click
-          end
+          click_on 'Yes, remove file'
 
-          expect(page).to have_content 'delete_me.pdf was removed'
+          within '#js-xhr-flashes' do
+            expect(page).to have_content 'delete_me.pdf was removed'
+          end
         end
 
         scenario 'shows errors' do
           allow(document_delete).to receive(:delete).and_return(false)
 
-          accept_alert do
-            find(:xpath, "//tr[contains(.,'delete_me.pdf')]/td/a", text: 'Remove').click
-          end
+          click_on 'Yes, remove file'
 
-          expect(page).to have_content 'An error occurred while removing delete_me.pdf'
+          within '#js-gem-c-modal-dialogue__error' do
+            expect(page).to have_content 'An error occurred while removing the file.'
+          end
         end
       end
     end

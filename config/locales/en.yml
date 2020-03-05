@@ -23,6 +23,10 @@ en:
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
         request_account_title: Request an account
         request_account_html: Don't have an account? You can get one if you work at a publicly funded school or trust in England, but you'll need your headteacher or senior leader to authorise you. Just ask them to send your full name and email address to %{mail_to}. Or email your details directly to that address, copying in your headteacher or senior leader.
+        some_of_our_users: >-
+          Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
+          in, try again soon.
+        you_might_have_problems_signing_in: You might have problems signing in
   nav:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
@@ -106,8 +110,10 @@ en:
     inline_feedback_error: Please select an option.
     feedback_all_submitted: 'You have provided feedback on all your expired jobs. Thank you for sharing this information, which will help us to improve the service. If you have general comments on the service you can share them with us using <a href="/feedback/new">this feedback form.</a>'
     salary: 'Salary'
-    publish_on: 'Date posted'
+    school_type: 'School type'
     expires_on: 'Closing date'
+    publish_on: 'Date posted'
+    start_on: 'Expected start date'
     sort_by_earliest_closing_date: 'Least time to apply'
     sort_by_furthest_closing_date: 'Most time to apply'
     sort_by_most_recent: 'Newest job listing'
@@ -118,8 +124,8 @@ en:
     page_views: 'Total views'
     get_more_info_clicks: "Total 'get more info' clicks"
     working_patterns: 'Working pattern'
-    working_patterns_info_one: '%{patterns} only.'
-    working_patterns_info_many: 'Will consider %{patterns}.'
+    working_patterns_info_one: '%{patterns} only'
+    working_patterns_info_many: 'Will consider %{patterns}'
     flexible_working_info: 'Email %{mailto} for further details.'
     newly_qualified_teacher: 'Newly qualified teacher'
     starts_on: 'Expected start date'
@@ -482,17 +488,18 @@ en:
     title: Statistics
     intro: This page is an event log used by the service team to measure and monitor the stability and performance of Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018 (the date we began recording statistics).
   buttons:
+    accept_and_continue: 'Accept and continue'
     apply_filters: 'Search'
     apply_filters_if_criteria: 'Refine search'
-    save_and_continue: 'Save and continue'
-    accept_and_continue: 'Accept and continue'
-    update_job: 'Update job'
-    find: 'Find'
-    delete: 'Delete'
+    change: 'Change'
     continue: 'Continue'
     create_job: 'Create a job'
-    change: 'Change'
+    delete: 'Delete'
+    dismiss: 'Dismiss'
+    find: 'Find'
+    save_and_continue: 'Save and continue'
     submit: 'Submit'
+    update_job: 'Update job'
 
   messages:
     jobs:
@@ -854,6 +861,12 @@ en:
             - the hiring staff journey for listing a job on the service, available at <a href='https://teaching-vacancies.service.gov.uk/identifications/new' target='_blank' class='govuk-link'>https://teaching-vacancies.service.gov.uk/identifications/new</a>
             - the jobseeker journey for searching for a teaching job and signing up for a job alert, available at <a href='https://teaching-vacancies.service.gov.uk/' target='_blank' class='govuk-link'>https://teaching-vacancies.service.gov.uk/</a>
       date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
+  shared:
+    file_remove_confirmation_dialogue:
+      are_you_sure_html: "Are you sure you want to remove '<span id=\"js-gem-c-modal-dialogue__file-name\"></span>'?"
+      delete_error: 'An error occurred while removing the file.'
+      no_keep_file: 'No, keep file'
+      yes_remove_file: 'Yes, remove file'
   footer:
       request_support: "Report problems via email"
       provide_feedback: "Give feedback"

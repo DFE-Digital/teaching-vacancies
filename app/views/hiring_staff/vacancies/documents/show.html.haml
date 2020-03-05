@@ -8,6 +8,8 @@
       %h2.govuk-heading-m
         = t('jobs.supporting_documents')
 
+      #js-xhr-flashes
+
       = f.govuk_file_field :documents,
         label: { text: t('jobs.upload_file'), size: 's' },
         multiple: true,
@@ -23,3 +25,6 @@
         %p.js-documents__no-files= t('jobs.no_files_message')
 
       = render 'hiring_staff/vacancies/documents/submit', f: f
+
+- content_for :after_main do
+  = render 'shared/file_remove_confirmation_dialogue'

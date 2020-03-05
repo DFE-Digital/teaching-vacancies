@@ -24,14 +24,17 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def destroy
     document = @documents.find(params[:id])
+    delete_operation_status = DocumentDelete.new(document).delete
+    flash_type = delete_operation_status ? :success : :error
+    flash_message = I18n.t("jobs.file_delete_#{flash_type}_message", filename: document.name)
 
-    if DocumentDelete.new(document).delete
-      flash[:success] = I18n.t('jobs.file_delete_success_message', filename: document.name)
+    if request.xhr?
+      flash.now[flash_type] = flash_message
+      render :destroy, layout: false, status: delete_operation_status ? :ok : :bad_request
     else
-      flash[:error] = I18n.t('jobs.file_delete_error_message', filename: document.name)
+      flash[flash_type] = flash_message
+      redirect_to documents_school_job_path
     end
-
-    redirect_to school_job_documents_path
   end
 
   private

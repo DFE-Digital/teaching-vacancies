@@ -260,6 +260,10 @@ class Vacancy < ApplicationRecord
     experience.present? || qualifications.present? || education.present?
   end
 
+  def show_key_info_in_search_snippet?
+    KeyInfoSearchSnippetFeature.enabled?
+  end
+
   def delete_documents
     self.documents.each { |document| DocumentDelete.new(document).delete }
   end

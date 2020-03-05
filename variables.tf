@@ -432,6 +432,10 @@ variable "feature_upload_documents" {
   default = "false"
 }
 
+variable "feature_key_info_search_snippet" {
+  default = "false"
+}
+
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "notify_prompt_feedback_for_expired_vacancies" {}
@@ -460,4 +464,8 @@ variable "cloud_storage_api_json_key" {
 variable "cloud_storage_bucket" {
   description = "Cloud Storage Bucket name"
   type        = "string"
+}
+
+variable "feature_sign_in_alert" {
+  default = "false"
 }
