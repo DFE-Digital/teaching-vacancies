@@ -109,6 +109,10 @@ en:
     feedback_error: There was a problem submitting your feedback. Please make sure you have selected an answer for both questions.
     inline_feedback_error: Please select an option.
     feedback_all_submitted: 'You have provided feedback on all your expired jobs. Thank you for sharing this information, which will help us to improve the service. If you have general comments on the service you can share them with us using <a href="/feedback/new">this feedback form.</a>'
+    days_to_apply:
+      remaining: '%{days_remaining} days remaining to apply'
+      today: 'Deadline is today'
+      tomorrow: 'Deadline is tomorrow'
     salary: 'Salary'
     school_type: 'School type'
     publish_on: 'Date listed'
@@ -430,9 +434,9 @@ en:
           - 'expected start date'
           - 'end date (for fixed-term jobs)'
     size:
-      up_to: 'Up to'
-      pupils: 'pupil'
-      enrolled: 'enrolled'        
+      enrolled: '%{number} %{pupils} enrolled'
+      up_to: 'Up to %{capacity} %{pupils}'
+      pupils: 'pupil'        
   subscriptions:
     link:
       text: 'Subscribe to a job alert.'

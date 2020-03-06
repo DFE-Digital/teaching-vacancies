@@ -42,11 +42,11 @@ class SchoolPresenter < BasePresenter
   private
 
   def number_of_pupils
-    [model.gias_data['NumberOfPupils'].to_s, pupils, I18n.t('schools.size.enrolled')].join(' ')
+    I18n.t('schools.size.enrolled', pupils: pupils, number: model.gias_data['NumberOfPupils'])
   end
 
   def school_capacity
-    [I18n.t('schools.size.up_to'), model.gias_data['SchoolCapacity'].to_s, pupils].join(' ')
+    I18n.t('schools.size.up_to', capacity: model.gias_data['SchoolCapacity'], pupils: pupils)
   end
 
   def pupils
