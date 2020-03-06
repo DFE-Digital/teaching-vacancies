@@ -22,8 +22,8 @@ class SchoolPresenter < BasePresenter
   end
 
   def ofsted_report
-    if model.gias_data.present?
-      OFSTED_REPORT_ENDPOINT + model.gias_data['URN']
+    if model.gias_data.present? && model.gias_data['URN'].present?
+      OFSTED_REPORT_ENDPOINT + model.gias_data['URN'].to_s
     end
   end
 

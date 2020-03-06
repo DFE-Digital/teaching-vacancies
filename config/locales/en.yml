@@ -436,7 +436,8 @@ en:
     size:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
-      pupils: 'pupil'        
+      pupils: 'pupil'
+    view_ofsted_report: 'View Ofsted report'        
   subscriptions:
     link:
       text: 'Subscribe to a job alert.'

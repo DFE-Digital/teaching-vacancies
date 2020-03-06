@@ -36,6 +36,14 @@ RSpec.describe SchoolPresenter do
     end
   end
 
+  describe '#ofsted_report' do
+    it 'returns a link to the ofsted report' do
+      school = SchoolPresenter.new(build(:school, gias_data: { 'URN': 100000 }))
+
+      expect(school.ofsted_report).to eq(SchoolPresenter::OFSTED_REPORT_ENDPOINT + '100000')
+    end
+  end
+
   describe '#full_address' do
     it 'should return a comma separated full address of the school' do
       school = SchoolPresenter.new(create(:school))
