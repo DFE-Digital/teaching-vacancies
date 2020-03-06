@@ -1,0 +1,9 @@
+.govuk-info-summary {
+  @extend .govuk-error-summary;
+  border-color: #1d70b8;
+}
+
+.govuk-info-summary__dismiss-link {
+  float: right;
+  display: block;
+}

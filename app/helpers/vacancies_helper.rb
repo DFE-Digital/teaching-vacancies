@@ -105,4 +105,10 @@ module VacanciesHelper
   def location_category_content?(filters)
     filters.location_category_search? && filters.only_active_to_hash.one?
   end
+
+  def new_sections(vacancy)
+    sections = []
+    sections << 'supporting_documents' if UploadDocumentsFeature.enabled? && !vacancy.supporting_documents
+    sections
+  end
 end

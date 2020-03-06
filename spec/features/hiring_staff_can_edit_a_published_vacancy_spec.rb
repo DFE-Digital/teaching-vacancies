@@ -202,6 +202,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+        expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
         expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
           .text).to include(I18n.t('jobs.notification_labels.new'))
 
