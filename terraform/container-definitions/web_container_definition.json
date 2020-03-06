@@ -223,6 +223,10 @@
         "value": "${big_query_api_json_key}"
       },
       {
+        "name": "BIG_QUERY_DATASET",
+        "value": "${big_query_dataset}"
+      },
+      {
         "name": "GOOGLE_CLOUD_PLATFORM_PROJECT_ID",
         "value": "${google_cloud_platform_project_id}"
       },
