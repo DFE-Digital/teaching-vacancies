@@ -5,8 +5,8 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   before_action :set_vacancy
 
-  before_action :redirect_if_no_vacancy, only: %i[show create destroy]
-  before_action :redirect_if_no_supporting_documents
+  before_action :redirect_unless_vacancy
+  before_action :redirect_unless_supporting_documents
   before_action :redirect_to_next_step_if_save_and_continue, only: %i[create]
 
   before_action :set_documents_form, only: %i[show create]
@@ -33,15 +33,11 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       render :destroy, layout: false, status: delete_operation_status ? :ok : :bad_request
     else
       flash[flash_type] = flash_message
-      redirect_to documents_school_job_path
+      redirect_to school_job_documents_path(@vacancy.id)
     end
   end
 
   private
-
-  def set_vacancy
-    @vacancy = current_school.vacancies.find(params[:job_id])
-  end
 
   def set_documents_form
     @documents_form = DocumentsForm.new
@@ -55,11 +51,12 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     params.require(:documents_form).permit(documents: [])
   end
 
-  def redirect_if_no_vacancy
-    redirect_unless_vacancy_session_id unless @vacancy
-  end
+  def redirect_unless_supporting_documents
+    if params[:change] && !@vacancy.supporting_documents
+      @vacancy.supporting_documents = 'yes'
+      @vacancy.save
+    end
 
-  def redirect_if_no_supporting_documents
     redirect_to supporting_documents_school_job_path unless @vacancy.supporting_documents
   end
 

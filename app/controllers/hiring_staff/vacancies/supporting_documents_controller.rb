@@ -1,9 +1,9 @@
 class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacancies::ApplicationController
-  before_action :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :set_vacancy
+
+  before_action :redirect_unless_vacancy, only: %i[new create]
 
   def new
-    redirect_to job_specification_school_job_path unless session_vacancy_id
-
     @supporting_documents_form = SupportingDocumentsForm.new(session[:vacancy_attributes])
     @supporting_documents_form.valid? if %i[step_2_intro review].include?(session[:current_step])
   end
