@@ -69,8 +69,6 @@
                 collection: working_pattern_options,
                 required: true
 
-      = render partial: 'working_pattern_warning'
-
       - if @job_specification_form.weekly_hours?
         = f.input :weekly_hours,
                   label: t('jobs.weekly_hours'),

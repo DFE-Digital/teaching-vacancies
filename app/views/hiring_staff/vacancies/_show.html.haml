@@ -120,8 +120,6 @@
           - if @vacancy.working_patterns?
             %dt= t('jobs.working_patterns')
             %dd= @vacancy.working_patterns
-            - if @vacancy.flexible_working?
-              %dd= @vacancy.flexible_working
 
           - if @vacancy.weekly_hours?
             %dt= t('jobs.weekly_hours')
