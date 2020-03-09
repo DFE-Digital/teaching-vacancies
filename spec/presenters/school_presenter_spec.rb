@@ -75,19 +75,25 @@ RSpec.describe SchoolPresenter do
   end
 
   describe '#school_type_with_religious_character' do
+    let(:academy) { build(:academy, gias_data: { religious_character: 'Does not apply' }) }
+    let(:catholic) { build(:school, gias_data: { religious_character: 'Roman Catholic' }) }
+    let(:secular) { build(:academy, gias_data: { religious_character: 'Does not apply' }) }
+
+    it 'singularizes the school_type' do
+      school_presenter = SchoolPresenter.new(academy)
+      expect(school_presenter.school_type_with_religious_character).to match(/Academy/)
+    end
+
     it 'links the school type with the religious character' do
-      catholic_school = build(:school, gias_data: { religious_character: 'Roman Catholic' })
-      school_presenter = SchoolPresenter.new(catholic_school)
-      expect(school_presenter.school_type_with_religious_character)
-        .to eq("#{catholic_school.school_type.label}, Roman Catholic")
+      school_presenter = SchoolPresenter.new(catholic)
+      expect(school_presenter.school_type_with_religious_character).to match(/Roman Catholic/)
     end
 
     context 'when the school has no religious character' do
       it 'returns only the school type' do
-        non_religious_school = build(:school, gias_data: { religious_character: 'Does not apply' })
-        school_presenter = SchoolPresenter.new(non_religious_school)
+        school_presenter = SchoolPresenter.new(secular)
         expect(school_presenter.school_type_with_religious_character)
-          .to eq(non_religious_school.school_type.label)
+          .to eq(secular.school_type.label.singularize)
       end
     end
   end
