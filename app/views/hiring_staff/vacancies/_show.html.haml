@@ -22,7 +22,7 @@
         .og-preview
           .og_image= image_pack_tag 'og_image.jpg'
           .og_text
-            .og_url= I18n.t('app.title')
+            .og_url= t('app.title')
             .og_title #{@vacancy.job_title} - #{@vacancy.school_name}
             .og_description= truncate(strip_tags(@vacancy.job_description), length: 76, separator: ' ')
         .og-caption

@@ -1,10 +1,10 @@
 json.info do
-  json.title "GOV UK - #{I18n.t('app.title')}"
-  json.description I18n.t('app.description')
+  json.title "GOV UK - #{t('app.title')}"
+  json.description t('app.description')
   json.termsOfService terms_and_conditions_url(protocol: 'https', anchor: 'api')
   json.contact do
-    json.name "#{I18n.t('app.title')} API Support"
-    json.email I18n.t('help.email')
+    json.name "#{t('app.title')} API Support"
+    json.email t('help.email')
   end
   json.license do
     json.name 'Open Government License'
