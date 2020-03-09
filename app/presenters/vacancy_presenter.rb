@@ -155,7 +155,6 @@ class VacancyPresenter < BasePresenter
       expires_on: expires_on,
       starts_on: starts_on,
       ends_on: ends_on,
-      weekly_hours: weekly_hours,
       flexible_working: flexible_working,
       school_urn: school.urn,
       school_county: school.county

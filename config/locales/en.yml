@@ -138,7 +138,6 @@ en:
     education: 'Essential educational requirements'
     qualifications: 'Essential qualifications'
     experience: 'Essential skills and experience'
-    weekly_hours: 'Weekly hours'
     ref_no: 'Reference number'
     subject: 'Subject(s)'
     main_subject: 'Main subject'
@@ -287,7 +286,6 @@ en:
       change_working_patterns: 'Change working pattern'
       change_newly_qualified_teacher: 'Change newly qualified teacher'
       change_employee_benefits: 'Change employee benefits'
-      change_weekly_hours: 'Change weekly hours'
       change_leadership_level: 'Change leadership level'
       change_expected_start_date: 'Change expected start date'
       change_end_date: 'Change end date'
@@ -315,7 +313,6 @@ en:
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
       pay_scale_range: 'What pay scale range does the job’s salary fall in?'
-      weekly_hours: 'Number of hours to be worked each week'
       start_date: 'For example, %{date}'
       end_date: 'For example, %{date}'
       education: 'State any formal education needed for the role (undergraduate degree, for example)'
@@ -437,7 +434,7 @@ en:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
       pupils: 'pupil'
-    view_ofsted_report: 'View Ofsted report'        
+    view_ofsted_report: 'View Ofsted report'
   subscriptions:
     link:
       text: 'Subscribe to a job alert.'

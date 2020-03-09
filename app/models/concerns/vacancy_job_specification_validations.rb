@@ -13,8 +13,6 @@ module VacancyJobSpecificationValidations
 
     validates :working_patterns, presence: true
 
-    validate :working_hours
-
     validate :starts_on_in_future?, if: :starts_on?
     validate :ends_on_in_future?, if: :ends_on?
     validate :starts_on_before_ends_on?
@@ -90,19 +88,6 @@ module VacancyJobSpecificationValidations
     errors.add(:maximum_salary, maximum_salary_must_be_greater_than_minimum_error)
   end
 
-  # rubocop:disable Lint/Void
-  def working_hours
-    return if weekly_hours.blank?
-
-    begin
-      !!BigDecimal(weekly_hours)
-      errors.add(:weekly_hours, negative_weekly_hours_error) if BigDecimal(weekly_hours).negative?
-    rescue ArgumentError
-      errors.add(:weekly_hours, invalid_weekly_hours_error)
-    end
-  end
-  # rubocop:enable Lint/Void
-
   private
 
   def maximum_lower_than_minimum_salary?
@@ -113,13 +98,5 @@ module VacancyJobSpecificationValidations
 
   def maximum_salary_must_be_greater_than_minimum_error
     I18n.t('activerecord.errors.models.vacancy.attributes.maximum_salary.greater_than_minimum_salary')
-  end
-
-  def negative_weekly_hours_error
-    I18n.t('activerecord.errors.models.vacancy.attributes.weekly_hours.negative')
-  end
-
-  def invalid_weekly_hours_error
-    I18n.t('activerecord.errors.models.vacancy.attributes.weekly_hours.invalid')
   end
 end

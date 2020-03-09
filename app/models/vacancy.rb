@@ -230,10 +230,6 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = format_salary(salary)
   end
 
-  def weekly_hours?
-    weekly_hours.present? && derived_flexible_working?
-  end
-
   def flexible_working?
     return flexible_working unless flexible_working.nil?
 

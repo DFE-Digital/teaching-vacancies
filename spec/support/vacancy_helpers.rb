@@ -19,8 +19,6 @@ module VacancyHelpers
     fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
     fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year
 
-    fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours if vacancy.weekly_hours?
-
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
             name: 'job_specification_form[working_patterns][]',
@@ -147,12 +145,6 @@ module VacancyHelpers
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
     expect(page).to have_content(vacancy.expires_on.to_s.strip)
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
-
-    if vacancy.weekly_hours?
-      expect(page).to have_content(vacancy.weekly_hours)
-    elsif vacancy.weekly_hours.present?
-      expect(page).not_to have_content(vacancy.weekly_hours)
-    end
   end
 
   def expect_schema_property_to_match_value(key, value)
@@ -205,7 +197,6 @@ module VacancyHelpers
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
     }
 
-    json['workHours'] = vacancy.weekly_hours if vacancy.weekly_hours?
     json
   end
 

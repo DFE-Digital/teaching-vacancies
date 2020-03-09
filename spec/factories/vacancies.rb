@@ -107,7 +107,6 @@ FactoryBot.define do
 
     trait :job_schema do
       working_patterns { ['full_time', 'part_time'] }
-      weekly_hours { '8.5' }
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
     end
