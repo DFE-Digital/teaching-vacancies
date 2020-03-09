@@ -52,4 +52,8 @@ FactoryBot.define do
       association :region, name: 'East of England'
     end
   end
+
+  factory :academy, parent: :school do
+     association :school_type, label: 'Academies'
+  end
 end

@@ -4,9 +4,8 @@ class SchoolPresenter < BasePresenter
   OFSTED_REPORT_ENDPOINT = 'https://www.ofsted.gov.uk/oxedu_providers/full/(urn)/'
 
   def school_type_with_religious_character
-    model.has_religious_character? ?
-      model.school_type.label + ', ' + model.gias_data['religious_character'] :
-      model.school_type.label
+    school_type = model.school_type.label.singularize
+    model.has_religious_character? ? school_type + ', ' + model.gias_data['religious_character'] : school_type
   end
 
   def location
