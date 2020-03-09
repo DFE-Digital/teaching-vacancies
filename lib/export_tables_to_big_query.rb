@@ -8,10 +8,10 @@ class ExportTablesToBigQuery
   # The maximum percentage of bad records BigQuery will allow before raising an error.
   BAD_RECORD_RATE = 0.01
 
-  BIGQUERY_DATASET = ENV['BIG_QUERY_DATASET']
+  BIGQUERY_DATASET = ENV.fetch('BIG_QUERY_DATASET')
   # This is to allow us to load new tables to the production dataset without disturbing the existing ones.
   BIGQUERY_TABLE_PREFIX = 'feb20'.freeze
-  BUCKET = ENV['CLOUD_STORAGE_BUCKET']
+  BUCKET = ENV.fetch('CLOUD_STORAGE_BUCKET')
 
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
   # Drop gias_data because it is aliased to data. This alias allows all records to be handled the same way and dropping
