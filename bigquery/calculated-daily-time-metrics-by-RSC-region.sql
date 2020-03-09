@@ -48,14 +48,12 @@ WITH
     date <= CURRENT_DATE()),
   published_vacancies_with_school_details AS ( #join some schools data we'll need later on to the vacancies table, and exclude unpublished vacancies
   SELECT
-    PARSE_DATE("%e %B %E4Y",
-      vacancy.publish_on) AS publish_on,
-    PARSE_DATE("%e %B %E4Y",
-      vacancy.expires_on) AS expires_on,
+    vacancy.publish_on AS publish_on,
+    vacancy.expires_on AS expires_on,
     school.urn AS school_urn,
     school.RSC_region AS school_RSC_region
   FROM
-    `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
+    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.CALCULATED_schools_joined_with_metrics` AS school
   ON
