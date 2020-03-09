@@ -1,4 +1,3 @@
-
 @media (min-width: 40.0625em) {
   .js-enabled .govuk-tabs__panel.no-border-override {
     border: none;
@@ -14,9 +13,8 @@ a.js-enabled .govuk-tabs__tab.tab-links-override:visited {
   color: $govuk-link-colour;
 }
 
-li.govuk-tabs__list-item--selected > a.govuk-tabs__tab.govuk-tabs__tab.tab-links-override, 
+li.govuk-tabs__list-item--selected > a.govuk-tabs__tab.govuk-tabs__tab.tab-links-override,
 a.govuk-tabs__tab.tab-links-override:focus,
 a.js-enabled .govuk-tabs__tab.tab-links-override:focus {
   color: $govuk-link-active-colour;
 }
-
