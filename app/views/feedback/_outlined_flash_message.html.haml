@@ -2,4 +2,13 @@
   .govuk-body.mv0{ class: "govuk-#{style}-summary__body" }
     %a.govuk-link.govuk-link--no-visited-state.govuk-success-summary__dismiss-link.js-dismissable__link{ href: '#' }
       = t('buttons.dismiss')
+    - if defined?(heading)
+      %h3.govuk-heading-s.mb0
+        = heading
     = message
+    <br>
+    - if defined?(links)
+      - links.each do |section|
+        %a.govuk-link.govuk-link--no-visited-state{ href: "##{section}"}
+          = t("jobs.#{section}")
+        <br>
