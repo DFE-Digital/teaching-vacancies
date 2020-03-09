@@ -1,39 +1,39 @@
 %section#job-details.govuk-tabs__panel.no-border-override
-  %h2.govuk-heading-m 
+  %h2.govuk-heading-m
     = t('jobs.job_details')
   %table.govuk-table
     %tbody.govuk-table__body
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('jobs.subject')
         %td.govuk-table__cell
           - if @vacancy.other_subjects.nil? || @vacancy.other_subjects == ''
             = @vacancy.main_subject
-          - else 
+          - else
             = @vacancy.main_subject + ', ' + @vacancy.other_subjects
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('jobs.working_patterns')
         %td.govuk-table__cell
           = @vacancy.working_patterns
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('jobs.salary')
         %td.govuk-table__cell
           = @vacancy.salary_range
       - if @vacancy.pay_scale_range.present?
         %tr.govuk-table__row
-          %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+          %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('jobs.pay_scale_range')
           %td.govuk-table__cell
             = @vacancy.pay_scale_range
-      - if @vacancy.newly_qualified_teacher?               
+      - if @vacancy.newly_qualified_teacher?
         %tr.govuk-table__row
-          %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+          %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('jobs.newly_qualified_teacher')
           %td.govuk-table__cell
             = @vacancy.newly_qualified_teacher
-  
+
   %h2.govuk-heading-m= t('jobs.description')
   %p= @vacancy.job_description
 
@@ -52,11 +52,11 @@
   -if @vacancy.benefits.present?
     %h2.govuk-heading-m= t('jobs.benefits')
     %p= @vacancy.benefits
-  
+
   - if @vacancy.leadership.present?
-    %dt= t('jobs.leadership_level')
-    %dd= @vacancy.leadership.title
-  
+    %h2.govuk-heading-m= t('jobs.leadership_level')
+    %p= @vacancy.leadership.title
+
   - if @vacancy.show_supporting_documents? && !@vacancy.documents.none?
     %h2.govuk-heading-m= t('jobs.supporting_documents')
     .supporting-docs
@@ -69,8 +69,8 @@
                 %image{src: asset_pack_path("media/images/icon-document.png")}
             %a.govuk-link.document-link{ href: document[:download_url], target: '_blank' } #{document[:name]}
             &nbsp#{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
-  
+
   %h2.govuk-heading-m.share-this-job
     = t('jobs.share_this_job')
-  
+
   = render partial: '/shared/vacancy/share_buttons'
