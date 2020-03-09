@@ -7,11 +7,11 @@ WITH
   signup_metrics AS (
   SELECT
     date,
-    SUM(schools_that_signed_up_on_each_date.schools_that_signed_up_on_this_date) OVER (ORDER BY date RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS schools_signed_up #calculate the total number of schools that had signed up by each date
+    SUM(schools_that_signed_up_on_each_date.schools_that_signed_up_on_this_date) OVER (ORDER BY date RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS schools_signed_up
   FROM
     dates
   LEFT JOIN (
-    SELECT #count the number of schools that signed up on each date *for dates when school(s) signed up*
+    SELECT
       date,
       (
       SELECT
@@ -25,7 +25,7 @@ WITH
           `teacher-vacancy-service.production_dataset.CALCULATED_schools_joined_with_metrics`) AS schools
       WHERE
         schools.signup_date IS NOT NULL
-        AND schools.signup_date = dates.date #ideally we'd replace this with an inequality to allow us to combine this subquery with its parent, but BigQuery's particular implementation of SQL won't allow this
+        AND schools.signup_date = dates.date
         AND schools.signed_up IS TRUE ) AS schools_that_signed_up_on_this_date
     FROM
       dates
@@ -34,16 +34,14 @@ WITH
   USING
     (date)
         WHERE
-      date <= CURRENT_DATE()), #set signup metrics to null for future dates so that they don't mess up graphs
+      date <= CURRENT_DATE()),
   published_vacancies_with_school_details AS ( #join some schools data we'll need later on to the vacancies table, and exclude unpublished vacancies
   SELECT
-    PARSE_DATE("%e %B %E4Y",
-      vacancy.publish_on) AS publish_on,
-    PARSE_DATE("%e %B %E4Y",
-      vacancy.expires_on) AS expires_on,
+      vacancy.publish_on AS publish_on,
+      vacancy.expires_on AS expires_on,
     school.urn AS school_urn
   FROM
-    `teacher-vacancy-service.production_dataset.vacancy` AS vacancy
+    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.CALCULATED_schools_joined_with_metrics` AS school
   ON
@@ -59,7 +57,7 @@ WITH
     SELECT
       COUNT(DISTINCT
       IF
-        (publish_on <= date, #ideally this inequality would be in subquery, but BigQuery's implementation of SQL won't allow this
+        (publish_on <= date,
           school_urn,
           NULL)),
     FROM
@@ -150,6 +148,6 @@ LEFT JOIN
   schools_in_scope
 USING
   (date)
-LEFT JOIN `teacher-vacancy-service.production_dataset.nightly_goals_from_google_sheets` AS goals #pull in manually set goals for metrics from a Google Sheet
+LEFT JOIN `teacher-vacancy-service.production_dataset.nightly_goals_from_google_sheets` AS goals
   ON dates.date=goals.Date
 ORDER BY date
