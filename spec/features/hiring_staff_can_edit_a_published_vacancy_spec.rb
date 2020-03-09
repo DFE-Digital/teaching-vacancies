@@ -85,31 +85,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page.current_path).to eq('/jobs/assistant-head-teacher')
       end
 
-      scenario 'clears flexible_working when working_patterns match' do
-        vacancy = create(:vacancy,
-                         :published,
-                         school: school,
-                         working_patterns: ['full_time'],
-                         flexible_working: true)
-
-        visit edit_school_job_path(vacancy.id)
-
-        click_link_in_container_with_text(I18n.t('jobs.working_patterns'))
-
-        check Vacancy.human_attribute_name('working_patterns.part_time'),
-              name: 'job_specification_form[working_patterns][]'
-        click_on 'Update job'
-
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
-
-        updated_vacancy = Vacancy.find(vacancy.id)
-
-        expect(updated_vacancy.working_patterns).to eq(['full_time', 'part_time'])
-        expect(updated_vacancy.flexible_working).to eq(nil)
-
-        expect(page.html).to include(VacancyPresenter.new(updated_vacancy).flexible_working)
-      end
-
       scenario 'tracks the vacancy update' do
         job_title = vacancy.job_title
 

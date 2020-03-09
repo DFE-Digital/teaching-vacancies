@@ -45,8 +45,6 @@
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.working_patterns')
           %dd.app-check-your-answers__answer= @vacancy.working_patterns
-          - if @vacancy.flexible_working?
-            %dd.app-check-your-answers__answer= @vacancy.flexible_working
       - if @vacancy.weekly_hours?
         .app-check-your-answers__contents
           %dt.app-check-your-answers__question= t('jobs.weekly_hours')
@@ -129,7 +127,7 @@
       = t('jobs.share_this_job')
     = render partial: '/shared/vacancy/share_buttons'
 
-    
+
     - if (@vacancy.application_link.present? && params[:apply_button] != 'top')
       %aside.vacancy--metadata
         = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link', 'aria-label': t('jobs.aria_labels.apply_link')

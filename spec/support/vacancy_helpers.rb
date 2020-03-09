@@ -97,7 +97,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page.html).to include(vacancy.flexible_working) if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
@@ -133,7 +132,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page.html).to include(vacancy.flexible_working) if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
