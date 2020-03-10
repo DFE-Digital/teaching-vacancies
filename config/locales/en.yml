@@ -102,7 +102,7 @@ en:
     location_search_heading: 'Teaching jobs in %{location}'
     sort_by: 'Sort by:'
     sort_submit: 'Sort'
-    key_info: 'Key information'
+    key_info: 'Contents'
     awaiting_feedback_intro: 'Please tell us if you filled these expired jobs through Teaching Vacancies, and whether you listed them elsewhere. Your feedback will help us improve the service.'
     no_awaiting_feedback: 'There are no jobs waiting for your feedback at the moment.'
     feedback_submitted: 'Thank you very much. Feedback is submitted 🎉'
@@ -437,7 +437,7 @@ en:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
       pupils: 'pupil'
-    view_ofsted_report: 'View Ofsted report'        
+    view_ofsted_report: 'View Ofsted report'
   subscriptions:
     link:
       text: 'Subscribe to a job alert.'
