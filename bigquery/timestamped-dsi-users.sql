@@ -20,9 +20,24 @@ IF
   current_table.school_urn
 FROM
   `teacher-vacancy-service.production_dataset.dsi_users` AS current_table
-INNER JOIN
+FULL JOIN
   `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS previous_table
 ON
   current_table.user_id=previous_table.user_id
   AND current_table.school_urn=previous_table.school_urn
   AND CAST(current_table.approval_datetime AS DATE)=previous_table.from_date
+WHERE
+IF
+  ((
+    SELECT
+      COUNT(*)
+    FROM
+      `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users`
+    WHERE
+      user_id NOT IN (
+      SELECT
+        user_id
+      FROM
+        `teacher-vacancy-service.production_dataset.dsi_users`)) < 500,
+    TRUE,
+    ERROR("Error: Today's user table appears to have  than the previous version."))
