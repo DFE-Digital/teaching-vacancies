@@ -6,7 +6,7 @@
     %h1.govuk-heading-l
       = t('jobs.edit_heading', school: @vacancy.school.name)
     - if new_sections(@vacancy).any?
-      = render 'feedback/outlined_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), links: new_sections(@vacancy)
+      = render 'shared/section_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), sections: new_sections(@vacancy)
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds

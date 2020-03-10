@@ -36,7 +36,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
       reset_session_vacancy!
       update_vacancy(@application_details_form.params_to_save, vacancy)
       update_google_index(vacancy) if vacancy.listed?
-      redirect_to edit_school_job_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(vacancy.id), success: I18n.t('messages.jobs.updated')
     else
       store_vacancy_attributes(@application_details_form.attributes)
       redirect_to edit_school_job_application_details_path(vacancy.id,
