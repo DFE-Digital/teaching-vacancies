@@ -48,4 +48,3 @@ json.hiringOrganization do
 end
 
 json.validThrough vacancy.expires_on.end_of_day.to_time.iso8601
-json.workHours vacancy.weekly_hours if vacancy.weekly_hours?

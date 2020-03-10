@@ -57,15 +57,6 @@
       %dd.app-check-your-answers__change
         = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
 
-  - if @vacancy.weekly_hours?
-    .app-check-your-answers__contents
-      %dt.app-check-your-answers__question
-        = t('jobs.weekly_hours')
-      %dd.app-check-your-answers__answer
-        = @vacancy.weekly_hours
-      %dd.app-check-your-answers__change
-        = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'weekly_hours'), 'aria-label': t('jobs.aria_labels.change_weekly_hours'), class: 'govuk-link'
-
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question
       = t('jobs.pay_scale')
