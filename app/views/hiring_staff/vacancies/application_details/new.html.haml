@@ -4,13 +4,13 @@
   = t('jobs.publish_heading', school: @application_details_form.school.name)
   %span.govuk-caption-l
     Step 3 of 3
-= render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
 = simple_form_for @application_details_form, action: :post, url: application_details_school_job_path(school_id: current_school.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.application_details')
 
   .govuk-grid-row
-    .govuk-grid-column-one-half
+    .govuk-grid-column-two-thirds
+      = render 'hiring_staff/vacancies/error_messages', errors: @application_details_form.errors
       = f.input :contact_email,
                 label: t('jobs.contact_email'),
                 hint: t('jobs.form_hints.contact_email'),

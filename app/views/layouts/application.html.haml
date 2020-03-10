@@ -58,9 +58,8 @@
             This is a new service - #{link_to 'your feedback', new_feedback_path, class: 'govuk-link'} will help us to improve it.
 
       %main#main-content.govuk-main-wrapper.app-main-class{ role: "main" }
-        - flash.each do |name, msg|
-          %div{ class: "flash #{name}" }
-            %span= msg
+      
+        = render 'shared/flash_messages'
 
         = yield
 

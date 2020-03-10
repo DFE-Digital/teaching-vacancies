@@ -1,26 +1,26 @@
-@mixin flash {
+.flash {
   @include govuk-font(19);
-  color: govuk-colour("black");
-  border: 1px solid govuk-colour("black");
+  color: govuk-colour('black');
+  border: 5px solid;
+  padding: 20px;
 }
 
-.flash {
-  margin-bottom: $govuk-gutter;
-  padding: 14px 15px 10px 15px;
-  &.notice {
-    background-color: tint(govuk-colour("light-blue"), 75);
-    @include flash;
-  }
-  &.success {
-    background-color: tint(govuk-colour("green"), 75);
-    @include flash;
-  }
-  &.error {
-    background-color: tint(govuk-colour("red"), 75);
-    @include flash;
-  }
-  &.alert {
-    background-color: tint(govuk-colour("yellow"), 75);
-    @include flash;
-  }
+.flash-notice {
+  border-color: govuk-colour('blue');
+}
+
+.flash-success {
+  border-color: govuk-colour('green');
+}
+
+.flash-error {
+  border-color: govuk-colour('red');
+}
+
+.flash-alert {
+  border-color: govuk-colout('yellow');
+}
+.dismiss-link {
+  float: right;
+  display: block;
 }
