@@ -11,7 +11,7 @@
         = format_date(vacancy.publish_on)
       %dt= t('jobs.start_on')
       %dd.double
-        = format_date(vacancy.publish_on)
+        = format_date(vacancy.starts_on)
     - if vacancy.show_key_info_in_search_snippet?
       %dt= t('jobs.school_type')
       %dd.double
@@ -24,6 +24,6 @@
     - if vacancy.expiry_time.nil?
       %dd.double
         = format_date(vacancy.expires_on)
-    - else 
+    - else
       %dd.double
         = format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime('%-l:%M %P')
