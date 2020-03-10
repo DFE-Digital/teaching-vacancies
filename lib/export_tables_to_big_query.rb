@@ -68,7 +68,6 @@ class ExportTablesToBigQuery
   ensure
     # Without the ensure subsequent runs on an container where this has failed recently will fail due to a lack of disk
     # space. This is a temporary fix until we have time to look at moving the ever-growing AuditData table off postgres.
-    # This is a temporary fix until we have time to look at moving the ever-growing AuditData table off postgres.
     # Without AuditData, the files are small.
     FileUtils.rm_rf(Rails.root.join(tmpdir))
   end
