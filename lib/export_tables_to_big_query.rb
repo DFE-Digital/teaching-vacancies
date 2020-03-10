@@ -64,8 +64,13 @@ class ExportTablesToBigQuery
     export
     upload_to_google_cloud_storage
     load_to_bigquery
-    FileUtils.rm_rf(Rails.root.join(tmpdir))
     Rails.logger.info({ status: 'finished', removed: tmpdir }.to_json)
+  ensure
+    # Without the ensure subsequent runs on an container where this has failed recently will fail due to a lack of disk
+    # space. This is a temporary fix until we have time to look at moving the ever-growing AuditData table off postgres.
+    # This is a temporary fix until we have time to look at moving the ever-growing AuditData table off postgres.
+    # Without AuditData, the files are small.
+    FileUtils.rm_rf(Rails.root.join(tmpdir))
   end
 
   private
