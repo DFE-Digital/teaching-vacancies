@@ -70,8 +70,9 @@ WITH
       dates.date AS date,
     IF
       ((schools.status != "Closed" #if the school is not closed
-        OR schools.closed_date > dates.date) #or if the school closed after the date we're calculating for
-          AND schools.created_at_date <= dates.date, #and if the school was first listed on GIAS before or on the date we're calculating for
+          OR schools.closed_date > dates.date) #or if the school closed after the date we're calculating for
+        AND schools.created_at_date <= dates.date,
+        #and if the school was first listed on GIAS before or on the date we're calculating for
         TRUE,
         FALSE) AS in_scope,
     IF
@@ -88,29 +89,29 @@ WITH
             FALSE),
           #up until 20th November 2019, take signup data from the static table of historic signup data for each school
         IF
-          (COUNTIF(users.from_date<=dates.date
+          (COUNTIF(users.from_date <= dates.date
               AND (users.to_date IS NULL
-                OR users.to_date>dates.date))>=1,
+                OR users.to_date > dates.date)) >= 1,
             #after 20th November 2019, count the number of users who had access, see if it is 1 or more, and if so count the school as signed up
             TRUE,
             FALSE))) AS signed_up,
     IF
-      (COUNTIF(vacancies.publish_on<=dates.date)>1,
+      (COUNTIF(vacancies.publish_on <= dates.date) > 1,
         TRUE,
         FALSE) AS has_published_so_far,
     IF
-      (COUNTIF(vacancies.publish_on<=dates.date
-          AND vacancies.publish_on>=DATE_SUB(dates.date,INTERVAL 1 YEAR))>1,
+      (COUNTIF(vacancies.publish_on <= dates.date
+          AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 1 YEAR)) > 1,
         TRUE,
         FALSE) AS has_published_in_the_last_year,
     IF
-      (COUNTIF(vacancies.publish_on<=dates.date
-          AND vacancies.publish_on>=DATE_SUB(dates.date,INTERVAL 3 MONTH))>1,
+      (COUNTIF(vacancies.publish_on <= dates.date
+          AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 3 MONTH)) > 1,
         TRUE,
         FALSE) AS has_published_in_the_last_quarter,
     IF
-      (COUNTIF(vacancies.publish_on<=dates.date
-          AND vacancies.expires_on>dates.date)>1,
+      (COUNTIF(vacancies.publish_on <= dates.date
+          AND vacancies.expires_on > dates.date) > 1,
         TRUE,
         FALSE) AS had_live_vacancies
     FROM
@@ -120,15 +121,15 @@ WITH
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.STATIC_schools_historic_pre201119` AS historic_signups
     ON
-      historic_signups.URN=schools.urn
+      historic_signups.URN = schools.urn
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
     ON
-      users.school_urn=schools.urn
+      users.school_urn = schools.urn
     LEFT JOIN
       vacancies
     ON
-      vacancies.school_id=schools.id
+      vacancies.school_id = schools.id
     GROUP BY
       urn,
       date,
@@ -176,6 +177,6 @@ USING
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.nightly_goals_from_google_sheets` AS goals #pull in manually set goals for metrics from a Google Sheet
 ON
-  dates.date=goals.Date
+  dates.date = goals.Date
 ORDER BY
   date
