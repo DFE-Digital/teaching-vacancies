@@ -6,9 +6,9 @@
       %h3.govuk-heading-s.mb0
         = heading
     = message
-    <br>
+    %br
     - if defined?(links)
       - links.each do |section|
-        %a.govuk-link.govuk-link--no-visited-state{ href: "##{section}"}
+        %a.govuk-link.govuk-link--no-visited-state{ href: "##{section}_heading"}
           = t("jobs.#{section}")
-        <br>
+        %br
