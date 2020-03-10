@@ -34,32 +34,32 @@
           %td.govuk-table__cell
             = @vacancy.newly_qualified_teacher
 
-  %h2.govuk-heading-m= t('jobs.description')
+  %h4.govuk-heading-m= t('jobs.description')
   %p= @vacancy.job_description
 
   - if !@vacancy.show_supporting_documents? && @vacancy.any_candidate_specification?
     - if @vacancy.education?
-      %h2.govuk-heading-m= t('jobs.education')
-      %p= @vacancy.education
+    %h4.govuk-heading-m= t('jobs.education')
+    %p= @vacancy.education
 
-    - if @vacancy.qualifications?
-      %h2.govuk-heading-m= t('jobs.qualifications')
-      %p= @vacancy.qualifications
+  - if @vacancy.qualifications?
+    %h4.govuk-heading-m= t('jobs.qualifications')
+    %p= @vacancy.qualifications
 
-    - if @vacancy.experience?
-      %h2.govuk-heading-m= t('jobs.experience')
-      %p= @vacancy.experience
+  - if @vacancy.experience?
+    %h4.govuk-heading-m= t('jobs.experience')
+    %p= @vacancy.experience
 
   -if @vacancy.benefits.present?
-    %h2.govuk-heading-m= t('jobs.benefits')
+    %h4.govuk-heading-m= t('jobs.benefits')
     %p= @vacancy.benefits
 
   - if @vacancy.leadership.present?
-    %h2.govuk-heading-m= t('jobs.leadership_level')
+    %h4.govuk-heading-m= t('jobs.leadership_level')
     %p= @vacancy.leadership.title
 
   - if @vacancy.show_supporting_documents? && @vacancy.documents.any?
-    %h2.govuk-heading-m= t('jobs.supporting_documents')
+    %h4.govuk-heading-m= t('jobs.supporting_documents')
     .supporting-docs
       %ul
         - @vacancy.documents.each do |document|
@@ -71,7 +71,7 @@
             %a.govuk-link.document-link{ href: document[:download_url], target: '_blank' } #{document[:name]}
             &nbsp#{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
 
-  %h2.govuk-heading-m.share-this-job
+  %h4.govuk-heading-m.share-this-job
     = t('jobs.share_this_job')
 
   = render partial: '/shared/vacancy/share_buttons'
