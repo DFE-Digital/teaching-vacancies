@@ -7,15 +7,15 @@
 .govuk-grid-row.govuk-grid-column-full
   %h1.govuk-heading-l
     = @vacancy.job_title
-    %span.govuk-caption-l
-      = @vacancy.location
+  %h4.govuk-caption-l
+    = @vacancy.location
 
 .vacancy.govuk-grid-row
   - if @vacancy.expired?
     .govuk-grid-column-full
       .banner-warning
         = t('jobs.expired')
-  
+
   = render '/vacancies/key_dates_sidebar'
 
   .govuk-grid-column-two-thirds
@@ -30,7 +30,7 @@
         %li.govuk-tabs__list-item
           %a.govuk-tabs__tab.tab-links-override{ :href => "#school-overview" }
             = t('schools.school_overview')
-         
+
       = render '/vacancies/job_details_section'
 
       = render '/vacancies/school_overview_section'
