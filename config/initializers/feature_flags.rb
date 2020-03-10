@@ -8,4 +8,3 @@ FEATURE_KEY_INFO_SEARCH_SNIPPET = ENV['FEATURE_KEY_INFO_SEARCH_SNIPPET']
 EmailAlertsFeature = FeatureFlag.new('email_alerts')
 ImportVacanciesFeature = FeatureFlag.new('import_vacancies')
 UploadDocumentsFeature = FeatureFlag.new('upload_documents')
-KeyInfoSearchSnippetFeature = FeatureFlag.new('key_info_search_snippet')

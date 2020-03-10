@@ -200,15 +200,7 @@ module VacancyHelpers
     json
   end
 
-  def verify_vacancy_list_page_details_without_feature_enabled(vacancy)
-    expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page.find('.vacancy')).not_to have_content(vacancy.school.school_type.label)
-
-    verify_shared_vacancy_list_page_details(vacancy)
-  end
-
-  def verify_vacancy_list_page_details_with_feature_enabled(vacancy)
+  def verify_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).not_to have_content(vacancy.publish_on)
     expect(page.find('.vacancy')).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label)
