@@ -34,3 +34,8 @@
       = render '/vacancies/job_details_section'
 
       = render '/vacancies/school_overview_section'
+
+  %h4.govuk-heading-m.share-this-job
+    = t('jobs.share_this_job')
+
+  = render partial: '/shared/vacancy/share_buttons'
