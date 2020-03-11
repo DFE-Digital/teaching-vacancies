@@ -29,6 +29,7 @@ class ExportTablesToBigQuery
   EXCLUDE_TABLES = %w[
     activities
     ar_internal_metadata
+    audit_data
     friendly_id_slugs
     schema_migrations
     sessions
