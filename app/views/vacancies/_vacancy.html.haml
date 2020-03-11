@@ -5,17 +5,9 @@
     %dt= t('jobs.salary')
     %dd.double
       = vacancy.salary_range
-    - unless vacancy.show_key_info_in_search_snippet?
-      %dt= t('jobs.publish_on')
-      %dd.double
-        = format_date(vacancy.publish_on)
-      %dt= t('jobs.start_on')
-      %dd.double
-        = format_date(vacancy.starts_on)
-    - if vacancy.show_key_info_in_search_snippet?
-      %dt= t('jobs.school_type')
-      %dd.double
-        = vacancy.school.school_type_with_religious_character
+    %dt= t('jobs.school_type')
+    %dd.double
+      = vacancy.school.school_type_with_religious_character
     - if vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double
