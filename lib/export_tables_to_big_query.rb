@@ -30,7 +30,7 @@ class ExportTablesToBigQuery
     activities
     ar_internal_metadata
     audit_data
-    friendlyuid_slugs
+    friendly_id_slugs
     schema_migrations
     sessions
   ].freeze
