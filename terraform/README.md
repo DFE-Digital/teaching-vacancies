@@ -13,6 +13,28 @@
 - CloudWatch
 - EC2 instances
 - Autoscaling configuration
+-
+## Quickstart 
+
+1. Ensure you're running `terraform@0.11`
+1. Ensure your AWS IAM account has the correct permission (talk to the tech lead to get the specifics);
+1. Checkout [the secrets repo](https://github.com/DFE-Digital/teaching-vacancies-service-secrets);
+
+Then:
+
+```bash
+cd teacher-vacany-service 
+export TVS_REPO_PATH=$(pwd)
+cd ../teaching-vacancies-service-secrets
+bin/copy-to-project
+cd ../teacher-vacancy-service
+export AWS_ACCESS_KEY_ID="<your access key>"
+export AWS_SECRET_ACCESS_KEY="<your secret key>"
+export AWS_DEFAULT_REGION="eu-west-2"
+terraform init
+terraform plan -var-file=workspace-variables/staging.tfvars
+terraform apply -var-file=workspace-variables/staging.tfvars
+```
 
 ## Setup an environment
 
