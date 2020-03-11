@@ -203,7 +203,7 @@ module VacancyHelpers
   def verify_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).not_to have_content(vacancy.publish_on)
     expect(page.find('.vacancy')).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label)
+    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label.singularize)
 
     verify_shared_vacancy_list_page_details(vacancy)
   end
