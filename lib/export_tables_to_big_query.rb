@@ -30,7 +30,7 @@ class ExportTablesToBigQuery
     activities
     ar_internal_metadata
     audit_data
-    friendly_id_slugs
+    friendlyuid_slugs
     schema_migrations
     sessions
   ].freeze
@@ -65,6 +65,10 @@ class ExportTablesToBigQuery
     upload_to_google_cloud_storage
     load_to_bigquery
     Rails.logger.info({ status: 'finished', removed: tmpdir }.to_json)
+  rescue => e
+    Rails.logger.error({ status: 'error', message: e.message }.to_json)
+    Rollbar.error(e)
+    raise e
   ensure
     # Without the ensure subsequent runs on an container where this has failed recently will fail due to a lack of disk
     # space. This is a temporary fix until we have time to look at moving the ever-growing AuditData table off postgres.
