@@ -64,6 +64,8 @@
 
         = yield
 
+      = content_for :after_main
+
     %footer.govuk-footer{ role: "contentinfo" }
       .govuk-width-container
         .govuk-footer__meta
@@ -71,26 +73,26 @@
             %div.govuk-grid-row
               %div.govuk-grid-column-one-third
                 %h2.govuk-heading-m
-                  = I18n.t('footer.for_job_seekers')
+                  = t('footer.for_job_seekers')
                 %ul.govuk-footer__inline-list
                   %li.govuk-footer__inline-list-item
-                    =link_to I18n.t('footer.search_teaching_vacancies'), root_url, class: 'govuk-footer__link'
+                    =link_to t('footer.search_teaching_vacancies'), root_url, class: 'govuk-footer__link'
 
               %div.govuk-grid-column-one-third
                 %h2.govuk-heading-m
-                  = I18n.t('footer.for_schools')
+                  = t('footer.for_schools')
                 %ul.govuk-footer__inline-list
                   %li.govuk-footer__inline-list-item
-                    =link_to I18n.t('footer.list_a_teaching_job'), new_identifications_path, class: 'govuk-footer__link'
+                    =link_to t('footer.list_a_teaching_job'), new_identifications_path, class: 'govuk-footer__link'
 
               %div.govuk-grid-column-one-third
                 %h2.govuk-heading-m
-                  = I18n.t('footer.service_support')
+                  = t('footer.service_support')
                 %ul.govuk-footer__inline-list.hide-bullet-points
                   %li.govuk-footer-list-item
-                    = mail_to I18n.t('help.email'), I18n.t('footer.request_support'), class: 'govuk-footer__link'
+                    = mail_to t('help.email'), t('footer.request_support'), class: 'govuk-footer__link'
                   %li.govuk-footer-list-item
-                    = link_to I18n.t('footer.provide_feedback'), new_feedback_path, class: 'govuk-footer__link'
+                    = link_to t('footer.provide_feedback'), new_feedback_path, class: 'govuk-footer__link'
                   %li.govuk-footer-list-item
                     =link_to 'Cookies', page_path('cookies'), class: 'govuk-footer__link'
                   %li.govuk-footer-list-item

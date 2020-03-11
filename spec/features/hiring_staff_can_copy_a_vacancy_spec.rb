@@ -2,6 +2,16 @@ require 'rails_helper'
 RSpec.feature 'Copying a vacancy' do
   let(:school) { create(:school) }
 
+  let(:document_copy) { double('document_copy') }
+
+  before do
+    allow(DocumentCopy).to receive(:new).and_return(document_copy)
+    allow(document_copy).to receive(:copy).and_return(document_copy)
+    allow(document_copy).to receive_message_chain(:copied, :web_content_link).and_return('test_url')
+    allow(document_copy).to receive_message_chain(:copied, :id).and_return('test_id')
+    allow(document_copy).to receive(:google_error).and_return(false)
+  end
+
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn)
   end
@@ -36,9 +46,8 @@ RSpec.feature 'Copying a vacancy' do
     click_on('Preview your job listing')
 
     expect(page).to have_content(new_vacancy.job_title)
-    expect(page).to have_content(new_vacancy.starts_on)
-    expect(page).to have_content(new_vacancy.ends_on)
-    expect(page).to have_content(new_vacancy.publish_on)
+    expect(page).to have_content(new_vacancy.starts_on.to_s.strip)
+    expect(page).to have_content(new_vacancy.publish_on.to_s.strip)
     expect(page).not_to have_content(original_vacancy.job_title)
     expect(page).not_to have_content(original_vacancy.starts_on)
     expect(page).not_to have_content(original_vacancy.ends_on)

@@ -1,17 +1,14 @@
-- content_for :page_title_prefix, "Supporting documents — Publish a job for #{current_school.name}"
-
-%h1.govuk-heading-l
-  = t('jobs.publish_heading', school: current_school.name)
-  %span.govuk-caption-l
-    Step 2 of 3
+= render 'hiring_staff/vacancies/documents/title'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @documents_form, url: documents_school_job_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @documents_form, url: school_job_documents_path(@vacancy.id), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary 'Please correct the following errors'
 
       %h2.govuk-heading-m
         = t('jobs.supporting_documents')
+
+      #js-xhr-flashes
 
       = f.govuk_file_field :documents,
         label: { text: t('jobs.upload_file'), size: 's' },
@@ -27,4 +24,7 @@
         = render 'hiring_staff/vacancies/documents/documents'
         %p.js-documents__no-files= t('jobs.no_files_message')
 
-      = f.govuk_submit t('buttons.save_and_continue')
+      = render 'hiring_staff/vacancies/documents/submit', f: f
+
+- content_for :after_main do
+  = render 'shared/file_remove_confirmation_dialogue'

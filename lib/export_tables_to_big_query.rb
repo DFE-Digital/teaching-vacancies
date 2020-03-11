@@ -24,7 +24,6 @@ class ExportTablesToBigQuery
     job_description
     qualifications
     supporting_documents
-    weekly_hours
   ].freeze
 
   EXCLUDE_TABLES = %w[

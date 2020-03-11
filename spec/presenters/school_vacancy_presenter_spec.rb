@@ -45,4 +45,42 @@ RSpec.describe SchoolVacancyPresenter do
       end
     end
   end
+
+  describe 'days_to_apply' do
+    let(:vacancy) { create(:vacancy, expires_on: time_to_apply) }
+
+    context 'when the deadline is today' do
+      let(:time_to_apply) { (Time.zone.today + 12.hours) }
+
+      it 'displays that the deadline is today' do
+        expect(presenter.days_to_apply).to eq('Deadline is today')
+      end
+    end
+
+    context 'when the deadline is tomorrow' do
+      context 'and less than 24 hours away' do
+        let(:time_to_apply) { (Time.zone.tomorrow) }
+
+        it 'displays that the deadline is tomorrow' do
+          expect(presenter.days_to_apply).to eq('Deadline is tomorrow')
+        end
+      end
+
+      context 'and more than 24 hours away' do
+        let(:time_to_apply) { (Time.zone.now + 24.hours + 1.second) }
+
+        it 'displays that the deadline is tomorrow' do
+          expect(presenter.days_to_apply).to eq('Deadline is tomorrow')
+        end
+      end
+    end
+
+    context 'with more than 2 days to apply' do
+      let(:time_to_apply) { (Time.zone.now + 3.days) }
+
+      it 'displays a countdown in days' do
+        expect(presenter.days_to_apply).to eq('3 days remaining to apply')
+      end
+    end
+  end
 end

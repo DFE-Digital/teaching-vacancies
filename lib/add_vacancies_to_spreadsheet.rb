@@ -22,7 +22,6 @@ class AddVacanciesToSpreadsheet < ExportToSpreadsheet
       vacancy.expires_on,
       vacancy.starts_on,
       vacancy.ends_on,
-      vacancy.weekly_hours,
       vacancy.working_patterns.join(','),
       vacancy.school.urn,
       vacancy.school.county

@@ -14,6 +14,16 @@ class SchoolVacancyPresenter < BasePresenter
     format_date(model.created_at)
   end
 
+  def days_to_apply
+    if model.expires_on == Time.zone.today
+      return I18n.t('jobs.days_to_apply.today')
+    elsif model.expires_on == Time.zone.tomorrow
+      return I18n.t('jobs.days_to_apply.tomorrow')
+    end
+    days_remaining = (model.expires_on - Time.zone.today).to_i
+    I18n.t('jobs.days_to_apply.remaining', days_remaining: days_remaining)
+  end
+
   def expires_on
     format_date(model.expires_on)
   end

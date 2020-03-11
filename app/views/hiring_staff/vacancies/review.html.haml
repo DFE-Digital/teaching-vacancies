@@ -5,6 +5,9 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l
       = t('jobs.review_heading', school: @vacancy.school.name)
+    %div
+      - if new_sections(@vacancy).any?
+        = render 'feedback/outlined_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), links: new_sections(@vacancy)
     %p.govuk-body-l
       - if @vacancy.publish_on.today?
         = t('jobs.review')
@@ -15,9 +18,9 @@
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     = render 'hiring_staff/vacancies/review_vacancy_sections/review_job_specification'
-    - if @vacancy.show_supporting_documents?
-      = render 'hiring_staff/vacancies/review_vacancy_sections/review_supporting_documents'
-    - if @vacancy.show_candidate_specification?
+    - if UploadDocumentsFeature.enabled?
+      = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
+    - else
       = render 'hiring_staff/vacancies/review_vacancy_sections/review_candidate_specification'
 
     = render 'hiring_staff/vacancies/review_vacancy_sections/review_application_details'

@@ -1,4 +1,4 @@
-%div.govuk-form-group#expiry_time{:class => ("govuk-form-group--error" if form.errors[:expiry_time].present?)}
+%div.govuk-form-group#expiry_time{ class: ("govuk-form-group--error" if form.errors[:expiry_time].present?) }
   %fieldset.govuk-fieldset
     %legend.govuk-fieldset__legend
       = t('jobs.deadline_time_html')

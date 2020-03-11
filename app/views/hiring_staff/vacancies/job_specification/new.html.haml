@@ -69,17 +69,6 @@
                 collection: working_pattern_options,
                 required: true
 
-      = render partial: 'working_pattern_warning'
-
-      - if @job_specification_form.weekly_hours?
-        = f.input :weekly_hours,
-                  label: t('jobs.weekly_hours'),
-                  as: :decimal,
-                  hint: t('jobs.form_hints.weekly_hours'),
-                  wrapper_html: { id: 'weekly_hours' },
-                  input_html: { class: 'govuk-!-width-one-half' },
-                  required: false
-
       %fieldset.govuk-fieldset#pay_scale_range
         %legend.govuk-label.govuk-label= "#{t('jobs.pay_scale_range')}"
         %span.govuk-hint= t('jobs.form_hints.pay_scale_range')

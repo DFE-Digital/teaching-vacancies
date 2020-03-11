@@ -78,25 +78,6 @@ RSpec.feature 'Viewing a single published vacancy' do
       expect(page).to_not have_content(I18n.t('jobs.benefits'))
     end
 
-    scenario 'does not see the Weekly hours label for part time roles that don\'t have weekly hours set' do
-      vacancy = build(:vacancy, :published_slugged, working_patterns: ['part_time'], weekly_hours: nil)
-      vacancy.save(validate: false)
-
-      visit job_path(vacancy)
-
-      expect(page).to_not have_content(I18n.t('jobs.weekly_hours'))
-    end
-
-    scenario 'can see the Weekly hours label for part time roles do have weekly hours set' do
-      vacancy = build(:vacancy, :published_slugged, working_patterns: ['part_time'], weekly_hours: 30)
-      vacancy.save(validate: false)
-
-      visit job_path(vacancy)
-
-      expect(page).to have_content(I18n.t('jobs.weekly_hours'))
-      expect(page).to have_content(30)
-    end
-
     context 'when the upload documents feature flag is OFF' do
       before do
         vacancy = create(:vacancy, :published)
@@ -120,6 +101,8 @@ RSpec.feature 'Viewing a single published vacancy' do
       context 'for a vacancy published BEFORE the flag is switched on' do
         before do
           vacancy = create(:vacancy, :published)
+          vacancy.documents = []
+          vacancy.save
           visit job_path(vacancy)
         end
 

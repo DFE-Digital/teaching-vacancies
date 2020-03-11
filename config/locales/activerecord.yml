@@ -95,9 +95,6 @@ en:
               past: End date must be in the future
               before_expires_on: End date must be after application deadline
               invalid: Enter the end date in the correct format
-            weekly_hours:
-              negative: can't be negative
-              invalid: must be a valid number
         vacancy_publish_feedback:
           attributes:
             user_participation_response:

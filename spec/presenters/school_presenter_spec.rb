@@ -16,6 +16,34 @@ RSpec.describe SchoolPresenter do
     end
   end
 
+  describe '#school_size' do
+    it 'returns the number of pupils when available' do
+      school = SchoolPresenter.new(build(:school, gias_data: { 'NumberOfPupils': 17, 'SchoolCapacity': 20 }))
+
+      expect(school.school_size).to eq('17 pupils enrolled')
+    end
+
+    it 'falls back to returning the capacity of the school when number of pupils unavailable' do
+      school = SchoolPresenter.new(build(:school, gias_data: { 'SchoolCapacity': 20 }))
+
+      expect(school.school_size).to eq('Up to 20 pupils')
+    end
+
+    it 'defaults to a no-information message otherwise' do
+      school = SchoolPresenter.new(build(:school, gias_data: {}))
+
+      expect(school.school_size).to eq(I18n.t('schools.no_information'))
+    end
+  end
+
+  describe '#ofsted_report' do
+    it 'returns a link to the ofsted report' do
+      school = SchoolPresenter.new(build(:school, gias_data: { 'URN': 100000 }))
+
+      expect(school.ofsted_report).to eq(SchoolPresenter::OFSTED_REPORT_ENDPOINT + '100000')
+    end
+  end
+
   describe '#full_address' do
     it 'should return a comma separated full address of the school' do
       school = SchoolPresenter.new(create(:school))
@@ -47,19 +75,25 @@ RSpec.describe SchoolPresenter do
   end
 
   describe '#school_type_with_religious_character' do
+    let(:academy) { build(:academy, gias_data: { religious_character: 'Does not apply' }) }
+    let(:catholic) { build(:school, gias_data: { religious_character: 'Roman Catholic' }) }
+    let(:secular) { build(:academy, gias_data: { religious_character: 'Does not apply' }) }
+
+    it 'singularizes the school_type' do
+      school_presenter = SchoolPresenter.new(academy)
+      expect(school_presenter.school_type_with_religious_character).to match(/Academy/)
+    end
+
     it 'links the school type with the religious character' do
-      catholic_school = build(:school, gias_data: { religious_character: 'Roman Catholic' })
-      school_presenter = SchoolPresenter.new(catholic_school)
-      expect(school_presenter.school_type_with_religious_character)
-        .to eq("#{catholic_school.school_type.label}, Roman Catholic")
+      school_presenter = SchoolPresenter.new(catholic)
+      expect(school_presenter.school_type_with_religious_character).to match(/Roman Catholic/)
     end
 
     context 'when the school has no religious character' do
       it 'returns only the school type' do
-        non_religious_school = build(:school, gias_data: { religious_character: 'Does not apply' })
-        school_presenter = SchoolPresenter.new(non_religious_school)
+        school_presenter = SchoolPresenter.new(secular)
         expect(school_presenter.school_type_with_religious_character)
-          .to eq(non_religious_school.school_type.label)
+          .to eq(secular.school_type.label.singularize)
       end
     end
   end

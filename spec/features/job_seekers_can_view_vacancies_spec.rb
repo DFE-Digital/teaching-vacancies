@@ -1,29 +1,11 @@
 require 'rails_helper'
 RSpec.feature 'Viewing vacancies' do
-  let(:feature_enabled?) { false }
-
-  before do
-    allow(KeyInfoSearchSnippetFeature).to receive(:enabled?).and_return(feature_enabled?)
-  end
-
   scenario 'Vacancies are listed with summary information', elasticsearch: true do
     vacancy = create(:vacancy)
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
 
-    verify_vacancy_list_page_details_without_feature_enabled(VacancyPresenter.new(vacancy))
-  end
-
-  context 'with key info search snippet feature enabled' do
-    let(:feature_enabled?) { true }
-
-    scenario 'Vacancies are listed with summary information', elasticsearch: true do
-      vacancy = create(:vacancy)
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      verify_vacancy_list_page_details_with_feature_enabled(VacancyPresenter.new(vacancy))
-    end
+    verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
   end
 
   scenario 'There are enough vacancies to invoke pagination', elasticsearch: true do
@@ -215,39 +197,13 @@ RSpec.feature 'Viewing vacancies' do
     end
   end
 
-  context 'when the vacancy is part_time' do
-    scenario 'Shows the weekly hours if there are weekly_hours' do
-      vacancy = create(:vacancy, working_patterns: ['part_time'], weekly_hours: '5')
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit job_path(vacancy)
-      expect(page).to have_content(I18n.t('jobs.weekly_hours'))
-      expect(page).to have_content(vacancy.weekly_hours)
-    end
-
-    scenario 'does not show the weekly hours if they are not set' do
-      vacancy = create(:vacancy, working_patterns: ['part_time'], weekly_hours: nil)
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit job_path(vacancy)
-      expect(page).not_to have_content(I18n.t('jobs.weekly_hours'))
-    end
-  end
-
-  context 'when the vacancy is full_time' do
-    scenario 'Does not show the weekly hours even if weekly_hours is set' do
-      vacancy = create(:vacancy, working_patterns: ['full_time'], weekly_hours: '5')
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit job_path(vacancy)
-      expect(page).not_to have_content(I18n.t('jobs.weekly_hours'))
-    end
-  end
-
   context 'when viewing vacancies created without expiry time' do
     scenario 'Vacancies do not display an expiry time' do
       vacancy = create(:vacancy, :with_no_expiry_time)
       Vacancy.__elasticsearch__.client.indices.flush
       visit jobs_path(vacancy)
 
-      verify_vacancy_list_page_details_without_feature_enabled(VacancyPresenter.new(vacancy))
+      verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
     end
   end
 

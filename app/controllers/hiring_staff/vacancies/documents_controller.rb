@@ -3,33 +3,38 @@ require 'google/apis/drive_v3'
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
   FILE_SIZE_LIMIT = 10.megabytes
 
-  before_action :redirect_unless_vacancy_session_id, only: %i[index create destroy]
-  before_action :redirect_if_no_supporting_documents, only: %i[index create destroy]
-  before_action :redirect_to_next_step_if_save_and_continue, only: %i[create destroy]
+  before_action :set_vacancy
 
-  before_action :set_documents_form, only: %i[index create]
-  before_action :set_documents, only: %i[index create destroy]
+  before_action :redirect_unless_vacancy
+  before_action :redirect_unless_supporting_documents
+  before_action :redirect_to_next_step_if_save_and_continue, only: %i[create]
 
-  def index; end
+  before_action :set_documents_form, only: %i[show create]
+  before_action :set_documents, only: %i[show create destroy]
+
+  def show; end
 
   def create
     process_documents.each do |document|
       @documents.create(document)
     end
 
-    render :index
+    render :show
   end
 
   def destroy
     document = @documents.find(params[:id])
+    delete_operation_status = DocumentDelete.new(document).delete
+    flash_type = delete_operation_status ? :success : :error
+    flash_message = I18n.t("jobs.file_delete_#{flash_type}_message", filename: document.name)
 
-    if DocumentDelete.new(document).delete
-      flash[:success] = I18n.t('jobs.file_delete_success_message', filename: document.name)
+    if request.xhr?
+      flash.now[flash_type] = flash_message
+      render :destroy, layout: false, status: delete_operation_status ? :ok : :bad_request
     else
-      flash[:error] = I18n.t('jobs.file_delete_error_message', filename: document.name)
+      flash[flash_type] = flash_message
+      redirect_to school_job_documents_path(@vacancy.id)
     end
-
-    redirect_to documents_school_job_path
   end
 
   private
@@ -38,21 +43,21 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     @documents_form = DocumentsForm.new
   end
 
-  def vacancy
-    current_school.vacancies.find(session_vacancy_id)
-  end
-
   def set_documents
-    @documents = vacancy.documents
+    @documents = @vacancy.documents
   end
 
   def documents_form_params
     params.require(:documents_form).permit(documents: [])
   end
 
-  def redirect_if_no_supporting_documents
-    supporting_documents = session[:vacancy_attributes]['supporting_documents']
-    redirect_to supporting_documents_school_job_path unless supporting_documents
+  def redirect_unless_supporting_documents
+    if params[:change] && !@vacancy.supporting_documents
+      @vacancy.supporting_documents = 'yes'
+      @vacancy.save
+    end
+
+    redirect_to supporting_documents_school_job_path unless @vacancy.supporting_documents
   end
 
   def next_step
@@ -60,7 +65,11 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def redirect_to_next_step_if_save_and_continue
-    redirect_to_next_step(vacancy) if params[:commit] == 'Save and continue'
+    if params[:commit] == 'Save and continue'
+      redirect_to_next_step(@vacancy)
+    elsif params[:commit] == 'Update job'
+      redirect_to edit_school_job_path(@vacancy.id), notice: I18n.t('messages.jobs.updated')
+    end
   end
 
   def process_documents
@@ -87,7 +96,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     add_google_error(document_params.original_filename) if document_upload.google_error
     add_virus_error(document_params.original_filename) unless document_upload.safe_download
 
-    document_attributes(document_params, document_upload)
+    document_attributes(document_params, document_upload) unless errors_on_file?(document_params.original_filename)
   end
 
   def add_file_size_error(filename)

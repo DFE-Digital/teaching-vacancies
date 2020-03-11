@@ -5,9 +5,14 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l
       = t('jobs.edit_heading', school: @vacancy.school.name)
+    - if new_sections(@vacancy).any?
+      = render 'feedback/outlined_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), links: new_sections(@vacancy)
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_candidate_specification'
+    - if UploadDocumentsFeature.enabled?
+      = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
+    - else
+      = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_candidate_specification'
     = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_application_details'

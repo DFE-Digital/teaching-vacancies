@@ -15,9 +15,9 @@
                                          item_wrapper_class: 'govuk-radios__item',
                                          item_wrapper_tag: 'div' do |field|
               - if field.value == :other_purpose
-                = field.radio_button(class: 'govuk-radios__input', "data-aria-controls": 'conditional_visit_purpose_comment') + field.label(:class => "govuk-label govuk-radios__label")
+                = field.radio_button(class: 'govuk-radios__input', "data-aria-controls": 'conditional_visit_purpose_comment') + field.label(class: "govuk-label govuk-radios__label")
               - else
-                = field.radio_button(class: 'govuk-radios__input') + field.label(:class => "govuk-label govuk-radios__label")
+                = field.radio_button(class: 'govuk-radios__input') + field.label(class: "govuk-label govuk-radios__label")
 
             #conditional_visit_purpose_comment.govuk-radios__conditional.govuk-radios__conditional--hidden
               = f.input :visit_purpose_comment, as: :text,

@@ -191,39 +191,20 @@ RSpec.feature 'Creating a vacancy' do
 
         choose 'Yes'
         click_on 'Save and continue'
-
-        expect(page.current_path).to eq(documents_school_job_path)
+        expect(page).to have_content('Upload files')
       end
     end
 
     context '#documents' do
       let(:feature_enabled?) { true }
-
-      before do
-        visit new_school_job_path
-        fill_in_job_specification_form_fields(vacancy)
-        click_on 'Save and continue'
-      end
-
-      scenario 'redirects to step 2, supporting_documents, when that step has not been completed' do
-        visit documents_school_job_path
-        expect(page.current_path).to eq(supporting_documents_school_job_path)
+      let(:documents_vacancy) do
+        create(:vacancy, school: school)
       end
 
       scenario 'hiring staff can select a file for upload' do
-        fill_in_supporting_documents_form_fields
-        click_on 'Save and continue'
-
+        visit school_job_documents_path(documents_vacancy.id)
         page.attach_file('documents-form-documents-field', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
         expect(page.find('#documents-form-documents-field').value).to_not be nil
-      end
-
-      scenario 'redirects to step 3, application_details, when submitted' do
-        fill_in_supporting_documents_form_fields
-        click_on 'Save and continue'
-
-        click_on 'Save and continue'
-        expect(page.current_path).to eq(application_details_school_job_path)
       end
 
       context 'when uploading files' do
@@ -239,8 +220,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays uploaded file in a table' do
-          fill_in_supporting_documents_form_fields
-          click_on 'Save and continue'
+          visit school_job_documents_path(documents_vacancy.id)
 
           upload_document(
             'new_documents_form',
@@ -253,8 +233,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'displays error message when large file is uploaded' do
           stub_const("#{HiringStaff::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
-          fill_in_supporting_documents_form_fields
-          click_on 'Save and continue'
+          visit school_job_documents_path(documents_vacancy.id)
 
           upload_document(
             'new_documents_form',
@@ -266,8 +245,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays error message when virus file is uploaded' do
-          fill_in_supporting_documents_form_fields
-          click_on 'Save and continue'
+          visit school_job_documents_path(documents_vacancy.id)
 
           allow(document_upload).to receive(:safe_download).and_return(false)
 
@@ -281,8 +259,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays error message when file not uploaded' do
-          fill_in_supporting_documents_form_fields
-          click_on 'Save and continue'
+          visit school_job_documents_path(documents_vacancy.id)
 
           allow(document_upload).to receive(:google_error).and_return(true)
 
@@ -302,30 +279,32 @@ RSpec.feature 'Creating a vacancy' do
         before do
           allow(DocumentDelete).to receive(:new).and_return(document_delete)
 
-          create :document, vacancy: Vacancy.last, name: 'delete_me.pdf'
+          create :document, vacancy: documents_vacancy, name: 'delete_me.pdf'
+          create :document, vacancy: documents_vacancy, name: 'do_not_delete_me.pdf'
 
-          fill_in_supporting_documents_form_fields
-          click_on 'Save and continue'
+          visit school_job_documents_path(documents_vacancy.id)
+
+          find('[data-file-name="delete_me.pdf"]').click
         end
 
         scenario 'deletes them' do
           allow(document_delete).to receive(:delete).and_return(true)
 
-          accept_alert do
-            click_on 'Remove'
-          end
+          click_on 'Yes, remove file'
 
-          expect(page).to have_content 'delete_me.pdf was removed'
+          within '#js-xhr-flashes' do
+            expect(page).to have_content 'delete_me.pdf was removed'
+          end
         end
 
         scenario 'shows errors' do
           allow(document_delete).to receive(:delete).and_return(false)
 
-          accept_alert do
-            click_on 'Remove'
-          end
+          click_on 'Yes, remove file'
 
-          expect(page).to have_content 'An error occurred while removing delete_me.pdf'
+          within '#js-gem-c-modal-dialogue__error' do
+            expect(page).to have_content 'An error occurred while removing the file.'
+          end
         end
       end
     end
@@ -376,55 +355,6 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Save and continue'
           expect(page).to have_content(I18n.t('jobs.review'))
           verify_all_vacancy_details(vacancy)
-        end
-      end
-
-      context 'with upload feature flag turned ON' do
-        let(:feature_enabled?) { true }
-        let(:document_upload) { double('document_upload') }
-
-        before do
-          visit new_school_job_path
-
-          fill_in_job_specification_form_fields(vacancy)
-          click_on 'Save and continue'
-        end
-
-        scenario 'redirects to the vacancy review page when submitted successfully WITH uploaded documents' do
-          allow(DocumentUpload).to receive(:new).and_return(document_upload)
-          allow(document_upload).to receive(:upload)
-          allow(document_upload).to receive_message_chain(:uploaded, :web_content_link).and_return('test_url')
-          allow(document_upload).to receive_message_chain(:uploaded, :id).and_return('test_id')
-          allow(document_upload).to receive(:safe_download).and_return(true)
-          allow(document_upload).to receive(:google_error).and_return(false)
-
-          fill_in_supporting_documents_form_fields
-          click_on 'Save and continue'
-
-          upload_document(
-            'new_documents_form',
-            'documents-form-documents-field',
-            'spec/fixtures/files/blank_job_spec.pdf'
-          )
-
-          click_on 'Save and continue'
-
-          fill_in_application_details_form_fields(vacancy)
-          click_on 'Save and continue'
-
-          expect(page).to have_content(I18n.t('jobs.review'))
-          expect(page).to_not have_content(I18n.t('jobs.no_supporting_documents'))
-        end
-
-        scenario 'redirects to the vacancy review page when submitted successfully WITHOUT uploaded documents' do
-          select_no_for_supporting_documents
-          click_on 'Save and continue'
-
-          fill_in_application_details_form_fields(vacancy)
-          click_on 'Save and continue'
-
-          expect(page).to have_content(I18n.t('jobs.review'))
-          expect(page).to have_content(I18n.t('jobs.no_supporting_documents'))
         end
       end
     end
@@ -687,7 +617,7 @@ RSpec.feature 'Creating a vacancy' do
           end
 
           expect(page).to have_content('Step 2 of 3')
-          expect(page.current_path).to eq(documents_school_job_path)
+          expect(page).to have_content('Upload files')
 
           click_on 'Save and continue'
 
@@ -699,7 +629,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Job contact email')
+          click_link_in_container_with_text('Contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -737,7 +667,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Job contact email')
+          click_link_in_container_with_text('Contact email')
 
           expect(page).to have_content('Step 3 of 3')
 
@@ -752,7 +682,7 @@ RSpec.feature 'Creating a vacancy' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           contact_email = vacancy.contact_email
           visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Job contact email')
+          click_link_in_container_with_text('Contact email')
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
@@ -863,7 +793,8 @@ RSpec.feature 'Creating a vacancy' do
 
         expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
         visit school_job_path(vacancy.id)
-        expect(page).to have_content("Date posted #{format_date(vacancy.publish_on)}")
+        expect(page).to have_content('Date listed')
+        expect(page).to have_content("#{format_date(vacancy.publish_on)}")
       end
 
       scenario 'displays the expiration date and time on the confirmation page' do

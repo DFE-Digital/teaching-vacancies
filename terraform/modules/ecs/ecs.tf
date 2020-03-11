@@ -176,14 +176,15 @@ data "template_file" "web_container_definition" {
     feature_import_vacancies                     = "${var.feature_import_vacancies}"
     feature_sign_in_alert                        = "${var.feature_sign_in_alert}"
     feature_upload_documents                     = "${var.feature_upload_documents}"
-    feature_key_info_search_snippet              = "${var.feature_key_info_search_snippet}"
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
     dfe_sign_in_service_access_role_id           = "${var.dfe_sign_in_service_access_role_id}"
     dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
     google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    big_query_dataset                            = "${var.big_query_dataset}"
     cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
   }
 }
 
@@ -336,7 +337,6 @@ data "template_file" "worker_container_definition" {
     subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
     feature_email_alerts                         = "${var.feature_email_alerts}"
     feature_upload_documents                     = "${var.feature_upload_documents}"
-    feature_key_info_search_snippet              = "${var.feature_key_info_search_snippet}"
     ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
     worker_command                               = "${jsonencode(var.worker_command)}"
   }
