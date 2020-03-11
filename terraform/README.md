@@ -1,6 +1,7 @@
 # Terraform
 
-Resources included:
+## Resources included:
+
 - CodePipeline
 - CodeBuild
 - CodeDeploy
