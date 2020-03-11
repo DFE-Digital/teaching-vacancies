@@ -68,7 +68,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     if params[:commit] == 'Save and continue'
       redirect_to_next_step(@vacancy)
     elsif params[:commit] == 'Update job'
-      redirect_to edit_school_job_path(@vacancy.id), notice: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
     end
   end
 

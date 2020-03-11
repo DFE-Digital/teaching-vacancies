@@ -2,13 +2,13 @@
 
 %h1.govuk-heading-l
   = t('jobs.edit_heading', school: current_school.name)
-= render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
 = simple_form_for @job_specification_form, method: :put, url: school_job_job_specification_path(@job_specification_form.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.job_specification')
 
   .govuk-grid-row
-    .govuk-grid-column-one-half
+    .govuk-grid-column-two-thirds
+      = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.input :job_title,
                   label: t('jobs.job_title'),

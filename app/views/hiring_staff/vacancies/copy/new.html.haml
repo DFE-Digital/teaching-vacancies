@@ -5,13 +5,13 @@
   %span.govuk-caption-l
     Step 1 of 2
 
-= render 'hiring_staff/vacancies/error_messages', errors: @copy_form.errors
 = simple_form_for @copy_form, html: { class: 'copy-form' }, action: :post, url: school_job_copy_path do |f|
   %h2.govuk-heading-m
     = t('jobs.job_specification')
 
   .govuk-grid-row
-    .govuk-grid-column-one-half
+    .govuk-grid-column-two-thirds
+      = render 'hiring_staff/vacancies/error_messages', errors: @copy_form.errors
       = f.input :job_title,
                 label: t('jobs.job_title'),
                 hint: t('jobs.form_hints.job_title'),
