@@ -1,5 +1,5 @@
 %section#school-overview.govuk-tabs__panel.no-border-override
-  %h2.govuk-heading-m 
+  %h3.govuk-heading-m 
     = t('schools.school_overview')
   %table.govuk-table
     %tbody.govuk-table__body
@@ -44,12 +44,12 @@
           %td.govuk-table__cell
             = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link wordwrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
   
-  %h2.govuk-heading-m
+  %h4.govuk-heading-s
     = t('schools.about')
     = @vacancy.school.name
   %p= @vacancy.school.description
 
-  %h2.govuk-heading-m
+  %h4.govuk-heading-s
     = t('schools.school_location')
   %p= @vacancy.school.full_address
   
