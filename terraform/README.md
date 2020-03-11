@@ -1,7 +1,5 @@
 # Terraform
 
-This terraform configuration will create an AWS stack.
-
 Resources included:
 - CodePipeline
 - CodeBuild
@@ -72,8 +70,8 @@ $ terraform init
   Workspaces allow the Terraform commands to be run with different states, giving them a degree of isolation. Eg. you can create a test workspace
 
 ```
-$ terraform workspace create staging
-$ terraform workspace create production
+$ terraform workspace new staging
+$ terraform workspace new production
 $ terraform workspace select staging
 ```
 
