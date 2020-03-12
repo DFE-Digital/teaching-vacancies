@@ -162,7 +162,6 @@ en:
     none_listed:
       - 'This may be because this isn’t a busy period in the teacher recruitment cycle.'
       - 'Schools have listed %{count} jobs but they have since expired.'
-    key_information: 'Key Information'
     job_details: 'Job details'
     job_title: 'Job title'
     benefits: 'Financial benefits'
@@ -506,7 +505,7 @@ en:
     apply_filters_if_criteria: 'Refine search'
     change: 'Change'
     continue: 'Continue'
-    create_job: 'Create a job'
+    create_job: 'Create a job listing'
     delete: 'Delete'
     dismiss: 'Dismiss'
     find: 'Find'
