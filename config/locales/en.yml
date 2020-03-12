@@ -505,7 +505,7 @@ en:
     apply_filters_if_criteria: 'Refine search'
     change: 'Change'
     continue: 'Continue'
-    create_job: 'Create a job'
+    create_job: 'Create a job listing'
     delete: 'Delete'
     dismiss: 'Dismiss'
     find: 'Find'
