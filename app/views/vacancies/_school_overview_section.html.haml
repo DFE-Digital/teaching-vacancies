@@ -36,13 +36,13 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
           = t('schools.website')
         %td.govuk-table__cell
-          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link wordwrap', target: '_blank')
+          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link link-wrap', target: '_blank')
       - if @vacancy.contact_email.present?                       
         %tr.govuk-table__row
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
             = t('jobs.contact_email')
           %td.govuk-table__cell
-            = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link wordwrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
+            = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link link-wrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
   
   %h4.govuk-heading-s
     = t('schools.about')
