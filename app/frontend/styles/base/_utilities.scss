@@ -23,6 +23,11 @@
   word-wrap:break-word;
 }
 
+.link-wrap {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 .overflow-scroll {
   @include govuk-media-query($until: tablet) {
     overflow: scroll;
