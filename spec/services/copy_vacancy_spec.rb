@@ -51,17 +51,17 @@ RSpec.describe CopyVacancy do
           google_drive_id: 'testid'
         )
         vacancy = create(:vacancy, documents: [document])
-  
+
         result = described_class.new(vacancy).call
-  
+
         expect(result.documents.first.name).to eq(vacancy.documents.first.name)
       end
 
       it 'does not copy candidate specification when upload documents feature flag ON' do
         vacancy = create(:vacancy)
-  
+
         result = described_class.new(vacancy).call
-  
+
         expect(result.experience).to eq(nil)
         expect(result.education).to eq(nil)
         expect(result.qualifications).to eq(nil)
