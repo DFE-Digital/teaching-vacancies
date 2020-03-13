@@ -10,6 +10,7 @@ WITH
     URN,
     id,
     data_CloseDate AS closed_date,
+    data_OpenDate AS opened_date,
     CAST(created_at AS DATE) AS created_at_date,
     data_EstablishmentStatus_name AS status,
     data_TypeOfEstablishment_name AS establishment_type
@@ -69,17 +70,20 @@ WITH
       schools.urn AS urn,
       dates.date AS date,
     IF
-      ((schools.status != "Closed" #if the school is not closed
+      ((schools.status != "Closed" #if the school is not currently closed
           OR schools.closed_date > dates.date) #or if the school closed after the date we're calculating for
+        AND (schools.status != "Proposed to Open" #and if the school is not currently proposed to open
+          OR schools.opened_date <= dates.date #or if the school opened before the date we're calculating for
+          )
         AND schools.created_at_date <= dates.date,
         #and if the school was first listed on GIAS before or on the date we're calculating for
         TRUE,
         FALSE) AS in_scope,
     IF
-      (schools.status = "Closed"
-        AND schools.closed_date <= dates.date,
+      ((schools.status = "Closed"
+        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
         FALSE,
-        #mark schools which were closed as not signed up, regardless of whether this is before or after 20th November 2019
+        #mark schools which were closed or had not yet opened as not signed up, regardless of whether this is before or after 20th November 2019
       IF
         ( historic_signups.School_been_added
           AND dates.date<='2019-11-20',
@@ -95,25 +99,46 @@ WITH
             #after 20th November 2019, count the number of users who had access, see if it is 1 or more, and if so count the school as signed up
             TRUE,
             FALSE))) AS signed_up,
+
+    IF
+      ((schools.status = "Closed"
+        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+        FALSE,
+        #mark schools which were closed or had not yet opened as not having published
     IF
       (COUNTIF(vacancies.publish_on <= dates.date) > 1,
         TRUE,
-        FALSE) AS has_published_so_far,
+        FALSE)) AS has_published_so_far,
+    IF
+      ((schools.status = "Closed"
+        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+        FALSE,
+        #mark schools which were closed or had not yet opened as not having published in the last year
     IF
       (COUNTIF(vacancies.publish_on <= dates.date
           AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 1 YEAR)) > 1,
         TRUE,
-        FALSE) AS has_published_in_the_last_year,
+        FALSE)) AS has_published_in_the_last_year,
+    IF
+      ((schools.status = "Closed"
+        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+        FALSE,
+        #mark schools which were closed or had not yet opened as not having published in the last quarter
     IF
       (COUNTIF(vacancies.publish_on <= dates.date
           AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 3 MONTH)) > 1,
         TRUE,
-        FALSE) AS has_published_in_the_last_quarter,
+        FALSE)) AS has_published_in_the_last_quarter,
+    IF
+      ((schools.status = "Closed"
+        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+        FALSE,
+        #mark schools which were closed or had not yet opened as not having had live vacancies
     IF
       (COUNTIF(vacancies.publish_on <= dates.date
           AND vacancies.expires_on > dates.date) > 1,
         TRUE,
-        FALSE) AS had_live_vacancies
+        FALSE)) AS had_live_vacancies
     FROM
       schools
     CROSS JOIN
@@ -134,6 +159,7 @@ WITH
       urn,
       date,
       closed_date,
+      opened_date,
       created_at_date,
       schools.status,
       historic_signups.School_been_added,
