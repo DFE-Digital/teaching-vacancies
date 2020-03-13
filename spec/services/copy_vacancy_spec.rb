@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe CopyVacancy do
   describe '#call' do
     let(:document_copy) { double('document_copy') }
+    let(:feature_enabled?) { false }
 
     before do
+      allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
       allow(DocumentCopy).to receive(:new).and_return(document_copy)
       allow(document_copy).to receive(:copy).and_return(document_copy)
       allow(document_copy).to receive_message_chain(:copied, :web_content_link).and_return('test_url')
@@ -37,19 +39,33 @@ RSpec.describe CopyVacancy do
       Timecop.return
     end
 
-    it 'copies documents when copying a vacancy' do
-      document = create(:document,
-        name: 'Test.png',
-        size: 1000,
-        content_type: 'image/png',
-        download_url: 'test/test.png',
-        google_drive_id: 'testid'
-      )
-      vacancy = create(:vacancy, documents: [document])
+    context 'when upload documents feature flag is ON' do
+      let(:feature_enabled?) { true }
 
-      result = described_class.new(vacancy).call
+      it 'copies documents when copying a vacancy' do
+        document = create(:document,
+          name: 'Test.png',
+          size: 1000,
+          content_type: 'image/png',
+          download_url: 'test/test.png',
+          google_drive_id: 'testid'
+        )
+        vacancy = create(:vacancy, documents: [document])
 
-      expect(result.documents.first.name).to eq(vacancy.documents.first.name)
+        result = described_class.new(vacancy).call
+
+        expect(result.documents.first.name).to eq(vacancy.documents.first.name)
+      end
+
+      it 'does not copy candidate specification when upload documents feature flag ON' do
+        vacancy = create(:vacancy)
+
+        result = described_class.new(vacancy).call
+
+        expect(result.experience).to eq(nil)
+        expect(result.education).to eq(nil)
+        expect(result.qualifications).to eq(nil)
+      end
     end
 
     context 'not all fields are copied' do
