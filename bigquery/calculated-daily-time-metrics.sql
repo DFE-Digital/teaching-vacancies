@@ -72,7 +72,7 @@ WITH
     IF
       ((schools.status != "Closed" #if the school is not currently closed
           OR schools.closed_date > dates.date) #or if the school closed after the date we're calculating for
-        AND (schools.status != "Proposed to Open" #and if the school is not currently proposed to open
+        AND (schools.status != "Proposed to open" #and if the school is not currently proposed to open
           OR schools.opened_date <= dates.date #or if the school opened before the date we're calculating for
           )
         AND schools.created_at_date <= dates.date,
