@@ -36,7 +36,7 @@ RSpec.feature 'Copying a vacancy' do
     expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
     within('form.copy-form') do
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
     end
 
     expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
@@ -71,7 +71,7 @@ RSpec.feature 'Copying a vacancy' do
 
       expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
       within('form.copy-form') do
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
       end
 
       expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
