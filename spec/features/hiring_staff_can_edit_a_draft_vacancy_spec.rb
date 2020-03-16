@@ -25,7 +25,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
     before do
       visit new_school_job_path
       fill_in_job_specification_form_fields(vacancy)
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
     end
 
     scenario 'redirects to incomplete candidate specification step, with fields pre-populated' do
