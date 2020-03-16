@@ -429,7 +429,7 @@ variable "feature_import_vacancies" {
 }
 
 variable "feature_upload_documents" {
-  default = "false"
+  default = "true"
 }
 
 variable "notify_subscription_confirmation_template" {}
