@@ -1,33 +1,46 @@
-SELECT
-  COALESCE(current_table.user_id,
-    previous_table.user_id) AS user_id,
-  COALESCE(current_table.role,
-    previous_table.role) AS role,
-  COALESCE(CAST(current_table.approval_datetime AS DATE),previous_table.from_date) AS from_date,
+SELECT DISTINCT
+  COALESCE(dsi_users_now.user_id,
+    latest_timestamped_dsi_users.user_id) AS user_id,
+  COALESCE(dsi_users_now.role,
+    latest_timestamped_dsi_users.role) AS role,
 IF
-  (current_table.user_id IS NULL
-    AND previous_table.to_date IS NULL,
+  (dsi_users_now.approval_datetime IS NOT NULL,
+    CAST(dsi_users_now.approval_datetime AS DATE),
+  IF
+    (latest_timestamped_dsi_users.from_date IS NOT NULL,
+      latest_timestamped_dsi_users.from_date,
+      CURRENT_DATE())) AS from_date,
+IF
+  (dsi_users_now.user_id IS NULL
+    AND latest_timestamped_dsi_users.to_date IS NULL,
     CURRENT_DATE(),
-    previous_table.to_date) AS to_date,
+  IF
+    (dsi_users_now.user_id IS NULL,
+      latest_timestamped_dsi_users.to_date,
+      NULL)) AS to_date,
   #if we find that a user from the previous table isn't in the current table, set the to_date to today's date (i.e. assume that the user left about now)
-  COALESCE(CAST(current_table.update_datetime AS DATE),
-    previous_table.last_updated_date) AS last_updated_date,
-  COALESCE(current_table.given_name,
-    previous_table.given_name) AS given_name,
-  COALESCE(current_table.family_name,
-    previous_table.family_name) AS family_name,
-  COALESCE(current_table.email,
-    previous_table.email) AS email,
-  current_table.school_urn
+  COALESCE(CAST(dsi_users_now.update_datetime AS DATE),
+    latest_timestamped_dsi_users.last_updated_date) AS last_updated_date,
+  COALESCE(dsi_users_now.given_name,
+    latest_timestamped_dsi_users.given_name) AS given_name,
+  COALESCE(dsi_users_now.family_name,
+    latest_timestamped_dsi_users.family_name) AS family_name,
+  COALESCE(dsi_users_now.email,
+    latest_timestamped_dsi_users.email) AS email,
+  COALESCE(dsi_users_now.school_urn,
+    latest_timestamped_dsi_users.school_urn) AS school_urn
 FROM
-  `teacher-vacancy-service.production_dataset.dsi_users` AS current_table
+  `teacher-vacancy-service.production_dataset.dsi_users` AS dsi_users_now
 FULL JOIN
-  `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS previous_table
+  `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS latest_timestamped_dsi_users
 ON
-  current_table.user_id=previous_table.user_id
-  AND current_table.school_urn=previous_table.school_urn
-  AND CAST(current_table.approval_datetime AS DATE)=previous_table.from_date
+  dsi_users_now.user_id=latest_timestamped_dsi_users.user_id
+  AND dsi_users_now.school_urn=latest_timestamped_dsi_users.school_urn
+  AND CAST(dsi_users_now.approval_datetime AS DATE)=latest_timestamped_dsi_users.from_date
 WHERE
+  COALESCE(dsi_users_now.school_urn,
+    latest_timestamped_dsi_users.school_urn) IS NOT NULL
+  AND
 IF
   ((
     SELECT
@@ -43,4 +56,5 @@ IF
       WHERE
         to_date IS NULL) ) < 500,
     TRUE,
-    ERROR("Error: Today's user table appears to have  than the previous version."))
+    ERROR("Error: Today's user table appears to have 500+ new users in it."))
+ORDER BY user_id ASC
