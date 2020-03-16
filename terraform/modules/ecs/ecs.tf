@@ -173,6 +173,8 @@ data "template_file" "web_container_definition" {
     subscription_key_generator_salt              = "${var.subscription_key_generator_salt}"
     subscription_key_generator_secret            = "${var.subscription_key_generator_secret}"
     feature_email_alerts                         = "${var.feature_email_alerts}"
+    feature_import_vacancies                     = "${var.feature_import_vacancies}"
+    feature_sign_in_alert                        = "${var.feature_sign_in_alert}"
     feature_upload_documents                     = "${var.feature_upload_documents}"
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
@@ -180,7 +182,9 @@ data "template_file" "web_container_definition" {
     dfe_sign_in_service_id                       = "${var.dfe_sign_in_service_id}"
     google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    big_query_dataset                            = "${var.big_query_dataset}"
     cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
+    cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
   }
 }
 

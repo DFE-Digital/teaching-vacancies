@@ -273,29 +273,6 @@ RSpec.describe Vacancy, type: :model do
         expect(vacancy.errors.messages[:maximum_salary]).to eq(['Maximum salary must be more than the minimum salary'])
       end
     end
-
-    describe '#working_hours' do
-      it 'can not accept non-numeric values' do
-        vacancy = build(:vacancy, weekly_hours: 'eight and a half')
-
-        expect(vacancy.valid?).to be(false)
-        expect(vacancy.errors.messages[:weekly_hours][0]).to eq('must be a valid number')
-      end
-
-      it 'can accept decimal values' do
-        vacancy = build(:vacancy, weekly_hours: '0.5')
-
-        expect(vacancy.valid?).to be true
-        expect(vacancy.weekly_hours).to eq('0.5')
-      end
-
-      it 'must not have a negative value' do
-        vacancy = build(:vacancy, weekly_hours: '-5')
-
-        expect(vacancy.valid?).to be false
-        expect(vacancy.errors.messages[:weekly_hours][0]).to eq('can\'t be negative')
-      end
-    end
   end
 
   describe 'friendly_id generated slug' do

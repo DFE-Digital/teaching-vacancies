@@ -24,7 +24,6 @@ class ExportTablesToBigQuery
     job_description
     qualifications
     supporting_documents
-    weekly_hours
   ].freeze
 
   EXCLUDE_TABLES = %w[
@@ -64,8 +63,12 @@ class ExportTablesToBigQuery
     export
     upload_to_google_cloud_storage
     load_to_bigquery
-    FileUtils.rm_rf(Rails.root.join(tmpdir))
     Rails.logger.info({ status: 'finished', removed: tmpdir }.to_json)
+  ensure
+    # Without the ensure subsequent runs on an container where this has failed recently will fail due to a lack of disk
+    # space. This is a temporary fix until we have time to look at moving the ever-growing AuditData table off postgres.
+    # Without AuditData, the files are small.
+    FileUtils.rm_rf(Rails.root.join(tmpdir))
   end
 
   private
@@ -90,6 +93,12 @@ class ExportTablesToBigQuery
 
       bad_records["#{table.underscore}.json"] = (records_count * BAD_RECORD_RATE).to_i
       total_records["#{table.underscore}.json"] = records_count
+      reporting = {
+        permitted_number_of_bad_records: bad_records["#{table.underscore}.json"],
+        records_expected: records_count,
+        started_at: DateTime.now.to_s(:db),
+        table: [BIGQUERY_TABLE_PREFIX, table].join('_'),
+      }
 
       Rails.logger.info(logging_details.to_json)
       next if records.none?
@@ -104,9 +113,31 @@ class ExportTablesToBigQuery
         end
         logging_details[:records_processed] += batch.size
       end
+
+      reporting = reporting.merge({
+        finished_at: DateTime.now.to_s(:db),
+        records_processed: logging_details[:records_processed]
+      })
+
+      create_or_update_reporting_table(reporting)
+
       fh.close
       Rails.logger.info(logging_details.to_json)
     end
+  end
+
+  def create_or_update_reporting_table(data)
+    table = dataset.table('reporting')
+    table = dataset.create_table 'reporting' do |schema|
+      schema.timestamp 'finished_at'
+      schema.integer 'permitted_number_of_bad_records', mode: :required
+      schema.integer 'records_expected', mode: :required
+      schema.integer 'records_processed'
+      schema.timestamp 'started_at', mode: :required
+      schema.string 'table', mode: :required
+    end if table.nil?
+
+    table.insert(data)
   end
 
   # Ensure that all records have a consistent map of the data keys. This is to prevent BigQuery breaking when importing
@@ -234,11 +265,11 @@ class ExportTablesToBigQuery
 
       if dataset.load(
         table_id,
-          endpoint,
-          autodetect: true,
-          format: 'json',
-          max_bad_records: bad_records[file],
-          write: 'truncate'
+        endpoint,
+        autodetect: true,
+        format: 'json',
+        max_bad_records: bad_records[file],
+        write: 'truncate'
       )
         table = dataset.table(table_id)
         logging_details = logging_details.merge({

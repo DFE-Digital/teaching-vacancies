@@ -5,19 +5,17 @@
     %dt= t('jobs.salary')
     %dd.double
       = vacancy.salary_range
-    %dt= t('jobs.publish_on')
+    %dt= t('jobs.school_type')
     %dd.double
-      = format_date(vacancy.publish_on)
-    %dt= t('jobs.expires_on')
-    - if vacancy.expiry_time.nil?
-      %dd.double
-        = format_date(vacancy.expires_on)
-    - else 
-      %dd.double
-        = format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime('%-l:%M%P')
-    %dt= t('jobs.starts_on')
-    %dd.double= format_date(vacancy.starts_on)
+      = vacancy.school.school_type_with_religious_character
     - if vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double
         = vacancy.working_patterns
+    %dt= t('jobs.expires_on')
+    - if vacancy.expiry_time.nil?
+      %dd.double
+        = format_date(vacancy.expires_on)
+    - else
+      %dd.double
+        = format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime('%-l:%M %P')

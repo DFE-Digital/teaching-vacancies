@@ -119,16 +119,6 @@ class VacancyPresenter < BasePresenter
     model.newly_qualified_teacher? ? 'Suitable' : 'Not suitable'
   end
 
-  def flexible_working
-    return unless model.flexible_working?
-
-    mailto = mail_to(model.contact_email, model.school.name, class: 'govuk-link')
-
-    # rubocop:disable Rails/OutputSafety
-    I18n.t('jobs.flexible_working_info', mailto: mailto).html_safe
-    # rubocop:enable Rails/OutputSafety
-  end
-
   def working_patterns?
     model_working_patterns.present?
   end
@@ -165,7 +155,6 @@ class VacancyPresenter < BasePresenter
       expires_on: expires_on,
       starts_on: starts_on,
       ends_on: ends_on,
-      weekly_hours: weekly_hours,
       flexible_working: flexible_working,
       school_urn: school.urn,
       school_county: school.county

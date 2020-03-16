@@ -19,7 +19,6 @@ class JobPosting
       experience: @schema['experienceRequirements'],
       working_patterns: @schema['employmentType'].split(', ').map(&:downcase),
       status: :published,
-      weekly_hours: @schema['workHours'],
       application_link: @schema['url'],
       contact_email: 'recruitment@school.invalid',
       minimum_salary: @schema.dig('baseSalary', 'value', 'value') || @schema.dig('baseSalary', 'value', 'minValue'),

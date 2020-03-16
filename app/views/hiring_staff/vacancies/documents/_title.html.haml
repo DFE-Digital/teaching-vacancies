@@ -1,0 +1,12 @@
+- if @vacancy.published?
+  - content_for :page_title_prefix, "Edit the Supporting documents"
+
+  %h1.govuk-heading-l
+    = t('jobs.edit_heading', school: current_school.name)
+- else
+  - content_for :page_title_prefix, "Supporting documents — Publish a job for #{current_school.name}"
+  
+  %h1.govuk-heading-l
+    = t('jobs.publish_heading', school: current_school.name)
+    %span.govuk-caption-l
+      Step 2 of 3

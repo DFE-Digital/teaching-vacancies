@@ -73,4 +73,17 @@ RSpec.describe VacanciesHelper, type: :helper do
       expect(helper.vacancy_params_whitelist).to match_array(filters)
     end
   end
+
+  describe '#new_sections' do
+    let(:vacancy) { double('vacancy') }
+
+    before do
+      allow(UploadDocumentsFeature).to receive(:enabled?).and_return(true)
+    end
+
+    it 'should include supporting_documents for legacy listings' do
+      allow(vacancy).to receive(:supporting_documents).and_return(nil)
+      expect(helper.new_sections(vacancy)).to include('supporting_documents')
+    end
+  end
 end

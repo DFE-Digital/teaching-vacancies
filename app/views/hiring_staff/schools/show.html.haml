@@ -1,7 +1,9 @@
 - content_for :page_title_prefix, @school.name
 
 - if @awaiting_feedback_count.positive?
-  .flash.notice#awaiting_notice
+  .js-dismissable.mb1#awaiting_notice{role: 'alert', tabindex: '-1', class: "flash flash-notice"}
+    %a.govuk-link.govuk-link--no-visited-state.dismiss-link.js-dismissable__link{ href: '#' }
+      = t('buttons.dismiss')
     You have <span class='count'>#{pluralize @awaiting_feedback_count, 'job'}</span> awaiting feedback
 
 .school.govuk-grid-row
@@ -28,7 +30,7 @@
     %table.check-your-answers.govuk-table
       %thead.govuk-table__head
         %tr.govuk-table__row
-          %th.govuk-table__header{:colspan => "2"}
+          %th.govuk-table__header{ colspan: "2" }
             %h2.govuk-heading-m
               = t('schools.info', school: @school.name)
           %th.govuk-table__header

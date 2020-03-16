@@ -84,8 +84,9 @@ variable "skylight_enabled" {}
 variable "skylight_ignored_endpoints" {}
 variable "notify_key" {}
 variable "feature_email_alerts" {}
-variable "feature_upload_documents" {}
 variable "feature_import_vacancies" {}
+variable "feature_sign_in_alert" {}
+variable "feature_upload_documents" {}
 variable "notify_subscription_confirmation_template" {}
 variable "notify_subscription_daily_template" {}
 variable "notify_prompt_feedback_for_expired_vacancies" {}

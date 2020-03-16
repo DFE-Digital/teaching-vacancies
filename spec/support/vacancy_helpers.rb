@@ -19,8 +19,6 @@ module VacancyHelpers
     fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
     fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year
 
-    fill_in 'job_specification_form[weekly_hours]', with: vacancy.weekly_hours if vacancy.weekly_hours?
-
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
             name: 'job_specification_form[working_patterns][]',
@@ -97,16 +95,15 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page.html).to include(vacancy.flexible_working) if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
-    expect(page).to have_content(I18n.t('jobs.supporting_documents')) if vacancy.show_supporting_documents?
-
-    if vacancy.show_candidate_specification?
+    if UploadDocumentsFeature.enabled?
+      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+    else
       expect(page.html).to include(vacancy.education)
       expect(page.html).to include(vacancy.qualifications)
       expect(page.html).to include(vacancy.experience)
@@ -118,12 +115,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.application_link)
     expect(page).to have_content(vacancy.expires_on)
     expect(page).to have_content(vacancy.publish_on)
-
-    if vacancy.weekly_hours?
-      expect(page).to have_content(vacancy.weekly_hours)
-    elsif vacancy.weekly_hours.present?
-      expect(page).not_to have_content(vacancy.weekly_hours)
-    end
   end
 
   def verify_vacancy_show_page_details(vacancy)
@@ -133,42 +124,27 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page.html).to include(vacancy.flexible_working) if vacancy.flexible_working?
     expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page.html).to include(vacancy.benefits)
     expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
-    expect(page.html).to include(vacancy.education)
-    expect(page.html).to include(vacancy.qualifications)
-    expect(page.html).to include(vacancy.experience)
+    if vacancy.show_supporting_documents?
+      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+    end
+
+    if !vacancy.show_supporting_documents? && vacancy.any_candidate_specification?
+      expect(page.html).to include(vacancy.education)
+      expect(page.html).to include(vacancy.qualifications)
+      expect(page.html).to include(vacancy.experience)
+    end
+
     expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
-    expect(page).to have_content(vacancy.expires_on)
-    expect(page).to have_content(vacancy.publish_on)
-
-    if vacancy.weekly_hours?
-      expect(page).to have_content(vacancy.weekly_hours)
-    elsif vacancy.weekly_hours.present?
-      expect(page).not_to have_content(vacancy.weekly_hours)
-    end
-  end
-
-  def verify_vacancy_list_page_details(vacancy)
-    expect(page.find('.vacancy')).to have_content(vacancy.job_title)
-    expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
-    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.publish_on)
-    expect(page.find('.vacancy')).to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
-
-    # rubocop:disable Style/GuardClause
-    unless vacancy.expiry_time.nil?
-      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M%P'))
-    end
-    # rubocop:enable Style/GuardClause
+    expect(page).to have_content(vacancy.expires_on.to_s.strip)
+    expect(page).to have_content(vacancy.publish_on.to_s.strip)
   end
 
   def expect_schema_property_to_match_value(key, value)
@@ -221,7 +197,27 @@ module VacancyHelpers
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
     }
 
-    json['workHours'] = vacancy.weekly_hours if vacancy.weekly_hours?
     json
+  end
+
+  def verify_vacancy_list_page_details(vacancy)
+    expect(page.find('.vacancy')).not_to have_content(vacancy.publish_on)
+    expect(page.find('.vacancy')).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
+    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label)
+
+    verify_shared_vacancy_list_page_details(vacancy)
+  end
+
+  private
+
+  def verify_shared_vacancy_list_page_details(vacancy)
+    expect(page.find('.vacancy')).to have_content(vacancy.job_title)
+    expect(page.find('.vacancy')).to have_content(vacancy.location)
+    expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
+    expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
+    expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
+    unless vacancy.expiry_time.nil?
+      expect(page.find('.vacancy')).to have_content(vacancy.expiry_time.strftime('%-l:%M %P'))
+    end
   end
 end

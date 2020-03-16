@@ -85,31 +85,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page.current_path).to eq('/jobs/assistant-head-teacher')
       end
 
-      scenario 'clears flexible_working when working_patterns match' do
-        vacancy = create(:vacancy,
-                         :published,
-                         school: school,
-                         working_patterns: ['full_time'],
-                         flexible_working: true)
-
-        visit school_job_edit_path(vacancy.id)
-
-        click_link_in_container_with_text(I18n.t('jobs.working_patterns'))
-
-        check Vacancy.human_attribute_name('working_patterns.part_time'),
-              name: 'job_specification_form[working_patterns][]'
-        click_on 'Update job'
-
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
-
-        updated_vacancy = Vacancy.find(vacancy.id)
-
-        expect(updated_vacancy.working_patterns).to eq(['full_time', 'part_time'])
-        expect(updated_vacancy.flexible_working).to eq(nil)
-
-        expect(page.html).to include(VacancyPresenter.new(updated_vacancy).flexible_working)
-      end
-
       scenario 'tracks the vacancy update' do
         job_title = vacancy.job_title
 
@@ -188,6 +163,33 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
         click_on 'Update job'
+      end
+    end
+
+    context '#supporting_documents' do
+      let(:feature_enabled?) { true }
+
+      scenario 'can edit documents for a legacy vacancy' do
+        vacancy.supporting_documents = nil
+        vacancy.documents = []
+        vacancy.save
+
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+        expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
+        expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
+          .text).to include(I18n.t('jobs.notification_labels.new'))
+
+        find("[id='change-supporting-documents']").click_link('Change')
+
+        expect(page).to have_content(I18n.t('jobs.upload_file'))
+
+        click_on 'Update job'
+
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+        expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
+          .text).to_not include(I18n.t('jobs.notification_labels.new'))
       end
     end
 

@@ -230,10 +230,6 @@ class Vacancy < ApplicationRecord
     self[:maximum_salary] = format_salary(salary)
   end
 
-  def weekly_hours?
-    weekly_hours.present? && derived_flexible_working?
-  end
-
   def flexible_working?
     return flexible_working unless flexible_working.nil?
 
@@ -253,12 +249,11 @@ class Vacancy < ApplicationRecord
   end
 
   def show_supporting_documents?
-    UploadDocumentsFeature.enabled? && !show_candidate_specification?
+    UploadDocumentsFeature.enabled? && documents.any?
   end
 
-  def show_candidate_specification?
-    # TODO: This method should change when the behaviour for changing candidate specification is defined
-    experience.present? && qualifications.present? && education.present?
+  def any_candidate_specification?
+    experience.present? || qualifications.present? || education.present?
   end
 
   def delete_documents

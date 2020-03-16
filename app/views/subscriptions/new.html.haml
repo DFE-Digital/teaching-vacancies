@@ -7,10 +7,10 @@
       = t('subscriptions.new.page_description')
 
 .govuk-grid-row
-  .govuk-grid-column-one
+  .govuk-grid-column-one-half
 
     - if @subscription.errors.any?
-      #errors.govuk-error-summary{role: 'alert', tabindex: '-1'}
+      #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
         %h2.govuk-heading-m.govuk-error-summary-heading
           = t('errors.feedback.errors_present')
         %ul.govuk-list.govuk-error-summary__list
@@ -31,7 +31,7 @@
           - @subscription.filtered_search_criteria.each_pair do |filter, value|
             %li
               - if filter.present?
-                %span{ class: 'govuk-!-font-weight-bold'} #{filter.humanize}:
+                %span{ class: 'govuk-!-font-weight-bold' } #{filter.humanize}:
               = value
       %p.govuk-body-l=t('subscriptions.next_steps')
       = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true

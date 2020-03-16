@@ -1,4 +1,4 @@
-%div.govuk-form-group#expiry_time{:class => ("govuk-form-group--error" if form.errors[:expiry_time].present?)}
+%div.govuk-form-group#expiry_time{ class: ("govuk-form-group--error" if form.errors[:expiry_time].present?) }
   %fieldset.govuk-fieldset
     %legend.govuk-fieldset__legend
       = t('jobs.deadline_time_html')
@@ -10,12 +10,12 @@
         = f.input :expiry_time_hh,
           label: t('jobs.application_deadline_hour'),
           as: :integer,
-          input_html: {class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (form.errors[:expiry_time].present? ? "govuk-input--error" : '' )}
+          input_html: { class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (form.errors[:expiry_time].present? ? "govuk-input--error" : '' ) }
       .govuk-date-input__item
         = f.input :expiry_time_mm,
           label: t('jobs.application_deadline_min'),
           as: :integer,
-           input_html: {class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (form.errors[:expiry_time].present? ? "govuk-input--error" : '' )}
+           input_html: { class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (form.errors[:expiry_time].present? ? "govuk-input--error" : '' ) }
       .govuk-date-input__item
         = f.input :expiry_time_meridiem,
                   as: :select,
@@ -23,4 +23,4 @@
                   collection: ['am', 'pm'],
                   label: t('jobs.application_deadline_meridiem'),
                   include_blank: '- -',
-                  input_html: {class: ("govuk-input--error" if form.errors[:expiry_time].present?)}
+                  input_html: { class: ("govuk-input--error" if form.errors[:expiry_time].present?) }

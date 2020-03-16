@@ -38,7 +38,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       reset_session_vacancy!
       update_vacancy(job_specification_form_params, vacancy)
       update_google_index(vacancy) if vacancy.listed?
-      redirect_to school_job_edit_path(vacancy.id), notice: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(vacancy.id), success: I18n.t('messages.jobs.updated')
     else
       store_vacancy_attributes(@job_specification_form.vacancy.attributes)
       redirect_to edit_school_job_job_specification_path(vacancy.id,
@@ -52,7 +52,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def job_specification_form_params
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
                                                    :minimum_salary, :maximum_salary,
-                                                   :benefits, :weekly_hours, :subject_id, :min_pay_scale_id,
+                                                   :benefits, :subject_id, :min_pay_scale_id,
                                                    :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
                                                    :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                                                    :flexible_working, :newly_qualified_teacher,
