@@ -25,7 +25,8 @@ WITH
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
     COUNTIF(status="published"
-      AND expires_on > CURRENT_DATE()) AS vacancies_currently_live #count this as vacancies which have been published and have not yet expired
+      AND expires_on > CURRENT_DATE()) AS vacancies_currently_live, #count this as vacancies which have been published and have not yet expired
+    MAX(publish_on) AS date_last_published
   FROM
     `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
   INNER JOIN
@@ -101,6 +102,7 @@ IF
     0) AS vacancies_published_in_the_last_quarter,
   IFNULL(school_vacancy_metrics.vacancies_published_in_the_last_quarter,
     0) AS vacancies_currently_live,
+  school_vacancy_metrics.date_last_published AS date_last_published,
   school.data_EstablishmentTypeGroup_name AS establishment_type_group,
   school.data_PhaseOfEducation_name AS education_phase,
   school.data_ReligiousCharacter_name AS religious_character,
@@ -176,4 +178,4 @@ WHERE
   FROM
     `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)
   AND school.data_EstablishmentStatus_name IS NOT NULL
-  OR school.data_EstablishmentStatus_name = "Closed" #exclude closed schools, as this is a table of in scope schools. Assume schools with a null status are closed - as we didn't update the GIAS data for these when we started populating this as a JSON string in the database.
+  AND school.data_EstablishmentStatus_name != "Closed" #exclude closed schools, as this is a table of in scope schools. Assume schools with a null status are closed - as we didn't update the GIAS data for these when we started populating this as a JSON string in the database.

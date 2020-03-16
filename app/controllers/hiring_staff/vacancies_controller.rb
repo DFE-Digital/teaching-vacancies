@@ -5,7 +5,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     vacancy = find_active_vacancy_by_id
     unless vacancy.published?
       return redirect_to school_job_review_path(vacancy.id),
-                         alert: I18n.t('messages.jobs.view.only_published')
+                         notice: I18n.t('messages.jobs.view.only_published')
     end
     @vacancy = VacancyPresenter.new(vacancy)
   end
@@ -72,7 +72,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def already_published_message
-    I18n.t('messages.vacancies.already_published')
+    I18n.t('jobs.already_published')
   end
 
   def clear_cache_and_step

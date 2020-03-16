@@ -22,7 +22,7 @@ RSpec.feature 'Creating a vacancy' do
     expect(page).to have_content(/#{school.address}/)
     expect(page).to have_content(/#{school.town}/)
 
-    click_link 'Create a job'
+    click_link 'Create a job listing'
 
     expect(page).to have_content('Step 1 of 3')
   end
