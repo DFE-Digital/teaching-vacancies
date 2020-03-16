@@ -29,6 +29,12 @@ SELECT
   SUM(
   IF
     (events.event_Action="vacancy_nextsteps"
+      AND events.event_Label="document_download",
+      events.Unique_Events,
+      0)) AS document_download_clicks,
+  SUM(
+  IF
+    (events.event_Action="vacancy_nextsteps"
       AND events.event_Label="email",
       events.Unique_Events,
       0)) AS email_clicks,
