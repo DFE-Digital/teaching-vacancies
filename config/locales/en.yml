@@ -509,7 +509,7 @@ en:
     delete: 'Delete'
     dismiss: 'Dismiss'
     find: 'Find'
-    save_and_continue: 'Save and continue'
+    continue: 'Continue'
     submit: 'Submit'
     update_job: 'Update job'
 
