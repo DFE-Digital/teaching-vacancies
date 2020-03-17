@@ -172,10 +172,9 @@ LEFT JOIN
 ON
   mat_metrics.trust_name=school.data_Trusts_name
 WHERE
-  detailed_school_type.code IN ( #exclude schools recorded in our database which have an out of scope establishment type
+  CAST(detailed_school_type.code AS NUMERIC) IN ( #exclude schools recorded in our database which have an out of scope establishment type
   SELECT
-    CAST(code AS STRING) AS code
+    code
   FROM
     `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)
-  AND school.data_EstablishmentStatus_name IS NOT NULL
   AND school.data_EstablishmentStatus_name != "Closed" #exclude closed schools, as this is a table of in scope schools. Assume schools with a null status are closed - as we didn't update the GIAS data for these when we started populating this as a JSON string in the database.
