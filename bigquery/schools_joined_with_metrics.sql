@@ -1,7 +1,7 @@
 WITH
   school_user_metrics AS ( #work out current user-related metric values for all individual schools for use in the main query later
   SELECT
-    school_urn AS urn,
+    CAST(school_urn AS STRING) AS urn,
     MIN(approval_datetime) AS dsi_signup_date,
     #the earliest date that a user is recorded as authorised for TV access in DSI - for schools who signed up *after* we moved to DSI for authorisation in Nov 2019 this is the date the school first signed up
     COUNT(*) AS number_of_users #the current number of users this school has authorised to access TV in DSI
@@ -11,7 +11,7 @@ WITH
     school_urn ),
   school_approver_metrics AS ( #work out current approver-related metric values for all individual schools for use in the main query later
   SELECT
-    school_urn AS urn,
+    CAST(school_urn AS STRING) AS urn,
     COUNT(*) AS number_of_approvers #the current number of approvers this school has to authorise access to services in DSI
   FROM
     `teacher-vacancy-service.production_dataset.dsi_approvers` AS approvers
@@ -19,13 +19,14 @@ WITH
     school_urn ),
   school_vacancy_metrics AS ( #work out current vacancy-related metric values for all individual schools for use in the main query later
   SELECT
-    school.urn AS urn,
+    CAST(school.urn AS STRING) AS urn,
     COUNT(*) AS vacancies_published,
     #the total number of vacancies this school published over all time
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
     COUNTIF(status="published"
-      AND expires_on > CURRENT_DATE()) AS vacancies_currently_live, #count this as vacancies which have been published and have not yet expired
+      AND expires_on > CURRENT_DATE()) AS vacancies_currently_live,
+    #count this as vacancies which have been published and have not yet expired
     MAX(publish_on) AS date_last_published
   FROM
     `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
@@ -162,7 +163,7 @@ ON
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.STATIC_schools_historic_pre201119` AS historic_signups
 ON
-  historic_signups.URN=school.urn
+  CAST(historic_signups.URN AS STRING)=school.urn
 LEFT JOIN
   school_vacancy_metrics
 ON
