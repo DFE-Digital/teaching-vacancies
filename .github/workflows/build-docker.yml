@@ -1,0 +1,58 @@
+name: CI Spike (Build with Docker)
+
+on:
+  push:
+    branches: [ govuk-paas-actions-build-with-docker ]
+
+jobs:
+  build:
+    name: Build with Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Docker login
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        
+      - name: Build and push docker image
+        env:
+          DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
+        run: | # check docker permissions and ensure correct image name 
+          docker build -t $DOCKER_IMAGE_NAME .
+          docker push $DOCKER_IMAGE_NAME
+      
+      - name: Install CF CLI
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf-cli
+
+      - name: CF login
+        env:
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+          CF_SPACE: ${{ secrets.CF_SPACE }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+        run: | 
+          cf api $CF_API_ENDPOINT
+          cf auth
+          cf target -o $CF_ORG -s $CF_SPACE
+
+      - name: Create services
+        run: |
+          cf create-service postgres tiny-unencrypted-9.5 teaching-vacancies-postgres
+          cf create-service redis tiny-4.x teaching-vacancies-redis
+          cf create-service elasticsearch tiny-6.x teaching-vacancies-elasticsearch
+
+      - name: CF push
+        env:
+          CF_DOCKER_PASSWORD: ${{ secrets.CF_DOCKER_PASSWORD }}
+        run: CF_DOCKER_PASSWORD=$CF_DOCKER_PASSWORD cf push
+

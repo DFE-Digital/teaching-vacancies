@@ -1,0 +1,43 @@
+name: CI Spike (Build)
+
+on:
+  push:
+    branches: [ govuk-paas-actions ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install CF CLI
+        run: |
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          sudo apt-get update
+          sudo apt-get install cf-cli
+
+      - name: CF login
+        env:
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+          CF_SPACE: ${{ secrets.CF_SPACE }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+        run: | 
+          cf api $CF_API_ENDPOINT
+          cf auth
+          cf target -o $CF_ORG -s $CF_SPACE
+
+      - name: Create services
+        run: |
+          cf create-service postgres tiny-unencrypted-9.5 teaching-vacancies-postgres
+          cf create-service redis tiny-4.x teaching-vacancies-redis
+          cf create-service elasticsearch tiny-6.x teaching-vacancies-elasticsearch
+
+      - name: CF push
+        run: cf push
+
