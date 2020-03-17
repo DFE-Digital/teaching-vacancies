@@ -25,7 +25,6 @@ class ExportTablesToBigQuery
     job_description
     qualifications
     supporting_documents
-    working_patterns
   ].freeze
 
   # This is to deal with a gem that automatically maps an interger column to a look up table of strings.
@@ -38,6 +37,7 @@ class ExportTablesToBigQuery
     'status' => :string,
     'visit_purpose' => :string,
     'user_participation_response' => :string,
+    'working_patterns' => :string,
   }.freeze
 
   EXCLUDE_TABLES = %w[
@@ -84,6 +84,7 @@ class ExportTablesToBigQuery
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
       data = '' if c.name == 'hired_status' && data.nil?
+      data = data.to_s if c.name == 'working_patterns'
       data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
       @bigquery_data[c.name] = data
     end
