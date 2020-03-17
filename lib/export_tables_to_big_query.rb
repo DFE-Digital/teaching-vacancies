@@ -92,13 +92,11 @@ class ExportTablesToBigQuery
       @bigquery_data['geolocation_y'] = record.geolocation.y
     end
 
-    json_template = json_template(table)
-    return @bigquery_data unless json_template
+    json_record = record.data if record.respond_to?(:data)
+    return @bigquery_data if json_record.nil?
 
-    no_template = json_template.nil?
-    json_template.map do |key, value|
-      data = no_template ? nil : value
-      data = nil if data.blank?
+    json_record.map do |key, value|
+      data = value.presence
       data = Date.parse(data).to_s(:db) if data.is_a?(String) && data.match?(/^\d{2}\-\d{2}\-\d{4}/)
       data = data.to_i if data.is_a?(String) && data.match?(/^\d+$/)
       @bigquery_data[data_key_name(key)] = data
@@ -173,8 +171,8 @@ class ExportTablesToBigQuery
       @bigquery_schema['geolocation_y'] = :float
     end
 
-    json_template = json_template(table)
-    return @bigquery_schema unless json_template
+    json_template = table.where.not(data: nil).first.data.presence if table.first.respond_to?(:data)
+    return @bigquery_schema if json_template.nil?
 
     json_template.sort_by { |k, _| k }.map do |key, value|
       data_type = :string
@@ -188,14 +186,6 @@ class ExportTablesToBigQuery
 
   def data_key_name(key)
     "data_#{key.chomp(')').gsub(/\W+/, '_').downcase}"
-  end
-
-  def json_template(table)
-    if table.first.respond_to?(:gias_data)
-      table.where.not(gias_data: nil).first.gias_data
-    elsif table.respond_to?(:data)
-      table.where.not(data: nil).first.data
-    end
   end
 
   def monitoring(data)
