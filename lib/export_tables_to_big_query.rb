@@ -16,6 +16,7 @@ class ExportTablesToBigQuery
   DROP_THESE_ATTRIBUTES = %w[
     benefits
     data
+    description
     education
     experience
     frequency
@@ -24,7 +25,6 @@ class ExportTablesToBigQuery
     job_description
     qualifications
     supporting_documents
-    working_patterns
   ].freeze
 
   # This is to deal with a gem that automatically maps an interger column to a look up table of strings.
@@ -37,6 +37,7 @@ class ExportTablesToBigQuery
     'status' => :string,
     'visit_purpose' => :string,
     'user_participation_response' => :string,
+    'working_patterns' => :string,
   }.freeze
 
   EXCLUDE_TABLES = %w[
@@ -83,6 +84,7 @@ class ExportTablesToBigQuery
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
       data = '' if c.name == 'hired_status' && data.nil?
+      data = data.to_s if c.name == 'working_patterns'
       data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
       @bigquery_data[c.name] = data
     end
@@ -92,13 +94,11 @@ class ExportTablesToBigQuery
       @bigquery_data['geolocation_y'] = record.geolocation.y
     end
 
-    json_template = json_template(table)
-    return @bigquery_data unless json_template
+    json_record = record.data if record.respond_to?(:data)
+    return @bigquery_data if json_record.nil?
 
-    no_template = json_template.nil?
-    json_template.map do |key, value|
-      data = no_template ? nil : value
-      data = nil if data.blank?
+    json_record.map do |key, value|
+      data = value.presence
       data = Date.parse(data).to_s(:db) if data.is_a?(String) && data.match?(/^\d{2}\-\d{2}\-\d{4}/)
       data = data.to_i if data.is_a?(String) && data.match?(/^\d+$/)
       @bigquery_data[data_key_name(key)] = data
@@ -173,8 +173,8 @@ class ExportTablesToBigQuery
       @bigquery_schema['geolocation_y'] = :float
     end
 
-    json_template = json_template(table)
-    return @bigquery_schema unless json_template
+    json_template = table.where.not(data: nil).first.data.presence if table.first.respond_to?(:data)
+    return @bigquery_schema if json_template.nil?
 
     json_template.sort_by { |k, _| k }.map do |key, value|
       data_type = :string
@@ -188,14 +188,6 @@ class ExportTablesToBigQuery
 
   def data_key_name(key)
     "data_#{key.chomp(')').gsub(/\W+/, '_').downcase}"
-  end
-
-  def json_template(table)
-    if table.first.respond_to?(:gias_data)
-      table.where.not(gias_data: nil).first.gias_data
-    elsif table.respond_to?(:data)
-      table.where.not(data: nil).first.data
-    end
   end
 
   def monitoring(data)
