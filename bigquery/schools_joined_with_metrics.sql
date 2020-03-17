@@ -25,8 +25,7 @@ WITH
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)) AS vacancies_published_in_the_last_quarter,
     COUNTIF(status="published"
-      AND expires_on > CURRENT_DATE()) AS vacancies_currently_live,
-    #count this as vacancies which have been published and have not yet expired
+      AND expires_on > CURRENT_DATE()) AS vacancies_currently_live, #count this as vacancies which have been published and have not yet expired
     MAX(publish_on) AS date_last_published
   FROM
     `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
@@ -141,7 +140,7 @@ IF
 FROM
   `teacher-vacancy-service.production_dataset.feb20_school` AS school
 LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_school_type` AS school_type
+  `teacher-vacancy-service.production_dataset.feb20_schooltype` AS school_type
 ON
   school_type.id=school.school_type_id
 LEFT JOIN
@@ -149,7 +148,7 @@ LEFT JOIN
 ON
   region.id=school.region_id
 LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_detailed_school_type` AS detailed_school_type
+  `teacher-vacancy-service.production_dataset.feb20_detailedschooltype` AS detailed_school_type
 ON
   detailed_school_type.id=school.detailed_school_type_id
 LEFT JOIN
@@ -175,7 +174,7 @@ ON
 WHERE
   detailed_school_type.code IN ( #exclude schools recorded in our database which have an out of scope establishment type
   SELECT
-    code
+    CAST(code AS STRING) AS code
   FROM
     `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)
   AND school.data_EstablishmentStatus_name IS NOT NULL
