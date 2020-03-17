@@ -8,7 +8,7 @@ key = ENV.fetch('ORDNANCE_SURVEY_API_KEY', nil)
 redis_ttl = 26.hours.to_i
 
 Geocoder.configure(
-  lookup: :os_names,
+  lookup: :uk_ordnance_survey_names,
   api_key: key,
   timeout: 5,
   units: :mi,
