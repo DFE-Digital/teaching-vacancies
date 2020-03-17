@@ -16,6 +16,7 @@ class ExportTablesToBigQuery
   DROP_THESE_ATTRIBUTES = %w[
     benefits
     data
+    description
     education
     experience
     frequency
