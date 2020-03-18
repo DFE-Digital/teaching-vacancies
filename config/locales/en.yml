@@ -100,6 +100,7 @@ en:
       supporting_documents_form:
         supporting_documents: 'These could include, for example, a job description, person specification or application pack'
   jobs:
+    current_step: "Step %{step} of %{total}"
     notification_labels:
       new: 'new'
     heading: 'Find a job in teaching'

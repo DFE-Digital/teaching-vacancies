@@ -54,11 +54,13 @@ Rails.application.routes.draw do
       get 'review'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
-      get :publish, to: 'hiring_staff/vacancies/publish#create'
-      resource :job_specification, only: %i[edit update],
-                                   controller: 'hiring_staff/vacancies/job_specification'
-      resource :pay_package, only: %i[show update],
-                                      controller: 'hiring_staff/vacancies/pay_package'
+      get :publish, to: 'hiring_staff/vacancies/publish#create'      
+      resource :job_specification,
+        only: %i[edit update],
+        controller: 'hiring_staff/vacancies/job_specification'
+      resource :pay_package, 
+        only: %i[show update],
+        controller: 'hiring_staff/vacancies/pay_package'
       resource :supporting_documents, only: %i[edit update],
                                                controller: 'hiring_staff/vacancies/supporting_documents'
       resource :documents, only: %i[create destroy show],
@@ -77,7 +79,7 @@ Rails.application.routes.draw do
       post :application_details, to: 'hiring_staff/vacancies/application_details#create'
       get :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#new'
       post :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#create'
-      get :job_specification, to: 'hiring_staff/vacancies/job_specification#new'
+      get :job_specification, to: 'hiring_staff/vacancies/job_specification#new', defaults: { create_step: 1 }
       post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'
     end
   end
