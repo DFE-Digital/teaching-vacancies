@@ -168,6 +168,7 @@ en:
       - 'Schools have listed %{count} jobs but they have since expired.'
     job_details: 'Job details'
     job_title: 'Job title'
+    salary: 'Salary'
     benefits: 'Financial benefits'
     salary_range_html: "Salary range (<span class='text-red'>Required</span>)"
     per_year: 'per year'

@@ -26,6 +26,10 @@ module VacancyHelpers
     end
   end
 
+  def fill_in_pay_package_form_fields(vacancy)
+    fill_in 'pay_package_form[salary]', with: vacancy.salary
+  end
+
   def fill_in_candidate_specification_form_fields(vacancy)
     fill_in 'candidate_specification_form[education]', with: vacancy.education
     fill_in 'candidate_specification_form[qualifications]', with: vacancy.qualifications
