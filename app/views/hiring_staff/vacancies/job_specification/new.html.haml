@@ -28,14 +28,6 @@
                 input_html: { rows: 10 },
                 wrapper_html: { id: 'job_description' },
                 required: true
-      = f.input :benefits,
-                wrapper: 'textarea',
-                as: :text,
-                label: t('jobs.benefits'),
-                hint: t('jobs.form_hints.benefits').html_safe,
-                input_html: { rows: 5 },
-                wrapper_html: { id: 'benefits' },
-                required: false
       = f.input :subject_id,
                 wrapper: 'select',
                 label: t('jobs.main_subject'),

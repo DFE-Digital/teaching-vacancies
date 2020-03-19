@@ -326,7 +326,6 @@ en:
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
-      benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'Enter the URL for the page on your school or trust’s website that gives further details on the job and how to apply.'
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'

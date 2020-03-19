@@ -78,10 +78,6 @@ module VacancyJobSpecificationValidations
     super(sanitize(value, tags: []))
   end
 
-  def benefits=(value)
-    super(sanitize(value))
-  end
-
   def maximum_salary_greater_than_minimum
     return unless maximum_lower_than_minimum_salary?
 
