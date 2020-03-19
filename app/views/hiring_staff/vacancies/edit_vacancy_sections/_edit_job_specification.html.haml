@@ -59,35 +59,11 @@
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question
-      = t('jobs.pay_scale')
-    %dd.app-check-your-answers__answer
-      =@vacancy.pay_scale_range
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'pay_scale_range'), 'aria-label': t('jobs.aria_labels.change_pay_scale'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.salary_range')
-    %dd.app-check-your-answers__answer
-      = @vacancy.salary_range("to")
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
       = t('jobs.newly_qualified_teacher')
     %dd.app-check-your-answers__answer
       = @vacancy.newly_qualified_teacher
     %dd.app-check-your-answers__change
       = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.benefits')
-    %dd.app-check-your-answers__answer
-      = @vacancy.benefits
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'benefits'), 'aria-label': t('jobs.aria_labels.change_employee_benefits'), class: 'govuk-link'
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question
