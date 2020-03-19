@@ -61,41 +61,6 @@
                 collection: working_pattern_options,
                 required: true
 
-      %fieldset.govuk-fieldset#pay_scale_range
-        %legend.govuk-label.govuk-label= "#{t('jobs.pay_scale_range')}"
-        %span.govuk-hint= t('jobs.form_hints.pay_scale_range')
-        .govuk-form-group
-          = f.input :min_pay_scale_id,
-                    wrapper: 'select',
-                    collection: pay_scale_options,
-                    label_method: :label,
-                    label: false,
-                    required: false,
-                    wrapper_html: { class: 'mb0' },
-                    input_html: { class: 'govuk-select mb0', 'aria-label': t('jobs.aria_labels.minimum_pay_scale_range') }
-
-          %p.value-to-value to
-
-          = f.input :max_pay_scale_id,
-                    wrapper: 'select',
-                    collection: pay_scale_options,
-                    label_method: :label,
-                    required: false,
-                    label: false,
-                    input_html: { class: 'govuk-select', 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range') }
-
-      %fieldset.govuk-fieldset#salary_range
-        %legend.form-label.govuk-label= t('jobs.salary_range_html')
-        %span.govuk-hint= t('jobs.form_hints.salary_range')
-        = f.input :minimum_salary,
-                  input_html: { class: 'govuk-input--width-10' },
-                  as: :currency,
-                  wrapper_html: { id: 'minimum_salary' }
-
-        = f.input :maximum_salary,
-                  input_html: { class: 'govuk-input--width-10' },
-                  as: :currency
-
       = f.input :newly_qualified_teacher, as: :boolean,
                 hint: t('jobs.form_hints.newly_qualified_teacher'),
                 wrapper: :inline_checkbox,

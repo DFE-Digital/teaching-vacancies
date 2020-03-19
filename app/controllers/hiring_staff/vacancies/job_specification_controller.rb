@@ -51,9 +51,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def job_specification_form_params
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
-                                                   :minimum_salary, :maximum_salary,
-                                                   :subject_id, :min_pay_scale_id,
-                                                   :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
+                                                   :subject_id,
+                                                   :starts_on_dd, :starts_on_mm,
                                                    :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                                                    :flexible_working, :newly_qualified_teacher,
                                                    :first_supporting_subject_id, :second_supporting_subject_id,
@@ -61,6 +60,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def save_vacancy_without_validation
+    # TODO: Remove this after migration of salary columns
+    @job_specification_form.vacancy.minimum_salary = 10000
     @job_specification_form.vacancy.school_id = current_school.id
     @job_specification_form.vacancy.send :set_slug
     @job_specification_form.vacancy.status = :draft

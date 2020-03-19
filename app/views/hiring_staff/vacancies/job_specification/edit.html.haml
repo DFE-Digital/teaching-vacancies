@@ -60,53 +60,6 @@
                 wrapper_html: { id: 'flexible_working' },
                 input_html: { 'aria-label': t('jobs.aria_labels.flexible_working') }
 
-      %fieldset.govuk-fieldset#pay_scale_range
-        %legend.form-label.govuk-label= "#{t('jobs.pay_scale_range')}"
-        %span.govuk-hint= t('jobs.form_hints.pay_scale_range')
-        .govuk-form-group
-          = f.input :min_pay_scale_id,
-                    wrapper: 'select',
-                    collection: pay_scale_options,
-                    label_method: :label,
-                    label: false,
-                    required: false,
-                    wrapper_html: { class: 'mb0' },
-                    input_html: { 'aria-label': t('jobs.aria_labels.minimum_pay_scale_range') }
-
-          %p.value-to-value to
-
-          = f.input :max_pay_scale_id,
-                    wrapper: 'select',
-                    collection: pay_scale_options,
-                    label_method: :label,
-                    label: false,
-                    required: false,
-                    input_html: { 'aria-label': t('jobs.aria_labels.maximum_pay_scale_range') }
-
-      %fieldset.govuk-fieldset#salary_range
-        %legend.form-label.govuk-label= t('jobs.salary_range_html')
-        %span.govuk-hint= t('jobs.form_hints.salary_range')
-        = f.input :minimum_salary,
-                  input_html: { class: 'govuk-input--width-10' },
-                  as: :currency,
-                  wrapper_html: { id: 'minimum_salary' }
-
-        = f.input :maximum_salary,
-                  input_html: { class: 'govuk-input--width-10' },
-                  as: :currency
-
-      = f.input :newly_qualified_teacher, as: :boolean,
-                hint: t('jobs.form_hints.newly_qualified_teacher'),
-                wrapper: :inline_checkbox,
-                wrapper_html: { id: 'newly_qualified_teacher' },
-                input_html: { 'aria-label': t('jobs.aria_labels.newly_qualified_teacher') }
-      = f.input :leadership_id,
-                wrapper: 'select',
-                label: t('jobs.leadership_level'),
-                collection: Leadership.order(:title),
-                wrapper_html: { id: 'leadership' },
-                required: false
-
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,
                               legend_options: { page_heading: false, class: "govuk-label" }
