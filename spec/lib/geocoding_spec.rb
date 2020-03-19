@@ -47,7 +47,7 @@ RSpec.describe Geocoding do
       around(:all) do |example|
         Geocoder.configure(lookup: :test)
         example.run
-        Geocoder.configure(lookup: :os_names)
+        Geocoder.configure(lookup: :uk_ordnance_survey_names)
       end
 
       it 'returns the correct value when the input is a valid postcode' do
