@@ -78,12 +78,17 @@ en:
       job_specification_form:
         starts_on: 'Expected start date'
         ends_on: 'End date'
+      pay_package_form:
+        salary_html: "Salary (<span class='text-red'>Required</span>)"
       supporting_documents_form:
         supporting_documents_html: "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
     hint:
       job_specification_form:
         starts_on: 'For example, 01 01 2020'
         ends_on: 'For example, 01 08 2020'
+      pay_package_form:
+        salary: 'Enter the annual salary or salary range, and/or pay scale range. Where relevant, state if the salary is full-time equivalent'
+        benefits: 'Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments, for example'
       application_details_form:
         publish_on: 'For example, 01 01 2020'
         expires_on: 'For example, 01 08 2020'
@@ -113,7 +118,6 @@ en:
       remaining: '%{days_remaining} days remaining to apply'
       today: 'Deadline is today'
       tomorrow: 'Deadline is tomorrow'
-    salary: 'Salary'
     school_type: 'School type'
     publish_on: 'Date listed'
     expires_on: 'Closing date'
@@ -176,6 +180,7 @@ en:
     edit_heading: 'Edit job for %{school}'
     current_step: 'Step %{current_step} of %{total_steps}'
     job_specification: 'Job specification'
+    pay_package: 'Pay package'
     candidate_specification: 'Candidate specification'
     supporting_documents: 'Supporting documents'
     upload_file: 'Upload files'
