@@ -38,6 +38,7 @@ RSpec.describe Vacancy, type: :model do
       it { should validate_presence_of(:job_description) }
       it { should validate_presence_of(:working_patterns) }
       it { should validate_presence_of(:minimum_salary) }
+      it { should validate_presence_of(:salary) }
     end
 
     context 'a record saved with job spec details' do
@@ -84,6 +85,11 @@ RSpec.describe Vacancy, type: :model do
       it '#job_title' do
         expect(subject.errors.messages[:job_title].first)
           .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_long', count: 100))
+      end
+
+      it '#salary' do
+        expect(subject.errors.messages[:salary].first)
+          .to eq(I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.too_long', count: 256))
       end
     end
 
@@ -564,6 +570,14 @@ RSpec.describe Vacancy, type: :model do
 
       sanitized_title = 'School teacher '
       expect(vacancy.job_title).to eq(sanitized_title)
+    end
+
+    it '#salary' do
+      salary = '<strong>Money</strong>'
+      vacancy = build(:vacancy, salary: salary)
+
+      sanitized_salary = 'Money'
+      expect(vacancy.salary).to eq(sanitized_salary)
     end
 
     it '#benefits' do

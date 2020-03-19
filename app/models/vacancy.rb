@@ -17,6 +17,7 @@ class Vacancy < ApplicationRecord
   include Auditor::Model
 
   include VacancyJobSpecificationValidations
+  include VacancyPayPackageValidations
   include VacancyCandidateSpecificationValidations
   include VacancyApplicationDetailValidations
 

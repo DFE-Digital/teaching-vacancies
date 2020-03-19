@@ -27,6 +27,7 @@ FactoryBot.define do
     publish_on { Time.zone.today }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }
+    salary { Faker::Lorem.sentence[1...30].strip }
     status { :published }
     supporting_documents { 'yes' }
     working_patterns { ['full_time'] }
@@ -46,6 +47,7 @@ FactoryBot.define do
       job_title { Faker::Lorem.characters(number: 150) }
       maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
       minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
+      salary { Faker::Lorem.characters(number: 257) }
       qualifications { Faker::Lorem.characters(number: 1002) }
     end
 

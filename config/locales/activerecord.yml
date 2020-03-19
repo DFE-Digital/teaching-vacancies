@@ -14,6 +14,10 @@ en:
       blank: Select a working pattern
     salary:
       more_than_maxiumum: "%{salary} must be less than %{count}"
+  pay_package_errors: &pay_package_errors
+    salary:
+      blank: Enter a salary
+      too_long: Salary must not be more than %{count} characters
   application_details_errors: &application_details_errors
     contact_email:
       blank: Enter a contact email
@@ -57,6 +61,9 @@ en:
         job_specification_form:
           attributes:
             <<: *job_specification_errors
+        pay_package_form:
+          attributes:
+            <<: *pay_package_errors
         application_details_form:
           attributes:
             <<: *application_details_errors
@@ -77,6 +84,7 @@ en:
         vacancy:
           attributes:
             <<: *job_specification_errors
+            <<: *pay_package_errors
             <<: *candidate_specification_errors
             <<: *application_details_errors
             <<: *supporting_documents_errors
