@@ -4,7 +4,7 @@
   = t('jobs.edit_heading', school: current_school.name)
 = simple_form_for @job_specification_form, method: :put, url: school_job_job_specification_path(@job_specification_form.id) do |f|
   %h2.govuk-heading-m
-    = t('jobs.job_specification')
+    = t('jobs.job_details')
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
