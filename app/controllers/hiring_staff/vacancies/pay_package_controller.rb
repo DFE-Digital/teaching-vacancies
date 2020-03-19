@@ -20,7 +20,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
   private
 
   def pay_package_form_params
-    (params[:pay_package_form] || params).permit(:salary)
+    (params[:pay_package_form] || params).permit(:salary, :benefits)
   end
 
   def next_step

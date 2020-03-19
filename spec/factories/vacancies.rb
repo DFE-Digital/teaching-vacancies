@@ -11,7 +11,7 @@ FactoryBot.define do
     end
 
     application_link { Faker::Internet.url }
-    benefits { Faker::Lorem.sentence }
+    benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
     education { Faker::Lorem.paragraph(sentence_count: 4) }
     experience { Faker::Lorem.paragraph(sentence_count: 4) }

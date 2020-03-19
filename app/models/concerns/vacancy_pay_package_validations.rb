@@ -10,4 +10,8 @@ module VacancyPayPackageValidations
   def salary=(value)
     super(sanitize(value, tags: []))
   end
+
+  def benefits=(value)
+    super(sanitize(value))
+  end
 end
