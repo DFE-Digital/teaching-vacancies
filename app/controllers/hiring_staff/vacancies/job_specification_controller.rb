@@ -71,7 +71,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    UploadDocumentsFeature.enabled? ? supporting_documents_school_job_path : candidate_specification_school_job_path
+    school_job_pay_package_path(session_vacancy_id)
   end
 
   def called_from_update_method

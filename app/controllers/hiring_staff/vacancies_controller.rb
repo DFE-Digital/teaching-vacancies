@@ -29,8 +29,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     store_vacancy_attributes(@vacancy.attributes)
 
     unless @vacancy.valid?
-      return redirect_to candidate_specification_school_job_path unless step_2_valid?
-      return redirect_to application_details_school_job_path unless step_3_valid?
+      redirect_to_incomplete_step
     end
 
     session[:current_step] = :review
@@ -64,15 +63,27 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def step_2_valid?
-    valid = CandidateSpecificationForm.new(@vacancy.attributes).completed?
+    valid = PayPackageForm.new(@vacancy.attributes).completed?
     clear_cache_and_step unless valid
     valid
   end
 
   def step_3_valid?
+    valid = CandidateSpecificationForm.new(@vacancy.attributes).completed?
+    clear_cache_and_step unless valid
+    valid
+  end
+
+  def step_4_valid?
     valid = ApplicationDetailsForm.new(@vacancy.attributes).completed?
     clear_cache_and_step unless valid
     valid
+  end
+
+  def redirect_to_incomplete_step
+    return redirect_to school_job_pay_package_path(@vacancy.id) unless step_2_valid?
+    return redirect_to candidate_specification_school_job_path unless step_3_valid?
+    return redirect_to application_details_school_job_path unless step_4_valid?
   end
 
   def already_published_message
