@@ -9,7 +9,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       %h2.govuk-heading-m
-        -# = t('jobs.job_specification')
+        = t('jobs.job_specification')
       = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.input :job_title,
