@@ -106,11 +106,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def subject_count
-    count = 0
-    count += 1 if main_subject.present?
-    count += 1 if first_supporting_subject.present?
-    count += 1 if second_supporting_subject.present?
-    count
+    [main_subject, first_supporting_subject, second_supporting_subject].count(&:present?)
   end
 
   def pay_scale_range
