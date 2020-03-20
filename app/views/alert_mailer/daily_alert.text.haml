@@ -7,7 +7,7 @@
   = notify_link(vacancy.share_url(source: 'subscription', medium: 'email', campaign: 'daily_alert'), vacancy.job_title).html_safe
   = vacancy.location
   \
-  = "Salary: #{vacancy.salary_range}"
+  = "Salary: #{vacancy.salary_fte}"
   - if vacancy.working_patterns?
     = "Working pattern: #{vacancy.working_patterns}"
   = "Closing date: #{format_date(vacancy.expires_on)}"

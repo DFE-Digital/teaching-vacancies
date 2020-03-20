@@ -1,35 +1,17 @@
 require 'rails_helper'
 RSpec.describe VacancyPresenter do
-  describe '#salary_range' do
-    let(:vacancy) { VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000)) }
-
-    it 'return the formatted minimum to maximum salary' do
-      expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year')
-    end
-
-    it 'returns the formatted minumum to maximum salary with the specified delimiter' do
-      expect(vacancy.salary_range('to')).to eq('£30,000 to £40,000 per year')
-    end
-
-    context 'when no maximum salary is set' do
-      let(:vacancy) { VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: nil)) }
-
-      it 'should just return the minimum salary' do
-        expect(vacancy.salary_range).to eq('£30,000')
-      end
+  describe '#salary_fte' do
+    let(:vacancy) do
+      VacancyPresenter.new(
+        create(:vacancy,
+               working_patterns: ['part_time'],
+               salary: '£40,000')
+      )
     end
 
     context 'when the vacancy is part time' do
-      let(:vacancy) do
-        VacancyPresenter.new(
-          create(:vacancy,
-                 working_patterns: ['part_time'],
-                 minimum_salary: 30000, maximum_salary: 40000)
-        )
-      end
-
       it 'should state the salary is full time equivalent' do
-        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year (full-time equivalent)')
+        expect(vacancy.salary_fte).to eq('£40,000 per year (full-time equivalent)')
       end
     end
   end
