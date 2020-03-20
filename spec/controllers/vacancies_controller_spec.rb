@@ -17,7 +17,6 @@ RSpec.describe VacanciesController, type: :controller do
           {
             subject: "<body onload=alert('test1')>Text</body>",
             location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
-            minimum_salary: '<xml>Foo</xml',
             phases: ['<iframe>Foo</iframe>', 'Bar'],
             working_patterns: ['<script>Foo</script>'],
           }
@@ -27,7 +26,6 @@ RSpec.describe VacanciesController, type: :controller do
           expected_safe_values = {
             'subject' => 'Text',
             'location' => '',
-            'minimum_salary' => 'Foo',
             'phases' => '["", "Bar"]',
             'working_patterns' => '[""]'
           }
@@ -101,7 +99,6 @@ RSpec.describe VacanciesController, type: :controller do
         {
           subject: 'Business Studies',
           location: 'Torquay',
-          minimum_salary: '1',
         }
       end
 

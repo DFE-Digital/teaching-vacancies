@@ -10,7 +10,6 @@ class VacanciesController < ApplicationController
   helper_method :location,
                 :subject,
                 :job_title,
-                :minimum_salary,
                 :working_patterns,
                 :phases,
                 :specific_phases?,
@@ -101,10 +100,6 @@ class VacanciesController < ApplicationController
 
   def job_title
     params[:job_title]
-  end
-
-  def minimum_salary
-    params[:minimum_salary]
   end
 
   def working_patterns_to_a

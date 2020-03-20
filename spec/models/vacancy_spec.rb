@@ -16,7 +16,6 @@ RSpec.describe Vacancy, type: :model do
                 radius: nil,
                 subject: 'subject',
                 job_title: 'job title',
-                minimum_salary: nil,
                 working_patterns: nil,
                 newly_qualified_teacher: nil,
                 phases: nil)
@@ -464,18 +463,6 @@ RSpec.describe Vacancy, type: :model do
 
       sanitized_education = '<p>University of London</p>'
       expect(vacancy.education).to eq(sanitized_education)
-    end
-  end
-
-  context 'salary trimming' do
-    it 'trims the minimum salary' do
-      job = build(:vacancy, minimum_salary: " #{SalaryValidator::MIN_SALARY_ALLOWED} ")
-      expect(job.minimum_salary).to eq(SalaryValidator::MIN_SALARY_ALLOWED)
-    end
-
-    it 'trims the maximum salary' do
-      job = build(:vacancy, maximum_salary: " #{SalaryValidator::MIN_SALARY_ALLOWED} ")
-      expect(job.maximum_salary).to eq(SalaryValidator::MIN_SALARY_ALLOWED)
     end
   end
 
