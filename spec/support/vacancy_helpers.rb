@@ -160,6 +160,7 @@ module VacancyHelpers
       '@context': 'http://schema.org',
       '@type': 'JobPosting',
       'title': vacancy.job_title,
+      'salary': vacancy.salary,
       'jobBenefits': vacancy.benefits,
       'datePosted': vacancy.publish_on.to_time.iso8601,
       'description': vacancy.job_description,
@@ -179,16 +180,6 @@ module VacancyHelpers
         },
       },
       'url': job_url(vacancy),
-      'baseSalary': {
-        '@type': 'MonetaryAmount',
-        'currency': 'GBP',
-        value: {
-          '@type': 'QuantitativeValue',
-          'minValue': vacancy.minimum_salary,
-          'maxValue': vacancy.maximum_salary,
-          'unitText': 'YEAR'
-        },
-      },
       'hiringOrganization': {
         '@type': 'School',
         'name': vacancy.school.name,
