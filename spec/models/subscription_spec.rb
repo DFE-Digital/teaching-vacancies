@@ -63,7 +63,7 @@ RSpec.describe Subscription, type: :model do
 
     context 'when no common search criteria is provided' do
       it 'does not set a default reference' do
-        subscription = Subscription.new(search_criteria: { radius: 20, minimum_salary: 30000 }.to_json)
+        subscription = Subscription.new(search_criteria: { radius: 20 }.to_json)
 
         expect(subscription.reference).to be_nil
       end
