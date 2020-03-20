@@ -23,7 +23,7 @@ module VacancyHelpers
 
   def fill_in_pay_package_form_fields(vacancy)
     fill_in 'pay_package_form[salary]', with: vacancy.salary
-    fill_in 'job_specification_form[benefits]', with: vacancy.benefits
+    fill_in 'pay_package_form[benefits]', with: vacancy.benefits
   end
 
   def fill_in_candidate_specification_form_fields(vacancy)
@@ -93,13 +93,13 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
-    expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content(vacancy.newly_qualified_teacher)
-    expect(page.html).to include(vacancy.benefits)
-    expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
+
+    expect(page).to have_content(vacancy.salary)
+    expect(page.html).to include(vacancy.benefits)
 
     if UploadDocumentsFeature.enabled?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
