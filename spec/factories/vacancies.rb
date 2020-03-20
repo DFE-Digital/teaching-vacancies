@@ -21,8 +21,8 @@ FactoryBot.define do
     job_description { Faker::Lorem.paragraph(sentence_count: 4) }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
-    maximum_salary { SalaryValidator::MAX_SALARY_LIMIT - 100 }
-    minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
+    # TODO: Remove this after migration
+    minimum_salary { Faker::Lorem.sentence[1...30].strip }
     newly_qualified_teacher { true }
     publish_on { Time.zone.today }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
@@ -45,19 +45,8 @@ FactoryBot.define do
       experience { Faker::Lorem.characters(number: 1010) }
       job_description { Faker::Lorem.characters(number: 50001) }
       job_title { Faker::Lorem.characters(number: 150) }
-      maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
-      minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
       salary { Faker::Lorem.characters(number: 257) }
       qualifications { Faker::Lorem.characters(number: 1002) }
-    end
-
-    trait :fail_minimum_salary_max_validation do
-      minimum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
-    end
-
-    trait :fail_maximum_salary_max_validation do
-      minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
-      maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
     end
 
     trait :complete do

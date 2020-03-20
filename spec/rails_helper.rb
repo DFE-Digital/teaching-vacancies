@@ -27,10 +27,6 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
-  config.before do
-    stub_const("#{SalaryValidator}::MIN_SALARY_ALLOWED", '1')
-  end
-
   config.before(:each, :sitemap) do
     default_url_options[:host] = DOMAIN.to_s
   end
