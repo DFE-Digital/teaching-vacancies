@@ -77,9 +77,13 @@ Rails.application.routes.draw do
     resource :job, only: [] do
       get :application_details, to: 'hiring_staff/vacancies/application_details#new'
       post :application_details, to: 'hiring_staff/vacancies/application_details#create'
-      get :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#new'
+      get :supporting_documents,
+        to: 'hiring_staff/vacancies/supporting_documents#new',
+        defaults: { create_step: 2, step_title: 'Supporting documents' }
       post :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#create'
-      get :job_specification, to: 'hiring_staff/vacancies/job_specification#new', defaults: { create_step: 1 }
+      get :job_specification,
+        to: 'hiring_staff/vacancies/job_specification#new',
+        defaults: { create_step: 1, step_title: 'Job description' }
       post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'
     end
   end
