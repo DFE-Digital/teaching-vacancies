@@ -56,26 +56,72 @@ RSpec.describe HiringStaff::JobCreationHelper do
         expect(helper.steps_to_display).to eql([[1, 'Step one'], [2, 'Step two'], [3, 'Step three']])
       end
     end
+
+    context 'multiple routes are part of the same step' do
+      around do |example|
+        # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
+        # environment.
+        # rubocop:disable Rails/HttpPositionalArguments
+        Rails.application.routes.draw do
+          get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_one_a, to: 'job#step_one_a', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
+        end
+        # rubocop:enable Rails/HttpPositionalArguments
+
+        example.run
+
+        Rails.application.routes_reloader.reload!
+      end
+
+      it 'returns an array of arrays with the step number and step title to be displayed' do
+        expect(helper.steps_to_display).to eql([[1, 'Step one'], [2, 'Step two']])
+      end
+    end
   end
 
   describe '#total_steps' do
-    around do |example|
-      # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
-      # environment.
-      # rubocop:disable Rails/HttpPositionalArguments
-      Rails.application.routes.draw do
-        get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
-        get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
+    context 'all steps are unique' do
+      around do |example|
+        # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
+        # environment.
+        # rubocop:disable Rails/HttpPositionalArguments
+        Rails.application.routes.draw do
+          get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
+        end
+        # rubocop:enable Rails/HttpPositionalArguments
+
+        example.run
+
+        Rails.application.routes_reloader.reload!
       end
-      # rubocop:enable Rails/HttpPositionalArguments
 
-      example.run
-
-      Rails.application.routes_reloader.reload!
+      it 'counts the correct number of steps' do
+        expect(helper.total_steps).to eql(2)
+      end
     end
 
-    it 'counts the number of routes with { defaults: { create_step: /\d+/ }} and returns the total' do
-      expect(helper.total_steps).to eql(2)
+    context 'multiple routes are part of the same step' do
+      around do |example|
+        # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
+        # environment.
+        # rubocop:disable Rails/HttpPositionalArguments
+        Rails.application.routes.draw do
+          get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_one_a, to: 'job#step_one_a', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
+        end
+        # rubocop:enable Rails/HttpPositionalArguments
+
+        example.run
+
+        Rails.application.routes_reloader.reload!
+      end
+
+      it 'counts the correct number of unique steps' do
+        expect(helper.total_steps).to eql(2)
+      end
     end
   end
 end

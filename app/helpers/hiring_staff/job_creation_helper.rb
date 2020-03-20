@@ -8,10 +8,10 @@ module HiringStaff::JobCreationHelper
       r.defaults.has_key?(:create_step) && r.defaults.has_key?(:step_title)
     }.map{ |r|
       [r.defaults[:create_step], r.defaults[:step_title]]
-    }.sort
+    }.sort.uniq
   end
 
   def total_steps
-    Rails.application.routes.routes.select { |r| r.defaults.has_key?(:create_step) }.size
+    steps_to_display.size
   end
 end
