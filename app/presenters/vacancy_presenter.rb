@@ -17,17 +17,6 @@ class VacancyPresenter < BasePresenter
     Rails.application.routes.url_helpers.job_url(model, params)
   end
 
-  def salary_fte
-    salary = model.salary.presence || ''
-    salary += ' '
-    if model.pro_rata_salary?
-      salary += I18n.t('jobs.per_year_pro_rata')
-    elsif model.flexible_working?
-      salary += I18n.t('jobs.per_year_fte')
-    end
-    salary
-  end
-
   def job_description
     simple_format(model.job_description)
   end

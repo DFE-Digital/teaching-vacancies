@@ -128,7 +128,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
-    expect(page).to have_content(vacancy.salary_fte)
+    expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
 
     if vacancy.show_supporting_documents?
@@ -205,7 +205,7 @@ module VacancyHelpers
   def verify_shared_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).to have_content(vacancy.job_title)
     expect(page.find('.vacancy')).to have_content(vacancy.location)
-    expect(page.find('.vacancy')).to have_content(vacancy.salary_fte)
+    expect(page.find('.vacancy')).to have_content(vacancy.salary)
     expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
     expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
     unless vacancy.expiry_time.nil?

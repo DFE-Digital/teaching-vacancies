@@ -1,21 +1,5 @@
 require 'rails_helper'
 RSpec.describe VacancyPresenter do
-  describe '#salary_fte' do
-    let(:vacancy) do
-      VacancyPresenter.new(
-        create(:vacancy,
-               working_patterns: ['part_time'],
-               salary: '£40,000')
-      )
-    end
-
-    context 'when the vacancy is part time' do
-      it 'should state the salary is full time equivalent' do
-        expect(vacancy.salary_fte).to eq('£40,000 per year (full-time equivalent)')
-      end
-    end
-  end
-
   describe '#expired?' do
     context 'when expiry time not given' do
       it 'returns true when the vacancy has expired' do
