@@ -8,8 +8,8 @@ RSpec.describe 'hiring_staff/vacancies/_sidebar' do
       # environment.
       # rubocop:disable Rails/HttpPositionalArguments
       Rails.application.routes.draw do
-        get :job_specification_school_job, to: 'dummy#step_one', defaults: { create_step: 1, step_title: 'Lorem' }
-        get :step_two, to: 'job#step_one', defaults: { create_step: 2, step_title: 'Ipsum' }
+        get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
+        get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
       end
       # rubocop:enable Rails/HttpPositionalArguments
 
@@ -29,7 +29,7 @@ RSpec.describe 'hiring_staff/vacancies/_sidebar' do
     end
 
     it 'the first step title is displayed' do
-      expect(render).to have_css('.js-step-title-text', text: 'Lorem')
+      expect(render).to have_css('.js-step-title-text', text: 'Step one')
     end
 
     it 'the second step number is displayed' do
@@ -37,7 +37,7 @@ RSpec.describe 'hiring_staff/vacancies/_sidebar' do
     end
 
     it 'the second step title is displayed' do
-      expect(render).to have_css('.js-step-title-text', text: 'Ipsum')
+      expect(render).to have_css('.js-step-title-text', text: 'Step two')
     end
   end
 end
