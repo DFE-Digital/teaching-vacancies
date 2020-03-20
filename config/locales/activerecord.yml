@@ -49,8 +49,8 @@ en:
   errors:
     format: "%{message}"
     title: 
-      one: "Please correct the following error in your listing:"
-      other: "Please correct the following %{count} errors in your listing:"
+      one: "Please correct the following error in your listing"
+      other: "Please correct the following %{count} errors in your listing"
     messages:
       taken: has already been taken
       blank: can't be blank
