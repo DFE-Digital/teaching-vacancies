@@ -8,8 +8,6 @@ en:
       blank: Enter a job description
       too_short: Job description must be at least %{count} characters
       too_long: Job description must not be more than %{count} characters
-    minimum_salary:
-      blank: Enter a minimum salary
     working_patterns:
       blank: Select a working pattern
     salary:
@@ -54,9 +52,6 @@ en:
     messages:
       taken: has already been taken
       blank: can't be blank
-      salary:
-        invalid_format: "%{salary} must be entered in one of the following formats: 25000, 25,000 or 25000.00"
-        lower_than_minimum_payscale: Minimum salary must be at least %{minimum_salary}
   activemodel:
     errors:
       models:
@@ -90,8 +85,6 @@ en:
             <<: *candidate_specification_errors
             <<: *application_details_errors
             <<: *supporting_documents_errors
-            maximum_salary:
-              greater_than_minimum_salary: Maximum salary must be more than the minimum salary
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Use the correct format for the time the application is due
