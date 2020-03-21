@@ -85,16 +85,6 @@ class VacancyPresenter < BasePresenter
     "#{first_supporting_subject}, #{second_supporting_subject}"
   end
 
-  def pay_scale_range
-    @pay_scale_range ||= begin
-                           return '' if model.min_pay_scale.blank? && model.max_pay_scale.blank?
-                           return "from #{model.min_pay_scale.label}" if only_min_pay_scale_present?
-                           return "up to #{model.max_pay_scale.label}" if only_max_pay_scale_present?
-
-                           pay_scale_range_label
-                         end
-  end
-
   def publish_today?
     model.publish_on == Time.zone.today
   end
@@ -147,19 +137,5 @@ class VacancyPresenter < BasePresenter
 
   def job_title_and_school
     "#{job_title} at #{school_name}"
-  end
-
-  private
-
-  def pay_scale_range_label
-    "#{model.min_pay_scale.label} to #{model.max_pay_scale.label}"
-  end
-
-  def only_min_pay_scale_present?
-    model.min_pay_scale.present? && model.max_pay_scale.blank?
-  end
-
-  def only_max_pay_scale_present?
-    model.min_pay_scale.blank? && model.max_pay_scale.present?
   end
 end

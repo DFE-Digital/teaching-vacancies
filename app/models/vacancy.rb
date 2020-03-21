@@ -113,8 +113,6 @@ class Vacancy < ApplicationRecord
   belongs_to :subject, optional: true
   belongs_to :first_supporting_subject, class_name: 'Subject', optional: true
   belongs_to :second_supporting_subject, class_name: 'Subject', optional: true
-  belongs_to :min_pay_scale, class_name: 'PayScale', optional: true
-  belongs_to :max_pay_scale, class_name: 'PayScale', optional: true
   belongs_to :leadership, optional: true
 
   has_one :publish_feedback, class_name: 'VacancyPublishFeedback'

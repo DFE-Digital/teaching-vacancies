@@ -124,7 +124,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content(vacancy.newly_qualified_teacher)
-    expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
