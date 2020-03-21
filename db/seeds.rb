@@ -59,7 +59,6 @@ community_school = FactoryBot.create(:school,
                                      town: 'Chatteris',
                                      urn: 110628)
 
-payscale = PayScale.limit(5).sample(1).first
 leadership = Leadership.limit(1).sample(1).first
 
 FactoryBot.create(:vacancy,
@@ -67,7 +66,7 @@ FactoryBot.create(:vacancy,
                   subject: Subject.find_by!(name: 'Physics'),
                   school: academy,
                   working_patterns: ['full_time', 'compressed_hours'],
-                  salary: '£35,000'
+                  salary: '£35,000',
                   leadership: leadership)
 
 FactoryBot.create(:vacancy,
@@ -75,7 +74,7 @@ FactoryBot.create(:vacancy,
                   subject: Subject.find_by!(name: 'Maths'),
                   school: community_school,
                   working_patterns: ['part_time'],
-                  salary: '£35,000'
+                  salary: '£35,000',
                   leadership: leadership)
 
 FactoryBot.create(:vacancy,
@@ -83,7 +82,7 @@ FactoryBot.create(:vacancy,
                   subject: Subject.find_by!(name: 'Physical Education'),
                   school: academy,
                   working_patterns: ['part_time'],
-                  salary: '£30,000'
+                  salary: '£30,000',
                   leadership: leadership,
                   total_pageviews: 4,
                   total_get_more_info_clicks: 2)
@@ -93,7 +92,7 @@ FactoryBot.create(:vacancy,
                   subject: Subject.find_by!(name: 'Chemistry'),
                   school: academy,
                   working_patterns: ['full_time', 'part_time'],
-                  salary: '£55,000'
+                  salary: '£55,000',
                   leadership: leadership)
 
 FactoryBot.create(:vacancy,
@@ -101,7 +100,7 @@ FactoryBot.create(:vacancy,
                   subject: Subject.find_by!(name: 'Geography'),
                   school: academy,
                   working_patterns: ['part_time', 'job_share'],
-                  salary: '£25,000'
+                  salary: '£25,000',
                   status: 1,
                   leadership: leadership)
 
@@ -110,7 +109,7 @@ FactoryBot.create(:vacancy,
                   job_title: 'Teacher of Drama',
                   subject: Subject.find_by!(name: 'Drama'),
                   school: academy,
-                  salary: '£28,000'
+                  salary: '£28,000',
                   leadership: leadership,
                   publish_on: Time.zone.today + 1.year,
                   expires_on: Time.zone.today + 2.years)
@@ -121,7 +120,7 @@ expired_one = FactoryBot.build(:vacancy,
                                subject: Subject.find_by!(name: 'Art'),
                                school: academy,
                                working_patterns: ['full_time', 'part_time', 'job_share'],
-                               salary: '£32,000'
+                               salary: '£32,000',
                                leadership: leadership,
                                publish_on: Time.zone.today - 5.days,
                                expires_on: Time.zone.today - 2.days)
@@ -133,7 +132,7 @@ expired_two = FactoryBot.build(:vacancy,
                                subject: Subject.find_by!(name: 'Drama'),
                                school: academy,
                                working_patterns: ['full_time', 'part_time', 'job_share'],
-                               salary: '£46,000'
+                               salary: '£46,000',
                                leadership: leadership,
                                publish_on: Time.zone.today - 5.days,
                                expires_on: Time.zone.today - 2.days)
@@ -145,7 +144,7 @@ expired_three = FactoryBot.build(:vacancy,
                                  subject: Subject.find_by!(name: 'Maths'),
                                  school: academy,
                                  working_patterns: ['full_time', 'part_time', 'job_share'],
-                                 salary: '£28,000'
+                                 salary: '£28,000',
                                  leadership: leadership,
                                  publish_on: Time.zone.today - 5.days,
                                  expires_on: Time.zone.today - 2.days)

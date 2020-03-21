@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :vacancy do
-    association :min_pay_scale, factory: :pay_scale
-    association :max_pay_scale, factory: :pay_scale
     association :subject
     association :leadership
     association :school
@@ -21,8 +19,6 @@ FactoryBot.define do
     job_description { Faker::Lorem.paragraph(sentence_count: 4) }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
-    # TODO: Remove this after migration
-    minimum_salary { Faker::Lorem.sentence[1...30].strip }
     newly_qualified_teacher { true }
     publish_on { Time.zone.today }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
