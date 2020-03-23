@@ -153,11 +153,11 @@ WITH
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.STATIC_schools_historic_pre201119` AS historic_signups
     ON
-      historic_signups.URN = schools.urn
+      CAST(historic_signups.URN AS STRING) = schools.urn
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
     ON
-      users.school_urn = schools.urn
+      CAST(users.school_urn AS STRING) = schools.urn
     LEFT JOIN
       vacancies
     ON

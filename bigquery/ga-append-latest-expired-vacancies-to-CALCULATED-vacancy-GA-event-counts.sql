@@ -1,7 +1,9 @@
 SELECT
-  vacancy.id, #unique vacancy ID from the Teaching Vacancies database
-  vacancy.slug, #human readable dash-separated string that is probably also a unique vacancy ID (but can't trust this)
-  vacancy.expiry_time AS expiry_time,
+  vacancy.id,
+  #unique vacancy ID from the Teaching Vacancies database
+  vacancy.slug,
+  #human readable dash-separated string that is probably also a unique vacancy ID (but can't trust this)
+  CAST(vacancy.expiry_time AS TIMESTAMP) AS expiry_time,
   SUM( #series of SUMIF statements that turn various Google Analytics event configurations into counts of the total number of events that occurred on this vacancy's page
   IF
     (events.event_Action="vacancy_visited",
@@ -22,8 +24,9 @@ SELECT
   SUM(
   IF
     ((events.event_Action="vacancy_nextsteps"
-      AND events.event_Label="get_more_information")
-      OR events.event_Action="vacancy_applied", #see comment above about vacancy_applied
+        AND events.event_Label="get_more_information")
+      OR events.event_Action="vacancy_applied",
+      #see comment above about vacancy_applied
       events.Unique_Events,
       0)) AS get_more_information_clicks,
   SUM(
@@ -71,9 +74,15 @@ LEFT JOIN (
     `teacher-vacancy-service.production_dataset.GA_events_on_vacancies_page`) AS events
 ON
   vacancy.slug=events.slug #matches the vacancy slug from our database with the vacancy slug from the part of the page URL recorded in Google Analytics - this is the critical part of this query
-WHERE vacancy.expiry_time < CURRENT_TIMESTAMP #only obtain vacancies which have expired
-AND vacancy.expiry_time > (SELECT MAX(expiry_time) FROM `teacher-vacancy-service.production_dataset.CALCULATED_vacancy_GA_event_counts`) #only select vacancies that expired since we last ran this query
-AND status NOT IN ("trashed","draft")
+WHERE
+  vacancy.expiry_time < CURRENT_DATETIME #only obtain vacancies which have expired
+  AND vacancy.expiry_time > CAST((
+    SELECT
+      MAX(expiry_time)
+    FROM
+      `teacher-vacancy-service.production_dataset.CALCULATED_vacancy_GA_event_counts`) AS DATETIME) #only select vacancies that expired since we last ran this query
+  AND status NOT IN ("trashed",
+    "draft")
 GROUP BY
   vacancy.id,
   vacancy.slug,
