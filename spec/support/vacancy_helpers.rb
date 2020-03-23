@@ -5,8 +5,6 @@ module VacancyHelpers
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.first_supporting_subject, from: 'job_specification_form[first_supporting_subject_id]'
     select vacancy.second_supporting_subject, from: 'job_specification_form[second_supporting_subject_id]'
-    select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
-    check 'job_specification_form[newly_qualified_teacher]', visible: false if vacancy.newly_qualified_teacher
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
     fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
     fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year
@@ -17,6 +15,12 @@ module VacancyHelpers
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
             name: 'job_specification_form[working_patterns][]',
+            visible: false
+    end
+
+    vacancy.model_job_role.each do |job_role|
+      check job_role,
+            name: 'job_specification_form[job_role][]',
             visible: false
     end
   end

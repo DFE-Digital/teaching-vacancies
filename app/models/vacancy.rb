@@ -2,6 +2,13 @@ require 'elasticsearch/model'
 require 'auditor'
 
 class Vacancy < ApplicationRecord
+  JOB_ROLE_OPTIONS = [
+    'Teacher',
+    'Leadership',
+    'SEN specialist',
+    'Suitable for NQTs'
+  ].freeze
+
   FLEXIBLE_WORKING_PATTERN_OPTIONS = {
     'part_time' => 100,
     'job_share' => 101,

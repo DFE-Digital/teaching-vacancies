@@ -28,6 +28,7 @@ RSpec.feature 'Creating a vacancy' do
     let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
+                                 job_role: ['Teacher', 'SEN specialist'],
                                  school: school,
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],
@@ -51,20 +52,16 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on 'Save and continue'
 
+        mandatory_fields = %w[job_title job_role job_description working_patterns]
+
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: 3))
+          expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))
         end
 
-        within_row_for(text: I18n.t('jobs.job_title')) do
-          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank')))
-        end
-
-        within_row_for(text: I18n.t('jobs.description')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
-        end
-
-        within_row_for(text: I18n.t('jobs.working_patterns')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_patterns.blank'))
+        mandatory_fields.each do |field|
+          within_row_for(text: I18n.t("jobs.#{field}")) do
+            expect(page).to have_content((I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.blank")))
+          end
         end
       end
 

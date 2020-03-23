@@ -3,6 +3,7 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
 
   delegate :working_patterns, to: :model, prefix: true
+  delegate :job_role, to: :model, prefix: true
 
   def share_url(source: nil, medium: nil, campaign: nil, content: nil)
     params = { protocol: 'https' }
