@@ -153,6 +153,17 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(activity.parameters.symbolize_keys).to include(salary: [salary,
                                                                        '£25,000 and money'])
       end
+
+      scenario 'adds a job to update the Google index in the queue' do
+        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          .to receive(:update_google_index).with(vacancy)
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.salary'))
+
+        fill_in 'pay_package_form[salary]', with: '£25,000 and money'
+        click_on 'Update job'
+      end
     end
 
     context '#candidate_specification' do
