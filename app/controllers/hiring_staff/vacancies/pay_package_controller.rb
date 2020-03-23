@@ -11,7 +11,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
 
     if @pay_package_form.valid?
       update_vacancy(pay_package_form_params, @vacancy)
-      return redirect_to_next_step(@vacancy)
+      return redirect_to_next_step_if_save_and_continue
     end
 
     render :show
@@ -25,5 +25,13 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
 
   def next_step
     UploadDocumentsFeature.enabled? ? supporting_documents_school_job_path : candidate_specification_school_job_path
+  end
+
+  def redirect_to_next_step_if_save_and_continue
+    if params[:commit] == 'Save and continue'
+      redirect_to_next_step(@vacancy)
+    elsif params[:commit] == 'Update job'
+      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
+    end
   end
 end

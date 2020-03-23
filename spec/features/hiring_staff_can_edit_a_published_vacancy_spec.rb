@@ -112,6 +112,49 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
+    context '#pay_package' do
+      scenario 'can not be edited when validation fails' do
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content("Edit job for #{school.name}")
+        click_link_in_container_with_text(I18n.t('jobs.salary'))
+
+        fill_in 'pay_package_form[salary]', with: ''
+        click_on 'Update job'
+
+        within_row_for(text: I18n.t('jobs.salary')) do
+          expect(page).to have_content(I18n.t('pay_package_errors.salary.blank'))
+        end
+      end
+
+      scenario 'can be successfully edited' do
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.salary'))
+
+        fill_in 'pay_package_form[salary]', with: '£25,000 and money'
+        click_on 'Update job'
+
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page).to have_content('£25,000 and money')
+      end
+
+      scenario 'tracks the vacancy update' do
+        salary = vacancy.salary
+
+        visit edit_school_job_path(vacancy.id)
+        click_link_in_container_with_text(I18n.t('jobs.salary'))
+
+        fill_in 'pay_package_form[salary]', with: '£25,000 and money'
+        click_on 'Update job'
+
+        activity = vacancy.activities.last
+        expect(activity.key).to eq('vacancy.update')
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.parameters.symbolize_keys).to include(salary: [salary,
+                                                                       '£25,000 and money'])
+      end
+    end
+
     context '#candidate_specification' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
