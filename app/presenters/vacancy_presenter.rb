@@ -101,6 +101,14 @@ class VacancyPresenter < BasePresenter
     "#{first_supporting_subject}, #{second_supporting_subject}"
   end
 
+  def any_subjects?
+    main_subject.present? || other_subjects.present?
+  end
+
+  def subject_count
+    [main_subject, first_supporting_subject, second_supporting_subject].count(&:present?)
+  end
+
   def pay_scale_range
     @pay_scale_range ||= begin
                            return '' if model.min_pay_scale.blank? && model.max_pay_scale.blank?

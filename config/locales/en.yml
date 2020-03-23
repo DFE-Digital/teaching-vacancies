@@ -139,7 +139,9 @@ en:
     qualifications: 'Essential qualifications'
     experience: 'Essential skills and experience'
     ref_no: 'Reference number'
-    subject: 'Subject(s)'
+    subject: 
+      one: 'Subject'
+      other: 'Subjects'
     main_subject: 'Main subject'
     first_supporting_subject: 'Supporting subject 1'
     second_supporting_subject: 'Supporting subject 2'
