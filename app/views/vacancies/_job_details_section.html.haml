@@ -37,7 +37,7 @@
           %td.govuk-table__cell
             = @vacancy.leadership.title
 
-  %h4.govuk-heading-s= t('jobs.description')
+  %h4.govuk-heading-s= t('jobs.job_description')
   %p= @vacancy.job_description
 
   - if @vacancy.documents.none? && @vacancy.any_candidate_specification?

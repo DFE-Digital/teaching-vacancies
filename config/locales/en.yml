@@ -139,7 +139,6 @@ en:
     starts_on: 'Expected start date'
     ends_on: 'End date'
     expired: 'This job post has expired'
-    description: 'Job description'
     education: 'Essential educational requirements'
     qualifications: 'Essential qualifications'
     experience: 'Essential skills and experience'
@@ -170,6 +169,7 @@ en:
     job_details: 'Job details'
     job_title: 'Job title'
     job_role: 'Job role'
+    job_description: 'Job description'    
     salary: 'Salary'
     benefits: 'Employee benefits'
     salary_range_html: "Salary range (<span class='text-red'>Required</span>)"

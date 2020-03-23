@@ -18,7 +18,7 @@ RSpec.describe 'Page availability', js: true, smoke_test: true do
       vacancy_page = page.first('.view-vacancy-link')
       unless vacancy_page.nil?
         vacancy_page.click
-        expect(page).to have_content(I18n.t('jobs.description'))
+        expect(page).to have_content(I18n.t('jobs.job_description'))
         expect(page.current_url).to include('https://teaching-vacancies.service.gov.uk/jobs/')
       end
     end
