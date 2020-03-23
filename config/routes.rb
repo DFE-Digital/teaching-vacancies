@@ -57,17 +57,24 @@ Rails.application.routes.draw do
       get :publish, to: 'hiring_staff/vacancies/publish#create'      
       resource :job_specification,
         only: %i[edit update],
-        controller: 'hiring_staff/vacancies/job_specification'
+        controller: 'hiring_staff/vacancies/job_specification',
+        defaults: { create_step: 1, step_title: I18n.t('jobs.job_specification') }
       resource :pay_package, 
         only: %i[show update],
-        controller: 'hiring_staff/vacancies/pay_package'
-      resource :supporting_documents, only: %i[edit update],
-                                               controller: 'hiring_staff/vacancies/supporting_documents'
-      resource :documents, only: %i[create destroy show],
-                           controller: 'hiring_staff/vacancies/documents'
-      resource :application_details, only: %i[edit update],
-                                     controller: 'hiring_staff/vacancies/application_details'
-
+        controller: 'hiring_staff/vacancies/pay_package',
+        defaults: { create_step: 2, step_title: I18n.t('jobs.pay_package') }
+      resource :supporting_documents,
+        only: %i[edit update],
+        controller: 'hiring_staff/vacancies/supporting_documents',
+        defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
+      resource :documents,
+        only: %i[create destroy show],
+        controller: 'hiring_staff/vacancies/documents',
+        defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
+      resource :application_details,
+        only: %i[edit update],
+        controller: 'hiring_staff/vacancies/application_details',
+        defaults: { create_step: 4, step_title: I18n.t('jobs.application_details') }
       resource :feedback, controller: 'hiring_staff/vacancies/vacancy_publish_feedback', only: %i[new create]
       resource :statistics, controller: 'hiring_staff/vacancies/statistics', only: %i[update]
       resource :copy, only: %i[new create],
@@ -75,15 +82,17 @@ Rails.application.routes.draw do
     end
 
     resource :job, only: [] do
-      get :application_details, to: 'hiring_staff/vacancies/application_details#new'
+      get :application_details,
+        to: 'hiring_staff/vacancies/application_details#new',
+        defaults: { create_step: 4, step_title: I18n.t('jobs.application_details') }
       post :application_details, to: 'hiring_staff/vacancies/application_details#create'
       get :supporting_documents,
         to: 'hiring_staff/vacancies/supporting_documents#new',
-        defaults: { create_step: 2, step_title: 'Supporting documents' }
+        defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
       post :supporting_documents, to: 'hiring_staff/vacancies/supporting_documents#create'
       get :job_specification,
         to: 'hiring_staff/vacancies/job_specification#new',
-        defaults: { create_step: 1, step_title: 'Job description' }
+        defaults: { create_step: 1, step_title: I18n.t('jobs.job_specification') }
       post :job_specification, to: 'hiring_staff/vacancies/job_specification#create'
     end
   end
