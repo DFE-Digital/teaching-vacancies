@@ -78,12 +78,17 @@ en:
       job_specification_form:
         starts_on: 'Expected start date'
         ends_on: 'End date'
+      pay_package_form:
+        salary_html: "Salary (<span class='text-red'>Required</span>)"
       supporting_documents_form:
         supporting_documents_html: "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
     hint:
       job_specification_form:
         starts_on: 'For example, 01 01 2020'
         ends_on: 'For example, 01 08 2020'
+      pay_package_form:
+        salary: 'Enter the annual salary or salary range, and/or pay scale range. Where relevant, state if the salary is full-time equivalent'
+        benefits: 'Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments, for example'
       application_details_form:
         publish_on: 'For example, 01 01 2020'
         expires_on: 'For example, 01 08 2020'
@@ -113,7 +118,6 @@ en:
       remaining: '%{days_remaining} days remaining to apply'
       today: 'Deadline is today'
       tomorrow: 'Deadline is tomorrow'
-    salary: 'Salary'
     school_type: 'School type'
     publish_on: 'Date listed'
     expires_on: 'Closing date'
@@ -146,8 +150,6 @@ en:
     first_supporting_subject: 'Supporting subject 1'
     second_supporting_subject: 'Supporting subject 2'
     other_subjects: 'Other subjects'
-    pay_scale: 'Pay scale'
-    pay_scale_range: 'Pay scale range'
     leadership_level: 'Leadership level'
     job_count_without_search: 'There is %{count} job listed'
     job_count_plural_without_search: 'There are %{count} jobs listed'
@@ -166,6 +168,7 @@ en:
       - 'Schools have listed %{count} jobs but they have since expired.'
     job_details: 'Job details'
     job_title: 'Job title'
+    salary: 'Salary'
     benefits: 'Financial benefits'
     salary_range_html: "Salary range (<span class='text-red'>Required</span>)"
     per_year: 'per year'
@@ -176,7 +179,9 @@ en:
     review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review this job for %{school}'
     edit_heading: 'Edit job for %{school}'
+    current_step: 'Step %{current_step} of %{total_steps}'
     job_specification: 'Job specification'
+    pay_package: 'Pay package'
     candidate_specification: 'Candidate specification'
     supporting_documents: 'Supporting documents'
     upload_file: 'Upload files'
@@ -271,10 +276,6 @@ en:
       feedback_time: '(takes 30 seconds)'
     aria_labels:
       content: Content
-      minimum_salary: 'Minimum salary'
-      maximum_salary: 'Maximum salary'
-      minimum_pay_scale_range: 'Minimum pay scale range'
-      maximum_pay_scale_range: 'Maximum pay scale range'
       change_job_specification: 'Change job specification'
       change_job_title: 'Change job title'
       change_job_description: 'Change job description'
@@ -282,14 +283,15 @@ en:
       change_other_subjects: 'Change other subjects'
       change_first_supporting_subject: 'Change first supporting subject'
       change_second_supporting_subject: 'Change second supporting subject'
-      change_pay_scale: 'Change pay scale'
-      change_salary_range: 'Change salary range'
       change_working_patterns: 'Change working pattern'
       change_newly_qualified_teacher: 'Change newly qualified teacher'
       change_employee_benefits: 'Change employee benefits'
       change_leadership_level: 'Change leadership level'
       change_expected_start_date: 'Change expected start date'
       change_end_date: 'Change end date'
+      change_pay_package: 'Change pay package'
+      change_salary: 'Change salary'
+      change_benefits: 'Change financial benefits'
       change_candidate_specification: 'Change candidate specification'
       change_essential_educational_requirements: 'Change essential educational requirements'
       change_essential_qualifications: 'Change essential qualifications'
@@ -313,7 +315,6 @@ en:
       supporting_subject: 'What other subject will the teacher focus on?'
       working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
-      pay_scale_range: 'What pay scale range does the job’s salary fall in?'
       start_date: 'For example, %{date}'
       end_date: 'For example, %{date}'
       education: 'State any formal education needed for the role (undergraduate degree, for example)'
@@ -321,7 +322,6 @@ en:
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
-      benefits: 'List any financial benefits, job training, <span aria-label="Continuing Professional Development">CPD</span>, <span aria-label="Special Educational Needs">SEN</span> allowances, <span aria-label="Teaching and Learning Responsibility">TLR</span> payments, etc.'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_link: 'Enter the URL for the page on your school or trust’s website that gives further details on the job and how to apply.'
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
@@ -337,7 +337,6 @@ en:
       subject_hint: 'Maths, for example'
       job_title: 'Job title'
       job_title_hint: 'Leader, for example'
-      minimum_salary: 'Minimum salary'
       working_pattern: 'Working pattern'
       education_phase: 'Education phase'
       education_phase_divider: 'or'

@@ -1,0 +1,12 @@
+- if @vacancy.published?
+  - content_for :page_title_prefix, "Edit the #{form_section_title}"
+
+  %h1.govuk-heading-l
+    = t('jobs.edit_heading', school: current_school.name)
+- else
+  - content_for :page_title_prefix, "#{form_section_title} — Publish a job for #{current_school.name}"
+  
+  %h1.govuk-heading-l
+    = t('jobs.publish_heading', school: current_school.name)
+    %span.govuk-caption-l
+      = t('jobs.current_step', current_step: form_section_step, total_steps: form_section_total_steps)

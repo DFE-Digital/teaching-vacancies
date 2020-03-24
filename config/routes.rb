@@ -57,6 +57,8 @@ Rails.application.routes.draw do
       get :publish, to: 'hiring_staff/vacancies/publish#create'
       resource :job_specification, only: %i[edit update],
                                    controller: 'hiring_staff/vacancies/job_specification'
+      resource :pay_package, only: %i[show update],
+                                      controller: 'hiring_staff/vacancies/pay_package'
       resource :supporting_documents, only: %i[edit update],
                                                controller: 'hiring_staff/vacancies/supporting_documents'
       resource :documents, only: %i[create destroy show],

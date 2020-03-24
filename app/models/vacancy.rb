@@ -17,6 +17,7 @@ class Vacancy < ApplicationRecord
   include Auditor::Model
 
   include VacancyJobSpecificationValidations
+  include VacancyPayPackageValidations
   include VacancyCandidateSpecificationValidations
   include VacancyApplicationDetailValidations
 
@@ -78,8 +79,6 @@ class Vacancy < ApplicationRecord
       indexes :publish_on, type: :date
       indexes :status, type: :keyword
       indexes :working_patterns, type: :keyword
-      indexes :minimum_salary, type: :integer
-      indexes :maximum_salary, type: :integer
       indexes :coordinates, type: :geo_point, ignore_malformed: true
       indexes :newly_qualified_teacher, type: :boolean
     end
@@ -114,8 +113,6 @@ class Vacancy < ApplicationRecord
   belongs_to :subject, optional: true
   belongs_to :first_supporting_subject, class_name: 'Subject', optional: true
   belongs_to :second_supporting_subject, class_name: 'Subject', optional: true
-  belongs_to :min_pay_scale, class_name: 'PayScale', optional: true
-  belongs_to :max_pay_scale, class_name: 'PayScale', optional: true
   belongs_to :leadership, optional: true
 
   has_one :publish_feedback, class_name: 'VacancyPublishFeedback'
@@ -222,14 +219,6 @@ class Vacancy < ApplicationRecord
     send(:set_slug)
   end
 
-  def minimum_salary=(salary)
-    self[:minimum_salary] = format_salary(salary)
-  end
-
-  def maximum_salary=(salary)
-    self[:maximum_salary] = format_salary(salary)
-  end
-
   def flexible_working?
     return flexible_working unless flexible_working.nil?
 
@@ -299,12 +288,5 @@ class Vacancy < ApplicationRecord
     return unless listed_elsewhere_changed? && hired_status_changed?
 
     self.stats_updated_at = Time.zone.now
-  end
-
-  def format_salary(salary)
-    salary = salary.to_s.strip
-    return salary.delete(',') if salary[SalaryValidator::SALARY_FORMAT]
-
-    salary
   end
 end
