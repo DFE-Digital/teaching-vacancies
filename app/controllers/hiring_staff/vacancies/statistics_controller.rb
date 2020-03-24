@@ -4,17 +4,11 @@ class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::App
       vacancy = Vacancy.find(vacancy_id)
       update_vacancy(vacancy)
 
-      flash_type = :success
-      flash_message = I18n.t('jobs.feedback_submitted')
+      redirect_to jobs_with_type_school_path(type: :awaiting_feedback), success: t('jobs.feedback_submitted_html',
+                                                                                   title: vacancy.job_title)
     else
-      flash_type = :error
-      flash_message = I18n.t('jobs.feedback_error')
+      redirect_to jobs_with_type_school_path(type: :awaiting_feedback), danger: t('jobs.feedback_error')
     end
-
-    return if request.format.js?
-
-    flash[flash_type] = flash_message
-    redirect_to jobs_with_type_school_path(type: :awaiting_feedback)
   end
 
   private

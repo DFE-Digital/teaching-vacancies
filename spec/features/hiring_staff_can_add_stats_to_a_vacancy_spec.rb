@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'sanitize'
+
 RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true do
   NOTIFICATION_BADGE_SELECTOR = "[data-test='expired-vacancies-with-feedback-outstanding']".freeze
   JOB_TITLE_LINK_SELECTOR = '#job-title.view-vacancy-link'.freeze
@@ -118,7 +119,6 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       submit_feedback_for(another_vacancy)
       submit_feedback_for(third_vacancy)
 
-      expect(page).to have_content(Sanitize.clean(I18n.t('jobs.feedback_all_submitted')))
       expect(page).to_not have_content(I18n.t('jobs.awaiting_feedback_intro'))
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 0)
     end
@@ -153,7 +153,6 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       click_on I18n.t('buttons.submit')
     end
 
-    expect(page).to have_content(I18n.t('jobs.feedback_submitted'))
-    expect(page).to_not have_content(vacancy.job_title)
+    expect(page).to have_content(strip_tags(I18n.t('jobs.feedback_submitted_html', title: vacancy.job_title)))
   end
 end
