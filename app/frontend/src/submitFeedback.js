@@ -24,37 +24,4 @@ $(document).ready(function(){
 
     return valid;
   })
-
-  $('.submit_feedback').on('ajax:success', function(event) {
-    var form = $(event.target);
-    var notification = $('.notification');
-    var count = Number(notification.text()) - 1;
-    var table = $('table.vacancies')
-    var notice = $('#awaiting_notice')
-    var notice_count = notice.find('.count');
-    var feedback_intro = $('#awaiting_feedback_intro')
-    const delayInMilliseconds = 60000
-
-    if (count > 0) {
-      row = form.parents('tr');
-      if (count == 1) {
-        notice_count.text('1 job');
-      } else {
-        notice_count.text(count + ' jobs');
-      }
-      notification.text(count);
-      text = form.data('successMessage');
-      row.html('<td class="govuk-table__cell" colspan="6">'+ text +'</td>');
-      row.fadeOut(delayInMilliseconds, function() {
-        $(this).remove();
-      })
-    } else {
-      notification.remove();
-      notice.remove();
-      table.remove();
-      feedback_intro.remove();
-      text = form.data('allSubmittedMessage');
-      $('section.govuk-tabs__panel').append('<p class="govuk-body govuk-!-font-size-19">' + text + '</p>');
-    }
-  });
 });

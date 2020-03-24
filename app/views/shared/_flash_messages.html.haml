@@ -1,6 +1,9 @@
 - flash.each do |style, message|
   .js-dismissable.mb1{role: 'alert', tabindex: '-1', class: "flash flash-#{style}"}
-    - unless style == 'error'
+    = raw message
+    - if style == 'success'
+      %svg.success-icon{ xmlns:"http://www.w3.org/2000/svg", width:"25", height:"25", viewBox:"0 0 25 25" }
+        %path{ fill: "#00703c", d: "M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z" }
+    - unless style == 'danger'
       %a.govuk-link.govuk-link--no-visited-state.dismiss-link.js-dismissable__link{ href: '#' }
         = t('buttons.dismiss')
-    = message

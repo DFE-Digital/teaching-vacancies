@@ -1,7 +1,7 @@
 WITH
   school_user_metrics AS ( #work out current user-related metric values for all individual schools for use in the main query later
   SELECT
-    school_urn AS urn,
+    CAST(school_urn AS STRING) AS urn,
     MIN(approval_datetime) AS dsi_signup_date,
     #the earliest date that a user is recorded as authorised for TV access in DSI - for schools who signed up *after* we moved to DSI for authorisation in Nov 2019 this is the date the school first signed up
     COUNT(*) AS number_of_users #the current number of users this school has authorised to access TV in DSI
@@ -11,7 +11,7 @@ WITH
     school_urn ),
   school_approver_metrics AS ( #work out current approver-related metric values for all individual schools for use in the main query later
   SELECT
-    school_urn AS urn,
+    CAST(school_urn AS STRING) AS urn,
     COUNT(*) AS number_of_approvers #the current number of approvers this school has to authorise access to services in DSI
   FROM
     `teacher-vacancy-service.production_dataset.dsi_approvers` AS approvers
@@ -19,7 +19,7 @@ WITH
     school_urn ),
   school_vacancy_metrics AS ( #work out current vacancy-related metric values for all individual schools for use in the main query later
   SELECT
-    school.urn AS urn,
+    CAST(school.urn AS STRING) AS urn,
     COUNT(*) AS vacancies_published,
     #the total number of vacancies this school published over all time
     COUNTIF(publish_on > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) AS vacancies_published_in_the_last_year,
@@ -140,7 +140,7 @@ IF
 FROM
   `teacher-vacancy-service.production_dataset.feb20_school` AS school
 LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_school_type` AS school_type
+  `teacher-vacancy-service.production_dataset.feb20_schooltype` AS school_type
 ON
   school_type.id=school.school_type_id
 LEFT JOIN
@@ -148,7 +148,7 @@ LEFT JOIN
 ON
   region.id=school.region_id
 LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_detailed_school_type` AS detailed_school_type
+  `teacher-vacancy-service.production_dataset.feb20_detailedschooltype` AS detailed_school_type
 ON
   detailed_school_type.id=school.detailed_school_type_id
 LEFT JOIN
@@ -162,7 +162,7 @@ ON
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.STATIC_schools_historic_pre201119` AS historic_signups
 ON
-  historic_signups.URN=school.urn
+  CAST(historic_signups.URN AS STRING)=school.urn
 LEFT JOIN
   school_vacancy_metrics
 ON
@@ -172,10 +172,9 @@ LEFT JOIN
 ON
   mat_metrics.trust_name=school.data_Trusts_name
 WHERE
-  detailed_school_type.code IN ( #exclude schools recorded in our database which have an out of scope establishment type
+  CAST(detailed_school_type.code AS NUMERIC) IN ( #exclude schools recorded in our database which have an out of scope establishment type
   SELECT
     code
   FROM
     `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)
-  AND school.data_EstablishmentStatus_name IS NOT NULL
   AND school.data_EstablishmentStatus_name != "Closed" #exclude closed schools, as this is a table of in scope schools. Assume schools with a null status are closed - as we didn't update the GIAS data for these when we started populating this as a JSON string in the database.

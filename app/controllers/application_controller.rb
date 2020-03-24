@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  add_flash_types :success
+  add_flash_types :success, :danger
 
   protect_from_forgery with: :exception, except: :not_found
 
