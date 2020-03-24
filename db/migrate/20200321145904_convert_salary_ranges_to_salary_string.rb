@@ -1,8 +1,8 @@
 class ConvertSalaryRangesToSalaryString < ActiveRecord::Migration[5.2]
   def change
     Vacancy.all.each do |vacancy|
-      min_pay_scale = PayScale.find(vacancy.min_pay_scale_id)
-      max_pay_scale = PayScale.find(vacancy.max_pay_scale_id)
+      min_pay_scale = vacancy.min_pay_scale_id.present? ? PayScale.find(vacancy.min_pay_scale_id) : nil
+      max_pay_scale = vacancy.max_pay_scale_id.present? ? PayScale.find(vacancy.max_pay_scale_id) : nil
       pay_scales = [min_pay_scale&.label, max_pay_scale&.label].reject(&:blank?).join(" to ")
       minimum_salary = vacancy.minimum_salary.present? ? "£#{vacancy.minimum_salary.gsub(/\d(?=(...)+$)/, '\0,')}" : nil
       maximum_salary = vacancy.maximum_salary.present? ? "£#{vacancy.maximum_salary.gsub(/\d(?=(...)+$)/, '\0,')}" : nil
