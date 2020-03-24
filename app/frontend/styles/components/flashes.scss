@@ -17,10 +17,20 @@
   border-color: govuk-colour('red');
 }
 
+.flash-danger {
+  border-color: govuk-colour('red');
+}
+
 .flash-alert {
   border-color: govuk-colour('yellow');
 }
+
 .dismiss-link {
   float: right;
   display: block;
+}
+
+.success-icon {
+  float: left;
+  margin-right: 10px;
 }

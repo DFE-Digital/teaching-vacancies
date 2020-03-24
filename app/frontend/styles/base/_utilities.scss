@@ -50,12 +50,19 @@
   display: inline-block;
 }
 
+.inline-button > .govuk-form-group {
+  margin-bottom: 0;
+  > input {
+    margin-bottom: 0;
+  }
+}
+
 .nobreak {
   white-space: nowrap;
 }
 
 strong, b {
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .text-red {
