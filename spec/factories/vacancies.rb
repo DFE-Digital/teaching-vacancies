@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :vacancy do
-    association :min_pay_scale, factory: :pay_scale
-    association :max_pay_scale, factory: :pay_scale
     association :subject
     association :leadership
     association :school
@@ -11,7 +9,7 @@ FactoryBot.define do
     end
 
     application_link { Faker::Internet.url }
-    benefits { Faker::Lorem.sentence }
+    benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
     education { Faker::Lorem.paragraph(sentence_count: 4) }
     experience { Faker::Lorem.paragraph(sentence_count: 4) }
@@ -21,12 +19,11 @@ FactoryBot.define do
     job_description { Faker::Lorem.paragraph(sentence_count: 4) }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
-    maximum_salary { SalaryValidator::MAX_SALARY_LIMIT - 100 }
-    minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
     newly_qualified_teacher { true }
     publish_on { Time.zone.today }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }
+    salary { Faker::Lorem.sentence[1...30].strip }
     status { :published }
     supporting_documents { 'yes' }
     working_patterns { ['full_time'] }
@@ -44,18 +41,8 @@ FactoryBot.define do
       experience { Faker::Lorem.characters(number: 1010) }
       job_description { Faker::Lorem.characters(number: 50001) }
       job_title { Faker::Lorem.characters(number: 150) }
-      maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
-      minimum_salary { (SalaryValidator::MAX_SALARY_LIMIT + 100) }
+      salary { Faker::Lorem.characters(number: 257) }
       qualifications { Faker::Lorem.characters(number: 1002) }
-    end
-
-    trait :fail_minimum_salary_max_validation do
-      minimum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
-    end
-
-    trait :fail_maximum_salary_max_validation do
-      minimum_salary { SalaryValidator::MIN_SALARY_ALLOWED }
-      maximum_salary { SalaryValidator::MAX_SALARY_LIMIT + 100 }
     end
 
     trait :complete do

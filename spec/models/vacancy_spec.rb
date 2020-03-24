@@ -16,7 +16,6 @@ RSpec.describe Vacancy, type: :model do
                 radius: nil,
                 subject: 'subject',
                 job_title: 'job title',
-                minimum_salary: nil,
                 working_patterns: nil,
                 newly_qualified_teacher: nil,
                 phases: nil)
@@ -37,7 +36,7 @@ RSpec.describe Vacancy, type: :model do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_description) }
       it { should validate_presence_of(:working_patterns) }
-      it { should validate_presence_of(:minimum_salary) }
+      it { should validate_presence_of(:salary) }
     end
 
     context 'a record saved with job spec details' do
@@ -85,6 +84,11 @@ RSpec.describe Vacancy, type: :model do
         expect(subject.errors.messages[:job_title].first)
           .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_long', count: 100))
       end
+
+      it '#salary' do
+        expect(subject.errors.messages[:salary].first)
+          .to eq(I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.too_long', count: 256))
+      end
     end
 
     context 'restrict maximum length of text fields' do
@@ -115,142 +119,6 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    context '#minimum_salary and #maximum_salary combined validations' do
-      it 'present minimum_salary and no maximum_salary' do
-        job = build(:vacancy, minimum_salary: 20, maximum_salary: nil)
-
-        expect(job.valid?).to be true
-        expect(job.errors.messages[:minimum_salary]).to be_empty
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'no minimum_salary and no maximum_salary set' do
-        job = build(:vacancy, minimum_salary: nil, maximum_salary: nil)
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary]).to eq(['Enter a minimum salary'])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'no minimum_salary and invalid maximum_salary' do
-        job = build(:vacancy, minimum_salary: nil, maximum_salary: 'not a number')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary]).to eq(['Enter a minimum salary'])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'invalid minimum_salary and no maximum_salary' do
-        job = build(:vacancy, minimum_salary: 'A20000', maximum_salary: nil)
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'invalid minimum_salary and invalid maximum_salary' do
-        job = build(:vacancy, minimum_salary: 'A20000', maximum_salary: '20K')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'invalid minimum_salary and valid maximum_salary' do
-        job = build(:vacancy, minimum_salary: 'A20000', maximum_salary: '20000')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'valid minimum_salary and invalid maximum_salary' do
-        job = build(:vacancy, minimum_salary: 20000, maximum_salary: 'A20000')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary]).to be_empty
-        expect(job.errors.messages[:maximum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Maximum salary')])
-      end
-
-      it 'valid minimum_salary and greater than allowed maximum_salary' do
-        job = build(:vacancy, minimum_salary: 20000, maximum_salary: 200000000000)
-
-        expect(job).to_not be_valid
-        expect(job.errors.messages[:minimum_salary]).to be_empty
-        expect(job.errors.messages[:maximum_salary])
-          .to eq(['Maximum salary must be less than £200,000'])
-      end
-
-      it 'greater than allowed minimum_salary and greater than allowed maximum_salary' do
-        job = build(:vacancy, minimum_salary: 20000000000000, maximum_salary: 2000000000000000)
-
-        expect(job).to_not be_valid
-        expect(job.errors.messages[:minimum_salary])
-          .to eq(['Minimum salary must be less than £200,000'])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'greater than allowed minimum_salary and no maximum_salary' do
-        job = build(:vacancy, minimum_salary: 20000000000000, maximum_salary: nil)
-
-        expect(job).to_not be_valid
-        expect(job.errors.messages[:minimum_salary])
-          .to eq(['Minimum salary must be less than £200,000'])
-        expect(job.errors.messages[:maximum_salary]).to be_empty
-      end
-
-      it 'can accept salary format with comma' do
-        job = build(:vacancy, minimum_salary: '20,000')
-
-        expect(job.valid?).to be true
-        expect(job.minimum_salary).to eq '20000'
-      end
-
-      it 'rejects salary format with incorrect comma placement' do
-        incorrect_salary_format = ['20,,000', '200,00', ',200'].sample
-        job = build(:vacancy, minimum_salary: incorrect_salary_format)
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-      end
-
-      it 'rejects salary format with decimal points at the end' do
-        job = build(:vacancy, minimum_salary: '20,000.')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-      end
-
-      it 'can accept salary format with two decimal points' do
-        job = build(:vacancy, minimum_salary: '20,000.23')
-
-        expect(job.valid?).to be true
-        expect(job.minimum_salary).to eq '20000.23'
-      end
-
-      it 'rejects salary format with one decimal point' do
-        job = build(:vacancy, minimum_salary: '20,000.2')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-      end
-
-      it 'can not accept salary format with more than two decimal points' do
-        job = build(:vacancy, minimum_salary: '20,000.2323232')
-
-        expect(job.valid?).to be false
-        expect(job.errors.messages[:minimum_salary])
-          .to eq([I18n.t('errors.messages.salary.invalid_format', salary: 'Minimum salary')])
-      end
-    end
-
     context 'a record saved with job spec and candidate spec details, ' \
       'and empty contact_email' do
       subject { build(:vacancy, status: :draft) }
@@ -263,15 +131,6 @@ RSpec.describe Vacancy, type: :model do
 
       it { should validate_presence_of(:publish_on) }
       it { should validate_presence_of(:expires_on) }
-    end
-
-    describe '#maximum_salary_greater_than_minimum' do
-      it 'the minimum salary should be less than the maximum salary' do
-        vacancy = build(:vacancy, minimum_salary: 20, maximum_salary: 10)
-
-        expect(vacancy.valid?).to be false
-        expect(vacancy.errors.messages[:maximum_salary]).to eq(['Maximum salary must be more than the minimum salary'])
-      end
     end
   end
 
@@ -566,6 +425,14 @@ RSpec.describe Vacancy, type: :model do
       expect(vacancy.job_title).to eq(sanitized_title)
     end
 
+    it '#salary' do
+      salary = '<strong>Money</strong>'
+      vacancy = build(:vacancy, salary: salary)
+
+      sanitized_salary = 'Money'
+      expect(vacancy.salary).to eq(sanitized_salary)
+    end
+
     it '#benefits' do
       benefits = '<ul><li><a href="">Gym membership</a></li></ul>'
       vacancy = build(:vacancy, benefits: benefits)
@@ -596,18 +463,6 @@ RSpec.describe Vacancy, type: :model do
 
       sanitized_education = '<p>University of London</p>'
       expect(vacancy.education).to eq(sanitized_education)
-    end
-  end
-
-  context 'salary trimming' do
-    it 'trims the minimum salary' do
-      job = build(:vacancy, minimum_salary: " #{SalaryValidator::MIN_SALARY_ALLOWED} ")
-      expect(job.minimum_salary).to eq(SalaryValidator::MIN_SALARY_ALLOWED)
-    end
-
-    it 'trims the maximum salary' do
-      job = build(:vacancy, maximum_salary: " #{SalaryValidator::MIN_SALARY_ALLOWED} ")
-      expect(job.maximum_salary).to eq(SalaryValidator::MIN_SALARY_ALLOWED)
     end
   end
 

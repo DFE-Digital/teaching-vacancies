@@ -17,22 +17,6 @@ class VacancyPresenter < BasePresenter
     Rails.application.routes.url_helpers.job_url(model, params)
   end
 
-  def salary_range(del = 'to')
-    return number_to_currency(model.minimum_salary) if model.maximum_salary.blank?
-
-    range = "#{number_to_currency(model.minimum_salary)} #{del} "
-    range += "#{number_to_currency(model.maximum_salary)} "
-    range +=
-      if model.pro_rata_salary?
-        I18n.t('jobs.per_year_pro_rata')
-      elsif model.flexible_working?
-        I18n.t('jobs.per_year_fte')
-      else
-        I18n.t('jobs.per_year')
-      end
-    range
-  end
-
   def job_description
     simple_format(model.job_description)
   end
@@ -109,16 +93,6 @@ class VacancyPresenter < BasePresenter
     [main_subject, first_supporting_subject, second_supporting_subject].count(&:present?)
   end
 
-  def pay_scale_range
-    @pay_scale_range ||= begin
-                           return '' if model.min_pay_scale.blank? && model.max_pay_scale.blank?
-                           return "from #{model.min_pay_scale.label}" if only_min_pay_scale_present?
-                           return "up to #{model.max_pay_scale.label}" if only_max_pay_scale_present?
-
-                           pay_scale_range_label
-                         end
-  end
-
   def publish_today?
     model.publish_on == Time.zone.today
   end
@@ -171,19 +145,5 @@ class VacancyPresenter < BasePresenter
 
   def job_title_and_school
     "#{job_title} at #{school_name}"
-  end
-
-  private
-
-  def pay_scale_range_label
-    "#{model.min_pay_scale.label} to #{model.max_pay_scale.label}"
-  end
-
-  def only_min_pay_scale_present?
-    model.min_pay_scale.present? && model.max_pay_scale.blank?
-  end
-
-  def only_max_pay_scale_present?
-    model.min_pay_scale.blank? && model.max_pay_scale.present?
   end
 end

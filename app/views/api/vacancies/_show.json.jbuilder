@@ -2,6 +2,7 @@ json.set! '@context', 'http://schema.org'
 json.set! '@type', 'JobPosting'
 
 json.title vacancy.job_title
+json.salary vacancy.salary
 json.jobBenefits vacancy.benefits
 json.datePosted vacancy.publish_on.to_time.iso8601
 json.description vacancy.job_description
@@ -25,21 +26,6 @@ json.jobLocation do
 end
 
 json.url job_url(vacancy)
-
-json.baseSalary do
-  json.set! '@type', 'MonetaryAmount'
-  json.currency 'GBP'
-  json.value do
-    json.set! '@type', 'QuantitativeValue'
-    if vacancy.minimum_salary && vacancy.maximum_salary.blank?
-      json.value vacancy.minimum_salary
-    else
-      json.minValue vacancy.minimum_salary
-      json.maxValue vacancy.maximum_salary
-    end
-    json.unitText 'YEAR'
-  end
-end
 
 json.hiringOrganization do
   json.set! '@type', 'School'
