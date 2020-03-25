@@ -206,6 +206,44 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
+  context 'when filtering by minimum salary', elasticsearch: true do
+    scenario 'displays vacancies with a maximum salary that is higher than or equal to the filter value' do
+      low_paying_vacancy = create(:vacancy, :published, minimum_salary: 10000, maximum_salary: 29000)
+      medium_paying_vacancy = create(:vacancy, :published, minimum_salary: 18000, maximum_salary: 30000)
+      high_paying_vacancy = create(:vacancy, :published, minimum_salary: 20000, maximum_salary: 45000)
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        select '£30,000', from: 'minimum_salary'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(medium_paying_vacancy.job_title)
+      expect(page).to have_content(high_paying_vacancy.job_title)
+      expect(page).not_to have_content(low_paying_vacancy.job_title)
+    end
+
+    scenario 'displays all vacancies that have no maximum salary, regardless of their minimum salary' do
+      vacancy_one = create(:vacancy, :published, minimum_salary: 19000, maximum_salary: nil)
+      vacancy_two = create(:vacancy, :published, minimum_salary: 30000, maximum_salary: nil)
+      vacancy_three = create(:vacancy, :published, minimum_salary: 40000, maximum_salary: nil)
+
+      Vacancy.__elasticsearch__.client.indices.flush
+      visit jobs_path
+
+      within '.filters-form' do
+        select '£30,000', from: 'minimum_salary'
+        page.find('.govuk-button[type=submit]').click
+      end
+
+      expect(page).to have_content(vacancy_one.job_title)
+      expect(page).to have_content(vacancy_two.job_title)
+      expect(page).to have_content(vacancy_three.job_title)
+    end
+  end
+
   context 'when filtering by newly qualified teacher', elasticsearch: true do
     scenario 'search results can be filtered by NQT suitability' do
       nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
@@ -256,6 +294,8 @@ RSpec.feature 'Filtering vacancies' do
         location: '',
         radius: '20',
         keyword: nil,
+        minimum_salary: '',
+        maximum_salary: nil,
         working_patterns: nil,
         phases: nil,
         newly_qualified_teacher: 'true',
@@ -288,6 +328,8 @@ RSpec.feature 'Filtering vacancies' do
         location: '',
         radius: '20',
         keyword: nil,
+        minimum_salary: '',
+        maximum_salary: nil,
         working_patterns: nil,
         phases: nil,
         newly_qualified_teacher: 'true',

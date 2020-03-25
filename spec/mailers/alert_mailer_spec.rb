@@ -10,6 +10,8 @@ RSpec.describe AlertMailer, type: :mailer do
                                                reference: 'a-reference',
                                                search_criteria: {
                                                  subject: 'English',
+                                                 minimum_salary: 20000,
+                                                 maximum_salary: 40000,
                                                  newly_qualified_teacher: 'true'
                                                }.to_json)
     token = subscription.token
@@ -45,6 +47,7 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{html_escape(vacancy_presenter.location)}/)
+        expect(body).to match(/Salary: #{vacancy_presenter.salary_range}/)
 
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
@@ -71,12 +74,14 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{html_escape(first_vacancy_presenter.location)}/)
+        expect(body).to match(/Salary: #{first_vacancy_presenter.salary_range}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
 
         expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(campaign_params))}/)
         expect(body).to match(/#{html_escape(second_vacancy_presenter.location)}/)
+        expect(body).to match(/Salary: #{second_vacancy_presenter.salary_range}/)
         expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
       end

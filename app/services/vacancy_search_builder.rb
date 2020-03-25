@@ -7,6 +7,7 @@ class VacancySearchBuilder
                 :working_patterns,
                 :phases,
                 :newly_qualified_teacher,
+                :minimum_salary,
                 :sort,
                 :expired,
                 :status
@@ -18,6 +19,7 @@ class VacancySearchBuilder
     self.working_patterns = filters.working_patterns
     self.phases = filters.phases
     self.newly_qualified_teacher = filters.newly_qualified_teacher
+    self.minimum_salary = filters.minimum_salary
     self.sort = sort
     self.expired = expired
     self.status = status
@@ -64,6 +66,7 @@ class VacancySearchBuilder
       phase_query,
       newly_qualified_teacher_query,
       working_pattern_query,
+      salary_query,
       expired_query,
       status_query,
       published_on_query,
@@ -190,8 +193,47 @@ class VacancySearchBuilder
     }
   end
 
+  def salary_query
+    return if minimum_salary.blank?
+
+    {
+      bool: {
+        should: [
+          less_than_maximum_salary,
+          without_a_maximum_salary
+        ]
+      }
+    }
+  end
+
   def sort_query
     sort.present? ? [{ sort.column.to_sym => { order: sort.order.to_sym } }] : []
+  end
+
+  def less_than_maximum_salary
+    {
+      bool: {
+        must: [
+          range: {
+            "maximum_salary": {
+              gte: minimum_salary.to_i
+            }
+          }
+        ]
+      }
+    }
+  end
+
+  def without_a_maximum_salary
+    {
+      bool: {
+        must_not: {
+          exists: {
+            field: 'maximum_salary'
+          }
+        }
+      }
+    }
   end
 
   def location_category_query

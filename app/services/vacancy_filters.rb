@@ -1,7 +1,7 @@
 class VacancyFilters
   include ActiveModel::Model
 
-  AVAILABLE_FILTERS = %i[location radius subject job_title working_patterns
+  AVAILABLE_FILTERS = %i[location radius subject job_title minimum_salary working_patterns
                          phases newly_qualified_teacher].freeze
 
   attr_reader(*AVAILABLE_FILTERS)
@@ -13,6 +13,7 @@ class VacancyFilters
     @radius = args[:radius].to_s if args[:radius].present? && !location_category_search?
     @subject = args[:subject]
     @job_title = args[:job_title]
+    @minimum_salary = args[:minimum_salary]
     @newly_qualified_teacher = args[:newly_qualified_teacher]
     @working_patterns = extract_working_patterns(args[:working_patterns])
     @phases = extract_phases(args[:phases])
@@ -24,6 +25,7 @@ class VacancyFilters
       radius: radius,
       subject: subject,
       job_title: job_title,
+      minimum_salary: minimum_salary,
       working_patterns: working_patterns,
       phases: phases,
       newly_qualified_teacher: newly_qualified_teacher,
@@ -35,6 +37,8 @@ class VacancyFilters
       location: location,
       radius: radius,
       keyword: nil,
+      minimum_salary: minimum_salary,
+      maximum_salary: nil,
       working_patterns: working_patterns,
       phases: phases,
       newly_qualified_teacher: newly_qualified_teacher,

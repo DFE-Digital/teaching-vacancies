@@ -31,6 +31,15 @@ RSpec.describe SubscriptionPresenter do
       end
     end
 
+    context 'with the salary filters' do
+      let(:search_criteria) { { minimum_salary: '10', maximum_salary: '2000' } }
+
+      it 'formats and returns the salary criteria' do
+        expect(presenter.filtered_search_criteria['minimum_salary']).to eq('£10')
+        expect(presenter.filtered_search_criteria['maximum_salary']).to eq('£2,000')
+      end
+    end
+
     context 'with the working_patterns filter' do
       let(:search_criteria) { { working_patterns: ['part_time'] } }
 
@@ -59,10 +68,12 @@ RSpec.describe SubscriptionPresenter do
       let(:search_criteria) do
         {
           phases: ['secondary', 'sixteen_plus'],
+          maximum_salary: '2000',
           radius: '10',
           job_title: 'leader',
           newly_qualified_teacher: 'true',
           location: 'EC2 9AN',
+          minimum_salary: '10',
           working_patterns: ['part_time'],
           subject: 'maths'
         }
@@ -73,6 +84,8 @@ RSpec.describe SubscriptionPresenter do
           'location' => 'Within 10 miles of EC2 9AN',
           'subject' => 'maths',
           'job_title' => 'leader',
+          'minimum_salary' => '£10',
+          'maximum_salary' => '£2,000',
           'working_patterns' => 'Part-time',
           'phases' => 'Secondary, Sixteen plus',
           '' => 'Suitable for NQTs'

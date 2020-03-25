@@ -50,12 +50,36 @@
         = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
 
   .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#pay_scale
+      = t('jobs.pay_scale')
+    %dd.app-check-your-answers__answer
+      =@vacancy.pay_scale_range
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'pay_scale_range'), 'aria-label': t('jobs.aria_labels.change_pay_scale'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#salary_range
+      = t('jobs.salary_range')
+    %dd.app-check-your-answers__answer
+      = @vacancy.salary_range("to")
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'salary_range'), 'aria-label': t('jobs.aria_labels.change_salary_range'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
     %dt.app-check-your-answers__question#newly_qualified_teacher
       = t('jobs.newly_qualified_teacher')
     %dd.app-check-your-answers__answer
       = @vacancy.newly_qualified_teacher
     %dd.app-check-your-answers__change
       = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#benefits
+      = t('jobs.benefits')
+    %dd.app-check-your-answers__answer
+      = @vacancy.benefits
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'benefits'), 'aria-label': t('jobs.aria_labels.change_employee_benefits'), class: 'govuk-link'
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#leadership_level

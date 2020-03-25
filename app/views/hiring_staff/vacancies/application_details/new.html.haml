@@ -3,7 +3,7 @@
 %h1.govuk-heading-l
   = t('jobs.publish_heading', school: @application_details_form.school.name)
   %span.govuk-caption-l
-    Step 4 of 4
+    Step 3 of 3
 = simple_form_for @application_details_form, action: :post, url: application_details_school_job_path(school_id: current_school.id) do |f|
   %h2.govuk-heading-m
     = t('jobs.application_details')

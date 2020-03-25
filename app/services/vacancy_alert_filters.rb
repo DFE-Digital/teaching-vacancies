@@ -1,5 +1,5 @@
 class VacancyAlertFilters < VacancyFilters
-  AVAILABLE_FILTERS = %i[keyword].concat(superclass::AVAILABLE_FILTERS).freeze
+  AVAILABLE_FILTERS = %i[keyword maximum_salary].concat(superclass::AVAILABLE_FILTERS).freeze
 
   attr_reader(*AVAILABLE_FILTERS)
 
@@ -7,11 +7,12 @@ class VacancyAlertFilters < VacancyFilters
     args = ActiveSupport::HashWithIndifferentAccess.new(args)
 
     @keyword = args[:keyword]
+    @maximum_salary = args[:maximum_salary]
 
     super(args)
   end
 
   def to_hash
-    super().merge(keyword: keyword)
+    super().merge(keyword: keyword, maximum_salary: maximum_salary)
   end
 end

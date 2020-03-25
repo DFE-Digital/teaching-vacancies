@@ -51,8 +51,9 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def job_specification_form_params
     params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
-                                                   :subject_id,
-                                                   :starts_on_dd, :starts_on_mm,
+                                                   :minimum_salary, :maximum_salary,
+                                                   :benefits, :subject_id, :min_pay_scale_id,
+                                                   :max_pay_scale_id, :starts_on_dd, :starts_on_mm,
                                                    :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                                                    :flexible_working, :newly_qualified_teacher,
                                                    :first_supporting_subject_id, :second_supporting_subject_id,
@@ -70,7 +71,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    school_job_pay_package_path(session_vacancy_id)
+    UploadDocumentsFeature.enabled? ? supporting_documents_school_job_path : candidate_specification_school_job_path
   end
 
   def called_from_update_method

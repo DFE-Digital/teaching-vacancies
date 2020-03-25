@@ -87,6 +87,30 @@ RSpec.describe JobSpecificationForm, type: :model do
         end
       end
     end
+
+    describe '#minimum_salary' do
+      let(:job_specification) { JobSpecificationForm.new(minimum_salary: nil) }
+
+      it 'requests an entry in the field' do
+        expect(job_specification.valid?).to be false
+        expect(job_specification.errors.messages[:minimum_salary][0])
+          .to eq('Enter a minimum salary')
+      end
+    end
+
+    describe '#maximum_salary' do
+      let(:job_specification) do
+        JobSpecificationForm.new(job_title: 'job title',
+                                 job_description: 'description', working_patterns: ['full_time'],
+                                 minimum_salary: 20, maximum_salary: 10)
+      end
+
+      it 'the maximum salary should be higher than the minimum salary' do
+        expect(job_specification.valid?).to be false
+        expect(job_specification.errors.messages[:maximum_salary][0])
+          .to eq('Maximum salary must be more than the minimum salary')
+      end
+    end
   end
 
   describe '#starts_on' do
@@ -156,6 +180,8 @@ RSpec.describe JobSpecificationForm, type: :model do
   end
 
   context 'when all attributes are valid' do
+    let(:min_pay_scale) { create(:pay_scale) }
+    let(:max_pay_scale) { create(:pay_scale) }
     let(:main_subject) { create(:subject) }
     let(:leadership) { create(:leadership) }
 
@@ -163,7 +189,10 @@ RSpec.describe JobSpecificationForm, type: :model do
       job_specification_form = JobSpecificationForm.new(job_title: 'English Teacher',
                                                         job_description: 'description',
                                                         working_patterns: ['full_time'],
-                                                        subject_id: main_subject.id,
+                                                        minimum_salary: 20000, maximum_salary: 40000,
+                                                        benefits: 'benefits', subject_id: main_subject.id,
+                                                        min_pay_scale_id: min_pay_scale.id,
+                                                        max_pay_scale_id: max_pay_scale.id,
                                                         leadership_id: leadership.id,
                                                         newly_qualified_teacher: true)
 
@@ -171,6 +200,11 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_description).to eq('description')
       expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
+      expect(job_specification_form.vacancy.minimum_salary).to eq('20000')
+      expect(job_specification_form.vacancy.maximum_salary).to eq('40000')
+      expect(job_specification_form.vacancy.benefits).to eq('benefits')
+      expect(job_specification_form.vacancy.min_pay_scale.label).to eq(min_pay_scale.label)
+      expect(job_specification_form.vacancy.max_pay_scale.label).to eq(max_pay_scale.label)
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)
       expect(job_specification_form.vacancy.leadership.title).to eq(leadership.title)
       expect(job_specification_form.vacancy.newly_qualified_teacher).to eq(true)

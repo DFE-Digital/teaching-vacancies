@@ -23,7 +23,13 @@
         %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('jobs.salary')
         %td.govuk-table__cell
-          = @vacancy.salary
+          = @vacancy.salary_range
+      - if @vacancy.pay_scale_range.present?
+        %tr.govuk-table__row
+          %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
+            = t('jobs.pay_scale_range')
+          %td.govuk-table__cell
+            = @vacancy.pay_scale_range
       - if @vacancy.newly_qualified_teacher?
         %tr.govuk-table__row
           %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
