@@ -9,6 +9,9 @@
     = label_tag 'job_title', t('jobs.filters.job_title'), class: 'govuk-label'
     = search_field_tag :job_title, job_title, class: 'govuk-input', placeholder: t('jobs.filters.job_title_hint')
   .govuk-form-group
+    = label_tag 'minimum_salary', t('jobs.filters.minimum_salary'), class: 'govuk-label'
+    = select_tag 'minimum_salary', options_for_select(VacanciesHelper::SALARY_OPTIONS, minimum_salary), class: 'govuk-select govuk-!-width-full', include_blank: 'None'
+  .govuk-form-group
     %fieldset.govuk-fieldset
       = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
       .govuk-checkboxes.checkbox-group.govuk-checkboxes--small

@@ -7,3 +7,8 @@ Rails.application.load_tasks
 
 desc 'Run all the specs'
 task default: %i[spec teaspoon]
+
+namespace :db do
+  desc 'runs `data:seed:pay_scale`'
+  task seed: %i[data:seed:pay_scale]
+end

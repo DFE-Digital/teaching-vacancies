@@ -13,7 +13,6 @@ class JobPosting
     {
       job_title: @schema['title'],
       job_description: @schema['description'],
-      salary: @schema['salary'],
       benefits: @schema['jobBenefits'],
       education: @schema['educationRequirements'],
       qualifications: @schema['qualifications'],
@@ -22,6 +21,8 @@ class JobPosting
       status: :published,
       application_link: @schema['url'],
       contact_email: 'recruitment@school.invalid',
+      minimum_salary: @schema.dig('baseSalary', 'value', 'value') || @schema.dig('baseSalary', 'value', 'minValue'),
+      maximum_salary: @schema.dig('baseSalary', 'value', 'maxValue'),
       publish_on: publish_on_or_today,
       expires_on: expires_on_or_future,
       school: school_by_urn_or_random

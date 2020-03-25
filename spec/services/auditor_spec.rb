@@ -12,7 +12,8 @@ RSpec.describe 'Auditor::Audit' do
       expect(audit_log.key).to eq('vacancy.test_create')
       expect(audit_log.session_id).to eq('test_session_id')
       expect(audit_log.parameters.symbolize_keys)
-        .to include(job_title: [nil, vacancy.job_title])
+        .to include(job_title: [nil, vacancy.job_title],
+                    minimum_salary: [nil, vacancy.minimum_salary])
     end
 
     it 'audits any changes to a model' do

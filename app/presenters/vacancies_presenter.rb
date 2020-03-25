@@ -6,9 +6,10 @@ class VacanciesPresenter < BasePresenter
   attr_reader :searched
   alias_method :user_search?, :searched
 
-  CSV_ATTRIBUTES = %w[title description salary jobBenefits datePosted educationRequirements qualifications
+  CSV_ATTRIBUTES = %w[title description jobBenefits datePosted educationRequirements qualifications
                       experienceRequirements employmentType jobLocation.addressLocality
                       jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
+                      baseSalary.currency baseSalary.minValue baseSalary.maxValue baseSalary.unitText
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
   def initialize(vacancies, searched:)
@@ -96,7 +97,6 @@ class VacanciesPresenter < BasePresenter
   def to_csv_row(vacancy)
     [vacancy.job_title,
      vacancy.job_description,
-     vacancy.salary,
      vacancy.benefits,
      vacancy.publish_on.to_time.iso8601,
      vacancy.education,
@@ -108,6 +108,10 @@ class VacanciesPresenter < BasePresenter
      vacancy.school.address,
      vacancy.school.postcode,
      job_url(vacancy, protocol: 'https'),
+     'GBP',
+     vacancy.minimum_salary,
+     vacancy.maximum_salary,
+     'YEAR',
      'School',
      vacancy.school.name,
      vacancy.school.urn]

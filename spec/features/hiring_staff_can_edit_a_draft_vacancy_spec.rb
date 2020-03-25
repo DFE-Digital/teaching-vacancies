@@ -12,9 +12,12 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
   context 'with job specification completed' do
     let!(:vacancy) do
+      pay_scales = create_list(:pay_scale, 3)
       VacancyPresenter.new(build(:vacancy, :complete,
                                  job_title: 'Draft vacancy',
                                  school: school,
+                                 min_pay_scale: pay_scales.sample,
+                                 max_pay_scale: pay_scales.sample,
                                  working_patterns: ['full_time', 'part_time']))
     end
     let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
@@ -25,14 +28,16 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       click_on I18n.t('buttons.save_and_continue')
     end
 
-    scenario 'redirects to incomplete pay package step, with fields pre-populated' do
-      draft_vacancy.benefits = 'Lots of benefits'
+    scenario 'redirects to incomplete candidate specification step, with fields pre-populated' do
+      draft_vacancy.education = 'Teaching degree'
+      draft_vacancy.qualifications = 'New Teacher Qualification'
       draft_vacancy.save(validate: false)
 
       visit edit_school_job_path(id: draft_vacancy.id)
 
-      expect(page).to have_content(I18n.t('jobs.current_step', current_step: 2, total_steps: 4))
-      expect(page).to have_content(draft_vacancy.benefits)
+      expect(page).to have_content('Step 2 of 3')
+      expect(page).to have_content(draft_vacancy.education)
+      expect(page).to have_content(draft_vacancy.qualifications)
     end
 
     context 'when editing a different vacancy' do
@@ -43,7 +48,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
       scenario 'then editing the draft redirects to incomplete step' do
         visit school_job_path(id: draft_vacancy.id)
-        expect(page).to have_content(I18n.t('jobs.current_step', current_step: 2, total_steps: 4))
+        expect(page).to have_content('Step 2 of 3')
       end
 
       def edit_a_published_vacancy

@@ -158,6 +158,45 @@ RSpec.describe Api::VacanciesController, type: :controller do
         expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
       end
 
+      context '#salary' do
+        it 'when both minimum and maximum salary are set' do
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          salary = {
+            'baseSalary': {
+              '@type': 'MonetaryAmount',
+              'currency': 'GBP',
+              value: {
+                '@type': 'QuantitativeValue',
+                'minValue': vacancy.minimum_salary,
+                'maxValue': vacancy.maximum_salary,
+                'unitText': 'YEAR'
+              }
+            }
+          }
+          expect(json.to_h).to include(salary)
+        end
+
+        it 'when no maximum salary is set' do
+          vacancy = create(:vacancy, maximum_salary: nil)
+
+          get :show, params: { id: vacancy.id, api_version: 1 }
+
+          salary = {
+            'baseSalary': {
+              '@type': 'MonetaryAmount',
+              'currency': 'GBP',
+              value: {
+                '@type': 'QuantitativeValue',
+                'value': vacancy.minimum_salary,
+                'unitText': 'YEAR'
+              }
+            }
+          }
+          expect(json.to_h).to include(salary)
+        end
+      end
+
       context '#employment_type' do
         it 'maps full_time working pattern to FULL_TIME' do
           vacancy = create(:vacancy, working_patterns: ['full_time'])

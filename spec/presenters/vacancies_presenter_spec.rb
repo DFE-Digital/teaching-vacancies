@@ -73,16 +73,16 @@ RSpec.describe VacanciesPresenter do
       vacancies_text = vacancies_presenter.to_csv
       vacancies_csv = CSV.parse(vacancies_text)
 
-      expect(vacancies_csv[0]).to eq(%w[title description salary jobBenefits datePosted educationRequirements
+      expect(vacancies_csv[0]).to eq(%w[title description jobBenefits datePosted educationRequirements
                                         qualifications experienceRequirements employmentType
                                         jobLocation.addressLocality jobLocation.addressRegion
                                         jobLocation.streetAddress jobLocation.postalCode url
-                                        hiringOrganization.type hiringOrganization.name
+                                        baseSalary.currency baseSalary.minValue baseSalary.maxValue
+                                        baseSalary.unitText hiringOrganization.type hiringOrganization.name
                                         hiringOrganization.identifier])
 
       expect(vacancies_csv[1]).to eq([vacancy.job_title,
                                       vacancy.job_description,
-                                      vacancy.salary,
                                       vacancy.benefits,
                                       vacancy.publish_on.to_time.iso8601,
                                       vacancy.education,
@@ -94,6 +94,10 @@ RSpec.describe VacanciesPresenter do
                                       vacancy.school.address,
                                       vacancy.school.postcode,
                                       Rails.application.routes.url_helpers.job_url(vacancy, protocol: 'https'),
+                                      'GBP',
+                                      vacancy.minimum_salary,
+                                      vacancy.maximum_salary,
+                                      'YEAR',
                                       'School',
                                       vacancy.school.name,
                                       vacancy.school.urn])
