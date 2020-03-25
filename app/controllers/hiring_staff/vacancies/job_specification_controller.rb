@@ -60,6 +60,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def save_vacancy_without_validation
+    # TODO: delete after minimum_salary column removed
+    @job_specification_form.vacancy.minimum_salary = 'test'
     @job_specification_form.vacancy.school_id = current_school.id
     @job_specification_form.vacancy.send :set_slug
     @job_specification_form.vacancy.status = :draft

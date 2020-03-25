@@ -20,6 +20,7 @@ FactoryBot.define do
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
     newly_qualified_teacher { true }
+    minimum_salary { 'test' }
     publish_on { Time.zone.today }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }
