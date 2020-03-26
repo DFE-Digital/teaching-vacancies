@@ -2,16 +2,11 @@ module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
-    select vacancy.min_pay_scale.label, from: 'job_specification_form[min_pay_scale_id]'
-    select vacancy.max_pay_scale.label, from: 'job_specification_form[max_pay_scale_id]'
     select vacancy.subject.name, from: 'job_specification_form[subject_id]'
     select vacancy.first_supporting_subject, from: 'job_specification_form[first_supporting_subject_id]'
     select vacancy.second_supporting_subject, from: 'job_specification_form[second_supporting_subject_id]'
     select vacancy.leadership.title, from: 'job_specification_form[leadership_id]'
     check 'job_specification_form[newly_qualified_teacher]', visible: false if vacancy.newly_qualified_teacher
-    fill_in 'job_specification_form[minimum_salary]', with: vacancy.minimum_salary
-    fill_in 'job_specification_form[maximum_salary]', with: vacancy.maximum_salary
-    fill_in 'job_specification_form[benefits]', with: vacancy.benefits
     fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
     fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
     fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year
@@ -24,6 +19,11 @@ module VacancyHelpers
             name: 'job_specification_form[working_patterns][]',
             visible: false
     end
+  end
+
+  def fill_in_pay_package_form_fields(vacancy)
+    fill_in 'pay_package_form[salary]', with: vacancy.salary
+    fill_in 'pay_package_form[benefits]', with: vacancy.benefits
   end
 
   def fill_in_candidate_specification_form_fields(vacancy)
@@ -93,13 +93,13 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
-    expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content(vacancy.newly_qualified_teacher)
-    expect(page.html).to include(vacancy.benefits)
-    expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
+
+    expect(page).to have_content(vacancy.salary)
+    expect(page.html).to include(vacancy.benefits)
 
     if UploadDocumentsFeature.enabled?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
@@ -122,13 +122,13 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
-    expect(page).to have_content(vacancy.salary_range)
     expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content(vacancy.newly_qualified_teacher)
-    expect(page.html).to include(vacancy.benefits)
-    expect(page).to have_content(vacancy.pay_scale_range)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
+
+    expect(page).to have_content(vacancy.salary)
+    expect(page.html).to include(vacancy.benefits)
 
     if vacancy.show_supporting_documents?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
@@ -160,6 +160,7 @@ module VacancyHelpers
       '@context': 'http://schema.org',
       '@type': 'JobPosting',
       'title': vacancy.job_title,
+      'salary': vacancy.salary,
       'jobBenefits': vacancy.benefits,
       'datePosted': vacancy.publish_on.to_time.iso8601,
       'description': vacancy.job_description,
@@ -179,16 +180,6 @@ module VacancyHelpers
         },
       },
       'url': job_url(vacancy),
-      'baseSalary': {
-        '@type': 'MonetaryAmount',
-        'currency': 'GBP',
-        value: {
-          '@type': 'QuantitativeValue',
-          'minValue': vacancy.minimum_salary,
-          'maxValue': vacancy.maximum_salary,
-          'unitText': 'YEAR'
-        },
-      },
       'hiringOrganization': {
         '@type': 'School',
         'name': vacancy.school.name,
@@ -213,7 +204,7 @@ module VacancyHelpers
   def verify_shared_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).to have_content(vacancy.job_title)
     expect(page.find('.vacancy')).to have_content(vacancy.location)
-    expect(page.find('.vacancy')).to have_content(vacancy.salary_range)
+    expect(page.find('.vacancy')).to have_content(vacancy.salary)
     expect(page.find('.vacancy')).to have_content(vacancy.working_patterns)
     expect(page.find('.vacancy')).to have_content(vacancy.expires_on)
     unless vacancy.expiry_time.nil?

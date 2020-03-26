@@ -1,39 +1,5 @@
 require 'rails_helper'
 RSpec.describe VacancyPresenter do
-  describe '#salary_range' do
-    let(:vacancy) { VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: 40000)) }
-
-    it 'return the formatted minimum to maximum salary' do
-      expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year')
-    end
-
-    it 'returns the formatted minumum to maximum salary with the specified delimiter' do
-      expect(vacancy.salary_range('to')).to eq('£30,000 to £40,000 per year')
-    end
-
-    context 'when no maximum salary is set' do
-      let(:vacancy) { VacancyPresenter.new(create(:vacancy, minimum_salary: 30000, maximum_salary: nil)) }
-
-      it 'should just return the minimum salary' do
-        expect(vacancy.salary_range).to eq('£30,000')
-      end
-    end
-
-    context 'when the vacancy is part time' do
-      let(:vacancy) do
-        VacancyPresenter.new(
-          create(:vacancy,
-                 working_patterns: ['part_time'],
-                 minimum_salary: 30000, maximum_salary: 40000)
-        )
-      end
-
-      it 'should state the salary is full time equivalent' do
-        expect(vacancy.salary_range).to eq('£30,000 to £40,000 per year (full-time equivalent)')
-      end
-    end
-  end
-
   describe '#expired?' do
     context 'when expiry time not given' do
       it 'returns true when the vacancy has expired' do
@@ -82,28 +48,6 @@ RSpec.describe VacancyPresenter do
     it 'returns the subject name' do
       vacancy = VacancyPresenter.new(build(:vacancy))
       expect(vacancy.main_subject).to eq(vacancy.subject.name)
-    end
-  end
-
-  describe '#pay_scale_range' do
-    it 'returns an empty string when no pay_scale is set' do
-      vacancy = VacancyPresenter.new(build(:vacancy, min_pay_scale: nil, max_pay_scale: nil))
-      expect(vacancy.pay_scale_range).to eq('')
-    end
-
-    it 'returns the minimum payscale when no max_pay_scale is set' do
-      vacancy = VacancyPresenter.new(build(:vacancy, max_pay_scale: nil))
-      expect(vacancy.pay_scale_range).to eq("from #{vacancy.min_pay_scale.label}")
-    end
-
-    it 'returns the maximum payscale when no min_pay_scale is set' do
-      vacancy = VacancyPresenter.new(build(:vacancy, min_pay_scale: nil))
-      expect(vacancy.pay_scale_range).to eq("up to #{vacancy.max_pay_scale.label}")
-    end
-
-    it 'returns the  payscale range when min_pay_scale and max_pay_scale are set' do
-      vacancy = VacancyPresenter.new(build(:vacancy))
-      expect(vacancy.pay_scale_range).to eq("#{vacancy.min_pay_scale.label} to #{vacancy.max_pay_scale.label}")
     end
   end
 

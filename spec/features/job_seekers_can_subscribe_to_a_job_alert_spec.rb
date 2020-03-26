@@ -17,17 +17,13 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
                                                      job_title: 'teacher',
                                                      location: 'EC2 9AN',
                                                      radius: '10',
-                                                     working_patterns: ['full_time'],
-                                                     minimum_salary: '20000',
-                                                     maximum_salary: '30000' })
+                                                     working_patterns: ['full_time'] })
 
       expect(page).to have_content('Subject: physics')
       expect(page).to have_content('Job title: teacher')
       expect(page).to have_content('Suitable for NQTs')
       expect(page).to have_content('Location: Within 10 miles of EC2 9AN')
       expect(page).to have_content('Working patterns: Full-time')
-      expect(page).to have_content('Minimum salary: £20,000')
-      expect(page).to have_content('Maximum salary: £30,000')
     end
 
     scenario 'subscribing to a search creates a new daily subscription audit' do

@@ -4,7 +4,7 @@ RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
-  let(:feature_enabled?) { false }
+  let(:feature_enabled?) { true }
 
   before(:each) do
     allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
@@ -24,18 +24,15 @@ RSpec.feature 'Creating a vacancy' do
 
     click_link 'Create a job listing'
 
-    expect(page).to have_content('Step 1 of 3')
+    expect(page).to have_content(I18n.t('jobs.current_step', current_step: 1, total_steps: 4))
   end
 
   context 'creating a new vacancy' do
-    let!(:pay_scales) { create_list(:pay_scale, 3) }
     let!(:subjects) { create_list(:subject, 3) }
     let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  school: school,
-                                 min_pay_scale: pay_scales.sample,
-                                 max_pay_scale: pay_scales.sample,
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
@@ -48,8 +45,8 @@ RSpec.feature 'Creating a vacancy' do
       visit new_school_job_path
 
       expect(page.current_path).to eq(job_specification_school_job_path)
-      expect(page).to have_content("Publish a job for #{school.name}")
-      expect(page).to have_content('Step 1 of 3')
+      expect(page).to have_content(I18n.t('jobs.publish_heading', school: school.name))
+      expect(page).to have_content(I18n.t('jobs.current_step', current_step: 1, total_steps: 4))
     end
 
     context '#job_specification' do
@@ -59,7 +56,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
 
         within('.govuk-error-summary') do
-          expect(page).to have_content('Please correct the following 4 errors in your listing:')
+          expect(page).to have_content(I18n.t('errors.title', count: 3))
         end
 
         within_row_for(text: I18n.t('jobs.job_title')) do
@@ -70,39 +67,19 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
         end
 
-        within_row_for(element: 'legend', text: strip_tags(I18n.t('jobs.salary_range_html'))) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.minimum_salary.blank'))
-        end
-
         within_row_for(text: I18n.t('jobs.working_patterns')) do
           expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_patterns.blank'))
         end
       end
 
-      context 'without feature upload documents enabled' do
-        scenario 'redirects to step 2, candidate profile, when submitted successfully' do
-          visit new_school_job_path
+      scenario 'redirects to step 2, pay package, when submitted successfully' do
+        visit new_school_job_path
 
-          fill_in_job_specification_form_fields(vacancy)
-          click_on 'Save and continue'
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
 
-          expect(page).to have_content('Step 2 of 3')
-          expect(page.current_path).to eq(candidate_specification_school_job_path)
-        end
-      end
-
-      context 'with feature upload documents enabled' do
-        let(:feature_enabled?) { true }
-
-        scenario 'redirects to step 2, supporting documents, when submitted succesfuly' do
-          visit new_school_job_path
-
-          fill_in_job_specification_form_fields(vacancy)
-          click_on 'Save and continue'
-
-          expect(page).to have_content('Step 2 of 3')
-          expect(page.current_path).to eq(supporting_documents_school_job_path)
-        end
+        expect(page).to have_content(I18n.t('jobs.current_step', current_step: 2, total_steps: 4))
+        expect(page).to have_content(I18n.t('jobs.pay_package'))
       end
 
       scenario 'tracks the vacancy creation' do
@@ -118,17 +95,73 @@ RSpec.feature 'Creating a vacancy' do
       end
     end
 
-    context '#candidate_profile' do
+    context '#pay_package' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
 
+        click_on 'Save and continue'
+
+        within('.govuk-error-summary') do
+          expect(page).to have_content(I18n.t('errors.title', count: 1))
+        end
+
+        within_row_for(text: I18n.t('jobs.salary')) do
+          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.salary.blank')))
+        end
+      end
+
+      context 'with feature upload documents enabled' do
+        scenario 'redirects to step 3, supporting documents, when submitted successfuly' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_pay_package_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
+          expect(page.current_path).to eq(supporting_documents_school_job_path)
+        end
+      end
+
+      context 'without feature upload documents enabled' do
+        let(:feature_enabled?) { false }
+
+        scenario 'redirects to step 3, candidate profile, when submitted successfully' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_pay_package_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
+          expect(page.current_path).to eq(candidate_specification_school_job_path)
+        end
+      end
+    end
+
+    context '#candidate_profile' do
+      let(:feature_enabled?) { false }
+
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on 'Save and continue'
+
         click_on 'Save and continue' # submit empty form
 
         within('.govuk-error-summary') do
-          expect(page).to have_content('Please correct the following 3 errors in your listing:')
+          expect(page).to have_content(I18n.t('errors.title', count: 3))
         end
 
         within_row_for(text: I18n.t('jobs.education')) do
@@ -143,25 +176,30 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 3, application_details profile, when submitted successfully' do
+      scenario 'redirects to step 4, application_details profile, when submitted successfully' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on 'Save and continue'
+
         fill_in_candidate_specification_form_fields(vacancy)
         click_on 'Save and continue'
 
-        expect(page).to have_content('Step 3 of 3')
+        expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
       end
     end
 
     context '#supporting_documents' do
-      let(:feature_enabled?) { true }
-
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        fill_in_pay_package_form_fields(vacancy)
         click_on 'Save and continue'
 
         click_on 'Save and continue' # submit empty form
@@ -170,33 +208,39 @@ RSpec.feature 'Creating a vacancy' do
           .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.supporting_documents.inclusion'))
       end
 
-      scenario 'redirects to step 3, application details, when choosing no' do
+      scenario 'redirects to step 4, application details, when choosing no' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
 
-        choose 'No'
+        fill_in_pay_package_form_fields(vacancy)
         click_on 'Save and continue'
 
-        expect(page).to have_content('Step 3 of 3')
+        select_no_for_supporting_documents
+        click_on 'Save and continue'
+
+        expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
         expect(page.current_path).to eq(application_details_school_job_path)
       end
 
-      scenario 'redirects to step 2, upload_documents, when choosing yes' do
+      scenario 'redirects to step 3, upload_documents, when choosing yes' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
+        click_on 'Save and continue'
+
+        fill_in_pay_package_form_fields(vacancy)
         click_on 'Save and continue'
 
         choose 'Yes'
         click_on 'Save and continue'
-        expect(page).to have_content('Upload files')
+
+        expect(page).to have_content(I18n.t('jobs.upload_file'))
       end
     end
 
     context '#documents' do
-      let(:feature_enabled?) { true }
       let(:documents_vacancy) do
         create(:vacancy, school: school)
       end
@@ -315,12 +359,17 @@ RSpec.feature 'Creating a vacancy' do
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
-        fill_in_candidate_specification_form_fields(vacancy)
+
+        fill_in_pay_package_form_fields(vacancy)
         click_on 'Save and continue'
+
+        select_no_for_supporting_documents
+        click_on 'Save and continue'
+
         click_on 'Save and continue'
 
         within('.govuk-error-summary') do
-          expect(page).to have_content('Please correct the following 5 errors in your listing:')
+          expect(page).to have_content(I18n.t('errors.title', count: 5))
         end
 
         within_row_for(text: I18n.t('jobs.contact_email')) do
@@ -349,10 +398,16 @@ RSpec.feature 'Creating a vacancy' do
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
-          fill_in_candidate_specification_form_fields(vacancy)
+
+          fill_in_pay_package_form_fields(vacancy)
           click_on 'Save and continue'
+
+          select_no_for_supporting_documents
+          click_on 'Save and continue'
+
           fill_in_application_details_form_fields(vacancy)
           click_on 'Save and continue'
+
           expect(page).to have_content(I18n.t('jobs.review'))
           verify_all_vacancy_details(vacancy)
         end
@@ -361,7 +416,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#review' do
       context 'redirects the user back to the last incomplete step' do
-        scenario 'redirects to step 2, candidate profile, when that step has not been completed' do
+        scenario 'redirects to step 2, pay package, when that step has not been completed' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
@@ -370,22 +425,44 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content('Step 2 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 2, total_steps: 4))
         end
 
-        scenario 'redirects to step 3, application details, when that step has not been completed' do
+        context 'without feature upload documents enabled' do
+          let(:feature_enabled?) { false }
+
+          scenario 'redirects to step 3, candidate specification, when that step has not been completed' do
+            visit new_school_job_path
+
+            fill_in_job_specification_form_fields(vacancy)
+            click_on 'Save and continue'
+
+            fill_in_pay_package_form_fields(vacancy)
+            click_on 'Save and continue'
+
+            v = Vacancy.find_by(job_title: vacancy.job_title)
+            visit school_job_path(id: v.id)
+
+            expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
+          end
+        end
+
+        scenario 'redirects to step 4, application details, when that step has not been completed' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
 
-          fill_in_candidate_specification_form_fields(vacancy)
+          fill_in_pay_package_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          select_no_for_supporting_documents
           click_on 'Save and continue'
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content('Step 3 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
         end
 
         scenario 'redirects to appropriate step when clicked on change on review page' do
@@ -394,21 +471,22 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_job_specification_form_fields(vacancy)
           click_on 'Save and continue'
 
-          fill_in_candidate_specification_form_fields(vacancy)
+          fill_in_pay_package_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          select_no_for_supporting_documents
           click_on 'Save and continue'
 
           fill_in_application_details_form_fields(vacancy)
           click_on 'Save and continue'
 
-          click_link_in_container_with_text('Essential qualifications')
-
-          expect(page).to have_content('Step 2 of 3')
+          click_link_in_container_with_text(I18n.t('jobs.contact_email'))
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
 
           click_on 'Save and continue'
 
-          click_link_in_container_with_text('Job description')
-
-          expect(page).to have_content('Step 1 of 3')
+          click_link_in_container_with_text(I18n.t('jobs.job_title'))
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 1, total_steps: 4))
         end
       end
 
@@ -501,7 +579,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job title')
 
-          expect(page).to have_content('Step 1 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 1, total_steps: 4))
 
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on 'Save and continue'
@@ -517,7 +595,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job title')
 
-          expect(page).to have_content('Step 1 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 1, total_steps: 4))
 
           fill_in 'job_specification_form[job_title]', with: 'High school teacher'
           click_on 'Save and continue'
@@ -547,12 +625,14 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       context 'editing the candidate_specification_details' do
+        let(:feature_enabled?) { false }
+
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Essential qualifications')
 
-          expect(page).to have_content('Step 2 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
 
           fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
           click_on 'Save and continue'
@@ -580,7 +660,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Essential educational requirements')
 
-          expect(page).to have_content('Step 2 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
 
           fill_in 'candidate_specification_form[education]', with: ''
           click_on 'Save and continue'
@@ -596,12 +676,13 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       context 'editing the supporting_documents' do
-        let(:feature_enabled?) { true }
-
         scenario 'updates the vacancy details' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
+          click_on 'Save and continue'
+
+          fill_in_pay_package_form_fields(vacancy)
           click_on 'Save and continue'
 
           select_no_for_supporting_documents
@@ -616,7 +697,7 @@ RSpec.feature 'Creating a vacancy' do
             click_on 'Change'
           end
 
-          expect(page).to have_content('Step 2 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
           expect(page).to have_content('Upload files')
 
           click_on 'Save and continue'
@@ -631,7 +712,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Contact email')
 
-          expect(page).to have_content('Step 3 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
 
           fill_in 'application_details_form[contact_email]', with: 'not a valid email'
           click_on 'Save and continue'
@@ -650,7 +731,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Link for jobseekers to learn more and apply')
 
-          expect(page).to have_content('Step 3 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
 
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
           click_on 'Save and continue'
@@ -669,7 +750,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Contact email')
 
-          expect(page).to have_content('Step 3 of 3')
+          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
@@ -837,7 +918,9 @@ RSpec.feature 'Creating a vacancy' do
 
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
-        fill_in_candidate_specification_form_fields(vacancy)
+        fill_in_pay_package_form_fields(vacancy)
+        click_on 'Save and continue'
+        select_no_for_supporting_documents
         click_on 'Save and continue'
         fill_in_application_details_form_fields(vacancy)
         click_on 'Save and continue'
