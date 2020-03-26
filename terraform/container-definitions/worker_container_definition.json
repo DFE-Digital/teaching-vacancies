@@ -177,10 +177,6 @@
         "value": "${feature_email_alerts}"
       },
       {
-        "name": "FEATURE_UPLOAD_DOCUMENTS",
-        "value": "${feature_upload_documents}"
-      },
-      {
         "name": "BIG_QUERY_API_JSON_KEY",
         "value": "${big_query_api_json_key}"
       },

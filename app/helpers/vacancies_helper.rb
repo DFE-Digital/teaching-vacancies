@@ -104,7 +104,7 @@ module VacanciesHelper
 
   def new_sections(vacancy)
     sections = []
-    sections << 'supporting_documents' if UploadDocumentsFeature.enabled? && !vacancy.supporting_documents
+    sections << 'supporting_documents' unless vacancy.supporting_documents
     sections
   end
 end

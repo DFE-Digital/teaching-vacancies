@@ -50,12 +50,6 @@ RSpec.feature 'Viewing a single published vacancy' do
   end
 
   context 'A user viewing a vacancy' do
-    let(:feature_enabled?) { false }
-
-    before do
-      allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
-    end
-
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
       visit job_path(vacancy)
@@ -78,13 +72,15 @@ RSpec.feature 'Viewing a single published vacancy' do
       expect(page).to_not have_content(I18n.t('jobs.benefits'))
     end
 
-    context 'when the upload documents feature flag is OFF' do
+    context 'without supporting documents attached but candidate spec' do
       before do
         vacancy = create(:vacancy, :published)
+        vacancy.documents = []
+        vacancy.save
         visit job_path(vacancy)
       end
 
-      scenario 'can not see the supporting documents section' do
+      scenario 'cannot see the supporting documents section' do
         expect(page).to_not have_content(I18n.t('jobs.supporting_documents'))
       end
 
@@ -95,72 +91,25 @@ RSpec.feature 'Viewing a single published vacancy' do
       end
     end
 
-    context 'when the upload documents feature flag is ON' do
-      let(:feature_enabled?) { true }
-
-      context 'for a vacancy published BEFORE the flag is switched on' do
-        before do
-          vacancy = create(:vacancy, :published)
-          vacancy.documents = []
-          vacancy.save
-          visit job_path(vacancy)
-        end
-
-        scenario 'cannot see the supporting documents section' do
-          expect(page).to_not have_content(I18n.t('jobs.supporting_documents'))
-        end
-
-        scenario 'can see the candidate specification sections' do
-          expect(page).to have_content(I18n.t('jobs.education'))
-          expect(page).to have_content(I18n.t('jobs.qualifications'))
-          expect(page).to have_content(I18n.t('jobs.experience'))
-        end
+    context 'with supporting documents attached and candidate spec' do
+      before do
+        vacancy = create(:vacancy, :published)
+        vacancy.education = nil
+        vacancy.qualifications = nil
+        vacancy.experience = nil
+        vacancy.save
+        visit job_path(vacancy)
       end
 
-      context 'for a vacancy published AFTER the flag is switched on' do
-        context 'with supporting documents attached' do
-          before do
-            vacancy = create(:vacancy, :published)
-            vacancy.education = nil
-            vacancy.qualifications = nil
-            vacancy.experience = nil
-            vacancy.save
-            visit job_path(vacancy)
-          end
+      scenario 'can see the supporting documents section' do
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+        expect(page).to have_content('Test.png')
+      end
 
-          scenario 'can see the supporting documents section' do
-            expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-            expect(page).to have_content('Test.png')
-          end
-
-          scenario 'cannot see the candidate specification sections' do
-            expect(page).to_not have_content(I18n.t('jobs.education'))
-            expect(page).to_not have_content(I18n.t('jobs.qualifications'))
-            expect(page).to_not have_content(I18n.t('jobs.experience'))
-          end
-        end
-
-        context 'without supporting documents attached' do
-          before do
-            vacancy = create(:vacancy, :published)
-            vacancy.education = nil
-            vacancy.qualifications = nil
-            vacancy.experience = nil
-            vacancy.documents = []
-            vacancy.save
-            visit job_path(vacancy)
-          end
-
-          scenario 'cannot see the supporting documents section' do
-            expect(page).to_not have_content(I18n.t('jobs.supporting_documents'))
-          end
-
-          scenario 'cannot see the candidate specification sections' do
-            expect(page).to_not have_content(I18n.t('jobs.education'))
-            expect(page).to_not have_content(I18n.t('jobs.qualifications'))
-            expect(page).to_not have_content(I18n.t('jobs.experience'))
-          end
-        end
+      scenario 'cannot see the candidate specification sections' do
+        expect(page).to_not have_content(I18n.t('jobs.education'))
+        expect(page).to_not have_content(I18n.t('jobs.qualifications'))
+        expect(page).to_not have_content(I18n.t('jobs.experience'))
       end
     end
 

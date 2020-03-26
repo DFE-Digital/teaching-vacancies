@@ -68,12 +68,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     valid
   end
 
-  def step_3_valid?
-    valid = CandidateSpecificationForm.new(@vacancy.attributes).completed?
-    clear_cache_and_step unless valid
-    valid
-  end
-
   def step_4_valid?
     valid = ApplicationDetailsForm.new(@vacancy.attributes).completed?
     clear_cache_and_step unless valid
@@ -82,7 +76,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def redirect_to_incomplete_step
     return redirect_to school_job_pay_package_path(@vacancy.id) unless step_2_valid?
-    return redirect_to candidate_specification_school_job_path unless step_3_valid?
     return redirect_to application_details_school_job_path unless step_4_valid?
   end
 

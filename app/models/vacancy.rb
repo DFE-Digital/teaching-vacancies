@@ -18,7 +18,6 @@ class Vacancy < ApplicationRecord
 
   include VacancyJobSpecificationValidations
   include VacancyPayPackageValidations
-  include VacancyCandidateSpecificationValidations
   include VacancyApplicationDetailValidations
 
   include Elasticsearch::Model
@@ -235,10 +234,6 @@ class Vacancy < ApplicationRecord
 
   def skip_update_callbacks?
     @skip_update_callbacks.present?
-  end
-
-  def show_supporting_documents?
-    UploadDocumentsFeature.enabled? && documents.any?
   end
 
   def any_candidate_specification?

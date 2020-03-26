@@ -195,10 +195,6 @@
         "value": "${feature_email_alerts}"
       },
       {
-        "name": "FEATURE_UPLOAD_DOCUMENTS",
-        "value": "${feature_upload_documents}"
-      },
-      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },

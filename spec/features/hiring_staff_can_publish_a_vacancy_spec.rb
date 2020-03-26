@@ -4,11 +4,7 @@ RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
-  let(:feature_enabled?) { true }
-
   before(:each) do
-    allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
-
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
@@ -126,69 +122,6 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
           expect(page.current_path).to eq(supporting_documents_school_job_path)
         end
-      end
-
-      context 'without feature upload documents enabled' do
-        let(:feature_enabled?) { false }
-
-        scenario 'redirects to step 3, candidate profile, when submitted successfully' do
-          visit new_school_job_path
-
-          fill_in_job_specification_form_fields(vacancy)
-          click_on 'Save and continue'
-
-          fill_in_pay_package_form_fields(vacancy)
-          click_on 'Save and continue'
-
-          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
-          expect(page.current_path).to eq(candidate_specification_school_job_path)
-        end
-      end
-    end
-
-    context '#candidate_profile' do
-      let(:feature_enabled?) { false }
-
-      scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
-
-        fill_in_job_specification_form_fields(vacancy)
-        click_on 'Save and continue'
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on 'Save and continue'
-
-        click_on 'Save and continue' # submit empty form
-
-        within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: 3))
-        end
-
-        within_row_for(text: I18n.t('jobs.education')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.education.blank'))
-        end
-
-        within_row_for(text: I18n.t('jobs.qualifications')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.blank'))
-        end
-        within_row_for(text: I18n.t('jobs.experience')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.experience.blank'))
-        end
-      end
-
-      scenario 'redirects to step 4, application_details profile, when submitted successfully' do
-        visit new_school_job_path
-
-        fill_in_job_specification_form_fields(vacancy)
-        click_on 'Save and continue'
-
-        fill_in_pay_package_form_fields(vacancy)
-        click_on 'Save and continue'
-
-        fill_in_candidate_specification_form_fields(vacancy)
-        click_on 'Save and continue'
-
-        expect(page).to have_content(I18n.t('jobs.current_step', current_step: 4, total_steps: 4))
       end
     end
 
@@ -428,25 +361,6 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', current_step: 2, total_steps: 4))
         end
 
-        context 'without feature upload documents enabled' do
-          let(:feature_enabled?) { false }
-
-          scenario 'redirects to step 3, candidate specification, when that step has not been completed' do
-            visit new_school_job_path
-
-            fill_in_job_specification_form_fields(vacancy)
-            click_on 'Save and continue'
-
-            fill_in_pay_package_form_fields(vacancy)
-            click_on 'Save and continue'
-
-            v = Vacancy.find_by(job_title: vacancy.job_title)
-            visit school_job_path(id: v.id)
-
-            expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
-          end
-        end
-
         scenario 'redirects to step 4, application details, when that step has not been completed' do
           visit new_school_job_path
 
@@ -621,57 +535,6 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(page).to have_content("Review this job for #{school.name}")
           expect(page).to have_content('A new job title')
-        end
-      end
-
-      context 'editing the candidate_specification_details' do
-        let(:feature_enabled?) { false }
-
-        scenario 'updates the vacancy details' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Essential qualifications')
-
-          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
-
-          fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
-          click_on 'Save and continue'
-
-          expect(page).to have_content("Review this job for #{school.name}")
-          expect(page).to have_content('Teaching diploma')
-        end
-
-        scenario 'tracks any changes to  the vacancy details' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          qualifications = vacancy.qualifications
-          visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Essential qualifications')
-
-          fill_in 'candidate_specification_form[qualifications]', with: 'Teaching diploma'
-          click_on 'Save and continue'
-
-          activity = vacancy.activities.last
-          expect(activity.session_id).to eq(session_id)
-          expect(activity.parameters.symbolize_keys).to eq(qualifications: [qualifications, 'Teaching diploma'])
-        end
-
-        scenario 'fails validation until values are set correctly' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id, publish_on: Time.zone.tomorrow)
-          visit school_job_review_path(vacancy.id)
-          click_link_in_container_with_text('Essential educational requirements')
-
-          expect(page).to have_content(I18n.t('jobs.current_step', current_step: 3, total_steps: 4))
-
-          fill_in 'candidate_specification_form[education]', with: ''
-          click_on 'Save and continue'
-
-          expect(page).to have_content('Enter essential educational requirements')
-
-          fill_in 'candidate_specification_form[education]', with: 'essential requirements'
-          click_on 'Save and continue'
-
-          expect(page).to have_content('Confirm and submit job')
-          expect(page).to have_content('essential requirements')
         end
       end
 
@@ -926,9 +789,6 @@ RSpec.feature 'Creating a vacancy' do
         click_on 'Save and continue'
         click_link('vacancy-review-submit')
         expect(page).to have_content('Preview your job listing')
-
-        visit candidate_specification_school_job_path
-        expect(page.current_path).to eq(job_specification_school_job_path)
 
         visit application_details_school_job_path
         expect(page.current_path).to eq(job_specification_school_job_path)
