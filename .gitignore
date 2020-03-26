@@ -57,6 +57,7 @@ workspace-variables/*.tfvars
 # Certificates
 config/localhost/https/*.key
 config/localhost/https/*.crt
+config/localhost/https/*.pem
 
 # GCP development credentails
 serviceAccount.json
