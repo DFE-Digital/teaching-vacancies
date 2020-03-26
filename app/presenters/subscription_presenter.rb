@@ -1,8 +1,14 @@
 class SubscriptionPresenter < BasePresenter
   include ApplicationHelper
 
-  SEARCH_CRITERIA_SORT_ORDER = %w[location radius keyword subject job_title minimum_salary maximum_salary
-                                  working_patterns phases newly_qualified_teacher].freeze
+  SEARCH_CRITERIA_SORT_ORDER = %w[location
+                                  radius
+                                  keyword
+                                  subject
+                                  job_title
+                                  working_patterns
+                                  phases
+                                  newly_qualified_teacher].freeze
 
   def filtered_search_criteria
     @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) do |(field, value), criteria|
@@ -39,7 +45,6 @@ class SubscriptionPresenter < BasePresenter
     return if field.eql?('radius')
 
     return render_location_filter(value, search_criteria_to_h['radius']) if field.eql?('location')
-    return render_salary_filter(field, value) if field.ends_with?('_salary')
     return render_working_patterns_filter(value) if field.eql?('working_patterns')
     return render_phases_filter(value) if field.eql?('phases')
     return render_nqt_filter(value) if field.eql?('newly_qualified_teacher')
@@ -54,10 +59,6 @@ class SubscriptionPresenter < BasePresenter
     return { location: I18n.t('subscriptions.location_radius_text', radius: radius, location: location) } if radius
 
     { location: I18n.t('subscriptions.location_category_text', location: location) }
-  end
-
-  def render_salary_filter(field, value)
-    { "#{field}": number_to_currency(value) }
   end
 
   def render_working_patterns_filter(value)

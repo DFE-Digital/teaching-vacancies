@@ -6,6 +6,7 @@ RSpec.describe JobPosting do
     {
       '@type' => 'JobPosting',
       'title' => 'Teacher of English',
+      'salary' => 'Lots of money',
       'jobBenefits' => '<p>This is an exceptional opportunity to make a difference within a positive environment.</p>',
       'datePosted' => date_posted,
       'description' => '<p>We are seeking an inspirational, dynamic and industrious Teacher of English</p>',
@@ -15,16 +16,6 @@ RSpec.describe JobPosting do
       'employmentType' => 'FULL_TIME, PART_TIME',
       'industry' => 'Education',
       'url' => 'https://teaching-vacancies.service.gov.uk/jobs/teacher-of-english-gosforth-academy',
-      'baseSalary' => {
-        '@type' => 'MonetaryAmount',
-        'currency' => 'GBP',
-        'value' => {
-          '@type' => 'QuantitativeValue',
-          'minValue' => '22917',
-          'maxValue' => '38633',
-          'unitText' => 'YEAR'
-        }
-      },
       'hiringOrganization' => {
         '@type' => 'School',
         'name' => 'Gosforth Academy',

@@ -67,10 +67,6 @@ module VacanciesHelper
   end
 
   # rubocop:disable Rails/HelperInstanceVariable:
-  def pay_scale_options
-    @pay_scale_options ||= PayScale.all
-  end
-
   def subject_options
     @subject_options ||= Subject.all
   end
