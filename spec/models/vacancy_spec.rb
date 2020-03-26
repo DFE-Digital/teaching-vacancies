@@ -28,10 +28,6 @@ RSpec.describe Vacancy, type: :model do
   end
 
   describe 'validations' do
-    let(:feature_enabled?) { false }
-
-    before { allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?) }
-
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_description) }
@@ -42,15 +38,7 @@ RSpec.describe Vacancy, type: :model do
     context 'a record saved with job spec details' do
       subject { create(:vacancy) }
 
-      context 'when upload document feature is OFF, validates candidate specification fields' do
-        it { should validate_presence_of(:education) }
-        it { should validate_presence_of(:qualifications) }
-        it { should validate_presence_of(:experience) }
-      end
-
-      context 'when upload document feature is ON, does not validate candidate specification fields' do
-        let(:feature_enabled?) { true }
-
+      context 'does not validate candidate specification fields' do
         it { should_not validate_presence_of(:education) }
         it { should_not validate_presence_of(:qualifications) }
         it { should_not validate_presence_of(:experience) }
@@ -101,21 +89,6 @@ RSpec.describe Vacancy, type: :model do
         expect(subject.errors.messages[:job_description].first)
           .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_long',
             count: 50000))
-      end
-
-      it '#experience' do
-        expect(subject.errors.messages[:experience].first)
-          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.experience.too_long', count: 1000))
-      end
-
-      it '#education' do
-        expect(subject.errors.messages[:education].first)
-          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.education.too_long', count: 1000))
-      end
-
-      it '#qualifications' do
-        expect(subject.errors.messages[:qualifications].first)
-          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.qualifications.too_long', count: 1000))
       end
     end
 
@@ -441,30 +414,6 @@ RSpec.describe Vacancy, type: :model do
 
       sanitized_benefits = '<ul><li>Gym membership</li></ul>'
       expect(vacancy.benefits).to eq(sanitized_benefits)
-    end
-
-    it '#experience' do
-      experience = '<strong>2 years experience</strong><script>'
-      vacancy = build(:vacancy, experience: experience)
-
-      sanitized_experience = '<strong>2 years experience</strong>'
-      expect(vacancy.experience).to eq(sanitized_experience)
-    end
-
-    it '#qualifications' do
-      qualifications = '<em>Degree in Teaching</em><br><a href="a-link">more info</a>'
-      vacancy = build(:vacancy, qualifications: qualifications)
-
-      sanitized_qualifications = '<em>Degree in Teaching</em><br>more info'
-      expect(vacancy.qualifications).to eq(sanitized_qualifications)
-    end
-
-    it '#education' do
-      education = '<p><a href="http://university-of-london">University of London</a></p>'
-      vacancy = build(:vacancy, education: education)
-
-      sanitized_education = '<p>University of London</p>'
-      expect(vacancy.education).to eq(sanitized_education)
     end
   end
 

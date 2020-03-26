@@ -1,6 +1,6 @@
 %h2.govuk-heading-m.mb0#supporting_documents_heading
   = t('jobs.supporting_documents')
-  - if UploadDocumentsFeature.enabled? && !@vacancy.supporting_documents
+  - unless @vacancy.supporting_documents
     .notification-tag
       %strong.govuk-tag.app-task-list__task-completed
         = t('jobs.notification_labels.new')

@@ -12,8 +12,5 @@
   .govuk-grid-column-two-thirds
     = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
     = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
-    - if UploadDocumentsFeature.enabled?
-      = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
-    - else
-      = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_candidate_specification'
+    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
     = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_application_details'

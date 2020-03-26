@@ -26,12 +26,6 @@ module VacancyHelpers
     fill_in 'pay_package_form[benefits]', with: vacancy.benefits
   end
 
-  def fill_in_candidate_specification_form_fields(vacancy)
-    fill_in 'candidate_specification_form[education]', with: vacancy.education
-    fill_in 'candidate_specification_form[qualifications]', with: vacancy.qualifications
-    fill_in 'candidate_specification_form[experience]', with: vacancy.experience
-  end
-
   def fill_in_supporting_documents_form_fields
     find('label[for="supporting-documents-form-supporting-documents-yes-field"]').click
   end
@@ -101,13 +95,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
 
-    if UploadDocumentsFeature.enabled?
-      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-    else
-      expect(page.html).to include(vacancy.education)
-      expect(page.html).to include(vacancy.qualifications)
-      expect(page.html).to include(vacancy.experience)
-    end
+    expect(page).to have_content(I18n.t('jobs.supporting_documents'))
 
     expect(page).to have_content(vacancy.leadership.title)
 
@@ -130,11 +118,11 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
 
-    if vacancy.show_supporting_documents?
+    if vacancy.documents.any?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
     end
 
-    if !vacancy.show_supporting_documents? && vacancy.any_candidate_specification?
+    if vacancy.documents.none? && vacancy.any_candidate_specification?
       expect(page.html).to include(vacancy.education)
       expect(page.html).to include(vacancy.qualifications)
       expect(page.html).to include(vacancy.experience)

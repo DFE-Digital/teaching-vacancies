@@ -3,11 +3,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
-  let(:feature_enabled?) { false }
-
   before(:each) do
-    allow(UploadDocumentsFeature).to receive(:enabled?).and_return(feature_enabled?)
-
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
@@ -166,63 +162,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
-    context '#candidate_specification' do
-      scenario 'can not be edited when validation fails' do
-        visit edit_school_job_path(vacancy.id)
-
-        expect(page).to have_content("Edit job for #{school.name}")
-        click_link_in_container_with_text(I18n.t('jobs.experience'))
-
-        fill_in 'candidate_specification_form[experience]', with: ''
-        click_on 'Update job'
-
-        within_row_for(text: I18n.t('jobs.experience')) do
-          expect(page).to have_content('Enter essential skills and experience')
-        end
-      end
-
-      scenario 'can be successfully edited' do
-        visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
-
-        fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
-        click_on 'Update job'
-
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
-        expect(page).to have_content('Teaching deegree')
-      end
-
-      scenario 'tracks the vacancy update' do
-        qualifications = vacancy.qualifications
-
-        visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
-
-        fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
-        click_on 'Update job'
-
-        activity = vacancy.activities.last
-        expect(activity.key).to eq('vacancy.update')
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(qualifications: [qualifications,
-                                                                               'Teaching deegree'])
-      end
-
-      scenario 'adds a job to update the Google index in the queue' do
-        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
-          .to receive(:update_google_index).with(vacancy)
-
-        visit edit_school_job_path(vacancy.id)
-        click_link_in_container_with_text(I18n.t('jobs.qualifications'))
-
-        fill_in 'candidate_specification_form[qualifications]', with: 'Teaching deegree'
-        click_on 'Update job'
-      end
-    end
-
     context '#supporting_documents' do
-      let(:feature_enabled?) { true }
-
       scenario 'can edit documents for a legacy vacancy' do
         vacancy.supporting_documents = nil
         vacancy.documents = []

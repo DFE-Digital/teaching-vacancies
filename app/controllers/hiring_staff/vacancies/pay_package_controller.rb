@@ -25,7 +25,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
   end
 
   def next_step
-    UploadDocumentsFeature.enabled? ? supporting_documents_school_job_path : candidate_specification_school_job_path
+    supporting_documents_school_job_path
   end
 
   def redirect_to_next_step_if_save_and_continue

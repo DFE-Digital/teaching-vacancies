@@ -13,7 +13,7 @@ class CopyVacancy
     @new_vacancy.total_get_more_info_clicks = 0
     @new_vacancy.total_get_more_info_clicks_updated_at = Time.zone.now
 
-    if UploadDocumentsFeature.enabled? && @vacancy.any_candidate_specification?
+    if @vacancy.any_candidate_specification?
       @new_vacancy.experience = nil
       @new_vacancy.education = nil
       @new_vacancy.qualifications = nil

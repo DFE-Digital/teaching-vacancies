@@ -13,7 +13,7 @@ module VacancyCandidateSpecificationValidations
   end
 
   def upload_feature_enabled?
-    UploadDocumentsFeature.enabled?
+    true
   end
 
   def experience=(value)
