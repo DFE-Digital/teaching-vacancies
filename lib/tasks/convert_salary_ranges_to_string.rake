@@ -2,7 +2,9 @@ namespace :data do
   desc 'Convert salary ranges to strings for vacancies without the new salary field'
   namespace :convert_salary_ranges do
     task vacancies: :environment do
-      pay_scales_array = PayScale.all.as_json
+      pay_scales_array = ActiveRecord::Base.connection.execute(
+        'SELECT * from pay_scales'
+      ).as_json
       updated_count = 0
       should_be_updated_count = Vacancy.where(salary: [nil, '']).count
 
