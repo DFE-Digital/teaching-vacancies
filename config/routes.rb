@@ -59,7 +59,7 @@ Rails.application.routes.draw do
         only: %i[edit update],
         controller: 'hiring_staff/vacancies/job_specification',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_specification') }
-      resource :pay_package, 
+      resource :pay_package,
         only: %i[show update],
         controller: 'hiring_staff/vacancies/pay_package',
         defaults: { create_step: 2, step_title: I18n.t('jobs.pay_package') }

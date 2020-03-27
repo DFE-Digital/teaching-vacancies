@@ -10,7 +10,7 @@
 }
 
 .app-step-nav-header__part-of {
-  @include govuk-font(16, $weight: bold)
+  @include govuk-font(16, $weight: bold);
   display: block;
   padding-bottom: 0.2em;
 }
@@ -20,18 +20,18 @@
 }
 
 .app-step-nav-related {
-  border-top: 2px solid $govuk-link-colour;
+  border-top: 3px solid $govuk-link-colour;
   margin-bottom: 30px;
 }
 
 .app-step-nav-related__heading {
-  @include govuk-font(19, $weight: bold)
+  @include govuk-font(19, $weight: bold);
   margin-top: 15px;
   margin-bottom: 10px;
 }
 
 .app-step-nav-related__links {
-  @include govuk-font(16, $weight: bold)
+  @include govuk-font(16, $weight: bold);
   margin: 0;
   padding: 0;
 }
@@ -40,7 +40,7 @@
   margin-bottom: 13px;
 
   .app-step-nav-related__heading {
-    @include govuk-font(19, $weight: bold)
+    @include govuk-font(19, $weight: bold);
     margin-top: 20px;
   }
 
@@ -106,19 +106,19 @@
 }
 
 .app-step-nav__button--title {
-  @include govuk-font(19, $weight: bold)
+  @include govuk-font(19, $weight: bold);
   display: inline-block;
   padding: 0;
   text-align: left;
   color: govuk-colour("black");
 
   .app-step-nav--large & {
-    @include govuk-font(24, $weight: bold)
+    @include govuk-font(24, $weight: bold);
   }
 }
 
 .app-step-nav__button--controls {
-  @include govuk-font(14)
+  @include govuk-font(14);
   position: relative;
   z-index: 1; // this and relative position stops focus outline underlap with border of accordion
   padding: 0.5em 0;
@@ -129,7 +129,7 @@
   }
 
   .app-step-nav--large & {
-    @include govuk-font(16)
+    @include govuk-font(16);
   }
 }
 
@@ -240,7 +240,7 @@
 }
 
 .app-step-nav__circle--number {
-  @include govuk-font(16, $weight: bold)
+  @include govuk-font(16, $weight: bold);
   line-height: 23px;
   border: solid 2px $govuk-border-colour;
 }
@@ -253,7 +253,7 @@
 }
 
 .app-step-nav--large .app-step-nav__circle--number {
-  @include govuk-font(16, $weight: bold)
+  @include govuk-font(16, $weight: bold);
   line-height: 23px;
 }
 
@@ -271,7 +271,7 @@
 }
 
 .app-step-nav__circle--logic {
-  @include govuk-font(16, $weight: bold)
+  @include govuk-font(16, $weight: bold);
   line-height: 28px;
 }
 @include govuk-media-query($from: tablet) {
@@ -282,7 +282,7 @@
 }
 
 .app-step-nav--large .app-step-nav__circle--logic {
-  @include govuk-font(16, $weight: bold)
+  @include govuk-font(16, $weight: bold);
   line-height: 28px;
 }
 
@@ -318,7 +318,7 @@
 }
 
 .app-step-nav__title {
-  @include govuk-font(19, $weight: bold)
+  @include govuk-font(19, $weight: bold);
   line-height: 1.4;
   margin: 0;
 }
@@ -331,7 +331,7 @@
 }
 
 .app-step-nav--large .app-step-nav__title {
-  @include govuk-font(19, $weight: bold)
+  @include govuk-font(19, $weight: bold);
   line-height: 1.4;
 }
 
@@ -343,7 +343,7 @@
 }
 
 .app-step-nav__toggle-link {
-  @include govuk-font(16)
+  @include govuk-font(16);
   line-height: 1.2;
   display: block;
   color: $govuk-link-colour;
@@ -354,7 +354,7 @@
 }
 
 .app-step-nav--large .app-step-nav__toggle-link {
-  @include govuk-font(16)
+  @include govuk-font(16);
   line-height: 1.2;
 }
 
@@ -370,7 +370,7 @@
 }
 
 .app-step-nav__panel {
-  @include govuk-font(16)
+  @include govuk-font(16);
   line-height: 1.25;
   .js-enabled &.js-hidden {
     display: none;

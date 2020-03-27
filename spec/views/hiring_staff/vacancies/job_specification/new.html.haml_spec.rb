@@ -6,8 +6,8 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/new' do
     # environment.
     # rubocop:disable Rails/HttpPositionalArguments
     Rails.application.routes.draw do
-      get :job_specification_school_job, to: 'dummy#step_one', defaults: { create_step: 1 }
-      get :step_two, to: 'job#step_one', defaults: { create_step: 2 }
+      get :job_specification_school_job, to: 'dummy#step_one', defaults: { create_step: 1, step_title: 'Step 1 title' }
+      get :step_two, to: 'job#step_one', defaults: { create_step: 2, step_title: 'Step 2 title' }
     end
     # rubocop:enable Rails/HttpPositionalArguments
 

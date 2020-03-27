@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'hiring_staff/vacancies/_sidebar' do
-
   context 'There are two steps' do
     around do |example|
       # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
@@ -21,6 +20,7 @@ RSpec.describe 'hiring_staff/vacancies/_sidebar' do
     end
 
     before do
+      allow(view).to receive(:params).and_return({ create_step: 1 })
       render
     end
 

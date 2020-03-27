@@ -180,7 +180,6 @@ en:
     review_page_title: 'Review the job details — Publish a job for %{school}'
     review_heading: 'Review this job for %{school}'
     edit_heading: 'Edit job for %{school}'
-    current_step: 'Step %{current_step} of %{total_steps}'
     job_specification: 'Job specification'
     pay_package: 'Pay package'
     supporting_documents: 'Supporting documents'

@@ -31,7 +31,10 @@ RSpec.describe HiringStaff::JobCreationHelper do
       end
 
       it 'returns an array of arrays with the step number and step title to be displayed' do
-        expect(helper.steps_to_display).to eql([[1, 'Step one'], [2, 'Step two']])
+        expect(helper.steps_to_display).to eql([
+          { number: 1, title: 'Step one' },
+          { number: 2, title: 'Step two' }
+        ])
       end
     end
 
@@ -53,7 +56,11 @@ RSpec.describe HiringStaff::JobCreationHelper do
       end
 
       it 'returns an array of arrays with the step number and step title to be displayed' do
-        expect(helper.steps_to_display).to eql([[1, 'Step one'], [2, 'Step two'], [3, 'Step three']])
+        expect(helper.steps_to_display).to eql([
+          { number: 1, title: 'Step one' },
+          { number: 2, title: 'Step two' },
+          { number: 3, title: 'Step three' }
+        ])
       end
     end
 
@@ -75,7 +82,10 @@ RSpec.describe HiringStaff::JobCreationHelper do
       end
 
       it 'returns an array of arrays with the step number and step title to be displayed' do
-        expect(helper.steps_to_display).to eql([[1, 'Step one'], [2, 'Step two']])
+        expect(helper.steps_to_display).to eql([
+          { number: 1, title: 'Step one' },
+          { number: 2, title: 'Step two' }
+        ])
       end
     end
   end
