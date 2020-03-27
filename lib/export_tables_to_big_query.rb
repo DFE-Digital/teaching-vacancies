@@ -69,6 +69,13 @@ class ExportTablesToBigQuery
     Rails.logger.info({ bigquery_export: 'started' }.to_json)
     tables.each do |table|
       bigquery_load(table.constantize)
+    rescue NameError => e
+      # This is to address an edge-case failure when a table, `PayScale`, didn't get dropped from the production db
+      # but its model has been removed from the codebase.
+      #
+      # The `PayScale` table should be removed in a later release, but this rescue will prevent any future oversights
+      # of this nature from breaking the run.
+      Rails.logger.error({ bigquery_export: 'error', status: 'handled', message: e })
     end
     Rails.logger.info({ bigquery_export: 'finished' }.to_json)
   end
