@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_121727) do
+ActiveRecord::Schema.define(version: 2020_03_27_125528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -95,13 +95,6 @@ ActiveRecord::Schema.define(version: 2020_03_25_121727) do
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.index ["title"], name: "index_leaderships_on_title", unique: true
-  end
-
-  create_table "pay_scales", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "label", null: false
-    t.string "code"
-    t.integer "index"
-    t.index ["label"], name: "index_pay_scales_on_label", unique: true
   end
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -224,9 +217,9 @@ ActiveRecord::Schema.define(version: 2020_03_25_121727) do
     t.integer "total_get_more_info_clicks"
     t.datetime "total_get_more_info_clicks_updated_at"
     t.integer "working_patterns", array: true
-    t.boolean "pro_rata_salary"
     t.integer "listed_elsewhere"
     t.integer "hired_status"
+    t.boolean "pro_rata_salary"
     t.datetime "stats_updated_at"
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
