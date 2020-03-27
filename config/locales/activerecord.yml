@@ -31,16 +31,6 @@ en:
       blank: Enter the date the role will be listed
       before_today: Date role will be listed must be either today or in the future
       invalid: Use the correct format for the date the role will be listed
-  candidate_specification_errors: &candidate_specification_errors
-    education:
-      blank: Enter essential educational requirements
-      too_long: Education must not be more than %{count} characters
-    experience:
-      blank: Enter essential skills and experience
-      too_long: Skills and experience must not be more than %{count} characters
-    qualifications:
-      blank: Enter essential qualifications
-      too_long: Qualifications must not be more than %{count} characters
   supporting_documents_errors: &supporting_documents_errors
     supporting_documents:
       inclusion: "Please indicate if you'd like to attach supporting documents"
@@ -64,9 +54,6 @@ en:
         application_details_form:
           attributes:
             <<: *application_details_errors
-        candidate_specification_form:
-          attributes:
-            <<: *candidate_specification_errors
         supporting_documents_form:
           attributes:
             <<: *supporting_documents_errors
@@ -82,7 +69,6 @@ en:
           attributes:
             <<: *job_specification_errors
             <<: *pay_package_errors
-            <<: *candidate_specification_errors
             <<: *application_details_errors
             <<: *supporting_documents_errors
             expiry_time:
