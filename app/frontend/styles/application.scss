@@ -98,3 +98,7 @@ p {
     display: none;
   }
 }
+
+.govuk-header__container {
+  border-bottom: 10px solid govuk-colour("orange");
+}
