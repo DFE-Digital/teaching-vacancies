@@ -92,7 +92,7 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    context 'a record saved with job spec and candidate spec details, ' \
+    context 'a record saved with job spec details, ' \
       'and empty contact_email' do
       subject { build(:vacancy, status: :draft) }
       before { subject.contact_email = '' }
