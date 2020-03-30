@@ -46,8 +46,7 @@
   
   - if @vacancy.school.description.present?
     %h4.govuk-heading-s
-      = t('schools.about')
-      = @vacancy.school.name
+      = t('schools.info', school: @vacancy.school.name)
     %p= @vacancy.school.description
 
   %h4.govuk-heading-s
