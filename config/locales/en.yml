@@ -170,6 +170,8 @@ en:
     job_title: 'Job title'
     job_role: 'Job role'
     job_role_options:
+      teacher: 'Teacher'
+      leadership: 'Leadership'
       sen_specialist: 'SEN specialist'
       nqt_suitable: 'Suitable for NQTs'
     job_description: 'Job description'    

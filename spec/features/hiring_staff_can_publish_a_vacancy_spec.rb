@@ -29,7 +29,7 @@ RSpec.feature 'Creating a vacancy' do
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  job_role: [
-                                   I18n.t('teacher'),
+                                   I18n.t('jobs.job_role_options.teacher'),
                                    I18n.t('jobs.job_role_options.sen_specialist')
                                   ],
                                  school: school,

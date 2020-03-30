@@ -13,6 +13,7 @@ class JobPosting
     {
       job_title: @schema['title'],
       job_description: @schema['description'],
+      job_role: @schema['jobRole'],
       salary: @schema['salary'],
       benefits: @schema['jobBenefits'],
       education: @schema['educationRequirements'],
