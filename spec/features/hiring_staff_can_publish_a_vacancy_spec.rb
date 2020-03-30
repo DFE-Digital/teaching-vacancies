@@ -416,7 +416,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
         visit school_job_review_path(vacancy.id)
 
-        expect(page).to have_content("Review this job for #{school.name}")
+        expect(page).to have_content(I18n.t('jobs.review_heading'))
 
         verify_all_vacancy_details(vacancy)
       end
@@ -447,7 +447,7 @@ RSpec.feature 'Creating a vacancy' do
           )
           visit school_job_review_path(vacancy.id)
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
 
           verify_all_vacancy_details(vacancy)
         end
@@ -464,7 +464,7 @@ RSpec.feature 'Creating a vacancy' do
           )
           visit school_job_review_path(vacancy.id)
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
 
           verify_all_vacancy_details(vacancy)
         end
@@ -481,7 +481,7 @@ RSpec.feature 'Creating a vacancy' do
           )
           visit school_job_review_path(vacancy.id)
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
 
           verify_all_vacancy_details(vacancy)
         end
@@ -498,7 +498,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('An edited job title')
         end
 
@@ -533,7 +533,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('A new job title')
         end
       end
@@ -554,7 +554,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_application_details_form_fields(vacancy)
           click_on 'Save and continue'
 
-          expect(page).to have_content('Review this job')
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
 
           within '#change-supporting-documents' do
             click_on 'Change'
@@ -565,7 +565,7 @@ RSpec.feature 'Creating a vacancy' do
 
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
         end
       end
 
@@ -585,7 +585,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('a@valid.email')
         end
 
@@ -604,7 +604,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[application_link]', with: 'www.valid-domain.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('www.valid-domain.com')
         end
 
@@ -618,7 +618,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
 
-          expect(page).to have_content("Review this job for #{school.name}")
+          expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('an@email.com')
         end
 
