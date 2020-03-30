@@ -27,7 +27,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
       visit edit_school_job_path(id: draft_vacancy.id)
 
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 4))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
       expect(page).to have_content(draft_vacancy.benefits)
     end
 
@@ -39,7 +39,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
       scenario 'then editing the draft redirects to incomplete step' do
         visit school_job_path(id: draft_vacancy.id)
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 4))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
       end
 
       def edit_a_published_vacancy

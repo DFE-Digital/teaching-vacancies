@@ -20,7 +20,7 @@ RSpec.feature 'Creating a vacancy' do
 
     click_link 'Create a job listing'
 
-    expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 4))
+    expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
   end
 
   context 'creating a new vacancy' do
@@ -42,7 +42,7 @@ RSpec.feature 'Creating a vacancy' do
 
       expect(page.current_path).to eq(job_specification_school_job_path)
       expect(page).to have_content(I18n.t('jobs.create_a_job', school: school.name))
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 4))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
     end
 
     context '#job_specification' do
@@ -74,7 +74,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_job_specification_form_fields(vacancy)
         click_on 'Save and continue'
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 4))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
         expect(page).to have_content(I18n.t('jobs.pay_package'))
       end
 
@@ -119,7 +119,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_pay_package_form_fields(vacancy)
           click_on 'Save and continue'
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 5))
           expect(page.current_path).to eq(supporting_documents_school_job_path)
         end
       end
@@ -153,7 +153,7 @@ RSpec.feature 'Creating a vacancy' do
         select_no_for_supporting_documents
         click_on 'Save and continue'
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 4))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
         expect(page.current_path).to eq(application_details_school_job_path)
       end
 
@@ -358,7 +358,7 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
         end
 
         scenario 'redirects to step 4, application details, when that step has not been completed' do
@@ -376,7 +376,7 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
         end
 
         scenario 'redirects to appropriate step when clicked on change on review page' do
@@ -395,12 +395,12 @@ RSpec.feature 'Creating a vacancy' do
           click_on 'Save and continue'
 
           click_link_in_container_with_text(I18n.t('jobs.contact_email'))
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
 
           click_on 'Save and continue'
 
           click_link_in_container_with_text(I18n.t('jobs.job_title'))
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
         end
       end
 
@@ -493,7 +493,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job title')
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
 
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on 'Save and continue'
@@ -509,7 +509,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Job title')
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
 
           fill_in 'job_specification_form[job_title]', with: 'High school teacher'
           click_on 'Save and continue'
@@ -560,7 +560,7 @@ RSpec.feature 'Creating a vacancy' do
             click_on 'Change'
           end
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 5))
           expect(page).to have_content('Upload files')
 
           click_on 'Save and continue'
@@ -575,7 +575,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Contact email')
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
 
           fill_in 'application_details_form[contact_email]', with: 'not a valid email'
           click_on 'Save and continue'
@@ -594,7 +594,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Link for jobseekers to learn more and apply')
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
 
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
           click_on 'Save and continue'
@@ -613,7 +613,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_link_in_container_with_text('Contact email')
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 4))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on 'Save and continue'
