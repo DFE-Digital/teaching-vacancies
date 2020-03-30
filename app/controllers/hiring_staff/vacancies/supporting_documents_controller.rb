@@ -13,6 +13,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
     store_vacancy_attributes(@supporting_documents_form.vacancy.attributes)
 
     if @supporting_documents_form.valid?
+      session[:completed_step] = current_step
       vacancy = update_vacancy(supporting_documents_form_params)
       return redirect_to_next_step(vacancy)
     end

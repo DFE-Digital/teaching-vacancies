@@ -18,6 +18,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     @vacancy = params[:job_id] ? current_school.vacancies.find(params[:job_id]) : nil
   end
 
+  def current_step
+    params[:create_step]
+  end
+
   def store_vacancy_attributes(attributes)
     session[:vacancy_attributes] ||= {}
     session[:vacancy_attributes].merge!(attributes.compact)
