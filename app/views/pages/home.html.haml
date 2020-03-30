@@ -4,6 +4,10 @@
   .govuk-grid-column-two-thirds
     .search_panel= render 'pages/home/search'
   .govuk-grid-column-one-third
-    .signin= render 'pages/home/signin'
+    .signin
+      - if ReadOnlyFeature.enabled?
+        = render 'pages/home/read_only'
+      - else
+        = render 'pages/home/signin'
 .govuk-grid-row
   .govuk-grid-column-full= render 'pages/home/location_categories'

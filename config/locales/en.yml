@@ -50,6 +50,9 @@ en:
         cities: Popular cities and towns
         counties: English counties
         location_links_heading: Explore teaching jobs by location
+      read_only:
+        title: Sorry, listing a job is unavailable
+        description_html: <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p><p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
       signin:
         title: List a teaching job
         description: You must sign in to your Teaching Vacancies account to list a job at your school.

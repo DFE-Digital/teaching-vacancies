@@ -1,10 +1,15 @@
 class HiringStaff::BaseController < ApplicationController
+  before_action :redirect_to_root_if_read_only
   before_action :check_session
   before_action :check_terms_and_conditions
 
   helper_method :current_school
 
   include AuthenticationConcerns
+
+  def redirect_to_root_if_read_only
+    redirect_to root_path if ReadOnlyFeature.enabled?
+  end
 
   def check_session
     redirect_to new_identifications_path unless session.key?(:urn)
