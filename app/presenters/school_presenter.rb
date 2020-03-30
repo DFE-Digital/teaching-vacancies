@@ -5,7 +5,7 @@ class SchoolPresenter < BasePresenter
 
   def school_type_with_religious_character
     school_type = model.school_type.label.singularize
-    model.has_religious_character? ? school_type + ', ' + model.gias_data['religious_character'] : school_type
+    model.has_religious_character? ? school_type + ', ' + model.gias_data['ReligiousCharacter (name)'] : school_type
   end
 
   def location

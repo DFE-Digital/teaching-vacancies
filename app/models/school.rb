@@ -37,7 +37,7 @@ class School < ApplicationRecord
 
   def has_religious_character?
     return false if !self.respond_to?(:gias_data) || self.gias_data == nil
-    ['None', 'Does not apply', nil].exclude?(self.gias_data['religious_character'])
+    ['None', 'Does not apply', nil].exclude?(self.gias_data['ReligiousCharacter (name)'])
   end
 
   private

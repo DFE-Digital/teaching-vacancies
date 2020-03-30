@@ -15,12 +15,12 @@ RSpec.describe School, type: :model do
     end
 
     it 'returns false when the school has no religious_character' do
-      allow(subject.gias_data).to receive(:[]).with('religious_character').and_return 'Does not apply'
+      allow(subject.gias_data).to receive(:[]).with('ReligiousCharacter (name)').and_return 'Does not apply'
       expect(subject.has_religious_character?).to be false
     end
 
     it 'returns true when the school has a religious character' do
-      allow(subject.gias_data).to receive(:[]).with('religious_character').and_return 'Roman Catholic'
+      allow(subject.gias_data).to receive(:[]).with('ReligiousCharacter (name)').and_return 'Roman Catholic'
       expect(subject.has_religious_character?).to be true
     end
   end

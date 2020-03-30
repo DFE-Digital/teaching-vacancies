@@ -75,9 +75,9 @@ RSpec.describe SchoolPresenter do
   end
 
   describe '#school_type_with_religious_character' do
-    let(:academy) { build(:academy, gias_data: { religious_character: 'Does not apply' }) }
-    let(:catholic) { build(:school, gias_data: { religious_character: 'Roman Catholic' }) }
-    let(:secular) { build(:academy, gias_data: { religious_character: 'Does not apply' }) }
+    let(:academy) { build(:academy, gias_data: { 'ReligiousCharacter (name)': 'Does not apply' }) }
+    let(:catholic) { build(:school, gias_data: { 'ReligiousCharacter (name)': 'Roman Catholic' }) }
+    let(:secular) { build(:academy, gias_data: { 'ReligiousCharacter (name)': 'Does not apply' }) }
 
     it 'singularizes the school_type' do
       school_presenter = SchoolPresenter.new(academy)
