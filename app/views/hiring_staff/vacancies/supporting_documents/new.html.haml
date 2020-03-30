@@ -1,7 +1,7 @@
-- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — Publish a job for #{current_school.name}"
+- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — #{t('jobs.create_a_job', school: current_school.name)}"
 
 %h1.govuk-heading-l
-  = t('jobs.publish_heading', school: current_school.name)
+  = t('jobs.create_a_job', school: current_school.name)
   %span.govuk-caption-l
     = t('jobs.current_step', step: current_step,  total: total_steps)
 

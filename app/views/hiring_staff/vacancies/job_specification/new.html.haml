@@ -1,7 +1,7 @@
-- content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Job specification — Publish a job for #{current_school.name}"
+- content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Job specification — #{t('jobs.create_a_job', school: current_school.name)}"
 
 %h1.govuk-heading-l
-  = t('jobs.publish_heading', school: current_school.name)
+  = t('jobs.create_a_job', school: current_school.name)
   %span.govuk-caption-l
     = t('jobs.current_step', step: current_step,  total: total_steps)
 = simple_form_for @job_specification_form, action: :post, url: job_specification_school_job_path(school_id: current_school.id) do |f|
