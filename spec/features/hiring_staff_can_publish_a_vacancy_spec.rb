@@ -28,7 +28,10 @@ RSpec.feature 'Creating a vacancy' do
     let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
-                                 job_role: ['Teacher', 'SEN specialist'],
+                                 job_role: [
+                                   I18n.t('teacher'),
+                                   I18n.t('jobs.job_role_options.sen_specialist')
+                                  ],
                                  school: school,
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],

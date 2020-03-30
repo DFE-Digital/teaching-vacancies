@@ -3,10 +3,10 @@ require 'auditor'
 
 class Vacancy < ApplicationRecord
   JOB_ROLE_OPTIONS = [
-    'Teacher',
-    'Leadership',
-    'SEN specialist',
-    'Suitable for NQTs'
+    I18n.t('teacher'),
+    I18n.t('leadership'),
+    I18n.t('jobs.job_role_options.sen_specialist'),
+    I18n.t('jobs.job_role_options.nqt_suitable')
   ].freeze
 
   FLEXIBLE_WORKING_PATTERN_OPTIONS = {

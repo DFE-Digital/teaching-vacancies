@@ -169,6 +169,9 @@ en:
     job_details: 'Job details'
     job_title: 'Job title'
     job_role: 'Job role'
+    job_role_options:
+      sen_specialist: 'SEN specialist'
+      nqt_suitable: 'Suitable for NQTs'
     job_description: 'Job description'    
     salary: 'Salary'
     benefits: 'Employee benefits'
