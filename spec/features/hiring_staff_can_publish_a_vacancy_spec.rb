@@ -25,7 +25,6 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'creating a new vacancy' do
     let!(:subjects) { create_list(:subject, 3) }
-    let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  job_role: [
@@ -36,7 +35,6 @@ RSpec.feature 'Creating a vacancy' do
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
-                                 leadership: leaderships.sample,
                                  working_patterns: ['full_time', 'part_time'],
                                  publish_on: Time.zone.today))
     end
