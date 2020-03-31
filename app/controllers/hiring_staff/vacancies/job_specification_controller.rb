@@ -49,6 +49,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   private
 
   def job_specification_form_params
+    persist_nqt_job_role_to_nqt_attribute
     params.require(:job_specification_form)
           .permit(:job_title, :job_description, :leadership_id,
                   :subject_id,
