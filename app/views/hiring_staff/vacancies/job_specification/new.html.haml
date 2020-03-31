@@ -69,18 +69,6 @@
                 collection: working_pattern_options,
                 required: true
 
-      = f.input :newly_qualified_teacher, as: :boolean,
-                hint: t('jobs.form_hints.newly_qualified_teacher'),
-                wrapper: :inline_checkbox,
-                wrapper_html: { id: 'newly_qualified_teacher' },
-                input_html: { 'aria-label': t('jobs.aria_labels.newly_qualified_teacher') }
-      = f.input :leadership_id,
-                wrapper: 'select',
-                label: t('jobs.leadership_level'),
-                collection: Leadership.order(:title),
-                wrapper_html: { id: 'leadership' },
-                required: false
-
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,
                               legend_options: { page_heading: false, class: "govuk-label" }
