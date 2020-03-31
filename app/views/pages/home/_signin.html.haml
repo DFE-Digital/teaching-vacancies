@@ -1,11 +1,16 @@
 %h2.govuk-heading-m= t('.title')
 
-%p= t('.description')
+- if authenticated?
+  %div.manage-vacancies
+    %p= "#{t('pages.home.signed_in.description')} #{current_school.name}"
+    = simple_form_for :identifications, url: identifications_path, defaults: { input_html: { class: 'text' } }, method: :post do |f|
+      = f.submit t('pages.home.signed_in.manage_link'), class: 'govuk-button'
 
-- if ENV['FEATURE_SIGN_IN_ALERT'].to_s == 'true'
-  = link_to t('sign_in.link'), new_identifications_path, class: 'govuk-button identifications-button'
 - else
-  = simple_form_for :identifications, url: identifications_path, defaults: { input_html: { class: 'text' } }, method: :post do |f|
-    = f.submit t('sign_in.link'), class: 'govuk-button'
+  %p= t('.description')
+  = link_to t('sign_in.link'), new_identifications_path, class: 'govuk-button identifications-button'
+  %p= t('.signin_guidance_html', link: link_to(t('.signin_link'), new_identifications_path))
 
-%p= t('.signin_guidance_html', link: link_to(t('.signin_link'), new_identifications_path))
+
+
+
