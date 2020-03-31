@@ -2,15 +2,17 @@ module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
     fill_in 'job_specification_form[job_description]', with: vacancy.job_description
-    select vacancy.subject.name, from: 'job_specification_form[subject_id]'
-    select vacancy.first_supporting_subject, from: 'job_specification_form[first_supporting_subject_id]'
-    select vacancy.second_supporting_subject, from: 'job_specification_form[second_supporting_subject_id]'
-    fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day
-    fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
-    fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year
-    fill_in 'job_specification_form[ends_on_dd]', with: vacancy.ends_on.day
-    fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
-    fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year
+    select vacancy.subject.name, from: 'job_specification_form[subject_id]' if vacancy.subject
+    select vacancy.first_supporting_subject,
+      from: 'job_specification_form[first_supporting_subject_id]' if vacancy.first_supporting_subject
+    select vacancy.second_supporting_subject,
+      from: 'job_specification_form[second_supporting_subject_id]' if vacancy.second_supporting_subject
+    fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day if vacancy.starts_on
+    fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
+    fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year if vacancy.starts_on
+    fill_in 'job_specification_form[ends_on_dd]', with: vacancy.ends_on.day if vacancy.ends_on
+    fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m') if vacancy.ends_on
+    fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year if vacancy.ends_on
 
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
@@ -18,7 +20,7 @@ module VacancyHelpers
             visible: false
     end
 
-    vacancy.model_job_role.each do |job_role|
+    vacancy.job_role.each do |job_role|
       check job_role,
             name: 'job_specification_form[job_role][]',
             visible: false
@@ -88,11 +90,11 @@ module VacancyHelpers
 
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
+    expect(page).to have_content(vacancy.job_role.join(', '))
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
@@ -100,8 +102,6 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.benefits)
 
     expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-
-    expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_content(vacancy.contact_email)
     expect(page).to have_content(vacancy.application_link)

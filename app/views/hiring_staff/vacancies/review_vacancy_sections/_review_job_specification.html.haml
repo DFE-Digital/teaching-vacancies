@@ -1,5 +1,9 @@
 %h2.govuk-heading-m.mb0
   = t('jobs.job_details')
+  - unless @vacancy.job_role.any?
+    .notification-tag
+      %strong.govuk-tag.app-task-list__task-completed
+        = t('jobs.notification_labels.new')
 
 .govuk-body-s.mb1
   = link_to job_specification_school_job_path, class: 'govuk-link', 'aria-label': 'Change job specification' do

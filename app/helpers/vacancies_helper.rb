@@ -108,6 +108,7 @@ module VacanciesHelper
 
   def new_sections(vacancy)
     sections = []
+    sections << 'job_role' unless vacancy.job_role.any?
     sections << 'supporting_documents' unless vacancy.supporting_documents
     sections
   end
