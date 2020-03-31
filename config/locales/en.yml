@@ -50,6 +50,9 @@ en:
         description: You must sign in to your Teaching Vacancies account to list a job at your school.
         signin_link: how to get one
         signin_guidance_html: Don't have an account? Find out %{link} if your school is eligible.
+      signed_in:
+        manage_link: Manage jobs
+        description: You're signed in as
     privacy_policy:
       page_description: Find out what personal information Teaching Vacancies collects, how it is used, how long it is kept and what your data protection rights are.
     terms-and-conditions:
