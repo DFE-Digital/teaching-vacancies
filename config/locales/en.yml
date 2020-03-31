@@ -384,7 +384,6 @@ en:
     user_interested_email_text: "We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services."
   schools:
     school_overview: 'School overview'
-    about: 'About'
     address: 'Address'
     school_location: 'School location'
     phase: 'Education phase'
