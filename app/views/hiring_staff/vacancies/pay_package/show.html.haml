@@ -18,3 +18,6 @@
         hint_text: t('helpers.hint.pay_package_form.benefits')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+  .govuk-grid-column-one-third
+    - unless @vacancy.published?
+      = render 'hiring_staff/vacancies/sidebar'

@@ -14,7 +14,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if @job_specification_form.valid?
       vacancy = session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes)
-
+      session[:completed_step] = current_step
       redirect_to_next_step(vacancy)
     else
       session[:current_step] = :step_1 if session[:current_step].blank?

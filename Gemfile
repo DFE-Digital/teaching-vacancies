@@ -76,6 +76,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'elasticsearch-extensions'
   gem 'pry'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'teaspoon-mocha'

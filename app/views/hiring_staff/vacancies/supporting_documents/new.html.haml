@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — Publish a job for #{current_school.name}"
+- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — #{t('jobs.create_a_job', school: current_school.name)}"
 
 %h1.govuk-heading-l
-  = t('jobs.publish_heading', school: current_school.name)
+  = t('jobs.create_a_job', school: current_school.name)
   %span.govuk-caption-l
-    Step 3 of 4
+    = t('jobs.current_step', step: current_step,  total: total_steps)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -20,3 +20,5 @@
         legend: { text: t('helpers.fieldset.supporting_documents_form.supporting_documents_html'), size: 's' },
         hint_text: t('helpers.hint.supporting_documents_form.supporting_documents')
       = f.govuk_submit t('buttons.save_and_continue')
+  .govuk-grid-column-one-third
+    = render 'hiring_staff/vacancies/sidebar'

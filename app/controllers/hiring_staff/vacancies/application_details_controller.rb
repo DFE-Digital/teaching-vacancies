@@ -11,6 +11,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     store_vacancy_attributes(@application_details_form.attributes)
 
     if @application_details_form.valid?
+      session[:completed_step] = current_step
       vacancy = update_vacancy(@application_details_form.params_to_save)
       redirect_to next_step(vacancy)
     else

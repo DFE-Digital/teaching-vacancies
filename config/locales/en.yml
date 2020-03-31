@@ -100,6 +100,7 @@ en:
       supporting_documents_form:
         supporting_documents: 'These could include, for example, a job description, person specification or application pack'
   jobs:
+    current_step: "Step %{step} of %{total}"
     notification_labels:
       new: 'new'
     heading: 'Find a job in teaching'
@@ -174,12 +175,11 @@ en:
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
     per_year_fte: 'per year (full-time equivalent)'
-    publish_heading: 'Publish a job for %{school}'
+    create_a_job: 'Create a job listing for %{school}'
     copy_page_title: 'Copy your %{job_title} job'
-    review_page_title: 'Review the job details — Publish a job for %{school}'
-    review_heading: 'Review this job for %{school}'
+    review_page_title: 'Review the job listing — Create a job listing for %{school}'
+    review_heading: 'Review the job listing'
     edit_heading: 'Edit job for %{school}'
-    current_step: 'Step %{current_step} of %{total_steps}'
     job_specification: 'Job specification'
     pay_package: 'Pay package'
     supporting_documents: 'Supporting documents'
