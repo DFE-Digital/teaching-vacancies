@@ -9,7 +9,7 @@
 %dl.app-check-your-answers.app-check-your-answers--short
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
+    %dt.app-check-your-answers__question#job_title
       = t('jobs.job_title')
     %dd.app-check-your-answers__answer
       = @vacancy.job_title
@@ -17,7 +17,15 @@
       = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'job_title'), 'aria-label': t('jobs.aria_labels.change_job_title'), class: 'govuk-link'
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
+    %dt.app-check-your-answers__question#job_role
+      = t('jobs.job_role')
+    %dd.app-check-your-answers__answer
+      = @vacancy.job_role.join(', ')
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'job_role'), 'aria-label': t('jobs.aria_labels.change_job_role'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#description
       = t('jobs.job_description')
     %dd.app-check-your-answers__answer
       = @vacancy.job_description
@@ -25,7 +33,7 @@
       = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'job_description'), 'aria-label': t('jobs.aria_labels.change_job_description'), class: 'govuk-link'
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
+    %dt.app-check-your-answers__question#main_subject
       = t('jobs.main_subject')
     %dd.app-check-your-answers__answer
       = @vacancy.main_subject
@@ -34,23 +42,15 @@
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question
-      = t('jobs.first_supporting_subject')
+      = t('jobs.other_subjects')
     %dd.app-check-your-answers__answer
-      = @vacancy.first_supporting_subject
+      = @vacancy.other_subjects
     %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'first_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_first_supporting_subject'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.second_supporting_subject')
-    %dd.app-check-your-answers__answer
-      = @vacancy.second_supporting_subject
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'second_supporting_subject'), 'aria-label': t('jobs.aria_labels.change_second_supporting_subject'), class: 'govuk-link'
+      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'other_subjects'), 'aria-label': t('jobs.aria_labels.change_other_subjects'), class: 'govuk-link'
 
   - if @vacancy.working_patterns?
     .app-check-your-answers__contents
-      %dt.app-check-your-answers__question
+      %dt.app-check-your-answers__question#working_patterns
         = t('jobs.working_patterns')
       %dd.app-check-your-answers__answer
         = @vacancy.working_patterns
@@ -58,24 +58,7 @@
         = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.newly_qualified_teacher')
-    %dd.app-check-your-answers__answer
-      = @vacancy.newly_qualified_teacher
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.leadership_level')
-    %dd.app-check-your-answers__answer
-      - if @vacancy.leadership
-        = @vacancy.leadership.title
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'leadership'), 'aria-label': t('jobs.aria_labels.change_leadership_level'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
+    %dt.app-check-your-answers__question#starts_on
       = t('jobs.starts_on')
     %dd.app-check-your-answers__answer
       = format_date @vacancy.starts_on
@@ -83,7 +66,7 @@
       = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'starts_on'), 'aria-label': t('jobs.aria_labels.change_expected_start_date'), class: 'govuk-link'
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
+    %dt.app-check-your-answers__question#ends_on
       = t('jobs.ends_on')
     %dd.app-check-your-answers__answer
       = format_date @vacancy.ends_on
