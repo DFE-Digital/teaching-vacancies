@@ -59,6 +59,16 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                   working_patterns: [], job_role: []).merge(completed_step: current_step)
   end
 
+  def persist_nqt_job_role_to_nqt_attribute
+    job_role = params.require(:job_specification_form)[:job_role]
+
+    if job_role && job_role.include?(I18n.t('jobs.job_role_options.nqt_suitable'))
+      params[:job_specification_form][:newly_qualified_teacher] = true
+    elsif job_role
+      params[:job_specification_form][:newly_qualified_teacher] = false
+    end
+  end
+
   def save_vacancy_without_validation
     # TODO remove after migration to remove column
     @job_specification_form.vacancy.minimum_salary = ''
