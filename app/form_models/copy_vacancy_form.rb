@@ -26,6 +26,7 @@ class CopyVacancyForm < VacancyForm
     @expiry_time_meridiem = vacancy.expiry_time&.strftime('%P')
     self.vacancy = vacancy
     self.job_title = vacancy.job_title
+    self.job_role = vacancy.job_role
 
     self.publish_on = nil if vacancy.publish_on.past?
     reset_date_fields if vacancy.expires_on.past?
@@ -34,7 +35,6 @@ class CopyVacancyForm < VacancyForm
   def apply_changes!(params = {})
     assign_attributes(params.extract!(:expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem))
     vacancy.assign_attributes(params)
-
     vacancy
   end
 

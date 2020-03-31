@@ -18,6 +18,15 @@
                 wrapper_html: { id: 'job_title' },
                 input_html: { class: 'govuk-input' },
                 required: true
+      - if @copy_form.vacancy.job_role.none?
+        = f.input :job_role,
+                  as: :check_boxes,
+                  wrapper: :checkboxes,
+                  label: t('jobs.job_role'),
+                  hint: t('jobs.form_hints.job_role'),
+                  wrapper_html: { id: 'job_role' },
+                  collection: job_role_options,
+                  required: true
 
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,
