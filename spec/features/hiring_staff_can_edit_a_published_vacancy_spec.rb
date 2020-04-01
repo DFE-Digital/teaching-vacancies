@@ -97,6 +97,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content(I18n.t('jobs.job_details'))
         expect(page.find('h2', text: I18n.t('jobs.job_details'))
           .text).to_not include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
 
       scenario 'ensures the vacancy slug is updated when the title is saved' do
@@ -217,6 +218,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
           .text).to_not include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
     end
 
