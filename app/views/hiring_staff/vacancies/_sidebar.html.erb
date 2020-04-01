@@ -10,7 +10,7 @@
     <% @steps_to_display.each do |step| -%>
       <li class="app-step-nav__step js-step
       <%= set_active_step_class(step[:number]) -%>
-      <%= set_visited_step_class(step[:number]) -%>"
+      <%= set_visited_step_class(step[:number], @vacancy) -%>"
           aria-current="step"
           data-show=""
           >

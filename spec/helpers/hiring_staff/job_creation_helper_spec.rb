@@ -136,6 +136,8 @@ RSpec.describe HiringStaff::JobCreationHelper do
   end
 
   describe '#set_visited_step_class' do
+    let(:vacancy) { instance_double('Vacancy') }
+
     context 'when subsequent steps have been completed' do
       around do |example|
         # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
@@ -155,12 +157,13 @@ RSpec.describe HiringStaff::JobCreationHelper do
 
       it 'returns the visited class for step 1, active class for step 2, visited class for step 3' do
         allow(params).to receive(:[]).with(:create_step).and_return(2)
-        allow(session).to receive(:[]).with(:completed_step).and_return(3)
+        allow(vacancy).to receive_message_chain(:completed_step, :present?).and_return(true)
+        allow(vacancy).to receive(:completed_step).and_return(3)
 
-        expect(helper.set_visited_step_class(1)).to eql('app-step-nav__step--visited')
+        expect(helper.set_visited_step_class(1, vacancy)).to eql('app-step-nav__step--visited')
         expect(helper.set_active_step_class(2)).to eql('app-step-nav__step--active')
-        expect(helper.set_visited_step_class(2)).to eql(nil)
-        expect(helper.set_visited_step_class(3)).to eql('app-step-nav__step--visited')
+        expect(helper.set_visited_step_class(2, vacancy)).to eql(nil)
+        expect(helper.set_visited_step_class(3, vacancy)).to eql('app-step-nav__step--visited')
       end
     end
   end
