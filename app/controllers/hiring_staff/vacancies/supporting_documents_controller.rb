@@ -1,7 +1,5 @@
 class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacancies::ApplicationController
-  before_action :set_vacancy
-
-  before_action :redirect_unless_vacancy, only: %i[new create]
+  before_action :redirect_unless_vacancy
 
   def new
     @supporting_documents_form = SupportingDocumentsForm.new(session[:vacancy_attributes])

@@ -1,5 +1,4 @@
 class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::ApplicationController
-  before_action :set_vacancy
   before_action :redirect_unless_vacancy
 
   def show

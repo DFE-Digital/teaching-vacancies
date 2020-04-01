@@ -1,5 +1,5 @@
 class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
-  before_action :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :redirect_unless_vacancy
 
   def new
     @application_details_form = ApplicationDetailsForm.new(session[:vacancy_attributes].with_indifferent_access)
