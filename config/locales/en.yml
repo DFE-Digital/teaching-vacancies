@@ -451,8 +451,8 @@ en:
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
-      confirmation: You will no longer recieve updates for this alert.
-      confirmation_with_reference: You will no longer recieve updates for your '%{reference}' alert.
+      confirmation: You will no longer receive updates for this alert.
+      confirmation_with_reference: You will no longer receive updates for your '%{reference}' alert.
       resubscribe_html: If you unsubscribed accidentally, you can %{link}.
       resubscribe_link_text: resubscribe here
     back_to_search_results: 'Return to your search results'
