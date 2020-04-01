@@ -633,7 +633,7 @@ RSpec.feature 'Creating a vacancy' do
 
           activity = vacancy.activities.last
           expect(activity.session_id).to eq(session_id)
-          expect(activity.parameters.symbolize_keys).to eq(contact_email: [contact_email, 'an@email.com'])
+          expect(activity.parameters.symbolize_keys).to include(contact_email: [contact_email, 'an@email.com'])
         end
       end
 
