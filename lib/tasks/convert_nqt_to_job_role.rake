@@ -24,8 +24,8 @@ namespace :data do
         )
       end
 
-      Rails.logger.info("Conversion of salary ranges to strings has been completed for #{updated_count} vacancies")
-      Rollbar.log(:info, "Conversion of salary ranges to strings has been completed for #{updated_count} vacancies")
+      Rails.logger.info("Conversion of NQT fields to job role has been completed for #{updated_count} vacancies")
+      Rollbar.log(:info, "Conversion of NQT fields to job role has been completed for #{updated_count} vacancies")
     end
   end
 end
