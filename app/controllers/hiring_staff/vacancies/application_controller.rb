@@ -2,6 +2,8 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
+  before_action :set_vacancy
+
   def school_id
     params.permit![:school_id]
   end
@@ -15,7 +17,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def set_vacancy
-    @vacancy = params[:job_id] ? current_school.vacancies.find(params[:job_id]) : nil
+    if params[:job_id]
+      @vacancy = current_school.vacancies.find(params[:job_id])
+    elsif session_vacancy_id
+      @vacancy = current_school.vacancies.find(session_vacancy_id)
+    end
   end
 
   def current_step
