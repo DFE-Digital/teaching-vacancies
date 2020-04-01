@@ -168,7 +168,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
-      expect(job_specification_form.vacancy.job_role).to eq(I18n.t('jobs.job_role_options.teacher'))
+      expect(job_specification_form.vacancy.job_role).to include(I18n.t('jobs.job_role_options.teacher'))
       expect(job_specification_form.vacancy.job_description).to eq('description')
       expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)

@@ -90,7 +90,7 @@ module VacancyHelpers
 
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.job_role.join(', '))
+    expect(page).to have_content(vacancy.show_job_role)
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)

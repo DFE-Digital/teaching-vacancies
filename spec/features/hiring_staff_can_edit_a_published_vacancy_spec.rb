@@ -261,7 +261,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
 
-        verify_all_vacancy_details(VacancyPresenter.new(vacancy))
+        verify_all_vacancy_details(vacancy)
       end
 
       context 'if the job post has already been published' do

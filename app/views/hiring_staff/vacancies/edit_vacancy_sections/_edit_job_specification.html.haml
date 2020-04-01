@@ -24,7 +24,7 @@
     %dt.app-check-your-answers__question#job_role
       = t('jobs.job_role')
     %dd.app-check-your-answers__answer
-      = @vacancy.job_role.join(', ')
+      = @vacancy.show_job_role
     %dd.app-check-your-answers__change
       = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id, anchor: 'job_role'), 'aria-label': t('jobs.aria_labels.change_job_role'), class: 'govuk-link'
 

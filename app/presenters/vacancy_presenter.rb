@@ -147,4 +147,8 @@ class VacancyPresenter < BasePresenter
   def job_title_and_school
     "#{job_title} at #{school_name}"
   end
+
+  def show_job_role
+    model.job_role.join(', ')
+  end
 end
