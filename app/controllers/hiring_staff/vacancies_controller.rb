@@ -1,6 +1,5 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
   before_action :set_vacancy, only: %i[review]
-  before_action :set_completed_step, only: %i[review]
 
   def show
     vacancy = find_active_vacancy_by_id
@@ -31,6 +30,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
     unless @vacancy.valid?
       redirect_to_incomplete_step
+    else
+      set_completed_step
     end
 
     session[:current_step] = :review
@@ -69,6 +70,12 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     valid
   end
 
+  def step_3_valid?
+    valid = SupportingDocumentsForm.new(@vacancy.attributes).valid?
+    clear_cache_and_step unless valid
+    valid
+  end
+
   def step_4_valid?
     valid = ApplicationDetailsForm.new(@vacancy.attributes).completed?
     clear_cache_and_step unless valid
@@ -77,6 +84,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def redirect_to_incomplete_step
     return redirect_to school_job_pay_package_path(@vacancy.id) unless step_2_valid?
+    return redirect_to supporting_documents_school_job_path unless step_3_valid?
     return redirect_to application_details_school_job_path unless step_4_valid?
   end
 

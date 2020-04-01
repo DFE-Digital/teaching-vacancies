@@ -12,7 +12,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
 
     if @supporting_documents_form.valid?
       update_vacancy(supporting_documents_form_params, @vacancy)
-      return redirect_to_next_step(@vacancy)
+      return redirect_to next_step
     end
 
     session[:current_step] = :step_3_intro unless session[:current_step].eql?(:review)
