@@ -6,7 +6,7 @@ module VacancyJobSpecificationValidations
     validates :job_title, :job_description, presence: true
     validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
 
-    validates :job_role, presence: true
+    validates :job_roles, presence: true
 
     validates :job_description, length: { minimum: 10, maximum: 50_000 }, if: :job_description?
 

@@ -6,7 +6,7 @@ RSpec.describe JobPosting do
     {
       '@type' => 'JobPosting',
       'title' => 'Teacher of English',
-      'jobRole' => [I18n.t('jobs.job_role_options.nqt_suitable'), I18n.t('jobs.job_role_options.sen_specialist')],
+      'jobRoles' => [I18n.t('jobs.job_role_options.nqt_suitable'), I18n.t('jobs.job_role_options.sen_specialist')],
       'salary' => 'Lots of money',
       'jobBenefits' => '<p>This is an exceptional opportunity to make a difference within a positive environment.</p>',
       'datePosted' => date_posted,

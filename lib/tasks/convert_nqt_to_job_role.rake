@@ -16,11 +16,11 @@ namespace :data do
       Vacancy.where(newly_qualified_teacher: true).in_batches(of: 100).each_record do |vacancy|
         # Some vacancies being updated will have been created prior to certain validations
         # rubocop:disable Rails/SkipsModelValidations
-        vacancy.update_columns(job_role: [I18n.t('jobs.job_role_options.nqt_suitable')])
+        vacancy.update_columns(job_roles: [I18n.t('jobs.job_role_options.nqt_suitable')])
         # rubocop:enable Rails/SkipsModelValidations
         updated_count += 1
         Rails.logger.info(
-          "Updated vacancy: #{vacancy.job_title} with job_role: #{I18n.t('jobs.job_role_options.nqt_suitable')}"
+          "Updated vacancy: #{vacancy.job_title} with job_roles: #{I18n.t('jobs.job_role_options.nqt_suitable')}"
         )
       end
 

@@ -17,7 +17,7 @@ FactoryBot.define do
     expiry_time { expires_on&.change(sec: 0) }
     hired_status { nil }
     job_description { Faker::Lorem.paragraph(sentence_count: 4) }
-    job_role { ['Teacher'] }
+    job_roles { ['Teacher'] }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
     minimum_salary { '' }

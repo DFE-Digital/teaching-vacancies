@@ -27,7 +27,7 @@ RSpec.feature 'Creating a vacancy' do
     let!(:subjects) { create_list(:subject, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
-                                 job_role: [
+                                 job_roles: [
                                    I18n.t('jobs.job_role_options.teacher'),
                                    I18n.t('jobs.job_role_options.sen_specialist')
                                   ],
@@ -53,7 +53,7 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on 'Save and continue'
 
-        mandatory_fields = %w[job_title job_role job_description working_patterns]
+        mandatory_fields = %w[job_title job_roles job_description working_patterns]
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))

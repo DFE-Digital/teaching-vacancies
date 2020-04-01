@@ -20,9 +20,9 @@ module VacancyHelpers
             visible: false
     end
 
-    vacancy.job_role.each do |job_role|
+    vacancy.job_roles.each do |job_role|
       check job_role,
-            name: 'job_specification_form[job_role][]',
+            name: 'job_specification_form[job_roles][]',
             visible: false
     end
   end
@@ -90,7 +90,7 @@ module VacancyHelpers
 
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.show_job_role)
+    expect(page).to have_content(vacancy.show_job_roles)
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)

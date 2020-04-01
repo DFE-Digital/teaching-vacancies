@@ -57,17 +57,17 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                   :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
                   :flexible_working, :newly_qualified_teacher,
                   :first_supporting_subject_id, :second_supporting_subject_id,
-                  working_patterns: [], job_role: []).merge(completed_step: current_step)
+                  working_patterns: [], job_roles: []).merge(completed_step: current_step)
   end
 
   # Only necessary until changes to search are implemented
   # TODO remove after migration to remove newly qualified teacher column
   def persist_nqt_job_role_to_nqt_attribute
-    job_role = params.require(:job_specification_form)[:job_role]
+    job_roles = params.require(:job_specification_form)[:job_roles]
 
-    if job_role && job_role.include?(I18n.t('jobs.job_role_options.nqt_suitable'))
+    if job_roles && job_roles.include?(I18n.t('jobs.job_role_options.nqt_suitable'))
       params[:job_specification_form][:newly_qualified_teacher] = true
-    elsif job_role
+    elsif job_roles
       params[:job_specification_form][:newly_qualified_teacher] = false
     end
   end

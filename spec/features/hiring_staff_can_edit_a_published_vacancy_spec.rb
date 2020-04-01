@@ -30,7 +30,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   context 'editing a published vacancy' do
     let(:vacancy) do
       VacancyPresenter.new(create(:vacancy, :complete,
-                                  job_role: [
+                                  job_roles: [
                                     I18n.t('jobs.job_role_options.teacher'),
                                     I18n.t('jobs.job_role_options.sen_specialist')
                                    ],
@@ -78,7 +78,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'can edit job role for a legacy vacancy' do
         # rubocop:disable Rails/SkipsModelValidations
-        vacancy.update_columns(job_role: [])
+        vacancy.update_columns(job_roles: [])
         # rubocop:enable Rails/SkipsModelValidations
 
         visit edit_school_job_path(vacancy.id)
@@ -88,7 +88,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page.find('h2', text: I18n.t('jobs.job_details'))
           .text).to include(I18n.t('jobs.notification_labels.new'))
 
-        click_link_in_container_with_text(I18n.t('jobs.job_role'))
+        click_link_in_container_with_text(I18n.t('jobs.job_roles'))
 
         fill_in_job_specification_form_fields(vacancy)
 

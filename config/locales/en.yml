@@ -168,7 +168,7 @@ en:
       - 'Schools have listed %{count} jobs but they have since expired.'
     job_details: 'Job details'
     job_title: 'Job title'
-    job_role: 'Job role'
+    job_roles: 'Job role'
     job_role_options:
       teacher: 'Teacher'
       leadership: 'Leadership'

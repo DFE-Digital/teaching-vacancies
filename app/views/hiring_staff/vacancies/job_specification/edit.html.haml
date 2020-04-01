@@ -18,10 +18,10 @@
                   required: true
         %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
-      = f.input :job_role,
+      = f.input :job_roles,
                 as: :check_boxes,
                 wrapper: :checkboxes,
-                label: t('jobs.job_role'),
+                label: t('jobs.job_roles'),
                 hint: t('jobs.form_hints.job_role'),
                 wrapper_html: { id: 'job_role' },
                 collection: job_role_options,

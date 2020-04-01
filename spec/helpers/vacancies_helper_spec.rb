@@ -83,7 +83,7 @@ RSpec.describe VacanciesHelper, type: :helper do
     end
 
     it 'should include job_role for legacy listings' do
-      allow(vacancy).to receive_message_chain(:job_role, :any?).and_return(false)
+      allow(vacancy).to receive_message_chain(:job_roles, :any?).and_return(false)
       expect(helper.new_sections(vacancy)).to include('job_role')
     end
   end

@@ -4,7 +4,7 @@ en:
       blank: Enter a job title
       too_short: Job title must be at least %{count} characters
       too_long: Job title must not be more than %{count} characters
-    job_role:
+    job_roles:
       blank: Select a job role
     job_description:
       blank: Enter a job description

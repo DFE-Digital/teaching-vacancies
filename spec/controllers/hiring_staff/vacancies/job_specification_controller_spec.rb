@@ -12,7 +12,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       let(:params) do
         {
           job_specification_form: {
-            job_role: I18n.t('jobs.job_role_options.nqt_suitable')
+            job_roles: I18n.t('jobs.job_role_options.nqt_suitable')
           }
         }
       end
@@ -27,7 +27,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       let(:params) do
         {
           job_specification_form: {
-            job_role: I18n.t('jobs.job_role_options.teacher')
+            job_roles: I18n.t('jobs.job_role_options.teacher')
           }
         }
       end
