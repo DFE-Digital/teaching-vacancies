@@ -136,6 +136,39 @@ RSpec.feature 'Copying a vacancy' do
     end
   end
 
+  context '#job_roles' do
+    context 'when a copied job has no job role set' do
+      scenario 'it shows the job role field' do
+        original_vacancy = build(:vacancy, :past_publish, job_roles: [], school: school)
+        original_vacancy.save(validate: false)
+
+        visit school_path
+
+        within('table.vacancies') do
+          click_on I18n.t('jobs.copy_link')
+        end
+
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to have_content(I18n.t('jobs.job_roles'))
+      end
+    end
+
+    context 'when a copied job has job role set' do
+      scenario 'it does not show the job role field' do
+        original_vacancy = create(:vacancy, school: school)
+
+        visit school_path
+
+        within('table.vacancies') do
+          click_on I18n.t('jobs.copy_link')
+        end
+
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to_not have_content(I18n.t('jobs.job_roles'))
+      end
+    end
+  end
+
   describe 'validations' do
     let!(:original_vacancy) do
       vacancy = build(:vacancy, :past_publish, school: school)
