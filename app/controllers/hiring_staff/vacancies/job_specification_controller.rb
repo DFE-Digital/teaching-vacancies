@@ -1,4 +1,8 @@
+require 'persist_nqt_job_role'
+
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
+  include PersistNQTJobRole
+
   def new
     @job_specification_form = JobSpecificationForm.new(school_id: current_school.id)
     return if session[:current_step].blank?
@@ -49,7 +53,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   private
 
   def job_specification_form_params
-    persist_nqt_job_role_to_nqt_attribute
+    persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
     params.require(:job_specification_form)
           .permit(:job_title, :job_description, :leadership_id,
                   :subject_id,
@@ -58,18 +62,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                   :flexible_working, :newly_qualified_teacher,
                   :first_supporting_subject_id, :second_supporting_subject_id,
                   working_patterns: [], job_roles: []).merge(completed_step: current_step)
-  end
-
-  # Only necessary until changes to search are implemented
-  # TODO remove after migration to remove newly qualified teacher column
-  def persist_nqt_job_role_to_nqt_attribute
-    job_roles = params.require(:job_specification_form)[:job_roles]
-
-    if job_roles && job_roles.include?(I18n.t('jobs.job_role_options.nqt_suitable'))
-      params[:job_specification_form][:newly_qualified_teacher] = true
-    elsif job_roles
-      params[:job_specification_form][:newly_qualified_teacher] = false
-    end
   end
 
   def save_vacancy_without_validation
