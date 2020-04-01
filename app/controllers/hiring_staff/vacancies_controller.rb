@@ -1,5 +1,6 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
   before_action :set_vacancy, only: %i[review]
+  before_action :set_completed_step, only: %i[review]
 
   def show
     vacancy = find_active_vacancy_by_id
@@ -88,8 +89,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     session[:current_step] = ''
   end
 
-  def set_vacancy
-    @vacancy = current_school.vacancies.active.find(vacancy_id)
+  def set_completed_step
+    @vacancy.update(completed_step: current_step)
   end
 
   def find_active_vacancy_by_id
