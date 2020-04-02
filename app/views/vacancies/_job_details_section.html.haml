@@ -3,7 +3,7 @@
     = t('jobs.job_details')
   %table.govuk-table{ ariadescribedby: "Job details" }
     %tbody.govuk-table__body
-      - if @vacancy.job_roles.present?
+      - if @vacancy.job_roles&.any?
         %tr.govuk-table__row
           %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('jobs.job_roles')
@@ -63,4 +63,3 @@
                   %image{src: asset_pack_path("media/images/icon-document.png")}
             %a.govuk-link.document-link{ href: document[:download_url], target: '_blank' } #{document[:name]}
             &nbsp#{number_with_precision(document[:size] / 1024.0 / 1024.0, precision: 2)} MB
-

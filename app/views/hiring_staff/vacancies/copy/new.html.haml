@@ -18,7 +18,7 @@
                 wrapper_html: { id: 'job_title' },
                 input_html: { class: 'govuk-input' },
                 required: true
-      - if @copy_form.vacancy.job_roles.none?
+      - if @copy_form.vacancy.job_roles&.none?
         = f.input :job_roles,
                   as: :check_boxes,
                   wrapper: :checkboxes,

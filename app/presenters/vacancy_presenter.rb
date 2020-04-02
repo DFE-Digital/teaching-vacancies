@@ -149,6 +149,6 @@ class VacancyPresenter < BasePresenter
   end
 
   def show_job_roles
-    model.job_roles.join(', ')
+    model.job_roles&.join(', ')
   end
 end
