@@ -1,6 +1,6 @@
 %h2.govuk-heading-m.mb0
   = t('jobs.job_details')
-  - unless @vacancy.job_roles.any?
+  - unless @vacancy.job_roles&.any?
     .notification-tag
       %strong.govuk-tag.app-task-list__task-completed
         = t('jobs.notification_labels.new')
