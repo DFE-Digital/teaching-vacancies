@@ -1,11 +1,16 @@
-= render 'hiring_staff/vacancies/vacancy_form_partials/title', form_section_title: I18n.t('jobs.supporting_documents')
+- if @vacancy.published?
+  - content_for :page_title_prefix, "#{@documents_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.supporting_documents')}"
+- else
+  - content_for :page_title_prefix, "#{@documents_form.errors.present? ? 'Error: ' : ''}#{t('jobs.supporting_documents')} — #{t('jobs.create_a_job', school: current_school.name)}"
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @documents_form, url: school_job_documents_path(@vacancy.id), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary 'Please correct the following errors'
 
-      %h2.govuk-heading-m
+      %h2.govuk-heading-l
         = t('jobs.supporting_documents')
 
       #js-xhr-flashes

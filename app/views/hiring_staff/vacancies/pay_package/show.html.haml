@@ -1,11 +1,16 @@
-= render 'hiring_staff/vacancies/vacancy_form_partials/title', form_section_title: I18n.t('jobs.pay_package')
+- if @vacancy.published?
+  - content_for :page_title_prefix, "#{@pay_package_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.pay_package')}"
+- else
+  - content_for :page_title_prefix, "#{@pay_package_form.errors.present? ? 'Error: ' : ''}#{t('jobs.pay_package')} — #{t('jobs.create_a_job', school: current_school.name)}"
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @pay_package_form, url: school_job_pay_package_path(@vacancy.id), html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = render 'hiring_staff/vacancies/error_messages', errors: @pay_package_form.errors
 
-      %h2.govuk-heading-m
+      %h2.govuk-heading-l
         = t('jobs.pay_package')
 
       = f.govuk_text_field :salary,

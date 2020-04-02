@@ -1,16 +1,12 @@
-- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}Supporting documents — #{t('jobs.create_a_job', school: current_school.name)}"
-
-%h1.govuk-heading-l
-  = t('jobs.create_a_job', school: current_school.name)
-  %span.govuk-caption-l
-    = t('jobs.current_step', step: current_step,  total: total_steps)
+- content_for :page_title_prefix, "#{@supporting_documents_form.errors.present? ? 'Error: ' : ''}#{t('jobs.supporting_documents')} — #{t('jobs.create_a_job', school: current_school.name)}"
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @supporting_documents_form, action: :post, url: supporting_documents_school_job_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary 'Please correct the following errors'
 
-      %h2.govuk-heading-m
+      %h2.govuk-heading-l
         = t('jobs.supporting_documents')
 
       = f.govuk_collection_radio_buttons :supporting_documents,

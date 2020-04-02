@@ -1,10 +1,9 @@
 - content_for :page_title_prefix, @vacancy.review_page_title
-= render partial: 'school_vacancy_breadcrumb'
-= render 'hiring_staff/vacancies/vacancy_form_partials/title', form_section_title: t('jobs.review_heading')
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
-    %h2.govuk-heading-m
+    %h2.govuk-heading-l
       = t('jobs.review_heading')
     %div
       - if new_sections(@vacancy).any?
