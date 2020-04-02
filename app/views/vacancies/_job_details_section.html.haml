@@ -3,6 +3,12 @@
     = t('jobs.job_details')
   %table.govuk-table{ ariadescribedby: "Job details" }
     %tbody.govuk-table__body
+      - if @vacancy.job_roles.any?
+        %tr.govuk-table__row
+          %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
+            = t('jobs.job_roles')
+          %td.govuk-table__cell
+            = @vacancy.show_job_roles
       - if @vacancy.any_subjects?
         %tr.govuk-table__row
           %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
@@ -24,18 +30,6 @@
           = t('jobs.salary')
         %td.govuk-table__cell
           = @vacancy.salary
-      - if @vacancy.newly_qualified_teacher?
-        %tr.govuk-table__row
-          %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
-            = t('jobs.newly_qualified_teacher')
-          %td.govuk-table__cell
-            = @vacancy.newly_qualified_teacher
-      - if @vacancy.leadership.present?
-        %tr.govuk-table__row
-          %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
-            = t('jobs.leadership_level')
-          %td.govuk-table__cell
-            = @vacancy.leadership.title
 
   %h4.govuk-heading-s= t('jobs.job_description')
   %p= @vacancy.job_description
