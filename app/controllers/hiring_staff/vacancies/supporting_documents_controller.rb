@@ -1,7 +1,5 @@
 class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacancies::ApplicationController
-  before_action :set_vacancy
-
-  before_action :redirect_unless_vacancy, only: %i[new create]
+  before_action :redirect_unless_vacancy
 
   def new
     @supporting_documents_form = SupportingDocumentsForm.new(session[:vacancy_attributes])
@@ -13,9 +11,8 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
     store_vacancy_attributes(@supporting_documents_form.vacancy.attributes)
 
     if @supporting_documents_form.valid?
-      session[:completed_step] = current_step
-      vacancy = update_vacancy(supporting_documents_form_params)
-      return redirect_to_next_step(vacancy)
+      update_vacancy(supporting_documents_form_params, @vacancy)
+      return redirect_to next_step
     end
 
     session[:current_step] = :step_3_intro unless session[:current_step].eql?(:review)
@@ -25,7 +22,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
   private
 
   def supporting_documents_form_params
-    (params[:supporting_documents_form] || params).permit(:supporting_documents)
+    (params[:supporting_documents_form] || params).permit(:supporting_documents).merge(completed_step: current_step)
   end
 
   def next_step

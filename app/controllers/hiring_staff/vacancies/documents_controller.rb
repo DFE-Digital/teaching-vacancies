@@ -3,8 +3,6 @@ require 'google/apis/drive_v3'
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
   FILE_SIZE_LIMIT = 10.megabytes
 
-  before_action :set_vacancy
-
   before_action :redirect_unless_vacancy
   before_action :redirect_unless_supporting_documents
   before_action :redirect_to_next_step_if_save_and_continue, only: %i[create]

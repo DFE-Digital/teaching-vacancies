@@ -1,9 +1,9 @@
 class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
-  before_action :redirect_unless_vacancy_session_id, only: %i[new create]
+  before_action :redirect_unless_vacancy
 
   def new
     @application_details_form = ApplicationDetailsForm.new(session[:vacancy_attributes].with_indifferent_access)
-    @application_details_form.valid? if %i[step_3 review].include?(session[:current_step])
+    @application_details_form.valid? if %i[step_4 review].include?(session[:current_step])
   end
 
   def create
@@ -15,7 +15,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
       vacancy = update_vacancy(@application_details_form.params_to_save)
       redirect_to next_step(vacancy)
     else
-      session[:current_step] = :step_3 unless session[:current_step].eql?(:review)
+      session[:current_step] = :step_4 unless session[:current_step].eql?(:review)
       redirect_to application_details_school_job_path(anchor: 'errors')
     end
   end
@@ -49,10 +49,11 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
   private
 
   def application_details_form_params
-    params.require(:application_details_form).permit(:application_link, :contact_email, :expiry_time,
-                                                     :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
-                                                     :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
-                                                     :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
+    params.require(:application_details_form)
+          .permit(:application_link, :contact_email, :expiry_time,
+                  :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
+                  :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
+                  :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem).merge(completed_step: current_step)
   end
 
   def next_step(vacancy)

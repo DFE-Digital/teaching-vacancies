@@ -1,5 +1,4 @@
 class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::ApplicationController
-  before_action :set_vacancy
   before_action :redirect_unless_vacancy
 
   def show
@@ -10,7 +9,6 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
     @pay_package_form = PayPackageForm.new(pay_package_form_params)
 
     if @pay_package_form.valid?
-      session[:completed_step] = current_step
       update_vacancy(pay_package_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       return redirect_to_next_step_if_save_and_continue
@@ -22,7 +20,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
   private
 
   def pay_package_form_params
-    (params[:pay_package_form] || params).permit(:salary, :benefits)
+    (params[:pay_package_form] || params).permit(:salary, :benefits).merge(completed_step: current_step)
   end
 
   def next_step
