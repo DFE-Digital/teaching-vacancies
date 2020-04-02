@@ -4,7 +4,7 @@
   = t('jobs.edit_heading', school: current_school.name)
 = simple_form_for @job_specification_form, method: :put, url: school_job_job_specification_path(@job_specification_form.id) do |f|
   %h2.govuk-heading-m
-    = t('jobs.job_specification')
+    = t('jobs.job_details')
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -18,10 +18,18 @@
                   required: true
         %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
+      = f.input :job_roles,
+                as: :check_boxes,
+                wrapper: :checkboxes,
+                label: t('jobs.job_roles'),
+                hint: t('jobs.form_hints.job_role'),
+                wrapper_html: { id: 'job_role' },
+                collection: job_role_options,
+                required: true
       = f.input :job_description,
                 wrapper: 'textarea',
                 as: :text,
-                label: t('jobs.description'),
+                label: t('jobs.job_description'),
                 hint: t('jobs.form_hints.description'),
                 input_html: { rows: 10 },
                 wrapper_html: { id: 'job_description' },
@@ -33,18 +41,22 @@
                 wrapper_html: { id: 'main_subject' },
                 collection: subject_options,
                 required: false
-      = f.input :first_supporting_subject_id,
-                label: t('jobs.first_supporting_subject'),
-                hint: t('jobs.form_hints.supporting_subject'),
-                wrapper_html: { id: 'first_supporting_subject' },
-                collection: subject_options,
-                required: false
-      = f.input :second_supporting_subject_id,
-                label: t('jobs.second_supporting_subject'),
-                hint: t('jobs.form_hints.supporting_subject'),
-                wrapper_html: { id: 'second_supporting_subject' },
-                collection: subject_options,
-                required: false
+
+      #other_subjects
+        = f.input :first_supporting_subject_id,
+                  wrapper: 'select',
+                  label: t('jobs.first_supporting_subject'),
+                  hint: t('jobs.form_hints.supporting_subject'),
+                  wrapper_html: { id: 'first_supporting_subject' },
+                  collection: subject_options,
+                  required: false
+        = f.input :second_supporting_subject_id,
+                  wrapper: 'select',
+                  label: t('jobs.second_supporting_subject'),
+                  hint: t('jobs.form_hints.supporting_subject'),
+                  wrapper_html: { id: 'second_supporting_subject' },
+                  collection: subject_options,
+                  required: false
 
       = f.input :working_patterns,
                 as: :check_boxes,
@@ -55,15 +67,9 @@
                 collection: working_pattern_options,
                 required: true
 
-      = f.input :flexible_working, as: :boolean,
-                wrapper: :inline_checkbox,
-                wrapper_html: { id: 'flexible_working' },
-                input_html: { 'aria-label': t('jobs.aria_labels.flexible_working') }
-
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,
                               legend_options: { page_heading: false, class: "govuk-label" }
-
 
       %div.govuk-form-group#ends_on
         = f.gov_uk_date_field :ends_on,

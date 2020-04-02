@@ -1,4 +1,8 @@
+require 'persist_nqt_job_role'
+
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
+  include PersistNQTJobRole
+
   def new
     @job_specification_form = JobSpecificationForm.new(school_id: current_school.id)
     return if session[:current_step].blank?
@@ -49,17 +53,19 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   private
 
   def job_specification_form_params
-    params.require(:job_specification_form).permit(:job_title, :job_description, :leadership_id,
-                                                   :subject_id,
-                                                   :starts_on_dd, :starts_on_mm,
-                                                   :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
-                                                   :flexible_working, :newly_qualified_teacher,
-                                                   :first_supporting_subject_id, :second_supporting_subject_id,
-                                                   working_patterns: []).merge(completed_step: current_step)
+    persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
+    params.require(:job_specification_form)
+          .permit(:job_title, :job_description, :leadership_id,
+                  :subject_id,
+                  :starts_on_dd, :starts_on_mm,
+                  :starts_on_yyyy, :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
+                  :flexible_working, :newly_qualified_teacher,
+                  :first_supporting_subject_id, :second_supporting_subject_id,
+                  working_patterns: [], job_roles: []).merge(completed_step: current_step)
   end
 
   def save_vacancy_without_validation
-    # TODO remove after migration to remove column
+    # TODO remove after migration to remove minimum salary column
     @job_specification_form.vacancy.minimum_salary = ''
     @job_specification_form.vacancy.school_id = current_school.id
     @job_specification_form.vacancy.send :set_slug

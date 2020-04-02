@@ -7,7 +7,7 @@
 
 = simple_form_for @copy_form, html: { class: 'copy-form' }, action: :post, url: school_job_copy_path do |f|
   %h2.govuk-heading-m
-    = t('jobs.job_specification')
+    = t('jobs.job_details')
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
@@ -18,6 +18,15 @@
                 wrapper_html: { id: 'job_title' },
                 input_html: { class: 'govuk-input' },
                 required: true
+      - if @copy_form.vacancy.job_roles.none?
+        = f.input :job_roles,
+                  as: :check_boxes,
+                  wrapper: :checkboxes,
+                  label: t('jobs.job_roles'),
+                  hint: t('jobs.form_hints.job_role'),
+                  wrapper_html: { id: 'job_role' },
+                  collection: job_role_options,
+                  required: true
 
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,

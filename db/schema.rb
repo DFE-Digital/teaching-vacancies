@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_125329) do
     t.string "supporting_documents"
     t.string "salary"
     t.integer "completed_step"
+    t.string "job_roles", array: true
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"

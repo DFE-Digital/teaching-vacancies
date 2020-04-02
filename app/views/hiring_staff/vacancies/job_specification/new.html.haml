@@ -9,7 +9,7 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       %h2.govuk-heading-m
-        = t('jobs.job_specification')
+        = t('jobs.job_details')
       = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.input :job_title,
@@ -20,10 +20,18 @@
                   required: true
         %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
+      = f.input :job_roles,
+                as: :check_boxes,
+                wrapper: :checkboxes,
+                label: t('jobs.job_roles'),
+                hint: t('jobs.form_hints.job_role'),
+                wrapper_html: { id: 'job_role' },
+                collection: job_role_options,
+                required: true
       = f.input :job_description,
                 wrapper: 'textarea',
                 as: :text,
-                label: t('jobs.description'),
+                label: t('jobs.job_description'),
                 hint: t('jobs.form_hints.description'),
                 input_html: { rows: 10 },
                 wrapper_html: { id: 'job_description' },
@@ -60,18 +68,6 @@
                 wrapper_html: { id: 'working_patterns' },
                 collection: working_pattern_options,
                 required: true
-
-      = f.input :newly_qualified_teacher, as: :boolean,
-                hint: t('jobs.form_hints.newly_qualified_teacher'),
-                wrapper: :inline_checkbox,
-                wrapper_html: { id: 'newly_qualified_teacher' },
-                input_html: { 'aria-label': t('jobs.aria_labels.newly_qualified_teacher') }
-      = f.input :leadership_id,
-                wrapper: 'select',
-                label: t('jobs.leadership_level'),
-                collection: Leadership.order(:title),
-                wrapper_html: { id: 'leadership' },
-                required: false
 
       %div.govuk-form-group#starts_on
         = f.gov_uk_date_field :starts_on,

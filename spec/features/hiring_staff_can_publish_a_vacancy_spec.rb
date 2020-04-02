@@ -25,14 +25,16 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'creating a new vacancy' do
     let!(:subjects) { create_list(:subject, 3) }
-    let!(:leaderships) { create_list(:leadership, 3) }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
+                                 job_roles: [
+                                   I18n.t('jobs.job_role_options.teacher'),
+                                   I18n.t('jobs.job_role_options.sen_specialist')
+                                  ],
                                  school: school,
                                  subject: subjects[0],
                                  first_supporting_subject: subjects[1],
                                  second_supporting_subject: subjects[2],
-                                 leadership: leaderships.sample,
                                  working_patterns: ['full_time', 'part_time'],
                                  publish_on: Time.zone.today))
     end
@@ -51,20 +53,16 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on 'Save and continue'
 
+        mandatory_fields = %w[job_title job_roles job_description working_patterns]
+
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: 3))
+          expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))
         end
 
-        within_row_for(text: I18n.t('jobs.job_title')) do
-          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_title.blank')))
-        end
-
-        within_row_for(text: I18n.t('jobs.description')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.blank'))
-        end
-
-        within_row_for(text: I18n.t('jobs.working_patterns')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.working_patterns.blank'))
+        mandatory_fields.each do |field|
+          within_row_for(text: I18n.t("jobs.#{field}")) do
+            expect(page).to have_content((I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.blank")))
+          end
         end
       end
 

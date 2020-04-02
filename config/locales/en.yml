@@ -139,7 +139,6 @@ en:
     starts_on: 'Expected start date'
     ends_on: 'End date'
     expired: 'This job post has expired'
-    description: 'Job description'
     education: 'Essential educational requirements'
     qualifications: 'Essential qualifications'
     experience: 'Essential skills and experience'
@@ -169,6 +168,13 @@ en:
       - 'Schools have listed %{count} jobs but they have since expired.'
     job_details: 'Job details'
     job_title: 'Job title'
+    job_roles: 'Job role'
+    job_role_options:
+      teacher: 'Teacher'
+      leadership: 'Leadership'
+      sen_specialist: 'SEN specialist'
+      nqt_suitable: 'Suitable for NQTs'
+    job_description: 'Job description'    
     salary: 'Salary'
     benefits: 'Employee benefits'
     salary_range_html: "Salary range (<span class='text-red'>Required</span>)"
@@ -304,6 +310,7 @@ en:
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
+      job_role: 'Select all that describe the role'
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
       salary_range: 'Enter full-time equivalent annual salary, before tax (for example, 30,000 for a half-time role that pays £15,000 per year)'

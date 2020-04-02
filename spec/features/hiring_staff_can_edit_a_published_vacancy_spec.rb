@@ -28,12 +28,22 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   end
 
   context 'editing a published vacancy' do
-    let(:vacancy) { create(:vacancy, :published, school: school) }
+    let(:vacancy) do
+      VacancyPresenter.new(create(:vacancy, :complete,
+                                  job_roles: [
+                                    I18n.t('jobs.job_role_options.teacher'),
+                                    I18n.t('jobs.job_role_options.sen_specialist')
+                                   ],
+                                  school: school,
+                                  subject: build(:subject),
+                                  working_patterns: ['full_time', 'part_time'],
+                                  publish_on: Time.zone.today))
+    end
 
     scenario 'shows all vacancy information' do
       visit edit_school_job_path(vacancy.id)
 
-      verify_all_vacancy_details(VacancyPresenter.new(vacancy))
+      verify_all_vacancy_details(vacancy)
     end
 
     scenario 'takes you to the edit page' do
@@ -64,6 +74,30 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
         expect(page).to have_content('Assistant Head Teacher')
+      end
+
+      scenario 'can edit job role for a legacy vacancy' do
+        # rubocop:disable Rails/SkipsModelValidations
+        vacancy.update_columns(job_roles: [])
+        # rubocop:enable Rails/SkipsModelValidations
+
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content(I18n.t('jobs.job_details'))
+        expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
+        expect(page.find('h2', text: I18n.t('jobs.job_details'))
+          .text).to include(I18n.t('jobs.notification_labels.new'))
+
+        click_link_in_container_with_text(I18n.t('jobs.job_roles'))
+
+        fill_in_job_specification_form_fields(vacancy)
+
+        click_on 'Update job'
+
+        expect(page).to have_content(I18n.t('jobs.job_details'))
+        expect(page.find('h2', text: I18n.t('jobs.job_details'))
+          .text).to_not include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
 
       scenario 'ensures the vacancy slug is updated when the title is saved' do
@@ -184,6 +218,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
           .text).to_not include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
     end
 
@@ -228,7 +263,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
 
-        verify_all_vacancy_details(VacancyPresenter.new(vacancy))
+        verify_all_vacancy_details(vacancy)
       end
 
       context 'if the job post has already been published' do

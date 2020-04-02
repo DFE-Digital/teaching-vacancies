@@ -1,5 +1,9 @@
 %h2.govuk-heading-m.mb0
-  = t('jobs.job_specification')
+  = t('jobs.job_details')
+  - unless @vacancy.job_roles.any?
+    .notification-tag
+      %strong.govuk-tag.app-task-list__task-completed
+        = t('jobs.notification_labels.new')
 
 .govuk-body-s.mb1
   = link_to job_specification_school_job_path, class: 'govuk-link', 'aria-label': 'Change job specification' do
@@ -17,8 +21,16 @@
       = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_title'), 'aria-label': t('jobs.aria_labels.change_job_title'), class: 'govuk-link'
 
   .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#job_role
+      = t('jobs.job_roles')
+    %dd.app-check-your-answers__answer
+      = @vacancy.show_job_roles
+    %dd.app-check-your-answers__change
+      = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'job_role'), 'aria-label': t('jobs.aria_labels.change_job_role'), class: 'govuk-link'
+
+  .app-check-your-answers__contents
     %dt.app-check-your-answers__question#description
-      = t('jobs.description')
+      = t('jobs.job_description')
     %dd.app-check-your-answers__answer
       = @vacancy.job_description
     %dd.app-check-your-answers__change
@@ -48,23 +60,6 @@
         = @vacancy.working_patterns
       %dd.app-check-your-answers__change
         = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'working_patterns'), 'aria-label': t('jobs.aria_labels.change_working_patterns'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#newly_qualified_teacher
-      = t('jobs.newly_qualified_teacher')
-    %dd.app-check-your-answers__answer
-      = @vacancy.newly_qualified_teacher
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'newly_qualified_teacher'), 'aria-label': t('jobs.aria_labels.newly_qualified_teacher'), class: 'govuk-link'
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#leadership_level
-      = t('jobs.leadership_level')
-    %dd.app-check-your-answers__answer
-      - if @vacancy.leadership
-        =@vacancy.leadership.title
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), job_specification_school_job_path(anchor: 'leadership'), 'aria-label': t('jobs.aria_labels.change_leadership_level'), class: 'govuk-link'
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#starts_on

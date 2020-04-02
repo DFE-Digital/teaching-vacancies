@@ -75,11 +75,16 @@ RSpec.describe VacanciesHelper, type: :helper do
   end
 
   describe '#new_sections' do
-    let(:vacancy) { double('vacancy') }
+    let(:vacancy) { double('vacancy').as_null_object }
 
     it 'should include supporting_documents for legacy listings' do
       allow(vacancy).to receive(:supporting_documents).and_return(nil)
       expect(helper.new_sections(vacancy)).to include('supporting_documents')
+    end
+
+    it 'should include job_role for legacy listings' do
+      allow(vacancy).to receive_message_chain(:job_roles, :any?).and_return(false)
+      expect(helper.new_sections(vacancy)).to include('job_role')
     end
   end
 end

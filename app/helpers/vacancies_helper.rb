@@ -10,6 +10,10 @@ module VacanciesHelper
 
   WORD_EXCEPTIONS = ['and', 'the', 'of', 'upon'].freeze
 
+  def job_role_options
+    Vacancy::JOB_ROLE_OPTIONS
+  end
+
   def working_pattern_options
     Vacancy::WORKING_PATTERN_OPTIONS.map do |key, _value|
       [Vacancy.human_attribute_name("working_patterns.#{key}"), key]
@@ -104,6 +108,7 @@ module VacanciesHelper
 
   def new_sections(vacancy)
     sections = []
+    sections << 'job_role' unless vacancy.job_roles.any?
     sections << 'supporting_documents' unless vacancy.supporting_documents
     sections
   end
