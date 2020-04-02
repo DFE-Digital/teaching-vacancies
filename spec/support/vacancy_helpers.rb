@@ -111,11 +111,11 @@ module VacancyHelpers
 
   def verify_vacancy_show_page_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
+    expect(page).to have_content(vacancy.show_job_roles)
     expect(page.html).to include(vacancy.job_description)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page).to have_content(vacancy.newly_qualified_teacher)
     expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
 
@@ -131,8 +131,6 @@ module VacancyHelpers
       expect(page.html).to include(vacancy.qualifications)
       expect(page.html).to include(vacancy.experience)
     end
-
-    expect(page).to have_content(vacancy.leadership.title)
 
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
     expect(page).to have_content(vacancy.expires_on.to_s.strip)
