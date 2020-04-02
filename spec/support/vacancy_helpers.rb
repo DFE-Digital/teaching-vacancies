@@ -20,7 +20,7 @@ module VacancyHelpers
             visible: false
     end
 
-    vacancy.job_roles.each do |job_role|
+    vacancy.job_roles&.each do |job_role|
       check job_role,
             name: 'job_specification_form[job_roles][]',
             visible: false
