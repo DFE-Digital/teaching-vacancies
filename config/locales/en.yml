@@ -226,6 +226,16 @@ en:
     review_future: 'Review your entries for each section below, making any changes before you submit the listing for publication.'
     edit: 'Edit the job details.'
     copy_of: 'Copy of'
+    preview_listing:
+      heading: 'Preview this job listing'
+      message: 'See how this job listing will appear to jobseekers on Teaching Vacancies'
+      button: 'Preview job listing'
+    submit_listing:
+      heading:
+        zero: 'Submit this listing for publication now'
+        one: 'Submit this listing for publication on %{date}'
+      message_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have provided are, to the best of your knowledge, correct"
+      button: 'Confirm and submit job'
     publish_for: 'Publish this listing for '
     publish_for_future: 'Submit this listing for publication on '
     confirmation_summary_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
@@ -495,6 +505,7 @@ en:
     dismiss: 'Dismiss'
     find: 'Find'
     save_and_continue: 'Save and continue'
+    save_and_return: 'Save and return later'
     submit: 'Submit'
     update_job: 'Update job'
 
