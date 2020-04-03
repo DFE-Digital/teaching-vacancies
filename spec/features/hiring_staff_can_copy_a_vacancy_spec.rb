@@ -40,7 +40,7 @@ RSpec.feature 'Copying a vacancy' do
     end
 
     expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
-    click_on I18n.t('jobs.submit')
+    click_on I18n.t('jobs.submit_listing.button')
 
     expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
     click_on('Preview your job listing')

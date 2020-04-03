@@ -113,7 +113,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
     def edit_a_published_vacancy
       published_vacancy = create(:vacancy, :published, school: school)
       visit edit_school_job_path(published_vacancy.id)
-      click_link_in_container_with_text(I18n.t('jobs.application_link'))
+      click_header_link(I18n.t('jobs.application_details'))
 
       fill_in 'application_details_form[application_link]', with: 'https://example.com'
       click_on I18n.t('buttons.update_job')
