@@ -49,6 +49,16 @@ RSpec.feature 'Viewing a single published vacancy' do
       .to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)).to_json)
   end
 
+  scenario 'A vacancy without a job role' do
+    vacancy = build(:vacancy, job_roles: nil)
+    vacancy.send :set_slug
+    vacancy.save(validate: false)
+
+    visit job_path(vacancy)
+    expect(page).to have_content(vacancy.job_title)
+    expect(page).to_not have_content(I18n.t('jobs.job_roles'))
+  end
+
   context 'A user viewing a vacancy' do
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
