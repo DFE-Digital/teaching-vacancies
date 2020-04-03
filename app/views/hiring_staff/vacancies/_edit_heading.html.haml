@@ -1,0 +1,8 @@
+- if @vacancy.published?
+  %h1.govuk-heading-l= t('jobs.edit_heading', school: current_school.name)
+- else
+  %h2.govuk-heading-l= t('jobs.review_heading')
+
+%div
+  - if new_sections(@vacancy).any?
+    = render 'shared/section_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), sections: new_sections(@vacancy)
