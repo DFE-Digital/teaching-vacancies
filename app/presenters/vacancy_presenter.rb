@@ -94,6 +94,10 @@ class VacancyPresenter < BasePresenter
     [main_subject, first_supporting_subject, second_supporting_subject].count(&:present?)
   end
 
+  def all_subjects
+    [main_subject, first_supporting_subject, second_supporting_subject].reject(&:blank?).join(', ')
+  end
+
   def publish_today?
     model.publish_on == Time.zone.today
   end
