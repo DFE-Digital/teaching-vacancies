@@ -1,47 +1,37 @@
-%h2.govuk-heading-m.mb0
+%h2.govuk-heading-m.app-task-list__section#job_details_heading
+  %span.app-task-list__section-number 4.
   = t('jobs.application_details')
-
-.govuk-body-s.mb1
-  = link_to edit_school_job_application_details_path(@vacancy.id), class: 'govuk-link', 'aria-label': t('jobs.aria_labels.change_application_details') do
-    Change
-    %span.govuk-visually-hidden the application details
+  - if @vacancy.published?
+    = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
+  - else
+    = link_to t('buttons.change'), application_details_school_job_path, class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.contact_email')
-    %dd.app-check-your-answers__answer
+    %dt.app-check-your-answers__question.first-question#contact_email
+      %h4.govuk-heading-s= t('jobs.contact_email')
+    %dd.app-check-your-answers__answer.first-question
       =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'contact_email'), 'aria-label': t('jobs.aria_labels.change_job_contact_email'), class: 'govuk-link'
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.application_link')
+    %dt.app-check-your-answers__question#application_link
+      %h4.govuk-heading-s= t('jobs.application_link')
     %dd.app-check-your-answers__answer
       = link_to @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url', url: @vacancy.application_link) do
         %span.govuk-body-m.govuk-link= t('jobs.application_link_url')
         %br
         %span.govuk-body-s.govuk-link= @vacancy.application_link
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'application_link'), 'aria-label': t('jobs.aria_labels.change_application_link_URL'), class: 'govuk-link'
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.publication_date')
-    %dd.app-check-your-answers__answer
-      = format_date @vacancy.publish_on
-    %dd.app-check-your-answers__change
-      - unless @vacancy.published? && @vacancy.publish_on.past?
-        = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'publish_on'), 'aria-label': t('jobs.aria_labels.change_date_role_will_be_listed'), class: 'govuk-link'
+    %dt.app-check-your-answers__question#publish_on
+      %h4.govuk-heading-s= t('jobs.publication_date')
+    %dd.app-check-your-answers__answer= format_date @vacancy.publish_on
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.application_deadline')
+    %dt.app-check-your-answers__question#expires_on
+      %h4.govuk-heading-s= t('jobs.application_deadline')
     %dd.app-check-your-answers__answer
       = format_date @vacancy.expires_on
       = t('jobs.time_at') unless @vacancy.expiry_time.nil?
       = format_time @vacancy.expiry_time
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id, anchor: 'expires_on'), 'aria-label': t('jobs.aria_labels.change_application_deadline'), class: 'govuk-link'

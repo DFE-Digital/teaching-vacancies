@@ -1,26 +1,16 @@
-%h2.govuk-heading-m.mb0#pay_package_heading
+%h2.govuk-heading-m.app-task-list__section#pay_package_heading
+  %span.app-task-list__section-number 2.
   = t('jobs.pay_package')
-  
-.govuk.body-s.mb1#change-pay-package
-  = link_to school_job_pay_package_path(@vacancy.id, change: true), class: 'govuk-link', 'aria-label': t('jobs.aria_labels.pay_package') do
-    Change
-    %span.govuk-visually-hidden the pay package
+  = link_to t('buttons.change'), school_job_pay_package_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_pay_package')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.salary')
-    %dd.app-check-your-answers__answer
-      = @vacancy.salary
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), school_job_pay_package_path(@vacancy.id, change: true, anchor: 'pay-package-form-salary-field'), 'aria-label': t('jobs.aria_labels.change_salary'), class: 'govuk-link'
-    
+    %dt.app-check-your-answers__question.first-question#salary
+      %h4.govuk-heading-s= t('jobs.salary')
+    %dd.app-check-your-answers__answer.first-question= @vacancy.salary
+
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question
-      = t('jobs.benefits')
-    %dd.app-check-your-answers__answer
-      = @vacancy.benefits
-    %dd.app-check-your-answers__change
-      = link_to t('buttons.change'), school_job_pay_package_path(@vacancy.id, change: true, anchor: 'pay-package-form-benefits-field'), 'aria-label': t('jobs.aria_labels.benefits'), class: 'govuk-link'
-    
+    %dt.app-check-your-answers__question#benefits
+      %h4.govuk-heading-s= t('jobs.benefits')
+    %dd.app-check-your-answers__answer= @vacancy.benefits
