@@ -232,7 +232,7 @@ en:
       button: 'Preview job listing'
     submit_listing:
       heading:
-        zero: 'Submit this listing for publication now'
+        zero: 'Submit this listing for publication now (%{date})'
         one: 'Submit this listing for publication on %{date}'
       message_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have provided are, to the best of your knowledge, correct"
       button: 'Confirm and submit job'
