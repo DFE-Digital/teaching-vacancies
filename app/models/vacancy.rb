@@ -35,7 +35,6 @@ class Vacancy < ApplicationRecord
 
   algoliasearch do
     attributes :first_supporting_subject,
-      :job_description,
       :job_roles,
       :job_title,
       :newly_qualified_teacher,
@@ -43,6 +42,10 @@ class Vacancy < ApplicationRecord
       :slug,
       :status,
       :working_patterns
+
+    attribute :job_description do
+      self.job_description.truncate(256)
+    end
 
     attribute :school do
       {
