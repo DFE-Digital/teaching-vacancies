@@ -21,7 +21,7 @@
 
     %h3.govuk-heading-m= t('jobs.preview_listing.heading')
     %p= t('jobs.preview_listing.message')
-    = link_to t('jobs.preview_listing.button'), school_job_review_path(@vacancy.id), class: 'govuk-button', id: 'vacancy-review-preview'
+    = link_to t('jobs.preview_listing.button'), school_job_preview_path(@vacancy.id), class: 'govuk-button', id: 'vacancy-review-preview'
 
     %h3.govuk-heading-m= t('jobs.submit_listing.heading', count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
     %p= t('jobs.submit_listing.message_html')

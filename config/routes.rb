@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review',
         defaults: { create_step: 5, step_title: I18n.t('jobs.review_heading') }
+      get 'preview'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
       get :publish, to: 'hiring_staff/vacancies/publish#create'
