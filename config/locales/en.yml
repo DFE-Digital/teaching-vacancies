@@ -226,6 +226,7 @@ en:
     deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
     time_at: ' at '
     publication_date: 'Date role will be listed'
+    job_summary: 'Job summary'
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
     review_future: 'Review your entries for each section below, making any changes before you submit the listing for publication.'
     edit: 'Edit the job details.'
