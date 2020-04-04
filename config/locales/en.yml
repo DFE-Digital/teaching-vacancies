@@ -291,7 +291,7 @@ en:
     confirmation_page:
       submitted: 'The job listing has been completed'
       page_title: 'The job listing for %{school} has been completed'
-      preview_posted_job: 'Preview your job listing'
+      view_posted_job: 'View your job listing'
       dashboard_link: 'You can also view, amend or delete it on %{link}'
       next_step: 'What happens next'
       date_posted: 'Your job listing will be posted on %{date}.'

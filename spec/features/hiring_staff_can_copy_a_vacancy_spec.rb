@@ -43,7 +43,7 @@ RSpec.feature 'Copying a vacancy' do
     click_on I18n.t('jobs.submit_listing.button')
 
     expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
-    click_on('Preview your job listing')
+    click_on I18n.t('jobs.confirmation_page.view_posted_job')
 
     expect(page).to have_content(new_vacancy.job_title)
     expect(page).to have_content(new_vacancy.starts_on.to_s.strip)

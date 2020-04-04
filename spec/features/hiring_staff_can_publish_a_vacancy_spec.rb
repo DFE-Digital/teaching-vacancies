@@ -638,7 +638,7 @@ RSpec.feature 'Creating a vacancy' do
         visit school_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
 
-        expect(page).to have_content('Preview your job listing')
+        expect(page).to have_content(I18n.t('jobs.confirmation_page.view_posted_job'))
       end
     end
 
@@ -661,7 +661,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('jobs.submit_listing.button')
         save_page
 
-        click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+        click_on I18n.t('jobs.confirmation_page.view_posted_job')
 
         verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
       end
@@ -675,7 +675,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('jobs.submit_listing.button')
           save_page
 
-          click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+          click_on I18n.t('jobs.confirmation_page.view_posted_job')
 
           verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
         end
@@ -690,7 +690,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('jobs.submit_listing.button')
           save_page
 
-          click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+          click_on I18n.t('jobs.confirmation_page.view_posted_job')
 
           verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
         end
@@ -705,7 +705,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('jobs.submit_listing.button')
           save_page
 
-          click_on I18n.t('jobs.confirmation_page.preview_posted_job')
+          click_on I18n.t('jobs.confirmation_page.view_posted_job')
 
           verify_vacancy_show_page_details(VacancyPresenter.new(vacancy))
         end
@@ -784,7 +784,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_application_details_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
         click_link('vacancy-review-submit')
-        expect(page).to have_content('Preview your job listing')
+        expect(page).to have_content(I18n.t('jobs.confirmation_page.view_posted_job'))
 
         visit application_details_school_job_path
         expect(page.current_path).to eq(job_specification_school_job_path)
