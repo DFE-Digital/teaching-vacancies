@@ -230,6 +230,15 @@ en:
       heading: 'Preview this job listing'
       message: 'See how this job listing will appear to jobseekers on Teaching Vacancies'
       button: 'Preview job listing'
+      page_title: 'Preview job listing for %{school}'
+      summary:
+        heading: 'Preview of %{title}'
+        body_html: 
+          zero: "This is how your job listing will appear to jobseekers visiting Teaching Vacancies. You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date})"
+          one: "This is how your job listing will appear to jobseekers visiting Teaching Vacancies. You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}"
+        buttons:
+          submit: 'Submit for publication'
+          make_changes: 'Make changes'
     submit_listing:
       heading:
         zero: 'Submit this listing for publication now (%{date})'

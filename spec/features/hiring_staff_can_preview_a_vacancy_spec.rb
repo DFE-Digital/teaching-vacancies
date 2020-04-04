@@ -23,7 +23,7 @@ RSpec.feature 'Hiring staff can preview a vacancy' do
     scenario 'users can preview the listing' do
       click_on I18n.t('jobs.preview_listing.button')
       expect(page).to have_current_path(school_job_preview_path(vacancy.id))
-      expect(page).to have_content('This is the preview page')
+      expect(page).to have_content(I18n.t('jobs.preview_listing.summary.heading', title: vacancy.job_title))
     end
 
     scenario 'users can submit the listing' do
@@ -37,6 +37,22 @@ RSpec.feature 'Hiring staff can preview a vacancy' do
       expect(page).to have_current_path(school_path)
       expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
       expect(page).to have_content(I18n.t('buttons.create_job'))
+    end
+  end
+
+  context 'when previewing a vacancy' do
+    before do
+      visit school_job_preview_path(vacancy.id)
+    end
+
+    scenario 'users can make changes to the listing' do
+      click_on I18n.t('jobs.preview_listing.summary.buttons.make_changes')
+      expect(page).to have_current_path(school_job_review_path(vacancy.id))
+    end
+
+    scenario 'users can submit the listing' do
+      click_on I18n.t('jobs.preview_listing.summary.buttons.submit')
+      expect(page).to have_current_path(school_job_summary_path(vacancy.id))
     end
   end
 end
