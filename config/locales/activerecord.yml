@@ -6,18 +6,15 @@ en:
       too_long: Job title must not be more than %{count} characters
     job_roles:
       blank: Select a job role
-    job_summary:
-      blank: Enter a job summary
-      too_short: Job summary must be at least %{count} characters
-      too_long: Job summary must not be more than %{count} characters
     working_patterns:
       blank: Select a working pattern
-    salary:
-      more_than_maxiumum: "%{salary} must be less than %{count}"
   pay_package_errors: &pay_package_errors
     salary:
       blank: Enter a salary
       too_long: Salary must not be more than %{count} characters
+  supporting_documents_errors: &supporting_documents_errors
+    supporting_documents:
+      inclusion: "Please indicate if you'd like to attach supporting documents"
   application_details_errors: &application_details_errors
     contact_email:
       blank: Enter a contact email
@@ -33,9 +30,11 @@ en:
       blank: Enter the date the role will be listed
       before_today: Date role will be listed must be either today or in the future
       invalid: Use the correct format for the date the role will be listed
-  supporting_documents_errors: &supporting_documents_errors
-    supporting_documents:
-      inclusion: "Please indicate if you'd like to attach supporting documents"
+  job_summary_errors: &job_summary_errors
+    job_summary:
+      blank: Enter a job summary
+    about_school:
+      blank: Enter a description of the school
   errors:
     format: "%{message}"
     title: 
@@ -53,12 +52,15 @@ en:
         pay_package_form:
           attributes:
             <<: *pay_package_errors
-        application_details_form:
-          attributes:
-            <<: *application_details_errors
         supporting_documents_form:
           attributes:
             <<: *supporting_documents_errors
+        application_details_form:
+          attributes:
+            <<: *application_details_errors
+        job_summary_form:
+          attributes:
+            <<: *job_summary_errors
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
@@ -71,8 +73,9 @@ en:
           attributes:
             <<: *job_specification_errors
             <<: *pay_package_errors
-            <<: *application_details_errors
             <<: *supporting_documents_errors
+            <<: *application_details_errors
+            <<: *job_summary_errors
             expiry_time:
               blank: Enter the time the application is due
               wrong_format: Use the correct format for the time the application is due

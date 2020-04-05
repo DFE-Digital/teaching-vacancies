@@ -47,46 +47,6 @@ RSpec.describe JobSpecificationForm, type: :model do
         end
       end
     end
-
-    describe '#job_summary' do
-      let(:job_specification) { JobSpecificationForm.new(job_summary: job_summary) }
-
-      context 'when description is blank' do
-        let(:job_summary) { nil }
-
-        it 'requests an entry in the field' do
-          expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:job_summary][0])
-            .to eq('Enter a job summary')
-        end
-      end
-
-      context 'when description is too short' do
-        let(:job_summary) { 'short' }
-
-        it 'validates minimum length' do
-          expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:job_summary][0])
-            .to eq(
-              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_summary.too_short',
-                count: 10)
-              )
-        end
-      end
-
-      context 'when description is too long' do
-        let(:job_summary) { 'Long text' * 10000 }
-
-        it 'validates max length' do
-          expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:job_summary][0])
-            .to eq(
-              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_summary.too_long',
-                count: 50000)
-              )
-        end
-      end
-    end
   end
 
   describe '#starts_on' do
@@ -169,7 +129,6 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_roles).to include(I18n.t('jobs.job_role_options.teacher'))
-      expect(job_specification_form.vacancy.job_summary).to eq('description')
       expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)
       expect(job_specification_form.vacancy.newly_qualified_teacher).to eq(true)
