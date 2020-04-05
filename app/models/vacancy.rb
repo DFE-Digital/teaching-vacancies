@@ -26,6 +26,7 @@ class Vacancy < ApplicationRecord
   include VacancyJobSpecificationValidations
   include VacancyPayPackageValidations
   include VacancyApplicationDetailValidations
+  include VacancyJobSummaryValidations
 
   include Elasticsearch::Model
   include Redis::Objects

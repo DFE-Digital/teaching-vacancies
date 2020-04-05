@@ -3,12 +3,10 @@ module VacancyJobSpecificationValidations
   include ApplicationHelper
 
   included do
-    validates :job_title, :job_summary, presence: true
+    validates :job_title, presence: true
     validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
 
     validates :job_roles, presence: true
-
-    validates :job_summary, length: { minimum: 10, maximum: 50_000 }, if: :job_summary?
 
     validates :working_patterns, presence: true
 
@@ -59,10 +57,6 @@ module VacancyJobSpecificationValidations
 
   def ends_on_past_error
     I18n.t('activerecord.errors.models.vacancy.attributes.ends_on.past')
-  end
-
-  def job_summary=(value)
-    super(sanitize(value))
   end
 
   def job_title=(value)

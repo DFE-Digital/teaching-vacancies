@@ -56,11 +56,6 @@ RSpec.describe Vacancy, type: :model do
         expect(subject.errors.messages[:job_title].first)
           .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.too_short', count: 4))
       end
-
-      it '#job_summary' do
-        expect(subject.errors.messages[:job_summary].first)
-          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_summary.too_short', count: 10))
-      end
     end
 
     context 'restrict maximum length of string fields' do
@@ -77,19 +72,6 @@ RSpec.describe Vacancy, type: :model do
       it '#salary' do
         expect(subject.errors.messages[:salary].first)
           .to eq(I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.too_long', count: 256))
-      end
-    end
-
-    context 'restrict maximum length of text fields' do
-      subject { build(:vacancy, :fail_maximum_validation) }
-      before(:each) do
-        subject.valid?
-      end
-
-      it '#job_summary' do
-        expect(subject.errors.messages[:job_summary].first)
-          .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_summary.too_long',
-            count: 50000))
       end
     end
 
