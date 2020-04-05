@@ -57,7 +57,7 @@ RSpec.describe JobSpecificationForm, type: :model do
         it 'requests an entry in the field' do
           expect(job_specification.valid?).to be false
           expect(job_specification.errors.messages[:job_summary][0])
-            .to eq('Enter a job description')
+            .to eq('Enter a job summary')
         end
       end
 
