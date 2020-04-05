@@ -31,7 +31,7 @@ RSpec.describe Vacancy, type: :model do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_roles) }
-      it { should validate_presence_of(:job_description) }
+      it { should validate_presence_of(:job_summary) }
       it { should validate_presence_of(:working_patterns) }
       it { should validate_presence_of(:salary) }
     end
@@ -57,9 +57,9 @@ RSpec.describe Vacancy, type: :model do
           .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.too_short', count: 4))
       end
 
-      it '#job_description' do
-        expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.too_short', count: 10))
+      it '#job_summary' do
+        expect(subject.errors.messages[:job_summary].first)
+          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_summary.too_short', count: 10))
       end
     end
 
@@ -86,9 +86,9 @@ RSpec.describe Vacancy, type: :model do
         subject.valid?
       end
 
-      it '#job_description' do
-        expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_long',
+      it '#job_summary' do
+        expect(subject.errors.messages[:job_summary].first)
+          .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_summary.too_long',
             count: 50000))
       end
     end
@@ -383,12 +383,12 @@ RSpec.describe Vacancy, type: :model do
   end
 
   context 'content sanitization' do
-    it '#job_description' do
+    it '#job_summary' do
       html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
-      vacancy = build(:vacancy, job_description: html)
+      vacancy = build(:vacancy, job_summary: html)
 
       sanitized_html = '<p> a paragraph with a link</p><br>'
-      expect(vacancy.job_description).to eq(sanitized_html)
+      expect(vacancy.job_summary).to eq(sanitized_html)
     end
 
     it '#job_title' do
@@ -586,7 +586,7 @@ RSpec.describe Vacancy, type: :model do
 
     it 'does not update the stats when you are updating the job description' do
       Timecop.freeze(2019, 1, 1, 10, 4, 3) do
-        expired_job.update(job_description: 'I am description')
+        expired_job.update(job_summary: 'I am description')
 
         expect(stats_updated_at).to be_nil
       end

@@ -95,7 +95,7 @@ class VacanciesPresenter < BasePresenter
   # rubocop:disable Metrics/AbcSize
   def to_csv_row(vacancy)
     [vacancy.job_title,
-     vacancy.job_description,
+     vacancy.job_summary,
      vacancy.salary,
      vacancy.benefits,
      vacancy.publish_on.to_time.iso8601,

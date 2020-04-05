@@ -12,7 +12,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     click_on(vacancy.job_title)
 
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.job_description)
+    expect(page).to have_content(vacancy.job_summary)
   end
 
   context 'with no jobs' do

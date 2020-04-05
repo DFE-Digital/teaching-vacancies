@@ -53,7 +53,7 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on I18n.t('buttons.save_and_continue')
 
-        mandatory_fields = %w[job_title job_roles job_description working_patterns]
+        mandatory_fields = %w[job_title job_roles job_summary working_patterns]
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))

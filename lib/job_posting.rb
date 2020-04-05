@@ -12,7 +12,7 @@ class JobPosting
   def map_schema_to_vacancy_fields
     {
       job_title: @schema['title'],
-      job_description: @schema['description'],
+      job_summary: @schema['description'],
       job_roles: @schema['jobRoles'],
       salary: @schema['salary'],
       benefits: @schema['jobBenefits'],

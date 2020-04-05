@@ -54,7 +54,7 @@ class Vacancy < ApplicationRecord
   } do
     mappings dynamic: 'false' do
       indexes :job_title, type: :text, analyzer: :stopwords
-      indexes :job_description, analyzer: 'english'
+      indexes :job_summary, analyzer: 'english'
 
       indexes :school do
         indexes :name, analyzer: 'english'

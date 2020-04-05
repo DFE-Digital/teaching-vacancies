@@ -27,7 +27,7 @@ RSpec.describe VacancySort do
     end
 
     it 'sets default column if an invalid one is provided' do
-      expect(vacancy_sort.update(column: 'job_description', order: anything).column).to eq 'expires_on'
+      expect(vacancy_sort.update(column: 'job_summary', order: anything).column).to eq 'expires_on'
     end
 
     it 'sets default order if an invalid one is provided' do
