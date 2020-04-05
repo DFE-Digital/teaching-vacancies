@@ -584,7 +584,7 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    it 'does not update the stats when you are updating the job description' do
+    it 'does not update the stats when you are updating the job summary' do
       Timecop.freeze(2019, 1, 1, 10, 4, 3) do
         expired_job.update(job_summary: 'I am description')
 
