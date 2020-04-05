@@ -178,7 +178,7 @@ en:
       leadership: 'Leadership'
       sen_specialist: 'SEN specialist'
       nqt_suitable: 'Suitable for NQTs'
-    job_description: 'Job description'    
+    job_summary: 'Job description'    
     salary: 'Salary'
     benefits: 'Employee benefits'
     salary_range_html: "Salary range (<span class='text-red'>Required</span>)"

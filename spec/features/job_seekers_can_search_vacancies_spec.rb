@@ -65,7 +65,7 @@ RSpec.feature 'Searching vacancies by subject' do
 
   describe 'does not match' do
     scenario '#description', elasticsearch: true do
-      vacancy = create(:vacancy, job_description: 'Opening has for an outstanding teacher.')
+      vacancy = create(:vacancy, job_summary: 'Opening has for an outstanding teacher.')
 
       Vacancy.__elasticsearch__.client.indices.flush
 

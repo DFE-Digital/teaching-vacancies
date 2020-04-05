@@ -1,7 +1,7 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    fill_in 'job_specification_form[job_description]', with: vacancy.job_description
+    fill_in 'job_specification_form[job_summary]', with: vacancy.job_summary
     select vacancy.subject.name, from: 'job_specification_form[subject_id]' if vacancy.subject
     select vacancy.first_supporting_subject,
       from: 'job_specification_form[first_supporting_subject_id]' if vacancy.first_supporting_subject
@@ -91,7 +91,7 @@ module VacancyHelpers
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
-    expect(page.html).to include(vacancy.job_description)
+    expect(page.html).to include(vacancy.job_summary)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
@@ -112,7 +112,7 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
-    expect(page.html).to include(vacancy.job_description)
+    expect(page.html).to include(vacancy.job_summary)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
@@ -153,7 +153,7 @@ module VacancyHelpers
       'salary': vacancy.salary,
       'jobBenefits': vacancy.benefits,
       'datePosted': vacancy.publish_on.to_time.iso8601,
-      'description': vacancy.job_description,
+      'description': vacancy.job_summary,
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,

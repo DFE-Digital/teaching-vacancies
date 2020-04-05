@@ -127,7 +127,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
-        fill_in 'job_specification_form[job_description]', with: 'Sample description'
+        fill_in 'job_specification_form[job_summary]', with: 'Sample description'
         click_on I18n.t('buttons.update_job')
       end
     end

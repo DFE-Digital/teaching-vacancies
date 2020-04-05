@@ -81,7 +81,7 @@ RSpec.describe VacanciesPresenter do
                                         hiringOrganization.identifier])
 
       expect(vacancies_csv[1]).to eq([vacancy.job_title,
-                                      vacancy.job_description,
+                                      vacancy.job_summary,
                                       vacancy.salary,
                                       vacancy.benefits,
                                       vacancy.publish_on.to_time.iso8601,
