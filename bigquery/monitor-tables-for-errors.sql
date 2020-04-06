@@ -18,6 +18,12 @@ IF
         #sets a minimum threshold for the number of schools that should be in the database - this should not change much unless we change the scope, so going below this threshold most likely means the dataset in BQ is incomplete
         "Table appears incomplete",
         #check whether there are at least this many schools in the schools table
+    IF
+      (table LIKE "%vacancy"
+        AND row_count <29000,
+        #sets a minimum threshold for the number of schools that should be in the database - this should not change much unless we change the scope, so going below this threshold most likely means the dataset in BQ is incomplete
+        "Table appears incomplete",
+        #check whether there are at least this many schools in the schools table
       IF
         (table = "dsi_users"
           AND row_count <25000,
@@ -44,7 +50,7 @@ IF
                 FROM
                   `teacher-vacancy-service.production_dataset.feb20_alertrun` ) < DATE_SUB(CURRENT_DATE(),INTERVAL 3 DAY)),
               "Latest date a row was updated in a frequently updated table from this source was at least 3 days ago",
-              "OK")))))) AS status
+              "OK"))))))) AS status
 FROM (
   SELECT
     table,
@@ -72,6 +78,7 @@ FROM (
     WHERE
       TYPE != 3 #exclude tables which are just Google Sheets - these don't have meaningful time/size data in __TABLES__
       AND table_id NOT LIKE "STATIC%" #don't monitor tables that don't change
+      AND table_id != 'CALCULATED_table_error_status' #don't monitor the table this query outputs to as we haven't written to it yet
       ))
 ORDER BY
   status DESC,
