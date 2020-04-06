@@ -27,14 +27,6 @@
                 wrapper_html: { id: 'job_role' },
                 collection: job_role_options,
                 required: true
-      = f.input :job_summary,
-                wrapper: 'textarea',
-                as: :text,
-                label: t('jobs.job_summary'),
-                hint: t('jobs.form_hints.description'),
-                input_html: { rows: 10 },
-                wrapper_html: { id: 'job_summary' },
-                required: true
       = f.input :subject_id,
                 wrapper: 'select',
                 label: t('jobs.main_subject'),

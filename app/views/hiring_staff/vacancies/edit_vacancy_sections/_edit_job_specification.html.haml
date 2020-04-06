@@ -23,11 +23,6 @@
     %dd.app-check-your-answers__answer= @vacancy.show_job_roles
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#job_summary
-      %h4.govuk-heading-s= t('jobs.job_summary')
-    %dd.app-check-your-answers__answer= @vacancy.job_summary
-
-  .app-check-your-answers__contents
     %dt.app-check-your-answers__question#subject
       %h4.govuk-heading-s= t('jobs.subjects')
     %dd.app-check-your-answers__answer= @vacancy.all_subjects
