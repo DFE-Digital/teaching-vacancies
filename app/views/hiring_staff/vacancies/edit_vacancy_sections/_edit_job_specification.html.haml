@@ -29,7 +29,7 @@
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#subject
-      %h4.govuk-heading-s= t('jobs.subject', count: @vacancy.subject_count)
+      %h4.govuk-heading-s= t('jobs.subjects')
     %dd.app-check-your-answers__answer= @vacancy.all_subjects
 
   - if @vacancy.working_patterns?
