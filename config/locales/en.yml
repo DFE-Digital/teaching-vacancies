@@ -22,7 +22,11 @@ en:
       new:
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
         request_account_title: Request an account
-        request_account_html: Don't have an account? You can get one if you work at a publicly funded school or trust in England, but you'll need your headteacher or senior leader to authorise you. Just ask them to send your full name and email address to %{mail_to}. Or email your details directly to that address, copying in your headteacher or senior leader.
+        request_account_html: >-
+          Don't have an account? You can get one if you work at a publicly funded school or trust in England, \
+          but you'll need your headteacher or senior leader to authorise you. Just ask them to send your full name
+          and email address to %{mail_to}. Or email your details directly to that address, copying in your headteacher
+          or senior leader.
         some_of_our_users: >-
           Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
           in, try again soon.
@@ -36,7 +40,8 @@ en:
     back: 'Back'
   pages:
     accessibility:
-      page_description: Find out which areas of Teaching Vacancies are not yet fully accessible and when we plan to correct each issue.
+      page_description:
+        Find out which areas of Teaching Vacancies are not yet fully accessible and when we plan to correct each issue.
     cookies:
       page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
     home:
@@ -54,14 +59,20 @@ en:
         manage_link: Manage jobs
         description: You're signed in as
     privacy_policy:
-      page_description: Find out what personal information Teaching Vacancies collects, how it is used, how long it is kept and what your data protection rights are.
+      page_description: >-
+        Find out what personal information Teaching Vacancies collects,
+        how it is used, how long it is kept and what your data protection rights are.
     terms-and-conditions:
-      page_description: Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
+      page_description:
+        Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
   sign_in:
     title: 'Sign in to Teaching Vacancies'
     link: 'Sign in'
     intro: You must have an account to sign into this service.
-    guidance: 'You can get one if you work at a publicly funded school or trust providing primary or secondary education in England and have been authorised by your headteacher or CEO. Just ask them to send your full name and email address to %{email}. Or email us your details directly, copying in your headteacher or CEO.'
+    guidance: >-
+      You can get one if you work at a publicly funded school or trust providing primary or secondary education in
+      England and have been authorised by your headteacher or CEO. Just ask them to send your full name and
+      email address to %{email}. Or email us your details directly, copying in your headteacher or CEO.
     organisation:
       title: 'Select your organisation'
       legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
@@ -84,7 +95,8 @@ en:
       pay_package_form:
         salary_html: "Salary (<span class='text-red'>Required</span>)"
       supporting_documents_form:
-        supporting_documents_html: "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
+        supporting_documents_html:
+          "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
@@ -93,8 +105,12 @@ en:
         starts_on: 'For example, 01 01 2020'
         ends_on: 'For example, 01 08 2020'
       pay_package_form:
-        salary: 'Enter the annual salary or salary range, and/or pay scale range. Where relevant, state if the salary is full-time equivalent'
-        benefits: 'Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments, for example'
+        salary: >-
+          Enter the annual salary or salary range, and/or pay scale range.
+          Where relevant, state if the salary is full-time equivalent
+        benefits: >-
+          Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
+          for example
       application_details_form:
         publish_on: 'For example, 01 01 2020'
         expires_on: 'For example, 01 08 2020'
@@ -104,26 +120,37 @@ en:
         publish_on: 'For example, 01 01 2020'
         expires_on: 'For example, 01 08 2020'
       supporting_documents_form:
-        supporting_documents: 'These could include, for example, a job description, person specification or application pack'
+        supporting_documents:
+          'These could include, for example, a job description, person specification or application pack'
       job_summary_form:
-        job_summary: 'Give a brief summary of the job that job seekers can quickly scan. This will be the first thing they see on the listing or in search engine results'
+        job_summary: >-
+          Give a brief summary of the job that job seekers can quickly scan.
+          This will be the first thing they see on the listing or in search engine results
         about_school: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
   jobs:
     current_step: "Step %{step} of %{total}"
     notification_labels:
       new: 'new'
     heading: 'Find a job in teaching'
-    location_description: 'Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers, with no recruitment fees for schools.'
+    location_description: >-
+      Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
+      with no recruitment fees for schools.
     location_search_heading: 'Teaching jobs in %{location}'
     sort_by: 'Sort by:'
     sort_submit: 'Sort'
     key_info: 'Contents'
-    awaiting_feedback_intro: 'Please tell us if you filled these expired jobs through Teaching Vacancies, and whether you listed them elsewhere. Your feedback will help us improve the service.'
+    awaiting_feedback_intro: >-
+      Please tell us if you filled these expired jobs through Teaching Vacancies,
+      and whether you listed them elsewhere. Your feedback will help us improve the service.
     no_awaiting_feedback: 'There are no jobs waiting for your feedback at the moment.'
     feedback_submitted_html: '<b>Feedback submitted</b> for %{title}'
-    feedback_error: There was a problem submitting your feedback. Please make sure you have selected an answer for both questions.
+    feedback_error:
+      There was a problem submitting your feedback. Please make sure you have selected an answer for both questions.
     inline_feedback_error: Please select an option.
-    feedback_all_submitted: 'You have provided feedback on all your expired jobs. Thank you for sharing this information, which will help us to improve the service. If you have general comments on the service you can share them with us using <a href="/feedback/new">this feedback form.</a>'
+    feedback_all_submitted: >-
+      You have provided feedback on all your expired jobs. Thank you for sharing this information,
+      which will help us to improve the service. If you have general comments on the service you can share them with us
+      using <a href="/feedback/new">this feedback form.</a>
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
       today: 'Deadline is today'
@@ -153,7 +180,8 @@ en:
     experience: 'Essential skills and experience'
     ref_no: 'Reference number'
     subjects: 'Subject(s)'
-    subject: 
+    subject:
+    subject:
       one: 'Subject'
       other: 'Subjects'
     main_subject: 'Main subject'
@@ -184,7 +212,7 @@ en:
       leadership: 'Leadership'
       sen_specialist: 'SEN specialist'
       nqt_suitable: 'Suitable for NQTs'
-    job_summary: 'Job summary'    
+    job_summary: 'Job summary'
     salary: 'Salary'
     benefits: 'Employee benefits'
     salary_range_html: "Salary range (<span class='text-red'>Required</span>)"
@@ -235,7 +263,8 @@ en:
     job_summary: 'Job summary'
     about_school: 'About %{school}'
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
-    review_future: 'Review your entries for each section below, making any changes before you submit the listing for publication.'
+    review_future:
+      'Review your entries for each section below, making any changes before you submit the listing for publication.'
     edit: 'Edit the job details.'
     copy_of: 'Copy of'
     preview_listing:
@@ -244,10 +273,16 @@ en:
       button: 'Preview job listing'
       page_title: 'Preview job listing for %{school}'
       summary:
-        heading: 'Preview of %{title} job listing'
-        body_html: 
-          zero: "This is how your job listing will appear to jobseekers visiting Teaching Vacancies. You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date})."
-          one: "This is how your job listing will appear to jobseekers visiting Teaching Vacancies. You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}."
+        heading: 'Preview of %{title}'
+        body_html:
+          zero: >-
+            This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
+            You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
+            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date})
+          one: >-
+            This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
+            You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
+            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}
         buttons:
           submit: 'Submit for publication'
           make_changes: 'Make changes'
@@ -255,11 +290,17 @@ en:
       heading:
         zero: 'Submit this listing for publication now (%{date})'
         one: 'Submit this listing for publication on %{date}'
-      message_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
+      message_html: >-
+        By publishing this job you agree to our <a href='/pages/terms-and-conditions'
+        class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have
+        provided are, to the best of your knowledge, correct
       button: 'Confirm and submit job'
     publish_for: 'Publish this listing for '
     publish_for_future: 'Submit this listing for publication on '
-    confirmation_summary_html: "By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are, to the best of your knowledge, correct."
+    confirmation_summary_html: >-
+      By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link'
+      target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are,
+      to the best of your knowledge, correct.
     submit: 'Publish now'
     submit_future: 'Confirm and submit job'
     apply: 'Get more information'
@@ -307,7 +348,9 @@ en:
       dashboard_link: 'You can also view, amend or delete it on %{link}'
       next_step: 'What happens next'
       date_posted: 'Your job listing will be posted on %{date}.'
-      date_expires: 'The listing will appear on the service until %{application_deadline}, after which it will no longer be visible to jobseekers.'
+      date_expires: >-
+        The listing will appear on the service until %{application_deadline},
+        after which it will no longer be visible to jobseekers.
       feedback_link: 'What did you think of this service?'
       feedback_time: '(takes 30 seconds)'
     aria_labels:
@@ -319,31 +362,44 @@ en:
       change_job_summary: 'Change job summary'
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'
-      application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}'
+      application_link_url: >-
+        Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}
       flexible_working: 'Flexible working'
       newly_qualified_teacher: 'Newly qualified teacher'
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
-      job_title: "For secondary school roles include subject and, if relevant, level of seniority ('Subject leader for science', for example)."
+      job_title: >-
+        For secondary school roles include subject and, if relevant,
+        level of seniority ('Subject leader for science', for example).
       job_role: 'Select all that describe the role'
       description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
       subject: 'What subject will the teacher focus on?'
-      salary_range: 'Enter full-time equivalent annual salary, before tax (for example, 30,000 for a half-time role that pays £15,000 per year)'
+      salary_range: >-
+        Enter full-time equivalent annual salary, before tax (for example,
+        30,000 for a half-time role that pays £15,000 per year)
       supporting_subject: 'What other subject will the teacher focus on?'
-      working_patterns: Select all working patterns you will consider for the role. Flexible working options may attract more candidates.
+      working_patterns: >-
+        Select all working patterns you will consider for the role.
+        Flexible working options may attract more candidates.
       newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
       start_date: 'For example, %{date}'
       end_date: 'For example, %{date}'
       education: 'State any formal education needed for the role (undergraduate degree, for example)'
-      qualifications: 'List any qualifications needed for this role (<span arial-label="Qualified Teacher Status">QTS</span>, for example)'
+      qualifications: >-
+        List any qualifications needed for this role
+        (<span arial-label="Qualified Teacher Status">QTS</span>, for example)
       experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
       contact_email: 'This email address will be shown publicly as a point of contact'
-      application_link: 'Enter the URL for the page on your school or trust’s website that gives further details on the job and how to apply.'
+      application_link: >-
+        Enter the URL for the page on your school or trust’s website that gives further details on the job
+        and how to apply.
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
     form_warnings:
-      working_pattern: If you select flexible working patterns (anything other than 'full-time') candidates will be asked to email you for details.
+      working_pattern: >-
+        If you select flexible working patterns (anything other than 'full-time')
+        candidates will be asked to email you for details.
     filters:
       title: 'Search job listings'
       location: 'Location'
@@ -387,23 +443,30 @@ en:
     rating4_option: Satisfied
     rating5_option: Very satisfied
     comment_label_html: "How could we improve this service? (<span class='text-red'>Required</span>)"
-    comment_hint_text: '<p>Please do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
+    comment_hint_text: >-
+      <p>Please do not include any information that could identify you personally
+      (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
     submit: 'Submit feedback'
   general_feedback:
     new:
       page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
     visit_purpose_legend_html: "What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)"
-    visit_purpose_hint_text: '<p>Please tell us what you came here to do. Do not include any information that could identify you personally (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>'
+    visit_purpose_hint_text: >-
+      <p>Please tell us what you came here to do. Do not include any information that could identify you personally
+      (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
     visit_purpose_options:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
       other_purpose: Something else (tell us in the box below)
-    user_participation_legend_html: "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
+    user_participation_legend_html:
+      "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
     user_participation_options:
       interested: 'Yes'
       not_interested: 'No'
     user_interested_email_heading: 'What is your email address?'
-    user_interested_email_text: "We'll only use this to tell you about opportunities to take part in user research that helps us improve Department for Education services."
+    user_interested_email_text: >-
+      We'll only use this to tell you about opportunities to take part in user research that helps us improve
+      Department for Education services.
   schools:
     school_overview: 'School overview'
     address: 'Address'
@@ -462,7 +525,8 @@ en:
     location_radius_text: Within %{radius} miles of %{location}
     location_category_text: In %{location}
     reference: 'for'
-    next_steps: "You'll receive a single job alert email at the end of any day when 1 or more matching jobs are first published."
+    next_steps:
+      "You'll receive a single job alert email at the end of any day when 1 or more matching jobs are first published."
     confirmation:
       header: 'Your email subscription has started'
       receipt_confirmation: We have sent a confirmation email to %{email}.
@@ -504,7 +568,9 @@ en:
           unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
   terms_and_conditions:
     page_title: 'Terms and Conditions'
-    intro: 'Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and agree to abide by them.'
+    intro: >-
+      Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and
+      agree to abide by them.
     intro_link: 'Of particular importance is the section %{link} which includes:'
     summary_list:
       - 'Using the Service'
@@ -515,7 +581,10 @@ en:
     label: 'I agree to all of the Terms and Conditions of the Teaching Vacancies service.'
   stats:
     title: Statistics
-    intro: This page is an event log used by the service team to measure and monitor the stability and performance of Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018 (the date we began recording statistics).
+    intro: >-
+      This page is an event log used by the service team to measure and monitor the stability and performance of
+      Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018
+      (the date we began recording statistics).
   buttons:
     accept_and_continue: 'Accept and continue'
     apply_filters: 'Search'
@@ -577,26 +646,38 @@ en:
       title: The email you're signed in with isn't authorised to list jobs for this school
       without_email:
         text:
-          - You can register your interest to use the service by emailing %{mailto_url}. It is currently open to schools in Cambridgeshire and the North East but will be rolled out in phases to other areas across England.
+          - You can register your interest to use the service by emailing %{mailto_url}.
+            It is currently open to schools in Cambridgeshire and the North East but will be rolled out in
+            phases to other areas across England.
 
-          - If your Teaching Vacancies account has already been set up but you are unable to sign in, email the same address with "help" in the subject line.
+          - If your Teaching Vacancies account has already been set up but you are unable to sign in,
+            email the same address with "help" in the subject line.
       with_email:
         text:
-          - You've tried to sign in with %{email}, which is not authorised to list jobs for this school. If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in, then sign into Teaching Vacancies with your authorised email. You can do this at %{signin_url}
+          - You've tried to sign in with %{email}, which is not authorised to list jobs for this school.
+            If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in,
+            then sign into Teaching Vacancies with your authorised email. You can do this at %{signin_url}
 
           - <h2 class="govuk-heading-m">If you are signing in with an authorised email</h2>
 
-          - If you know the email you’ve signed in with is authorised then there could be a technical issue. Please try using a different web browser to sign in or, if this fails, email %{mailto_url} with 'help' in the subject line.
+          - If you know the email you’ve signed in with is authorised then there could be a technical issue.
+            Please try using a different web browser to sign in or, if this fails, email %{mailto_url} with 'help'
+            in the subject line.
 
           - <h2 class="govuk-heading-m">If you need an account</h2>
 
-          - If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a publicly funded school or trust providing primary or secondary education in England and have your headteacher or CEO’s approval. Just ask them to send your full name and email address to %{mailto_url}. Or email us your details directly, copying in your headteacher or CEO.
+          - If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a publicly
+            funded school or trust providing primary or secondary education in England and have your headteacher or
+            CEO’s approval. Just ask them to send your full name and email address to %{mailto_url}. Or email us your
+            details directly, copying in your headteacher or CEO.
     cookies:
       title: Cookies
       name: Name
       purpose: Purpose
       expires: Expires
-      explainer: "'Teaching Vacancies' puts small files (known as 'cookies') onto your computer to collect information about how you use the service."
+      explainer: >-
+        "'Teaching Vacancies' puts small files (known as 'cookies') onto your computer to collect information about
+        how you use the service."
       cookies_are_used_to:
         title: 'Cookies are used to:'
         list:
@@ -610,14 +691,19 @@ en:
         title: How we use cookies
         analytics:
           title: Measuring website usage (Google Analytics)
-          line_1: We use Google Analytics software to collect information about how you use 'Teaching Vacancies'. We do this to help make sure the service is meeting the needs of its users and to help us make improvements.
+          line_1: >-
+            We use Google Analytics software to collect information about how you use 'Teaching Vacancies'.
+            We do this to help make sure the service is meeting the needs of its users and to help us make improvements.
           line_2: 'Google Analytics stores information about:'
           list:
             - the pages you visit on 'Teaching Vacancies'
             - how long you spend on each page
             - how you got to the site
             - what you click on while you're visiting the site
-          share_data_with_gds: We also share anonymised Google Analytics data with the Government Digital Service for the purpose of improving the user's experience across the government’s digital services. This data does not contain any information that could reveal the identity of individual users of the service.
+          share_data_with_gds: >-
+            We also share anonymised Google Analytics data with the Government Digital Service for the purpose of
+            improving the user's experience across the government’s digital services. This data does not contain any
+            information that could reveal the identity of individual users of the service.
           line_3: We don't allow Google to use or share our analytics data.
           line_4: 'Google Analytics sets the following cookies:'
           you_can_opt_out: You can %{opt_out_url}
@@ -627,13 +713,19 @@ en:
         about: A cookie is set to record your session activity.
       introductory_message:
         title: Our introductory message
-        about: You may see a pop-up welcome message when you first visit 'Teaching Vacancies'. We'll store a cookie so that your computer knows you've seen it and knows not to show it again.
+        about: >-
+          You may see a pop-up welcome message when you first visit 'Teaching Vacancies'.
+          We'll store a cookie so that your computer knows you've seen it and knows not to show it again.
       types:
         ga:
-          purpose: This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before
+          purpose: >-
+            This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if
+            you've visited before
           expires: After 2 years
         gid:
-          purpose: This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if you've visited before
+          purpose: >-
+            This helps us count how many people visit teaching-vacancies.service.gov.uk by tracking if
+            you've visited before
           expires: After 24 hours
         gat:
           purpose: This helps us limit the number of page view requests that Google records per minute
@@ -658,13 +750,18 @@ en:
       title: 'Privacy Notice: Teaching Vacancies'
       who_we_are:
         title: Who we are
-        about: This work is being carried out by the Department for Education (DfE) Digital, which is a part of DfE. DfE engages the private company Made Tech to help improve and provide the service. For the purpose of data protection legislation, DfE is the data controller for the personal data processed as part of Teaching Vacancies. Teaching Vacancies is a free and optional service for schools to list teaching roles.
+        about: >-
+          This work is being carried out by the Department for Education (DfE) Digital, which is a part of DfE.
+          DfE engages the private company Made Tech to help improve and provide the service. For the purpose of data
+          protection legislation, DfE is the data controller for the personal data processed as part of
+          Teaching Vacancies. Teaching Vacancies is a free and optional service for schools to list teaching roles.
       when_we_collect:
         title: When we collect personal information
         about: 'We receive your personal data when you submit it:'
         list:
           - when contacting us for support using the service, to leave feedback or for any other matters
-          - as a headteacher or other authorised person at a school when selecting which hiring staff can create Teaching Vacancies accounts
+          - as a headteacher or other authorised person at a school when selecting which hiring staff can create
+            Teaching Vacancies accounts
           - as hiring staff in order to create a Teaching Vacancies account
           - as a contact person for a job that has been listed on Teaching Vacancies
           - as a jobseeker signing up to emailed job alerts
@@ -674,34 +771,62 @@ en:
         list:
           - your name, email and (if applicable) your phone number when you contact us
           - your email address when you sign up for a job alert
-          - your email address if you include it with feedback to us on the service or agree to be contacted for user research purposes
-          - email addresses that are shared with us by schools for the purposes of creating a Teaching Vacancies account and posting jobs
-          - personal information such as the name and email of a contact person at your school, if you choose to share this in a job listing you post to Teaching Vacancies
+          - your email address if you include it with feedback to us on the service or agree to be
+            contacted for user research purposes
+          - email addresses that are shared with us by schools for the purposes of creating a Teaching Vacancies
+            account and posting jobs
+          - personal information such as the name and email of a contact person at your school, if you choose to share
+            this in a job listing you post to Teaching Vacancies
       how_we_use:
         title: How we will use your information
         text:
-          - If you contact us, DfE and (where applicable) Made Tech will use your name and contact information for the purpose of responding to you and providing support. We will not share this information with any other parties.
-          - If you sign up for a job alert your email address will be used exclusively for the purpose of sending you an email when a job meeting your chosen search criteria is published to the service.
-          - To list jobs on the service, hiring staff at schools need a Teaching Vacancies account, which requires them to supply their name and email address. Names and email addresses shared with us for this purpose are not shared by us with other parties.
-          - Information published in job listings may be used by third party job listing sites that use our job listing data via an application programming interface (API), as described in our Terms and Conditions. We are not responsible for how a third party handles any personal information you choose to include in a job listing.
-          - If you indicate in the feedback form that we can contact you for user research then we may use your email for that purpose. It will not be shared with third parties.
+          - If you contact us, DfE and (where applicable) Made Tech will use your name and contact information for the
+            purpose of responding to you and providing support. We will not share this information with any other
+            parties.
+          - If you sign up for a job alert your email address will be used exclusively for the purpose of sending you
+            an email when a job meeting your chosen search criteria is published to the service.
+          - To list jobs on the service, hiring staff at schools need a Teaching Vacancies account, which requires them
+            to supply their name and email address. Names and email addresses shared with us for this purpose are not
+            shared by us with other parties.
+          - Information published in job listings may be used by third party job listing sites that use our job listing
+            data via an application programming interface (API), as described in our Terms and Conditions. We are not
+            responsible for how a third party handles any personal information you choose to include in a job listing.
+          - If you indicate in the feedback form that we can contact you for user research then we may use your email
+            for that purpose. It will not be shared with third parties.
       why_its_lawful:
         title: Why our use of your personal data is lawful
-        about: In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation. For the purpose of this project, your consent forms the basis of this as stated under GDPR Article 6 (1)(a).
+        about: >-
+          In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data
+          protection legislation. For the purpose of this project, your consent forms the basis of this as stated under
+          GDPR Article 6 (1)(a).
       who_we_make_available_to:
         title: Who we will make your personal data available to
-        line_1: We sometimes need to make personal data available to other organisations. These might include contracted partners (who we have employed to process your personal data on our behalf) and/or other organisations (with whom we need to share your personal data for specific purposes).
-        line_2: Where we need to share your personal data with others, we ensure that this data sharing complies with data protection legislation. We share specific types of personal data with dxw and Made Tech, who have been contracted by DfE to manage the delivery and hosting of the digital service.
+        line_1: >-
+          We sometimes need to make personal data available to other organisations. These might include contracted
+          partners (who we have employed to process your personal data on our behalf) and/or other organisations
+          (with whom we need to share your personal data for specific purposes).
+        line_2: >-
+          Where we need to share your personal data with others, we ensure that this data sharing complies with data
+          protection legislation. We share specific types of personal data with dxw and Made Tech, who have been
+          contracted by DfE to manage the delivery and hosting of the digital service.
         line_3: 'The firms dxw and Made Tech use your data:'
         list:
-          - 'for security purposes: collecting part of the IP addresses of people visiting the Teaching Vacancies website (for example, if we were receiving continuous direct denial of service attacks from an IP address range then we could block it)'
-          - 'to enable users to use the service and receive updates: collecting the emails of those publishing job listings on Teaching Vacancies and those signing up to job alerts'
+          - 'for security purposes: collecting part of the IP addresses of people visiting the Teaching Vacancies
+            website (for example, if we were receiving continuous direct denial of service attacks from an IP address
+            range then we could block it)'
+          - 'to enable users to use the service and receive updates: collecting the emails of those publishing job
+            listings on Teaching Vacancies and those signing up to job alerts'
       how_long:
         title: How long we will keep your personal data
         text:
-          - Neither DfE nor its delivery partners will keep your personal data longer than we need it for the purpose(s) of research, security and/or delivery of the service, and in any case not longer than 7 years. Your data will be deleted when DfE and its delivery partners no longer need it for these purposes, or when 7 years have passed, whichever comes first.
-          - Partial IP addresses will be deleted after 7 days unless their request caused an error, in which case they remain in our logs for 30 days.
-          - If you share personal information in a job listing we will retain this while the job vacancy is live and for one year after it has expired.
+          - Neither DfE nor its delivery partners will keep your personal data longer than we need it for the purpose(s)
+            of research, security and/or delivery of the service, and in any case not longer than 7 years. Your data
+            will be deleted when DfE and its delivery partners no longer need it for these purposes, or when 7 years
+            have passed, whichever comes first.
+          - Partial IP addresses will be deleted after 7 days unless their request caused an error, in which case they
+            remain in our logs for 30 days.
+          - If you share personal information in a job listing we will retain this while the job vacancy is live and
+            for one year after it has expired.
       your_rights:
         title: Your data protection rights
         line_1: 'You have the right:'
@@ -710,20 +835,31 @@ en:
           - to have your personal data rectified, if it is inaccurate or incomplete
           - to ask us to delete your personal data unless there is a legal reason to continue to store and process it
           - to restrict our processing of your personal data (i.e. permitting its storage but no further processing)
-          - to object to direct marketing (including profiling) and processing for the purposes of scientific/historical research and statistics
-          - not to be subject to decisions based purely on automated processing where it produces a legal or similarly significant effect on you
-        line_2: If you need to contact us regarding any of the above, or have any other questions about how your personal information will be used, please %{contact_the_dfe_url}.
-        line_3: The Information Commissioner's Office makes further information about your data protection rights available in their %{gdpr_url}.
+          - to object to direct marketing (including profiling) and processing for the purposes of scientific/historical
+            research and statistics
+          - not to be subject to decisions based purely on automated processing where it produces a legal or similarly
+            significant effect on you
+        line_2: >-
+          If you need to contact us regarding any of the above, or have any other questions about how your
+          personal information will be used, please %{contact_the_dfe_url}.
+        line_3: >-
+          The Information Commissioner's Office makes further information about your data protection rights available
+          in their %{gdpr_url}.
         contact_the_dfe: contact the DfE
         gdpr: Guide to the General Data Protection Regulation (GDPR)
       withdrawal_of_consent:
         title: Withdrawal of consent and the right to lodge a complaint
-        line_1: Where we are processing your personal data with your consent, you have the right to withdraw that consent. If you change your mind, or you are unhappy with our use of your personal data, please let us know by emailing %{mailto}.
+        line_1: >-
+          Where we are processing your personal data with your consent, you have the right to withdraw that consent.
+          If you change your mind, or you are unhappy with our use of your personal data, please let us know by emailing
+          %{mailto}.
         line_2: You also have the right to raise any concerns with the %{ico_url}.
         ico: Information Commissioner’s Office (ICO)
       last_updated:
         title: Last updated
-        line_1: We may need to update this privacy notice periodically so we recommend that you revisit this information from time to time. This version was last updated on 18 June 2019.
+        line_1: >-
+          We may need to update this privacy notice periodically so we recommend that you revisit this information from
+          time to time. This version was last updated on 18 June 2019.
     terms_and_conditions:
       title: Terms and Conditions
       all_users:
@@ -731,168 +867,316 @@ en:
         using_the_website:
           title: Using the Service
           text:
-            - Access and use by you of the Teaching Vacancies website (the "Service") constitutes your acceptance of these Terms and Conditions ("General Terms"). This takes effect from the date on which you first use the Service. If you do not agree to these General Terms, you must not use this website.
+            - Access and use by you of the Teaching Vacancies website (the "Service") constitutes your acceptance of
+              these Terms and Conditions ("General Terms"). This takes effect from the date on which you first use the
+              Service. If you do not agree to these General Terms, you must not use this website.
             - By using Teaching Vacancies you agree to abide by the following terms and conditions.
-            - If we change these General Terms we will post the revised document here with an updated effective date. If we make significant changes to these terms, we may notify you by other means such as sending an email or posting a notice on our home page.
+            - If we change these General Terms we will post the revised document here with an updated effective date.
+              If we make significant changes to these terms, we may notify you by other means such as sending an email
+              or posting a notice on our home page.
         information_about_us:
           title: Information About Us
           text:
-            - This Service is operated by [the Department for Education] (“<strong>we</strong>”, “<strong>our</strong>”, or “<strong>us</strong>”). We are a central government department and have our registered office at Sanctuary Buildings, 20 Great Smith Street, SW1P 3BT.
-            - "You can contact us using the following email address: <a href='mailto: %{help_email}' class='govuk-link'>%{help_email}</a>"
+            - This Service is operated by [the Department for Education] (“<strong>we</strong>”, “<strong>our</strong>”,
+              or “<strong>us</strong>”). We are a central government department and have our registered office at
+              Sanctuary Buildings, 20 Great Smith Street, SW1P 3BT.
+            - "You can contact us using the following email address: <a href='mailto: %{help_email}'
+              class='govuk-link'>%{help_email}</a>"
         access_to_the_site:
           title: Access to the Site
           text:
-            - We shall not be liable if for any reason the Site is unavailable at any time or for any period. From time to time, we may restrict access to all or some parts of the Site to users who have registered with us.
-            - If you choose, or are provided with, a user identification code, password or any other piece of information as part of our security procedures, you must treat such information as confidential, and you must not disclose it to any third party.
-            - We reserve the right to restrict or deny you access to all or some part of the Site if in our opinion, you have failed to comply with these General Terms.
+            - We shall not be liable if for any reason the Site is unavailable at any time or for any period.
+              From time to time, we may restrict access to all or some parts of the Site to users who have
+              registered with us.
+            - If you choose, or are provided with, a user identification code, password or any other piece of
+              information as part of our security procedures, you must treat such information as confidential,
+              and you must not disclose it to any third party.
+            - We reserve the right to restrict or deny you access to all or some part of the Site if in our opinion,
+              you have failed to comply with these General Terms.
         hyperlinking:
           title: Hyperlinking to the Teaching Vacancies website
           text:
-            - We do not object to you linking directly to pages on this site and you do not need to ask permission to do so. However, we do not permit our pages to be loaded into frames on your site. The Teaching Vacancies pages must be displayed in the user's entire browser window.
+            - We do not object to you linking directly to pages on this site and you do not need to ask permission to
+              do so. However, we do not permit our pages to be loaded into frames on your site. \
+              The Teaching Vacancies pages must be displayed in the user's entire browser window.
             - You may not charge your website's users to click on a link to any page on the Service.
         third_party_content:
           title: Third Party Content and Hyperlinking from the Service
           text:
-            - We are not liable or responsible for the third party content on the Service. Third party content includes, for example, material posted by other users of the Service, job listings and display advertising.
-            - Where the Service contains links to other sites and resources, we are not liable or responsible for the content or reliability of those websites and resources and do not necessarily endorse the views expressed within them.
-            - We aim to replace broken links to other sites but cannot guarantee that these links will always work as we have no control over the availability of other sites.
+            - We are not liable or responsible for the third party content on the Service. Third party content includes,
+              for example, material posted by other users of the Service, job listings and display advertising.
+            - Where the Service contains links to other sites and resources, we are not liable or responsible for the
+              content or reliability of those websites and resources and do not necessarily endorse the views expressed within them.
+            - We aim to replace broken links to other sites but cannot guarantee that these links will always work as
+              we have no control over the availability of other sites.
         virus_protection:
           title: Virus protection
           text:
-            - We make every effort to check and test material at all stages of production. It is always wise for you to run an anti-virus program on all material downloaded from the Internet as we do not guarantee our service will be secure or free from bugs or viruses. We cannot accept any responsibility for any loss, disruption or damage to your data or your computer system which may occur whilst using material derived from this website.
-            - You must not misuse our service by knowingly introducing viruses, trojans, worms, logic bombs or other material that is malicious or technologically harmful. You must not attempt to gain unauthorised access to our service, the server on which our service is stored or any server, computer or database connected to our service. You must not attack our site via a denial-of-service attack or a distributed denial-of service attack. Each of these acts is a criminal offence. We will report any such offence to the relevant law enforcement authorities and co-operate with them to determine your identity.
+            - We make every effort to check and test material at all stages of production. It is always wise for you to
+              run an anti-virus program on all material downloaded from the Internet as we do not guarantee our service
+              will be secure or free from bugs or viruses. We cannot accept any responsibility for any loss, disruption
+              or damage to your data or your computer system which may occur whilst using material derived from this
+              website.
+            - You must not misuse our service by knowingly introducing viruses, trojans, worms, logic bombs or other
+              material that is malicious or technologically harmful. You must not attempt to gain unauthorised access
+              to our service, the server on which our service is stored or any server, computer or database connected
+              to our service. You must not attack our site via a denial-of-service attack or a distributed denial-of
+              service attack. Each of these acts is a criminal offence. We will report any such offence to the relevant
+              law enforcement authorities and co-operate with them to determine your identity.
         disclaimer_and_liability:
           title: Disclaimer and Liability
-          line_1: 'The content of this Service includes both content created by us (included but not limited to content that helps you use the Service) and third-party content (included but not limited to job listings). We do not:'
+          line_1: >-
+            The content of this Service includes both content created by us (included but not limited to content that
+            helps you use the Service) and third-party content (included but not limited to job listings). We do not:
           list_1:
             - endorse third-party content
             - vouch for its accuracy
             - guarantee that the views, instructions and/or assertions expressed in it are our own
-          line_2: The content we create for the Service is not advice. You should verify any information on the Service yourself and use your own judgement before doing or not doing anything on the basis of the content.
-          line_3: Unless expressly stated in writing by us, the Service and material relating to government information, products and services (or to third party information, products and services), is provided 'as is', without any representation or endorsement made and without warranty of any kind whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose, non-infringement, compatibility, security and accuracy.
-          line_4: We do not warrant that the functions contained in the material contained in this site will be uninterrupted or error free, that defects will be corrected, or that this site or the server that makes it available are free of viruses or represent the full functionality, accuracy, reliability of the materials.
+          line_2: >-
+            The content we create for the Service is not advice. You should verify any information on the Service
+            yourself and use your own judgement before doing or not doing anything on the basis of the content.
+          line_3: >-
+            Unless expressly stated in writing by us, the Service and material relating to government information,
+            products and services (or to third party information, products and services), is provided 'as is',
+            without any representation or endorsement made and without warranty of any kind whether express or implied,
+            including but not limited to the implied warranties of satisfactory quality, fitness for a particular
+            purpose, non-infringement, compatibility, security and accuracy.
+          line_4: >-
+            We do not warrant that the functions contained in the material contained in this site will be uninterrupted
+            or error free, that defects will be corrected, or that this site or the server that makes it available are
+            free of viruses or represent the full functionality, accuracy, reliability of the materials.
           line_5: 'In no event will we be liable for:'
           list_2:
-            - any action you may take as a result of relying on any information/materials provided on the Service or for any loss or damage suffered by you as a result of you taking such action  including, without limitation, indirect or consequential loss or damage, or any loss or damages whatsoever arising from or in connection with the use of the Service
-            - any dealings you have with third parties (e.g. other users or advertisers) that take place using or facilitated by the Service
+            - any action you may take as a result of relying on any information/materials provided on the Service or for
+              any loss or damage suffered by you as a result of you taking such action  including, without limitation,
+              indirect or consequential loss or damage, or any loss or damages whatsoever arising from or in connection
+              with the use of the Service
+            - any dealings you have with third parties (e.g. other users or advertisers) that take place using or
+              facilitated by the Service
         validity:
           title: Validity of these General Terms
-          line_1: If any of these terms and conditions are held to be invalid, unenforceable or illegal for any reason, the remaining terms and conditions will still apply.
+          line_1: >-
+            If any of these terms and conditions are held to be invalid, unenforceable or illegal for any reason,
+            the remaining terms and conditions will still apply.
         applicable_law:
           title: Applicable Law and Jurisdiction
-          line_1: These General Terms are governed by the laws of England and Wales. Any dispute arising under these General Terms will be subject to the exclusive jurisdiction of the courts of England and Wales.
+          line_1: >-
+            These General Terms are governed by the laws of England and Wales. Any dispute arising under these
+            General Terms will be subject to the exclusive jurisdiction of the courts of England and Wales.
       for_schools:
         title: Terms and Conditions for Schools and Trusts
         approving_user_accounts:
           title: Approving user accounts
           text:
-            - Users must be approved before they are given a Teaching Vacancies account for the purposes of publishing or managing job listings for a school or trust. Each school or trust must have a nominated 'approver' who is responsible for approving Teaching Vacancies accounts for users at that school or trust. An approver must only allow someone working for their school or trust to publish or manage job listings for their school or trust. Approvers must not create accounts for or allow third parties to publish or manage job listings on behalf of their school or trust. If the Teaching Vacancies team detects or is alerted to any account held by or used by third parties then that account will be deleted immediately.
+            - Users must be approved before they are given a Teaching Vacancies account for the purposes of publishing
+              or managing job listings for a school or trust. Each school or trust must have a nominated 'approver' who
+              is responsible for approving Teaching Vacancies accounts for users at that school or trust. An approve
+              must only allow someone working for their school or trust to publish or manage job listings for their
+              school or trust. Approvers must not create accounts for or allow third parties to publish or manage job
+              listings on behalf of their school or trust. If the Teaching Vacancies team detects or is alerted to any
+              account held by or used by third parties then that account will be deleted immediately.
         using_the_service:
           title: Using the Service
           text:
-            - Access and use by you of this Service constitutes your acceptance of these Terms and Conditions. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
+            - Access and use by you of this Service constitutes your acceptance of these Terms and Conditions.
+              This takes effect from the date on which you first use this website. If you do not agree to these terms,
+              you must not use this website.
             - By using Teaching Vacancies you agree to abide by the following terms and conditions.
         unacceptable_use:
           title: Unacceptable Use
           line_1: 'You must not publish:'
           list:
-            - listings for teaching vacancies that aren’t relevant to the service, such as but not limited to non-teaching roles, supply teaching roles and unpaid positions
+            - listings for teaching vacancies that aren’t relevant to the service, such as but not limited to
+              non-teaching roles, supply teaching roles and unpaid positions
             - listings for unconfirmed or non-existent vacancies
-            - listings for any school or trust that is not state funded, that is not in England or that does not teach primary or secondary pupils
-            - offensive or inappropriate language, including but not limited to profanities or language pejorative of any group, such as racist, sexist or homophobic comments
-            - "discriminatory content: you must not state or imply in a job advert that you will discriminate against anyone (subject to certain exceptions under the Equality Act 2010 particularly those applying to schools with a religious character); for further information see GOV.UK’s <a href='https://www.gov.uk/employer-preventing-discrimination/recruitment' target='_blank' class='govuk-link'>guidance on discrimination in job adverts</a>"
-            - material that infringes any intellectual property rights, such as copyright and trademarks (this means generally that you must own the rights in everything you submit or must obtain permission from the rights owner to submit the material)
-            - material that is technically harmful (including, without limitation, computer viruses, logic bombs, Trojan horses, worms, harmful components, corrupted data or other malicious software or harmful data)
-            - material that encourages or teaches conduct that is a criminal offence, gives rise to civil liability, or is otherwise unlawful
+            - listings for any school or trust that is not state funded, that is not in England or that does not teach
+              primary or secondary pupils
+            - offensive or inappropriate language, including but not limited to profanities or language pejorative of
+              any group, such as racist, sexist or homophobic comments
+            - "discriminatory content: you must not state or imply in a job advert that you will discriminate against
+              anyone (subject to certain exceptions under the Equality Act 2010 particularly those applying to schools
+              with a religious character); for further information see GOV.UK’s
+              <a href='https://www.gov.uk/employer-preventing-discrimination/recruitment' target='_blank'
+              class='govuk-link'>guidance on discrimination in job adverts</a>"
+            - material that infringes any intellectual property rights, such as copyright and trademarks (this means
+              generally that you must own the rights in everything you submit or must obtain permission from the rights
+              owner to submit the material)
+            - material that is technically harmful (including, without limitation, computer viruses, logic bombs,
+              Trojan horses, worms, harmful components, corrupted data or other malicious software or harmful data)
+            - material that encourages or teaches conduct that is a criminal offence, gives rise to civil liability,
+              or is otherwise unlawful
         access_to_the_service:
           title: Access to the Service
           text:
-            - We will not be liable if for any reason the Service is unavailable at any time or for any period. From time to time, we may restrict access to all or some parts of the Service to users who have registered with us.
-            - If you choose, or are provided with, a user identification code, password or any other piece of information as part of our security procedures, you must treat such information as confidential, and you must not disclose it to any third party.
-            - We reserve the right to restrict or deny you access to all or some part of the Service if in our opinion you have failed to comply with these Terms and Conditions.
-            - The Department for Education withholds the right to withdraw without notice listings that breach these terms and to withdraw the access of users who breach them.
+            - We will not be liable if for any reason the Service is unavailable at any time or for any period.
+              From time to time, we may restrict access to all or some parts of the Service to users who have
+              registered with us.
+            - If you choose, or are provided with, a user identification code, password or any other piece of
+              information as part of our security procedures, you must treat such information as confidential,
+              and you must not disclose it to any third party.
+            - We reserve the right to restrict or deny you access to all or some part of the Service if in our opinion
+              you have failed to comply with these Terms and Conditions.
+            - The Department for Education withholds the right to withdraw without notice listings that breach these
+              terms and to withdraw the access of users who breach them.
         listing_data:
           title: Listing Data
           text:
-            - "Application Programming Interface (API) use: listings are published under the <a href='http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/open-government-licence/' target='_blank' class='govuk-link'>Open Government License</a> (OGL), which permits a wide range of information in the public sector to be reused free of charge. This means the listing data on Teaching Vacancies will be available to third parties to publish on external sites after the pilot phase, aside from where <a href='http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/open-government-licence/exceptions-to-ogl/' target='_blank' class='govuk-link'>exceptions to the OGL</a> prohibit it."
-            - "Data ownership: schools have sole responsibility for maintaining the accuracy and appropriateness of the data contained in their listings."
+            - "Application Programming Interface (API) use: listings are published under the
+              <a href='http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk\n
+              -government-licensing-framework/open-government-licence/' target='_blank'
+              class='govuk-link'>Open Government License</a> (OGL), which permits a wide range of information in the
+              public sector to be reused free of charge. This means the listing data on Teaching Vacancies will be
+              available to third parties to publish on external sites after the pilot phase, aside from where
+              <a href='http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk\n
+              -government-licensing-framework/open-government-licence/exceptions-to-ogl/' target='_blank'
+              class='govuk-link'>exceptions to the OGL</a> prohibit it."
+            - "Data ownership: schools have sole responsibility for maintaining the accuracy and appropriateness of the
+              data contained in their listings."
         for_api_users:
           title: Terms and Conditions for API users
-          line_1: "You are free to reuse job listing data under the terms of the <a href='https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/' target='_blank' class='govuk-link'>Open Government Licence</a> for public sector information with the following exception:"
-          list: you may not charge a school any fee or commission for contacting, interviewing or hiring a respondent to your advertisement or listing if it is based on Teaching Vacancies data that you have reused.
+          line_1: >-
+            You are free to reuse job listing data under the terms of the
+            <a href='https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
+            target='_blank' class='govuk-link'>Open Government Licence</a> for public sector information with the
+            following exception:
+          list: >-
+            you may not charge a school any fee or commission for contacting, interviewing or hiring a respondent to
+            your advertisement or listing if it is based on Teaching Vacancies data that you have reused.
     accessibility:
       page_title: Accessibility
       title: Accessibility statement for Teaching Vacancies
       mission:
-        opening_text: "Teaching Vacancies is run by the Department for Education. We want as many people as possible to be able to use the service. For example, that means users should be able to:"
+        opening_text: >-
+          Teaching Vacancies is run by the Department for Education. We want as many people as possible to be able to
+          use the service. For example, that means users should be able to:
         list:
           - change colours, contrast levels and fonts
           - zoom in up to 300% without the text spilling off the screen
           - navigate most of the service using just a keyboard
           - navigate most of the service using speech recognition software
-          - listen to most of the content on Teaching Vacancies using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
+          - listen to most of the content on Teaching Vacancies using a screen reader (including the most recent
+            versions of JAWS, NVDA and VoiceOver)
         closing_text: "We’ve also made the text on the service as simple as possible to understand."
       how_accessible:
         title: How accessible Teaching Vacancies is
-        text: "Teaching Vacancies is currently designated as 'partially accessible' according to the <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>Web Content Accessibility Guidelines version (WCAG) 2.1</a> AA standard. All significant issues with accessibility are detailed in the Non-accessible content section, below."
+        text: >-
+          Teaching Vacancies is currently designated as 'partially accessible' according to the
+          <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>Web Content Accessibility
+          Guidelines version (WCAG) 2.1</a> AA standard. All significant issues with accessibility are detailed in the
+          Non-accessible content section, below.
       reporting_accessibility_problems:
         title: Reporting accessibility problems with Teaching Vacancies
-        text: "We’re always looking to improve the accessibility of this service. If you find any problems that aren’t listed on this page or think we’re not meeting accessibility requirements, please email <a href='mailto: %{help_email}' class='govuk-link'>%{help_email}</a> with 'Accessibility issues' in the subject line of the email."
+        text: >-
+          "We’re always looking to improve the accessibility of this service. If you find any problems that aren’t
+          listed on this page or think we’re not meeting accessibility requirements, please email
+          <a href='mailto: %{help_email}' class='govuk-link'>%{help_email}</a> with 'Accessibility issues' in the
+          subject line of the email."
       enforcement_procedure:
         title: Enforcement procedure
-        text: "The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, <a href='https://www.equalityadvisoryservice.com/' class='govuk-link'>contact the Equality Advisory and Support Service (EASS)</a>."
+        text: >-
+          The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies
+          (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
+          If you’re not happy with how we respond to your complaint,
+          <a href='https://www.equalityadvisoryservice.com/' class='govuk-link'>contact the Equality Advisory and
+          Support Service (EASS)</a>.
       technical_information:
         title: "Technical information about Teaching Vacancies' accessibility"
         text:
-          - The Department for Education is committed to making its digital services accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
-          - "This website is at present partially compliant with the <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>WCAG 2.1</a> AA standard, due to those non-compliance issues listed below that are marked with (A) or (AA)."
+          - The Department for Education is committed to making its digital services accessible, in accordance with the
+            Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+          - "This website is at present partially compliant with the
+            <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>WCAG 2.1</a> AA standard,
+            due to those non-compliance issues listed below that are marked with (A) or (AA)."
       non_accesssible:
         title: Non-accessible content
-        text: A number of issues related to the accessibility of Teaching Vacancies were raised in an accessibility audit conducted in May 2019. Most of these have been corrected but there are still a number of issues the Teaching Vacancies team is working to resolve. When these issues have been resolved we will update this statement and the compliance status of Teaching Vacancies.
+        text: >-
+          A number of issues related to the accessibility of Teaching Vacancies were raised in an accessibility audit
+          conducted in May 2019. Most of these have been corrected but there are still a number of issues the Teaching
+          Vacancies team is working to resolve. When these issues have been resolved we will update this statement and
+          the compliance status of Teaching Vacancies.
       non_compliance:
         title: Non-compliance with the accessibility regulations
-        text: The following accessibility issues have been identified and are grouped here according to which principle of accessibility criteria they fall under in the WCAG 2.1 guidelines.
+        text: >-
+          The following accessibility issues have been identified and are grouped here according to which principle of
+          accessibility criteria they fall under in the WCAG 2.1 guidelines.
         perceivable:
           heading: "'Perceivable'"
-          principle: "Principle: Information and user interface components must be presentable to users in ways they can perceive."
+          principle: >-
+            Principle: Information and user interface components must be presentable to users in ways they can
+            perceive.
           issue:
             text:
-            - "<strong class='strong'>Issue</strong>: Some images don’t have a text alternative, so the information in them isn’t available to people using a screen reader.<br /><strong class='strong'>Criterion failed</strong>: 1.1.1 Text Alternatives: Non-text content (AA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
-            - "<strong class='strong'>Issue</strong>: The colour contrast ratio between text and its background colour on certain pages makes text difficult for visually impaired users to read. Increasing the text size will resolve this issue.<br /><strong class='strong'>Criterion failed</strong>: 1.4.3 Distinguishable: Contrast (Minimum) (AA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
+            - "<strong class='strong'>Issue</strong>: Some images don’t have a text alternative, so the information
+              in them isn’t available to people using a screen reader.<br /><strong class='strong'>Criterion failed
+              </strong>: 1.1.1 Text Alternatives: Non-text content (AA)<br /><strong class='strong'>Will be
+              resolved</strong>: October/November 2019"
+            - "<strong class='strong'>Issue</strong>: The colour contrast ratio between text and its background colour
+              on certain pages makes text difficult for visually impaired users to read. Increasing the text size will
+              resolve this issue.<br /><strong class='strong'>Criterion failed</strong>: 1.4.3 Distinguishable:
+              Contrast (Minimum) (AA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
         operable:
           heading: "'Operable'"
           principle: "Principle: User interface components and navigation must be operable."
           issue:
             text:
-              - "<strong class='strong'>Issue</strong>: The 'skip to content' link that allows users of assistive technology to skip navigation links and go straight to the main content isn't working in Internet Explorer.<br /><strong class='strong'>Criterion failed</strong>: 2.4.1 Navigable: Bypass Blocks (A)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
-              - "<strong class='strong'>Issue</strong>: Some hyperlinks on the service need more useful descriptions for users of screen readers, who require context for each link.<br /><strong class='strong'>Criterion failed</strong>: 2.4.9 Navigable: Link Purpose (Link Only) (AAA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
-              - "<strong class='strong'>Issue</strong>: Header text on the page confirming to a user that they've signed up for a job alert skips a heading level (for example, jumping from an h2 level to an h4 level), which can cause confusion for users navigating pages with a screen reader.<br /><strong class='strong'>Criterion failed</strong>: 2.4.10 Navigable: Section headings (AAA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: The 'skip to content' link that allows users of assistive
+                technology to skip navigation links and go straight to the main content isn't working in Internet
+                Explorer.<br /><strong class='strong'>Criterion failed</strong>: 2.4.1 Navigable: Bypass Blocks (A)
+                <br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: Some hyperlinks on the service need more useful descriptions
+                for users of screen readers, who require context for each link.<br /><strong class='strong'>Criterion
+                failed</strong>: 2.4.9 Navigable: Link Purpose (Link Only) (AAA)<br /><strong class='strong'>Will be
+                resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: Header text on the page confirming to a user that they've signed
+                up for a job alert skips a heading level (for example, jumping from an h2 level to an h4 level), which
+                can cause confusion for users navigating pages with a screen reader.<br /><strong class='strong'>
+                Criterion failed</strong>: 2.4.10 Navigable: Section headings (AAA)<br /><strong class='strong'>
+                Will be resolved</strong>: October/November 2019"
         robust:
           heading: "'Robust'"
-          principle: "Principle: Content must be robust enough that it can be interpreted by a wide variety of user agents, including assistive technologies."
+          principle: >-
+            Principle: Content must be robust enough that it can be interpreted by a wide variety of user agents,
+            including assistive technologies.
           issue:
             text:
-              - "<strong class='strong'>Issue</strong>: Users of screen readers aren't reliably notified when a page is loading or when jobs have been sorted by date. This leads to the focus remaining stationary.<br /><strong class='strong'>Criterion failed</strong>:  4.1.3 Compatible: Status messages (AA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: Users of screen readers aren't reliably notified when a page is
+                loading or when jobs have been sorted by date. This leads to the focus remaining stationary.<br />
+                <strong class='strong'>Criterion failed</strong>:  4.1.3 Compatible: Status messages (AA)<br />
+                <strong class='strong'>Will be resolved</strong>: October/November 2019"
         not_in_scope:
           heading: "Content that’s not within the scope of the accessibility regulations"
-          text: The following accessibility issues have been identified but do not fall within the scope of the WCAG 2.1 guidelines for the reasons stated.
+          text: >-
+            The following accessibility issues have been identified but do not fall within the scope of the WCAG 2.1\
+            guidelines for the reasons stated.
           issue:
             text:
-              - "<strong class='strong'>Issue</strong>: The colour used to indicate when an element such as a radio button has received focus does not meet the expected ratio.  This is a GDS Design System issue, however, so is not within our scope to correct. Note that a subtle movement effect also helps convey the focus state of a button, for example, so colour contrast is not the only tactic we use for improving distinguishability.<br /><strong class='strong'>Criterion failed</strong>:  1.4.11 Distinguishable: Non-text contrast"
+              - "<strong class='strong'>Issue</strong>: The colour used to indicate when an element such as a radio
+                button has received focus does not meet the expected ratio.  This is a GDS Design System issue, however,
+                so is not within our scope to correct. Note that a subtle movement effect also helps convey the focus
+                state of a button, for example, so colour contrast is not the only tactic we use for improving
+                distinguishability.<br /><strong class='strong'>Criterion failed</strong>:  1.4.11 Distinguishable:
+                Non-text contrast"
       how_we_tested:
         title: How we tested this website
         opening_text:
-          - This website was last tested on 28 May 2019. The test was carried out by the Digital Accessibility Centre (DAC).
+          - This website was last tested on 28 May 2019. The test was carried out by the Digital Accessibility Centre
+            (DAC).
           - "DAC tested various combinations of the following for both desktop and mobile/tablet users:"
         list:
-          - assistive technologies (eg Jaws 16, NVDA, VoiceOver, Dragon Voice Activation, Keyboard, System inverted colours, Screen Magnification, Colour blind checks, Resizing content)
+          - assistive technologies (eg Jaws 16, NVDA, VoiceOver, Dragon Voice Activation, Keyboard, System inverted
+            colours, Screen Magnification, Colour blind checks, Resizing content)
           - browser environments (IE11, Firefox, Safari, Chrome)
-          - accessibility user groups (Blind, Deaf, Mobility, Colour blind, Dyslexia, Low Vision, Aspergers, Cognitive Impaired/Panic/Anxiety)
+          - accessibility user groups (Blind, Deaf, Mobility, Colour blind, Dyslexia, Low Vision, Aspergers,
+            Cognitive Impaired/Panic/Anxiety)
         closing_text:
           text: "DAC tested:"
           list:
-            - the hiring staff journey for listing a job on the service, available at <a href='https://teaching-vacancies.service.gov.uk/identifications/new' target='_blank' class='govuk-link'>https://teaching-vacancies.service.gov.uk/identifications/new</a>
-            - the jobseeker journey for searching for a teaching job and signing up for a job alert, available at <a href='https://teaching-vacancies.service.gov.uk/' target='_blank' class='govuk-link'>https://teaching-vacancies.service.gov.uk/</a>
+            - the hiring staff journey for listing a job on the service, available at
+              <a href='https://teaching-vacancies.service.gov.uk/identifications/new' target='_blank'
+              class='govuk-link'>https://teaching-vacancies.service.gov.uk/identifications/new</a>
+            - the jobseeker journey for searching for a teaching job and signing up for a job alert, available at
+              <a href='https://teaching-vacancies.service.gov.uk/' target='_blank'
+              class='govuk-link'>https://teaching-vacancies.service.gov.uk/</a>
       date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
   shared:
     file_remove_confirmation_dialogue:
