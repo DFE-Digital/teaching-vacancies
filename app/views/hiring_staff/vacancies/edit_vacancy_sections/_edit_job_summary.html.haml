@@ -1,0 +1,16 @@
+%h2.govuk-heading-m.app-task-list__section#job_summary_heading
+  %span.app-task-list__section-number 5.
+  = t('jobs.job_summary')
+  = link_to t('buttons.change'), school_job_job_summary_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_summary')
+
+%dl.app-check-your-answers.app-check-your-answers--short
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question.first-question#job_summary
+      %h4.govuk-heading-s= t('jobs.job_summary')
+    %dd.app-check-your-answers__answer.first-question= @vacancy.job_summary
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#about_school
+      %h4.govuk-heading-s= t('jobs.about_school', school: current_school.name)
+    %dd.app-check-your-answers__answer= @vacancy.about_school
