@@ -85,6 +85,9 @@ en:
         salary_html: "Salary (<span class='text-red'>Required</span>)"
       supporting_documents_form:
         supporting_documents_html: "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
+      job_summary_form:
+        job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
+        about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
     hint:
       job_specification_form:
         starts_on: 'For example, 01 01 2020'
@@ -102,6 +105,9 @@ en:
         expires_on: 'For example, 01 08 2020'
       supporting_documents_form:
         supporting_documents: 'These could include, for example, a job description, person specification or application pack'
+      job_summary_form:
+        job_summary: 'Give a brief summary of the job that job seekers can quickly scan. This will be the first thing they see on the listing or in search engine results'
+        about_school: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
   jobs:
     current_step: "Step %{step} of %{total}"
     notification_labels:
@@ -227,6 +233,7 @@ en:
     time_at: ' at '
     publication_date: 'Date role will be listed'
     job_summary: 'Job summary'
+    about_school: 'About %{school}'
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
     review_future: 'Review your entries for each section below, making any changes before you submit the listing for publication.'
     edit: 'Edit the job details.'
@@ -309,6 +316,7 @@ en:
       change_pay_package: 'Change pay package'
       change_supporting_documents: 'Change supporting documents'
       change_application_details: 'Change application details'
+      change_job_summary: 'Change job summary'
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'
       application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}'
