@@ -1,5 +1,5 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
-  before_action :set_vacancy, only: %i[review]
+  before_action :set_vacancy, only: %i[review preview]
 
   def show
     vacancy = find_active_vacancy_by_id
@@ -47,6 +47,12 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
     redirect_to school_path, notice: t('messages.jobs.delete')
+  end
+
+  def preview
+    return redirect_to school_job_path(@vacancy.id), notice: already_published_message if @vacancy.published?
+    redirect_to_incomplete_step unless @vacancy.valid?
+    @vacancy = VacancyPresenter.new(@vacancy)
   end
 
   def summary

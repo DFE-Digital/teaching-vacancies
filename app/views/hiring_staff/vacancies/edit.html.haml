@@ -1,16 +1,11 @@
-- content_for :page_title_prefix, "Edit the #{@vacancy.job_title} job for #{current_school.name}"
-= render partial: 'school_vacancy_breadcrumb'
-
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    %h1.govuk-heading-l
-      = t('jobs.edit_heading', school: @vacancy.school.name)
-    - if new_sections(@vacancy).any?
-      = render 'shared/section_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), sections: new_sections(@vacancy)
+- content_for :page_title_prefix, t('jobs.edit_heading', school: current_school.name)
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_application_details'
+    = render 'hiring_staff/vacancies/edit_heading'
+
+    %ol.app-task-list
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_application_details'

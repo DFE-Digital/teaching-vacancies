@@ -1,25 +1,22 @@
-%h2.govuk-heading-m.mb0#supporting_documents_heading
+%h2.govuk-heading-m.app-task-list__section#supporting_documents_heading
+  %span.app-task-list__section-number 3.
   = t('jobs.supporting_documents')
+  = link_to t('buttons.change'), school_job_documents_path(job_id: @vacancy.id, change: true), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.supporting_documents')
   - unless @vacancy.supporting_documents
     .notification-tag
       %strong.govuk-tag.app-task-list__task-completed
         = t('jobs.notification_labels.new')
 
-.govuk-body-s.mb1#change-supporting-documents
-  = link_to school_job_documents_path(job_id: @vacancy.id, change: true), class: 'govuk-link', 'aria-label': 'Change the supporting documents' do
-    Change
-    %span.govuk-visually-hidden the supporting documents
-
 %dl.app-check-your-answers.app-check-your-answers--short
+
   - if @vacancy.documents.none?
     .app-check-your-answers__contents
-      %dt#supporting_documents{ class: "govuk-!-font-weight-regular" }
+      %dt.app-check-your-answers__question.first-question#supporting_documents{ class: "govuk-!-font-weight-regular" }
         = t('jobs.no_supporting_documents')
   - else
     - @vacancy.documents.each_with_index do |document, index|
       - index_from_one = index + 1
       .app-check-your-answers__contents
-        %dt.app-check-your-answers__question#supporting_documents
-          = "Document #{index_from_one}"
-        %dd.app-check-your-answers__answer
-          = document[:name]
+        %dt.app-check-your-answers__question#supporting_documents{ class: index == 0 && 'first-question'}
+          %h4.govuk-heading-s= "Document #{index_from_one}"
+        %dd.app-check-your-answers__answer{ class: index == 0 && 'first-question'}= document[:name]

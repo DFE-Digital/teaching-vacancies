@@ -10,7 +10,8 @@ body.hiring-staff {
   }
 
   &.vacancies_index,
-  &.vacancies_show {
+  &.vacancies_show,
+  &.vacancies_preview {
     .govuk-main-wrapper {
       max-width: 960px;
       margin-left: auto;

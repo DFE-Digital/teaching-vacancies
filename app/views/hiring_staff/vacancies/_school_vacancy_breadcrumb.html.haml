@@ -1,8 +1,0 @@
-.govuk-grid-row
-  .govuk-grid-column-full
-    .govuk-breadcrumbs
-      %ol.govuk-breadcrumbs__list
-        %li.govuk-breadcrumbs__list-item
-          = link_to current_school.name, school_path, class: 'govuk-breadcrumbs__link'
-        %li.govuk-breadcrumbs__list-item{ 'aria-current' => 'page' }
-          = @vacancy.job_title

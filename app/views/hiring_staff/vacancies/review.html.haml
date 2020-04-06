@@ -1,14 +1,10 @@
 - content_for :page_title_prefix, @vacancy.review_page_title
-= render partial: 'school_vacancy_breadcrumb'
-= render 'hiring_staff/vacancies/vacancy_form_partials/title', form_section_title: t('jobs.review_heading')
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
-    %h2.govuk-heading-m
-      = t('jobs.review_heading')
-    %div
-      - if new_sections(@vacancy).any?
-        = render 'shared/section_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), sections: new_sections(@vacancy)
+    = render 'hiring_staff/vacancies/edit_heading'
+    
     %p.govuk-body-l
       - if @vacancy.publish_on.today?
         = t('jobs.review')
@@ -16,21 +12,23 @@
         = t('jobs.review_future')
 
     = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
-    = render 'hiring_staff/vacancies/review_vacancy_sections/review_job_specification'
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
-    = render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
-    = render 'hiring_staff/vacancies/review_vacancy_sections/review_application_details'
+    
+    %ol.app-task-list
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
+      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_application_details'
 
-    %h2.govuk-heading-m
-      - if @vacancy.publish_on.today?
-        = t('jobs.publish_for') + @vacancy.job_title
-      - else
-        = t('jobs.publish_for_future') + @vacancy.publish_on.to_s
-    %p= t('jobs.confirmation_summary_html')
+    %h3.govuk-heading-m= t('jobs.preview_listing.heading')
+    %p= t('jobs.preview_listing.message')
+    = link_to t('jobs.preview_listing.button'), school_job_preview_path(@vacancy.id), class: 'govuk-button', id: 'vacancy-review-preview'
 
-    - if @vacancy.publish_on.today?
-      = link_to t('jobs.submit'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button", id: "vacancy-review-submit"
-    - else
-      = link_to t('jobs.submit_future'), school_job_publish_path(@vacancy.id), method: :post, class: "govuk-button", id: "vacancy-review-submit"
+    %h3.govuk-heading-m= t('jobs.submit_listing.heading', count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
+    %p= t('jobs.submit_listing.message_html')
+    = link_to t('jobs.submit_listing.button'), school_job_publish_path(@vacancy.id), method: :post, class: 'govuk-button govuk-button--secondary', id: 'vacancy-review-submit'
+
+    %br
+    = link_to t('buttons.save_and_return'), school_path, class: 'govuk-link'
+
   .govuk-grid-column-one-third
     = render 'hiring_staff/vacancies/sidebar'

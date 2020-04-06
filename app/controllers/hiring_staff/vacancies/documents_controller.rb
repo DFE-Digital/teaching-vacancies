@@ -63,9 +63,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def redirect_to_next_step_if_save_and_continue
-    if params[:commit] == 'Save and continue'
+    if params[:commit] == I18n.t('buttons.save_and_continue')
       redirect_to_next_step(@vacancy)
-    elsif params[:commit] == 'Update job'
+    elsif params[:commit] == I18n.t('buttons.update_job')
       redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
     end
   end

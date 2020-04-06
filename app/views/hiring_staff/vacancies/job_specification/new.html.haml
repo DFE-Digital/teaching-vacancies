@@ -1,16 +1,15 @@
-- content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Job specification — #{t('jobs.create_a_job', school: current_school.name)}"
+- content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
-%h1.govuk-heading-l
-  = t('jobs.create_a_job', school: current_school.name)
-  %span.govuk-caption-l
-    = t('jobs.current_step', step: current_step,  total: total_steps)
 = simple_form_for @job_specification_form, action: :post, url: job_specification_school_job_path(school_id: current_school.id) do |f|
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      %h2.govuk-heading-m
-        = t('jobs.job_details')
       = render 'hiring_staff/vacancies/error_messages', errors: @job_specification_form.errors
+
+      %h2.govuk-heading-l
+        = t('jobs.job_details')
+
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.input :job_title,
                   label: t('jobs.job_title'),

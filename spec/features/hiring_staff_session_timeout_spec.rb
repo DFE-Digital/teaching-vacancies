@@ -17,7 +17,7 @@ RSpec.feature 'Hiring staff session' do
 
     Timecop.travel(8.hours)
 
-    click_on 'Save and continue'
+    click_on I18n.t('buttons.save_and_continue')
 
     expect(page.current_path).to eq new_identifications_path
   end
@@ -27,7 +27,7 @@ RSpec.feature 'Hiring staff session' do
 
     Timecop.travel(1.hour)
 
-    click_on 'Save and continue'
+    click_on I18n.t('buttons.save_and_continue')
 
     expect(page.current_path).to eq job_specification_school_job_path
   end

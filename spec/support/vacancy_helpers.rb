@@ -95,8 +95,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
+    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
+    expect(page).to have_content(vacancy.ends_on.to_s.strip) if vacancy.ends_on?
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
@@ -105,8 +105,8 @@ module VacancyHelpers
 
     expect(page).to have_content(vacancy.contact_email)
     expect(page).to have_content(vacancy.application_link)
-    expect(page).to have_content(vacancy.expires_on)
-    expect(page).to have_content(vacancy.publish_on)
+    expect(page).to have_content(vacancy.expires_on.to_s.strip)
+    expect(page).to have_content(vacancy.publish_on.to_s.strip)
   end
 
   def verify_vacancy_show_page_details(vacancy)
@@ -116,8 +116,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page).to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page).to have_content(vacancy.ends_on) if vacancy.ends_on?
+    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
+    expect(page).to have_content(vacancy.ends_on.to_s.strip) if vacancy.ends_on?
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)

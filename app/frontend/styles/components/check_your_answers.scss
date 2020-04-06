@@ -38,48 +38,68 @@
   }
 }
 
-.app-check-your-answers__contents:first-child .app-check-your-answers__question,
-.app-check-your-answers__contents:first-child .app-check-your-answers__answer,
-.app-check-your-answers__contents:first-child .app-check-your-answers__change {
-  @include govuk-media-query($from: desktop) {
-    padding-top: 0;
-  }
+.app-check-your-answers {
+  width: fill-available;
+  padding-left: govuk-spacing(6);
 }
 
 .app-check-your-answers__question,
-.app-check-your-answers__answer,
-.app-check-your-answers__change {
+.app-check-your-answers__answer {
   display: block;
   margin: 0;
   @include govuk-media-query($from: desktop) {
     display: table-cell;
     border-bottom: 1px solid $govuk-border-colour;
-    padding: govuk-em(12, 19) govuk-em(20, 19) govuk-em(9, 19) 0;
+    padding: govuk-em(12, 19) govuk-em(20, 19) govuk-em(12, 19) 0;
+  }
+  > p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 }
 
-.app-check-your-answers__question {
-  font-weight: bold;
-  margin: govuk-em(12, 19) 4em govuk-em(4, 19) 0; // using margin instead of padding because of easier absolutely positioning of .app-check-your-answers__change
+.app-task-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  @include govuk-media-query($from: tablet) {
+    min-width: 550px;
+  }
 }
 
-.app-check-your-answers__answer {
-  padding-bottom: govuk-em(9, 19);
+h2.app-task-list__section {
+  margin-bottom: 0.83rem;
 }
 
-.app-check-your-answers__change {
-  text-align: right;
-  position: absolute;
-  top: 0;
-  right: 0;
+.app-task-list__section {
+  display: table;
+  @include govuk-font($size:24, $weight: bold);
+}
 
-  @include govuk-media-query($from: desktop) {
-    position: static;
+.app-task-list__section-number {
+  display: table-cell;
+
+  @include govuk-media-query($from: tablet) {
+    min-width: govuk-spacing(6);
     padding-right: 0;
   }
+}
+
+.first-question {
+  border-top: 1px solid $govuk-border-colour !important;
+}
+
+dt.app-check-your-answers__question > h4 {
+  margin-bottom: 0;
 }
 
 .notification-tag {
   float: right;
   text-transform: uppercase;
+}
+
+.change-button {
+  margin-left: 20px;
+  font-size: 19px;
 }

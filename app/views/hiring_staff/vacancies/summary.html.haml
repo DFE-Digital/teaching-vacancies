@@ -1,7 +1,5 @@
 - content_for :page_title_prefix, t('jobs.confirmation_page.page_title', school: current_school.name)
 
-=render partial: 'school_vacancy_breadcrumb'
-
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-panel.govuk-panel--confirmation
@@ -10,9 +8,9 @@
 
       .govuk-panel__body
         - if @vacancy.publish_today?
-          %p= link_to t('jobs.confirmation_page.preview_posted_job'), job_path(@vacancy), class: 'reversed-link'
+          %p= link_to t('jobs.confirmation_page.view_posted_job'), job_path(@vacancy), class: 'reversed-link'
         - else
-          %p= link_to t('jobs.confirmation_page.preview_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
+          %p= link_to t('jobs.confirmation_page.view_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
 
         %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', school_path, class: 'reversed-link')).html_safe
 
