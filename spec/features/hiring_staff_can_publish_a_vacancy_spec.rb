@@ -359,10 +359,8 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on I18n.t('buttons.save_and_continue')
 
-        mandatory_fields = %w[job_summary about_school]
-
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))
+          expect(page).to have_content(I18n.t('errors.title', count: 1))
         end
 
         within_row_for(text: I18n.t('jobs.job_summary')) do
@@ -370,7 +368,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         within_row_for(text: I18n.t('jobs.about_school', school: school.name)) do
-          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.about_school.blank')))
+          expect(page).to have_content(school.description)
         end
       end
 
