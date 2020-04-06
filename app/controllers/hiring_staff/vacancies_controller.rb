@@ -88,10 +88,17 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     valid
   end
 
+  def step_5_valid?
+    valid = JobSummaryForm.new(@vacancy.attributes).valid?
+    clear_cache_and_step unless valid
+    valid
+  end
+
   def redirect_to_incomplete_step
     return redirect_to school_job_pay_package_path(@vacancy.id) unless step_2_valid?
     return redirect_to supporting_documents_school_job_path unless step_3_valid?
     return redirect_to application_details_school_job_path unless step_4_valid?
+    return redirect_to school_job_job_summary_path(@vacancy.id) unless step_5_valid?
   end
 
   def already_published_message
