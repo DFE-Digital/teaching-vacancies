@@ -15,7 +15,7 @@
 cp docker-compose.env.sample docker-compose.env
 ```
 
-2. Navigate to the secrets repository, and [fill in][docs-to-read-secrets] any missing secrets from the [docker-compose.env.gpg][secret-docker-compose]. 
+2. Navigate to the secrets repository, and [fill in][docs-to-read-secrets] any missing secrets from the [docker-compose.env.gpg][secret-docker-compose].
 
 ```
 bin/pass secrets/dev/docker-compose.env > path/to/teacher-vacancy-service/docker-compose.env
@@ -90,11 +90,6 @@ To run a single spec file, the `args` are simply the path to the desired spec fi
 bin/dspec spec/features/job_seekers_can_view_vacancies_spec.rb:23
 ```
 
-Run the javascript tests
-```bash
-bin/dteaspoon
-```
-
 ### Full run (before you push to github)
 
 Rebuilds the test server, runs rubocop checks, all tests (both specs and javascript) and cleans up.
@@ -128,7 +123,7 @@ bin/drake elasticsearch:vacancies:index
 ### Background
 
 It may be useful to be able to run the codebase outside of the docker containers. For example, you might be working a
-small VM or a slow machine and docker would introduce an unnecessarily high overhead. 
+small VM or a slow machine and docker would introduce an unnecessarily high overhead.
 
 ### Dependencies
 
