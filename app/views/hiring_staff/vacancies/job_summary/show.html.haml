@@ -1,0 +1,29 @@
+- if @vacancy.published?
+  - content_for :page_title_prefix, "#{@job_summary_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.job_summary')}"
+- else
+  - content_for :page_title_prefix, "#{@job_summary_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_summary')} — #{t('jobs.create_a_job', school: current_school.name)}"
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @job_summary_form, url: school_job_job_summary_path(@vacancy.id), html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = render 'hiring_staff/vacancies/error_messages', errors: @job_summary_form.errors
+
+      %h2.govuk-heading-l
+        = t('jobs.job_summary')
+
+      = f.govuk_text_area :job_summary,
+        label: { text: t('helpers.fieldset.job_summary_form.job_summary_html'), size: 's' },
+        hint_text: t('helpers.hint.job_summary_form.job_summary'),
+        required: true
+
+      = f.govuk_text_area :about_school,
+        label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: current_school.name), size: 's' },
+        hint_text: t('helpers.hint.job_summary_form.about_school'),
+        required: true
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+  .govuk-grid-column-one-third
+    - unless @vacancy.published?
+      = render 'hiring_staff/vacancies/sidebar'
