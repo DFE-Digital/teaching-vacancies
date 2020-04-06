@@ -20,7 +20,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
     scenario 'incomplete pay package step' do
       visit edit_school_job_path(id: draft_vacancy.id)
 
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
       expect(page).to have_content(I18n.t('jobs.pay_package'))
     end
 
@@ -33,7 +33,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
     end
 
@@ -49,7 +49,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
       click_on I18n.t('buttons.save_and_continue')
 
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
     end
 
@@ -65,7 +65,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       select_no_for_supporting_documents
       click_on I18n.t('buttons.save_and_continue')
 
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
       expect(page).to have_content(I18n.t('jobs.application_details'))
     end
 
@@ -83,8 +83,35 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
       click_on I18n.t('buttons.save_and_continue')
 
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
       expect(page).to have_content(I18n.t('jobs.application_details'))
+    end
+
+    scenario 'incomplete job summary step' do
+      visit edit_school_job_path(id: draft_vacancy.id)
+
+      draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
+      draft_vacancy.benefits = 'Gym, health insurance'
+
+      fill_in_pay_package_form_fields(draft_vacancy)
+      click_on I18n.t('buttons.save_and_continue')
+
+      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      click_on I18n.t('buttons.save_and_continue')
+
+      click_on I18n.t('buttons.save_and_continue')
+
+      draft_vacancy.contact_email = 'test@email.com'
+      draft_vacancy.application_link = 'https://example.com'
+      draft_vacancy.expires_on = DateTime.now + 1.year
+      draft_vacancy.expiry_time = Time.zone.now
+      draft_vacancy.publish_on = DateTime.now + 1.day
+
+      fill_in_application_details_form_fields(draft_vacancy)
+      click_on I18n.t('buttons.save_and_continue')
+
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
+      expect(page).to have_content(I18n.t('jobs.job_summary'))
     end
   end
 
@@ -107,7 +134,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
     scenario 'then editing the draft redirects to incomplete step' do
       visit school_job_path(id: draft_vacancy.id)
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
     end
 
     def edit_a_published_vacancy

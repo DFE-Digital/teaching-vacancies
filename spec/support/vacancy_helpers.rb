@@ -1,7 +1,6 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    fill_in 'job_specification_form[job_summary]', with: vacancy.job_summary
     select vacancy.subject.name, from: 'job_specification_form[subject_id]' if vacancy.subject
     select vacancy.first_supporting_subject,
       from: 'job_specification_form[first_supporting_subject_id]' if vacancy.first_supporting_subject
@@ -64,6 +63,11 @@ module VacancyHelpers
     fill_in 'application_details_form[publish_on_yyyy]', with: vacancy.publish_on.year
   end
 
+  def fill_in_job_summary_form_fields(vacancy)
+    fill_in 'job_summary_form[job_summary]', with: vacancy.job_summary
+    fill_in 'job_summary_form[about_school]', with: vacancy.about_school
+  end
+
   def fill_in_copy_vacancy_form_fields(vacancy)
     fill_in 'copy_vacancy_form[job_title]', with: vacancy.job_title
 
@@ -91,7 +95,6 @@ module VacancyHelpers
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
-    expect(page.html).to include(vacancy.job_summary)
     expect(page).to have_content(vacancy.subject.name)
     expect(page).to have_content(vacancy.other_subjects)
     expect(page).to have_content(vacancy.working_patterns)
@@ -107,6 +110,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.application_link)
     expect(page).to have_content(vacancy.expires_on.to_s.strip)
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
+
+    expect(page.html).to include(vacancy.job_summary)
+    expect(page.html).to include(vacancy.about_school)
   end
 
   def verify_vacancy_show_page_details(vacancy)

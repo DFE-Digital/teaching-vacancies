@@ -127,7 +127,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
-        fill_in 'job_specification_form[job_summary]', with: 'Sample description'
+        fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on I18n.t('buttons.update_job')
       end
     end
@@ -151,11 +151,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.pay_package'))
 
-        fill_in 'pay_package_form[salary]', with: '£25,000 and money'
+        fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
         click_on I18n.t('buttons.update_job')
 
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
-        expect(page).to have_content('£25,000 and money')
+        expect(page).to have_content('Pay scale 1 to Pay scale 2')
       end
 
       scenario 'tracks the vacancy update' do
@@ -164,14 +164,15 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.pay_package'))
 
-        fill_in 'pay_package_form[salary]', with: '£25,000 and money'
+        fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
         click_on I18n.t('buttons.update_job')
 
         activity = vacancy.activities.last
         expect(activity.key).to eq('vacancy.update')
         expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(salary: [salary,
-                                                                       '£25,000 and money'])
+        expect(activity.parameters.symbolize_keys).to include(
+          salary: [salary, 'Pay scale 1 to Pay scale 2']
+        )
       end
 
       scenario 'adds a job to update the Google index in the queue' do
@@ -181,7 +182,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         visit edit_school_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.pay_package'))
 
-        fill_in 'pay_package_form[salary]', with: '£25,000 and money'
+        fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
         click_on I18n.t('buttons.update_job')
       end
     end
@@ -324,6 +325,61 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_header_link(I18n.t('jobs.application_details'))
 
         fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
+        click_on I18n.t('buttons.update_job')
+      end
+    end
+
+    context '#job_summary' do
+      scenario 'can not be edited when validation fails' do
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content(I18n.t('jobs.edit_heading', school: school.name))
+        click_header_link(I18n.t('jobs.job_summary'))
+
+        fill_in 'job_summary_form[job_summary]', with: ''
+        click_on I18n.t('buttons.update_job')
+
+        within_row_for(text: I18n.t('jobs.job_summary')) do
+          expect(page).to have_content(I18n.t('job_summary_errors.job_summary.blank'))
+        end
+      end
+
+      scenario 'can be successfully edited' do
+        visit edit_school_job_path(vacancy.id)
+        click_header_link(I18n.t('jobs.job_summary'))
+
+        fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
+        click_on I18n.t('buttons.update_job')
+
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page).to have_content('A summary about the job.')
+      end
+
+      scenario 'tracks the vacancy update' do
+        job_summary = vacancy.job_summary
+
+        visit edit_school_job_path(vacancy.id)
+        click_header_link(I18n.t('jobs.job_summary'))
+
+        fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
+        click_on I18n.t('buttons.update_job')
+
+        activity = vacancy.activities.last
+        expect(activity.key).to eq('vacancy.update')
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.parameters.symbolize_keys).to include(
+          job_summary: [strip_tags(job_summary), 'A summary about the job.']
+        )
+      end
+
+      scenario 'adds a job to update the Google index in the queue' do
+        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          .to receive(:update_google_index).with(vacancy)
+
+        visit edit_school_job_path(vacancy.id)
+        click_header_link(I18n.t('jobs.job_summary'))
+
+        fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
         click_on I18n.t('buttons.update_job')
       end
     end
