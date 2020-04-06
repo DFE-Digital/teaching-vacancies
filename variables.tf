@@ -184,26 +184,6 @@ variable "import_schools_task_schedule" {
   default     = "cron(0 07 * * ? *)"
 }
 
-variable "update_spreadsheets_task_command" {
-  description = "The Entrypoint for the update_spreadsheets task"
-  default     = ["rake", "verbose", "spreadsheets:update"]
-}
-
-variable "update_spreadsheets_task_schedule" {
-  description = "update_spreadsheets schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "cron(0 01 * * ? *)"
-}
-
-variable "update_dsi_spreadsheets_task_command" {
-  description = "The Entrypoint for the update_dsi_spreadsheets task"
-  default     = ["rake", "verbose", "dsi_spreadsheets:update"]
-}
-
-variable "update_dsi_spreadsheets_task_schedule" {
-  description = "update_dsi_spreadsheets schedule expression - https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html"
-  default     = "cron(0 02 * * ? *)"
-}
-
 variable "update_database_records_in_big_query_task_command" {
   description = "The Entrypoint for the update_database_records_in_big_query task"
   default     = ["rake", "verbose", "database_records:in_big_query:update"]
@@ -384,15 +364,6 @@ variable "google_maps_api_key" {}
 variable "google_tag_manager_container_id" {}
 variable "secret_key_base" {}
 
-variable "google_drive_json_key" {
-  type = "map"
-}
-
-variable "audit_spreadsheet_id" {}
-
-variable "dsi_user_spreadsheet_id" {}
-variable "dsi_user_worksheet_gid" {}
-variable "dsi_approver_worksheet_gid" {}
 variable "google_geocoding_api_key" {}
 
 variable "ordnance_survey_api_key" {}
@@ -406,13 +377,6 @@ variable "google_api_json_key" {
 }
 
 variable "google_analytics_profile_id" {}
-variable "audit_vacancies_worksheet_gid" {}
-variable "audit_vacancy_publish_feedback_worksheet_gid" {}
-variable "audit_general_feedback_worksheet_gid" {}
-variable "audit_express_interest_worksheet_gid" {}
-variable "audit_subscription_creation_worksheet_gid" {}
-
-variable "audit_search_event_worksheet_gid" {}
 variable "skylight_authentication" {}
 variable "skylight_env" {}
 variable "skylight_enabled" {}
