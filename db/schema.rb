@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_05_090140) do
+ActiveRecord::Schema.define(version: 2020_04_06_102653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -184,7 +184,7 @@ ActiveRecord::Schema.define(version: 2020_04_05_090140) do
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title", null: false
     t.string "slug", null: false
-    t.text "job_summary", null: false
+    t.text "job_summary"
     t.string "minimum_salary", null: false
     t.string "maximum_salary"
     t.text "benefits"
