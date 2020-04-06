@@ -26,7 +26,7 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     expect { click_on 'Get more information' }.to change { vacancy.get_more_info_counter.to_i }.by(1)
   end
 
-  scenario 'it triggers a job to write an express_interest_event to the audit Spreadsheet' do
+  scenario 'it triggers a job to write an express_interest_event to the audit table' do
     vacancy = create(:vacancy, :published)
     visit job_path(vacancy)
 

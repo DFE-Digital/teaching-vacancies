@@ -57,7 +57,6 @@ secret_key_base =
 http_user = "user"
 http_pass = "password"
 google_maps_api_key =
-published_vacancy_spreadsheet_id =
 rollbar_access_token =
 rollbar_client_errors_access_token =
 domain = # "tvs.dxw.net"

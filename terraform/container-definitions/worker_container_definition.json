@@ -89,46 +89,6 @@
         "value": "${aws_elasticsearch_secret}"
       },
       {
-        "name": "AUDIT_SPREADSHEET_ID",
-        "value": "${audit_spreadsheet_id}"
-      },
-      {
-        "name": "AUDIT_VACANCIES_WORKSHEET_GID",
-        "value": "${audit_vacancies_worksheet_gid}"
-      },
-      {
-        "name": "AUDIT_VACANCY_PUBLISH_FEEDBACK_WORKSHEET_GID",
-        "value": "${audit_vacancy_publish_feedback_worksheet_gid}"
-      },
-      {
-        "name": "AUDIT_GENERAL_FEEDBACK_WORKSHEET_GID",
-        "value": "${audit_general_feedback_worksheet_gid}"
-      },
-      {
-        "name": "AUDIT_EXPRESS_INTEREST_WORKSHEET_GID",
-        "value": "${audit_express_interest_worksheet_gid}"
-      },
-      {
-        "name": "AUDIT_SUBSCRIPTION_CREATION_WORKSHEET_GID",
-        "value": "${audit_subscription_creation_worksheet_gid}"
-      },
-      {
-        "name": "AUDIT_SEARCH_EVENT_WORKSHEET_GID",
-        "value": "${audit_search_event_worksheet_gid}"
-      },
-      {
-        "name": "DSI_USER_SPREADSHEET_ID",
-        "value": "${dsi_user_spreadsheet_id}"
-      },
-      {
-        "name": "DSI_USER_WORKSHEET_GID",
-        "value": "${dsi_user_worksheet_gid}"
-      },
-      {
-        "name": "DSI_APPROVER_WORKSHEET_GID",
-        "value": "${dsi_approver_worksheet_gid}"
-      },
-      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },
@@ -155,10 +115,6 @@
       {
         "name": "NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES",
         "value": "${notify_prompt_feedback_for_expired_vacancies}"
-      },
-      {
-        "name": "GOOGLE_DRIVE_JSON_KEY",
-        "value": "${google_drive_json_key}"
       },
       {
         "name": "ORDNANCE_SURVEY_API_KEY",

@@ -156,9 +156,6 @@ data "template_file" "web_container_definition" {
     google_geocoding_api_key                     = "${var.google_geocoding_api_key}"
     ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"
     pp_transactions_by_channel_token             = "${var.pp_transactions_by_channel_token}"
-    google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
-    audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
-    dsi_user_spreadsheet_id                      = "${var.dsi_user_spreadsheet_id}"
     domain                                       = "${var.domain}"
     google_api_json_key                          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id                  = "${var.google_analytics_profile_id}"
@@ -310,24 +307,13 @@ data "template_file" "worker_container_definition" {
     google_api_json_key                          = "${replace(jsonencode(var.google_api_json_key), "/([\"\\\\])/", "\\$1")}"
     google_analytics_profile_id                  = "${var.google_analytics_profile_id}"
     domain                                       = "${var.domain}"
-    audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
-    dsi_user_spreadsheet_id                      = "${var.dsi_user_spreadsheet_id}"
-    dsi_user_worksheet_gid                       = "${var.dsi_user_worksheet_gid}"
-    dsi_approver_worksheet_gid                   = "${var.dsi_approver_worksheet_gid}"
     dfe_sign_in_url                              = "${var.dfe_sign_in_url}"
     dfe_sign_in_password                         = "${var.dfe_sign_in_password}"
-    google_drive_json_key                        = "${replace(jsonencode(var.google_drive_json_key), "/([\"\\\\])/", "\\$1")}"
     google_cloud_platform_project_id             = "${var.google_cloud_platform_project_id}"
     big_query_api_json_key                       = "${replace(jsonencode(var.big_query_api_json_key), "/([\"\\\\])/", "\\$1")}"
     big_query_dataset                            = "${var.big_query_dataset}"
     cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
     cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
-    audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"
-    audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
-    audit_general_feedback_worksheet_gid         = "${var.audit_general_feedback_worksheet_gid}"
-    audit_express_interest_worksheet_gid         = "${var.audit_express_interest_worksheet_gid}"
-    audit_subscription_creation_worksheet_gid    = "${var.audit_subscription_creation_worksheet_gid}"
-    audit_search_event_worksheet_gid             = "${var.audit_search_event_worksheet_gid}"
     notify_key                                   = "${var.notify_key}"
     notify_subscription_confirmation_template    = "${var.notify_subscription_confirmation_template}"
     notify_subscription_daily_template           = "${var.notify_subscription_daily_template}"
@@ -559,40 +545,6 @@ module "import_schools_task" {
   task_description = "Import school data"
   task_command     = "${var.import_schools_task_command}"
   task_schedule    = "${var.import_schools_task_schedule}"
-
-  container_definition_template = "${module.rake_container_definition.template}"
-
-  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
-
-  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
-}
-
-module "update_spreadsheets_task" {
-  source = "../scheduled-ecs-task"
-
-  task_name        = "${var.ecs_service_web_task_name}_update_spreadsheets"
-  task_description = "Update spreadsheets"
-  task_command     = "${var.update_spreadsheets_task_command}"
-  task_schedule    = "${var.update_spreadsheets_task_schedule}"
-
-  container_definition_template = "${module.rake_container_definition.template}"
-
-  ecs_cluster_arn = "${aws_ecs_cluster.cluster.arn}"
-
-  execution_role_arn = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn      = "${aws_iam_role.ecs_execution_role.arn}"
-  event_role_arn     = "${aws_iam_role.scheduled_task_role.arn}"
-}
-
-module "update_dsi_spreadsheets_task" {
-  source = "../scheduled-ecs-task"
-
-  task_name        = "${var.ecs_service_web_task_name}_update_dsi_spreadsheets"
-  task_description = "Update DSI spreadsheets"
-  task_command     = "${var.update_dsi_spreadsheets_task_command}"
-  task_schedule    = "${var.update_dsi_spreadsheets_task_schedule}"
 
   container_definition_template = "${module.rake_container_definition.template}"
 

@@ -802,7 +802,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      context 'updates the published vacancy spreadsheet via Sidekiq' do
+      context 'updates the published vacancy audit table' do
         scenario 'when the vacancy is published' do
           vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
 
