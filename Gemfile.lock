@@ -468,10 +468,6 @@ GEM
       activesupport (>= 3)
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
-    teaspoon (1.1.5)
-      railties (>= 3.2.5, < 6)
-    teaspoon-mocha (2.3.3)
-      teaspoon (>= 1.0.0)
     temple (0.8.1)
     thor (0.20.3)
     thread_safe (0.3.6)
@@ -583,7 +579,6 @@ DEPENDENCIES
   skylight
   spring
   spring-watcher-listen (~> 2.0.0)
-  teaspoon-mocha
   timecop
   tzinfo-data
   validate_url (~> 1.0.8)

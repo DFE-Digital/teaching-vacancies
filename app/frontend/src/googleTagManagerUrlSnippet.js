@@ -13,7 +13,3 @@ function removePIIfromURL(url) {
 $(document).ready(function(){
   pushURLToDatalayer();
 });
-
-// Exposing function to window to let teaspoon specs pass
-// TODO: remove this after removing teaspoon
-window.removePIIfromURL = removePIIfromURL
