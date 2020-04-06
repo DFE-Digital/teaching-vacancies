@@ -1,46 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe 'pages/home/_signin.html.haml' do
-  context 'FEATURE_SIGN_IN_ALERT is a string "false"' do
+  context 'if session is authenticated' do
     before do
-      allow(ENV).to receive(:[]).with('FEATURE_SIGN_IN_ALERT').and_return('false')
+      allow(view).to receive(:authenticated?).and_return(true)
+      school = create(:school, name: 'Salisbury School')
+      allow(view).to receive(:current_school) { school }
       render
     end
 
-    it 'displays the regular signin workflow' do
-      expect(render).to have_css('.identifications')
+    it 'should display the manage schools workflow' do
+      expect(render).to have_css('.manage-vacancies')
     end
   end
 
-  context 'FEATURE_SIGN_IN_ALERT is a boolean false' do
+  context 'if session is not authenticated' do
     before do
-      allow(ENV).to receive(:[]).with('FEATURE_SIGN_IN_ALERT').and_return(false)
+      allow(view).to receive(:authenticated?).and_return(false)
       render
     end
 
-    it 'displays the regular signin workflow' do
-      expect(render).to have_css('.identifications')
-    end
-  end
-
-  context 'FEATURE_SIGN_IN_ALERT is as string "true"' do
-    before do
-      allow(ENV).to receive(:[]).with('FEATURE_SIGN_IN_ALERT').and_return('true')
-      render
-    end
-
-    it 'displays the regular signin workflow' do
-      expect(render).to have_css('.identifications-button')
-    end
-  end
-
-  context 'FEATURE_SIGN_IN_ALERT is as boolean true' do
-    before do
-      allow(ENV).to receive(:[]).with('FEATURE_SIGN_IN_ALERT').and_return(true)
-      render
-    end
-
-    it 'displays the regular signin workflow' do
+    it 'should display the regular signin workflow' do
       expect(render).to have_css('.identifications-button')
     end
   end
