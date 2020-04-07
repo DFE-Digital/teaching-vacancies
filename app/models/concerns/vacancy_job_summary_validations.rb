@@ -1,6 +1,5 @@
 module VacancyJobSummaryValidations
   extend ActiveSupport::Concern
-  include ApplicationHelper
 
   included do
     validates :job_summary, presence: true
