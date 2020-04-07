@@ -120,7 +120,6 @@ RSpec.describe JobSpecificationForm, type: :model do
 
     it 'a JobSpecificationForm can be converted to a vacancy' do
       job_specification_form = JobSpecificationForm.new(job_title: 'English Teacher',
-                                                        job_summary: 'description',
                                                         job_roles: [I18n.t('jobs.job_role_options.teacher')],
                                                         working_patterns: ['full_time'],
                                                         subject_id: main_subject.id,
