@@ -25,3 +25,32 @@ body.hiring-staff {
   margin-bottom: 0;
   margin-top: 1.5rem;
 }
+
+.hod-checkmark {
+  font-size: 35px;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+
+  + .govuk-heading-l {
+    margin-top: 0;
+  }
+}
