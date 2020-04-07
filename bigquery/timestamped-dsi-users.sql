@@ -1,5 +1,5 @@
-SELECT DISTINCT
-  COALESCE(dsi_users_now.user_id,
+SELECT
+  DISTINCT COALESCE(dsi_users_now.user_id,
     latest_timestamped_dsi_users.user_id) AS user_id,
   COALESCE(dsi_users_now.role,
     latest_timestamped_dsi_users.role) AS role,
@@ -46,15 +46,15 @@ IF
     SELECT
       COUNT(*)
     FROM
-      `teacher-vacancy-service.production_dataset.dsi_users`
+      `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users`
     WHERE
-      user_id NOT IN (
+      to_date IS NULL
+      AND user_id NOT IN (
       SELECT
         user_id
       FROM
-        `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users`
-      WHERE
-        to_date IS NULL) ) < 500,
+        `teacher-vacancy-service.production_dataset.dsi_users` ) ) < 500,
     TRUE,
-    ERROR("Error: Today's user table appears to have 500+ new users in it."))
-ORDER BY user_id ASC
+    ERROR("Error: 500+ users that were recorded as signed up yesterday don't appear to be today."))
+ORDER BY
+  user_id ASC
