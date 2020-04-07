@@ -38,6 +38,21 @@ WITH
     (status NOT IN ("trashed",
         "deleted",
         "draft")) ),
+  vacancy_metrics AS (
+  SELECT
+    dates.date AS date,
+  IF
+    (date > CURRENT_DATE(),
+      NULL,
+      COUNT(*)) AS vacancies_published
+  FROM
+    dates
+  LEFT JOIN
+    vacancies
+  ON
+    dates.date=vacancies.publish_on
+  GROUP BY
+    dates.date ),
   metrics AS (
   SELECT
     date,
@@ -81,7 +96,8 @@ WITH
         FALSE) AS in_scope,
     IF
       ((schools.status = "Closed"
-        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+          AND schools.closed_date <= dates.date)
+        OR schools.opened_date > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not signed up, regardless of whether this is before or after 20th November 2019
       IF
@@ -99,46 +115,49 @@ WITH
             #after 20th November 2019, count the number of users who had access, see if it is 1 or more, and if so count the school as signed up
             TRUE,
             FALSE))) AS signed_up,
-
     IF
       ((schools.status = "Closed"
-        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+          AND schools.closed_date <= dates.date)
+        OR schools.opened_date > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having published
-    IF
-      (COUNTIF(vacancies.publish_on <= dates.date) > 1,
-        TRUE,
-        FALSE)) AS has_published_so_far,
+      IF
+        (COUNTIF(vacancies.publish_on <= dates.date) > 1,
+          TRUE,
+          FALSE)) AS has_published_so_far,
     IF
       ((schools.status = "Closed"
-        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+          AND schools.closed_date <= dates.date)
+        OR schools.opened_date > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having published in the last year
-    IF
-      (COUNTIF(vacancies.publish_on <= dates.date
-          AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 1 YEAR)) > 1,
-        TRUE,
-        FALSE)) AS has_published_in_the_last_year,
+      IF
+        (COUNTIF(vacancies.publish_on <= dates.date
+            AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 1 YEAR)) > 1,
+          TRUE,
+          FALSE)) AS has_published_in_the_last_year,
     IF
       ((schools.status = "Closed"
-        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+          AND schools.closed_date <= dates.date)
+        OR schools.opened_date > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having published in the last quarter
-    IF
-      (COUNTIF(vacancies.publish_on <= dates.date
-          AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 3 MONTH)) > 1,
-        TRUE,
-        FALSE)) AS has_published_in_the_last_quarter,
+      IF
+        (COUNTIF(vacancies.publish_on <= dates.date
+            AND vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 3 MONTH)) > 1,
+          TRUE,
+          FALSE)) AS has_published_in_the_last_quarter,
     IF
       ((schools.status = "Closed"
-        AND schools.closed_date <= dates.date) OR schools.opened_date > dates.date,
+          AND schools.closed_date <= dates.date)
+        OR schools.opened_date > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having had live vacancies
-    IF
-      (COUNTIF(vacancies.publish_on <= dates.date
-          AND vacancies.expires_on > dates.date) > 1,
-        TRUE,
-        FALSE)) AS had_live_vacancies
+      IF
+        (COUNTIF(vacancies.publish_on <= dates.date
+            AND vacancies.expires_on > dates.date) > 1,
+          TRUE,
+          FALSE)) AS had_live_vacancies
     FROM
       schools
     CROSS JOIN
@@ -193,11 +212,16 @@ SELECT
   SAFE_DIVIDE(metrics.schools_which_published_so_far,
     metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_so_far,
   SAFE_DIVIDE(metrics.schools_which_had_vacancies_live,
-    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live
+    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live,
+  vacancy_metrics.vacancies_published AS vacancies_published
 FROM
   dates
 LEFT JOIN
   metrics
+USING
+  (date)
+LEFT JOIN
+  vacancy_metrics
 USING
   (date)
 LEFT JOIN
