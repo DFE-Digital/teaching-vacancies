@@ -8,13 +8,6 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       expect(helper.sanitize(html)).to eq(sanitized_html)
     end
-
-    it 'it converts &amp; to &' do
-      html = '<p>English  &amp; Drama teacher</p>'
-      sanitized_html = '<p>English  & Drama teacher</p>'
-
-      expect(helper.sanitize(html)).to eq(sanitized_html)
-    end
   end
 
   describe '#body_class' do

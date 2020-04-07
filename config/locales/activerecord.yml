@@ -4,6 +4,7 @@ en:
       blank: Enter a job title
       too_short: Job title must be at least %{count} characters
       too_long: Job title must not be more than %{count} characters
+      invalid_characters: Job title must not contain any HTML tags
     job_roles:
       blank: Select a job role
     working_patterns:
@@ -12,6 +13,7 @@ en:
     salary:
       blank: Enter a salary
       too_long: Salary must not be more than %{count} characters
+      invalid_characters: Salary must not contain any HTML tags
   supporting_documents_errors: &supporting_documents_errors
     supporting_documents:
       inclusion: "Please indicate if you'd like to attach supporting documents"
@@ -37,7 +39,7 @@ en:
       blank: Enter a description of the school
   errors:
     format: "%{message}"
-    title: 
+    title:
       one: "Please correct the following error in your listing"
       other: "Please correct the following %{count} errors in your listing"
     messages:
