@@ -22,7 +22,7 @@
       = f.govuk_text_area :about_school,
         label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: current_school.name), size: 's' },
         hint_text: t('helpers.hint.job_summary_form.about_school'),
-        value: @vacancy.about_school.presence || (@vacancy.school.description.presence || ''),
+        value: @vacancy.about_school.presence || @vacancy.school.description.presence.to_s,
         rows: 10,
         required: true
 
