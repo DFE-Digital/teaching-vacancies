@@ -1,5 +1,5 @@
 %section#school-overview.govuk-tabs__panel.no-border-override
-  %h3.govuk-heading-m 
+  %h3.govuk-heading-m
     = t('schools.school_overview')
   %table.govuk-table
     %tbody.govuk-table__body
@@ -9,22 +9,22 @@
         %td.govuk-table__cell
           = @vacancy.school.school_type_with_religious_character
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
         %td.govuk-table__cell
           = @vacancy.school.phase.titleize
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.school_size')
         %td.govuk-table__cell
           = @vacancy.school.school_size
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.age_range')
         %td.govuk-table__cell
           = @vacancy.school.age_range
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.ofsted_report')
         - if @vacancy.school.ofsted_report.present?
           %td.govuk-table__cell
@@ -33,26 +33,26 @@
           %td.govuk-table__cell
             = t('schools.no_information')
       %tr.govuk-table__row
-        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+        %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.website')
         %td.govuk-table__cell
           = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link link-wrap', target: '_blank')
-      - if @vacancy.contact_email.present?                       
+      - if @vacancy.contact_email.present?
         %tr.govuk-table__row
-          %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" } 
+          %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('jobs.contact_email')
           %td.govuk-table__cell
             = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link link-wrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
-  
-  - if @vacancy.school.description.present?
+
+  - if @vacancy.about_school.present?
     %h4.govuk-heading-s
       = t('schools.info', school: @vacancy.school.name)
-    %p= @vacancy.school.description
+    %p= @vacancy.about_school
 
   %h4.govuk-heading-s
     = t('schools.school_location')
   %p= @vacancy.school.full_address
-  
+
   - if @vacancy.school.geolocation
     %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
     = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
