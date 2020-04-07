@@ -39,6 +39,26 @@ WITH
     (status NOT IN ("trashed",
         "deleted",
         "draft")) ),
+  vacancy_metrics AS (
+  SELECT
+    dates.date AS date,
+    schools.RSC_region AS RSC_region,
+  IF
+    (date > CURRENT_DATE(),
+      NULL,
+      COUNT(*)) AS vacancies_published
+  FROM
+    dates
+  LEFT JOIN
+    vacancies
+  ON
+    dates.date=vacancies.publish_on
+  LEFT JOIN
+    schools
+  ON
+    vacancies.school_id=schools.id
+  GROUP BY
+    dates.date,RSC_region ),
   metrics AS (
   SELECT
     date,
@@ -203,13 +223,18 @@ SELECT
   SAFE_DIVIDE(metrics.schools_which_published_so_far,
     metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_so_far,
   SAFE_DIVIDE(metrics.schools_which_had_vacancies_live,
-    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live
+    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live,
+  vacancy_metrics.vacancies_published AS vacancies_published
 FROM
   dates
 LEFT JOIN
   metrics
 USING
   (date)
+LEFT JOIN
+  vacancy_metrics
+USING
+  (date,RSC_region)
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.nightly_goals_from_google_sheets` AS goals #pull in manually set goals for metrics from a Google Sheet
 ON
