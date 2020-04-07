@@ -364,42 +364,6 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  context 'content sanitization' do
-    it '#job_summary' do
-      html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
-      vacancy = build(:vacancy, job_summary: html)
-
-      sanitized_html = '<p> a paragraph with a link</p><br>'
-      expect(vacancy.job_summary).to eq(sanitized_html)
-    end
-
-    it '#job_title' do
-      title = '<strong>School teacher </strong>'
-      vacancy = build(:vacancy, job_title: title)
-
-      sanitized_title = 'School teacher '
-      expect(vacancy.job_title).to eq(sanitized_title)
-    end
-
-    context '#salary' do
-      it 'strips the tags' do
-        salary = '<strong>£25,000</strong>'
-        vacancy = build(:vacancy, salary: salary)
-
-        sanitized_salary = '£25,000'
-        expect(vacancy.salary).to eq(sanitized_salary)
-      end
-    end
-
-    it '#benefits' do
-      benefits = '<ul><li><a href="">Gym membership</a></li></ul>'
-      vacancy = build(:vacancy, benefits: benefits)
-
-      sanitized_benefits = '<ul><li>Gym membership</li></ul>'
-      expect(vacancy.benefits).to eq(sanitized_benefits)
-    end
-  end
-
   context '#flexible_working?' do
     context 'when no flexible working options are available' do
       let(:flexible_working) { nil }

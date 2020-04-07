@@ -5,13 +5,12 @@ module VacancyPayPackageValidations
   included do
     validates :salary, presence: true
     validates :salary, length: { minimum: 1, maximum: 256 }, if: :salary?
+    validate :salary_has_no_tags?, if: :salary?
   end
 
-  def salary=(value)
-    super(sanitize(value, tags: []))
-  end
-
-  def benefits=(value)
-    super(sanitize(value))
+  def salary_has_no_tags?
+    errors.add(
+      :salary, I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters')
+    ) unless salary == sanitize(salary, tags: [])
   end
 end

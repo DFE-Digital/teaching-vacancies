@@ -46,6 +46,17 @@ RSpec.describe JobSpecificationForm, type: :model do
             .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_long', count: 100))
         end
       end
+
+      context 'when title contains HTML tags' do
+        let(:job_title) { 'Title with <p>tags</p>' }
+
+        it 'validates presence of HTML tags' do
+          expect(job_specification.valid?).to be false
+          expect(job_specification.errors.messages[:job_title]).to include(
+            I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+          )
+        end
+      end
     end
   end
 
