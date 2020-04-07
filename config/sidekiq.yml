@@ -6,7 +6,6 @@
   - [performance_platform, 2]
   - [google_indexing, 2]
   - [import_school_data, 1]
-  - [update_vacancy_spreadsheet, 1]
   - [audit_published_vacancy, 1]
   - [audit_vacancies, 1]
   - [audit_express_interest_event, 1]
@@ -14,14 +13,9 @@
   - [audit_vacancy_publish_feedback, 1]
   - [audit_general_feedback, 1]
   - [audit_subscription_creation, 1]
-  - [audit_spreadsheet, 1]
-  - [dsi_user_data, 1]
-  - [dsi_approver_data, 1]
   - [seed_vacancies_from_api, 1]
   - [export_users, 1]
   - [export_tables, 1]
-update_vacancy_spreadsheet:
-  :concurrency: 1
 audit_published_vacancy:
   :concurrency: 1
 audit_vacancies:
@@ -35,12 +29,6 @@ audit_vacancy_publish_feedback:
 audit_general_feedback:
   :concurrency: 1
 audit_subscription_creation:
-  :concurrency: 1
-audit_spreadsheet:
-  :concurrency: 1
-dsi_user_data:
-  :concurrency: 1
-dsi_approver_data:
   :concurrency: 1
 mailers:
   :concurrency: 2

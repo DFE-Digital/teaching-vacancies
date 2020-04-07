@@ -88,12 +88,6 @@ module "ecs" {
   import_schools_task_command  = "${var.import_schools_task_command}"
   import_schools_task_schedule = "${var.import_schools_task_schedule}"
 
-  update_spreadsheets_task_command  = "${var.update_spreadsheets_task_command}"
-  update_spreadsheets_task_schedule = "${var.update_spreadsheets_task_schedule}"
-
-  update_dsi_spreadsheets_task_command  = "${var.update_dsi_spreadsheets_task_command}"
-  update_dsi_spreadsheets_task_schedule = "${var.update_dsi_spreadsheets_task_schedule}"
-
   update_database_records_in_big_query_task_command = "${var.update_database_records_in_big_query_task_command}"
   update_database_records_in_big_query_task_schedule = "${var.update_database_records_in_big_query_task_schedule}"
 
@@ -151,17 +145,6 @@ module "ecs" {
   aws_elasticsearch_secret                     = "${module.es.es_user_access_key_secret}"
   redis_cache_url                              = "redis://${module.elasticache_redis.redis_cache_endpoint}"
   redis_queue_url                              = "redis://${module.elasticache_redis.redis_queue_endpoint}"
-  google_drive_json_key                        = "${var.google_drive_json_key}"
-  audit_spreadsheet_id                         = "${var.audit_spreadsheet_id}"
-  audit_vacancies_worksheet_gid                = "${var.audit_vacancies_worksheet_gid}"
-  audit_vacancy_publish_feedback_worksheet_gid = "${var.audit_vacancy_publish_feedback_worksheet_gid}"
-  audit_general_feedback_worksheet_gid         = "${var.audit_general_feedback_worksheet_gid}"
-  audit_express_interest_worksheet_gid         = "${var.audit_express_interest_worksheet_gid}"
-  audit_subscription_creation_worksheet_gid    = "${var.audit_subscription_creation_worksheet_gid}"
-  audit_search_event_worksheet_gid             = "${var.audit_search_event_worksheet_gid}"
-  dsi_user_spreadsheet_id                      = "${var.dsi_user_spreadsheet_id}"
-  dsi_user_worksheet_gid                       = "${var.dsi_user_worksheet_gid}"
-  dsi_approver_worksheet_gid                   = "${var.dsi_approver_worksheet_gid}"
   domain                                       = "${var.domain}"
   google_geocoding_api_key                     = "${var.google_geocoding_api_key}"
   ordnance_survey_api_key                      = "${var.ordnance_survey_api_key}"

@@ -119,18 +119,6 @@
         "value": "${redis_queue_url}"
       },
       {
-        "name": "GOOGLE_DRIVE_JSON_KEY",
-        "value": "${google_drive_json_key}"
-      },
-      {
-        "name": "AUDIT_SPREADSHEET_ID",
-        "value": "${audit_spreadsheet_id}"
-      },
-      {
-        "name": "DSI_USER_SPREADSHEET_ID",
-        "value": "${dsi_user_spreadsheet_id}"
-      },
-      {
         "name": "DOMAIN",
         "value": "${domain}"
       },

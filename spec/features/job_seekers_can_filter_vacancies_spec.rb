@@ -243,7 +243,7 @@ RSpec.feature 'Filtering vacancies' do
     end
   end
 
-  context 'when searching triggers a job to write a search_event to the audit Spreadsheet', elasticsearch: true do
+  context 'when searching triggers a job to write a search_event to the audit table', elasticsearch: true do
     scenario 'correctly logs the number of non-paginated results' do
       create_list(:vacancy, 3, :published, job_title: 'Physics', newly_qualified_teacher: true)
       create(:vacancy, :published, newly_qualified_teacher: false)

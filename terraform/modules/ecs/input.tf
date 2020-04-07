@@ -52,23 +52,6 @@ variable "aws_elasticsearch_secret" {}
 variable "redis_cache_url" {}
 variable "redis_queue_url" {}
 
-variable "google_drive_json_key" {
-  type = "map"
-}
-
-variable "audit_spreadsheet_id" {}
-variable "audit_vacancies_worksheet_gid" {}
-variable "audit_vacancy_publish_feedback_worksheet_gid" {}
-variable "audit_general_feedback_worksheet_gid" {}
-variable "audit_express_interest_worksheet_gid" {}
-variable "audit_subscription_creation_worksheet_gid" {}
-
-variable "audit_search_event_worksheet_gid" {}
-
-variable "dsi_user_spreadsheet_id" {}
-
-variable "dsi_user_worksheet_gid" {}
-variable "dsi_approver_worksheet_gid" {}
 variable "domain" {}
 variable "google_geocoding_api_key" {}
 variable "ordnance_survey_api_key" {}
@@ -163,14 +146,6 @@ variable "sessions_trim_task_schedule" {}
 variable "performance_platform_submit_task_schedule" {}
 variable "import_schools_task_schedule" {}
 
-variable "update_spreadsheets_task_command" {
-  type = "list"
-}
-
-variable "update_dsi_spreadsheets_task_command" {
-  type = "list"
-}
-
 variable "update_database_records_in_big_query_task_command" {
   type = "list"
 }
@@ -179,8 +154,6 @@ variable "export_tables_as_csv_to_big_query_task_command" {
   type = "list"
 }
 
-variable "update_spreadsheets_task_schedule" {}
-variable "update_dsi_spreadsheets_task_schedule" {}
 variable "update_database_records_in_big_query_task_schedule" {}
 variable "export_tables_as_csv_to_big_query_task_schedule" {}
 variable "send_job_alerts_daily_email_task_schedule" {}
