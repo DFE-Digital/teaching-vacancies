@@ -162,7 +162,7 @@ RSpec.feature 'Viewing a single published vacancy' do
       visit job_path(vacancy)
 
       expect(page.find('meta[name="description"]', visible: false)['content'])
-        .to eq(strip_tags(vacancy.job_description))
+        .to eq(strip_tags(vacancy.job_summary))
     end
 
     scenario 'the vacancy\'s open graph meta data are rendered correctly' do
@@ -170,7 +170,7 @@ RSpec.feature 'Viewing a single published vacancy' do
       visit job_path(vacancy)
 
       expect(page.find('meta[property="og:description"]', visible: false)['content'])
-        .to eq(strip_tags(vacancy.job_description))
+        .to eq(strip_tags(vacancy.job_summary))
     end
   end
 end

@@ -22,7 +22,7 @@ class ExportTablesToBigQuery
     frequency
     geolocation
     gias_data
-    job_description
+    job_summary
     qualifications
     supporting_documents
   ].freeze

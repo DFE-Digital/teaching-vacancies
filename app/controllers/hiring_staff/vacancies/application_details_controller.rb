@@ -13,7 +13,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     if @application_details_form.valid?
       session[:completed_step] = current_step
       vacancy = update_vacancy(@application_details_form.params_to_save)
-      redirect_to next_step(vacancy)
+      redirect_to_next_step(vacancy)
     else
       session[:current_step] = :step_4 unless session[:current_step].eql?(:review)
       redirect_to application_details_school_job_path(anchor: 'errors')
@@ -56,7 +56,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
                   :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem).merge(completed_step: current_step)
   end
 
-  def next_step(vacancy)
-    review_path(vacancy)
+  def next_step
+    school_job_job_summary_path(@vacancy.id)
   end
 end

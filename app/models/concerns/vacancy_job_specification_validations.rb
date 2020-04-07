@@ -3,12 +3,11 @@ module VacancyJobSpecificationValidations
   include ApplicationHelper
 
   included do
-    validates :job_title, :job_description, presence: true
+    validates :job_title, presence: true
     validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
+    validate :job_title_has_no_tags?, if: :job_title?
 
     validates :job_roles, presence: true
-
-    validates :job_description, length: { minimum: 10, maximum: 50_000 }, if: :job_description?
 
     validates :working_patterns, presence: true
 
@@ -61,11 +60,9 @@ module VacancyJobSpecificationValidations
     I18n.t('activerecord.errors.models.vacancy.attributes.ends_on.past')
   end
 
-  def job_description=(value)
-    super(sanitize(value))
-  end
-
-  def job_title=(value)
-    super(sanitize(value, tags: []))
+  def job_title_has_no_tags?
+    errors.add(
+      :job_title, I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+    ) unless job_title == sanitize(job_title, tags: [])
   end
 end

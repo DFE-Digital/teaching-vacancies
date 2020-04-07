@@ -12,7 +12,6 @@ class JobPosting
   def map_schema_to_vacancy_fields
     {
       job_title: @schema['title'],
-      job_description: @schema['description'],
       job_roles: @schema['jobRoles'],
       salary: @schema['salary'],
       benefits: @schema['jobBenefits'],
@@ -25,6 +24,8 @@ class JobPosting
       contact_email: 'recruitment@school.invalid',
       publish_on: publish_on_or_today,
       expires_on: expires_on_or_future,
+      job_summary: @schema['description'],
+      about_school: @schema['aboutSchool'],
       school: school_by_urn_or_random
     }
   end

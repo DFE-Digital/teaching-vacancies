@@ -31,8 +31,8 @@
         %td.govuk-table__cell
           = @vacancy.salary
 
-  %h4.govuk-heading-s= t('jobs.job_description')
-  %p= @vacancy.job_description
+  %h4.govuk-heading-s= t('jobs.job_summary')
+  %p= @vacancy.job_summary
 
   - if @vacancy.documents.none? && @vacancy.any_candidate_specification?
     - if @vacancy.education?

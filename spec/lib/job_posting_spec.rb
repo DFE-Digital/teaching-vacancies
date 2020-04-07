@@ -23,7 +23,8 @@ RSpec.describe JobPosting do
         'identifier' => '136352'
       },
       'validThrough' => valid_through,
-      'workHours' => '37.5'
+      'workHours' => '37.5',
+      'aboutSchool' => 'Some information about the school'
     }
   end
   let(:school_by_urn) { build(:school, urn: '136352') }

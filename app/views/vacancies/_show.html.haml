@@ -2,7 +2,7 @@
   #{@vacancy.job_title} - #{@vacancy.school_name}
 
 - content_for :page_description do
-  = strip_tags(@vacancy.job_description)
+  = strip_tags(@vacancy.job_summary)
 
 .vacancy
   = render '/shared/vacancy/jobseeker_view'

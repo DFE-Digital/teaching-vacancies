@@ -46,44 +46,15 @@ RSpec.describe JobSpecificationForm, type: :model do
             .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.too_long', count: 100))
         end
       end
-    end
 
-    describe '#job_description' do
-      let(:job_specification) { JobSpecificationForm.new(job_description: job_description) }
+      context 'when title contains HTML tags' do
+        let(:job_title) { 'Title with <p>tags</p>' }
 
-      context 'when description is blank' do
-        let(:job_description) { nil }
-
-        it 'requests an entry in the field' do
+        it 'validates presence of HTML tags' do
           expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:job_description][0])
-            .to eq('Enter a job description')
-        end
-      end
-
-      context 'when description is too short' do
-        let(:job_description) { 'short' }
-
-        it 'validates minimum length' do
-          expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:job_description][0])
-            .to eq(
-              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_short',
-                count: 10)
-              )
-        end
-      end
-
-      context 'when description is too long' do
-        let(:job_description) { 'Long text' * 10000 }
-
-        it 'validates max length' do
-          expect(job_specification.valid?).to be false
-          expect(job_specification.errors.messages[:job_description][0])
-            .to eq(
-              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_long',
-                count: 50000)
-              )
+          expect(job_specification.errors.messages[:job_title]).to include(
+            I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+          )
         end
       end
     end
@@ -160,7 +131,6 @@ RSpec.describe JobSpecificationForm, type: :model do
 
     it 'a JobSpecificationForm can be converted to a vacancy' do
       job_specification_form = JobSpecificationForm.new(job_title: 'English Teacher',
-                                                        job_description: 'description',
                                                         job_roles: [I18n.t('jobs.job_role_options.teacher')],
                                                         working_patterns: ['full_time'],
                                                         subject_id: main_subject.id,
@@ -169,7 +139,6 @@ RSpec.describe JobSpecificationForm, type: :model do
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_roles).to include(I18n.t('jobs.job_role_options.teacher'))
-      expect(job_specification_form.vacancy.job_description).to eq('description')
       expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
       expect(job_specification_form.vacancy.subject.name).to eq(main_subject.name)
       expect(job_specification_form.vacancy.newly_qualified_teacher).to eq(true)

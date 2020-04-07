@@ -20,7 +20,7 @@ RSpec.feature 'Creating a vacancy' do
 
     click_link 'Create a job listing'
 
-    expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
+    expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
   end
 
   context 'creating a new vacancy' do
@@ -44,7 +44,7 @@ RSpec.feature 'Creating a vacancy' do
 
       expect(page.current_path).to eq(job_specification_school_job_path)
       expect(page).to have_content(I18n.t('jobs.create_a_job', school: school.name))
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
     end
 
     context '#job_specification' do
@@ -53,7 +53,7 @@ RSpec.feature 'Creating a vacancy' do
 
         click_on I18n.t('buttons.save_and_continue')
 
-        mandatory_fields = %w[job_title job_roles job_description working_patterns]
+        mandatory_fields = %w[job_title job_roles working_patterns]
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))
@@ -72,7 +72,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
         expect(page).to have_content(I18n.t('jobs.pay_package'))
       end
 
@@ -107,19 +107,17 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      context 'with feature upload documents enabled' do
-        scenario 'redirects to step 3, supporting documents, when submitted successfuly' do
-          visit new_school_job_path
+      scenario 'redirects to step 3, supporting documents, when submitted successfuly' do
+        visit new_school_job_path
 
-          fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
 
-          fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 5))
-          expect(page.current_path).to eq(supporting_documents_school_job_path)
-        end
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+        expect(page.current_path).to eq(supporting_documents_school_job_path)
       end
     end
 
@@ -151,7 +149,7 @@ RSpec.feature 'Creating a vacancy' do
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
         expect(page.current_path).to eq(application_details_school_job_path)
       end
 
@@ -323,25 +321,78 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      context 'when the upload feature flag is OFF' do
-        scenario 'redirects to the vacancy review page when submitted successfully' do
-          visit new_school_job_path
+      scenario 'redirects to the job summary page when submitted successfully' do
+        visit new_school_job_path
 
-          fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
 
-          fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
 
-          select_no_for_supporting_documents
-          click_on I18n.t('buttons.save_and_continue')
+        select_no_for_supporting_documents
+        click_on I18n.t('buttons.save_and_continue')
 
-          fill_in_application_details_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+        fill_in_application_details_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
 
-          expect(page).to have_content(I18n.t('jobs.review'))
-          verify_all_vacancy_details(vacancy)
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
+        expect(page).to have_content(I18n.t('jobs.job_summary'))
+      end
+    end
+
+    context '#job_summary' do
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        select_no_for_supporting_documents
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_application_details_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        click_on I18n.t('buttons.save_and_continue')
+
+        within('.govuk-error-summary') do
+          expect(page).to have_content(I18n.t('errors.title', count: 1))
         end
+
+        within_row_for(text: I18n.t('jobs.job_summary')) do
+          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_summary.blank')))
+        end
+
+        within_row_for(text: I18n.t('jobs.about_school', school: school.name)) do
+          expect(page).to have_content(school.description)
+        end
+      end
+
+      scenario 'redirects to the vacancy review page when submitted successfully' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        select_no_for_supporting_documents
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_application_details_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_job_summary_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+        expect(page).to have_content(I18n.t('jobs.review'))
+        verify_all_vacancy_details(vacancy)
       end
     end
 
@@ -356,7 +407,7 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
         end
 
         scenario 'redirects to step 4, application details, when that step has not been completed' do
@@ -374,7 +425,28 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+        end
+
+        scenario 'redirects to step 5, job summary, when that step has not been completed' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_pay_package_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          select_no_for_supporting_documents
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_application_details_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          v = Vacancy.find_by(job_title: vacancy.job_title)
+          visit school_job_path(id: v.id)
+
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
         end
 
         scenario 'redirects to appropriate step when clicked on change on review page' do
@@ -392,13 +464,16 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_application_details_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
+          fill_in_job_summary_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
           click_header_link(I18n.t('jobs.application_details'))
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           click_on I18n.t('buttons.save_and_continue')
 
           click_header_link(I18n.t('jobs.job_details'))
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
         end
       end
 
@@ -491,7 +566,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
 
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on I18n.t('buttons.save_and_continue')
@@ -507,7 +582,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
 
           fill_in 'job_specification_form[job_title]', with: 'High school teacher'
           click_on I18n.t('buttons.save_and_continue')
@@ -552,11 +627,14 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_application_details_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
+          fill_in_job_summary_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
           expect(page).to have_content(I18n.t('jobs.review_heading'))
 
           click_header_link(I18n.t('jobs.supporting_documents'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
           expect(page).to have_content(I18n.t('jobs.upload_file'))
 
           click_on I18n.t('buttons.save_and_continue')
@@ -571,7 +649,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           fill_in 'application_details_form[contact_email]', with: 'not a valid email'
           click_on I18n.t('buttons.save_and_continue')
@@ -590,7 +668,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
           click_on I18n.t('buttons.save_and_continue')
@@ -609,7 +687,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 5))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on I18n.t('buttons.save_and_continue')
@@ -782,6 +860,8 @@ RSpec.feature 'Creating a vacancy' do
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
         fill_in_application_details_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+        fill_in_job_summary_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
         click_link('vacancy-review-submit')
         expect(page).to have_content(I18n.t('jobs.confirmation_page.view_posted_job'))

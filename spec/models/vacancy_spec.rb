@@ -31,7 +31,7 @@ RSpec.describe Vacancy, type: :model do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
       it { should validate_presence_of(:job_roles) }
-      it { should validate_presence_of(:job_description) }
+      it { should validate_presence_of(:job_summary) }
       it { should validate_presence_of(:working_patterns) }
       it { should validate_presence_of(:salary) }
     end
@@ -56,11 +56,6 @@ RSpec.describe Vacancy, type: :model do
         expect(subject.errors.messages[:job_title].first)
           .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_title.too_short', count: 4))
       end
-
-      it '#job_description' do
-        expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('activerecord.errors.models.vacancy.attributes.job_description.too_short', count: 10))
-      end
     end
 
     context 'restrict maximum length of string fields' do
@@ -77,19 +72,6 @@ RSpec.describe Vacancy, type: :model do
       it '#salary' do
         expect(subject.errors.messages[:salary].first)
           .to eq(I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.too_long', count: 256))
-      end
-    end
-
-    context 'restrict maximum length of text fields' do
-      subject { build(:vacancy, :fail_maximum_validation) }
-      before(:each) do
-        subject.valid?
-      end
-
-      it '#job_description' do
-        expect(subject.errors.messages[:job_description].first)
-          .to eq(I18n.t('activemodel.errors.models.job_specification_form.attributes.job_description.too_long',
-            count: 50000))
       end
     end
 
@@ -382,42 +364,6 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  context 'content sanitization' do
-    it '#job_description' do
-      html = '<p> a paragraph <a href=\'link\'>with a link</a></p><br>'
-      vacancy = build(:vacancy, job_description: html)
-
-      sanitized_html = '<p> a paragraph with a link</p><br>'
-      expect(vacancy.job_description).to eq(sanitized_html)
-    end
-
-    it '#job_title' do
-      title = '<strong>School teacher </strong>'
-      vacancy = build(:vacancy, job_title: title)
-
-      sanitized_title = 'School teacher '
-      expect(vacancy.job_title).to eq(sanitized_title)
-    end
-
-    context '#salary' do
-      it 'strips the tags' do
-        salary = '<strong>£25,000</strong>'
-        vacancy = build(:vacancy, salary: salary)
-
-        sanitized_salary = '£25,000'
-        expect(vacancy.salary).to eq(sanitized_salary)
-      end
-    end
-
-    it '#benefits' do
-      benefits = '<ul><li><a href="">Gym membership</a></li></ul>'
-      vacancy = build(:vacancy, benefits: benefits)
-
-      sanitized_benefits = '<ul><li>Gym membership</li></ul>'
-      expect(vacancy.benefits).to eq(sanitized_benefits)
-    end
-  end
-
   context '#flexible_working?' do
     context 'when no flexible working options are available' do
       let(:flexible_working) { nil }
@@ -584,9 +530,9 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    it 'does not update the stats when you are updating the job description' do
+    it 'does not update the stats when you are updating the job summary' do
       Timecop.freeze(2019, 1, 1, 10, 4, 3) do
-        expired_job.update(job_description: 'I am description')
+        expired_job.update(job_summary: 'I am description')
 
         expect(stats_updated_at).to be_nil
       end

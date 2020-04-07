@@ -8,9 +8,18 @@ vacancies:
     -
       slug: 'teacher-of-science-the-english-martyrs-school-and-sixth-form-college-hartlepool'
       job_title: 'Teacher of Science (2 posts)'
-      job_description: "<p>Required from January 2019 – two ambitious, creative and enthusiastic teachers of Science.  The posts would suit either a new entrant to the profession or someone seeking to broaden their experience in our thriving 11-18 school. The ability to teach A-level Chemistry or Physics would be an advantage but is not essential.</p>
-      <p>It is an exciting time to join The English Martyrs School and Sixth Form College, following significant success during the Summer examinations, both in Science and across the school. We hope the successful candidate will play a significant role in the future as we strive to achieve excellence. We are also looking forward to moving into our new school with brand new facilities from September 2019.</p>
-      <p>The Directors and Local Governing Body are committed to safeguarding and promoting the welfare of children and young people and vulnerable adults. The successful candidate will be subject to an enhanced disclosure through the Disclosure and Barring Service, Prohibition Check and additional pre-employment checks.</p>
+      job_summary: >
+      "<p>Required from January 2019 – two ambitious, creative and enthusiastic teachers of Science.
+      The posts would suit either a new entrant to the profession or someone seeking to broaden their experience in our
+      thriving 11-18 school. The ability to teach A-level Chemistry or Physics would be an advantage
+      but is not essential.</p>
+      <p>It is an exciting time to join The English Martyrs School and Sixth Form College,
+      following significant success during the Summer examinations, both in Science and across the school.
+      We hope the successful candidate will play a significant role in the future as we strive to achieve excellence.
+      We are also looking forward to moving into our new school with brand new facilities from September 2019.</p>
+      <p>The Directors and Local Governing Body are committed to safeguarding and promoting the welfare of children and
+      young people and vulnerable adults. The successful candidate will be subject to an enhanced disclosure through the
+      Disclosure and Barring Service, Prohibition Check and additional pre-employment checks.</p>
       <p>Application forms should be returned to the Headteacher’s P.A. Lisa Foster lfoster@ems.hartlepool.sch.uk</p>
       <p>Shortlisting 15th October 2018</p>
       <p>Interviews w/c 22nd October 2018</p>
@@ -26,37 +35,70 @@ vacancies:
     -
       slug: 'teacher-of-english-norham-high-school'
       job_title: 'Teacher of English'
-      job_description: "<p>Norham High school is seeking to appoint a Teacher of English who will join and strengthen the Department on a maternity cover contract. We are looking to appoint a dynamic and enthusiastic teacher with high expectations, who will be passionate about their subject, able to inspire and motivate young people, they must be committed to the highest standards of teaching and learning, through lesson planning, and high quality assessment.</p>
-      <p>The school is committed to safeguarding and promoting the welfare of children and young people and expects all staff and volunteers to share this commitment.  This post will require the successful applicant to apply for an enhanced disclosure with the Disclosure and Barring Service.</p>
-      <p>Norham High School is an 11 – 16 comprehensive school serving part of the South East locality of North Shields. The school is pupil-centred and enables pupils to have a real voice in our current and future improvements.</p>
-      <p>Applications for this post are invited from people who are keen to join an organisation that is recognised for the high quality care and support it provides for its pupils and staff, its committed staff team and the drive to raise standards at all levels.</p>
-      <p>For further information and to download an application form please visit our website (Join Us Section) at www.norhamhigh.com or, alternatively, to receive an application pack, telephone the school on 0191 2005062 or email the school at: norham.high@northtyneside.gov.uk.  The closing date for completed applications, to be addressed to Ms S Lennox, is 12 noon Friday 12 October 2018.</p>"
+      job_summary: >
+      "<p>Norham High school is seeking to appoint a Teacher of English who will join and strengthen the Department on a
+      maternity cover contract. We are looking to appoint a dynamic and enthusiastic teacher with high expectations,
+      who will be passionate about their subject, able to inspire and motivate young people, they must be committed to
+      the highest standards of teaching and learning, through lesson planning, and high quality assessment.</p>
+      <p>The school is committed to safeguarding and promoting the welfare of children and young people and expects all
+      staff and volunteers to share this commitment.  This post will require the successful applicant to apply for an
+      enhanced disclosure with the Disclosure and Barring Service.</p>
+      <p>Norham High School is an 11 – 16 comprehensive school serving part of the South East locality of North Shields.
+      The school is pupil-centred and enables pupils to have a real voice in our current and future improvements.</p>
+      <p>Applications for this post are invited from people who are keen to join an organisation that is recognised for
+      the high quality care and support it provides for its pupils and staff, its committed staff team and the drive to
+      raise standards at all levels.</p>
+      <p>For further information and to download an application form please visit our website (Join Us Section) at
+      www.norhamhigh.com or, alternatively, to receive an application pack, telephone the school on 0191 2005062 or
+      email the school at: norham.high@northtyneside.gov.uk.  The closing date for completed applications, to be
+      addressed to Ms S Lennox, is 12 noon Friday 12 October 2018.</p>"
       experience: "<p>To be successful, you will:</p>
-      <ul><li>be an excellent practitioner who thinks creatively and has the potential and desire to continue to improve</li>
-      <li>have a passion for English along with excellent subject knowledge and be able to communicate this to students, with particular strength in teaching the AQA English Language and English Literature courses.</li>
-      <li>be an effective and committed team player who values the opportunity to take risks and who relishes challenge</li></ul>"
-      benefits: "<p>The school is working with Churchill Community College, a local outstanding teaching school, to accelerate progress. This partnership provides excellent CPD opportunities.</p>
-      <p>The school recognises that its staff are its greatest asset and this is highlighted through our innovative CPD programme and recognition for our work in Investors in People.</p>"
+      <ul><li>be an excellent practitioner who thinks creatively and has the potential and desire to continue to
+      improve</li>
+      <li>have a passion for English along with excellent subject knowledge and be able to communicate this to students,
+      with particular strength in teaching the AQA English Language and English Literature courses.</li>
+      <li>be an effective and committed team player who values the opportunity to take risks and who relishes
+      challenge</li></ul>"
+      benefits: "<p>The school is working with Churchill Community College, a local outstanding teaching school,
+      to accelerate progress. This partnership provides excellent CPD opportunities.</p>
+      <p>The school recognises that its staff are its greatest asset and this is highlighted through our
+      innovative CPD programme and recognition for our work in Investors in People.</p>"
     -
       slug: 'home-school-support-worker'
       job_title: 'Home School Support Worker'
-      job_description: "<p>37 hours per week</p>
+      job_summary: >
+      "<p>37 hours per week</p>
       <p>Term time plus one week</p>
       <p>Grade M point 25 – 29</p>
-      <p>The successful candidate will undertake casework working alongside school and locality staff to address the needs of the children, who need support to overcome barriers to learn both inside and outside school; this will including assessment and appropriate management of attendance.</p>
-      <p>Application forms and further details for the above position are available from our website www.educationvillage.org.uk Applicants are encouraged to visit The Education Village by contacting Helen Blanchard-Wynne on 01325 248173 to arrange an appointment.</p>
+      <p>The successful candidate will undertake casework working alongside school and locality staff to address the
+      needs of the children, who need support to overcome barriers to learn both inside and outside school; this will
+      including assessment and appropriate management of attendance.</p>
+      <p>Application forms and further details for the above position are available from our website
+      www.educationvillage.org.uk Applicants are encouraged to visit The Education Village by contacting Helen
+      Blanchard-Wynne on 01325 248173 to arrange an appointment.</p>
       <p>Closing Date: 5.00pm on Friday 2nd November 2018</p>
       <p>Interviews will be held w/c Monday 5th November 2018</p>
-      <p>The Education Village Academy Trust (EVAT) is committed to safeguarding the welfare of children and young people. You will be required to undertake an enhanced Disclosure check and Disqualification declaration.</p>"
+      <p>The Education Village Academy Trust (EVAT) is committed to safeguarding the welfare of children and
+      young people. You will be required to undertake an enhanced Disclosure check and Disqualification declaration.</p>"
     -
-      slug: 'teacher-with-phase-leader-responsibility-for-pupils-with-special-educational-needs-mainly-to-teach-in-ks3-ks4'
-      job_title: 'Teacher with Phase Leader responsibility for pupils with Special Educational Needs (mainly to teach in KS3-KS4)'
-      job_description: "<p>Cleaswell Hill School is a day community Special School for 181 children (designated age range 2-19). Some pupils have additional physical difficulties and medical needs while many are identified as being within the autistic spectrum.</p>
-      <p>We are committed to safeguarding and promoting the welfare of children and young people and expect all staff to share this commitment.  An enhanced criminal records check is required for this post.</p>
+      slug:
+        'teacher-with-phase-leader-responsibility-for-pupils-with-special-educational-needs-mainly-to-teach-in-ks3-ks4'
+      job_title: >
+        'Teacher with Phase Leader responsibility for pupils with Special Educational Needs
+        (mainly to teach in KS3-KS4)'
+      job_summary: >
+      "<p>Cleaswell Hill School is a day community Special School for 181 children (designated age range 2-19).
+      Some pupils have additional physical difficulties and medical needs while many are identified as being within
+      the autistic spectrum.</p>
+      <p>We are committed to safeguarding and promoting the welfare of children and young people and expect all staff to
+      share this commitment.  An enhanced criminal records check is required for this post.</p>
       <p>Further information about the school can be found on our website.</p>
-      <p>An application pack, including an application form, is available to download from the school’s website at  http://www.cleaswellhill.northumberland.sch.uk/site</p>
-      <p>Visits to school are encouraged and can be obtained by contacting Anne Carruthers, School Business Leader on 01670 823182.</p>
-      <p>Completed application forms should be returned directly to the school by post or e-mail, no later than midday on Monday 22 October 2019.  Interviews will be held on Thursday 25 October 2018.</p>
+      <p>An application pack, including an application form, is available to download from the school’s website at
+      http://www.cleaswellhill.northumberland.sch.uk/site</p>
+      <p>Visits to school are encouraged and can be obtained by contacting Anne Carruthers, School Business Leader on
+      01670 823182.</p>
+      <p>Completed application forms should be returned directly to the school by post or e-mail,
+      no later than midday on Monday 22 October 2019.  Interviews will be held on Thursday 25 October 2018.</p>
       <p>School Name: Cleaswell Hill School<br>
       Full address: School Avenue, Guidepost, Choppington, Northumberland<br>
       Postcode: NE62 5DJ<br>
@@ -67,38 +109,56 @@ vacancies:
       <ul><li>the ability to think and act strategically at whole school level;</li>
       <li>the ability to inspire and motivate others;</li>
       <li>successful line management of key areas of responsibility and holding others to account;</li>
-      <li>understanding of and empathy with the complex learning difficulties of our pupils and ensure that each one of them continues to achieve their full potential;</li>
+      <li>understanding of and empathy with the complex learning difficulties of our pupils and ensure
+      that each one of them continues to achieve their full potential;</li>
       <li>being an enthusiastic and inspiring teacher with excellent communication skills;</li>
-      <li>a passion for helping children and young people develop, learn and achieve their best – whatever their starting point.</li></ul>"
+      <li>a passion for helping children and young people develop,
+      learn and achieve their best – whatever their starting point.</li></ul>"
       benefits: "<p>In return we offer you:</p>
       <ul><li>career progression;</li>
       <li>an opportunity to work with inspirational children who have complex difficulties;</li>
       <li>the support of experienced, enthusiastic and dedicated staff;</li>
       <li>the opportunity for on-going personal and professional development;</li>
-      <li>a strong and effective governing body, which is both supportive and challenging and wholly committed to working in partnership</li></ul>"
+      <li>a strong and effective governing body,
+      which is both supportive and challenging and wholly committed to working in partnership</li></ul>"
       expires_on: '22/10/2018'
     -
       slug: 'teacher-of-chemistry-bede-academy'
       job_title: 'Teacher of Chemistry'
-      job_description: "<p>We require from January 2019 a motivated and passionate graduate qualified to teach Chemistry at all levels, including ‘A’ level. The ability to demonstrate excellent subject knowledge and to consistently teach inspirational lessons is essential.</p>
-      <p>If you believe you have the vision and commitment to work in an Academy which seeks to raise achievement as well as set and maintain high standards and expectations, please contact Bede Academy.</p>
-      <p>For an application pack and further information, please visit www.bedeacademy.org.uk Alternatively, please call Mrs Hogg on 01670 545111, option 2 or email recruitment@bedeacademy.org.uk</p>
+      job_summary: >
+      "<p>We require from January 2019 a motivated and passionate graduate qualified to teach Chemistry at all levels,
+      including ‘A’ level. The ability to demonstrate excellent subject knowledge and to consistently teach
+      inspirational lessons is essential.</p>
+      <p>If you believe you have the vision and commitment to work in an Academy which seeks to raise achievement as
+      well as set and maintain high standards and expectations, please contact Bede Academy.</p>
+      <p>For an application pack and further information, please visit www.bedeacademy.org.uk Alternatively,
+      please call Mrs Hogg on 01670 545111, option 2 or email recruitment@bedeacademy.org.uk</p>
       <p>Interviews w/c: 26 November 2018</p>
-      <p>Bede Academy takes its responsibility for safeguarding children very seriously and successful applications will be subject to an Enhanced Disclosure and Barring Service Disclosure along with standard pre-employment safeguarding checks.</p>"
+      <p>Bede Academy takes its responsibility for safeguarding children very seriously and successful applications will
+      be subject to an Enhanced Disclosure and Barring Service Disclosure along with standard pre-employment
+      safeguarding checks.</p>"
     -
       slug: 'cover-supervisor-st-michael-s-catholic-academy'
       job_title: 'Cover Supervisor'
-      job_description: "<p>St Michael’s Catholic Academy is a warmly welcoming and inclusive community with a determination to achieve the highest standards. We have strong expectations and an unswerving dedication to ensure that every student achieves their very best. Our Academy is a vibrant, forward thinking and Christ-centred place to work and we are looking to appoint a passionate and committed individual to join the Academy in the role of Cover Supervisor.</p>
+      job_summary: >
+      "<p>St Michael’s Catholic Academy is a warmly welcoming and inclusive community with a determination to achieve
+      the highest standards. We have strong expectations and an unswerving dedication to ensure that every student
+      achieves their very best. Our Academy is a vibrant, forward thinking and Christ-centred place to work and we are
+      looking to appoint a passionate and committed individual to join the Academy in the role of Cover Supervisor.</p>
       <p>Duties will include:</p>
       <ul><li>Supervising classes during the short term absence of teachers</li>
-      <li>Supervising students using the Learning Resource Centre for the first half hour of lunchtime and also after school for study/homework purposes</li>
+      <li>Supervising students using the Learning Resource Centre for the first half hour of lunchtime and also after
+      school for study/homework purposes</li>
       <li>Working under the guidance of the teaching staff and within an agreed system of supervision</li>
       <li>Implementing work programmes with individuals/groups in or out of the classroom</li>
       <li>Managing the behaviour of students being supervised</li>
       <li>Reporting to the Assistant Principal at the beginning and the end of the school day</li>
       <li>Following school policies and procedures</li></ul>
-      <p>The school is committed to safer recruitment practice and pre-employment checks will be undertaken before any appointment is confirmed. This post is subject to Enhanced Debarring Service disclosure.</p>
-      <p>For further information please contact Mrs F Magog on 01642 870003 or by email to recruitment@stmichaelsacademy.org.uk. Alternatively you can download an application pack for this post from our website, http://www.stmichaelsacademy.org.uk/</p>
+      <p>The school is committed to safer recruitment practice and pre-employment checks will be undertaken before any
+      appointment is confirmed. This post is subject to Enhanced Debarring Service disclosure.</p>
+      <p>For further information please contact Mrs F Magog on 01642 870003 or by email to
+      recruitment@stmichaelsacademy.org.uk. Alternatively you can download an application pack for this post from our
+      website, http://www.stmichaelsacademy.org.uk/</p>
       <p>The closing date for applications is 12 noon on Friday 2 November 2018.</p>"
       benefits: "<p>We will offer you:</p>
       <ul><li>Staff collaboration across Carmel Education Trust</li>
@@ -107,9 +167,15 @@ vacancies:
     -
       slug: 'teacher-of-music-maternity-cover-0-6'
       job_title: 'Teacher of Music / maternity cover 0.6'
-      job_description: "<p>Required to start in January 2019 an enthusiastic, well-qualified Music specialist with the ability to teach Music up to GCSE and ‘A’ level. The Music Department is very successful and has a strong tradition of extra-curricular provision.</p>
-      <p>The post would suit either an experienced teacher wishing to extend their experience in our successful environment or a newly qualified teacher.</p>
-      <p>The Directors and Local Governing Body are committed to safeguarding and promoting the welfare of children and young people and vulnerable adults. The successful candidate will be subject to an enhanced disclosure through the Disclosure and Barring Service and additional recruitment checks.</p>
+      job_summary: >
+      "<p>Required to start in January 2019 an enthusiastic, well-qualified Music specialist with the ability to teach
+      Music up to GCSE and ‘A’ level. The Music Department is very successful and has a strong tradition of
+      extra-curricular provision.</p>
+      <p>The post would suit either an experienced teacher wishing to extend their experience in our successful
+      environment or a newly qualified teacher.</p>
+      <p>The Directors and Local Governing Body are committed to safeguarding and promoting the welfare of children and
+      young people and vulnerable adults. The successful candidate will be subject to an enhanced disclosure through
+      the Disclosure and Barring Service and additional recruitment checks.</p>
       <p>For further details and application form please visit our school website www.emshartlepool.org</p>
       <p>Closing Date: 7 November 2018 at 12 noon<br/>
       Shortlisting: 7 November 2018<br/>

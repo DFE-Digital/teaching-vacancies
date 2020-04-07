@@ -70,28 +70,20 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     params.require(:job_id)
   end
 
-  def step_2_valid?
-    valid = PayPackageForm.new(@vacancy.attributes).valid?
-    clear_cache_and_step unless valid
-    valid
-  end
-
-  def step_3_valid?
-    valid = SupportingDocumentsForm.new(@vacancy.attributes).valid?
-    clear_cache_and_step unless valid
-    valid
-  end
-
-  def step_4_valid?
-    valid = ApplicationDetailsForm.new(@vacancy.attributes).completed?
-    clear_cache_and_step unless valid
-    valid
+  def step_valid?(step_form)
+    validation = step_form.new(@vacancy.attributes)
+    if step_form == ApplicationDetailsForm
+      (validation&.completed?).tap { |valid| clear_cache_and_step unless valid }
+    else
+      (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
+    end
   end
 
   def redirect_to_incomplete_step
-    return redirect_to school_job_pay_package_path(@vacancy.id) unless step_2_valid?
-    return redirect_to supporting_documents_school_job_path unless step_3_valid?
-    return redirect_to application_details_school_job_path unless step_4_valid?
+    return redirect_to school_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
+    return redirect_to supporting_documents_school_job_path unless step_valid?(SupportingDocumentsForm)
+    return redirect_to application_details_school_job_path unless step_valid?(ApplicationDetailsForm)
+    return redirect_to school_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)
   end
 
   def already_published_message

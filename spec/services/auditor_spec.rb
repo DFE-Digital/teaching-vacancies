@@ -4,7 +4,7 @@ RSpec.describe 'Auditor::Audit' do
 
   describe '#log' do
     it 'audits setting values to a model' do
-      vacancy.job_description = 'A new description'
+      vacancy.job_summary = 'A new description'
       audit = Auditor::Audit.new(vacancy, 'vacancy.test_create', 'test_session_id')
       audit.log { vacancy.save }
 
@@ -17,8 +17,8 @@ RSpec.describe 'Auditor::Audit' do
 
     it 'audits any changes to a model' do
       vacancy.save
-      job_description = vacancy.job_description
-      vacancy.job_description = 'A new description'
+      job_summary = vacancy.job_summary
+      vacancy.job_summary = 'A new description'
       audit = Auditor::Audit.new(vacancy, 'vacancy.test', 'test_session_id')
       audit.log { vacancy.save }
 
@@ -26,7 +26,7 @@ RSpec.describe 'Auditor::Audit' do
       expect(audit_log.key).to eq('vacancy.test')
       expect(audit_log.session_id).to eq('test_session_id')
       expect(audit_log.parameters.symbolize_keys)
-        .to eq(job_description: [job_description, 'A new description'])
+        .to eq(job_summary: [job_summary, 'A new description'])
     end
   end
 

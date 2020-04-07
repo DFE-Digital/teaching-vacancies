@@ -8,6 +8,7 @@ FactoryBot.define do
       create_list :document, 3, vacancy: vacancy
     end
 
+    about_school { Faker::Lorem.paragraph(sentence_count: 4) }
     application_link { Faker::Internet.url }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
@@ -16,7 +17,7 @@ FactoryBot.define do
     expires_on { Faker::Time.forward(days: 14) }
     expiry_time { expires_on&.change(sec: 0) }
     hired_status { nil }
-    job_description { Faker::Lorem.paragraph(sentence_count: 4) }
+    job_summary { Faker::Lorem.paragraph(sentence_count: 4) }
     job_roles { ['Teacher'] }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
@@ -33,7 +34,7 @@ FactoryBot.define do
     trait :fail_minimum_validation do
       education { Faker::Lorem.paragraph[0..8] }
       experience { Faker::Lorem.paragraph[0..7] }
-      job_description { Faker::Lorem.paragraph[0..5] }
+      job_summary { Faker::Lorem.paragraph[0..5] }
       job_title { Faker::Job.title[0..2] }
       qualifications { Faker::Lorem.paragraph[0...8] }
     end
@@ -41,7 +42,7 @@ FactoryBot.define do
     trait :fail_maximum_validation do
       education { Faker::Lorem.characters(number: 1005) }
       experience { Faker::Lorem.characters(number: 1010) }
-      job_description { Faker::Lorem.characters(number: 50001) }
+      job_summary { Faker::Lorem.characters(number: 50001) }
       job_title { Faker::Lorem.characters(number: 150) }
       salary { Faker::Lorem.characters(number: 257) }
       qualifications { Faker::Lorem.characters(number: 1002) }
