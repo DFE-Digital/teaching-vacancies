@@ -2,8 +2,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   include SignInAuditConcerns
 
   skip_before_action :check_session, only: %i[create new]
-  skip_before_action :check_terms_and_conditions, only: %i[create new]
-  skip_before_action :verify_authenticity_token, only: %i[create new]
+  skip_before_action :check_terms_and_conditions, only: %i[create new destroy]
+  skip_before_action :verify_authenticity_token, only: %i[create new destroy]
 
   def new
     # This is defined by the class name of our Omniauth strategy
@@ -17,6 +17,11 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     perform_dfe_sign_in_authorisation
   end
 
+  def destroy
+    session.destroy
+    redirect_to root_path, notice: I18n.t('messages.access.signed_out')
+  end
+
   private
 
   def not_authorised
@@ -28,7 +33,12 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def update_session(authorisation_permissions)
-    session.update(session_id: user_id, urn: school_urn, multiple_schools: authorisation_permissions.many_schools?)
+    session.update(
+      session_id: user_id,
+      urn: school_urn,
+      multiple_schools: authorisation_permissions.many_schools?,
+      id_token: id_token
+    )
     audit_successful_authorisation
   end
 
@@ -50,6 +60,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
 
   def organisation_id
     auth_hash.dig('extra', 'raw_info', 'organisation', 'id')
+  end
+
+  def id_token
+    auth_hash.dig('credentials', 'id_token')
   end
 
   def perform_dfe_sign_in_authorisation
