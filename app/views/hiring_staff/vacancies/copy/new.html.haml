@@ -18,7 +18,8 @@
                 wrapper_html: { id: 'job_title' },
                 input_html: { class: 'govuk-input' },
                 required: true
-      - if @copy_form.vacancy.job_roles&.none?
+
+      - unless @copy_form.vacancy.job_roles.present?
         = f.input :job_roles,
                   as: :check_boxes,
                   wrapper: :checkboxes,
@@ -26,6 +27,16 @@
                   hint: t('jobs.form_hints.job_role'),
                   wrapper_html: { id: 'job_role' },
                   collection: job_role_options,
+                  required: true
+
+      - unless @copy_form.vacancy.about_school.present?
+        = f.input :about_school,
+                  wrapper: 'textarea',
+                  as: :text,
+                  label: t('jobs.about_school', school: current_school.name),
+                  hint: t('helpers.hint.job_summary_form.about_school'),
+                  input_html: { rows: 10, value: @vacancy.school.description.presence.to_s, },
+                  wrapper_html: { id: 'about_school' },
                   required: true
 
       %div.govuk-form-group#starts_on
