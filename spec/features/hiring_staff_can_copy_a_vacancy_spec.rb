@@ -139,7 +139,7 @@ RSpec.feature 'Copying a vacancy' do
   context '#job_roles' do
     context 'when a copied job has no job role set' do
       scenario 'it shows the job role field' do
-        original_vacancy = build(:vacancy, :past_publish, job_roles: [], school: school)
+        original_vacancy = build(:vacancy, :past_publish, job_roles: nil, school: school)
         original_vacancy.save(validate: false)
 
         visit school_path
@@ -165,6 +165,39 @@ RSpec.feature 'Copying a vacancy' do
 
         expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
         expect(page).to_not have_content(I18n.t('jobs.job_roles'))
+      end
+    end
+  end
+
+  context '#about_school' do
+    context 'when a copied job has no about_school set' do
+      scenario 'it shows the about_school field' do
+        original_vacancy = build(:vacancy, :past_publish, about_school: nil, school: school)
+        original_vacancy.save(validate: false)
+
+        visit school_path
+
+        within('table.vacancies') do
+          click_on I18n.t('jobs.copy_link')
+        end
+
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to have_content(I18n.t('jobs.about_school', school: school.name))
+      end
+    end
+
+    context 'when a copied job has about_school set' do
+      scenario 'it does not show the about_school field' do
+        original_vacancy = create(:vacancy, school: school)
+
+        visit school_path
+
+        within('table.vacancies') do
+          click_on I18n.t('jobs.copy_link')
+        end
+
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to_not have_content(I18n.t('jobs.about_school', school: school.name))
       end
     end
   end
