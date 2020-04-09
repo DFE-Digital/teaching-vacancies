@@ -11,6 +11,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def create
+    binding.pry # hi, you are creating the session! NOT expecting this from post logout redirect.
     Rails.logger.warn("Hiring staff signed in: #{user_id}")
     audit_successful_authentication
 

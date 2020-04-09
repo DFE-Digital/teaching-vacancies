@@ -8,6 +8,7 @@ module OmniAuth
       # rubocop:disable Style/GuardClause
       # Please refer to this commit to read why this has been copied from: https://github.com/m0n9oose/omniauth_openid_connect/blob/master/lib/omniauth/strategies/openid_connect.rb
       def callback_phase
+        binding.pry # We're in the monkey patch area.
         Rollbar.log(:info, 'A sign-in callback was started',
                     stored_state: session['omniauth.state'],
                     accept_header: request.has_header?('Accept') ? request.get_header('Accept') : request.get_header('HTTP_ACCEPT'),

@@ -14,6 +14,7 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   end
 
   def redirect_signed_in_users
+    binding.pry
     return redirect_to school_path if session.key?(:urn)
   end
 end

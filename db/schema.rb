@@ -224,9 +224,9 @@ ActiveRecord::Schema.define(version: 2020_04_06_102653) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
+    t.string "job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
-    t.string "job_roles", array: true
     t.text "about_school"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"

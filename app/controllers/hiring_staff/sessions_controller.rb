@@ -5,6 +5,7 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
   skip_before_action :check_terms_and_conditions, only: %i[destroy]
 
   def destroy
+    binding.pry
     session.destroy
     redirect_to root_path, notice: I18n.t('messages.access.signed_out')
   end
