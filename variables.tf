@@ -387,6 +387,7 @@ variable "skylight_ignored_endpoints" {
 
 variable "notify_key" {}
 variable "feature_email_alerts" {}
+variable "feature_read_only" {}
 
 variable "feature_import_vacancies" {
   default = "false"
