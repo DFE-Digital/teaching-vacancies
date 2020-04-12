@@ -183,6 +183,10 @@
         "value": "${feature_email_alerts}"
       },
       {
+        "name": "FEATURE_READ_ONLY",
+        "value": "${feature_read_only}"
+      },
+      {
         "name": "DFE_SIGN_IN_URL",
         "value": "${dfe_sign_in_url}"
       },
