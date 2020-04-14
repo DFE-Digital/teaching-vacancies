@@ -165,6 +165,3 @@ variable "vacancies_statistics_refresh_cache_task_command" {
 }
 
 variable "vacancies_statistics_refresh_cache_task_schedule" {}
-variable "algolia_app_id" {}
-variable "algolia_write_api_key" {}
-variable "algolia_search_api_key" {}

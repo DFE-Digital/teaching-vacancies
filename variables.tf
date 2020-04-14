@@ -426,7 +426,3 @@ variable "cloud_storage_bucket" {
 variable "feature_sign_in_alert" {
   default = "false"
 }
-
-variable "algolia_app_id" {}
-variable "algolia_write_api_key" {}
-variable "algolia_search_api_key" {}
