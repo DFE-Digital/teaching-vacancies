@@ -31,6 +31,63 @@ class Vacancy < ApplicationRecord
   include Elasticsearch::Model
   include Redis::Objects
 
+  include AlgoliaSearch
+
+  algoliasearch do
+    attributes :first_supporting_subject,
+      :job_description,
+      :job_roles,
+      :job_title,
+      :newly_qualified_teacher,
+      :second_supporting_subject,
+      :slug,
+      :status,
+      :working_patterns
+
+    attribute :school do
+      {
+        name: self.school.name,
+        address: self.school.address,
+        county: self.school.county,
+        local_authority: self.school.local_authority,
+        phase: self.school.phase,
+        postcode: self.school.postcode,
+        region_name: self.school.region.name,
+        town: self.school.town
+      }
+    end
+
+    attribute :subject do
+      self.subject&.name
+    end
+
+    attribute :expires_on do
+      convert_date_to_unix_time(self.expires_on)
+    end
+
+    attribute :publish_on do
+      convert_date_to_unix_time(self.publish_on)
+    end
+
+    attribute :starts_on do
+      convert_date_to_unix_time(self.starts_on)
+    end
+
+    attribute :updated_at do
+      convert_date_to_unix_time(self.updated_at)
+    end
+
+    geoloc :lat, :lng
+  end
+
+  def lat
+    self.school.geolocation.x.to_f
+  end
+
+  def lng
+    self.school.geolocation.y.to_f
+  end
+
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
   document_type 'vacancy'
   settings index: {
@@ -253,6 +310,12 @@ class Vacancy < ApplicationRecord
   end
 
   private
+
+  def convert_date_to_unix_time(date)
+    date_as_unix = date&.strftime('%s').to_i
+    # nil.to_i returns 0, so if strftime('%s') returns nil we should return nil.
+    date_as_unix > 0 ? date_as_unix : nil
+  end
 
   def slug_candidates
     [
