@@ -225,18 +225,6 @@
       {
         "name": "FEATURE_SIGN_IN_ALERT",
         "value": "${feature_sign_in_alert}"
-      },
-      {
-        "name": "ALGOLIA_APP_ID",
-        "value": "${algolia_app_id}"
-      },
-      {
-        "name": "ALGOLIA_WRITE_API_KEY",
-        "value": "${algolia_write_api_key}"
-      },
-      {
-        "name": "ALGOLIA_SEARCH_API_KEY",
-        "value": "${algolia_search_api_key}"
       }
     ]
   }

@@ -11,7 +11,6 @@ gem 'rails', '~> 5.2.4'
 
 gem 'activerecord-session_store'
 gem 'addressable'
-gem 'algoliasearch-rails'
 gem 'array_enum'
 gem 'breasal', '~> 0.0.1'
 gem 'browser'
