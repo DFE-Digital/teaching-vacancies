@@ -182,6 +182,9 @@ data "template_file" "web_container_definition" {
     big_query_dataset                            = "${var.big_query_dataset}"
     cloud_storage_api_json_key                   = "${replace(jsonencode(var.cloud_storage_api_json_key), "/([\"\\\\])/", "\\$1")}"
     cloud_storage_bucket                         = "${var.cloud_storage_bucket}"
+    algolia_app_id                               = "${var.aloglia_app_id}"
+    algolia_write_api_key                        = "${var.algolia_write_api_key}"
+    algolia_search_api_key                       = "${var.algolia_search_api_key}"
   }
 }
 
