@@ -37,6 +37,18 @@ RSpec.describe PayPackageForm, type: :model do
           )
         end
       end
+
+      context 'when salary does not contain HTML tags' do
+        context 'salary contains &' do
+          let(:salary) { 'Pay scale & another pay scale' }
+
+          it 'does not validate presence of HTML tags' do
+            expect(pay_package.errors.messages[:salary]).to_not include(
+              I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters')
+            )
+          end
+        end
+      end
     end
   end
 end
