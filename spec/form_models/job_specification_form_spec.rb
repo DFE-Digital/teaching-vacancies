@@ -57,6 +57,18 @@ RSpec.describe JobSpecificationForm, type: :model do
           )
         end
       end
+
+      context 'when title does not contain HTML tags' do
+        context 'job title contains &' do
+          let(:job_title) { 'Job & another job' }
+
+          it 'does not validate presence of HTML tags' do
+            expect(job_specification.errors.messages[:job_title]).to_not include(
+              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+            )
+          end
+        end
+      end
     end
   end
 
