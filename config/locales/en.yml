@@ -411,6 +411,8 @@ en:
         candidates will be asked to email you for details.
     filters:
       title: 'Search job listings'
+      keyword: 'Keyword'
+      keyword_hint: 'Job title or subject, for example'
       location: 'Location'
       location_hint: 'Enter a city, town or postcode'
       use_current_location: 'use your current location'

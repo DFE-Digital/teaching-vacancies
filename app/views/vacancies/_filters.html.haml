@@ -1,58 +1,17 @@
-- content_for :advanced_filters do
-  .govuk-form-group
-    = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
-    = select_tag 'radius', options_for_select(radius_filter_options, radius), disabled: @filters.location_category_search?, class: 'govuk-select govuk-!-width-full'
-  .govuk-form-group
-    = label_tag 'subject', t('jobs.filters.subject'), class: 'govuk-label'
-    = search_field_tag :subject, subject, class: 'govuk-input', placeholder: t('jobs.filters.subject_hint')
-  .govuk-form-group
-    = label_tag 'job_title', t('jobs.filters.job_title'), class: 'govuk-label'
-    = search_field_tag :job_title, job_title, class: 'govuk-input', placeholder: t('jobs.filters.job_title_hint')
-  .govuk-form-group
-    %fieldset.govuk-fieldset
-      = label_tag 'working_pattern', t('jobs.filters.working_pattern'), class: 'govuk-label'
-      .govuk-checkboxes.checkbox-group.govuk-checkboxes--small
-        - working_pattern_options.each_with_index do |working_pattern, i|
-          .govuk-checkboxes__item
-            = check_box_tag 'working_patterns[]', working_pattern[1], working_pattern_checked?(working_pattern[1]), id: 'working_patterns_' + working_pattern[1], class: 'govuk-checkboxes__input'
-            = label_tag 'working_patterns[]', working_pattern[0], for: 'working_patterns_' + working_pattern[1], class: 'govuk-label govuk-checkboxes__label'
-  .govuk-form-group
-    %fieldset.govuk-fieldset
-      = label_tag 'phases', t('jobs.filters.education_phase'), class: 'govuk-label'
-      .govuk-checkboxes.checkbox-group.govuk-checkboxes--small{ class: ('checkbox-group--scrollable' unless specific_phases?) }
-        .govuk-checkboxes__item
-          = check_box_tag 'phases[]', '', !specific_phases?, id: 'phases_any', class: 'govuk-checkboxes__input'
-          = label_tag 'phases[]', 'Any', for: 'phases_any', class: 'govuk-label govuk-checkboxes__label'
-        .checkbox-group__divider
-          = t('jobs.filters.education_phase_divider')
-        - school_phase_options.each_with_index do |phase, i|
-          .govuk-checkboxes__item
-            = check_box_tag 'phases[]', phase[1], phase_checked?(phase[1]), id: 'phases_' + phase[1], class: 'govuk-checkboxes__input'
-            = label_tag 'phases[]', phase[0], for: 'phases_' + phase[1], class: 'govuk-label govuk-checkboxes__label'
-  .govuk-form-group
-    %fieldset.govuk-fieldset
-      .govuk-checkboxes
-        .govuk-checkboxes__item
-          = check_box_tag 'newly_qualified_teacher', 'true', nqt_suitable_checked?(newly_qualified_teacher), class: 'govuk-checkboxes__input'
-          = label_tag 'newly_qualified_teacher', t('jobs.filters.nqt_suitable'), class: 'govuk-label govuk-checkboxes__label'
-
-
 %aside.filter-vacancies
   %h2.govuk-heading-m
     =t('jobs.filters.title')
 
   = form_tag jobs_path(anchor: 'vacancy-results'), class: 'filters-form', method: :get do
+    .govuk-form-group
+      = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
+      = search_field_tag :keyword, keyword, class: 'govuk-input', placeholder: t('jobs.filters.keyword_hint')
+
     = render 'shared/location_search_tag', extra_label_class: nil
 
-    - if local_assigns.fetch :collapsible?, false
-      %details.govuk-details{"data-module": "govuk-details", "data-summary-expanded": t('jobs.filters.summary_expanded'), "data-summary-collapsed": t('jobs.filters.summary_collapsed')}
-        %summary.govuk-details__summary
-          %span.govuk-details__summary-text
-            = t('jobs.filters.summary_nojs')
-        %div
-          = yield :advanced_filters
-    - else
-      = yield :advanced_filters
+    .govuk-form-group
+      = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
+      = select_tag 'radius', options_for_select(radius_filter_options, radius), disabled: @filters.location_category_search?, class: 'govuk-select govuk-!-width-full'
 
     = hidden_field_tag :sort_column, sort_column
     = hidden_field_tag :sort_order, sort_order

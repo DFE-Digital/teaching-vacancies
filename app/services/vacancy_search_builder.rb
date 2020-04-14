@@ -2,6 +2,7 @@ require 'geocoding'
 
 class VacancySearchBuilder
   attr_accessor :filters,
+                :keyword,
                 :subject,
                 :job_title,
                 :working_patterns,
@@ -13,6 +14,7 @@ class VacancySearchBuilder
 
   def initialize(filters:, sort:, expired: false, status: :published)
     self.filters = filters
+    self.keyword = filters.keyword.to_s.strip
     self.subject = filters.subject.to_s.strip
     self.job_title = filters.job_title.to_s.strip
     self.working_patterns = filters.working_patterns
@@ -59,6 +61,7 @@ class VacancySearchBuilder
 
   def must_query_clause
     [
+      keyword_query,
       subject_query,
       job_title_query,
       phase_query,
@@ -69,6 +72,21 @@ class VacancySearchBuilder
       published_on_query,
       location_category_query
     ].compact.uniq
+  end
+
+  def keyword_query
+    return if keyword.blank?
+
+    {
+      multi_match: {
+        query: keyword,
+        type: 'best_fields',
+        fields: %w[subject.name^3 first_supporting_subject.name^2 second_supporting_subject.name^2 job_title],
+        operator: 'or',
+        minimum_should_match: 1,
+        fuzziness: 'AUTO'
+      }
+    }
   end
 
   def subject_query

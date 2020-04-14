@@ -68,6 +68,7 @@ RSpec.describe VacancyFilters do
     it 'returns a hash of the reader attributes' do
       filters = described_class.new(
         location: 'location',
+        keyword: 'keyword',
         subject: 'subject',
         job_title: 'job_title',
         radius: 20,
@@ -80,6 +81,7 @@ RSpec.describe VacancyFilters do
 
       expect(result).to eql(
         location: 'location',
+        keyword: 'keyword',
         subject: 'subject',
         job_title: 'job_title',
         radius: '20',

@@ -2,43 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Searching vacancies by subject' do
   describe 'searchable fields' do
-    context '#job_title' do
-      scenario 'exact match', elasticsearch: true do
-        vacancy = create(:vacancy, job_title: 'Maths Teacher')
-
-        Vacancy.__elasticsearch__.client.indices.flush
-
-        visit jobs_path
-
-        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-
-        within '.filters-form' do
-          fill_in 'subject', with: vacancy.job_title
-          page.find('.govuk-button[type=submit]').click
-        end
-
-        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-      end
-
-      scenario 'partial match', elasticsearch: true do
-        vacancy = create(:vacancy, job_title: 'Maths Teacher')
-
-        Vacancy.__elasticsearch__.client.indices.flush
-
-        visit jobs_path
-
-        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-
-        within '.filters-form' do
-          fill_in 'subject', with: 'Math'
-          page.find('.govuk-button[type=submit]').click
-        end
-
-        expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
-      end
-    end
-
-    scenario '#subject', elasticsearch: true do
+    scenario '#keyword', elasticsearch: true do
       arts_vacancy = create(:vacancy, job_title: 'Arts Teacher', subject: create(:subject, name: 'Arts'),
                                       first_supporting_subject: create(:subject, name: 'English'))
       maths_vacancy = create(:vacancy, job_title: 'Teacher Bar', subject: create(:subject, name: 'Maths'))
@@ -53,7 +17,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page).to have_content(english_vacancy.job_title)
 
       within '.filters-form' do
-        fill_in 'subject', with: 'English'
+        fill_in 'keyword', with: 'English'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -74,7 +38,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
 
       within '.filters-form' do
-        fill_in 'subject', with: 'standing'
+        fill_in 'keyword', with: 'standing'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -82,7 +46,7 @@ RSpec.feature 'Searching vacancies by subject' do
     end
   end
 
-  context 'fuzzy search on subject' do
+  context 'fuzzy search on keyword' do
     scenario 'finds on any searchable word with a single typo', elasticsearch: true do
       vacancy = create(:vacancy, job_title: 'Maths Teacher')
 
@@ -93,7 +57,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page.find('.vacancy:eq(1)')).to have_content(vacancy.job_title)
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Mahts'
+        fill_in 'keyword', with: 'Mahts'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -131,7 +95,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page.all('.vacancy', count: 5)).to_not be_empty
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Science'
+        fill_in 'keyword', with: 'Science'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -140,7 +104,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page).to have_content('2 jobs match your search')
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Sceinc'
+        fill_in 'keyword', with: 'Sceinc'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -149,47 +113,13 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page).to have_content('2 jobs match your search')
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Part'
+        fill_in 'keyword', with: 'Part'
         page.find('.govuk-button[type=submit]').click
       end
       expect(page).to have_content('0 jobs match your search')
 
       within '.filters-form' do
-        fill_in 'subject', with: 'time'
-        page.find('.govuk-button[type=submit]').click
-      end
-      expect(page).to have_content('0 jobs match your search')
-    end
-
-    scenario 'does not include results with words removed from the index in their title when searching by job title' do
-      visit jobs_path
-
-      expect(page.all('.vacancy', count: 5)).to_not be_empty
-
-      within '.filters-form' do
-        fill_in 'job_title', with: 'Science'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page.find('.vacancy:eq(1)')).to have_content('Science Teacher')
-      expect(page).to have_content('1 job matches your search')
-
-      within '.filters-form' do
-        fill_in 'job_title', with: 'Sceinc'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page.find('.vacancy:eq(1)')).to have_content('Science Teacher')
-      expect(page).to have_content('1 job matches your search')
-
-      within '.filters-form' do
-        fill_in 'job_title', with: 'Part'
-        page.find('.govuk-button[type=submit]').click
-      end
-      expect(page).to have_content('0 jobs match your search')
-
-      within '.filters-form' do
-        fill_in 'job_title', with: 'time'
+        fill_in 'keyword', with: 'time'
         page.find('.govuk-button[type=submit]').click
       end
       expect(page).to have_content('0 jobs match your search')
@@ -205,7 +135,7 @@ RSpec.feature 'Searching vacancies by subject' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Maths'
+        fill_in 'keyword', with: 'Maths'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -213,7 +143,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page).to have_content('Maths Teacher')
 
       page.find('.govuk-back-link').click
-      expect(page.current_url).to include('subject=Maths')
+      expect(page.current_url).to include('keyword=Maths')
     end
   end
 
@@ -226,7 +156,7 @@ RSpec.feature 'Searching vacancies by subject' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Biology'
+        fill_in 'keyword', with: 'Biology'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -234,7 +164,7 @@ RSpec.feature 'Searching vacancies by subject' do
       expect(page).to have_content('Biology Teacher')
 
       page.find('.govuk-back-link').click
-      expect(page.current_url).to include('subject=Biology')
+      expect(page.current_url).to include('keyword=Biology')
     end
   end
 end

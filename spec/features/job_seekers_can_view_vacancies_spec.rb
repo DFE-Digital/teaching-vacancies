@@ -74,7 +74,7 @@ RSpec.feature 'Viewing vacancies' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
     within '.filters-form' do
-      fill_in 'subject', with: 'English'
+      fill_in 'keyword', with: 'English'
       page.find('.govuk-button[type=submit]').click
     end
     expect(page).to have_content(I18n.t('jobs.job_count', count: vacancies.count))
@@ -85,7 +85,7 @@ RSpec.feature 'Viewing vacancies' do
     Vacancy.__elasticsearch__.client.indices.flush
     visit jobs_path
     within '.filters-form' do
-      fill_in 'subject', with: 'English'
+      fill_in 'keyword', with: 'English'
       page.find('.govuk-button[type=submit]').click
     end
     expect(page).to have_content(I18n.t('jobs.job_count_plural', count: vacancies.count))
@@ -110,7 +110,7 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'subject', with: 'English'
+      fill_in 'keyword', with: 'English'
       click_on I18n.t('buttons.apply_filters')
     end
 
@@ -159,7 +159,7 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'subject', with: 'Maths'
+      fill_in 'keyword', with: 'Maths'
       click_button('Search')
     end
 
@@ -187,7 +187,7 @@ RSpec.feature 'Viewing vacancies' do
     visit jobs_path
 
     within '.filters-form' do
-      fill_in 'subject', with: 'English'
+      fill_in 'keyword', with: 'English'
       expect(find('.govuk-button').value).to eq('Search')
       click_on I18n.t('buttons.apply_filters')
     end
@@ -204,21 +204,6 @@ RSpec.feature 'Viewing vacancies' do
       visit jobs_path(vacancy)
 
       verify_vacancy_list_page_details(VacancyPresenter.new(vacancy))
-    end
-  end
-
-  context 'when the user is not on mobile' do
-    scenario 'they should not see the \'refine your search\' link' do
-      visit jobs_path
-      expect(page).not_to have_content('Refine your search')
-    end
-  end
-
-  context 'when the user is on mobile', js: true do
-    scenario 'they should see the \'Show more filters\' link' do
-      page.driver.add_header('User-Agent', USER_AGENTS['MOBILE_CHROME'])
-      visit jobs_path
-      expect(page).to have_content(I18n.t('jobs.filters.summary_collapsed'))
     end
   end
 end

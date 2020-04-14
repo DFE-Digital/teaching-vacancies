@@ -21,8 +21,8 @@ RSpec.describe SubscriptionReferenceGenerator do
       end
     end
 
-    context 'with subject in search criteria' do
-      let(:params) { { search_criteria: { 'subject' => 'maths and science', 'radius' => 20 } } }
+    context 'with keyword in search criteria' do
+      let(:params) { { search_criteria: { 'keyword' => 'maths and science', 'radius' => 20 } } }
 
       it 'returns a reference containing the subject' do
         service = described_class.new(params)
@@ -45,7 +45,7 @@ RSpec.describe SubscriptionReferenceGenerator do
       let(:params) do
         {
           search_criteria: {
-            'subject' => 'maths and science',
+            'keyword' => 'maths and science',
             'job_title' => 'headteacher',
             'radius' => 20
           }
