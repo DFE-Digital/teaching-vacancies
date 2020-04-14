@@ -41,7 +41,7 @@ class Vacancy < ApplicationRecord
     end
 
     attribute :job_summary do
-      self.job_summary.truncate(256)
+      self.job_summary&.truncate(256)
     end
 
     attribute :last_updated_at do
