@@ -59,6 +59,8 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
     scenario 'can sign out' do
       visit terms_and_conditions_path
       click_on(I18n.t('nav.sign_out'))
+      # A request to logout is sent to DfE Sign-in system. On success DSI comes back at auth_dfe_signout_path
+      visit auth_dfe_signout_path
 
       expect(page).to have_content(I18n.t('messages.access.signed_out'))
     end

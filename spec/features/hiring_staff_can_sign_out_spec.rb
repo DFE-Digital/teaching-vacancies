@@ -8,6 +8,9 @@ RSpec.feature 'Hiring staff can sign out' do
     visit root_path
 
     click_on(I18n.t('nav.sign_out'))
+    # A request to logout is sent to DfE Sign-in system. On success DSI comes back at auth_dfe_signout_path
+    visit auth_dfe_signout_path
+
     within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_in')) }
     expect(page).to have_content(I18n.t('messages.access.signed_out'))
   end
