@@ -34,15 +34,35 @@ class Vacancy < ApplicationRecord
   include AlgoliaSearch
 
   algoliasearch do
-    attributes :first_supporting_subject,
-      :job_description,
-      :job_roles,
-      :job_title,
-      :newly_qualified_teacher,
-      :second_supporting_subject,
-      :slug,
-      :status,
-      :working_patterns
+    attributes :first_supporting_subject, :job_roles, :job_title, :second_supporting_subject, :working_patterns
+
+    attribute :expiry_date do
+      convert_date_to_unix_time(self.expires_on)
+    end
+
+    attribute :job_summary do
+      self.job_summary.truncate(256)
+    end
+
+    attribute :last_updated_at do
+      convert_date_to_unix_time(self.updated_at)
+    end
+
+    attribute :listing_status do
+      self.status
+    end
+
+    attribute :newly_qualified_teacher_status do
+      self.newly_qualified_teacher
+    end
+
+    attribute :permalink do
+      self.slug
+    end
+
+    attribute :publication_date do
+      convert_date_to_unix_time(self.publish_on)
+    end
 
     attribute :school do
       {
@@ -52,29 +72,17 @@ class Vacancy < ApplicationRecord
         local_authority: self.school.local_authority,
         phase: self.school.phase,
         postcode: self.school.postcode,
-        region_name: self.school.region.name,
+        region: self.school.region.name,
         town: self.school.town
       }
     end
 
-    attribute :subject do
-      self.subject&.name
-    end
-
-    attribute :expires_on do
-      convert_date_to_unix_time(self.expires_on)
-    end
-
-    attribute :publish_on do
-      convert_date_to_unix_time(self.publish_on)
-    end
-
-    attribute :starts_on do
+    attribute :start_date do
       convert_date_to_unix_time(self.starts_on)
     end
 
-    attribute :updated_at do
-      convert_date_to_unix_time(self.updated_at)
+    attribute :subject do
+      self.subject&.name
     end
 
     geoloc :lat, :lng
