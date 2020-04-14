@@ -33,7 +33,7 @@ class Vacancy < ApplicationRecord
 
   include AlgoliaSearch
 
-  algoliasearch do
+  algoliasearch per_environment: true do
     attributes :first_supporting_subject, :job_roles, :job_title, :second_supporting_subject, :working_patterns
 
     attribute :expiry_date do
