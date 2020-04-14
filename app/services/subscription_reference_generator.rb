@@ -23,14 +23,19 @@ class SubscriptionReferenceGenerator
 
     parts = []
 
-    parts.push(search_criteria['subject'].strip.split(/\s+/).join(' ')) if search_criteria.key?('subject')
-    parts.push(search_criteria['job_title'].strip.split(/\s+/).join(' ')) if search_criteria.key?('job_title')
+    parts.push(strip_split_join(search_criteria['keyword'])) if search_criteria.key?('keyword')
+    parts.push(strip_split_join(search_criteria['subject'])) if search_criteria.key?('subject')
+    parts.push(strip_split_join(search_criteria['job_title'])) if search_criteria.key?('job_title')
 
     parts.join(' ')
   end
 
+  def strip_split_join(field)
+    field.strip.split(/\s+/).join(' ')
+  end
+
   def job_type?
-    ['subject', 'job_title'].any? { |key| search_criteria.key?(key) }
+    ['keyword', 'subject', 'job_title'].any? { |key| search_criteria.key?(key) }
   end
 
   def location_part

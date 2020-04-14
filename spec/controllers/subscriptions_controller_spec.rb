@@ -34,7 +34,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         {
           subscription: {
             email: 'foo@email.com',
-            search_criteria: { subject: 'english' }.to_json
+            search_criteria: { keyword: 'english' }.to_json
           }
         }
       end

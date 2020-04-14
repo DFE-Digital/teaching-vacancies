@@ -94,7 +94,7 @@ RSpec.feature 'Filtering vacancies' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'subject', with: 'English'
+        fill_in 'keyword', with: 'English'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -109,7 +109,7 @@ RSpec.feature 'Filtering vacancies' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'job_title', with: 'Tutor'
+        fill_in 'keyword', with: 'Tutor'
         page.find('.govuk-button[type=submit]').click
       end
 
@@ -118,128 +118,6 @@ RSpec.feature 'Filtering vacancies' do
       expect(page).not_to have_content(english_title_vacancy.job_title)
       expect(page).to have_content(arts_vacancy.job_title)
       expect(page).to have_content(english_subject_vacancy.job_title)
-    end
-  end
-
-  context 'when filtering by working patterns', elasticsearch: true do
-    let!(:part_time_vacancy) { create(:vacancy, :published, working_patterns: ['part_time']) }
-    let!(:full_time_vacancy) { create(:vacancy, :published, working_patterns: ['full_time']) }
-    let!(:job_share_vacancy) { create(:vacancy, :published, working_patterns: ['job_share']) }
-    let!(:full_and_part_time_vacancy) { create(:vacancy, :published, working_patterns: ['full_time', 'part_time']) }
-
-    before(:each) do
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-    end
-
-    scenario 'is filterable by single working pattern selection', elasticsearch: true do
-      within '.filters-form' do
-        check 'Part-time', name: 'working_patterns[]'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(part_time_vacancy.job_title)
-      expect(page).to have_content(full_and_part_time_vacancy.job_title)
-      expect(page).not_to have_content(full_time_vacancy.job_title)
-      expect(page).not_to have_content(job_share_vacancy.job_title)
-    end
-
-    scenario 'is filterable by multiple working pattern selections', elasticsearch: true do
-      within '.filters-form' do
-        check 'Part-time', name: 'working_patterns[]'
-        check 'Full-time', name: 'working_patterns[]'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(part_time_vacancy.job_title)
-      expect(page).to have_content(full_and_part_time_vacancy.job_title)
-      expect(page).to have_content(full_time_vacancy.job_title)
-      expect(page).not_to have_content(job_share_vacancy.job_title)
-    end
-  end
-
-  context 'with jobs with education phases', elasticsearch: true do
-    let!(:nursery_vacancy) { create(:vacancy, :published, school: build(:school, :nursery)) }
-    let!(:primary_vacancy) { create(:vacancy, :published, school: build(:school, :primary)) }
-    let!(:secondary_vacancy) { create(:vacancy, :published, school: build(:school, :secondary)) }
-
-    before(:each) { Vacancy.__elasticsearch__.client.indices.flush }
-
-    scenario 'is filterable by single education phase selection' do
-      visit jobs_path
-
-      within '.filters-form' do
-        check 'Primary', name: 'phases[]'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).not_to have_content(nursery_vacancy.job_title)
-      expect(page).to have_content(primary_vacancy.job_title)
-      expect(page).not_to have_content(secondary_vacancy.job_title)
-    end
-
-    scenario 'is filterable by multiple education phase selections' do
-      visit jobs_path
-
-      within '.filters-form' do
-        check 'Primary', name: 'phases[]'
-        check 'Secondary', name: 'phases[]'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).not_to have_content(nursery_vacancy.job_title)
-      expect(page).to have_content(primary_vacancy.job_title)
-      expect(page).to have_content(secondary_vacancy.job_title)
-    end
-
-    scenario 'displays all available jobs when "Any" education phase selected' do
-      visit jobs_path
-
-      within '.filters-form' do
-        check 'Any', name: 'phases[]'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(nursery_vacancy.job_title)
-      expect(page).to have_content(primary_vacancy.job_title)
-      expect(page).to have_content(secondary_vacancy.job_title)
-    end
-  end
-
-  context 'when filtering by newly qualified teacher', elasticsearch: true do
-    scenario 'search results can be filtered by NQT suitability' do
-      nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
-      not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        check 'newly_qualified_teacher'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(nqt_suitable_vacancy.job_title)
-      expect(page).not_to have_content(not_nqt_suitable_vacancy.job_title)
-      expect(page).to have_field('newly_qualified_teacher', checked: true)
-    end
-
-    scenario 'displays all available jobs when NQT suitable is unchecked', elasticsearch: true do
-      nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: true)
-      not_nqt_suitable_vacancy = create(:vacancy, :published, newly_qualified_teacher: false)
-
-      Vacancy.__elasticsearch__.client.indices.flush
-      visit jobs_path
-
-      within '.filters-form' do
-        check 'newly_qualified_teacher'
-        uncheck 'newly_qualified_teacher'
-        page.find('.govuk-button[type=submit]').click
-      end
-
-      expect(page).to have_content(not_nqt_suitable_vacancy.job_title)
-      expect(page).to have_content(nqt_suitable_vacancy.job_title)
-      expect(page).to have_field('newly_qualified_teacher', checked: false)
     end
   end
 
@@ -255,12 +133,12 @@ RSpec.feature 'Filtering vacancies' do
         total_count: 3,
         location: '',
         radius: '20',
-        keyword: nil,
+        keyword: 'Physics',
         working_patterns: nil,
         phases: nil,
-        newly_qualified_teacher: 'true',
-        subject: 'Physics',
-        job_title: ''
+        newly_qualified_teacher: nil,
+        subject: nil,
+        job_title: nil
       }
 
       expect(AuditSearchEventJob).to receive(:perform_later)
@@ -270,8 +148,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Timecop.freeze(timestamp) do
         within '.filters-form' do
-          check 'newly_qualified_teacher'
-          fill_in 'subject', with: 'Physics'
+          fill_in 'keyword', with: 'Physics'
           page.find('.govuk-button[type=submit]').click
         end
       end
@@ -287,12 +164,12 @@ RSpec.feature 'Filtering vacancies' do
         total_count: 12,
         location: '',
         radius: '20',
-        keyword: nil,
+        keyword: 'Math',
         working_patterns: nil,
         phases: nil,
-        newly_qualified_teacher: 'true',
-        subject: 'Math',
-        job_title: ''
+        newly_qualified_teacher: nil,
+        subject: nil,
+        job_title: nil
       }
 
       expect(AuditSearchEventJob).to receive(:perform_later)
@@ -302,8 +179,7 @@ RSpec.feature 'Filtering vacancies' do
 
       Timecop.freeze(timestamp) do
         within '.filters-form' do
-          check 'newly_qualified_teacher'
-          fill_in 'subject', with: 'Math'
+          fill_in 'keyword', with: 'Math'
           page.find('.govuk-button[type=submit]').click
         end
       end
@@ -318,7 +194,7 @@ RSpec.feature 'Filtering vacancies' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'subject', with: 'Physics'
+        fill_in 'keyword', with: 'Physics'
         page.find('.govuk-button[type=submit]').click
       end
 

@@ -3,31 +3,8 @@
 = form_for VacancyFilters.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
   = f.hidden_field :radius, value: '20'
 
+  = f.govuk_text_field(:keyword, label: { text: t('jobs.filters.keyword') }, placeholder: t('jobs.filters.keyword_hint'))
+
   = render 'shared/location_search_tag', location: nil, extra_label_class: 'govuk-label--s'
-
-  #accordion-default.govuk-accordion{ data: { module: 'govuk-accordion' } }
-    .govuk-accordion__section
-      .govuk-accordion__section-header
-        %h2.govuk-accordion__section-heading.govuk-body
-          %span#accordion-default-heading-1.govuk-accordion__section-button.govuk-label--s
-            = t('jobs.filters.subject')
-      #accordion-default-content-1.govuk-accordion__section-content{ aria: { labelledby: 'accordion-default-heading-1' } }
-        .govuk-body= f.govuk_text_field(:subject, label: { hidden: true, text: t('jobs.filters.subject') }, placeholder: t('jobs.filters.subject_hint'))
-
-    .govuk-accordion__section
-      .govuk-accordion__section-header
-        %h2.govuk-accordion__section-heading
-          %span#accordion-default-heading-2.govuk-accordion__section-button.govuk-label--s
-            = t('jobs.job_title')
-      #accordion-default-content-2.govuk-accordion__section-content{ aria: { labelledby: 'accordion-default-heading-2' } }
-        .govuk-body= f.govuk_text_field(:job_title, label: { hidden: true, text: t('jobs.filters.job_title') }, placeholder: t('jobs.filters.job_title_hint'))
-
-    .govuk-accordion__section
-      .govuk-accordion__section-header
-        %h2.govuk-accordion__section-heading
-          %span#accordion-default-heading-3.govuk-accordion__section-button.govuk-label--s
-            = t('jobs.filters.education_phase')
-      #accordion-default-content-3.govuk-accordion__section-content{ aria: { labelledby: 'accordion-default-heading-3' } }
-        .govuk-body= f.govuk_collection_check_boxes(:phases, school_phase_options, :second, :first, small: true)
 
   = f.govuk_submit t('buttons.apply_filters')

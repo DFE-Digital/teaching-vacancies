@@ -8,6 +8,7 @@ class VacanciesController < ApplicationController
   DEFAULT_RADIUS = 20
 
   helper_method :location,
+                :keyword,
                 :subject,
                 :job_title,
                 :working_patterns,
@@ -92,6 +93,10 @@ class VacanciesController < ApplicationController
     return params[:location_category] if params[:location_category]
 
     params[:location]
+  end
+
+  def keyword
+    params[:keyword]
   end
 
   def subject
