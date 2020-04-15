@@ -33,7 +33,7 @@
 
       = render 'hiring_staff/vacancies/expiry_time_field', f: f, form: @application_details_form
 
-      = f.button :submit, t('buttons.save_and_continue')
+      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
     .govuk-grid-column-one-third
       = render 'hiring_staff/vacancies/sidebar'

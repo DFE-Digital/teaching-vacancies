@@ -1,6 +1,14 @@
 - if @vacancy.published?
   = f.govuk_submit t('buttons.update_job')
 - else
-  = f.govuk_submit t('buttons.save_and_continue') do
-    %br
-    = link_to t('buttons.save_and_return'), jobs_with_type_school_path('draft'), class: 'govuk-link'    
+  - if f.class == GOVUKDesignSystemFormBuilder::FormBuilder
+    %div.continue.no-margin-bottom
+      = f.govuk_submit t('buttons.save_and_continue')
+    %div.button-as-link.no-margin-bottom
+      = f.govuk_submit t('buttons.save_and_return')
+  - elsif f.class == SimpleForm::FormBuilder
+    %div.continue.govuk-form-group.no-margin-bottom
+      = f.button :submit, t('buttons.save_and_continue')
+    %div.button-as-link.no-margin-bottom
+      %div.govuk-form-group
+        = f.button :submit, t('buttons.save_and_return')
