@@ -1,6 +1,8 @@
 @media (min-width: 40.0625em) {
-  .govuk-button {
-    margin-bottom: 0;
+  div.no-margin-bottom {
+    .govuk-button {
+      margin-bottom: 0;
+    }
   }
 
   div.button-as-link {
@@ -8,8 +10,6 @@
       // Remove styling of govuk-button
       font-family: inherit;
       -webkit-font-smoothing: inherit;
-      margin-bottom: inherit;
-      font-size: inherit;
       width: inherit;
       line-height: inherit;
       font-weight: inherit;
@@ -17,10 +17,8 @@
       display: inherit;
       position: inherit;
       margin-top: inherit;
-      padding: inherit;
       border: inherit;
       border-radius: inherit;
-      color: inherit;
       background-color: inherit;
       box-shadow: inherit;
       text-align: inherit;
