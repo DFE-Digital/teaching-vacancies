@@ -13,7 +13,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     if @application_details_form.valid?
       session[:completed_step] = current_step
       vacancy = update_vacancy(@application_details_form.params_to_save)
-      redirect_to_next_step(vacancy)
+      return redirect_after_validation_and_update
     else
       session[:current_step] = :step_4 unless session[:current_step].eql?(:review)
       redirect_to application_details_school_job_path(anchor: 'errors')
@@ -58,5 +58,13 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   def next_step
     school_job_job_summary_path(@vacancy.id)
+  end
+
+  def redirect_after_validation_and_update
+    if params[:commit] == I18n.t('buttons.save_and_return')
+      redirect_to_school_draft_jobs(@vacancy)
+    elsif params[:commit] == I18n.t('buttons.save_and_continue')
+      redirect_to_next_step(@vacancy)
+    end
   end
 end

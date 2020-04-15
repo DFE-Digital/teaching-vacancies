@@ -609,6 +609,7 @@ en:
         heading: 'New section'
         message: 'Improve your job listing using the new sections and features below'
       delete: The job has been deleted
+      draft_saved: 'Draft saved for %{job_title}'
       updated: 'The job has been updated'
       view:
         only_published: You can only view published jobs

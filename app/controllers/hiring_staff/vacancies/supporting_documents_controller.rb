@@ -12,7 +12,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
 
     if @supporting_documents_form.valid?
       update_vacancy(supporting_documents_form_params, @vacancy)
-      return redirect_to next_step
+      return redirect_after_validation_and_update
     end
 
     session[:current_step] = :step_3_intro unless session[:current_step].eql?(:review)
@@ -20,6 +20,14 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
   end
 
   private
+
+  def redirect_after_validation_and_update
+    if params[:commit] == I18n.t('buttons.save_and_return')
+      redirect_to_school_draft_jobs(@vacancy)
+    elsif params[:commit] == I18n.t('buttons.save_and_continue')
+      redirect_to next_step
+    end
+  end
 
   def supporting_documents_form_params
     (params[:supporting_documents_form] || params).permit(:supporting_documents).merge(completed_step: current_step)
