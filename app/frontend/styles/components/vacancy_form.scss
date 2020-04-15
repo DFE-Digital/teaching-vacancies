@@ -1,0 +1,54 @@
+@media (min-width: 40.0625em) {
+  .govuk-button {
+    margin-bottom: 0;
+  }
+
+  div.button-as-link {
+    .govuk-button {
+      // Remove styling of govuk-button
+      font-family: inherit;
+      -webkit-font-smoothing: inherit;
+      margin-bottom: inherit;
+      font-size: inherit;
+      width: inherit;
+      line-height: inherit;
+      font-weight: inherit;
+      box-sizing: inherit;
+      display: inherit;
+      position: inherit;
+      margin-top: inherit;
+      padding: inherit;
+      border: inherit;
+      border-radius: inherit;
+      color: inherit;
+      background-color: inherit;
+      box-shadow: inherit;
+      text-align: inherit;
+      vertical-align: inherit;
+      cursor: inherit;
+      -webkit-appearance: inherit;
+
+      // Remove pseudo-element from govuk-button
+      content: none;
+
+      // Include govuk-link mixin which is "used in cases where it is not helpful
+      // to distinguish between visited and non-visited links".
+
+      @include govuk-link-common;
+      @include govuk-link-style-no-visited-state;
+
+      // Copy remaining styling of govuk-link
+      font-family: "GDS Transport", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale; 
+      
+      color: $govuk-link-colour;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-line: underline;
+      text-decoration-style: initial;
+      text-decoration-color: initial;
+    }
+  }
+}

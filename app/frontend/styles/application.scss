@@ -50,6 +50,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'components/vacancies-count';
 @import 'components/vacancies-show';
 @import 'components/vacancy';
+@import 'components/vacancy_form';
 @import 'ie';
 
 input[type='search'] {
