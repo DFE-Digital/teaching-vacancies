@@ -30,14 +30,14 @@ class ExportDsiUsersToBigQuery < BaseDsiExporter
 
   def insert_table_data(batch)
     dataset.insert TABLE_NAME, present_for_big_query(batch), autocreate: true do |schema|
-      schema.string 'user_id', mode: :required
+      schema.string 'user_id', mode: :nullable
       schema.string 'role', mode: :nullable
       schema.timestamp 'approval_datetime', mode: :nullable
       schema.timestamp 'update_datetime', mode: :nullable
       schema.string 'given_name', mode: :nullable
       schema.string 'family_name', mode: :nullable
-      schema.string 'email', mode: :required
-      schema.integer 'school_urn', mode: :required
+      schema.string 'email', mode: :nullable
+      schema.integer 'school_urn', mode: :nullable
     end
   end
 
