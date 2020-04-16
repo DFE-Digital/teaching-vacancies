@@ -121,7 +121,6 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'saves draft and redirects to school page when submitted as a draft' do
-        # Testing the version using GOVUKDesignSystemFormBuilder::FormBuilder
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -183,6 +182,26 @@ RSpec.feature 'Creating a vacancy' do
         choose 'Yes'
         click_on I18n.t('buttons.save_and_continue')
 
+        expect(page).to have_content(I18n.t('jobs.upload_file'))
+      end
+
+      scenario 'saves draft and redirects to school page when submitted as a draft' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        choose 'Yes'
+        click_on I18n.t('buttons.save_and_return')
+
+        expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
+        click_on vacancy.job_title
+
+        # Check that fields were saved and that it remembers to ask for a document upload
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
         expect(page).to have_content(I18n.t('jobs.upload_file'))
       end
     end
@@ -298,6 +317,28 @@ RSpec.feature 'Creating a vacancy' do
           end
         end
       end
+
+      scenario 'saves draft and redirects to school page when submitted as a draft' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        choose 'Yes'
+        click_on I18n.t('buttons.save_and_continue')
+
+        click_on I18n.t('buttons.save_and_return')
+
+        expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
+        click_on vacancy.job_title
+
+        # Check that fields were saved
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+        expect(page).to have_content(I18n.t('jobs.upload_file'))
+      end
     end
 
     context '#application_details' do
@@ -359,7 +400,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'saves draft and redirects to school page when submitted as a draft' do
-        # Testing the version using SimpleForm::FormBuilder
+        # Tests the version using SimpleForm::FormBuilder
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -435,6 +476,33 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
         expect(page).to have_content(I18n.t('jobs.review'))
         verify_all_vacancy_details(vacancy)
+      end
+
+      scenario 'saves draft and redirects to school page when submitted as a draft' do
+        # Tests the version using SimpleForm::FormBuilder
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        select_no_for_supporting_documents
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_application_details_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_job_summary_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_return')
+
+        expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
+        click_on vacancy.job_title
+
+        # Check that fields were saved
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+        expect(page).to have_content(I18n.t('jobs.review'))
       end
     end
 
