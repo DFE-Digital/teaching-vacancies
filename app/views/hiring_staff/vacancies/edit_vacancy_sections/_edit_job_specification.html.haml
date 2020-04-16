@@ -1,10 +1,7 @@
 %h2.govuk-heading-m.app-task-list__section#job_details_heading
   %span.app-task-list__section-number 1.
   = t('jobs.job_details')
-  - if @vacancy.published?
-    = link_to t('buttons.change'), edit_school_job_job_specification_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
-  - else
-    = link_to t('buttons.change'), job_specification_school_job_path, class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
+  = link_to t('buttons.change'), school_job_job_specification_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
   - unless @vacancy.job_roles&.any?
     .notification-tag
       %strong.govuk-tag.app-task-list__task-completed
