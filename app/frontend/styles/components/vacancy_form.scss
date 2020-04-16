@@ -5,6 +5,12 @@
     }
   }
 
+  div.continue {
+    .govuk-button {
+      width: 190px;
+    }
+  }
+
   div.button-as-link {
     .govuk-button {
       // Remove styling of govuk-button

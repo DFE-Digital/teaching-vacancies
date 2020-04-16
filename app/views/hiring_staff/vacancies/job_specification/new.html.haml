@@ -67,7 +67,7 @@
       %div.govuk-form-group#ends_on
         = f.gov_uk_date_field :ends_on,
                               legend_options: { page_heading: false, class: "govuk-label" }
-
-      = f.button :submit, t('buttons.save_and_continue')
+      %div.continue
+        = f.button :submit, t('buttons.save_and_continue')
     .govuk-grid-column-one-third
       = render 'hiring_staff/vacancies/sidebar'
