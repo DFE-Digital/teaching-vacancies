@@ -52,7 +52,7 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
 
       current_user.reload
 
-      expect(page).to have_content(I18n.t('errors.terms_and_conditions.errors_present'))
+      expect(page).to have_content(I18n.t('jobs.errors_present'))
       expect(current_user).not_to be_accepted_terms_and_conditions
     end
 
