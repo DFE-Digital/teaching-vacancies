@@ -67,6 +67,8 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       redirect_to_next_step(@vacancy)
     elsif params[:commit] == I18n.t('buttons.update_job')
       redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
+    elsif params[:commit] == I18n.t('buttons.save_and_return')
+      redirect_to_school_draft_jobs(@vacancy)
     end
   end
 
