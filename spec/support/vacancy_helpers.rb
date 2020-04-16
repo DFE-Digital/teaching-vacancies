@@ -32,7 +32,7 @@ module VacancyHelpers
   end
 
   def fill_in_supporting_documents_form_fields
-    find('label[for="supporting-documents-form-supporting-documents-yes-field"]').click
+    page.find_all(:xpath, "//*[normalize-space(text())='Yes']").first.click
   end
 
   def select_no_for_supporting_documents

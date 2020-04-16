@@ -46,7 +46,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      fill_in_supporting_documents_form_fields
       click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
@@ -78,7 +78,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      fill_in_supporting_documents_form_fields
       click_on I18n.t('buttons.save_and_continue')
 
       click_on I18n.t('buttons.save_and_continue')
@@ -96,7 +96,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      fill_in_supporting_documents_form_fields
       click_on I18n.t('buttons.save_and_continue')
 
       click_on I18n.t('buttons.save_and_continue')
