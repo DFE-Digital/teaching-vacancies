@@ -33,7 +33,7 @@ class Vacancy < ApplicationRecord
 
   include AlgoliaSearch
 
-  algoliasearch per_environment: true do
+  algoliasearch per_environment: true, disable_indexing: Rails.env.test? do
     attributes :first_supporting_subject, :job_roles, :job_title, :second_supporting_subject, :working_patterns
 
     attribute :expiry_date do
@@ -66,16 +66,14 @@ class Vacancy < ApplicationRecord
     end
 
     attribute :school do
-      {
-        name: self.school.name,
+      { name: self.school.name,
         address: self.school.address,
         county: self.school.county,
         local_authority: self.school.local_authority,
         phase: self.school.phase,
         postcode: self.school.postcode,
         region: self.school.region.name,
-        town: self.school.town
-      }
+        town: self.school.town }
     end
 
     attribute :start_date do
