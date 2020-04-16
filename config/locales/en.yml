@@ -93,6 +93,11 @@ en:
         publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
         expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
       job_specification_form:
+        job_title_html: "Job title (<span class='text-red'>Required</span>)"
+        job_roles_html: "Job role (<span class='text-red'>Required</span>)"
+        main_subject: 'Main subject'
+        supporting_subject: 'Supporting subject %{number}'
+        working_pattern_html: "Working patterns (<span class='text-red'>Required</span>)"
         starts_on: 'Expected start date'
         ends_on: 'End date'
       pay_package_form:
@@ -105,6 +110,15 @@ en:
         about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
     hint:
       job_specification_form:
+        job_title: >-
+          For secondary school roles include subject and, if relevant,
+          level of seniority ('Subject leader for science', for example).
+        job_roles: 'Select all that describe the role'
+        subject: 'What subject will the teacher focus on?'
+        supporting_subject: 'What other subject will the teacher focus on?'
+        working_patterns: >-
+          Select all working patterns you will consider for the role.
+          Flexible working options may attract more candidates.
         starts_on: 'For example, 01 01 2020'
         ends_on: 'For example, 01 08 2020'
       pay_package_form:
@@ -132,6 +146,7 @@ en:
         about_school: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
   jobs:
     current_step: "Step %{step} of %{total}"
+    errors_present: Please correct the following errors
     notification_labels:
       new: 'new'
     heading: 'Find a job in teaching'
@@ -371,27 +386,6 @@ en:
       newly_qualified_teacher: 'Newly qualified teacher'
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
-      job_title: >-
-        For secondary school roles include subject and, if relevant,
-        level of seniority ('Subject leader for science', for example).
-      job_role: 'Select all that describe the role'
-      description: 'Briefly describe the duties and responsibilities involved in the role (minimum 10 characters)'
-      subject: 'What subject will the teacher focus on?'
-      salary_range: >-
-        Enter full-time equivalent annual salary, before tax (for example,
-        30,000 for a half-time role that pays £15,000 per year)
-      supporting_subject: 'What other subject will the teacher focus on?'
-      working_patterns: >-
-        Select all working patterns you will consider for the role.
-        Flexible working options may attract more candidates.
-      newly_qualified_teacher: 'Tick this box if it is suitable for newly qualified teachers.'
-      start_date: 'For example, %{date}'
-      end_date: 'For example, %{date}'
-      education: 'State any formal education needed for the role (undergraduate degree, for example)'
-      qualifications: >-
-        List any qualifications needed for this role
-        (<span arial-label="Qualified Teacher Status">QTS</span>, for example)
-      experience: 'Expected teaching or other experience'
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
       contact_email: 'This email address will be shown publicly as a point of contact'
@@ -625,10 +619,6 @@ en:
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
-    terms_and_conditions:
-      errors_present: Please correct the following errors
-    feedback:
-      errors_present: Please correct the following errors
     vacancy_publish_feedback:
       already_submitted: Feedback for this job listing has already been submitted
     subscriptions:
