@@ -31,6 +31,70 @@ class Vacancy < ApplicationRecord
   include Elasticsearch::Model
   include Redis::Objects
 
+  include AlgoliaSearch
+
+  algoliasearch per_environment: true, disable_indexing: Rails.env.test? do
+    attributes :first_supporting_subject, :job_roles, :job_title, :second_supporting_subject, :working_patterns
+
+    attribute :expiry_date do
+      convert_date_to_unix_time(self.expires_on)
+    end
+
+    attribute :job_summary do
+      self.job_summary&.truncate(256)
+    end
+
+    attribute :last_updated_at do
+      # Convert from ActiveSupport::TimeWithZone object to Unix time
+      self.updated_at.to_i
+    end
+
+    attribute :listing_status do
+      self.status
+    end
+
+    attribute :newly_qualified_teacher_status do
+      self.newly_qualified_teacher
+    end
+
+    attribute :permalink do
+      self.slug
+    end
+
+    attribute :publication_date do
+      convert_date_to_unix_time(self.publish_on)
+    end
+
+    attribute :school do
+      { name: self.school.name,
+        address: self.school.address,
+        county: self.school.county,
+        local_authority: self.school.local_authority,
+        phase: self.school.phase,
+        postcode: self.school.postcode,
+        region: self.school.region.name,
+        town: self.school.town }
+    end
+
+    attribute :start_date do
+      convert_date_to_unix_time(self.starts_on)
+    end
+
+    attribute :subject do
+      self.subject&.name
+    end
+
+    geoloc :lat, :lng
+  end
+
+  def lat
+    self.school.geolocation.x.to_f
+  end
+
+  def lng
+    self.school.geolocation.y.to_f
+  end
+
   index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
   document_type 'vacancy'
   settings index: {
@@ -253,6 +317,13 @@ class Vacancy < ApplicationRecord
   end
 
   private
+
+  def convert_date_to_unix_time(date)
+    # nil.to_i returns 0 in unix time (1970-01-01), so if date is nil we should return nil.
+    return nil if date == nil
+    # Convert to unix time via DateTime object in order to use correct time zone
+    Time.zone.at(date.to_time).to_datetime.midday.to_i
+  end
 
   def slug_candidates
     [
