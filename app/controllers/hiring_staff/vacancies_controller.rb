@@ -82,8 +82,18 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def redirect_to_incomplete_step
     return redirect_to school_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
     return redirect_to supporting_documents_school_job_path unless step_valid?(SupportingDocumentsForm)
+    return redirect_to school_job_documents_path(@vacancy.id) if redirect_to_documents_path_condition
     return redirect_to application_details_school_job_path unless step_valid?(ApplicationDetailsForm)
     return redirect_to school_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)
+  end
+
+  def redirect_to_documents_path_condition
+    # Give returning users who had said 'yes' to adding a document
+    # (but who did not add a document) one opportunity to do so per session.
+    @vacancy.supporting_documents == 'yes' \
+    && @vacancy.documents.none? \
+    && !step_valid?(ApplicationDetailsForm) \
+    && !session[:clicked_continue_at_school_job_documents_path]
   end
 
   def already_published_message

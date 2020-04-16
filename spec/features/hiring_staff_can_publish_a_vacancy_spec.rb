@@ -336,11 +336,18 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        click_on vacancy.job_title
+        expect(page).to have_content(vacancy.job_title)
 
-        # Check that fields were saved
+        # Check that fields were saved on supporting_documents,
+        # and that the user is given one chance to upload docs
+        # after saying 'yes' to supporting_documents
+        visit edit_school_job_path(id: vacancy_model.id)
         expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
         expect(page).to have_content(I18n.t('jobs.upload_file'))
+
+        # Check that user can proceed to next step after being given a chance to upload
+        click_on I18n.t('buttons.save_and_continue')
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
       end
     end
 
