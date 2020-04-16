@@ -6,7 +6,7 @@ class Vacancy < ApplicationRecord
     I18n.t('jobs.job_role_options.teacher'),
     I18n.t('jobs.job_role_options.leadership'),
     I18n.t('jobs.job_role_options.sen_specialist'),
-    I18n.t('jobs.job_role_options.nqt_suitable')
+    I18n.t('jobs.job_role_options.nqt_suitable'),
   ].freeze
 
   FLEXIBLE_WORKING_PATTERN_OPTIONS = {
