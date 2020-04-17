@@ -40,10 +40,6 @@ class Vacancy < ApplicationRecord
       convert_date_to_unix_time(self.expires_on)
     end
 
-    attribute :job_summary do
-      self.job_summary&.truncate(256)
-    end
-
     attribute :last_updated_at do
       # Convert from ActiveSupport::TimeWithZone object to Unix time
       self.updated_at.to_i
