@@ -1188,11 +1188,16 @@ en:
       delete_error: 'An error occurred while removing the file.'
       no_keep_file: 'No, keep file'
       yes_remove_file: 'Yes, remove file'
+  release_notes:
+    heading: Release notes
+    updates: Updates
+    dated: '%{date} Updates'
   footer:
-      request_support: "Report problems via email"
-      provide_feedback: "Give feedback"
-      for_job_seekers: "For job seekers"
-      search_teaching_vacancies: "Find a teaching job"
-      for_schools: "For schools"
-      list_a_teaching_job: "List a teaching job"
-      service_support: "Service support"
+    request_support: "Report problems via email"
+    provide_feedback: "Give feedback"
+    for_job_seekers: "For job seekers"
+    search_teaching_vacancies: "Find a teaching job"
+    for_schools: "For schools"
+    list_a_teaching_job: "List a teaching job"
+    service_support: "Service support"
+    release_notes: Release notes

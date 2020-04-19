@@ -1,0 +1,9 @@
+- content_for :page_title_prefix, t('release_notes.heading')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-l= t('release_notes.heading')
+    %ul.govuk-list
+      - @releases.each do |release|
+        %li
+          = link_to release[:date].to_s, release_note_path(release[:path]), class: 'govuk-link'
