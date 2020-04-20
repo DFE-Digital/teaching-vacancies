@@ -27,6 +27,6 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
 
   def next_step
     @supporting_documents_form.supporting_documents == 'yes' ?
-      school_job_documents_path(session_vacancy_id) : application_details_school_job_path
+      school_job_documents_path(@vacancy.id) : school_job_application_details_path(@vacancy.id)
   end
 end

@@ -75,7 +75,7 @@ Rails.application.routes.draw do
         controller: 'hiring_staff/vacancies/documents',
         defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
       resource :application_details,
-        only: %i[edit update],
+        only: %i[show update],
         controller: 'hiring_staff/vacancies/application_details',
         defaults: { create_step: 4, step_title: I18n.t('jobs.application_details') }
       resource :job_summary,
@@ -89,12 +89,6 @@ Rails.application.routes.draw do
     end
 
     resource :job, only: [] do
-      get :application_details,
-        to: 'hiring_staff/vacancies/application_details#new',
-        defaults: { create_step: 4, step_title: I18n.t('jobs.application_details') }
-      post :application_details,
-        to: 'hiring_staff/vacancies/application_details#create',
-        defaults: { create_step: 4, step_title: I18n.t('jobs.application_details') }
       get :supporting_documents,
         to: 'hiring_staff/vacancies/supporting_documents#new',
         defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
