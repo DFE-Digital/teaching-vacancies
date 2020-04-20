@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'pages#home'
 
-  get 'release_notes' => 'release_notes#show'
-  get 'release_notes/:date' => 'release_notes#index', as: :release_note
+  get 'updates' => 'updates#show'
+  get 'updates/:date' => 'updates#index', as: :update
 
   get 'check' => 'application#check'
   get 'sitemap' => 'sitemap#show', format: 'xml'

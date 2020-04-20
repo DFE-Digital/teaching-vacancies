@@ -1,0 +1,9 @@
+- content_for :page_title_prefix, t('updates.heading')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    %h1.govuk-heading-l= t('updates.heading')
+    %ul.govuk-list
+      - @updates.each do |update|
+        %li
+          = link_to update[:date].to_s, update_path(update[:path]), class: 'govuk-link'
