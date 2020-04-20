@@ -34,7 +34,7 @@ class Vacancy < ApplicationRecord
   include AlgoliaSearch
 
   algoliasearch per_environment: true, disable_indexing: Rails.env.test? do
-    attributes :first_supporting_subject, :job_roles, :job_title, :second_supporting_subject, :working_patterns
+    attributes :first_supporting_subject, :job_roles, :job_title, :salary, :second_supporting_subject, :working_patterns
 
     attribute :expiry_date do
       convert_date_to_unix_time(self.expires_on)
