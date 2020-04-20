@@ -1,62 +1,57 @@
 class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
   before_action :redirect_unless_vacancy
+  before_action :set_up_application_details_form, only: %i[update]
 
-  def new
-    @application_details_form = ApplicationDetailsForm.new(session[:vacancy_attributes].with_indifferent_access)
-    @application_details_form.valid? if %i[step_4 review].include?(session[:current_step])
-  end
-
-  def create
-    @application_details_form = ApplicationDetailsForm.new(application_details_form_params)
-    store_vacancy_attributes(@application_details_form.attributes)
-
-    if @application_details_form.valid?
-      session[:completed_step] = current_step
-      vacancy = update_vacancy(@application_details_form.params_to_save)
-      redirect_to_next_step(vacancy)
-    else
-      session[:current_step] = :step_4 unless session[:current_step].eql?(:review)
-      redirect_to application_details_school_job_path(anchor: 'errors')
-    end
-  end
-
-  def edit
-    vacancy_attributes = source_update? ? session[:vacancy_attributes] : retrieve_job_from_db
-
-    @application_details_form = ApplicationDetailsForm.new(vacancy_attributes.with_indifferent_access)
-    @application_details_form.valid?
+  def show
+    @application_details_form = ApplicationDetailsForm.new(@vacancy.attributes.symbolize_keys)
   end
 
   def update
-    vacancy = current_school.vacancies.published.find(vacancy_id)
-    @application_details_form = ApplicationDetailsForm.new(application_details_form_params)
-    @application_details_form.status = vacancy.status
-    @application_details_form.id = vacancy.id
+    @application_details_form.id = @vacancy.id
+    @application_details_form.status = @vacancy.status
 
-    if @application_details_form.valid?
-      reset_session_vacancy!
-      update_vacancy(@application_details_form.params_to_save, vacancy)
-      update_google_index(vacancy) if vacancy.listed?
-      redirect_to edit_school_job_path(vacancy.id), success: I18n.t('messages.jobs.updated')
-    else
-      store_vacancy_attributes(@application_details_form.attributes)
-      redirect_to edit_school_job_application_details_path(vacancy.id,
-                                                           anchor: 'errors',
-                                                           source: 'update')
+    if @application_details_form.complete_and_valid?
+      update_vacancy(@application_details_form.params_to_save, @vacancy)
+      update_google_index(@vacancy) if @vacancy.listed?
+      return redirect_to_next_step_if_save_and_continue
     end
+
+    render :show
   end
 
   private
 
+  def set_up_application_details_form
+    publish_in_past = @vacancy.published? && @vacancy.reload.publish_on.past?
+    delete_publish_on_params if publish_in_past
+    dates_to_convert = publish_in_past ? [:expires_on] : [:publish_on, :expires_on]
+    date_errors = convert_multiparameter_attributes_to_dates(:application_details_form, dates_to_convert)
+    @application_details_form = ApplicationDetailsForm.new(application_details_form_params)
+    add_errors_to_form(date_errors, @application_details_form)
+  end
+
   def application_details_form_params
     params.require(:application_details_form)
           .permit(:application_link, :contact_email, :expiry_time,
-                  :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
-                  :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
+                  :publish_on, :expires_on,
                   :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem).merge(completed_step: current_step)
+  end
+
+  def delete_publish_on_params
+    params.require(:application_details_form).delete('publish_on(3i)')
+    params.require(:application_details_form).delete('publish_on(2i)')
+    params.require(:application_details_form).delete('publish_on(1i)')
   end
 
   def next_step
     school_job_job_summary_path(@vacancy.id)
+  end
+
+  def redirect_to_next_step_if_save_and_continue
+    if params[:commit] == I18n.t('buttons.save_and_continue')
+      redirect_to_next_step(@vacancy)
+    elsif params[:commit] == I18n.t('buttons.update_job')
+      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
+    end
   end
 end
