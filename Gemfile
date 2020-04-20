@@ -42,6 +42,7 @@ gem 'pg', '~> 1.1'
 gem 'public_activity'
 gem 'puma', '~> 4.3'
 gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
+gem 'rdiscount', '~> 2.2.0.1'
 gem 'redis'
 gem 'redis-objects'
 gem 'roadie-rails'
