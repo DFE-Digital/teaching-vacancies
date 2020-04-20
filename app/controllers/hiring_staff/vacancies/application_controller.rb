@@ -91,4 +91,21 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     url = job_url(job, protocol: 'https')
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
+
+  def strip_empty_checkboxes(form, field)
+    params[form][field] = params[form][field]&.reject(&:blank?)
+  end
+
+  def flatten_date_hash(hash, field)
+    %w(1 2 3).map { |i| hash[:"#{field}(#{i}i)"].to_i }
+  end
+
+  def convert_date(form, field)
+    date_params = flatten_date_hash(
+      params[form].extract!(:"#{field}(1i)", :"#{field}(2i)", :"#{field}(3i)"), field
+    )
+    begin
+      params[form][field] = Date.new(*date_params) unless date_params.all?(0)
+    rescue ArgumentError; end
+  end
 end

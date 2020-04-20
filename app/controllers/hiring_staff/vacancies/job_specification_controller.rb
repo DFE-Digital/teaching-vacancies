@@ -43,10 +43,10 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def job_specification_form_params
     persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
-    convert_date('starts_on')
-    convert_date('ends_on')
-    strip_empty_checkboxes(:working_patterns)
-    strip_empty_checkboxes(:job_roles)
+    convert_date(:job_specification_form, :starts_on)
+    convert_date(:job_specification_form, :ends_on)
+    strip_empty_checkboxes(:job_specification_form, :working_patterns)
+    strip_empty_checkboxes(:job_specification_form, :job_roles)
     params.require(:job_specification_form)
           .permit(:job_title,
                   :subject_id, :first_supporting_subject_id, :second_supporting_subject_id,
@@ -54,21 +54,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                   :newly_qualified_teacher,
                   working_patterns: [], job_roles: [])
           .merge(completed_step: current_step)
-  end
-
-  def convert_date(field)
-    date_params = flatten_date_hash(
-      params[:job_specification_form].extract!("#{field}(1i)", "#{field}(2i)", "#{field}(3i)"), field
-    )
-    params[:job_specification_form][field] = Date.new(*date_params) unless date_params.all?(0)
-  end
-
-  def flatten_date_hash(hash, field)
-    %w(1 2 3).map { |i| hash["#{field}(#{i}i)"].to_i }
-  end
-
-  def strip_empty_checkboxes(field)
-    params[:job_specification_form][field] = params[:job_specification_form][field]&.reject(&:blank?)
   end
 
   def save_vacancy_without_validation
