@@ -50,17 +50,17 @@ module VacancyHelpers
     fill_in 'application_details_form[contact_email]', with: vacancy.contact_email
     fill_in 'application_details_form[application_link]', with: vacancy.application_link
 
-    fill_in 'application_details_form[expires_on_dd]', with: vacancy.expires_on.day
-    fill_in 'application_details_form[expires_on_mm]', with: vacancy.expires_on.strftime('%m')
-    fill_in 'application_details_form[expires_on_yyyy]', with: vacancy.expires_on.year
+    fill_in 'application_details_form[expires_on(3i)]', with: vacancy.expires_on.day
+    fill_in 'application_details_form[expires_on(2i)]', with: vacancy.expires_on.strftime('%m')
+    fill_in 'application_details_form[expires_on(1i)]', with: vacancy.expires_on.year
 
     fill_in 'application_details_form[expiry_time_hh]', with: vacancy.expiry_time.strftime('%-l')
     fill_in 'application_details_form[expiry_time_mm]', with: vacancy.expiry_time.strftime('%-M')
     select vacancy.expiry_time.strftime('%P'), from: 'application_details_form[expiry_time_meridiem]'
 
-    fill_in 'application_details_form[publish_on_dd]', with: vacancy.publish_on.day
-    fill_in 'application_details_form[publish_on_mm]', with: vacancy.publish_on.strftime('%m')
-    fill_in 'application_details_form[publish_on_yyyy]', with: vacancy.publish_on.year
+    fill_in 'application_details_form[publish_on(3i)]', with: vacancy.publish_on.day
+    fill_in 'application_details_form[publish_on(2i)]', with: vacancy.publish_on.strftime('%m')
+    fill_in 'application_details_form[publish_on(1i)]', with: vacancy.publish_on.year
   end
 
   def fill_in_job_summary_form_fields(vacancy)

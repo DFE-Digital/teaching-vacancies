@@ -113,7 +113,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: 1))
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
         end
 
         within_row_for(text: I18n.t('jobs.salary')) do
@@ -164,7 +164,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
-        expect(page.current_path).to eq(application_details_school_job_path)
+        expect(page).to have_content(I18n.t('jobs.application_details'))
       end
 
       scenario 'redirects to step 3, upload_documents, when choosing yes' do
@@ -312,7 +312,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: 5))
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
         end
 
         within_row_for(text: I18n.t('jobs.contact_email')) do
@@ -374,7 +374,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: 1))
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
         end
 
         within_row_for(text: I18n.t('jobs.job_summary')) do
@@ -846,27 +846,15 @@ RSpec.feature 'Creating a vacancy' do
 
         visit school_job_publish_path(vacancy.id)
 
-        expect(page).to have_content('This job has already been published')
+        expect(page).to have_content(I18n.t('jobs.already_published'))
       end
 
       scenario 'a published vacancy cannot be edited' do
-        visit new_school_job_path
+        vacancy = create(:vacancy, :published, school_id: school.id)
 
-        fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
-        fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
-        select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
-        fill_in_application_details_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
-        fill_in_job_summary_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
-        click_link('vacancy-review-submit')
-        expect(page).to have_content(I18n.t('jobs.confirmation_page.view_posted_job'))
-
-        visit application_details_school_job_path
-        expect(page.current_path).to eq(job_specification_school_job_path)
+        visit school_job_review_path(vacancy.id)
+        expect(page.current_path).to eq(school_job_path(vacancy.id))
+        expect(page).to have_content(I18n.t('jobs.already_published'))
       end
 
       context 'adds a job to update the Google index in the queue' do

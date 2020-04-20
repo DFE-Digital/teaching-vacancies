@@ -286,11 +286,11 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
             click_header_link(I18n.t('jobs.application_details'))
 
             expect(page).to have_content('Date role will be listed')
-            expect(page).to have_css('#application_details_form_publish_on_dd')
+            expect(page).to have_css('#application_details_form_publish_on_3i')
 
-            fill_in 'application_details_form[publish_on_dd]', with: (Time.zone.today + 2.days).day
-            fill_in 'application_details_form[publish_on_mm]', with: (Time.zone.today + 2.days).month
-            fill_in 'application_details_form[publish_on_yyyy]', with: (Time.zone.today + 2.days).year
+            fill_in 'application_details_form[publish_on(3i)]', with: (Time.zone.today + 2.days).day
+            fill_in 'application_details_form[publish_on(2i)]', with: (Time.zone.today + 2.days).month
+            fill_in 'application_details_form[publish_on(1i)]', with: (Time.zone.today + 2.days).year
             click_on I18n.t('buttons.update_job')
 
             expect(page).to have_content(I18n.t('messages.jobs.updated'))
