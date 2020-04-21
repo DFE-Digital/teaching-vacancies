@@ -25,7 +25,7 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'creating a new vacancy' do
     let!(:subjects) { create_list(:subject, 3) }
-    let(:vacancy) do
+    let!(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  job_roles: [
                                    I18n.t('jobs.job_role_options.teacher'),
@@ -38,6 +38,7 @@ RSpec.feature 'Creating a vacancy' do
                                  working_patterns: ['full_time', 'part_time'],
                                  publish_on: Time.zone.today))
     end
+    let(:vacancy_model) { Vacancy.find_by(job_title: vacancy.job_title) }
 
     scenario 'redirects to step 1, job specification' do
       visit new_school_job_path
@@ -130,9 +131,10 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        click_on vacancy.job_title
+        expect(page).to have_content(vacancy.job_title)
 
         # Check that fields were saved
+        visit edit_school_job_path(id: vacancy_model.id)
         expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
         expect(page.current_path).to eq(supporting_documents_school_job_path)
       end
@@ -198,9 +200,10 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        click_on vacancy.job_title
+        expect(page).to have_content(vacancy.job_title)
 
         # Check that fields were saved and that it remembers to ask for a document upload
+        visit edit_school_job_path(id: vacancy_model.id)
         expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
         expect(page).to have_content(I18n.t('jobs.upload_file'))
       end
@@ -416,9 +419,10 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        click_on vacancy.job_title
+        expect(page).to have_content(vacancy.job_title)
 
         # Check that fields were saved
+        visit edit_school_job_path(id: vacancy_model.id)
         expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
         expect(page).to have_content(I18n.t('jobs.job_summary'))
       end
@@ -498,9 +502,10 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        click_on vacancy.job_title
+        expect(page).to have_content(vacancy.job_title)
 
         # Check that fields were saved
+        visit edit_school_job_path(id: vacancy_model.id)
         expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
         expect(page).to have_content(I18n.t('jobs.review'))
       end
