@@ -50,8 +50,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_to_school_draft_jobs(vacancy)
-    redirect_to jobs_with_type_school_path('draft'),
-        success: I18n.t('messages.jobs.draft_saved', job_title: vacancy.job_title)
+    redirect_to jobs_with_type_school_path(
+      'draft',
+      sort_column: 'updated_at',
+      sort_order: 'desc'
+    ), success: I18n.t('messages.jobs.draft_saved', job_title: vacancy.job_title)
   end
 
   def reset_session_vacancy!

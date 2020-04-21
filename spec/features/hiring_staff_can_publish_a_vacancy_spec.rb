@@ -131,7 +131,8 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        expect(page).to have_content(vacancy.job_title)
+        expect(page).to have_content(I18n.t('messages.jobs.draft_saved',
+          job_title: vacancy.job_title))
 
         # Check that fields were saved
         visit edit_school_job_path(id: vacancy_model.id)
@@ -200,7 +201,8 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        expect(page).to have_content(vacancy.job_title)
+        expect(page).to have_content(I18n.t('messages.jobs.draft_saved',
+          job_title: vacancy.job_title))
 
         # Check that fields were saved and that it remembers to ask for a document upload
         visit edit_school_job_path(id: vacancy_model.id)
@@ -336,7 +338,8 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        expect(page).to have_content(vacancy.job_title)
+        expect(page).to have_content(I18n.t('messages.jobs.draft_saved',
+          job_title: vacancy.job_title))
 
         # Check that fields were saved on supporting_documents,
         # and that the user is given one chance to upload docs
@@ -426,7 +429,8 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        expect(page).to have_content(vacancy.job_title)
+        expect(page).to have_content(I18n.t('messages.jobs.draft_saved',
+          job_title: vacancy.job_title))
 
         # Check that fields were saved
         visit edit_school_job_path(id: vacancy_model.id)
@@ -509,7 +513,8 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_return')
 
         expect(page.current_path).to eq(jobs_with_type_school_path('draft'))
-        expect(page).to have_content(vacancy.job_title)
+        expect(page).to have_content(I18n.t('messages.jobs.draft_saved',
+          job_title: vacancy.job_title))
 
         # Check that fields were saved
         visit edit_school_job_path(id: vacancy_model.id)
