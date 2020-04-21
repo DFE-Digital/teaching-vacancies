@@ -6,16 +6,19 @@ export const renderHits = (renderOptions) => {
   }
 };
 
+export const formatSnakeCase = value => value.toLowerCase().replace(/_/g, ' ')
+
+export const formatDate = timestamp => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  return new Date(timestamp * 1000).toLocaleDateString("en-GB", options)
+}
+
 export const transform = items => items.map(item => {
-
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-    const expiry_date = new Date(item.expiry_date * 1000);
-
     return {
         ...item,
-        working_patterns: item.working_patterns.join(', ').toLowerCase().replace(/_/g, ' '),
-        expiry_date: expiry_date.toLocaleDateString("en-GB", options),
-        school_type: item.school.phase.toLowerCase().replace(/_/g, ' ')
+        working_patterns: item.working_patterns.map(formatSnakeCase).join(', '),
+        expiry_date: formatDate(item.expiry_date),
+        school_type: formatSnakeCase(item.school.phase)
     }
 });
 

@@ -18,7 +18,7 @@ export const renderAutocomplete = (renderOptions, isFirstRender) => {
 };
 
 export const renderIndexListItem = ({ indexId, hits }) => `
-${hits
-  .map(hit => `<li class="app-site-search__option">${hit.school.town} (${hit.school.county})</li>`)
-  .join('')}
+    ${hits
+    .map(hit => `<li class="app-site-search__option">${hit.school.town} (${hit.school.county})</li>`)
+    .join('')}
 `;
