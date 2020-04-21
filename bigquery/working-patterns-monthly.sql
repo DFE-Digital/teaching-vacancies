@@ -20,7 +20,10 @@ FROM (
     COUNT(vacancy.id) AS number_of_vacancies,
     COUNTIF("full_time" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))
       AND ARRAY_LENGTH(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))=1) AS number_of_full_time_only_vacancies,
-    COUNTIF("full_time" NOT IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))) AS number_of_vacancies_offering_flexible_working,
+    COUNTIF("part_time" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))
+      OR "job_share" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))
+      OR "compressed_hours" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))
+      OR "staggered_hours" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \"")) ) AS number_of_vacancies_offering_flexible_working,
     COUNTIF("full_time" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))) AS number_of_vacancies_offering_full_time,
     COUNTIF("part_time" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))) AS number_of_vacancies_offering_part_time,
     COUNTIF("job_share" IN UNNEST(SPLIT(TRIM(vacancy.working_patterns,"[]\""),"\", \""))) AS number_of_vacancies_offering_job_share,
