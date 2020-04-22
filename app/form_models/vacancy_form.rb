@@ -15,4 +15,15 @@ class VacancyForm
   def school
     @school ||= vacancy.school
   end
+
+  def complete_and_valid?
+    existing_errors = errors.dup
+    is_valid = valid?
+    existing_errors.messages.each do |field, error_array|
+      error_array.each do |error|
+        errors.add(field, error)
+      end
+    end
+    errors.none? && is_valid
+  end
 end

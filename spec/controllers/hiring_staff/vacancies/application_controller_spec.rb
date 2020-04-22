@@ -70,7 +70,7 @@ RSpec.describe HiringStaff::Vacancies::ApplicationController, type: :controller 
       let(:checkboxes) { ['first_box', 'second_box'] }
 
       it 'removes nothing from the array' do
-        subject.strip_empty_checkboxes(:test_form, :test_field)
+        subject.strip_empty_checkboxes(:test_form, [:test_field])
         expect(controller.params[:test_form][:test_field]).to eql(checkboxes)
       end
     end
@@ -80,13 +80,13 @@ RSpec.describe HiringStaff::Vacancies::ApplicationController, type: :controller 
       let(:stripped_checkboxes) { ['first_box', 'second_box'] }
 
       it 'removes empty checkbox from the array' do
-        subject.strip_empty_checkboxes(:test_form, :test_field)
+        subject.strip_empty_checkboxes(:test_form, [:test_field])
         expect(controller.params[:test_form][:test_field]).to eql(stripped_checkboxes)
       end
     end
   end
 
-  describe '#convert_date' do
+  describe '#convert_multiparameter_attributes_to_dates' do
     let(:params) do
       { test_form: dates }
     end
@@ -96,29 +96,34 @@ RSpec.describe HiringStaff::Vacancies::ApplicationController, type: :controller 
     end
 
     context 'date present in params' do
-      let(:dates) { { 'test_field(3i)': '01', 'test_field(2i)': '01', 'test_field(1i)': '2020' } }
+      let(:dates) { { 'starts_on(3i)': '01', 'starts_on(2i)': '01', 'starts_on(1i)': '2020' } }
 
       it 'converts date params to a Date object' do
-        subject.convert_date(:test_form, :test_field)
-        expect(controller.params[:test_form][:test_field]).to eql(Date.new(2020, 01, 01))
+        subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])
+        expect(controller.params[:test_form][:starts_on]).to eql(Date.new(2020, 01, 01))
       end
     end
 
     context 'invalid date in params' do
-      let(:dates) { { 'test_field(3i)': '100', 'test_field(2i)': '', 'test_field(1i)': '2020' } }
+      let(:dates) { { 'starts_on(3i)': '100', 'starts_on(2i)': '', 'starts_on(1i)': '2020' } }
+
+      it 'the form object has an invalid date error' do
+        expect(subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])[:starts_on]).to eql(
+          I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.invalid')
+        )
+      end
 
       it 'does not convert date params to a Date object' do
-        subject.convert_date(:test_form, :test_field)
-        expect(controller.params[:test_form][:test_field]).to eql(nil)
+        expect(controller.params[:test_form][:starts_on]).to eql(nil)
       end
     end
 
     context 'date not present in params' do
-      let(:dates) { { 'test_field(3i)': '', 'test_field(2i)': '', 'test_field(1i)': '' } }
+      let(:dates) { { 'starts_on(3i)': '', 'starts_on(2i)': '', 'starts_on(1i)': '' } }
 
       it 'does not convert date params to a Date object' do
-        subject.convert_date(:test_form, :test_field)
-        expect(controller.params[:test_form][:test_field]).to eql(nil)
+        subject.convert_multiparameter_attributes_to_dates(:test_form, [:starts_on])
+        expect(controller.params[:test_form][:starts_on]).to eql(nil)
       end
     end
   end

@@ -3,6 +3,8 @@ require 'persist_nqt_job_role'
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   include PersistNQTJobRole
 
+  before_action :set_up_job_specification_form, only: %i[create update]
+
   def show
     if @vacancy.present?
       @job_specification_form = JobSpecificationForm.new(@vacancy.attributes)
@@ -14,10 +16,9 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def create
-    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
     store_vacancy_attributes(@job_specification_form.vacancy.attributes)
 
-    if @job_specification_form.valid?
+    if @job_specification_form.complete_and_valid?
       session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes)
       return redirect_to_next_step_if_save_and_continue
@@ -27,9 +28,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def update
-    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
-
-    if @job_specification_form.valid?
+    if @job_specification_form.complete_and_valid?
       reset_session_vacancy!
       update_vacancy(job_specification_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
@@ -41,12 +40,15 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   private
 
+  def set_up_job_specification_form
+    date_errors = convert_multiparameter_attributes_to_dates(:job_specification_form, [:starts_on, :ends_on])
+    @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
+    add_errors_to_form(date_errors, @job_specification_form)
+  end
+
   def job_specification_form_params
     persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
-    convert_date(:job_specification_form, :starts_on)
-    convert_date(:job_specification_form, :ends_on)
-    strip_empty_checkboxes(:job_specification_form, :working_patterns)
-    strip_empty_checkboxes(:job_specification_form, :job_roles)
+    strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles])
     params.require(:job_specification_form)
           .permit(:job_title,
                   :subject_id, :first_supporting_subject_id, :second_supporting_subject_id,

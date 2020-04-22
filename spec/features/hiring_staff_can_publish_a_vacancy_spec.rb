@@ -66,6 +66,20 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
+      scenario 'is invalid if invalid dates are submitted' do
+        visit new_school_job_path
+
+        fill_in 'job_specification_form[starts_on(3i)]', with: '100'
+        fill_in 'job_specification_form[starts_on(2i)]', with: '100'
+        fill_in 'job_specification_form[starts_on(1i)]', with: '100'
+
+        click_on I18n.t('buttons.save_and_continue')
+
+        within_row_for(element: 'legend', text: I18n.t('helpers.fieldset.job_specification_form.starts_on')) do
+          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.invalid')))
+        end
+      end
+
       scenario 'redirects to step 2, pay package, when submitted successfully' do
         visit new_school_job_path
 
