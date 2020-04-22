@@ -12,7 +12,9 @@ SELECT
   SUM(
   IF
     (events.event_Action="vacancy_applied" #vacancy_applied is a pre-Q3 2019 event that was the same as action = vacancy_nextsteps AND label = get_more_information - left over from when we didn't record clicks on the mailto link or the school website URL on the listing page
-      OR events.event_Action="vacancy_nextsteps",
+      OR events.event_Action="vacancy_nextsteps"
+      OR events.event_Action="document_download",
+      #see comment below under document_download_clicks
       events.Unique_Events,
       0)) AS next_steps,
   SUM(
@@ -31,8 +33,10 @@ SELECT
       0)) AS get_more_information_clicks,
   SUM(
   IF
-    (events.event_Action="vacancy_nextsteps"
-      AND events.event_Label="document_download",
+    ((events.event_Action="vacancy_nextsteps"
+        AND events.event_Label="document_download")
+      OR events.event_Action="document_download",
+      #on 22nd April document_download was moved into the event_action field from the event_label field to allow event_label to store the filename. This counts both events as document downloads.
       events.Unique_Events,
       0)) AS document_download_clicks,
   SUM(
