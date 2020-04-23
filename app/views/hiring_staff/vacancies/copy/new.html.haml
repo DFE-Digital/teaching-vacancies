@@ -5,59 +5,62 @@
   %span.govuk-caption-l
     Step 1 of 2
 
-= simple_form_for @copy_form, html: { class: 'copy-form' }, action: :post, url: school_job_copy_path do |f|
-  %h2.govuk-heading-m
-    = t('jobs.job_details')
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @copy_form, url: school_job_copy_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
 
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      = render 'hiring_staff/vacancies/error_messages', errors: @copy_form.errors
-      = f.input :job_title,
-                label: t('jobs.job_title'),
-                hint: t('jobs.form_hints.job_title'),
-                wrapper_html: { id: 'job_title' },
-                input_html: { class: 'govuk-input' },
-                required: true
+      %h2.govuk-heading-m
+        = t('jobs.job_details')
 
-      - unless @copy_form.vacancy.job_roles.present?
-        = f.input :job_roles,
-                  as: :check_boxes,
-                  wrapper: :checkboxes,
-                  label: t('jobs.job_roles'),
-                  hint: t('jobs.form_hints.job_role'),
-                  wrapper_html: { id: 'job_role' },
-                  collection: job_role_options,
-                  required: true
+      .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
+        = f.govuk_text_field :job_title,
+          id: 'copy_form_job_title',
+          label: { text: t('helpers.fieldset.job_specification_form.job_title_html'), size: 's' },
+          hint_text: t('helpers.hint.job_specification_form.job_title'),
+          class: 'govuk-input string required govuk-js-character-count',
+          required: true
+        %span#copy_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
+          You can enter up to 100 characters
 
-      - unless @copy_form.vacancy.about_school.present?
-        = f.input :about_school,
-                  wrapper: 'textarea',
-                  as: :text,
-                  label: t('jobs.about_school', school: current_school.name),
-                  hint: t('helpers.hint.job_summary_form.about_school'),
-                  input_html: { rows: 10, value: @vacancy.school.description.presence.to_s, },
-                  wrapper_html: { id: 'about_school' },
-                  required: true
+      - unless @vacancy.job_roles.present?
+        = f.govuk_collection_check_boxes :job_roles,
+          job_role_options,
+          :itself,
+          :itself,
+          legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html'), size: 's' },
+          hint_text: t('helpers.hint.job_specification_form.job_roles')
 
-      %div.govuk-form-group#starts_on
-        = f.gov_uk_date_field :starts_on,
-                              legend_options: { page_heading: false, class: "govuk-label" }
+      = f.govuk_date_field :starts_on,
+        legend: { text: t('helpers.fieldset.job_specification_form.starts_on'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.starts_on')
 
-      %div.govuk-form-group#ends_on
-        = f.gov_uk_date_field :ends_on,
-                              legend_options: { page_heading: false, class: "govuk-label" }
+      = f.govuk_date_field :ends_on,
+        legend: { text: t('helpers.fieldset.job_specification_form.ends_on'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.ends_on')
+
+      - unless @vacancy.about_school.present?
+        %h2.govuk-heading-m
+        = t('jobs.job_summary')
+
+        = f.govuk_text_area :about_school,
+          label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: current_school.name), size: 's' },
+          hint_text: t('helpers.hint.job_summary_form.about_school'),
+          value: @vacancy.about_school.presence || @vacancy.school.description.presence.to_s,
+          rows: 10,
+          required: true
 
       %h2.govuk-heading-m
         = t('jobs.application_details')
 
-      %div.govuk-form-group#publish_on
-        = f.gov_uk_date_field :publish_on,
-                              legend_options: { page_heading: false, class: "govuk-label" }
+      = f.govuk_date_field :publish_on,
+        legend: { text: t('helpers.fieldset.application_details_form.publish_on_html'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.publish_on')
 
-      %div.govuk-form-group#expires_on
-        = f.gov_uk_date_field :expires_on,
-                              legend_options: { page_heading: false, class: "govuk-label" }
+      = f.govuk_date_field :expires_on,
+        legend: { text: t('helpers.fieldset.application_details_form.expires_on_html'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.expires_on')
 
-      = render 'hiring_staff/vacancies/expiry_time_field', f: f, form: @copy_form
+      = render 'hiring_staff/vacancies/expiry_time_field', f: f
 
-      = f.button :submit, t('buttons.save_and_continue')
+      = f.govuk_submit t('buttons.save_and_continue')
