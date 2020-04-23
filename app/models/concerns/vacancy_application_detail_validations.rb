@@ -13,8 +13,6 @@ module VacancyApplicationDetailValidations
 
     validates :expires_on, presence: true
     validate :validity_of_expires_on
-
-    validates_with DateFormatValidator, fields: %i[publish_on expires_on]
   end
 
   def publish_on_must_not_be_in_the_past

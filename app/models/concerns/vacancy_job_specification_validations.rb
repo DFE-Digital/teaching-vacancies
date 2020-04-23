@@ -17,7 +17,6 @@ module VacancyJobSpecificationValidations
 
     validate :starts_on_before_closing_date, if: :starts_on?
     validate :ends_on_before_closing_date, if: :ends_on?
-    validates_with DateFormatValidator, fields: %i[starts_on ends_on]
   end
 
   def starts_on_before_ends_on?
