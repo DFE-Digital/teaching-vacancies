@@ -1,7 +1,6 @@
 class ApplicationDetailsForm < VacancyForm
-  delegate :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
-           :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
-           :published?, :status, :publish_on_changed?, :expiry_time, to: :vacancy
+  delegate :published?, :status, :publish_on_changed?,
+           :publish_on, :expires_on, :expiry_time, to: :vacancy
 
   attr_accessor :params, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
 
@@ -40,9 +39,9 @@ class ApplicationDetailsForm < VacancyForm
     params_with_expiry_time = @params
 
     expiry_time_attr = {
-      day: expires_on_dd,
-      month: expires_on_mm,
-      year: expires_on_yyyy,
+      day: expires_on&.day,
+      month: expires_on&.month,
+      year: expires_on&.year,
       hour: expiry_time_hh,
       min: expiry_time_mm,
       meridiem: expiry_time_meridiem
