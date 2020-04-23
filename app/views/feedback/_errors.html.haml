@@ -1,7 +1,7 @@
 - if errors.any?
   #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
     %h2.govuk-error-summary__title
-      = t('errors.feedback.errors_present')
+      = t('jobs.errors_present')
     .govuk-error-summary__body
       %ul.govuk-list.govuk-error-summary__list
         - errors.each do |attribute, error|

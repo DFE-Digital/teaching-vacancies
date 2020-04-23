@@ -1,4 +1,4 @@
-- if @vacancy.published?
+- if @vacancy&.published?
   = f.govuk_submit t('buttons.update_job')
 - else
   = f.govuk_submit t('buttons.save_and_continue')

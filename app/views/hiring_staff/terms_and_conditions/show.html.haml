@@ -5,7 +5,7 @@
     - if @terms_and_conditions_form.errors.any?
       #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
         %h2.govuk-error-summary__title
-          = t('errors.terms_and_conditions.errors_present')
+          = t('jobs.errors_present')
         .govuk-error-summary__body
           %ul.govuk-list.govuk-error-summary__list
             - @terms_and_conditions_form.errors.each do |attribute, error|

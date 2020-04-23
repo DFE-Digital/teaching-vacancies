@@ -12,7 +12,7 @@
     - if @subscription.errors.any?
       #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
         %h2.govuk-heading-m.govuk-error-summary-heading
-          = t('errors.feedback.errors_present')
+          = t('jobs.errors_present')
         %ul.govuk-list.govuk-error-summary__list
           - @subscription.errors.each do |attribute, error|
             - if attribute == :email

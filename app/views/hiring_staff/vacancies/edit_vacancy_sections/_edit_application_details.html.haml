@@ -2,9 +2,9 @@
   %span.app-task-list__section-number 4.
   = t('jobs.application_details')
   - if @vacancy.published?
-    = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
+    = link_to t('buttons.change'), edit_school_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_application_details')
   - else
-    = link_to t('buttons.change'), application_details_school_job_path, class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
+    = link_to t('buttons.change'), application_details_school_job_path, class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_application_details')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 

@@ -56,13 +56,27 @@ RSpec.feature 'Creating a vacancy' do
         mandatory_fields = %w[job_title job_roles working_patterns]
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('errors.title', count: mandatory_fields.size))
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
         end
 
         mandatory_fields.each do |field|
-          within_row_for(text: I18n.t("jobs.#{field}")) do
+          within_row_for(element: field == 'job_title' ? 'label' : 'legend', text: I18n.t("jobs.#{field}")) do
             expect(page).to have_content((I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.blank")))
           end
+        end
+      end
+
+      scenario 'is invalid if invalid dates are submitted' do
+        visit new_school_job_path
+
+        fill_in 'job_specification_form[starts_on(3i)]', with: '100'
+        fill_in 'job_specification_form[starts_on(2i)]', with: '100'
+        fill_in 'job_specification_form[starts_on(1i)]', with: '100'
+
+        click_on I18n.t('buttons.save_and_continue')
+
+        within_row_for(element: 'legend', text: I18n.t('helpers.fieldset.job_specification_form.starts_on')) do
+          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.invalid')))
         end
       end
 
@@ -492,21 +506,6 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content(I18n.t('jobs.review_heading'))
 
         verify_all_vacancy_details(vacancy)
-      end
-
-      scenario 'enables the user to resolve cross-form errors' do
-        vacancy = build(:vacancy, :draft, :complete, slug: 'vacancy-slug', school_id: school.id,
-                                                     starts_on: Time.zone.today,
-                                                     expiry_time: Time.zone.now + 5.days)
-        vacancy.save(validate: false)
-
-        visit school_job_review_path(vacancy.id)
-        expect(page)
-          .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.before_expires_on'))
-
-        click_header_link(I18n.t('jobs.job_details'))
-        expect(page)
-          .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.before_expires_on'))
       end
 
       context 'when the listing is full-time' do

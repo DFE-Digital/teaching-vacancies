@@ -1,17 +1,17 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    select vacancy.subject.name, from: 'job_specification_form[subject_id]' if vacancy.subject
+    select vacancy.subject.name, from: 'job_specification_form[subject_id]' if vacancy.subject.present?
     select vacancy.first_supporting_subject,
-      from: 'job_specification_form[first_supporting_subject_id]' if vacancy.first_supporting_subject
+      from: 'job_specification_form[first_supporting_subject_id]' if vacancy.first_supporting_subject.present?
     select vacancy.second_supporting_subject,
-      from: 'job_specification_form[second_supporting_subject_id]' if vacancy.second_supporting_subject
-    fill_in 'job_specification_form[starts_on_dd]', with: vacancy.starts_on.day if vacancy.starts_on
-    fill_in 'job_specification_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
-    fill_in 'job_specification_form[starts_on_yyyy]', with: vacancy.starts_on.year if vacancy.starts_on
-    fill_in 'job_specification_form[ends_on_dd]', with: vacancy.ends_on.day if vacancy.ends_on
-    fill_in 'job_specification_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m') if vacancy.ends_on
-    fill_in 'job_specification_form[ends_on_yyyy]', with: vacancy.ends_on.year if vacancy.ends_on
+      from: 'job_specification_form[second_supporting_subject_id]' if vacancy.second_supporting_subject.present?
+    fill_in 'job_specification_form[starts_on(3i)]', with: vacancy.starts_on.day if vacancy.starts_on
+    fill_in 'job_specification_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
+    fill_in 'job_specification_form[starts_on(1i)]', with: vacancy.starts_on.year if vacancy.starts_on
+    fill_in 'job_specification_form[ends_on(3i)]', with: vacancy.ends_on.day if vacancy.ends_on
+    fill_in 'job_specification_form[ends_on(2i)]', with: vacancy.ends_on.strftime('%m') if vacancy.ends_on
+    fill_in 'job_specification_form[ends_on(1i)]', with: vacancy.ends_on.year if vacancy.ends_on
 
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),

@@ -1,0 +1,74 @@
+- if @vacancy&.published?
+  - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.job_details')}"
+- else
+  - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @job_specification_form, url: @vacancy&.published? ? school_job_job_specification_path(@vacancy.id) : job_specification_school_job_path(school_id: current_school.id), html: { method: @vacancy&.published? ? "patch" : "post" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary 'Please correct the following errors'
+
+      %h2.govuk-heading-l
+        = t('jobs.job_details')
+
+      .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
+        = f.govuk_text_field :job_title,
+          id: 'job_specification_form_job_title',
+          label: { text: t('helpers.fieldset.job_specification_form.job_title_html'), size: 's' },
+          hint_text: t('helpers.hint.job_specification_form.job_title'),
+          class: 'govuk-input string required govuk-js-character-count',
+          required: true
+        %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
+          You can enter up to 100 characters
+
+      = f.govuk_collection_check_boxes :job_roles,
+        job_role_options,
+        :itself,
+        :itself,
+        legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.job_roles')
+
+      = f.govuk_collection_select :subject_id,
+        subject_options,
+        :id,
+        :name,
+        label: { text: t('helpers.fieldset.job_specification_form.main_subject'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.subject')
+
+      #other_subjects
+        = f.govuk_collection_select :first_supporting_subject_id,
+          subject_options,
+          :id,
+          :name,
+          label: { text: t('helpers.fieldset.job_specification_form.supporting_subject', number: 1), size: 's' },
+          hint_text: t('helpers.hint.job_specification_form.supporting_subject')
+
+        = f.govuk_collection_select :second_supporting_subject_id,
+          subject_options,
+          :id,
+          :name,
+          label: { text: t('helpers.fieldset.job_specification_form.supporting_subject', number: 2), size: 's' },
+          hint_text: t('helpers.hint.job_specification_form.supporting_subject')
+
+      = f.govuk_collection_check_boxes :working_patterns,
+        working_pattern_options,
+        :last,
+        :first,
+        legend: { text: t('helpers.fieldset.job_specification_form.working_pattern_html'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.working_patterns')
+
+      = f.govuk_date_field :starts_on,
+        legend: { text: t('helpers.fieldset.job_specification_form.starts_on'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.starts_on')
+
+      = f.govuk_date_field :ends_on,
+        legend: { text: t('helpers.fieldset.job_specification_form.ends_on'), size: 's' },
+        hint_text: t('helpers.hint.job_specification_form.ends_on')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+
+  .govuk-grid-column-one-third
+    - unless @vacancy&.published?
+      = render 'hiring_staff/vacancies/sidebar'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'hiring_staff/vacancies/job_specification/new' do
+RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
   around do |example|
     # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
     # environment.

@@ -91,4 +91,35 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     url = job_url(job, protocol: 'https')
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
+
+  def strip_empty_checkboxes(form_key, fields)
+    fields.each do |field|
+      params[form_key][field] = params[form_key][field]&.reject(&:blank?)
+    end
+  end
+
+  def flatten_date_hash(hash, field)
+    %w(1 2 3).map { |i| hash[:"#{field}(#{i}i)"].to_i }
+  end
+
+  def convert_multiparameter_attributes_to_dates(form_key, fields)
+    date_errors = {}
+    fields.each do |field|
+      date_params = flatten_date_hash(
+        params[form_key].extract!(:"#{field}(1i)", :"#{field}(2i)", :"#{field}(3i)"), field
+      )
+      begin
+        params[form_key][field] = Date.new(*date_params) unless date_params.all?(0)
+      rescue ArgumentError
+        date_errors[field] = I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.invalid")
+      end
+    end
+    date_errors
+  end
+
+  def add_errors_to_form(errors, form_object)
+    errors.each do |field, error|
+      form_object.errors.add(field, error)
+    end
+  end
 end
