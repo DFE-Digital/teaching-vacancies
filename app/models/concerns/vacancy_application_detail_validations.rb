@@ -2,14 +2,17 @@ module VacancyApplicationDetailValidations
   extend ActiveSupport::Concern
 
   included do
-    validates :contact_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
-                              if: proc { |a| a.contact_email.present? }
-    validates :application_link, :contact_email, :expires_on, presence: true
-    validates :application_link, url: true, if: proc { |v| v.application_link.present? }
+    validates :contact_email, presence: true
+    validates :contact_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }, if: :contact_email?
 
-    validates :publish_on, presence: true, if: proc { |v| !v.published? }
-    validate :publish_on_must_not_be_in_the_past, :validity_of_expires_on
-    validates_with DateFormatValidator, fields: %i[publish_on expires_on]
+    validates :application_link, presence: true
+    validates :application_link, url: true, if: :application_link?
+
+    validates :publish_on, presence: true, unless: proc { |v| v.status == 'published' }
+    validate :publish_on_must_not_be_in_the_past
+
+    validates :expires_on, presence: true
+    validate :validity_of_expires_on
   end
 
   def publish_on_must_not_be_in_the_past

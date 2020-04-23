@@ -53,19 +53,17 @@ RSpec.describe CopyVacancyForm, type: :model do
 
     describe '#update_expiry_time' do
       it 'updates the original vacancy with the users new preferences' do
-        vacancy = build(:vacancy)
+        vacancy = build(:vacancy, expires_on: 5.days.from_now.to_date)
 
         new_choices = {
-          expires_on_dd: 5.days.from_now.to_date.day.to_s,
-          expires_on_mm: 5.days.from_now.to_date.month.to_s,
-          expires_on_yyyy: 5.days.from_now.to_date.year.to_s,
+          expires_on: 5.days.from_now.to_date,
           expiry_time_hh: 11,
           expiry_time_mm: 11,
-          expiry_time_meridiem: 'am',
+          expiry_time_meridiem: 'am'
         }
 
-        expiry_time_string = "#{new_choices[:expires_on_dd]}-#{new_choices[:expires_on_mm]}-"\
-                            "#{new_choices[:expires_on_yyyy]} #{new_choices[:expiry_time_hh]}" \
+        expiry_time_string = "#{new_choices[:expires_on].day}-#{new_choices[:expires_on].month}-"\
+                            "#{new_choices[:expires_on].year} #{new_choices[:expiry_time_hh]}" \
                            ":#{new_choices[:expiry_time_mm]} #{new_choices[:expiry_time_meridiem]}"
         new_expiry_time = Time.zone.parse(expiry_time_string)
 

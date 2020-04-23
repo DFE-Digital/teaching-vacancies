@@ -77,3 +77,9 @@ strong, b {
 
   column-count: 4;
 }
+
+.govuk-form-group--error {
+  select {
+    border: 4px solid #d4351c;
+  }
+}

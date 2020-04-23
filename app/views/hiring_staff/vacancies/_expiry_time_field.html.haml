@@ -1,26 +1,26 @@
-%div.govuk-form-group#expiry_time{ class: ("govuk-form-group--error" if form.errors[:expiry_time].present?) }
-  %fieldset.govuk-fieldset
-    %legend.govuk-fieldset__legend
-      = t('jobs.deadline_time_html')
-    %span.govuk-hint
-      = t('jobs.form_hints.application_deadline_time')
-    = f.error :expiry_time
-    %govuk-date-input
+.govuk-form-group{ 'class': f.object.errors[:expiry_time].present? ? 'govuk-form-group--error' : '' }
+  %fieldset.govuk-fieldset{ 'aria-describedby': '#application-details-form-expiry-time-hint', 'id': f.object.errors[:expiry_time].present? ? 'application-details-form-expiry-time-field-error' : 'application-details-form-expiry-time-field' }
+    %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
+      %h1.govuk-fieldset__heading= t('helpers.fieldset.application_details_form.expiry_time_html')
+    %span.govuk-hint#application-details-form-expires-on-hint
+      = t('helpers.hint.application_details_form.expiry_time')
+    - f.object.errors[:expiry_time]&.each do |error|
+      %span.govuk-error-message#application-details-form-expiry-time-error
+        = error
+    .govuk-date-input
       .govuk-date-input__item.add-colon-positioned-next-to-element
-        = f.input :expiry_time_hh,
-          label: t('jobs.application_deadline_hour'),
-          as: :integer,
-          input_html: { class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (form.errors[:expiry_time].present? ? "govuk-input--error" : '' ) }
+        = f.govuk_number_field :expiry_time_hh,
+          label: { text: t('helpers.fieldset.application_details_form.expiry_time_hh') },
+          width: 2,
+          class: 'govuk-input govuk-date-input__input govuk-input--width-2 ' + (f.object.errors[:expiry_time].present? ? 'govuk-input--error' : '')
       .govuk-date-input__item
-        = f.input :expiry_time_mm,
-          label: t('jobs.application_deadline_min'),
-          as: :integer,
-           input_html: { class:'govuk-input govuk-date-input__input govuk-input--width-2 ' + (form.errors[:expiry_time].present? ? "govuk-input--error" : '' ) }
+        = f.govuk_number_field :expiry_time_mm,
+          label: { text: t('helpers.fieldset.application_details_form.expiry_time_mm') },
+          width: 2,
+          class: 'govuk-input govuk-date-input__input govuk-input--width-2 ' + (f.object.errors[:expiry_time].present? ? 'govuk-input--error' : '')
       .govuk-date-input__item
-        = f.input :expiry_time_meridiem,
-                  as: :select,
-                  wrapper: :select,
-                  collection: ['am', 'pm'],
-                  label: t('jobs.application_deadline_meridiem'),
-                  include_blank: '- -',
-                  input_html: { class: ("govuk-input--error" if form.errors[:expiry_time].present?) }
+        = f.govuk_collection_select :expiry_time_meridiem,
+          %w[am pm],
+          :itself,
+          :itself,
+          label: { text: t('helpers.fieldset.application_details_form.expiry_time_meridiem') }

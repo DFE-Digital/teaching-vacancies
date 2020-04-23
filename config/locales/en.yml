@@ -84,9 +84,6 @@ en:
     find_school_information: Find your school's official area
   helpers:
     fieldset:
-      application_details_form:
-        publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
-        expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
       copy_vacancy_form:
         starts_on: 'Expected start date'
         ends_on: 'End date'
@@ -105,10 +102,24 @@ en:
       supporting_documents_form:
         supporting_documents_html:
           "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
+      application_details_form:
+        contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
+        application_link_html: "Link for jobseekers to learn more and apply (<span class='text-red'>Required</span>)"
+        publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
+        expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
+        expiry_time_html: "Time application is due (<span class='text-red'>Required</span>)"
+        expiry_time_hh: 'Hour'
+        expiry_time_mm: 'Minute'
+        expiry_time_meridiem: 'am or pm'
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
     hint:
+      copy_vacancy_form:
+        starts_on: 'For example, 01 01 2020'
+        ends_on: 'For example, 01 08 2020'
+        publish_on: 'For example, 01 01 2020'
+        expires_on: 'For example, 01 08 2020'
       job_specification_form:
         job_title: >-
           For secondary school roles include subject and, if relevant,
@@ -128,17 +139,17 @@ en:
         benefits: >-
           Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
           for example
-      application_details_form:
-        publish_on: 'For example, 01 01 2020'
-        expires_on: 'For example, 01 08 2020'
-      copy_vacancy_form:
-        starts_on: 'For example, 01 01 2020'
-        ends_on: 'For example, 01 08 2020'
-        publish_on: 'For example, 01 01 2020'
-        expires_on: 'For example, 01 08 2020'
       supporting_documents_form:
         supporting_documents:
           'These could include, for example, a job description, person specification or application pack'
+      application_details_form:
+        contact_email: This email address will be shown publicly as a point of contact
+        application_link: >-
+          Enter the URL for the page on your school trust's website that gives further details on the job
+          and how to apply
+        publish_on: 'For example, 01 01 2020'
+        expires_on: 'For example, 01 08 2020'
+        expiry_time: 'For example, 9:00 am or 5:00 pm'
       job_summary_form:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.

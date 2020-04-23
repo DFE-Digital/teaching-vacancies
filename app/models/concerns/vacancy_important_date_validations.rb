@@ -1,22 +1,19 @@
-module VacancyJobSpecificationValidations
+module VacancyImportantDateValidations
   extend ActiveSupport::Concern
-  include ApplicationHelper
 
   included do
-    validates :job_title, presence: true
-    validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
-    validate :job_title_has_no_tags?, if: :job_title?
-
-    validates :job_roles, presence: true
-
-    validates :working_patterns, presence: true
-
     validate :starts_on_in_future?, if: :starts_on?
     validate :ends_on_in_future?, if: :ends_on?
     validate :starts_on_before_ends_on?
 
     validate :starts_on_before_closing_date, if: :starts_on?
     validate :ends_on_before_closing_date, if: :ends_on?
+
+    validates :publish_on, presence: true, unless: proc { |v| v.status == 'published' }
+    validate :publish_on_must_not_be_in_the_past
+
+    validates :expires_on, presence: true
+    validate :validity_of_expires_on
   end
 
   def starts_on_before_ends_on?
@@ -59,9 +56,27 @@ module VacancyJobSpecificationValidations
     I18n.t('activerecord.errors.models.vacancy.attributes.ends_on.past')
   end
 
-  def job_title_has_no_tags?
-    errors.add(
-      :job_title, I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
-    ) unless job_title == sanitize(job_title, tags: [])
+  def publish_on_must_not_be_in_the_past
+    errors.add(:publish_on, publish_on_before_today_error) if publish_on_in_past?
+  end
+
+  def validity_of_expires_on
+    errors.add(:expires_on, expires_on_before_publish_on_error) if expiry_date_less_than_publish_date?
+  end
+
+  def expiry_date_less_than_publish_date?
+    expires_on && publish_on && expires_on < publish_on
+  end
+
+  def publish_on_in_past?
+    publish_on && publish_on < Time.zone.today
+  end
+
+  def publish_on_before_today_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today')
+  end
+
+  def expires_on_before_publish_on_error
+    I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date')
   end
 end

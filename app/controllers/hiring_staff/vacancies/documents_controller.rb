@@ -59,7 +59,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def next_step
-    application_details_school_job_path
+    school_job_application_details_path(@vacancy.id)
   end
 
   def redirect_to_next_step_if_save_and_continue

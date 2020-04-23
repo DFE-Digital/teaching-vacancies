@@ -155,11 +155,12 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
     it 'can save expiry time if time fields are complete' do
       application_details = ApplicationDetailsForm.new(contact_email: 'some@email.com',
+                                                       expires_on: Time.zone.today + 1.week,
                                                        expiry_time_hh: '9',
                                                        expiry_time_mm: '15',
                                                        expiry_time_meridiem: 'am')
       params = application_details.params_to_save
-      expect(params.count).to eq(2)
+      expect(params.count).to eq(3)
       expect(params[:expiry_time].hour).to eq(9)
       expect(params[:expiry_time].min).to eq(15)
     end

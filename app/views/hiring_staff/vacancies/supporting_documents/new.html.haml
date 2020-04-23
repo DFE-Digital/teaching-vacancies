@@ -4,7 +4,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @supporting_documents_form, action: :post, url: supporting_documents_school_job_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
-      = f.govuk_error_summary 'Please correct the following errors'
+      = f.govuk_error_summary t('jobs.errors_present')
 
       %h2.govuk-heading-l
         = t('jobs.supporting_documents')

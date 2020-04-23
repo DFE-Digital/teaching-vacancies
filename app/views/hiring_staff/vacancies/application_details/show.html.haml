@@ -1,0 +1,49 @@
+- if @vacancy.published?
+  - content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.application_details')}"
+- else
+  - content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}#{t('jobs.application_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @application_details_form, url: school_job_application_details_path(@vacancy.id), html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
+
+      %h2.govuk-heading-l
+        = t('jobs.application_details')
+
+      = f.govuk_email_field :contact_email,
+        label: { text: t('helpers.fieldset.application_details_form.contact_email_html'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.contact_email'),
+        required: true
+
+      = f.govuk_url_field :application_link,
+        label: { text: t('helpers.fieldset.application_details_form.application_link_html'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.application_link'),
+        required: true
+
+      - if @application_details_form.disable_editing_publish_on?
+        #publish_on
+          %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
+            %h1.govuk-fieldset__heading= t('helpers.fieldset.application_details_form.publish_on_html')
+          %p= format_date @application_details_form.publish_on
+        %br
+        .display-none
+          = f.govuk_date_field :publish_on
+      - else
+        = f.govuk_date_field :publish_on,
+          legend: { text: t('helpers.fieldset.application_details_form.publish_on_html'), size: 's' },
+          hint_text: t('helpers.hint.application_details_form.publish_on')
+
+      = f.govuk_date_field :expires_on,
+        legend: { text: t('helpers.fieldset.application_details_form.expires_on_html'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.expires_on')
+
+      = render 'hiring_staff/vacancies/expiry_time_field', f: f
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+
+  .govuk-grid-column-one-third
+    - unless @vacancy.published?
+      = render 'hiring_staff/vacancies/sidebar'
