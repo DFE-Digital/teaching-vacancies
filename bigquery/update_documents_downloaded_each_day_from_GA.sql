@@ -3,7 +3,7 @@ SELECT
   slug,
   file_extension,
   document_name,
-  MAX(unique_downloads) #if the latest unique_downloads of a particular document on a particular day in the Google Sheet from GA differs from the version we have in the table already, take the higher of the two values
+  MAX(unique_downloads) AS unique_downloads #if the latest unique_downloads of a particular document on a particular day in the Google Sheet from GA differs from the version we have in the table already, take the higher of the two values
 FROM (
   SELECT
     Date AS date,
