@@ -1,34 +1,28 @@
 class CopyVacancyForm < VacancyForm
   include ActiveModel::Model
-  include VacancyExpiryTimeFieldValidations
   include DateHelper
 
-  delegate :starts_on_yyyy, :starts_on_mm, :starts_on_dd,
-           :ends_on_dd, :ends_on_mm, :ends_on_yyyy,
-           :expires_on_dd, :expires_on_mm, :expires_on_yyyy,
-           :publish_on_dd, :publish_on_mm, :publish_on_yyyy,
-           :errors, to: :vacancy
+  include VacancyCopyValidations
+  include VacancyImportantDateValidations
+  include VacancyExpiryTimeFieldValidations
+
+  delegate :starts_on, :ends_on, :publish_on, :expires_on, :errors, to: :vacancy
 
   attr_accessor :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
-
-  validates_presence_of :publish_on
-  validate :publish_on_must_not_be_in_the_past
-
-  def publish_on_must_not_be_in_the_past
-    return unless publish_on.present? && publish_on.past?
-
-    errors.add(:publish_on, I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.before_today'))
-  end
 
   def initialize(vacancy:)
     @expiry_time_hh = vacancy.expiry_time&.strftime('%-l')
     @expiry_time_mm = vacancy.expiry_time&.strftime('%-M')
     @expiry_time_meridiem = vacancy.expiry_time&.strftime('%P')
+
     self.vacancy = vacancy
+    self.vacancy.status = 'draft'
+
     self.job_title = vacancy.job_title
     self.job_roles = vacancy.job_roles
-
+    self.about_school = vacancy.about_school
     self.publish_on = nil if vacancy.publish_on.past?
+
     reset_date_fields if vacancy.expires_on.past?
   end
 
@@ -40,9 +34,9 @@ class CopyVacancyForm < VacancyForm
 
   def update_expiry_time(vacancy, params)
     expiry_time_attr = {
-      day: params[:expires_on_dd],
-      month: params[:expires_on_mm],
-      year: params[:expires_on_yyyy],
+      day: vacancy.expires_on&.day,
+      month: vacancy.expires_on&.month,
+      year: vacancy.expires_on&.year,
       hour: params[:expiry_time_hh],
       min: params[:expiry_time_mm],
       meridiem: params[:expiry_time_meridiem]
