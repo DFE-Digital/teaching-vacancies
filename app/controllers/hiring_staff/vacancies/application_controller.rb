@@ -109,7 +109,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
         params[form_key].extract!(:"#{field}(1i)", :"#{field}(2i)", :"#{field}(3i)"), field
       )
       begin
-        params[form_key][field] = Date.new(*date_params) unless date_params.all?(0)
+        if date_params.all?(0)
+          params[form_key][field] = nil
+        else
+          params[form_key][field] = Date.new(*date_params)
+        end
       rescue ArgumentError
         date_errors[field] = I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.invalid")
       end
