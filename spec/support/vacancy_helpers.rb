@@ -71,25 +71,25 @@ module VacancyHelpers
   def fill_in_copy_vacancy_form_fields(vacancy)
     fill_in 'copy_vacancy_form[job_title]', with: vacancy.job_title
 
-    fill_in 'copy_vacancy_form[starts_on_dd]', with: vacancy.starts_on.day
-    fill_in 'copy_vacancy_form[starts_on_mm]', with: vacancy.starts_on.strftime('%m')
-    fill_in 'copy_vacancy_form[starts_on_yyyy]', with: vacancy.starts_on.year
+    fill_in 'copy_vacancy_form[starts_on(3i)]', with: vacancy.starts_on.day if vacancy.starts_on
+    fill_in 'copy_vacancy_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
+    fill_in 'copy_vacancy_form[starts_on(1i)]', with: vacancy.starts_on.year if vacancy.starts_on
 
-    fill_in 'copy_vacancy_form[ends_on_dd]', with: vacancy.ends_on.day
-    fill_in 'copy_vacancy_form[ends_on_mm]', with: vacancy.ends_on.strftime('%m')
-    fill_in 'copy_vacancy_form[ends_on_yyyy]', with: vacancy.ends_on.year
+    fill_in 'copy_vacancy_form[ends_on(3i)]', with: vacancy.ends_on.day if vacancy.ends_on
+    fill_in 'copy_vacancy_form[ends_on(2i)]', with: vacancy.ends_on.strftime('%m') if vacancy.ends_on
+    fill_in 'copy_vacancy_form[ends_on(1i)]', with: vacancy.ends_on.year if vacancy.ends_on
 
-    fill_in 'copy_vacancy_form[expires_on_dd]', with: vacancy.expires_on&.day
-    fill_in 'copy_vacancy_form[expires_on_mm]', with: vacancy.expires_on&.strftime('%m')
-    fill_in 'copy_vacancy_form[expires_on_yyyy]', with: vacancy.expires_on&.year
+    fill_in 'copy_vacancy_form[expires_on(3i)]', with: vacancy.expires_on&.day
+    fill_in 'copy_vacancy_form[expires_on(2i)]', with: vacancy.expires_on&.strftime('%m')
+    fill_in 'copy_vacancy_form[expires_on(1i)]', with: vacancy.expires_on&.year
 
     fill_in 'copy_vacancy_form[expiry_time_hh]', with: vacancy.expiry_time.strftime('%-l')
     fill_in 'copy_vacancy_form[expiry_time_mm]', with: vacancy.expiry_time.strftime('%-M')
     select vacancy.expiry_time.strftime('%P'), from: 'copy_vacancy_form[expiry_time_meridiem]'
 
-    fill_in 'copy_vacancy_form[publish_on_dd]', with: vacancy.publish_on&.day
-    fill_in 'copy_vacancy_form[publish_on_mm]', with: vacancy.publish_on&.strftime('%m')
-    fill_in 'copy_vacancy_form[publish_on_yyyy]', with: vacancy.publish_on&.year
+    fill_in 'copy_vacancy_form[publish_on(3i)]', with: vacancy.publish_on&.day
+    fill_in 'copy_vacancy_form[publish_on(2i)]', with: vacancy.publish_on&.strftime('%m')
+    fill_in 'copy_vacancy_form[publish_on(1i)]', with: vacancy.publish_on&.year
   end
 
   def verify_all_vacancy_details(vacancy)

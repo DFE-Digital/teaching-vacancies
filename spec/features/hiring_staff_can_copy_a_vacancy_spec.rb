@@ -34,10 +34,9 @@ RSpec.feature 'Copying a vacancy' do
     end
 
     expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
-    within('form.copy-form') do
-      fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t('buttons.save_and_continue')
-    end
+
+    fill_in_copy_vacancy_form_fields(new_vacancy)
+    click_on I18n.t('buttons.save_and_continue')
 
     expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
     click_on I18n.t('jobs.submit_listing.button')
@@ -70,9 +69,8 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
-      within('form.copy-form') do
-        click_on I18n.t('buttons.save_and_continue')
-      end
+
+      click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
     end
@@ -97,10 +95,9 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
-      within('form.copy-form') do
-        fill_in_copy_vacancy_form_fields(new_vacancy)
-        click_on I18n.t('buttons.save_and_continue')
-      end
+
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+      click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
     end
@@ -113,10 +110,8 @@ RSpec.feature 'Copying a vacancy' do
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
-      new_vacancy.starts_on = 35.days.from_now
-      new_vacancy.ends_on = 100.days.from_now
       new_vacancy.publish_on = 0.days.from_now
-      new_vacancy.expiry_time = new_vacancy.expires_on = 30.days.from_now
+      new_vacancy.expiry_time = new_vacancy.expires_on
 
       visit school_path
 
@@ -125,13 +120,11 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
-      within('form.copy-form') do
-        fill_in_copy_vacancy_form_fields(new_vacancy)
-        fill_in 'copy_vacancy_form[expires_on_mm]', with: '090'
 
-        click_on I18n.t('buttons.save_and_continue')
-      end
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+      fill_in 'copy_vacancy_form[expires_on(2i)]', with: '090'
 
+      click_on I18n.t('buttons.save_and_continue')
       expect(page).to have_content('Use the correct format for the date the application is due')
     end
   end
@@ -218,10 +211,9 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
-      within('form.copy-form') do
-        fill_in_copy_vacancy_form_fields(new_vacancy)
-        click_on I18n.t('buttons.save_and_continue')
-      end
+
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+      click_on I18n.t('buttons.save_and_continue')
     end
 
     context 'when publish on is blank' do
