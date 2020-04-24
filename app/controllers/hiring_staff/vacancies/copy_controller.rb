@@ -19,7 +19,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
     if valid_copy_form?
       new_vacancy = CopyVacancy.new(@proposed_vacancy).call
       Auditor::Audit.new(new_vacancy, 'vacancy.copy', current_session_id).log
-      return redirect_to review_path(new_vacancy)
+      return redirect_to school_job_review_path(new_vacancy.id)
     end
 
     render :new

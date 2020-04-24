@@ -13,7 +13,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
     if @application_details_form.complete_and_valid?
       update_vacancy(@application_details_form.params_to_save, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue
+      return redirect_to_next_step_if_save_and_continue(@vacancy.id)
     end
 
     render :show
@@ -45,13 +45,5 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   def next_step
     school_job_job_summary_path(@vacancy.id)
-  end
-
-  def redirect_to_next_step_if_save_and_continue
-    if params[:commit] == I18n.t('buttons.save_and_continue')
-      redirect_to_next_step(@vacancy)
-    elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
-    end
   end
 end

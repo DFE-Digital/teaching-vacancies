@@ -12,7 +12,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
       store_vacancy_attributes(@supporting_documents_form.vacancy.attributes)
       update_vacancy(supporting_documents_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue
+      return redirect_to_documents_or_next_step
     end
 
     render :show
@@ -31,13 +31,11 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
       school_job_documents_path(@vacancy.id) : school_job_application_details_path(@vacancy.id)
   end
 
-  def redirect_to_next_step_if_save_and_continue
+  def redirect_to_documents_or_next_step
     if session[:current_step].eql?(:review) && @supporting_documents_form.supporting_documents == 'yes'
       redirect_to school_job_documents_path(@vacancy.id)
-    elsif params[:commit] == I18n.t('buttons.save_and_continue')
-      redirect_to_next_step(@vacancy)
-    elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
+    else
+      redirect_to_next_step_if_save_and_continue(@vacancy.id)
     end
   end
 end

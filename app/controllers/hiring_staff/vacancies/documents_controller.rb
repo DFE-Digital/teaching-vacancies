@@ -5,7 +5,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   before_action :redirect_unless_vacancy
   before_action :redirect_unless_supporting_documents
-  before_action :redirect_to_next_step_if_save_and_continue, only: %i[create]
+  before_action only: %i[create] do
+    redirect_to_next_step_if_save_and_continue(@vacancy.id)
+  end
 
   before_action :set_documents_form, only: %i[show create]
   before_action :set_documents, only: %i[show create destroy]
@@ -60,14 +62,6 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
   def next_step
     school_job_application_details_path(@vacancy.id)
-  end
-
-  def redirect_to_next_step_if_save_and_continue
-    if params[:commit] == I18n.t('buttons.save_and_continue')
-      redirect_to_next_step(@vacancy)
-    elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
-    end
   end
 
   def process_documents
