@@ -55,7 +55,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       @vacancy.save
     end
 
-    redirect_to supporting_documents_school_job_path unless @vacancy.supporting_documents
+    redirect_to school_job_supporting_documents_path(@vacancy.id) unless @vacancy.supporting_documents
   end
 
   def next_step
