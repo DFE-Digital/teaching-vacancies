@@ -1,5 +1,5 @@
-- if @vacancy&.published?
-  - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.job_details')}"
+- if @vacancy.present?
+  - content_for :page_title_prefix, page_title_prefix(@vacancy, @job_specification_form, t('jobs.job_details'))
 - else
   - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
 
