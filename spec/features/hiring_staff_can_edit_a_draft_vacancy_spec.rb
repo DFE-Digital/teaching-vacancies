@@ -21,7 +21,9 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       visit edit_school_job_path(id: draft_vacancy.id)
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
-      expect(page).to have_content(I18n.t('jobs.pay_package'))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.pay_package'))
+      end
     end
 
     scenario 'incomplete supporting documents step' do
@@ -34,7 +36,9 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
-      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+      end
     end
 
     scenario 'documents step if YES selected for supporting documents' do
@@ -46,11 +50,13 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      fill_in_supporting_documents_form_fields
       click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
-      expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.supporting_documents'))
+      end
     end
 
     scenario 'application details step if NO selected for supporting documents' do
@@ -66,7 +72,9 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
-      expect(page).to have_content(I18n.t('jobs.application_details'))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.application_details'))
+      end
     end
 
     scenario 'incomplete application details step' do
@@ -78,13 +86,15 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      fill_in_supporting_documents_form_fields
       click_on I18n.t('buttons.save_and_continue')
 
       click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
-      expect(page).to have_content(I18n.t('jobs.application_details'))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.application_details'))
+      end
     end
 
     scenario 'incomplete job summary step' do
@@ -96,7 +106,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       fill_in_pay_package_form_fields(draft_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      find('label[for="supporting-documents-form-supporting-documents-field-error"]').click
+      fill_in_supporting_documents_form_fields
       click_on I18n.t('buttons.save_and_continue')
 
       click_on I18n.t('buttons.save_and_continue')
@@ -111,7 +121,9 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       click_on I18n.t('buttons.save_and_continue')
 
       expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
-      expect(page).to have_content(I18n.t('jobs.job_summary'))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.job_summary'))
+      end
     end
   end
 
