@@ -424,7 +424,7 @@ variable "cloud_storage_bucket" {
 }
 
 variable "feature_sign_in_alert" {
-  default = "false"
+  default = "true"
 }
 
 variable "algolia_app_id" {}
