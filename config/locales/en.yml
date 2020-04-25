@@ -1190,7 +1190,9 @@ en:
       yes_remove_file: 'Yes, remove file'
   updates:
     heading: Updates
-    dated: '%{date} Updates'
+    updates_description_html: >-
+       Teaching vacancies is a new service and we make frequent updates to improve it.
+       You can %{link} to help us.
   footer:
     request_support: "Report problems via email"
     provide_feedback: "Give feedback"

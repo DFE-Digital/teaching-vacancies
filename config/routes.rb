@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   get 'updates' => 'updates#show'
-  get 'updates/:date' => 'updates#index', as: :update
 
   get 'check' => 'application#check'
   get 'sitemap' => 'sitemap#show', format: 'xml'
