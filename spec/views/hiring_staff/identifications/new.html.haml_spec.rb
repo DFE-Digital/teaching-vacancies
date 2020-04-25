@@ -8,7 +8,7 @@ RSpec.describe 'hiring_staff/identifications/new.html.haml' do
     end
 
     it 'does not show the sign in warning' do
-      expect(render).not_to match(/you might have problems signing in/i)
+      expect(render).not_to match(/#{I18n.t('hiring_staff.identifications.new.you_might_have_problems_signing_in')}/)
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe 'hiring_staff/identifications/new.html.haml' do
     end
 
     it 'does not show the sign in warning' do
-      expect(render).not_to match(/you might have problems signing in/i)
+      expect(render).not_to match(/#{I18n.t('hiring_staff.identifications.new.you_might_have_problems_signing_in')}/)
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe 'hiring_staff/identifications/new.html.haml' do
     end
 
     it 'shows the sign in warning' do
-      expect(render).to match('You might have problems signing in')
+      expect(render).to match(/#{I18n.t('hiring_staff.identifications.new.you_might_have_problems_signing_in')}/)
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe 'hiring_staff/identifications/new.html.haml' do
     end
 
     it 'shows the sign in warning' do
-      expect(render).to match('You might have problems signing in')
+      expect(render).to match(/#{I18n.t('hiring_staff.identifications.new.you_might_have_problems_signing_in')}/)
     end
   end
 end
