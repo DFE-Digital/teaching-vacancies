@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   root 'pages#home'
 
-  get 'updates' => 'updates#show'
-
   get 'check' => 'application#check'
   get 'sitemap' => 'sitemap#show', format: 'xml'
 
   get '/pages/*id' => 'pages#show', as: :page, format: false
+
+  resources :updates, only: %i[index]
 
   resources :jobs, only: %i[index show], controller: 'vacancies' do
     resources :interests, only: %i[new]
