@@ -1,7 +1,7 @@
-import { updateUrlQueryParams } from '../utils'
+import { updateUrlQueryParams } from '../utils';
 
 export const renderRadiusSelect = (renderOptions, isFirstRender) => {
-    const { query, refine, clear, isSearchStalled, widgetParams } = renderOptions;
+    const { query, refine, widgetParams } = renderOptions;
 
     if (isFirstRender) {
         widgetParams.container.querySelector(widgetParams.element).addEventListener('change', event => {
@@ -9,7 +9,7 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
         });
     }
 
-    query ? updateUrlQueryParams(widgetParams.key, query) : false
+    query ? updateUrlQueryParams(widgetParams.key, query) : false;
     document.querySelector('ul.vacancies').style.display = query ? 'none' : 'block';
     document.querySelector('ul.pagination-server').style.display = query ? 'none' : 'block';
 };

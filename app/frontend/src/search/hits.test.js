@@ -1,13 +1,13 @@
-import { formatSnakeCase, formatDate, transform } from './hits'
+import { snakeCaseToHumanReadable, timestampToHumanReadable } from './hits';
 
-describe('formatSnakeCase', () => {
+describe('snakeCaseToHumanReadable', () => {
     test('should format an array of snake case strings for display', () => {
-        expect(formatSnakeCase('Secondary_girls_school')).toBe('secondary girls school')
-    })
-})
+        expect(snakeCaseToHumanReadable('Secondary_girls_school')).toBe('secondary girls school');
+    });
+});
 
-describe('formatDate', () => {
+describe('timestampToHumanReadable', () => {
     test('should format UNIX timestamp to m, d, y, t string for display', () => {
-        expect(formatDate(1587488218)).toBe('April 21, 2020, 5:56 PM')
-    })
-})
+        expect(timestampToHumanReadable(1587488218)).toBe('April 21, 2020, 5:56 PM');
+    });
+});

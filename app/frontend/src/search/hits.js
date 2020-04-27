@@ -2,20 +2,20 @@ export const renderHits = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    widgetParams.container.innerHTML = `There are ${results.nbHits} jobs listed`
+    widgetParams.container.innerHTML = `There are ${results.nbHits} jobs listed`;
   }
 };
 
-export const formatSnakeCase = value => value.toLowerCase().replace(/_/g, ' ')
+export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/g, ' ');
 
-export const formatDate = timestamp => new Date(timestamp * 1000).toLocaleDateString("en-GB", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })
+export const timestampToHumanReadable = timestamp => new Date(timestamp * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
 
 export const transform = items => items.map(item => ({
   ...item,
-  working_patterns: item.working_patterns.map(formatSnakeCase).join(', '),
-  expiry_date: formatDate(item.expiry_date),
-  school_type: formatSnakeCase(item.school.phase)
-}))
+  working_patterns: item.working_patterns.map(snakeCaseToHumanReadable).join(', '),
+  expiry_date: timestampToHumanReadable(item.expiry_date),
+  school_type: snakeCaseToHumanReadable(item.school.phase)
+}));
 
 export const templates = {
   item: `
@@ -45,4 +45,4 @@ export const templates = {
 </dd>
 </dl>
 </article>
-`}
+`};

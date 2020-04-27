@@ -1,18 +1,19 @@
-/* global algoliasearch instantsearch */
-import { transform, templates, renderHits } from './hits'
-import { searchClient } from './client'
-import { renderSearchBox } from './ui/input'
-import { renderAutocomplete } from './ui/autocomplete'
-import { renderSortSelect } from './ui/sort'
+/* global instantsearch */
 
-const ALGOLIA_INDEX = 'Vacancy_production'
+import { transform, templates, renderHits } from './hits';
+import { searchClient } from './client';
+import { renderSearchBox } from './ui/input';
+import { renderAutocomplete } from './ui/autocomplete';
+import { renderSortSelect } from './ui/sort';
 
-const searchClientInstance = searchClient(ALGOLIA_INDEX)
+const ALGOLIA_INDEX = 'Vacancy_production';
 
-const locationSearchBox = instantsearch.connectors.connectSearchBox(renderSearchBox)
-const keywordSearchBox = instantsearch.connectors.connectSearchBox(renderSearchBox)
-const autocomplete = instantsearch.connectors.connectAutocomplete(renderAutocomplete)
-const hits = instantsearch.connectors.connectHits(renderHits)
+const searchClientInstance = searchClient(ALGOLIA_INDEX);
+
+const locationSearchBox = instantsearch.connectors.connectSearchBox(renderSearchBox);
+const keywordSearchBox = instantsearch.connectors.connectSearchBox(renderSearchBox);
+const autocomplete = instantsearch.connectors.connectAutocomplete(renderAutocomplete);
+const hits = instantsearch.connectors.connectHits(renderHits);
 const sortBy = instantsearch.connectors.connectSortBy(renderSortSelect);
 
 searchClientInstance.addWidgets([
@@ -45,7 +46,7 @@ searchClientInstance.addWidgets([
     instantsearch.widgets.hits({
         container: '#vacancies-hits',
         transformItems(items) {
-            return transform(items)
+            return transform(items);
         },
         templates,
         cssClasses: {
@@ -56,7 +57,7 @@ searchClientInstance.addWidgets([
 ]);
 
 if (document.querySelector('#pagination-hits')) {
-    keywordClient.addWidgets([
+    searchClientInstance.addWidgets([
         instantsearch.widgets.pagination({
             container: '#pagination-hits',
             cssClasses: {

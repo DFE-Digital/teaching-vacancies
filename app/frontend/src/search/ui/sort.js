@@ -1,4 +1,4 @@
-import { updateUrlQueryParams } from '../utils'
+import { updateUrlQueryParams } from '../utils';
 
 export const renderSortSelect = (renderOptions, isFirstRender) => {
     const {
@@ -12,9 +12,9 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
     if (isFirstRender) {
 
         const select = document.createElement('select');
-        select.classList.add('govuk-select')
-        select.classList.add('govuk-input--width-10')
-        select.id = 'algolia-select'
+        select.classList.add('govuk-select');
+        select.classList.add('govuk-input--width-10');
+        select.id = 'algolia-select';
 
         select.addEventListener('change', event => {
             document.querySelector('ul.vacancies').style.display = 'none';
