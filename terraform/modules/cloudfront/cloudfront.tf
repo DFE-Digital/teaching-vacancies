@@ -9,6 +9,11 @@ resource "aws_cloudfront_distribution" "default" {
       https_port             = "443"
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
+
+    custom_header = {
+      name = "X-Forwarded-Host"
+      value = "${var.domain}"
+    }
   }
 
   origin {
@@ -40,19 +45,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      headers      = [
-        "Host",
-        "Authorization",
-        "Origin",
-        "Referer",
-        "Accept",
-        "Accept-Charset",
-        "Accept-DateTime",
-        "Accept-Encoding",
-        "Accept-Language",
-        "CloudFront-Forwarded-Proto",
-        "User-Agent",
-      ]
+      headers      = "${local.header_list}"
 
       cookies {
         forward = "all"

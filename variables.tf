@@ -430,3 +430,6 @@ variable "feature_sign_in_alert" {
 variable "algolia_app_id" {}
 variable "algolia_write_api_key" {}
 variable "algolia_search_api_key" {}
+variable "cloudfront_origin_domain_name" {
+  default = ""
+}

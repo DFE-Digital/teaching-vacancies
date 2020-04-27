@@ -249,11 +249,16 @@ module "cloudfront" {
 
   environment                   = "${terraform.workspace}"
   project_name                  = "${var.project_name}"
-  cloudfront_origin_domain_name = "${module.core.alb_dns_name}"
+  cloudfront_origin_domain_name = "${
+    var.cloudfront_origin_domain_name != "" ?
+    var.cloudfront_origin_domain_name : module.core.alb_dns_name
+  }"
   cloudfront_aliases            = "${var.cloudfront_aliases}"
   cloudfront_certificate_arn    = "${var.cloudfront_certificate_arn}"
   offline_bucket_domain_name    = "${var.offline_bucket_domain_name}"
   offline_bucket_origin_path    = "${var.offline_bucket_origin_path}"
+  domain                        = "${var.domain}"
+  forward_host_header           = "${var.cloudfront_origin_domain_name == ""}"
 }
 
 module "elasticache_redis" {
