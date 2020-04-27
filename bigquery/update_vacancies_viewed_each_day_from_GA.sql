@@ -1,7 +1,7 @@
 SELECT
   date,
   slug,
-  MAX(unique_views) AS unique_views #if the latest unique_downloads of a particular document on a particular day in the Google Sheet from GA differs from the version we have in the table already, take the higher of the two values
+  MAX(unique_views) AS unique_views #if the latest unique_views of a particular vacancy on a particular day in the Google Sheet from GA differs from the version we have in the table already, take the higher of the two values
 FROM (
   SELECT
     Date AS date,
