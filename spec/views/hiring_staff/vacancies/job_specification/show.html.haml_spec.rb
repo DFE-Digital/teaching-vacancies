@@ -24,6 +24,8 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
     # important for *this* test.
     allow(view).to receive(:params).and_return({ create_step: 1 })
     assign(:job_specification_form, JobSpecificationForm.new)
+    assign(:job_specification_url_method, 'post')
+    assign(:job_specification_url, job_specification_school_job_path(school_id: 'school_id'))
     render
   end
 

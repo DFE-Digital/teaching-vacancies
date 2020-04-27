@@ -113,4 +113,14 @@ module VacanciesHelper
     sections << 'supporting_documents' unless vacancy.supporting_documents
     sections
   end
+
+  def page_title_prefix(vacancy, form_object, page_heading)
+    if vacancy.published?
+      "#{form_object.errors.present? ?
+        'Error: ' : ''}Edit the #{page_heading}"
+    else
+      "#{form_object.errors.present? ?
+        'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job', school: current_school.name)}"
+    end
+  end
 end

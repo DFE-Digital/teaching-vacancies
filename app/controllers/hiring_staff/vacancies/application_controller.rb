@@ -44,18 +44,25 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     vacancy
   end
 
-  def redirect_to_next_step(vacancy)
-    next_path = session[:current_step].eql?(:review) ? review_path(vacancy) : next_step
+  def redirect_to_next_step_if_save_and_continue(vacancy_id)
+    if params[:commit] == I18n.t('buttons.save_and_continue')
+      redirect_to_next_step(vacancy_id)
+    elsif params[:commit] == I18n.t('buttons.update_job')
+      redirect_to edit_school_job_path(vacancy_id), success: I18n.t('messages.jobs.updated')
+    end
+  end
+
+  def redirect_to_next_step(vacancy_id)
+    next_path = session[:current_step].eql?(:review) ? school_job_review_path(
+      school_id: current_school.id,
+      job_id: vacancy_id
+    ) : next_step
     redirect_to next_path
   end
 
   def reset_session_vacancy!
     session[:vacancy_attributes] = nil
     session[:current_step] = nil
-  end
-
-  def review_path(vacancy)
-    school_job_review_path(school_id: current_school.id, job_id: vacancy.id)
   end
 
   def review_path_with_errors(vacancy)

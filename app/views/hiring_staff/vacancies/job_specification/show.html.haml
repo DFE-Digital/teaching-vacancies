@@ -1,5 +1,5 @@
-- if @vacancy&.published?
-  - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.job_details')}"
+- if @vacancy.present?
+  - content_for :page_title_prefix, page_title_prefix(@vacancy, @job_specification_form, t('jobs.job_details'))
 - else
   - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
 
@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @job_specification_form, url: @vacancy&.published? ? school_job_job_specification_path(@vacancy.id) : job_specification_school_job_path(school_id: current_school.id), html: { method: @vacancy&.published? ? "patch" : "post" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @job_specification_form, url: @job_specification_url, html: { method: @job_specification_url_method }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary t('jobs.errors_present')
 
       %h2.govuk-heading-l

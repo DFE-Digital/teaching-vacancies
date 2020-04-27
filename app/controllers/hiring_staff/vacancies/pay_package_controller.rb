@@ -11,7 +11,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
     if @pay_package_form.valid?
       update_vacancy(pay_package_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue
+      return redirect_to_next_step_if_save_and_continue(@vacancy.id)
     end
 
     render :show
@@ -20,18 +20,10 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
   private
 
   def pay_package_form_params
-    (params[:pay_package_form] || params).permit(:salary, :benefits).merge(completed_step: current_step)
+    params.require(:pay_package_form).permit(:salary, :benefits).merge(completed_step: current_step)
   end
 
   def next_step
-    supporting_documents_school_job_path
-  end
-
-  def redirect_to_next_step_if_save_and_continue
-    if params[:commit] == I18n.t('buttons.save_and_continue')
-      redirect_to_next_step(@vacancy)
-    elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
-    end
+    school_job_supporting_documents_path(@vacancy.id)
   end
 end

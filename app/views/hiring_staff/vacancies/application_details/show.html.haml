@@ -1,8 +1,4 @@
-- if @vacancy.published?
-  - content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}Edit the #{t('jobs.application_details')}"
-- else
-  - content_for :page_title_prefix, "#{@application_details_form.errors.present? ? 'Error: ' : ''}#{t('jobs.application_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
-
+- content_for :page_title_prefix, page_title_prefix(@vacancy, @application_details_form, t('jobs.application_details'))
 = render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .govuk-grid-row

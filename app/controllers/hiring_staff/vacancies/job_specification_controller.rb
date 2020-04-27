@@ -3,6 +3,7 @@ require 'persist_nqt_job_role'
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   include PersistNQTJobRole
 
+  before_action :set_up_url
   before_action :set_up_job_specification_form, only: %i[create update]
 
   def show
@@ -21,7 +22,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if @job_specification_form.complete_and_valid?
       session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes)
-      return redirect_to_next_step_if_save_and_continue
+      return redirect_to_next_step_if_save_and_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
     end
 
     render :show
@@ -29,16 +30,21 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def update
     if @job_specification_form.complete_and_valid?
-      reset_session_vacancy!
       update_vacancy(job_specification_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue
+      return redirect_to_next_step_if_save_and_continue(@vacancy.id)
     end
 
     render :show
   end
 
   private
+
+  def set_up_url
+    @job_specification_url_method = @vacancy&.id.present? ? 'patch' : 'post'
+    @job_specification_url = @vacancy&.id.present? ?
+      school_job_job_specification_path(@vacancy.id) : job_specification_school_job_path(school_id: current_school.id)
+  end
 
   def set_up_job_specification_form
     date_errors = convert_multiparameter_attributes_to_dates(:job_specification_form, [:starts_on, :ends_on])
@@ -71,14 +77,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    school_job_pay_package_path(session_vacancy_id)
-  end
-
-  def redirect_to_next_step_if_save_and_continue
-    if params[:commit] == I18n.t('buttons.save_and_continue')
-      redirect_to_next_step(@vacancy)
-    elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(@vacancy.id), success: I18n.t('messages.jobs.updated')
-    end
+    school_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
   end
 end
