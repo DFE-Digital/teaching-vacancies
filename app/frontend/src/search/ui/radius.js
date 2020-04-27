@@ -12,5 +12,4 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
     query ? updateUrlQueryParams(widgetParams.key, query) : false
     document.querySelector('ul.vacancies').style.display = query ? 'none' : 'block';
     document.querySelector('ul.pagination-server').style.display = query ? 'none' : 'block';
-    // widgetParams.container.querySelector('span').hidden = !isSearchStalled;
 };
