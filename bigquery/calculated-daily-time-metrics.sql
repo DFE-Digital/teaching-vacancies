@@ -28,23 +28,37 @@ WITH
       `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)),
   vacancies AS (
   SELECT
-    id,
-    publish_on,
-    expires_on,
-    school_id
+    vacancy.id,
+    vacancy.publish_on,
+    vacancy.expires_on,
+    vacancy.school_id,
+    COUNT(document.id) AS number_of_documents
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_vacancy`
+    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
+  LEFT JOIN
+    `teacher-vacancy-service.production_dataset.feb20_document` AS document
+  ON
+    document.vacancy_id=vacancy.id
   WHERE
     (status NOT IN ("trashed",
         "deleted",
-        "draft")) ),
+        "draft"))
+  GROUP BY
+    vacancy.id,
+    publish_on,
+    expires_on,
+    school_id ),
   vacancy_metrics AS (
   SELECT
     dates.date AS date,
   IF
     (date > CURRENT_DATE(),
       NULL,
-      COUNT(*)) AS vacancies_published
+      COUNT(vacancies.id)) AS vacancies_published,
+  IF
+    (date > CURRENT_DATE(),
+      NULL,
+      COUNTIF(number_of_documents>0)) AS vacancies_with_documents_published
   FROM
     dates
   LEFT JOIN
@@ -213,7 +227,8 @@ SELECT
     metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_so_far,
   SAFE_DIVIDE(metrics.schools_which_had_vacancies_live,
     metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live,
-  vacancy_metrics.vacancies_published AS vacancies_published
+  vacancy_metrics.vacancies_published AS vacancies_published,
+  vacancy_metrics.vacancies_with_documents_published AS vacancies_with_documents_published
 FROM
   dates
 LEFT JOIN
