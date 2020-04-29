@@ -39,6 +39,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
       multiple_schools: authorisation_permissions.many_schools?,
       id_token: id_token
     )
+    Rails.logger.info("Updated session with URN #{session[:urn]}")
     audit_successful_authorisation
   end
 
