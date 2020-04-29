@@ -1,5 +1,7 @@
+export const isActive = (threshold, currentInput) => currentInput ? currentInput.length >= threshold : false;
+
 export const renderAutocomplete = (renderOptions, isFirstRender) => {
-    const { indices, currentRefinement, widgetParams } = renderOptions;
+    const { currentRefinement, widgetParams } = renderOptions;
 
     if (isFirstRender) {
         const ul = document.createElement('ul');
@@ -9,15 +11,21 @@ export const renderAutocomplete = (renderOptions, isFirstRender) => {
         widgetParams.container.appendChild(ul);
 
         document.addEventListener('click', () => hide(ul));
+
+        widgetParams.container.querySelector('ul').addEventListener('click', (e) => {
+            widgetParams.onSelection(e.target.innerHTML);
+        });
     }
 
     show(widgetParams.container.querySelector('.app-site-search__menu'));
 
-    widgetParams.container.querySelector('#location').value = currentRefinement;
-
-    widgetParams.container.querySelector('ul').innerHTML = indices
+    if (isActive(widgetParams.threshold, currentRefinement)) {
+        widgetParams.container.querySelector('ul').innerHTML = getOptions(widgetParams.dataset, currentRefinement)
         .map(renderIndexListItem)
         .join('');
+    }
+
+    widgetParams.container.querySelector('#location').value = currentRefinement;
 };
 
 export const show = element => {
@@ -30,8 +38,6 @@ export const hide = element => {
     element.classList.remove('app-site-search__menu--visible');
 };
 
-export const renderIndexListItem = ({ hits }) => `
-    ${hits
-        .map(hit => `<li class="app-site-search__option">${hit.school.town} (${hit.school.county})</li>`)
-        .join('')}
-`;
+export const getOptions = (dataset, query) => dataset.filter((result) => result.toLowerCase().indexOf(query) >= 0);
+
+export const renderIndexListItem = hit => `<li class="app-site-search__option">${hit}</li>`;

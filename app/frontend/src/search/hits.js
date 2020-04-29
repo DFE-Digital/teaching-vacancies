@@ -2,8 +2,7 @@ export const renderHits = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    widgetParams.container.innerHTML = `There are ${results.nbHits} jobs listed`;
-  }
+    widgetParams.container.innerHTML = `There are ${results.nbHits} jobs listed`;  }
 };
 
 export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/g, ' ');

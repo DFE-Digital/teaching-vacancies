@@ -1,5 +1,3 @@
-import { updateUrlQueryParams } from '../utils';
-
 export const renderSortSelect = (renderOptions, isFirstRender) => {
     const {
         options,
