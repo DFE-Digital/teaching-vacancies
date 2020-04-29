@@ -129,6 +129,8 @@ GEM
       multi_json
     erubi (1.9.0)
     erubis (2.7.0)
+    et-orbi (1.2.4)
+      tzinfo
     execjs (2.7.0)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
@@ -147,6 +149,9 @@ GEM
       thor (~> 0.14)
     friendly_id (5.3.0)
       activerecord (>= 4.0.0)
+    fugit (1.3.4)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.1)
     fuubar (2.5.0)
       rspec-core (~> 3.0)
       ruby-progressbar (~> 1.4)
@@ -328,6 +333,7 @@ GEM
     public_suffix (4.0.1)
     puma (4.3.3)
       nio4r (~> 2.0)
+    raabro (1.1.6)
     rack (2.2.2)
     rack-oauth2 (1.10.1)
       activesupport
@@ -448,6 +454,9 @@ GEM
       rack (>= 2.0.0)
       rack-protection (>= 2.0.0)
       redis (>= 4.1.0)
+    sidekiq-cron (1.2.0)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     signet (0.12.0)
       addressable (~> 2.3)
       faraday (~> 0.9)
@@ -583,6 +592,7 @@ DEPENDENCIES
   sanitize (~> 5.1)
   shoulda-matchers (~> 3.1)
   sidekiq
+  sidekiq-cron (~> 1.1)
   simple_form
   skylight
   spring
@@ -596,7 +606,7 @@ DEPENDENCIES
   xml-sitemap
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 2.6.6p146
 
 BUNDLED WITH
    1.17.3

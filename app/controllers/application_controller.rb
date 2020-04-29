@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  before_action :check_staging_auth, except: :check
+  # before_action :check_staging_auth, except: :check
   before_action :set_headers
   before_action :detect_device_format
   before_action :set_root_headers

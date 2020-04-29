@@ -11,7 +11,8 @@ RSpec.describe 'staging authentication', type: :request do
 
   context 'when in staging' do
     before(:each) { stub_global_auth(return_value: true) }
-    it_behaves_like 'basic auth'
+    # it_behaves_like 'basic auth'
+    it_behaves_like 'no basic auth'
   end
 
   context 'when in production' do
