@@ -46,7 +46,7 @@ resource "aws_ecs_service" "web" {
   task_definition = "${aws_ecs_task_definition.web.family}:${max("${aws_ecs_task_definition.web.revision}", "${data.aws_ecs_task_definition.web.revision}")}"
   desired_count   = "${var.ecs_service_web_task_count}"
 
-  deployment_minimum_healthy_percent = 50
+  deployment_minimum_healthy_percent = 0
   deployment_maximum_percent         = 100
 
   health_check_grace_period_seconds = 30
