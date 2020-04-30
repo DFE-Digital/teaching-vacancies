@@ -26,18 +26,7 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
 
     select.disabled = hasNoResults;
 
-    select.innerHTML = `
-  ${options
-            .map(
-                option => `
-        <option
-          value="${option.value}"
-          ${option.value === currentRefinement ? 'selected' : ''}
-        >
-          ${option.label}
-        </option>
-      `
-            )
-            .join('')}
-`;
+    select.innerHTML = constructOptions(options, currentRefinement);
 };
+
+export const constructOptions = (options, selected) => `${options.map(option => `<option value="${option.value}"${option.value === selected ? ' selected' : ''}>${option.label}</option>`).join('')}`;
