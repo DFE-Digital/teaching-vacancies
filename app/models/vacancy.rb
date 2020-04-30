@@ -33,7 +33,7 @@ class Vacancy < ApplicationRecord
 
   include AlgoliaSearch
 
-  algoliasearch per_environment: true, disable_indexing: true do
+  algoliasearch disable_indexing: !Rails.env.production? do
     attributes :first_supporting_subject, :job_roles, :job_title, :salary, :second_supporting_subject, :working_patterns
 
     attribute :expiry_date do
