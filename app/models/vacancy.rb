@@ -33,11 +33,16 @@ class Vacancy < ApplicationRecord
 
   include AlgoliaSearch
 
+  # rubocop:disable Metrics/BlockLength
   algoliasearch disable_indexing: !Rails.env.production? do
-    attributes :first_supporting_subject, :job_roles, :job_title, :salary, :second_supporting_subject, :working_patterns
+    attributes :job_roles, :job_title, :salary, :working_patterns
 
     attribute :expiry_date do
       convert_date_to_unix_time(self.expires_on)
+    end
+
+    attribute :first_supporting_subject do
+      self.first_supporting_subject&.name
     end
 
     attribute :last_updated_at do
@@ -72,6 +77,10 @@ class Vacancy < ApplicationRecord
         town: self.school.town }
     end
 
+    attribute :second_supporting_subject do
+      self.second_supporting_subject&.name
+    end
+
     attribute :start_date do
       convert_date_to_unix_time(self.starts_on)
     end
@@ -82,6 +91,7 @@ class Vacancy < ApplicationRecord
 
     geoloc :lat, :lng
   end
+  # rubocop:enable Metrics/BlockLength
 
   def lat
     self.school.geolocation.x.to_f
