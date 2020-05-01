@@ -40,9 +40,12 @@ class Vacancy < ApplicationRecord
       convert_date_to_unix_time(self.expires_on)
     end
 
+    attribute :expiry_time do
+      convert_time_to_unix_time(self.expiry_time)
+    end
+
     attribute :last_updated_at do
-      # Convert from ActiveSupport::TimeWithZone object to Unix time
-      self.updated_at.to_i
+      convert_time_to_unix_time(self.updated_at)
     end
 
     attribute :listing_status do
@@ -319,6 +322,13 @@ class Vacancy < ApplicationRecord
     return nil if date == nil
     # Convert to unix time via DateTime object in order to use correct time zone
     Time.zone.at(date.to_time).to_datetime.midday.to_i
+  end
+
+  def convert_time_to_unix_time(time)
+    # nil.to_i returns 0 in unix time (midnight 1970), so if time is nil we should return nil.
+    return nil if time == nil
+    # Convert from ActiveSupport::TimeWithZone object to Unix time
+    time.to_i
   end
 
   def slug_candidates
