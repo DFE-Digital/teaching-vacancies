@@ -28,10 +28,8 @@ en:
           and email address to %{mail_to}. Or email your details directly to that address, copying in your headteacher
           or senior leader.
         some_of_our_users: >-
-          We’re completing planned maintenance.
-          You can search and view vacancies, but you can’t manage them.
-          You’ll be able to use the full service from 9:00am on Monday morning.
-          Contact our support team if you need help.
+          Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
+          in, try again soon.
         you_might_have_problems_signing_in: Sorry, the service is unavailable
   nav:
     sign_in: 'List a teaching job'
