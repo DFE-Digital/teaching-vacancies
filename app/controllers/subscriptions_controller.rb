@@ -45,13 +45,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def search_criteria_params
-    params.require(:search_criteria).permit(*permitted_search_criteria_params)
-  end
-
-  def permitted_search_criteria_params
-    [].concat(VacancyAlertFilters::AVAILABLE_FILTERS)
-      .concat(VacanciesController::PERMITTED_SEARCH_PARAMS)
-      .uniq
+    params.require(:search_criteria).permit(:keyword, :location, :location_category, :radius, :jobs_sort)
   end
 
   def check_feature_flag

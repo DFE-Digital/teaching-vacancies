@@ -129,34 +129,30 @@ RSpec.describe Subscription, type: :model do
   end
 
   context 'vacancies_for_range' do
+    let(:date_yesterday) { Time.zone.yesterday.to_datetime }
+    let(:date_today) { Time.zone.today.to_datetime }
     let(:subscription) do
       create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
-
-    let!(:old_matching_vacancies) do
-      Timecop.freeze(2.days.ago) do
-        create_list(:vacancy, 1, :published_slugged, publish_on: Time.zone.today, job_title: 'English Language')
-      end
+    let(:search_filter) do
+      "(publication_date <= #{date_today.to_i} AND expiry_time > #{date_today.to_i}) AND "\
+      "(publication_date >= #{date_yesterday.to_i} AND publication_date <= #{date_today.to_i})"
     end
 
-    let!(:old_vacancies) do
-      Timecop.freeze(2.days.ago) { create_list(:vacancy, 1, :published_slugged, publish_on: Time.zone.today) }
+    let(:algolia_search_query) { 'english' }
+    let(:algolia_search_args) do
+      {
+        filters: search_filter,
+        hitsPerPage: 500
+      }
     end
 
-    let!(:current_unmatching_vacancies) do
-      Timecop.freeze(1.day.ago) { create_list(:vacancy, 3, :published_slugged, publish_on: Time.zone.today) }
+    before do
+      mock_algolia_search('vacancies', algolia_search_query, algolia_search_args)
     end
 
-    let!(:current_matching_vacancies) do
-      Timecop.freeze(1.day.ago) do
-        create_list(:vacancy, 4, :published_slugged, publish_on: Time.zone.today, job_title: 'English Language')
-      end
-    end
-
-    it 'returns the correct vacancies' do
-      Vacancy.__elasticsearch__.client.indices.flush
-      vacancies = subscription.vacancies_for_range(Time.zone.yesterday, Time.zone.today)
-      expect(vacancies.pluck(:id)).to match_array(current_matching_vacancies.pluck(:id))
+    it 'calls out to algolia search' do
+      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eql('vacancies')
     end
   end
 

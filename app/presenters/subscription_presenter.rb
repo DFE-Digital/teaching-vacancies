@@ -1,7 +1,7 @@
 class SubscriptionPresenter < BasePresenter
   include ApplicationHelper
 
-  SEARCH_CRITERIA_SORT_ORDER = %w[location
+  SEARCH_CRITERIA_SORT_ORDER = %i[location
                                   radius
                                   keyword
                                   subject
@@ -37,14 +37,17 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def available_filter_hash
-    Hash[VacancyAlertFilters::AVAILABLE_FILTERS.collect { |v| [v, nil] }]
+    Hash[SEARCH_CRITERIA_SORT_ORDER.collect { |v| [v, nil] }]
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
   def search_criteria_field(field, value)
     return if field.eql?('radius')
+    return if field.eql?('location_category')
 
-    return render_location_filter(value, search_criteria_to_h['radius']) if field.eql?('location')
+    return render_location_filter(
+      search_criteria_to_h['location_category'], value, search_criteria_to_h['radius']
+    ) if field.eql?('location')
     return render_working_patterns_filter(value) if field.eql?('working_patterns')
     return render_phases_filter(value) if field.eql?('phases')
     return render_nqt_filter(value) if field.eql?('newly_qualified_teacher')
@@ -53,12 +56,11 @@ class SubscriptionPresenter < BasePresenter
   end
   # rubocop:enable Metrics/CyclomaticComplexity
 
-  def render_location_filter(location, radius)
+  def render_location_filter(location_category, location, radius)
     return if location.empty?
 
+    return { location: I18n.t('subscriptions.location_category_text', location: location) } if location_category
     return { location: I18n.t('subscriptions.location_radius_text', radius: radius, location: location) } if radius
-
-    { location: I18n.t('subscriptions.location_category_text', location: location) }
   end
 
   def render_working_patterns_filter(value)
