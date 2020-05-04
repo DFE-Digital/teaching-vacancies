@@ -1,10 +1,11 @@
 %h1.govuk-heading-m= t('jobs.heading')
 
-= form_for VacancyFilters.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
-  = f.hidden_field :radius, value: '20'
+= form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
 
-  = f.govuk_text_field(:keyword, label: { text: t('jobs.filters.keyword') }, placeholder: t('jobs.filters.keyword_hint'))
+  = f.govuk_text_field :keyword,
+    label: { text: t('jobs.filters.keyword'), size: 's' },
+    placeholder: t('jobs.filters.keyword_hint')
 
   = render 'shared/location_search_tag', location: nil, extra_label_class: 'govuk-label--s'
 
-  = f.govuk_submit t('buttons.apply_filters')
+  = f.govuk_submit t('buttons.search')

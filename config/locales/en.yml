@@ -165,8 +165,16 @@ en:
       Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
       with no recruitment fees for schools.
     location_search_heading: 'Teaching jobs in %{location}'
-    sort_by: 'Sort by:'
-    sort_submit: 'Sort'
+    sort_by:
+      label: 'Sort by:'
+      most_relevant: 'Most relevant'
+      publish_on:
+        descending: 'Newest job listing'
+        ascending: 'Oldest job listing'
+      expiry_time:
+        descending: 'Least time to apply'
+        ascending: 'Most time to apply'
+      submit: 'Sort'
     key_info: 'Contents'
     awaiting_feedback_intro: >-
       Please tell us if you filled these expired jobs through Teaching Vacancies,
@@ -188,10 +196,6 @@ en:
     publish_on: 'Date listed'
     expires_on: 'Closing date'
     start_on: 'Expected start date'
-    sort_by_earliest_closing_date: 'Least time to apply'
-    sort_by_furthest_closing_date: 'Most time to apply'
-    sort_by_most_recent: 'Newest job listing'
-    sort_by_most_ancient: 'Oldest job listing'
     application_deadline: 'Application deadline'
     job_filled: 'Job filled on Teaching Vacancies?'
     listed_elsewhere: 'Listed elsewhere?'
@@ -414,9 +418,9 @@ en:
       keyword: 'Keyword'
       keyword_hint: 'Job title or subject, for example'
       location: 'Location'
-      location_hint: 'Enter a city, town or postcode'
+      location_hint: 'City, town or postcode, for example'
       use_current_location: 'use your current location'
-      radius: 'Radius'
+      within_radius: 'Within radius'
       subject: 'Subject'
       subject_hint: 'Maths, for example'
       job_title: 'Job title'
@@ -598,8 +602,7 @@ en:
       (the date we began recording statistics).
   buttons:
     accept_and_continue: 'Accept and continue'
-    apply_filters: 'Search'
-    apply_filters_if_criteria: 'Refine search'
+    search: 'Search'
     change: 'Change'
     continue: 'Continue'
     create_job: 'Create a job listing'

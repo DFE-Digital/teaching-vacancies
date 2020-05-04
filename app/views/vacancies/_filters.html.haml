@@ -5,15 +5,14 @@
   = form_tag jobs_path(anchor: 'vacancy-results'), class: 'filters-form', method: :get do
     .govuk-form-group
       = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
-      = search_field_tag :keyword, keyword, class: 'govuk-input', placeholder: t('jobs.filters.keyword_hint')
+      = search_field_tag :keyword, @vacancies_search.keyword, class: 'govuk-input', placeholder: t('jobs.filters.keyword_hint')
 
     = render 'shared/location_search_tag', extra_label_class: nil
 
     .govuk-form-group
-      = label_tag 'radius', t('jobs.filters.radius'), class: 'govuk-label'
-      = select_tag 'radius', options_for_select(radius_filter_options, radius), disabled: @filters.location_category_search?, class: 'govuk-select govuk-!-width-full'
+      = label_tag 'radius', t('jobs.filters.within_radius'), class: 'govuk-label'
+      = select_tag 'radius', options_for_select(radius_filter_options, @vacancies_search.radius), disabled: @vacancies_search.location_category_search?, class: 'govuk-select govuk-!-width-full'
 
-    = hidden_field_tag :sort_column, sort_column
-    = hidden_field_tag :sort_order, sort_order
+    = hidden_field_tag :jobs_sort, @vacancies_search.sort_by
 
-    = submit_tag @vacancies.apply_filters_button_text, class: 'govuk-button mb0'
+    = submit_tag t('buttons.search'), class: 'govuk-button mb0'

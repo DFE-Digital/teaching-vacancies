@@ -1,4 +1,3 @@
-require 'elasticsearch/model'
 require 'auditor'
 
 class Vacancy < ApplicationRecord
@@ -20,6 +19,14 @@ class Vacancy < ApplicationRecord
     'full_time' => 0
   }.merge(FLEXIBLE_WORKING_PATTERN_OPTIONS).freeze
 
+  JOB_SORTING_OPTIONS = [
+    [I18n.t('jobs.sort_by.most_relevant'), ''],
+    [I18n.t('jobs.sort_by.publish_on.descending'), 'publish_on_desc'],
+    [I18n.t('jobs.sort_by.publish_on.ascending'), 'publish_on_asc'],
+    [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
+    [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
+  ]
+
   include ApplicationHelper
   include Auditor::Model
 
@@ -28,7 +35,6 @@ class Vacancy < ApplicationRecord
   include VacancyApplicationDetailValidations
   include VacancyJobSummaryValidations
 
-  include Elasticsearch::Model
   include Redis::Objects
 
   include AlgoliaSearch
@@ -136,66 +142,6 @@ class Vacancy < ApplicationRecord
     self.school.geolocation.y.to_f
   end
 
-  index_name [Rails.env, model_name.collection.tr('\/', '-')].join('_')
-  document_type 'vacancy'
-  settings index: {
-    analysis: {
-      analyzer: {
-        stopwords: {
-          tokenizer: 'standard',
-          filter: ['standard', 'lowercase', 'english_stopwords', 'stopwords']
-        }
-      },
-      filter: {
-        english_stopwords: {
-          type: 'stop',
-          stopwords: '_english_'
-        },
-        stopwords: {
-          type: 'stop',
-          stopwords: ['part', 'full', 'time']
-        }
-      }
-    }
-  } do
-    mappings dynamic: 'false' do
-      indexes :job_title, type: :text, analyzer: :stopwords
-      indexes :job_summary, analyzer: 'english'
-
-      indexes :school do
-        indexes :name, analyzer: 'english'
-        indexes :phase, type: :keyword
-        indexes :postcode, type: :text
-        indexes :town, type: :text
-        indexes :county, type: :text
-        indexes :local_authority, type: :text
-        indexes :address, type: :text
-        indexes :region_name, type: :text
-      end
-
-      indexes :subject do
-        indexes :name, type: :text
-      end
-
-      indexes :first_supporting_subject do
-        indexes :name, type: :text
-      end
-
-      indexes :second_supporting_subject do
-        indexes :name, type: :text
-      end
-
-      indexes :expires_on, type: :date
-      indexes :starts_on, type: :date
-      indexes :updated_at, type: :date
-      indexes :publish_on, type: :date
-      indexes :status, type: :keyword
-      indexes :working_patterns, type: :keyword
-      indexes :coordinates, type: :geo_point, ignore_malformed: true
-      indexes :newly_qualified_teacher, type: :boolean
-    end
-  end
-
   extend FriendlyId
   extend ArrayEnum
 
@@ -265,10 +211,6 @@ class Vacancy < ApplicationRecord
   before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
   before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-
-  after_commit on: %i[create update] do
-    __elasticsearch__.index_document
-  end
 
   counter :page_view_counter
   counter :get_more_info_counter
