@@ -1,5 +1,4 @@
 require 'geocoding'
-
 class Api::CoordinatesController < Api::ApplicationController
   before_action :verify_json_request, only: ['show']
 
