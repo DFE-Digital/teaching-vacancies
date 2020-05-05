@@ -6,10 +6,10 @@ class Api::CoordinatesController < Api::ApplicationController
   def show
     lat, lng = Geocoding.new(location).coordinates
     render json: {
-      "lat": lat,
-      "lng": lng,
-      "query": location,
-      "success": success?(lat, lng)
+      lat: lat,
+      lng: lng,
+      query: location,
+      success: success?(lat, lng)
     }
   end
 
