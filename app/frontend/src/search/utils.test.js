@@ -1,4 +1,4 @@
-import { constructNewUrlWithParam, stringMatchesPostcode } from './utils';
+import { constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres } from './utils';
 
 describe('constructNewUrlWithParams', () => {
     test('should activate autocomplete if threshold has been met', () => {
@@ -23,6 +23,8 @@ describe('constructNewUrlWithParams', () => {
 describe('stringMatchesPostcode', () => {
     test('should test that string matching correct postcode is true', () => {
         expect(stringMatchesPostcode('CT9 5ST')).toBe(true);
+        expect(stringMatchesPostcode('ct9 5ST')).toBe(true);
+        expect(stringMatchesPostcode('ct9 5St')).toBe(true);
         expect(stringMatchesPostcode('CT95ST')).toBe(true);
         expect(stringMatchesPostcode('SE18 2BT')).toBe(true);
         expect(stringMatchesPostcode('SE182BT')).toBe(true);
@@ -37,5 +39,12 @@ describe('stringMatchesPostcode', () => {
         expect(stringMatchesPostcode('SEF82BT')).toBe(false);
         expect(stringMatchesPostcode('B2 %ST')).toBe(false);
         expect(stringMatchesPostcode('B2%ST')).toBe(false);
+    });
+});
+
+describe('convertMilesToMetres', () => {
+    test('should convert a number of miles to the equivalent in metres', () => {
+        expect(convertMilesToMetres(1)).toBe(1760);
+        expect(convertMilesToMetres('1')).toBe(1760);
     });
 });

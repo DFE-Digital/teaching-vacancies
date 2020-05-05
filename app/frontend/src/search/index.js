@@ -1,3 +1,5 @@
+/* global window */
+
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
@@ -9,7 +11,7 @@ import { renderAutocomplete } from './ui/autocomplete';
 import { renderSortSelect } from './ui/sort';
 import { renderRadiusSelect } from './ui/radius';
 import { locations } from './data/locations';
-import { updateUrlQueryParams } from './utils';
+import { updateUrlQueryParams, stringMatchesPostcode } from './utils';
 import { getCoordinates } from './geoloc';
 
 const ALGOLIA_INDEX = 'Vacancy';
@@ -26,8 +28,20 @@ const locationSearchBox = searchBox({
     container: document.querySelector('.filters-form'),
     element: '#location',
     key: 'location',
+    queryHook(query, search) {
+        query ? updateUrlQueryParams('location', query, window.location.href) : false;
+        if (stringMatchesPostcode(query)) {
+            getCoordinates(query).then(coords => {
+                console.log('geolocate postcode: ' + query, coords);
+                document.querySelector('#radius').removeAttribute('disabled');
+                document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
+                search('');
+            });
+        } else {
+            search(query);
+        }
+    },
 });
-
 
 searchClientInstance.addWidgets([
     configure({
@@ -38,13 +52,8 @@ searchClientInstance.addWidgets([
         dataset: locations,
         threshold: 3,
         onSelection: value => {
-            getCoordinates(value).then(coords => {
-                console.log('onSelection getCoordinates', value, coords, searchClientInstance.mainIndex);
-                document.querySelector('#radius').removeAttribute('disabled');
-                document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
-                locationSearchBox._refine(value);
-            });
-            // updateUrlQueryParams('location', value, window.location.href)
+            locationSearchBox._refine(value);
+            updateUrlQueryParams('location', value, window.location.href);
         }
     }),
     locationSearchBox,
@@ -52,17 +61,17 @@ searchClientInstance.addWidgets([
         container: document.querySelector('.filters-form'),
         element: '#job_title',
         key: 'job_title',
-        // queryHook(query, search) {
-        //     query ? updateUrlQueryParams('job_title', query, window.location.href) : false;
-        //     search(query);
-        // },
+        queryHook(query, search) {
+            query ? updateUrlQueryParams('job_title', query, window.location.href) : false;
+            search(query);
+        },
     }),
-    
     locationRadius({
         container: document.querySelector('#location-radius-select'),
         attribute: '_geoloc',
         element: '#radius',
         onSelection: value => {
+            updateUrlQueryParams('radius', value, window.location.href);
             document.querySelector('#location').dataset.radius = `${value}`;
             searchClientInstance.refresh();
         }
