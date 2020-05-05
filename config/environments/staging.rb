@@ -3,7 +3,7 @@ Rails.application.configure do
   # config/application.rb.
 
   # Configure the domains permitted to access coordinates API
-  config.allowed_cors_origins = ["https://#{ENV.fetch('DOMAIN')}"]
+  config.allowed_cors_origin = "https://#{ENV.fetch('DOMAIN')}"
 
   # Code is not reloaded between requests.
   config.cache_classes = true

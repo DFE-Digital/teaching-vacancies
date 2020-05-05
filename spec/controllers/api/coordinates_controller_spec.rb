@@ -9,11 +9,15 @@ RSpec.describe Api::CoordinatesController, type: :controller do
     request.accept = 'application/json'
   end
 
+  before(:each) do
+    request.headers['origin'] = Rails.application.config.allowed_cors_origin
+  end
+
   describe 'GET /api/v1/coordinates/ct9.html' do
     it 'returns status :not_found as only CSV and JSON format is allowed' do
       get :show, params: { api_version: 1, location: location_query }, format: :html
 
-      expect(response.status).to eq(Rack::Utils.status_code(:not_found))
+      expect(response).to have_http_status(:not_found)
     end
   end
 
@@ -27,6 +31,7 @@ RSpec.describe Api::CoordinatesController, type: :controller do
       allow(geocoding).to receive(:coordinates).and_return([response_lat, response_lng])
 
       get :show, params: { api_version: 1, location: location_query }
+
       expect(json[:lat]).to eq response_lat
       expect(json[:lng]).to eq response_lng
       expect(json[:query]).to eq location_query
@@ -37,6 +42,7 @@ RSpec.describe Api::CoordinatesController, type: :controller do
       no_place = 'utopia'
       allow(Geocoding).to receive(:new).with(no_place).and_return(geocoding)
       allow(geocoding).to receive(:coordinates).and_return([0, 0])
+
       get :show, params: { api_version: 1, location: no_place }
 
       expect(json[:lat]).to eq 0

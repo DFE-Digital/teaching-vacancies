@@ -3,8 +3,7 @@ Rails.application.configure do
   # config/application.rb.
 
   # Configure the domains permitted to access coordinates API
-  # (not used in test environment)
-  config.allowed_cors_origins = []
+  config.allowed_cors_origin = 'https://allowed.test.website'
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that

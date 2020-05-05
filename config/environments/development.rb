@@ -3,11 +3,7 @@ Rails.application.configure do
   # config/application.rb.
 
   # Configure the domains permitted to access coordinates API
-  config.allowed_cors_origins =
-    ENV['DOMAIN'].blank? ?
-      ['https://localhost:3000',
-      'https://127.0.0.1:3000']
-      : [ENV.fetch('DOMAIN')]
+  config.allowed_cors_origin = "https://#{ENV.fetch('DOMAIN')}"
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
