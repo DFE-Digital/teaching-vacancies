@@ -215,14 +215,6 @@ class Vacancy < ApplicationRecord
   counter :page_view_counter
   counter :get_more_info_counter
 
-  def self.public_search(filters:, sort:)
-    query = VacancySearchBuilder.new(filters: filters, sort: sort).call
-    results = ElasticSearchFinder.new.call(query[:search_query], query[:search_sort])
-
-    Rollbar.log(:info, 'A search returned 0 results', filters.to_hash) if results.count.zero?
-    results
-  end
-
   def location
     @location ||= SchoolPresenter.new(school).location
   end
