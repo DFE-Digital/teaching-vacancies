@@ -1,8 +1,12 @@
-export const renderHits = (renderOptions) => {
+export const renderHeading = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    widgetParams.container.innerHTML = `There are ${results.nbHits} jobs listed`;  }
+    const location = results.query ? ` in ${results.query}` : '';
+    widgetParams.container.innerHTML = `There are ${results.nbHits} jobs listed ${location}`;  
+    document.querySelector('ul.vacancies').style.display = 'none';
+    document.querySelector('ul.pagination-server').style.display = 'none';
+  }
 };
 
 export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/g, ' ');
@@ -20,7 +24,7 @@ export const templates = {
   item: `
 <article class="vacancy">
   <h2 class="govuk-heading-m mb0">
-    <a href="{{ url }}" class="govuk-link view-vacancy-link">
+    <a href="/url" class="govuk-link view-vacancy-link">
     {{ job_title }}
     </a>
     </h2>
@@ -28,7 +32,7 @@ export const templates = {
   <dl>
 <dt>Salary</dt>
 <dd class="double">
-&pound;{{ minValue }} to &pound;{{ maxValue }}
+{{ salary }}
 </dd>
 <dt>School type</dt>
 <dd class="double">

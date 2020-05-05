@@ -24,8 +24,6 @@ export const renderAutocomplete = (renderOptions, isFirstRender) => {
         .map(renderIndexListItem)
         .join('');
     }
-
-    widgetParams.container.querySelector('#location').value = currentRefinement;
 };
 
 export const show = element => {
