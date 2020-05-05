@@ -19,6 +19,26 @@ Bundler.require(*Rails.groups)
 
 module TeacherVacancyService
   class Application < Rails::Application
+    # Configure Rack::Cors https://github.com/cyu/rack-cors
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+
+        # Allow all domains access to jobs API
+        resource '/api/v1/jobs/*',
+          headers: :any,
+          methods: [:get, :post, :delete, :put, :patch, :options, :head]
+          
+        # Only allow our domains access to coordinates API
+        resource '/api/v1/coordinates/*',
+          headers: :any,
+          methods: :get,
+          if: proc { |env|
+            Rails.application.config.allowed_cors_origins.include?(env['HTTP_ORIGIN'])
+          }
+      end
+    end
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     config.time_zone = 'Europe/London'
