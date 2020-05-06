@@ -250,6 +250,8 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
+    kramdown (2.2.1)
+      rexml
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (3.1.5)
@@ -309,7 +311,6 @@ GEM
       validate_url
       webfinger (>= 1.0.1)
     os (1.0.1)
-    pandoc-ruby (2.1.4)
     parallel (1.19.1)
     parser (2.6.5.0)
       ast (~> 2.4.0)
@@ -395,6 +396,7 @@ GEM
     request_store (1.4.1)
       rack (>= 1.4)
     retriable (3.1.2)
+    rexml (3.2.4)
     roadie (3.5.1)
       css_parser (~> 1.4)
       nokogiri (~> 1.8)
@@ -564,6 +566,7 @@ DEPENDENCIES
   jbuilder (~> 2.9)
   jquery-rails
   kaminari
+  kramdown
   launchy
   listen (>= 3.0.5, < 3.2)
   lograge
@@ -571,7 +574,6 @@ DEPENDENCIES
   mock_redis
   omniauth (~> 1.9)
   omniauth_openid_connect (~> 0.3)
-  pandoc-ruby (~> 2.1)
   pg (~> 1.1)
   poltergeist
   pry
