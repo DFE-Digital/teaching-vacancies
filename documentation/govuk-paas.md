@@ -162,15 +162,20 @@ Get log destination from Papertrail
 cf7 create-user-provided-service teaching-vacancies-papertrail-dev -l syslog-tls://logsX.papertrailapp.com:XXXXX
 ```
 
-### Set environment variables
+### Set environment variables for the app
 For all the environment variables defined in `.env.example` set them up with:
 ```bash
 cf7 set-env teaching-vacancies-dev ENV_VAR_NAME env_var_value
 ```
 
-When you are done setting up environment variables remember to restart the app:
+Verify that you see the desired changes:
 ```bash
-cf7 restart teaching-vacancies-dev
+cf7 env teaching-vacancies-dev
+```
+
+When you are done setting up environment variables, remember to restart the app, using `--strategy rolling` if you wish to avoid downtime. In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
+```bash
+cf7 restart teaching-vacancies-dev --strategy rolling
 ```
 
 ## Backup/Restore GOV.UK PaaS Postgres service database
