@@ -16,6 +16,14 @@ RSpec.describe Geocoding do
       let(:os_api_response) { { header: { totalresults: 0 } }.to_json }
       let(:key_doesnt_exist) { -2 }
 
+      before(:all) do
+        Geocoder.configure(lookup: :uk_ordnance_survey_names)
+      end
+
+      after(:all) do
+        Geocoder.configure(lookup: :test)
+      end
+
       before do
         Geocoder.configure(api_key: '')
         stub_request(:get, request_url)
@@ -44,12 +52,6 @@ RSpec.describe Geocoding do
     end
 
     context 'When not using the Redis cache' do
-      around(:all) do |example|
-        Geocoder.configure(lookup: :test)
-        example.run
-        Geocoder.configure(lookup: :uk_ordnance_survey_names)
-      end
-
       it 'returns the correct value when the input is a valid postcode' do
         geocoding = Geocoding.new('TS14 6RD')
         expect(geocoding.coordinates).to eq(Geocoder::DEFAULT_STUB_COORDINATES)
