@@ -48,3 +48,15 @@ end
 
 require 'sidekiq/testing'
 Sidekiq::Testing.fake!
+
+# Stub Geocoder HTTP requests in specs
+require 'geocoder'
+Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556]
+Geocoder.configure(lookup: :test)
+Geocoder::Lookup::Test.set_default_stub(
+  [
+    {
+      coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
+    }
+  ]
+)

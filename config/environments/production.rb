@@ -2,6 +2,9 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in
   # config/application.rb.
 
+  # Configure the domains permitted to access coordinates API
+  config.allowed_cors_origin = proc { "https://#{DOMAIN}" }
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

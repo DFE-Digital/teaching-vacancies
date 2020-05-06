@@ -41,6 +41,7 @@ gem 'omniauth_openid_connect', '~> 0.3'
 gem 'pg', '~> 1.1'
 gem 'public_activity'
 gem 'puma', '~> 4.3'
+gem 'rack-cors'
 gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2018-3741
 gem 'redis'
 gem 'redis-objects'

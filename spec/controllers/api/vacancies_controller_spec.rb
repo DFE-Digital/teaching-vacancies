@@ -8,7 +8,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
   end
 
   describe 'GET /api/v1/jobs.html' do
-    it 'returns status :not_found as only CSV and JSON format is allowed' do
+    it 'returns status :not_found as only JSON format is allowed' do
       get :index, params: { api_version: 1 }, format: :html
 
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))

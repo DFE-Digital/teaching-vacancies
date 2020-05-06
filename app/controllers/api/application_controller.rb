@@ -8,7 +8,8 @@ class Api::ApplicationController < ApplicationController
     not_found unless request.format.json?
   end
 
-  def verify_json_or_csv_request
-    not_found unless request.format.json? || request.format.csv?
+  def verify_same_domain
+    return if Rails.env.development? # HTTP origin header is nil in development
+    not_found unless request.headers['origin'] == Rails.application.config.allowed_cors_origin
   end
 end
