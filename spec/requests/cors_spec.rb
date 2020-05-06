@@ -3,13 +3,9 @@ require 'geocoding'
 
 RSpec.describe 'CORS', type: :request do
   describe '/api/v1/coordinates/:location.json' do
-    let(:location_query) { 'ct9' }
+    let(:location_query) { 'abingdon' }
 
     scenario 'allows a request from a domain defined by configuration' do
-      geocoding = Geocoding.new(location_query)
-      allow(Geocoding).to receive(:new).with(location_query).and_return(geocoding)
-      allow(geocoding).to receive(:coordinates).and_return([0, 0])
-
       params = { api_version: 1, location: location_query, format: 'json' }
       headers = { 'HTTP_ORIGIN': Rails.application.config.allowed_cors_origin }
       get api_path(params), headers: headers

@@ -12,8 +12,13 @@ RSpec.feature 'Filtering vacancies' do
 
     scenario 'search results can be filtered by the selected location and radius' do
       allow(LocationCategory).to receive(:include?).with('enfield').and_return(false)
-      expect(Geocoder).to receive(:coordinates).with('enfield')
-                                               .and_return([51.6622925, -0.1180655])
+      Geocoder::Lookup::Test.add_stub(
+        'enfield', [
+          {
+            'coordinates'  => [51.6622925, -0.1180655],
+          }
+        ]
+      )
       enfield_vacancy = create(:vacancy, :published,
                                school: build(:school, name: 'St James School',
                                                       town: 'Enfield',
