@@ -17,3 +17,13 @@ export_tables:
   cron: '0 03 * * *'
   class: 'ExportTablesToBigQueryJob'
   queue: export_tables
+
+reset_sessions:
+  cron: '0 02 * * *'
+  class: 'ResetSessionsJob'
+  queue: reset_sessions
+
+submit_performance_platform:
+  cron: '0 04 * * *'
+  class: 'SubmitPerformancePlatformJob'
+  queue: submit_performance_platform

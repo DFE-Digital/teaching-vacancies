@@ -16,6 +16,8 @@
   - [seed_vacancies_from_api, 1]
   - [export_users, 1]
   - [export_tables, 1]
+  - [reset_sessions, 1]
+  - [submit_performance_platform, 1]
 audit_published_vacancy:
   :concurrency: 1
 audit_vacancies:
@@ -37,4 +39,8 @@ seed_vacancies_from_api:
 export_users:
   :concurrency: 1
 export_tables:
+  :concurrency: 1
+reset_sessions:
+  :concurrency: 1
+submit_performance_platform:
   :concurrency: 1
