@@ -6,7 +6,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors, logger: (-> { R
 
     resource '/api/v1/jobs/*',
       headers: :any,
-      methods: [:get, :post, :delete, :put, :patch, :options, :head]
+      methods: :get
   end
 
   allow do
