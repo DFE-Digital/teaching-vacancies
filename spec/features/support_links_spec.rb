@@ -21,10 +21,8 @@ RSpec.feature 'A visitor to the website can access the support links' do
   scenario 'the terms and conditions' do
     visit root_path
     click_on 'Terms and Conditions'
-
-    expect(page).to have_content(I18n.t('static_pages.terms_and_conditions.title'))
-
-    expect(page).to have_content(I18n.t('static_pages.terms_and_conditions.all_users.using_the_website.text').first)
+    expect(page).to have_content(/terms and conditions/i)
+    expect(page).to have_content(/unacceptable use/i)
   end
 
   scenario 'the accessibility statement' do
