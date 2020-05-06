@@ -55,7 +55,7 @@ resource "aws_iam_role_policy" "slack_lambda_policy" {
 }
 
 resource "aws_lambda_function" "cloudwatch_to_slack" {
-  filename         = "lambda_cloudwatch_to_slack_opsgenie_payload.zip"
+  filename         = "terraform/lambda/lambda_cloudwatch_to_slack_opsgenie_payload.zip"
   function_name    = "${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
   role             = "${aws_iam_role.slack_lambda_role.arn}"
   handler          = "lambda_function.lambda_handler"
