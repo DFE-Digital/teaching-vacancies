@@ -1,7 +1,7 @@
 default_domains = {
   test: 'localhost:3000',
   development: 'localhost:3000',
-  staging: 'teaching-vacancies-staging.london.cloudapps.digital',
+  staging: 'tvs.staging.dxw.net',
   production: 'teaching-vacancies.service.gov.uk'
 }
 
