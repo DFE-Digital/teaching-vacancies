@@ -25,7 +25,7 @@ RSpec.feature 'School viewing vacancies' do
     expect(page).to have_content(vacancy2.job_title)
   end
 
-  scenario 'A draft vacancy show page should show a flash message with the status', elasticsearch: true do
+  scenario 'A draft vacancy show page should show a flash message with the status' do
     vacancy = create(:vacancy, school: school, status: 'draft')
 
     visit school_job_path(vacancy.id)

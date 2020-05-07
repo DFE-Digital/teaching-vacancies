@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Viewing the home page' do
   before { visit page_path(:home) }
 
-  scenario 'searching from the blue box lands on the jobs index page', elasticsearch: true do
+  scenario 'searching from the blue box lands on the jobs index page' do
     within '.search_panel' do
       fill_in 'location', with: 'bristol'
       fill_in 'keyword', with: 'math'

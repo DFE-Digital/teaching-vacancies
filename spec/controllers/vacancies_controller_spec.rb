@@ -15,22 +15,18 @@ RSpec.describe VacanciesController, type: :controller do
       context 'search params' do
         let(:params) do
           {
-            subject: "<body onload=alert('test1')>Text</body>",
-            location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
-            phases: ['<iframe>Foo</iframe>', 'Bar'],
-            working_patterns: ['<script>Foo</script>'],
+            keyword: "<body onload=alert('test1')>Text</body>",
+            location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
           }
         end
 
-        it 'passes only safe values to VacancyFilters' do
+        it 'passes only safe values to VacancyAlgoliaSearchBuilder' do
           expected_safe_values = {
-            'subject' => 'Text',
-            'location' => '',
-            'phases' => '["", "Bar"]',
-            'working_patterns' => '[""]'
+            'keyword' => 'Text',
+            'location' => ''
           }
 
-          expect(VacancyFilters).to receive(:new)
+          expect(VacancyAlgoliaSearchBuilder).to receive(:new)
             .with(expected_safe_values)
             .and_call_original
 
@@ -41,17 +37,16 @@ RSpec.describe VacanciesController, type: :controller do
       context 'sort params' do
         let(:params) do
           {
-            sort_column: "<body onload=alert('test1')>Text</script>",
-            sort_order: '<xml>Foo</xml',
+            jobs_sort: "<body onload=alert('test1')>Text</script>"
           }
         end
-        it 'passes sanitised params to VacancySort' do
+
+        it 'passes sanitised params to VacancyAlgoliaSearchBuilder' do
           expected_safe_values = {
-            column: 'Text',
-            order: 'Foo',
+            'jobs_sort' => 'Text'
           }
 
-          expect_any_instance_of(VacancySort).to receive(:update)
+          expect(VacancyAlgoliaSearchBuilder).to receive(:new)
             .with(expected_safe_values)
             .and_call_original
 
@@ -62,17 +57,14 @@ RSpec.describe VacanciesController, type: :controller do
       context 'search auditor' do
         let(:params) do
           {
-            job_title: 'Should have three match'
+            keyword: 'Teacher'
           }
         end
 
-        it 'should call the search auditor', elasticsearch: true do
-          3.times { create(:vacancy, job_title: 'Should have three match') }
-          Vacancy.__elasticsearch__.client.indices.flush
+        it 'should call the search auditor' do
           expect(AuditSearchEventJob).to receive(:perform_later).with(
             hash_including(
-              total_count: 3,
-              job_title: 'Should have three match'
+              keyword: 'Teacher'
             )
           )
 
@@ -95,48 +87,55 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'jobs_sort option' do
-      let(:search_params) do
+      let(:params) do
         {
-          subject: 'Business Studies',
+          keyword: 'Business Studies',
           location: 'Torquay',
+          jobs_sort: sort
         }
       end
 
-      let(:search_path) { jobs_path(params: search_params.merge(expanded_search_params), anchor: 'jobs_sort') }
+      context 'when parameters include the sort by newest listing option' do
+        let(:sort) { 'publish_on_desc' }
 
-      context 'when parameters include the sort_by_most_recent jobs_sort option' do
-        let(:params) { search_params.merge(jobs_sort: 'sort_by_most_recent') }
-        let(:expanded_search_params) { { sort_column: 'publish_on', sort_order: 'desc' } }
-
-        it 'redirects to the full search path' do
-          expect(subject).to redirect_to(search_path)
+        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+          subject
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
+            "Vacancy_#{sort}"
+          )
         end
       end
 
-      context 'when parameters include the sort_by_most_ancient jobs_sort option' do
-        let(:params) { search_params.merge(jobs_sort: 'sort_by_most_ancient') }
-        let(:expanded_search_params) { { sort_column: 'publish_on', sort_order: 'asc' } }
+      context 'when parameters include the sort by oldest listing option' do
+        let(:sort) { 'publish_on_asc' }
 
-        it 'redirects to the full search path' do
-          expect(subject).to redirect_to(search_path)
+        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+          subject
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
+            "Vacancy_#{sort}"
+          )
         end
       end
 
-      context 'when parameters include the sort_by_earliest_closing_date jobs_sort option' do
-        let(:params) { search_params.merge(jobs_sort: 'sort_by_earliest_closing_date') }
-        let(:expanded_search_params) { { sort_column: 'expires_on', sort_order: 'asc' } }
+      context 'when parameters include the sort by most time to apply option' do
+        let(:sort) { 'expiry_time_desc' }
 
-        it 'redirects to the full search path' do
-          expect(subject).to redirect_to(search_path)
+        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+          subject
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
+            "Vacancy_#{sort}"
+          )
         end
       end
 
-      context 'when parameters include the sort_by_furthest_closing_date jobs_sort option' do
-        let(:params) { search_params.merge(jobs_sort: 'sort_by_furthest_closing_date') }
-        let(:expanded_search_params) { { sort_column: 'expires_on', sort_order: 'desc' } }
+      context 'when parameters include the sort by least time to apply option' do
+        let(:sort) { 'expiry_time_asc' }
 
-        it 'redirects to the full search path' do
-          expect(subject).to redirect_to(search_path)
+        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+          subject
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
+            "Vacancy_#{sort}"
+          )
         end
       end
     end
@@ -148,7 +147,7 @@ RSpec.describe VacanciesController, type: :controller do
         before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
 
         it 'shows the subscribe link' do
-          get :index, params: { subject: 'English' }
+          get :index, params: { keyword: 'English' }
           expect(response.body).to match(I18n.t('subscriptions.link.text'))
         end
       end
@@ -157,7 +156,7 @@ RSpec.describe VacanciesController, type: :controller do
         before { allow(EmailAlertsFeature).to receive(:enabled?) { false } }
 
         it 'does not show the subscribe link' do
-          get :index, params: { subject: 'English' }
+          get :index, params: { keyword: 'English' }
           expect(response.body).to_not match(I18n.t('subscriptions.link.text'))
         end
       end

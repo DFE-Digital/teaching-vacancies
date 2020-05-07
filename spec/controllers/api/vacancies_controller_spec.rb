@@ -15,7 +15,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
   end
 
-  describe 'GET /api/v1/jobs.json', elasticsearch: true, json: true do
+  describe 'GET /api/v1/jobs.json', json: true do
     render_views
 
     context 'sets headers' do
@@ -61,8 +61,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       vacancies = [published_vacancy, expired_vacancy]
 
-      Vacancy.__elasticsearch__.refresh_index!
-
       get :index, params: { api_version: 1 }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
@@ -76,7 +74,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
       before do
         stub_const('Api::VacanciesController::MAX_API_RESULTS_PER_PAGE', per_page)
         create_list(:vacancy, 16)
-        Vacancy.__elasticsearch__.refresh_index!
 
         get :index, params: { api_version: 1, page: 2 }
       end
@@ -107,8 +104,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
       create(:vacancy, :draft)
       create(:vacancy, :trashed)
       create(:vacancy, :future_publish)
-
-      Vacancy.__elasticsearch__.refresh_index!
 
       get :index, params: { api_version: 1 }
 
