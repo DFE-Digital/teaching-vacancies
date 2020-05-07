@@ -58,7 +58,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
           it 'carries out geographical search around a coordinate location with the default radius' do
             expect(subject.search_query).not_to include(location)
             expect(subject.location_filter).to eql({
-              coordinates: [40.7143528, -74.0059731],
+              coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
               radius: subject.convert_radius_in_miles_to_metres(default_radius)
             })
           end
@@ -76,7 +76,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
           it 'carries out geographical search around a coordinate location with the specified radius' do
             expect(subject.search_query).not_to include(location)
             expect(subject.location_filter).to eql({
-              coordinates: [40.7143528, -74.0059731],
+              coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
               radius: subject.convert_radius_in_miles_to_metres(radius)
             })
           end
@@ -182,7 +182,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
     context 'a geographical radius location search' do
       let(:search_query) { keyword }
-      let(:location_coordinates) { [40.7143528, -74.0059731] }
+      let(:location_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
       let(:location_radius) { subject.convert_radius_in_miles_to_metres(default_radius) }
 
       it 'carries out search with correct criteria' do

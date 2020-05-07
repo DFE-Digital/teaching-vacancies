@@ -7,7 +7,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
   let(:location) { 'SW1A 1AA' }
   let(:default_radius) { 10 }
   let(:date_today) { Time.zone.today.to_datetime }
-  let(:location_coordinates) { [40.7143528, -74.0059731] }
+  let(:location_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
   let(:location_radius) { subject.convert_radius_in_miles_to_metres(default_radius) }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
