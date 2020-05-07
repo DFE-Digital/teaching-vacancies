@@ -45,7 +45,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      headers      = "${local.header_list}"
+      headers      = "${var.default_header_list}"
 
       cookies {
         forward = "all"
