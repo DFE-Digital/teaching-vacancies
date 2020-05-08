@@ -42,7 +42,9 @@ class Vacancy < ApplicationRecord
   # For guidance on sanity-checking an indexing change, read documentation/algolia_sanity_check.md
 
   # rubocop:disable Metrics/BlockLength
-  algoliasearch disable_indexing: !Rails.env.production? do
+  # rubocop:disable Metrics/LineLength
+  # There must be a better way to pass these settings to the block, but everything seems to break
+  algoliasearch index_name: Rails.env.test? ? 'Vacancy_test' : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
     attributes :job_roles, :job_title, :salary, :working_patterns
 
     attribute :expires_at do
@@ -132,6 +134,7 @@ class Vacancy < ApplicationRecord
       ranking ['asc(expires_at_timestamp)']
     end
   end
+  # rubocop:enable Metrics/LineLength
   # rubocop:enable Metrics/BlockLength
 
   def lat
