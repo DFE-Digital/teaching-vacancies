@@ -1,7 +1,6 @@
 require 'geocoding'
 
 class Api::CoordinatesController < Api::ApplicationController
-  before_action :verify_same_domain, only: ['show']
   before_action :verify_json_request, only: ['show']
 
   def show

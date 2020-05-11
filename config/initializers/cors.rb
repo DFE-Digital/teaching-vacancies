@@ -11,7 +11,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: true, lo
 
   allow do
     # Only allow our domains access to coordinates API with HTTP GET
-    origins Rails.application.config.allowed_cors_origin
+    origins Rails.application.config.allowed_cors_origin.call
 
     resource '/api/v1/coordinates/*',
       headers: :any,

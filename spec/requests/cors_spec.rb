@@ -7,11 +7,11 @@ RSpec.describe 'CORS', type: :request do
 
     scenario 'allows a request from a domain defined by configuration' do
       params = { api_version: 1, location: location_query, format: 'json' }
-      headers = { 'HTTP_ORIGIN': Rails.application.config.allowed_cors_origin }
+      headers = { 'HTTP_ORIGIN': Rails.application.config.allowed_cors_origin.call }
       get api_path(params), headers: headers
 
-      expect(response).to have_http_status(:ok)
-      expect(response.headers['Access-Control-Allow-Origin']).to eq(Rails.application.config.allowed_cors_origin)
+      expect(response.headers['X-Rack-CORS']).to eq('hit')
+      expect(response.headers['Access-Control-Allow-Origin']).to eq(Rails.application.config.allowed_cors_origin.call)
     end
 
     scenario 'does not allow a request from a different domain' do
@@ -19,7 +19,8 @@ RSpec.describe 'CORS', type: :request do
       headers = { 'HTTP_ORIGIN': 'https://www.test.com' }
       get api_path(params), headers: headers
 
-      expect(response).to have_http_status(:not_found)
+      expect(response.headers['X-Rack-CORS']).to include('miss')
+      expect(response.headers['Access-Control-Allow-Origin']).to be_blank
     end
   end
 
@@ -29,7 +30,7 @@ RSpec.describe 'CORS', type: :request do
       headers = { 'HTTP_ORIGIN': 'https://www.test.com' }
       get api_jobs_path(params), headers: headers
 
-      expect(response).to have_http_status(:ok)
+      expect(response.headers['X-Rack-CORS']).to eq('hit')
       expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
     end
   end
@@ -42,7 +43,7 @@ RSpec.describe 'CORS', type: :request do
       headers = { 'HTTP_ORIGIN': 'https://www.test.com' }
       get api_job_path(params), headers: headers
 
-      expect(response).to have_http_status(:ok)
+      expect(response.headers['X-Rack-CORS']).to eq('hit')
       expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
     end
   end

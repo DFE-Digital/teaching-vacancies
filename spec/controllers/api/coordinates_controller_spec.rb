@@ -8,10 +8,6 @@ RSpec.describe Api::CoordinatesController, type: :controller do
     request.accept = 'application/json'
   end
 
-  before(:each) do
-    request.headers['origin'] = Rails.application.config.allowed_cors_origin
-  end
-
   describe 'GET /api/v1/coordinates/abingdon.html' do
     it 'returns status :not_found as only JSON format is allowed' do
       get :show, params: { api_version: 1, location: location_query }, format: :html
