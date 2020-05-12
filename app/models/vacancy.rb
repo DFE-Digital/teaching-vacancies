@@ -102,6 +102,24 @@ class Vacancy < ApplicationRecord
     end
 
     geoloc :lat, :lng
+
+    attributesForFaceting [:job_roles, :working_patterns, :school]
+
+    add_replica 'Vacancy_publish_on_desc', inherit: true do
+      ranking ['desc(publication_date_timestamp)']
+    end
+
+    add_replica 'Vacancy_publish_on_asc', inherit: true do
+      ranking ['asc(publication_date_timestamp)']
+    end
+
+    add_replica 'Vacancy_expiry_time_desc', inherit: true do
+      ranking ['desc(expires_at_timestamp)']
+    end
+
+    add_replica 'Vacancy_expiry_time_asc', inherit: true do
+      ranking ['asc(expires_at_timestamp)']
+    end
   end
   # rubocop:enable Metrics/BlockLength
 
