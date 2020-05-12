@@ -337,7 +337,9 @@ class Vacancy < ApplicationRecord
   private
 
   def expires_at
+    # rubocop:disable Rails/Date
     self.expiry_time.presence || Time.zone.at(self.expires_on.to_time).to_datetime.end_of_day
+    # rubocop:enable Rails/Date
   end
 
   def slug_candidates
