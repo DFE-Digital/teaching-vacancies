@@ -217,6 +217,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
               '@type': 'School',
               'name': vacancy.school.name,
               'identifier': vacancy.school.urn,
+              'description': "<p>#{vacancy.about_school}</p>"
             }
           }
           expect(json.to_h).to include(hiring_organization)

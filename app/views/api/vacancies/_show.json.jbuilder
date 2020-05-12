@@ -6,6 +6,7 @@ json.salary vacancy.salary
 json.jobBenefits vacancy.benefits
 json.datePosted vacancy.publish_on.to_time.iso8601
 json.description vacancy.job_summary
+json.occupationalCategory vacancy.job_roles&.join(', ')
 
 json.educationRequirements vacancy.education
 json.qualifications vacancy.qualifications
@@ -31,6 +32,7 @@ json.hiringOrganization do
   json.set! '@type', 'School'
   json.name vacancy.school.name
   json.identifier vacancy.school.urn
+  json.description vacancy.about_school
 end
 
 json.validThrough vacancy.expires_on.end_of_day.to_time.iso8601

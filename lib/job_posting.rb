@@ -12,7 +12,7 @@ class JobPosting
   def map_schema_to_vacancy_fields
     {
       job_title: @schema['title'],
-      job_roles: @schema['jobRoles'],
+      job_roles: @schema['occupationalCategory'].split(', '),
       salary: @schema['salary'],
       benefits: @schema['jobBenefits'],
       education: @schema['educationRequirements'],
@@ -25,7 +25,7 @@ class JobPosting
       publish_on: publish_on_or_today,
       expires_on: expires_on_or_future,
       job_summary: @schema['description'],
-      about_school: @schema['aboutSchool'],
+      about_school: @schema['hiringOrganization']['description'],
       school: school_by_urn_or_random
     }
   end
