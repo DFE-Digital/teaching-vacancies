@@ -1,7 +1,7 @@
 import { constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres } from './utils';
 
 describe('constructNewUrlWithParams', () => {
-    test('should activate autocomplete if threshold has been met', () => {
+    test('activates autocomplete if threshold has been met', () => {
         expect(constructNewUrlWithParam(
             'location',
             's',
@@ -21,30 +21,42 @@ describe('constructNewUrlWithParams', () => {
 });
 
 describe('stringMatchesPostcode', () => {
-    test('should test that string matching correct postcode is true', () => {
-        expect(stringMatchesPostcode('CT9 5ST')).toBe(true);
-        expect(stringMatchesPostcode('ct9 5ST')).toBe(true);
-        expect(stringMatchesPostcode('ct9 5St')).toBe(true);
-        expect(stringMatchesPostcode('CT95ST')).toBe(true);
-        expect(stringMatchesPostcode('SE18 2BT')).toBe(true);
-        expect(stringMatchesPostcode('SE182BT')).toBe(true);
-        expect(stringMatchesPostcode('B2 5ST')).toBe(true);
-        expect(stringMatchesPostcode('B25ST')).toBe(true);
+
+    const validPostcodes = [
+        'CT9 5ST',
+        'ct9 5ST',
+        'ct9 5St',
+        'CT95ST',
+        'SE18 2BT',
+        'SE182BT',
+        'B2 5ST',
+        'B25ST'
+    ];
+
+    test('matches a correct postcode', () => {
+        validPostcodes.map(postcode => expect(stringMatchesPostcode(postcode)).toBe(true));
     });
 
-    test('should test that string matching incorrect postcode is false', () => {
-        expect(stringMatchesPostcode('CT 5ST')).toBe(false);
-        expect(stringMatchesPostcode('CT5ST')).toBe(false);
-        expect(stringMatchesPostcode('SEF8 2BT')).toBe(false);
-        expect(stringMatchesPostcode('SEF82BT')).toBe(false);
-        expect(stringMatchesPostcode('B2 %ST')).toBe(false);
-        expect(stringMatchesPostcode('B2%ST')).toBe(false);
+    const invalidPostcodes = [
+        'CT 5ST',
+        'CT5ST',
+        'SEF8 2BT',
+        'SEF82BT',
+        'B2 %ST',
+        'B2%ST'
+    ];
+
+    test('matches a correct postcode', () => {
+        invalidPostcodes.map(postcode => expect(stringMatchesPostcode(postcode)).toBe(false));
     });
 });
 
 describe('convertMilesToMetres', () => {
-    test('should convert a number of miles to the equivalent in metres', () => {
+    test('converts an integer of number of miles to the equivalent in metres', () => {
         expect(convertMilesToMetres(1)).toBe(1760);
+    });
+
+    test('converts a string of number of miles to the equivalent in metres', () => {
         expect(convertMilesToMetres('1')).toBe(1760);
     });
 });

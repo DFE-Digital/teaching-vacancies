@@ -1,6 +1,6 @@
 .govuk-grid-row.sortable-links
   .govuk-grid-column-one-half
-    = form_tag('', method: :get, id: "jobs_sort_form") do
+    = form_tag('', method: :get, id: 'jobs_sort_form') do
       - search_criteria.each do |filter, value|
         - unless filter == :jobs_sort
           = hidden_field_tag filter, value

@@ -7,7 +7,7 @@ describe('renderSortSelect', () => {
 });
 
 describe('constructOptions', () => {
-    test('should options HTML with selected option set', () => {
+    test('constructs HTML options for select tag with the selected option attribute set', () => {
 
         const options = [
             {

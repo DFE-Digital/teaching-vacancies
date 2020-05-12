@@ -2,9 +2,12 @@ import { isActive, getOptions } from './autocomplete';
 
 describe('isActive', () => {
     test('should activate autocomplete if threshold has been met', () => {
-        expect(isActive(3, 'so')).toBe(false);
         expect(isActive(3, 'sou')).toBe(true);
         expect(isActive(3, 'sout')).toBe(true);
+    });
+
+    test('should not activate autocomplete if threshold hasnt been met', () => {
+        expect(isActive(3, 'so')).toBe(false);
     });
 });
 
@@ -18,9 +21,8 @@ const options = [
 ];
 
 describe('getOptions', () => {
-    test('should return an array of matches that contain the supplied query', () => {
+    test('should return an array of matches from the options array that contain the supplied string', () => {
         expect(getOptions(options, 'appl')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
         expect(getOptions(options, 'a')).toEqual(['apple', 'banana', 'apple apple', 'banana apple', 'applebanana']);
-        expect(getOptions(options, '')).toEqual(options);
     });
 });
