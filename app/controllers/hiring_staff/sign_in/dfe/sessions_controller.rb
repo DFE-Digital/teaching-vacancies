@@ -11,7 +11,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def create
-    Rails.logger.warn("Hiring staff signed in: #{user_id}")
+    Rails.logger.info("Hiring staff signed in: #{user_id}")
     audit_successful_authentication
 
     perform_dfe_sign_in_authorisation
