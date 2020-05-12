@@ -135,7 +135,8 @@ RSpec.describe Subscription, type: :model do
       create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
     let(:search_filter) do
-      "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
+      '(listing_status:published AND '\
+      "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
       "(publication_date_timestamp >= #{date_yesterday.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
     end
 

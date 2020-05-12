@@ -8,7 +8,8 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
     self.keyword = subscription_hash[:keyword] || build_subscription_keyword(subscription_hash)
 
     self.location_filter = {}
-    self.search_filter = "publication_date_timestamp <= #{date_today_filter} AND "\
+    self.search_filter = 'listing_status:published AND '\
+                         "publication_date_timestamp <= #{date_today_filter} AND "\
                          "expires_at_timestamp > #{date_today_filter}"
     self.filter_array = []
 

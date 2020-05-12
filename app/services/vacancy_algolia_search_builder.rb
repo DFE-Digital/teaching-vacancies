@@ -14,7 +14,8 @@ class VacancyAlgoliaSearchBuilder
     self.keyword = params[:keyword]
 
     self.location_filter = {}
-    self.search_filter = "publication_date_timestamp <= #{date_today_filter} AND "\
+    self.search_filter = 'listing_status:published AND '\
+                         "publication_date_timestamp <= #{date_today_filter} AND "\
                          "expires_at_timestamp > #{date_today_filter}"
 
     self.sort_by = params[:jobs_sort] if valid_sort?(params[:jobs_sort])
@@ -91,7 +92,11 @@ class VacancyAlgoliaSearchBuilder
 
   def build_search_replica
     return nil if sort_by.blank?
-    self.search_replica = ['Vacancy', Rails.env.test? ? 'test' : '', sort_by].reject(&:blank?).join('_')
+    self.search_replica = ['Vacancy', test_search_replica, sort_by].reject(&:blank?).join('_')
+  end
+
+  def test_search_replica
+    Rails.env.test? ? 'test' : ''
   end
 
   def date_today_filter
