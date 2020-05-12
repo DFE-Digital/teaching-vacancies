@@ -1,4 +1,4 @@
-export const renderSortSelect = (isFirstRender, renderOptions) => {
+export const renderSortSelect = (renderOptions, isFirstRender) => {
     const {
         options,
         currentRefinement,
