@@ -211,7 +211,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
   end
 
   context 'jobseekers can sort vacancies' do
-    scenario 'newest listing first', js: false, algolia: true do
+    scenario 'newest listing first' do
       visit jobs_path
 
       within '.sortable-links' do
@@ -226,7 +226,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
       expect(page.find('.vacancy:nth-child(5)')).to have_content(@fifth_vacancy.job_title)
     end
 
-    scenario 'oldest listing first', js: false, algolia: true do
+    scenario 'oldest listing first' do
       visit jobs_path
 
       within '.sortable-links' do
@@ -241,7 +241,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
       expect(page.find('.vacancy:nth-child(5)')).to have_content(@first_vacancy.job_title)
     end
 
-    scenario 'least time to apply listing first', js: false, algolia: true do
+    scenario 'least time to apply listing first' do
       visit jobs_path
 
       within '.sortable-links' do
@@ -256,7 +256,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
       expect(page.find('.vacancy:nth-child(5)')).to have_content(@fourth_vacancy.job_title)
     end
 
-    scenario 'most time to apply listing first', js: false, algolia: true do
+    scenario 'most time to apply listing first' do
       visit jobs_path
 
       within '.sortable-links' do
@@ -276,11 +276,11 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
     let(:jobs_per_page) { 5 }
 
     before do
-      VacancyAlgoliaSearchBuilder.class_variable_set(:@@default_hits_per_page, jobs_per_page)
+      allow_any_instance_of(VacancyAlgoliaSearchBuilder).to receive(:hits_per_page).and_return(jobs_per_page)
     end
 
     context 'when fewer vacancies than the jobs per page' do
-      scenario 'there is only one page', js: false, algolia: true do
+      scenario 'there is only one page' do
         visit jobs_path
 
         expect(page).to have_selector('.vacancy', count: 5)
@@ -292,7 +292,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
     context 'when more vacancies than the jobs per page' do
       let(:jobs_per_page) { 2 }
 
-      scenario 'there are two pages', js: false, algolia: true do
+      scenario 'there are two pages' do
         visit jobs_path
 
         expect(page).to have_selector('.vacancy', count: 2)

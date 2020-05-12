@@ -3,17 +3,12 @@ require 'geocoding'
 class VacancyAlgoliaSearchBuilder
   include ActiveModel::Model
 
-  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page,
+  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page,
                 :search_query, :location_filter, :search_replica, :search_filter,
                 :vacancies
 
   DEFAULT_RADIUS = 10
-
-  # This is so I can set the class variable from outside the class. Must be a better way to do this
-  @@default_hits_per_page = 10
-  def default_hits_per_page
-    @@default_hits_per_page
-  end
+  DEFAULT_HITS_PER_PAGE = 10
 
   def initialize(params)
     self.keyword = params[:keyword]
@@ -22,6 +17,7 @@ class VacancyAlgoliaSearchBuilder
     self.search_filter = "publication_date <= #{date_today_filter} AND expiry_time > #{date_today_filter}"
 
     self.sort_by = params[:jobs_sort] if valid_sort?(params[:jobs_sort])
+    self.hits_per_page = params[:per_page] || DEFAULT_HITS_PER_PAGE
     self.page = params[:page]
 
     initialize_location(params[:location_category], params[:location], params[:radius])
@@ -34,7 +30,7 @@ class VacancyAlgoliaSearchBuilder
       aroundLatLng: location_filter[:coordinates],
       aroundRadius: location_filter[:radius],
       replica: search_replica,
-      hitsPerPage: default_hits_per_page,
+      hitsPerPage: hits_per_page,
       filters: search_filter,
       page: page
     )
