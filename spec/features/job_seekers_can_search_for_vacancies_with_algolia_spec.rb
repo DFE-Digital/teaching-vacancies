@@ -245,7 +245,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
       visit jobs_path
 
       within '.sortable-links' do
-        select I18n.t('jobs.sort_by.expiry_time.descending')
+        select I18n.t('jobs.sort_by.expiry_time.ascending')
         click_on I18n.t('jobs.sort_by.submit')
       end
 
@@ -260,7 +260,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
       visit jobs_path
 
       within '.sortable-links' do
-        select I18n.t('jobs.sort_by.expiry_time.ascending')
+        select I18n.t('jobs.sort_by.expiry_time.descending')
         click_on I18n.t('jobs.sort_by.submit')
       end
 

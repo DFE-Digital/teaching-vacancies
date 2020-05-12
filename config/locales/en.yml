@@ -172,8 +172,8 @@ en:
         descending: 'Newest job listing'
         ascending: 'Oldest job listing'
       expiry_time:
-        descending: 'Least time to apply'
-        ascending: 'Most time to apply'
+        descending: 'Most time to apply'
+        ascending: 'Least time to apply'
       submit: 'Sort'
     key_info: 'Contents'
     awaiting_feedback_intro: >-
