@@ -421,6 +421,9 @@ en:
       location_hint: 'City, town or postcode, for example'
       use_current_location: 'use your current location'
       within_radius: 'Within radius'
+      number_of_miles:
+        one: '%{count} mile'
+        other: '%{count} miles'
       subject: 'Subject'
       subject_hint: 'Maths, for example'
       job_title: 'Job title'
