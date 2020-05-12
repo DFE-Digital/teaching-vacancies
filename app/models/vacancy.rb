@@ -37,8 +37,12 @@ class Vacancy < ApplicationRecord
   algoliasearch disable_indexing: !Rails.env.production? do
     attributes :job_roles, :job_title, :salary, :working_patterns
 
-    attribute :expiry_date do
-      convert_date_to_unix_time(self.expires_on)
+    attribute :expires_at do
+      expires_at.to_s
+    end
+
+    attribute :expires_at_timestamp do
+      expires_at.to_i
     end
 
     attribute :first_supporting_subject do
@@ -63,7 +67,11 @@ class Vacancy < ApplicationRecord
     end
 
     attribute :publication_date do
-      convert_date_to_unix_time(self.publish_on)
+      self.publish_on&.to_s
+    end
+
+    attribute :publication_date_timestamp do
+      self.publish_on&.to_datetime&.to_i
     end
 
     attribute :school do
@@ -82,7 +90,11 @@ class Vacancy < ApplicationRecord
     end
 
     attribute :start_date do
-      convert_date_to_unix_time(self.starts_on)
+      self.starts_on&.to_s
+    end
+
+    attribute :start_date_timestamp do
+      self.starts_on&.to_datetime&.to_i
     end
 
     attribute :subject do
@@ -324,11 +336,10 @@ class Vacancy < ApplicationRecord
 
   private
 
-  def convert_date_to_unix_time(date)
-    # nil.to_i returns 0 in unix time (1970-01-01), so if date is nil we should return nil.
-    return nil if date == nil
-    # Convert to unix time via DateTime object in order to use correct time zone
-    Time.zone.at(date.to_time).to_datetime.midday.to_i
+  def expires_at
+    # rubocop:disable Rails/Date
+    self.expiry_time.presence || Time.zone.at(self.expires_on.to_time).to_datetime.end_of_day
+    # rubocop:enable Rails/Date
   end
 
   def slug_candidates
