@@ -101,7 +101,7 @@ RSpec.describe VacanciesController, type: :controller do
         it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
-            "Vacancy_#{sort}"
+            "Vacancy_test_#{sort}"
           )
         end
       end
@@ -112,7 +112,7 @@ RSpec.describe VacanciesController, type: :controller do
         it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
-            "Vacancy_#{sort}"
+            "Vacancy_test_#{sort}"
           )
         end
       end
@@ -123,7 +123,7 @@ RSpec.describe VacanciesController, type: :controller do
         it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
-            "Vacancy_#{sort}"
+            "Vacancy_test_#{sort}"
           )
         end
       end
@@ -134,7 +134,7 @@ RSpec.describe VacanciesController, type: :controller do
         it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
-            "Vacancy_#{sort}"
+            "Vacancy_test_#{sort}"
           )
         end
       end

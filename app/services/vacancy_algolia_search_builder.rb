@@ -90,7 +90,8 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def build_search_replica
-    self.search_replica = "Vacancy_#{sort_by}" if sort_by.present?
+    return nil if sort_by.blank?
+    self.search_replica = ['Vacancy', Rails.env.test? ? 'test' : '', sort_by].reject(&:blank?).join('_')
   end
 
   def date_today_filter

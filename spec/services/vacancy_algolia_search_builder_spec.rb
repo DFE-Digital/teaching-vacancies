@@ -140,7 +140,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
         end
 
         it 'uses the correct search replica' do
-          expect(subject.search_replica).to eql('Vacancy_publish_on_desc')
+          expect(subject.search_replica).to eql('Vacancy_test_publish_on_desc')
         end
       end
     end
