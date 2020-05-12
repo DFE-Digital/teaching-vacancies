@@ -34,3 +34,21 @@ jobs:
         cf7 auth
         cf7 target -o $CF_ORG -s $CF_SPACE
         cf7 push --strategy rolling
+
+  notify:
+    needs: deploy
+
+    name: Slack notification
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send slack message to twd_tv_dev channel
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_ICON_EMOJI: :tada:
+          SLACK_TITLE: Successful deployment
+          SLACK_MESSAGE: 'Deployment to production on GOV.UK PaaS successful :rocket:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
