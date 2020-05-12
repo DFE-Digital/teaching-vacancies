@@ -8,7 +8,8 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
     self.keyword = subscription_hash[:keyword] || build_subscription_keyword(subscription_hash)
 
     self.location_filter = {}
-    self.search_filter = "publication_date <= #{date_today_filter} AND expiry_time > #{date_today_filter}"
+    self.search_filter = "publication_date_timestamp <= #{date_today_filter} AND "\
+                         "expires_at_timestamp > #{date_today_filter}"
     self.filter_array = []
 
     self.sort_by = subscription_hash[:jobs_sort]
@@ -34,8 +35,8 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
   private
 
   def build_subscription_filters(subscription_hash)
-    dates = "publication_date >= #{subscription_hash[:from_date].to_datetime.to_i} AND "\
-            "publication_date <= #{subscription_hash[:to_date].to_datetime.to_i}"
+    dates = "publication_date_timestamp >= #{subscription_hash[:from_date].to_datetime.to_i} AND "\
+            "publication_date_timestamp <= #{subscription_hash[:to_date].to_datetime.to_i}"
 
     working_patterns = subscription_hash[:working_patterns]&.map {
       |working_pattern| "working_pattern:#{working_pattern}"

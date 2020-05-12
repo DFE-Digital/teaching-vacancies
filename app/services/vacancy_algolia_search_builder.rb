@@ -14,7 +14,8 @@ class VacancyAlgoliaSearchBuilder
     self.keyword = params[:keyword]
 
     self.location_filter = {}
-    self.search_filter = "publication_date <= #{date_today_filter} AND expiry_time > #{date_today_filter}"
+    self.search_filter = "publication_date_timestamp <= #{date_today_filter} AND "\
+                         "expires_at_timestamp > #{date_today_filter}"
 
     self.sort_by = params[:jobs_sort] if valid_sort?(params[:jobs_sort])
     self.hits_per_page = params[:per_page] || DEFAULT_HITS_PER_PAGE

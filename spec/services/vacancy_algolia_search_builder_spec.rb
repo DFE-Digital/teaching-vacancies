@@ -151,7 +151,8 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     let(:search_replica) { nil }
     let(:default_hits_per_page) { 10 }
     let(:search_filter) do
-      "publication_date <= #{Time.zone.today.to_datetime.to_i} AND expiry_time > #{Time.zone.today.to_datetime.to_i}"
+      "publication_date_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\
+      "expires_at_timestamp > #{Time.zone.today.to_datetime.to_i}"
     end
     let(:page) { 1 }
 

@@ -50,7 +50,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
       context '#build_subscription_filters' do
         it 'adds date filter' do
           expect(subject.filter_array).to include(
-            "(publication_date >= #{date_today.to_i} AND publication_date <= #{date_today.to_i})"
+            "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
           )
         end
 
@@ -76,8 +76,8 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
     context '#call' do
       let(:search_filter) do
-        "(publication_date <= #{date_today.to_i} AND expiry_time > #{date_today.to_i}) AND "\
-        "(publication_date >= #{date_today.to_i} AND publication_date <= #{date_today.to_i}) AND "\
+        "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
+        "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i}) AND "\
         '(working_pattern:full_time OR working_pattern:part_time) AND '\
         "(job_roles:#{I18n.t('jobs.job_role_options.nqt_suitable')}) AND "\
         '(school.phase:secondary OR school.phase:primary)'
@@ -107,8 +107,8 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
     context '#call' do
       let(:search_filter) do
-        "(publication_date <= #{date_today.to_i} AND expiry_time > #{date_today.to_i}) AND "\
-        "(publication_date >= #{date_today.to_i} AND publication_date <= #{date_today.to_i})"
+        "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
+        "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
       end
 
       before do

@@ -6,7 +6,8 @@ module SearchHelper
       replica: algolia_hash[:replica] || nil,
       hitsPerPage: algolia_hash[:hitsPerPage] || 10,
       filters: algolia_hash[:filters] ||
-        "publication_date <= #{Time.zone.today.to_datetime.to_i} AND expiry_time > #{Time.zone.today.to_datetime.to_i}"
+        "publication_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\
+        "expires_at_timestamp > #{Time.zone.today.to_datetime.to_i}"
     }
     arguments_to_algolia[:page] = algolia_hash[:page] if algolia_hash[:page].present?
 

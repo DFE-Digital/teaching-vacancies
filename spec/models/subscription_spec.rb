@@ -135,8 +135,8 @@ RSpec.describe Subscription, type: :model do
       create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
     let(:search_filter) do
-      "(publication_date <= #{date_today.to_i} AND expiry_time > #{date_today.to_i}) AND "\
-      "(publication_date >= #{date_yesterday.to_i} AND publication_date <= #{date_today.to_i})"
+      "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
+      "(publication_date_timestamp >= #{date_yesterday.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
     end
 
     let(:algolia_search_query) { 'english' }
