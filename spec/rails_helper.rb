@@ -1,3 +1,4 @@
+require 'algolia/webmock'
 require 'spec_helper'
 require 'es_helper'
 
@@ -29,6 +30,10 @@ RSpec.configure do |config|
 
   config.before(:each, :sitemap) do
     default_url_options[:host] = DOMAIN.to_s
+  end
+
+  config.before(:each) do
+    Algolia::WebMock.mock!
   end
 
   config.include ActionView::Helpers::NumberHelper
