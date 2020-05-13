@@ -9,8 +9,8 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
 
     self.location_filter = {}
     self.search_filter = 'listing_status:published AND '\
-                         "publication_date_timestamp <= #{date_today_filter} AND "\
-                         "expires_at_timestamp > #{date_today_filter}"
+                         "publication_date_timestamp <= #{published_today_filter} AND "\
+                         "expires_at_timestamp > #{expired_now_filter}"
     self.filter_array = []
 
     self.sort_by = subscription_hash[:jobs_sort]

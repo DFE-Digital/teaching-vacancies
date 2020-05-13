@@ -129,6 +129,9 @@ RSpec.describe Subscription, type: :model do
   end
 
   context 'vacancies_for_range' do
+    @expired_now = Time.zone.now.to_datetime.to_i
+    Timecop.freeze(@expired_now)
+
     let(:date_yesterday) { Time.zone.yesterday.to_datetime }
     let(:date_today) { Time.zone.today.to_datetime }
     let(:subscription) do
@@ -137,7 +140,7 @@ RSpec.describe Subscription, type: :model do
     let(:vacancies) { double('vacancies') }
     let(:search_filter) do
       '(listing_status:published AND '\
-      "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
+      "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{@expired_now}) AND "\
       "(publication_date_timestamp >= #{date_yesterday.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
     end
 
@@ -150,6 +153,7 @@ RSpec.describe Subscription, type: :model do
     end
 
     before do
+      allow_any_instance_of(VacancyAlgoliaAlertBuilder).to receive(:expired_now_filter).and_return(@expired_now)
       allow(vacancies).to receive(:count).and_return(10)
       mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
     end

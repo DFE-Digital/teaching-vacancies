@@ -15,8 +15,8 @@ class VacancyAlgoliaSearchBuilder
 
     self.location_filter = {}
     self.search_filter = 'listing_status:published AND '\
-                         "publication_date_timestamp <= #{date_today_filter} AND "\
-                         "expires_at_timestamp > #{date_today_filter}"
+                         "publication_date_timestamp <= #{published_today_filter} AND "\
+                         "expires_at_timestamp > #{expired_now_filter}"
 
     self.sort_by = params[:jobs_sort] if valid_sort?(params[:jobs_sort])
     self.hits_per_page = params[:per_page] || DEFAULT_HITS_PER_PAGE
@@ -104,8 +104,12 @@ class VacancyAlgoliaSearchBuilder
     Rails.env.test? ? 'test' : ''
   end
 
-  def date_today_filter
+  def published_today_filter
     Time.zone.today.to_datetime.to_i
+  end
+
+  def expired_now_filter
+    Time.zone.now.to_datetime.to_i
   end
 
   def valid_sort?(job_sort_param)
