@@ -49,16 +49,21 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def location_category_search?
-    @location_category_search ||= (location_category && LocationCategory.include?(location_category))
+    (location_category && LocationCategory.include?(location_category)) ||
+    (location && LocationCategory.include?(location))
+  end
+
+  def disable_radius?
+    location_category_search? || location.blank?
   end
 
   def only_active_to_hash
-    to_hash.delete_if { |_, v| v.blank? }
+    to_hash.delete_if { |k, v| v.blank? || (k.eql?(:radius) && to_hash[:location].blank?) }
   end
 
   def any?
     filters = only_active_to_hash
-    filters.delete_if { |k, _| k.eql?(:radius) }
+    filters.delete_if { |k, _| k.eql?(:radius) || k.eql?(:jobs_sort) }
     filters.any?
   end
 
@@ -75,7 +80,7 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def initialize_location(location_category, location, radius)
-    self.location = location
+    self.location = location || location_category
     self.radius = (radius || DEFAULT_RADIUS).to_i
     self.location_category = (location.present? && LocationCategory.include?(location)) ?
       location : location_category
