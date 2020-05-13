@@ -24,8 +24,8 @@ export const templates = {
   item: `
 <article class="vacancy">
   <h2 class="govuk-heading-m mb0">
-    <a href="/url" class="govuk-link view-vacancy-link">
-    {{ job_title }}
+    <a href="/jobs/{{ permalink }}" class="govuk-link view-vacancy-link">
+    {{ job_title }} 
     </a>
     </h2>
   <p>{{ school.name }}, {{ school.town }}, {{ school.region }}.</p>
