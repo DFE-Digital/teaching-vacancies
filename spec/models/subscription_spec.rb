@@ -134,6 +134,7 @@ RSpec.describe Subscription, type: :model do
     let(:subscription) do
       create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
+    let(:vacancies) { double('vacancies') }
     let(:search_filter) do
       '(listing_status:published AND '\
       "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
@@ -149,11 +150,12 @@ RSpec.describe Subscription, type: :model do
     end
 
     before do
-      mock_algolia_search('vacancies', algolia_search_query, algolia_search_args)
+      allow(vacancies).to receive(:count).and_return(10)
+      mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
     end
 
     it 'calls out to algolia search' do
-      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eql('vacancies')
+      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eql(vacancies)
     end
   end
 

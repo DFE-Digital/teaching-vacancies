@@ -23,7 +23,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
     }
   end
 
-  context 'pre Algolia subscriptions' do
+  context 'subscription created before algolia' do
     let(:search_subject) { 'maths' }
     let(:job_title) { 'teacher' }
     let(:search_query) { "#{search_subject} #{job_title}" }
@@ -56,13 +56,13 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
         it 'adds working patterns filter' do
           expect(subject.filter_array).to include(
-            '(working_pattern:full_time OR working_pattern:part_time)'
+            '(working_patterns:full_time OR working_patterns:part_time)'
           )
         end
 
         it 'adds NQT filter' do
           expect(subject.filter_array).to include(
-            "(job_roles:#{I18n.t('jobs.job_role_options.nqt_suitable')})"
+            "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}')"
           )
         end
 
@@ -75,27 +75,30 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
     end
 
     context '#call' do
+      let(:vacancies) { double('vacancies') }
       let(:search_filter) do
         '(listing_status:published AND '\
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
         "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i}) AND "\
-        '(working_pattern:full_time OR working_pattern:part_time) AND '\
-        "(job_roles:#{I18n.t('jobs.job_role_options.nqt_suitable')}) AND "\
+        '(working_patterns:full_time OR working_patterns:part_time) AND '\
+        "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}') AND "\
         '(school.phase:secondary OR school.phase:primary)'
       end
 
       before do
-        mock_algolia_search('vacancies', algolia_search_query, algolia_search_args)
+        allow(vacancies).to receive(:count).and_return(10)
+        mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
       end
 
       it 'carries out alert search with correct criteria' do
         subject.call
-        expect(subject.vacancies).to eql('vacancies')
+        expect(subject.vacancies).to eql(vacancies)
       end
     end
   end
 
-  context 'post Algolia subscriptions' do
+  context 'subscription created after algolia' do
+    let(:vacancies) { double('vacancies') }
     let(:search_query) { keyword }
     let(:subscription_hash) do
       {
@@ -114,12 +117,13 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
       end
 
       before do
-        mock_algolia_search('vacancies', algolia_search_query, algolia_search_args)
+        allow(vacancies).to receive(:count).and_return(10)
+        mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
       end
 
       it 'carries out alert search with correct criteria' do
         subject.call
-        expect(subject.vacancies).to eql('vacancies')
+        expect(subject.vacancies).to eql(vacancies)
       end
     end
   end
