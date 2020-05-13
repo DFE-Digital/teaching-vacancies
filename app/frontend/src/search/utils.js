@@ -14,3 +14,5 @@ export const stringMatchesPostcode = postcode => {
 };
 
 export const convertMilesToMetres = miles => parseInt(miles, 10) * 1760;
+
+export const convertEpochToUnixTimestamp = timestamp => Math.floor(timestamp / 1000);

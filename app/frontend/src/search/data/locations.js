@@ -142,4 +142,4 @@ export const locations = [
     'North West',
     'North East',
     'South West',
-    'East Midlands'];
+    'East Midlands'].sort();

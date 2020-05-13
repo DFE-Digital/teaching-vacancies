@@ -1,4 +1,4 @@
-import { constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres } from './utils';
+import { constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp } from './utils';
 
 describe('constructNewUrlWithParams', () => {
     test('activates autocomplete if threshold has been met', () => {
@@ -58,5 +58,12 @@ describe('convertMilesToMetres', () => {
 
     test('converts a string of number of miles to the equivalent in metres', () => {
         expect(convertMilesToMetres('1')).toBe(1760);
+    });
+});
+
+describe('convertEpochToUnixTimestamp', () => {
+    test('converts an epoch timestamp to unix format', () => {
+        expect(convertEpochToUnixTimestamp(1589351356458)).toBe(1589351356);
+        expect(convertEpochToUnixTimestamp(1589351356658)).toBe(1589351356);
     });
 });
