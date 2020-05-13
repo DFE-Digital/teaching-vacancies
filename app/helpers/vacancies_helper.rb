@@ -46,10 +46,6 @@ module VacanciesHelper
     array.join(' ')
   end
 
-  def location_category_content?(search)
-    search.location_category_search? && search.only_active_to_hash.one?
-  end
-
   def new_sections(vacancy)
     sections = []
     sections << 'job_role' unless vacancy.job_roles&.any?
