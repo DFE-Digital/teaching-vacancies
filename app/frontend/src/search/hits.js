@@ -15,7 +15,7 @@ export const timestampToHumanReadable = timestamp => new Date(timestamp * 1000).
 
 export const transform = items => items.map(item => ({
   ...item,
-  working_patterns: item.working_patterns.map(snakeCaseToHumanReadable).join(', '),
+  working_patterns: item.working_patterns ? item.working_patterns.map(snakeCaseToHumanReadable).join(', ') : '',
   expiry_date: timestampToHumanReadable(item.expiry_date),
   school_type: snakeCaseToHumanReadable(item.school.phase)
 }));

@@ -5,5 +5,9 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
         widgetParams.container.querySelector(widgetParams.element).addEventListener('input', event => {
             refine(event.target.value);
         });
+
+        widgetParams.container.querySelector(widgetParams.element).addEventListener('change', event => {
+            refine(event.target.value);
+        });
     }
 };

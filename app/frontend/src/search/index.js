@@ -32,7 +32,6 @@ const locationSearchBox = searchBox({
         query ? updateUrlQueryParams('location', query, window.location.href) : false;
         if (stringMatchesPostcode(query)) {
             getCoordinates(query).then(coords => {
-                console.log('geolocate postcode: ' + query, coords);
                 document.querySelector('#radius').removeAttribute('disabled');
                 document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
                 search('');
@@ -48,7 +47,8 @@ searchClientInstance.addWidgets([
         hitsPerPage: 10,
     }),
     autocomplete({
-        container: document.querySelector('.js-location-finder'),
+        container: document.querySelector('.app-site-search__wrapper'),
+        input: document.querySelector('#location'),
         dataset: locations,
         threshold: 3,
         onSelection: value => {
