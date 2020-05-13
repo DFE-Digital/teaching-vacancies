@@ -53,17 +53,17 @@ describe('stringMatchesPostcode', () => {
 
 describe('convertMilesToMetres', () => {
     test('converts an integer of number of miles to the equivalent in metres', () => {
-        expect(convertMilesToMetres(1)).toBe(1760);
+        expect(convertMilesToMetres(1)).toBe(1609.34);
     });
 
     test('converts a string of number of miles to the equivalent in metres', () => {
-        expect(convertMilesToMetres('1')).toBe(1760);
+        expect(convertMilesToMetres('1')).toBe(1609.34);
     });
 });
 
 describe('convertEpochToUnixTimestamp', () => {
     test('converts an epoch timestamp to unix format', () => {
         expect(convertEpochToUnixTimestamp(1589351356458)).toBe(1589351356);
-        expect(convertEpochToUnixTimestamp(1589351356658)).toBe(1589351356);
+        expect(convertEpochToUnixTimestamp(1589351356658)).toBe(1589351357);
     });
 });

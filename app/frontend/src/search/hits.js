@@ -11,13 +11,9 @@ export const renderHeading = (renderOptions) => {
 
 export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/g, ' ');
 
-export const timestampToHumanReadable = timestamp => new Date(timestamp * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-
 export const transform = items => items.map(item => ({
   ...item,
-  working_patterns: item.working_patterns ? item.working_patterns.map(snakeCaseToHumanReadable).join(', ') : '',
-  expiry_date: timestampToHumanReadable(item.expiry_date),
-  school_type: snakeCaseToHumanReadable(item.school.phase)
+  working_patterns: Array.isArray(item.working_patterns) ? item.working_patterns.map(snakeCaseToHumanReadable).join(', ') : item.working_patterns,
 }));
 
 export const templates = {
@@ -25,7 +21,7 @@ export const templates = {
 <article class="vacancy">
   <h2 class="govuk-heading-m mb0">
     <a href="/jobs/{{ permalink }}" class="govuk-link view-vacancy-link">
-    {{ job_title }} 
+    {{ job_title }}
     </a>
     </h2>
   <p>{{ school.name }}, {{ school.town }}, {{ school.region }}.</p>
@@ -44,7 +40,7 @@ export const templates = {
 </dd>
 <dt>Closing date</dt>
 <dd class="double">
-{{ expiry_date }}
+{{ expires_at }}
 </dd>
 </dl>
 </article>

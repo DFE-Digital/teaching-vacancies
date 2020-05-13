@@ -1,5 +1,4 @@
 /* global window */
-
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
@@ -14,104 +13,108 @@ import { locations } from './data/locations';
 import { updateUrlQueryParams, stringMatchesPostcode } from './utils';
 import { getCoordinates } from './geoloc';
 
-const ALGOLIA_INDEX = 'Vacancy';
+if (document.querySelector('#vacancies-hits')) {
+    const ALGOLIA_INDEX = 'Vacancy';
 
-const searchClientInstance = searchClient(ALGOLIA_INDEX);
+    const searchClientInstance = searchClient(ALGOLIA_INDEX);
 
-const searchBox = connectSearchBox(renderSearchBox);
-const autocomplete = connectAutocomplete(renderAutocomplete);
-const heading = connectHits(renderHeading);
-const sortBy = connectSortBy(renderSortSelect);
-const locationRadius = connectMenu(renderRadiusSelect);
+    const searchBox = connectSearchBox(renderSearchBox);
+    const autocomplete = connectAutocomplete(renderAutocomplete);
+    const heading = connectHits(renderHeading);
+    const sortBy = connectSortBy(renderSortSelect);
+    const locationRadius = connectMenu(renderRadiusSelect);
 
-const locationSearchBox = searchBox({
-    container: document.querySelector('.filters-form'),
-    element: '#location',
-    key: 'location',
-    queryHook(query, search) {
-        query ? updateUrlQueryParams('location', query, window.location.href) : false;
-        if (stringMatchesPostcode(query)) {
-            getCoordinates(query).then(coords => {
-                document.querySelector('#radius').removeAttribute('disabled');
-                document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
-                search('');
-            });
-        } else {
-            search(query);
-        }
-    },
-});
-
-searchClientInstance.addWidgets([
-    configure({
-        hitsPerPage: 10,
-    }),
-    autocomplete({
-        container: document.querySelector('.app-site-search__wrapper'),
-        input: document.querySelector('#location'),
-        dataset: locations,
-        threshold: 3,
-        onSelection: value => {
-            locationSearchBox._refine(value);
-            updateUrlQueryParams('location', value, window.location.href);
-        }
-    }),
-    locationSearchBox,
-    searchBox({
+    const locationSearchBox = searchBox({
         container: document.querySelector('.filters-form'),
-        element: '#job_title',
-        key: 'job_title',
+        element: '#location',
+        key: 'location',
         queryHook(query, search) {
-            query ? updateUrlQueryParams('job_title', query, window.location.href) : false;
-            search(query);
+            query ? updateUrlQueryParams('location', query, window.location.href) : false;
+            if (stringMatchesPostcode(query)) {
+                getCoordinates(query).then(coords => {
+                    document.querySelector('#radius').removeAttribute('disabled');
+                    document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
+                    search('');
+                });
+            } else {
+                document.querySelector('#radius').setAttribute('disabled', true);
+                search(query);
+            }
         },
-    }),
-    locationRadius({
-        container: document.querySelector('#location-radius-select'),
-        attribute: '_geoloc',
-        element: '#radius',
-        onSelection: value => {
-            updateUrlQueryParams('radius', value, window.location.href);
-            document.querySelector('#location').dataset.radius = `${value}`;
-            searchClientInstance.refresh();
-        }
-    }),
-    sortBy({
-        container: document.querySelector('#jobs_sort_form'),
-        element: '#jobs_sort',
-        items: [
-            { label: 'Newest job listing', value: 'Vacancy_production_newest_listing' },
-            { label: 'Oldest job listing', value: 'Vacancy_production_oldest_listing' },
-            { label: 'Newest closing date', value: 'Vacancy_production_newest_closing' },
-            { label: 'Oldest closing date', value: 'Vacancy_production_oldest_closing' },
-        ],
-    }),
-    heading({
-        container: document.querySelector('#job-count'),
-    }),
-    hits({
-        container: '#vacancies-hits',
-        transformItems(items) {
-            return transform(items);
-        },
-        templates,
-        cssClasses: {
-            list: ['vacancies'],
-            item: 'vacancy'
-        },
-    }),
-]);
+    });
 
-if (document.querySelector('#pagination-hits')) {
     searchClientInstance.addWidgets([
-        pagination({
-            container: '#pagination-hits',
+        configure({
+            hitsPerPage: 10,
+        }),
+        autocomplete({
+            container: document.querySelector('.app-site-search__wrapper'),
+            input: document.querySelector('#location'),
+            dataset: locations,
+            threshold: 3,
+            onSelection: value => {
+                locationSearchBox._refine(value);
+                updateUrlQueryParams('location', value, window.location.href);
+            }
+        }),
+        locationSearchBox,
+        searchBox({
+            container: document.querySelector('.filters-form'),
+            element: '#keyword',
+            key: 'job_title',
+            queryHook(query, search) {
+                query ? updateUrlQueryParams('job_title', query, window.location.href) : false;
+                search(query);
+            },
+        }),
+        locationRadius({
+            container: document.querySelector('#location-radius-select'),
+            attribute: '_geoloc',
+            element: '#radius',
+            onSelection: value => {
+                updateUrlQueryParams('radius', value, window.location.href);
+                document.querySelector('#location').dataset.radius = `${value}`;
+                searchClientInstance.refresh();
+            }
+        }),
+        sortBy({
+            container: document.querySelector('#jobs_sort_form'),
+            element: '#jobs_sort',
+            items: [
+                { label: 'Relevancy', value: 'Vacancy' },
+                { label: 'Newest job listing', value: 'Vacancy_publish_on_desc' },
+                { label: 'Oldest job listing', value: 'Vacancy_publish_on_asc' },
+                { label: 'Newest closing date', value: 'Vacancy_expiry_time_desc' },
+                { label: 'Oldest closing date', value: 'Vacancy_expiry_time_asc' },
+            ],
+        }),
+        heading({
+            container: document.querySelector('#job-count'),
+        }),
+        hits({
+            container: '#vacancies-hits',
+            transformItems(items) {
+                return transform(items);
+            },
+            templates,
             cssClasses: {
-                list: ['pagination'],
-                item: 'pagination__item'
+                list: ['vacancies'],
+                item: 'vacancy'
             },
         }),
     ]);
-}
 
-searchClientInstance.start();
+    if (document.querySelector('#pagination-hits')) {
+        searchClientInstance.addWidgets([
+            pagination({
+                container: '#pagination-hits',
+                cssClasses: {
+                    list: ['pagination'],
+                    item: 'pagination__item'
+                },
+            }),
+        ]);
+    }
+
+    searchClientInstance.start();
+}

@@ -4,8 +4,8 @@
   = content_for :page_title_prefix, t('jobs.heading')
 = render partial: 'head_links'
 
-%h1.govuk-heading-xl
-  = t('jobs.heading')
+%h1.govuk-heading-xl#job-count
+  = @vacancies_search.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@vacancies_search.location_category)) : @vacancies.total_count_message
 .govuk-grid-row
   .govuk-grid-column-one-third
     = render 'filters', collapsible?: true

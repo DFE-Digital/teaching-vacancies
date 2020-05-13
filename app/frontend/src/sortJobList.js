@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   if (jobSortSelect) {
-    jobSortSelect.addEventListener('change', function(e) {
-      jobSortSelect.form.submit();
-    });
+      jobSortSelect.style.display = 'none';
   }
 });

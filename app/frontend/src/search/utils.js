@@ -13,6 +13,12 @@ export const stringMatchesPostcode = postcode => {
     return regex.test(postcode);
 };
 
-export const convertMilesToMetres = miles => parseInt(miles, 10) * 1760;
+export const convertMilesToMetres = miles => parseInt(miles, 10) * 1609.34;
 
-export const convertEpochToUnixTimestamp = timestamp => Math.floor(timestamp / 1000);
+export const convertEpochToUnixTimestamp = timestamp => Math.round(timestamp / 1000);
+
+export const getUnixTimestampForDayStart = () => {
+    const date = new Date();
+    date.setUTCHours(0,0,0,0);
+    return convertEpochToUnixTimestamp(+date);
+};
