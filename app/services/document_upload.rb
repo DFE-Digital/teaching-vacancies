@@ -50,6 +50,7 @@ class DocumentUpload
     if e.status_code == FILE_VIRUS_STATUS_CODE
       self.safe_download = false
       drive_service.delete_file(uploaded.id)
+      Rollbar.log(:info, 'Google drive detected the upload of a malicious file. This file has been deleted.')
     else
       self.google_error = true
     end
