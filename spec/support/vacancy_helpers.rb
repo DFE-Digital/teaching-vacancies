@@ -160,6 +160,7 @@ module VacancyHelpers
       'jobBenefits': vacancy.benefits,
       'datePosted': vacancy.publish_on.to_time.iso8601,
       'description': vacancy.job_summary,
+      'occupationalCategory': vacancy.job_roles&.join(', '),
       'educationRequirements': vacancy.education,
       'qualifications': vacancy.qualifications,
       'experienceRequirements': vacancy.experience,
@@ -180,6 +181,7 @@ module VacancyHelpers
         '@type': 'School',
         'name': vacancy.school.name,
         'identifier': vacancy.school.urn,
+        'description': vacancy.about_school
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
     }
