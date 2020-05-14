@@ -4,7 +4,10 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   CONTENT_TYPES_ALLOWED = %w[ application/pdf
                               image/jpeg image/png
                               video/mp4
-                              application/msword application/vnd.ms-excel application/vnd.ms-powerpoint ]
+                              application/msword application/vnd.ms-excel application/vnd.ms-powerpoint
+                              application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                              application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                              application/vnd.openxmlformats-officedocument.presentationml.presentation ]
   FILE_SIZE_LIMIT = 10.megabytes
 
   before_action :redirect_unless_vacancy
