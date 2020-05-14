@@ -206,6 +206,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when uploading files' do
         let(:document_upload) { double('document_upload') }
+        let(:filename) { 'blank_job_spec.pdf' }
 
         before do
           allow(DocumentUpload).to receive(:new).and_return(document_upload)
@@ -222,10 +223,25 @@ RSpec.feature 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            'spec/fixtures/files/blank_job_spec.pdf'
+            "spec/fixtures/files/#{filename}"
           )
 
-          expect(page).to have_content('blank_job_spec.pdf')
+          expect(page).to have_content(filename)
+        end
+
+        scenario 'displays error message when invalid file type is uploaded' do
+          visit school_job_documents_path(documents_vacancy.id)
+
+          allow_any_instance_of(HiringStaff::Vacancies::DocumentsController)
+            .to receive_message_chain(:valid_content_type?).and_return(false)
+
+          upload_document(
+            'new_documents_form',
+            'documents-form-documents-field',
+            "spec/fixtures/files/#{filename}"
+          )
+
+          expect(page).to have_content(I18n.t('jobs.file_type_error_message', filename: filename))
         end
 
         scenario 'displays error message when large file is uploaded' do
@@ -235,10 +251,12 @@ RSpec.feature 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            'spec/fixtures/files/blank_job_spec.pdf'
+            "spec/fixtures/files/#{filename}"
           )
 
-          expect(page).to have_content('blank_job_spec.pdf must be smaller than')
+          expect(page).to have_content(
+            I18n.t('jobs.file_size_error_message', filename: filename, size_limit: '1 KB')
+          )
         end
 
         scenario 'displays error message when virus file is uploaded' do
@@ -249,10 +267,10 @@ RSpec.feature 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            'spec/fixtures/files/blank_job_spec.pdf'
+            "spec/fixtures/files/#{filename}"
           )
 
-          expect(page).to have_content('blank_job_spec.pdf contains a virus')
+          expect(page).to have_content(I18n.t('jobs.file_virus_error_message', filename: filename))
         end
 
         scenario 'displays error message when file not uploaded' do
@@ -263,10 +281,10 @@ RSpec.feature 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            'spec/fixtures/files/blank_job_spec.pdf'
+            "spec/fixtures/files/#{filename}"
           )
 
-          expect(page).to have_content('blank_job_spec.pdf could not be uploaded - try again')
+          expect(page).to have_content(I18n.t('jobs.file_google_error_message', filename: filename))
         end
       end
 

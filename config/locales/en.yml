@@ -265,6 +265,7 @@ en:
     file_google_error_message: '%{filename} could not be uploaded - try again'
     file_input_error_message: 'The selected file(s) could not be uploaded'
     file_size_error_message: '%{filename} must be smaller than %{size_limit}'
+    file_type_error_message: '%{filename} must be a valid file type'
     file_virus_error_message: '%{filename} contains a virus'
     upload_documents_table:
       headers:

@@ -1,6 +1,10 @@
 require 'google/apis/drive_v3'
 
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
+  CONTENT_TYPES_ALLOWED = %w[ application/pdf
+                              image/jpeg image/png
+                              video/mp4
+                              application/msword application/vnd.ms-excel application/vnd.ms-powerpoint ]
   FILE_SIZE_LIMIT = 10.megabytes
 
   before_action :redirect_unless_vacancy
@@ -74,6 +78,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def upload_document(document_params)
+    add_file_type_error(document_params.original_filename) unless valid_content_type?(document_params.content_type)
     add_file_size_error(document_params.original_filename) if document_params.size > FILE_SIZE_LIMIT
 
     document_upload = DocumentUpload.new(
@@ -89,6 +94,13 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     add_virus_error(document_params.original_filename) unless document_upload.safe_download
 
     document_attributes(document_params, document_upload) unless errors_on_file?(document_params.original_filename)
+  end
+
+  def add_file_type_error(filename)
+    @documents_form.errors.add(
+      :documents,
+      t('jobs.file_type_error_message', filename: filename)
+    )
   end
 
   def add_file_size_error(filename)
@@ -120,5 +132,9 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       download_url: upload.uploaded.web_content_link,
       google_drive_id: upload.uploaded.id
     }
+  end
+
+  def valid_content_type?(content_type)
+    CONTENT_TYPES_ALLOWED.include?(content_type)
   end
 end
