@@ -2,7 +2,7 @@
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
-import { transform, templates, renderHeading } from './hits';
+import { transform, templates, renderContent } from './hits';
 import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
@@ -20,7 +20,7 @@ if (document.querySelector('#vacancies-hits')) {
 
     const searchBox = connectSearchBox(renderSearchBox);
     const autocomplete = connectAutocomplete(renderAutocomplete);
-    const heading = connectHits(renderHeading);
+    const heading = connectHits(renderContent);
     const sortBy = connectSortBy(renderSortSelect);
     const locationRadius = connectMenu(renderRadiusSelect);
 
@@ -61,9 +61,9 @@ if (document.querySelector('#vacancies-hits')) {
         searchBox({
             container: document.querySelector('.filters-form'),
             element: '#keyword',
-            key: 'job_title',
+            key: 'keyword',
             queryHook(query, search) {
-                query ? updateUrlQueryParams('job_title', query, window.location.href) : false;
+                query ? updateUrlQueryParams('keyword', query, window.location.href) : false;
                 search(query);
             },
         }),
@@ -90,6 +90,7 @@ if (document.querySelector('#vacancies-hits')) {
         }),
         heading({
             container: document.querySelector('#job-count'),
+            alert: document.querySelector('.vacancies-count'),
         }),
         hits({
             container: '#vacancies-hits',

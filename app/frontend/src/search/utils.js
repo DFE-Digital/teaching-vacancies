@@ -1,3 +1,5 @@
+import URLSearchParams from '../lib/URLSearchParams.polyfill';
+
 export const constructNewUrlWithParam = (key, value, url) => {
     const re = new RegExp(`[\\?&]${key}=([^&#]*)`);
     return url.replace(re, `&${key}=${value}`);
@@ -5,6 +7,20 @@ export const constructNewUrlWithParam = (key, value, url) => {
 
 export const updateUrlQueryParams = (key, value, url) => {
     history.replaceState({}, null, constructNewUrlWithParam(key, value, url));
+};
+
+export const extractQueryParams = (url, keys) => {
+
+    const paramsObj = {};
+    const params = new URLSearchParams(url);
+
+    params.forEach((value, key) => {
+        if (keys.indexOf(key) > -1 && value.length) {
+            paramsObj[key] = value;
+        }
+    });
+
+    return paramsObj;
 };
 
 export const stringMatchesPostcode = postcode => {
@@ -19,6 +35,6 @@ export const convertEpochToUnixTimestamp = timestamp => Math.round(timestamp / 1
 
 export const getUnixTimestampForDayStart = () => {
     const date = new Date();
-    date.setUTCHours(0,0,0,0);
+    date.setUTCHours(0, 0, 0, 0);
     return convertEpochToUnixTimestamp(+date);
 };

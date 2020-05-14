@@ -19,6 +19,6 @@ describe('constructOptions', () => {
                 label: 'l2'
             }
         ];
-        expect(constructOptions(options, 'v2')).toBe(`<option value="v1">l1</option><option value="v2" selected>l2</option>`);
+        expect(constructOptions(options, 'v2')).toBe(`<option value="v1">l1</option><option value="v2" selected>l2</option>`); // eslint-disable-line
     });
 });
