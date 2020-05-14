@@ -16,6 +16,7 @@ import 'src/googleOptimise';
 import 'src/googleTagManagerUrlSnippet';
 import 'src/removeCommaFromNumber';
 import 'src/shareUrl';
+import 'src/signOutAfterInactivity.js';
 import 'src/sortJobList';
 import 'src/submitFeedback';
 import 'src/uploadDocuments';

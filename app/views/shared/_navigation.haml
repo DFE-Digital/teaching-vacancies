@@ -3,7 +3,7 @@
     - if authenticated? && !ReadOnlyFeature.enabled?
       %li{ class: active_link_class(school_path) }= link_to t('nav.school_page_link'), school_path, class: 'govuk-header__link'
       %li{ class: active_link_class(root_path) }= link_to t('nav.jobseekers_index_link'), root_path, class: 'govuk-header__link'
-      %li{ class: active_link_class(sessions_path) }= link_to t('nav.sign_out'), sessions_path, method: :delete, class: 'govuk-header__link'
+      %li{ class: active_link_class(sessions_path) }= link_to t('nav.sign_out'), sessions_path, method: :delete, class: 'govuk-header__link', id: 'sign_out'
     - else
       %label.govuk-label.navigation_heading
         = t('footer.for_job_seekers')
