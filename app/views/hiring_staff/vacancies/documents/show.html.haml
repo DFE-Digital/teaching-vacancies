@@ -13,6 +13,7 @@
 
       = f.govuk_file_field :documents,
         label: { text: t('jobs.upload_file'), size: 's' },
+        accept: '.doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4',
         multiple: true,
         enctype: 'multipart/form-data' do
 
