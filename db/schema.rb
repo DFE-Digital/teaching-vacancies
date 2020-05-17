@@ -181,6 +181,10 @@ ActiveRecord::Schema.define(version: 2020_06_05_112853) do
     t.datetime "accepted_terms_at"
     t.string "email"
     t.jsonb "dsi_data"
+    t.string "magic_link_token"
+    t.datetime "magic_link_token_sent_at"
+    t.datetime "last_activity_at"
+    t.index ["magic_link_token"], name: "index_users_on_magic_link_token", unique: true
     t.index ["oid"], name: "index_users_on_oid", unique: true
   end
 
