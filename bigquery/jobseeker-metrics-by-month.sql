@@ -27,6 +27,14 @@ SELECT
   actuals.jobseekers_taking_next_steps AS jobseekers_taking_next_steps,
   SUM(actuals.jobseekers_taking_next_steps) OVER (ORDER BY actuals.month) AS jobseekers_taking_next_steps_so_far,
   #do a cumulative sum of the jobseekers_taking_next_steps metric
+  (
+  SELECT
+    COUNT(*)
+  FROM
+    `teacher-vacancy-service.production_dataset.feb20_subscription` AS job_alerts
+  WHERE
+    DATE_TRUNC(CAST(created_at AS DATE),
+      MONTH) = actuals.month ) AS job_alerts_created,
   goals.Target_no_jobseekers_using_the_site AS Target_no_jobseekers_using_the_site,
   goals.Target_no_jobseekers_taking_next_steps AS Target_no_jobseekers_taking_next_steps,
   goals.Target_total_no_jobseekers_taking_next_steps AS Target_total_no_jobseekers_taking_next_steps
