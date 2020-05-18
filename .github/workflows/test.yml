@@ -75,6 +75,9 @@ jobs:
       - name: Install node.js dependencies
         run: yarn install
 
+      - name: run frontend tests and linting
+        run: npm test
+
       - name: Set up test database
         run: bin/rails db:create db:schema:load
 

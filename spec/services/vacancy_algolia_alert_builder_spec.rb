@@ -85,11 +85,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
       let(:vacancies) { double('vacancies') }
       let(:search_filter) do
         '(listing_status:published AND '\
-<<<<<<< HEAD
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{@expired_now}) AND "\
-=======
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
->>>>>>> 7e9f5108... Add listing status filter to all searches
         "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i}) AND "\
         '(working_patterns:full_time OR working_patterns:part_time) AND '\
         "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}') AND "\
@@ -123,11 +119,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
     context '#call' do
       let(:search_filter) do
         '(listing_status:published AND '\
-<<<<<<< HEAD
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{@expired_now}) AND "\
-=======
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{date_today.to_i}) AND "\
->>>>>>> 7e9f5108... Add listing status filter to all searches
         "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
       end
 

@@ -414,12 +414,9 @@ en:
       location_hint: 'City, town or postcode, for example'
       use_current_location: 'use your current location'
       within_radius: 'Within radius'
-<<<<<<< HEAD
       number_of_miles:
         one: '%{count} mile'
         other: '%{count} miles'
-=======
->>>>>>> d0cf83de... Carry out server side search using algoliasearch-rails
       subject: 'Subject'
       subject_hint: 'Maths, for example'
       job_title: 'Job title'
