@@ -1,7 +1,7 @@
 .govuk-form-group.js-location-finder
   = label_tag 'location', t('jobs.filters.location'), class: "govuk-label #{extra_label_class}"
   .js-location-finder__input-container#js-location-finder__input-container
-    = search_field_tag :location, location, class: 'govuk-input js-location-finder__input', placeholder: t('jobs.filters.location_hint')
+    = search_field_tag :location, @vacancies_search&.location, class: 'govuk-input js-location-finder__input', placeholder: t('jobs.filters.location_hint')
   .js-location-finder__link.govuk-body-s
     or
     = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'

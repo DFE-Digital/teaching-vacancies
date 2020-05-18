@@ -54,7 +54,7 @@ RSpec.describe Subscription, type: :model do
     context 'when common search criteria is provided' do
       it 'generates a reference on initialization' do
         subscription = Subscription.new(search_criteria: {
-          location: 'Somewhere', radius: 30, subject: 'english maths science'
+          location: 'Somewhere', radius: 30, keyword: 'english maths science'
         }.to_json)
 
         expect(subscription.reference).to eq('English maths science jobs within 30 miles of Somewhere')
@@ -129,34 +129,37 @@ RSpec.describe Subscription, type: :model do
   end
 
   context 'vacancies_for_range' do
+    @expired_now = Time.zone.now.to_datetime.to_i
+    Timecop.freeze(@expired_now)
+
+    let(:date_yesterday) { Time.zone.yesterday.to_datetime }
+    let(:date_today) { Time.zone.today.to_datetime }
     let(:subscription) do
       create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
-
-    let!(:old_matching_vacancies) do
-      Timecop.freeze(2.days.ago) do
-        create_list(:vacancy, 1, :published_slugged, publish_on: Time.zone.today, job_title: 'English Language')
-      end
+    let(:vacancies) { double('vacancies') }
+    let(:search_filter) do
+      '(listing_status:published AND '\
+      "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{@expired_now}) AND "\
+      "(publication_date_timestamp >= #{date_yesterday.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
     end
 
-    let!(:old_vacancies) do
-      Timecop.freeze(2.days.ago) { create_list(:vacancy, 1, :published_slugged, publish_on: Time.zone.today) }
+    let(:algolia_search_query) { 'english' }
+    let(:algolia_search_args) do
+      {
+        filters: search_filter,
+        hitsPerPage: 500
+      }
     end
 
-    let!(:current_unmatching_vacancies) do
-      Timecop.freeze(1.day.ago) { create_list(:vacancy, 3, :published_slugged, publish_on: Time.zone.today) }
+    before do
+      allow_any_instance_of(VacancyAlgoliaAlertBuilder).to receive(:expired_now_filter).and_return(@expired_now)
+      allow(vacancies).to receive(:count).and_return(10)
+      mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
     end
 
-    let!(:current_matching_vacancies) do
-      Timecop.freeze(1.day.ago) do
-        create_list(:vacancy, 4, :published_slugged, publish_on: Time.zone.today, job_title: 'English Language')
-      end
-    end
-
-    it 'returns the correct vacancies' do
-      Vacancy.__elasticsearch__.client.indices.flush
-      vacancies = subscription.vacancies_for_range(Time.zone.yesterday, Time.zone.today)
-      expect(vacancies.pluck(:id)).to match_array(current_matching_vacancies.pluck(:id))
+    it 'calls out to algolia search' do
+      expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eql(vacancies)
     end
   end
 

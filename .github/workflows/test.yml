@@ -7,7 +7,7 @@ env:
 
 jobs:
   tests:
-    name: Run RuboCop and RSpec
+    name: Run Rubocop and RSpec
 
     runs-on: ubuntu-latest
 
@@ -79,5 +79,15 @@ jobs:
       - name: Set up test database
         run: bin/rails db:create db:schema:load
 
+      - name: Run Rubocop
+        run: bundle exec rubocop
+
       - name: Run tests
-        run: bundle exec rake
+        run: bundle exec rspec
+
+      - name: Run Algolia integration tests
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_WRITE_API_KEY: ${{ secrets.ALGOLIA_WRITE_API_KEY }}
+          ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+        run: bundle exec rspec --tag algolia

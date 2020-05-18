@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
   before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
 
-  let(:search_criteria) { { subject: 'English', location: 'SW1A1AA', radius: 20 } }
+  let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
   let(:reference) { 'A reference' }
   let(:subscription) do
     create(:subscription,
@@ -11,10 +11,6 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
            frequency: :daily,
            search_criteria: search_criteria.to_json)
   end
-
-  # This needs to be here as we get redirected to the root page, which errors
-  # if we haven't flushed the Elasticsearch indices
-  before { Vacancy.__elasticsearch__.client.indices.flush }
 
   before do
     visit subscription_unsubscribe_path(subscription_id: token)
@@ -39,7 +35,7 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
     it 'allows me to resubscribe' do
       click_on I18n.t('subscriptions.deletion.resubscribe_link_text')
 
-      expect(page).to have_content('Subject: English')
+      expect(page).to have_content('Keyword: English')
       expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
     end
 

@@ -21,8 +21,8 @@ RSpec.describe SubscriptionReferenceGenerator do
       end
     end
 
-    context 'with subject in search criteria' do
-      let(:params) { { search_criteria: { 'subject' => 'maths and science', 'radius' => 20 } } }
+    context 'with keyword in search criteria' do
+      let(:params) { { search_criteria: { 'keyword' => 'maths and science', 'radius' => 20 } } }
 
       it 'returns a reference containing the subject' do
         service = described_class.new(params)
@@ -31,41 +31,13 @@ RSpec.describe SubscriptionReferenceGenerator do
       end
     end
 
-    context 'with job title in search criteria' do
-      let(:params) { { search_criteria: { 'job_title' => 'headteacher', 'radius' => 20 } } }
-
-      it 'returns a reference containing the job title' do
-        service = described_class.new(params)
-
-        expect(service.generate).to include('Headteacher jobs')
-      end
-    end
-
-    context 'with subject and job title in search criteria' do
-      let(:params) do
-        {
-          search_criteria: {
-            'subject' => 'maths and science',
-            'job_title' => 'headteacher',
-            'radius' => 20
-          }
-        }
-      end
-
-      it 'returns a reference containing the subject and job title' do
-        service = described_class.new(params)
-
-        expect(service.generate).to include('Maths and science headteacher jobs')
-      end
-    end
-
     context 'with location and radius in search criteria' do
-      let(:params) { { search_criteria: { 'location' => 'London', 'radius' => 40 } } }
+      let(:params) { { search_criteria: { 'location' => 'SW1A 1AA', 'radius' => 40 } } }
 
       it 'returns a reference containing the location and radius' do
         service = described_class.new(params)
 
-        expect(service.generate).to include('within 40 miles of London')
+        expect(service.generate).to include('within 40 miles of SW1A 1AA')
       end
     end
   end

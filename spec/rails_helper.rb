@@ -1,6 +1,5 @@
 require 'algolia/webmock'
 require 'spec_helper'
-require 'es_helper'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -42,6 +41,7 @@ RSpec.configure do |config|
   config.include VacancyHelpers
   config.include AuthHelpers
   config.include CapybaraHelper, type: :feature
+  config.include SearchHelper
 end
 
 Shoulda::Matchers.configure do |config|

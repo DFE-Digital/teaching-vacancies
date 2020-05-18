@@ -5,28 +5,6 @@ RSpec.describe Vacancy, type: :model do
   it { should belong_to(:publisher_user) }
   it { should have_many(:documents) }
 
-  describe '.public_search' do
-    context 'when there were no results' do
-      it 'records the event in Rollbar' do
-        filters = VacancyFilters.new(subject: 'subject', job_title: 'job title')
-        expect(Rollbar).to receive(:log)
-          .with(:info,
-                'A search returned 0 results',
-                location: nil,
-                radius: nil,
-                subject: 'subject',
-                job_title: 'job title',
-                working_patterns: nil,
-                newly_qualified_teacher: nil,
-                phases: nil)
-
-        results = Vacancy.public_search(filters: filters, sort: VacancySort.new)
-
-        expect(results.count).to eql(0)
-      end
-    end
-  end
-
   describe 'validations' do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }

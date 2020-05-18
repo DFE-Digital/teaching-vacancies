@@ -42,7 +42,9 @@ class Subscription < ApplicationRecord
   end
 
   def vacancies_for_range(date_from, date_to)
-    AlertResultFinder.new(search_criteria_to_h, date_from, date_to).call.records
+    VacancyAlgoliaAlertBuilder.new(
+      search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to)
+    ).call
   end
 
   def alert_run_today

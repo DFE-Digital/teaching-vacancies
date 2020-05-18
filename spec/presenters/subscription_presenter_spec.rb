@@ -15,7 +15,7 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context 'with the location category filter' do
-      let(:search_criteria) { { location: 'Barnet' } }
+      let(:search_criteria) { { location_category: 'Barnet', location: 'Barnet' } }
 
       it 'formats and returns the search criteria' do
         expect(presenter.filtered_search_criteria['location']).to eq('In Barnet')
@@ -110,8 +110,8 @@ RSpec.describe SubscriptionPresenter do
     let(:full_search_criteria) { presenter.send(:full_search_criteria) }
 
     it 'adds all possible search criteria to subscription criteria' do
-      expect(full_search_criteria.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count)
-      expect(full_search_criteria.keys).to match_array(VacancyAlertFilters::AVAILABLE_FILTERS)
+      expect(full_search_criteria.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count)
+      expect(full_search_criteria.keys).to match_array(described_class::SEARCH_CRITERIA_SORT_ORDER)
       expect(full_search_criteria[:keyword]).to eq(search_criteria[:keyword])
     end
   end
@@ -120,7 +120,7 @@ RSpec.describe SubscriptionPresenter do
     let(:to_row) { presenter.to_row }
 
     it 'returns the right number of keys' do
-      expect(to_row.count).to eq(VacancyAlertFilters::AVAILABLE_FILTERS.count + 1)
+      expect(to_row.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count + 1)
     end
 
     it 'returns the reference' do

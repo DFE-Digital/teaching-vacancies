@@ -7,7 +7,7 @@ RSpec.describe VacanciesPresenter do
       searched = true
       decorated_vacancies = vacancies.map { |v| VacancyPresenter.new(v) }
 
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
+      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
       allow(vacancies_presenter).to receive(:decorated_collection).and_return(decorated_vacancies)
 
       expect(decorated_vacancies).to receive(:each)
@@ -17,59 +17,72 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe '#total_count_message' do
-    it 'returns the correct number for a single vacancy', elasticsearch: true do
-      create(:vacancy, job_title: 'School teacher')
-      Vacancy.__elasticsearch__.client.indices.flush
+    let(:vacancies) { double('vacancies').as_null_object }
 
-      vacancies = Vacancy.search('Teacher').records
-      searched = true
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count', count: 1))
+    before do
+      allow(vacancies).to receive(:count).and_return(total_count)
     end
 
-    it 'returns the correct number for multiple vacancies', elasticsearch: true do
-      create(:vacancy, job_title: 'School teacher')
-      create(:vacancy, job_title: 'Math teacher')
-      create(:vacancy, job_title: 'English teacher')
-      Vacancy.__elasticsearch__.client.indices.flush
+    context 'with search' do
+      let(:searched) { true }
 
-      vacancies = Vacancy.search('Teacher').records
-      searched = true
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_plural', count: 3))
+      context 'for a single vacancy' do
+        let(:total_count) { 1 }
+
+        it 'returns the correct number' do
+          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
+          expect(vacancies_presenter.total_count_message).to eq(
+            I18n.t('jobs.job_count', count: total_count)
+          )
+        end
+      end
+
+      context 'for multiple vacancies' do
+        let(:total_count) { 3 }
+
+        it 'returns the correct number' do
+          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
+          expect(vacancies_presenter.total_count_message).to eq(
+            I18n.t('jobs.job_count_plural', count: total_count)
+          )
+        end
+      end
     end
 
-    it 'returns the correct number for a single vacancy without a search', elasticsearch: true do
-      create(:vacancy, job_title: 'School teacher')
-      Vacancy.__elasticsearch__.client.indices.flush
+    context 'without search' do
+      let(:searched) { false }
 
-      vacancies = Vacancy.search('Teacher').records
-      searched = false
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_without_search', count: 1))
-    end
+      context 'for a single vacancy' do
+        let(:total_count) { 1 }
 
-    it 'returns the correct number for multiple vacancies without a search', elasticsearch: true do
-      create(:vacancy, job_title: 'School teacher')
-      create(:vacancy, job_title: 'Math teacher')
-      create(:vacancy, job_title: 'English teacher')
-      Vacancy.__elasticsearch__.client.indices.flush
+        it 'returns the correct number' do
+          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
+          expect(vacancies_presenter.total_count_message).to eq(
+            I18n.t('jobs.job_count_without_search', count: total_count)
+          )
+        end
+      end
 
-      vacancies = Vacancy.search('Teacher').records
-      searched = false
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched)
-      expect(vacancies_presenter.total_count_message).to eq(I18n.t('jobs.job_count_plural_without_search', count: 3))
+      context 'for multiple vacancies' do
+        let(:total_count) { 3 }
+
+        it 'returns the correct number' do
+          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
+          expect(vacancies_presenter.total_count_message).to eq(
+            I18n.t('jobs.job_count_plural_without_search', count: total_count)
+          )
+        end
+      end
     end
   end
 
   describe '#to_csv' do
-    let!(:vacancy) { VacancyPresenter.new(create(:vacancy, job_title: 'School teacher')) }
+    let!(:vacancy) { create(:vacancy, job_title: 'School teacher') }
+    let!(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
-    it 'returns the correct data', elasticsearch: true do
-      Vacancy.__elasticsearch__.client.indices.flush
-
-      vacancies = Vacancy.search('Teacher').records
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: false)
+    it 'returns the correct data' do
+      vacancies = [vacancy]
+      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.count)
       vacancies_text = vacancies_presenter.to_csv
       vacancies_csv = CSV.parse(vacancies_text)
 
@@ -80,28 +93,30 @@ RSpec.describe VacanciesPresenter do
                                         hiringOrganization.type hiringOrganization.name
                                         hiringOrganization.identifier])
 
-      expect(vacancies_csv[1]).to eq([vacancy.job_title,
-                                      vacancy.job_summary,
-                                      vacancy.salary,
-                                      vacancy.benefits,
-                                      vacancy.publish_on.to_time.iso8601,
-                                      vacancy.education,
-                                      vacancy.qualifications,
-                                      vacancy.experience,
-                                      vacancy.working_patterns_for_job_schema,
-                                      vacancy.school.town,
-                                      vacancy.school&.region&.name,
-                                      vacancy.school.address,
-                                      vacancy.school.postcode,
-                                      Rails.application.routes.url_helpers.job_url(vacancy, protocol: 'https'),
+      expect(vacancies_csv[1]).to eq([vacancy_presenter.job_title,
+                                      vacancy_presenter.job_summary,
+                                      vacancy_presenter.salary,
+                                      vacancy_presenter.benefits,
+                                      vacancy_presenter.publish_on.to_time.iso8601,
+                                      vacancy_presenter.education,
+                                      vacancy_presenter.qualifications,
+                                      vacancy_presenter.experience,
+                                      vacancy_presenter.working_patterns_for_job_schema,
+                                      vacancy_presenter.school.town,
+                                      vacancy_presenter.school&.region&.name,
+                                      vacancy_presenter.school.address,
+                                      vacancy_presenter.school.postcode,
+                                      Rails.application.routes.url_helpers.job_url(
+                                        vacancy_presenter, protocol: 'https'
+                                      ),
                                       'School',
-                                      vacancy.school.name,
-                                      vacancy.school.urn])
+                                      vacancy_presenter.school.name,
+                                      vacancy_presenter.school.urn])
     end
   end
 
   describe '#previous_api_url' do
-    let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false) }
+    let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.total_count) }
     let(:vacancies) { double(:vacancies, map: [], prev_page: prev_page, total_count: 0) }
 
     context 'when there is a previous page' do
@@ -122,7 +137,7 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe '#next_api_url' do
-    let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false) }
+    let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.total_count) }
     let(:vacancies) { double(:vacancies, map: [], next_page: next_page, total_count: 0) }
 
     context 'when there is a next page' do

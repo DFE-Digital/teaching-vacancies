@@ -3,7 +3,7 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :searched
+  attr_reader :searched, :total_count
   alias_method :user_search?, :searched
 
   CSV_ATTRIBUTES = %w[title description salary jobBenefits datePosted educationRequirements qualifications
@@ -11,9 +11,10 @@ class VacanciesPresenter < BasePresenter
                       jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
-  def initialize(vacancies, searched:)
+  def initialize(vacancies, searched:, total_count:)
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
+    @total_count = total_count
     super(vacancies)
   end
 
@@ -41,14 +42,6 @@ class VacanciesPresenter < BasePresenter
     return I18n.t('jobs.job_count_with_location_category', count: total_count, location: location) if total_count == 1
     I18n.t('jobs.job_count_plural_with_location_category', \
       count: number_with_delimiter(total_count), location: location)
-  end
-
-  def apply_filters_button_text
-    if @searched == true
-      I18n.t('buttons.apply_filters_if_criteria')
-    else
-      I18n.t('buttons.apply_filters')
-    end
   end
 
   def to_csv
@@ -79,10 +72,6 @@ class VacanciesPresenter < BasePresenter
   end
 
   private
-
-  def total_count
-    @total_count ||= model.total_count
-  end
 
   def json_api_params
     {
