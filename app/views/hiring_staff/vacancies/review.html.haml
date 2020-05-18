@@ -4,7 +4,7 @@
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     = render 'hiring_staff/vacancies/edit_heading'
-    
+
     %p.govuk-body-l
       - if @vacancy.publish_on.today?
         = t('jobs.review')
@@ -12,7 +12,7 @@
         = t('jobs.review_future')
 
     = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
-    
+
     %ol.app-task-list
       %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
       %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
@@ -22,7 +22,7 @@
 
     %h3.govuk-heading-m= t('jobs.preview_listing.heading')
     %p= t('jobs.preview_listing.message')
-    = link_to t('jobs.preview_listing.button'), school_job_preview_path(@vacancy.id), class: 'govuk-button', id: 'vacancy-review-preview'
+    = link_to t('jobs.preview_listing.button'), school_job_preview_path(@vacancy.id), class: 'govuk-button preview-listing-gtm', id: 'vacancy-review-preview'
 
     %h3.govuk-heading-m= t('jobs.submit_listing.heading', count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
     %p= t('jobs.submit_listing.message_html')
