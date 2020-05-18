@@ -33,6 +33,8 @@ class Vacancy < ApplicationRecord
 
   include AlgoliaSearch
 
+  # For guidance on sanity-checking an indexing change, read documentation/algolia_sanity_check.md
+
   # rubocop:disable Metrics/BlockLength
   algoliasearch disable_indexing: !Rails.env.production? do
     attributes :job_roles, :job_title, :salary, :working_patterns
