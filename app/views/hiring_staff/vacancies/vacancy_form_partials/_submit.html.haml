@@ -1,4 +1,4 @@
 - if @vacancy&.published?
-  = f.govuk_submit t('buttons.update_job')
+  = f.govuk_submit t('buttons.update_job'), classes: 'update-listing-gtm'
 - else
-  = f.govuk_submit t('buttons.save_and_continue')
+  = f.govuk_submit t('buttons.save_and_continue'), classes: 'save-listing-gtm'
