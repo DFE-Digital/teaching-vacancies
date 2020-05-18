@@ -46,7 +46,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
-    redirect_to school_path, notice: t('messages.jobs.delete')
+    redirect_to school_path, success: t('messages.jobs.delete')
   end
 
   def preview
