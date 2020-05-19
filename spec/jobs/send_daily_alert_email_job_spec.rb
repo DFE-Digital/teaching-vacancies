@@ -109,7 +109,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
             job_title: 'Teacher',
             working_patterns: ['full_time'],
             phases: ['primary', 'secondary'],
-            newly_qualified_teacher: true
+            newly_qualified_teacher: 'true'
           }.to_json
         end
 

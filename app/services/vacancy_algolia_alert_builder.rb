@@ -31,7 +31,11 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
       hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
       filters: search_filter
     )
-    Rails.logger.info("#{vacancies.count} vacancies found for job alert with criteria: #{subscription_hash}")
+    Rails.logger.info(
+      "#{vacancies.count} vacancies found for job alert with criteria: #{subscription_hash}, "\
+      "search_query: #{search_query}, replica: #{search_replica}, location_filter: #{location_filter} "\
+      "and filters: #{search_filter}"
+    )
     vacancies
   end
 
@@ -46,7 +50,7 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
     }&.join(' OR ')
 
     job_roles = "job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}'" if
-      subscription_hash[:newly_qualified_teacher] == true
+      subscription_hash[:newly_qualified_teacher] == 'true'
 
     phases = subscription_hash[:phases]&.map {
       |phase| "school.phase:#{phase}"

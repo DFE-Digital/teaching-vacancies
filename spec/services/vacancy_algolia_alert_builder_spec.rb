@@ -40,7 +40,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
         subject: search_subject,
         job_title: job_title,
         working_patterns: ['full_time', 'part_time'],
-        newly_qualified_teacher: true,
+        newly_qualified_teacher: 'true',
         phases: ['secondary', 'primary'],
         from_date: date_today,
         to_date: date_today
