@@ -217,16 +217,16 @@ ActiveRecord::Schema.define(version: 2020_05_14_084513) do
     t.integer "total_get_more_info_clicks"
     t.datetime "total_get_more_info_clicks_updated_at"
     t.integer "working_patterns", array: true
-    t.boolean "pro_rata_salary"
     t.integer "listed_elsewhere"
     t.integer "hired_status"
+    t.boolean "pro_rata_salary"
     t.datetime "stats_updated_at"
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
+    t.string "job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
-    t.string "job_roles", array: true
     t.text "about_school"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
