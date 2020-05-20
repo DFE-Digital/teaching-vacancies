@@ -1,4 +1,9 @@
 /* global window */
+
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import '../lib/classlist.polyfill';
+
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
@@ -36,12 +41,12 @@ if (document.querySelector('#vacancies-hits')) {
             if (SEARCH_THRESHOLD <= query.length) {
                 if (stringMatchesPostcode(query)) {
                     getCoordinates(query).then(coords => {
-                        document.querySelector('#radius').removeAttribute('disabled');
+                        document.querySelector('#location-radius-select').style.display = 'block';
                         document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
                         search('');
                     });
                 } else {
-                    document.querySelector('#radius').setAttribute('disabled', true);
+                    document.querySelector('#location-radius-select').style.display = 'none';
                     search(query);
                 }
             } else {

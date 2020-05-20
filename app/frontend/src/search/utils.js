@@ -29,7 +29,7 @@ export const stringMatchesPostcode = postcode => {
     return regex.test(postcode);
 };
 
-export const convertMilesToMetres = miles => parseInt(miles, 10) * 1609.34;
+export const convertMilesToMetres = miles => Math.ceil(parseInt(miles, 10) * 1609.34);
 
 export const convertEpochToUnixTimestamp = timestamp => Math.round(timestamp / 1000);
 

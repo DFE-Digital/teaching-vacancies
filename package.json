@@ -22,8 +22,8 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "test": "npm run js:check",
-    "js:check": "npm run js:lint && npm run js:test",
+    "test": "yarn run js:check",
+    "js:check": "yarn run js:lint && yarn run js:test",
     "js:test": "jest",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss -q",
     "js:lint": "eslint ./app/frontend/src/search"

@@ -1,10 +1,12 @@
+import '../../lib/after.polyfill';
+
 export const isActive = (threshold, currentInput) => currentInput ? currentInput.length >= threshold : false;
 
 export const renderAutocomplete = (renderOptions) => {
     const { currentRefinement, widgetParams } = renderOptions;
 
     if (!widgetParams.container.querySelector('ul')) {
-        create(widgetParams.container, widgetParams.input, widgetParams.onSelection);
+        create(widgetParams.input, widgetParams.onSelection);
     }
 
     const handleFocus = e => {
@@ -40,7 +42,7 @@ export const hide = (element, inputElement) => {
     inputElement.setAttribute('aria-expanded', false);
 };
 
-export const create = (container, input, onSelect) => {
+export const create = (input, onSelect) => {
     const ul = document.createElement('ul');
     ul.setAttribute('id', 'location__listbox');
     ul.setAttribute('role', 'listbox');
@@ -49,7 +51,7 @@ export const create = (container, input, onSelect) => {
     ul.classList.add('app-site-search__menu');
     ul.classList.add('app-site-search__menu--overlay');
 
-    container.appendChild(ul);
+    input.after(ul);
 
     document.addEventListener('click', () => {
         hide(ul, input);
@@ -64,7 +66,7 @@ export const getOptions = (dataset, query) => dataset.filter((result) => result.
 
 export const renderIndexListItem = (refinement) => {
     return (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
-};
+    };
 
 export const highlightRefinement = (text, refinement) => {
     const index = text.toLowerCase().indexOf(refinement);
@@ -74,7 +76,9 @@ export const highlightRefinement = (text, refinement) => {
 <span class='highlight'>
 ${text.toLowerCase().substring(index, index + refinement.length)}
 </span>
+<span>
 ${text.toLowerCase().substring(index + refinement.length, text.length)}
+</span>
 `;
     }
 };

@@ -6,7 +6,7 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    addHeadingMarkup(widgetParams.container, results.nbHits, results.query, widgetParams.threshold);
+    addHeadingMarkup(widgetParams.container, results.nbHits);
     if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.alert);
       updateJobAlertLink();
@@ -18,11 +18,11 @@ export const renderContent = (renderOptions) => {
 };
 
 export const addJobAlertMarkup = container => {
-  !document.querySelector('#job-alert-subscribe') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
+  !document.getElementById('job-seeker-alert-icon') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
 };
 
 export const removeJobAlertMarkup = () => {
-  const el = document.getElementById('job-alert-subscribe');
+  const el = document.getElementById('job-seeker-alert-icon');
   return el && el.remove(); 
 };
 
@@ -34,9 +34,8 @@ export const updateJobAlertLink = () => {
   document.querySelector('#job-alert-link').href = `/subscriptions/new?${encodeURIComponent(queryString)}`;
 };
 
-export const addHeadingMarkup = (container, nbHits, query, threshold) => {
-  const inQuery = query && (query.length >= threshold) ? ` in ${query}` : '';
-  container.innerHTML = `There are ${nbHits} jobs listed ${inQuery}`;
+export const addHeadingMarkup = (container, nbHits) => {
+  container.innerHTML = `There are ${nbHits} jobs listed`;
 };
 
 export const hideServerMarkup = () => {
@@ -53,8 +52,8 @@ export const transform = items => items.map(item => ({
 
 export const templates = {
   item: `
-<article class="vacancy">
-  <h2 class="govuk-heading-m mb0">
+<article class="vacancy" role="article">
+  <h2 class="govuk-heading-m mb0" role="heading" aria-level="2">
     <a href="/jobs/{{ permalink }}" class="govuk-link view-vacancy-link">
     {{ job_title }}
     </a>
@@ -83,7 +82,7 @@ export const templates = {
 
 export const customTemplates = {
   alert: `
-  <div class="govuk-inset-text" id="job-alert-subscribe">
+  <div class="govuk-inset-text" id="job-seeker-alert-icon">
 <span class="job-seeker-alert-icon">
 <svg height="16" viewBox="0 0 20 16" width="20" xmlns="http://www.w3.org/2000/svg">
 <path d="M18 0H2C.9 0 0 .9 0 2v12a2 2 0 0 0 2 2h16c1.1 0 2-.9 2-2V2a2 2 0 0 0-2-2zm-.4 4.25l-7.07 4.42c-.32.2-.74.2-1.06 0L2.4 4.25a.85.85 0 1 1 .9-1.44L10 7l6.7-4.19a.85.85 0 1 1 .9 1.44zm0 0" fill="#0b0c0c"></path>

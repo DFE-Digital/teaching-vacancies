@@ -55,13 +55,13 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
         expect(page).to have_selector('.vacancy', count: 2)
       end
 
-      scenario 'radius filter is disabled', js: true do
+      scenario 'radius filter is disabled' do
         visit location_category_path('bradford')
 
         expect(page).to have_field('radius', disabled: true)
       end
 
-      scenario 'radius filter is re-enabled when the location field is clicked', js: true do
+      scenario 'radius filter is re-enabled when the location field is clicked' do
         visit location_category_path('bradford')
 
         expect(page).to have_field('radius', disabled: true)
