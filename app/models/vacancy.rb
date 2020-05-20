@@ -38,6 +38,7 @@ class Vacancy < ApplicationRecord
   include Redis::Objects
 
   include AlgoliaSearch
+  AlgoliaSearch::IndexSettings::DEFAULT_BATCH_SIZE = 100
 
   # For guidance on sanity-checking an indexing change, read documentation/algolia_sanity_check.md
 
@@ -68,6 +69,10 @@ class Vacancy < ApplicationRecord
       self.status
     end
 
+    attribute :job_summary do
+      self.job_summary&.truncate(256)
+    end
+
     attribute :newly_qualified_teacher_status do
       self.newly_qualified_teacher
     end
@@ -85,14 +90,16 @@ class Vacancy < ApplicationRecord
     end
 
     attribute :school do
-      { name: self.school.name,
-        address: self.school.address,
-        county: self.school.county,
-        local_authority: self.school.local_authority,
-        phase: self.school.phase,
-        postcode: self.school.postcode,
-        region: self.school.region.name,
-        town: self.school.town }
+      school = self.school
+      { name: school.name,
+        county: school.county,
+        detailed_school_type: school.detailed_school_type&.label,
+        local_authority: school.local_authority,
+        phase: school.phase,
+        religious_character: school.gias_data['ReligiousCharacter (name)'],
+        region: school.region&.name,
+        school_type: school.school_type&.label&.singularize,
+        town: school.town }
     end
 
     attribute :second_supporting_subject do
