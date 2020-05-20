@@ -18,5 +18,4 @@ applications:
     services:
       - teaching-vacancies-postgres-dev
       - teaching-vacancies-redis-dev
-      - teaching-vacancies-elasticsearch-dev
       - teaching-vacancies-papertrail-dev
