@@ -78,6 +78,10 @@ test:
   <<: *default
   compile: true
 
+staging:
+  <<: *default
+  compile: true
+
 production:
   <<: *default
 
