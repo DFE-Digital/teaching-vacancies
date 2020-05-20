@@ -18,5 +18,4 @@ applications:
     services:
       - teaching-vacancies-postgres-production
       - teaching-vacancies-redis-production
-      - teaching-vacancies-elasticsearch-production
       - teaching-vacancies-papertrail-production
