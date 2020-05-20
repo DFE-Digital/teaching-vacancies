@@ -1,0 +1,76 @@
+name: Integration Test
+
+on: [push]
+
+jobs:
+  backend-search-tests:
+    name: Run backend Algolia search integration tests
+
+    runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: test
+      ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+      ALGOLIA_WRITE_API_KEY: ${{ secrets.ALGOLIA_WRITE_API_KEY }}
+      ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+
+    services:
+      postgres:
+        image: postgres:11.6-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ''
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6.6
+
+      - name: Set up ruby gem cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install gems
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 20 --retry 3
+
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install yarn
+        run: npm install yarn -g
+
+      - name: Yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Set up yarn cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install node.js dependencies
+        run: yarn install
+
+      - name: Set up test database
+        run: bin/rails db:create db:schema:load
+
+      - name: Run Algolia integration tests
+        run: bundle exec rspec --tag algolia
