@@ -11,12 +11,10 @@ services:
     environment:
       RAILS_ENV: "development"
       DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
-      ELASTICSEARCH_URL: "http://elasticsearch:9200"
     env_file:
       - docker-compose.env
     depends_on:
       - db
-      - elasticsearch
       - redis_queue
       - redis_cache
       - sidekiq
@@ -38,26 +36,6 @@ services:
       - "15432:5432"
     restart: on-failure
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
-    depends_on:
-      - db
-    ports:
-      - "9200:9200"
-    environment:
-      - cluster.name=docker-dev-cluster
-      - node.name={{.Node.Hostname}}-elasticsearch
-      - network.host=0.0.0.0
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
-    restart: on-failure
-
   redis_cache:
     image: redis:alpine
     command: redis-server
@@ -77,7 +55,6 @@ services:
     environment:
       RAILS_ENV: "development"
       DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
-      ELASTICSEARCH_URL: "http://elasticsearch:9200"
     env_file:
       - docker-compose.env
     volumes:
@@ -90,6 +67,4 @@ services:
 
 volumes:
   pg_data: {}
-  elasticsearch:
-    driver: local
   node_modules:
