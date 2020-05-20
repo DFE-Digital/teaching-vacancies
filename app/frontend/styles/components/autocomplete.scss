@@ -123,9 +123,15 @@
     display: block;
     position: relative;
     padding: 10px;
-    border-bottom: solid #b1b4b6;
+    border-bottom: solid #DEE0E2;
     border-width: 1px 0;
     cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+.app-site-search__option .highlight {
+    font-weight: bold;
+    text-transform: capitalize;
 }
 .app-site-search__option > * {
     pointer-events: none;
@@ -136,16 +142,16 @@
 .app-site-search__option:last-of-type {
     border-bottom-width: 0;
 }
-.app-site-search__option--odd {
-    background-color: #fafafa;
+.app-site-search__option:nth-child(even) {
+    background-color: #F8F8F8;
 }
 .app-site-search__option--focused,
 .app-site-search__option:hover {
-    border-color: #1d70b8;
+    border-color: #C2DFF4;
     outline: 3px solid transparent;
     outline-offset: -3px;
-    color: #fff;
-    background-color: #1d70b8;
+    color: #000000;
+    background-color: #C2DFF4;
 }
 .app-site-search__option--focused .app-site-search--section,
 .app-site-search__option:hover .app-site-search--section {

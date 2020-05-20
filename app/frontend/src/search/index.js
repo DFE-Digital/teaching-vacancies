@@ -15,6 +15,7 @@ import { getCoordinates } from './geoloc';
 
 if (document.querySelector('#vacancies-hits')) {
     const ALGOLIA_INDEX = 'Vacancy';
+    const SEARCH_THRESHOLD = 3;
 
     const searchClientInstance = searchClient(ALGOLIA_INDEX);
 
@@ -28,17 +29,23 @@ if (document.querySelector('#vacancies-hits')) {
         container: document.querySelector('.filters-form'),
         element: '#location',
         key: 'location',
+        
         queryHook(query, search) {
             query ? updateUrlQueryParams('location', query, window.location.href) : false;
-            if (stringMatchesPostcode(query)) {
-                getCoordinates(query).then(coords => {
-                    document.querySelector('#radius').removeAttribute('disabled');
-                    document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
-                    search('');
-                });
+
+            if (SEARCH_THRESHOLD <= query.length) {
+                if (stringMatchesPostcode(query)) {
+                    getCoordinates(query).then(coords => {
+                        document.querySelector('#radius').removeAttribute('disabled');
+                        document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
+                        search('');
+                    });
+                } else {
+                    document.querySelector('#radius').setAttribute('disabled', true);
+                    search(query);
+                }
             } else {
-                document.querySelector('#radius').setAttribute('disabled', true);
-                search(query);
+                search('');
             }
         },
     });
@@ -51,7 +58,7 @@ if (document.querySelector('#vacancies-hits')) {
             container: document.querySelector('.app-site-search__wrapper'),
             input: document.querySelector('#location'),
             dataset: locations,
-            threshold: 3,
+            threshold: SEARCH_THRESHOLD,
             onSelection: value => {
                 locationSearchBox._refine(value);
                 updateUrlQueryParams('location', value, window.location.href);
@@ -91,6 +98,7 @@ if (document.querySelector('#vacancies-hits')) {
         heading({
             container: document.querySelector('#job-count'),
             alert: document.querySelector('.vacancies-count'),
+            threshold: SEARCH_THRESHOLD,
         }),
         hits({
             container: '#vacancies-hits',

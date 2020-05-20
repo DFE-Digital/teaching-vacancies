@@ -1,26 +1,28 @@
 export const isActive = (threshold, currentInput) => currentInput ? currentInput.length >= threshold : false;
 
-export const renderAutocomplete = (renderOptions, isFirstRender) => {
+export const renderAutocomplete = (renderOptions) => {
     const { currentRefinement, widgetParams } = renderOptions;
 
-    if (isFirstRender) {
+    if (!widgetParams.container.querySelector('ul')) {
         create(widgetParams.container, widgetParams.input, widgetParams.onSelection);
     }
 
     const handleFocus = e => {
-        widgetParams.input.value = e.target.innerHTML;
-        widgetParams.onSelection(e.target.innerHTML);
+        widgetParams.input.value = e.target.dataset.location;
+        widgetParams.onSelection(e.target.dataset.location);
     };
 
-    if (isActive(widgetParams.threshold, currentRefinement)) {
-        const options = getOptions(widgetParams.dataset, currentRefinement);
+    const options = getOptions(widgetParams.dataset, currentRefinement);
 
-        widgetParams.container.querySelector('ul').innerHTML = options.map(renderIndexListItem).join('');
+    if (isActive(widgetParams.threshold, currentRefinement)) {
+
+        widgetParams.container.querySelector('ul').innerHTML = options.map(renderIndexListItem(currentRefinement)).join('');
 
         show(widgetParams.container.querySelector('ul'), widgetParams.input);
 
         Array.from(widgetParams.container.querySelectorAll('.app-site-search__option'))
             .forEach(element => element.addEventListener('focus', (e) => handleFocus(e), true));
+
     } else {
         hide(widgetParams.container.querySelector('ul'), widgetParams.input);
     }
@@ -54,10 +56,25 @@ export const create = (container, input, onSelect) => {
     });
 
     ul.addEventListener('click', (e) => {
-        onSelect(e.target.innerHTML);
+        onSelect(e.target.dataset.location);
     });
-}
+};
 
 export const getOptions = (dataset, query) => dataset.filter((result) => result.toLowerCase().indexOf(query) >= 0);
 
-export const renderIndexListItem = (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index}>${hit}</li>`;
+export const renderIndexListItem = (refinement) => {
+    return (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
+};
+
+export const highlightRefinement = (text, refinement) => {
+    const index = text.toLowerCase().indexOf(refinement);
+
+    if (index >= 0) {
+        return `${text.substring(0, index).toLowerCase()}
+<span class='highlight'>
+${text.toLowerCase().substring(index, index + refinement.length)}
+</span>
+${text.toLowerCase().substring(index + refinement.length, text.length)}
+`;
+    }
+};

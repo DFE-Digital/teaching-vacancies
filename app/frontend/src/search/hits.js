@@ -6,8 +6,8 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    results.query.length ? addHeadingMarkup(widgetParams.container, results.nbHits, results.query) : false;
-    if (results.query.length >=3) {
+    addHeadingMarkup(widgetParams.container, results.nbHits, results.query, widgetParams.threshold);
+    if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.alert);
       updateJobAlertLink();
     } else {
@@ -34,8 +34,8 @@ export const updateJobAlertLink = () => {
   document.querySelector('#job-alert-link').href = `/subscriptions/new?${encodeURIComponent(queryString)}`;
 };
 
-export const addHeadingMarkup = (container, nbHits, query) => {
-  const inQuery = query ? ` in ${query}` : '';
+export const addHeadingMarkup = (container, nbHits, query, threshold) => {
+  const inQuery = query && (query.length >= threshold) ? ` in ${query}` : '';
   container.innerHTML = `There are ${nbHits} jobs listed ${inQuery}`;
 };
 
