@@ -76,7 +76,7 @@ jobs:
         run: bundle exec rspec
 
   frontend-tests:
-    name: Run yarn test
+    name: Run jest
 
     runs-on: ubuntu-latest
 
