@@ -69,6 +69,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   before(:each) do
     stub_accepted_terms_and_condition
     OmniAuth.config.test_mode = true
+    allow(AuthenticationFallback).to receive(:enabled?) { false }
   end
 
   after(:each) do

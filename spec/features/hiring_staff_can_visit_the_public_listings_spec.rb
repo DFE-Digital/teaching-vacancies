@@ -9,6 +9,7 @@ RSpec.feature 'School viewing public listings' do
 
   before do
     OmniAuth.config.test_mode = true
+    allow(AuthenticationFallback).to receive(:enabled?) { false }
   end
 
   after(:each) do
