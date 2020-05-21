@@ -2,5 +2,5 @@
   %td.govuk-table__cell= link_to vacancy.job_title, school_job_path(vacancy.id), class: 'govuk-link view-vacancy-link'
   %td.govuk-table__cell= vacancy.created_at
   %td.govuk-table__cell= vacancy.updated_at
-  %td.govuk-table__cell= link_to t('jobs.edit_link'), edit_school_job_path(vacancy.id), class: 'govuk-link'
+  %td.govuk-table__cell= link_to t('jobs.edit_link'), school_job_review_path(vacancy.id, edit_draft: true), class: 'govuk-link'
   %td.govuk-table__cell= link_to t('jobs.delete_link'), school_job_path(id: vacancy.id), class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }

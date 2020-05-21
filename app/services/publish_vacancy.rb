@@ -9,6 +9,7 @@ class PublishVacancy
 
     @vacancy.publisher_user_id = @current_user.id
     @vacancy.status = :published
+    @vacancy.state = 'edit_published'
     @vacancy.save
   end
 end
