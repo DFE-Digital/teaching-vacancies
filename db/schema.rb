@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_075215) do
+ActiveRecord::Schema.define(version: 2020_05_21_171155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_075215) do
     t.string "oid"
     t.datetime "accepted_terms_at"
     t.string "email"
+    t.jsonb "dsi_data"
     t.index ["oid"], name: "index_users_on_oid", unique: true
   end
 
