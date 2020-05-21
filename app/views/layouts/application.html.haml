@@ -27,7 +27,7 @@
     = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
     %meta{ content: asset_pack_path('media/images/govuk-opengraph-image.png'), property: "og:image" }/
     = csrf_meta_tags
-  %body{ class: body_class }
+  %body{ class: body_class, data: { vacancy_state: @vacancy.present? ? @vacancy.state : 'create' } }
     = render partial: 'shared/google_tag_manager_body'
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
