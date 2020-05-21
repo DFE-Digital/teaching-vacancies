@@ -57,7 +57,6 @@ GEM
     algoliasearch-rails (1.24.0)
       algoliasearch (>= 1.26.0, < 2.0.0)
       json (>= 1.5.1)
-    ansi (1.5.0)
     arel (9.0.0)
     array_enum (1.2.0)
       activemodel
@@ -112,21 +111,6 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
-    elasticsearch (7.4.0)
-      elasticsearch-api (= 7.4.0)
-      elasticsearch-transport (= 7.4.0)
-    elasticsearch-api (7.4.0)
-      multi_json
-    elasticsearch-extensions (0.0.31)
-      ansi
-      elasticsearch
-    elasticsearch-model (7.0.0)
-      activesupport (> 3)
-      elasticsearch (> 1)
-      hashie
-    elasticsearch-transport (7.4.0)
-      faraday
-      multi_json
     erubi (1.9.0)
     erubis (2.7.0)
     et-orbi (1.2.4)
@@ -546,8 +530,6 @@ DEPENDENCIES
   colorize
   database_cleaner
   dotenv-rails
-  elasticsearch-extensions
-  elasticsearch-model
   factory_bot_rails
   faker
   faraday_middleware-aws-signers-v4

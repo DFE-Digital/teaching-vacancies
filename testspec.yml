@@ -10,12 +10,11 @@ phases:
   build:
     commands:
       - echo Testing the newly built Docker image...
-      - docker run --name es -d -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" docker.elastic.co/elasticsearch/elasticsearch:6.0.1
       - docker run --name pg -d -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres:9.6
       - docker run --name test -d -e RAILS_ENV=test --link pg:pg --link es:es temp_image:test /bin/bash -c "tail -f /dev/null"
-      - docker exec test /bin/bash -c "export DATABASE_URL='postgres://postgres@pg:5432/test?template=template0&pool=5&encoding=unicode' && export ELASTICSEARCH_URL='http://es:9200' && rails db:setup"
-      - docker exec test /bin/bash -c "export DATABASE_URL='postgres://postgres@pg:5432/test?template=template0&pool=5&encoding=unicode' && export ELASTICSEARCH_URL='http://es:9200' && rails assets:precompile"
-      - docker exec test /bin/bash -c "export DATABASE_URL='postgres://postgres@pg:5432/test?template=template0&pool=5&encoding=unicode' && export ELASTICSEARCH_URL='http://es:9200' && rake"
+      - docker exec test /bin/bash -c "export DATABASE_URL='postgres://postgres@pg:5432/test?template=template0&pool=5&encoding=unicode' && rails db:setup"
+      - docker exec test /bin/bash -c "export DATABASE_URL='postgres://postgres@pg:5432/test?template=template0&pool=5&encoding=unicode' && rails assets:precompile"
+      - docker exec test /bin/bash -c "export DATABASE_URL='postgres://postgres@pg:5432/test?template=template0&pool=5&encoding=unicode' && rake"
       - docker rm -f test es pg
   post_build:
     commands:

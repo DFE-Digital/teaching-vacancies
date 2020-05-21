@@ -8,7 +8,6 @@ services:
     environment:
       RAILS_ENV: "test"
       DATABASE_URL: "postgres://postgres@db-test:5432"
-      ELASTICSEARCH_URL: "http://elasticsearch-test:9200"
     container_name: teacher-vacancy-service_test_1
     env_file:
       - docker-compose.env
@@ -17,7 +16,6 @@ services:
       - node_modules:/srv/dfe-tvs/node_modules:cached
     depends_on:
       - db-test
-      - elasticsearch-test
     command: ["bundle", "exec", "./bin/dsetup && spring server"]
     restart: on-failure
     networks:
@@ -35,30 +33,9 @@ services:
       - "25432:5432"
     restart: on-failure
 
-  elasticsearch-test:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.0.1
-    hostname: "{{.Node.Hostname}}-elasticsearch-test"
-    depends_on:
-      - db-test
-    ports:
-      - "9201:9200"
-    environment:
-      - discovery.type=single-node
-      - cluster.name=docker-test-cluster
-      - node.name={{.Node.Hostname}}-elasticsearch-test
-      - network.host=0.0.0.0
-    # place elasticsearch data on tmpfs for performance
-    tmpfs: /usr/share/elasticsearch/test/data
-    volumes:
-      - elasticsearch_test:/usr/share/elasticsearch/teaching_jobs_test/data
-    networks:
-      - tests
-    restart: on-failure
-
 networks:
   tests:
 
 volumes:
   pg_test_data: {}
-  elasticsearch_test: {}
   node_modules:

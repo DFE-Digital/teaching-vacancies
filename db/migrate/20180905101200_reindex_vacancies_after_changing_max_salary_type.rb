@@ -1,5 +1,7 @@
 class ReindexVacanciesAfterChangingMaxSalaryType < ActiveRecord::Migration[5.2]
   def change
-    Rake::Task['elasticsearch:vacancies:index'].invoke
+    # noop
+    # This method used to run an ElasticSearch task.
+    # We no longer use ElasticSearch.
   end
 end

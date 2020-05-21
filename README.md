@@ -56,14 +56,6 @@ bin/drake data:schools:import
 
 _db/seeds.rb contain sample school data so this is not required for development_
 
-### Indexing the vacancies
-
-Index the vacancies in Elasticsearch, both in the development and test environments
-
-```bash
-bin/drake elasticsearch:vacancies:index
-```
-
 ## Running the tests
 
 There are two ways that you can run the tests.
@@ -105,19 +97,6 @@ _I see Page Not Found when I log in and try to create a job listing_
 Try importing the school data if you have not already. When your sign in account was created, it was assigned to a
 school via a URN, and you may not have a school in your database with the same URN.
 
-_I get a connection error to Elasticsearch when I try to access the application locally_
-
-It might be that the web server is attempting to connect to Elasticsearch before it has fully booted, despite
-Elasticsearch being listed as a dependency for the webserver. Wait for a few minutes and try again.
-
-_The application claims to have vacancies in the search results but I can't see them listed_
-
-Run the Elasticsearch vacancies index task if you haven't already:
-
-```bash
-bin/drake elasticsearch:vacancies:index
-```
-
 ## Running outside of docker
 
 ### Background
@@ -137,7 +116,6 @@ Ruby 2.6.6
 
 Make sure you have the following services configured and running on your development background:
 
- * [Elasticsearch](https://elastic.co)
  * [Postgresql](https://postgresql.org)
  * [Redis](https://redis.io)
 

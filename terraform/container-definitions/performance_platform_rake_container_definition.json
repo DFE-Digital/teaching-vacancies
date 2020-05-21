@@ -38,22 +38,6 @@
         "value": "postgres://${database_user}:${database_password}@${database_url}:5432/${project_name}_${environment}?template=template0&pool=5&encoding=unicode"
       },
       {
-        "name": "ELASTICSEARCH_URL",
-        "value": "https://${elastic_search_url}:443"
-      },
-      {
-        "name": "ELASTICSEARCH_AWS_SIGNING",
-        "value": "true"
-      },
-      {
-        "name": "AWS_ELASTICSEARCH_REGION",
-        "value": "${aws_elasticsearch_region}"
-      },
-      {
-        "name": "AWS_ELASTICSEARCH_KEY",
-        "value": "${aws_elasticsearch_key}"
-      },
-      {
         "name": "REDIS_CACHE_URL",
         "value": "${redis_cache_url}"
       },
