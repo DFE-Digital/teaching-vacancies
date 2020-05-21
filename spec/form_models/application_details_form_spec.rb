@@ -168,7 +168,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
   context 'when all attributes are valid' do
     it 'can correctly be converted to a vacancy' do
-      application_details = ApplicationDetailsForm.new(application_link: 'http://an.application.link',
+      application_details = ApplicationDetailsForm.new(state: 'create', application_link: 'http://an.application.link',
                                                        contact_email: 'some@email.com',
                                                        expires_on: Time.zone.today + 1.week,
                                                        publish_on: Time.zone.today,

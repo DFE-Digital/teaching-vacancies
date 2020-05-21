@@ -36,7 +36,7 @@ RSpec.describe JobSummaryForm, type: :model do
   end
 
   context 'when all attributes are valid' do
-    job_summary_form = JobSummaryForm.new(job_summary: 'Summary about the job',
+    job_summary_form = JobSummaryForm.new(state: 'create', job_summary: 'Summary about the job',
                                           about_school: 'Description of the school')
 
     it 'a JobSummaryForm can be converted to a vacancy' do

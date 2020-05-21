@@ -14,6 +14,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
     allow(controller).to receive_message_chain(:current_user, :accepted_terms_and_conditions?).and_return(true)
 
     allow(vacancy).to receive_message_chain(:id).and_return(vacancy_id)
+    allow(vacancy).to receive(:state).and_return('create')
     controller.instance_variable_set(:@vacancy, vacancy)
   end
 

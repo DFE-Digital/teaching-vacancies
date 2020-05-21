@@ -26,6 +26,7 @@ FactoryBot.define do
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }
     salary { Faker::Lorem.sentence[1...30].strip }
+    state { 'create' }
     status { :published }
     supporting_documents { 'yes' }
     working_patterns { ['full_time'] }
