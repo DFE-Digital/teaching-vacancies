@@ -1,0 +1,58 @@
+name: Sync staging database
+
+on:
+  schedule:
+  # The schedule is in UTC and uses cron syntax
+  # * is a special character in YAML so you have to quote this string
+  - cron: '0 2 * * *'
+
+jobs:
+  sync:
+    name: Sync staging database from production
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install cf client
+      env:
+        CF_CLI_VERSION: 7.0.0-beta.30
+      run: |
+        curl -sL "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        cp /tmp/cf7 /usr/local/bin/cf7
+
+    - name: Install postgres client
+      run: |
+        apt-get update
+        apt-get install -y postgresql-client
+
+    - name: Sync staging from production
+      env:
+        CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+        CF_ORG: ${{ secrets.CF_ORG }}
+        CF_SPACE_ORIGIN: teaching-vacancies-production
+        CF_SPACE_TARGET: teaching-vacancies-staging
+        CF_POSTGRES_SERVICE_ORIGIN: teaching-vacancies-postgres-production
+        CF_POSTGRES_SERVICE_TARGET: teaching-vacancies-postgres-staging
+      run: |
+        cf7 install-plugin conduit -f
+        bin/sync-db
+
+  sync_notify:
+    needs: sync
+    name: Slack notification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send slack message to twd_tv_dev channel
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_ICON_EMOJI: ':tada:'
+          SLACK_TITLE: Successful syncing
+          SLACK_MESSAGE: 'Successful syncing staging from production database :rocket:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
