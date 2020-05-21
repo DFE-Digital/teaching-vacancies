@@ -41,4 +41,21 @@ module DFESignIn
       JWT.encode(payload, DFE_SIGN_IN_PASSWORD, 'HS256')
     end
   end
+
+  private
+
+  def error_message_for(response)
+    response['message'] || 'failed request'
+  end
+
+  def number_of_pages
+    response = api_response
+    raise (response['message'] || 'failed request') if response['numberOfPages'].nil?
+
+    response['numberOfPages']
+  end
+
+  def users_nil_or_empty?(response)
+    response['users'].nil? || response['users'].first.empty?
+  end
 end
