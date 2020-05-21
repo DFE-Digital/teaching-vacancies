@@ -3,7 +3,6 @@ require 'rack_session_access/capybara'
 
 RSpec.configure do |config|
   allowed_http_requests = [
-    'elasticsearch-test',
     'localhost',
     '127.0.0.1', # Required for Capybara sessions
     'es', # Required for CI. Defined in ./buildspec.yml
