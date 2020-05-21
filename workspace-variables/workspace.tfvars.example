@@ -33,11 +33,6 @@ rds_username = "dxw"
 rds_password = "mice long tail keep trap cheese"
 rds_instance_type = "db.t2.small"
 
-# Elastic search
-es_instance_type = "t2.small.elasticsearch"
-es_instance_count = 2
-es_version = "6.0"
-
 # CloudFront
 cloudfront_certificate_arn =
 cloudfront_aliases =
