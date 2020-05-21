@@ -22,7 +22,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
 
   def supporting_documents_form_params
     (params[:supporting_documents_form] || params)
-      .permit(:supporting_documents)
+      .permit(:state, :supporting_documents)
       .merge(completed_step: current_step)
   end
 

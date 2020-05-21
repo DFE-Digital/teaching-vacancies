@@ -34,7 +34,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
   def copy_form_params
     persist_nqt_job_role_to_nqt_attribute(:copy_vacancy_form)
     strip_empty_checkboxes(:copy_vacancy_form, [:job_roles])
-    params.require(:copy_vacancy_form).permit(:job_title, :about_school,
+    params.require(:copy_vacancy_form).permit(:state, :job_title, :about_school,
                                               :starts_on, :ends_on,
                                               :publish_on, :expires_on,
                                               :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem,

@@ -1,0 +1,1 @@
+= f.hidden_field :state, value: @vacancy&.published? ? 'edit_published' : %w(review edit).include?(@vacancy&.state) ? @vacancy.state : 'create'

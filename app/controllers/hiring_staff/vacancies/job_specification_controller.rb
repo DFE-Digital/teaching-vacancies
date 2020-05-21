@@ -56,7 +56,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
     strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles])
     params.require(:job_specification_form)
-          .permit(:job_title,
+          .permit(:state, :job_title,
                   :subject_id, :first_supporting_subject_id, :second_supporting_subject_id,
                   :starts_on, :ends_on,
                   :newly_qualified_teacher,

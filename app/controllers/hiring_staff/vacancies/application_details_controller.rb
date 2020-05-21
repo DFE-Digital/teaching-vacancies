@@ -32,7 +32,7 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   def application_details_form_params
     params.require(:application_details_form)
-          .permit(:application_link, :contact_email, :expiry_time,
+          .permit(:state, :application_link, :contact_email, :expiry_time,
                   :publish_on, :expires_on,
                   :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem).merge(completed_step: current_step)
   end

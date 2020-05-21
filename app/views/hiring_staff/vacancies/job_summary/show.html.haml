@@ -9,6 +9,8 @@
       %h2.govuk-heading-l
         = t('jobs.job_summary')
 
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
       = f.govuk_text_area :job_summary,
         label: { text: t('helpers.fieldset.job_summary_form.job_summary_html'), size: 's' },
         hint_text: t('helpers.hint.job_summary_form.job_summary'),

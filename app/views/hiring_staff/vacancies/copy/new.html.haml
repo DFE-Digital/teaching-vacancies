@@ -7,11 +7,13 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @copy_form, url: school_job_copy_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary t('jobs.errors_present')
 
       %h2.govuk-heading-m
         = t('jobs.job_details')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.govuk_text_field :job_title,
