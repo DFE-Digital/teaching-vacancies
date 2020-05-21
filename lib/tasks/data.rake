@@ -14,4 +14,12 @@ namespace :data do
       LocationCategory.export
     end
   end
+
+  desc 'Update DfE Sign In users data'
+  namespace :users do
+    task update: :environment do
+      Rails.logger.debug("Running DfE Sign In users update task in #{Rails.env}")
+      UpdateDfeSignInUsersJob.perform_later
+    end
+  end
 end

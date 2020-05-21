@@ -8,6 +8,11 @@ import_school_data:
   class: 'UpdateSchoolsDataFromSourceJob'
   queue: import_school_data
 
+update_dsi_users:
+  cron: '0 0 0 ? * * *'
+  class: 'UpdateDfeSignInUsersJob'
+  queue: update_dsi_users_in_db
+
 export_dsi_users:
   cron: '0 01 * * *'
   class: 'ExportDsiUsersToBigQueryJob'
