@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   resources :stats, only: [:index]
 
   resource :identifications, only: %i[new create], controller: 'hiring_staff/identifications'
+  # Authentication fallback with emailed magic link
+    post 'sign-in-by-email', to: 'hiring_staff/identifications#sign_in_by_email'
 
   # Sign in
   resource :sessions, only: %i[destroy], controller: 'hiring_staff/sessions'

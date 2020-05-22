@@ -1,0 +1,24 @@
+- content_for :page_title_prefix do
+  = t('sign_in.title')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-error-summary{ aria: { labelledby: "govuk-error-summary__title" }, role: "alert", tabindex: "-1" }
+      %h2.govuk-error-summary__title
+        ='Temporary login'
+      .govuk-error-summary__body
+        ='DfE Sign In is experiencing problems. Please sign in using your email address.'
+
+    %h1.govuk-heading-l= t('sign_in.title')
+
+    %p= t('pages.home.signin.description')
+
+    = form_for User.new, url: sign_in_by_email_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_email_field :email
+      = f.submit 'Continue', class: 'govuk-button'
+
+    %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+
+    %h2.govuk-heading-m= I18n.t('.hiring_staff.identifications.new.request_account_title')
+
+    %p= t('hiring_staff.identifications.new.request_account_html', mail_to: mail_to(t('help.email'), t('help.email'), class: 'govuk-link'))

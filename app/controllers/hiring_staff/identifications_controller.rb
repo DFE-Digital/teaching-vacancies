@@ -1,13 +1,22 @@
 class HiringStaff::IdentificationsController < HiringStaff::BaseController
   include ActionView::Helpers::OutputSafetyHelper
 
-  skip_before_action :check_session, only: %i[new create]
-  skip_before_action :check_terms_and_conditions, only: %i[new create]
+  skip_before_action :check_session, only: %i[new create sign_in_by_email]
+  skip_before_action :check_terms_and_conditions, only: %i[new create sign_in_by_email]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   before_action :redirect_signed_in_users
 
-  def new; end
+  def new
+    if EmailSignInFeature.enabled?
+      render :authentication_fallback
+    end
+  end
+
+  def sign_in_by_email
+    raise unless EmailSignInFeature.enabled?
+    raise 'got to this method'
+  end
 
   def create
     redirect_to new_dfe_path
