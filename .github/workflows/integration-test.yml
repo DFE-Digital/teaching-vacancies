@@ -1,6 +1,6 @@
 name: Integration Test
 
-on: [push]
+on: [pull-request]
 
 jobs:
   backend-search-tests:
