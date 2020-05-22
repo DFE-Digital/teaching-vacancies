@@ -53,11 +53,11 @@ describe('stringMatchesPostcode', () => {
 
 describe('convertMilesToMetres', () => {
     test('converts an integer of number of miles to the equivalent in metres', () => {
-        expect(convertMilesToMetres(1)).toBe(1609.34);
+        expect(convertMilesToMetres(1)).toBe(1610);
     });
 
     test('converts a string of number of miles to the equivalent in metres', () => {
-        expect(convertMilesToMetres('1')).toBe(1609.34);
+        expect(convertMilesToMetres('1')).toBe(1610);
     });
 });
 

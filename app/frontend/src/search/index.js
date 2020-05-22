@@ -34,7 +34,7 @@ if (document.querySelector('#vacancies-hits')) {
         container: document.querySelector('.filters-form'),
         element: '#location',
         key: 'location',
-        
+        autofocus: true,
         queryHook(query, search) {
             query ? updateUrlQueryParams('location', query, window.location.href) : false;
 
@@ -65,7 +65,6 @@ if (document.querySelector('#vacancies-hits')) {
             dataset: locations,
             threshold: SEARCH_THRESHOLD,
             onSelection: value => {
-                locationSearchBox._refine(value);
                 updateUrlQueryParams('location', value, window.location.href);
             }
         }),
@@ -74,6 +73,7 @@ if (document.querySelector('#vacancies-hits')) {
             container: document.querySelector('.filters-form'),
             element: '#keyword',
             key: 'keyword',
+            autofocus: true,
             queryHook(query, search) {
                 query ? updateUrlQueryParams('keyword', query, window.location.href) : false;
                 search(query);

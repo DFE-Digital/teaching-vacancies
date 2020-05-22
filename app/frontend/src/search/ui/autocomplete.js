@@ -3,7 +3,7 @@ import '../../lib/after.polyfill';
 export const isActive = (threshold, currentInput) => currentInput ? currentInput.length >= threshold : false;
 
 export const renderAutocomplete = (renderOptions) => {
-    const { currentRefinement, widgetParams } = renderOptions;
+    const {  widgetParams } = renderOptions;
 
     if (!widgetParams.container.querySelector('ul')) {
         create(widgetParams.input, widgetParams.onSelection);
@@ -14,20 +14,21 @@ export const renderAutocomplete = (renderOptions) => {
         widgetParams.onSelection(e.target.dataset.location);
     };
 
-    const options = getOptions(widgetParams.dataset, currentRefinement);
+    widgetParams.input.addEventListener('input', () => {
+        const options = getOptions(widgetParams.dataset, widgetParams.input.value);
+        if (isActive(widgetParams.threshold, widgetParams.input.value)) {
 
-    if (isActive(widgetParams.threshold, currentRefinement)) {
+            widgetParams.container.querySelector('ul').innerHTML = options.map(renderIndexListItem(widgetParams.input.value)).join('');
 
-        widgetParams.container.querySelector('ul').innerHTML = options.map(renderIndexListItem(currentRefinement)).join('');
+            show(widgetParams.container.querySelector('ul'), widgetParams.input);
 
-        show(widgetParams.container.querySelector('ul'), widgetParams.input);
+            Array.from(widgetParams.container.querySelectorAll('.app-site-search__option'))
+                .forEach(element => element.addEventListener('focus', (e) => handleFocus(e), true));
 
-        Array.from(widgetParams.container.querySelectorAll('.app-site-search__option'))
-            .forEach(element => element.addEventListener('focus', (e) => handleFocus(e), true));
-
-    } else {
-        hide(widgetParams.container.querySelector('ul'), widgetParams.input);
-    }
+        } else {
+            hide(widgetParams.container.querySelector('ul'), widgetParams.input);
+        }
+    });
 };
 
 export const show = (element, inputElement) => {
