@@ -6,7 +6,7 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    addHeadingMarkup(widgetParams.container, results.nbHits);
+    addHeadingMarkup(widgetParams.container, results.nbHits, results.query);
     if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.alert);
       updateJobAlertLink();
@@ -34,8 +34,9 @@ export const updateJobAlertLink = () => {
   document.querySelector('#job-alert-link').href = `/subscriptions/new?${encodeURIComponent(queryString)}`;
 };
 
-export const addHeadingMarkup = (container, nbHits) => {
-  container.innerHTML = `There are ${nbHits} jobs listed`;
+export const addHeadingMarkup = (container, nbHits, query) => {
+  const inQuery = query ? ` in ${query.replace(/\b\w/g, l => l.toUpperCase() )}` : '';
+  container.innerHTML = `${nbHits} teaching jobs ${inQuery}`;
 };
 
 export const hideServerMarkup = () => {
