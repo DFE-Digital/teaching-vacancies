@@ -60,6 +60,16 @@ class Vacancy < ApplicationRecord
       self.first_supporting_subject&.name
     end
 
+    JOB_ROLE_OPTIONS.size.times do |index|
+      attribute "job_role_#{index}".to_sym do
+        self.job_roles[index] if self.job_roles.present?
+      end
+    end
+
+    attribute :job_summary do
+      self.job_summary&.truncate(256)
+    end
+
     attribute :last_updated_at do
       # Convert from ActiveSupport::TimeWithZone object to Unix time
       self.updated_at.to_i
@@ -67,10 +77,6 @@ class Vacancy < ApplicationRecord
 
     attribute :listing_status do
       self.status
-    end
-
-    attribute :job_summary do
-      self.job_summary&.truncate(256)
     end
 
     attribute :newly_qualified_teacher_status do
@@ -120,7 +126,16 @@ class Vacancy < ApplicationRecord
 
     geoloc :lat, :lng
 
-    attributesForFaceting [:job_roles, :working_patterns, :school, :listing_status]
+    attributesForFaceting [
+      :job_roles,
+      :job_role_0,
+      :job_role_1,
+      :job_role_2,
+      :job_role_3,
+      :working_patterns,
+      :school,
+      :listing_status
+    ]
 
     add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
@@ -142,11 +157,11 @@ class Vacancy < ApplicationRecord
   # rubocop:enable Metrics/BlockLength
 
   def lat
-    self.school.geolocation.x.to_f
+    self.school.geolocation&.x&.to_f
   end
 
   def lng
-    self.school.geolocation.y.to_f
+    self.school.geolocation&.y&.to_f
   end
 
   extend FriendlyId
