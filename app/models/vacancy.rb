@@ -88,13 +88,10 @@ class Vacancy < ApplicationRecord
       { name: self.school.name,
         address: self.school.address,
         county: self.school.county,
-        detailed_school_type: self.school.detailed_school_type&.label,
         local_authority: self.school.local_authority,
         phase: self.school.phase,
         postcode: self.school.postcode,
-        religious_character: self.school.gias_data['ReligiousCharacter (name)'],
-        region: self.school.region&.name,
-        school_type: self.school.school_type&.label&.singularize,
+        region: self.school.region.name,
         town: self.school.town }
     end
 
