@@ -24,7 +24,8 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
 
     const select = widgetParams.container.querySelector('#algolia-select');
 
-    select.disabled = hasNoResults;
+    select.style.display = hasNoResults ? 'none' : 'inline-block';
+    document.querySelector('#jobs_sort_label').style.display = hasNoResults ? 'none' : 'inline-block';
 
     select.innerHTML = constructOptions(options, currentRefinement);
 };

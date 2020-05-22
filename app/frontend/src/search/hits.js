@@ -79,7 +79,8 @@ export const templates = {
 </dd>
 </dl>
 </article>
-`};
+`,
+empty: '<h4 class="govuk-heading-m">Try another search</h4><ul class="govuk-list govuk-list--bullet"><li>with different keywords</li><li>and/or a wider radius</li></ul>',};
 
 export const customTemplates = {
   alert: `
