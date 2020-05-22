@@ -44,7 +44,7 @@ class Vacancy < ApplicationRecord
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/LineLength
   # There must be a better way to pass these settings to the block, but everything seems to break
-  algoliasearch index_name: Rails.env.test? ? 'Vacancy_test' : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
+  algoliasearch index_name: Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}" : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
     attributes :job_roles, :job_title, :salary, :working_patterns
 
     attribute :expires_at do
@@ -118,19 +118,19 @@ class Vacancy < ApplicationRecord
 
     attributesForFaceting [:job_roles, :working_patterns, :school, :listing_status]
 
-    add_replica Rails.env.test? ? 'Vacancy_test_publish_on_desc' : 'Vacancy_publish_on_desc', inherit: true do
+    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
     end
 
-    add_replica Rails.env.test? ? 'Vacancy_test_publish_on_asc' : 'Vacancy_publish_on_asc', inherit: true do
+    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_asc" : 'Vacancy_publish_on_asc', inherit: true do
       ranking ['asc(publication_date_timestamp)']
     end
 
-    add_replica Rails.env.test? ? 'Vacancy_test_expiry_time_desc' : 'Vacancy_expiry_time_desc', inherit: true do
+    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_desc" : 'Vacancy_expiry_time_desc', inherit: true do
       ranking ['desc(expires_at_timestamp)']
     end
 
-    add_replica Rails.env.test? ? 'Vacancy_test_expiry_time_asc' : 'Vacancy_expiry_time_asc', inherit: true do
+    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_asc" : 'Vacancy_expiry_time_asc', inherit: true do
       ranking ['asc(expires_at_timestamp)']
     end
   end
