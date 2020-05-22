@@ -101,7 +101,7 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def test_search_replica
-    Rails.env.test? ? 'test' : ''
+    Rails.env.test? ? "test#{ENV.fetch('GITHUB_RUN_ID', '')}" : ''
   end
 
   def published_today_filter
