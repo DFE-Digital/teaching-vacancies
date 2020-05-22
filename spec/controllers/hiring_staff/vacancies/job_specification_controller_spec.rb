@@ -47,6 +47,29 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
     end
   end
 
+  describe '#convert_subject_ids_to_subjects_array' do
+    let(:subject) { create(:subject) }
+    let(:first_supporting_subject) { create(:subject) }
+    let(:second_supporting_subject) { create(:subject) }
+
+    let(:params) do
+      {
+        job_specification_form: {
+          subject_id: subject.id,
+          first_supporting_subject_id: first_supporting_subject.id,
+          second_supporting_subject_id: second_supporting_subject.id
+        }
+      }
+    end
+
+    it 'converts subject ids to a string array of subject names' do
+      post :create, params: params
+      expect(controller.params[:job_specification_form][:subjects]).to eql(
+        [subject.name, first_supporting_subject.name, second_supporting_subject.name]
+      )
+    end
+  end
+
   describe '#create' do
     context 'job role is suitable for NQT' do
       let(:params) do
