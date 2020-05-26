@@ -6,6 +6,8 @@ class VacancyForm
   delegate(*Vacancy.attribute_names.map { |attr| [attr, "#{attr}=", "#{attr}?"] }.flatten, to: :vacancy)
   delegate :save, to: :vacancy
 
+  validates :state, inclusion: { in: %w[copy create edit edit_published review] }
+
   def initialize(params = {})
     @vacancy = Vacancy.new(
       params.except(:documents_attributes, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)

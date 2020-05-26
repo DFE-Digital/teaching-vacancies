@@ -20,7 +20,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
   private
 
   def pay_package_form_params
-    params.require(:pay_package_form).permit(:salary, :benefits).merge(completed_step: current_step)
+    params.require(:pay_package_form).permit(:state, :salary, :benefits).merge(completed_step: current_step)
   end
 
   def next_step

@@ -55,7 +55,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   end
 
   def documents_form_params
-    params.require(:documents_form).permit(documents: [])
+    params.require(:documents_form).permit(:state, documents: [])
   end
 
   def redirect_unless_supporting_documents

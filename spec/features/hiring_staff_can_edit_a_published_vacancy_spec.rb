@@ -42,6 +42,14 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       expect(page).to have_content(I18n.t('jobs.edit_heading', school: school.name))
     end
 
+    scenario 'vacancy state is edit_published' do
+      visit edit_school_job_path(vacancy.id)
+      expect(Vacancy.last.state).to eql('edit_published')
+
+      click_header_link(I18n.t('jobs.job_details'))
+      expect(Vacancy.last.state).to eql('edit_published')
+    end
+
     context '#job_specification' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)

@@ -9,6 +9,8 @@
       %h2.govuk-heading-l
         = t('jobs.pay_package')
 
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
       = f.govuk_text_field :salary,
         label: { text: t('helpers.fieldset.pay_package_form.salary_html'), size: 's' },
         hint_text: t('helpers.hint.pay_package_form.salary'),

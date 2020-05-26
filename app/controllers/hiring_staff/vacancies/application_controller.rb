@@ -53,10 +53,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_to_next_step(vacancy_id)
-    next_path = session[:current_step].eql?(:review) ? school_job_review_path(
-      school_id: current_school.id,
-      job_id: vacancy_id
-    ) : next_step
+    next_path = session[:current_step].eql?(:review) ? school_job_review_path(vacancy_id) : next_step
     redirect_to next_path
   end
 

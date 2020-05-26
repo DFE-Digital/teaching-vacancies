@@ -9,6 +9,8 @@
       %h2.govuk-heading-l
         = t('jobs.application_details')
 
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
       = f.govuk_email_field :contact_email,
         label: { text: t('helpers.fieldset.application_details_form.contact_email_html'), size: 's' },
         hint_text: t('helpers.hint.application_details_form.contact_email'),

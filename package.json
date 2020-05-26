@@ -9,8 +9,17 @@
     "rails-ujs": "^5.2.3"
   },
   "devDependencies": {
+    "jest": "^25.4.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
+  },
+  "scripts": {
+    "js:test": "jest"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/app/frontend/src/**/*.test.js"
+    ]
   }
 }

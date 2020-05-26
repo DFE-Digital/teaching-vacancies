@@ -92,6 +92,15 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
+      scenario 'vacancy state is create' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(Vacancy.last.state).to eql('create')
+      end
+
       scenario 'tracks the vacancy creation' do
         visit new_school_job_path
 
@@ -504,7 +513,7 @@ RSpec.feature 'Creating a vacancy' do
           end
         end
 
-        scenario 'redirects to appropriate step when clicked on change on review page' do
+        scenario 'vacancy state is review when all steps completed' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
@@ -522,19 +531,53 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_job_summary_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
+          expect(Vacancy.last.state).to eql('review')
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+          within('h2.govuk-heading-l') do
+            expect(page).to have_content(I18n.t('jobs.review_heading'))
+          end
+        end
+
+        scenario 'vacancy state is review' do
+          visit new_school_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_pay_package_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          select_no_for_supporting_documents
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_application_details_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_job_summary_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          expect(Vacancy.last.state).to eql('review')
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+          within('h2.govuk-heading-l') do
+            expect(page).to have_content(I18n.t('jobs.review_heading'))
+          end
+
           click_header_link(I18n.t('jobs.application_details'))
           expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.application_details'))
           end
+          expect(Vacancy.last.state).to eql('review')
 
           click_on I18n.t('buttons.save_and_continue')
+          expect(Vacancy.last.state).to eql('review')
 
           click_header_link(I18n.t('jobs.job_details'))
           expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.job_details'))
           end
+          expect(Vacancy.last.state).to eql('review')
         end
       end
 

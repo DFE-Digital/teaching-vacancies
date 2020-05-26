@@ -19,6 +19,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     vacancy = current_school.vacancies.find(id)
     return redirect_to school_job_review_path(vacancy.id) unless vacancy.published?
 
+    vacancy.update(state: 'edit_published') unless vacancy&.state == 'edit_published'
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -31,6 +32,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     unless @vacancy.valid?
       redirect_to_incomplete_step
     else
+      state = params[:edit_draft] == 'true' ? 'edit' : 'review'
+      @vacancy.update(state: state) unless @vacancy&.state == state
       set_completed_step
     end
 
