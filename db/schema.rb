@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_075215) do
+ActiveRecord::Schema.define(version: 2020_05_26_125107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_075215) do
     t.datetime "updated_at", null: false
     t.string "email"
     t.integer "user_participation_response"
+    t.float "recaptcha_score"
   end
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -224,9 +225,9 @@ ActiveRecord::Schema.define(version: 2020_05_21_075215) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
-    t.string "job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
+    t.string "job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true
