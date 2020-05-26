@@ -19,7 +19,7 @@
   },
   "scripts": {
     "js:test": "jest",
-    "sass:lint": "yarn stylelint app/frontend/**/*.scss"
+    "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
   },
   "jest": {
     "testMatch": [

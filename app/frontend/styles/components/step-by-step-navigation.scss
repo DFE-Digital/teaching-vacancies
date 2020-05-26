@@ -580,7 +580,7 @@ ol.app-step-nav__steps {
       background-color: #0b0c0c;
 
       .app-step-nav__circle-background {
-        color: white;
+        color: govuk-colour('white');
         text-shadow: none;
       }
     }
@@ -591,7 +591,7 @@ ol.app-step-nav__steps {
       background-color: #1d70b8;
 
       .app-step-nav__circle-background {
-        color: white;
+        color: govuk-colour('white');
         text-shadow: none;
       }
     }
@@ -614,22 +614,6 @@ li.app-step-nav__step {
         .app-step-nav__button {
           color: #0b0c0c;
           cursor: default;
-        }
-      }
-    }
-
-    .app-step-nav__title {
-      .app-step-nav__circle {
-        .app-step-nav__circle-inner {
-          .app-step-nav__circle-background {
-          }
-        }
-      }
-
-      .js-step-title {
-        .app-step-nav__button {
-          .js-step-title-text {
-          }
         }
       }
     }

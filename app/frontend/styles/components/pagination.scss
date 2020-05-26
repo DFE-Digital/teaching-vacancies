@@ -47,7 +47,7 @@ ul.pagination {
 
   &.current {
     @include govuk-font(19, $weight: bold);
-    border: none;
+    border-style: none;
     color: $govuk-text-colour;
     cursor: default;
     pointer-events: none;
