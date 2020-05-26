@@ -1,14 +1,16 @@
 a.reversed-link {
   &:link {
-    color: govuk-colour("white");
+    color: govuk-colour('white');
   }
+
   &:visited {
-    color: govuk-colour("white");
+    color: govuk-colour('white');
   }
 }
 
 .govuk-link * {
   color: $govuk-link-colour;
+
   &:hover {
     color: $govuk-link-hover-colour;
   }

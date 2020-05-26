@@ -8,11 +8,11 @@
 
 .currency-input__symbol {
   @extend .govuk-input;
-  position: absolute;
-  width: auto;
+  background-color: govuk-colour('light-grey');
   font-weight: bold;
   padding: 9px 10px 0;
-  background-color: govuk-colour("light-grey");
+  position: absolute;
+  width: auto;
 
   @include govuk-media-query($from: tablet) {
     padding-top: 6px;

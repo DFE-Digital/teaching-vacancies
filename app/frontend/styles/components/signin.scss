@@ -1,13 +1,13 @@
 .signin {
-  @media screen and (max-width: 524px) {
-    display: none;
-  }
 
-  @include govuk-responsive-padding(2, "top");
+  @include govuk-responsive-padding(2, 'top');
+
+  border-top: 5px solid $govuk-brand-colour;
 
   .govuk-button {
     margin-bottom: 0;
   }
-
-  border-top: 5px solid $govuk-brand-colour;
+  @media screen and (max-width: 524px) {
+    display: none;
+  }
 }

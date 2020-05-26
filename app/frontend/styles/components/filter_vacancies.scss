@@ -1,56 +1,63 @@
 .filter-vacancies {
+  background-color: govuk-colour('light-grey');
   margin-bottom: 0;
   padding: $govuk-gutter-half;
-  background-color: govuk-colour("light-grey");
-  h2 {
-    margin: 0 0 $govuk-gutter-half 0;
-  }
-  .govuk-form-group {
-    margin-bottom: $govuk-gutter-half;
-  }
 
   @include govuk-media-query($until: tablet) {
     margin-bottom: $govuk-gutter;
   }
 
+  h2 {
+    margin: 0 0 $govuk-gutter-half 0;
+  }
+
+  .govuk-form-group {
+    margin-bottom: $govuk-gutter-half;
+  }
+
   // filters form white checkbox on grey background
   .filters-form .govuk-checkboxes {
+    background: govuk-colour('white');
     float: left;
-    background: govuk-colour("white");
+
     label {
-      background: govuk-colour("light-grey");
+      background: govuk-colour('light-grey');
       padding: 12px 15px 8px;
-       @include govuk-media-query($from: desktop) {
-         padding: 10px 15px 5px;
-       }
+      @include govuk-media-query($from: desktop) {
+        padding: 10px 15px 5px;
+      }
     }
   }
 
   .filters-form .checkbox-group {
+    border: 2px solid govuk-colour('dark-grey');
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+
     &--scrollable {
       height: 220px;
       overflow: auto;
     }
-    padding: 10px;
-    border: 2px solid govuk-colour("dark-grey");
-    box-sizing: border-box;
-    width: 100%;
+
     label {
-      background: govuk-colour("white");
+      background: govuk-colour('white');
       font-size: $small-font-size;
     }
+
     &__divider {
       $govuk-divider-size: 40px;
       @include govuk-font($size: 19);
       @include govuk-text-colour;
-      width: $govuk-divider-size;
       margin-bottom: govuk-spacing(2);
       text-align: center;
+      width: $govuk-divider-size;
     }
   }
-  .filters-form .checkbox-group:after {
-    content: "";
-    height: 10px;
+
+  .filters-form .checkbox-group::after {
+    content: '';
     display: block;
+    height: 10px;
   }
 }

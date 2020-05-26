@@ -5,49 +5,49 @@ $govuk-modal-wide-breakpoint: $govuk-page-width + $govuk-modal-margin * 2 + $gov
 
 .gem-c-modal-dialogue {
   display: none;
-  position: fixed;
-  z-index: $govuk-modal-z-index;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
+  left: 0;
+  outline: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  outline: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $govuk-modal-z-index;
 }
 
 .gem-c-modal-dialogue__box {
-  display: block;
-  position: fixed;
-  background: govuk-colour("white");
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
-  border: 0;
-
-  &:focus {
-    outline: $govuk-focus-width solid $govuk-focus-colour;
-  }
 
   @include govuk-font($size: 19);
   @include govuk-text-colour;
+  background: govuk-colour('white');
+  border: 0;
+  bottom: 0;
+  display: block;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  overflow-y: auto;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
   @include govuk-media-query($from: tablet) {
-    position: relative;
-    top: inherit;
-    right: inherit;
-    bottom: inherit;
-    left: inherit;
-    width: auto;
-    max-width: $govuk-page-width * 2 / 3;
-    height: auto;
-    margin: $govuk-modal-margin auto;
     border: $govuk-border-width-form-element solid $govuk-input-border-colour;
+    bottom: inherit;
+    height: auto;
+    left: inherit;
+    margin: $govuk-modal-margin auto;
+    max-width: $govuk-page-width * 2 / 3;
+    position: relative;
+    right: inherit;
+    top: inherit;
+    width: auto;
+  }
+
+  &:focus {
+    outline: $govuk-focus-width solid $govuk-focus-colour;
   }
 }
 
@@ -62,17 +62,17 @@ $govuk-modal-wide-breakpoint: $govuk-page-width + $govuk-modal-margin * 2 + $gov
 }
 
 .gem-c-modal-dialogue__overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
+  background: govuk-colour('black');
   bottom: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
-  opacity: .8;
-  background: govuk-colour("black");
+  left: 0;
+  opacity: 0.8;
   pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
   touch-action: none;
+  width: 100%;
 }
 
 .gem-o-template--modal {
@@ -97,9 +97,9 @@ $govuk-modal-wide-breakpoint: $govuk-page-width + $govuk-modal-margin * 2 + $gov
 }
 
 .gem-c-modal-dialogue__header {
+  background: govuk-colour('black');
+  color: govuk-colour('white');
   padding: 9px govuk-spacing(3) 10px;
-  color: govuk-colour("white");
-  background: govuk-colour("black");
 }
 
 .gem-c-modal-dialogue__logotype-crown {
@@ -108,20 +108,20 @@ $govuk-modal-wide-breakpoint: $govuk-page-width + $govuk-modal-margin * 2 + $gov
 }
 
 .gem-c-modal-dialogue__logotype-crown-fallback-image {
-  width: 30px;
-  height: 26px;
   border: 0;
+  height: 26px;
   vertical-align: middle;
+  width: 30px;
 }
 
 .gem-c-modal-dialogue__content {
+  background: govuk-colour('white');
   padding: govuk-spacing(3) govuk-spacing(3) 0;
-  background: govuk-colour("white");
 }
 
 .gem-c-modal-dialogue__footer {
+  background: govuk-colour('white');
   padding: 9px govuk-spacing(3) 10px;
-  background: govuk-colour("white");
 }
 
 .gem-c-modal-dialogue__confirm-link,
@@ -131,33 +131,33 @@ $govuk-modal-wide-breakpoint: $govuk-page-width + $govuk-modal-margin * 2 + $gov
 
 /// Mimic button style
 .govuk-link--button {
-  display: inline-block;
-  width: 100%;
-  padding: (govuk-spacing(2) - $govuk-border-width-form-element) govuk-spacing(2) (govuk-spacing(2) - $govuk-border-width-form-element - ($govuk-border-width-form-element / 2));
   border: $govuk-border-width-form-element solid transparent;
+  display: inline-block;
   line-height: 1;
-
-  &:focus {
-    color: $govuk-focus-text-colour;
-  }
+  padding: (govuk-spacing(2) - $govuk-border-width-form-element) govuk-spacing(2) (govuk-spacing(2) - $govuk-border-width-form-element - ($govuk-border-width-form-element / 2));
+  width: 100%;
 
   @include govuk-media-query($from: tablet) {
     width: auto;
   }
+
+  &:focus {
+    color: $govuk-focus-text-colour;
+  }
 }
 
 .gem-c-modal-dialogue__close-link--button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: $govuk-modal-close-button-size;
-  height: $govuk-modal-close-button-size;
-  border: 0;
-  color: govuk-colour("white");
-  background: none;
-  cursor: pointer;
 
   @include govuk-font($size: 36, $weight: bold, $line-height: 1.3);
+  background: none;
+  border: 0;
+  color: govuk-colour('white');
+  cursor: pointer;
+  height: $govuk-modal-close-button-size;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: $govuk-modal-close-button-size;
   @include govuk-media-query($until: tablet) {
     font-size: 36px;
     line-height: 1.3;
@@ -166,10 +166,10 @@ $govuk-modal-wide-breakpoint: $govuk-page-width + $govuk-modal-margin * 2 + $gov
   &:focus,
   &:hover {
     @include govuk-focused-text;
+    background: $govuk-focus-colour;
+    box-shadow: none;
+    color: govuk-colour('black');
 
     outline: none;
-    box-shadow: none;
-    color: govuk-colour("black");
-    background: $govuk-focus-colour;
   }
 }

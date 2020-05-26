@@ -1,4 +1,4 @@
-ul.notes-timeline:before {
+ul.notes-timeline::before {
   top: 13px;
 }
 
@@ -7,13 +7,13 @@ ul.notes-timeline li.updates-timeline__item {
 }
 
 ul.notes-timeline li.updates-timeline__item h3.updates-timeline__title {
-  margin-bottom: 20px;
   display: inline-block;
+  margin-bottom: 20px;
 }
 
 ul.updates-timeline li.updates-timeline__item h4.notes-heading {
   font-size: 19px;
-  margin: 0 0 10px 0;
+  margin: 0 0 10px;
 }
 
 ul.notes-timeline li.updates-timeline__item p.notes-copy {
@@ -25,16 +25,16 @@ ul.notes-timeline li.updates-timeline__item p.notes-copy:last-of-type {
 }
 
 ul.updates-timeline {
-  margin: 0 0 15px 0;
-  overflow: hidden;
-  position: relative;
-  padding-left: 0;
   list-style-type: none;
+  margin: 0 0 15px;
+  overflow: hidden;
+  padding-left: 0;
+  position: relative;
 }
 
-ul.updates-timeline:before {
+ul.updates-timeline::before {
   background-color: #1d70b8;
-  content: "";
+  content: '';
   height: 100%;
   left: 0;
   position: absolute;
@@ -48,9 +48,9 @@ ul.updates-timeline .updates-timeline__item {
   position: relative;
 }
 
-ul.updates-timeline .updates-timeline__item:before {
+ul.updates-timeline .updates-timeline__item::before {
   background-color: #1d70b8;
-  content: "";
+  content: '';
   height: 5px;
   left: 0;
   position: absolute;
@@ -59,8 +59,8 @@ ul.updates-timeline .updates-timeline__item:before {
 }
 
 ul.updates-timeline .updates-timeline__item .updates-timeline__title {
-  line-height: 1.31579;
   display: inline;
+  line-height: 1.31579;
 }
 
 ul.updates-timeline .updates-timeline__item .updates-timeline__by {

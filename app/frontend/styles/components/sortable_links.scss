@@ -1,12 +1,13 @@
 .sortable-link {
   &.active {
-    &.sortby--asc:after {
-      content: "\25B4";
+    &.sortby--asc::after {
+      content: '\25B4';
       display: inline-block;
       padding-left: 0.2em;
     }
-    &.sortby--desc:after {
-      content: "\25BE";
+
+    &.sortby--desc::after {
+      content: '\25BE';
       display: inline-block;
       padding-left: 0.2em;
     }
@@ -16,9 +17,11 @@
 .sortable-links {
   @extend .govuk-body-s;
   margin-bottom: $govuk-gutter;
+
   a {
     @extend .sortable-link;
     margin: 0 4px;
+
     &.active {
       @include govuk-font(16, $weight: bold);
       text-decoration: none;

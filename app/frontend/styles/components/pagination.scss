@@ -5,12 +5,13 @@ ul.pagination {
   li {
     display: inline-block;
 
-    &.current, a {
+    &.current,
+    a {
       @include govuk-font(19, $weight: bold);
-      color: govuk-colour("blue");
+      color: govuk-colour('blue');
       display: inline-block;
-      padding: 15px 5px 10px 5px;
       margin-right: 15px;
+      padding: 15px 5px 10px;
       text-decoration: none;
 
       &:focus {
@@ -24,10 +25,10 @@ ul.pagination {
 
     &.active a,
     &.active a:hover {
-      color: govuk-colour("blue");
-      -webkit-box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
-      -moz-box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
-      box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
+      -webkit-box-shadow: inset 0 -5px 0 0 govuk-colour('blue');
+      -moz-box-shadow: inset 0 -5px 0 0 govuk-colour('blue');
+      box-shadow: inset 0 -5px 0 0 govuk-colour('blue');
+      color: govuk-colour('blue');
     }
   }
 }
@@ -45,16 +46,16 @@ ul.pagination {
   list-style: none;
 
   &.current {
-    color: $govuk-text-colour;
     @include govuk-font(19, $weight: bold);
     border: none;
-    pointer-events: none;
+    color: $govuk-text-colour;
     cursor: default;
+    pointer-events: none;
 
     &:hover,
     &:focus {
-      color: $govuk-text-colour;
       background: none;
+      color: $govuk-text-colour;
     }
   }
 }
@@ -67,7 +68,7 @@ ul.pagination {
 
   &:hover,
   &:focus {
-    background: govuk-colour("light-grey");
+    background: govuk-colour('light-grey');
     outline: 3px solid $govuk-focus-colour;
   }
 }
