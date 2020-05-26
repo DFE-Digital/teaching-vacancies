@@ -43,7 +43,7 @@
 
       - unless @vacancy.about_school.present?
         %h2.govuk-heading-m
-        = t('jobs.job_summary')
+          = t('jobs.job_summary')
 
         = f.govuk_text_area :about_school,
           label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: current_school.name), size: 's' },
