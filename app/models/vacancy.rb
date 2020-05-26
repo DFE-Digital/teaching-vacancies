@@ -38,6 +38,7 @@ class Vacancy < ApplicationRecord
   include Redis::Objects
 
   include AlgoliaSearch
+  AlgoliaSearch::IndexSettings::DEFAULT_BATCH_SIZE = 100
 
   # For guidance on sanity-checking an indexing change, read documentation/algolia_sanity_check.md
 
@@ -57,6 +58,16 @@ class Vacancy < ApplicationRecord
 
     attribute :first_supporting_subject do
       self.first_supporting_subject&.name
+    end
+
+    JOB_ROLE_OPTIONS.size.times do |index|
+      attribute "job_role_#{index}".to_sym do
+        self.job_roles[index] if self.job_roles.present?
+      end
+    end
+
+    attribute :job_summary do
+      self.job_summary&.truncate(256)
     end
 
     attribute :last_updated_at do
@@ -85,14 +96,16 @@ class Vacancy < ApplicationRecord
     end
 
     attribute :school do
-      { name: self.school.name,
-        address: self.school.address,
-        county: self.school.county,
-        local_authority: self.school.local_authority,
-        phase: self.school.phase,
-        postcode: self.school.postcode,
-        region: self.school.region.name,
-        town: self.school.town }
+      school = self.school
+      { name: school.name,
+        county: school.county,
+        detailed_school_type: school.detailed_school_type&.label,
+        local_authority: school.local_authority,
+        phase: school.phase,
+        religious_character: school.gias_data['ReligiousCharacter (name)'],
+        region: school.region&.name,
+        school_type: school.school_type&.label&.singularize,
+        town: school.town }
     end
 
     attribute :second_supporting_subject do
@@ -113,7 +126,16 @@ class Vacancy < ApplicationRecord
 
     geoloc :lat, :lng
 
-    attributesForFaceting [:job_roles, :working_patterns, :school, :listing_status]
+    attributesForFaceting [
+      :job_roles,
+      :job_role_0,
+      :job_role_1,
+      :job_role_2,
+      :job_role_3,
+      :working_patterns,
+      :school,
+      :listing_status
+    ]
 
     add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
@@ -135,11 +157,11 @@ class Vacancy < ApplicationRecord
   # rubocop:enable Metrics/BlockLength
 
   def lat
-    self.school.geolocation.x.to_f
+    self.school.geolocation&.x&.to_f
   end
 
   def lng
-    self.school.geolocation.y.to_f
+    self.school.geolocation&.y&.to_f
   end
 
   extend FriendlyId
