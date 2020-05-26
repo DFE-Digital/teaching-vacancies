@@ -36,7 +36,7 @@ if (document.querySelector('#vacancies-hits')) {
         key: 'location',
         autofocus: true,
         queryHook(query, search) {
-            query ? updateUrlQueryParams('location', document.querySelector('#location').dataset.searchTerm, window.location.href) : false;
+            query ? updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href) : false;
 
             if (SEARCH_THRESHOLD <= query.length) {
                 if (stringMatchesPostcode(query)) {
@@ -75,7 +75,7 @@ if (document.querySelector('#vacancies-hits')) {
             key: 'keyword',
             autofocus: true,
             queryHook(query, search) {
-                query ? updateUrlQueryParams('keyword', document.querySelector('#keyword').dataset.searchTerm, window.location.href) : false;
+                query ? updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href) : false;
                 search(query);
             },
         }),
