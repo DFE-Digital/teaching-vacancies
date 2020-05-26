@@ -55,12 +55,13 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def job_specification_form_params
     persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
     strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles])
+    convert_subject_ids_to_subjects_array
     params.require(:job_specification_form)
           .permit(:state, :job_title,
                   :subject_id, :first_supporting_subject_id, :second_supporting_subject_id,
                   :starts_on, :ends_on,
                   :newly_qualified_teacher,
-                  working_patterns: [], job_roles: [])
+                  job_roles: [], working_patterns: [], subjects: [])
           .merge(completed_step: current_step)
   end
 
@@ -76,5 +77,13 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def next_step
     school_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+  end
+
+  def convert_subject_ids_to_subjects_array
+    subjects = params.require(:job_specification_form)
+                     .values_at(:subject_id, :first_supporting_subject_id, :second_supporting_subject_id)
+                     .reject(&:blank?)
+                     .map { |subject_id| Subject.find(subject_id).name }
+    params[:job_specification_form][:subjects] = subjects
   end
 end
