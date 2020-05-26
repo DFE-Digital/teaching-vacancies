@@ -25,6 +25,7 @@
                         label: false,
                         hint: t('general_feedback.visit_purpose_hint_text').html_safe,
                         input_html: { class: 'form-control form-control-4-4', rows: '5' }
+              = recaptcha_v3(action: 'feedback')
 
 
       = render partial: 'shared/feedback_comment', locals: { f: f }
