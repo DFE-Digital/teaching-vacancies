@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_075215) do
+ActiveRecord::Schema.define(version: 2020_05_19_151545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_075215) do
     t.string "salary"
     t.integer "completed_step"
     t.text "about_school"
-    t.string "state", default: 'create'
+    t.string "state", default: "create"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
