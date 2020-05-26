@@ -6,7 +6,7 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    addHeadingMarkup(widgetParams.container, results.nbHits, results.query);
+    addHeadingMarkup(widgetParams.container, results.nbHits);
     if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.alert);
       updateJobAlertLink();
@@ -18,11 +18,11 @@ export const renderContent = (renderOptions) => {
 };
 
 export const addJobAlertMarkup = container => {
-  !document.getElementById('job-seeker-alert-icon') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
+  !document.getElementById('job-alert-link') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
 };
 
 export const removeJobAlertMarkup = () => {
-  const el = document.getElementById('job-seeker-alert-icon');
+  const el = document.getElementById('job-alert-link');
   return el && el.remove(); 
 };
 
@@ -34,14 +34,26 @@ export const updateJobAlertLink = () => {
   document.querySelector('#job-alert-link').href = `/subscriptions/new?${encodeURIComponent(queryString)}`;
 };
 
-export const addHeadingMarkup = (container, nbHits, query) => {
-  const inQuery = query ? ` in ${query.replace(/\b\w/g, l => l.toUpperCase() )}` : '';
-  container.innerHTML = `${nbHits} teaching jobs ${inQuery}`;
+export const addHeadingMarkup = (container, nbHits) => {
+  const keyword = document.querySelector('#keyword').dataset.searchTerm;
+  const location = document.querySelector('#location').dataset.searchTerm;
+  const prefix = keyword || location ? ' match ' : ' listed';
+  const postfix = `${prefix} ${createPostfixString('', keyword)} ${createPostfixString('in', location)}`;
+  const hits = keyword || location ? nbHits : `There are ${nbHits}`;
+
+  container.innerHTML = `${hits} jobs ${postfix}`;
+};
+
+export const createPostfixString = (pre, string) => {
+  return string ? ` ${pre} ${string.replace(/\b\w/g, l => l.toUpperCase() )}` : '';
 };
 
 export const hideServerMarkup = () => {
   document.querySelector('ul.vacancies').style.display = 'none';
-  document.querySelector('ul.pagination-server').style.display = 'none';
+
+  if (document.querySelector('ul.pagination-server')) {
+    document.querySelector('ul.pagination-server').style.display = 'none';
+  }
 };
 
 export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/g, ' ');
@@ -84,7 +96,7 @@ empty: '<h4 class="govuk-heading-m">Try another search</h4><ul class="govuk-list
 
 export const customTemplates = {
   alert: `
-  <div class="govuk-inset-text" id="job-seeker-alert-icon">
+  <div class="govuk-inset-text">
 <span class="job-seeker-alert-icon">
 <svg height="16" viewBox="0 0 20 16" width="20" xmlns="http://www.w3.org/2000/svg">
 <path d="M18 0H2C.9 0 0 .9 0 2v12a2 2 0 0 0 2 2h16c1.1 0 2-.9 2-2V2a2 2 0 0 0-2-2zm-.4 4.25l-7.07 4.42c-.32.2-.74.2-1.06 0L2.4 4.25a.85.85 0 1 1 .9-1.44L10 7l6.7-4.19a.85.85 0 1 1 .9 1.44zm0 0" fill="#0b0c0c"></path>

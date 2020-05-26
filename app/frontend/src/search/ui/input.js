@@ -5,21 +5,24 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
 
         document.querySelector('#location-radius-select').style.display = 'none';
 
-        if (getSearchInputValues().filter(value => value.length).length) {
+        if (getSearchInputValues().filter(value => value).length) {
             refine(getSearchInputValues().filter(value => value.length).join(' '));
         }
 
-        widgetParams.container.querySelector(widgetParams.element).addEventListener('input', () => {
+        widgetParams.inputElement.addEventListener('input', () => {
             enableSubmitButton(widgetParams.container);
+            widgetParams.inputElement.dataset.searchTerm = widgetParams.inputElement.value;
         });
 
-        widgetParams.container.querySelector(widgetParams.element).addEventListener('change', () => {
+        widgetParams.inputElement.addEventListener('change', () => {
             enableSubmitButton(widgetParams.container);
+            widgetParams.inputElement.dataset.searchTerm = widgetParams.inputElement.value;
         });
 
         widgetParams.container.addEventListener('submit', (e) => {
             e.preventDefault();
-            refine(getSearchInputValues().filter(value => value.length).join(' '));
+            widgetParams.inputElement.dataset.searchTerm = widgetParams.inputElement.value;
+            refine(getSearchInputValues().filter(value => value).join(' '));
         });
     }
 };
@@ -27,6 +30,6 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
 export const enableSubmitButton = container => container.querySelector('input[type="submit"]').disabled = false;
 
 export const getSearchInputValues = () => [
-    document.querySelector('#keyword').value,
-    document.querySelector('#location').value
+    document.querySelector('#keyword').dataset.searchTerm,
+    document.querySelector('#location').dataset.searchTerm
 ];

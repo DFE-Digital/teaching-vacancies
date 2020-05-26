@@ -32,11 +32,11 @@ if (document.querySelector('#vacancies-hits')) {
 
     const locationSearchBox = searchBox({
         container: document.querySelector('.filters-form'),
-        element: '#location',
+        inputElement: document.getElementById('location'),
         key: 'location',
         autofocus: true,
         queryHook(query, search) {
-            query ? updateUrlQueryParams('location', query, window.location.href) : false;
+            query ? updateUrlQueryParams('location', document.querySelector('#location').dataset.searchTerm, window.location.href) : false;
 
             if (SEARCH_THRESHOLD <= query.length) {
                 if (stringMatchesPostcode(query)) {
@@ -71,18 +71,18 @@ if (document.querySelector('#vacancies-hits')) {
         locationSearchBox,
         searchBox({
             container: document.querySelector('.filters-form'),
-            element: '#keyword',
+            inputElement: document.getElementById('keyword'),
             key: 'keyword',
             autofocus: true,
             queryHook(query, search) {
-                query ? updateUrlQueryParams('keyword', query, window.location.href) : false;
+                query ? updateUrlQueryParams('keyword', document.querySelector('#keyword').dataset.searchTerm, window.location.href) : false;
                 search(query);
             },
         }),
         locationRadius({
             container: document.querySelector('#location-radius-select'),
             attribute: '_geoloc',
-            element: '#radius',
+            inputElement: document.getElementById('radius'),
             onSelection: value => {
                 updateUrlQueryParams('radius', value, window.location.href);
                 document.querySelector('#location').dataset.radius = `${value}`;

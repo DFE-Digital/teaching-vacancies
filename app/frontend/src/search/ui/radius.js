@@ -4,11 +4,11 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
     const { query, widgetParams } = renderOptions;
 
     if (isFirstRender) {
-        widgetParams.container.querySelector(widgetParams.element).addEventListener('change', event => {
+        widgetParams.inputElement.addEventListener('change', event => {
             widgetParams.onSelection(event.target.value);
         });
 
-        widgetParams.container.querySelector(widgetParams.element).setAttribute('disabled', true);
+        widgetParams.inputElement.setAttribute('disabled', true);
     }
 
     query ? updateUrlQueryParams(widgetParams.key, query) : false;

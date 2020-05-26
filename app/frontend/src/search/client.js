@@ -2,7 +2,7 @@ import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 
 import { convertMilesToMetres } from './utils';
-import { getFilters } from './filters';
+import { getFilters } from './query';
 
 // This is the public API key which can be safely used in your frontend code.
 // This key is usable for search queries and list the indices you've got access to.
