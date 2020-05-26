@@ -79,7 +79,7 @@ export const templates = {
 </dd>
 <dt>School type</dt>
 <dd class="double">
-{{ school_type }}
+{{ school.school_type }}
 </dd>
 <dt>Working pattern</dt>
 <dd class="double">
