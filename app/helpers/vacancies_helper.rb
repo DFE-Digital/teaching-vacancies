@@ -11,6 +11,10 @@ module VacanciesHelper
     end
   end
 
+  def subject_options
+    SUBJECT_OPTIONS
+  end
+
   def listed_elsewhere_options
     Vacancy.listed_elsewheres.keys.map { |k| [t("jobs.feedback.listed_elsewhere.#{k}"), k] }
   end

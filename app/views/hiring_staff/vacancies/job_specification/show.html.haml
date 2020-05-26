@@ -32,27 +32,23 @@
         legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html'), size: 's' },
         hint_text: t('helpers.hint.job_specification_form.job_roles')
 
-      = f.govuk_collection_select :subject_id,
-        subject_options,
-        :id,
-        :name,
-        label: { text: t('helpers.fieldset.job_specification_form.main_subject'), size: 's' },
-        hint_text: t('helpers.hint.job_specification_form.subject')
+      = f.govuk_fieldset legend: { text: t('helpers.fieldset.job_specification_form.subjects'), size: 's' } do
 
-      #other_subjects
-        = f.govuk_collection_select :first_supporting_subject_id,
-          subject_options,
-          :id,
-          :name,
-          label: { text: t('helpers.fieldset.job_specification_form.supporting_subject', number: 1), size: 's' },
-          hint_text: t('helpers.hint.job_specification_form.supporting_subject')
+        %label{ for: 'job-specification-form-subject-search' }
+          %span.govuk-visually-hidden
+            Subject filter
+        %span.govuk-hint#job-specification-form-subjects-hint
+          =t('helpers.hint.job_specification_form.subjects_hint')
+        .checkboxes-with-scroll__filter.js-checkbox.display-none
+          %input.govuk-input#job-specification-form-subject-search{ type: 'text', 'aria-describedby': 'job-specification-form-subjects-hint', name: 'subject-search' }
 
-        = f.govuk_collection_select :second_supporting_subject_id,
+        = f.govuk_collection_check_boxes :subjects,
           subject_options,
-          :id,
-          :name,
-          label: { text: t('helpers.fieldset.job_specification_form.supporting_subject', number: 2), size: 's' },
-          hint_text: t('helpers.hint.job_specification_form.supporting_subject')
+          :first,
+          :first,
+          :last,
+          small: true,
+          classes: 'checkboxes-with-scroll subjects-options js-disabled-border'
 
       = f.govuk_collection_check_boxes :working_patterns,
         working_pattern_options,
