@@ -18,14 +18,22 @@ jobs:
     - name: Install cf client
       env:
         CF_CLI_VERSION: 7.0.0-beta.30
+        CF_CLI_URL: https://packages.cloudfoundry.org/stable?release=linux64-binary&version=
       run: |
-        curl -sL "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
-        cp /tmp/cf7 /usr/local/bin/cf7
+        curl -sL "${CF_CLI_URL}${CF_CLI_VERSION}" | sudo tar -zx -C /usr/local/bin
+        cf7 version
+        cf7 install-plugin conduit -f
+        cf7 plugins
 
     - name: Install postgres client
       run: |
-        apt-get update
-        apt-get install -y postgresql-client
+        wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+        RELEASE=$(lsb_release -cs)
+        echo "deb http://apt.postgresql.org/pub/repos/apt/ ${RELEASE}"-pgdg main | sudo tee  /etc/apt/sources.list.d/pgdg.list
+        cat /etc/apt/sources.list.d/pgdg.list
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client-11
+        psql --version
 
     - name: Sync staging from production
       env:
@@ -37,9 +45,7 @@ jobs:
         CF_SPACE_TARGET: teaching-vacancies-staging
         CF_POSTGRES_SERVICE_ORIGIN: teaching-vacancies-postgres-production
         CF_POSTGRES_SERVICE_TARGET: teaching-vacancies-postgres-staging
-      run: |
-        cf7 install-plugin conduit -f
-        bin/sync-db
+      run: bin/sync-db
 
   sync_notify:
     needs: sync
