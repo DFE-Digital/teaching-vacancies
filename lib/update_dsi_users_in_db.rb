@@ -4,16 +4,7 @@ class UpdateDfeSignInUsers
   include DFESignIn
 
   def run
-    (1..number_of_pages).each do |page|
-      response = api_response(page: page)
-      if users_nil_or_empty?(response)
-        Rollbar.log(:error,
-          "DfE Sign In API responded with nil users during job #{self.class.name}")
-        raise error_message_for(response)
-      end
-
-      convert_to_users(response['users'])
-    end
+    get_response_pages.each { |page| convert_to_users(page) }
   end
 
   private
