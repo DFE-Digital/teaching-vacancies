@@ -32,6 +32,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def update
     if @job_specification_form.complete_and_valid?
+      remove_subject_fields(@vacancy) unless @vacancy.subjects.nil?
       update_vacancy(job_specification_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       return redirect_to_next_step_if_save_and_continue(@vacancy.id)
@@ -63,6 +64,12 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                   :newly_qualified_teacher,
                   job_roles: [], working_patterns: [], subjects: [])
           .merge(completed_step: current_step)
+  end
+
+  def remove_subject_fields(vacancy)
+    @vacancy.subject = nil
+    @vacancy.first_supporting_subject = nil
+    @vacancy.second_supporting_subject = nil
   end
 
   def save_vacancy_without_validation
