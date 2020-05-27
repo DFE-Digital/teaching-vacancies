@@ -42,27 +42,3 @@ RSpec.describe 'Auditor::Audit' do
     end
   end
 end
-
-RSpec.describe 'Auditor::Auth' do
-  describe '#yestedays_activities' do
-    it 'returns the auth related activities taken place yesterday' do
-      Timecop.freeze(2.days.ago) do
-        Auditor::Audit.new(nil, 'dfe-sign-in.test', 'test_session_id').log_without_association
-      end
-
-      Timecop.freeze(1.day.ago) do
-        Auditor::Audit.new(nil, 'azure.authentication', 'test_session_id').log_without_association
-        Auditor::Audit.new(nil, 'dfe-sign-in.authentication.failure', 'test_session_id').log_without_association
-      end
-
-      Auditor::Audit.new(nil, 'dfe-sign-in.authentication.success', 'test_session_id').log_without_association
-
-      latest_activities = Auditor::Auth.new.yesterdays_activities
-      expect(latest_activities.count).to eq(2)
-      expect(latest_activities.first.key).to eq('azure.authentication')
-      expect(latest_activities.last.key).to eq('dfe-sign-in.authentication.failure')
-
-      Timecop.return
-    end
-  end
-end
