@@ -75,20 +75,19 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
       before(:each) do
         skip_vacancy_publish_on_validation
 
-        @subject = create(:subject, name: 'Other')
         @school = create(:school, :secondary, town: 'Abingdon', geolocation: Geocoder::DEFAULT_STUB_COORDINATES)
 
-        @draft_vacancy = create(:vacancy, :draft, job_title: 'English Teacher')
-        @expired_vacancy = create(:vacancy, :expired, job_title: 'Drama Teacher')
+        @draft_vacancy = create(:vacancy, :draft, job_title: 'English Teacher', subjects: ['English'])
+        @expired_vacancy = create(:vacancy, :expired, job_title: 'Drama Teacher', subjects: ['Drama'])
 
         @valid_vacancy = create(
-          :vacancy, :published, job_title: 'Maths Teacher', subject: @subject, school: @school,
+          :vacancy, :published, job_title: 'Maths Teacher', subjects: ['Maths'], school: @school,
           working_patterns: ['full_time'], job_roles: ['Suitable for NQTs'],
           publish_on: Time.zone.today, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 2.hours
         )
 
         @invalid_vacancy = create(
-          :vacancy, :published, job_title: 'English Teacher', subject: @subject, school: @school,
+          :vacancy, :published, job_title: 'English Teacher', subjects: ['English'], school: @school,
           working_patterns: ['part_time'], job_roles: ['Teacher'],
           publish_on: Time.zone.today, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 2.hours
         )
