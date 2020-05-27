@@ -1,4 +1,8 @@
+require 'get_subject_name'
+
 class CopyVacancy
+  include GetSubjectName
+
   def initialize(vacancy)
     @vacancy = vacancy
   end
@@ -18,6 +22,13 @@ class CopyVacancy
       @new_vacancy.education = nil
       @new_vacancy.qualifications = nil
     end
+
+    @new_vacancy.subjects ||= []
+    @new_vacancy.subjects += [
+      get_subject_name(@vacancy.subject),
+      get_subject_name(@vacancy.first_supporting_subject),
+      get_subject_name(@vacancy.second_supporting_subject)
+    ].reject(&:blank?) unless @new_vacancy.subjects.any?
 
     @new_vacancy.save
 
