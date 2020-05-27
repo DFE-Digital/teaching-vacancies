@@ -1,3 +1,9 @@
 import { convertEpochToUnixTimestamp, getUnixTimestampForDayStart } from './utils';
+import { stringMatchesPostcode } from './utils';
 
 export const getFilters = () => `listing_status:published AND publication_date_timestamp <= ${getUnixTimestampForDayStart()} AND expires_at_timestamp > ${convertEpochToUnixTimestamp(Date.now())}`;
+
+export const getQuery = () => [
+    document.querySelector('#keyword').value,
+    stringMatchesPostcode(document.querySelector('#location').value) ? null : document.querySelector('#location').value
+].filter(value => value).join(' ');

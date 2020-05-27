@@ -1,3 +1,6 @@
+import { getQuery } from '../query';
+import { enableSubmitButton } from './form';
+
 export const renderSearchBox = (renderOptions, isFirstRender) => {
     const { refine, widgetParams } = renderOptions;
 
@@ -5,28 +8,29 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
 
         document.querySelector('#location-radius-select').style.display = 'none';
 
-        if (getSearchInputValues().filter(value => value).length) {
-            refine(getSearchInputValues().filter(value => value.length).join(' '));
+        if (getQuery().length) {
+            refine(getQuery());
         }
 
         widgetParams.inputElement.addEventListener('input', () => {
             enableSubmitButton(widgetParams.container);
+
+            if (widgetParams.onChange) {
+                widgetParams.onChange(document.querySelector('#location').value);
+            }
         });
 
         widgetParams.inputElement.addEventListener('change', () => {
             enableSubmitButton(widgetParams.container);
+
+            if (widgetParams.onChange) {
+                widgetParams.onChange(document.querySelector('#location').value);
+            }
         });
 
         widgetParams.container.addEventListener('submit', (e) => {
             e.preventDefault();
-            refine(getSearchInputValues().filter(value => value).join(' '));
+            refine();
         });
     }
 };
-
-export const enableSubmitButton = container => container.querySelector('input[type="submit"]').disabled = false;
-
-export const getSearchInputValues = () => [
-    document.querySelector('#keyword').value,
-    document.querySelector('#location').value
-];

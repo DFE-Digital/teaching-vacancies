@@ -17,6 +17,7 @@ import { renderRadiusSelect } from './ui/radius';
 import { locations } from './data/locations';
 import { updateUrlQueryParams, stringMatchesPostcode } from './utils';
 import { getCoordinates } from './geoloc';
+import { enableSubmitButton } from './ui/form';
 
 if (document.querySelector('#vacancies-hits')) {
     const ALGOLIA_INDEX = 'Vacancy';
@@ -37,20 +38,19 @@ if (document.querySelector('#vacancies-hits')) {
         autofocus: true,
         queryHook(query, search) {
             query ? updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href) : false;
-
-            if (SEARCH_THRESHOLD <= query.length) {
-                if (stringMatchesPostcode(query)) {
-                    getCoordinates(query).then(coords => {
-                        document.querySelector('#location-radius-select').style.display = 'block';
-                        document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
-                        search('');
-                    });
-                } else {
-                    document.querySelector('#location-radius-select').style.display = 'none';
-                    search(query);
-                }
+            search(query);
+        },
+        onChange(query) {
+            if (stringMatchesPostcode(query)) {
+                getCoordinates(query).then(coords => {
+                    document.querySelector('#location-radius-select').style.display = 'block';
+                    document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
+                    document.querySelector('#radius').dataset.radius = document.querySelector('#radius').value || 10;
+                });
             } else {
-                search('');
+                document.querySelector('#location-radius-select').style.display = 'none';
+                delete document.querySelector('#location').dataset.coordinates;
+                delete document.querySelector('#radius').dataset.radius;
             }
         },
     });
@@ -85,7 +85,8 @@ if (document.querySelector('#vacancies-hits')) {
             inputElement: document.getElementById('radius'),
             onSelection: value => {
                 updateUrlQueryParams('radius', value, window.location.href);
-                document.querySelector('#location').dataset.radius = `${value}`;
+                document.querySelector('#radius').dataset.radius = `${value}`;
+                enableSubmitButton(document.querySelector('.filters-form'));
                 searchClientInstance.refresh();
             }
         }),

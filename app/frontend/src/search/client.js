@@ -2,7 +2,7 @@ import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 
 import { convertMilesToMetres } from './utils';
-import { getFilters } from './query';
+import { getFilters, getQuery } from './query';
 
 // This is the public API key which can be safely used in your frontend code.
 // This key is usable for search queries and list the indices you've got access to.
@@ -16,8 +16,11 @@ export const searchClient = indexName => instantsearch({
             helper.state.aroundLatLng = document.querySelector('#location').dataset.coordinates;
         }
 
-        if (document.querySelector('#location').dataset.radius) {
-            helper.state.aroundRadius = convertMilesToMetres(document.querySelector('#location').dataset.radius);
+        if (document.querySelector('#radius').dataset.radius) {
+            helper.state.aroundRadius = convertMilesToMetres(document.querySelector('#radius').dataset.radius);
+            helper.state.query = document.querySelector('#keyword').value;
+        } else {
+            helper.state.query = getQuery();
         }
 
         helper.state.filters = getFilters();
