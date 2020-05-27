@@ -13,7 +13,7 @@ class GeneralFeedbackController < ApplicationController
     # data sample, we can decide how we will act on it.
     #
     # https://developers.google.com/recaptcha/docs/v3
-    @feedback.recaptcha_score = recaptcha_reply['score'] if recaptcha_valid
+    @feedback.recaptcha_score = recaptcha_reply['score'] if recaptcha_valid && recaptcha_reply
     @feedback.save
 
     redirect_to root_path, notice: I18n.t('messages.feedback.submitted')
