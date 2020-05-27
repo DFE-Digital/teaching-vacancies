@@ -1,8 +1,8 @@
 // Recommended - Use these styles for the check your answers pattern
 .app-check-your-answers {
   @include govuk-font(19);
+  @include govuk-responsive-margin(9, 'bottom');
   margin-top: 0;
-  @include govuk-responsive-margin(9, "bottom");
   @include govuk-media-query($from: desktop) {
     display: table;
   }
@@ -29,18 +29,18 @@
 }
 
 .app-check-your-answers__contents {
-  position: relative;
   border-bottom: 1px solid $govuk-border-colour;
+  position: relative;
 
   @include govuk-media-query($from: desktop) {
-    display: table-row;
     border-bottom-width: 0;
+    display: table-row;
   }
 }
 
 .app-check-your-answers {
-  width: fill-available;
   padding-left: govuk-spacing(6);
+  width: fill-available;
 }
 
 .app-check-your-answers__question,
@@ -48,21 +48,22 @@
   display: block;
   margin: 0;
   @include govuk-media-query($from: desktop) {
-    display: table-cell;
     border-bottom: 1px solid $govuk-border-colour;
+    display: table-cell;
     padding: govuk-em(12, 19) govuk-em(20, 19) govuk-em(12, 19) 0;
   }
+
   > p {
-    margin-top: 0 !important;
     margin-bottom: 0 !important;
+    margin-top: 0 !important;
   }
 }
 
 .app-task-list {
   list-style-type: none;
-  padding-left: 0;
-  margin-top: 0;
   margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0;
   @include govuk-media-query($from: tablet) {
     min-width: 550px;
   }
@@ -73,8 +74,8 @@ h2.app-task-list__section {
 }
 
 .app-task-list__section {
-  display: table;
   @include govuk-font($size:24, $weight: bold);
+  display: table;
 }
 
 .app-task-list__section-number {
@@ -100,6 +101,6 @@ dt.app-check-your-answers__question > h4 {
 }
 
 .change-button {
-  margin-left: 20px;
   font-size: 19px;
+  margin-left: 20px;
 }

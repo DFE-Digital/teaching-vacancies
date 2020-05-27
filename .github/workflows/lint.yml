@@ -69,5 +69,5 @@ jobs:
       - name: Install node.js dependencies
         run: yarn install
 
-      # - name: Run yarn lint
-      #   run: yarn lint
+      - name: Run SASS lint
+        run: yarn run sass:lint

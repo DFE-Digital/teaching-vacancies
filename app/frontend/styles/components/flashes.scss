@@ -1,7 +1,7 @@
 .flash {
   @include govuk-font(19);
-  color: govuk-colour('black');
   border: 5px solid;
+  color: govuk-colour('black');
   padding: 20px;
 }
 
@@ -26,8 +26,8 @@
 }
 
 .dismiss-link {
-  float: right;
   display: block;
+  float: right;
 }
 
 .success-icon {

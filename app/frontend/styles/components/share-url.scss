@@ -1,11 +1,12 @@
 .share-url-info {
   @include govuk-font(19);
-  margin-bottom: $govuk-gutter;
-  padding: $govuk-gutter-half;
-  margin-top: $govuk-gutter-half;
-  margin-bottom: $govuk-gutter;
   border: $thick-border solid;
   border-color: $warning-color;
+  margin-bottom: $govuk-gutter;
+  margin-bottom: $govuk-gutter;
+  margin-top: $govuk-gutter-half;
+  padding: $govuk-gutter-half;
+
   h2 {
     margin-top: $govuk-gutter;
   }
@@ -15,38 +16,43 @@ body.js-enabled {
   .share-url {
     display: block;
   }
+
   .share-url-no-js {
     display: none;
   }
 }
+
 .share-links__link {
   font-size: 16px;
-  line-height: 1.25;
   font-weight: 700;
+  line-height: 1.25;
   margin-right: 20px;
-  text-transform: none;
   text-decoration: none;
+  text-transform: none;
 }
+
 .share-links__list-item {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  position: relative;
   display: inline-block;
-  min-height: 32px;
-  padding-left: 42px;
-  margin-bottom: 10px;
   font-size: 16px;
   line-height: 32px;
+  margin-bottom: 10px;
+  min-height: 32px;
+  padding-left: 42px;
+  position: relative;
 }
+
 .share-links__link-icon {
+  height: 32px;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
   vertical-align: top;
+  width: 32px;
 }
+
 .share-this-job {
   margin-top: $govuk-gutter;
 }

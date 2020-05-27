@@ -1,9 +1,9 @@
 .app-step-nav-header {
-  position: relative;
-  padding: 10px;
-  background: govuk-colour("light-grey", $legacy: "grey-4");
-  border-top: solid 1px $govuk-border-colour;
+  background: govuk-colour('light-grey', $legacy: 'grey-4');
   border-bottom: solid 1px $govuk-border-colour;
+  border-top: solid 1px $govuk-border-colour;
+  padding: 10px;
+  position: relative;
   @include govuk-media-query($from: tablet) {
     padding: 15px;
   }
@@ -16,8 +16,7 @@
 }
 
 .app-step-nav-header__title {
-  @include govuk-font(24, $weight: bold)
-}
+  @include govuk-font(24, $weight: bold); }
 
 .app-step-nav-related {
   border-top: 3px solid $govuk-link-colour;
@@ -26,8 +25,8 @@
 
 .app-step-nav-related__heading {
   @include govuk-font(19, $weight: bold);
-  margin-top: 15px;
   margin-bottom: 10px;
+  margin-top: 15px;
 }
 
 .app-step-nav-related__links {
@@ -71,6 +70,7 @@
 .app-step-nav {
   @include govuk-font(19);
   margin-bottom: 30px;
+
   &.app-step-nav--large {
     @include govuk-media-query($from: tablet) {
       margin-bottom: 60px;
@@ -84,10 +84,10 @@
 }
 
 .app-step-nav__button {
-  color: $govuk-link-colour;
-  cursor: pointer;
   background: none;
   border: 0;
+  color: $govuk-link-colour;
+  cursor: pointer;
   margin: 0;
 
   &:focus {
@@ -107,10 +107,10 @@
 
 .app-step-nav__button--title {
   @include govuk-font(19, $weight: bold);
+  color: govuk-colour('black');
   display: inline-block;
   padding: 0;
   text-align: left;
-  color: govuk-colour("black");
 
   .app-step-nav--large & {
     @include govuk-font(24, $weight: bold);
@@ -119,10 +119,10 @@
 
 .app-step-nav__button--controls {
   @include govuk-font(14);
-  position: relative;
-  z-index: 1; // this and relative position stops focus outline underlap with border of accordion
   padding: 0.5em 0;
+  position: relative;
   text-decoration: underline;
+  z-index: 1; // this and relative position stops focus outline underlap with border of accordion
 
   &:hover:not(:focus) {
     color: $govuk-link-hover-colour;
@@ -134,27 +134,27 @@
 }
 
 .app-step-nav__steps {
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .app-step-nav__step {
-  position: relative;
-  padding-left: 45px;
   list-style: none;
+  padding-left: 45px;
+  position: relative;
 }
 
-.app-step-nav__step:after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  width: 0;
-  height: 100%;
-  border-left: solid 2px $govuk-border-colour;
+.app-step-nav__step::after {
   background: #fff;
+  border-left: solid 2px $govuk-border-colour;
+  content: '';
+  height: 100%;
   left: 0;
   margin-left: 12px;
+  position: absolute;
   top: 15px;
+  width: 0;
+  z-index: 2;
 }
 
 @include govuk-media-query($from: tablet) {
@@ -162,76 +162,76 @@
     padding-left: 60px;
   }
 
-  .app-step-nav--large .app-step-nav__step:after {
+  .app-step-nav--large .app-step-nav__step::after {
+    border-width: 3px;
     left: 0;
     margin-left: 16px;
-    border-width: 3px;
     top: 30px;
   }
 }
 
-.app-step-nav__step:last-child:before {
-  content: "";
-  position: absolute;
-  z-index: 6;
+.app-step-nav__step:last-child::before {
+  border-bottom: solid 2px $govuk-border-colour;
   bottom: 0;
+  content: '';
+  height: 0;
   left: 0;
   margin-left: 6.5px;
+  position: absolute;
   width: 13px;
-  height: 0;
-  border-bottom: solid 2px $govuk-border-colour;
+  z-index: 6;
 }
 
-.app-step-nav__step:last-child:after {
+.app-step-nav__step:last-child::after {
   height: -webkit-calc(100% - 15px);
   height: calc(100% - 15px);
 }
 
-.app-step-nav__step:last-child .app-step-nav__help:after {
+.app-step-nav__step:last-child .app-step-nav__help::after {
   height: 100%;
 }
 
 @include govuk-media-query($from: tablet) {
-  .app-step-nav--large .app-step-nav__step:last-child:before {
+  .app-step-nav--large .app-step-nav__step:last-child::before {
+    border-width: 3px;
     margin-left: 8.75px;
     width: 17.5px;
-    border-width: 3px;
   }
 
-  .app-step-nav--large .app-step-nav__step:last-child:after {
+  .app-step-nav--large .app-step-nav__step:last-child::after {
     height: calc(100% - 30px);
   }
 }
 
 .app-step-nav__step--active .app-step-nav__circle--number,
-.app-step-nav__step--active .app-step-nav__help:after,
-.app-step-nav__step--active .app-step-nav__substep:after,
-.app-step-nav__step--active:after,
-.app-step-nav__step--active:last-child:before {
-  border-color: govuk-colour("black");
+.app-step-nav__step--active .app-step-nav__help::after,
+.app-step-nav__step--active .app-step-nav__substep::after,
+.app-step-nav__step--active::after,
+.app-step-nav__step--active:last-child::before {
+  border-color: govuk-colour('black');
 }
 
 .app-step-nav__circle {
+  background: #fff;
+  border-radius: 100px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  position: absolute;
-  z-index: 5;
-  top: 15px;
-  left: 0;
-  width: 26px;
+  color: govuk-colour('black');
   height: 26px;
-  color: govuk-colour("black");
-  background: #fff;
-  border-radius: 100px;
+  left: 0;
+  position: absolute;
   text-align: center;
+  top: 15px;
+  width: 26px;
+  z-index: 5;
 }
 
 @include govuk-media-query($from: tablet) {
   .app-step-nav--large .app-step-nav__circle {
+    height: 35px;
     top: 30px;
     width: 35px;
-    height: 35px;
   }
 }
 
@@ -241,8 +241,8 @@
 
 .app-step-nav__circle--number {
   @include govuk-font(16, $weight: bold);
-  line-height: 23px;
   border: solid 2px $govuk-border-colour;
+  line-height: 23px;
 }
 
 @include govuk-media-query($from: tablet) {
@@ -303,8 +303,8 @@
 }
 
 .app-step-nav__header {
+  border-top: solid 2px govuk-colour('light-grey', $legacy: 'grey-3');
   padding: 15px 0;
-  border-top: solid 2px govuk-colour("light-grey", $legacy: "grey-3");
 }
 
 .app-step-nav--active .app-step-nav__header {
@@ -344,9 +344,9 @@
 
 .app-step-nav__toggle-link {
   @include govuk-font(16);
-  line-height: 1.2;
-  display: block;
   color: $govuk-link-colour;
+  display: block;
+  line-height: 1.2;
 }
 
 .app-step-nav__header:hover .app-step-nav__button:not(:focus) .app-step-nav__toggle-link {
@@ -372,6 +372,7 @@
 .app-step-nav__panel {
   @include govuk-font(16);
   line-height: 1.25;
+
   .js-enabled &.js-hidden {
     display: none;
   }
@@ -384,14 +385,13 @@
 }
 
 .app-step-nav--large .app-step-nav__panel {
-  @include govuk-font(19)
-}
+  @include govuk-font(19); }
 
 .app-step-nav__heading,
 .app-step-nav__paragraph {
-  padding-bottom: 15px;
-  margin: 0;
   font-size: inherit;
+  margin: 0;
+  padding-bottom: 15px;
 }
 
 .app-step-nav__heading + .app-step-nav__list,
@@ -427,15 +427,15 @@
 }
 
 .app-step-nav__list--choice {
-  margin-left: 20px;
   list-style: disc;
+  margin-left: 20px;
 }
 
-.app-step-nav__list--choice .app-step-nav__list-item--active:before {
+.app-step-nav__list--choice .app-step-nav__list-item--active::before {
   left: -45px;
 }
 @include govuk-media-query($from: tablet) {
-  .app-step-nav--large .app-step-nav__list--choice .app-step-nav__list-item--active:before {
+  .app-step-nav--large .app-step-nav__list--choice .app-step-nav__list-item--active::before {
     left: -80px;
   }
 }
@@ -449,86 +449,86 @@
   position: relative;
 }
 
-.app-step-nav__list-item--active:before {
+.app-step-nav__list-item--active::before {
+  background: govuk-colour('black');
+  border: solid 2px #fff;
+  border-radius: 100px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  content: "";
-  position: absolute;
-  z-index: 5;
-  top: 0.6em;
+  content: '';
+  height: 16px;
   left: -45px;
   margin-left: 5px;
-  width: 16px;
-  height: 16px;
   margin-top: -8px;
-  background: govuk-colour("black");
-  border: solid 2px #fff;
-  border-radius: 100px;
+  position: absolute;
+  top: 0.6em;
+  width: 16px;
+  z-index: 5;
 }
 @include govuk-media-query($from: tablet) {
-  .app-step-nav--large .app-step-nav__list-item--active:before {
+  .app-step-nav--large .app-step-nav__list-item--active::before {
     left: -60px;
     margin-left: 9.5px;
   }
 }
 
 .app-step-nav__list-item--active .app-step-nav__link {
-  color: govuk-colour("black");
+  color: govuk-colour('black');
   text-decoration: none;
 }
 
 .app-step-nav__list-item--active .app-step-nav__link:active,
 .app-step-nav__list-item--active .app-step-nav__link:link,
 .app-step-nav__list-item--active .app-step-nav__link:visited {
-  color: govuk-colour("black");
+  color: govuk-colour('black');
 }
 
 .app-step-nav__context {
+  color: $govuk-secondary-text-colour;
   display: inline-block;
   font-weight: normal;
-  color: $govuk-secondary-text-colour;
 }
 
-.app-step-nav__context:before {
-  content: " \2013\00a0";
+.app-step-nav__context::before {
+  content: ' \2013\00a0';
 }
 
 .app-step-nav__help {
-  position: relative;
+  border-top: solid 2px govuk-colour('light-grey', $legacy: 'grey-3');
   padding: 15px 0;
-  border-top: solid 2px govuk-colour("light-grey", $legacy: "grey-3");
+  position: relative;
 }
 
-.app-step-nav__help:after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  width: 0;
-  height: 100%;
-  border-left: dotted 2px $govuk-border-colour;
+.app-step-nav__help::after {
   background: #fff;
-  left: 0;
-  margin-left: 12px;
-  z-index: 3;
-  top: 0;
-  left: -45px;
+  border-left: dotted 2px $govuk-border-colour;
+  content: '';
+  height: 100%;
   height: calc(100% + 30px);
+  left: 0;
+  left: -45px;
+  margin-left: 12px;
+  position: absolute;
+  top: 0;
+  width: 0;
+  z-index: 2;
+  z-index: 3;
 }
 
 @include govuk-media-query($from: tablet) {
-  .app-step-nav--large .app-step-nav__help:after {
-    left: 0;
-    margin-left: 16px;
+  .app-step-nav--large .app-step-nav__help::after {
     border-width: 3px;
-    left: -60px;
     height: calc(100% + 30px + 15px);
+    left: 0;
+    left: -60px;
+    margin-left: 16px;
   }
 }
 
 .app-step-nav__help-link {
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .app-step-nav__help-link:hover {
@@ -536,24 +536,24 @@
 }
 
 .app-step-nav__substep {
-  position: relative;
+  border-top: solid 2px govuk-colour('light-grey', $legacy: 'grey-3');
   padding-top: 15px;
-  border-top: solid 2px govuk-colour("light-grey", $legacy: "grey-3");
+  position: relative;
 }
 
-.app-step-nav__substep:after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  width: 0;
-  height: 100%;
-  border-left: solid 2px $govuk-border-colour;
+.app-step-nav__substep::after {
   background: #fff;
+  border-left: solid 2px $govuk-border-colour;
+  content: '';
+  height: 100%;
   left: 0;
-  margin-left: 12px;
-  z-index: 3;
-  top: 0;
   left: -45px;
+  margin-left: 12px;
+  position: absolute;
+  top: 0;
+  width: 0;
+  z-index: 2;
+  z-index: 3;
 }
 
 @include govuk-media-query($from: tablet) {
@@ -561,82 +561,70 @@
     padding-top: 30px;
   }
 
-  .app-step-nav--large .app-step-nav__substep:after {
-    left: 0;
-    margin-left: 16px;
+  .app-step-nav--large .app-step-nav__substep::after {
     border-width: 3px;
+    left: 0;
     left: -60px;
+    margin-left: 16px;
   }
 }
 
-.app-step-nav__substep--optional:after {
+.app-step-nav__substep--optional::after {
   border-left-style: dotted;
 }
 
 
 ol.app-step-nav__steps {
-    .app-step-nav__step--active {
-        .app-step-nav__circle {
-            background-color: #0b0c0c;
-            .app-step-nav__circle-background {
-                text-shadow: none;
-                color: white;
-            }
-        }
-    }
+  .app-step-nav__step--active {
+    .app-step-nav__circle {
+      background-color: #0b0c0c;
 
-    .app-step-nav__step--visited {
-        .app-step-nav__circle {
-            background-color: #1d70b8;
-            .app-step-nav__circle-background {
-                text-shadow: none;
-                color: white;
-            }
-        }
+      .app-step-nav__circle-background {
+        color: govuk-colour('white');
+        text-shadow: none;
+      }
     }
+  }
+
+  .app-step-nav__step--visited {
+    .app-step-nav__circle {
+      background-color: #1d70b8;
+
+      .app-step-nav__circle-background {
+        color: govuk-colour('white');
+        text-shadow: none;
+      }
+    }
+  }
 }
 
 li.app-step-nav__step {
-    div.app-step-nav__header {
-        padding-top: 15px;
-        padding-bottom: 5px;
+  div.app-step-nav__header {
+    cursor: default;
+    padding-bottom: 5px;
+    padding-top: 15px;
+
+    &:hover {
+      .app-step-nav__circle {
+        color: #0b0c0c;
         cursor: default;
+      }
 
-        &:hover {
-            .app-step-nav__circle {
-                color: #0b0c0c;
-                cursor:default;
-            }
-            .js-step-title {
-                .app-step-nav__button {
-                    color: #0b0c0c;
-                    cursor:default;
-                }
-            }
+      .js-step-title {
+        .app-step-nav__button {
+          color: #0b0c0c;
+          cursor: default;
         }
-
-        .app-step-nav__title {
-            .app-step-nav__circle {
-                .app-step-nav__circle-inner {
-                    .app-step-nav__circle-background {
-                    }
-                }
-            }
-            .js-step-title {
-                .app-step-nav__button {
-                    .js-step-title-text {
-                    }
-                }
-            }
-        }
+      }
     }
+  }
 
-    p.app-step-nav__paragraph {
-        padding-bottom: 15px;
-    }
+  p.app-step-nav__paragraph {
+    padding-bottom: 15px;
+  }
 
-    .app-step-nav__circle {
-        top: 16px;
-    }
+  .app-step-nav__circle {
+    top: 16px;
+  }
 
 }

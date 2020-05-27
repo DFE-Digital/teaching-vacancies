@@ -6,21 +6,23 @@
   }
 
   &--metadata {
-    background-color: govuk-colour("light-grey");
+    background-color: govuk-colour('light-grey');
+
+    margin-bottom: $govuk-gutter;
     padding: $govuk-gutter-half;
     @include govuk-media-query($until: tablet) {
       margin-top: $govuk-gutter;
     }
 
-    margin-bottom: $govuk-gutter;
-
     dl {
       dt {
         @include govuk-font(19, $weight: bold);
       }
+
       dd {
-        margin-left: 0;
         margin-bottom: $govuk-gutter-half;
+        margin-left: 0;
+
         &:last-of-type {
           margin-bottom: 0;
         }
@@ -29,9 +31,9 @@
   }
 
   #map_zoom {
-    width: 100%;
     height: 400px;
     margin-top: 30px;
+    width: 100%;
   }
 
   h4.job-caption {
@@ -47,20 +49,20 @@
   }
 
   div.supporting-docs {
+    border: 1px solid #b1b4b6;
     margin-block-end: 1em;
     padding: 15px;
-    border: 1px solid #b1b4b6;
 
     ul {
-      margin:0;
-      padding: 0;
       list-style-type: none;
+      margin: 0;
+      padding: 0;
 
       li {
         margin-bottom: 10px;
 
         &:last-child {
-            margin-bottom: 0;
+          margin-bottom: 0;
         }
 
         .document-link {

@@ -1,41 +1,50 @@
 .vacancies {
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
+
   h2 {
-    font-weight: 700;
     font-size: 22px;
+    font-weight: 700;
   }
+
   p {
     margin-bottom: $govuk-gutter-half;
   }
+
   li {
-    border-bottom: 1px solid govuk-colour("light-grey");
-    padding-bottom: $govuk-gutter-half;
+    border-bottom: 1px solid govuk-colour('light-grey');
     margin-bottom: $govuk-gutter-half;
+    padding-bottom: $govuk-gutter-half;
+
     dl {
       @include govuk-font(16);
     }
-    dt, dd {
+
+    dt,
+    dd {
       display: inline-block;
-      vertical-align: top;
       padding-bottom: 5px;
+      vertical-align: top;
     }
+
     dt {
-      width: 25%;
       color: $govuk-secondary-text-colour;
+      width: 25%;
       @include govuk-media-query($from: desktop) {
         width: 24%;
       }
     }
+
     dd {
-      width: 50%;
       margin-left: 0;
+      width: 50%;
+      @include govuk-media-query($from: desktop) {
+        width: 24%;
+      }
+
       &.double {
         width: 60%;
-      }
-      @include govuk-media-query($from: desktop) {
-        width: 24%;
       }
     }
   }

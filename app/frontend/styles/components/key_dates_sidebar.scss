@@ -1,18 +1,18 @@
 ul.key-dates-timeline {
-  margin: 0 0 15px 0;
-  overflow: hidden;
-  position: relative;
-  padding-left: 0;
   list-style-type: none;
+  margin: 0 0 15px;
+  overflow: hidden;
+  padding-left: 0;
+  position: relative;
 
   li:first-of-type {
-    &:before {
+    &::before {
       top: 10px;
     }
   }
 
   li:last-of-type {
-    &:before {
+    &::before {
       height: 10px;
     }
   }
@@ -22,9 +22,9 @@ ul.key-dates-timeline {
     padding-left: 20px;
     position: relative;
 
-    &:before {
+    &::before {
       background-color: #1d70b8;
-      content: "";
+      content: '';
       height: 130%;
       left: 0;
       position: absolute;
@@ -32,12 +32,12 @@ ul.key-dates-timeline {
     }
 
     .key-dates-timeline__title {
-      line-height: 1.31579;
       display: inline;
+      line-height: 1.31579;
 
-      &:before {
+      &::before {
         background-color: #1d70b8;
-        content: "";
+        content: '';
         height: 5px;
         left: 0;
         position: absolute;
@@ -45,6 +45,7 @@ ul.key-dates-timeline {
         width: 15px;
       }
     }
+
     .key-dates-timeline__by {
       margin: 0;
     }
@@ -52,6 +53,6 @@ ul.key-dates-timeline {
 }
 
 .vacancy-apply-link {
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }

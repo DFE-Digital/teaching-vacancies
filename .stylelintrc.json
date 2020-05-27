@@ -1,0 +1,50 @@
+{
+    "extends": "stylelint-config-sass-guidelines",
+    "rules": {
+        "selector-class-pattern": [
+            ".",
+            {
+                "severity": "warning"
+            }
+        ],
+        "selector-no-qualifying-type": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ],
+        "max-nesting-depth": [
+            3,
+            {
+                "severity": "warning"
+            }
+        ],
+        "scss/at-import-no-partial-leading-underscore": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ],
+        "property-no-vendor-prefix": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ],
+        "scss/at-extend-no-missing-placeholder": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ],
+        "selector-max-compound-selectors": [
+            5,
+            {
+                "severity": "warning"
+            }
+        ],
+        "selector-max-id": [
+            1
+        ]    
+    }
+}

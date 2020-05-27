@@ -3,8 +3,8 @@
 }
 
 .mv0 {
-  margin-top: 0;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .mb1 {
@@ -20,12 +20,12 @@
 }
 
 .wordwrap {
-  word-wrap:break-word;
+  word-wrap: break-word;
 }
 
 .link-wrap {
-  word-break: break-word;
   overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .overflow-scroll {
@@ -52,6 +52,7 @@
 
 .inline-button > .govuk-form-group {
   margin-bottom: 0;
+
   > input {
     margin-bottom: 0;
   }
@@ -61,21 +62,22 @@
   white-space: nowrap;
 }
 
-strong, b {
+strong,
+b {
   font-weight: bold;
 }
 
 .text-red {
+  color: govuk-colour('red');
   font-weight: bold;
-  color: govuk-colour("red");
 }
 
 .four-column-list {
+
+  column-count: 4;
   @include govuk-media-query($until: tablet) {
     column-count: 2;
   }
-
-  column-count: 4;
 }
 
 .govuk-form-group--error {

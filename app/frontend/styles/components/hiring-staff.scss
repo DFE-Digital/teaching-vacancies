@@ -1,11 +1,10 @@
 body.hiring-staff {
-
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {
-      max-width: 1200px;
-      width: 90%;
       margin-left: auto;
       margin-right: auto;
+      max-width: 1200px;
+      width: 90%;
     }
   }
 
@@ -13,9 +12,9 @@ body.hiring-staff {
   &.vacancies_show,
   &.vacancies_preview {
     .govuk-main-wrapper {
-      max-width: 960px;
       margin-left: auto;
       margin-right: auto;
+      max-width: 960px;
     }
   }
 
@@ -27,27 +26,27 @@ body.hiring-staff {
 }
 
 .hod-checkmark {
-  font-size: 35px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
   display: block;
+  font-size: 35px;
+  height: 70px;
   margin: 15px auto;
   position: relative;
-  background: rgba(255, 255, 255, 0.1);
   width: 70px;
-  height: 70px;
-  border-radius: 50%;
 
   &::before {
+    left: 50%;
     position: absolute;
     top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
   }
 
   svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   + .govuk-heading-l {

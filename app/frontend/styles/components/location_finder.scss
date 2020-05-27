@@ -1,23 +1,23 @@
 .js-location-finder {
   .govuk-c-loader {
     @extend .govuk-input;
+    background: #fff;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
     user-select: none;
+    width: 100%;
   }
 
   .govuk-c-loader__spinner {
+    left: -3px;
     position: relative;
     top: -3px;
-    left: -3px;
   }
 
   .govuk-c-loader__label {
-    vertical-align: top;
     line-height: 26px;
+    vertical-align: top;
   }
 }
 

@@ -1,15 +1,16 @@
 %banner {
-  font-size: $large-font-size;
-  padding: $govuk-gutter-half;
-  margin-top: $govuk-gutter-half;
-  margin-bottom: $govuk-gutter;
   border: $thick-border solid;
+  font-size: $large-font-size;
   font-weight: $bold-font-weight;
+  margin-bottom: $govuk-gutter;
+  margin-top: $govuk-gutter-half;
+  padding: $govuk-gutter-half;
 }
+
 .banner {
   &-warning {
     @extend %banner;
-    color: $warning-color;
     border-color: $warning-color;
+    color: $warning-color;
   }
 }
