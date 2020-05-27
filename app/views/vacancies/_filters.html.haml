@@ -2,7 +2,7 @@
   %h2.govuk-heading-m
     =t('jobs.filters.title')
 
-  = form_tag jobs_path(anchor: 'vacancy-results'), class: 'filters-form', method: :get do
+  = form_tag jobs_path(anchor: 'vacancy-results'), class: 'filters-form', role: 'search', method: :get do
     .govuk-form-group
       = label_tag 'keyword', t('jobs.filters.keyword'), class: 'govuk-label'
       = search_field_tag :keyword, @vacancies_search.keyword, class: 'govuk-input', placeholder: t('jobs.filters.keyword_hint')
