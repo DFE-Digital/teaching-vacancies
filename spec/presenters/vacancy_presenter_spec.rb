@@ -45,13 +45,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe '#main_subject' do
-    it 'returns the subject name' do
-      vacancy = VacancyPresenter.new(build(:vacancy))
-      expect(vacancy.main_subject).to eq(vacancy.subject.name)
-    end
-  end
-
   describe '#publish_today?' do
     it 'verifies that the publish_on is set to today' do
       vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Time.zone.today))

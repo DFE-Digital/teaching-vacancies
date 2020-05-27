@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :vacancy do
-    association :subject
     association :leadership
     association :school
 
@@ -28,6 +27,7 @@ FactoryBot.define do
     salary { Faker::Lorem.sentence[1...30].strip }
     state { 'create' }
     status { :published }
+    subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     supporting_documents { 'yes' }
     working_patterns { ['full_time'] }
 
@@ -120,14 +120,6 @@ FactoryBot.define do
       status { :published }
       expires_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 20.days) }
       expiry_time { nil }
-    end
-
-    trait :first_supporting_subject do
-      association :first_supporting_subject, factory: :subject
-    end
-
-    trait :second_supporting_subject do
-      association :second_supporting_subject, factory: :subject
     end
   end
 end

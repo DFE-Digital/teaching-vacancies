@@ -1,11 +1,6 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    select vacancy.subject.name, from: 'job_specification_form[subject_id]' if vacancy.subject.present?
-    select vacancy.first_supporting_subject,
-      from: 'job_specification_form[first_supporting_subject_id]' if vacancy.first_supporting_subject.present?
-    select vacancy.second_supporting_subject,
-      from: 'job_specification_form[second_supporting_subject_id]' if vacancy.second_supporting_subject.present?
     fill_in 'job_specification_form[starts_on(3i)]', with: vacancy.starts_on.day if vacancy.starts_on
     fill_in 'job_specification_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
     fill_in 'job_specification_form[starts_on(1i)]', with: vacancy.starts_on.year if vacancy.starts_on
@@ -22,6 +17,12 @@ module VacancyHelpers
     vacancy.job_roles&.each do |job_role|
       check job_role,
             name: 'job_specification_form[job_roles][]',
+            visible: false
+    end
+
+    vacancy.subjects&.each do |subject|
+      check subject,
+            name: 'job_specification_form[subjects][]',
             visible: false
     end
   end
@@ -95,8 +96,7 @@ module VacancyHelpers
   def verify_all_vacancy_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
-    expect(page).to have_content(vacancy.subject.name)
-    expect(page).to have_content(vacancy.other_subjects)
+    expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on.to_s.strip) if vacancy.ends_on?
@@ -119,8 +119,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
     expect(page.html).to include(vacancy.job_summary)
-    expect(page).to have_content(vacancy.subject.name)
-    expect(page).to have_content(vacancy.other_subjects)
+    expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
     expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
     expect(page).to have_content(vacancy.ends_on.to_s.strip) if vacancy.ends_on?
