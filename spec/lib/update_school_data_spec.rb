@@ -46,7 +46,7 @@ RSpec.describe UpdateSchoolData do
     end
 
     it 'should raise an HTTP error' do
-      expect { UpdateSchoolData.new.run }.to raise_error do
+      expect { UpdateSchoolData.new.run! }.to raise_error do
         HTTParty::ResponseError.new('School CSV file not found.')
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe UpdateSchoolData do
     end
 
     it 'should raise an HTTP error' do
-      expect { UpdateSchoolData.new.run }.to raise_error do
+      expect { UpdateSchoolData.new.run! }.to raise_error do
         HTTParty::ResponseError.new('Unexpected problem downloading School CSV file.')
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe UpdateSchoolData do
     end
 
     it 'should correct convert the file to UTF-8' do
-      UpdateSchoolData.new.run
+      UpdateSchoolData.new.run!
 
       school.reload
 
@@ -99,13 +99,13 @@ RSpec.describe UpdateSchoolData do
 
     context 'and the schools aren’t already in the database' do
       it 'adds all the schools (open and closed)' do
-        expect { UpdateSchoolData.new.run }.to change(School, :count).by(8)
+        expect { UpdateSchoolData.new.run! }.to change(School, :count).by(8)
       end
 
       describe 'it loads the expected attributes' do
         let(:example_school) { School.find_by(urn: '100000') }
         before do
-          UpdateSchoolData.new.run
+          UpdateSchoolData.new.run!
         end
 
         it { expect(example_school).not_to be_blank }
@@ -130,7 +130,7 @@ RSpec.describe UpdateSchoolData do
       # testing every expected attribute change does not substantially add to the quality of the tests.
       it 'updates the school name' do
         expect {
-          UpdateSchoolData.new.run; school.reload
+          UpdateSchoolData.new.run!; school.reload
         }.to change(school, :name).from('?').to("Sir John Cass's Foundation Primary School")
       end
     end
@@ -146,7 +146,7 @@ RSpec.describe UpdateSchoolData do
                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                   "Town,Postcode\n" \
                   "100000,St John\x92s School,999,999,ZZZ,test.com,?,?,?")
-      UpdateSchoolData.new.run
+      UpdateSchoolData.new.run!
 
       school.reload
 
@@ -162,7 +162,7 @@ RSpec.describe UpdateSchoolData do
                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
                   "Town,Postcode\n" \
                   "100000,St John\x92s School,999,999,ZZZ,,?,?,?")
-      UpdateSchoolData.new.run
+      UpdateSchoolData.new.run!
 
       school.reload
 

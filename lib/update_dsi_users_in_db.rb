@@ -3,7 +3,7 @@ require 'dfe_sign_in_api'
 class UpdateDfeSignInUsers
   include DFESignIn
 
-  def run
+  def run!
     get_response_pages.each { |page| convert_to_users(page) }
   end
 

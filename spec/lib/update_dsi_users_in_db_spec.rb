@@ -8,7 +8,7 @@ RSpec.describe UpdateDfeSignInUsers do
   let(:test_file_empty_users_path) { Rails.root.join('spec/fixtures/dfe_sign_in_service_users_empty_response.json') }
   let(:update_dfe_sign_in_users) { described_class.new }
 
-  describe '#run' do
+  describe '#run!' do
     before do
       allow(described_class).to receive(:new).and_return(update_dfe_sign_in_users)
     end
@@ -23,7 +23,7 @@ RSpec.describe UpdateDfeSignInUsers do
           )
       end
 
-      expect { update_dfe_sign_in_users.run }.to change { User.all.size }.by(2)
+      expect { update_dfe_sign_in_users.run! }.to change { User.all.size }.by(2)
 
       user_with_one_school = User.find_by(email: 'foo@example.com')
       expect(user_with_one_school.dsi_data['school_urns']).to eq(['111111'])
@@ -41,13 +41,13 @@ RSpec.describe UpdateDfeSignInUsers do
           .to_return(
             body: File.read(test_file_empty_users_path)
           )
-      expect { update_dfe_sign_in_users.run }.to raise_error('failed request')
+      expect { update_dfe_sign_in_users.run! }.to raise_error('failed request')
 
       stub_request(:get, "#{DFE_SIGN_IN_URL}/users?page=#{1}&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: '{}'
           )
-      expect { update_dfe_sign_in_users.run }.to raise_error('failed request')
+      expect { update_dfe_sign_in_users.run! }.to raise_error('failed request')
     end
   end
 end

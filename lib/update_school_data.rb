@@ -28,7 +28,7 @@ class UpdateSchoolData
     town: 'Town',
   }
 
-  def run
+  def run!
     save_csv_file
     CSV.foreach(csv_file_location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
       School.transaction do

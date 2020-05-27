@@ -16,7 +16,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
   it 'executes perform' do
     update_school_data = double(:mock)
     expect(UpdateSchoolData).to receive(:new).and_return(update_school_data)
-    expect(update_school_data).to receive(:run)
+    expect(update_school_data).to receive(:run!)
 
     perform_enqueued_jobs { job }
   end
