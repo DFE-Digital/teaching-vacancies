@@ -33,13 +33,6 @@ module VacanciesHelper
     end
   end
 
-  # rubocop:disable Rails/HelperInstanceVariable:
-  def subject_options
-    @subject_options ||= Subject.all.as_json.map { |subject| OpenStruct.new(id: subject['id'], name: subject['name']) }
-    @subject_options.unshift(OpenStruct.new(id: nil, name: ''))
-  end
-  # rubocop:enable Rails/HelperInstanceVariable:
-
   def format_location_name(location)
     uncapitalize_words(location.titleize)
   end

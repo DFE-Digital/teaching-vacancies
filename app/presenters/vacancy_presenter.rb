@@ -60,52 +60,6 @@ class VacancyPresenter < BasePresenter
     @school ||= SchoolPresenter.new(model.school)
   end
 
-  def main_subject
-    @main_subject ||= model.subject ? model.subject.name : ''
-  end
-
-  def first_supporting_subject
-    @first_supporting_subject ||= model.first_supporting_subject ? model.first_supporting_subject.name : ''
-  end
-
-  def second_supporting_subject
-    @second_supporting_subject ||= model.second_supporting_subject ? model.second_supporting_subject.name : ''
-  end
-
-  def other_subjects
-    @other_subjects ||= begin
-        return '' if first_supporting_subject.blank? && second_supporting_subject.blank?
-        return first_supporting_subject if only_first_supporting_subject_present?
-        return second_supporting_subject if only_second_supporting_subject_present?
-
-        supporting_subjects
-      end
-  end
-
-  def only_first_supporting_subject_present?
-    first_supporting_subject.present? && second_supporting_subject.blank?
-  end
-
-  def only_second_supporting_subject_present?
-    second_supporting_subject.present? && first_supporting_subject.blank?
-  end
-
-  def supporting_subjects
-    "#{first_supporting_subject}, #{second_supporting_subject}"
-  end
-
-  def any_subjects?
-    main_subject.present? || other_subjects.present?
-  end
-
-  def subject_count
-    [main_subject, first_supporting_subject, second_supporting_subject].count(&:present?)
-  end
-
-  def all_subjects
-    [main_subject, first_supporting_subject, second_supporting_subject].reject(&:blank?).join(', ')
-  end
-
   def publish_today?
     model.publish_on == Time.zone.today
   end
@@ -162,5 +116,9 @@ class VacancyPresenter < BasePresenter
 
   def show_job_roles
     model.job_roles&.join(', ')
+  end
+
+  def show_subjects
+    model.subjects&.join(', ')
   end
 end

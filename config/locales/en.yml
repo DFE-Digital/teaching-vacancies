@@ -212,13 +212,8 @@ en:
     ref_no: 'Reference number'
     subjects: 'Subject(s)'
     subject:
-    subject:
       one: 'Subject'
       other: 'Subjects'
-    main_subject: 'Main subject'
-    first_supporting_subject: 'Supporting subject 1'
-    second_supporting_subject: 'Supporting subject 2'
-    other_subjects: 'Other subjects'
     leadership_level: 'Leadership level'
     job_count_without_search: 'There is %{count} job listed'
     job_count_plural_without_search: 'There are %{count} jobs listed'

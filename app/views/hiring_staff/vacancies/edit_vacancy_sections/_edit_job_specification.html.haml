@@ -2,10 +2,9 @@
   %span.app-task-list__section-number 1.
   = t('jobs.job_details')
   = link_to t('buttons.change'), school_job_job_specification_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
-  - unless @vacancy.job_roles&.any?
-    .notification-tag
-      %strong.govuk-tag.app-task-list__task-completed
-        = t('jobs.notification_labels.new')
+  - unless @vacancy.job_roles&.any? && !missing_subjects?(@vacancy)
+    %strong.govuk-tag.notification-tag
+      = t('jobs.notification_labels.new')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 
@@ -20,9 +19,9 @@
     %dd.app-check-your-answers__answer= @vacancy.show_job_roles
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#subject
+    %dt.app-check-your-answers__question#subjects
       %h4.govuk-heading-s= t('jobs.subjects')
-    %dd.app-check-your-answers__answer= @vacancy.all_subjects
+    %dd.app-check-your-answers__answer= @vacancy.show_subjects
 
   - if @vacancy.working_patterns?
     .app-check-your-answers__contents
