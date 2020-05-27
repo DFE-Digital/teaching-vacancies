@@ -1,8 +1,16 @@
 module GetSubjectName
   SUBJECT_SYNONYMS = {
-    'Maths': 'Mathematics',
+    'Art': 'Art and design',
+    'Design Technology': 'Design and technology',
     'English Literature': 'English',
-    'English Language': 'English'
+    'English Language': 'English',
+    'Health and Social care': 'Health and social care',
+    'Latin': 'Classics',
+    'Maths': 'Mathematics',
+    'Media Studies': 'Media studies',
+    'Physical Education': 'Physical education',
+    'Religious Studies': 'Religious education',
+    'General Science': 'Science'
   }.stringify_keys
 
   def get_subject_name(subject)
