@@ -37,9 +37,14 @@ RSpec.describe VacanciesHelper, type: :helper do
       expect(helper.new_sections(vacancy)).to include('supporting_documents')
     end
 
-    it 'should include job_role for legacy listings' do
+    it 'should include job_details for legacy listings' do
       allow(vacancy).to receive_message_chain(:job_roles, :any?).and_return(false)
-      expect(helper.new_sections(vacancy)).to include('job_role')
+      expect(helper.new_sections(vacancy)).to include('job_details')
+    end
+
+    it 'should include job_details for legacy listings' do
+      allow(helper).to receive(:missing_subjects?).with(vacancy).and_return(true)
+      expect(helper.new_sections(vacancy)).to include('job_details')
     end
   end
 end

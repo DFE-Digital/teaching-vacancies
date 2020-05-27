@@ -45,7 +45,7 @@ module VacanciesHelper
 
   def new_sections(vacancy)
     sections = []
-    sections << 'job_role' unless vacancy.job_roles&.any?
+    sections << 'job_details' unless vacancy.job_roles&.any? && !missing_subjects?(vacancy)
     sections << 'supporting_documents' unless vacancy.supporting_documents
     sections
   end
@@ -58,5 +58,12 @@ module VacanciesHelper
       "#{form_object.errors.present? ?
         'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job', school: current_school.name)}"
     end
+  end
+
+  def missing_subjects?(vacancy)
+    legacy_subjects = [vacancy.subject,
+                       vacancy.first_supporting_subject,
+                       vacancy.second_supporting_subject].reject(&:blank?)
+    legacy_subjects.any? && legacy_subjects.count != vacancy.subjects&.count
   end
 end
