@@ -1,6 +1,6 @@
 require 'base_dsi_exporter'
 
-class ExportDsiUsersToBigQuery < BaseDsiExporter
+class ExportDsiUsersToBigQuery < BaseDsiBigQueryExporter
   TABLE_NAME = 'dsi_users'
 
   def run!
