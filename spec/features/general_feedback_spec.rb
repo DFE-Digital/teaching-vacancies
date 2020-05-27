@@ -1,6 +1,9 @@
 require 'rails_helper'
 RSpec.feature 'Giving general feedback for the service' do
-  before(:each) { visit new_feedback_path }
+  before(:each) do
+    expect(ENV).to receive(:[]).at_least(:twice).and_return(double('ENV').as_null_object)
+    visit new_feedback_path
+  end
 
   it 'displays the general feedback page' do
     expect(page).to have_content(I18n.t('feedback.heading'))
