@@ -77,74 +77,85 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
     OmniAuth.config.test_mode = false
   end
 
-  context 'with valid credentials that match a school' do
-    let!(:school) { create(:school, urn: '110627') }
+  context 'with authentication fallback feature not enabled' do
+    before { allow(EmailSignInFeature).to receive(:enabled?) { false } }
 
-    before(:each) do
-      stub_authentication_step email: dsi_email_address
-      stub_authorisation_step
-      stub_sign_in_with_multiple_organisations
+    context 'with valid credentials that match a school' do
+      let!(:school) { create(:school, urn: '110627') }
 
-      visit root_path
+      before(:each) do
+        stub_authentication_step email: dsi_email_address
+        stub_authorisation_step
+        stub_sign_in_with_multiple_organisations
 
-      sign_in_user
-    end
+        visit root_path
 
-    it_behaves_like 'a successful sign in'
+        sign_in_user
+      end
 
-    scenario 'it redirects the sign in page to the school page' do
-      visit new_identifications_path
-      expect(page).to have_content("Jobs at #{school.name}")
-      expect(current_path).to eql(school_path)
-    end
+      it_behaves_like 'a successful sign in'
 
-    context 'the user can switch between organisations' do
-      let!(:other_school) { create(:school, urn: '101010') }
-
-      scenario 'allows the user to switch between organisations' do
+      scenario 'it redirects the sign in page to the school page' do
+        visit new_identifications_path
         expect(page).to have_content("Jobs at #{school.name}")
+        expect(current_path).to eql(school_path)
+      end
 
-        # Mock switching organisations from within DfE Sign In
-        stub_authentication_step(
-          organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-          school_urn: '101010'
-        )
-        stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-                                fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')
+      context 'the user can switch between organisations' do
+        let!(:other_school) { create(:school, urn: '101010') }
 
-        click_on 'Change organisation'
-        expect(page).to have_content("Jobs at #{other_school.name}")
+        scenario 'allows the user to switch between organisations' do
+          expect(page).to have_content("Jobs at #{school.name}")
+
+          # Mock switching organisations from within DfE Sign In
+          stub_authentication_step(
+            organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
+            school_urn: '101010'
+          )
+          stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
+                                  fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')
+
+          click_on 'Change organisation'
+          expect(page).to have_content("Jobs at #{other_school.name}")
+        end
       end
     end
-  end
 
-  context 'with valid credentials but no authorisation' do
-    before(:each) do
-      stub_authentication_step(email: 'another_email@example.com')
-      stub_authorisation_step_with_not_found
+    context 'with valid credentials but no authorisation' do
+      before(:each) do
+        stub_authentication_step(email: 'another_email@example.com')
+        stub_authorisation_step_with_not_found
+      end
+
+      it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
+                                          school_urn: '110627',
+                                          email: 'another_email@example.com'
     end
 
-    it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
-                                        school_urn: '110627',
-                                        email: 'another_email@example.com'
-  end
+    context 'when there is was an error with DfE Sign-in' do
+      before(:each) do
+        stub_authentication_step
+        stub_authorisation_step_with_external_error
+      end
 
-  context 'when there is was an error with DfE Sign-in' do
-    before(:each) do
-      stub_authentication_step
-      stub_authorisation_step_with_external_error
+      it 'raises an error' do
+        visit root_path
+
+        expect { sign_in_user }.to raise_error(Authorisation::ExternalServerError)
+      end
     end
 
-    it 'raises an error' do
-      visit root_path
-
-      expect { sign_in_user }.to raise_error(Authorisation::ExternalServerError)
+    def sign_in_user
+      within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
+      click_on(I18n.t('sign_in.link'))
     end
   end
 
-  def sign_in_user
-    within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
-    click_on(I18n.t('sign_in.link'))
+  context 'with authentication fallback feature enabled' do
+    before { allow(EmailSignInFeature).to receive(:enabled?) { true } }
+    xit 'Integration tests' do
+      # noop
+    end
   end
 
   def stub_accepted_terms_and_condition

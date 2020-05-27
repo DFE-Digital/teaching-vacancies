@@ -1,7 +1,7 @@
 require 'dfe_sign_in_api'
 require 'google/cloud/bigquery'
 
-class BaseDsiExporter
+class BaseDsiBigQueryExporter
   include DFESignIn
 
   attr_reader :dataset
@@ -21,8 +21,11 @@ class BaseDsiExporter
   def insert_rows
     (1..number_of_pages).each do |page|
       response = api_response(page: page)
-      raise error_message_for(response) if users_nil_or_empty?(response)
-
+      if users_nil_or_empty?(response)
+        Rollbar.log(:error,
+          'DfE Sign In API responded with nil users while exporting to BigQuery')
+        raise error_message_for(response)
+      end
       insert_table_data(response['users'])
     end
   end

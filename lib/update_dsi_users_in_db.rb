@@ -6,7 +6,6 @@ class UpdateDfeSignInUsers
   def run
     (1..number_of_pages).each do |page|
       response = api_response(page: page)
-
       if users_nil_or_empty?(response)
         Rollbar.log(:error,
           "DfE Sign In API responded with nil users during job #{self.class.name}")
@@ -27,10 +26,12 @@ class UpdateDfeSignInUsers
         # When a user is associated with multiple organisations,
         # DfE Sign In returns 1 user object per organisation.
         # Each of these user objects has the same userId.
-        organisation = dsi_user['organisation']
+        urn, uid = dsi_user['organisation']['URN'], dsi_user['organisation']['UID']
+        school_urns = user.dsi_data&.[]('school_urns') || Array.new
+        school_group_uids = user.dsi_data&.[]('school_group_uids') || Array.new
         user.dsi_data = {
-          school_urns: Set.new(user.dsi_data['school_urns']).add(organisation['URN']),
-          school_group_uids: Set.new(user.dsi_data['school_group_uids']).add(organisation['UID'])
+          school_urns: (school_urns | [urn]).compact,
+          school_group_uids: (school_group_uids | [uid]).compact,
         }
         user.save
       end

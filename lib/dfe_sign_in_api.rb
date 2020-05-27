@@ -56,6 +56,6 @@ module DFESignIn
   end
 
   def users_nil_or_empty?(response)
-    response['users'].nil? || response['users'].first.empty?
+    response['users'].blank? || response['users'].first.blank?
   end
 end
