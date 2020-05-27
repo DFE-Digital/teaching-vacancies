@@ -182,10 +182,10 @@ cf7 install-plugin conduit
 
 ### Backup
 ```bash
-cf7 conduit CF_POSTGRES_SERVICE_ORIGIN -- pg_dump -x --no-owner -c -f backup.sql
+cf7 conduit $CF_POSTGRES_SERVICE_ORIGIN -- pg_dump -x --no-owner -c -f backup.sql
 ```
 
 ### Restore
 ```bash
-cf7 conduit CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
+cf7 conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
 ```
