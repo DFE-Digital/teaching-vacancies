@@ -15,7 +15,14 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
 
   def sign_in_by_email
     raise unless EmailSignInFeature.enabled?
-    raise 'got to this method'
+
+    user = User.find_by(email: params.dig(:user, :email))
+
+    if user
+      magic_link_token = MagicLinkToken.new
+      ProviderMailer.fallback_sign_in_email(provider_user, magic_link_token.raw).deliver_later
+      provider_user.update!(magic_link_token: magic_link_token.encrypted, magic_link_token_sent_at: Time.zone.now)
+    end
   end
 
   def create
