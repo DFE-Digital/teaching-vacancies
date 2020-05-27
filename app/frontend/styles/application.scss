@@ -53,8 +53,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'components/vacancy';
 @import 'ie';
 
-input
-&[type='search'] {
+input[type='search'] {
   box-sizing: border-box;
 }
 
