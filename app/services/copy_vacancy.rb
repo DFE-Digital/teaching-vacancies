@@ -23,12 +23,7 @@ class CopyVacancy
       @new_vacancy.qualifications = nil
     end
 
-    @new_vacancy.subjects ||= []
-    @new_vacancy.subjects += [
-      get_subject_name(@vacancy.subject),
-      get_subject_name(@vacancy.first_supporting_subject),
-      get_subject_name(@vacancy.second_supporting_subject)
-    ].reject(&:blank?) unless @new_vacancy.subjects.any?
+    copy_legacy_subjects
 
     @new_vacancy.save
 
@@ -51,5 +46,14 @@ class CopyVacancy
         google_drive_id: document_copy.copied.id
       }) unless document_copy.google_error
     end
+  end
+
+  def copy_legacy_subjects
+    @new_vacancy.subjects ||= []
+    @new_vacancy.subjects += [
+      get_subject_name(@vacancy.subject),
+      get_subject_name(@vacancy.first_supporting_subject),
+      get_subject_name(@vacancy.second_supporting_subject)
+    ].uniq.reject(&:blank?) unless @new_vacancy.subjects.any?
   end
 end

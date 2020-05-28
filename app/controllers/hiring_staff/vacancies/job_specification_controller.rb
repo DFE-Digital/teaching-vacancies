@@ -86,6 +86,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
                      .values_at(:subject_id, :first_supporting_subject_id, :second_supporting_subject_id)
                      .reject(&:blank?)
                      .map { |subject_id| get_subject_name(Subject.find(subject_id)) }
+                     .uniq
                      .reject(&:blank?)
     params[:job_specification_form][:subjects] = subjects
   end
