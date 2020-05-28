@@ -4,7 +4,7 @@
     "approvedAt": "2019-06-19T15:09:58.683Z",
     "updatedAt": "2019-06-19T15:09:58.683Z",
     "organisation": {
-      "id": "meaningless string",
+      "id": "13F20E54-79EA-4146-8E39-18197576F024",
       "name": "Organisation 2",
       "Category": "002",
       "Type": null,
@@ -36,7 +36,7 @@
     "approvedAt": "2019-06-19T15:09:58.683Z",
     "updatedAt": "2019-06-19T15:09:58.683Z",
     "organisation": {
-      "id": "another string",
+      "id": "23F20E54-79EA-4146-8E39-18197576F025",
       "name": "Organisation 3",
       "Category": "002",
       "Type": null,
@@ -68,7 +68,7 @@
     "approvedAt": "2019-06-19T15:09:58.683Z",
     "updatedAt": "2019-06-19T15:09:58.683Z",
     "organisation": {
-      "id": "meaningless string",
+      "id": "13F20E54-79EA-4146-8E39-18197576F024",
       "name": "Organisation 2",
       "Category": "002",
       "Type": null,
@@ -100,7 +100,7 @@
     "approvedAt": "2019-06-19T15:09:58.683Z",
     "updatedAt": "2019-06-19T15:09:58.683Z",
     "organisation": {
-      "id": "another string",
+      "id": "23F20E54-79EA-4146-8E39-18197576F025",
       "name": "Organisation 3",
       "Category": "002",
       "Type": null,
