@@ -6,17 +6,19 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
 
     if (isFirstRender) {
 
-        document.querySelector('#location-radius-select').style.display = 'none';
-
         if (getQuery().length) {
             refine(getQuery());
+        }
+
+        if (widgetParams.onChange) {
+            widgetParams.onChange(widgetParams.inputElement.value);
         }
 
         widgetParams.inputElement.addEventListener('input', () => {
             enableSubmitButton(widgetParams.container);
 
             if (widgetParams.onChange) {
-                widgetParams.onChange(document.querySelector('#location').value);
+                widgetParams.onChange(widgetParams.inputElement.value);
             }
         });
 
@@ -24,7 +26,7 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
             enableSubmitButton(widgetParams.container);
 
             if (widgetParams.onChange) {
-                widgetParams.onChange(document.querySelector('#location').value);
+                widgetParams.onChange(widgetParams.inputElement.value);
             }
         });
 

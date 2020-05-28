@@ -33,7 +33,7 @@ if (document.querySelector('#vacancies-hits')) {
 
     const locationSearchBox = searchBox({
         container: document.querySelector('.filters-form'),
-        inputElement: document.getElementById('location'),
+        inputElement: document.querySelector('#location'),
         key: 'location',
         autofocus: true,
         queryHook(query, search) {
@@ -43,9 +43,11 @@ if (document.querySelector('#vacancies-hits')) {
         onChange(query) {
             if (stringMatchesPostcode(query)) {
                 getCoordinates(query).then(coords => {
+                    document.querySelector('#radius').removeAttribute('disabled');
                     document.querySelector('#location-radius-select').style.display = 'block';
                     document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
                     document.querySelector('#radius').dataset.radius = document.querySelector('#radius').value || 10;
+                    searchClientInstance.refresh();
                 });
             } else {
                 document.querySelector('#location-radius-select').style.display = 'none';
