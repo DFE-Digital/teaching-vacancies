@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GetSubjectName do
   describe '#get_subject_name' do
-    let(:subject) { create(:subject, name: Vacancy::SUBJECT_OPTIONS.sample.first) }
+    let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
     let(:synonym_subject) { create(:subject, name: described_class::SUBJECT_SYNONYMS.keys.sample) }
     let(:invalid_subject) { create(:subject, name: 'An invalid subject') }
 

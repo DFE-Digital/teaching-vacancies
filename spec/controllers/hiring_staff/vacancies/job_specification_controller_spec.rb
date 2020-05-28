@@ -48,7 +48,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
   end
 
   describe '#convert_subject_ids_to_subjects_array' do
-    let(:subject) { create(:subject, name: Vacancy::SUBJECT_OPTIONS.sample.first) }
+    let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
     let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
     let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }
 

@@ -1,5 +1,4 @@
 require 'auditor'
-require 'subjects'
 
 class Vacancy < ApplicationRecord
   JOB_ROLE_OPTIONS = [
@@ -27,8 +26,6 @@ class Vacancy < ApplicationRecord
     [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
     [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
   ]
-
-  SUBJECT_OPTIONS = Subjects::SUBJECT_OPTIONS.freeze
 
   include ApplicationHelper
   include Auditor::Model

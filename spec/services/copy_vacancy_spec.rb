@@ -65,7 +65,7 @@ RSpec.describe CopyVacancy do
     end
 
     context '#subjects' do
-      let(:subject) { create(:subject, name: Vacancy::SUBJECT_OPTIONS.sample.first) }
+      let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
       let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
       let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }
       let(:vacancy) { create(
@@ -94,7 +94,7 @@ RSpec.describe CopyVacancy do
       end
 
       context 'subjects array contains subjects' do
-        let(:subjects) { [Vacancy::SUBJECT_OPTIONS.sample.first] }
+        let(:subjects) { [SUBJECT_OPTIONS.sample.first] }
 
         it 'does not change the subjects array' do
           expect(described_class.new(vacancy).call.subjects).to eql(subjects)
