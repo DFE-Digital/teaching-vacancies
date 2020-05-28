@@ -48,9 +48,9 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
   end
 
   describe '#convert_subject_ids_to_subjects_array' do
-    let(:subject) { create(:subject) }
-    let(:first_supporting_subject) { create(:subject) }
-    let(:second_supporting_subject) { create(:subject) }
+    let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
+    let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
+    let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }
 
     let(:params) do
       {
@@ -62,10 +62,10 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       }
     end
 
-    it 'converts subject ids to a string array of subject names' do
+    it 'converts valid subject ids to a string array of subject names' do
       post :create, params: params
       expect(controller.params[:job_specification_form][:subjects]).to eql(
-        [subject.name, first_supporting_subject.name, second_supporting_subject.name]
+        [subject.name, GetSubjectName::SUBJECT_SYNONYMS[first_supporting_subject.name]]
       )
     end
   end

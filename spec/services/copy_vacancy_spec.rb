@@ -64,6 +64,44 @@ RSpec.describe CopyVacancy do
       end
     end
 
+    context '#subjects' do
+      let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
+      let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
+      let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }
+      let(:vacancy) { create(
+        :vacancy, subjects: subjects, subject: subject,
+        first_supporting_subject: first_supporting_subject, second_supporting_subject: second_supporting_subject
+      ) }
+
+      context 'subjects array is nil' do
+        let(:subjects) { nil }
+
+        it 'pushes valid subjects to the subjects array' do
+          expect(described_class.new(vacancy).call.subjects).to include(
+            subject.name, GetSubjectName::SUBJECT_SYNONYMS[first_supporting_subject.name]
+          )
+        end
+      end
+
+      context 'subjects array is empty' do
+        let(:subjects) { [] }
+
+        it 'pushes valid subjects to the subjects array' do
+          expect(described_class.new(vacancy).call.subjects).to include(
+            subject.name, GetSubjectName::SUBJECT_SYNONYMS[first_supporting_subject.name]
+          )
+        end
+      end
+
+      context 'subjects array contains subjects' do
+        let(:subjects) { [SUBJECT_OPTIONS.sample.first] }
+
+        it 'does not change the subjects array' do
+          expect(described_class.new(vacancy).call.subjects).to eql(subjects)
+        end
+      end
+    end
+
     context 'not all fields are copied' do
       let(:vacancy) do
         create(:vacancy,

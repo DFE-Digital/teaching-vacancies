@@ -1,6 +1,8 @@
+require 'get_subject_name'
 require 'persist_nqt_job_role'
 
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
+  include GetSubjectName
   include PersistNQTJobRole
 
   before_action :set_up_url
@@ -83,7 +85,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     subjects = params.require(:job_specification_form)
                      .values_at(:subject_id, :first_supporting_subject_id, :second_supporting_subject_id)
                      .reject(&:blank?)
-                     .map { |subject_id| Subject.find(subject_id).name }
+                     .map { |subject_id| get_subject_name(Subject.find(subject_id)) }
+                     .reject(&:blank?)
     params[:job_specification_form][:subjects] = subjects
   end
 end

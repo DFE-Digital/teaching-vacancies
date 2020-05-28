@@ -1,3 +1,7 @@
+require Rails.root.join('app/services/get_subject_name').to_s
+
+include GetSubjectName
+
 namespace :data do
   desc 'Convert subject fields to string array for vacancies without the new subject field'
   namespace :convert_subject_fields do
@@ -14,11 +18,9 @@ namespace :data do
       )
 
       Vacancy.where("subjects is NULL or subjects = '{}'").in_batches(of: 100).each_record do |vacancy|
-        subject_name = vacancy.subject.present? ? vacancy.subject.name : nil
-        first_subject_name = vacancy.first_supporting_subject.present? ? vacancy.first_supporting_subject.name : nil
-        second_subject_name = vacancy.second_supporting_subject.present? ? vacancy.second_supporting_subject.name : nil
-
-        subjects = [subject_name, first_subject_name, second_subject_name].reject(&:blank?)
+        subjects = [get_subject_name(vacancy.subject),
+                    get_subject_name(vacancy.first_supporting_subject),
+                    get_subject_name(vacancy.second_supporting_subject)].reject(&:blank?)
 
         # rubocop:disable Rails/SkipsModelValidations
         vacancy.update_columns(subjects: subjects)
