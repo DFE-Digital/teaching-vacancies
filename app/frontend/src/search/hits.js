@@ -35,8 +35,8 @@ export const updateJobAlertLink = () => {
 };
 
 export const addHeadingMarkup = (container, nbHits) => {
-  const keyword = document.querySelector('#keyword').value;
-  const location = document.querySelector('#location').value;
+  const keyword = document.getElementById('keyword').value;
+  const location = document.getElementById('location').value;
   const prefix = keyword || location ? ' match ' : ' listed';
   const postfix = `${prefix} ${createPostfixString('', keyword)} ${createPostfixString('in', location)}`;
   const hits = keyword || location ? nbHits : `There are ${nbHits}`;

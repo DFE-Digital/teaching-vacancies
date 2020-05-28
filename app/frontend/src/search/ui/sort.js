@@ -12,7 +12,7 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
         const select = document.createElement('select');
         select.classList.add('govuk-select');
         select.classList.add('govuk-input--width-10');
-        select.id = 'algolia-select';
+        select.id = 'jobs_sort_select';
 
         select.addEventListener('change', event => {
             document.querySelector('ul.vacancies').style.display = 'none';
@@ -22,10 +22,10 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
         widgetParams.container.appendChild(select);
     }
 
-    const select = widgetParams.container.querySelector('#algolia-select');
+    const select = document.getElementById('jobs_sort_select');
 
     select.style.display = hasNoResults ? 'none' : 'inline-block';
-    document.querySelector('#jobs_sort_label').style.display = hasNoResults ? 'none' : 'inline-block';
+    document.getElementById('jobs_sort_label').style.display = hasNoResults ? 'none' : 'inline-block';
 
     select.innerHTML = constructOptions(options, currentRefinement);
 };

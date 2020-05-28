@@ -3,15 +3,14 @@ import '../../lib/after.polyfill';
 export const isActive = (threshold, currentInput) => currentInput ? currentInput.length >= threshold : false;
 
 export const renderAutocomplete = (renderOptions) => {
-    const {  widgetParams } = renderOptions;
+    const { widgetParams } = renderOptions;
 
     if (!widgetParams.container.querySelector('ul')) {
         create(widgetParams.input, widgetParams.onSelection);
     }
 
-    const handleFocus = e => {
+    const handleSelection = e => {
         widgetParams.input.value = e.target.dataset.location;
-        widgetParams.onSelection(e.target.dataset.location);
     };
 
     widgetParams.input.addEventListener('input', () => {
@@ -23,13 +22,53 @@ export const renderAutocomplete = (renderOptions) => {
             show(widgetParams.container.querySelector('ul'), widgetParams.input);
 
             Array.from(widgetParams.container.querySelectorAll('.app-site-search__option'))
-                .forEach(element => element.addEventListener('focus', (e) => handleFocus(e), true));
+                .forEach(element => element.addEventListener('focus', (e) => handleSelection(e), true));
 
         } else {
             hide(widgetParams.container.querySelector('ul'), widgetParams.input);
         }
     });
+
+    widgetParams.input.addEventListener('keyup', e => {
+        e.stopImmediatePropagation();
+
+        switch (e.code) {
+            case 'ArrowDown':
+                focusElement('next', widgetParams.input);
+                break;
+            case 'ArrowUp':
+                focusElement('previous', widgetParams.input);
+                break;
+        }
+    });
 };
+
+export const getFocusedElement = () => document.getElementsByClassName('app-site-search__option--focused')[0];
+
+export const focusElement = (direction, input) => {
+    if (isPopulated()) {
+        const elements = getFocusableElement(direction);
+        elements.current && elements.current.classList.remove('app-site-search__option--focused');
+        elements[direction] && elements[direction].classList.add('app-site-search__option--focused');
+        input.value = elements[direction] ? elements[direction].dataset.location : '';
+    }
+};
+
+export const getCurrentOptionElementsArray = () => document.getElementsByClassName('app-site-search__option');
+
+export const isPopulated = () => getCurrentOptionElementsArray().length;
+
+export const getFocusableElement = () => {
+    const next = getFocusedElement() ? getOptionIndex(getFocusedElement()) + 1 : 0;
+    const previous = getFocusedElement() ? getOptionIndex(getFocusedElement()) - 1 : 0;
+    return {
+        next: document.getElementById(`app-site-search__input__option--${next}`),
+        previous: document.getElementById(`app-site-search__input__option--${previous}`),
+        current: getFocusedElement(),
+    };
+};
+
+export const getOptionIndex = el => parseInt(el.getAttribute('aria-posinset'), 10);
 
 export const show = (element, inputElement) => {
     element.classList.add('app-site-search__menu--visible');
@@ -67,7 +106,7 @@ export const getOptions = (dataset, query) => dataset.filter((result) => result.
 
 export const renderIndexListItem = (refinement) => {
     return (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
-    };
+};
 
 export const highlightRefinement = (text, refinement) => {
     const index = text.toLowerCase().indexOf(refinement);

@@ -12,7 +12,6 @@
 
   .govuk-grid-column-two-thirds
     .govuk-grid-column-full.vacancies-count
-      %p.govuk-heading-l.mb0= @vacancies_search.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@vacancies_search.location_category)) : @vacancies.total_count_message
       - if @vacancies.user_search?
         %span.clear-search.nobreak= link_to t('jobs.filters.clear_filters'), root_path, class: 'govuk-link'
         = render(partial: 'subscribe_link', locals: { search_criteria: @vacancies_search.only_active_to_hash }) if EmailAlertsFeature.enabled? && !ReadOnlyFeature.enabled?
