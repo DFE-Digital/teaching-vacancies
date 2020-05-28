@@ -68,6 +68,18 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
         [subject.name, GetSubjectName::SUBJECT_SYNONYMS[first_supporting_subject.name]]
       )
     end
+
+    context 'duplicate subject synonyms' do
+      let(:subject) { create(:subject, name: 'English Literature') }
+      let(:first_supporting_subject) { create(:subject, name: 'English Language') }
+
+      it 'converts valid subject ids to a string array of unique subject names' do
+        post :create, params: params
+        expect(controller.params[:job_specification_form][:subjects]).to eql(
+          ['English']
+        )
+      end
+    end
   end
 
   describe '#create' do
