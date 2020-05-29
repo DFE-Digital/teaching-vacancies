@@ -1,4 +1,4 @@
-import { constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, extractQueryParams } from './utils';
+import { getUnixTimestampForDayStart, constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, extractQueryParams } from './utils';
 
 describe('constructNewUrlWithParams', () => {
     test('activates autocomplete if threshold has been met', () => {
@@ -73,5 +73,11 @@ describe('extractQueryParams', () => {
         const url = '/jobs?utf8=%E2%9C%93&keyword=physics&location=london&jobs_sort=&commit=Search#vacancy-results';
         expect(extractQueryParams(url, ['keyword', 'location'])).toStrictEqual({'keyword': 'physics', 'location': 'london'});
         expect(extractQueryParams(url, ['keyword', 'place'])).toStrictEqual({'keyword': 'physics'});
+    });
+});
+
+describe('getUnixTimestampForDayStart', () => {
+    test('get the UNIX timestamp of the beggining of a supplied date', () => {
+        expect(getUnixTimestampForDayStart(new Date('2020-05-28T18:45:34.181Z'))).toBe(1590624000);
     });
 });

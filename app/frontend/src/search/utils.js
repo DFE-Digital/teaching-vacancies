@@ -25,7 +25,7 @@ export const extractQueryParams = (url, keys) => {
 
 export const stringMatchesPostcode = postcode => {
     postcode = postcode.replace(/\s/g, '');
-    var regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
+    const regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
     return regex.test(postcode);
 };
 
@@ -33,8 +33,7 @@ export const convertMilesToMetres = miles => Math.ceil(parseInt(miles, 10) * 160
 
 export const convertEpochToUnixTimestamp = timestamp => Math.round(timestamp / 1000);
 
-export const getUnixTimestampForDayStart = () => {
-    const date = new Date();
+export const getUnixTimestampForDayStart = date => {
     date.setUTCHours(0, 0, 0, 0);
     return convertEpochToUnixTimestamp(+date);
 };

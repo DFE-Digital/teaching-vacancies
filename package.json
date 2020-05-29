@@ -22,11 +22,14 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "test": "yarn run js:check",
+    "test": "yarn run js:check && yarn run sass:check",
     "js:check": "yarn run js:lint && yarn run js:test",
+    "sass:check": "yarn run sass:lint",
     "js:test": "jest",
-    "sass:lint": "yarn stylelint app/frontend/**/*.scss -q",
-    "js:lint": "eslint ./app/frontend/src/search"
+    "js:test:coverage": "jest --coverage",
+    "js:lint": "eslint ./app/frontend/src/search",
+    "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
+    
   },
   "jest": {
     "testMatch": [

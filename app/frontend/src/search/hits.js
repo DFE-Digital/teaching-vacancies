@@ -6,10 +6,10 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    addHeadingMarkup(widgetParams.container, results.nbHits);
+    widgetParams.container.innerHTML = addHeadingMarkup(results.nbHits);
     if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.alert);
-      updateJobAlertLink();
+      document.querySelector('#job-alert-link').href = getJobAlertLink(window.location.href);
     } else {
       removeJobAlertMarkup();
     }
@@ -26,26 +26,26 @@ export const removeJobAlertMarkup = () => {
   return el && el.remove(); 
 };
 
-export const updateJobAlertLink = () => {
-  const paramsObj = extractQueryParams(window.location.href, ['keyword', 'location', 'radius']);
+export const getJobAlertLink = url => {
+  const paramsObj = extractQueryParams(url, ['keyword', 'location', 'radius']);
   let queryString = '';
 
   Object.keys(paramsObj).map(key => queryString += `&search_criteria[${key}]=${paramsObj[key]}`);
-  document.querySelector('#job-alert-link').href = `/subscriptions/new?${encodeURIComponent(queryString)}`;
+  return `/subscriptions/new?${encodeURIComponent(queryString)}`;
 };
 
-export const addHeadingMarkup = (container, nbHits) => {
+export const addHeadingMarkup = (numberHits) => {
   const keyword = document.getElementById('keyword').value;
   const location = document.getElementById('location').value;
   const prefix = keyword || location ? ' match ' : ' listed';
-  const postfix = `${prefix} ${createPostfixString('', keyword)} ${createPostfixString('near', location)}`;
-  const hits = keyword || location ? nbHits : `There are ${nbHits}`;
+  const postfix = `${prefix}${createCapitalisedStringWithPrefix('', keyword)} ${createCapitalisedStringWithPrefix('near', location)}`;
+  const hits = keyword || location ? numberHits : `There are ${numberHits}`;
 
-  container.innerHTML = `${hits} jobs ${postfix}`;
+  return `${hits} jobs ${postfix}`;
 };
 
-export const createPostfixString = (pre, string) => {
-  return string ? ` ${pre} ${string.replace(/\b\w/g, l => l.toUpperCase() )}` : '';
+export const createCapitalisedStringWithPrefix = (pre, string) => {
+  return string ? `${pre} ${string.replace(/\b\w/g, l => l.toUpperCase() )}` : '';
 };
 
 export const hideServerMarkup = () => {
