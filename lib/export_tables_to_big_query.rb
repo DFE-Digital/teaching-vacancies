@@ -92,7 +92,8 @@ class ExportTablesToBigQuery
       # being nullable.
       data = '' if c.name == 'hired_status' && data.nil?
       # This prevents an error whereby BigQuery rejects arrays of exactly one element.
-      data = data.to_s if c.is_a?(Array) && c.length == 1
+      data = data.to_s if c.name == 'job_roles'
+      data = data.to_s if c.name == 'subjects'
       data = data.to_s if c.name == 'working_patterns'
       data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
       @bigquery_data[c.name] = data
