@@ -11,6 +11,10 @@ module VacanciesHelper
     end
   end
 
+  def subject_options
+    SUBJECT_OPTIONS
+  end
+
   def listed_elsewhere_options
     Vacancy.listed_elsewheres.keys.map { |k| [t("jobs.feedback.listed_elsewhere.#{k}"), k] }
   end
@@ -29,13 +33,6 @@ module VacanciesHelper
     end
   end
 
-  # rubocop:disable Rails/HelperInstanceVariable:
-  def subject_options
-    @subject_options ||= Subject.all.as_json.map { |subject| OpenStruct.new(id: subject['id'], name: subject['name']) }
-    @subject_options.unshift(OpenStruct.new(id: nil, name: ''))
-  end
-  # rubocop:enable Rails/HelperInstanceVariable:
-
   def format_location_name(location)
     uncapitalize_words(location.titleize)
   end
@@ -48,7 +45,7 @@ module VacanciesHelper
 
   def new_sections(vacancy)
     sections = []
-    sections << 'job_role' unless vacancy.job_roles&.any?
+    sections << 'job_details' unless vacancy.job_roles&.any? && !missing_subjects?(vacancy)
     sections << 'supporting_documents' unless vacancy.supporting_documents
     sections
   end
@@ -61,5 +58,12 @@ module VacanciesHelper
       "#{form_object.errors.present? ?
         'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job', school: current_school.name)}"
     end
+  end
+
+  def missing_subjects?(vacancy)
+    legacy_subjects = [vacancy.subject,
+                       vacancy.first_supporting_subject,
+                       vacancy.second_supporting_subject].reject(&:blank?)
+    legacy_subjects.any? && legacy_subjects.count != vacancy.subjects&.count
   end
 end

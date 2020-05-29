@@ -25,7 +25,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                     I18n.t('jobs.job_role_options.sen_specialist')
                                    ],
                                   school: school,
-                                  subject: build(:subject),
                                   working_patterns: ['full_time', 'part_time'],
                                   publish_on: Time.zone.today))
     end

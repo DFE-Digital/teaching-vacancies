@@ -47,41 +47,6 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
     end
   end
 
-  describe '#convert_subject_ids_to_subjects_array' do
-    let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
-    let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
-    let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }
-
-    let(:params) do
-      {
-        job_specification_form: {
-          subject_id: subject.id,
-          first_supporting_subject_id: first_supporting_subject.id,
-          second_supporting_subject_id: second_supporting_subject.id
-        }
-      }
-    end
-
-    it 'converts valid subject ids to a string array of subject names' do
-      post :create, params: params
-      expect(controller.params[:job_specification_form][:subjects]).to eql(
-        [subject.name, GetSubjectName::SUBJECT_SYNONYMS[first_supporting_subject.name]]
-      )
-    end
-
-    context 'duplicate subject synonyms' do
-      let(:subject) { create(:subject, name: 'English Literature') }
-      let(:first_supporting_subject) { create(:subject, name: 'English Language') }
-
-      it 'converts valid subject ids to a string array of unique subject names' do
-        post :create, params: params
-        expect(controller.params[:job_specification_form][:subjects]).to eql(
-          ['English']
-        )
-      end
-    end
-  end
-
   describe '#create' do
     context 'job role is suitable for NQT' do
       let(:params) do

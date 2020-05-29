@@ -92,8 +92,7 @@ en:
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
         job_roles_html: "Job role (<span class='text-red'>Required</span>)"
-        main_subject: 'Main subject'
-        supporting_subject: 'Supporting subject %{number}'
+        subjects: Subject(s)
         working_pattern_html: "Working patterns (<span class='text-red'>Required</span>)"
         starts_on: 'Expected start date'
         ends_on: 'End date'
@@ -125,8 +124,7 @@ en:
           For secondary school roles include subject and, if relevant,
           level of seniority ('Subject leader for science', for example).
         job_roles: 'Select all that describe the role'
-        subject: 'What subject will the teacher focus on?'
-        supporting_subject: 'What other subject will the teacher focus on?'
+        subjects_hint: What subject(s) will the teacher focus on?
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
@@ -214,13 +212,8 @@ en:
     ref_no: 'Reference number'
     subjects: 'Subject(s)'
     subject:
-    subject:
       one: 'Subject'
       other: 'Subjects'
-    main_subject: 'Main subject'
-    first_supporting_subject: 'Supporting subject 1'
-    second_supporting_subject: 'Supporting subject 2'
-    other_subjects: 'Other subjects'
     leadership_level: 'Leadership level'
     job_count_without_search: 'There is %{count} job listed'
     job_count_plural_without_search: 'There are %{count} jobs listed'

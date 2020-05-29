@@ -46,7 +46,7 @@ class Vacancy < ApplicationRecord
   # rubocop:disable Metrics/LineLength
   # There must be a better way to pass these settings to the block, but everything seems to break
   algoliasearch index_name: Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}" : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
-    attributes :job_roles, :job_title, :salary, :working_patterns
+    attributes :job_roles, :job_title, :salary, :working_patterns, :subjects
 
     attribute :expires_at do
       expires_at.to_s
@@ -54,10 +54,6 @@ class Vacancy < ApplicationRecord
 
     attribute :expires_at_timestamp do
       expires_at.to_i
-    end
-
-    attribute :first_supporting_subject do
-      self.first_supporting_subject&.name
     end
 
     JOB_ROLE_OPTIONS.size.times do |index|
@@ -108,10 +104,6 @@ class Vacancy < ApplicationRecord
         town: school.town }
     end
 
-    attribute :second_supporting_subject do
-      self.second_supporting_subject&.name
-    end
-
     attribute :start_date do
       self.starts_on&.to_s
     end
@@ -120,22 +112,9 @@ class Vacancy < ApplicationRecord
       self.starts_on&.to_datetime&.to_i
     end
 
-    attribute :subject do
-      self.subject&.name
-    end
-
     geoloc :lat, :lng
 
-    attributesForFaceting [
-      :job_roles,
-      :job_role_0,
-      :job_role_1,
-      :job_role_2,
-      :job_role_3,
-      :working_patterns,
-      :school,
-      :listing_status
-    ]
+    attributesForFaceting [:job_roles, :working_patterns, :school, :listing_status]
 
     add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']

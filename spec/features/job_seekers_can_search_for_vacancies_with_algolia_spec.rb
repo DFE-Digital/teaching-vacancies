@@ -4,36 +4,34 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
   before(:each) do
     skip_vacancy_publish_on_validation
 
-    @subject = create(:subject, name: 'Other')
-
     @first_school = create(:school, town: 'Bradford')
     @second_school = create(:school, town: 'Abingdon', geolocation: Geocoder::DEFAULT_STUB_COORDINATES)
 
-    @draft_vacancy = create(:vacancy, :draft, job_title: 'English Teacher')
-    @expired_vacancy = create(:vacancy, :expired, job_title: 'Drama Teacher')
+    @draft_vacancy = create(:vacancy, :draft, job_title: 'English Teacher', subjects: ['English'])
+    @expired_vacancy = create(:vacancy, :expired, job_title: 'Drama Teacher', subjects: ['Drama'])
 
     @first_vacancy = create(
-      :vacancy, :published, job_title: 'Head of Science', subject: @subject, school: @first_school,
+      :vacancy, :published, job_title: 'Head of Science', subjects: ['Science'], school: @first_school,
       publish_on: 1.day.ago, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 2.hours
     )
 
     @second_vacancy = create(
-      :vacancy, :published, job_title: 'Science Teacher', subject: @subject, school: @second_school,
+      :vacancy, :published, job_title: 'Science Teacher', subjects: ['Science'], school: @second_school,
       publish_on: 2.days.ago, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 1.hour
     )
 
     @third_vacancy = create(
-      :vacancy, :published, job_title: 'Maths Teacher', subject: @subject, school: @second_school,
+      :vacancy, :published, job_title: 'Maths Teacher', subjects: ['Maths'], school: @second_school,
       publish_on: 4.days.ago, expires_on: 2.days.from_now, expiry_time: Time.zone.now + 2.days + 4.hours
     )
 
     @fourth_vacancy = create(
-      :vacancy, :published, job_title: 'Primary Teacher', subject: @subject, school: @first_school,
+      :vacancy, :published, job_title: 'Primary Teacher', subjects: ['All or not applicable'], school: @first_school,
       publish_on: 5.days.ago, expires_on: 10.days.from_now, expiry_time: Time.zone.now + 10.days + 2.hours
     )
 
     @fifth_vacancy = create(
-      :vacancy, :published, job_title: 'Teacher of History', subject: @subject,
+      :vacancy, :published, job_title: 'Teacher of History', subjects: ['History'],
       publish_on: 9.days.ago, expires_on: 2.days.from_now, expiry_time: Time.zone.now + 2.days + 5.hours
     )
 

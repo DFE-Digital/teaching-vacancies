@@ -4,3 +4,45 @@
     @extend .govuk-checkboxes__label;
   }
 }
+
+.checkboxes-with-scroll {
+  border-bottom: 5px solid govuk-colour('light-grey');
+  border-left: 5px solid govuk-colour('light-grey');
+  border-right: 5px solid govuk-colour('light-grey');
+  max-height: 300px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 5px 15px;
+
+  .govuk-checkboxes__item label {
+    font-weight: 600;
+  }
+}
+
+.checkboxes-with-scroll__filter {
+  background: govuk-colour('white');
+  border-left: 5px solid govuk-colour('light-grey');
+  border-right: 5px solid govuk-colour('light-grey');
+  border-top: 5px solid govuk-colour('light-grey');
+  padding: 13px 13px 10px;
+  position: relative;
+
+  > input {
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36' width='40' height='40'><path d='M25.7 24.8L21.9 21c.7-1 1.1-2.2 1.1-3.5 0-3.6-2.9-6.5-6.5-6.5S10 13.9 10 17.5s2.9 6.5 6.5 6.5c1.6 0 3-.6 4.1-1.5l3.7 3.7 1.4-1.4zM12 17.5c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5-2 4.5-4.5 4.5-4.5-2-4.5-4.5z' fill='currentColor'/></svg>") #fff no-repeat -5px -3px;
+    font-family: 'nta', Arial, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+
+
+
+    line-height: 1.25;
+    padding-left: 33px;
+  }
+}
+
+.js-disabled-border {
+  border-top: 5px solid govuk-colour('light-grey');
+}

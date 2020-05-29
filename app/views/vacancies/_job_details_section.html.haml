@@ -9,17 +9,12 @@
             = t('jobs.job_roles')
           %td.govuk-table__cell
             = @vacancy.show_job_roles
-      - if @vacancy.any_subjects?
+      - if @vacancy.subjects&.any?
         %tr.govuk-table__row
           %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
-            = t('jobs.subject', count: @vacancy.subject_count)
+            = t('jobs.subject', count: @vacancy.subjects&.count)
           %td.govuk-table__cell
-            - if @vacancy.other_subjects.nil? || @vacancy.other_subjects == ''
-              = @vacancy.main_subject
-            - elsif @vacancy.main_subject.nil? || @vacancy.main_subject == ''
-              = @vacancy.other_subjects
-            - else
-              = @vacancy.main_subject + ', ' + @vacancy.other_subjects
+            = @vacancy.show_subjects
       %tr.govuk-table__row
         %th.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('jobs.working_patterns')
