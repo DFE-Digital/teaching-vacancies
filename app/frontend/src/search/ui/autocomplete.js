@@ -102,23 +102,19 @@ export const create = (input, onSelect) => {
     });
 };
 
-export const getOptions = (dataset, query) => dataset.filter((result) => result.toLowerCase().indexOf(query) >= 0);
+export const getOptions = (dataset, query) => dataset.filter((option) => option.toLowerCase().indexOf(query.toLowerCase()) >= 0);
 
 export const renderIndexListItem = (refinement) => {
     return (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
 };
 
 export const highlightRefinement = (text, refinement) => {
-    const index = text.toLowerCase().indexOf(refinement);
+    const index = text.toLowerCase().indexOf(refinement.toLowerCase());
 
     if (index >= 0) {
-        return `${text.substring(0, index).toLowerCase()}
-<span class='highlight'>
-${text.toLowerCase().substring(index, index + refinement.length)}
-</span>
-<span>
-${text.toLowerCase().substring(index + refinement.length, text.length)}
-</span>
+        return `${text.substring(0, index)}
+<span class='highlight'>${text.substring(index, index + refinement.length)}</span>
+<span>${text.substring(index + refinement.length, text.length)}</span>
 `;
     }
 };

@@ -13,9 +13,9 @@ import { searchClient } from './client';
 import { renderSearchBox } from './ui/input';
 import { renderAutocomplete } from './ui/autocomplete';
 import { renderSortSelect } from './ui/sort';
-import { renderRadiusSelect } from './ui/radius';
+import { renderRadiusSelect, enableRadiusSelect, disableRadiusSelect } from './ui/radius';
 import { locations } from './data/locations';
-import { updateUrlQueryParams, stringMatchesPostcode } from './utils';
+import { updateUrlQueryParams, stringMatchesPostcode, removeDataAttribute, setDataAttribute } from './utils';
 import { getCoordinates } from './geoloc';
 import { enableSubmitButton } from './ui/form';
 
@@ -43,16 +43,15 @@ if (document.querySelector('#vacancies-hits')) {
         onChange(query) {
             if (stringMatchesPostcode(query)) {
                 getCoordinates(query).then(coords => {
-                    document.querySelector('#radius').removeAttribute('disabled');
-                    document.querySelector('#location-radius-select').style.display = 'block';
-                    document.querySelector('#location').dataset.coordinates = `${coords.lat}, ${coords.lng}`;
-                    document.querySelector('#radius').dataset.radius = document.querySelector('#radius').value || 10;
+                    enableRadiusSelect();
+                    setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
+                    setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
                     searchClientInstance.refresh();
                 });
             } else {
-                document.querySelector('#location-radius-select').style.display = 'none';
-                delete document.querySelector('#location').dataset.coordinates;
-                delete document.querySelector('#radius').dataset.radius;
+                disableRadiusSelect();
+                removeDataAttribute(document.querySelector('#location'), 'coordinates');
+                removeDataAttribute(document.querySelector('#radius'), 'radius');
             }
         },
     });
@@ -85,9 +84,9 @@ if (document.querySelector('#vacancies-hits')) {
             container: document.querySelector('#location-radius-select'),
             attribute: '_geoloc',
             inputElement: document.getElementById('radius'),
-            onSelection: value => {
-                updateUrlQueryParams('radius', value, window.location.href);
-                document.querySelector('#radius').dataset.radius = `${value}`;
+            onSelection: location => {
+                updateUrlQueryParams('radius', location, window.location.href);
+                setDataAttribute(document.querySelector('#radius'), 'radius', location);
                 enableSubmitButton(document.querySelector('.filters-form'));
                 searchClientInstance.refresh();
             }

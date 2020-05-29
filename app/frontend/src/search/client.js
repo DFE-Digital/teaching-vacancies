@@ -20,6 +20,8 @@ export const searchClient = indexName => instantsearch({
             helper.state.aroundRadius = convertMilesToMetres(document.querySelector('#radius').dataset.radius);
             helper.state.query = document.querySelector('#keyword').value;
         } else {
+            delete helper.state.aroundRadius;
+            delete helper.state.aroundLatLng;
             helper.state.query = getQuery();
         }
 

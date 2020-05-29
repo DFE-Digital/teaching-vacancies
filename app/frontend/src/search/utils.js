@@ -37,3 +37,7 @@ export const getUnixTimestampForDayStart = date => {
     date.setUTCHours(0, 0, 0, 0);
     return convertEpochToUnixTimestamp(+date);
 };
+
+export const removeDataAttribute = (el, key) => delete el.dataset[key];
+
+export const setDataAttribute = (el, key, value) => el.dataset[key] = value;

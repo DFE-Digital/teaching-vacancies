@@ -24,7 +24,7 @@ describe('transform', () => {
                 working_patterns: 'pattern 3',
                 somethingElse: 'xyz'
             }
-        ]
+        ];
         expect(transform(items)).toStrictEqual([{'somethingElse': 'abc', 'working_patterns': 'pattern 1, pattern 2'}, {'somethingElse': 'xyz', 'working_patterns': 'pattern 3'}]);
     });
 });
@@ -32,6 +32,6 @@ describe('transform', () => {
 describe('getJobAlertLink', () => {
     test('returns a string of capitalized words after a prefix', () => {
         expect(getJobAlertLink('/jobs?utf8=✓&keyword=&location=south%20gloucestershire')).toBe('/subscriptions/new?%26search_criteria%5Blocation%5D%3Dsouth%20gloucestershire');
-        expect(getJobAlertLink('/jobs?utf8=✓&keyword=maths&location=south%20gloucestershire')).toBe('/subscriptions/new?%26search_criteria%5Bkeyword%5D%3Dmaths%26search_criteria%5Blocation%5D%3Dsouth%20gloucestershire')
+        expect(getJobAlertLink('/jobs?utf8=✓&keyword=maths&location=south%20gloucestershire')).toBe('/subscriptions/new?%26search_criteria%5Bkeyword%5D%3Dmaths%26search_criteria%5Blocation%5D%3Dsouth%20gloucestershire');
     });
 });
