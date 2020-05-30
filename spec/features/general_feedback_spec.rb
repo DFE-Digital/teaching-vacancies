@@ -1,7 +1,7 @@
 require 'rails_helper'
+
 RSpec.feature 'Giving general feedback for the service' do
   before(:each) do
-    expect(ENV).to receive(:[]).at_least(:twice).and_return(double('ENV').as_null_object)
     visit new_feedback_path
   end
 
