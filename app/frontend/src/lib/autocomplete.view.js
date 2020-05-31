@@ -7,8 +7,8 @@ export const create = (container, input, onSelect) => {
         ul.setAttribute('role', 'listbox');
         ul.setAttribute('tabindex', 0);
 
-        ul.classList.add('app-site-search__menu');
-        ul.classList.add('app-site-search__menu--overlay');
+        ul.classList.add('autocomplete__menu');
+        ul.classList.add('autocomplete__menu--overlay');
 
         input.after(ul);
 
@@ -39,8 +39,8 @@ export const show = (options, container, input) => {
 
     render(options, container, input);
 
-    getRenderedList(container).classList.add('app-site-search__menu--visible');
-    getRenderedList(container).classList.remove('app-site-search__menu--hidden');
+    getRenderedList(container).classList.add('autocomplete__menu--visible');
+    getRenderedList(container).classList.remove('autocomplete__menu--hidden');
     input.setAttribute('aria-expanded', true);
 
     Array.from(getCurrentOptionElementsArray(container))
@@ -48,8 +48,8 @@ export const show = (options, container, input) => {
 };
 
 export const hide = (container, input) => {
-    getRenderedList(container).classList.add('app-site-search__menu--hidden');
-    getRenderedList(container).classList.remove('app-site-search__menu--visible');
+    getRenderedList(container).classList.add('autocomplete__menu--hidden');
+    getRenderedList(container).classList.remove('autocomplete__menu--visible');
     input.setAttribute('aria-expanded', false);
 };
 
@@ -64,13 +64,13 @@ export const isPopulated = container => getCurrentOptionElementsArray(container)
 export const focus = (container, direction, input) => {
     if (isPopulated(container)) {
         const elements = getFocusableOptions(container);
-        elements.current && elements.current.classList.remove('app-site-search__option--focused');
-        elements[direction] && elements[direction].classList.add('app-site-search__option--focused');
+        elements.current && elements.current.classList.remove('autocomplete__option--focused');
+        elements[direction] && elements[direction].classList.add('autocomplete__option--focused');
         input.value = elements[direction] ? elements[direction].dataset.location : '';
     }
 };
 
-export const getCurrentOptionElementsArray = container => container.querySelectorAll('.app-site-search__option');
+export const getCurrentOptionElementsArray = container => container.querySelectorAll('.autocomplete__option');
 
 export const getFocusableOptions = container => {
 
@@ -78,18 +78,18 @@ export const getFocusableOptions = container => {
     const previous = getFocusedOption(container) ? getOptionIndex(getFocusedOption(container)) - 1 : 0;
 
     return {
-        next: container.querySelector(`#app-site-search__input__option--${next}`),
-        previous: container.querySelector(`#app-site-search__input__option--${previous}`),
+        next: container.querySelector(`#autocomplete__input__option--${next}`),
+        previous: container.querySelector(`#autocomplete__input__option--${previous}`),
         current: getFocusedOption(container),
     };
 };
 
 export const getOptionIndex = el => parseInt(el.getAttribute('aria-posinset'), 10);
 
-export const getFocusedOption = container => container.getElementsByClassName('app-site-search__option--focused')[0];
+export const getFocusedOption = container => container.getElementsByClassName('autocomplete__option--focused')[0];
 
 export const getOptionHtml = (refinement) => {
-    return (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
+    return (hit, index, options) => `<li class="autocomplete__option" id="autocomplete__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
 };
 
 export const highlightRefinement = (text, refinement) => {
