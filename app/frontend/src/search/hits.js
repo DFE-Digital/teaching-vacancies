@@ -26,12 +26,25 @@ export const removeJobAlertMarkup = () => {
   return el && el.remove(); 
 };
 
+const JOB_ALERT_URL = '/subscriptions/new';
+
 export const getJobAlertLink = url => {
   const paramsObj = extractQueryParams(url, ['keyword', 'location', 'radius']);
   let queryString = '';
 
-  Object.keys(paramsObj).map(key => queryString += `&search_criteria[${key}]=${paramsObj[key]}`);
-  return `/subscriptions/new?${encodeURIComponent(queryString)}`;
+  Object.keys(paramsObj).map(key => {
+    queryString += getJobAlertLinkParam(key, paramsObj[key]);
+
+    if (key === 'location') {
+      queryString += getJobAlertLinkParam('location_category', paramsObj[key]);
+    }
+  });
+
+  return `${JOB_ALERT_URL}?${queryString}`;
+};
+
+export const getJobAlertLinkParam = (key, value) => {
+  return encodeURIComponent(`search_criteria[${key}]`) + `=${value.replace(' ', '+')}&`;
 };
 
 export const addHeadingMarkup = (numberHits) => {

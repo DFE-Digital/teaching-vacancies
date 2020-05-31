@@ -37,7 +37,7 @@ if (document.querySelector('#vacancies-hits')) {
         key: 'location',
         autofocus: true,
         queryHook(query, search) {
-            query ? updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href) : false;
+            updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href);
             search(query);
         },
         onChange(query) {
@@ -76,7 +76,7 @@ if (document.querySelector('#vacancies-hits')) {
             key: 'keyword',
             autofocus: true,
             queryHook(query, search) {
-                query ? updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href) : false;
+                updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
                 search(query);
             },
         }),
