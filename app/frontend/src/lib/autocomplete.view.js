@@ -1,9 +1,5 @@
 import '../polyfill/after.polyfill';
 
-const selectors = {
-
-}
-
 export const create = (container, input, onSelect) => {
     if (!getRenderedList(container)) {
         const ul = document.createElement('ul');
@@ -29,10 +25,10 @@ export const create = (container, input, onSelect) => {
     
             switch (e.code) {
                 case 'ArrowDown':
-                    focus('next', input);
+                    focus(container, 'next', input);
                     break;
                 case 'ArrowUp':
-                    focus('previous', input);
+                    focus(container, 'previous', input);
                     break;
             }
         });
@@ -47,7 +43,7 @@ export const show = (options, container, input) => {
     getRenderedList(container).classList.remove('app-site-search__menu--hidden');
     input.setAttribute('aria-expanded', true);
 
-    Array.from(getCurrentOptionElementsArray())
+    Array.from(getCurrentOptionElementsArray(container))
         .forEach(element => element.addEventListener('focus', (e) => input.value = e.target.dataset.location, true));
 };
 
@@ -63,34 +59,34 @@ export const render = (options, container, input) => {
 
 export const getRenderedList = container => container.querySelector('ul');
 
-export const isPopulated = () => getCurrentOptionElementsArray().length;
+export const isPopulated = container => getCurrentOptionElementsArray(container).length;
 
-export const focus = (direction, input) => {
-    if (isPopulated()) {
-        const elements = getFocusableOptions(direction);
+export const focus = (container, direction, input) => {
+    if (isPopulated(container)) {
+        const elements = getFocusableOptions(container);
         elements.current && elements.current.classList.remove('app-site-search__option--focused');
         elements[direction] && elements[direction].classList.add('app-site-search__option--focused');
         input.value = elements[direction] ? elements[direction].dataset.location : '';
     }
 };
 
-export const getCurrentOptionElementsArray = () => document.querySelectorAll('.app-site-search__option');
+export const getCurrentOptionElementsArray = container => container.querySelectorAll('.app-site-search__option');
 
-export const getFocusableOptions = () => {
+export const getFocusableOptions = container => {
 
-    const next = getFocusedOption() ? getOptionIndex(getFocusedOption()) + 1 : 0;
-    const previous = getFocusedOption() ? getOptionIndex(getFocusedOption()) - 1 : 0;
+    const next = getFocusedOption(container) ? getOptionIndex(getFocusedOption(container)) + 1 : 0;
+    const previous = getFocusedOption(container) ? getOptionIndex(getFocusedOption(container)) - 1 : 0;
 
     return {
-        next: document.getElementById(`app-site-search__input__option--${next}`),
-        previous: document.getElementById(`app-site-search__input__option--${previous}`),
-        current: getFocusedOption(),
+        next: container.querySelector(`#app-site-search__input__option--${next}`),
+        previous: container.querySelector(`#app-site-search__input__option--${previous}`),
+        current: getFocusedOption(container),
     };
 };
 
 export const getOptionIndex = el => parseInt(el.getAttribute('aria-posinset'), 10);
 
-export const getFocusedOption = () => document.getElementsByClassName('app-site-search__option--focused')[0];
+export const getFocusedOption = container => container.getElementsByClassName('app-site-search__option--focused')[0];
 
 export const getOptionHtml = (refinement) => {
     return (hit, index, options) => `<li class="app-site-search__option" id="app-site-search__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;

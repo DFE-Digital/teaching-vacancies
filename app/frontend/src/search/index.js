@@ -61,7 +61,7 @@ if (document.querySelector('#vacancies-hits')) {
             hitsPerPage: 10,
         }),
         autocomplete({
-            container: document.querySelector('.app-site-search__wrapper'),
+            container: document.querySelector('#location-search'),
             input: document.querySelector('#location'),
             dataset: locations,
             threshold: SEARCH_THRESHOLD,
