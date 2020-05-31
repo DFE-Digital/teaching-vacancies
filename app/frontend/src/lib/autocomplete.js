@@ -1,4 +1,4 @@
-import '../../lib/after.polyfill';
+import '../polyfill/after.polyfill';
 
 export const isActive = (threshold, currentInput) => currentInput ? currentInput.length >= threshold : false;
 

@@ -1,6 +1,6 @@
 /* global window */
-import { extractQueryParams } from './utils';
-import '../lib/remove.polyfill';
+import { extractQueryParams } from '../lib/utils';
+import '../polyfill/remove.polyfill';
 
 export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;

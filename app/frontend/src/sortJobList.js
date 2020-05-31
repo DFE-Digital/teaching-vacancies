@@ -1,4 +1,4 @@
-import './lib/remove.polyfill';
+import './polyfill/remove.polyfill';
 
 document.addEventListener('DOMContentLoaded', function() {
   const jobSortSelect = document.getElementById('jobs_sort_select');

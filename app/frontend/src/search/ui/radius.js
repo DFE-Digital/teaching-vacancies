@@ -1,4 +1,4 @@
-import { updateUrlQueryParams } from '../utils';
+import { updateUrlQueryParams } from '../../lib/utils';
 
 export const renderRadiusSelect = (renderOptions, isFirstRender) => {
     const { query, widgetParams } = renderOptions;

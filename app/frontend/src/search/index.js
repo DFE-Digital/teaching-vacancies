@@ -2,7 +2,7 @@
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import '../lib/classlist.polyfill';
+import '../polyfill/classlist.polyfill';
 
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
@@ -11,12 +11,12 @@ import { transform, templates, renderContent } from './hits';
 import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
-import { renderAutocomplete } from './ui/autocomplete';
+import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelect } from './ui/sort';
 import { renderRadiusSelect, enableRadiusSelect, disableRadiusSelect } from './ui/radius';
 import { locations } from './data/locations';
-import { updateUrlQueryParams, stringMatchesPostcode, removeDataAttribute, setDataAttribute } from './utils';
-import { getCoordinates } from './geoloc';
+import { updateUrlQueryParams, stringMatchesPostcode, removeDataAttribute, setDataAttribute } from '../lib/utils';
+import { getGeolocatedCoordinates } from '../lib/api';
 import { enableSubmitButton } from './ui/form';
 
 if (document.querySelector('#vacancies-hits')) {
@@ -42,7 +42,7 @@ if (document.querySelector('#vacancies-hits')) {
         },
         onChange(query) {
             if (stringMatchesPostcode(query)) {
-                getCoordinates(query).then(coords => {
+                getGeolocatedCoordinates(query).then(coords => {
                     enableRadiusSelect();
                     setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
                     setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);

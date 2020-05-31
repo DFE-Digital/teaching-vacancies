@@ -1,5 +1,5 @@
-import { convertEpochToUnixTimestamp, getUnixTimestampForDayStart } from './utils';
-import { stringMatchesPostcode } from './utils';
+import { convertEpochToUnixTimestamp, getUnixTimestampForDayStart } from '../lib/utils';
+import { stringMatchesPostcode } from '../lib/utils';
 
 export const getFilters = () => `listing_status:published AND publication_date_timestamp <= ${getUnixTimestampForDayStart(new Date())} AND expires_at_timestamp > ${convertEpochToUnixTimestamp(Date.now())}`;
 

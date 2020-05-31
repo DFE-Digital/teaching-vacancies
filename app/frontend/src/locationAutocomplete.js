@@ -1,4 +1,4 @@
-import { renderAutocomplete } from './search/ui/autocomplete';
+import { renderAutocomplete } from './lib/autocomplete';
 import { locations } from './search/data/locations';
 
 $(document).ready(function () {
