@@ -28,6 +28,55 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#create' do
+    let(:subscription) do
+      build(:subscription)
+    end
+
+    let(:subscription_presenter) do
+      SubscriptionPresenter.new(subscription)
+    end
+
+    let(:subscription_finder) do
+      instance_double(SubscriptionFinder).as_null_object
+    end
+
+    context 'verify_recaptcha is true ' do
+      before do
+        allow(Subscription).to receive(:new).and_return(subscription)
+        allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
+        allow(SubscriptionPresenter).to receive(:new).and_return(subscription_presenter)
+        allow(subscription_finder).to receive(:exists?).and_return(false)
+        allow(controller).to receive(:recaptcha_reply).and_return({ 'score' => 0.9 })
+        allow(controller).to receive(:verify_recaptcha).and_return(true)
+      end
+
+      it 'verifies the recaptcha' do
+        expect(controller).to receive(:verify_recaptcha)
+        post :create, params: { subscription: subscription.attributes }
+      end
+
+      it 'sends the Subscription instance and action (both required) when it verifies the recaptcha' do
+        expect(controller).to receive(:verify_recaptcha)
+          .with(model: an_instance_of(Subscription), action: 'subscription')
+        post :create, params: { subscription: subscription.attributes }
+      end
+
+      it 'sets the recaptcha score on the Subscription record' do
+        expect(subscription).to receive(:recaptcha_score=).with(0.9)
+        post :create, params: { subscription: subscription.attributes }
+      end
+
+      it 'saves the Subscription record' do
+        expect(subscription).to receive(:save)
+        post :create, params: { subscription: subscription.attributes }
+      end
+
+      it 'renders the "confirm" template' do
+        post :create, params: { subscription: subscription.attributes }
+        expect(response).to render_template('confirm')
+      end
+    end
+
     context 'when feature is enabled' do
       before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
       let(:params) do
