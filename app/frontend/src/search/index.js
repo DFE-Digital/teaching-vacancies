@@ -126,7 +126,8 @@ if (document.querySelector('#vacancies-hits')) {
                 container: '#pagination-hits',
                 cssClasses: {
                     list: ['pagination'],
-                    item: 'pagination__item'
+                    item: 'pagination__item',
+                    selectedItem: 'active'
                 },
             }),
         ]);
@@ -134,3 +135,4 @@ if (document.querySelector('#vacancies-hits')) {
 
     searchClientInstance.start();
 }
+
