@@ -617,6 +617,7 @@ en:
         message: 'Improve your job listing using the new sections and features below'
       delete: The job has been deleted
       updated: 'The job has been updated'
+      draft_saved_html: '<strong>Draft saved</strong> for %{job_title}'
       view:
         only_published: You can only view published jobs
     access:
