@@ -1,0 +1,27 @@
+{
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly",
+        "document": "readonly",
+        "describe": "readonly",
+        "test": "readonly",
+        "expect": "readonly",
+        "history": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "semi": ["warn", "always"],
+        "quotes": ["warn", "single"],
+        "eol-last": 1,
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }]
+    },
+    "root": true
+}

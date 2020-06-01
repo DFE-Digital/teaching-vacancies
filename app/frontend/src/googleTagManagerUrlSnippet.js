@@ -1,15 +1,6 @@
-function pushURLToDatalayer() {
-  var newURL = removePIIfromURL(window.location);
+document.addEventListener("DOMContentLoaded", function(event) {
   dataLayer.push({
-    dePIIedURL: newURL,
+    dePIIedURL: window.location.pathname,
     event: "parametersRemoved"
-  })
-}
-
-function removePIIfromURL(url) {
-  return url.pathname;
-}
-
-$(document).ready(function(){
-  pushURLToDatalayer();
+  });
 });

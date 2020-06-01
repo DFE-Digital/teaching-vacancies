@@ -113,5 +113,5 @@ jobs:
       - name: Install node.js dependencies
         run: yarn install
 
-      # - name: Run yarn test
-      #   run: yarn test
+      - name: run frontend tests and linting
+        run: npm test

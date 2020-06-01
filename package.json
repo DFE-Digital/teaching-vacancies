@@ -3,12 +3,16 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "4.2.2",
+    "algoliasearch": "~4.2.0",
+    "axios": "^0.19.2",
     "clipboard": "^2.0.4",
     "govuk-frontend": "3.4.0",
+    "instantsearch.js": "^4.4.1",
     "jquery": "^3.5.0",
     "rails-ujs": "^5.2.3"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "jest": "^25.4.0",
     "stylelint": "^13.5.0",
     "stylelint-config-sass-guidelines": "^7.0.0",
@@ -18,8 +22,14 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
+    "test": "yarn run js:check && yarn run sass:check",
+    "js:check": "yarn run js:lint && yarn run js:test",
+    "sass:check": "yarn run sass:lint",
     "js:test": "jest",
+    "js:test:coverage": "jest --coverage",
+    "js:lint": "eslint ./app/frontend/src/search",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
+    
   },
   "jest": {
     "testMatch": [
