@@ -36,6 +36,7 @@
       %p.govuk-body-l=t('subscriptions.next_steps')
       = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true
       = f.input :reference, as: :string, input_html: { class: 'govuk-input', placeholder: 'e.g. Maths jobs within 20 miles of Oxford' }
+      = recaptcha_v3(action: 'subscription')
 
 
       .govuk-warning-text
