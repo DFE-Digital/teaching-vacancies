@@ -127,7 +127,6 @@
 
 .autocomplete__option .highlight {
     font-weight: bold;
-    text-transform: capitalize;
 }
 .autocomplete__option .highlight::after {
     content: '';
@@ -252,3 +251,4 @@
     margin-right: 5px;
     margin-left: 5px;
 }
+

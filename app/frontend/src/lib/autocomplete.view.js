@@ -97,8 +97,7 @@ export const highlightRefinement = (text, refinement) => {
     const index = text.toLowerCase().indexOf(refinement.toLowerCase());
 
     if (index >= 0) {
-        return `${text.substring(0, index)}
-<span class='highlight'>${text.substring(index, index + refinement.length)}</span><span>${text.substring(index + refinement.length, text.length)}</span>
-`;
+        return `${text.substring(0, index)}<span class='highlight'>${text.substring(index, index + refinement.length)}</span><span>${text.substring(index + refinement.length, text.length)}</span>`;
     }
 };
+
