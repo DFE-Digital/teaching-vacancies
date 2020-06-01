@@ -44,12 +44,21 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     vacancy
   end
 
-  def redirect_to_next_step_if_save_and_continue(vacancy_id, job_title = nil)
-    if params[:commit] == I18n.t('buttons.save_and_return')
-      update_message = job_title.present? ?
-        I18n.t('messages.jobs.draft_saved_html', job_title: job_title) : I18n.t('messages.jobs.updated')
-      redirect_to jobs_with_type_school_path('draft'), success: update_message
-    elsif params[:commit] == I18n.t('buttons.save_and_continue')
+  def save_vacancy_as_draft_if_save_and_return_later(attributes, vacancy)
+    if params[:commit] == I18n.t('buttons.save_and_return_later')
+      vacancy = update_vacancy(attributes, vacancy)
+      redirect_to_draft(vacancy.id, vacancy.job_title)
+    end
+  end
+
+  def redirect_to_draft(vacancy_id, job_title = nil)
+    update_message = job_title.present? ?
+      I18n.t('messages.jobs.draft_saved_html', job_title: job_title) : I18n.t('messages.jobs.updated')
+    redirect_to jobs_with_type_school_path('draft'), success: update_message
+  end
+
+  def redirect_to_next_step_if_save_and_continue(vacancy_id)
+    if params[:commit] == I18n.t('buttons.save_and_continue')
       redirect_to_next_step(vacancy_id)
     elsif params[:commit] == I18n.t('buttons.update_job')
       redirect_to edit_school_job_path(vacancy_id), success: I18n.t('messages.jobs.updated')

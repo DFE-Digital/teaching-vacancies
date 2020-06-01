@@ -83,6 +83,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def redirect_to_incomplete_step
+    return redirect_to school_job_job_specification_path(@vacancy.id) unless step_valid?(JobSpecificationForm)
     return redirect_to school_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
     return redirect_to school_job_supporting_documents_path(@vacancy.id) unless step_valid?(SupportingDocumentsForm)
     return redirect_to school_job_application_details_path(@vacancy.id) unless step_valid?(ApplicationDetailsForm)

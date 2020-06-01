@@ -1,5 +1,8 @@
 class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::ApplicationController
   before_action :redirect_unless_vacancy
+  before_action only: %i[update] do
+    save_vacancy_as_draft_if_save_and_return_later(pay_package_form_params, @vacancy)
+  end
 
   def show
     @pay_package_form = PayPackageForm.new(@vacancy.attributes)

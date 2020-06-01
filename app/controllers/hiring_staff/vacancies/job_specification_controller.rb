@@ -8,6 +8,10 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   before_action :set_up_url
   before_action :set_up_job_specification_form, only: %i[create update]
 
+  before_action only: %i[update] do
+    save_vacancy_as_draft_if_save_and_return_later(job_specification_form_params, @vacancy)
+  end
+
   def show
     if @vacancy.present?
       @job_specification_form = JobSpecificationForm.new(@vacancy.attributes)
@@ -21,13 +25,12 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def create
     store_vacancy_attributes(@job_specification_form.vacancy.attributes)
 
-    if @job_specification_form.complete_and_valid?
+    if params[:commit] == I18n.t('buttons.save_and_return_later')
+      return save_vacancy_as_draft
+    elsif @job_specification_form.complete_and_valid?
       session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes)
-      return redirect_to_next_step_if_save_and_continue(
-        @vacancy&.id.present? ? @vacancy.id : session_vacancy_id,
-        @vacancy.job_title
-      )
+      return redirect_to_next_step_if_save_and_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
     end
 
     render :show
@@ -38,7 +41,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       remove_subject_fields(@vacancy) unless @vacancy.subjects.nil?
       update_vacancy(job_specification_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
+      return redirect_to_next_step_if_save_and_continue(@vacancy.id)
     end
 
     render :show
@@ -73,6 +76,18 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @vacancy.subject = nil
     @vacancy.first_supporting_subject = nil
     @vacancy.second_supporting_subject = nil
+  end
+
+  def save_vacancy_as_draft
+    if @job_specification_form.vacancy.job_title.present?
+      save_vacancy_without_validation
+      redirect_to_draft(
+        @job_specification_form.vacancy.id,
+        @job_specification_form.vacancy.job_title
+      )
+    else
+      redirect_to jobs_with_type_school_path('draft')
+    end
   end
 
   def save_vacancy_without_validation

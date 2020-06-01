@@ -1,6 +1,9 @@
 class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
   before_action :redirect_unless_vacancy
   before_action :set_up_application_details_form, only: %i[update]
+  before_action only: %i[update] do
+    save_vacancy_as_draft_if_save_and_return_later(@application_details_form.params_to_save, @vacancy)
+  end
 
   def show
     @application_details_form = ApplicationDetailsForm.new(@vacancy.attributes.symbolize_keys)
