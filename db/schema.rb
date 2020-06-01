@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_125107) do
     t.string "oid"
     t.datetime "accepted_terms_at"
     t.string "email"
+    t.jsonb "dsi_data"
     t.index ["oid"], name: "index_users_on_oid", unique: true
   end
 
@@ -225,9 +226,9 @@ ActiveRecord::Schema.define(version: 2020_05_26_125107) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
+    t.string "job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
-    t.string "job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true

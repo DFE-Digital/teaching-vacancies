@@ -41,4 +41,35 @@ module DFESignIn
       JWT.encode(payload, DFE_SIGN_IN_PASSWORD, 'HS256')
     end
   end
+
+  private
+
+  def error_message_for(response)
+    response['message'] || 'failed request'
+  end
+
+  def number_of_pages
+    response = api_response
+    raise (response['message'] || 'failed request') if response['numberOfPages'].nil?
+
+    response['numberOfPages']
+  end
+
+  def users_nil_or_empty?(response)
+    response['users'].blank? || response['users'].first.blank?
+  end
+
+  def get_response_pages
+    response_pages = []
+    (1..number_of_pages).each do |page|
+      response = api_response(page: page)
+      if users_nil_or_empty?(response)
+        Rollbar.log(:error,
+          'DfE Sign In API responded with nil users')
+        raise error_message_for(response)
+      end
+      response_pages.push(response['users'])
+    end
+    response_pages
+  end
 end

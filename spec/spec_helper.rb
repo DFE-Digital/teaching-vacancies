@@ -5,7 +5,6 @@ RSpec.configure do |config|
   allowed_http_requests = [
     'localhost',
     '127.0.0.1', # Required for Capybara sessions
-    'es', # Required for CI. Defined in ./buildspec.yml
     'pg', # Required for CI. Defined in ./buildspec.yml
   ]
   WebMock.disable_net_connect!(allow: allowed_http_requests)
