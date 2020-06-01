@@ -95,11 +95,11 @@ if (document.querySelector('#vacancies-hits')) {
             container: document.querySelector('#jobs_sort_form'),
             element: '#jobs_sort',
             items: [
-                { label: 'Relevancy', value: 'Vacancy' },
+                { label: 'Most relevant', value: 'Vacancy' },
                 { label: 'Newest job listing', value: 'Vacancy_publish_on_desc' },
                 { label: 'Oldest job listing', value: 'Vacancy_publish_on_asc' },
-                { label: 'Newest closing date', value: 'Vacancy_expiry_time_desc' },
-                { label: 'Oldest closing date', value: 'Vacancy_expiry_time_asc' },
+                { label: 'Least time to apply', value: 'Vacancy_expiry_time_asc' },
+                { label: 'Most time to apply', value: 'Vacancy_expiry_time_desc' },
             ],
         }),
         heading({
