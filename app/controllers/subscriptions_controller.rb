@@ -12,7 +12,9 @@ class SubscriptionsController < ApplicationController
   def create
     subscription = Subscription.new(daily_subscription_params)
     @subscription = SubscriptionPresenter.new(subscription)
+    recaptcha_valid = verify_recaptcha(model: subscription, action: 'subscription')
 
+    @subscription.recaptcha_score = recaptcha_reply['score'] if recaptcha_valid && recaptcha_reply
     if SubscriptionFinder.new(daily_subscription_params).exists?
       flash.now[:error] = I18n.t('errors.subscriptions.already_exists')
     elsif subscription.save
