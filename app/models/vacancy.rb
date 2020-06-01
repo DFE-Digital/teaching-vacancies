@@ -217,7 +217,7 @@ class Vacancy < ApplicationRecord
   counter :get_more_info_counter
 
   def location
-    @location ||= SchoolPresenter.new(school).location
+    SchoolPresenter.new(school).location
   end
 
   def coordinates

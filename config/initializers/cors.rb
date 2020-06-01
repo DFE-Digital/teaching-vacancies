@@ -1,5 +1,5 @@
 # Configure Rack::Cors https://github.com/cyu/rack-cors
-Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
+Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.env.production?, logger: (-> { Rails.logger }) do
   allow do
     # Allow all domains access to jobs API
     origins '*'

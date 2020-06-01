@@ -2,6 +2,7 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
+  delegate :location, to: :school
   delegate :working_patterns, to: :model, prefix: true
   delegate :job_roles, to: :model, prefix: true
 
@@ -44,10 +45,6 @@ class VacancyPresenter < BasePresenter
 
   def benefits
     simple_format(model.benefits) if model.benefits.present?
-  end
-
-  def location
-    @location ||= school.location
   end
 
   def expired?
