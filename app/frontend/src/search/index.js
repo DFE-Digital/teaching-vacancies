@@ -88,7 +88,6 @@ if (document.querySelector('#vacancies-hits')) {
                 updateUrlQueryParams('radius', location, window.location.href);
                 setDataAttribute(document.querySelector('#radius'), 'radius', location);
                 enableSubmitButton(document.querySelector('.filters-form'));
-                searchClientInstance.refresh();
             }
         }),
         sortBy({
@@ -126,7 +125,8 @@ if (document.querySelector('#vacancies-hits')) {
                 container: '#pagination-hits',
                 cssClasses: {
                     list: ['pagination'],
-                    item: 'pagination__item'
+                    item: 'pagination__item',
+                    selectedItem: 'active'
                 },
             }),
         ]);
@@ -134,3 +134,4 @@ if (document.querySelector('#vacancies-hits')) {
 
     searchClientInstance.start();
 }
+
