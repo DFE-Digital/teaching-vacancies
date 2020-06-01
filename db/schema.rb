@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_112853) do
     t.string "reference", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "recaptcha_score"
   end
 
   create_table "transaction_auditors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -221,9 +222,9 @@ ActiveRecord::Schema.define(version: 2020_06_05_112853) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
-    t.string "job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
+    t.string "job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Subscription, type: :model do
   it { should have_many(:alert_runs) }
+  it { should respond_to(:recaptcha_score) }
 
   context 'validations' do
     context 'email' do
