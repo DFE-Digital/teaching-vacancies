@@ -88,7 +88,6 @@ if (document.querySelector('#vacancies-hits')) {
                 updateUrlQueryParams('radius', location, window.location.href);
                 setDataAttribute(document.querySelector('#radius'), 'radius', location);
                 enableSubmitButton(document.querySelector('.filters-form'));
-                searchClientInstance.refresh();
             }
         }),
         sortBy({
