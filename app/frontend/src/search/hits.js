@@ -18,11 +18,11 @@ export const renderContent = (renderOptions) => {
 };
 
 export const addJobAlertMarkup = container => {
-  !document.getElementById('job-alert-link') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
+  !document.getElementById('job-alert-cta') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
 };
 
 export const removeJobAlertMarkup = () => {
-  const el = document.getElementById('job-alert-link');
+  const el = document.getElementById('job-alert-cta');
   return el && el.remove(); 
 };
 
@@ -109,7 +109,7 @@ empty: '<h4 class="govuk-heading-m">Try another search</h4><ul class="govuk-list
 
 export const customTemplates = {
   alert: `
-  <div class="govuk-inset-text">
+  <div class="govuk-inset-text" id="job-alert-cta">
 <span class="job-seeker-alert-icon">
 <svg height="16" viewBox="0 0 20 16" width="20" xmlns="http://www.w3.org/2000/svg">
 <path d="M18 0H2C.9 0 0 .9 0 2v12a2 2 0 0 0 2 2h16c1.1 0 2-.9 2-2V2a2 2 0 0 0-2-2zm-.4 4.25l-7.07 4.42c-.32.2-.74.2-1.06 0L2.4 4.25a.85.85 0 1 1 .9-1.44L10 7l6.7-4.19a.85.85 0 1 1 .9 1.44zm0 0" fill="#0b0c0c"></path>
