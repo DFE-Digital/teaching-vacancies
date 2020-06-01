@@ -606,9 +606,9 @@ en:
     dismiss: 'Dismiss'
     find: 'Find'
     save_and_continue: 'Continue'
-    save_and_return: 'Save and return later'
+    save_and_return_later: 'Save and return later'
     submit: 'Submit'
-    update_job: 'Update job'
+    update_job: 'Update listing'
 
   messages:
     jobs:
