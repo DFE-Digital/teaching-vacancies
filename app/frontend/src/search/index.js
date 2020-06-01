@@ -7,7 +7,7 @@ import '../polyfill/classlist.polyfill';
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
-import { transform, templates, renderContent } from './hits';
+import { templates, renderContent } from './hits';
 import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
@@ -114,9 +114,6 @@ if (document.querySelector('#vacancies-hits')) {
         }),
         hits({
             container: '#vacancies-hits',
-            transformItems(items) {
-                return transform(items);
-            },
             templates,
             cssClasses: {
                 list: ['vacancies'],
