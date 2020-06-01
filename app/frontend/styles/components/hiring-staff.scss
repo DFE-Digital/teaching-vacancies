@@ -25,6 +25,22 @@ body.hiring-staff {
   margin-top: 1.5rem;
 }
 
+.button-link {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  color: $govuk-link-colour;
+  display: block;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.button-link:hover {
+  background-color: transparent;
+  color: $govuk-link-hover-colour;
+  text-decoration: underline;
+}
+
 .hod-checkmark {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;

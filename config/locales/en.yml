@@ -605,7 +605,7 @@ en:
     delete: 'Delete'
     dismiss: 'Dismiss'
     find: 'Find'
-    save_and_continue: 'Save and continue'
+    save_and_continue: 'Continue'
     save_and_return: 'Save and return later'
     submit: 'Submit'
     update_job: 'Update job'
