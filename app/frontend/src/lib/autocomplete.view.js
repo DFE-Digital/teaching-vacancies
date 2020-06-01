@@ -20,7 +20,7 @@ export const create = (container, input, onSelect) => {
             onSelect(e.target.dataset.location);
         });
 
-        input.addEventListener('keyup', e => {
+        input.addEventListener('keyup', (e) => {
             e.stopImmediatePropagation();
     
             switch (e.code) {
@@ -98,8 +98,7 @@ export const highlightRefinement = (text, refinement) => {
 
     if (index >= 0) {
         return `${text.substring(0, index)}
-<span class='highlight'>${text.substring(index, index + refinement.length)}</span>
-<span>${text.substring(index + refinement.length, text.length)}</span>
+<span class='highlight'>${text.substring(index, index + refinement.length)}</span><span>${text.substring(index + refinement.length, text.length)}</span>
 `;
     }
 };

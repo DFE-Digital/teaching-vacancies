@@ -16,8 +16,8 @@
         = render(partial: 'subscribe_link', locals: { search_criteria: @vacancies_search.only_active_to_hash }) if EmailAlertsFeature.enabled? && !ReadOnlyFeature.enabled?
     - if @vacancies.any?
       = render partial: 'sorting_options', locals: { search_criteria: @vacancies_search.only_active_to_hash, sort: @vacancies_search.sort_by }
-      #vacancies-hits
-        %ul.vacancies
+      #vacancies-hits{ 'aria-label': 'Search results' }
+        %ul.vacancies{ 'role': 'list' }
           - @vacancies.each do |vacancy|
             = render partial: 'vacancy', locals: { vacancy: vacancy }
 

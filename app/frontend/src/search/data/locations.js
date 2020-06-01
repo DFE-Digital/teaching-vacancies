@@ -134,7 +134,6 @@ export const locations = [
     'West Yorkshire',
     'Wiltshire',
     'Worcestershire',
-    'London',
     'South East',
     'Yorkshire and the Humber',
     'East of England',
