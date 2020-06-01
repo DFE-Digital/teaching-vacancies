@@ -1,31 +1,8 @@
-import { snakeCaseToHumanReadable, createCapitalisedStringWithPrefix, transform, getJobAlertLink, getJobAlertLinkParam } from './hits';
-
-describe('snakeCaseToHumanReadable', () => {
-    test('formats an array of snake case strings for display', () => {
-        expect(snakeCaseToHumanReadable('Secondary_girls_school')).toBe('secondary girls school');
-    });
-});
+import { createCapitalisedStringWithPrefix, getJobAlertLink, getJobAlertLinkParam } from './hits';
 
 describe('createCapitalisedStringWithPrefix', () => {
     test('returns a string of capitalized words after a prefix', () => {
         expect(createCapitalisedStringWithPrefix('176 jobs near', 'babylon gardens')).toBe('176 jobs near Babylon Gardens');
-    });
-});
-
-describe('transform', () => {
-    test('converts each vacancy in array to renderable values', () => {
-
-        const items = [
-            {
-                working_patterns: ['pattern 1', 'pattern 2'],
-                somethingElse: 'abc'
-            },
-            {
-                working_patterns: 'pattern 3',
-                somethingElse: 'xyz'
-            }
-        ];
-        expect(transform(items)).toStrictEqual([{'somethingElse': 'abc', 'working_patterns': 'pattern 1, pattern 2'}, {'somethingElse': 'xyz', 'working_patterns': 'pattern 3'}]);
     });
 });
 

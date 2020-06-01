@@ -69,13 +69,6 @@ export const hideServerMarkup = () => {
   }
 };
 
-export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/g, ' ');
-
-export const transform = items => items.map(item => ({
-  ...item,
-  working_patterns: Array.isArray(item.working_patterns) ? item.working_patterns.map(snakeCaseToHumanReadable).join(', ') : item.working_patterns,
-}));
-
 export const templates = {
   item: `
 <article class="vacancy" role="article">
@@ -84,7 +77,7 @@ export const templates = {
     {{ job_title }}
     </a>
     </h2>
-  <p>{{ school.name }}, {{ school.town }}, {{ school.county }}.</p>
+  <p>{{ location }}</p>
   <dl>
 <dt>Salary</dt>
 <dd class="double">

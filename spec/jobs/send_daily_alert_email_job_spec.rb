@@ -92,6 +92,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
           publish_on: Time.zone.today, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 2.hours
         )
 
+        p Vacancy.index
         WebMock.disable!
         Vacancy.reindex!
       end
