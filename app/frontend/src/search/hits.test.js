@@ -18,14 +18,39 @@ describe('transform', () => {
         const items = [
             {
                 working_patterns: ['pattern 1', 'pattern 2'],
-                somethingElse: 'abc'
+                somethingElse: 'abc',
+                school: {
+                    region : 'south east',
+                    county : 'kent'
+                }
             },
             {
                 working_patterns: 'pattern 3',
-                somethingElse: 'xyz'
+                somethingElse: 'xyz',
+                school: {
+                    county : 'surrey'
+                }
             }
         ];
-        expect(transform(items)).toStrictEqual([{'somethingElse': 'abc', 'working_patterns': 'pattern 1, pattern 2'}, {'somethingElse': 'xyz', 'working_patterns': 'pattern 3'}]);
+        expect(transform(items)).toStrictEqual([
+            {
+                'somethingElse': 'abc',
+                'working_patterns': 'pattern 1, pattern 2',
+                'school': {
+                    'county': 'kent',
+                    'region': 'south east'
+                },
+                'school_region': 'south east'
+            },
+            {
+                'somethingElse': 'xyz',
+                'working_patterns': 'pattern 3',
+                'school': {
+                    'county': 'surrey'
+                },
+                'school_region': 'surrey'
+            }
+        ]);
     });
 });
 

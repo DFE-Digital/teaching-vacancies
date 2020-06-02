@@ -74,6 +74,7 @@ export const snakeCaseToHumanReadable = value => value.toLowerCase().replace(/_/
 export const transform = items => items.map(item => ({
   ...item,
   working_patterns: Array.isArray(item.working_patterns) ? item.working_patterns.map(snakeCaseToHumanReadable).join(', ') : item.working_patterns,
+  school_region: item.school.region || item.school.county
 }));
 
 export const templates = {
@@ -84,7 +85,7 @@ export const templates = {
     {{ job_title }}
     </a>
     </h2>
-  <p>{{ school.name }}, {{ school.town }}, {{ school.county }}.</p>
+  <p>{{ school.name }}, {{ school.town }}, {{ school_region }}.</p>
   <dl>
 <dt>Salary</dt>
 <dd class="double">

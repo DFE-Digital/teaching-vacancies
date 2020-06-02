@@ -11,28 +11,25 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
         }
 
         if (widgetParams.onChange) {
-            widgetParams.onChange(widgetParams.inputElement.value);
+            widgetParams.onChange(widgetParams.inputElement.value).then(() => refine());
         }
 
         widgetParams.inputElement.addEventListener('input', () => {
-            enableSubmitButton(widgetParams.container);
-
             if (widgetParams.onChange) {
-                widgetParams.onChange(widgetParams.inputElement.value);
+                widgetParams.onChange(widgetParams.inputElement.value).then(() => enableSubmitButton(widgetParams.container));
             }
         });
 
         widgetParams.inputElement.addEventListener('change', () => {
-            enableSubmitButton(widgetParams.container);
-
             if (widgetParams.onChange) {
-                widgetParams.onChange(widgetParams.inputElement.value);
+                widgetParams.onChange(widgetParams.inputElement.value).then(() => enableSubmitButton(widgetParams.container));
             }
         });
 
         widgetParams.container.addEventListener('submit', (e) => {
             e.preventDefault();
-            refine();
+            widgetParams.onChange(widgetParams.inputElement.value);
+            refine(getQuery());
         });
     }
 };

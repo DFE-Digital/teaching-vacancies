@@ -33,27 +33,42 @@ if (document.querySelector('#vacancies-hits')) {
 
     const locationSearchBox = searchBox({
         container: document.querySelector('.filters-form'),
-        inputElement: document.querySelector('#location'),
+        inputElement: document.getElementById('location'),
         key: 'location',
         autofocus: true,
         queryHook(query, search) {
             updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href);
             search(query);
         },
-        onChange(query) {
-            if (stringMatchesPostcode(query)) {
-                getGeolocatedCoordinates(query).then(coords => {
-                    enableRadiusSelect();
-                    setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
-                    setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
-                    searchClientInstance.refresh();
-                });
-            } else {
-                disableRadiusSelect();
-                removeDataAttribute(document.querySelector('#location'), 'coordinates');
-                removeDataAttribute(document.querySelector('#radius'), 'radius');
-            }
+        onChange: (query) => {
+            return new Promise(resolve => {
+                if (stringMatchesPostcode(query) || (query.length && locations.indexOf(query.toLowerCase()) === -1)) {
+                    getGeolocatedCoordinates(query).then(coords => {
+                        coords.success ? enableRadiusSelect() : disableRadiusSelect();
+                        setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
+                        setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
+                        resolve();
+                    });
+                } else {
+                    disableRadiusSelect();
+                    removeDataAttribute(document.querySelector('#location'), 'coordinates');
+                    removeDataAttribute(document.querySelector('#radius'), 'radius');
+                    resolve();
+                }
+            });
+        }
+    });
+
+    const keywordSearchBox = searchBox({
+        container: document.querySelector('.filters-form'),
+        inputElement: document.getElementById('keyword'),
+        key: 'keyword',
+        autofocus: true,
+        queryHook(query, search) {
+            updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
+            search(query);
         },
+        onChange: () => new Promise(resolve => resolve())
     });
 
     searchClientInstance.addWidgets([
@@ -70,16 +85,7 @@ if (document.querySelector('#vacancies-hits')) {
             }
         }),
         locationSearchBox,
-        searchBox({
-            container: document.querySelector('.filters-form'),
-            inputElement: document.getElementById('keyword'),
-            key: 'keyword',
-            autofocus: true,
-            queryHook(query, search) {
-                updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
-                search(query);
-            },
-        }),
+        keywordSearchBox,
         locationRadius({
             container: document.querySelector('#location-radius-select'),
             attribute: '_geoloc',
