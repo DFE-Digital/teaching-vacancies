@@ -84,7 +84,7 @@ export const templates = {
     {{ job_title }}
     </a>
     </h2>
-  <p>{{ school.name }}, {{ school.town }}, {{ school.region }}.</p>
+  <p>{{ school.name }}, {{ school.town }}, {{ school.county }}.</p>
   <dl>
 <dt>Salary</dt>
 <dd class="double">

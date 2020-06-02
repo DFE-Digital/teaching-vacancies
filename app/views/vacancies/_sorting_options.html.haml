@@ -1,9 +1,8 @@
 .govuk-grid-row.sortable-links
-  .govuk-grid-column-one-half
-    = form_tag('', method: :get, id: 'jobs_sort_form') do
-      - search_criteria.each do |filter, value|
-        - unless filter == :jobs_sort
-          = hidden_field_tag filter, value
-      = label_tag 'jobs_sort_select', t('jobs.sort_by.label'), class: "govuk-label inline", id: 'jobs_sort_label'
-      = select_tag 'jobs_sort', options_for_select(job_sorting_options, @vacancies_search.sort_by), class: 'govuk-select govuk-input--width-10', id: 'jobs_sort_select'
-      = submit_tag t('jobs.sort_by.submit'), class: 'govuk-button', id: 'submit_job_sort'
+  = form_tag('', method: :get, id: 'jobs_sort_form') do
+    - search_criteria.each do |filter, value|
+      - unless filter == :jobs_sort
+        = hidden_field_tag filter, value
+    = label_tag 'jobs_sort_select', t('jobs.sort_by.label'), class: "govuk-label inline", id: 'jobs_sort_label'
+    = select_tag 'jobs_sort', options_for_select(job_sorting_options, @vacancies_search.sort_by), class: 'govuk-select govuk-input--width-10', id: 'jobs_sort_select'
+    = submit_tag t('jobs.sort_by.submit'), class: 'govuk-button govuk-!-margin-0', id: 'submit_job_sort'
