@@ -46,36 +46,4 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       end
     end
   end
-
-  describe '#create' do
-    context 'job role is suitable for NQT' do
-      let(:params) do
-        {
-          job_specification_form: {
-            job_roles: [I18n.t('jobs.job_role_options.nqt_suitable')]
-          }
-        }
-      end
-
-      it 'persists the job role in the NQT field' do
-        post :create, params: params
-        expect(controller.params[:job_specification_form][:newly_qualified_teacher]).to eql(true)
-      end
-    end
-
-    context 'job role is NOT suitable for NQT' do
-      let(:params) do
-        {
-          job_specification_form: {
-            job_roles: [I18n.t('jobs.job_role_options.teacher')]
-          }
-        }
-      end
-
-      it 'persists the job role in the NQT field' do
-        post :create, params: params
-        expect(controller.params[:job_specification_form][:newly_qualified_teacher]).to eql(false)
-      end
-    end
-  end
 end
