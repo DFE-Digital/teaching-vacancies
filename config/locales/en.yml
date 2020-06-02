@@ -202,7 +202,6 @@ en:
     working_patterns: 'Working pattern'
     working_patterns_info_one: '%{patterns} only'
     working_patterns_info_many: 'Will consider %{patterns}'
-    newly_qualified_teacher: 'Newly qualified teacher'
     starts_on: 'Expected start date'
     ends_on: 'End date'
     expired: 'This job post has expired'
@@ -392,7 +391,6 @@ en:
       application_link_url: >-
         Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}
       flexible_working: 'Flexible working'
-      newly_qualified_teacher: 'Newly qualified teacher'
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       deadline_date: 'For example, %{date}'
