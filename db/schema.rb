@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_081744) do
+ActiveRecord::Schema.define(version: 2020_06_02_093420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -205,7 +205,6 @@ ActiveRecord::Schema.define(version: 2020_06_02_081744) do
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
     t.string "application_link"
     t.boolean "flexible_working"
-    t.boolean "newly_qualified_teacher", default: false, null: false
     t.integer "weekly_pageviews"
     t.integer "total_pageviews"
     t.datetime "weekly_pageviews_updated_at"
