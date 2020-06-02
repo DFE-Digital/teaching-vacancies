@@ -219,8 +219,8 @@ en:
     job_count_plural_without_search: 'There are %{count} jobs listed'
     job_count: '%{count} job matches your search'
     job_count_plural: '%{count} jobs match your search'
-    job_count_with_location_category: '%{count} teaching job in %{location}'
-    job_count_plural_with_location_category: '%{count} teaching jobs in %{location}'
+    job_count_with_location_category: '%{count} job match near %{location}'
+    job_count_plural_with_location_category: '%{count} jobs match near %{location}'
     no_jobs:
       intro: 'You might find matching jobs by:'
       suggestions:
