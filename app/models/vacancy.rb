@@ -46,7 +46,7 @@ class Vacancy < ApplicationRecord
   # rubocop:disable Metrics/LineLength
   # There must be a better way to pass these settings to the block, but everything seems to break
   algoliasearch index_name: Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}" : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
-    attributes :location, :job_roles, :job_title, :salary, :subjects
+    attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
 
     attribute :expires_at do
       expires_at = format_date(self.expires_on)
@@ -115,7 +115,7 @@ class Vacancy < ApplicationRecord
       self.starts_on&.to_datetime&.to_i
     end
 
-    attribute :working_patterns do
+    attribute :working_patterns_for_display do
       VacancyPresenter.new(self).working_patterns
     end
 

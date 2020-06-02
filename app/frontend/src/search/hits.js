@@ -89,7 +89,7 @@ export const templates = {
 </dd>
 <dt>Working pattern</dt>
 <dd class="double">
-{{ working_patterns }}
+{{ working_patterns_for_display }}
 </dd>
 <dt>Closing date</dt>
 <dd class="double">
