@@ -34,7 +34,7 @@ RSpec.feature 'Hiring staff can preview a vacancy' do
 
     scenario 'users can save and return later' do
       click_on I18n.t('buttons.save_and_return_later')
-      expect(page).to have_current_path(school_path)
+      expect(page).to have_current_path(jobs_with_type_school_path('draft'))
       expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
       expect(page).to have_content(I18n.t('buttons.create_job'))
     end
