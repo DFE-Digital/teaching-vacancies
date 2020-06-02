@@ -30,7 +30,10 @@ describe('stringMatchesPostcode', () => {
         'SE18 2BT',
         'SE182BT',
         'B2 5ST',
-        'B25ST'
+        'B25ST',
+        'SW1A 1AA',
+        'SW1A 1aa',
+        'Sw1A 1aA'
     ];
 
     test('matches a correct postcode', () => {

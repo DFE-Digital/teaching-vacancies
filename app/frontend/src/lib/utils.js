@@ -25,7 +25,7 @@ export const extractQueryParams = (url, keys) => {
 
 export const stringMatchesPostcode = postcode => {
     postcode = postcode.replace(/\s/g, '');
-    const regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
+    const regex = /^[A-Za-z]{1,2}[0-9]{1,2}[A-Za-z]? ?[0-9][A-Z]{2}$/i;
     return regex.test(postcode);
 };
 
