@@ -13,7 +13,7 @@ GEM
       rails-dom-testing (~> 2.0)
     actionpack (5.2.4)
       actionview (= 5.2.4)
-      activesupport (= 5.2.4)
+      activesupport (~> 5.2.4.3)
       rack (~> 2.0)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
