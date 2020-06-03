@@ -64,10 +64,6 @@ class VacancyPresenter < BasePresenter
     model.publish_on == Time.zone.today
   end
 
-  def newly_qualified_teacher
-    model.newly_qualified_teacher? ? 'Suitable' : 'Not suitable'
-  end
-
   def working_patterns?
     model_working_patterns.present?
   end

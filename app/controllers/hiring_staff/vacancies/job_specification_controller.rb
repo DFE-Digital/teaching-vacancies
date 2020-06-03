@@ -1,9 +1,7 @@
 require 'get_subject_name'
-require 'persist_nqt_job_role'
 
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   include GetSubjectName
-  include PersistNQTJobRole
 
   before_action :set_up_url
   before_action :set_up_job_specification_form, only: %i[create update]
@@ -62,12 +60,10 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def job_specification_form_params
-    persist_nqt_job_role_to_nqt_attribute(:job_specification_form)
     strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles, :subjects])
     params.require(:job_specification_form)
           .permit(:state, :job_title,
                   :starts_on, :ends_on,
-                  :newly_qualified_teacher,
                   job_roles: [], working_patterns: [], subjects: [])
           .merge(completed_step: current_step)
   end
