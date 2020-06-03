@@ -29,7 +29,7 @@ class Vacancy < ApplicationRecord
 
   include ApplicationHelper
   include Auditor::Model
-
+  include DateHelper
   include VacancyJobSpecificationValidations
   include VacancyPayPackageValidations
   include VacancyApplicationDetailValidations
@@ -46,10 +46,13 @@ class Vacancy < ApplicationRecord
   # rubocop:disable Metrics/LineLength
   # There must be a better way to pass these settings to the block, but everything seems to break
   algoliasearch index_name: Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}" : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
-    attributes :job_roles, :job_title, :salary, :working_patterns, :subjects
+    attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
 
     attribute :expires_at do
-      expires_at.to_s
+      expires_at = format_date(self.expires_on)
+      unless self.expiry_time.nil?
+        expires_at + ' at ' + self.expiry_time.strftime('%-l:%M %P')
+      end
     end
 
     attribute :expires_at_timestamp do
@@ -110,6 +113,10 @@ class Vacancy < ApplicationRecord
 
     attribute :start_date_timestamp do
       self.starts_on&.to_datetime&.to_i
+    end
+
+    attribute :working_patterns_for_display do
+      VacancyPresenter.new(self).working_patterns
     end
 
     geoloc :lat, :lng
@@ -217,7 +224,7 @@ class Vacancy < ApplicationRecord
   counter :get_more_info_counter
 
   def location
-    @location ||= SchoolPresenter.new(school).location
+    SchoolPresenter.new(school).location
   end
 
   def coordinates
