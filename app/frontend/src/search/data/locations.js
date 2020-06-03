@@ -141,4 +141,4 @@ export const locations = [
     'North West',
     'North East',
     'South West',
-    'East Midlands'].sort();
+    'East Midlands'].map(location => location.toLowerCase()).sort();
