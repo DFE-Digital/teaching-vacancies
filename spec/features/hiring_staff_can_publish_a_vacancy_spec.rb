@@ -565,7 +565,7 @@ RSpec.feature 'Creating a vacancy' do
           end
           expect(Vacancy.last.state).to eql('review')
 
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
           expect(Vacancy.last.state).to eql('review')
 
           click_header_link(I18n.t('jobs.job_details'))
@@ -654,7 +654,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
 
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('An edited job title')
@@ -670,7 +670,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
 
           fill_in 'job_specification_form[job_title]', with: 'High school teacher'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           activity = vacancy.activities.last
           expect(activity.session_id).to eq(session_id)
@@ -684,12 +684,12 @@ RSpec.feature 'Creating a vacancy' do
           click_header_link(I18n.t('jobs.job_details'))
 
           fill_in 'job_specification_form[job_title]', with: ''
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content('Enter a job title')
 
           fill_in 'job_specification_form[job_title]', with: 'A new job title'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('A new job title')
@@ -722,7 +722,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
           expect(page).to have_content(I18n.t('jobs.upload_file'))
 
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
         end
@@ -737,12 +737,12 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           fill_in 'application_details_form[contact_email]', with: 'not a valid email'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content('Enter an email address in the correct format, like name@example.com')
 
           fill_in 'application_details_form[contact_email]', with: 'a@valid.email'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('a@valid.email')
@@ -756,12 +756,12 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content('Enter an application link in the correct format, like http://www.school.ac.uk')
 
           fill_in 'application_details_form[application_link]', with: 'www.valid-domain.com'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('www.valid-domain.com')
@@ -775,7 +775,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
           expect(page).to have_content('an@email.com')
@@ -788,7 +788,7 @@ RSpec.feature 'Creating a vacancy' do
           click_header_link(I18n.t('jobs.application_details'))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.update_job')
 
           activity = vacancy.activities.last
           expect(activity.session_id).to eq(session_id)

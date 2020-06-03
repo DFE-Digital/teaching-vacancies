@@ -2,7 +2,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   def show
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
-    @sort = VacancySort.new.update(column: params[:sort_column], order: params[:sort_order])
+    @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancy_presenter = SchoolVacanciesPresenter.new(@school, @sort, params[:type])
     @awaiting_feedback_count = @school.vacancies.awaiting_feedback.count
   end
@@ -33,5 +33,13 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
 
   def session_has_multiple_schools?
     session.key?(:multiple_schools) && session[:multiple_schools] == true
+  end
+
+  def sort_column
+    params[:type] == 'draft' ? (params[:sort_column] || 'created_at') : params[:sort_column]
+  end
+
+  def sort_order
+    params[:type] == 'draft' ? (params[:sort_order] || 'desc') : params[:sort_order]
   end
 end

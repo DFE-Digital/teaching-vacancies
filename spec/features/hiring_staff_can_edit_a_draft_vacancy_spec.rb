@@ -117,7 +117,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
         draft_vacancy.contact_email = 'test@email.com'
         draft_vacancy.application_link = 'https://example.com'
-        draft_vacancy.expires_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
         draft_vacancy.publish_on = DateTime.now + 1.day
 

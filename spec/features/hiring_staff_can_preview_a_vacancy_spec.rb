@@ -17,7 +17,7 @@ RSpec.feature 'Hiring staff can preview a vacancy' do
     scenario 'review page shows preview, submit and save calls to action' do
       expect(page).to have_content(I18n.t('jobs.preview_listing.button'))
       expect(page).to have_content(I18n.t('jobs.submit_listing.button'))
-      expect(page).to have_content(I18n.t('buttons.save_and_return'))
+      expect(page).to have_content(I18n.t('buttons.save_and_return_later'))
     end
 
     scenario 'users can preview the listing' do
@@ -33,8 +33,8 @@ RSpec.feature 'Hiring staff can preview a vacancy' do
     end
 
     scenario 'users can save and return later' do
-      click_on I18n.t('buttons.save_and_return')
-      expect(page).to have_current_path(school_path)
+      click_on I18n.t('buttons.save_and_return_later')
+      expect(page).to have_current_path(jobs_with_type_school_path('draft'))
       expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
       expect(page).to have_content(I18n.t('buttons.create_job'))
     end
