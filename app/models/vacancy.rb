@@ -75,10 +75,6 @@ class Vacancy < ApplicationRecord
       self.status
     end
 
-    attribute :newly_qualified_teacher_status do
-      self.newly_qualified_teacher
-    end
-
     attribute :permalink do
       self.slug
     end
