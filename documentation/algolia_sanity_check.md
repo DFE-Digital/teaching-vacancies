@@ -11,4 +11,10 @@ algoliasearch per_environment: true, disable_indexing: Rails.env.production? do
 This creates a separate index called Vacancy_{environment}, and will only
 be run in non-production environments.
 
+Double-check that you aren't about to put data in the real database with:
+
+```ruby
+Vacancy.index.name # should be e.g. Vacancy_staging
+```
+
 You will also need to comment out or adapt the add_replica blocks.
