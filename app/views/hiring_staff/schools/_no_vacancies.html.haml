@@ -1,19 +1,18 @@
-.govuk-grid-row
+.govuk-grid-row.no-jobs-border{ class: 'govuk-!-margin-top-5 govuk-!-margin-bottom-5' }
   .govuk-grid-column-full
     %h2.govuk-heading-m= t('schools.no_jobs.heading')
 
-    %p
-      = "To"
-      = link_to 'create a good job listing', new_school_job_path(school), class: 'govuk-link'
-      = 'for your school, you will need the following information:'
+    = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
 
-  .govuk-grid-column-one-half
+    %p= t('schools.no_jobs.intro')
+
+  .govuk-grid-column-one-third
     %h2.govuk-heading-s Required
     %ul.govuk-list.govuk-list--bullet
-      - t('schools.no_jobs.bullets.mandatory').each do |bullet|
+      - t('schools.no_jobs.bullets.required').each do |bullet|
         %li= bullet
 
-  .govuk-grid-column-one-half
+  .govuk-grid-column-one-third
     %h2.govuk-heading-s Optional
     %ul.govuk-list.govuk-list--bullet
       - t('schools.no_jobs.bullets.optional').each do |bullet|
