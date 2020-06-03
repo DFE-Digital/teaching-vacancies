@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_125107) do
+ActiveRecord::Schema.define(version: 2020_06_02_081744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -187,13 +187,10 @@ ActiveRecord::Schema.define(version: 2020_05_26_125107) do
     t.string "job_title", null: false
     t.string "slug", null: false
     t.text "job_summary"
-    t.string "minimum_salary"
-    t.string "maximum_salary"
     t.text "benefits"
     t.date "starts_on"
     t.date "ends_on"
     t.uuid "subject_id"
-    t.uuid "min_pay_scale_id"
     t.uuid "leadership_id"
     t.text "education"
     t.text "qualifications"
@@ -208,7 +205,6 @@ ActiveRecord::Schema.define(version: 2020_05_26_125107) do
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
     t.string "application_link"
     t.boolean "flexible_working"
-    t.uuid "max_pay_scale_id"
     t.boolean "newly_qualified_teacher", default: false, null: false
     t.integer "weekly_pageviews"
     t.integer "total_pageviews"
@@ -236,8 +232,6 @@ ActiveRecord::Schema.define(version: 2020_05_26_125107) do
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
-    t.index ["max_pay_scale_id"], name: "index_vacancies_on_max_pay_scale_id"
-    t.index ["min_pay_scale_id"], name: "index_vacancies_on_min_pay_scale_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
