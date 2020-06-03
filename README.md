@@ -50,11 +50,17 @@ Vacancies__. Talk to the team to get these set up.
 Populate your environment with real school data. This is taken from
 [GIAS](https://get-information-schools.service.gov.uk/)
 
+In Docker:
+
 ```bash
 bin/drake data:schools:import
 ```
 
-_db/seeds.rb contain sample school data so this is not required for development_
+Outside Docker:
+
+```bash
+rake data:schools:import
+```
 
 ## Running the tests
 
