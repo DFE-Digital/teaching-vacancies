@@ -1,6 +1,4 @@
 class HiringStaff::IdentificationsController < HiringStaff::BaseController
-  include ActionView::Helpers::OutputSafetyHelper
-
   skip_before_action :check_user_last_activity_at
   skip_before_action :check_session, only: %i[new create]
   skip_before_action :check_terms_and_conditions, only: %i[new create]
