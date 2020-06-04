@@ -28,24 +28,24 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#create' do
-    let(:subscription) do
-      build(:subscription)
-    end
-
-    let(:subscription_presenter) do
-      SubscriptionPresenter.new(subscription)
-    end
-
-    let(:subscription_finder) do
-      instance_double(SubscriptionFinder).as_null_object
-    end
-
     context 'verify_recaptcha is true ' do
+      let(:subscription) do
+        build(:subscription)
+      end
+
+      let(:subscription_presenter) do
+        SubscriptionPresenter.new(subscription)
+      end
+
+      let(:subscription_finder) do
+        instance_double(SubscriptionFinder).as_null_object
+      end
+
       before do
         allow(Subscription).to receive(:new).and_return(subscription)
         allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
         allow(SubscriptionPresenter).to receive(:new).and_return(subscription_presenter)
-        allow(subscription_finder).to receive(:exists?).and_return(false)
+        expect(subscription_finder).to receive(:exists?).and_return(false)
         allow(controller).to receive(:recaptcha_reply).and_return({ 'score' => 0.9 })
         allow(controller).to receive(:verify_recaptcha).and_return(true)
       end
@@ -67,7 +67,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'saves the Subscription record' do
-        expect(subscription).to receive(:save)
+        expect(subscription).to receive(:save).at_least(:once).and_return(true)
         post :create, params: { subscription: subscription.attributes }
       end
 
