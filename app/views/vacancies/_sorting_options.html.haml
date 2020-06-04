@@ -1,4 +1,4 @@
-.govuk-grid-row.sortable-links
+.sortable-links
   = form_tag('', method: :get, id: 'jobs_sort_form') do
     - search_criteria.each do |filter, value|
       - unless filter == :jobs_sort
