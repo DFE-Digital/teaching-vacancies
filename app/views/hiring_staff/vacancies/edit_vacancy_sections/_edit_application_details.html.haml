@@ -1,5 +1,5 @@
 %h2.govuk-heading-m.app-task-list__section#application_details_heading
-  %span.app-task-list__section-number 4.
+  %span.app-task-list__section-number 5.
   = t('jobs.application_details')
   = link_to t('buttons.change'), school_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_application_details')
 
@@ -19,16 +19,3 @@
         %span.govuk-body-m.govuk-link= t('jobs.application_link_url')
         %br
         %span.govuk-body-s.govuk-link= @vacancy.application_link
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#publish_on
-      %h4.govuk-heading-s= t('jobs.publication_date')
-    %dd.app-check-your-answers__answer= format_date @vacancy.publish_on
-
-  .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#expires_on
-      %h4.govuk-heading-s= t('jobs.application_deadline')
-    %dd.app-check-your-answers__answer
-      = format_date @vacancy.expires_on
-      = t('jobs.time_at') unless @vacancy.expiry_time.nil?
-      = format_time @vacancy.expiry_time
