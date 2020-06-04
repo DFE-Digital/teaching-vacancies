@@ -25,6 +25,7 @@ FactoryBot.define do
     reference { SecureRandom.uuid }
     salary { Faker::Lorem.sentence[1...30].strip }
     state { 'create' }
+    starts_on { Time.zone.today + 1.year }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     supporting_documents { 'yes' }
@@ -49,7 +50,6 @@ FactoryBot.define do
 
     trait :complete do
       starts_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 30.days) }
-      ends_on { Faker::Time.between(from: Time.zone.today + 30.days, to: Time.zone.today + 60.days) }
       expires_on { Faker::Time.between(from: Time.zone.today + 2.days, to: Time.zone.today + 9.days) }
       publish_on { Faker::Time.between(from: Time.zone.today, to: Time.zone.today + 1.day) }
     end
@@ -91,7 +91,6 @@ FactoryBot.define do
       publish_on { Time.zone.yesterday }
       expires_on { Time.zone.today + 2.months }
       starts_on { Time.zone.today + 3.months }
-      ends_on { Time.zone.today + 4.months }
     end
 
     trait :job_schema do
