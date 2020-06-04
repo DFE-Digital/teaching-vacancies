@@ -1,20 +1,18 @@
 class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacancies::ApplicationController
   before_action :redirect_unless_vacancy
-  before_action :set_up_application_details_form, only: %i[update]
   before_action only: %i[update] do
-    save_vacancy_as_draft_if_save_and_return_later(@application_details_form.params_to_save, @vacancy)
+    save_vacancy_as_draft_if_save_and_return_later(application_details_form_params, @vacancy)
   end
 
   def show
-    @application_details_form = ApplicationDetailsForm.new(@vacancy.attributes.symbolize_keys)
+    @application_details_form = ApplicationDetailsForm.new(@vacancy.attributes)
   end
 
   def update
-    @application_details_form.id = @vacancy.id
-    @application_details_form.status = @vacancy.status
+    @application_details_form = ApplicationDetailsForm.new(application_details_form_params)
 
-    if @application_details_form.complete_and_valid?
-      update_vacancy(@application_details_form.params_to_save, @vacancy)
+    if @application_details_form.valid?
+      update_vacancy(application_details_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       return redirect_to_next_step_if_save_and_continue(@vacancy.id)
     end
@@ -24,26 +22,9 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   private
 
-  def set_up_application_details_form
-    publish_in_past = @vacancy.published? && @vacancy.reload.publish_on.past?
-    delete_publish_on_params if publish_in_past
-    dates_to_convert = publish_in_past ? [:expires_on] : [:publish_on, :expires_on]
-    date_errors = convert_multiparameter_attributes_to_dates(:application_details_form, dates_to_convert)
-    @application_details_form = ApplicationDetailsForm.new(application_details_form_params)
-    add_errors_to_form(date_errors, @application_details_form)
-  end
-
   def application_details_form_params
     params.require(:application_details_form)
-          .permit(:state, :application_link, :contact_email, :expiry_time,
-                  :publish_on, :expires_on,
-                  :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem).merge(completed_step: current_step)
-  end
-
-  def delete_publish_on_params
-    params.require(:application_details_form).delete('publish_on(3i)')
-    params.require(:application_details_form).delete('publish_on(2i)')
-    params.require(:application_details_form).delete('publish_on(1i)')
+          .permit(:state, :application_link, :contact_email).merge(completed_step: current_step)
   end
 
   def next_step
