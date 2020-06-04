@@ -33,14 +33,6 @@
           legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html'), size: 's' },
           hint_text: t('helpers.hint.job_specification_form.job_roles')
 
-      = f.govuk_date_field :starts_on,
-        legend: { text: t('helpers.fieldset.job_specification_form.starts_on'), size: 's' },
-        hint_text: t('helpers.hint.job_specification_form.starts_on')
-
-      = f.govuk_date_field :ends_on,
-        legend: { text: t('helpers.fieldset.job_specification_form.ends_on'), size: 's' },
-        hint_text: t('helpers.hint.job_specification_form.ends_on')
-
       - unless @vacancy.about_school.present?
         %h2.govuk-heading-m
           = t('jobs.job_summary')
@@ -53,16 +45,20 @@
           required: true
 
       %h2.govuk-heading-m
-        = t('jobs.application_details')
+        = t('jobs.important_dates')
 
       = f.govuk_date_field :publish_on,
-        legend: { text: t('helpers.fieldset.application_details_form.publish_on_html'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.publish_on')
+        legend: { text: t('helpers.fieldset.important_dates_form.publish_on_html'), size: 's' },
+        hint_text: t('helpers.hint.important_dates_form.publish_on')
 
       = f.govuk_date_field :expires_on,
-        legend: { text: t('helpers.fieldset.application_details_form.expires_on_html'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.expires_on')
+        legend: { text: t('helpers.fieldset.important_dates_form.expires_on_html'), size: 's' },
+        hint_text: t('helpers.hint.important_dates_form.expires_on')
 
       = render 'hiring_staff/vacancies/expiry_time_field', f: f
+
+      = f.govuk_date_field :starts_on,
+        legend: { text: t('helpers.fieldset.important_dates_form.starts_on'), size: 's' },
+        hint_text: t('helpers.hint.important_dates_form.starts_on')
 
       = f.govuk_submit t('buttons.save_and_continue')
