@@ -21,25 +21,6 @@
         hint_text: t('helpers.hint.application_details_form.application_link'),
         required: true
 
-      - if @application_details_form.disable_editing_publish_on?
-        #publish_on
-          %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-            %h1.govuk-fieldset__heading= t('helpers.fieldset.application_details_form.publish_on_html')
-          %p= format_date @application_details_form.publish_on
-        %br
-        .display-none
-          = f.govuk_date_field :publish_on
-      - else
-        = f.govuk_date_field :publish_on,
-          legend: { text: t('helpers.fieldset.application_details_form.publish_on_html'), size: 's' },
-          hint_text: t('helpers.hint.application_details_form.publish_on')
-
-      = f.govuk_date_field :expires_on,
-        legend: { text: t('helpers.fieldset.application_details_form.expires_on_html'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.expires_on')
-
-      = render 'hiring_staff/vacancies/expiry_time_field', f: f
-
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
   .govuk-grid-column-one-third

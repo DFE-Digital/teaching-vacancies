@@ -1,0 +1,41 @@
+- content_for :page_title_prefix, page_title_prefix(@vacancy, @important_dates_form, t('jobs.important_dates'))
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @important_dates_form, url: school_job_important_dates_path(@vacancy.id), html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
+
+      %h2.govuk-heading-l
+        = t('jobs.important_dates')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
+      - if @important_dates_form.disable_editing_publish_on?
+        #publish_on
+          %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
+            %h1.govuk-fieldset__heading= t('helpers.fieldset.important_dates_form.publish_on_html')
+          %p= format_date @important_dates_form.publish_on
+        %br
+        .display-none
+          = f.govuk_date_field :publish_on
+      - else
+        = f.govuk_date_field :publish_on,
+          legend: { text: t('helpers.fieldset.important_dates_form.publish_on_html'), size: 's' },
+          hint_text: t('helpers.hint.important_dates_form.publish_on')
+
+      = f.govuk_date_field :expires_on,
+        legend: { text: t('helpers.fieldset.important_dates_form.expires_on_html'), size: 's' },
+        hint_text: t('helpers.hint.important_dates_form.expires_on')
+
+      = render 'hiring_staff/vacancies/expiry_time_field', f: f
+
+      = f.govuk_date_field :starts_on,
+        legend: { text: t('helpers.fieldset.important_dates_form.starts_on'), size: 's' },
+        hint_text: t('helpers.hint.important_dates_form.starts_on')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+
+  .govuk-grid-column-one-third
+    - unless @vacancy.published?
+      = render 'hiring_staff/vacancies/sidebar'
