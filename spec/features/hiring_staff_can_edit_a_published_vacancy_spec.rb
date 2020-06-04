@@ -26,7 +26,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                    ],
                                   school: school,
                                   working_patterns: ['full_time', 'part_time'],
-                                  publish_on: Time.zone.today))
+                                  publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
     end
 
     scenario 'shows all vacancy information' do
@@ -194,6 +194,124 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
+    context '#important_dates' do
+      def edit_date(date_type, date)
+        fill_in "important_dates_form[#{date_type}(3i)]", with: date&.day.presence || ''
+        fill_in "important_dates_form[#{date_type}(2i)]", with: date&.month.presence || ''
+        fill_in "important_dates_form[#{date_type}(1i)]", with: date&.year.presence || ''
+        click_on I18n.t('buttons.update_job')
+      end
+
+      scenario 'can not be edited when validation fails' do
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content("Edit job for #{school.name}")
+        click_header_link(I18n.t('jobs.important_dates'))
+
+        edit_date('expires_on', nil)
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.blank')
+          )
+        end
+      end
+
+      scenario 'can not be saved when expiry time validation fails' do
+        visit edit_school_job_path(vacancy.id)
+
+        expect(page).to have_content("Edit job for #{school.name}")
+        click_header_link(I18n.t('jobs.important_dates'))
+
+        fill_in 'important_dates_form[expiry_time_hh]', with: '88'
+        click_on I18n.t('buttons.update_job')
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expiry_time_html'))) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format'))
+        end
+      end
+
+      scenario 'can be successfully edited' do
+        visit edit_school_job_path(vacancy.id)
+        click_header_link(I18n.t('jobs.important_dates'))
+
+        expiry_date = Time.zone.today + 1.week
+        edit_date('expires_on', expiry_date)
+
+        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page).to have_content(expiry_date.to_s)
+      end
+
+      scenario 'tracks the vacancy update' do
+        visit edit_school_job_path(vacancy.id)
+        click_header_link(I18n.t('jobs.important_dates'))
+
+        expiry_date = Time.zone.today + 1.week
+        edit_date('expires_on', expiry_date)
+
+        activity = vacancy.activities.last
+        expect(activity.key).to eq('vacancy.update')
+        expect(activity.session_id).to eq(session_id)
+        expect(activity.parameters.symbolize_keys).to include(
+          expires_on: [vacancy.expires_on.to_s, expiry_date.to_s]
+        )
+      end
+
+      scenario 'adds a job to update the Google index in the queue' do
+        expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
+          .to receive(:update_google_index).with(vacancy)
+
+        visit edit_school_job_path(vacancy.id)
+        click_header_link(I18n.t('jobs.important_dates'))
+
+        expiry_date = Time.zone.today + 1.week
+        edit_date('expires_on', expiry_date)
+      end
+
+      context 'if the job post has already been published' do
+        context 'and the publication date is in the past' do
+          scenario 'renders the publication date as text and does not allow editing' do
+            vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
+            vacancy.save(validate: false)
+            vacancy = VacancyPresenter.new(vacancy)
+            visit edit_school_job_path(vacancy.id)
+
+            click_header_link(I18n.t('jobs.important_dates'))
+            expect(page).to have_content(I18n.t('jobs.publication_date'))
+            expect(page).to have_content(format_date(vacancy.publish_on))
+            expect(page).not_to have_css('#important_dates_form_publish_on_dd')
+
+            fill_in 'important_dates_form[expires_on(3i)]', with: vacancy.expires_on.day
+            click_on I18n.t('buttons.update_job')
+
+            expect(page).to have_content(I18n.t('messages.jobs.updated'))
+            verify_all_vacancy_details(vacancy)
+          end
+        end
+
+        context 'and the publication date is in the future' do
+          scenario 'renders the publication date as text and allows editing' do
+            vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days, school: school)
+            vacancy = VacancyPresenter.new(vacancy)
+            visit edit_school_job_path(vacancy.id)
+            click_header_link(I18n.t('jobs.important_dates'))
+
+            expect(page).to have_css('#important_dates_form_publish_on_3i')
+
+            publish_on = Time.zone.today + 1.week
+            edit_date('publish_on', publish_on)
+
+            expect(page).to have_content(I18n.t('messages.jobs.updated'))
+
+            vacancy.publish_on = publish_on
+            verify_all_vacancy_details(vacancy)
+          end
+        end
+      end
+    end
+
     context '#supporting_documents' do
       scenario 'can edit documents for a legacy vacancy' do
         vacancy.supporting_documents = nil
@@ -236,20 +354,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         end
       end
 
-      scenario 'can not be saved when expiry time validation fails' do
-        visit edit_school_job_path(vacancy.id)
-
-        expect(page).to have_content("Edit job for #{school.name}")
-        click_header_link(I18n.t('jobs.application_details'))
-
-        fill_in 'application_details_form[expiry_time_hh]', with: '88'
-        click_on I18n.t('buttons.update_job')
-
-        within_row_for(text: I18n.t('jobs.application_link')) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format'))
-        end
-      end
-
       scenario 'can be successfully edited' do
         visit edit_school_job_path(vacancy.id)
 
@@ -262,50 +366,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content(I18n.t('messages.jobs.updated'))
 
         verify_all_vacancy_details(vacancy)
-      end
-
-      context 'if the job post has already been published' do
-        context 'and the publication date is in the past' do
-          scenario 'renders the publication date as text and does not allow editing' do
-            vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
-            vacancy.save(validate: false)
-            vacancy = VacancyPresenter.new(vacancy)
-            visit edit_school_job_path(vacancy.id)
-
-            click_header_link(I18n.t('jobs.application_details'))
-            expect(page).to have_content('Date role will be listed')
-            expect(page).to have_content(format_date(vacancy.publish_on))
-            expect(page).not_to have_css('#application_details_form_publish_on_dd')
-
-            fill_in 'application_details_form[application_link]', with: vacancy.application_link
-            click_on I18n.t('buttons.update_job')
-
-            expect(page).to have_content(I18n.t('messages.jobs.updated'))
-            verify_all_vacancy_details(vacancy)
-          end
-        end
-
-        context 'and the publication date is in the future' do
-          scenario 'renders the publication date as text and allows editing' do
-            vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days, school: school)
-            vacancy = VacancyPresenter.new(vacancy)
-            visit edit_school_job_path(vacancy.id)
-            click_header_link(I18n.t('jobs.application_details'))
-
-            expect(page).to have_content('Date role will be listed')
-            expect(page).to have_css('#application_details_form_publish_on_3i')
-
-            fill_in 'application_details_form[publish_on(3i)]', with: (Time.zone.today + 2.days).day
-            fill_in 'application_details_form[publish_on(2i)]', with: (Time.zone.today + 2.days).month
-            fill_in 'application_details_form[publish_on(1i)]', with: (Time.zone.today + 2.days).year
-            click_on I18n.t('buttons.update_job')
-
-            expect(page).to have_content(I18n.t('messages.jobs.updated'))
-
-            vacancy.publish_on = Time.zone.today + 2.days
-            verify_all_vacancy_details(vacancy)
-          end
-        end
       end
 
       scenario 'tracks the vacancy update' do

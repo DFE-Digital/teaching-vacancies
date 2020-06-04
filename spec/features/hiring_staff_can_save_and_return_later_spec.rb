@@ -18,7 +18,7 @@ RSpec.feature 'Hiring staff can save and return later' do
 
         expect(page.current_path).to eql(job_specification_school_job_path)
         expect(page).to have_content(I18n.t('jobs.create_a_job', school: school.name))
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.job_details'))
         end
@@ -61,6 +61,37 @@ RSpec.feature 'Hiring staff can save and return later' do
       end
     end
 
+    context '#important_dates' do
+      scenario 'can save and return later' do
+        visit school_path
+        click_on I18n.t('buttons.create_job')
+
+        fill_in_job_specification_form_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+        created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
+
+        fill_in_pay_package_form_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(page.current_path).to eql(school_job_important_dates_path(created_vacancy.id))
+
+        fill_in 'important_dates_form[publish_on(3i)]', with: '12'
+        fill_in 'important_dates_form[publish_on(2i)]', with: '01'
+        fill_in 'important_dates_form[publish_on(1i)]', with: '2010'
+        click_on I18n.t('buttons.save_and_return_later')
+
+        expect(page.current_path).to eql(jobs_with_type_school_path('draft'))
+        expect(page.body).to include(I18n.t('messages.jobs.draft_saved_html', job_title: @vacancy.job_title))
+
+        click_on 'Edit'
+
+        expect(page.current_path).to eql(school_job_important_dates_path(created_vacancy.id))
+        expect(find_field('important_dates_form[publish_on(3i)]').value).to eql('12')
+        expect(find_field('important_dates_form[publish_on(2i)]').value).to eql('1')
+        expect(find_field('important_dates_form[publish_on(1i)]').value).to eql('2010')
+      end
+    end
+
     context '#supporting_documents' do
       scenario 'can save and return later' do
         visit school_path
@@ -71,6 +102,9 @@ RSpec.feature 'Hiring staff can save and return later' do
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_important_dates_fields(@vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
         expect(page.current_path).to eql(school_job_supporting_documents_path(created_vacancy.id))
@@ -100,15 +134,15 @@ RSpec.feature 'Hiring staff can save and return later' do
         fill_in_pay_package_form_fields(@vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        fill_in_important_dates_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
         expect(page.current_path).to eql(school_job_application_details_path(created_vacancy.id))
 
-        yesterday = 1.day.ago
-        fill_in 'application_details_form[expires_on(3i)]', with: yesterday.day
-        fill_in 'application_details_form[expires_on(2i)]', with: yesterday.month
-        fill_in 'application_details_form[expires_on(1i)]', with: yesterday.year
+        fill_in 'application_details_form[contact_email]', with: 'email@test.com'
         click_on I18n.t('buttons.save_and_return_later')
 
         expect(page.current_path).to eql(jobs_with_type_school_path('draft'))
@@ -117,9 +151,7 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on 'Edit'
 
         expect(page.current_path).to eql(school_job_application_details_path(created_vacancy.id))
-        expect(find_field('application_details_form[expires_on(3i)]').value).to eql(yesterday.day.to_s)
-        expect(find_field('application_details_form[expires_on(2i)]').value).to eql(yesterday.month.to_s)
-        expect(find_field('application_details_form[expires_on(1i)]').value).to eql(yesterday.year.to_s)
+        expect(find_field('application_details_form[contact_email]').value).to eql('email@test.com')
       end
     end
 
@@ -133,6 +165,9 @@ RSpec.feature 'Hiring staff can save and return later' do
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_important_dates_fields(@vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
         select_no_for_supporting_documents
