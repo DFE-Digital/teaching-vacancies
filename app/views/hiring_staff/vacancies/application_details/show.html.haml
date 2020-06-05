@@ -16,6 +16,16 @@
         hint_text: t('helpers.hint.application_details_form.contact_email'),
         required: true
 
+      = f.govuk_text_area :school_visits,
+        label: { text: t('helpers.fieldset.application_details_form.school_visits'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.school_visits'),
+        rows: 10
+
+      = f.govuk_text_area :how_to_apply,
+        label: { text: t('helpers.fieldset.application_details_form.how_to_apply'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.how_to_apply'),
+        rows: 10
+
       = f.govuk_url_field :application_link,
         label: { text: t('helpers.fieldset.application_details_form.application_link_html'), size: 's' },
         hint_text: t('helpers.hint.application_details_form.application_link'),

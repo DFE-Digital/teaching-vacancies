@@ -24,7 +24,8 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
 
   def application_details_form_params
     params.require(:application_details_form)
-          .permit(:state, :application_link, :contact_email).merge(completed_step: current_step)
+          .permit(:state, :application_link, :contact_email, :school_visits, :how_to_apply)
+          .merge(completed_step: current_step)
   end
 
   def next_step
