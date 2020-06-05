@@ -3,7 +3,7 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :searched, :total_count
+  attr_reader :searched, :total_count, :keyword
   alias_method :user_search?, :searched
 
   CSV_ATTRIBUTES = %w[title description salary jobBenefits datePosted educationRequirements qualifications
@@ -11,7 +11,7 @@ class VacanciesPresenter < BasePresenter
                       jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
-  def initialize(vacancies, searched:, total_count:)
+  def initialize(vacancies, searched:, total_count:, keyword:)
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
     @total_count = total_count
@@ -26,22 +26,28 @@ class VacanciesPresenter < BasePresenter
     decorated_collection.count.nonzero?
   end
 
-  def total_count_message
+  def total_count_message(keyword)
     if total_count == 1
       return I18n.t('jobs.job_count_without_search', count: total_count) unless @searched
 
-      I18n.t('jobs.job_count', count: total_count)
+      I18n.t('jobs.job_count', keyword: keyword, count: number_with_delimiter(total_count))
     else
-      return I18n.t('jobs.job_count_plural_without_search', count: number_with_delimiter(total_count)) unless @searched
+      return I18n.t('jobs.job_count_plural_without_search', count: total_count) unless @searched
 
-      I18n.t('jobs.job_count_plural', count: number_with_delimiter(total_count))
+      I18n.t('jobs.job_count_plural', keyword: keyword, count: number_with_delimiter(total_count))
     end
   end
 
-  def total_count_message_with_location(location)
-    return I18n.t('jobs.job_count_with_location_category', count: total_count, location: location) if total_count == 1
+  def total_count_message_with_location(location, keyword)
+    return I18n.t(
+      'jobs.job_count_with_location_category',
+      count: number_with_delimiter(total_count),
+      location: location,
+      keyword: keyword
+    ) if total_count == 1
+
     I18n.t('jobs.job_count_plural_with_location_category', \
-      count: number_with_delimiter(total_count), location: location)
+      location: location, keyword: keyword, count: number_with_delimiter(total_count))
   end
 
   def to_csv

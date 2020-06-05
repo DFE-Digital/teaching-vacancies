@@ -50,7 +50,14 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
         visit location_category_path('bradford')
 
         expect(page).to have_content(
-          I18n.t('jobs.job_count_plural_with_location_category', count: 2, location: 'Bradford')
+          strip_tags(
+            I18n.t(
+              'jobs.job_count_plural_with_location_category',
+              count: 2,
+              location: 'Bradford',
+              keyword: ''
+            )
+          )
         )
         expect(page).to have_selector('.vacancy', count: 2)
       end
@@ -78,7 +85,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count_plural_without_search', count: 5)
+            strip_tags(I18n.t('jobs.job_count_plural_without_search', count: 5, keyword: ''))
           )
           expect(page).to have_selector('.vacancy', count: 5)
 
@@ -105,7 +112,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count', count: 1)
+            strip_tags(I18n.t('jobs.job_count', count: 1, keyword: 'science'))
           )
           expect(page).to have_selector('.vacancy', count: 1)
           expect(page).to have_content(@second_vacancy.job_title)
@@ -119,7 +126,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           visit jobs_path
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count_plural_without_search', count: 5)
+            strip_tags(I18n.t('jobs.job_count_plural_without_search', count: 5, keyword: ''))
           )
           expect(page).to have_selector('.vacancy', count: 5)
         end
@@ -136,7 +143,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count_plural', count: 2)
+            strip_tags(I18n.t('jobs.job_count_plural', count: 2, keyword: 'science'))
           )
           expect(page).to have_selector('.vacancy', count: 2)
           expect(page).to have_content(@first_vacancy.job_title)
@@ -155,7 +162,14 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count_plural_with_location_category', count: 2, location: 'Bradford')
+            strip_tags(
+              I18n.t(
+                'jobs.job_count_plural_with_location_category',
+                count: 2,
+                location: 'Bradford',
+                keyword: ''
+              )
+            )
           )
           expect(page).to have_selector('.vacancy', count: 2)
           expect(page).to have_content(@first_vacancy.job_title)
@@ -174,7 +188,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count_plural', count: 2)
+            strip_tags(I18n.t('jobs.job_count_plural', count: 2, location: 'SW1A 1AA', keyword: ''))
           )
           expect(page).to have_selector('.vacancy', count: 2)
           expect(page).to have_content(@second_vacancy.job_title)
@@ -195,7 +209,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            I18n.t('jobs.job_count', count: 1)
+            strip_tags(I18n.t('jobs.job_count', count: 1, keyword: 'maths'))
           )
           expect(page).to have_selector('.vacancy', count: 1)
           expect(page).not_to have_content(@second_vacancy.job_title)

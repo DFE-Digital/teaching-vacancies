@@ -1,8 +1,8 @@
-import { createCapitalisedStringWithPrefix, getJobAlertLink, getJobAlertLinkParam } from './hits';
+import { createHeadingHTMLForSearchTerm, getJobAlertLink, getJobAlertLinkParam } from './hits';
 
-describe('createCapitalisedStringWithPrefix', () => {
+describe('createHeadingHTMLForSearchTerm', () => {
     test('returns a string of capitalized words after a prefix', () => {
-        expect(createCapitalisedStringWithPrefix('176 jobs near', 'babylon gardens')).toBe('176 jobs near Babylon Gardens');
+        expect(createHeadingHTMLForSearchTerm('176 jobs near', 'babylon gardens')).toBe('176 jobs near <span class="govuk-!-font-weight-bold text-capitalize">&#39;babylon gardens&#39;</span>');
     });
 });
 

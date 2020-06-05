@@ -51,14 +51,14 @@ export const addHeadingMarkup = (numberHits) => {
   const keyword = document.getElementById('keyword').value;
   const location = document.getElementById('location').value;
   const prefix = keyword || location ? ' match ' : ' listed';
-  const postfix = `${prefix}${createCapitalisedStringWithPrefix('', keyword)} ${createCapitalisedStringWithPrefix('near', location)}`;
-  const hits = keyword || location ? numberHits : `There are ${numberHits}`;
+  const postfix = `${prefix}${createHeadingHTMLForSearchTerm('', keyword)} ${createHeadingHTMLForSearchTerm('near', location)}`;
+  const hits = keyword || location ? `<span class="govuk-!-font-weight-bold">${numberHits}</span>` : `There are <span class="govuk-!-font-weight-bold">${numberHits}</span>`;
 
   return `${hits} jobs ${postfix}`;
 };
 
-export const createCapitalisedStringWithPrefix = (pre, string) => {
-  return string ? `${pre} ${string.replace(/\b\w/g, l => l.toUpperCase() )}` : '';
+export const createHeadingHTMLForSearchTerm = (pre, string) => {
+  return string ? `${pre} <span class="govuk-!-font-weight-bold text-capitalize">&#39;${string}&#39;</span>` : '';
 };
 
 export const hideServerMarkup = () => {

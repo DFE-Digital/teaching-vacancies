@@ -1,12 +1,12 @@
 - if @vacancies_search.location_category_search?
-  = content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@vacancies_search.location_category))
+  = content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@vacancies_search.location_category), keyword: @vacancies_search.keyword)
   = content_for :page_description,  t('jobs.location_description', location: format_location_name(@vacancies_search.location_category))
 - else
   = content_for :page_title_prefix, t('jobs.heading')
 = render partial: 'head_links'
 
-%h1.govuk-heading-xl#job-count{'role': 'heading', 'aria-level': '1'}
-  = @vacancies_search.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@vacancies_search.location_category)) : @vacancies.total_count_message
+%h1.govuk-heading-xl#job-count{'role': 'heading', 'aria-level': '1', class: 'govuk-!-font-weight-regular'}
+  = raw @vacancies_search.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@vacancies_search.location_category), @vacancies_search.keyword) : @vacancies.total_count_message(@vacancies_search.keyword)
 .govuk-grid-row
   .govuk-grid-column-one-third
     = render 'filters'
