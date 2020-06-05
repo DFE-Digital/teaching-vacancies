@@ -49,6 +49,11 @@
       = t('schools.info', school: @vacancy.school.name)
     %p= @vacancy.about_school
 
+  - if @vacancy.school_visits.present?
+    %h4.govuk-heading-s
+      = t('jobs.school_visits_heading', school: @vacancy.school.name)
+    %p= @vacancy.school_visits
+
   %h4.govuk-heading-s
     = t('schools.school_location')
   %p= @vacancy.school.full_address

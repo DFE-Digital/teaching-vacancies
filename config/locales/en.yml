@@ -285,7 +285,9 @@ en:
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: 'Regarding the job at %{url}'
     school_visits: 'School visit instructions'
+    school_visits_heading: 'Arranging a visit to %{school}'
     how_to_apply: 'Application instructions'
+    applying_for_the_job: Applying for the job
     deadline_date: 'Date application is due'
     deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
     time_at: ' at '

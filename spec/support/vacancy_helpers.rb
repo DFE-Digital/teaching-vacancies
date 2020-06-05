@@ -118,7 +118,6 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.show_job_roles)
-    expect(page.html).to include(vacancy.job_summary)
     expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
 
@@ -128,6 +127,12 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.publish_on.to_s.strip)
     expect(page).to have_content(vacancy.expires_on.to_s.strip)
     expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
+
+    expect(page.html).to include(vacancy.school_visits)
+    expect(page.html).to include(vacancy.how_to_apply)
+
+    expect(page.html).to include(vacancy.job_summary)
+    expect(page.html).to include(vacancy.about_school)
 
     if vacancy.documents.any?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))

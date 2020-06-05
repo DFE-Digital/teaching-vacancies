@@ -42,9 +42,13 @@
       %h4.govuk-heading-s= t('jobs.experience')
       %p= @vacancy.experience
 
-  -if @vacancy.benefits.present?
+  - if @vacancy.benefits.present?
     %h4.govuk-heading-s= t('jobs.benefits')
     %p= @vacancy.benefits
+
+  - if @vacancy.how_to_apply.present?
+    %h4.govuk-heading-s= t('jobs.applying_for_the_job')
+    %p= @vacancy.how_to_apply
 
   - if @vacancy.documents.any?
     %h4.govuk-heading-s= t('jobs.supporting_documents')
