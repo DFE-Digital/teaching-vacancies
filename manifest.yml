@@ -2,7 +2,7 @@
 applications:
   - name: teaching-vacancies-production
     buildpacks:
-      - https://github.com/cloudfoundry/ruby-buildpack.git#v1.8.17
+      - ruby_buildpack
     env:
       RAILS_ENV: production
     processes:
