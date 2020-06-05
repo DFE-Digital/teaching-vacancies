@@ -5,7 +5,9 @@ cf7 api $CF_API_ENDPOINT
 cf7 auth
 
 cf7 target -o $CF_ORG -s $CF_SPACE_ORIGIN
-cf7 conduit "$CF_POSTGRES_SERVICE_ORIGIN" -- pg_dump -x --no-owner -c -f backup.sql
+cf7 conduit "$CF_POSTGRES_SERVICE_ORIGIN" --app-name teaching-vacancies-conduit-production -- pg_dump -x --no-owner -c -f backup.sql
+cf7 delete -f teaching-vacancies-conduit-production
 
 cf7 target -o $CF_ORG -s $CF_SPACE_TARGET
-cf7 conduit "$CF_POSTGRES_SERVICE_TARGET" -- psql < backup.sql
+cf7 conduit "$CF_POSTGRES_SERVICE_TARGET" --app-name teaching-vacancies-conduit-staging -- psql < backup.sql
+cf7 delete -f teaching-vacancies-conduit-staging
