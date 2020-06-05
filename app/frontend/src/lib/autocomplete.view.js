@@ -89,7 +89,7 @@ export const getOptionIndex = el => parseInt(el.getAttribute('aria-posinset'), 1
 export const getFocusedOption = container => container.getElementsByClassName('autocomplete__option--focused')[0];
 
 export const getOptionHtml = (refinement) => {
-    return (hit, index, options) => `<li class="autocomplete__option" id="autocomplete__input__option--${index}" role="option" tabindex="${index}" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
+    return (hit, index, options) => `<li class="autocomplete__option" id="autocomplete__input__option--${index}" role="option" tabindex="0" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
 };
 
 export const highlightRefinement = (text, refinement) => {

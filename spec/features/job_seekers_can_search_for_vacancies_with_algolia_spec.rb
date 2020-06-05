@@ -221,21 +221,6 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
       expect(page.find('.vacancy:nth-child(5)')).to have_content(@fifth_vacancy.job_title)
     end
 
-    scenario 'oldest listing first' do
-      visit jobs_path
-
-      within '.sortable-links' do
-        select I18n.t('jobs.sort_by.publish_on.ascending')
-        click_on I18n.t('jobs.sort_by.submit')
-      end
-
-      expect(page.find('.vacancy:nth-child(1)')).to have_content(@fifth_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(2)')).to have_content(@fourth_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(3)')).to have_content(@third_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(4)')).to have_content(@second_vacancy.job_title)
-      expect(page.find('.vacancy:nth-child(5)')).to have_content(@first_vacancy.job_title)
-    end
-
     scenario 'least time to apply listing first' do
       visit jobs_path
 
