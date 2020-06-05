@@ -22,7 +22,6 @@ class Vacancy < ApplicationRecord
   JOB_SORTING_OPTIONS = [
     [I18n.t('jobs.sort_by.most_relevant'), ''],
     [I18n.t('jobs.sort_by.publish_on.descending'), 'publish_on_desc'],
-    [I18n.t('jobs.sort_by.publish_on.ascending'), 'publish_on_asc'],
     [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
     [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
   ]
@@ -121,10 +120,6 @@ class Vacancy < ApplicationRecord
 
     add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
-    end
-
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_asc" : 'Vacancy_publish_on_asc', inherit: true do
-      ranking ['asc(publication_date_timestamp)']
     end
 
     add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_desc" : 'Vacancy_expiry_time_desc', inherit: true do

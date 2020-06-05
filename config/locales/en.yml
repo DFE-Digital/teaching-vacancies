@@ -165,13 +165,12 @@ en:
     location_search_heading: 'Teaching jobs in %{location}'
     sort_by:
       label: 'Sort by:'
-      most_relevant: 'Most relevant'
+      most_relevant: 'most relevant first'
       publish_on:
-        descending: 'Newest job listing'
-        ascending: 'Oldest job listing'
+        descending: 'newest job listing'
       expiry_time:
-        descending: 'Most time to apply'
-        ascending: 'Least time to apply'
+        descending: 'most time to apply'
+        ascending: 'least time to apply'
       submit: 'Sort'
     key_info: 'Contents'
     awaiting_feedback_intro: >-

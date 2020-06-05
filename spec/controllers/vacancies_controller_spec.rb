@@ -106,17 +106,6 @@ RSpec.describe VacanciesController, type: :controller do
         end
       end
 
-      context 'when parameters include the sort by oldest listing option' do
-        let(:sort) { 'publish_on_asc' }
-
-        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
-          subject
-          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql(
-            "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{sort}"
-          )
-        end
-      end
-
       context 'when parameters include the sort by most time to apply option' do
         let(:sort) { 'expiry_time_desc' }
 
