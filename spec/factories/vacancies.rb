@@ -16,6 +16,7 @@ FactoryBot.define do
     expires_on { Faker::Time.forward(days: 14) }
     expiry_time { expires_on&.change(sec: 0) }
     hired_status { nil }
+    how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
     job_summary { Faker::Lorem.paragraph(sentence_count: 4) }
     job_roles { ['Teacher'] }
     job_title { Faker::Lorem.sentence[1...30].strip }
@@ -24,6 +25,7 @@ FactoryBot.define do
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }
     salary { Faker::Lorem.sentence[1...30].strip }
+    school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
     state { 'create' }
     starts_on { Time.zone.today + 1.year }
     status { :published }
