@@ -26,6 +26,9 @@ module DateHelper
                    args[:min],
                    args[:meridiem]].any? { |attr| attr.to_s.empty? }
 
+    return nil unless in_range?(args[:hour], 1, 12)
+    return nil unless in_range?(args[:min], 0, 59)
+
     expiry_time_string = "#{args[:day]}-#{args[:month]}-#{args[:year]}" \
                          " #{args[:hour]}:#{args[:min]} #{args[:meridiem]}"
 
@@ -37,5 +40,15 @@ module DateHelper
 
     date_time = Time.zone.parse(str)
     "#{date_time}:#{date_time.strftime('%S')}"
+  end
+
+  private
+
+  def in_range?(value, min, max)
+    number?(value) && value.to_i >= min && value.to_i <= max
+  end
+
+  def number?(value)
+    /\A[+-]?\d+\z/.match?(value.to_s)
   end
 end

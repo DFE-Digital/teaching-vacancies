@@ -90,40 +90,40 @@ RSpec.describe ImportantDatesForm, type: :model do
         subject.expiry_time_mm = nil
         subject.expiry_time_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(
-          [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')]
+        expect(subject.errors.messages[:expiry_time]).to include(
+          I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')
         )
       end
 
       validate_expiry_time_hours = [
-        { value: nil, errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')] },
+        { value: nil, errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank') },
         { value: 'not a number',
-          errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')] },
-        { value: '14', errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')] },
-        { value: '0', errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')] },
+          errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format') },
+        { value: '14', errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format') },
+        { value: '0', errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format') },
       ]
 
       validate_expiry_time_hours.each do |h|
         it "displays '#{h[:errors][0]}' error when hours field is #{h[:value]}" do
           subject.expiry_time_hh = h[:value]
           subject.valid?
-          expect(subject.errors.messages[:expiry_time]).to eq(h[:errors])
+          expect(subject.errors.messages[:expiry_time]).to include(h[:errors])
         end
       end
 
       validate_expiry_time_minutes = [
-        { value: nil, errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')] },
+        { value: nil, errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank') },
         { value: 'not a number',
-          errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')] },
-        { value: '-6', errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')] },
-        { value: '66', errors: [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')] },
+          errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format') },
+        { value: '-6', errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format') },
+        { value: '66', errors: I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format') },
       ]
 
       validate_expiry_time_minutes.each do |m|
         it "displays '#{m[:errors][0]}' error when minutes field is #{m[:value]}" do
           subject.expiry_time_mm = m[:value]
           subject.valid?
-          expect(subject.errors.messages[:expiry_time]).to eq(m[:errors])
+          expect(subject.errors.messages[:expiry_time]).to include(m[:errors])
         end
       end
 
@@ -135,20 +135,12 @@ RSpec.describe ImportantDatesForm, type: :model do
         )
       end
 
-      it 'displays only one error message at a time' do
-        subject.expiry_time_hh = '14'
-        subject.expiry_time_mm = '66'
-        subject.expiry_time_meridiem = nil
-        subject.valid?
-        expect(subject.errors.messages[:expiry_time].count).to eq(1)
-      end
-
       it 'displays wrong format error if minutes and meridiem are invalid' do
         subject.expiry_time_mm = '66'
         subject.expiry_time_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(
-          [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')]
+        expect(subject.errors.messages[:expiry_time]).to include(
+          I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')
         )
       end
 

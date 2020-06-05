@@ -90,6 +90,36 @@ RSpec.feature 'Hiring staff can save and return later' do
         expect(find_field('important_dates_form[publish_on(2i)]').value).to eql('1')
         expect(find_field('important_dates_form[publish_on(1i)]').value).to eql('2010')
       end
+
+      scenario 'redirected to important_dates if not valid' do
+        visit school_path
+        click_on I18n.t('buttons.create_job')
+
+        fill_in_job_specification_form_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+        created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
+
+        fill_in_pay_package_form_fields(@vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(page.current_path).to eql(school_job_important_dates_path(created_vacancy.id))
+
+        fill_in_important_dates_fields(@vacancy)
+        fill_in 'important_dates_form[publish_on(3i)]', with: '12'
+        fill_in 'important_dates_form[publish_on(2i)]', with: '01'
+        fill_in 'important_dates_form[publish_on(1i)]', with: '2010'
+        click_on I18n.t('buttons.save_and_return_later')
+
+        expect(page.current_path).to eql(jobs_with_type_school_path('draft'))
+        expect(page.body).to include(I18n.t('messages.jobs.draft_saved_html', job_title: @vacancy.job_title))
+
+        click_on 'Edit'
+
+        expect(page.current_path).to eql(school_job_important_dates_path(created_vacancy.id))
+        expect(find_field('important_dates_form[publish_on(3i)]').value).to eql('12')
+        expect(find_field('important_dates_form[publish_on(2i)]').value).to eql('1')
+        expect(find_field('important_dates_form[publish_on(1i)]').value).to eql('2010')
+      end
     end
 
     context '#supporting_documents' do

@@ -943,17 +943,44 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'cannot be published unless the details are valid' do
+        yesterday_date = Time.zone.yesterday
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
-        vacancy.assign_attributes expires_on: Time.zone.yesterday
+        vacancy.assign_attributes expires_on: yesterday_date
         vacancy.save(validate: false)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Confirm and submit job'
 
-        expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
-        expect(page).to have_content(
-          I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_on')
-        )
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 7))
+        within('h2.govuk-heading-l') do
+          expect(page).to have_content(I18n.t('jobs.important_dates'))
+        end
+
+        expect(find_field('important_dates_form[expires_on(3i)]').value).to eql(yesterday_date.day.to_s)
+        expect(find_field('important_dates_form[expires_on(2i)]').value).to eql(yesterday_date.month.to_s)
+        expect(find_field('important_dates_form[expires_on(1i)]').value).to eql(yesterday_date.year.to_s)
+
+        click_on I18n.t('buttons.save_and_continue')
+
+        within('.govuk-error-summary') do
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
+        end
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.before_today')
+          )
+        end
+
+        expiry_date = Time.zone.today + 1.week
+
+        fill_in 'important_dates_form[expires_on(3i)]', with: expiry_date.day
+        fill_in 'important_dates_form[expires_on(2i)]', with: expiry_date.month
+        fill_in 'important_dates_form[expires_on(1i)]', with: expiry_date.year
+        click_on I18n.t('buttons.save_and_continue')
+
+        click_on I18n.t('jobs.submit_listing.button')
+        expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
       end
 
       scenario 'can be published at a later date' do

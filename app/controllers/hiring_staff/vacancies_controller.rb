@@ -75,11 +75,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def step_valid?(step_form)
     validation = step_form.new(@vacancy.attributes)
-    if step_form == ImportantDatesForm
-      (validation&.completed?).tap { |valid| clear_cache_and_step unless valid }
-    else
-      (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
-    end
+    (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
   end
 
   def redirect_to_incomplete_step
