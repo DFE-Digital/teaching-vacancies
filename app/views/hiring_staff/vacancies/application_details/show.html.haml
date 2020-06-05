@@ -27,9 +27,8 @@
         rows: 10
 
       = f.govuk_url_field :application_link,
-        label: { text: t('helpers.fieldset.application_details_form.application_link_html'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.application_link'),
-        required: true
+        label: { text: t('helpers.fieldset.application_details_form.application_link'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.application_link')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 

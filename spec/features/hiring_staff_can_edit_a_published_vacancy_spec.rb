@@ -349,8 +349,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_on I18n.t('buttons.update_job')
 
         within_row_for(text: I18n.t('jobs.application_link')) do
-          expect(page).to have_content(
-            I18n.t('activemodel.errors.models.application_details_form.attributes.application_link.url'))
+          expect(page).to have_content(I18n.t('application_details_errors.application_link.url'))
         end
       end
 

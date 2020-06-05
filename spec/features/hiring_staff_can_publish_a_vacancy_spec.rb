@@ -405,11 +405,6 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(
             I18n.t('activemodel.errors.models.application_details_form.attributes.contact_email.blank'))
         end
-
-        within_row_for(text: strip_tags(I18n.t('helpers.fieldset.application_details_form.application_link_html'))) do
-          expect(page).to have_content(
-            I18n.t('activemodel.errors.models.application_details_form.attributes.application_link.blank'))
-        end
       end
 
       scenario 'redirects to the job summary page when submitted successfully' do
@@ -826,7 +821,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
           click_on I18n.t('buttons.update_job')
 
-          expect(page).to have_content('Enter an application link in the correct format, like http://www.school.ac.uk')
+          expect(page).to have_content(I18n.t('application_details_errors.application_link.url'))
 
           fill_in 'application_details_form[application_link]', with: 'www.valid-domain.com'
           click_on I18n.t('buttons.update_job')

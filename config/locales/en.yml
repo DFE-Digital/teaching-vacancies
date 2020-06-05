@@ -110,7 +110,7 @@ en:
         contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
         school_visits: School visits
         how_to_apply: How to apply
-        application_link_html: "Link for jobseekers to learn more and apply (<span class='text-red'>Required</span>)"
+        application_link: Link to online application
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
@@ -149,8 +149,7 @@ en:
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         how_to_apply: Explain how to apply for the job, referring to any relevant documents
         application_link: >-
-          Enter the URL for the page on your school trust's website that gives further details on the job
-          and how to apply
+          Leave this blank unless candidates can apply directly on the school or council website
       job_summary_form:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
@@ -336,9 +335,7 @@ en:
     submit: 'Publish now'
     submit_future: 'Confirm and submit job'
     apply: 'Get more information'
-    application_link: 'Link for jobseekers to learn more and apply'
-    no_application_link: 'No application link given'
-    application_link_url: 'Link for jobseekers to learn more and apply (link opens external website in a new window)'
+    application_link: Link to online application
     application_deadline_hour: 'Hour'
     application_deadline_min: 'Minute'
     application_deadline_meridiem: 'am or pm'
@@ -394,17 +391,12 @@ en:
       change_job_summary: 'Change job summary'
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'
-      application_link_url: >-
-        Link for jobseekers to learn more and apply (link opens external website in a new window) — %{url}
       flexible_working: 'Flexible working'
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
       contact_email: 'This email address will be shown publicly as a point of contact'
-      application_link: >-
-        Enter the URL for the page on your school or trust’s website that gives further details on the job
-        and how to apply.
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
     form_warnings:
       working_pattern: >-
@@ -488,7 +480,7 @@ en:
     school_location: 'School location'
     phase: 'Education phase'
     type: 'School type'
-    website: 'Website'
+    website: 'School website'
     search_label: 'School name'
     description: 'Description'
     school_age: 'School age'

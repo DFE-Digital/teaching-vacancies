@@ -172,7 +172,7 @@ RSpec.feature 'Hiring staff can save and return later' do
 
         expect(page.current_path).to eql(school_job_application_details_path(created_vacancy.id))
 
-        fill_in 'application_details_form[contact_email]', with: 'email@test.com'
+        fill_in 'application_details_form[application_link]', with: 'some link'
         click_on I18n.t('buttons.save_and_return_later')
 
         expect(page.current_path).to eql(jobs_with_type_school_path('draft'))
@@ -181,7 +181,7 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on 'Edit'
 
         expect(page.current_path).to eql(school_job_application_details_path(created_vacancy.id))
-        expect(find_field('application_details_form[contact_email]').value).to eql('email@test.com')
+        expect(find_field('application_details_form[application_link]').value).to eql('some link')
       end
     end
 
