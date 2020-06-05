@@ -1,0 +1,16 @@
+---
+applications:
+  - name: teaching-vacancies-worker-dev
+    buildpacks:
+      - ruby_buildpack
+    env:
+      RAILS_ENV: staging
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    health-check-type: process
+    instances: 2
+    memory: 512M
+    no-route: true
+    services:
+      - teaching-vacancies-postgres-dev
+      - teaching-vacancies-redis-dev
+      - teaching-vacancies-papertrail-dev
