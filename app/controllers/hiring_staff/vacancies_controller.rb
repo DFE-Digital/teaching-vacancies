@@ -75,16 +75,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def step_valid?(step_form)
     validation = step_form.new(@vacancy.attributes)
-    if step_form == ApplicationDetailsForm
-      (validation&.completed?).tap { |valid| clear_cache_and_step unless valid }
-    else
-      (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
-    end
+    (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
   end
 
   def redirect_to_incomplete_step
     return redirect_to school_job_job_specification_path(@vacancy.id) unless step_valid?(JobSpecificationForm)
     return redirect_to school_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
+    return redirect_to school_job_important_dates_path(@vacancy.id) unless step_valid?(ImportantDatesForm)
     return redirect_to school_job_supporting_documents_path(@vacancy.id) unless step_valid?(SupportingDocumentsForm)
     return redirect_to school_job_application_details_path(@vacancy.id) unless step_valid?(ApplicationDetailsForm)
     return redirect_to school_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)

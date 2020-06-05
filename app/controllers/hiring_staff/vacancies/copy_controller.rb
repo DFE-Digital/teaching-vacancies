@@ -6,7 +6,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
   def create
     @copy_form = CopyVacancyForm.new(vacancy: @vacancy)
     date_errors = convert_multiparameter_attributes_to_dates(
-      :copy_vacancy_form, [:starts_on, :ends_on, :publish_on, :expires_on]
+      :copy_vacancy_form, [:publish_on, :expires_on, :starts_on]
     )
     @proposed_vacancy = @copy_form.apply_changes!(copy_form_params)
     @copy_form.update_expiry_time(@proposed_vacancy, params.require(:copy_vacancy_form))
@@ -30,8 +30,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
   def copy_form_params
     strip_empty_checkboxes(:copy_vacancy_form, [:job_roles])
     params.require(:copy_vacancy_form).permit(:state, :job_title, :about_school,
-                                              :starts_on, :ends_on,
-                                              :publish_on, :expires_on,
+                                              :publish_on, :expires_on, :starts_on,
                                               :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem,
                                               job_roles: [])
   end

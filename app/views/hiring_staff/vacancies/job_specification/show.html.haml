@@ -57,14 +57,6 @@
         legend: { text: t('helpers.fieldset.job_specification_form.working_pattern_html'), size: 's' },
         hint_text: t('helpers.hint.job_specification_form.working_patterns')
 
-      = f.govuk_date_field :starts_on,
-        legend: { text: t('helpers.fieldset.job_specification_form.starts_on'), size: 's' },
-        hint_text: t('helpers.hint.job_specification_form.starts_on')
-
-      = f.govuk_date_field :ends_on,
-        legend: { text: t('helpers.fieldset.job_specification_form.ends_on'), size: 's' },
-        hint_text: t('helpers.hint.job_specification_form.ends_on')
-
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
   .govuk-grid-column-one-third

@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     end
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review',
-        defaults: { create_step: 6, step_title: I18n.t('jobs.review_heading') }
+        defaults: { create_step: 7, step_title: I18n.t('jobs.review_heading') }
       get 'preview'
       get 'summary'
       post :publish, to: 'hiring_staff/vacancies/publish#create'
@@ -69,22 +69,26 @@ Rails.application.routes.draw do
         only: %i[show update],
         controller: 'hiring_staff/vacancies/pay_package',
         defaults: { create_step: 2, step_title: I18n.t('jobs.pay_package') }
+      resource :important_dates,
+        only: %i[show update],
+        controller: 'hiring_staff/vacancies/important_dates',
+        defaults: { create_step: 3, step_title: I18n.t('jobs.important_dates') }
       resource :supporting_documents,
         only: %i[show update],
         controller: 'hiring_staff/vacancies/supporting_documents',
-        defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
+        defaults: { create_step: 4, step_title: I18n.t('jobs.supporting_documents') }
       resource :documents,
         only: %i[create destroy show],
         controller: 'hiring_staff/vacancies/documents',
-        defaults: { create_step: 3, step_title: I18n.t('jobs.supporting_documents') }
+        defaults: { create_step: 4, step_title: I18n.t('jobs.supporting_documents') }
       resource :application_details,
         only: %i[show update],
         controller: 'hiring_staff/vacancies/application_details',
-        defaults: { create_step: 4, step_title: I18n.t('jobs.application_details') }
+        defaults: { create_step: 5, step_title: I18n.t('jobs.application_details') }
       resource :job_summary,
         only: %i[show update],
         controller: 'hiring_staff/vacancies/job_summary',
-        defaults: { create_step: 5, step_title: I18n.t('jobs.job_summary') }
+        defaults: { create_step: 6, step_title: I18n.t('jobs.job_summary') }
       resource :feedback, controller: 'hiring_staff/vacancies/vacancy_publish_feedback', only: %i[new create]
       resource :statistics, controller: 'hiring_staff/vacancies/statistics', only: %i[update]
       resource :copy, only: %i[new create],

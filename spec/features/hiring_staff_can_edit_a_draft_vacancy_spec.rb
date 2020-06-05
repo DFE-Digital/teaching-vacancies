@@ -24,9 +24,24 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       scenario 'incomplete pay package step' do
         visit edit_school_job_path(id: draft_vacancy.id)
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.pay_package'))
+        end
+      end
+
+      scenario 'incomplete important dates step' do
+        visit edit_school_job_path(id: draft_vacancy.id)
+
+        draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
+        draft_vacancy.benefits = 'Gym, health insurance'
+
+        fill_in_pay_package_form_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 7))
+        within('h2.govuk-heading-l') do
+          expect(page).to have_content(I18n.t('jobs.important_dates'))
         end
       end
 
@@ -39,7 +54,15 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
+        draft_vacancy.expiry_time = Time.zone.now
+        draft_vacancy.publish_on = DateTime.now + 1.day
+
+        fill_in_important_dates_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         end
@@ -54,10 +77,18 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
+        draft_vacancy.expiry_time = Time.zone.now
+        draft_vacancy.publish_on = DateTime.now + 1.day
+
+        fill_in_important_dates_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         fill_in_supporting_documents_form_fields
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         end
@@ -72,10 +103,18 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
+        draft_vacancy.expiry_time = Time.zone.now
+        draft_vacancy.publish_on = DateTime.now + 1.day
+
+        fill_in_important_dates_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.application_details'))
         end
@@ -90,12 +129,20 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
+        draft_vacancy.expiry_time = Time.zone.now
+        draft_vacancy.publish_on = DateTime.now + 1.day
+
+        fill_in_important_dates_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         fill_in_supporting_documents_form_fields
         click_on I18n.t('buttons.save_and_continue')
 
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.application_details'))
         end
@@ -110,6 +157,14 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
+        draft_vacancy.expiry_time = Time.zone.now
+        draft_vacancy.publish_on = DateTime.now + 1.day
+
+        fill_in_important_dates_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         fill_in_supporting_documents_form_fields
         click_on I18n.t('buttons.save_and_continue')
 
@@ -117,14 +172,11 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
         draft_vacancy.contact_email = 'test@email.com'
         draft_vacancy.application_link = 'https://example.com'
-        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
 
         fill_in_application_details_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.job_summary'))
         end
@@ -142,6 +194,14 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
+        draft_vacancy.expiry_time = Time.zone.now
+        draft_vacancy.publish_on = DateTime.now + 1.day
+
+        fill_in_important_dates_fields(draft_vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
@@ -150,7 +210,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
       scenario 'then editing the draft redirects to incomplete step' do
         visit school_job_path(id: draft_vacancy.id)
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
       end
 
       def edit_a_published_vacancy
@@ -173,7 +233,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       visit school_job_review_path(vacancy.id, edit_draft: true)
 
       expect(Vacancy.last.state).to eql('edit')
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
       within('h2.govuk-heading-l') do
         expect(page).to have_content(I18n.t('jobs.review_heading'))
       end

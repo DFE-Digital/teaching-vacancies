@@ -1,21 +1,21 @@
 .govuk-form-group{ 'class': f.object.errors[:expiry_time].present? ? 'govuk-form-group--error' : '' }
-  %fieldset.govuk-fieldset{ 'aria-describedby': '#application-details-form-expiry-time-hint', 'id': f.object.errors[:expiry_time].present? ? 'application-details-form-expiry-time-field-error' : 'application-details-form-expiry-time-field' }
+  %fieldset.govuk-fieldset{ 'aria-describedby': '#important_dates_form-expiry-time-hint', 'id': f.object.errors[:expiry_time].present? ? 'important_dates_form-expiry-time-field-error' : 'important_dates_form-expiry-time-field' }
     %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-      %h1.govuk-fieldset__heading= t('helpers.fieldset.application_details_form.expiry_time_html')
-    %span.govuk-hint#application-details-form-expires-on-hint
-      = t('helpers.hint.application_details_form.expiry_time')
+      %h1.govuk-fieldset__heading= t('helpers.fieldset.important_dates_form.expiry_time_html')
+    %span.govuk-hint#important_dates_form-expiry-time-hint
+      = t('helpers.hint.important_dates_form.expiry_time')
     - f.object.errors[:expiry_time]&.each do |error|
-      %span.govuk-error-message#application-details-form-expiry-time-error
+      %span.govuk-error-message#important_dates_form-expiry-time-error
         = error
     .govuk-date-input
       .govuk-date-input__item.add-colon-positioned-next-to-element
         = f.govuk_number_field :expiry_time_hh,
-          label: { text: t('helpers.fieldset.application_details_form.expiry_time_hh') },
+          label: { text: t('helpers.fieldset.important_dates_form.expiry_time_hh') },
           width: 2,
           class: 'govuk-input govuk-date-input__input govuk-input--width-2 ' + (f.object.errors[:expiry_time].present? ? 'govuk-input--error' : '')
       .govuk-date-input__item
         = f.govuk_number_field :expiry_time_mm,
-          label: { text: t('helpers.fieldset.application_details_form.expiry_time_mm') },
+          label: { text: t('helpers.fieldset.important_dates_form.expiry_time_mm') },
           width: 2,
           class: 'govuk-input govuk-date-input__input govuk-input--width-2 ' + (f.object.errors[:expiry_time].present? ? 'govuk-input--error' : '')
       .govuk-date-input__item
@@ -23,4 +23,4 @@
           %w[am pm],
           :itself,
           :itself,
-          label: { text: t('helpers.fieldset.application_details_form.expiry_time_meridiem') }
+          label: { text: t('helpers.fieldset.important_dates_form.expiry_time_meridiem') }

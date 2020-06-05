@@ -20,7 +20,7 @@ RSpec.feature 'Creating a vacancy' do
 
     click_link 'Create a job listing'
 
-    expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
+    expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
   end
 
   context 'creating a new vacancy' do
@@ -40,7 +40,7 @@ RSpec.feature 'Creating a vacancy' do
 
       expect(page.current_path).to eq(job_specification_school_job_path)
       expect(page).to have_content(I18n.t('jobs.create_a_job', school: school.name))
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
+      expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
     end
 
     context '#job_specification' do
@@ -62,27 +62,13 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'is invalid if invalid dates are submitted' do
-        visit new_school_job_path
-
-        fill_in 'job_specification_form[starts_on(3i)]', with: '100'
-        fill_in 'job_specification_form[starts_on(2i)]', with: '100'
-        fill_in 'job_specification_form[starts_on(1i)]', with: '100'
-
-        click_on I18n.t('buttons.save_and_continue')
-
-        within_row_for(element: 'legend', text: I18n.t('helpers.fieldset.job_specification_form.starts_on')) do
-          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.starts_on.invalid')))
-        end
-      end
-
       scenario 'redirects to step 2, pay package, when submitted successfully' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.pay_package'))
         end
@@ -128,7 +114,7 @@ RSpec.feature 'Creating a vacancy' do
         end
       end
 
-      scenario 'redirects to step 3, supporting documents, when submitted successfuly' do
+      scenario 'redirects to step 3, important dates, when submitted successfuly' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
@@ -137,7 +123,62 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_pay_package_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 7))
+        within('h2.govuk-heading-l') do
+          expect(page).to have_content(I18n.t('jobs.important_dates'))
+        end
+      end
+    end
+
+    context '#important_dates' do
+      scenario 'is invalid unless all mandatory fields are submitted' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        click_on I18n.t('buttons.save_and_continue')
+
+        within('.govuk-error-summary') do
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
+        end
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.publish_on_html'))) do
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.publish_on.blank')
+          )
+        end
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.blank')
+          )
+        end
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expiry_time_html'))) do
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'))
+        end
+      end
+
+      scenario 'redirects to step 4, supporting documents, when submitted successfuly' do
+        visit new_school_job_path
+
+        fill_in_job_specification_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_important_dates_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         end
@@ -152,6 +193,9 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
 
         fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_important_dates_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
         click_on I18n.t('buttons.save_and_continue') # submit empty form
@@ -169,10 +213,13 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_pay_package_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        fill_in_important_dates_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.application_details'))
         end
@@ -187,10 +234,13 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_pay_package_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        fill_in_important_dates_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         choose 'Yes'
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         end
@@ -339,6 +389,9 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_pay_package_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        fill_in_important_dates_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
@@ -348,23 +401,14 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content(I18n.t('jobs.errors_present'))
         end
 
-        within_row_for(text: I18n.t('jobs.contact_email')) do
+        within_row_for(text: strip_tags(I18n.t('helpers.fieldset.application_details_form.contact_email_html'))) do
           expect(page).to have_content(
             I18n.t('activemodel.errors.models.application_details_form.attributes.contact_email.blank'))
         end
 
-        within_row_for(element: 'legend', text: I18n.t('jobs.deadline_date')) do
+        within_row_for(text: strip_tags(I18n.t('helpers.fieldset.application_details_form.application_link_html'))) do
           expect(page).to have_content(
-            I18n.t('activemodel.errors.models.application_details_form.attributes.expires_on.blank'))
-        end
-
-        within_row_for(element: 'legend', text: strip_tags(I18n.t('jobs.deadline_time_html'))) do
-          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'))
-        end
-
-        within_row_for(element: 'legend', text: I18n.t('jobs.publication_date')) do
-          expect(page).to have_content(
-            I18n.t('activemodel.errors.models.application_details_form.attributes.publish_on.blank'))
+            I18n.t('activemodel.errors.models.application_details_form.attributes.application_link.blank'))
         end
       end
 
@@ -377,13 +421,16 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_pay_package_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        fill_in_important_dates_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
         fill_in_application_details_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.job_summary'))
         end
@@ -398,6 +445,9 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.save_and_continue')
 
         fill_in_pay_package_form_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
+        fill_in_important_dates_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
         select_no_for_supporting_documents
@@ -430,6 +480,9 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_pay_package_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
+        fill_in_important_dates_fields(vacancy)
+        click_on I18n.t('buttons.save_and_continue')
+
         select_no_for_supporting_documents
         click_on I18n.t('buttons.save_and_continue')
 
@@ -439,7 +492,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in_job_summary_form_fields(vacancy)
         click_on I18n.t('buttons.save_and_continue')
 
-        expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.review_heading'))
         end
@@ -458,19 +511,22 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.pay_package'))
           end
         end
 
-        scenario 'redirects to step 4, application details, when that step has not been completed' do
+        scenario 'redirects to step 5, application details, when that step has not been completed' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
           fill_in_pay_package_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_important_dates_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
           select_no_for_supporting_documents
@@ -479,19 +535,22 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.application_details'))
           end
         end
 
-        scenario 'redirects to step 5, job summary, when that step has not been completed' do
+        scenario 'redirects to step 6, job summary, when that step has not been completed' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
           fill_in_pay_package_form_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
+          fill_in_important_dates_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
           select_no_for_supporting_documents
@@ -503,7 +562,7 @@ RSpec.feature 'Creating a vacancy' do
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.job_summary'))
           end
@@ -518,6 +577,9 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_pay_package_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
+          fill_in_important_dates_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
           select_no_for_supporting_documents
           click_on I18n.t('buttons.save_and_continue')
 
@@ -528,7 +590,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('buttons.save_and_continue')
 
           expect(Vacancy.last.state).to eql('review')
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.review_heading'))
           end
@@ -543,6 +605,9 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_pay_package_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
+          fill_in_important_dates_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
           select_no_for_supporting_documents
           click_on I18n.t('buttons.save_and_continue')
 
@@ -553,13 +618,13 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('buttons.save_and_continue')
 
           expect(Vacancy.last.state).to eql('review')
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.review_heading'))
           end
 
           click_header_link(I18n.t('jobs.application_details'))
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.application_details'))
           end
@@ -569,7 +634,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(Vacancy.last.state).to eql('review')
 
           click_header_link(I18n.t('jobs.job_details'))
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
           within('h2.govuk-heading-l') do
             expect(page).to have_content(I18n.t('jobs.job_details'))
           end
@@ -651,7 +716,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
 
           fill_in 'job_specification_form[job_title]', with: 'An edited job title'
           click_on I18n.t('buttons.update_job')
@@ -667,7 +732,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
 
           fill_in 'job_specification_form[job_title]', with: 'High school teacher'
           click_on I18n.t('buttons.update_job')
@@ -706,6 +771,9 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_pay_package_form_fields(vacancy)
           click_on I18n.t('buttons.save_and_continue')
 
+          fill_in_important_dates_fields(vacancy)
+          click_on I18n.t('buttons.save_and_continue')
+
           select_no_for_supporting_documents
           click_on I18n.t('buttons.save_and_continue')
 
@@ -719,7 +787,7 @@ RSpec.feature 'Creating a vacancy' do
 
           click_header_link(I18n.t('jobs.supporting_documents'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
           expect(page).to have_content(I18n.t('jobs.upload_file'))
 
           click_on I18n.t('buttons.update_job')
@@ -734,7 +802,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
 
           fill_in 'application_details_form[contact_email]', with: 'not a valid email'
           click_on I18n.t('buttons.update_job')
@@ -753,7 +821,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
 
           fill_in 'application_details_form[application_link]', with: 'www invalid.domain.com'
           click_on I18n.t('buttons.update_job')
@@ -772,7 +840,7 @@ RSpec.feature 'Creating a vacancy' do
           visit school_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
-          expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 6))
+          expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
           click_on I18n.t('buttons.update_job')
@@ -875,17 +943,44 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'cannot be published unless the details are valid' do
+        yesterday_date = Time.zone.yesterday
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
-        vacancy.assign_attributes expires_on: Time.zone.yesterday
+        vacancy.assign_attributes expires_on: yesterday_date
         vacancy.save(validate: false)
 
         visit school_job_review_path(vacancy.id)
-        click_on 'Confirm and submit job'
 
-        expect(page).to have_content(I18n.t('errors.jobs.unable_to_publish'))
-        expect(page).to have_content(
-          I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.before_publish_date')
-        )
+        expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 7))
+        within('h2.govuk-heading-l') do
+          expect(page).to have_content(I18n.t('jobs.important_dates'))
+        end
+
+        expect(find_field('important_dates_form[expires_on(3i)]').value).to eql(yesterday_date.day.to_s)
+        expect(find_field('important_dates_form[expires_on(2i)]').value).to eql(yesterday_date.month.to_s)
+        expect(find_field('important_dates_form[expires_on(1i)]').value).to eql(yesterday_date.year.to_s)
+
+        click_on I18n.t('buttons.save_and_continue')
+
+        within('.govuk-error-summary') do
+          expect(page).to have_content(I18n.t('jobs.errors_present'))
+        end
+
+        within_row_for(element: 'legend',
+                       text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
+          expect(page).to have_content(
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.before_today')
+          )
+        end
+
+        expiry_date = Time.zone.today + 1.week
+
+        fill_in 'important_dates_form[expires_on(3i)]', with: expiry_date.day
+        fill_in 'important_dates_form[expires_on(2i)]', with: expiry_date.month
+        fill_in 'important_dates_form[expires_on(1i)]', with: expiry_date.year
+        click_on I18n.t('buttons.save_and_continue')
+
+        click_on I18n.t('jobs.submit_listing.button')
+        expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
       end
 
       scenario 'can be published at a later date' do

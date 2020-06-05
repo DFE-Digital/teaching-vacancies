@@ -85,40 +85,39 @@ en:
   helpers:
     fieldset:
       copy_vacancy_form:
-        starts_on: 'Expected start date'
-        ends_on: 'End date'
-        publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
+        publish_on_html: "Date job will be listed (<span class='text-red'>Required</span>)"
         expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
+        starts_on: "Date job starts"
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
         job_roles_html: "Job role (<span class='text-red'>Required</span>)"
         subjects: Subject(s)
         working_pattern_html: "Working patterns (<span class='text-red'>Required</span>)"
-        starts_on: 'Expected start date'
-        ends_on: 'End date'
       pay_package_form:
         salary_html: "Salary (<span class='text-red'>Required</span>)"
+      important_dates_form:
+        publish_on_html: "Date job will be listed (<span class='text-red'>Required</span>)"
+        expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
+        expiry_time_html: "Time application is due (<span class='text-red'>Required</span>)"
+        expiry_time_hh: 'Hour'
+        expiry_time_mm: 'Minute'
+        expiry_time_meridiem: 'am or pm'
+        starts_on: "Date job starts"
       supporting_documents_form:
         supporting_documents_html:
           "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
       application_details_form:
         contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
         application_link_html: "Link for jobseekers to learn more and apply (<span class='text-red'>Required</span>)"
-        publish_on_html: "Date role will be listed (<span class='text-red'>Required</span>)"
-        expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
-        expiry_time_html: "Time application is due (<span class='text-red'>Required</span>)"
-        expiry_time_hh: 'Hour'
-        expiry_time_mm: 'Minute'
-        expiry_time_meridiem: 'am or pm'
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
     hint:
       copy_vacancy_form:
-        starts_on: 'For example, 01 01 2020'
-        ends_on: 'For example, 01 08 2020'
-        publish_on: 'For example, 01 01 2020'
-        expires_on: 'For example, 01 08 2020'
+        publish_on: For example, 01 01 2020
+        expires_on: For example, 01 05 2020
+        expiry_time: For example, 9:30 am or 11:59 pm (midnight)
+        starts_on: For example, 01 09 2020
       job_specification_form:
         job_title: >-
           For secondary school roles include subject and, if relevant,
@@ -128,8 +127,6 @@ en:
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
-        starts_on: 'For example, 01 01 2020'
-        ends_on: 'For example, 01 08 2020'
       pay_package_form:
         salary: >-
           Enter the annual salary or salary range, and/or pay scale range.
@@ -137,6 +134,11 @@ en:
         benefits: >-
           Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
           for example
+      important_dates_form:
+        publish_on: For example, 01 01 2020
+        expires_on: For example, 01 05 2020
+        expiry_time: For example, 9:30 am or 11:59 pm (midnight)
+        starts_on: For example, 01 09 2020
       supporting_documents_form:
         supporting_documents:
           'These could include, for example, a job description, person specification or application pack'
@@ -145,9 +147,6 @@ en:
         application_link: >-
           Enter the URL for the page on your school trust's website that gives further details on the job
           and how to apply
-        publish_on: 'For example, 01 01 2020'
-        expires_on: 'For example, 01 08 2020'
-        expiry_time: 'For example, 9:00 am or 5:00 pm'
       job_summary_form:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
@@ -192,7 +191,7 @@ en:
     school_type: 'School type'
     publish_on: 'Date listed'
     expires_on: 'Closing date'
-    start_on: 'Expected start date'
+    start_on: 'Date job starts'
     application_deadline: 'Application deadline'
     job_filled: 'Job filled on Teaching Vacancies?'
     listed_elsewhere: 'Listed elsewhere?'
@@ -202,7 +201,6 @@ en:
     working_patterns_info_one: '%{patterns} only'
     working_patterns_info_many: 'Will consider %{patterns}'
     starts_on: 'Expected start date'
-    ends_on: 'End date'
     expired: 'This job post has expired'
     education: 'Essential educational requirements'
     qualifications: 'Essential qualifications'
@@ -250,6 +248,7 @@ en:
     edit_heading: 'Edit job for %{school}'
     job_specification: 'Job specification'
     pay_package: 'Pay package'
+    important_dates: 'Important dates and deadlines'
     supporting_documents: 'Supporting documents'
     upload_file: 'Upload files'
     select_file: 'Select a file'
@@ -284,7 +283,7 @@ en:
     deadline_date: 'Date application is due'
     deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
     time_at: ' at '
-    publication_date: 'Date role will be listed'
+    publication_date: 'Date job will be listed'
     job_summary: 'Job summary'
     about_school: 'About %{school}'
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'

@@ -1,12 +1,6 @@
 module VacancyHelpers
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
-    fill_in 'job_specification_form[starts_on(3i)]', with: vacancy.starts_on.day if vacancy.starts_on
-    fill_in 'job_specification_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
-    fill_in 'job_specification_form[starts_on(1i)]', with: vacancy.starts_on.year if vacancy.starts_on
-    fill_in 'job_specification_form[ends_on(3i)]', with: vacancy.ends_on.day if vacancy.ends_on
-    fill_in 'job_specification_form[ends_on(2i)]', with: vacancy.ends_on.strftime('%m') if vacancy.ends_on
-    fill_in 'job_specification_form[ends_on(1i)]', with: vacancy.ends_on.year if vacancy.ends_on
 
     vacancy.model_working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
@@ -32,6 +26,24 @@ module VacancyHelpers
     fill_in 'pay_package_form[benefits]', with: vacancy.benefits
   end
 
+  def fill_in_important_dates_fields(vacancy)
+    fill_in 'important_dates_form[publish_on(3i)]', with: vacancy.publish_on.day
+    fill_in 'important_dates_form[publish_on(2i)]', with: vacancy.publish_on.strftime('%m')
+    fill_in 'important_dates_form[publish_on(1i)]', with: vacancy.publish_on.year
+
+    fill_in 'important_dates_form[expires_on(3i)]', with: vacancy.expires_on.day
+    fill_in 'important_dates_form[expires_on(2i)]', with: vacancy.expires_on.strftime('%m')
+    fill_in 'important_dates_form[expires_on(1i)]', with: vacancy.expires_on.year
+
+    fill_in 'important_dates_form[expiry_time_hh]', with: vacancy.expiry_time.strftime('%-l')
+    fill_in 'important_dates_form[expiry_time_mm]', with: vacancy.expiry_time.strftime('%-M')
+    select vacancy.expiry_time.strftime('%P'), from: 'important_dates_form[expiry_time_meridiem]'
+
+    fill_in 'important_dates_form[starts_on(3i)]', with: vacancy.starts_on.day
+    fill_in 'important_dates_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m')
+    fill_in 'important_dates_form[starts_on(1i)]', with: vacancy.starts_on.year
+  end
+
   def fill_in_supporting_documents_form_fields
     find('label[for="supporting-documents-form-supporting-documents-yes-field"]').click
   end
@@ -50,18 +62,6 @@ module VacancyHelpers
   def fill_in_application_details_form_fields(vacancy)
     fill_in 'application_details_form[contact_email]', with: vacancy.contact_email
     fill_in 'application_details_form[application_link]', with: vacancy.application_link
-
-    fill_in 'application_details_form[expires_on(3i)]', with: vacancy.expires_on.day
-    fill_in 'application_details_form[expires_on(2i)]', with: vacancy.expires_on.strftime('%m')
-    fill_in 'application_details_form[expires_on(1i)]', with: vacancy.expires_on.year
-
-    fill_in 'application_details_form[expiry_time_hh]', with: vacancy.expiry_time.strftime('%-l')
-    fill_in 'application_details_form[expiry_time_mm]', with: vacancy.expiry_time.strftime('%-M')
-    select vacancy.expiry_time.strftime('%P'), from: 'application_details_form[expiry_time_meridiem]'
-
-    fill_in 'application_details_form[publish_on(3i)]', with: vacancy.publish_on.day
-    fill_in 'application_details_form[publish_on(2i)]', with: vacancy.publish_on.strftime('%m')
-    fill_in 'application_details_form[publish_on(1i)]', with: vacancy.publish_on.year
   end
 
   def fill_in_job_summary_form_fields(vacancy)
@@ -71,14 +71,6 @@ module VacancyHelpers
 
   def fill_in_copy_vacancy_form_fields(vacancy)
     fill_in 'copy_vacancy_form[job_title]', with: vacancy.job_title
-
-    fill_in 'copy_vacancy_form[starts_on(3i)]', with: vacancy.starts_on.day if vacancy.starts_on
-    fill_in 'copy_vacancy_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
-    fill_in 'copy_vacancy_form[starts_on(1i)]', with: vacancy.starts_on.year if vacancy.starts_on
-
-    fill_in 'copy_vacancy_form[ends_on(3i)]', with: vacancy.ends_on.day if vacancy.ends_on
-    fill_in 'copy_vacancy_form[ends_on(2i)]', with: vacancy.ends_on.strftime('%m') if vacancy.ends_on
-    fill_in 'copy_vacancy_form[ends_on(1i)]', with: vacancy.ends_on.year if vacancy.ends_on
 
     fill_in 'copy_vacancy_form[expires_on(3i)]', with: vacancy.expires_on&.day
     fill_in 'copy_vacancy_form[expires_on(2i)]', with: vacancy.expires_on&.strftime('%m')
@@ -91,6 +83,10 @@ module VacancyHelpers
     fill_in 'copy_vacancy_form[publish_on(3i)]', with: vacancy.publish_on&.day
     fill_in 'copy_vacancy_form[publish_on(2i)]', with: vacancy.publish_on&.strftime('%m')
     fill_in 'copy_vacancy_form[publish_on(1i)]', with: vacancy.publish_on&.year
+
+    fill_in 'copy_vacancy_form[starts_on(3i)]', with: vacancy.starts_on.day if vacancy.starts_on
+    fill_in 'copy_vacancy_form[starts_on(2i)]', with: vacancy.starts_on.strftime('%m') if vacancy.starts_on
+    fill_in 'copy_vacancy_form[starts_on(1i)]', with: vacancy.starts_on.year if vacancy.starts_on
   end
 
   def verify_all_vacancy_details(vacancy)
@@ -98,18 +94,18 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.show_job_roles)
     expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
-    expect(page).to have_content(vacancy.ends_on.to_s.strip) if vacancy.ends_on?
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
+
+    expect(page).to have_content(vacancy.publish_on.to_s.strip)
+    expect(page).to have_content(vacancy.expires_on.to_s.strip)
+    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
 
     expect(page).to have_content(I18n.t('jobs.supporting_documents'))
 
     expect(page).to have_content(vacancy.contact_email)
     expect(page).to have_content(vacancy.application_link)
-    expect(page).to have_content(vacancy.expires_on.to_s.strip)
-    expect(page).to have_content(vacancy.publish_on.to_s.strip)
 
     expect(page.html).to include(vacancy.job_summary)
     expect(page.html).to include(vacancy.about_school)
@@ -121,11 +117,13 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.job_summary)
     expect(page).to have_content(vacancy.show_subjects)
     expect(page).to have_content(vacancy.working_patterns)
-    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
-    expect(page).to have_content(vacancy.ends_on.to_s.strip) if vacancy.ends_on?
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)
+
+    expect(page).to have_content(vacancy.publish_on.to_s.strip)
+    expect(page).to have_content(vacancy.expires_on.to_s.strip)
+    expect(page).to have_content(vacancy.starts_on.to_s.strip) if vacancy.starts_on?
 
     if vacancy.documents.any?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
@@ -138,8 +136,6 @@ module VacancyHelpers
     end
 
     expect(page).to have_link(I18n.t('jobs.apply'), href: new_job_interest_path(vacancy.id))
-    expect(page).to have_content(vacancy.expires_on.to_s.strip)
-    expect(page).to have_content(vacancy.publish_on.to_s.strip)
   end
 
   def expect_schema_property_to_match_value(key, value)
@@ -147,7 +143,7 @@ module VacancyHelpers
   end
 
   def skip_vacancy_publish_on_validation
-    allow_any_instance_of(Vacancy).to receive(:publish_on_must_not_be_in_the_past).and_return(true)
+    allow_any_instance_of(Vacancy).to receive(:publish_on_must_not_be_before_today).and_return(true)
   end
 
   def vacancy_json_ld(vacancy)

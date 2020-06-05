@@ -35,7 +35,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def update
-    if @job_specification_form.complete_and_valid?
+    if @job_specification_form.valid?
       remove_subject_fields(@vacancy) unless @vacancy.subjects.nil?
       update_vacancy(job_specification_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
@@ -54,16 +54,13 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def set_up_job_specification_form
-    date_errors = convert_multiparameter_attributes_to_dates(:job_specification_form, [:starts_on, :ends_on])
     @job_specification_form = JobSpecificationForm.new(job_specification_form_params)
-    add_errors_to_form(date_errors, @job_specification_form)
   end
 
   def job_specification_form_params
     strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles, :subjects])
     params.require(:job_specification_form)
           .permit(:state, :job_title,
-                  :starts_on, :ends_on,
                   job_roles: [], working_patterns: [], subjects: [])
           .merge(completed_step: current_step)
   end

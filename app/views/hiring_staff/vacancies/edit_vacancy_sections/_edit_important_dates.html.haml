@@ -1,0 +1,24 @@
+%h2.govuk-heading-m.app-task-list__section#important_dates_heading
+  %span.app-task-list__section-number 3.
+  = t('jobs.important_dates')
+  = link_to t('buttons.change'), school_job_important_dates_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_important_dates')
+
+%dl.app-check-your-answers.app-check-your-answers--short
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#publish_on
+      %h4.govuk-heading-s= t('jobs.publication_date')
+    %dd.app-check-your-answers__answer= format_date @vacancy.publish_on
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#expires_on
+      %h4.govuk-heading-s= t('jobs.application_deadline')
+    %dd.app-check-your-answers__answer
+      = format_date @vacancy.expires_on
+      = t('jobs.time_at') unless @vacancy.expiry_time.nil?
+      = format_time @vacancy.expiry_time
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#starts_on
+      %h4.govuk-heading-s= t('jobs.start_on')
+    %dd.app-check-your-answers__answer= format_date @vacancy.starts_on

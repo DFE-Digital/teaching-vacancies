@@ -14,6 +14,25 @@ en:
       blank: Enter a salary
       too_long: Salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
+  important_dates_errors: &important_dates_errors
+    publish_on:
+      blank: Enter the date job will be listed
+      before_today: Date job will be listed must be either today or in the future
+      invalid: Use the correct format for date job will be listed
+    expires_on:
+      blank: Enter the date application is due
+      before_today: Date application is due must be in the future
+      before_publish_on: Date application is due must be after date job will be listed
+      invalid: Use the correct format for date application is due
+    expiry_time:
+      blank: Enter the time application is due
+      wrong_format: Use the correct format for time application is due
+      must_be_am_pm: Select am or pm
+    starts_on:
+      before_today: Date job starts must be in the future
+      before_publish_on: Date job starts must be after date job will be listed
+      before_expires_on: Date job starts must be after date application is due
+      invalid: Use the correct format for date the job starts
   supporting_documents_errors: &supporting_documents_errors
     supporting_documents:
       inclusion: "Please indicate if you'd like to attach supporting documents"
@@ -24,14 +43,6 @@ en:
     application_link:
       blank: Enter a link for jobseekers to apply
       url: Enter an application link in the correct format, like http://www.school.ac.uk
-    expires_on:
-      blank: Enter the date the application is due
-      before_publish_date: Application cannot be due before the job has been listed
-      invalid: Use the correct format for the date the application is due
-    publish_on:
-      blank: Enter the date the role will be listed
-      before_today: Date role will be listed must be either today or in the future
-      invalid: Use the correct format for the date the role will be listed
   job_summary_errors: &job_summary_errors
     job_summary:
       blank: Enter a job summary
@@ -54,6 +65,9 @@ en:
         pay_package_form:
           attributes:
             <<: *pay_package_errors
+        important_dates_form:
+          attributes:
+            <<: *important_dates_errors
         supporting_documents_form:
           attributes:
             <<: *supporting_documents_errors
@@ -75,22 +89,28 @@ en:
           attributes:
             <<: *job_specification_errors
             <<: *pay_package_errors
+            <<: *important_dates_errors
             <<: *supporting_documents_errors
             <<: *application_details_errors
             <<: *job_summary_errors
+            publish_on:
+              blank: Enter the date job will be listed
+              before_today: Date job will be listed must be either today or in the future
+              invalid: Use the correct format for date job will be listed
+            expires_on:
+              blank: Enter the date application is due
+              before_today: Date application is due must be in the future
+              before_publish_on: Date application is due must be after date job will be listed
+              invalid: Use the correct format for date application is due
             expiry_time:
-              blank: Enter the time the application is due
-              wrong_format: Use the correct format for the time the application is due
+              blank: Enter the time application is due
+              wrong_format: Use the correct format for time application is due
               must_be_am_pm: Select am or pm
             starts_on:
-              past: Start date must be in the future
-              after_ends_on: Start date must be before end date
-              before_expires_on: Start date must be after application deadline
-              invalid: Enter the start date in the correct format
-            ends_on:
-              past: End date must be in the future
-              before_expires_on: End date must be after application deadline
-              invalid: Enter the end date in the correct format
+              before_today: Date job starts must be in the future
+              before_publish_on: Date job starts must be after date job will be listed
+              before_expires_on: Date job starts must be after date application is due
+              invalid: Use the correct format for date the job starts
         vacancy_publish_feedback:
           attributes:
             user_participation_response:

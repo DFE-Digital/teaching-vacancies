@@ -2,11 +2,12 @@ class CopyVacancyForm < VacancyForm
   include ActiveModel::Model
   include DateHelper
 
-  include VacancyCopyValidations
   include VacancyImportantDateValidations
   include VacancyExpiryTimeFieldValidations
+  include VacancyCopyValidations
 
-  delegate :starts_on, :ends_on, :publish_on, :expires_on, :errors, to: :vacancy
+  delegate :publish_on, :expires_on, :starts_on, :errors,
+           :publish_on_changed?, :expires_on_changed?, :starts_on_changed?, to: :vacancy
 
   attr_accessor :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
 
@@ -49,7 +50,6 @@ class CopyVacancyForm < VacancyForm
 
   def reset_date_fields
     self.starts_on  = nil
-    self.ends_on    = nil
     self.expires_on = nil
     self.publish_on = nil
   end
