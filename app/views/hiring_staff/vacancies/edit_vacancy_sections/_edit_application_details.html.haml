@@ -12,6 +12,16 @@
       =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
 
   .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#school_visits
+      %h4.govuk-heading-s= t('jobs.school_visits')
+    %dd.app-check-your-answers__answer= @vacancy.school_visits
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#how_to_apply
+      %h4.govuk-heading-s= t('jobs.how_to_apply')
+    %dd.app-check-your-answers__answer= @vacancy.how_to_apply
+
+  .app-check-your-answers__contents
     %dt.app-check-your-answers__question#application_link
       %h4.govuk-heading-s= t('jobs.application_link')
     %dd.app-check-your-answers__answer
