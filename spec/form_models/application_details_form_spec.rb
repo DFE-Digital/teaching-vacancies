@@ -30,12 +30,17 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
   context 'when all attributes are valid' do
     it 'can correctly be converted to a vacancy' do
-      application_details = ApplicationDetailsForm.new(state: 'create', application_link: 'http://an.application.link',
-                                                       contact_email: 'some@email.com')
+      application_details = ApplicationDetailsForm.new(state: 'create',
+                                                       application_link: 'http://an.application.link',
+                                                       contact_email: 'some@email.com',
+                                                       school_visits: 'How you can visit the school',
+                                                       how_to_apply: 'How you can apply for the job')
 
       expect(application_details.valid?).to be true
       expect(application_details.vacancy.contact_email).to eql('some@email.com')
       expect(application_details.vacancy.application_link).to eql('http://an.application.link')
+      expect(application_details.vacancy.school_visits).to eql('How you can visit the school')
+      expect(application_details.vacancy.how_to_apply).to eql('How you can apply for the job')
     end
   end
 end

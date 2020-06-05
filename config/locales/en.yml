@@ -108,6 +108,8 @@ en:
           "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
       application_details_form:
         contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
+        school_visits: School visits
+        how_to_apply: How to apply
         application_link_html: "Link for jobseekers to learn more and apply (<span class='text-red'>Required</span>)"
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
@@ -144,6 +146,8 @@ en:
           'These could include, for example, a job description, person specification or application pack'
       application_details_form:
         contact_email: This email address will be shown publicly as a point of contact
+        school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
+        how_to_apply: Explain how to apply for the job, referring to any relevant documents
         application_link: >-
           Enter the URL for the page on your school trust's website that gives further details on the job
           and how to apply
@@ -275,11 +279,13 @@ en:
         cancel: 'Cancel'
         remove: 'Remove'
         removing: 'Removing...'
-    application_details: 'Application details'
+    application_details: 'Applying for the job'
     no_contact_email: 'No job contact email given'
     contact_email: 'Contact email'
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: 'Regarding the job at %{url}'
+    school_visits: 'School visit instructions'
+    how_to_apply: 'Application instructions'
     deadline_date: 'Date application is due'
     deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
     time_at: ' at '
@@ -382,7 +388,7 @@ en:
       change_job_details: 'Change job details'
       change_pay_package: 'Change pay package'
       change_supporting_documents: 'Change supporting documents'
-      change_application_details: 'Change application details'
+      change_application_details: 'Change applying for the job'
       change_job_summary: 'Change job summary'
       apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
       contact_email_link: 'Email link for job contact email — %{email}'

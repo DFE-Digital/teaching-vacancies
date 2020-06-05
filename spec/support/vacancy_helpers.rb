@@ -61,6 +61,8 @@ module VacancyHelpers
 
   def fill_in_application_details_form_fields(vacancy)
     fill_in 'application_details_form[contact_email]', with: vacancy.contact_email
+    fill_in 'application_details_form[school_visits]', with: vacancy.school_visits
+    fill_in 'application_details_form[how_to_apply]', with: vacancy.how_to_apply
     fill_in 'application_details_form[application_link]', with: vacancy.application_link
   end
 
@@ -105,6 +107,8 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t('jobs.supporting_documents'))
 
     expect(page).to have_content(vacancy.contact_email)
+    expect(page.html).to include(vacancy.school_visits)
+    expect(page.html).to include(vacancy.how_to_apply)
     expect(page).to have_content(vacancy.application_link)
 
     expect(page.html).to include(vacancy.job_summary)
