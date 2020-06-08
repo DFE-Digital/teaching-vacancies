@@ -6,7 +6,7 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    widgetParams.container.innerHTML = addHeadingMarkup(results.nbHits);
+    widgetParams.container.innerHTML = createHeadingMarkup(results.nbHits, document.getElementById('keyword').value, document.getElementById('location').value);
     if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.alert);
       document.querySelector('#job-alert-link').href = getJobAlertLink(window.location.href);
@@ -47,14 +47,12 @@ export const getJobAlertLinkParam = (key, value) => {
   return encodeURIComponent(`search_criteria[${key}]`) + `=${value.replace(' ', '+')}&`;
 };
 
-export const addHeadingMarkup = (numberHits) => {
-  const keyword = document.getElementById('keyword').value;
-  const location = document.getElementById('location').value;
-  const prefix = keyword || location ? ' match ' : ' listed';
+export const createHeadingMarkup = (numberHits, keyword = null, location = null) => {
+  const prefix = keyword || location ? ` ${numberHits > 1 ? 'match' : 'matches'} ` : ' listed';
   const postfix = `${prefix}${createHeadingHTMLForSearchTerm('', keyword)} ${createHeadingHTMLForSearchTerm('near', location)}`;
-  const hits = keyword || location ? `<span class="govuk-!-font-weight-bold">${numberHits}</span>` : `There are <span class="govuk-!-font-weight-bold">${numberHits}</span>`;
+  const hits = keyword || location ? `<span class="govuk-!-font-weight-bold">${numberHits}</span>` : `There ${numberHits > 1 ? 'are' : 'is'} <span class="govuk-!-font-weight-bold">${numberHits}</span>`;
 
-  return `${hits} jobs ${postfix}`;
+  return `${hits} ${numberHits > 1 ? 'jobs' : 'job'} ${postfix}`;
 };
 
 export const createHeadingHTMLForSearchTerm = (pre, string) => {
