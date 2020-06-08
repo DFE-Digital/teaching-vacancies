@@ -1,2 +1,2 @@
 - copy = false if local_assigns[:copy].nil?
-= f.hidden_field :state, value: copy ? 'copy' : @vacancy&.published? ? 'edit_published' : %w(copy_review review edit).include?(@vacancy&.state) ? @vacancy.state : 'create'
+= f.hidden_field :state, value: copy ? 'copy' : @vacancy&.published? ? 'edit_published' : %w(copy review edit).include?(@vacancy&.state) ? @vacancy.state : 'create'

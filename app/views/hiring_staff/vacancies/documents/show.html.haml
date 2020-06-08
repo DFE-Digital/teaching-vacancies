@@ -30,7 +30,7 @@
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
   .govuk-grid-column-one-third
-    - unless @vacancy.published? || @vacancy.state == 'copy_review'
+    - unless @vacancy.published? || @vacancy.state == 'copy'
       = render 'hiring_staff/vacancies/sidebar'
 
 - content_for :after_main do

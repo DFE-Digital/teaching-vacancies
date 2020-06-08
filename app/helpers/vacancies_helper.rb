@@ -62,14 +62,14 @@ module VacanciesHelper
 
   def review_heading(vacancy, school = current_school)
     return I18n.t('jobs.edit_heading', school: school.name) if vacancy.published?
-    return I18n.t('jobs.copy_review_heading') if vacancy.state == 'copy_review'
+    return I18n.t('jobs.copy_review_heading') if vacancy.state == 'copy'
     I18n.t('jobs.review_heading')
   end
 
   def page_title(vacancy, school = current_school)
     return I18n.t('jobs.edit_heading', school: school.name) if vacancy.published?
     return I18n.t('jobs.copy_page_title',
-                  job_title: vacancy.job_title.downcase) if %w(copy copy_review).include?(vacancy.state)
+                  job_title: vacancy.job_title.downcase) if vacancy.state == 'copy'
     I18n.t('jobs.create_a_job', school: school.name)
   end
 

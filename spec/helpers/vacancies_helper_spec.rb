@@ -57,9 +57,9 @@ RSpec.describe VacanciesHelper, type: :helper do
       expect(review_heading(vacancy, school)).to eql(I18n.t('jobs.edit_heading', school: school.name))
     end
 
-    it 'returns copy review heading if vacancy state is copy_review' do
+    it 'returns copy review heading if vacancy state is copy' do
       allow(vacancy).to receive(:published?).and_return(false)
-      allow(vacancy).to receive(:state).and_return('copy_review')
+      allow(vacancy).to receive(:state).and_return('copy')
 
       expect(review_heading(vacancy, school)).to eql(I18n.t('jobs.copy_review_heading'))
     end
@@ -80,14 +80,6 @@ RSpec.describe VacanciesHelper, type: :helper do
       allow(vacancy).to receive(:published?).and_return(true)
 
       expect(page_title(vacancy, school)).to eql(I18n.t('jobs.edit_heading', school: school.name))
-    end
-
-    it 'returns copy title if vacancy state is copy_review' do
-      allow(vacancy).to receive(:published?).and_return(false)
-      allow(vacancy).to receive(:state).and_return('copy_review')
-      allow(vacancy).to receive(:job_title).and_return('Test job title')
-
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.copy_page_title', job_title: 'test job title'))
     end
 
     it 'returns copy title if vacancy state is copy' do
