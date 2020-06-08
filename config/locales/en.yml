@@ -609,6 +609,7 @@ en:
     submit: 'Submit'
     update_job: 'Update listing'
     cancel_copy: 'Cancel copy'
+    cancel_and_return: Cancel and return
 
   messages:
     jobs:
@@ -617,6 +618,7 @@ en:
         message: 'Improve your job listing using the new sections and features below'
       delete: The job has been deleted
       updated: 'The job has been updated'
+      listing_updated_html: '<strong>Listing updated</strong> for %{job_title}'
       draft_saved_html: '<strong>Draft saved</strong> for %{job_title}'
       view:
         only_published: You can only view published jobs

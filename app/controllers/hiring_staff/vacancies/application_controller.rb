@@ -57,11 +57,13 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     redirect_to jobs_with_type_school_path('draft'), success: update_message
   end
 
-  def redirect_to_next_step_if_save_and_continue(vacancy_id)
+  def redirect_to_next_step_if_save_and_continue(vacancy_id, job_title = nil)
+    update_message = job_title.present? ?
+      I18n.t('messages.jobs.listing_updated_html', job_title: job_title) : I18n.t('messages.jobs.updated')
     if params[:commit] == I18n.t('buttons.save_and_continue')
       redirect_to_next_step(vacancy_id)
     elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(vacancy_id), success: I18n.t('messages.jobs.updated')
+      redirect_to edit_school_job_path(vacancy_id), success: update_message
     end
   end
 
