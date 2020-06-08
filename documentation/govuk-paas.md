@@ -67,6 +67,10 @@ cf7 unset-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
 cf7 apps
 ```
 
+There should be 2 apps:
+- webapp: it has a route to serve requests from users
+- worker: it subscribe to redis to run asynchronous jobs
+
 ## Check running services
 ```bash
 cf7 services
@@ -74,50 +78,52 @@ cf7 services
 
 ## Check app health and status
 ```bash
-cf7 app $CF_SPACE
+cf7 app <app_name>
 ```
 
 ## Check environment variables
 ```bash
-cf7 env $CF_SPACE
+cf7 env <app_name>
 ```
 
 ## Set environment variable
 ```bash
-cf7 set-env $CF_SPACE ENV_VAR_NAME env_var_value
+cf7 set-env <app_name> ENV_VAR_NAME env_var_value
 ```
 Remember to restart the app, using `--strategy rolling` if you wish to avoid downtime. In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
 ```bash
-cf7 restart $CF_SPACE --strategy rolling
+cf7 restart <app_name> --strategy rolling
 ```
 
 ## SSH into app
 ```bash
-cf7 ssh $CF_SPACE
+cf7 ssh <app_name>
 ```
 
 ## Access Rails console
 ```bash
-cf7 ssh $CF_SPACE -t -c "/tmp/lifecycle/launcher /home/vcap/app 'rails console' ''"
+cf7 ssh <app_name> -t -c "/tmp/lifecycle/launcher /home/vcap/app 'rails console' ''"
 ```
 
 ## Run task
 ```bash
-cf7 run-task $CF_SPACE -c "rails task:name"
+cf7 run-task <app_name> -c "rails task:name"
 ```
 
 ## Deploy to dev
 Make sure you are logged in `teaching-vacancies-dev` space.
 
 ```bash
-cf7 push -f manifest-dev.yml
+cf7 push -f paas/web/manifest-dev.yml
+cf7 push -f paas/worker/manifest-dev.yml
 ```
 
 ## Deploy to staging
 Make sure you are logged in `teaching-vacancies-staging` space.
 
 ```bash
-cf7 push -f manifest-staging.yml
+cf7 push -f paas/web/manifest-staging.yml
+cf7 push -f paas/worker/manifest-staging.yml
 ```
 
 ## CI/CD with GitHub Actions
@@ -128,12 +134,12 @@ When a PR is approved and merged into `master` branch an automatic deploy is tri
 ## Set up environment on GOV.UK PaaS
 
 ### Create services
-All the services are specified in the `manifest.yml` file and are automatically bounded on deploy.
+All the services are specified in the `manifest.yml` file and are automatically bound on deploy.
 
 ```
 teaching-vacancies-dev -> manifest-dev.yml
 teaching-vacancies-staging -> manifest-staging.yml
-teaching-vacancies-production -> manifest.yml
+teaching-vacancies-production -> manifest-production.yml
 ```
 Make sure you are logged in the relevant space.
 
