@@ -37,5 +37,5 @@
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
   .govuk-grid-column-one-third
-    - unless @vacancy.published?
+    - unless @vacancy.published? || @vacancy.state == 'copy_review'
       = render 'hiring_staff/vacancies/sidebar'
