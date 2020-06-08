@@ -5,7 +5,6 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
   context 'validations' do
     it { should validate_presence_of(:contact_email).with_message('Enter a contact email') }
-    it { should validate_presence_of(:application_link).with_message('Enter a link for jobseekers to apply') }
 
     describe '#application_link' do
       let(:application_details) { ApplicationDetailsForm.new(application_link: 'not a url') }
@@ -13,7 +12,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'checks for a valid url' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:application_link][0])
-          .to eq('Enter an application link in the correct format, like http://www.school.ac.uk')
+          .to eq(I18n.t('application_details_errors.application_link.url'))
       end
     end
 
@@ -23,7 +22,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       it 'checks for a valid email format' do
         expect(application_details.valid?).to be false
         expect(application_details.errors.messages[:contact_email][0])
-          .to eq('Enter an email address in the correct format, like name@example.com')
+          .to eq(I18n.t('application_details_errors.contact_email.invalid'))
       end
     end
   end

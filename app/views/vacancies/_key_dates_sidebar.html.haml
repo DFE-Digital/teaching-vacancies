@@ -3,7 +3,7 @@
     - unless @vacancy.expired?
       %h3.govuk-heading-s
         = SchoolVacancyPresenter.new(@vacancy).days_to_apply
-    %ul.key-dates-timeline
+    %ul.key-dates-timeline{ class: 'govuk-!-margin-bottom-0' }
       - if @vacancy.starts_on.present?
         %li.key-dates-timeline__item
           %h3.key-dates-timeline__title.govuk-heading-s
@@ -20,5 +20,3 @@
           = t('jobs.publish_on')
         %p.key-dates-timeline__by
           = format_date(@vacancy.publish_on)
-    - if @vacancy.application_link.present?
-      = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')

@@ -41,8 +41,7 @@ en:
       blank: Enter a contact email
       invalid: Enter an email address in the correct format, like name@example.com
     application_link:
-      blank: Enter a link for jobseekers to apply
-      url: Enter an application link in the correct format, like http://www.school.ac.uk
+      url: Enter a link in the correct format, like http://www.school.ac.uk
   job_summary_errors: &job_summary_errors
     job_summary:
       blank: Enter a job summary

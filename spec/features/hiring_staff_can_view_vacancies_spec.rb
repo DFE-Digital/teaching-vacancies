@@ -47,6 +47,6 @@ RSpec.feature 'School viewing vacancies' do
     vacancy = create(:vacancy, school: school, status: 'published')
     visit school_job_path(vacancy.id)
 
-    expect { click_on 'Get more information' }.to change { vacancy.get_more_info_counter.to_i }.by(0)
+    expect { click_on I18n.t('jobs.apply') }.to change { vacancy.get_more_info_counter.to_i }.by(0)
   end
 end

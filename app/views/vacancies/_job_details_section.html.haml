@@ -1,5 +1,5 @@
 %section#job-details.govuk-tabs__panel.no-border-override
-  %h3.govuk-heading-m
+  %h3.govuk-heading-l
     = t('jobs.job_details')
   %table.govuk-table{ ariadescribedby: "Job details" }
     %tbody.govuk-table__body
@@ -42,9 +42,16 @@
       %h4.govuk-heading-s= t('jobs.experience')
       %p= @vacancy.experience
 
-  -if @vacancy.benefits.present?
+  - if @vacancy.benefits.present?
     %h4.govuk-heading-s= t('jobs.benefits')
     %p= @vacancy.benefits
+
+  - if @vacancy.how_to_apply.present?
+    %h4.govuk-heading-s= t('jobs.applying_for_the_job')
+    %p= @vacancy.how_to_apply
+
+  - if @vacancy.application_link.present?
+    = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
 
   - if @vacancy.documents.any?
     %h4.govuk-heading-s= t('jobs.supporting_documents')

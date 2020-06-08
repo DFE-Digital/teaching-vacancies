@@ -31,6 +31,14 @@ class VacancyPresenter < BasePresenter
     end
   end
 
+  def school_visits
+    simple_format(model.school_visits) if model.school_visits.present?
+  end
+
+  def how_to_apply
+    simple_format(model.how_to_apply) if model.how_to_apply.present?
+  end
+
   def education
     simple_format(model.education) if model.education.present?
   end

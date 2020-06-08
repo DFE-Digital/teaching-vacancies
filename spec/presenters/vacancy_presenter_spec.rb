@@ -93,6 +93,24 @@ RSpec.describe VacancyPresenter do
     end
   end
 
+  describe '#school_visits' do
+    it 'sanitizes and transforms school_visits into HTML' do
+      vacancy = build(:vacancy, school_visits: '<script> call();</script>Sanitized content')
+      presenter = VacancyPresenter.new(vacancy)
+
+      expect(presenter.school_visits).to eq('<p> call();Sanitized content</p>')
+    end
+  end
+
+  describe '#how_to_apply' do
+    it 'sanitizes and transforms school_visits into HTML' do
+      vacancy = build(:vacancy, how_to_apply: '<script> call();</script>Sanitized content')
+      presenter = VacancyPresenter.new(vacancy)
+
+      expect(presenter.how_to_apply).to eq('<p> call();Sanitized content</p>')
+    end
+  end
+
   describe '#working_patterns' do
     it 'returns nil if working_patterns is unset' do
       vacancy = VacancyPresenter.new(create(:vacancy,

@@ -12,7 +12,7 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     vacancy = create(:vacancy, :published, application_link: 'www.google.com')
     visit job_path(vacancy)
 
-    click_on 'Get more information'
+    click_on I18n.t('jobs.apply')
 
     activity = vacancy.activities.last
     expect(activity.key).to eq('vacancy.get_more_information')
@@ -23,7 +23,7 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     vacancy = create(:vacancy, :published)
     visit job_path(vacancy)
 
-    expect { click_on 'Get more information' }.to change { vacancy.get_more_info_counter.to_i }.by(1)
+    expect { click_on I18n.t('jobs.apply') }.to change { vacancy.get_more_info_counter.to_i }.by(1)
   end
 
   scenario 'it triggers a job to write an express_interest_event to the audit table' do
@@ -43,7 +43,7 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
       .with(express_interest_event)
 
     Timecop.freeze(timestamp) do
-      click_on 'Get more information'
+      click_on I18n.t('jobs.apply')
     end
   end
 end
