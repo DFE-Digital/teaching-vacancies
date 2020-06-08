@@ -108,7 +108,6 @@ if (document.querySelector('#vacancies-hits')) {
         }),
         heading({
             container: document.querySelector('#job-count'),
-            alert: document.querySelector('.vacancies-count'),
             threshold: SEARCH_THRESHOLD,
         }),
         hits({

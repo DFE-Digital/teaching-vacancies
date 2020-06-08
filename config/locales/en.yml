@@ -528,8 +528,8 @@ en:
     view_ofsted_report: 'View Ofsted report'
   subscriptions:
     link:
-      text: 'Subscribe to a job alert.'
-      help_text: 'We’ll email you whenever a job matching this search is published.'
+      text: 'Receive a job alert'
+      help_text: 'whenever a job matching this search is published'
     intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     new:
       page_description: Sign up for a job alert
