@@ -45,7 +45,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         allow(Subscription).to receive(:new).and_return(subscription)
         allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
         allow(SubscriptionPresenter).to receive(:new).and_return(subscription_presenter)
-        expect(subscription_finder).to receive(:exists?).and_return(false)
+        allow(subscription_finder).to receive(:exists?).and_return(false)
         allow(controller).to receive(:recaptcha_reply).and_return({ 'score' => 0.9 })
         allow(controller).to receive(:verify_recaptcha).and_return(true)
       end
