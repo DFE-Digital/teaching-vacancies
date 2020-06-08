@@ -33,7 +33,8 @@ jobs:
         cf7 api $CF_API_ENDPOINT
         cf7 auth
         cf7 target -o $CF_ORG -s $CF_SPACE
-        cf7 push --strategy rolling
+        cf7 push --strategy rolling -f paas/web/manifest-production.yml
+        cf7 push -f paas/worker/manifest-production.yml
 
   notify:
     needs: deploy

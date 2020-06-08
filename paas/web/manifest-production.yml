@@ -1,0 +1,14 @@
+---
+applications:
+  - name: teaching-vacancies-production
+    buildpacks:
+      - ruby_buildpack
+    env:
+      RAILS_ENV: production
+    command: bundle exec rake cf:on_first_instance db:migrate && rails s
+    instances: 4
+    memory: 512M
+    services:
+      - teaching-vacancies-postgres-production
+      - teaching-vacancies-redis-production
+      - teaching-vacancies-papertrail-production
