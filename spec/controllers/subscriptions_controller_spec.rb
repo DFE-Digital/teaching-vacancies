@@ -30,7 +30,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe '#create' do
     context 'verify_recaptcha is true ' do
       let(:subscription) do
-        build(:subscription)
+        create(:subscription)
       end
 
       let(:subscription_presenter) do
