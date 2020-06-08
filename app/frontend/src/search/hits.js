@@ -61,7 +61,7 @@ export const createHeadingMarkup = (numberHits, keyword = null, location = null)
 };
 
 export const createHeadingHTMLForSearchTerm = (pre, string) => {
-  return string ? `${pre} <span class="govuk-!-font-weight-bold text-capitalize">&#39;${string}&#39;</span>` : '';
+  return string ? `${pre} <span class="govuk-!-font-weight-bold text-capitalize">${string}</span>` : '';
 };
 
 export const hideServerMarkup = () => {

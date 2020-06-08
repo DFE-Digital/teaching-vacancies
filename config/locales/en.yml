@@ -216,10 +216,10 @@ en:
     leadership_level: 'Leadership level'
     job_count_without_search: There is <span class='govuk-!-font-weight-bold'>%{count}</span> job listed
     job_count_plural_without_search: "There are <span class='govuk-!-font-weight-bold'>%{count}</span> jobs listed"
-    job_count: "<span class='govuk-!-font-weight-bold'>%{count}</span> job matches your <span class='govuk-!-font-weight-bold text-capitalize'>&#39;%{keyword}&#39;</span>"
-    job_count_plural: "<span class='govuk-!-font-weight-bold'>%{count}</span> jobs match<span class='govuk-!-font-weight-bold text-capitalize'> &#39;%{keyword}&#39;</span>"
-    job_count_with_location_category: "<span class='govuk-!-font-weight-bold'>%{count}</span> job matches &#39;<span class='govuk-!-font-weight-bold text-capitalize'>%{keyword}</span>&#39; near &#39;<span class='govuk-!-font-weight-bold'>%{location}</span>&#39;"
-    job_count_plural_with_location_category: <span class="govuk-!-font-weight-bold">%{count}</span>jobs match &#39;<span class="govuk-!-font-weight-bold text-capitalize">%{keyword}</span>&#39; near &#39;<span class="govuk-!-font-weight-bold">%{location}</span>&#39;
+    job_count: "<span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-capitalize'>%{keyword}</span>"
+    job_count_plural: "<span class='govuk-!-font-weight-bold'>%{count}</span> jobs match <span class='govuk-!-font-weight-bold text-capitalize'>%{keyword}</span>"
+    job_count_with_location_category: "<span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-capitalize'>%{keyword}</span> near <span class='govuk-!-font-weight-bold'>%{location}</span>"
+    job_count_plural_with_location_category: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-capitalize">%{keyword}</span> near <span class="govuk-!-font-weight-bold">%{location}</span>
     no_jobs:
       intro: 'You might find matching jobs by:'
       suggestions:

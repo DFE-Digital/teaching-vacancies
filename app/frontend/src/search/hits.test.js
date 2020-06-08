@@ -6,21 +6,21 @@ describe('createHeadingMarkup', () => {
     });
 
     test('creates formatted and readable markup to reflect search terms for plural number of results', () => {
-        expect(createHeadingMarkup(4, 'physics')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-capitalize">&#39;physics&#39;</span> ');
-        expect(createHeadingMarkup(4, '', 'mars')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  near <span class="govuk-!-font-weight-bold text-capitalize">&#39;mars&#39;</span>');
-        expect(createHeadingMarkup(4, 'physics', 'mars')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-capitalize">&#39;physics&#39;</span> near <span class="govuk-!-font-weight-bold text-capitalize">&#39;mars&#39;</span>');
+        expect(createHeadingMarkup(4, 'physics')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> ');
+        expect(createHeadingMarkup(4, '', 'mars')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  near <span class="govuk-!-font-weight-bold text-capitalize">mars</span>');
+        expect(createHeadingMarkup(4, 'physics', 'mars')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> near <span class="govuk-!-font-weight-bold text-capitalize">mars</span>');
     });
 
     test('creates formatted and readable markup to reflect search terms for one result', () => {
         expect(createHeadingMarkup(1)).toBe('There is <span class="govuk-!-font-weight-bold">1</span> job  listed ');
-        expect(createHeadingMarkup(1, 'physics')).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-capitalize">&#39;physics&#39;</span> ');
-        expect(createHeadingMarkup(1, 'physics', 'mars')).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-capitalize">&#39;physics&#39;</span> near <span class="govuk-!-font-weight-bold text-capitalize">&#39;mars&#39;</span>');
+        expect(createHeadingMarkup(1, 'physics')).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> ');
+        expect(createHeadingMarkup(1, 'physics', 'mars')).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> near <span class="govuk-!-font-weight-bold text-capitalize">mars</span>');
     });
 });
 
 describe('createHeadingHTMLForSearchTerm', () => {
     test('returns a string of capitalized words after a prefix', () => {
-        expect(createHeadingHTMLForSearchTerm('176 jobs near', 'babylon gardens')).toBe('176 jobs near <span class="govuk-!-font-weight-bold text-capitalize">&#39;babylon gardens&#39;</span>');
+        expect(createHeadingHTMLForSearchTerm('176 jobs near', 'babylon gardens')).toBe('176 jobs near <span class="govuk-!-font-weight-bold text-capitalize">babylon gardens</span>');
     });
 });
 
