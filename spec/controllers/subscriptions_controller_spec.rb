@@ -51,23 +51,23 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'verifies the recaptcha' do
-        expect_any_instance_of(SubscriptionsController).to receive(:verify_recaptcha)
+        expect(controller).to receive(:verify_recaptcha)
         post :create, params: { subscription: subscription.attributes }
       end
 
       it 'sends the Subscription instance and action (both required) when it verifies the recaptcha' do
-        expect_any_instance_of(SubscriptionsController).to receive(:verify_recaptcha)
+        expect(controller).to receive(:verify_recaptcha)
           .with(model: an_instance_of(Subscription), action: 'subscription')
         post :create, params: { subscription: subscription.attributes }
       end
 
       it 'sets the recaptcha score on the Subscription record' do
-        expect_any_instance_of(Subscription).to receive(:recaptcha_score=).with(0.9)
+        expect(subscription).to receive(:recaptcha_score=).with(0.9)
         post :create, params: { subscription: subscription.attributes }
       end
 
       it 'saves the Subscription record' do
-        expect_any_instance_of(Subscription).to receive(:save).at_least(:once).and_return(true)
+        expect(subscription).to receive(:save).at_least(:once).and_return(true)
         post :create, params: { subscription: subscription.attributes }
       end
 
