@@ -14,15 +14,18 @@
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#school_visits
       %h4.govuk-heading-s= t('jobs.school_visits')
-    %dd.app-check-your-answers__answer= @vacancy.school_visits
+    %dd.app-check-your-answers__answer= @vacancy.school_visits.presence || t('jobs.not_defined')
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#how_to_apply
       %h4.govuk-heading-s= t('jobs.how_to_apply')
-    %dd.app-check-your-answers__answer= @vacancy.how_to_apply
+    %dd.app-check-your-answers__answer= @vacancy.how_to_apply.presence || t('jobs.not_defined')
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#application_link
       %h4.govuk-heading-s= t('jobs.application_link')
     %dd.app-check-your-answers__answer
-      = link_to @vacancy.application_link, @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank'
+      - if @vacancy.application_link.present?
+        = link_to @vacancy.application_link, @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank'
+      - else
+        = t('jobs.not_defined')

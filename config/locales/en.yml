@@ -296,6 +296,7 @@ en:
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
     review_future:
       'Review your entries for each section below, making any changes before you submit the listing for publication.'
+    not_defined: Not defined (will not be seen on published listing)
     edit: 'Edit the job details.'
     copy_of: 'Copy of'
     preview_listing:
