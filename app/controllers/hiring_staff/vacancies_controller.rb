@@ -32,7 +32,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     unless @vacancy.valid?
       redirect_to_incomplete_step
     else
-      state = params[:edit_draft] == 'true' ? 'edit' : 'review'
+      state = %w(copy copy_review).include?(@vacancy.state) ? 'copy_review' :
+        params[:edit_draft] == 'true' ? 'edit' : 'review'
       @vacancy.update(state: state) unless @vacancy&.state == state
       set_completed_step
     end

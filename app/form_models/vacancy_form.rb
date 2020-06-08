@@ -6,7 +6,7 @@ class VacancyForm
   delegate(*Vacancy.attribute_names.map { |attr| [attr, "#{attr}=", "#{attr}?"] }.flatten, to: :vacancy)
   delegate :save, to: :vacancy
 
-  validates :state, inclusion: { in: %w[copy create edit edit_published review] }
+  validates :state, inclusion: { in: %w[copy copy_review create edit edit_published review] }
 
   def initialize(params = {})
     @vacancy = Vacancy.new(
