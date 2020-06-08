@@ -67,6 +67,8 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'saves the Subscription record' do
+        expect(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
+        expect(subscription_finder).to receive(:exists?).and_return(false)
         expect(subscription).to receive(:save).at_least(:once).and_return(true)
         post :create, params: { subscription: subscription.attributes }
       end
