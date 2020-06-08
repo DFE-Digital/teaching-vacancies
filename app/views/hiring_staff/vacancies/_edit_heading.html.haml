@@ -1,7 +1,4 @@
-- if @vacancy.published?
-  %h1.govuk-heading-l= t('jobs.edit_heading', school: current_school.name)
-- else
-  %h2.govuk-heading-l= t('jobs.review_heading')
+%h2.govuk-heading-l= review_heading(@vacancy)
 
 %div
   - if new_sections(@vacancy).any?
