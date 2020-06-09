@@ -56,6 +56,9 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'sends the Subscription instance and action (both required) when it verifies the recaptcha' do
+        allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
+        allow(subscription_finder).to receive(:exists?).and_return(false)
+        allow(subscription).to receive(:save).at_least(:once).and_return(true)
         expect(controller).to receive(:verify_recaptcha)
           .with(model: an_instance_of(Subscription), action: 'subscription')
         post :create, params: { subscription: subscription.attributes }
