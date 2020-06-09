@@ -40,42 +40,42 @@ class VacanciesPresenter < BasePresenter
   end
 
   def total_count_message
-    return I18n.t('jobs.job_count_without_search_html', count: total_count) if total_count == 1
+    return I18n.t('jobs.search_result_heading.without_search.one_html', count: total_count) if total_count == 1
 
-    I18n.t('jobs.job_count_plural_without_search_html', count: number_with_delimiter(total_count))
+    I18n.t('jobs.search_result_heading.without_search.plural_html', count: number_with_delimiter(total_count))
   end
 
   def total_count_message_with_keyword_location(keyword, location)
     return I18n.t(
-      'jobs.job_count_with_location_keyword_html',
+      'jobs.search_result_heading.keyword_location.one_html',
       count: total_count,
       keyword: keyword,
       location: location
     ) if total_count == 1
 
-    I18n.t('jobs.job_count_plural_with_location_keyword_html',
+    I18n.t('jobs.search_result_heading.keyword_location.plural_html',
       location: location, keyword: keyword, count: number_with_delimiter(total_count))
   end
 
   def total_count_message_with_keyword(keyword)
     return I18n.t(
-      'jobs.job_count_with_keyword_html',
+      'jobs.search_result_heading.keyword.one_html',
       count: total_count,
       keyword: keyword
     ) if total_count == 1
 
-    I18n.t('jobs.job_count_plural_with_keyword_html',
+    I18n.t('jobs.search_result_heading.keyword.plural_html',
       keyword: keyword, count: number_with_delimiter(total_count))
   end
 
   def total_count_message_with_location(location)
     return I18n.t(
-      'jobs.job_count_with_location_html',
+      'jobs.search_result_heading.location.one_html',
       count: total_count,
       location: location
     ) if total_count == 1
 
-    I18n.t('jobs.job_count_plural_with_location_html',
+    I18n.t('jobs.search_result_heading.location.plural_html',
       location: location, count: number_with_delimiter(total_count))
   end
 
