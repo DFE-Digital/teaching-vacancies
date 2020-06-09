@@ -610,6 +610,7 @@ en:
     update_job: 'Update listing'
     cancel_copy: 'Cancel copy'
     cancel_and_return: Cancel and return
+    back_to_manage_jobs: Back to manage jobs
 
   messages:
     jobs:

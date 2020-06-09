@@ -90,4 +90,15 @@ module VacanciesHelper
     return vacancy&.state if %w(copy review edit).include?(vacancy&.state)
     'create'
   end
+
+  def back_to_manage_jobs_link(vacancy)
+    if vacancy.listed?
+      state = 'published'
+    elsif vacancy.published? && vacancy.expires_on.future?
+      state = 'pending'
+    else
+      state = 'draft'
+    end
+    jobs_with_type_school_path(state)
+  end
 end

@@ -132,4 +132,29 @@ RSpec.describe VacanciesHelper, type: :helper do
       expect(hidden_state_field_value(vacancy)).to eql('create')
     end
   end
+
+  describe '#back_to_manage_jobs_link' do
+    let(:vacancy) { double('vacancy').as_null_object }
+
+    before do
+      allow(vacancy).to receive(:listed?).and_return(false)
+      allow(vacancy).to receive(:published?).and_return(false)
+      allow(vacancy).to receive_message_chain(:expires_on, :future?).and_return(false)
+    end
+
+    it 'returns draft jobs link for draft jobs' do
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('draft'))
+    end
+
+    it 'returns pending jobs link for scheduled jobs' do
+      allow(vacancy).to receive(:published?).and_return(true)
+      allow(vacancy).to receive_message_chain(:expires_on, :future?).and_return(true)
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('pending'))
+    end
+
+    it 'returns published jobs link for published jobs' do
+      allow(vacancy).to receive(:listed?).and_return(true)
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('published'))
+    end
+  end
 end
