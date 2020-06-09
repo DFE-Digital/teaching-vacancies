@@ -1,11 +1,11 @@
 .govuk-form-group{ 'class': f.object.errors[:expiry_time].present? ? 'govuk-form-group--error' : '' }
-  %fieldset.govuk-fieldset{ 'aria-describedby': '#important_dates_form-expiry-time-hint', 'id': f.object.errors[:expiry_time].present? ? 'important_dates_form-expiry-time-field-error' : 'important_dates_form-expiry-time-field' }
+  %fieldset.govuk-fieldset{ 'aria-describedby': "##{f.object_name}-expiry-time-hint", 'id': f.object.errors[:expiry_time].present? ? "##{f.object_name}-expity-time-field-error" : "##{f.object_name}-expity-time-field" }
     %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
       %h1.govuk-fieldset__heading= t('helpers.fieldset.important_dates_form.expiry_time_html')
-    %span.govuk-hint#important_dates_form-expiry-time-hint
+    %span.govuk-hint{ id: "#{f.object_name}-expiry-time-hint" }
       = t('helpers.hint.important_dates_form.expiry_time')
     - f.object.errors[:expiry_time]&.each do |error|
-      %span.govuk-error-message#important_dates_form-expiry-time-error
+      %span.govuk-error-message{ id: "#{f.object_name}-expiry-time-error" }
         = error
     .govuk-date-input
       .govuk-date-input__item.add-colon-positioned-next-to-element

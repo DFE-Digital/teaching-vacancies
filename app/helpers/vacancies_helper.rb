@@ -60,10 +60,30 @@ module VacanciesHelper
     end
   end
 
+  def review_heading(vacancy, school = current_school)
+    return I18n.t('jobs.edit_heading', school: school.name) if vacancy.published?
+    return I18n.t('jobs.copy_review_heading') if vacancy.state == 'copy'
+    I18n.t('jobs.review_heading')
+  end
+
+  def page_title(vacancy, school = current_school)
+    return I18n.t('jobs.edit_heading', school: school.name) if vacancy.published?
+    return I18n.t('jobs.copy_page_title',
+                  job_title: vacancy.job_title.downcase) if vacancy.state == 'copy'
+    I18n.t('jobs.create_a_job', school: school.name)
+  end
+
   def missing_subjects?(vacancy)
     legacy_subjects = [vacancy.subject,
                        vacancy.first_supporting_subject,
                        vacancy.second_supporting_subject].reject(&:blank?)
     legacy_subjects.any? && legacy_subjects.count != vacancy.subjects&.count
+  end
+
+  def hidden_state_field_value(vacancy, copy = false)
+    return 'copy' if copy
+    return 'edit_published' if vacancy&.published?
+    return vacancy&.state if %w(copy review edit).include?(vacancy&.state)
+    'create'
   end
 end

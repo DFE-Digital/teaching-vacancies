@@ -1,19 +1,18 @@
 - content_for :page_title_prefix, "#{@copy_form.errors.present? ? 'Error: ' : ''}Copy a job for #{current_school.name}"
 
-%h1.govuk-heading-l
-  = t('jobs.copy_page_title', job_title: @copy_form.vacancy.job_title.downcase)
-  %span.govuk-caption-l
-    Step 1 of 2
+%h1.govuk-heading-m= t('jobs.copy_page_title', job_title: @copy_form.vacancy.job_title.downcase)
+
+= link_to t('buttons.cancel_copy'), school_path, class: 'govuk-back-link govuk-!-margin-bottom-5'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_error_summary t('jobs.errors_present')
 
-      %h2.govuk-heading-m
-        = t('jobs.job_details')
+      %h2.govuk-heading-l
+        = t('jobs.new_job_listing_details')
 
-      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f, copy: true
 
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.govuk_text_field :job_title,
@@ -34,18 +33,12 @@
           hint_text: t('helpers.hint.job_specification_form.job_roles')
 
       - unless @vacancy.about_school.present?
-        %h2.govuk-heading-m
-          = t('jobs.job_summary')
-
         = f.govuk_text_area :about_school,
           label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: current_school.name), size: 's' },
           hint_text: t('helpers.hint.job_summary_form.about_school'),
           value: @vacancy.about_school.presence || @vacancy.school.description.presence.to_s,
           rows: 10,
           required: true
-
-      %h2.govuk-heading-m
-        = t('jobs.important_dates')
 
       = f.govuk_date_field :publish_on,
         legend: { text: t('helpers.fieldset.important_dates_form.publish_on_html'), size: 's' },
@@ -61,4 +54,6 @@
         legend: { text: t('helpers.fieldset.important_dates_form.starts_on'), size: 's' },
         hint_text: t('helpers.hint.important_dates_form.starts_on')
 
-      = f.govuk_submit t('buttons.save_and_continue')
+      = f.govuk_submit t('buttons.save_and_continue'), classes: 'govuk-!-margin-bottom-5'
+
+    = link_to t('buttons.cancel_copy'), school_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'

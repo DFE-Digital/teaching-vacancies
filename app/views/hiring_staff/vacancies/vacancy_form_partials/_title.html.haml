@@ -1,8 +1,5 @@
-- if @vacancy&.published?
-  %h1.govuk-heading-m
-    = t('jobs.edit_heading', school: current_school.name)
-- else
-  %h1.govuk-heading-m
-    = t('jobs.create_a_job', school: current_school.name)
+%h1.govuk-heading-m
+  = @vacancy.present? ? page_title(@vacancy) : t('jobs.create_a_job', school: current_school.name)
+  - unless @vacancy&.published? || @vacancy&.state == 'copy'
     %span.govuk-caption-m
       = t('jobs.current_step', step: current_step,  total: total_steps)

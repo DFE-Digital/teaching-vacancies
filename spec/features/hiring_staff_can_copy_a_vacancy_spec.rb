@@ -16,6 +16,51 @@ RSpec.feature 'Copying a vacancy' do
     stub_hiring_staff_auth(urn: school.urn)
   end
 
+  context '#cancel_copy' do
+    scenario 'a copy can be cancelled using the cancel copy back link' do
+      original_vacancy = build(:vacancy, :past_publish, school: school)
+      original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+
+      new_vacancy = original_vacancy.dup
+      new_vacancy.job_title = 'A new job title'
+
+      visit school_path
+
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
+      end
+
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+
+      click_on(I18n.t('buttons.cancel_copy'), class: 'govuk-back-link')
+
+      expect(page.current_path).to eql(school_path)
+      expect(page).not_to have_content('A new job title')
+    end
+
+    scenario 'a copy can be cancelled using the cancel copy link' do
+      original_vacancy = build(:vacancy, :past_publish, school: school)
+      original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+
+      new_vacancy = original_vacancy.dup
+      new_vacancy.job_title = 'A new job title'
+
+      visit school_path
+
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
+      end
+
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+
+      click_on(I18n.t('buttons.cancel_copy'), class: 'govuk-link')
+
+      expect(page.current_path).to eql(school_path)
+      expect(page).not_to have_content('A new job title')
+    end
+  end
+
+
   scenario 'a job can be successfully copied and published' do
     original_vacancy = build(:vacancy, :past_publish, school: school)
     original_vacancy.save(validate: false) # Validation prevents publishing on a past date
@@ -32,12 +77,16 @@ RSpec.feature 'Copying a vacancy' do
       click_on I18n.t('jobs.copy_link')
     end
 
-    expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+    within('h1.govuk-heading-m') do
+      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+    end
 
     fill_in_copy_vacancy_form_fields(new_vacancy)
     click_on I18n.t('buttons.save_and_continue')
 
-    expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
+    within('h2.govuk-heading-l') do
+      expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
+    end
     click_on I18n.t('jobs.submit_listing.button')
 
     expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
@@ -66,11 +115,15 @@ RSpec.feature 'Copying a vacancy' do
         click_on I18n.t('jobs.copy_link')
       end
 
-      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('h1.govuk-heading-m') do
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      end
 
       click_on I18n.t('buttons.save_and_continue')
 
-      expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
+      end
     end
   end
 
@@ -91,12 +144,16 @@ RSpec.feature 'Copying a vacancy' do
         click_on I18n.t('jobs.copy_link')
       end
 
-      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('h1.govuk-heading-m') do
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
       click_on I18n.t('buttons.save_and_continue')
 
-      expect(page).to have_content(I18n.t('jobs.review_heading', school: school.name))
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
+      end
     end
   end
 
@@ -116,7 +173,9 @@ RSpec.feature 'Copying a vacancy' do
         click_on I18n.t('jobs.copy_link')
       end
 
-      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      within('h1.govuk-heading-m') do
+        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
       fill_in 'copy_vacancy_form[expires_on(2i)]', with: '090'
@@ -138,7 +197,9 @@ RSpec.feature 'Copying a vacancy' do
           click_on I18n.t('jobs.copy_link')
         end
 
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        end
         expect(page).to have_content(I18n.t('jobs.job_roles'))
       end
     end
@@ -153,7 +214,9 @@ RSpec.feature 'Copying a vacancy' do
           click_on I18n.t('jobs.copy_link')
         end
 
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        end
         expect(page).to_not have_content(I18n.t('jobs.job_roles'))
       end
     end
@@ -171,7 +234,9 @@ RSpec.feature 'Copying a vacancy' do
           click_on I18n.t('jobs.copy_link')
         end
 
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        end
         expect(page).to have_content(I18n.t('jobs.about_school', school: school.name))
       end
     end
@@ -186,7 +251,9 @@ RSpec.feature 'Copying a vacancy' do
           click_on I18n.t('jobs.copy_link')
         end
 
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        end
         expect(page).to_not have_content(I18n.t('jobs.about_school', school: school.name))
       end
     end
