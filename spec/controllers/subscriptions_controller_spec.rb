@@ -51,11 +51,16 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'verifies the recaptcha' do
+        allow(Subscription).to receive(:new).and_return(subscription)
+        allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
+        allow(subscription_finder).to receive(:exists?).and_return(false)
+        allow(subscription).to receive(:save).at_least(:once).and_return(true)
         expect(controller).to receive(:verify_recaptcha)
         post :create, params: { subscription: subscription.attributes }
       end
 
       it 'sends the Subscription instance and action (both required) when it verifies the recaptcha' do
+        allow(Subscription).to receive(:new).and_return(subscription)
         allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
         allow(subscription_finder).to receive(:exists?).and_return(false)
         allow(subscription).to receive(:save).at_least(:once).and_return(true)
@@ -65,11 +70,16 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'sets the recaptcha score on the Subscription record' do
+        allow(Subscription).to receive(:new).and_return(subscription)
+        allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
+        allow(subscription_finder).to receive(:exists?).and_return(false)
+        allow(subscription).to receive(:save).at_least(:once).and_return(true)
         expect(subscription).to receive(:recaptcha_score=).with(0.9)
         post :create, params: { subscription: subscription.attributes }
       end
 
       it 'saves the Subscription record' do
+        allow(Subscription).to receive(:new).and_return(subscription)
         allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
         allow(subscription_finder).to receive(:exists?).and_return(false)
         expect(subscription).to receive(:save).at_least(:once).and_return(true)
@@ -77,6 +87,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'renders the "confirm" template' do
+        allow(Subscription).to receive(:new).and_return(subscription)
         allow(SubscriptionFinder).to receive(:new).and_return(subscription_finder)
         allow(subscription_finder).to receive(:exists?).and_return(false)
         allow(subscription).to receive(:save).at_least(:once).and_return(true)
