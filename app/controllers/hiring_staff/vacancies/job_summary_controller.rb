@@ -14,7 +14,7 @@ class HiringStaff::Vacancies::JobSummaryController < HiringStaff::Vacancies::App
     if @job_summary_form.valid?
       update_vacancy(job_summary_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue(@vacancy.id)
+      return redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
     end
 
     render :show

@@ -49,6 +49,24 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       expect(Vacancy.last.state).to eql('edit_published')
     end
 
+    scenario 'create a job sidebar is not present' do
+      visit edit_school_job_path(vacancy.id)
+
+      expect(page).to_not have_content('Creating a job listing steps')
+    end
+
+    context '#cancel_and_return_later' do
+      scenario 'can cancel and return from job details page' do
+        visit edit_school_job_path(vacancy.id)
+
+        click_header_link(I18n.t('jobs.job_details'))
+        expect(page).to have_content(I18n.t('buttons.cancel_and_return'))
+
+        click_on I18n.t('buttons.cancel_and_return')
+        expect(page.current_path).to eql(edit_school_job_path(vacancy.id))
+      end
+    end
+
     context '#job_specification' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
@@ -69,7 +87,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on I18n.t('buttons.update_job')
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: 'Assistant Head Teacher'))
         expect(page).to have_content('Assistant Head Teacher')
       end
 
@@ -105,7 +123,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on I18n.t('buttons.update_job')
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: 'Assistant Head Teacher'))
         expect(page).to have_content('Assistant Head Teacher')
 
         visit job_path(vacancy.reload)
@@ -161,7 +179,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
         click_on I18n.t('buttons.update_job')
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
         expect(page).to have_content('Pay scale 1 to Pay scale 2')
       end
 
@@ -240,7 +258,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expiry_date = Time.zone.today + 1.week
         edit_date('expires_on', expiry_date)
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
         expect(page).to have_content(expiry_date.to_s)
       end
 
@@ -286,7 +304,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
             fill_in 'important_dates_form[expires_on(3i)]', with: vacancy.expires_on.day
             click_on I18n.t('buttons.update_job')
 
-            expect(page).to have_content(I18n.t('messages.jobs.updated'))
+            expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
             verify_all_vacancy_details(vacancy)
           end
         end
@@ -303,7 +321,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
             publish_on = Time.zone.today + 1.week
             edit_date('publish_on', publish_on)
 
-            expect(page).to have_content(I18n.t('messages.jobs.updated'))
+            expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
 
             vacancy.publish_on = publish_on
             verify_all_vacancy_details(vacancy)
@@ -362,7 +380,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'application_details_form[application_link]', with: vacancy.application_link
         click_on I18n.t('buttons.update_job')
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
 
         verify_all_vacancy_details(vacancy)
       end
@@ -417,7 +435,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
         click_on I18n.t('buttons.update_job')
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
         expect(page).to have_content('A summary about the job.')
       end
 

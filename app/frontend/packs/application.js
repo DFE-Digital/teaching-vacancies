@@ -12,6 +12,7 @@ import 'src/deleteAccordionControl';
 import 'src/deleteDocument';
 import 'src/details';
 import 'src/dismissableElement';
+import 'src/disabledInputs';
 import 'src/enableRadiusFilter';
 import 'src/fetchLocation';
 import 'src/googleOptimise';

@@ -1,6 +1,9 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @important_dates_form, t('jobs.important_dates'))
 = render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
+- if @vacancy.present? && @vacancy&.state != 'create'
+  = link_to t('buttons.cancel_and_return'), edit_school_job_path(@vacancy.id), class: 'govuk-back-link'
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @important_dates_form, url: school_job_important_dates_path(@vacancy.id), html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|

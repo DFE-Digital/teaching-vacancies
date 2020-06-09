@@ -221,7 +221,9 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         fill_in 'application_details_form[application_link]', with: 'https://example.com'
         click_on I18n.t('buttons.update_job')
 
-        expect(page).to have_content(I18n.t('messages.jobs.updated'))
+        expect(page.body).to include(
+          I18n.t('messages.jobs.listing_updated_html', job_title: published_vacancy.job_title)
+        )
       end
     end
   end
@@ -236,6 +238,18 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
       within('h2.govuk-heading-l') do
         expect(page).to have_content(I18n.t('jobs.review_heading'))
+      end
+    end
+
+    context '#cancel_and_return_later' do
+      scenario 'can cancel and return from job details page' do
+        visit school_job_review_path(vacancy.id)
+
+        click_header_link(I18n.t('jobs.job_details'))
+        expect(page).to have_content(I18n.t('buttons.cancel_and_return'))
+
+        click_on I18n.t('buttons.cancel_and_return')
+        expect(page.current_path).to eql(school_job_review_path(vacancy.id))
       end
     end
   end
