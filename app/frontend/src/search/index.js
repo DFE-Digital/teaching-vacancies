@@ -56,7 +56,8 @@ if (document.querySelector('#vacancies-hits')) {
                     resolve();
                 }
             });
-        }
+        },
+        onSubmit: () => searchClientInstance.refresh()
     });
 
     const keywordSearchBox = searchBox({
@@ -68,7 +69,8 @@ if (document.querySelector('#vacancies-hits')) {
             updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
             search(query);
         },
-        onChange: () => new Promise(resolve => resolve())
+        onChange: () => new Promise(resolve => resolve()),
+        onSubmit: () => searchClientInstance.refresh()
     });
 
     searchClientInstance.addWidgets([

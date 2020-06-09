@@ -28,8 +28,7 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
 
         widgetParams.container.addEventListener('submit', (e) => {
             e.preventDefault();
-            widgetParams.onChange(widgetParams.inputElement.value);
-            refine(getQuery());
+            widgetParams.onSubmit();
         });
     }
 };
