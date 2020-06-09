@@ -49,26 +49,19 @@ RSpec.describe VacanciesHelper, type: :helper do
 
   describe '#review_heading' do
     let(:vacancy) { double('vacancy').as_null_object }
-    let(:school) { build(:school) }
-
-    it 'returns edit heading if vacancy is published' do
-      allow(vacancy).to receive(:published?).and_return(true)
-
-      expect(review_heading(vacancy, school)).to eql(I18n.t('jobs.edit_heading', school: school.name))
-    end
 
     it 'returns copy review heading if vacancy state is copy' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('copy')
 
-      expect(review_heading(vacancy, school)).to eql(I18n.t('jobs.copy_review_heading'))
+      expect(review_heading(vacancy)).to eql(I18n.t('jobs.copy_review_heading'))
     end
 
     it 'returns review heading' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('not_copy_review')
 
-      expect(review_heading(vacancy, school)).to eql(I18n.t('jobs.review_heading'))
+      expect(review_heading(vacancy)).to eql(I18n.t('jobs.review_heading'))
     end
   end
 
@@ -76,25 +69,32 @@ RSpec.describe VacanciesHelper, type: :helper do
     let(:vacancy) { double('vacancy').as_null_object }
     let(:school) { build(:school) }
 
-    it 'returns edit title if vacancy is published' do
-      allow(vacancy).to receive(:published?).and_return(true)
-
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.edit_heading', school: school.name))
-    end
-
-    it 'returns copy title if vacancy state is copy' do
+    it 'returns copy job title if vacancy state is copy' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('copy')
       allow(vacancy).to receive(:job_title).and_return('Test job title')
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.copy_page_title', job_title: 'test job title'))
+      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.copy_job_title', job_title: 'test job title'))
     end
 
-    it 'returns create a job title' do
+    it 'returns create a job title if vacancy state is create' do
       allow(vacancy).to receive(:published?).and_return(false)
-      allow(vacancy).to receive(:state).and_return('not_copy_review')
+      allow(vacancy).to receive(:state).and_return('create')
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.create_a_job', school: school.name))
+      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.create_a_job_title', school: school.name))
+    end
+
+    it 'returns create a job title if vacancy state is review' do
+      allow(vacancy).to receive(:published?).and_return(false)
+      allow(vacancy).to receive(:state).and_return('review')
+
+      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.create_a_job_title', school: school.name))
+    end
+
+    it 'returns edit job title' do
+      allow(vacancy).to receive(:published?).and_return(true)
+
+      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
     end
   end
 
