@@ -1,4 +1,5 @@
-- content_for :page_title_prefix, t('jobs.edit_heading', school: current_school.name)
+- content_for :page_title_prefix, review_page_title_prefix(@vacancy)
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds

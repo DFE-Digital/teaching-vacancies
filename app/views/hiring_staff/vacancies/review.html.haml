@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, @vacancy.review_page_title
+- content_for :page_title_prefix, review_page_title_prefix(@vacancy)
 = render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 .vacancy.govuk-grid-row
@@ -33,5 +33,5 @@
     = link_to t('buttons.save_and_return_later'), jobs_with_type_school_path('draft'), class: 'govuk-link govuk-link--no-visited-state'
 
   .govuk-grid-column-one-third
-    - unless @vacancy.state == 'copy'
+    - if %w(create review).include?(@vacancy.state)
       = render 'hiring_staff/vacancies/sidebar'
