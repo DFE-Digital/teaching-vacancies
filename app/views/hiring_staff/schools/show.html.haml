@@ -18,8 +18,8 @@
 .govuk-grid-row
   .govuk-grid-column-full
     .govuk-form-group.create-a-job
-      = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button'
     - if @school.vacancies.active.any?
+      = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
       .overflow-scroll
         = render partial: 'vacancies', locals: { school: @school, vacancies: @vacancies }
     - else

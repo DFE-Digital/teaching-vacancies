@@ -30,3 +30,10 @@
     width: 100%;
   }
 }
+
+.no-jobs-border {
+  border: 2px dashed $govuk-border-colour;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 20px 20px 0;
+}

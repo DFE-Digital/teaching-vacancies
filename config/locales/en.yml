@@ -499,26 +499,28 @@ en:
     jobs:
       index: 'Jobs at %{school}'
     no_jobs:
-      heading: 'You have no current jobs.'
+      heading: You have no job listings to manage
+      intro: 'To create a job listing for your school, you will need the following information:'
       bullets:
-        mandatory:
-          - 'a job title'
-          - 'a job summary'
-          - 'working patterns'
-          - 'a salary range'
-          - 'educational requirements'
-          - 'qualifications required'
-          - 'experience required'
-          - 'a contact email address'
-          - 'a link to apply online'
-          - 'the deadline for applications'
+        required:
+          - job title
+          - job role
+          - working pattern
+          - salary
+          - date job will be listed
+          - date application is due
+          - time application is due
+          - contact email
+          - job summary
+          - information about the school
         optional:
-          - 'details of employee benefits'
-          - 'the main subject'
-          - 'a pay scale'
-          - 'leadership level'
-          - 'expected start date'
-          - 'end date (for fixed-term jobs)'
+          - subject
+          - employee benefits
+          - date job starts
+          - supporting documents to attach
+          - how to arrange a school visit
+          - how to apply
+          - link to online application
     size:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
