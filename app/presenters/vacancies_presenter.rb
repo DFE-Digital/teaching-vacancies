@@ -28,11 +28,11 @@ class VacanciesPresenter < BasePresenter
 
   def search_heading(keyword: '', location: '')
     case true
-    when (keyword && keyword.length > 0) && (location && location.length > 0)
+    when keyword.present? && location.present?
       total_count_message_with_keyword_location(keyword, location)
-    when keyword && keyword.length > 0
+    when keyword.present?
       total_count_message_with_keyword(keyword)
-    when location && location.length > 0
+    when location.present?
       total_count_message_with_location(location)
     else
       total_count_message
