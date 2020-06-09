@@ -79,4 +79,11 @@ module VacanciesHelper
                        vacancy.second_supporting_subject].reject(&:blank?)
     legacy_subjects.any? && legacy_subjects.count != vacancy.subjects&.count
   end
+
+  def hidden_state_field_value(vacancy, copy = false)
+    return 'copy' if copy
+    return 'edit_published' if vacancy&.published?
+    return vacancy&.state if %w(copy review edit).include?(vacancy&.state)
+    'create'
+  end
 end

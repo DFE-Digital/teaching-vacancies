@@ -32,8 +32,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     unless @vacancy.valid?
       redirect_to_incomplete_step
     else
-      state = params[:edit_draft] == 'true' ? 'edit' :  @vacancy&.state == 'copy' ? 'copy' : 'review'
-      @vacancy.update(state: state) unless @vacancy&.state == state
+      update_vacancy_state
       set_completed_step
     end
 
@@ -98,5 +97,16 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def find_active_vacancy_by_id
     current_school.vacancies.active.find(id)
+  end
+
+  def update_vacancy_state
+    if params[:edit_draft] == 'true'
+      state = 'edit'
+    elsif @vacancy&.state == 'copy'
+      state = 'copy'
+    else
+      state = 'review'
+    end
+    @vacancy.update(state: state)
   end
 end
