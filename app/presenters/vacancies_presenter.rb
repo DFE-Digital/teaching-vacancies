@@ -3,7 +3,7 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :searched, :total_count, :keyword
+  attr_reader :searched, :total_count
   alias_method :user_search?, :searched
 
   CSV_ATTRIBUTES = %w[title description salary jobBenefits datePosted educationRequirements qualifications
@@ -11,7 +11,7 @@ class VacanciesPresenter < BasePresenter
                       jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
-  def initialize(vacancies, searched:, total_count:, keyword:)
+  def initialize(vacancies, searched:, total_count:)
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
     @total_count = total_count
@@ -26,28 +26,57 @@ class VacanciesPresenter < BasePresenter
     decorated_collection.count.nonzero?
   end
 
-  def total_count_message(keyword)
-    if total_count == 1
-      return I18n.t('jobs.job_count_without_search', count: total_count) unless @searched
-
-      I18n.t('jobs.job_count', keyword: keyword, count: number_with_delimiter(total_count))
-    else
-      return I18n.t('jobs.job_count_plural_without_search', count: total_count) unless @searched
-
-      I18n.t('jobs.job_count_plural', keyword: keyword, count: number_with_delimiter(total_count))
-    end
+  def search_heading(keyword: '', location: '')
+      case true
+      when (keyword && keyword.length > 0) && (location && location.length > 0)
+        total_count_message_with_keyword_location(keyword, location)
+      when keyword && keyword.length > 0
+        total_count_message_with_keyword(keyword)
+      when location && location.length > 0
+        total_count_message_with_location(location)
+      else
+        total_count_message()
+      end
   end
 
-  def total_count_message_with_location(location, keyword)
+  def total_count_message
+    return I18n.t('jobs.job_count_without_search', count: total_count) if total_count == 1
+
+    I18n.t('jobs.job_count_plural_without_search', count: number_with_delimiter(total_count))
+  end
+
+  def total_count_message_with_keyword_location(keyword, location)
     return I18n.t(
-      'jobs.job_count_with_location_category',
-      count: number_with_delimiter(total_count),
-      location: location,
+      'jobs.job_count_with_location_keyword',
+      count: total_count,
+      keyword: keyword,
+      location: location
+    ) if total_count == 1
+
+    I18n.t('jobs.job_count_plural_with_location_keyword', \
+      location: location, keyword: keyword, count: number_with_delimiter(total_count))
+  end
+
+  def total_count_message_with_keyword(keyword)
+    return I18n.t(
+      'jobs.job_count_with_keyword',
+      count: total_count,
       keyword: keyword
     ) if total_count == 1
 
-    I18n.t('jobs.job_count_plural_with_location_category', \
-      location: location, keyword: keyword, count: number_with_delimiter(total_count))
+    I18n.t('jobs.job_count_plural_with_keyword', \
+      keyword: keyword, count: number_with_delimiter(total_count))
+  end
+
+  def total_count_message_with_location(location)
+    return I18n.t(
+      'jobs.job_count_with_location',
+      count: total_count,
+      location: location
+    ) if total_count == 1
+
+    I18n.t('jobs.job_count_plural_with_location', \
+      location: location, count: number_with_delimiter(total_count))
   end
 
   def to_csv

@@ -11,8 +11,7 @@ RSpec.describe VacanciesPresenter do
         vacancies,
         searched: searched,
         total_count:
-        vacancies.count,
-        keyword: 'keyword'
+        vacancies.count
       )
 
       allow(vacancies_presenter).to receive(:decorated_collection).and_return(decorated_vacancies)
@@ -40,11 +39,10 @@ RSpec.describe VacanciesPresenter do
           vacancies_presenter = VacanciesPresenter.new(
             vacancies,
             searched: searched,
-            total_count: vacancies.count,
-            keyword: ''
+            total_count: vacancies.count
           )
-          expect(vacancies_presenter.total_count_message('keyword')).to eq(
-            I18n.t('jobs.job_count', count: total_count, keyword: 'keyword')
+          expect(vacancies_presenter.search_heading(keyword: 'physics')).to eq(
+            I18n.t('jobs.job_count_with_keyword', count: total_count, keyword: 'physics')
           )
         end
       end
@@ -56,11 +54,10 @@ RSpec.describe VacanciesPresenter do
           vacancies_presenter = VacanciesPresenter.new(
             vacancies,
             searched: searched,
-            total_count: vacancies.count,
-            keyword: ''
+            total_count: vacancies.count
           )
-          expect(vacancies_presenter.total_count_message('keyword')).to eq(
-            I18n.t('jobs.job_count_plural', count: total_count, keyword: 'keyword')
+          expect(vacancies_presenter.search_heading(keyword: 'physics')).to eq(
+            I18n.t('jobs.job_count_plural_with_keyword', count: total_count, keyword: 'physics')
           )
         end
       end
@@ -76,10 +73,9 @@ RSpec.describe VacanciesPresenter do
           vacancies_presenter = VacanciesPresenter.new(
             vacancies,
             searched: searched,
-            total_count: vacancies.count,
-            keyword: ''
+            total_count: vacancies.count
           )
-          expect(vacancies_presenter.total_count_message('keyword')).to eq(
+          expect(vacancies_presenter.search_heading()).to eq(
             I18n.t('jobs.job_count_without_search', count: total_count)
           )
         end
@@ -92,10 +88,9 @@ RSpec.describe VacanciesPresenter do
           vacancies_presenter = VacanciesPresenter.new(
             vacancies,
             searched: searched,
-            total_count: vacancies.count,
-            keyword: ''
+            total_count: vacancies.count
           )
-          expect(vacancies_presenter.total_count_message('keyword')).to eq(
+          expect(vacancies_presenter.search_heading()).to eq(
             I18n.t('jobs.job_count_plural_without_search', count: total_count)
           )
         end
@@ -112,8 +107,7 @@ RSpec.describe VacanciesPresenter do
       vacancies_presenter = VacanciesPresenter.new(
         vacancies,
         searched: false,
-        total_count: vacancies.count,
-        keyword: ''
+        total_count: vacancies.count
       )
       vacancies_text = vacancies_presenter.to_csv
       vacancies_csv = CSV.parse(vacancies_text)
@@ -152,8 +146,7 @@ RSpec.describe VacanciesPresenter do
       VacanciesPresenter.new(
         vacancies,
         searched: false,
-        total_count: vacancies.total_count,
-        keyword: 'keyword'
+        total_count: vacancies.total_count
       )
     }
     let(:vacancies) { double(:vacancies, map: [], prev_page: prev_page, total_count: 0) }
@@ -180,8 +173,7 @@ RSpec.describe VacanciesPresenter do
       VacanciesPresenter.new(
         vacancies,
         searched: false,
-        total_count: vacancies.total_count,
-        keyword: 'keyword'
+        total_count: vacancies.total_count
       )
     }
     let(:vacancies) { double(:vacancies, map: [], next_page: next_page, total_count: 0) }

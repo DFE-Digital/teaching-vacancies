@@ -6,11 +6,11 @@ export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
   if (results) {
-    widgetParams.container.innerHTML = createHeadingMarkup(
-      results.nbHits,
-      document.getElementById('keyword').value,
-      document.getElementById('location').value
-    );
+    widgetParams.container.innerHTML = createHeadingMarkup({
+      count: results.nbHits,
+      keyword: document.getElementById('keyword').value,
+      location: document.getElementById('location').value
+    });
 
     if (results.query.length >= widgetParams.threshold) {
       addJobAlertMarkup(widgetParams.container);
@@ -52,16 +52,28 @@ export const getJobAlertLinkParam = (key, value) => {
   return encodeURIComponent(`search_criteria[${key}]`) + `=${value.replace(' ', '+')}&`;
 };
 
-export const createHeadingMarkup = (numberHits, keyword = null, location = null) => {
-  const prefix = keyword || location ? ` ${numberHits > 1 ? 'match' : 'matches'} ` : ' listed';
-  const postfix = `${prefix}${createHeadingHTMLForSearchTerm('', keyword)} ${createHeadingHTMLForSearchTerm('near', location)}`;
-  const hits = keyword || location ? `<span class="govuk-!-font-weight-bold">${numberHits}</span>` : `There ${numberHits > 1 ? 'are' : 'is'} <span class="govuk-!-font-weight-bold">${numberHits}</span>`;
+export const createHeadingMarkup = (options) => {
+  const { count, keyword = '', location = '' } = options;
 
-  return `${hits} ${numberHits > 1 ? 'jobs' : 'job'} ${postfix}`;
+  const postfix = `${getSearchTermsPrefix(location, keyword, count)}${createHeadingHTMLForSearchTerm('', keyword, false)} ${createHeadingHTMLForSearchTerm('near', location, true)}`;
+  const hits = keyword || location ? `<span class="govuk-!-font-weight-bold">${count}</span>` : `There ${count > 1 ? 'are' : 'is'} <span class="govuk-!-font-weight-bold">${count}</span>`;
+
+  return `${hits} ${count > 1 ? 'jobs' : 'job'} ${postfix}`;
 };
 
-export const createHeadingHTMLForSearchTerm = (pre, string) => {
-  return string ? `${pre} <span class="govuk-!-font-weight-bold text-capitalize">${string}</span>` : '';
+export const getSearchTermsPrefix = (location, keyword, count) => {
+  let prefix = 'listed';
+  if (keyword.length) {
+    prefix = ` ${count > 1 ? 'match' : 'matches'} `;
+  } else if (location.length) {
+    prefix = 'found';
+  }
+
+  return prefix;
+};
+
+export const createHeadingHTMLForSearchTerm = (pre, string, capitalize) => {
+  return string ? `${pre} <span class="govuk-!-font-weight-bold${capitalize ? ' text-capitalize' : ''} text-wrap-apostrophe">${string}</span>` : '';
 };
 
 export const hideServerMarkup = () => {

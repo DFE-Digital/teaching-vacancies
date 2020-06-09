@@ -2,25 +2,46 @@ import { createHeadingMarkup, createHeadingHTMLForSearchTerm, getJobAlertLink, g
 
 describe('createHeadingMarkup', () => {
     test('creates formatted and readable markup for number of results with no search terms', () => {
-        expect(createHeadingMarkup(582)).toBe('There are <span class="govuk-!-font-weight-bold">582</span> jobs  listed ');
+        expect(createHeadingMarkup({
+            count: 582
+        })).toBe('There are <span class="govuk-!-font-weight-bold">582</span> jobs listed ');
     });
 
     test('creates formatted and readable markup to reflect search terms for plural number of results', () => {
-        expect(createHeadingMarkup(4, 'physics')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> ');
-        expect(createHeadingMarkup(4, '', 'mars')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  near <span class="govuk-!-font-weight-bold text-capitalize">mars</span>');
-        expect(createHeadingMarkup(4, 'physics', 'mars')).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> near <span class="govuk-!-font-weight-bold text-capitalize">mars</span>');
+        expect(createHeadingMarkup({
+            count: 4,
+            keyword: 'physics'
+        })).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-wrap-apostrophe">physics</span> ');
+        expect(createHeadingMarkup({
+            count: 4,
+            location: 'W12 8QT'
+        })).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs found near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">W12 8QT</span>');
+        expect(createHeadingMarkup({
+            count: 4,
+            keyword: 'physics',
+            location: 'W12 8QT'
+        })).toBe('<span class="govuk-!-font-weight-bold">4</span> jobs  match  <span class="govuk-!-font-weight-bold text-wrap-apostrophe">physics</span> near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">W12 8QT</span>');
     });
 
     test('creates formatted and readable markup to reflect search terms for one result', () => {
-        expect(createHeadingMarkup(1)).toBe('There is <span class="govuk-!-font-weight-bold">1</span> job  listed ');
-        expect(createHeadingMarkup(1, 'physics')).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> ');
-        expect(createHeadingMarkup(1, 'physics', 'mars')).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-capitalize">physics</span> near <span class="govuk-!-font-weight-bold text-capitalize">mars</span>');
+        expect(createHeadingMarkup({
+            count: 1
+        })).toBe('There is <span class="govuk-!-font-weight-bold">1</span> job listed ');
+        expect(createHeadingMarkup({
+            count: 1,
+            keyword: 'physics'
+        })).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-wrap-apostrophe">physics</span> ');
+        expect(createHeadingMarkup({
+            count: 1,
+            keyword: 'physics',
+            location: 'W12 8QT'
+        })).toBe('<span class="govuk-!-font-weight-bold">1</span> job  matches  <span class="govuk-!-font-weight-bold text-wrap-apostrophe">physics</span> near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">W12 8QT</span>');
     });
 });
 
 describe('createHeadingHTMLForSearchTerm', () => {
     test('returns a string of capitalized words after a prefix', () => {
-        expect(createHeadingHTMLForSearchTerm('176 jobs near', 'babylon gardens')).toBe('176 jobs near <span class="govuk-!-font-weight-bold text-capitalize">babylon gardens</span>');
+        expect(createHeadingHTMLForSearchTerm('176 jobs near', 'babylon gardens', true)).toBe('176 jobs near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">babylon gardens</span>');
     });
 });
 

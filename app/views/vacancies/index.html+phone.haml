@@ -5,7 +5,7 @@
 = render partial: 'head_links'
 
 %h1#job-count{ class: 'govuk-!-margin-bottom-2 govuk-heading-xl govuk-!-font-weight-regular', role: 'heading', 'aria-level': '1' }
-  = @vacancies_search.location_category_search? ? @vacancies.total_count_message_with_location(format_location_name(@vacancies_search.location_category), @vacancies_search.keyword) : @vacancies.total_count_message(@vacancies_search.keyword)
+  = raw @vacancies.search_heading(location: @vacancies_search.location, keyword: @vacancies_search.keyword)
 - if @vacancies.user_search?
   = render(partial: 'subscribe_link', locals: { search_criteria: @vacancies_search.only_active_to_hash }) if EmailAlertsFeature.enabled? && !ReadOnlyFeature.enabled?
 .govuk-grid-row{ class: 'govuk-!-margin-top-5' }
