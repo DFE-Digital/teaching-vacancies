@@ -79,3 +79,27 @@ ul.pagination {
   }
 }
 
+#pagination-hits {
+  display: inline-block;
+  margin-left: 16rem;
+
+  @media (max-width: 1019px) {
+    display: block;
+    margin-left: 0;
+  }
+}
+
+.pagination-results {
+  #vacancies-stats-bottom {
+    display: block;
+    margin-bottom: 0;
+    margin-top: 1rem;
+    text-align: center;
+
+    @media (min-width: 1020px) {
+      float: right;
+      margin-top: 1.9rem;
+    }
+  }
+}
+

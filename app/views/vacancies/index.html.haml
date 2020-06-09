@@ -16,6 +16,7 @@
     .govuk-grid-column-full.vacancies-count
     .sort-results.sortable-links
       = render partial: 'sorting_options', locals: { search_criteria: @vacancies_search.only_active_to_hash, sort: @vacancies_search.sort_by }
+      %p.govuk-body#vacancies-stats-top{ 'aria-label': 'Number of results' }
     #vacancies-hits{ 'aria-label': 'Search results' }
       - if @vacancies.any?
         %ul.vacancies{ 'role': 'list' }
@@ -34,5 +35,7 @@
           - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
             %p= sentence
 
-= paginate @vacancies_search.vacancies
+.pagination-results
+  = paginate @vacancies_search.vacancies
+  %p.govuk-body#vacancies-stats-bottom{ 'aria-label': 'Number of results' }
 = javascript_pack_tag 'search'

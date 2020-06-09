@@ -17,6 +17,7 @@
 .sortable-links {
   @extend .govuk-body-s;
   margin-bottom: $govuk-gutter;
+  width: auto;
 
   a {
     @extend .sortable-link;
@@ -25,6 +26,22 @@
     &.active {
       @include govuk-font(16, $weight: bold);
       text-decoration: none;
+    }
+  }
+
+  form {
+    display: inline-block;
+  }
+}
+
+.sort-results {
+  #vacancies-stats-top {
+    margin-bottom: 0;
+    margin-top: 1rem;
+
+    @media (min-width: 1020px) {
+      float: right;
+      margin-top: 0.5rem;
     }
   }
 }
