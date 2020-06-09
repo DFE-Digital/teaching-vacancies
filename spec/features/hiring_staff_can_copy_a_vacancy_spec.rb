@@ -78,7 +78,7 @@ RSpec.feature 'Copying a vacancy' do
     end
 
     within('h1.govuk-heading-m') do
-      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
     end
 
     fill_in_copy_vacancy_form_fields(new_vacancy)
@@ -116,7 +116,7 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       within('h1.govuk-heading-m') do
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
       end
 
       click_on I18n.t('buttons.save_and_continue')
@@ -145,7 +145,7 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       within('h1.govuk-heading-m') do
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
@@ -174,7 +174,7 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       within('h1.govuk-heading-m') do
-        expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+        expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
@@ -198,7 +198,7 @@ RSpec.feature 'Copying a vacancy' do
         end
 
         within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
         end
         expect(page).to have_content(I18n.t('jobs.job_roles'))
       end
@@ -215,7 +215,7 @@ RSpec.feature 'Copying a vacancy' do
         end
 
         within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
         end
         expect(page).to_not have_content(I18n.t('jobs.job_roles'))
       end
@@ -235,7 +235,7 @@ RSpec.feature 'Copying a vacancy' do
         end
 
         within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
         end
         expect(page).to have_content(I18n.t('jobs.about_school', school: school.name))
       end
@@ -252,7 +252,7 @@ RSpec.feature 'Copying a vacancy' do
         end
 
         within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
         end
         expect(page).to_not have_content(I18n.t('jobs.about_school', school: school.name))
       end
@@ -274,7 +274,7 @@ RSpec.feature 'Copying a vacancy' do
         click_on I18n.t('jobs.copy_link')
       end
 
-      expect(page).to have_content(I18n.t('jobs.copy_page_title', job_title: original_vacancy.job_title))
+      expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
       click_on I18n.t('buttons.save_and_continue')

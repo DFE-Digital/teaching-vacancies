@@ -244,13 +244,13 @@ en:
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
     per_year_fte: 'per year (full-time equivalent)'
-    create_a_job: 'Create a job listing for %{school}'
-    copy_page_title: 'Copy %{job_title}'
+    create_a_job_title: 'Create a job listing for %{school}'
+    copy_job_title: 'Copy %{job_title}'
     new_job_listing_details: New job listing details
     review_page_title: 'Review the job listing — Create a job listing for %{school}'
     review_heading: 'Review the job listing'
     copy_review_heading: Review the new job listing
-    edit_heading: 'Edit job for %{school}'
+    edit_job_title: 'Edit %{job_title}'
     job_specification: 'Job specification'
     pay_package: 'Pay package'
     important_dates: 'Important dates and deadlines'
@@ -610,6 +610,7 @@ en:
     update_job: 'Update listing'
     cancel_copy: 'Cancel copy'
     cancel_and_return: Cancel and return
+    back_to_manage_jobs: Back to manage jobs
 
   messages:
     jobs:

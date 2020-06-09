@@ -90,11 +90,6 @@ class VacancyPresenter < BasePresenter
     model_working_patterns.map(&:upcase).join(', ')
   end
 
-  def review_page_title
-    page_title = I18n.t('jobs.review_page_title', school: model.school.name)
-    "#{model.errors.present? ? 'Error: ' : ''}#{page_title}"
-  end
-
   def to_row
     {
       id: id,

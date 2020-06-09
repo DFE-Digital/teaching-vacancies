@@ -38,7 +38,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     scenario 'takes you to the edit page' do
       visit edit_school_job_path(vacancy.id)
 
-      expect(page).to have_content(I18n.t('jobs.edit_heading', school: school.name))
+      within('h1.govuk-heading-m') do
+        expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+      end
     end
 
     scenario 'vacancy state is edit_published' do
@@ -71,7 +73,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
 
-        expect(page).to have_content(I18n.t('jobs.edit_heading', school: school.name))
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+        end
         click_header_link(I18n.t('jobs.job_details'))
 
         fill_in 'job_specification_form[job_title]', with: ''
@@ -161,7 +165,10 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
 
-        expect(page).to have_content("Edit job for #{school.name}")
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+        end
+
         click_header_link(I18n.t('jobs.pay_package'))
 
         fill_in 'pay_package_form[salary]', with: ''
@@ -223,7 +230,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
 
-        expect(page).to have_content("Edit job for #{school.name}")
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+        end
         click_header_link(I18n.t('jobs.important_dates'))
 
         edit_date('expires_on', nil)
@@ -239,7 +248,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be saved when expiry time validation fails' do
         visit edit_school_job_path(vacancy.id)
 
-        expect(page).to have_content("Edit job for #{school.name}")
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+        end
         click_header_link(I18n.t('jobs.important_dates'))
 
         fill_in 'important_dates_form[expiry_time_hh]', with: '88'
@@ -360,7 +371,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
 
-        expect(page).to have_content("Edit job for #{school.name}")
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+        end
         click_header_link(I18n.t('jobs.application_details'))
 
         fill_in 'application_details_form[application_link]', with: 'some link'
@@ -417,7 +430,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'can not be edited when validation fails' do
         visit edit_school_job_path(vacancy.id)
 
-        expect(page).to have_content(I18n.t('jobs.edit_heading', school: school.name))
+        within('h1.govuk-heading-m') do
+          expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+        end
         click_header_link(I18n.t('jobs.job_summary'))
 
         fill_in 'job_summary_form[job_summary]', with: ''

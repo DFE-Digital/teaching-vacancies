@@ -1,7 +1,7 @@
 - if @vacancy.present?
   - content_for :page_title_prefix, page_title_prefix(@vacancy, @job_specification_form, t('jobs.job_details'))
 - else
-  - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_details')} — #{t('jobs.create_a_job', school: current_school.name)}"
+  - content_for :page_title_prefix, "#{@job_specification_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_details')} — #{t('jobs.create_a_job_title', school: current_school.name)}"
 
 = render 'hiring_staff/vacancies/vacancy_form_partials/title'
 

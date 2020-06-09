@@ -235,7 +235,6 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       visit school_job_review_path(vacancy.id, edit_draft: true)
 
       expect(Vacancy.last.state).to eql('edit')
-      expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
       within('h2.govuk-heading-l') do
         expect(page).to have_content(I18n.t('jobs.review_heading'))
       end

@@ -51,26 +51,30 @@ module VacanciesHelper
   end
 
   def page_title_prefix(vacancy, form_object, page_heading)
-    if vacancy.published?
+    if %w(create review).include?(vacancy.state)
       "#{form_object.errors.present? ?
-        'Error: ' : ''}Edit the #{page_heading}"
+        'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', school: current_school.name)}"
     else
       "#{form_object.errors.present? ?
-        'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job', school: current_school.name)}"
+        'Error: ' : ''}Edit the #{page_heading}"
     end
   end
 
-  def review_heading(vacancy, school = current_school)
-    return I18n.t('jobs.edit_heading', school: school.name) if vacancy.published?
+  def review_page_title_prefix(vacancy, school = current_school)
+    page_title = I18n.t('jobs.review_page_title', school: school.name)
+    "#{vacancy.errors.present? ? 'Error: ' : ''}#{page_title}"
+  end
+
+  def review_heading(vacancy)
     return I18n.t('jobs.copy_review_heading') if vacancy.state == 'copy'
     I18n.t('jobs.review_heading')
   end
 
   def page_title(vacancy, school = current_school)
-    return I18n.t('jobs.edit_heading', school: school.name) if vacancy.published?
-    return I18n.t('jobs.copy_page_title',
+    return I18n.t('jobs.copy_job_title',
                   job_title: vacancy.job_title.downcase) if vacancy.state == 'copy'
-    I18n.t('jobs.create_a_job', school: school.name)
+    return I18n.t('jobs.create_a_job_title', school: school.name) if %w(create review).include?(vacancy.state)
+    I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
   end
 
   def missing_subjects?(vacancy)
@@ -85,5 +89,16 @@ module VacanciesHelper
     return 'edit_published' if vacancy&.published?
     return vacancy&.state if %w(copy review edit).include?(vacancy&.state)
     'create'
+  end
+
+  def back_to_manage_jobs_link(vacancy)
+    if vacancy.listed?
+      state = 'published'
+    elsif vacancy.published? && vacancy.expires_on.future?
+      state = 'pending'
+    else
+      state = 'draft'
+    end
+    jobs_with_type_school_path(state)
   end
 end
