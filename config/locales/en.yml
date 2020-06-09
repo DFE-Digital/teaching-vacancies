@@ -599,6 +599,7 @@ en:
       (the date we began recording statistics).
   buttons:
     accept_and_continue: 'Accept and continue'
+    back: 'Back'
     search: 'Search'
     change: 'Change'
     continue: 'Continue'
