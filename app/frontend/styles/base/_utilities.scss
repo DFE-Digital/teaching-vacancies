@@ -72,6 +72,17 @@ b {
   font-weight: bold;
 }
 
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-wrap-apostrophe {
+  &::after,
+  &::before {
+    content: '\0027'
+  }
+}
+
 .four-column-list {
 
   column-count: 4;

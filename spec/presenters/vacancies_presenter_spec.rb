@@ -7,7 +7,13 @@ RSpec.describe VacanciesPresenter do
       searched = true
       decorated_vacancies = vacancies.map { |v| VacancyPresenter.new(v) }
 
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
+      vacancies_presenter = VacanciesPresenter.new(
+        vacancies,
+        searched: searched,
+        total_count:
+        vacancies.count
+      )
+
       allow(vacancies_presenter).to receive(:decorated_collection).and_return(decorated_vacancies)
 
       expect(decorated_vacancies).to receive(:each)
@@ -30,9 +36,13 @@ RSpec.describe VacanciesPresenter do
         let(:total_count) { 1 }
 
         it 'returns the correct number' do
-          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
-          expect(vacancies_presenter.total_count_message).to eq(
-            I18n.t('jobs.job_count', count: total_count)
+          vacancies_presenter = VacanciesPresenter.new(
+            vacancies,
+            searched: searched,
+            total_count: vacancies.count
+          )
+          expect(vacancies_presenter.search_heading(keyword: 'physics')).to eq(
+            I18n.t('jobs.search_result_heading.keyword.one_html', count: total_count, keyword: 'physics')
           )
         end
       end
@@ -41,9 +51,13 @@ RSpec.describe VacanciesPresenter do
         let(:total_count) { 3 }
 
         it 'returns the correct number' do
-          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
-          expect(vacancies_presenter.total_count_message).to eq(
-            I18n.t('jobs.job_count_plural', count: total_count)
+          vacancies_presenter = VacanciesPresenter.new(
+            vacancies,
+            searched: searched,
+            total_count: vacancies.count
+          )
+          expect(vacancies_presenter.search_heading(keyword: 'physics')).to eq(
+            I18n.t('jobs.search_result_heading.keyword.plural_html', count: total_count, keyword: 'physics')
           )
         end
       end
@@ -56,9 +70,13 @@ RSpec.describe VacanciesPresenter do
         let(:total_count) { 1 }
 
         it 'returns the correct number' do
-          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
-          expect(vacancies_presenter.total_count_message).to eq(
-            I18n.t('jobs.job_count_without_search', count: total_count)
+          vacancies_presenter = VacanciesPresenter.new(
+            vacancies,
+            searched: searched,
+            total_count: vacancies.count
+          )
+          expect(vacancies_presenter.search_heading()).to eq(
+            I18n.t('jobs.search_result_heading.without_search.one_html', count: total_count)
           )
         end
       end
@@ -67,9 +85,13 @@ RSpec.describe VacanciesPresenter do
         let(:total_count) { 3 }
 
         it 'returns the correct number' do
-          vacancies_presenter = VacanciesPresenter.new(vacancies, searched: searched, total_count: vacancies.count)
-          expect(vacancies_presenter.total_count_message).to eq(
-            I18n.t('jobs.job_count_plural_without_search', count: total_count)
+          vacancies_presenter = VacanciesPresenter.new(
+            vacancies,
+            searched: searched,
+            total_count: vacancies.count
+          )
+          expect(vacancies_presenter.search_heading()).to eq(
+            I18n.t('jobs.search_result_heading.without_search.plural_html', count: total_count)
           )
         end
       end
@@ -82,7 +104,11 @@ RSpec.describe VacanciesPresenter do
 
     it 'returns the correct data' do
       vacancies = [vacancy]
-      vacancies_presenter = VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.count)
+      vacancies_presenter = VacanciesPresenter.new(
+        vacancies,
+        searched: false,
+        total_count: vacancies.count
+      )
       vacancies_text = vacancies_presenter.to_csv
       vacancies_csv = CSV.parse(vacancies_text)
 
@@ -116,7 +142,13 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe '#previous_api_url' do
-    let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.total_count) }
+    let(:vacancies_presenter) {
+      VacanciesPresenter.new(
+        vacancies,
+        searched: false,
+        total_count: vacancies.total_count
+      )
+    }
     let(:vacancies) { double(:vacancies, map: [], prev_page: prev_page, total_count: 0) }
 
     context 'when there is a previous page' do
@@ -137,7 +169,13 @@ RSpec.describe VacanciesPresenter do
   end
 
   describe '#next_api_url' do
-    let(:vacancies_presenter) { VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.total_count) }
+    let(:vacancies_presenter) {
+      VacanciesPresenter.new(
+        vacancies,
+        searched: false,
+        total_count: vacancies.total_count
+      )
+    }
     let(:vacancies) { double(:vacancies, map: [], next_page: next_page, total_count: 0) }
 
     context 'when there is a next page' do

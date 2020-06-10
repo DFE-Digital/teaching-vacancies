@@ -214,12 +214,19 @@ en:
       one: 'Subject'
       other: 'Subjects'
     leadership_level: 'Leadership level'
-    job_count_without_search: 'There is %{count} job listed'
-    job_count_plural_without_search: 'There are %{count} jobs listed'
-    job_count: '%{count} job matches your search'
-    job_count_plural: '%{count} jobs match your search'
-    job_count_with_location_category: '%{count} job match near %{location}'
-    job_count_plural_with_location_category: '%{count} jobs match near %{location}'
+    search_result_heading:
+      without_search:
+        one_html: There is <span class='govuk-!-font-weight-bold'>%{count}</span> job listed
+        plural_html: There are <span class='govuk-!-font-weight-bold'>%{count}</span> jobs listed
+      keyword:
+        one_html: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
+        plural_html: <span class='govuk-!-font-weight-bold'>%{count}</span> jobs match <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
+      location:
+        one_html: <span class='govuk-!-font-weight-bold'>%{count}</span> job found near <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
+        plural_html: <span class="govuk-!-font-weight-bold">%{count}</span> jobs found near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
+      keyword_location:
+        one_html: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
+        plural_html: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
     no_jobs:
       intro: 'You might find matching jobs by:'
       suggestions:
@@ -528,8 +535,8 @@ en:
     view_ofsted_report: 'View Ofsted report'
   subscriptions:
     link:
-      text: 'Subscribe to a job alert.'
-      help_text: 'We’ll email you whenever a job matching this search is published.'
+      text: 'Receive a job alert'
+      help_text: 'whenever a job matching this search is published'
     intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     new:
       page_description: Sign up for a job alert
