@@ -27,56 +27,19 @@ class VacanciesPresenter < BasePresenter
   end
 
   def search_heading(keyword: '', location: '')
-    case true
-    when keyword.present? && location.present?
-      total_count_message_with_keyword_location(keyword, location)
-    when keyword.present?
-      total_count_message_with_keyword(keyword)
-    when location.present?
-      total_count_message_with_location(location)
+    if keyword.present? && location.present?
+      I18n.t('jobs.search_result_heading.keyword_location_html',
+        jobs_count: number_with_delimiter(total_count), location: location, keyword: keyword, count: total_count)
+    elsif keyword.present?
+      I18n.t('jobs.search_result_heading.keyword_html',
+        jobs_count: number_with_delimiter(total_count), keyword: keyword, count: total_count)
+    elsif location.present?
+      I18n.t('jobs.search_result_heading.location_html',
+        jobs_count: number_with_delimiter(total_count), location: location, count: total_count)
     else
-      total_count_message
+      I18n.t('jobs.search_result_heading.without_search_html',
+        jobs_count: number_with_delimiter(total_count), count: total_count)
     end
-  end
-
-  def total_count_message
-    return I18n.t('jobs.search_result_heading.without_search.one_html', count: total_count) if total_count == 1
-
-    I18n.t('jobs.search_result_heading.without_search.plural_html', count: number_with_delimiter(total_count))
-  end
-
-  def total_count_message_with_keyword_location(keyword, location)
-    return I18n.t(
-      'jobs.search_result_heading.keyword_location.one_html',
-      count: total_count,
-      keyword: keyword,
-      location: location
-    ) if total_count == 1
-
-    I18n.t('jobs.search_result_heading.keyword_location.plural_html',
-      location: location, keyword: keyword, count: number_with_delimiter(total_count))
-  end
-
-  def total_count_message_with_keyword(keyword)
-    return I18n.t(
-      'jobs.search_result_heading.keyword.one_html',
-      count: total_count,
-      keyword: keyword
-    ) if total_count == 1
-
-    I18n.t('jobs.search_result_heading.keyword.plural_html',
-      keyword: keyword, count: number_with_delimiter(total_count))
-  end
-
-  def total_count_message_with_location(location)
-    return I18n.t(
-      'jobs.search_result_heading.location.one_html',
-      count: total_count,
-      location: location
-    ) if total_count == 1
-
-    I18n.t('jobs.search_result_heading.location.plural_html',
-      location: location, count: number_with_delimiter(total_count))
   end
 
   def to_csv

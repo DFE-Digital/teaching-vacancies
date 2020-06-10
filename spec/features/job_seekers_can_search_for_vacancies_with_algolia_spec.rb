@@ -52,7 +52,8 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
         expect(page).to have_content(
           strip_tags(
             I18n.t(
-              'jobs.search_result_heading.location.plural_html',
+              'jobs.search_result_heading.location_html',
+              jobs_count: 2,
               count: 2,
               location: 'bradford'
             )
@@ -84,7 +85,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            strip_tags(I18n.t('jobs.search_result_heading.without_search.plural_html', count: 5, keyword: ''))
+            strip_tags(I18n.t('jobs.search_result_heading.without_search_html', jobs_count: 5, count: 5, keyword: ''))
           )
           expect(page).to have_selector('.vacancy', count: 5)
 
@@ -113,7 +114,8 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           expect(page).to have_content(
             strip_tags(
               I18n.t(
-                'jobs.search_result_heading.keyword_location.one_html',
+                'jobs.search_result_heading.keyword_location_html',
+                jobs_count: 1,
                 count: 1,
                 keyword: 'science',
                 location: 'SW1A 1AA'
@@ -132,7 +134,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           visit jobs_path
 
           expect(page).to have_content(
-            strip_tags(I18n.t('jobs.search_result_heading.without_search.plural_html', count: 5))
+            strip_tags(I18n.t('jobs.search_result_heading.without_search_html', jobs_count: 5, count: 5))
           )
           expect(page).to have_selector('.vacancy', count: 5)
         end
@@ -149,7 +151,7 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            strip_tags(I18n.t('jobs.search_result_heading.keyword.plural_html', count: 2, keyword: 'science'))
+            strip_tags(I18n.t('jobs.search_result_heading.keyword_html', jobs_count: 2, count: 2, keyword: 'science'))
           )
           expect(page).to have_selector('.vacancy', count: 2)
           expect(page).to have_content(@first_vacancy.job_title)
@@ -170,7 +172,8 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           expect(page).to have_content(
             strip_tags(
               I18n.t(
-                'jobs.search_result_heading.location.plural_html',
+                'jobs.search_result_heading.location_html',
+                jobs_count: 2,
                 count: 2,
                 location: 'Bradford'
               )
@@ -193,7 +196,8 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           end
 
           expect(page).to have_content(
-            strip_tags(I18n.t('jobs.search_result_heading.location.plural_html', count: 2, location: 'SW1A 1AA'))
+            strip_tags(I18n.t('jobs.search_result_heading.location_html',
+              jobs_count: 2, count: 2, location: 'SW1A 1AA'))
           )
           expect(page).to have_selector('.vacancy', count: 2)
           expect(page).to have_content(@second_vacancy.job_title)
@@ -216,7 +220,8 @@ RSpec.feature 'Algolia search with javascript disabled', js: false, algolia: tru
           expect(page).to have_content(
             strip_tags(
               I18n.t(
-                'jobs.search_result_heading.keyword_location.one_html', count: 1, keyword: 'maths', location: 'SW1A 1AA'
+                'jobs.search_result_heading.keyword_location_html',
+                  jobs_count: 1, count: 1, keyword: 'maths', location: 'SW1A 1AA'
               )
             )
           )

@@ -42,7 +42,8 @@ RSpec.describe VacanciesPresenter do
             total_count: vacancies.count
           )
           expect(vacancies_presenter.search_heading(keyword: 'physics')).to eq(
-            I18n.t('jobs.search_result_heading.keyword.one_html', count: total_count, keyword: 'physics')
+            I18n.t('jobs.search_result_heading.keyword_html',
+              jobs_count: number_with_delimiter(total_count), count: total_count, keyword: 'physics')
           )
         end
       end
@@ -57,7 +58,8 @@ RSpec.describe VacanciesPresenter do
             total_count: vacancies.count
           )
           expect(vacancies_presenter.search_heading(keyword: 'physics')).to eq(
-            I18n.t('jobs.search_result_heading.keyword.plural_html', count: total_count, keyword: 'physics')
+            I18n.t('jobs.search_result_heading.keyword_html',
+              jobs_count: number_with_delimiter(total_count), count: total_count, keyword: 'physics')
           )
         end
       end
@@ -76,7 +78,8 @@ RSpec.describe VacanciesPresenter do
             total_count: vacancies.count
           )
           expect(vacancies_presenter.search_heading()).to eq(
-            I18n.t('jobs.search_result_heading.without_search.one_html', count: total_count)
+            I18n.t('jobs.search_result_heading.without_search_html',
+              jobs_count: number_with_delimiter(total_count), count: total_count)
           )
         end
       end
@@ -91,7 +94,8 @@ RSpec.describe VacanciesPresenter do
             total_count: vacancies.count
           )
           expect(vacancies_presenter.search_heading()).to eq(
-            I18n.t('jobs.search_result_heading.without_search.plural_html', count: total_count)
+            I18n.t('jobs.search_result_heading.without_search_html',
+              jobs_count: number_with_delimiter(total_count), count: total_count)
           )
         end
       end
