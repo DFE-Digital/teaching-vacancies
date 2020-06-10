@@ -1,5 +1,5 @@
-require 'browser_test_helper'
-require 'i18n_helper'
+require 'support/browser_test_helper'
+require 'support/i18n_helper'
 
 RSpec.describe 'Page availability', js: true, smoke_test: true do
   context 'Job seeker visits vacancy page' do
