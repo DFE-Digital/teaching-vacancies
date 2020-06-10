@@ -23,12 +23,12 @@ export const renderContent = (renderOptions) => {
 };
 
 export const addJobAlertMarkup = container => {
-  !document.getElementById('job-alert-cta') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false; 
+  !document.getElementById('job-alert-cta') ? container.insertAdjacentHTML('beforeend', customTemplates.alert) : false;
 };
 
 export const removeJobAlertMarkup = () => {
   const el = document.getElementById('job-alert-cta');
-  return el && el.remove(); 
+  return el && el.remove();
 };
 
 const JOB_ALERT_URL = '/subscriptions/new';
@@ -77,7 +77,9 @@ export const createHeadingHTMLForSearchTerm = (pre, string, capitalize) => {
 };
 
 export const hideServerMarkup = () => {
-  document.querySelector('ul.vacancies').style.display = 'none';
+  if (document.querySelector('ul.vacancies')) {
+    document.querySelector('ul.vacancies').style.display = 'none';
+  }
 
   if (document.querySelector('ul.pagination-server')) {
     document.querySelector('ul.pagination-server').style.display = 'none';
