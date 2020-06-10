@@ -14,24 +14,25 @@
     = render 'filters'
   .govuk-grid-column-two-thirds
     .govuk-grid-column-full.vacancies-count
-    - if @vacancies.any?
+    .sort-results.sortable-links
       = render partial: 'sorting_options', locals: { search_criteria: @vacancies_search.only_active_to_hash, sort: @vacancies_search.sort_by }
-      #vacancies-hits{ 'aria-label': 'Search results' }
+    #vacancies-hits{ 'aria-label': 'Search results' }
+      - if @vacancies.any?
         %ul.vacancies{ 'role': 'list' }
           - @vacancies.each do |vacancy|
             = render partial: 'vacancy', locals: { vacancy: vacancy }
 
-    - elsif @vacancies.user_search?
-      %p
-        = t('jobs.no_jobs.intro')
-        %ul.govuk-list.govuk-list--bullet
-          - t('jobs.no_jobs.suggestions').each do |list_item|
-            %li= list_item
+      - elsif @vacancies.user_search?
+        %p
+          = t('jobs.no_jobs.intro')
+          %ul.govuk-list.govuk-list--bullet
+            - t('jobs.no_jobs.suggestions').each do |list_item|
+              %li= list_item
 
-    - else
-      %div.empty
-        - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
-          %p= sentence
+      - else
+        %div.empty
+          - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
+            %p= sentence
 
 = paginate @vacancies_search.vacancies
 = javascript_pack_tag 'search'
