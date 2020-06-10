@@ -9,9 +9,11 @@ export const renderStats = (renderOptions, isFirstRender) => {
   let last = constructLastResultNumber(nbPages, page, nbHits, hitsPerPage);
   let first = constructFirstResultNumber(nbPages, page, hitsPerPage);
 
-  widgetParams.container.innerHTML = `
-    Showing <span class="govuk-!-font-weight-bold">${first}</span> to <span class="govuk-!-font-weight-bold">${last}</span> of <span class="govuk-!-font-weight-bold">${nbHits}</span> ${results}
-  `;
+  if (nbHits) {
+    widgetParams.container.innerHTML = `
+      Showing <span class="govuk-!-font-weight-bold">${first}</span> to <span class="govuk-!-font-weight-bold">${last}</span> of <span class="govuk-!-font-weight-bold">${nbHits}</span> ${results}
+    `;
+  }
 };
 
 export const constructResults = (results) => {
