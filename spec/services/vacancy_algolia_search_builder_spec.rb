@@ -146,6 +146,40 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     end
   end
 
+  context '#build_stats' do
+    let(:params) { {} }
+    let(:page) { 0 }
+    let(:pages) { 6 }
+    let(:results_per_page) { 10 }
+    let(:total_results) { 57 }
+
+    it 'returns the correct array' do
+      expect(subject.build_stats(page, pages, results_per_page, total_results)).to eql(
+        [1, 10, total_results]
+      )
+    end
+
+    context 'there are no results' do
+      let(:total_results) { 0 }
+
+      it 'returns the correct array' do
+        expect(subject.build_stats(page, pages, results_per_page, total_results)).to eql(
+          [0, 0, total_results]
+        )
+      end
+    end
+
+    context 'the last page' do
+      let(:page) { 5 }
+
+      it 'returns the correct array' do
+        expect(subject.build_stats(page, pages, results_per_page, total_results)).to eql(
+          [51, total_results, total_results]
+        )
+      end
+    end
+  end
+
   context '#call' do
     @expired_now = Time.zone.now.to_datetime.to_i
     Timecop.freeze(@expired_now)
@@ -169,9 +203,11 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       }
     end
 
+    let(:vacancies) { double('vacancies').as_null_object }
+
     before do
       allow_any_instance_of(VacancyAlgoliaSearchBuilder).to receive(:expired_now_filter).and_return(@expired_now)
-      mock_algolia_search('vacancies', algolia_search_query, algolia_search_args)
+      mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
     end
 
     context 'a location category search' do
@@ -182,7 +218,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
       it 'carries out search with correct parameters' do
         subject.call
-        expect(subject.vacancies).to eql('vacancies')
+        expect(subject.vacancies).to eql(vacancies)
       end
     end
 
@@ -193,7 +229,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
       it 'carries out search with correct criteria' do
         subject.call
-        expect(subject.vacancies).to eql('vacancies')
+        expect(subject.vacancies).to eql(vacancies)
       end
     end
   end
