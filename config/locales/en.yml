@@ -166,7 +166,7 @@ en:
       with no recruitment fees for schools.
     location_search_heading: 'Teaching jobs in %{location}'
     sort_by:
-      label: 'Sort by:'
+      label: 'Sort by'
       most_relevant: 'most relevant first'
       publish_on:
         descending: 'newest job listing'
