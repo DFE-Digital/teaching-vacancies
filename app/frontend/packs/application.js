@@ -5,6 +5,7 @@ import 'styles/application.scss';
 
 import Rails from 'rails-ujs';
 
+import 'src/locationAutocomplete';
 import 'src/addTitleToGoogleMapsIframe';
 import 'src/addVacancyStateToDataLayer';
 import 'src/deleteAccordionControl';
@@ -18,6 +19,7 @@ import 'src/googleOptimise';
 import 'src/googleTagManagerUrlSnippet';
 import 'src/removeCommaFromNumber';
 import 'src/shareUrl';
+import 'src/sortJobList';
 import 'src/subjectsFilter';
 import 'src/submitFeedback';
 import 'src/uploadDocuments';

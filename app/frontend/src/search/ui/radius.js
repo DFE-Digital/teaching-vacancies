@@ -14,11 +14,22 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
 };
 
 export const enableRadiusSelect = () => {
-    document.querySelector('#radius').removeAttribute('disabled');
-    document.querySelector('#location-radius-select').style.display = 'block';
+
+    if (document.querySelector('#radius')) {
+        document.querySelector('#radius').removeAttribute('disabled');
+    }
+
+    if (document.querySelector('#location-radius-select')) {
+        document.querySelector('#location-radius-select').style.display = 'block';
+    }
 };
 
 export const disableRadiusSelect = () => {
-    document.querySelector('#radius').disabled = true;
-    document.querySelector('#location-radius-select').style.display = 'none';
+    if (document.querySelector('#radius')) {
+        document.querySelector('#radius').disabled = true;
+    }
+
+    if (document.querySelector('#location-radius-select')) {
+        document.querySelector('#location-radius-select').style.display = 'none';
+    }
 };

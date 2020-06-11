@@ -37,3 +37,5 @@
 .pagination-results
   = paginate @vacancies_search.vacancies
   %p.govuk-body#vacancies-stats-bottom{ 'aria-label': 'Number of results' }
+
+  = javascript_pack_tag 'search'
