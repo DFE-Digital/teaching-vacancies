@@ -37,7 +37,7 @@ Rails.application.routes.draw do
 
   # Authentication fallback with emailed magic link
   if AuthenticationFallback.enabled?
-    post 'identifications/request-email-sign-in', to: 'hiring_staff/identifications#request_email_sign_in'
+    post 'identifications/check-your-email', to: 'hiring_staff/identifications#check_your_email'
   end
 
   # Sign in

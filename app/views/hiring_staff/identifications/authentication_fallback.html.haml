@@ -10,7 +10,7 @@
         =t('hiring_staff.identifications.temp_login.please_use_email')
     %h1.govuk-heading-l= t('sign_in.title')
     %p= t('pages.home.signin.description')
-    = form_for User.new, url: identifications_request_email_sign_in_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for User.new, url: identifications_check_your_email_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
       = f.govuk_email_field :email
       = f.submit 'Continue', class: 'govuk-button'
     %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible

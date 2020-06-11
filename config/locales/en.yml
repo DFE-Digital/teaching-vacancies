@@ -38,10 +38,10 @@ en:
           page_title: Check your email
           heading: Check your email
           sent: >-
-            If your email address exists in our database, we’ve sent you an email. Click on the link to
-            confirm your address and return to this service.
+            If your email address is in our database, we’ve sent you an email.
+            Click on the link to confirm your address and return to this service.
           check_spam_html: >-
-            If our email doesn’t arrive within 5 minutes, check your spam and trash folder, or %{try_again}.
+            If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
         email:
           body: Click the link below to sign in to the Teaching Vacancies service.
         choose_org:
