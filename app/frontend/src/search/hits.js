@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* global window */
 import { extractQueryParams } from '../lib/utils';
 import '../polyfill/remove.polyfill';

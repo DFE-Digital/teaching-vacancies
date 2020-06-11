@@ -1,5 +1,5 @@
 import { renderAutocomplete } from './lib/autocomplete';
-import { locations } from './search/data/locations';
+import locations from './search/data/locations';
 
 $(document).ready(function () {
     if ($('#new_').length) {
