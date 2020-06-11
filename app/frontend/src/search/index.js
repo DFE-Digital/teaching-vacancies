@@ -40,26 +40,23 @@ if (document.querySelector('#vacancies-hits')) {
             updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href);
             search(query);
         },
-        onChange: (query) => {
-            return new Promise(resolve => {
-                if (stringMatchesPostcode(query) || (query.length && locations.indexOf(query.toLowerCase()) === -1)) {
-                    getGeolocatedCoordinates(query).then(coords => {
-                        if (coords.success) {
-                            enableRadiusSelect();
-                            setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
-                            setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
-                            resolve();
-                        }
-                    });
-                }
-                
-                disableRadiusSelect();
-                removeDataAttribute(document.querySelector('#location'), 'coordinates');
-                removeDataAttribute(document.querySelector('#radius'), 'radius');
-                resolve();
-            });
-        },
-        onSubmit: () => searchClientInstance.refresh()
+        onSubmit: (query) => {
+            if (shouldGeocode(query, locations)) {
+                getGeolocatedCoordinates(query).then(coords => {
+                    if (coords.success) {
+                        enableRadiusSelect();
+                        setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
+                        setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
+                        searchClientInstance.refresh();
+                    }
+                });
+            }
+
+            disableRadiusSelect();
+            removeDataAttribute(document.querySelector('#location'), 'coordinates');
+            removeDataAttribute(document.querySelector('#radius'), 'radius');
+            searchClientInstance.refresh();
+        }
     });
 
     const keywordSearchBox = searchBox({
@@ -71,7 +68,6 @@ if (document.querySelector('#vacancies-hits')) {
             updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
             search(query);
         },
-        onChange: () => new Promise(resolve => resolve()),
         onSubmit: () => searchClientInstance.refresh()
     });
 
@@ -139,4 +135,6 @@ if (document.querySelector('#vacancies-hits')) {
 
     searchClientInstance.start();
 }
+
+export const shouldGeocode = (query, locations) => stringMatchesPostcode(query) || (query.length && locations.indexOf(query.toLowerCase()) === -1);
 

@@ -10,25 +10,17 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
             refine(getQuery());
         }
 
-        if (widgetParams.onChange) {
-            widgetParams.onChange(widgetParams.inputElement.value).then(() => refine());
-        }
-
         widgetParams.inputElement.addEventListener('input', () => {
-            if (widgetParams.onChange) {
-                widgetParams.onChange(widgetParams.inputElement.value).then(() => enableSubmitButton(widgetParams.container));
-            }
+            enableSubmitButton(widgetParams.container);
         });
 
         widgetParams.inputElement.addEventListener('change', () => {
-            if (widgetParams.onChange) {
-                widgetParams.onChange(widgetParams.inputElement.value).then(() => enableSubmitButton(widgetParams.container));
-            }
+            enableSubmitButton(widgetParams.container);
         });
 
         widgetParams.container.addEventListener('submit', (e) => {
             e.preventDefault();
-            widgetParams.onSubmit();
+            widgetParams.onSubmit(widgetParams.inputElement.value);
         });
     }
 };

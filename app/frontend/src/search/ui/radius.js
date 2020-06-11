@@ -9,6 +9,8 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
         });
     }
 
+    disableRadiusSelect();
+
     query ? updateUrlQueryParams(widgetParams.key, query) : false;
 };
 
