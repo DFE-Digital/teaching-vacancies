@@ -7,9 +7,8 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
         widgetParams.inputElement.addEventListener('change', event => {
             widgetParams.onSelection(event.target.value);
         });
+        disableRadiusSelect();
     }
-
-    disableRadiusSelect();
 
     query ? updateUrlQueryParams(widgetParams.key, query) : false;
 };
