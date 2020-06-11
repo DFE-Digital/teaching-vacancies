@@ -44,17 +44,19 @@ if (document.querySelector('#vacancies-hits')) {
             return new Promise(resolve => {
                 if (stringMatchesPostcode(query) || (query.length && locations.indexOf(query.toLowerCase()) === -1)) {
                     getGeolocatedCoordinates(query).then(coords => {
-                        coords.success ? enableRadiusSelect() : disableRadiusSelect();
-                        setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
-                        setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
-                        resolve();
+                        if (coords.success) {
+                            enableRadiusSelect();
+                            setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
+                            setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);
+                            resolve();
+                        }
                     });
-                } else {
-                    disableRadiusSelect();
-                    removeDataAttribute(document.querySelector('#location'), 'coordinates');
-                    removeDataAttribute(document.querySelector('#radius'), 'radius');
-                    resolve();
                 }
+                
+                disableRadiusSelect();
+                removeDataAttribute(document.querySelector('#location'), 'coordinates');
+                removeDataAttribute(document.querySelector('#radius'), 'radius');
+                resolve();
             });
         },
         onSubmit: () => searchClientInstance.refresh()
