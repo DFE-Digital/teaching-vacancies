@@ -9,7 +9,8 @@ import { templates, renderContent } from './hits';
 import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
-import { onSubmit } from './ui/input/location';
+import { onSubmit as locationSubmit } from './ui/input/location';
+import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelect } from './ui/sort';
 import { renderStats } from './ui/stats';
@@ -40,7 +41,7 @@ const locationSearchBox = searchBox({
         updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href);
         search(query);
     },
-    onSubmit: query => onSubmit(query, locations, searchClientInstance)
+    onSubmit: query => locationSubmit(query, locations, searchClientInstance)
 });
 
 const keywordSearchBox = searchBox({
@@ -52,7 +53,7 @@ const keywordSearchBox = searchBox({
         updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
         search(query);
     },
-    onSubmit: () => searchClientInstance.refresh()
+    onSubmit: () => keywordSubmit(searchClientInstance)
 });
 
 searchClientInstance.addWidgets([

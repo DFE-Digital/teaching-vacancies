@@ -2,10 +2,12 @@ import { shouldGeocode, onSubmit, geocodeSuccess } from './location';
 import { locations } from '../../data/locations';
 
 import { getGeolocatedCoordinates } from '../../../lib/api';
+import { enableRadiusSelect, disableRadiusSelect } from '../radius';
 
 jest.mock('../../../lib/api');
+jest.mock('../radius');
 
-describe('location', () => {
+describe('location search box', () => {
 
     const client = {};
     let performSearch = null;
@@ -30,7 +32,7 @@ describe('location', () => {
         });
     });
 
-    describe('getGeolocatedCoordinates', () => {
+    describe('onSubmit getGeolocatedCoordinates', () => {
         test('is called once if location provided that is not in predefined list', () => {
             onSubmit('harlow', locations, client);
             expect(getGeolocatedCoordinates).toHaveBeenCalledTimes(1);
@@ -44,9 +46,10 @@ describe('location', () => {
         });
     });
 
-    describe('getGeolocatedCoordinates', () => {
-        test('does not get called if location supplied that exists in predefined list', () => {
+    describe('onSubmit getGeolocatedCoordinates', () => {
+        test('does not get called if location supplied that exists in predefined list and radius diabled', () => {
             onSubmit('london', locations, client);
+            expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
             expect(getGeolocatedCoordinates).not.toHaveBeenCalled();
         });
     });
@@ -58,9 +61,10 @@ describe('location', () => {
             expect(performSearch).not.toHaveBeenCalled();
         });
 
-        test('performs a search if succesful', () => {
+        test('performs a search if succesful and radius is enabled', () => {
             const coords = { success: true };
             geocodeSuccess(coords, client);
+            expect(enableRadiusSelect).toHaveBeenCalledTimes(1);
             expect(performSearch).toHaveBeenCalled();
             expect(performSearch).toHaveBeenCalledTimes(1);
         });
