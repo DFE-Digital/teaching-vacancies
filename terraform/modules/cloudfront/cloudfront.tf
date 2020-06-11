@@ -22,6 +22,16 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   custom_error_response {
+    error_code            = "404"
+    error_caching_min_ttl = "10"
+  }
+
+  custom_error_response {
+    error_code            = "500"
+    error_caching_min_ttl = "60"
+  }
+
+  custom_error_response {
     error_code            = "503"
     error_caching_min_ttl = "60"
     response_code         = "503"
