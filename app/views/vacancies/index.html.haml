@@ -14,6 +14,12 @@
     = render 'filters'
   .govuk-grid-column-two-thirds
     .govuk-grid-column-full.vacancies-count
+    .location-info-message.govuk-info-summary
+      .govuk-info-summary__body
+        %h3.govuk-heading-s{ class: 'govuk-!-margin-bottom-1' } We are having some problems with search
+        Location search is not working properly so you may see some unexpected results.
+        %br
+        If you searched using a postcode, you might get more relevant results using the name of a place instead.
     .sort-results.sortable-links
       = render partial: 'sorting_options', locals: { search_criteria: @vacancies_search.only_active_to_hash, sort: @vacancies_search.sort_by }
     #vacancies-hits{ 'aria-label': 'Search results' }
