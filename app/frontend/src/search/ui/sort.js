@@ -15,19 +15,25 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
         select.id = 'jobs_sort_select';
 
         select.addEventListener('change', event => {
-            document.querySelector('ul.vacancies').style.display = 'none';
+            if (document.querySelector('ul.vacancies')) {
+                document.querySelector('ul.vacancies').style.display = 'none';
+            }
             refine(event.target.value);
         });
 
         widgetParams.container.appendChild(select);
     }
 
+    if (document.getElementById('jobs_sort_label')) {
+        document.getElementById('jobs_sort_label').style.display = hasNoResults ? 'none' : 'inline-block';
+    }
+
     const select = document.getElementById('jobs_sort_select');
+    if (select) {
+        select.style.display = hasNoResults ? 'none' : 'inline-block';
 
-    select.style.display = hasNoResults ? 'none' : 'inline-block';
-    document.getElementById('jobs_sort_label').style.display = hasNoResults ? 'none' : 'inline-block';
-
-    select.innerHTML = constructOptions(options, currentRefinement);
+        select.innerHTML = constructOptions(options, currentRefinement);
+    }
 };
 
 export const constructOptions = (options, selected) => `${options.map(option => `<option value="${option.value}"${option.value === selected ? ' selected' : ''}>${option.label}</option>`).join('')}`;
