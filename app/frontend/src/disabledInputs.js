@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (allInputs && submitInput) {
     submitInput.disabled = true;
 
-    [...allInputs].forEach(function(input) {
+    var inputArray = [];
+    Array.prototype.push.apply(inputArray, allInputs);
+
+    inputArray.forEach(function(input) {
       input.addEventListener('input', function() {
         if (submitInput.disabled) {
           submitInput.disabled = false;
@@ -18,7 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (textAreaInputs && submitInput) {
     submitInput.disabled = true;
 
-    [...textAreaInputs].forEach(function(input) {
+    var textAreaInputArray = [];
+    Array.prototype.push.apply(textAreaInputArray, textAreaInputs);
+
+    textAreaInputArray.forEach(function(input) {
       input.addEventListener('input', function() {
         if (submitInput.disabled) {
           submitInput.disabled = false;
