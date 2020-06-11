@@ -17,6 +17,8 @@ export const create = (container, input, onSelect) => {
         });
 
         ul.addEventListener('click', (e) => {
+            input.value = e.target.dataset.location;
+            input.dispatchEvent(new Event('change', { bubbles: true }))
             onSelect(e.target.dataset.location);
         });
 
