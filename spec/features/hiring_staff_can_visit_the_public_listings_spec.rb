@@ -9,7 +9,6 @@ RSpec.feature 'School viewing public listings' do
 
   before do
     OmniAuth.config.test_mode = true
-    allow(AuthenticationFallback).to receive(:enabled?) { false }
   end
 
   after(:each) do
@@ -24,6 +23,7 @@ RSpec.feature 'School viewing public listings' do
       stub_authentication_step(school_urn: '110627')
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
+      allow(AuthenticationFallback).to receive(:enabled?) { false }
     end
 
     scenario 'A signed in school should see a link back to their own dashboard when viewing public listings' do

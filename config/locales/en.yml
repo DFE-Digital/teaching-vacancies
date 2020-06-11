@@ -34,6 +34,22 @@ en:
       temp_login:
         heading: Temporary login
         please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
+        check_your_email:
+          page_title: Check your email
+          heading: Check your email
+          sent: >-
+            If your email address exists in our database, we’ve sent you an email. Click on the link to
+            confirm your address and return to this service.
+          check_spam_html: >-
+            If our email doesn’t arrive within 5 minutes, check your spam and trash folder, or %{try_again}.
+        email:
+          body: Click the link below to sign in to the Teaching Vacancies service.
+        choose_org:
+          heading: Select your organisation
+          no_org: >-
+            You are not associated with any organisations. Unfortunately, we cannot associate your account with an
+            organisation until DfE Sign In is working as normal. Please try again later.
+          please_select: You are associated with more than one organisation. Please select the one you wish to sign in with.
   nav:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
