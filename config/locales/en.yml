@@ -31,6 +31,9 @@ en:
           Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
           in, try again soon.
         you_might_have_problems_signing_in: Sorry, the service is unavailable
+      temp_login:
+        heading: Temporary login
+        please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
   nav:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
