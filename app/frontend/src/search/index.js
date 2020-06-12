@@ -4,7 +4,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '../polyfill/classlist.polyfill';
 
-import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu } from 'instantsearch.js/es/connectors';
+import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu, connectStats } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
 import { templates, renderContent } from './hits';
@@ -13,6 +13,7 @@ import { searchClient } from './client';
 import { renderSearchBox } from './ui/input';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelect } from './ui/sort';
+import { renderStats } from './ui/stats';
 import { renderRadiusSelect, enableRadiusSelect, disableRadiusSelect } from './ui/radius';
 import { locations } from './data/locations';
 import { updateUrlQueryParams, stringMatchesPostcode, removeDataAttribute, setDataAttribute } from '../lib/utils';
@@ -29,6 +30,8 @@ if (document.querySelector('#vacancies-hits')) {
     const autocomplete = connectAutocomplete(renderAutocomplete);
     const heading = connectHits(renderContent);
     const sortBy = connectSortBy(renderSortSelect);
+    const statsBottom = connectStats(renderStats);
+    const statsTop = connectStats(renderStats);
     const locationRadius = connectMenu(renderRadiusSelect);
 
     const locationSearchBox = searchBox({
@@ -109,6 +112,12 @@ if (document.querySelector('#vacancies-hits')) {
         heading({
             container: document.querySelector('#job-count'),
             threshold: SEARCH_THRESHOLD,
+        }),
+        statsBottom({
+            container: document.querySelector('#vacancies-stats-bottom'),
+        }),
+        statsTop({
+            container: document.querySelector('#vacancies-stats-top'),
         }),
         hits({
             container: '#vacancies-hits',

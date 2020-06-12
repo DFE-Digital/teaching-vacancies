@@ -3,7 +3,7 @@ require 'geocoding'
 class VacancyAlgoliaSearchBuilder
   include ActiveModel::Model
 
-  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page,
+  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats,
                 :search_query, :location_filter, :search_replica, :search_filter,
                 :vacancies
 
@@ -35,6 +35,12 @@ class VacancyAlgoliaSearchBuilder
       hitsPerPage: hits_per_page,
       filters: search_filter,
       page: page
+    )
+    self.stats = build_stats(
+      vacancies.raw_answer['page'],
+      vacancies.raw_answer['nbPages'],
+      vacancies.raw_answer['hitsPerPage'],
+      vacancies.raw_answer['nbHits']
     )
   end
 
@@ -69,6 +75,17 @@ class VacancyAlgoliaSearchBuilder
 
   def convert_radius_in_miles_to_metres(radius)
     (radius * 1.60934 * 1000).to_i
+  end
+
+  def build_stats(page, pages, results_per_page, total_results)
+    return [0, 0, 0] unless total_results > 0
+    first_number = page * results_per_page + 1
+    if page + 1 === pages
+      last_number = total_results
+    else
+      last_number = (page + 1) * results_per_page
+    end
+    [first_number, last_number, total_results]
   end
 
   private
