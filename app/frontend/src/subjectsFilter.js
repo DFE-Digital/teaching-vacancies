@@ -7,13 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const subjectElements = document.querySelector('.checkboxes-with-scroll.subjects-options');
 
   if (subjectElements) {
-    const subjectArray = [...subjectElements.children];
+    var subjectArray = [];
+    Array.prototype.push.apply(subjectArray, subjectElements.children);
     subjectArray.shift();
+
     const subjectNames = subjectArray.map(ele => ele.children[1].textContent.toLowerCase());
     const subjectHints = subjectArray.map(ele => ele.children.length > 2 ? ele.children[2].textContent.toLowerCase() : undefined);
     const subjectCheckboxes = document.querySelectorAll('.subjects-options > .govuk-checkboxes__item > input');
 
-    subjectSearchInput.addEventListener('input', function(v) {
+    subjectSearchInput.addEventListener('input', function() {
       subjectFilter = subjectSearchInput.value.toLowerCase();
       filteredSubjectNames = subjectNames.filter(function(a) {
         return a.indexOf(subjectFilter) > -1;
@@ -22,13 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return a == undefined ? false : a.indexOf(subjectFilter) > -1;
       });
 
-      for (var i = 0; i < subjectArray.length; i++) {
-        var element = subjectArray[i];
+      subjectArray.forEach(function(element) {
         displayElement(element) ? element.style.display = 'block' : element.style.display = 'none';
-      }
+      });
     });
 
-    [...subjectCheckboxes].forEach(function(checkbox) {
+    var subjectCheckboxesArray = [];
+    Array.prototype.push.apply(subjectCheckboxesArray, subjectCheckboxes);
+
+    subjectCheckboxesArray.forEach(function(checkbox) {
       if (checkbox.checked) {
         manipulateCheckedElement(checkbox);
       }
