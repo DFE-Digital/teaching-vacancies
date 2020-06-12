@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe VacancyAlgoliaAlertBuilder do
   subject { described_class.new(subscription_hash) }
 
-  @expired_now = Time.zone.now.to_datetime.to_i
-  Timecop.freeze(@expired_now)
+  let!(:expired_now) { Time.zone.now }
 
   let(:keyword) { 'maths teacher' }
   let(:location) { 'SW1A 1AA' }
@@ -27,7 +26,14 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
   end
 
   before do
-    allow_any_instance_of(VacancyAlgoliaAlertBuilder).to receive(:expired_now_filter).and_return(@expired_now)
+    travel_to(expired_now)
+    allow_any_instance_of(VacancyAlgoliaAlertBuilder)
+      .to receive(:expired_now_filter)
+      .and_return(expired_now.to_datetime.to_i)
+  end
+
+  after(:all) do
+    travel_back
   end
 
   context 'subscription created before algolia' do
@@ -85,9 +91,9 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
       let(:vacancies) { double('vacancies') }
       let(:search_filter) do
         '(listing_status:published AND '\
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{@expired_now}) AND "\
-        "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i}) AND "\
-        '(working_patterns:full_time OR working_patterns:part_time) AND '\
+        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_datetime.to_i})"\
+        " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
+        " #{date_today.to_i}) AND (working_patterns:full_time OR working_patterns:part_time) AND "\
         "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}') AND "\
         '(school.phase:secondary OR school.phase:primary)'
       end
@@ -119,8 +125,9 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
     context '#call' do
       let(:search_filter) do
         '(listing_status:published AND '\
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{@expired_now}) AND "\
-        "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
+        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
+        "#{expired_now.to_datetime.to_i}) AND (publication_date_timestamp >= "\
+        "#{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
       end
 
       before do

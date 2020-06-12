@@ -47,7 +47,7 @@ RSpec.shared_examples 'a DFE Sign In endpoint' do
     end
 
     it 'sets a token in the header of the request' do
-      Timecop.freeze(Time.zone.now) do
+      freeze_time do
         expected_token = generate_jwt_token
 
         stub_api_response_for_page(1)

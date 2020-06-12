@@ -181,16 +181,14 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
   end
 
   context '#call' do
-    @expired_now = Time.zone.now.to_datetime.to_i
-    Timecop.freeze(@expired_now)
-
+    let!(:expired_now) { Time.zone.now }
     let(:sort_by) { '' }
     let(:search_replica) { nil }
     let(:default_hits_per_page) { 10 }
     let(:search_filter) do
       'listing_status:published AND '\
       "publication_date_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\
-      "expires_at_timestamp > #{@expired_now}"
+      "expires_at_timestamp > #{expired_now.to_datetime.to_i}"
     end
     let(:page) { 1 }
 
@@ -206,9 +204,14 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     let(:vacancies) { double('vacancies').as_null_object }
 
     before do
-      allow_any_instance_of(VacancyAlgoliaSearchBuilder).to receive(:expired_now_filter).and_return(@expired_now)
+      travel_to(expired_now)
+      allow_any_instance_of(VacancyAlgoliaSearchBuilder)
+        .to receive(:expired_now_filter)
+        .and_return(expired_now.to_datetime.to_i)
       mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
     end
+
+    after { travel_back }
 
     context 'a location category search' do
       let(:location) { 'London' }

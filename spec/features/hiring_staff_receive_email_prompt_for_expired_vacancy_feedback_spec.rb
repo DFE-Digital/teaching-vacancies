@@ -10,7 +10,7 @@ RSpec.feature 'Creating a vacancy' do
   end
 
   after(:each) do
-    Timecop.return
+    travel_back
   end
 
   context 'Hiring staff has expired vacancy that is not older than 2 weeks' do
@@ -26,13 +26,13 @@ RSpec.feature 'Creating a vacancy' do
         publisher_user_id: current_user.id
       )
 
-      Timecop.freeze(Time.zone.now + 2.weeks)
+      travel 2.weeks do
+        perform_enqueued_jobs do
+          SendExpiredVacancyFeedbackEmailJob.new.perform
+        end
 
-      perform_enqueued_jobs do
-        SendExpiredVacancyFeedbackEmailJob.new.perform
+        expect(ApplicationMailer.deliveries.count).to eq(0)
       end
-
-      expect(ApplicationMailer.deliveries.count).to eq(0)
     end
   end
 
@@ -69,17 +69,17 @@ RSpec.feature 'Creating a vacancy' do
         publisher_user_id: current_user.id
       )
 
-      Timecop.freeze(Time.zone.now + 2.weeks)
+      travel 2.weeks do
+        perform_enqueued_jobs do
+          SendExpiredVacancyFeedbackEmailJob.new.perform
+        end
 
-      perform_enqueued_jobs do
-        SendExpiredVacancyFeedbackEmailJob.new.perform
+        expect(ApplicationMailer.deliveries.first.to).to eq(['test@mail.com'])
+        expect(ApplicationMailer.deliveries.count).to eq(1)
+        expect(ApplicationMailer.deliveries.first.body).to have_content('Job one')
+        expect(ApplicationMailer.deliveries.first.body).to have_content('Job two')
+        expect(ApplicationMailer.deliveries.first.body).to_not have_content('Job three')
       end
-
-      expect(ApplicationMailer.deliveries.first.to).to eq(['test@mail.com'])
-      expect(ApplicationMailer.deliveries.count).to eq(1)
-      expect(ApplicationMailer.deliveries.first.body).to have_content('Job one')
-      expect(ApplicationMailer.deliveries.first.body).to have_content('Job two')
-      expect(ApplicationMailer.deliveries.first.body).to_not have_content('Job three')
     end
   end
 
@@ -107,16 +107,16 @@ RSpec.feature 'Creating a vacancy' do
         publisher_user_id: another_user.id
       )
 
-      Timecop.freeze(Time.zone.now + 2.weeks)
+      travel 2.weeks do
+        perform_enqueued_jobs do
+          SendExpiredVacancyFeedbackEmailJob.new.perform
+        end
 
-      perform_enqueued_jobs do
-        SendExpiredVacancyFeedbackEmailJob.new.perform
+        expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(
+          ['another@user.com'], ['test@mail.com']
+        )
+        expect(ApplicationMailer.deliveries.count).to eq(2)
       end
-
-      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(
-        ['another@user.com'], ['test@mail.com']
-      )
-      expect(ApplicationMailer.deliveries.count).to eq(2)
     end
   end
 end

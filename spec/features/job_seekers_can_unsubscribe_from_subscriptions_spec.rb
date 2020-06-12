@@ -92,12 +92,12 @@ RSpec.feature 'A job seeker can unsubscribe from subscriptions' do
   end
 
   context 'with an old token' do
-    let(:token) do
-      Timecop.travel(-3.days) { subscription.token }
-    end
+    let(:token) { subscription.token }
 
     scenario 'still returns 200' do
-      expect(page.status_code).to eq(200)
+      travel 3.days do
+        expect(page.status_code).to eq(200)
+      end
     end
   end
 end
