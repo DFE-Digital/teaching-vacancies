@@ -13,6 +13,8 @@ export const renderStats = (renderOptions, isFirstRender) => {
     widgetParams.container.innerHTML = `
       Showing <span class="govuk-!-font-weight-bold">${first}</span> to <span class="govuk-!-font-weight-bold">${last}</span> of <span class="govuk-!-font-weight-bold">${nbHits}</span> ${results}
     `;
+  } else {
+    widgetParams.container.innerHTML = '';
   }
 };
 
