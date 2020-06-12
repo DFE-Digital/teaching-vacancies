@@ -51,7 +51,7 @@
     %p= @vacancy.how_to_apply
 
   - if @vacancy.application_link.present?
-    = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link mb1', 'aria-label': t('jobs.aria_labels.apply_link')
+    = link_to t('jobs.apply'), new_job_interest_path(@vacancy.id), target: '_blank', class: 'govuk-button vacancy-apply-link govuk-!-margin-bottom-5', 'aria-label': t('jobs.aria_labels.apply_link')
 
   - if @vacancy.documents.any?
     %h4.govuk-heading-s= t('jobs.supporting_documents')
