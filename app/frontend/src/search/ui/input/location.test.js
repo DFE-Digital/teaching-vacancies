@@ -2,10 +2,10 @@ import { shouldGeocode, onSubmit, geocodeSuccess } from './location';
 import { locations } from '../../data/locations';
 
 import { getGeolocatedCoordinates } from '../../../lib/api';
-import { enableRadiusSelect, disableRadiusSelect } from '../radius';
+import { enableRadiusSelect, disableRadiusSelect } from './radius';
 
 jest.mock('../../../lib/api');
-jest.mock('../radius');
+jest.mock('./radius');
 
 describe('location search box', () => {
 

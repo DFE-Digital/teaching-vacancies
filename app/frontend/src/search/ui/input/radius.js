@@ -1,4 +1,4 @@
-import { updateUrlQueryParams } from '../../lib/utils';
+import { updateUrlQueryParams, convertMilesToMetres } from '../../../lib/utils';
 
 export const renderRadiusSelect = (renderOptions, isFirstRender) => {
     const { query, widgetParams } = renderOptions;
@@ -31,5 +31,11 @@ export const disableRadiusSelect = () => {
 
     if (document.querySelector('#location-radius-select')) {
         document.querySelector('#location-radius-select').style.display = 'none';
+    }
+};
+
+export const getRadius = () => {
+    if (document.querySelector('#radius')) {
+        return convertMilesToMetres(document.querySelector('#radius').dataset.radius);
     }
 };

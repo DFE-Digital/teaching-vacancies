@@ -1,5 +1,5 @@
 import { setGeocodeAttributes, removeGeocodeAttributes } from '../form';
-import { enableRadiusSelect, disableRadiusSelect } from '../radius';
+import { enableRadiusSelect, disableRadiusSelect } from './radius';
 import { stringMatchesPostcode } from '../../../lib/utils';
 import { getGeolocatedCoordinates } from '../../../lib/api';
 
@@ -24,3 +24,5 @@ export const geocodeSuccess = (coords, client) => {
         client.refresh();
     }
 };
+
+export const getCoords = () => document.querySelector('#location').dataset.coordinates;

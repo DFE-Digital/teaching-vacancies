@@ -14,7 +14,7 @@ import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelect } from './ui/sort';
 import { renderStats } from './ui/stats';
-import { renderRadiusSelect } from './ui/radius';
+import { renderRadiusSelect } from './ui/input/radius';
 import { locations } from './data/locations';
 import { updateUrlQueryParams, setDataAttribute } from '../lib/utils';
 import { enableSubmitButton } from './ui/form';
