@@ -84,7 +84,6 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   def check_authorisation(authorisation_permissions)
     if authorisation_permissions.authorised?
       update_session(authorisation_permissions)
-      current_user.update(email: identifier)
       update_user_last_activity_at
       redirect_to school_path
     else
