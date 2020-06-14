@@ -3,7 +3,7 @@ class AuthenticationFallbackMailer < ApplicationMailer
   NOTIFY_GENERIC_EMAIL_TEMPLATE = '2f37ec1d-58ef-4cd9-9d0a-4272723dda3d'.freeze
 
   def sign_in_fallback(login_key:, email:)
-    @login_link = choose_org_url(login_key: login_key.id)
+    @login_link = choose_organisation_url(login_key: login_key.id)
     view_mail(
       NOTIFY_GENERIC_EMAIL_TEMPLATE,
       to: email,

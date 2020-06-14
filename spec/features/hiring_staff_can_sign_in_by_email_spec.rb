@@ -55,9 +55,9 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
 
       # Expect that the link in the email goes to the landing page
 
-      visit choose_org_path(login_key: login_key.id)
+      visit choose_organisation_path(login_key: login_key.id)
 
-      expect(page).to have_content('Select your organisation')
+      expect(page).to have_content('Choose your organisation')
 
       click_on school.name
 

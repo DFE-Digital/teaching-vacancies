@@ -2,51 +2,57 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
   skip_before_action :check_user_last_activity_at
-  skip_before_action :check_session, only: %i[new create check_your_email choose_org]
-  skip_before_action :check_terms_and_conditions, only: %i[new create check_your_email choose_org]
+  skip_before_action :check_session,
+    only: %i[new create check_your_email choose_organisation sign_in_by_email]
+  skip_before_action :check_terms_and_conditions,
+    only: %i[new create check_your_email choose_organisation sign_in_by_email]
   skip_before_action :verify_authenticity_token, only: %i[create]
 
   before_action :redirect_signed_in_users
-  before_action :check_flag, only: %i[check_your_email choose_org]
+  before_action :check_flag, only: %i[check_your_email choose_organisation sign_in_by_email]
 
   def new
-    if AuthenticationFallback.enabled?
-      render :authentication_fallback
-    end
+    render :authentication_fallback if AuthenticationFallback.enabled?
   end
 
   def create
     redirect_to new_dfe_path
   end
 
+  # TODO: maybe separate things out into a separate controller.
+  # TODO: expire sessions
   def check_your_email
     user = User.find_by(email: params.dig(:user, :email).downcase.strip)
     send_login_key(user: user) if user
   end
 
-  def choose_org
-    @schools = get_schools_from_login_key
+  def choose_organisation
+    binding.pry
+    key = get_key
+    if key
+      user = key&.user_id ? User.find(key.user_id) : nil
+    end
+    @schools = get_schools(user)
+    binding.pry
     # TODO: include school_groups here when we have implemented school groups/trusts/LAs
+    key&.destroy
+    @has_multiple_schools = @schools.size > 1 
+    update_session_without_urn(@has_multiple_schools, user&.id)
+  end
+
+  def sign_in_by_email
+    binding.pry
+    redirect_to new_identifications_path unless user_authorised?
+    session.update(urn: get_urn)
+    Rails.logger.info("Updated session with URN #{session[:urn]}")
+    redirect_to school_path
   end
 
   private
 
-  def get_schools_from_login_key
-    params_login_key = params.permit(:login_key)['login_key']
-    if params_login_key
-      login_key = EmergencyLoginKey.find(params_login_key)
-      user = login_key&.user_id ? User.find(login_key.user_id) : nil
-    end
-    schools = []
-    user&.dsi_data&.dig('school_urns')&.each do |urn|
-      schools.push SchoolPresenter.new(School.where(urn: urn)).first
-    end
-    schools.compact
-  end
-
-  def send_login_key(user:)
-    login_key = user.emergency_login_keys.create(not_valid_after: Time.zone.now + EMERGENCY_LOGIN_KEY_DURATION)
-    AuthenticationFallbackMailer.sign_in_fallback(login_key: login_key, email: user.email).deliver_later
+  def user_authorised?
+    user = User.find(session[:session_id]) rescue nil
+    user.dsi_data['school_urns'].include? get_urn
   end
 
   def redirect_signed_in_users
@@ -55,5 +61,36 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
 
   def check_flag
     redirect_to new_identifications_path unless AuthenticationFallback.enabled?
+  end
+
+  def update_session_without_urn(multiple_schools, id)
+    return unless id
+    session.update(
+      session_id: id,
+      multiple_schools: multiple_schools
+    )
+    Rails.logger.warn("Hiring staff signed in: #{id}")
+  end
+
+  def get_schools(user)
+    schools = []
+    user&.dsi_data&.dig('school_urns')&.each do |urn|
+      schools.push SchoolPresenter.new(School.where(urn: urn).first)
+    end
+    schools.compact
+  end
+
+  def get_urn
+    params.dig(:urn)
+  end
+
+  def get_key
+    params_login_key = params.dig(:login_key)
+    EmergencyLoginKey.find(params_login_key) rescue nil
+  end
+
+  def send_login_key(user:)
+    login_key = user.emergency_login_keys.create(not_valid_after: Time.zone.now + EMERGENCY_LOGIN_KEY_DURATION)
+    AuthenticationFallbackMailer.sign_in_fallback(login_key: login_key, email: user.email).deliver_later
   end
 end
