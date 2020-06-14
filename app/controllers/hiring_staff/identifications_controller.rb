@@ -28,7 +28,7 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
 
   def choose_organisation
     key = get_key
-    if key
+    if key&.not_valid_after < Time.zone.now
       user = key&.user_id ? User.find(key.user_id) : nil
     end
     @schools = get_schools(user)
@@ -76,6 +76,8 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
       schools.push SchoolPresenter.new(School.where(urn: urn).first)
     end
     schools.compact
+    binding.pry
+    return schools.compact
   end
 
   def get_urn
