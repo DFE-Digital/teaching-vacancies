@@ -48,10 +48,14 @@ en:
           heading: Sign in to Teaching Vacancies
           body: Click the link below to sign in to the Teaching Vacancies service.
         choose_org:
+          page_title: Select your organisation
           heading: Select your organisation
-          no_org: >-
-            You are not associated with any organisations. Unfortunately, we cannot associate your account with an
-            organisation until DfE Sign In is working as normal. Please try again later.
+          no_org:
+            title: No organisations found
+            body_html: >-
+              The login link you used is not associated with any organisations. Either the link is expired, or your
+              account is not associated with an organisation. Unfortunately, we cannot associate your account with an
+              organisation until DfE Sign In is working as normal. Please %{try_again} later.
           please_select: You are associated with more than one organisation. Please select the one you wish to sign in with.
   nav:
     sign_in: 'List a teaching job'

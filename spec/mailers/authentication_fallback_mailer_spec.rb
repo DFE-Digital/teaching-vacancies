@@ -10,7 +10,7 @@ RSpec.describe AuthenticationFallbackMailer, type: :mailer do
 
     it 'sends an email with the correct subject, heading, and login link' do
       expect(mail.subject.downcase).to include('sign in to teaching vacancies')
-    
+
       body = mail.body.encoded.downcase
 
       # Heading
@@ -18,7 +18,7 @@ RSpec.describe AuthenticationFallbackMailer, type: :mailer do
       # Paragraph
       expect(body).to include('click the link')
       # Login link
-      expect(body).to include("/identifications/sign-in-by-email?login_key=#{login_key.id}")
+      expect(body).to include("/identifications/choose-org?login_key=#{login_key.id}")
     end
   end
 end

@@ -2,10 +2,13 @@ require 'rails_helper'
 
 RSpec.feature 'Hiring staff signing in with fallback email authentication' do
   let!(:school) { create(:school) }
-  let!(:user_dsi_data) { { 'school_urns'=>[170047], 'school_group_uids'=>[3409, 1623] } }
-  let(:user) { create(:user, dsi_data: user_dsi_data, accepted_terms_at: 1.day.ago) }
+  let!(:user_dsi_data) { { 'school_urns'=>[school.urn], 'school_group_uids'=>[3409, 1623] } }
+  let!(:user) { create(:user, dsi_data: user_dsi_data, accepted_terms_at: 1.day.ago) }
+  let(:login_key) do
+    user.emergency_login_keys.create(not_valid_after: Time.zone.now + HiringStaff::IdentificationsController::EMERGENCY_LOGIN_KEY_DURATION)
+  end
 
-  before(:each) do
+  before do
     allow(AuthenticationFallback).to receive(:enabled?) { true }
   end
 
@@ -26,38 +29,46 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
   end
 
   scenario 'can sign in' do
-    visit root_path
+    freeze_time do
+      visit root_path
 
-    click_sign_in
+      click_sign_in
 
-    fill_in 'user[email]', with: user.email
+      fill_in 'user[email]', with: user.email
 
-    click_on 'commit'
+      click_on 'commit'
 
-    expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.check_your_email.sent'))
+      expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.check_your_email.sent'))
 
-    # Expect an email
+      allow(user).to receive_message_chain(:emergency_login_keys, :create)
+        .with(not_valid_after: Time.zone.now + HiringStaff::IdentificationsController::EMERGENCY_LOGIN_KEY_DURATION)
+        .and_return(login_key)
 
-    message_delivery = instance_double(ActionMailer::MessageDelivery)
-    allow(AuthenticationFallbackMailer).to receive(:login_key_email)
-      .with(login_key: key, email: user.email)
-      .and_return(message_delivery)
-    expect(message_delivery).to receive(:deliver_later)
+      # Expect an email
 
-    # Expect that the link in the email goes to the landing page
+      message_delivery = instance_double(ActionMailer::MessageDelivery)
 
-    visit whatever_path(key)
+      allow(AuthenticationFallbackMailer).to receive(:sign_in_fallback)
+        .with(login_key: login_key, email: user.email)
+        .and_return(message_delivery)
+      expect(message_delivery).to receive(:deliver_later)
 
-    expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.choose_org.heading'))
+      # Expect that the link in the email goes to the landing page
 
-    click_on school.name
+      visit choose_org_path(login_key: login_key.id)
 
-    expect(page).to have_content("Jobs at #{school.name}")
+      expect(page).to have_content('Select your organisation')
 
-    click_on(I18n.t('nav.sign_out'))
+      click_on school.name
 
-    within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_in')) }
-    expect(page).to have_content(I18n.t('messages.access.signed_out'))
+      expect(page).to have_content("Jobs at #{school.name}")
+      expect(login_key).to be destroyed
+
+      click_on(I18n.t('nav.sign_out'))
+
+      within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_in')) }
+      expect(page).to have_content(I18n.t('messages.access.signed_out'))
+    end
   end
 
   private

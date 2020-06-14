@@ -1,0 +1,17 @@
+- content_for :page_title_prefix do
+  = t('hiring_staff.identifications.temp_login.choose_org.page_title')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if @schools.empty?
+      .govuk-info-summary{ aria: { labelledby: "govuk-info-summary__title" }, role: "alert", tabindex: "-1" }
+        %h2.govuk-info-summary__title
+          =t('hiring_staff.identifications.temp_login.choose_org.no_org.title')
+        .govuk-info-summary__body
+          =t('hiring_staff.identifications.temp_login.choose_org.no_org.body_html',
+            try_again: (link_to 'try again', new_identifications_path, class: 'govuk-link'))
+    - else
+      %h1.govuk-heading-l= t('hiring_staff.identifications.temp_login.choose_org.heading')
+      - @schools.each do |school|
+        = link_to school.name, root_path, class: 'govuk-link'
+        %br
