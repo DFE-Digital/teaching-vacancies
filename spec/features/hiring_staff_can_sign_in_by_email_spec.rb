@@ -62,7 +62,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
       click_on school.name
 
       expect(page).to have_content("Jobs at #{school.name}")
-      expect(login_key).to be destroyed
+      expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
       click_on(I18n.t('nav.sign_out'))
 

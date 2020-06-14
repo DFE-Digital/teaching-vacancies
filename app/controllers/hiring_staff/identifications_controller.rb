@@ -27,21 +27,18 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   end
 
   def choose_organisation
-    binding.pry
     key = get_key
     if key
       user = key&.user_id ? User.find(key.user_id) : nil
     end
     @schools = get_schools(user)
-    binding.pry
     # TODO: include school_groups here when we have implemented school groups/trusts/LAs
     key&.destroy
     @has_multiple_schools = @schools.size > 1 
-    update_session_without_urn(@has_multiple_schools, user&.id)
+    update_session_without_urn(@has_multiple_schools, user&.oid)
   end
 
   def sign_in_by_email
-    binding.pry
     redirect_to new_identifications_path unless user_authorised?
     session.update(urn: get_urn)
     Rails.logger.info("Updated session with URN #{session[:urn]}")
@@ -51,8 +48,9 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   private
 
   def user_authorised?
-    user = User.find(session[:session_id]) rescue nil
-    user.dsi_data['school_urns'].include? get_urn
+    user = User.find_by(oid: session[:session_id]) rescue nil
+    user&.dsi_data&.dig('school_urns')&.include? get_urn
+    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
   end
 
   def redirect_signed_in_users
@@ -63,13 +61,13 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
     redirect_to new_identifications_path unless AuthenticationFallback.enabled?
   end
 
-  def update_session_without_urn(multiple_schools, id)
-    return unless id
+  def update_session_without_urn(multiple_schools, oid)
+    return unless oid
     session.update(
-      session_id: id,
+      session_id: oid,
       multiple_schools: multiple_schools
     )
-    Rails.logger.warn("Hiring staff signed in: #{id}")
+    Rails.logger.warn("Hiring staff signed in: #{oid}")
   end
 
   def get_schools(user)
