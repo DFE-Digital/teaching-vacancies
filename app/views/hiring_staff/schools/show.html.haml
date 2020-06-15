@@ -1,11 +1,5 @@
 - content_for :page_title_prefix, @school.name
 
-- if @awaiting_feedback_count.positive?
-  .js-dismissable.mb1#awaiting_notice{role: 'alert', tabindex: '-1', class: "flash flash-notice"}
-    %a.govuk-link.govuk-link--no-visited-state.dismiss-link.js-dismissable__link{ href: '#' }
-      = t('buttons.dismiss')
-    You have <span class='count'>#{pluralize @awaiting_feedback_count, 'job'}</span> awaiting feedback
-
 .school.govuk-grid-row
   .govuk-grid-column-full
     %h1.govuk-heading-l.mb0
