@@ -1,6 +1,7 @@
 class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   include SignInAuditConcerns
 
+  skip_before_action :check_user_last_activity_at
   skip_before_action :check_session, only: %i[create new]
   skip_before_action :check_terms_and_conditions, only: %i[create new destroy]
   skip_before_action :verify_authenticity_token, only: %i[create new destroy]
@@ -18,8 +19,13 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def destroy
+    if session[:signing_out_for_inactivity]
+      flash_message = { notice: I18n.t('messages.access.signed_out_for_inactivity') }
+    else
+      flash_message = { notice: I18n.t('messages.access.signed_out') }
+    end
     session.destroy
-    redirect_to root_path, notice: I18n.t('messages.access.signed_out')
+    redirect_to new_identifications_path, flash_message
   end
 
   private
@@ -77,6 +83,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
     if authorisation_permissions.authorised?
       update_session(authorisation_permissions)
       current_user.update(email: identifier)
+      update_user_last_activity_at
       redirect_to school_path
     else
       not_authorised

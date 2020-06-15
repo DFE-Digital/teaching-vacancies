@@ -18,7 +18,7 @@ module AuthHelpers
   def stub_hiring_staff_auth(urn:, session_id: 'session_id', email: nil)
     page.set_rack_session(urn: urn)
     page.set_rack_session(session_id: session_id)
-    create(:user, oid: session_id, email: email)
+    create(:user, oid: session_id, email: email, last_activity_at: Time.zone.now)
   end
 
   def stub_authentication_step(organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
