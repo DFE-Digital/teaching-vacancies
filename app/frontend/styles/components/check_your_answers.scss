@@ -96,9 +96,13 @@ dt.app-check-your-answers__question > h4 {
 }
 
 .notification-tag {
-  vertical-align: middle;
+  float: right;
   text-transform: uppercase;
-  margin-left: 20px;
+  vertical-align: middle;
+}
+
+.action-required {
+  background-color: govuk-colour('red');
 }
 
 .change-button {

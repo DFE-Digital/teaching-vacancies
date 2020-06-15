@@ -159,7 +159,8 @@ en:
     current_step: "Step %{step} of %{total}"
     errors_present: Please correct the following errors
     notification_labels:
-      new: 'new'
+      new: new
+      action_required: action required
     heading: 'Find a job in teaching'
     location_description: >-
       Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
