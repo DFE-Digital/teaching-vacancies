@@ -5,10 +5,10 @@ import '../polyfill/classlist.polyfill';
 import { connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu, connectStats } from 'instantsearch.js/es/connectors';
 import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
 
-import { templates, renderContent } from './hits';
 import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
+import { templates, renderContent } from './ui/hits';
 import { onSubmit as locationSubmit } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';

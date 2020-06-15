@@ -36,6 +36,8 @@
       "<rootDir>/app/frontend/src/**/*.test.js"
     ],
     "setupFilesAfterEnv": ["<rootDir>/app/frontend/src/lib/testSetup.js"],
-    "coveragePathIgnorePatterns": ["<rootDir>/app/frontend/src/polyfill/*"]
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/app/frontend/src/polyfill/*"
+    ]
   }
 }
