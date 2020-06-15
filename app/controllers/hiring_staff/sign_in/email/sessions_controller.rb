@@ -1,15 +1,13 @@
 class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::BaseSessionsController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
-  skip_before_action :check_session,
-    only: %i[new create destroy check_your_email change_organisation choose_organisation]
-  skip_before_action :check_terms_and_conditions,
-    only: %i[new create destroy check_your_email change_organisation choose_organisation]
+  skip_before_action :check_session
+  skip_before_action :check_terms_and_conditions
 
   before_action :redirect_signed_in_users,
     only: %i[new create check_your_email choose_organisation]
   before_action :check_flag,
-    only: %i[new create check_your_email change_organisation choose_organisation create]
+    only: %i[new create check_your_email change_organisation choose_organisation]
 
   def new; end
 
@@ -50,7 +48,6 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     else
       @reason_for_denial = 'no_key'
     end
-    binding.pry
   end
 
   private

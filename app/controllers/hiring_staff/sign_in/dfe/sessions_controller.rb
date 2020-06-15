@@ -81,4 +81,8 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
       not_authorised
     end
   end
+
+  def check_flag
+    redirect_to new_auth_email_path if AuthenticationFallback.enabled?
+  end
 end
