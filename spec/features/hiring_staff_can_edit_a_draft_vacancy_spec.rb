@@ -222,7 +222,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
         click_on I18n.t('buttons.update_job')
 
         expect(page.body).to include(
-          I18n.t('messages.jobs.listing_updated_html', job_title: published_vacancy.job_title)
+          I18n.t('messages.jobs.listing_updated', job_title: published_vacancy.job_title)
         )
       end
     end

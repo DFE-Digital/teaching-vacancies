@@ -1022,7 +1022,7 @@ RSpec.feature 'Creating a vacancy' do
 
         visit school_job_publish_path(vacancy.id)
 
-        expect(page).to have_content(I18n.t('jobs.already_published'))
+        expect(page).to have_content(I18n.t('messages.jobs.already_published'))
       end
 
       scenario 'a published vacancy cannot be edited' do
@@ -1030,7 +1030,7 @@ RSpec.feature 'Creating a vacancy' do
 
         visit school_job_review_path(vacancy.id)
         expect(page.current_path).to eq(school_job_path(vacancy.id))
-        expect(page).to have_content(I18n.t('jobs.already_published'))
+        expect(page).to have_content(I18n.t('messages.jobs.already_published'))
       end
 
       context 'adds a job to update the Google index in the queue' do

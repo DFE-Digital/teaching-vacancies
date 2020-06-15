@@ -27,7 +27,7 @@ RSpec.feature 'Vacancy publish feedback' do
 
       visit new_school_job_feedback_path(published_job.id)
 
-      expect(page).to have_content('Feedback for this job listing has already been submitted')
+      expect(page).to have_content(I18n.t('errors.vacancy_publish_feedback.already_submitted'))
     end
   end
 
@@ -59,7 +59,9 @@ RSpec.feature 'Vacancy publish feedback' do
       choose_no_to_participation
 
       click_on 'Submit feedback'
-      expect(page).to have_content('Your feedback has been successfully submitted')
+      expect(page).to have_content(
+        strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: published_job.job_title))
+      )
     end
 
     scenario 'creates a feedback record' do
@@ -86,7 +88,9 @@ RSpec.feature 'Vacancy publish feedback' do
       choose_no_to_participation
 
       click_on 'Submit feedback'
-      expect(page).to have_content('Your feedback has been successfully submitted')
+      expect(page).to have_content(
+        strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: published_job.job_title))
+      )
 
       activity = published_job.activities.last
       expect(activity.key).to eq('vacancy.publish_feedback.create')

@@ -14,9 +14,13 @@ RSpec.feature 'School deleting vacancies' do
 
     delete_vacancy(school, vacancy.id)
 
-    expect(page).not_to have_content(vacancy.job_title)
+    within('table.vacancies') do
+      expect(page).not_to have_content(vacancy.job_title)
+    end
     expect(page).to have_content(vacancy2.job_title)
-    expect(page).to have_content('The job has been deleted')
+    expect(page).to have_content(
+      strip_tags(I18n.t('messages.jobs.delete_html', job_title: vacancy.job_title))
+    )
   end
 
   scenario 'Deleting a vacancy triggers deletion of its supporting documents' do
