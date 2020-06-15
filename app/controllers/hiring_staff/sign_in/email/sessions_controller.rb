@@ -37,8 +37,8 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
 
   def choose_organisation
     key = get_key
-    if key&.not_valid_after > Time.zone.now
-      user = key&.user_id ? User.find(key.user_id) : nil
+    if key&.valid?
+      user = key.user_id ? User.find(key.user_id) : nil
     end
     key&.destroy
     @schools = get_schools(user)
