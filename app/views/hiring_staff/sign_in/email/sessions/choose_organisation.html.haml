@@ -13,9 +13,8 @@
     - else
       %h1.govuk-heading-l= t('hiring_staff.temp_login.choose_organisation.heading')
 
-      - if @has_multiple_schools
-        %p= t('hiring_staff.temp_login.choose_organisation.please_select')
+      %p= t('hiring_staff.temp_login.choose_organisation.please_select')
 
       - @schools.each do |school|
-        = link_to(school.location, auth_email_sign_in_path(urn: school.urn), class: 'govuk-link')
+        = link_to(school.location, auth_email_create_session_path(urn: school.urn), class: 'govuk-link')
         %br

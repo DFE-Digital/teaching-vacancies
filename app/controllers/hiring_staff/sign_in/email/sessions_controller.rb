@@ -39,12 +39,12 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
       @reason_for_denial = 'expired'
     elsif key
       user = key.user_id ? User.find(key.user_id) : nil
-      key&.destroy
+      key.destroy
       @schools = get_schools(user)
       # TODO: include school_groups here when we have implemented school groups/trusts/LAs
       @reason_for_denial = 'no_orgs' if @schools.empty?
-      @has_multiple_schools = @schools.size > 1
-      update_session_without_urn(@has_multiple_schools, user&.oid)
+      update_session_without_urn(@schools.size > 1, user&.oid)
+      redirect_to auth_email_create_session_path(urn: @schools.first.urn) if @schools.size == 1
     else
       @reason_for_denial = 'no_key'
     end
@@ -58,11 +58,11 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     # TODO: include school_groups here when we have implemented school groups/trusts/LAs
   end
 
-  def update_session_without_urn(multiple_schools, oid)
+  def update_session_without_urn(has_multiple_schools, oid)
     return unless oid
     session.update(
       session_id: oid,
-      multiple_schools: multiple_schools
+      multiple_schools: has_multiple_schools
     )
     # Session is expired after the time set in config/initializers/session_store.rb
     Rails.logger.warn("Hiring staff signed in: #{oid}")
@@ -74,7 +74,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
       school_query = School.where(urn: urn)
       schools.push SchoolPresenter.new(school_query.first) unless school_query.empty?
     end
-    schools
+    schools.sort_by { |school| school.name }
   end
 
   def get_urn

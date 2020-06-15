@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   get 'auth/email/sessions/choose-organisation', to: 'hiring_staff/sign_in/email/sessions#choose_organisation',
     as: 'auth_email_choose_organisation'
   get 'auth/email/sessions/sign-in', to: 'hiring_staff/sign_in/email/sessions#create',
-    as: 'auth_email_sign_in'
+    as: 'auth_email_create_session'
   get 'auth/email/sessions/sign-out', to: 'hiring_staff/sign_in/email/sessions#destroy',
     as: 'auth_email_sign_out'
   get 'auth/email/sessions/change-organisation', to: 'hiring_staff/sign_in/email/sessions#change_organisation',
