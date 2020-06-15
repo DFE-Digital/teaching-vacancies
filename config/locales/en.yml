@@ -46,15 +46,16 @@ en:
         email:
           subject: Sign in to Teaching Vacancies
           heading: Sign in to Teaching Vacancies
-          body: Click the link below to sign in to the Teaching Vacancies service.
+          body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
         choose_organisation:
           page_title: Choose your organisation
           heading: Choose your organisation
-          no_org:
-            title: No organisations found
-            body_html: >-
-              The login link you used is not associated with any organisations. Either the link has expired, or your
-              account is not associated with an organisation. Unfortunately, we cannot associate your account with an
+          denial:
+            title: Sign in unsuccessful
+            expired_html: The login link you used has expired. Please %{try_again}.
+            no_key_html: The login link you used was not recognised. Please %{try_again}.
+            no_orgs_html: >-
+              The login link you used is not associated with any organisations. Unfortunately, we cannot associate your account with an
               organisation until DfE Sign In is working as normal. Please %{try_again} later.
           please_select: >-
             You are associated with more than one organisation. Please select the one you wish to sign in with.

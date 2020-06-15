@@ -3,12 +3,12 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if @schools.empty?
+    - if @reason_for_denial
       .govuk-info-summary{ aria: { labelledby: "govuk-info-summary__title" }, role: "alert", tabindex: "-1" }
         %h2.govuk-info-summary__title
-          =t('hiring_staff.identifications.temp_login.choose_organisation.no_org.title')
+          =t('hiring_staff.identifications.temp_login.choose_organisation.denial.title')
         .govuk-info-summary__body
-          =t('hiring_staff.identifications.temp_login.choose_organisation.no_org.body_html',
+          =t("hiring_staff.identifications.temp_login.choose_organisation.denial.#{@reason_for_denial}_html",
             try_again: (link_to 'try again', new_identifications_path, class: 'govuk-link'))
     - else
       %h1.govuk-heading-l= t('hiring_staff.identifications.temp_login.choose_organisation.heading')

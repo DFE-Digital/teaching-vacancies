@@ -2,7 +2,7 @@ class EmergencyLoginKey < ApplicationRecord
   belongs_to :user
   validates :not_valid_after, presence: true
 
-  def valid?
-    not_valid_after > Time.zone.now
+  def expired?
+    Time.zone.now > not_valid_after
   end
 end

@@ -37,14 +37,20 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
 
   def choose_organisation
     key = get_key
-    if key&.valid?
+    if key&.expired?
+      @reason_for_denial = 'expired'
+    elsif key
       user = key.user_id ? User.find(key.user_id) : nil
+      key&.destroy
+      @schools = get_schools(user)
+      # TODO: include school_groups here when we have implemented school groups/trusts/LAs
+      @reason_for_denial = 'no_orgs' if @schools.empty?
+      @has_multiple_schools = @schools.size > 1
+      update_session_without_urn(@has_multiple_schools, user&.oid)
+    else
+      @reason_for_denial = 'no_key'
     end
-    key&.destroy
-    @schools = get_schools(user)
-    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
-    @has_multiple_schools = @schools.size > 1
-    update_session_without_urn(@has_multiple_schools, user&.oid)
+    binding.pry
   end
 
   private
