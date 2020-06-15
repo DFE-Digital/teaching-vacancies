@@ -1,7 +1,6 @@
-class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
+class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSessionsController
   include SignInAuditConcerns
 
-  skip_before_action :check_user_last_activity_at
   skip_before_action :check_session, only: %i[create new]
   skip_before_action :check_terms_and_conditions, only: %i[create new destroy]
   skip_before_action :verify_authenticity_token, only: %i[create new destroy]
@@ -19,15 +18,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::BaseController
   end
 
   def destroy
-    if session[:signing_out_for_inactivity]
-      flash_message = { notice: I18n.t(
-        'messages.access.signed_out_for_inactivity',
-        duration: timeout_period_as_string) }
-    else
-      flash_message = { success: I18n.t('messages.access.signed_out') }
-    end
-    session.destroy
-    redirect_to new_identifications_path, flash_message
+    end_session_and_redirect
   end
 
   private

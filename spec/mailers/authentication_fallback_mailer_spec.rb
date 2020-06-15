@@ -18,7 +18,7 @@ RSpec.describe AuthenticationFallbackMailer, type: :mailer do
       # Paragraph
       expect(body).to include('click the link')
       # Login link
-      expect(body).to include("/identifications/choose-organisation?login_key=#{login_key.id}")
+      expect(body).to include("/auth/email/sessions/choose-organisation?login_key=#{login_key.id}")
     end
   end
 end

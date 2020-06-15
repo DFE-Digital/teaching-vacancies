@@ -7,12 +7,12 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
   let!(:user) { create(:user, dsi_data: user_dsi_data, accepted_terms_at: 1.day.ago) }
   let(:login_key) do
     user.emergency_login_keys.create(
-      not_valid_after: Time.zone.now + HiringStaff::IdentificationsController::EMERGENCY_LOGIN_KEY_DURATION
+      not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION
     )
   end
   let(:login_key_2) do
     user.emergency_login_keys.create(
-      not_valid_after: Time.zone.now + HiringStaff::IdentificationsController::EMERGENCY_LOGIN_KEY_DURATION
+      not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION
     )
   end
 
@@ -40,7 +40,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
-      allow_any_instance_of(HiringStaff::IdentificationsController)
+      allow_any_instance_of(HiringStaff::SignIn::Email::SessionsController)
         .to receive(:generate_login_key)
         .with(user: user)
         .and_return(login_key)
@@ -62,7 +62,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
         expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.check_your_email.sent'))
 
         # Expect that the link in the email goes to the landing page
-        visit choose_organisation_path(login_key: login_key.id)
+        visit auth_email_choose_organisation_path(login_key: login_key.id)
 
         expect(page).to have_content('Choose your organisation')
         expect(page).to have_content(other_school.name)
@@ -72,7 +72,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
         expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
         # Can switch organisations
-        allow_any_instance_of(HiringStaff::IdentificationsController)
+        allow_any_instance_of(HiringStaff::SignIn::Email::SessionsController)
           .to receive(:generate_login_key)
           .with(user: user)
           .and_return(login_key_2)
@@ -96,7 +96,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
       click_on 'commit'
       expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.check_your_email.sent'))
       travel 5.hours do
-        visit choose_organisation_path(login_key: login_key.id)
+        visit auth_email_choose_organisation_path(login_key: login_key.id)
         expect(page).to have_content('No organisations')
       end
     end

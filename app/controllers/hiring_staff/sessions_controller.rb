@@ -7,14 +7,6 @@ class HiringStaff::SessionsController < HiringStaff::BaseController
   skip_before_action :check_terms_and_conditions, only: %i[destroy]
 
   def destroy
-    redirect_to(identifications_sessions_path) && (return) if AuthenticationFallback.enabled?
-    redirect_to dsi_logout_url
-  end
-
-  private
-
-  def redirect_to_dfe_sign_in
-    # This is defined by the class name of our Omniauth strategy
-    redirect_to '/auth/dfe'
+    redirect_to logout_endpoint
   end
 end
