@@ -35,7 +35,7 @@
 
 .govuk-notification__list {
   margin-bottom: 0;
-  margin-top: 0;
+  margin-top: govuk-spacing(1);
 }
 
 .govuk-notification--notice {
@@ -58,4 +58,8 @@
   background-size: 25px 25px;
   border-color: govuk-colour('red');
   padding-left: govuk-spacing(8);
+
+  .govuk-notification__list a {
+    color: govuk-colour('red');
+  }
 }
