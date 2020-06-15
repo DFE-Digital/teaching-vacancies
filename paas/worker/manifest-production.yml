@@ -8,7 +8,7 @@ applications:
     command: bundle exec sidekiq -C config/sidekiq.yml
     health-check-type: process
     instances: 2
-    memory: 1G
+    memory: 1.5G
     no-route: true
     services:
       - teaching-vacancies-postgres-production
