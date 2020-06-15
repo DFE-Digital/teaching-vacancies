@@ -6,7 +6,7 @@ import { getFilters } from './query';
 import { getRadius } from './ui/input/radius';
 
 describe('getNewState', () => {
-    test('updates the state object with new properties', () => {
+    test('returns state object with new properties', () => {
         expect(getNewState(
             { prop: 'has this' },
             { newProp: 'add'}
@@ -64,9 +64,11 @@ describe('onSearch', () => {
         onSearch(helper);
         expect(getCoords).toHaveBeenCalledTimes(2);
         expect(performSearch).toHaveBeenCalledTimes(1);
+
         expect(setState).toHaveBeenNthCalledWith(1, {'aroundLatLng': '51.7687925059338, 0.09572273060949459'});
         expect(setState).toHaveBeenNthCalledWith(2, {'aroundRadius': 'all'});
         expect(setState).toHaveBeenNthCalledWith(3, {'filters': 'filters'});
+
         expect(setQuery).toHaveBeenCalledTimes(1);
         expect(getFilters).toHaveBeenCalledTimes(1);
     });
@@ -80,8 +82,10 @@ describe('onSearch', () => {
         onSearch(helper);
         expect(getCoords).toHaveBeenCalledTimes(1);
         expect(performSearch).toHaveBeenCalledTimes(1);
+
         expect(setState).toHaveBeenNthCalledWith(1, {'aroundRadius': 'all'});
         expect(setState).toHaveBeenNthCalledWith(2, {'filters': 'filters'});
+
         expect(setQuery).toHaveBeenCalledTimes(1);
         expect(getFilters).toHaveBeenCalledTimes(1);
     });
@@ -96,9 +100,11 @@ describe('onSearch', () => {
         onSearch(helper);
         expect(getCoords).toHaveBeenCalledTimes(2);
         expect(performSearch).toHaveBeenCalledTimes(1);
+
         expect(setState).toHaveBeenNthCalledWith(1, {'aroundLatLng': '51.7687925059338, 0.09572273060949459'});
         expect(setState).toHaveBeenNthCalledWith(2, {'aroundRadius': 10});
         expect(setState).toHaveBeenNthCalledWith(3, {'filters': 'filters'});
+
         expect(setQuery).toHaveBeenCalledTimes(1);
         expect(getFilters).toHaveBeenCalledTimes(1);
     });
@@ -112,8 +118,10 @@ describe('onSearch', () => {
         onSearch(helper);
         expect(getCoords).toHaveBeenCalledTimes(1);
         expect(performSearch).toHaveBeenCalledTimes(1);
+
         expect(setState).toHaveBeenNthCalledWith(1, {'aroundRadius': 10});
         expect(setState).toHaveBeenNthCalledWith(2, {'filters': 'filters'});
+
         expect(setQuery).toHaveBeenCalledTimes(1);
         expect(getFilters).toHaveBeenCalledTimes(1);
     });
