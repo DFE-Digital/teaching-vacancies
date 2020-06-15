@@ -11,7 +11,7 @@ describe('keyword search box', () => {
     });
 
     describe('onSubmit', () => {
-        test('does not performs search if unsuccesful', () => {
+        test('performs search when onSubmit handler called', () => {
             onSubmit(client);
             expect(performSearch).toHaveBeenCalledTimes(1);
         });

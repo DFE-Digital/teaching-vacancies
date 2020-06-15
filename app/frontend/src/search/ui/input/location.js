@@ -1,21 +1,20 @@
 import { setGeocodeAttributes, removeGeocodeAttributes } from '../form';
 import { enableRadiusSelect, disableRadiusSelect } from './radius';
-import { stringMatchesPostcode } from '../../../lib/utils';
 import { getGeolocatedCoordinates } from '../../../lib/api';
 
 export const onSubmit = (query, locations, client) => {
-    if (shouldGeocode(query, locations)) {
-        getGeolocatedCoordinates(query).then(coords => {
-            geocodeSuccess(coords, client);
-        });
-    } else {
+    if (shouldNotGeocode(query, locations)) {
         disableRadiusSelect();
         removeGeocodeAttributes();
         client.refresh();
+    } else {
+        getGeolocatedCoordinates(query).then(coords => {
+            geocodeSuccess(coords, client);
+        });
     }
 };
 
-export const shouldGeocode = (query, locations) => stringMatchesPostcode(query) || (query.length && locations.indexOf(query.toLowerCase()) === -1);
+export const shouldNotGeocode = (query, locations) => query.length && locations.indexOf(query.toLowerCase()) > -1;
 
 export const geocodeSuccess = (coords, client) => {
     if (coords.success) {

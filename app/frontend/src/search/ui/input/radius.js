@@ -14,7 +14,6 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
 };
 
 export const enableRadiusSelect = () => {
-
     if (document.querySelector('#radius')) {
         document.querySelector('#radius').removeAttribute('disabled');
     }

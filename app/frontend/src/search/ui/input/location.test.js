@@ -1,4 +1,4 @@
-import { shouldGeocode, onSubmit, geocodeSuccess } from './location';
+import { shouldNotGeocode, onSubmit, geocodeSuccess } from './location';
 import { locations } from '../../data/locations';
 
 import { getGeolocatedCoordinates } from '../../../lib/api';
@@ -21,14 +21,14 @@ describe('location search box', () => {
         getGeolocatedCoordinates.mockReturnValue(Promise.resolve({ success: true }));
     });
 
-    describe('shouldGeocode', () => {
-        test('returns true if location is not in predefined list or matches a postcode pattern', () => {
-            expect(shouldGeocode('harlow', locations)).toBe(true);
-            expect(shouldGeocode('SE17 4BT', locations)).toBe(true);
+    describe('shouldNotGeocode', () => {
+        test('returns false if location is not in predefined list or matches a postcode pattern', () => {
+            expect(shouldNotGeocode('harlow', locations)).toBe(false);
+            expect(shouldNotGeocode('SE17 4BT', locations)).toBe(false);
         });
 
-        test('returns false if location is in predefined list', () => {
-            expect(shouldGeocode('london', locations)).toBe(false);
+        test('returns true if location is in predefined list', () => {
+            expect(shouldNotGeocode('london', locations)).toBe(true);
         });
     });
 
@@ -47,7 +47,7 @@ describe('location search box', () => {
     });
 
     describe('onSubmit getGeolocatedCoordinates', () => {
-        test('does not get called if location supplied that exists in predefined list and radius diabled', () => {
+        test('does not get called if location supplied that exists in predefined list and radius disabled', () => {
             onSubmit('london', locations, client);
             expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
             expect(getGeolocatedCoordinates).not.toHaveBeenCalled();
@@ -61,7 +61,7 @@ describe('location search box', () => {
             expect(performSearch).not.toHaveBeenCalled();
         });
 
-        test('performs a search if succesful and radius is enabled', () => {
+        test('performs a search if successful and radius is enabled', () => {
             const coords = { success: true };
             geocodeSuccess(coords, client);
             expect(enableRadiusSelect).toHaveBeenCalledTimes(1);

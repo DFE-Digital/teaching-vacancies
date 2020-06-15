@@ -75,9 +75,9 @@ searchClientInstance.addWidgets([
         container: document.querySelector('#location-radius-select'),
         attribute: '_geoloc',
         inputElement: document.getElementById('radius'),
-        onSelection: location => {
-            updateUrlQueryParams('radius', location, window.location.href);
-            setDataAttribute(document.querySelector('#radius'), 'radius', location);
+        onSelection: radiusInMiles => {
+            updateUrlQueryParams('radius', radiusInMiles, window.location.href);
+            setDataAttribute(document.querySelector('#radius'), 'radius', radiusInMiles);
             enableSubmitButton(document.querySelector('.filters-form'));
         }
     }),
