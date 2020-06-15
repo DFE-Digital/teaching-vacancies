@@ -19,7 +19,7 @@ RSpec.feature 'School viewing public listings' do
 
   context 'when signed in with DfE Sign In' do
     before(:each) do
-      stub_accepted_terms_and_condition
+      stub_accepted_terms_and_conditions
       stub_authentication_step(school_urn: '110627')
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
@@ -35,7 +35,7 @@ RSpec.feature 'School viewing public listings' do
     end
   end
 
-  def stub_accepted_terms_and_condition
+  def stub_accepted_terms_and_conditions
     create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
   end
 

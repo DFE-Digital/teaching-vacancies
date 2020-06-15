@@ -51,14 +51,14 @@ Rails.application.routes.draw do
     as: 'auth_email_sign_out'
   get 'auth/email/sessions/change-organisation', to: 'hiring_staff/sign_in/email/sessions#change_organisation',
     as: 'auth_email_change_organisation'
-  
+
   # DfE Sign In
   resource :sessions,
           only: %i[create new],
           as: :dfe,
           path: '/dfe/sessions',
           controller: 'hiring_staff/sign_in/dfe/sessions'
-  
+
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
   get '/auth/dfe/signout', to: 'hiring_staff/sign_in/dfe/sessions#destroy'
   get '/auth/failure', to: 'hiring_staff/sign_in/dfe/sessions#new'

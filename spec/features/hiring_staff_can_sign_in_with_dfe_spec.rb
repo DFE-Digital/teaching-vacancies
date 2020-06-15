@@ -17,11 +17,6 @@ RSpec.shared_examples 'a successful sign in' do
     expect(authorisation.key).to eq('dfe-sign-in.authorisation.success')
     expect(authorisation.trackable.urn).to eq(school.urn)
   end
-
-  scenario 'updates the user record with the DfE Sign In email address' do
-    user_record = User.find_by(oid: user_oid)
-    expect(user_record.email).to eq(dsi_email_address)
-  end
 end
 
 RSpec.shared_examples 'a failed sign in' do |options|
@@ -67,9 +62,9 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   let(:dsi_email_address) { Faker::Internet.email }
 
   before(:each) do
-    stub_accepted_terms_and_condition
-    OmniAuth.config.test_mode = true
     allow(AuthenticationFallback).to receive(:enabled?) { false }
+    stub_accepted_terms_and_conditions
+    OmniAuth.config.test_mode = true
   end
 
   after(:each) do
@@ -148,7 +143,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
     click_on(I18n.t('sign_in.link'))
   end
 
-  def stub_accepted_terms_and_condition
+  def stub_accepted_terms_and_conditions
     create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
   end
 end
