@@ -5,9 +5,9 @@
   .govuk-grid-column-two-thirds
     .govuk-error-summary{ aria: { labelledby: "govuk-error-summary__title" }, role: "alert", tabindex: "-1" }
       %h2.govuk-error-summary__title
-        =t('hiring_staff.identifications.temp_login.heading')
+        =t('hiring_staff.temp_login.heading')
       .govuk-error-summary__body
-        =t('hiring_staff.identifications.temp_login.please_use_email')
+        =t('hiring_staff.temp_login.please_use_email')
     %h1.govuk-heading-l= t('sign_in.title')
     %p= t('pages.home.signin.description')
     = form_for User.new, url: auth_email_check_your_email_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|

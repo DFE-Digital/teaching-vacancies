@@ -31,34 +31,34 @@ en:
           Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
           in, try again soon.
         you_might_have_problems_signing_in: Sorry, the service is unavailable
-      temp_login:
-        heading: Temporary login
-        please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
-        check_your_email:
-          page_title: Check your email
-          heading: Check your email
-          sent: >-
-            If your email address is in our database, we’ve sent you an email.
-            Click on the link to confirm your address and return to this service.
-            You do not need to keep this page open.
-          check_spam_html: >-
-            If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
-        email:
-          subject: Sign in to Teaching Vacancies
-          heading: Sign in to Teaching Vacancies
-          body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
-        choose_organisation:
-          page_title: Choose your organisation
-          heading: Choose your organisation
-          denial:
-            title: Sign in unsuccessful
-            expired_html: The login link you used has expired. Please %{try_again}.
-            no_key_html: The login link you used was not recognised. Please %{try_again}.
-            no_orgs_html: >-
-              The login link you used is not associated with any organisations. Unfortunately, we cannot associate your account with an
-              organisation until DfE Sign In is working as normal. Please %{try_again} later.
-          please_select: >-
-            You are associated with more than one organisation. Please select the one you wish to sign in with.
+    temp_login:
+      heading: Temporary login
+      please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
+      check_your_email:
+        page_title: Check your email
+        heading: Check your email
+        sent: >-
+          If your email address is in our database, we’ve sent you an email.
+          Click on the link to confirm your address and return to this service.
+          You do not need to keep this page open.
+        check_spam_html: >-
+          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
+      email:
+        subject: Sign in to Teaching Vacancies
+        heading: Sign in to Teaching Vacancies
+        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
+      choose_organisation:
+        page_title: Choose your organisation
+        heading: Choose your organisation
+        denial:
+          title: Sign in unsuccessful
+          expired_html: The login link you used has expired. Please %{try_again}.
+          no_key_html: The login link you used was not recognised. Please %{try_again}.
+          no_orgs_html: >-
+            The login link you used is not associated with any organisations. Unfortunately, we cannot associate your account with an
+            organisation until DfE Sign In is working as normal. Please %{try_again} later.
+        please_select: >-
+          You are associated with more than one organisation. Please select the one you wish to sign in with.
   nav:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'

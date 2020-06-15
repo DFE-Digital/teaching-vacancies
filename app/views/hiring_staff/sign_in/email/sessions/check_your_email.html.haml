@@ -1,12 +1,12 @@
 - content_for :page_title_prefix do
-  = t('hiring_staff.identifications.temp_login.check_your_email.page_title')
+  = t('hiring_staff.temp_login.check_your_email.page_title')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
 
-    %h1.govuk-heading-l= t('hiring_staff.identifications.temp_login.check_your_email.heading')
+    %h1.govuk-heading-l= t('hiring_staff.temp_login.check_your_email.heading')
 
-    %p= t('hiring_staff.identifications.temp_login.check_your_email.sent')
+    %p= t('hiring_staff.temp_login.check_your_email.sent')
 
-    %p= t('hiring_staff.identifications.temp_login.check_your_email.check_spam_html',
+    %p= t('hiring_staff.temp_login.check_your_email.check_spam_html',
       try_again: (link_to 'try again', new_identifications_path, class: 'govuk-link'))

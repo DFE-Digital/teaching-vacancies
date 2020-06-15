@@ -24,16 +24,16 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
     visit root_path
 
     within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
-    expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.heading'))
-    expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.please_use_email'))
+    expect(page).to have_content(I18n.t('hiring_staff.temp_login.heading'))
+    expect(page).to have_content(I18n.t('hiring_staff.temp_login.please_use_email'))
   end
 
   scenario 'can reach email request page by sign in button' do
     visit root_path
 
     within('.signin') { click_on(I18n.t('sign_in.link')) }
-    expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.heading'))
-    expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.please_use_email'))
+    expect(page).to have_content(I18n.t('hiring_staff.temp_login.heading'))
+    expect(page).to have_content(I18n.t('hiring_staff.temp_login.please_use_email'))
   end
 
   context 'user flow' do
@@ -59,12 +59,13 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
 
         fill_in 'user[email]', with: user.email
         click_on 'commit'
-        expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.check_your_email.sent'))
+        expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
 
         # Expect that the link in the email goes to the landing page
         visit auth_email_choose_organisation_path(login_key: login_key.id)
 
         expect(page).to have_content('Choose your organisation')
+        expect(page).not_to have_content(I18n.t('hiring_staff.temp_login.denial.title'))
         expect(page).to have_content(other_school.name)
         click_on school.name
 
@@ -86,18 +87,25 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
 
         within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_in')) }
         expect(page).to have_content(I18n.t('messages.access.signed_out'))
+
+        # Login link no longer works
+        visit auth_email_choose_organisation_path(login_key: login_key.id)
+        expect(page).to have_content('used')
+        expect(page).not_to have_content('Choose your organisation')
       end
     end
 
-    scenario 'sign in rejected when key has expired' do
-      visit new_identifications_path
-      fill_in 'user[email]', with: user.email
-      expect(message_delivery).to receive(:deliver_later)
-      click_on 'commit'
-      expect(page).to have_content(I18n.t('hiring_staff.identifications.temp_login.check_your_email.sent'))
-      travel 5.hours do
-        visit auth_email_choose_organisation_path(login_key: login_key.id)
-        expect(page).to have_content('No organisations')
+    context 'sign in rejected' do
+      scenario 'if key has expired' do
+        visit new_identifications_path
+        fill_in 'user[email]', with: user.email
+        expect(message_delivery).to receive(:deliver_later)
+        click_on 'commit'
+        travel 5.hours do
+          visit auth_email_choose_organisation_path(login_key: login_key.id)
+          expect(page).to have_content('expired')
+          expect(page).not_to have_content('Choose your organisation')
+        end
       end
     end
   end
