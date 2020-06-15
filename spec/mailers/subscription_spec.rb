@@ -5,10 +5,10 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
   before(:each) do
     stub_const('NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE', '')
-    Timecop.travel('2019-01-01')
+    travel_to Time.zone.local(2019, 01, 01, 01, 01, 01)
   end
 
-  after(:each) { Timecop.return }
+  after(:each) { travel_back }
 
   let(:email) { 'an@email.com' }
   let(:subscription) do

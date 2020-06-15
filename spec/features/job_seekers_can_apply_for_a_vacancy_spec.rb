@@ -30,19 +30,19 @@ RSpec.feature 'Job seekers can apply for a vacancy' do
     vacancy = create(:vacancy, :published)
     visit job_path(vacancy)
 
-    timestamp = Time.zone.now.iso8601
+    freeze_time do
+      timestamp = Time.zone.now.iso8601
 
-    express_interest_event = {
-      datestamp: timestamp.to_s,
-      vacancy_id: vacancy.id,
-      school_urn: vacancy.school.urn,
-      application_link: vacancy.application_link
-    }
+      express_interest_event = {
+        datestamp: timestamp.to_s,
+        vacancy_id: vacancy.id,
+        school_urn: vacancy.school.urn,
+        application_link: vacancy.application_link
+      }
 
-    expect(AuditExpressInterestEventJob).to receive(:perform_later)
-      .with(express_interest_event)
+      expect(AuditExpressInterestEventJob).to receive(:perform_later)
+        .with(express_interest_event)
 
-    Timecop.freeze(timestamp) do
       click_on I18n.t('jobs.apply')
     end
   end

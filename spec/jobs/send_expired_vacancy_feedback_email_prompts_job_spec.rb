@@ -121,7 +121,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
   end
 
   def send_expired_vacancy_feedback_emails(after = 2.weeks)
-    Timecop.travel(Time.zone.now + after) do
+    travel after do
       perform_enqueued_jobs { job }
     end
   end

@@ -82,7 +82,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'timecop'
 end
 
 group :test do

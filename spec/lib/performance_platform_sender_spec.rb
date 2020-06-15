@@ -18,7 +18,7 @@ RSpec.describe PerformancePlatformSender::Base do
     subject { described_class.by_type(type).call(date: date_to_upload) }
 
     it 'will submit transaction data' do
-      Timecop.freeze(runtime) do
+      freeze_time do
         stub_const('PP_TRANSACTIONS_BY_CHANNEL_TOKEN', 'not-nil')
 
         two_days_ago = Date.current.beginning_of_day.in_time_zone - 2.days

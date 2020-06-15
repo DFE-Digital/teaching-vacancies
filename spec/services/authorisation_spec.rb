@@ -21,11 +21,11 @@ RSpec.describe Authorisation do
 
     before(:each) do
       stub_authorisation_step
-      Timecop.travel(stubbed_time)
+      travel_to stubbed_time
     end
 
     after(:each) do
-      Timecop.return
+      travel_back
     end
 
     it 'stores the role_ids' do

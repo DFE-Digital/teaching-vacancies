@@ -9,26 +9,26 @@ RSpec.feature 'Hiring staff session' do
   end
 
   after do
-    Timecop.return
+    travel_back
   end
 
   it 'expires after 8 hours and redirects to login page' do
     visit new_school_job_path
 
-    Timecop.travel(8.hours)
+    travel 9.hours do
+      click_on I18n.t('buttons.save_and_continue')
 
-    click_on I18n.t('buttons.save_and_continue')
-
-    expect(page.current_path).to eq new_identifications_path
+      expect(page.current_path).to eq new_identifications_path
+    end
   end
 
   it 'doesn\'t expire before 8 hours' do
     visit new_school_job_path
 
-    Timecop.travel(1.hour)
+    travel 1.hour do
+      click_on I18n.t('buttons.save_and_continue')
 
-    click_on I18n.t('buttons.save_and_continue')
-
-    expect(page.current_path).to eq job_specification_school_job_path
+      expect(page.current_path).to eq job_specification_school_job_path
+    end
   end
 end

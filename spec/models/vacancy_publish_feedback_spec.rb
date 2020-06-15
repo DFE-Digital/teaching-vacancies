@@ -66,7 +66,7 @@ RSpec.describe VacancyPublishFeedback, type: :model do
     let(:email) { 'user@email.com' }
 
     let(:feedback) do
-      Timecop.freeze(created_at) do
+      travel_to created_at do
         create(:vacancy_publish_feedback, user: user, vacancy: vacancy, rating: rating, comment: comment,
                                           user_participation_response: user_participation_response, email: email)
       end

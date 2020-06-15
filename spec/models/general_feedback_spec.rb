@@ -64,7 +64,7 @@ RSpec.describe GeneralFeedback, type: :model do
     let(:email) { 'hello@research.com' }
 
     let(:feedback) do
-      Timecop.freeze(created_at) do
+      travel_to created_at do
         create(:general_feedback, visit_purpose: visit_purpose,
                                   visit_purpose_comment: visit_purpose_comment,
                                   comment: comment,
