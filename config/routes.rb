@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     post 'identifications/check-your-email', to: 'hiring_staff/identifications#check_your_email'
     get 'identifications/choose-organisation', to: 'hiring_staff/identifications#choose_organisation', as: 'choose_organisation'
     get 'identifications/sign-in-by-email', to: 'hiring_staff/identifications#sign_in_by_email'
+    get 'identifications/sessions', to: 'hiring_staff/identifications#destroy'
+    get 'identifications/change-organisation', to: 'hiring_staff/identifications#change_organisation', as: 'authentication_fallback_change_organisation'
   end
 
   # Sign in

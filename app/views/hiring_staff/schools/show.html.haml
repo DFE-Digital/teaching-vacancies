@@ -4,12 +4,11 @@
   .govuk-grid-column-full
     %h1.govuk-heading-l.mb0
       = t('schools.jobs.index', school: @school.name)
-    - if @multiple_schools && AuthenticationFallback.enabled?
-      = link_to t('sign_in.organisation.change'), identifications_destroy_path, class: 'govuk-link'
-      %br
-      %br
-    - elsif @multiple_schools && !AuthenticationFallback.enabled?
-      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
+    - if @multiple_schools
+      - if AuthenticationFallback.enabled?
+        = link_to t('sign_in.organisation.change'), authentication_fallback_change_organisation_path, class: 'govuk-link'
+      - else
+        = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
       %br
       %br
 
