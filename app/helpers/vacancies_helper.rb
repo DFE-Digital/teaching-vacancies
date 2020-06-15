@@ -94,8 +94,10 @@ module VacanciesHelper
   def back_to_manage_jobs_link(vacancy)
     if vacancy.listed?
       state = 'published'
-    elsif vacancy.published? && vacancy.expires_on.future?
+    elsif vacancy.published? && vacancy.expiry_time.future?
       state = 'pending'
+    elsif vacancy.published? && vacancy.expiry_time.past?
+      state = 'expired'
     else
       state = 'draft'
     end
