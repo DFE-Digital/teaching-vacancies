@@ -192,10 +192,6 @@ en:
       Please tell us if you filled these expired jobs through Teaching Vacancies,
       and whether you listed them elsewhere. Your feedback will help us improve the service.
     no_awaiting_feedback: 'There are no jobs waiting for your feedback at the moment.'
-    feedback_submitted_html: '<b>Feedback submitted</b> for %{title}'
-    feedback_error:
-      There was a problem submitting your feedback. Please make sure you have selected an answer for both questions.
-    inline_feedback_error: Please select an option.
     feedback_all_submitted: >-
       You have provided feedback on all your expired jobs. Thank you for sharing this information,
       which will help us to improve the service. If you have general comments on the service you can share them with us
@@ -366,7 +362,6 @@ en:
     preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
     actions: 'Actions'
     status: 'Status'
-    already_published: 'This job has already been published'
     draft: 'This job is currently a draft version.'
     date_to_be_posted: Date to be published
     share_url: 'This job is publicly visible at:'
@@ -637,18 +632,28 @@ en:
 
   messages:
     jobs:
+      already_published: This job has already been published
       new_sections:
         heading: 'New section'
         message: 'Improve your job listing using the new sections and features below'
-      delete: The job has been deleted
-      updated: 'The job has been updated'
-      listing_updated_html: '<strong>Listing updated</strong> for %{job_title}'
-      draft_saved_html: '<strong>Draft saved</strong> for %{job_title}'
+      feedback:
+        awaiting:
+          one: You have %{count} job awaiting feedback
+          other: You have %{count} jobs awaiting feedback
+        error_title: There was a problem submitting your feedback
+        error_body: Please make sure you have submitted an answer for both questions
+        inline_error: Please select an option
+        submitted_html: '<span class="govuk-!-font-weight-bold">Feedback submitted</span> for %{job_title}'
+      delete_html: >-
+        %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
+      draft_saved_html: '<span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}'
+      listing_updated: Listing updated for %{job_title}
+      manage_jobs_html: 'Back to <a href="%{link}" class="govuk-link govuk-link--no-visited-state">manage jobs</a>'
       view:
         only_published: You can only view published jobs
     access:
-      signed_out: You've been signed out.
       signed_out_for_inactivity: You have been signed out due to inactivity
+      signed_out: You have been signed out
     feedback:
       submitted: Your feedback has been successfully submitted
     subscriptions:
@@ -656,12 +661,13 @@ en:
 
   errors:
     jobs:
-      unable_to_publish: We were unable to publish this job. Make sure that you have filled all mandatory fields
+      unable_to_publish_title: We were unable to publish this job
+      unable_to_publish_body: Make sure that you have filled all mandatory fields
     sign_in:
       unauthorised: You are not authorised to act on behalf of this school
       failure: An unexpected error occured. We have been notified.
     vacancy_publish_feedback:
-      already_submitted: Feedback for this job listing has already been submitted
+      already_submitted: Feedback for this job has already been submitted
     subscriptions:
       already_exists: "You're already subscribed to an alert for these search criteria"
 

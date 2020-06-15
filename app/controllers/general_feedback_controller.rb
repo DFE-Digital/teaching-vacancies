@@ -16,7 +16,7 @@ class GeneralFeedbackController < ApplicationController
     @feedback.recaptcha_score = recaptcha_reply['score'] if recaptcha_valid && recaptcha_reply
     @feedback.save
 
-    redirect_to root_path, notice: I18n.t('messages.feedback.submitted')
+    redirect_to root_path, success: I18n.t('messages.feedback.submitted')
   end
 
   private

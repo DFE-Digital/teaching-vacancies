@@ -51,19 +51,19 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     end
   end
 
-  def redirect_to_draft(vacancy_id, job_title = nil)
-    update_message = job_title.present? ?
-      I18n.t('messages.jobs.draft_saved_html', job_title: job_title) : I18n.t('messages.jobs.updated')
-    redirect_to jobs_with_type_school_path('draft'), success: update_message
+  def redirect_to_draft(vacancy_id, job_title)
+    redirect_to jobs_with_type_school_path('draft'),
+                success: I18n.t('messages.jobs.draft_saved_html', job_title: job_title)
   end
 
   def redirect_to_next_step_if_save_and_continue(vacancy_id, job_title = nil)
-    update_message = job_title.present? ?
-      I18n.t('messages.jobs.listing_updated_html', job_title: job_title) : I18n.t('messages.jobs.updated')
     if params[:commit] == I18n.t('buttons.save_and_continue')
       redirect_to_next_step(vacancy_id)
     elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(vacancy_id), success: update_message
+      redirect_to edit_school_job_path(vacancy_id), success: {
+        title: I18n.t('messages.jobs.listing_updated', job_title: job_title),
+        body: I18n.t('messages.jobs.manage_jobs_html', link: helpers.back_to_manage_jobs_link(@vacancy))
+      }
     end
   end
 

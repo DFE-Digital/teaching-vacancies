@@ -24,7 +24,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def review
-    return redirect_to school_job_path(@vacancy.id), notice: I18n.t('jobs.already_published') if @vacancy.published?
+    return redirect_to school_job_path(@vacancy.id),
+                       notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
 
     reset_session_vacancy!
     store_vacancy_attributes(@vacancy.attributes)
@@ -48,11 +49,12 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
-    redirect_to school_path, success: t('messages.jobs.delete')
+    redirect_to school_path, success: I18n.t('messages.jobs.delete_html', job_title: @vacancy.job_title)
   end
 
   def preview
-    return redirect_to school_job_path(@vacancy.id), notice: I18n.t('jobs.already_published') if @vacancy.published?
+    return redirect_to school_job_path(@vacancy.id),
+                       notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
     redirect_to_incomplete_step unless @vacancy.valid?
     @vacancy = VacancyPresenter.new(@vacancy)
   end
