@@ -1,70 +1,46 @@
-version: "3.1"
+version: '3.6'
 services:
+  db:
+    image: postgres:11-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '54320:5432'
+    environment:
+      POSTGRES_PASSWORD: password
+  redis:
+    image: redis:alpine
   web:
     build:
       context: .
-      args:
-        RAILS_ENV: "development"
-    image: local/tvs_web
-    ports: ["3000:3000"]
-    container_name: teacher-vacancy-service_web_1
+      target: dev-build
+    image: teacher-vacancy-services
+    ports:
+      - '3000:3000'
     environment:
-      RAILS_ENV: "development"
-      DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
+      RAILS_ENV: development
+      DATABASE_URL: 'postgres://postgres:password@db:5432/tvs_development?template=template0&pool=5&encoding=unicode'
+      REDIS_QUEUE_URL: 'redis://redis:6379'
+      REDIS_CACHE_URL: 'redis://redis:6379'
     env_file:
-      - docker-compose.env
+      - .env
     depends_on:
       - db
-      - redis_queue
-      - redis_cache
-      - sidekiq
-    tty: true
-    stdin_open: true
-    restart: on-failure
-    volumes:
-      - .:/srv/dfe-tvs:cached
-      - node_modules:/srv/dfe-tvs/node_modules
-    command: bash -c "rm -f tmp/pids/server.pid && rails s -b 'ssl://web:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'"
-
-  db:
-    environment:
-      POSTGRES_HOST_AUTH_METHOD: "trust"
-    image: postgres:9.6-alpine
-    volumes:
-      - pg_data:/var/lib/postgresql/data/:cached
-    ports:
-      - "15432:5432"
-    restart: on-failure
-
-  redis_cache:
-    image: redis:alpine
-    command: redis-server
-    restart: on-failure
-
-  redis_queue:
-    image: redis:alpine
-    command: redis-server
-    restart: on-failure
-
+      - redis
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"
   sidekiq:
-    image: local/tvs_web
-    build:
-      context: .
-      args:
-        RAILS_ENV: "development"
+    image: teacher-vacancy-services
     environment:
-      RAILS_ENV: "development"
-      DATABASE_URL: "postgres://postgres@db:5432/tvs_development?template=template0&pool=5&encoding=unicode"
+      RAILS_ENV: development
+      DATABASE_URL: 'postgres://postgres:password@db:5432/tvs_development?template=template0&pool=5&encoding=unicode'
+      REDIS_QUEUE_URL: 'redis://redis:6379'
+      REDIS_CACHE_URL: 'redis://redis:6379'
     env_file:
-      - docker-compose.env
-    volumes:
-      - .:/srv/dfe-tvs:cached
-      - node_modules:/srv/dfe-tvs/node_modules
-    command: bundle exec sidekiq -C config/sidekiq.yml
+      - .env
     depends_on:
-      - redis_queue
-    restart: on-failure
-
+      - web
+      - db
+      - redis
+    command: /bin/sh -c "bundle exec sidekiq -C config/sidekiq.yml"
 volumes:
-  pg_data: {}
-  node_modules:
+  pgdata:
