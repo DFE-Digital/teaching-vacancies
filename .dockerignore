@@ -1,3 +1,36 @@
+# Ignore git folders
+.git/
+.github/
+
+# Ignore package folders
+/node_modules/*
+/gem/*
+
+# using Yarn, so ignore package-lock.json
+package-lock.json
+
+# Ignore terraform files
+/terraform/*
+*.tf
+
 config/application.yml
 config/localhost/https/*.key
 config/localhost/https/*.crt
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+*.gem
+*.rdb
+*.sample
+*.example
+/.config
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+/documentation/
+.tool-versions
