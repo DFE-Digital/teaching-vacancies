@@ -1,5 +1,7 @@
-# Configure Rack::Cors https://github.com/cyu/rack-cors
-Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
+# https://github.com/cyu/rack-cors
+# rubocop:disable Metrics/LineLength
+Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.env.test?, logger: (-> { Rails.logger }) do
+  # rubocop:enable Metrics/LineLength
   allow do
     # Allow all domains access to jobs API
     origins '*'
