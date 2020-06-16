@@ -11,7 +11,7 @@ resource "aws_sns_topic_policy" "sns_cloudwatch_alerts" {
 }
 
 data "template_file" "sns_cloudwatch_alerts_policy" {
-  template = "${file("./terraform/policies/sns-policy.json")}"
+  template = "${file("${path.module}/../../policies/sns-policy.json")}"
 
   vars {
     policy_id      = "${var.project_name}-${var.environment}-cloudwatch-alerts-policy"
@@ -36,11 +36,11 @@ resource "aws_cloudwatch_log_group" "cloudwatch_lambda_log_group" {
 
 resource "aws_iam_role" "slack_lambda_role" {
   name               = "${var.project_name}-${var.environment}-slack-lambda-role"
-  assume_role_policy = "${file("./terraform/policies/cloudwatch-slack-lambda-role.json")}"
+  assume_role_policy = "${file("${path.module}/../../policies/cloudwatch-slack-lambda-role.json")}"
 }
 
 data "template_file" "slack_lambda_policy" {
-  template = "${file("./terraform/policies/cloudwatch-slack-lambda-policy.json")}"
+  template = "${file("${path.module}/../../policies/cloudwatch-slack-lambda-policy.json")}"
 
   vars {
     cloudwatch_lambda_log_group_arn = "${aws_cloudwatch_log_group.cloudwatch_lambda_log_group.arn}"
@@ -59,7 +59,7 @@ resource "aws_lambda_function" "cloudwatch_to_slack" {
   function_name    = "${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
   role             = "${aws_iam_role.slack_lambda_role.arn}"
   handler          = "lambda_function.lambda_handler"
-  source_code_hash = "${base64sha256(file("terraform/lambda/lambda_cloudwatch_to_slack_opsgenie_payload.zip"))}"
+  source_code_hash = "${base64sha256(file("${path.module}/../../lambda/lambda_cloudwatch_to_slack_opsgenie_payload.zip"))}"
   runtime          = "python3.6"
   timeout          = "10"
   kms_key_arn      = "${aws_kms_key.cloudwatch_lambda.arn}"

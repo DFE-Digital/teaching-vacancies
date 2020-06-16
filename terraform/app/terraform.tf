@@ -23,7 +23,7 @@ terraform {
 }
 
 module "cloudwatch" {
-  source = "./terraform/modules/cloudwatch"
+  source = "./modules/cloudwatch"
 
   environment            = "${terraform.workspace}"
   project_name           = "${var.project_name}"
@@ -33,7 +33,7 @@ module "cloudwatch" {
 }
 
 module "cloudfront" {
-  source = "./terraform/modules/cloudfront"
+  source = "./modules/cloudfront"
 
   environment                   = "${terraform.workspace}"
   project_name                  = "${var.project_name}"
