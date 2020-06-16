@@ -5,6 +5,9 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancy_presenter = SchoolVacanciesPresenter.new(@school, @sort, params[:type])
     @awaiting_feedback_count = @school.vacancies.awaiting_feedback.count
+
+    flash.now[:notice] = I18n.t('messages.jobs.feedback.awaiting', count: @awaiting_feedback_count) if
+      @awaiting_feedback_count.positive?
   end
 
   def edit

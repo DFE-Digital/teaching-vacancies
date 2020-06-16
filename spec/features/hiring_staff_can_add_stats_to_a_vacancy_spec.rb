@@ -4,7 +4,6 @@ require 'sanitize'
 RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true do
   NOTIFICATION_BADGE_SELECTOR = "[data-test='expired-vacancies-with-feedback-outstanding']".freeze
   JOB_TITLE_LINK_SELECTOR = '#job-title.view-vacancy-link'.freeze
-  AWAITING_FEEDBACK_NOTICE_SELECTOR = '#awaiting_notice .count'.freeze
 
   let(:school) { create(:school) }
   before(:each) do
@@ -26,7 +25,9 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     scenario 'hiring staff can see notice of vacancies awaiting feedback' do
       visit school_path
 
-      expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '3 jobs')
+      within('div.govuk-notification--notice') do
+        expect(page).to have_content('3 jobs')
+      end
     end
 
     scenario 'continously displays the number of vacancies awaiting feedback' do
@@ -38,10 +39,14 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: third_vacancy.job_title)
 
       submit_feedback_for(vacancy)
-      expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '2 jobs')
+      within('div.govuk-notification--notice') do
+        expect(page).to have_content('2 jobs')
+      end
 
       submit_feedback_for(another_vacancy)
-      expect(page).to have_selector(AWAITING_FEEDBACK_NOTICE_SELECTOR, text: '1 job')
+      within('div.govuk-notification--notice') do
+        expect(page).to have_content('1 job')
+      end
     end
 
     scenario 'when adding feedback, it saves feedback to the model' do
@@ -62,10 +67,10 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
         click_on I18n.t('buttons.submit')
       end
 
-      expect(page).to have_content(I18n.t('jobs.feedback_error'))
+      expect(page).to have_content(I18n.t('messages.jobs.feedback.error_body'))
       expect(page).to have_content(vacancy.job_title)
 
-      expect(page).to_not have_content(I18n.t('jobs.inline_feedback_error'))
+      expect(page).to_not have_content(I18n.t('messages.jobs.feedback.inline_error'))
 
       expect(vacancy.hired_status).to eq(nil)
       expect(vacancy.listed_elsewhere).to eq(nil)
@@ -79,10 +84,10 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
         click_on I18n.t('buttons.submit')
       end
 
-      expect(page).to have_content(I18n.t('jobs.inline_feedback_error'))
+      expect(page).to have_content(I18n.t('messages.jobs.feedback.inline_error'))
       expect(page).to have_content(vacancy.job_title)
 
-      expect(page).to_not have_content(I18n.t('jobs.feedback_error'))
+      expect(page).to_not have_content(I18n.t('messages.jobs.feedback.error_body'))
 
       expect(vacancy.hired_status).to eq(nil)
       expect(vacancy.listed_elsewhere).to eq(nil)
@@ -95,7 +100,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
         click_on I18n.t('buttons.submit')
       end
 
-      expect(page).to have_content(I18n.t('jobs.inline_feedback_error'), count: 2)
+      expect(page).to have_content(I18n.t('messages.jobs.feedback.inline_error'), count: 2)
 
       within('tr', text: vacancy.job_title) do
         select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
@@ -107,7 +112,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
         click_on I18n.t('buttons.submit')
       end
 
-      expect(page).to have_content(I18n.t('jobs.inline_feedback_error'), count: 1)
+      expect(page).to have_content(I18n.t('messages.jobs.feedback.inline_error'), count: 1)
     end
 
     scenario 'when all feedback has been submitted' do
@@ -153,6 +158,8 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       click_on I18n.t('buttons.submit')
     end
 
-    expect(page).to have_content(strip_tags(I18n.t('jobs.feedback_submitted_html', title: vacancy.job_title)))
+    expect(page).to have_content(
+      strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: vacancy.job_title))
+    )
   end
 end

@@ -19,7 +19,7 @@ class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Va
 
     Auditor::Audit.new(vacancy, 'vacancy.publish_feedback.create', current_session_id).log
 
-    redirect_to school_path, notice: I18n.t('messages.feedback.submitted')
+    redirect_to school_path, success: I18n.t('messages.jobs.feedback.submitted_html', job_title: vacancy.job_title)
   end
 
   private

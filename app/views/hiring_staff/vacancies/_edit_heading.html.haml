@@ -1,5 +1,4 @@
 %h2.govuk-heading-l= review_heading(@vacancy)
 
-%div
-  - if new_sections(@vacancy).any?
-    = render 'shared/section_flash_message', style: 'info', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), sections: new_sections(@vacancy)
+- if new_sections(@vacancy).any?
+  = render 'shared/section_flash_message', style: 'notice', message: t('messages.jobs.new_sections.message'), heading: t('messages.jobs.new_sections.heading'), sections: new_sections(@vacancy)

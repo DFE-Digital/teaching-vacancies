@@ -1,3 +1,5 @@
+= render 'hiring_staff/vacancies/section_tag', section: 'important_dates'
+
 %h2.govuk-heading-m.app-task-list__section#important_dates_heading
   %span.app-task-list__section-number 3.
   = t('jobs.important_dates')
@@ -6,9 +8,9 @@
 %dl.app-check-your-answers.app-check-your-answers--short
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#publish_on
+    %dt.app-check-your-answers__question.first-question#publish_on
       %h4.govuk-heading-s= t('jobs.publication_date')
-    %dd.app-check-your-answers__answer= format_date @vacancy.publish_on
+    %dd.app-check-your-answers__answer.first-question= format_date @vacancy.publish_on
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#expires_on

@@ -91,7 +91,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on I18n.t('buttons.update_job')
 
-        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: 'Assistant Head Teacher'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: 'Assistant Head Teacher'))
         expect(page).to have_content('Assistant Head Teacher')
       end
 
@@ -104,8 +104,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('jobs.job_details'))
         expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
-        expect(page.find('h2', text: I18n.t('jobs.job_details'))
-          .text).to include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to have_selector('.new-job_details')
 
         click_header_link(I18n.t('jobs.job_details'))
 
@@ -114,8 +113,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_on I18n.t('buttons.update_job')
 
         expect(page).to have_content(I18n.t('jobs.job_details'))
-        expect(page.find('h2', text: I18n.t('jobs.job_details'))
-          .text).to_not include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to_not have_selector('.new-job_details')
         expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
 
@@ -127,7 +125,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
         click_on I18n.t('buttons.update_job')
 
-        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: 'Assistant Head Teacher'))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: 'Assistant Head Teacher'))
         expect(page).to have_content('Assistant Head Teacher')
 
         visit job_path(vacancy.reload)
@@ -186,7 +184,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
         click_on I18n.t('buttons.update_job')
 
-        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
         expect(page).to have_content('Pay scale 1 to Pay scale 2')
       end
 
@@ -269,7 +267,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expiry_date = Time.zone.today + 1.week
         edit_date('expires_on', expiry_date)
 
-        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
         # Used a regex here as I was getting failures with a straight string comparison. For reasons that aren't clear,
         # the string to be matched was being reported as " 6 July 2373" whereas the date the in the body was
         # "\n6 July 2373".  The leading newline was causing the match to fail. Given it was a plain matcher, I'm not
@@ -319,7 +317,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
             fill_in 'important_dates_form[expires_on(3i)]', with: vacancy.expires_on.day
             click_on I18n.t('buttons.update_job')
 
-            expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
+            expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
             verify_all_vacancy_details(vacancy)
           end
         end
@@ -336,7 +334,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
             publish_on = Time.zone.today + 1.week
             edit_date('publish_on', publish_on)
 
-            expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
+            expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
 
             vacancy.publish_on = publish_on
             verify_all_vacancy_details(vacancy)
@@ -355,8 +353,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
-        expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
-          .text).to include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to have_selector('.new-supporting_documents')
 
         click_header_link(I18n.t('jobs.supporting_documents'))
 
@@ -365,8 +362,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_on I18n.t('buttons.update_job')
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-        expect(page.find('h2', text: I18n.t('jobs.supporting_documents'))
-          .text).to_not include(I18n.t('jobs.notification_labels.new'))
+        expect(page).to_not have_selector('.new-supporting_documents')
         expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
     end
@@ -397,7 +393,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'application_details_form[application_link]', with: vacancy.application_link
         click_on I18n.t('buttons.update_job')
 
-        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
 
         verify_all_vacancy_details(vacancy)
       end
@@ -454,7 +450,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
         click_on I18n.t('buttons.update_job')
 
-        expect(page.body).to include(I18n.t('messages.jobs.listing_updated_html', job_title: vacancy.job_title))
+        expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
         expect(page).to have_content('A summary about the job.')
       end
 

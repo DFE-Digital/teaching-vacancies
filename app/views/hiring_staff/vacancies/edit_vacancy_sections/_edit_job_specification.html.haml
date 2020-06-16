@@ -1,10 +1,9 @@
+= render 'hiring_staff/vacancies/section_tag', section: 'job_details'
+
 %h2.govuk-heading-m.app-task-list__section#job_details_heading
   %span.app-task-list__section-number 1.
   = t('jobs.job_details')
   = link_to t('buttons.change'), school_job_job_specification_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_details')
-  - unless @vacancy.job_roles&.any? && !missing_subjects?(@vacancy)
-    %strong.govuk-tag.notification-tag
-      = t('jobs.notification_labels.new')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 

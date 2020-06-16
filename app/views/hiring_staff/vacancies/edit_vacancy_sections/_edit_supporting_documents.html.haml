@@ -1,10 +1,9 @@
+= render 'hiring_staff/vacancies/section_tag', section: 'supporting_documents'
+
 %h2.govuk-heading-m.app-task-list__section#supporting_documents_heading
   %span.app-task-list__section-number 4.
   = t('jobs.supporting_documents')
   = link_to t('buttons.change'), school_job_documents_path(job_id: @vacancy.id, change: true), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_supporting_documents')
-  - unless @vacancy.supporting_documents
-    %strong.govuk-tag.notification-tag
-      = t('jobs.notification_labels.new')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 
