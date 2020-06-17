@@ -1,8 +1,10 @@
 import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 
-import { convertMilesToMetres } from '../lib/utils';
 import { getFilters, getQuery } from './query';
+import { getKeyword } from './ui/input/keyword';
+import { getCoords } from './ui/input/location';
+import { getRadius } from './ui/input/radius';
 
 // This is the public API key which can be safely used in your frontend code.
 // This key is usable for search queries and list the indices you've got access to.
@@ -12,23 +14,31 @@ export const searchClient = indexName => instantsearch({
     indexName: indexName,
     searchClient: search,
     searchFunction(helper) {
-        if (document.querySelector('#location').dataset.coordinates) {
-            helper.state.aroundLatLng = document.querySelector('#location').dataset.coordinates;
-        }
-
-        if (document.querySelector('#radius').dataset.radius) {
-            helper.state.aroundRadius = convertMilesToMetres(document.querySelector('#radius').dataset.radius);
-            helper.state.query = document.querySelector('#keyword').value;
-        } else {
-            delete helper.state.aroundRadius;
-            delete helper.state.aroundLatLng;
-            helper.state.query = getQuery();
-        }
-
-        helper.state.filters = getFilters();
-
-        helper.search();
+        onSearch(helper);
     },
 });
 
+export const onSearch = helper => {
+    if (getCoords()) {
+        helper.setState(getNewState(helper.state, { aroundLatLng: getCoords() }));
+    }
+
+    if (getRadius()) {
+        helper.setState(getNewState(helper.state, { aroundRadius: getRadius() }));
+        helper.setQuery(getKeyword());
+    } else {
+        helper.setState(getNewState(helper.state, { aroundRadius: 'all' }));
+        helper.setQuery(getQuery());
+    }
+
+    helper.setState(getNewState(helper.state, { filters:  getFilters()}));
+
+    return helper.search();
+};
+
 export const index = indexName => search.initIndex(indexName);
+
+export const getNewState = (state, add) => {
+    const updatedState = { ...state, ...add };
+    return updatedState;
+};

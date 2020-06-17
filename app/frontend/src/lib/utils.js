@@ -38,6 +38,14 @@ export const getUnixTimestampForDayStart = date => {
     return convertEpochToUnixTimestamp(+date);
 };
 
-export const removeDataAttribute = (el, key) => delete el.dataset[key];
+export const removeDataAttribute = (element, key) => {
+    if (element) {
+        delete element.dataset[key];
+    }
+}
 
-export const setDataAttribute = (el, key, value) => el.dataset[key] = value;
+export const setDataAttribute = (element, key, value) => {
+    if (element) {
+        element.dataset[key] = value;
+    }
+}

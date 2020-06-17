@@ -29,6 +29,9 @@ yarn-debug.log*
 # Ignore examples persistence file
 /spec/examples.txt
 
+# Ignore generated test coverage folder
+/coverage
+
 # Ignore application configuration
 /config/application.yml
 /config/storage.yml
