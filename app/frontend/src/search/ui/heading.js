@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const getSearchTermsPrefix = (location, keyword, count) => {
   let prefix = 'listed';
   if (keyword.length) {

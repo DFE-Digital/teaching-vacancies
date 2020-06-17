@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { extractQueryParams } from '../../lib/utils';
 import '../../polyfill/remove.polyfill';
 

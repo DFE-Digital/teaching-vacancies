@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { createHeadingMarkup, getSearchTermsPrefix, createHeadingHTMLForSearchTerm } from './heading';
 
 describe('createHeadingMarkup', () => {

@@ -2,7 +2,7 @@ import { setGeocodeAttributes, removeGeocodeAttributes } from '../form';
 import { enableRadiusSelect, disableRadiusSelect } from './radius';
 import { getGeolocatedCoordinates } from '../../../lib/api';
 
-export const shouldNotGeocode = (query, locations) => query.length && locations.indexOf(query.toLowerCase()) > -1;
+export const shouldNotGeocode = (query, locations) => query.length && locations.indexOf(query.toLowerCase()) > -1; // eslint-disable-line
 
 export const geocodeSuccess = (coords, client) => {
   if (coords.success) {
