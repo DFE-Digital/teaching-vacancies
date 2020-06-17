@@ -1,4 +1,6 @@
-import { renderStats, constructResults, constructLastResultNumber, constructFirstResultNumber } from './stats';
+import {
+  renderStats, constructResults, constructLastResultNumber, constructFirstResultNumber,
+} from './stats';
 
 describe('renderStats', () => {
   test('returns a function', () => {

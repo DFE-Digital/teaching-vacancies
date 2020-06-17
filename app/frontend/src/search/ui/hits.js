@@ -8,7 +8,7 @@ export const renderContent = (renderOptions) => {
     widgetParams.container.innerHTML = createHeadingMarkup({
       count: results.nbHits,
       keyword: document.getElementById('keyword').value,
-      location: document.getElementById('location').value
+      location: document.getElementById('location').value,
     });
 
     if (results.query.length >= widgetParams.threshold) {
@@ -60,4 +60,5 @@ export const templates = {
 </dl>
 </article>
 `,
-empty: '<h4 class="govuk-heading-m">Try another search</h4><ul class="govuk-list govuk-list--bullet"><li>with different keywords</li><li>and/or a wider radius</li></ul>'};
+  empty: '<h4 class="govuk-heading-m">Try another search</h4><ul class="govuk-list govuk-list--bullet"><li>with different keywords</li><li>and/or a wider radius</li></ul>',
+};
