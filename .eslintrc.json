@@ -21,6 +21,7 @@
     },
     "rules": {
         "semi": ["warn", "always"],
+        "no-use-before-define": ["warn"],
         "quotes": ["warn", "single"],
         "eol-last": 1,
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],

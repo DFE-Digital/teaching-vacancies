@@ -1,3 +1,5 @@
+export const constructOptions = (options, selected) => `${options.map((option) => `<option value="${option.value}"${option.value === selected ? ' selected' : ''}>${option.label}</option>`).join('')}`;
+
 export const renderSortSelect = (renderOptions, isFirstRender) => {
   const {
     options,
@@ -34,5 +36,3 @@ export const renderSortSelect = (renderOptions, isFirstRender) => {
     select.innerHTML = constructOptions(options, currentRefinement);
   }
 };
-
-export const constructOptions = (options, selected) => `${options.map((option) => `<option value="${option.value}"${option.value === selected ? ' selected' : ''}>${option.label}</option>`).join('')}`;

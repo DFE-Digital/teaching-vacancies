@@ -10,13 +10,10 @@ import { getRadius } from './ui/input/radius';
 // This key is usable for search queries and list the indices you've got access to.
 export const search = algoliasearch('QM2YE0HRBW', '4082ba44346a92023eac1f794d739dd1');
 
-export const searchClient = (indexName) => instantsearch({
-  indexName,
-  searchClient: search,
-  searchFunction(helper) {
-    onSearch(helper);
-  },
-});
+export const getNewState = (state, add) => {
+  const updatedState = { ...state, ...add };
+  return updatedState;
+};
 
 export const onSearch = (helper) => {
   if (getCoords()) {
@@ -38,7 +35,10 @@ export const onSearch = (helper) => {
 
 export const index = (indexName) => search.initIndex(indexName);
 
-export const getNewState = (state, add) => {
-  const updatedState = { ...state, ...add };
-  return updatedState;
-};
+export const searchClient = (indexName) => instantsearch({
+  indexName,
+  searchClient: search,
+  searchFunction(helper) {
+    onSearch(helper);
+  },
+});

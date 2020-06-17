@@ -1,18 +1,5 @@
 import { updateUrlQueryParams, convertMilesToMetres } from '../../../lib/utils';
 
-export const renderRadiusSelect = (renderOptions, isFirstRender) => {
-  const { query, widgetParams } = renderOptions;
-
-  if (isFirstRender) {
-    widgetParams.inputElement.addEventListener('change', (event) => {
-      widgetParams.onSelection(event.target.value);
-    });
-    disableRadiusSelect();
-  }
-
-  query ? updateUrlQueryParams(widgetParams.key, query) : false;
-};
-
 export const enableRadiusSelect = () => {
   if (document.querySelector('#radius')) {
     document.querySelector('#radius').removeAttribute('disabled');
@@ -37,4 +24,17 @@ export const getRadius = () => {
   if (document.querySelector('#radius')) {
     return convertMilesToMetres(document.querySelector('#radius').dataset.radius);
   }
+};
+
+export const renderRadiusSelect = (renderOptions, isFirstRender) => {
+  const { query, widgetParams } = renderOptions;
+
+  if (isFirstRender) {
+    widgetParams.inputElement.addEventListener('change', (event) => {
+      widgetParams.onSelection(event.target.value);
+    });
+    disableRadiusSelect();
+  }
+
+  query ? updateUrlQueryParams(widgetParams.key, query) : false;
 };

@@ -3,6 +3,8 @@ import '../../polyfill/remove.polyfill';
 
 const JOB_ALERT_URL = '/subscriptions/new';
 
+export const getJobAlertLinkParam = (key, value) => `${encodeURIComponent(`search_criteria[${key}]`)}=${value.replace(' ', '+')}&`;
+
 export const getJobAlertLink = (url) => {
   const paramsObj = extractQueryParams(url, ['keyword', 'location', 'radius']);
   let queryString = '';
@@ -18,17 +20,6 @@ export const getJobAlertLink = (url) => {
   return `${JOB_ALERT_URL}?${queryString}`;
 };
 
-export const getJobAlertLinkParam = (key, value) => `${encodeURIComponent(`search_criteria[${key}]`)}=${value.replace(' ', '+')}&`;
-
-export const addJobAlertMarkup = (container) => {
-  !document.getElementById('job-alert-cta') ? container.insertAdjacentHTML('beforeend', templates.alert) : false;
-};
-
-export const removeJobAlertMarkup = () => {
-  const el = document.getElementById('job-alert-cta');
-  return el && el.remove();
-};
-
 export const templates = {
   alert: `
     <div id="job-alert-cta" class="govuk-heading-s govuk-!-font-weight-regular govuk-!-margin-0">
@@ -39,4 +30,13 @@ export const templates = {
   whenever a job matching this search is published
   </div>
   `,
+};
+
+export const addJobAlertMarkup = (container) => {
+  !document.getElementById('job-alert-cta') ? container.insertAdjacentHTML('beforeend', templates.alert) : false;
+};
+
+export const removeJobAlertMarkup = () => {
+  const el = document.getElementById('job-alert-cta');
+  return el && el.remove();
 };

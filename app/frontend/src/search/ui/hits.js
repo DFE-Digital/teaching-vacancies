@@ -1,6 +1,16 @@
 import { createHeadingMarkup } from './heading';
 import { addJobAlertMarkup, getJobAlertLink, removeJobAlertMarkup } from './alert';
 
+export const hideServerMarkup = () => {
+  if (document.querySelector('ul.vacancies')) {
+    document.querySelector('ul.vacancies').style.display = 'none';
+  }
+
+  if (document.querySelector('ul.pagination-server')) {
+    document.querySelector('ul.pagination-server').style.display = 'none';
+  }
+};
+
 export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
 
@@ -18,16 +28,6 @@ export const renderContent = (renderOptions) => {
       removeJobAlertMarkup();
     }
     hideServerMarkup();
-  }
-};
-
-export const hideServerMarkup = () => {
-  if (document.querySelector('ul.vacancies')) {
-    document.querySelector('ul.vacancies').style.display = 'none';
-  }
-
-  if (document.querySelector('ul.pagination-server')) {
-    document.querySelector('ul.pagination-server').style.display = 'none';
   }
 };
 

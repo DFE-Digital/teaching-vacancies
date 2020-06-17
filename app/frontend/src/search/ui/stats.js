@@ -1,3 +1,21 @@
+export const constructResults = (results) => {
+  if (results === 1) {
+    return 'result';
+  }
+  return 'results';
+};
+
+export const constructLastResultNumber = (pages, page, results, resultsPerPage) => {
+  if (pages === 0) {
+    return 0;
+  } if (page + 1 === pages) {
+    return results;
+  }
+  return (page + 1) * resultsPerPage;
+};
+
+export const constructFirstResultNumber = (pages, page, resultsPerPage) => (pages === 0 ? 0 : page * resultsPerPage + 1);
+
 export const renderStats = (renderOptions, isFirstRender) => {
   const {
     nbHits, nbPages, page, hitsPerPage, widgetParams,
@@ -19,21 +37,3 @@ export const renderStats = (renderOptions, isFirstRender) => {
     widgetParams.container.innerHTML = '';
   }
 };
-
-export const constructResults = (results) => {
-  if (results === 1) {
-    return 'result';
-  }
-  return 'results';
-};
-
-export const constructLastResultNumber = (pages, page, results, resultsPerPage) => {
-  if (pages === 0) {
-    return 0;
-  } if (page + 1 === pages) {
-    return results;
-  }
-  return (page + 1) * resultsPerPage;
-};
-
-export const constructFirstResultNumber = (pages, page, resultsPerPage) => (pages === 0 ? 0 : page * resultsPerPage + 1);
