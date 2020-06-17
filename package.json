@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2",
     "jest": "^25.4.0",
     "jsdom": "^16.2.2",
     "stylelint": "^13.5.0",
@@ -35,7 +37,9 @@
     "testMatch": [
       "<rootDir>/app/frontend/src/**/*.test.js"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/app/frontend/src/lib/testSetup.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/app/frontend/src/lib/testSetup.js"
+    ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/app/frontend/src/polyfill/*"
     ]
