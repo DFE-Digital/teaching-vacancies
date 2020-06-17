@@ -1,6 +1,9 @@
 import { removeDataAttribute, setDataAttribute } from '../../lib/utils';
 
-export const enableSubmitButton = (container) => container.querySelector('input[type="submit"]').disabled = false;
+export const enableSubmitButton = (container) => {
+  container.querySelector('input[type="submit"]').disabled = false; // eslint-disable-line
+  return true;
+};
 
 export const setGeocodeAttributes = (coords) => {
   setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);

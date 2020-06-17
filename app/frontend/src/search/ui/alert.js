@@ -16,6 +16,8 @@ export const getJobAlertLink = (url) => {
     if (key === 'location') {
       queryString += getJobAlertLinkParam('location_category', paramsObj[key]);
     }
+
+    return true;
   });
 
   return `${JOB_ALERT_URL}?${queryString}`;
@@ -34,7 +36,11 @@ export const templates = {
 };
 
 export const addJobAlertMarkup = (container) => {
-  !document.getElementById('job-alert-cta') ? container.insertAdjacentHTML('beforeend', templates.alert) : false;
+  if (!document.getElementById('job-alert-cta')) {
+    container.insertAdjacentHTML('beforeend', templates.alert);
+  }
+
+  return true;
 };
 
 export const removeJobAlertMarkup = () => {
