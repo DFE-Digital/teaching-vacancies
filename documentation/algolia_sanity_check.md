@@ -17,4 +17,4 @@ Double-check that you aren't about to put data in the real database with:
 Vacancy.index.name # should be e.g. Vacancy_staging
 ```
 
-You will also need to comment out or adapt the add_replica blocks.
+You will also need to comment out or adapt the add_replica blocks, as they also specify index names.

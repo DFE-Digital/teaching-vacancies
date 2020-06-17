@@ -12,11 +12,12 @@ class UpdateDfeSignInUsers
   def convert_to_users(dsi_users)
     dsi_users.each do |dsi_user|
       User.transaction do
-        # TODO: I think the below find_or_initialize by is resulting in multiple user
+        # I think the below find_or_initialize by is resulting in multiple user
         # records for the same user.
         # e.g. on staging: User.where(email: "sbm@acornswhitleyfed.cheshire.sch.uk").size => 2
         # These 2 records have different oids.
-        # I propose that we
+        # I propose that we reconcile user objects that have the same non-nil email into a
+        # single records, to avoid inconsistencies.
         user = User.find_or_initialize_by(oid: dsi_user['userId'])
         user.email = dsi_user['email']
         # When a user is associated with multiple organisations,
