@@ -64,8 +64,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
       session_id: oid,
       multiple_schools: has_multiple_schools
     )
-    # Session is expired after the time set in config/initializers/session_store.rb
-    Rails.logger.warn("Hiring staff signed in: #{oid}")
+    Rails.logger.warn("Hiring staff signed in via fallback authentication: #{oid}")
   end
 
   def get_schools(user)
