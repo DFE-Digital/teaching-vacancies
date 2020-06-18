@@ -1,35 +1,40 @@
-= render partial: '/feedback/head'
-= render partial: '/feedback/errors', locals: { errors: @feedback.errors }
+- content_for :page_title_prefix, t('feedback.page_title')
 
-= simple_form_for @feedback, action: :post, url: feedback_path do |f|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @feedback, url: feedback_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
 
-      .govuk-form-group.feedback-form-group#visit_purpose
-        %fieldset.govuk-fieldset
-          %legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-            %h2.govuk-fieldset__heading
-              = t('general_feedback.visit_purpose_legend_html')
-          .govuk-radios.govuk-radios--conditional{ "data-module": "govuk-radios"}
-            = f.collection_radio_buttons :visit_purpose, visit_purpose_options, :last, :first,
-                                         item_wrapper_class: 'govuk-radios__item',
-                                         item_wrapper_tag: 'div' do |field|
-              - if field.value == :other_purpose
-                = field.radio_button(class: 'govuk-radios__input', "data-aria-controls": 'conditional_visit_purpose_comment') + field.label(class: "govuk-label govuk-radios__label")
-              - else
-                = field.radio_button(class: 'govuk-radios__input') + field.label(class: "govuk-label govuk-radios__label")
+      %h2.govuk-heading-l
+        = t('feedback.heading')
 
-            #conditional_visit_purpose_comment.govuk-radios__conditional.govuk-radios__conditional--hidden
-              = f.input :visit_purpose_comment, as: :text,
-                        wrapper: :textarea,
-                        label: false,
-                        hint: t('general_feedback.visit_purpose_hint_text').html_safe,
-                        input_html: { class: 'form-control form-control-4-4', rows: '5' }
-              = recaptcha_v3(action: 'feedback')
+      = f.govuk_radio_buttons_fieldset(:visit_purpose, legend: { size: 'm', text: t('general_feedback.visit_purpose_legend_html') }) do
+        - visit_purpose_options.each_with_index do |visit_purpose, idx|
+          - if visit_purpose.last == :other_purpose
+            = f.govuk_radio_button :visit_purpose, visit_purpose.last, label: { text: visit_purpose.first }, link_errors: idx == 0 do
+              = f.govuk_text_area :visit_purpose_comment,
+                label: { text: t('general_feedback.visit_purpose_legend_html'), hidden: true },
+                hint_text: t('general_feedback.visit_purpose_hint_text'),
+                rows: 5,
+                max_chars: 1200
+          - else
+            = f.govuk_radio_button :visit_purpose, visit_purpose.last, label: { text: visit_purpose.first }, link_errors: idx == 0
 
+      = f.govuk_text_area :comment,
+        label: { text: t('feedback.comment_label_html'), size: 'm' },
+        rows: 5,
+        max_chars: 1200,
+        required: true
 
-      = render partial: 'shared/feedback_comment', locals: { f: f }
+      = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: 'm', text: t('general_feedback.user_participation_legend_html') }) do
+        = f.govuk_radio_button :user_participation_response, :interested, label: { text: t('general_feedback.user_participation_options.interested') }, link_errors: true do
+          = f.govuk_email_field :email,
+            label: { text: t('general_feedback.user_interested_email_heading_html') },
+            hint_text: t('general_feedback.user_interested_email_text'),
+            required: true
 
-      = render partial: 'shared/user_participation', locals: { f: f }
+        = f.govuk_radio_button :user_participation_response, :not_interested, label: { text: t('general_feedback.user_participation_options.not_interested') }
 
-      = f.submit t('feedback.submit'), class: 'govuk-button'
+      = recaptcha_v3(action: 'feedback')
+
+      = f.govuk_submit t('feedback.submit')
