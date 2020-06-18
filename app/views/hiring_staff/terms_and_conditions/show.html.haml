@@ -1,32 +1,24 @@
 - content_for :page_title_prefix, t('terms_and_conditions.page_title')
 
 .govuk-grid-row
-  .govuk-grid-row-column-full
-    - if @terms_and_conditions_form.errors.any?
-      #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
-        %h2.govuk-error-summary__title
-          = t('jobs.errors_present')
-        .govuk-error-summary__body
-          %ul.govuk-list.govuk-error-summary__list
-            - @terms_and_conditions_form.errors.each do |attribute, error|
-              %li= link_to @terms_and_conditions_form.errors.full_message(attribute, error), "##{attribute}"
-
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-xl= t('terms_and_conditions.page_title')
-    %p= t('terms_and_conditions.intro')
-    %p= t('terms_and_conditions.intro_link', link: link_to('Terms and Conditions for Schools', page_path('terms-and-conditions'), class: 'govuk-link')).html_safe
-    %ul.govuk-list.govuk-list--bullet
-      - t('terms_and_conditions.summary_list').each do |item|
-        %li= item
+    = form_for @terms_and_conditions_form, url: terms_and_conditions_path, html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
 
-    = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
-      %div{ class: 'govuk-form-group' }
-        %fieldset.govuk-fieldset
-          %legend
-            %h3.govuk-heading-m= t('terms_and_conditions.please_accept')
-          .govuk-checkboxes
-            .govuk-checkboxes__item
-              = f.check_box :terms, class: 'govuk-checkboxes__input'
-              = f.label :terms, t('terms_and_conditions.label'), class: 'govuk-label govuk-checkboxes__label'
-      .govuk-form-group
-        = f.submit t('buttons.accept_and_continue'), class: 'govuk-button'
+      %h1.govuk-heading-xl= t('terms_and_conditions.page_title')
+      %p= t('terms_and_conditions.intro')
+      %p= t('terms_and_conditions.intro_link', link: link_to('Terms and Conditions for Schools', page_path('terms-and-conditions'), class: 'govuk-link')).html_safe
+      %ul.govuk-list.govuk-list--bullet
+        - t('terms_and_conditions.summary_list').each do |item|
+          %li= item
+
+      = f.govuk_check_boxes_fieldset :terms,
+        legend: { text: t('terms_and_conditions.please_accept'), size: 'm' } do
+
+        = f.govuk_check_box :terms,
+          true,
+          multiple: false,
+          link_errors: true,
+          label: { text: t('terms_and_conditions.label') }
+
+      = f.govuk_submit t('buttons.accept_and_continue')
