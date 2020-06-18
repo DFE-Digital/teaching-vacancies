@@ -138,12 +138,3 @@ en:
           attributes:
             task:
               taken: must have a unique entry for a date
-  simple_form:
-    labels:
-      subscription:
-        email: Email address
-        reference: Your reference
-    hints:
-      defaults:
-        email: Enter your email address. We'll only use it to send you job alerts.
-        reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.

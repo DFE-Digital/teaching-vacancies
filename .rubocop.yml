@@ -8,7 +8,6 @@ AllCops:
       - 'db/migrate/**/*'
       - 'db/schema.rb'
       - 'bin/**/*'
-      - 'config/initializers/simple_form.rb'
       - 'config/initializers/assets.rb'
       - 'vendor/**/*'
       - 'node_modules/**/*'
