@@ -1,10 +1,13 @@
-= render partial: '/feedback/head'
-= render partial: '/feedback/errors', locals: { errors: @feedback.errors }
+- content_for :page_title_prefix, t('feedback.page_title')
 
-= simple_form_for @feedback, action: :post, url: school_job_feedback_path do |f|
-  .govuk-grid-row
-    .govuk-grid-column-two-thirds
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @feedback, url: school_job_feedback_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
 
-      = render partial: '/feedback/fields', locals: { form: f }
+      %h2.govuk-heading-l
+        = t('feedback.heading')
 
-      = f.submit t('feedback.submit'), class: 'govuk-button'
+      = render '/feedback/fields', f: f
+
+      = f.govuk_submit t('feedback.submit')

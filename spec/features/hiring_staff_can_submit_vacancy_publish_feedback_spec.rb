@@ -2,8 +2,10 @@ require 'rails_helper'
 RSpec.feature 'Vacancy publish feedback' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
-  let(:choose_yes_to_participation) { choose('vacancy_publish_feedback_user_participation_response_interested') }
-  let(:choose_no_to_participation) { choose('vacancy_publish_feedback_user_participation_response_not_interested') }
+  let(:choose_yes_to_participation) { choose('vacancy-publish-feedback-user-participation-response-interested-field') }
+  let(:choose_no_to_participation) {
+    choose('vacancy-publish-feedback-user-participation-response-not-interested-field')
+  }
 
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
@@ -36,7 +38,7 @@ RSpec.feature 'Vacancy publish feedback' do
 
     scenario 'must have a participation response' do
       visit new_school_job_feedback_path(published_job.id)
-      fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
 
       click_on 'Submit feedback'
 
@@ -55,7 +57,7 @@ RSpec.feature 'Vacancy publish feedback' do
     scenario 'Can be successfully submitted for a published vacancy' do
       visit new_school_job_feedback_path(published_job.id)
 
-      fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
       choose_no_to_participation
 
       click_on 'Submit feedback'
@@ -67,9 +69,9 @@ RSpec.feature 'Vacancy publish feedback' do
     scenario 'creates a feedback record' do
       visit new_school_job_feedback_path(published_job.id)
 
-      fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
       choose_yes_to_participation
-      fill_in 'vacancy_publish_feedback_email', with: 'user@email.com'
+      fill_in 'vacancy_publish_feedback[email]', with: 'user@email.com'
 
       click_on 'Submit feedback'
 
@@ -84,7 +86,7 @@ RSpec.feature 'Vacancy publish feedback' do
     scenario 'logs an audit activity' do
       visit new_school_job_feedback_path(published_job.id)
 
-      fill_in 'vacancy_publish_feedback_comment', with: 'Perfect!'
+      fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
       choose_no_to_participation
 
       click_on 'Submit feedback'
