@@ -1,43 +1,38 @@
-- content_for :page_title_prefix do
-  = t('subscriptions.new.page_description')
+- content_for :page_title_prefix, t('subscriptions.new.page_description')
 
 .govuk-grid-row
-  .govuk-grid-column-full
-    %h1.govuk-heading-xl
-      = t('subscriptions.new.page_description')
+  .govuk-grid-column-two-thirds
+    = form_for @subscription, url: subscriptions_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+      = f.govuk_error_summary t('jobs.errors_present')
 
-.govuk-grid-row
-  .govuk-grid-column-one-half
+      %h1.govuk-heading-xl
+        = t('subscriptions.new.page_description')
 
-    - if @subscription.errors.any?
-      #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
-        %h2.govuk-heading-m.govuk-error-summary-heading
-          = t('jobs.errors_present')
-        %ul.govuk-list.govuk-error-summary__list
-          - @subscription.errors.each do |attribute, error|
-            - if attribute == :email
-              %li= error
-            - else
-              %li= @subscription.errors.full_message(attribute, error)
+      %p.govuk-body-l=t('subscriptions.intro')
 
-.govuk-grid-row
-  .govuk-grid-column-one-half
-    %p.govuk-body-l=t('subscriptions.intro')
+      = f.hidden_field :search_criteria
 
-    = simple_form_for @subscription do |f|
-      = f.input :search_criteria, as: :hidden
-      %div.govuk-inset-text
+      .govuk-inset-text
         %ul.govuk-list
           - @subscription.filtered_search_criteria.each_pair do |filter, value|
             %li
               - if filter.present?
                 %span{ class: 'govuk-!-font-weight-bold' } #{filter.humanize}:
               = value
-      %p.govuk-body-l=t('subscriptions.next_steps')
-      = f.input :email, as: :email, input_html: { class: 'govuk-input' }, required: true
-      = f.input :reference, as: :string, input_html: { class: 'govuk-input', placeholder: 'e.g. Maths jobs within 20 miles of Oxford' }
-      = recaptcha_v3(action: 'subscription')
 
+      %p.govuk-body-l=t('subscriptions.next_steps')
+
+      = f.govuk_email_field :email,
+        label: { text: t('subscriptions.email.label_html'), size: 's' },
+        hint_text: t('subscriptions.email.hint'),
+        required: true
+
+      = f.govuk_text_field :reference,
+        label: { text: t('subscriptions.reference.label_html'), size: 's' },
+        hint_text: t('subscriptions.reference.hint'),
+        required: true
+
+      = recaptcha_v3(action: 'subscription')
 
       .govuk-warning-text
         %span.govuk-warning-text__icon{'aria-hidden': "true"}
@@ -46,4 +41,4 @@
           %span.govuk-warning-text__assistive Warning
           = t('subscriptions.info')
 
-      = f.button :submit, 'Subscribe'
+      = f.govuk_submit t('buttons.subscribe')
