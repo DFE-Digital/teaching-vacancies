@@ -119,15 +119,15 @@ class Vacancy < ApplicationRecord
 
     attributesForFaceting [:job_roles, :working_patterns, :school, :listing_status]
 
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
+    add_replica 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
     end
 
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_desc" : 'Vacancy_expiry_time_desc', inherit: true do
+    add_replica 'Vacancy_expiry_time_desc', inherit: true do
       ranking ['desc(expires_at_timestamp)']
     end
 
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_asc" : 'Vacancy_expiry_time_asc', inherit: true do
+    add_replica 'Vacancy_expiry_time_asc', inherit: true do
       ranking ['asc(expires_at_timestamp)']
     end
   end
