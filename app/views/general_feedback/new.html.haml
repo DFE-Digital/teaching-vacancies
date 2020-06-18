@@ -20,7 +20,7 @@
           - else
             = f.govuk_radio_button :visit_purpose, visit_purpose.last, label: { text: visit_purpose.first }, link_errors: idx == 0
 
-      = render '/feedback/fields', f: f
+      = render '/feedback/form', f: f
 
       = recaptcha_v3(action: 'feedback')
 
