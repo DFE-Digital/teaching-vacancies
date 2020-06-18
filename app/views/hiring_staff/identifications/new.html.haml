@@ -14,8 +14,7 @@
 
     %p= t('pages.home.signin.description')
 
-    = simple_form_for :identifications, url: identifications_path, method: :post do |f|
-      = f.submit t('sign_in.link'), class: 'govuk-button'
+    = render 'hiring_staff/identifications/signin'
 
     %hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 

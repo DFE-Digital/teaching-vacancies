@@ -10,7 +10,7 @@
   - if ENV['FEATURE_SIGN_IN_ALERT'].to_s == 'true'
     = link_to t('sign_in.link'), new_identifications_path, class: 'govuk-button identifications-button'
   - else
-    = simple_form_for :identifications, url: identifications_path, defaults: { input_html: { class: 'text' } }, method: :post do |f|
-      = f.submit t('sign_in.link'), class: 'govuk-button identifications-button'
+    = render 'hiring_staff/identifications/signin', home: true
+
   %p= t('.signin_guidance_html', link: link_to(t('.signin_link'), new_identifications_path))
 
