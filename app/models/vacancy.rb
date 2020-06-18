@@ -45,7 +45,7 @@ class Vacancy < ApplicationRecord
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/LineLength
   # There must be a better way to pass these settings to the block, but everything seems to break
-  algoliasearch index_name: Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}" : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
+  algoliasearch if: :listed? do
     attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
 
     attribute :expires_at do
@@ -181,7 +181,7 @@ class Vacancy < ApplicationRecord
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
-                      :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
+    :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
   scope :applicable_by_time, (-> { where('expiry_time IS NOT NULL AND expiry_time >= ?', Time.zone.now) })
@@ -195,13 +195,13 @@ class Vacancy < ApplicationRecord
   scope :expired_by_date, (-> { published.where('expiry_time IS NULL AND expires_on < ?', Time.zone.today) })
   scope :live, (-> { live_by_date.or(live_by_time) })
   scope :live_by_time, (lambda {
-                          published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
-                                          Time.zone.today, Time.zone.now)
-                        })
+    published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
+                    Time.zone.today, Time.zone.now)
+  })
   scope :live_by_date, (lambda {
-                          published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
-                                          Time.zone.today, Time.zone.today)
-                        })
+    published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
+                    Time.zone.today, Time.zone.today)
+  })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
 
   paginates_per 10
@@ -229,7 +229,7 @@ class Vacancy < ApplicationRecord
   end
 
   def listed?
-    published? && !publish_on.future? && expires_on.future?
+    published? && !publish_on&.future? && expires_on&.future?
   end
 
   def as_indexed_json(_arg = {})
