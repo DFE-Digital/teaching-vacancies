@@ -3,5 +3,6 @@ class TermsAndConditionsForm
 
   attr_accessor :terms
 
-  validates :terms, acceptance: true
+  validates :terms, presence: true
+  validates :terms, acceptance: { accept: 'true' }
 end

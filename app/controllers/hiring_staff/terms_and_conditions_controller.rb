@@ -19,7 +19,7 @@ class HiringStaff::TermsAndConditionsController < HiringStaff::BaseController
   private
 
   def terms_params
-    params.require(:terms_and_conditions_form).permit(:terms)
+    (params[:terms_and_conditions_form] || params).permit(:terms)
   end
 
   def audit_toc_acceptance
