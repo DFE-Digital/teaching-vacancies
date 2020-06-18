@@ -37,15 +37,34 @@ class Vacancy < ApplicationRecord
 
   include Redis::Objects
 
-  include AlgoliaSearch
-  AlgoliaSearch::IndexSettings::DEFAULT_BATCH_SIZE = 100
-
   # For guidance on sanity-checking an indexing change, read documentation/algolia_sanity_check.md
+  include AlgoliaSearch
+
+  # NOTE: the `if: :listed?` filter in the `algoliasearch` stanza below *only* excludes records from being *added* to
+  # the index. It DOES NOT prevent the ruby client from checking that the record exists in the Algolia index in the
+  # first place. Even if the record should not be in the index (unpublished or expired records), the client still
+  # consumes an Algolia operation to try and look it up if it appears in canonical list of records returned by the
+  # model.
+  #
+  # To illustrate: if you run the unmodified `Vacancy.reindex!` on a recent (2020-06-18) production dataset you will
+  # consume more than 30,000 operations on the Alogolia app. This occurs because it looks up each of the 30,000+
+  # expired/unpublished records before it applies the `:listed?` filter. It only indexes about 470 records. I am not
+  # 100% certain, but it seems this is done so it can remove records that should not be in the index according to the
+  # filter.
+  #
+  # If, however, you run `Vacancy.live.reindex!`, which scopes the list to only the "published" records, it only
+  # consumes slightly more operation than there are indexable records.
+  def self.reindex!
+    live.algolia_reindex!
+  end
+
+  def self.reindex
+    live.algolia_reindex
+  end
 
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/LineLength
-  # There must be a better way to pass these settings to the block, but everything seems to break
-  algoliasearch if: :listed? do
+  algoliasearch auto_index: true, auto_remove: true, if: :listed? do
     attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
 
     attribute :expires_at do

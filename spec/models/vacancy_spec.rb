@@ -5,6 +5,22 @@ RSpec.describe Vacancy, type: :model do
   it { should belong_to(:publisher_user) }
   it { should have_many(:documents) }
 
+  context 'indexing for search' do
+    describe '#reindex!' do
+      it 'is overridden so that it only indexes vacancies scoped as `live`' do
+        expect(described_class).to receive_message_chain('live.algolia_reindex!')
+        described_class.reindex!
+      end
+    end
+
+    describe '#reindex' do
+      it 'is overridden so that it only indexes vacancies scoped as `live`' do
+        expect(described_class).to receive_message_chain('live.algolia_reindex')
+        described_class.reindex
+      end
+    end
+  end
+
   describe 'validations' do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
@@ -130,11 +146,11 @@ RSpec.describe Vacancy, type: :model do
   context 'scopes' do
     let(:expired_earlier_today) do
       build(:vacancy, expires_on: Time.zone.today,
-                      expiry_time: Time.zone.now - 1.hour)
+            expiry_time: Time.zone.now - 1.hour)
     end
     let(:expires_later_today) do
       create(:vacancy, status: :published,
-                       expiry_time: Time.zone.now + 1.hour)
+             expiry_time: Time.zone.now + 1.hour)
     end
     describe '#applicable' do
       context 'when expiry time not given' do
