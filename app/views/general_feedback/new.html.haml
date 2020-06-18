@@ -20,20 +20,7 @@
           - else
             = f.govuk_radio_button :visit_purpose, visit_purpose.last, label: { text: visit_purpose.first }, link_errors: idx == 0
 
-      = f.govuk_text_area :comment,
-        label: { text: t('feedback.comment_label_html'), size: 'm' },
-        rows: 5,
-        max_chars: 1200,
-        required: true
-
-      = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: 'm', text: t('general_feedback.user_participation_legend_html') }) do
-        = f.govuk_radio_button :user_participation_response, :interested, label: { text: t('general_feedback.user_participation_options.interested') }, link_errors: true do
-          = f.govuk_email_field :email,
-            label: { text: t('general_feedback.user_interested_email_heading_html') },
-            hint_text: t('general_feedback.user_interested_email_text'),
-            required: true
-
-        = f.govuk_radio_button :user_participation_response, :not_interested, label: { text: t('general_feedback.user_participation_options.not_interested') }
+      = render '/feedback/form', f: f
 
       = recaptcha_v3(action: 'feedback')
 
