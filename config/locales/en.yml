@@ -478,18 +478,18 @@ en:
       page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
     visit_purpose_legend_html: "What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)"
     visit_purpose_hint_text: >-
-      <p>Please tell us what you came here to do. Do not include any information that could identify you personally
-      (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
+      Please tell us what you came here to do. Do not include any information that could identify you personally
+      (such as your name or the name of your school).
     visit_purpose_options:
       find_teaching_job: Find a job in teaching
       list_teaching_job: List a teaching job on the service
-      other_purpose: Something else (tell us in the box below)
+      other_purpose: Something else
     user_participation_legend_html:
       "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
     user_participation_options:
       interested: 'Yes'
       not_interested: 'No'
-    user_interested_email_heading: 'What is your email address?'
+    user_interested_email_heading_html: 'What is your email address? (<span class="text-red">Required</span>)'
     user_interested_email_text: >-
       We'll only use this to tell you about opportunities to take part in user research that helps us improve
       Department for Education services.
