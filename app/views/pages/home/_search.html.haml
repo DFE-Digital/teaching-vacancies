@@ -1,6 +1,6 @@
 %h1.govuk-heading-m= t('jobs.heading')
 
-= form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+= form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get do |f|
 
   = f.govuk_text_field :keyword,
     label: { text: t('jobs.filters.keyword'), size: 's' },

@@ -10,7 +10,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @job_specification_form, url: @job_specification_url, html: { method: @job_specification_url_method }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @job_specification_form, url: @job_specification_url, html: { method: @job_specification_url_method } do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l

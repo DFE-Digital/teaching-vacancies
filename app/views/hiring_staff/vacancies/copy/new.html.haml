@@ -6,7 +6,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' } do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l

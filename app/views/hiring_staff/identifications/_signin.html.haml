@@ -1,3 +1,3 @@
 - home = false if local_assigns[:home].nil?
-= form_for :identifications, url: identifications_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+= form_for :identifications, url: identifications_path do |f|
   = f.govuk_submit t('sign_in.link'), classes: home ? 'identifications-button' : ''

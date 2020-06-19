@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcerns
   include Ip
 
+  default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
+
   def check
     render json: { status: 'OK' }, status: :ok
   end

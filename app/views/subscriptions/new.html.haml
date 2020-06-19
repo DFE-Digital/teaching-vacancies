@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @subscription, url: subscriptions_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @subscription, url: subscriptions_path do |f|
       = f.govuk_error_summary
 
       %h1.govuk-heading-xl

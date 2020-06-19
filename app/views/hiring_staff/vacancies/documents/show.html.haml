@@ -8,7 +8,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @documents_form, url: school_job_documents_path(@vacancy.id), builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
+    = form_for @documents_form, url: school_job_documents_path(@vacancy.id) do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l
