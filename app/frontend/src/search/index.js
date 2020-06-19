@@ -126,4 +126,9 @@ if (document.querySelector('#pagination-hits')) {
   ]);
 }
 
-searchClientInstance.start();
+document.querySelector('.filters-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!searchClientInstance.started) {
+    searchClientInstance.start();
+  }
+});

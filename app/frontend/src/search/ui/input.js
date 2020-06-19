@@ -1,14 +1,9 @@
-import { getQuery } from '../query';
 import { enableSubmitButton } from './form';
 
 export const renderSearchBox = (renderOptions, isFirstRender) => {
-  const { refine, widgetParams } = renderOptions;
+  const { widgetParams } = renderOptions;
 
   if (isFirstRender) {
-    if (getQuery().length) {
-      refine(getQuery());
-    }
-
     widgetParams.inputElement.addEventListener('input', () => {
       enableSubmitButton(widgetParams.container);
     });
