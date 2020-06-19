@@ -23,13 +23,13 @@
       %p.govuk-body-l=t('subscriptions.next_steps')
 
       = f.govuk_email_field :email,
-        label: { text: t('subscriptions.email.label_html'), size: 's' },
-        hint_text: t('subscriptions.email.hint'),
+        label: { text: t('subscriptions.labels.email_html'), size: 's' },
+        hint_text: t('subscriptions.hints.email'),
         required: true
 
       = f.govuk_text_field :reference,
-        label: { text: t('subscriptions.reference.label_html'), size: 's' },
-        hint_text: t('subscriptions.reference.hint'),
+        label: { text: t('subscriptions.labels.reference_html'), size: 's' },
+        hint_text: t('subscriptions.hints.reference'),
         required: true
 
       = recaptcha_v3(action: 'subscription')
