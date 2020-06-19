@@ -83,6 +83,11 @@ b {
   }
 }
 
+.divider-bottom {
+  border-bottom: 2px solid govuk-colour('light-grey');
+  margin-bottom: $govuk-gutter;
+}
+
 .four-column-list {
 
   column-count: 4;
