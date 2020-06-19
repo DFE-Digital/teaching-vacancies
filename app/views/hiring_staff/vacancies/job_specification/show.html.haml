@@ -11,7 +11,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @job_specification_form, url: @job_specification_url, html: { method: @job_specification_url_method }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
-      = f.govuk_error_summary t('jobs.errors_present')
+      = f.govuk_error_summary
 
       %h2.govuk-heading-l
         = t('jobs.job_details')
@@ -32,10 +32,10 @@
         job_role_options,
         :itself,
         :itself,
-        legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html'), size: 's' },
+        legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html') },
         hint_text: t('helpers.hint.job_specification_form.job_roles')
 
-      = f.govuk_fieldset legend: { text: t('helpers.fieldset.job_specification_form.subjects'), size: 's' } do
+      = f.govuk_fieldset legend: { text: t('helpers.fieldset.job_specification_form.subjects') } do
 
         %label{ for: 'job-specification-form-subject-search' }
           %span.govuk-visually-hidden
@@ -57,7 +57,7 @@
         working_pattern_options,
         :last,
         :first,
-        legend: { text: t('helpers.fieldset.job_specification_form.working_pattern_html'), size: 's' },
+        legend: { text: t('helpers.fieldset.job_specification_form.working_pattern_html') },
         hint_text: t('helpers.hint.job_specification_form.working_patterns')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
