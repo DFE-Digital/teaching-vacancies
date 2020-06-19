@@ -62,6 +62,7 @@ config/localhost/https/*.key
 config/localhost/https/*.crt
 localhost.key
 localhost.crt
+rootCA.pem
 
 # GCP development credentails
 serviceAccount.json
