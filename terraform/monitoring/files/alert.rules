@@ -1,0 +1,9 @@
+groups:
+  - name: example
+    rules:
+    - alert: HighCPU
+      expr: avg by (space) (cpu{space=~"teaching-vacancies-.+"}) > 0
+      labels:
+        severity: page
+      annotations:
+        summary: High CPU

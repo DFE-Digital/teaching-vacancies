@@ -1,0 +1,17 @@
+global:
+  resolve_timeout: 5m
+  slack_api_url: https://hooks.slack.com/services/XXX/YYY/ZZZ
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'web.hook'
+
+receivers:
+- name: 'web.hook'
+  slack_configs:
+  - channel: twd_tv_dev
+    icon_emoji: ':fire:'
+    text: 'everything is :fine:'
