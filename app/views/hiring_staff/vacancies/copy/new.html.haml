@@ -6,8 +6,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
-      = f.govuk_error_summary t('jobs.errors_present')
+    = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' } do |f|
+      = f.govuk_error_summary
 
       %h2.govuk-heading-l
         = t('jobs.new_job_listing_details')
@@ -29,7 +29,7 @@
           job_role_options,
           :itself,
           :itself,
-          legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html'), size: 's' },
+          legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html') },
           hint_text: t('helpers.hint.job_specification_form.job_roles')
 
       - unless @vacancy.about_school.present?
@@ -41,19 +41,19 @@
           required: true
 
       = f.govuk_date_field :publish_on,
-        legend: { text: t('helpers.fieldset.important_dates_form.publish_on_html'), size: 's' },
+        legend: { text: t('helpers.fieldset.important_dates_form.publish_on_html') },
         hint_text: t('helpers.hint.important_dates_form.publish_on')
 
       = f.govuk_date_field :expires_on,
-        legend: { text: t('helpers.fieldset.important_dates_form.expires_on_html'), size: 's' },
+        legend: { text: t('helpers.fieldset.important_dates_form.expires_on_html') },
         hint_text: t('helpers.hint.important_dates_form.expires_on')
 
       = render 'hiring_staff/vacancies/expiry_time_field', f: f
 
       = f.govuk_date_field :starts_on,
-        legend: { text: t('helpers.fieldset.important_dates_form.starts_on'), size: 's' },
+        legend: { text: t('helpers.fieldset.important_dates_form.starts_on') },
         hint_text: t('helpers.hint.important_dates_form.starts_on')
 
-      = f.govuk_submit t('buttons.save_and_continue'), classes: 'govuk-!-margin-bottom-5'
+      = f.govuk_submit classes: 'govuk-!-margin-bottom-5'
 
     = link_to t('buttons.cancel_copy'), school_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'

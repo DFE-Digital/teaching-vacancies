@@ -8,8 +8,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @supporting_documents_form, url: school_job_supporting_documents_path(@vacancy.id), html: { method: "patch" }, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
-      = f.govuk_error_summary t('jobs.errors_present')
+    = form_for @supporting_documents_form, url: school_job_supporting_documents_path(@vacancy.id), html: { method: "patch" } do |f|
+      = f.govuk_error_summary
 
       %h2.govuk-heading-l
         = t('jobs.supporting_documents')
@@ -20,7 +20,7 @@
         %w[yes no],
         :to_s,
         :capitalize,
-        legend: { text: t('helpers.fieldset.supporting_documents_form.supporting_documents_html'), size: 's' },
+        legend: { text: t('helpers.fieldset.supporting_documents_form.supporting_documents_html') },
         hint_text: t('helpers.hint.supporting_documents_form.supporting_documents')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f

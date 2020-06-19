@@ -2,8 +2,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @feedback, url: feedback_path, builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f|
-      = f.govuk_error_summary t('jobs.errors_present')
+    = form_for @feedback, url: feedback_path do |f|
+      = f.govuk_error_summary
 
       %h2.govuk-heading-l
         = t('feedback.heading')
