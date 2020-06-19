@@ -586,12 +586,12 @@ en:
         expiry_text_html: "Your job alert subscription will end on %{date}."
     manage: Manage your subscription
     unsubscribe: Unsubscribe
-    email:
-      label_html: Email address
-      hint: Enter your email address. We'll only use it to send you job alerts.
-    reference:
-      label_html: Your reference
-      hint: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
+    labels:
+      email_html: Email address (<span class="text-red">Required</span>)
+      reference_html: Your reference (<span class="text-red">Required</span>)
+    hints:
+      email: Enter your email address. We'll only use it to send you job alerts.
+      reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
   job_alerts:
     confirmation:
       email:
