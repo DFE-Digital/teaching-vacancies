@@ -260,8 +260,12 @@ class Vacancy < ApplicationRecord
     }
   end
 
+  # `publish_on` is nullable, so you can't use `!publish_on.try(:future?)` as `publish_on = nil` will yield an
+  # unintended `true` result.
+  #
+  # I've deliberately chosen `#try` over `#&.` for long-term readability.
   def listed?
-    published? && !publish_on&.future? && expires_on&.future?
+    published? && (publish_on.try(:today?) || publish_on.try(:past?)) && expiry_time.try(:future?)
   end
 
   def as_indexed_json(_arg = {})

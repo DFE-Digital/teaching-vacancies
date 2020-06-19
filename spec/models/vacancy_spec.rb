@@ -133,17 +133,60 @@ RSpec.describe Vacancy, type: :model do
     end
 
     context '#listed?' do
-      it 'returns true if the vacancy is currently listed' do
-        job = create(:vacancy, :published)
-
-        expect(job.listed?).to be true
+      let(:datetime) do
+        instance_double(DateTime)
       end
 
-      it 'returns false if the vacancy is not yet listed' do
-        job = build(:vacancy, :published, slug: 'value', publish_on: Time.zone.tomorrow)
-        job.save(validate: false)
+      subject do
+        build(:vacancy, :published)
+      end
 
-        expect(job.listed?).to be false
+      it 'does not break if #expiry_time is nil' do
+        subject.expiry_time = nil
+        expect { subject.listed? }.not_to raise_error
+      end
+
+      it 'checks #expiry_time is in the future' do
+        allow(subject).to receive(:expiry_time).and_return(datetime)
+        expect(datetime).to receive(:future?)
+        subject.listed?
+      end
+
+      it 'checks #published?' do
+        expect(subject).to receive(:published?)
+        subject.listed?
+      end
+
+      it 'checks if #published == "draft" (yields published? == false)' do
+        subject.status = 'draft'
+        expect(subject.listed?).to be_falsey
+      end
+
+      context '#publish_on' do
+        before do
+          allow(subject).to receive(:publish_on).and_return(datetime)
+          allow(datetime).to receive(:past?)
+          allow(datetime).to receive(:today?)
+        end
+
+        it 'checks if #publish_on is in the past' do
+          expect(datetime).to receive(:past?)
+          subject.listed?
+        end
+
+        it 'checks if #publish_on is today' do
+          expect(datetime).to receive(:today?)
+          subject.listed?
+        end
+
+        it 'does not break if publish_on is nil' do
+          subject.publish_on = nil
+          expect { subject.listed? }.not_to raise_error
+        end
+      end
+
+      it 'return true if all the conditions are met' do
+        expect(subject.listed?).to be_truthy
       end
     end
   end
