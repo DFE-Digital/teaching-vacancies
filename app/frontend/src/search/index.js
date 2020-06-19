@@ -14,7 +14,7 @@ import { templates, renderContent } from './ui/hits';
 import { onSubmit as locationSubmit } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
-import { renderSortSelect } from './ui/sort';
+import { renderSortSelectInput } from './ui/sort';
 import { renderStats } from './ui/stats';
 import { renderRadiusSelect } from './ui/input/radius';
 import { locations } from './data/locations';
@@ -29,7 +29,7 @@ const searchClientInstance = searchClient(ALGOLIA_INDEX);
 const searchBox = connectSearchBox(renderSearchBox);
 const autocomplete = connectAutocomplete(renderAutocomplete);
 const heading = connectHits(renderContent);
-const sortBy = connectSortBy(renderSortSelect);
+const sortBy = connectSortBy(renderSortSelectInput);
 const statsBottom = connectStats(renderStats);
 const statsTop = connectStats(renderStats);
 const locationRadius = connectMenu(renderRadiusSelect);
@@ -85,7 +85,7 @@ searchClientInstance.addWidgets([
   }),
   sortBy({
     container: document.querySelector('#jobs_sort_form'),
-    element: '#jobs_sort',
+    element: document.querySelector('#jobs_sort_select'),
     items: [
       { label: 'most relevant first', value: 'Vacancy' },
       { label: 'newest job listing', value: 'Vacancy_publish_on_desc' },
