@@ -117,11 +117,7 @@ class VacancyAlgoliaSearchBuilder
 
   def build_search_replica
     return nil if sort_by.blank?
-    self.search_replica = ['Vacancy', test_search_replica, sort_by].reject(&:blank?).join('_')
-  end
-
-  def test_search_replica
-    Rails.env.test? ? "test#{ENV.fetch('GITHUB_RUN_ID', '')}" : ''
+    self.search_replica = ['Vacancy', sort_by].reject(&:blank?).join('_')
   end
 
   def published_today_filter
