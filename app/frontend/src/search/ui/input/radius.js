@@ -21,10 +21,10 @@ export const disableRadiusSelect = () => {
 };
 
 export const getRadius = () => {
-  if (document.querySelector('#radius')) {
-    convertMilesToMetres(document.querySelector('#radius').dataset.radius);
+  if (document.querySelector('#radius') && document.querySelector('#radius').dataset.radius) {
+    return convertMilesToMetres(document.querySelector('#radius').dataset.radius);
   }
-  return true;
+  return false;
 };
 
 export const renderRadiusSelect = (renderOptions, isFirstRender) => {

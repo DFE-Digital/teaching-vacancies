@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { createHeadingMarkup } from './heading';
 import { addJobAlertMarkup, getJobAlertLink, removeJobAlertMarkup } from './alert';
 
@@ -60,5 +61,20 @@ export const templates = {
 </dl>
 </article>
 `,
-  empty: '<h4 class="govuk-heading-m">Try another search</h4><ul class="govuk-list govuk-list--bullet"><li>with different keywords</li><li>and/or a wider radius</li></ul>',
+  empty: `<div class="divider-bottom">
+<p class="govuk-heading-m">Try another search j</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>with different keywords</li>
+<li>and/or a wider radius</li>
+</ul>
+</div>
+<span class="govuk-heading-m">
+Or <a href="/subscriptions/new?search_criteria%5Blocation%5D=&amp;search_criteria%5Bradius%5D=10" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed
+</span>
+<p class="govuk-!-margin-1">Subscribers</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>get an email when new jobs match their search j</li>
+<li>can unsubscribe at any time</li>
+<li>receive no more than 1 email a day</li>
+</ul>`,
 };

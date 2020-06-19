@@ -238,11 +238,10 @@ en:
         one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
         other: <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
     no_jobs:
-      intro: 'You might find matching jobs by:'
+      intro: 'Try another search'
       suggestions:
-        - 'increasing the search radius'
-        - 'using less specific search terms'
-        - 'using fewer search terms or filters'
+        - 'with different keywords'
+        - 'and/or a wider radius'
     none_listed:
       - 'This may be because this isn’t a busy period in the teacher recruitment cycle.'
       - 'Schools have listed %{count} jobs but they have since expired.'
@@ -543,9 +542,16 @@ en:
       pupils: 'pupil'
     view_ofsted_report: 'View Ofsted report'
   subscriptions:
+    benefits:
+      title: Subscribers
+      list:
+        - get an email when new jobs match their search
+        - can unsubscribe at any time
+        - receive no more than 1 email a day
     link:
       text: 'Receive a job alert'
       help_text: 'whenever a job matching this search is published'
+      no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed'
     intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     new:
       page_description: Sign up for a job alert

@@ -23,10 +23,18 @@
             = render partial: 'vacancy', locals: { vacancy: vacancy }
 
       - elsif @vacancies.user_search?
-        %p
-          = t('jobs.no_jobs.intro')
+        .divider-bottom
+          %p.govuk-heading-m
+            = t('jobs.no_jobs.intro')
+            %ul.govuk-list.govuk-list--bullet
+              - t('jobs.no_jobs.suggestions').each do |list_item|
+                %li= list_item
+        %span.govuk-heading-m
+          = t('subscriptions.link.no_search_results_html', link_href: new_subscription_path(search_criteria: @vacancies_search.only_active_to_hash), class: 'govuk-link', id: 'job-alert-link-search')
+        %p{ class: 'govuk-!-margin-1' }
+          = t('subscriptions.benefits.title')
           %ul.govuk-list.govuk-list--bullet
-            - t('jobs.no_jobs.suggestions').each do |list_item|
+            - t('subscriptions.benefits.list').each do |list_item|
               %li= list_item
 
       - else
