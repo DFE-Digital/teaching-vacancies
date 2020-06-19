@@ -71,7 +71,7 @@ export const templates = {
 <span class="govuk-heading-m">
 Or <a href="/subscriptions/new?search_criteria%5Blocation%5D=&amp;search_criteria%5Bradius%5D=10" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed
 </span>
-<p>Subscribers</p>
+<p class="govuk-!-margin-1">Subscribers</p>
 <ul class="govuk-list govuk-list--bullet">
 <li>get an email when new jobs match their search j</li>
 <li>can unsubscribe at any time</li>

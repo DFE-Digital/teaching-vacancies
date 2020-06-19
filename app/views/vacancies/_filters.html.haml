@@ -11,7 +11,7 @@
 
     .govuk-form-group.govuk-inset-text#location-radius-select
       = label_tag 'radius', t('jobs.filters.within_radius'), class: 'govuk-label'
-      = select_tag 'radius', options_for_select(radius_filter_options, @vacancies_search.radius), disabled: @vacancies_search.disable_radius?, class: 'govuk-select govuk-!-width-full', 'data-radius': 10
+      = select_tag 'radius', options_for_select(radius_filter_options, @vacancies_search.radius), disabled: @vacancies_search.disable_radius?, class: 'govuk-select govuk-!-width-full', data: { radius: 10 }
 
     = hidden_field_tag :jobs_sort, @vacancies_search.sort_by
 

@@ -1,7 +1,7 @@
 import { getRadius } from './radius';
 
 describe('getRadius', () => {
-  test('to be true when radius data attribute is present', () => {
+  test('to be truthy when radius data attribute is present', () => {
     document.body.innerHTML = `<select name="radius" id="radius" data-radius="10"><option value="1">1 mile</option>
     <option value="5">5 miles</option>
 </select>`;
