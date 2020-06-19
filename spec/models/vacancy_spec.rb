@@ -6,6 +6,23 @@ RSpec.describe Vacancy, type: :model do
   it { should have_many(:documents) }
 
   context 'indexing for search' do
+    describe '#update_index!' do
+      it { should have_db_column(:initially_indexed) }
+      it { should have_db_index(:initially_indexed) }
+
+      it 'indexes `live` records where `initially_indexed == false`' do
+        allow(described_class).to receive_message_chain('unindexed.update_all').with({ initially_indexed: true })
+        expect(described_class).to receive_message_chain('unindexed.algolia_reindex!')
+        described_class.update_index!
+      end
+
+      it 'flags indexed records as `initially_indexed = true`' do
+        allow(described_class).to receive_message_chain('unindexed.algolia_reindex!')
+        expect(described_class).to receive_message_chain('unindexed.update_all').with({ initially_indexed: true })
+        described_class.update_index!
+      end
+    end
+
     describe '#reindex!' do
       it 'is overridden so that it only indexes vacancies scoped as `live`' do
         expect(described_class).to receive_message_chain('live.algolia_reindex!')

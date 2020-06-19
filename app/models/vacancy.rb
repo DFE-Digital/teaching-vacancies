@@ -62,6 +62,18 @@ class Vacancy < ApplicationRecord
     live.algolia_reindex
   end
 
+  # This is the main method you should use most of the time when bulk-adding new records to the algolia index. It will
+  # not use any additional operations checking records that have been indexed once. NOTE: if a record has been indexed
+  # already and it is updated with new or additional information, the `auto_index: true` will do the work of keeping the
+  # changes in sync with the algolia index. This method is solely for preventing us paying for unnecessary usage when
+  # adding records that have become `live` since the last time it was run.
+  def self.update_index!
+    unindexed.algolia_reindex!
+    # rubocop:disable Rails/SkipsModelValidations
+    unindexed.update_all(initially_indexed: true)
+    # rubocop:enable Rails/SkipsModelValidations
+  end
+
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/LineLength
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
@@ -202,16 +214,15 @@ class Vacancy < ApplicationRecord
   acts_as_gov_uk_date :starts_on, :publish_on,
     :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
+  scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
   scope :applicable_by_time, (-> { where('expiry_time IS NOT NULL AND expiry_time >= ?', Time.zone.now) })
   scope :applicable_by_date, (-> { where('expiry_time IS NULL AND expires_on >= ?', Time.zone.today) })
-  scope :active, (-> { where(status: %i[published draft]) })
-  scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
-  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
-  scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
+  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
   scope :expired, (-> { expired_by_time.or(expired_by_date) })
   scope :expired_by_time, (-> { published.where('expiry_time IS NOT NULL AND expiry_time < ?', Time.zone.now) })
   scope :expired_by_date, (-> { published.where('expiry_time IS NULL AND expires_on < ?', Time.zone.today) })
+  scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
   scope :live, (-> { live_by_date.or(live_by_time) })
   scope :live_by_time, (lambda {
     published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
@@ -221,7 +232,9 @@ class Vacancy < ApplicationRecord
     published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
                     Time.zone.today, Time.zone.today)
   })
-  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
+  scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
+  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+  scope :unindexed, (-> { live.where(initially_indexed: false) })
 
   paginates_per 10
 
