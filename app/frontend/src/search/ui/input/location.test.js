@@ -9,10 +9,14 @@ jest.mock('./radius');
 
 describe('location search box', () => {
   const client = {};
-  let performSearch = null;
+  let performSearch = null; let setPage = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
+
+    client.helper = jest.fn();
+    client.helper.setPage = jest.fn();
+    setPage = jest.spyOn(client.helper, 'setPage');
 
     client.refresh = jest.fn();
     performSearch = jest.spyOn(client, 'refresh');
@@ -34,12 +38,14 @@ describe('location search box', () => {
   describe('onSubmit getGeolocatedCoordinates', () => {
     test('is called once if location provided that is not in predefined list', () => {
       onSubmit('harlow', locations, client);
+      expect(setPage).toHaveBeenNthCalledWith(1, 0);
       expect(getGeolocatedCoordinates).toHaveBeenCalledTimes(1);
       expect(getGeolocatedCoordinates).toHaveBeenCalledWith('harlow');
     });
 
     test('is called once if location is detected to be a postcode', () => {
       onSubmit('w12 8qt', locations, client);
+      expect(setPage).toHaveBeenNthCalledWith(1, 0);
       expect(getGeolocatedCoordinates).toHaveBeenCalledTimes(1);
       expect(getGeolocatedCoordinates).toHaveBeenCalledWith('w12 8qt');
     });
@@ -48,6 +54,7 @@ describe('location search box', () => {
   describe('onSubmit getGeolocatedCoordinates', () => {
     test('does not get called if location supplied that exists in predefined list and radius disabled', () => {
       onSubmit('london', locations, client);
+      expect(setPage).toHaveBeenNthCalledWith(1, 0);
       expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
       expect(getGeolocatedCoordinates).not.toHaveBeenCalled();
     });

@@ -40,7 +40,9 @@ export const onSearch = (helper) => {
 
   helper.setState(getNewState(helper.state, { filters: getFilters() }));
 
-  return helper.setPage(page).search();
+  helper.setPage(page);
+
+  return helper.search();
 };
 
 export const index = (indexName) => search.initIndex(indexName);
