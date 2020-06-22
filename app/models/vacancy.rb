@@ -47,7 +47,7 @@ class Vacancy < ApplicationRecord
   # model.
   #
   # To illustrate: if you run the unmodified `Vacancy.reindex!` on a recent (2020-06-18) production dataset you will
-  # consume more than 30,000 operations on the Alogolia app. This occurs because it looks up each of the 30,000+
+  # consume more than 30,000 operations on the Algolia app. This occurs because it looks up each of the 30,000+
   # expired/unpublished records before it applies the `:listed?` filter. It only indexes about 470 records. I am not
   # 100% certain, but it seems this is done so it can remove records that should not be in the index according to the
   # filter.
@@ -60,6 +60,12 @@ class Vacancy < ApplicationRecord
 
   def self.reindex
     live.algolia_reindex
+  end
+
+  # This is intended as a one-shot method used in conjuntion with `algolia_index...if: :listed?` to clear ununsed
+  # records from the production db. It should be deleted after it is successfully run.
+  def self.full_reindex!
+    algolia_reindex!
   end
 
   # This is the main method you should use most of the time when bulk-adding new records to the algolia index. It will
