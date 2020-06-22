@@ -28,6 +28,11 @@ submit_performance_platform:
   class: 'SubmitPerformancePlatformJob'
   queue: submit_performance_platform
 
+update_algolia_index:
+  cron: '*/5 * * * *'
+  class: 'UpdateAlgoliaIndex'
+  queue: update_algolia_index
+
 update_dsi_users:
   cron: '0 0 * * *'
   class: 'UpdateDfeSignInUsersJob'
