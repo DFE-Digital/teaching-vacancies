@@ -1,105 +1,93 @@
-ul.pagination {
-
-  text-align: center;
+.pagination {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
 
   li {
     display: inline-block;
-
-    &.current,
-    a,
-    span {
-      @include govuk-font(19, $weight: bold);
-      color: govuk-colour('blue');
-      display: inline-block;
-      margin-right: 15px;
-      padding: 15px 5px 10px;
-      text-decoration: none;
-
-      &:focus {
-        outline: 0;
-      }
-
-      &.current {
-        color: $govuk-text-colour;
-      }
-    }
-
-    &.active a,
-    &.active a:hover {
-      color: govuk-colour('black');
-    }
   }
-}
 
-.padding {
-  padding-left: 15px;
-}
+  a,
+  span {
+    @include govuk-font(19);
+    color: govuk-colour('blue');
+    text-decoration: none;
 
-.pagination {
-  padding: 0;
-}
+  }
 
-.pagination__item {
-  display: inline-block;
-  list-style: none;
+  .pagination__item {
+    @include govuk-font(19);
+    border: 3px solid transparent;
+    color: govuk-colour('blue');
+    display: inline-block;
+    min-width: 25px;
+    padding: 2px;
+    text-align: center;
+    text-decoration: none;
 
-  &.current {
-    @include govuk-font(19, $weight: bold);
-    border-style: none;
-    color: $govuk-text-colour;
-    cursor: default;
-    pointer-events: none;
+    &.current {
+      @include govuk-font(19, $weight: bold);
+      color: $govuk-text-colour;
+      height: 25px;
+    }
 
-    &:hover,
+    &:hover {
+      border: 3px solid $govuk-focus-colour;
+    }
+
     &:focus {
-      background: none;
+      background: $govuk-focus-colour;
+      border-bottom: solid govuk-colour('black');
       color: $govuk-text-colour;
     }
   }
-}
 
-.pagination__link {
-  display: block;
-  padding: 5px 10px;
-  text-decoration: none;
-  //border: 1px solid $border-colour;
-
-  &:hover,
-  &:focus {
-    background: govuk-colour('light-grey');
-    outline: 3px solid $govuk-focus-colour;
+  .pagination--prev::before,
+  .pagination--next::after {
+    background: transparent;
+    border-style: solid;
+    color: govuk-colour('black');
+    content: '';
+    display: inline-block;
+    height: 10px;
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    width: 10px;
   }
-}
 
-.pagination__summary {
-  padding: 8px 0;
-
-  @media (min-width: 642px) {
-    float: right;
+  .pagination--prev::before {
+    border-width: 3px 0 0 3px;
+    margin-right: govuk-spacing(1);
   }
-}
 
-#pagination-hits {
-  display: inline-block;
-  margin-left: 16rem;
+  .pagination--next::after {
+    border-width: 0 3px 3px 0;
+    margin-left: govuk-spacing(1);
+  }
 
-  @media (max-width: 1019px) {
+  .pagination__link {
     display: block;
-    margin-left: 0;
+    padding: 5px 10px;
+    text-decoration: none;
   }
 }
 
 .pagination-results {
+  display: inline-block;
+}
+
+.pagination-and-stats {
   #vacancies-stats-bottom {
-    display: block;
     margin-bottom: 0;
     margin-top: 1rem;
-    text-align: left;
 
     @media (min-width: 1020px) {
       float: right;
-      margin-top: 1.9rem;
+      margin-left: 0.5rem;
+      margin-top: 0.25rem;
     }
   }
 }
-

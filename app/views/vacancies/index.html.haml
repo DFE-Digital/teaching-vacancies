@@ -42,6 +42,7 @@
           - t('jobs.none_listed', count: Vacancy.listed.count).each do |sentence|
             %p= sentence
 
-.pagination-results
-  = paginate @vacancies_search.vacancies
-  %p.govuk-body#vacancies-stats-bottom{ 'aria-label': 'Number of results' }
+    .pagination-and-stats
+      .pagination-results
+        = paginate @vacancies_search.vacancies
+      %p.govuk-body#vacancies-stats-bottom{ 'aria-label': 'Number of results' }
