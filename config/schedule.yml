@@ -3,16 +3,6 @@ daily_alerts:
   class: 'SendDailyAlertEmailJob'
   queue: queue_daily_alerts
 
-import_school_data:
-  cron: '0 07 * * *'
-  class: 'UpdateSchoolsDataFromSourceJob'
-  queue: import_school_data
-
-update_dsi_users:
-  cron: '0 0 * * *'
-  class: 'UpdateDfeSignInUsersJob'
-  queue: update_dsi_users_in_db
-
 export_dsi_users:
   cron: '0 01 * * *'
   class: 'ExportDsiUsersToBigQueryJob'
@@ -23,6 +13,11 @@ export_tables:
   class: 'ExportTablesToBigQueryJob'
   queue: export_tables
 
+import_school_data:
+  cron: '0 07 * * *'
+  class: 'UpdateSchoolsDataFromSourceJob'
+  queue: import_school_data
+
 reset_sessions:
   cron: '0 02 * * *'
   class: 'ResetSessionsJob'
@@ -32,3 +27,8 @@ submit_performance_platform:
   cron: '0 04 * * *'
   class: 'SubmitPerformancePlatformJob'
   queue: submit_performance_platform
+
+update_dsi_users:
+  cron: '0 0 * * *'
+  class: 'UpdateDfeSignInUsersJob'
+  queue: update_dsi_users_in_db
