@@ -3,7 +3,8 @@ import 'regenerator-runtime/runtime';
 import '../polyfill/classlist.polyfill';
 
 import {
-  connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
+  connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
+  connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats,
 } from 'instantsearch.js/es/connectors';
 import { hits, configure } from 'instantsearch.js/es/widgets';
 
@@ -28,7 +29,6 @@ const SEARCH_THRESHOLD = 3;
 const searchClientInstance = searchClient(ALGOLIA_INDEX);
 
 const searchBox = connectSearchBox(renderSearchBox);
-const autocomplete = connectAutocomplete(renderAutocomplete);
 const heading = connectHits(renderContent);
 const sortBy = connectSortBy(renderSortSelectInput);
 const pagination = connectPagination(renderPagination);
@@ -63,15 +63,6 @@ const keywordSearchBox = searchBox({
 searchClientInstance.addWidgets([
   configure({
     hitsPerPage: 10,
-  }),
-  autocomplete({
-    container: document.querySelector('#location-search'),
-    input: document.querySelector('#location'),
-    dataset: locations,
-    threshold: SEARCH_THRESHOLD,
-    onSelection: (value) => {
-      updateUrlQueryParams('location', value, window.location.href);
-    },
   }),
   locationSearchBox,
   keywordSearchBox,
@@ -125,4 +116,14 @@ document.querySelector('.filters-form').addEventListener('submit', (e) => {
   if (!searchClientInstance.started) {
     searchClientInstance.start();
   }
+});
+
+renderAutocomplete({
+  container: document.querySelector('#location-search'),
+  input: document.querySelector('#location'),
+  dataset: locations,
+  threshold: SEARCH_THRESHOLD,
+  onSelection: (value) => {
+    updateUrlQueryParams('location', value, window.location.href);
+  },
 });

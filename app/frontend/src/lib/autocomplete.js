@@ -1,7 +1,6 @@
 import { create, hide, show } from './autocomplete.view';
 
-export const renderAutocomplete = (renderOptions) => {
-    const { widgetParams } = renderOptions;
+export const renderAutocomplete = (widgetParams) => {
 
     create(widgetParams.container, widgetParams.input, widgetParams.onSelection);
 
