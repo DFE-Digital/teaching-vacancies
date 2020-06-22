@@ -1,6 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '../polyfill/classlist.polyfill';
+import '../polyfill/remove.polyfill';
 
 import {
   connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
@@ -12,13 +13,13 @@ import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
 import { templates, renderContent } from './ui/hits';
-import { onSubmit as locationSubmit, getCoords, shouldNotGeocode } from './ui/input/location';
+import { onSubmit as locationSubmit, getCoords } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelectInput } from './ui/sort';
 import { renderPagination } from './ui/pagination';
 import { renderStats } from './ui/stats';
-import { enableRadiusSelect, disableRadiusSelect, renderRadiusSelect } from './ui/input/radius';
+import { disableRadiusSelect, renderRadiusSelect } from './ui/input/radius';
 import { locations } from './data/locations';
 import { updateUrlQueryParams, setDataAttribute } from '../lib/utils';
 import { enableSubmitButton } from './ui/form';
@@ -125,13 +126,20 @@ if (document.querySelector('#pagination-hits')) {
 }
 
 // Initialise Algolia client
-document.querySelector('.filters-form input[type="submit"]').addEventListener('click', (event) => {
+document.querySelector('.filters-form input[type="submit"]').addEventListener('click', () => {
   if (!searchClientInstance.started) {
-    searchClientInstance.start();
-  }
+    const jobSortSelect = document.getElementById('jobs_sort_select');
+    const jobSortSubmitButton = document.getElementById('submit_job_sort');
 
-  if (!shouldNotGeocode(event.target.value, locations)) {
-    enableRadiusSelect();
+    if (jobSortSubmitButton) {
+      jobSortSubmitButton.remove();
+    }
+
+    if (jobSortSelect) {
+      jobSortSelect.remove();
+    }
+
+    searchClientInstance.start();
   }
 });
 
