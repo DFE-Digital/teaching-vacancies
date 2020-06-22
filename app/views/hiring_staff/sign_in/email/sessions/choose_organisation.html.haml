@@ -1,13 +1,12 @@
-- content_for :page_title_prefix do
-  = t('hiring_staff.temp_login.choose_organisation.page_title')
+- content_for :page_title_prefix, t('hiring_staff.temp_login.choose_organisation.page_title')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - if @reason_for_failing_sign_in
-      .govuk-info-summary{ aria: { labelledby: "govuk-info-summary__title" }, role: "alert", tabindex: "-1" }
-        %h2.govuk-info-summary__title
+      .govuk-notification.govuk-notification--notice{ aria: { labelledby: "govuk-notification__title" }, role: "alert", tabindex: "-1" }
+        %h2.govuk-notification__title
           =t('hiring_staff.temp_login.choose_organisation.denial.title')
-        .govuk-info-summary__body
+        .govuk-notification__body
           =t("hiring_staff.temp_login.choose_organisation.denial.#{@reason_for_failing_sign_in}_html",
             try_again: (link_to 'try again', new_identifications_path, class: 'govuk-link'))
     - else

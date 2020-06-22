@@ -35,11 +35,12 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   end
 
   def choose_organisation
+    # This flow needs to be adapted when we have implemented school groups/trusts/LAs
+    # It is likely that we will not sign in Trust users as a school.
     information = GetInformationFromLoginKey.new(get_key)
     @reason_for_failing_sign_in, @schools = information.reason_for_failing_sign_in, information.schools
     update_session_without_urn(information.details_to_update_in_session)
     redirect_to auth_email_create_session_path(urn: @schools.first.urn) if @schools&.one?
-    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
   end
 
   private

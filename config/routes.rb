@@ -54,10 +54,10 @@ Rails.application.routes.draw do
 
   # DfE Sign In
   resource :sessions,
-          only: %i[create new],
-          as: :dfe,
-          path: '/dfe/sessions',
-          controller: 'hiring_staff/sign_in/dfe/sessions'
+            only: %i[create new],
+            as: :dfe,
+            path: '/dfe/sessions',
+            controller: 'hiring_staff/sign_in/dfe/sessions'
 
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
   get '/auth/dfe/signout', to: 'hiring_staff/sign_in/dfe/sessions#destroy'

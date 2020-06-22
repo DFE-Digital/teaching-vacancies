@@ -3,7 +3,7 @@ class GetInformationFromLoginKey
 
   def initialize(key)
     @key = key
-    @key && !@key.expired? ? process_key : set_reason_for_failing_sign_in
+    @key && !@key.expired? ? process_key : deny_sign_in
   end
 
   def details_to_update_in_session
@@ -13,7 +13,7 @@ class GetInformationFromLoginKey
 
   private
 
-  def set_reason_for_failing_sign_in
+  def deny_sign_in
     if @key&.expired?
       @reason_for_failing_sign_in = 'expired'
     else
@@ -22,10 +22,9 @@ class GetInformationFromLoginKey
   end
 
   def process_key
-    @user = @key.user_id ? User.find(@key.user_id) : nil
-    @key.destroy
+    @user = get_user
     @schools = get_schools
-    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
+    @key.destroy
     @reason_for_failing_sign_in = 'no_orgs' if @schools.empty?
   end
 
@@ -36,6 +35,10 @@ class GetInformationFromLoginKey
       scratch.push SchoolPresenter.new(school_query.first) unless school_query.empty?
     end
     scratch.sort_by { |school| school.name }
+  end
+
+  def get_user
+    @key.user_id ? User.find(@key.user_id) : nil
   end
 
   def has_multiple_schools
