@@ -65,7 +65,7 @@ describe('onSearch', () => {
     getPage.mockReturnValue(0);
     getCoords.mockReturnValue('51.7687925059338, 0.09572273060949459');
     getFilters.mockReturnValue('filters');
-    getRadius.mockReturnValue(undefined);
+    getRadius.mockReturnValue(false);
 
     onSearch(helper);
     expect(getPage).toHaveBeenCalledTimes(1);
@@ -85,7 +85,7 @@ describe('onSearch', () => {
     getPage.mockReturnValue(0);
     getCoords.mockReturnValue(undefined);
     getFilters.mockReturnValue('filters');
-    getRadius.mockReturnValue(undefined);
+    getRadius.mockReturnValue(false);
 
     onSearch(helper);
     expect(getPage).toHaveBeenCalledTimes(1);

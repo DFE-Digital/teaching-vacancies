@@ -12,13 +12,13 @@ import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
 import { templates, renderContent } from './ui/hits';
-import { onSubmit as locationSubmit } from './ui/input/location';
+import { onSubmit as locationSubmit, getCoords, shouldNotGeocode } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelectInput } from './ui/sort';
 import { renderPagination } from './ui/pagination';
 import { renderStats } from './ui/stats';
-import { renderRadiusSelect } from './ui/input/radius';
+import { enableRadiusSelect, disableRadiusSelect, renderRadiusSelect } from './ui/input/radius';
 import { locations } from './data/locations';
 import { updateUrlQueryParams, setDataAttribute } from '../lib/utils';
 import { enableSubmitButton } from './ui/form';
@@ -111,13 +111,35 @@ searchClientInstance.addWidgets([
   }),
 ]);
 
-document.querySelector('.filters-form').addEventListener('submit', (e) => {
-  e.preventDefault();
+if (document.querySelector('#pagination-hits')) {
+  searchClientInstance.addWidgets([
+    pagination({
+      container: '#pagination-hits',
+      cssClasses: {
+        list: ['pagination'],
+        item: 'pagination__item',
+        selectedItem: 'active',
+      },
+    }),
+  ]);
+}
+
+// Initialise Algolia client
+document.querySelector('.filters-form input[type="submit"]').addEventListener('click', (event) => {
   if (!searchClientInstance.started) {
     searchClientInstance.start();
   }
+
+  if (!shouldNotGeocode(event.target.value, locations)) {
+    enableRadiusSelect();
+  }
 });
 
+if (!getCoords()) {
+  disableRadiusSelect();
+}
+
+// Initialise custom autcomplete
 renderAutocomplete({
   container: document.querySelector('#location-search'),
   input: document.querySelector('#location'),

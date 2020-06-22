@@ -67,11 +67,11 @@ describe('Radius select', () => {
       disableRadiusSelectMock = jest.spyOn(radiusSelect, 'disableRadiusSelect');
     });
 
-    test('disables radius select on first render', () => {
+    test('does not disable radius select on first render', () => {
       radiusSelect.renderRadiusSelect({
         widgetParams: radiusSelectParams,
       }, true);
-      expect(disableRadiusSelectMock).toHaveBeenCalledTimes(1);
+      expect(disableRadiusSelectMock).not.toHaveBeenCalled();
     });
 
     test('does not disable radius select on susequent renders', () => {

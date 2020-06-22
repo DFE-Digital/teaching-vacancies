@@ -18,5 +18,5 @@ export const createHeadingMarkup = (options) => {
   const searchTermsHTML = `${getSearchTermsPrefix(location, keyword, count)}${createHeadingHTMLForSearchTerm('', keyword, false)} ${createHeadingHTMLForSearchTerm('near', location, true)}`;
   const countHTML = keyword || location ? `<span class="govuk-!-font-weight-bold">${count}</span>` : `There ${count > 1 ? 'are' : 'is'} <span class="govuk-!-font-weight-bold">${count}</span>`;
 
-  return `${countHTML} ${count > 1 ? 'jobs' : 'job'} ${searchTermsHTML}`;
+  return `${countHTML} ${count === 1 ? 'job' : 'jobs'} ${searchTermsHTML}`;
 };
