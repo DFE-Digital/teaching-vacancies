@@ -42,10 +42,6 @@ const locationSearchBox = searchBox({
   inputElement: document.getElementById('location'),
   key: 'location',
   autofocus: true,
-  queryHook(query, search) {
-    updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href);
-    search(query);
-  },
   onSubmit: (query) => locationSubmit(query, locations, searchClientInstance),
 });
 
@@ -54,10 +50,6 @@ const keywordSearchBox = searchBox({
   inputElement: document.getElementById('keyword'),
   key: 'keyword',
   autofocus: true,
-  queryHook(query, search) {
-    updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
-    search(query);
-  },
   onSubmit: () => keywordSubmit(searchClientInstance),
 });
 
