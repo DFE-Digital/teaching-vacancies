@@ -25,4 +25,9 @@ export const geocodeSuccess = (coords, client) => {
   }
 };
 
-export const getCoords = () => document.querySelector('#location').dataset.coordinates;
+export const getCoords = () => {
+  if (document.querySelector('#location').dataset.coordinates) {
+    return document.querySelector('#location').dataset.coordinates.split(' ').join(',');
+  }
+  return false;
+};

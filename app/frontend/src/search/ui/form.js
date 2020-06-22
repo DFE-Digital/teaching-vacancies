@@ -6,7 +6,7 @@ export const enableSubmitButton = (container) => {
 };
 
 export const setGeocodeAttributes = (coords) => {
-  setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat}, ${coords.lng}`);
+  setDataAttribute(document.querySelector('#location'), 'coordinates', `${coords.lat} ${coords.lng}`);
 
   if (document.querySelector('#radius')) {
     setDataAttribute(document.querySelector('#radius'), 'radius', document.querySelector('#radius').value || 10);

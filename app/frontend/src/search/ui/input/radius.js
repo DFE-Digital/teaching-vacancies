@@ -34,8 +34,17 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
     widgetParams.inputElement.addEventListener('change', (event) => {
       widgetParams.onSelection(event.target.value);
     });
-    disableRadiusSelect();
+    radiusSelect.disableRadiusSelect();
   }
 
   return query ? updateUrlQueryParams(widgetParams.key, query) : false;
 };
+
+const radiusSelect = {
+  getRadius,
+  enableRadiusSelect,
+  disableRadiusSelect,
+  renderRadiusSelect,
+};
+
+export default radiusSelect;
