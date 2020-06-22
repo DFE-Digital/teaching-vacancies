@@ -3,7 +3,7 @@ require 'geocoding'
 class VacancyAlgoliaSearchBuilder
   include ActiveModel::Model
 
-  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats,
+  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats, :coordinates,
                 :search_query, :location_filter, :search_replica, :search_filter,
                 :vacancies
 
@@ -42,6 +42,7 @@ class VacancyAlgoliaSearchBuilder
       vacancies.raw_answer['hitsPerPage'],
       vacancies.raw_answer['nbHits']
     )
+    self.coordinates = location_filter[:coordinates]
   end
 
   def to_hash
@@ -49,6 +50,7 @@ class VacancyAlgoliaSearchBuilder
       keyword: keyword,
       location_category: location_category,
       location: location,
+      coordinates: location_filter[:coordinates],
       radius: radius,
       jobs_sort: sort_by
     }

@@ -3,7 +3,7 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :searched, :total_count
+  attr_reader :searched, :total_count, :coordinates
   alias_method :user_search?, :searched
 
   CSV_ATTRIBUTES = %w[title description salary jobBenefits datePosted educationRequirements qualifications
@@ -11,7 +11,7 @@ class VacanciesPresenter < BasePresenter
                       jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
-  def initialize(vacancies, searched:, total_count:)
+  def initialize(vacancies, searched:, total_count:, coordinates:)
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
     @total_count = total_count
