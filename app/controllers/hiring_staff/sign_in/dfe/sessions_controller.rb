@@ -4,6 +4,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
   skip_before_action :check_session, only: %i[create new]
   skip_before_action :check_terms_and_conditions, only: %i[create new destroy]
   skip_before_action :verify_authenticity_token, only: %i[create new destroy]
+  before_action :redirect_for_fallback_authentication, only: %i[create new]
 
   def new
     # This is defined by the class name of our Omniauth strategy
@@ -82,7 +83,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
     end
   end
 
-  def check_flag
+  def redirect_for_fallback_authentication
     redirect_to new_auth_email_path if AuthenticationFallback.enabled?
   end
 end

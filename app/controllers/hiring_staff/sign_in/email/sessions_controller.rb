@@ -6,7 +6,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
 
   before_action :redirect_signed_in_users,
     only: %i[new create check_your_email choose_organisation]
-  before_action :check_flag,
+  before_action :redirect_for_dsi_authentication,
     only: %i[new create check_your_email change_organisation choose_organisation]
 
   def new; end
@@ -96,7 +96,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     user.emergency_login_keys.create(not_valid_after: Time.zone.now + EMERGENCY_LOGIN_KEY_DURATION)
   end
 
-  def check_flag
+  def redirect_for_dsi_authentication
     redirect_to new_identifications_path unless AuthenticationFallback.enabled?
   end
 end
