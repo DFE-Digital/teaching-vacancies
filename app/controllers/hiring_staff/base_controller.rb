@@ -17,7 +17,7 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_session
-    redirect_to sign_in_path unless session.key?(:urn)
+    redirect_to new_identifications_path unless session.key?(:urn)
   end
 
   def check_terms_and_conditions
@@ -52,10 +52,6 @@ class HiringStaff::BaseController < ApplicationController
     url = URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end")
     url.query = { post_logout_redirect_uri: auth_dfe_signout_url, id_token_hint: session[:id_token] }.to_query
     url.to_s
-  end
-
-  def sign_in_path
-    AuthenticationFallback.enabled? ? new_identifications_path : new_auth_email_path
   end
 
   def redirect_signed_in_users
