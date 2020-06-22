@@ -35,50 +35,24 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   end
 
   def choose_organisation
-    key = get_key
-    if key&.expired?
-      @reason_for_denial = 'expired'
-    elsif key
-      user = key.user_id ? User.find(key.user_id) : nil
-      key.destroy
-      @schools = get_schools(user)
-      # TODO: include school_groups here when we have implemented school groups/trusts/LAs
-      @reason_for_denial = 'no_orgs' if @schools.empty?
-      update_session_without_urn(@schools.size > 1, user&.oid)
-      redirect_to auth_email_create_session_path(urn: @schools.first.urn) if @schools.size == 1
-    else
-      @reason_for_denial = 'no_key'
+    information = GetInformationFromLoginKey.new(get_key)
+    @reason_for_failing_sign_in, @schools = information.reason_for_failing_sign_in, information.schools
+    update_session_without_urn(information.details_to_update_in_session)
+    if @schools&.size == 1
+      redirect_to auth_email_create_session_path(urn: @schools.first.urn)
     end
+    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
   end
 
   private
 
-  def redirect_unauthorised_users
-    redirect_to new_auth_email_path unless user_authorised?
-  end
-
-  def user_authorised?
-    user = User.find_by(oid: session[:session_id]) rescue nil
-    user&.dsi_data&.dig('school_urns')&.include? get_urn
-    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
-  end
-
-  def update_session_without_urn(has_multiple_schools, oid)
-    return unless oid
+  def update_session_without_urn(options)
+    return unless options[:oid]
     session.update(
-      session_id: oid,
-      multiple_schools: has_multiple_schools
+      session_id: options[:oid],
+      multiple_schools: options[:has_multiple_schools]
     )
-    Rails.logger.warn("Hiring staff signed in via fallback authentication: #{oid}")
-  end
-
-  def get_schools(user)
-    schools = []
-    user&.dsi_data&.dig('school_urns')&.each do |urn|
-      school_query = School.where(urn: urn)
-      schools.push SchoolPresenter.new(school_query.first) unless school_query.empty?
-    end
-    schools.sort_by { |school| school.name }
+    Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
   end
 
   def get_urn
@@ -103,5 +77,15 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
 
   def redirect_for_dsi_authentication
     redirect_to new_identifications_path unless AuthenticationFallback.enabled?
+  end
+
+  def redirect_unauthorised_users
+    redirect_to new_auth_email_path unless user_authorised?
+  end
+
+  def user_authorised?
+    user = User.find_by(oid: session[:session_id]) rescue nil
+    user&.dsi_data&.dig('school_urns')&.include? get_urn
+    # TODO: include school_groups here when we have implemented school groups/trusts/LAs
   end
 end
