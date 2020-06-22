@@ -62,7 +62,7 @@ export const templates = {
 </article>
 `,
   empty: `<div class="divider-bottom">
-<p class="govuk-heading-m">Try another search j</p>
+<p class="govuk-heading-m">Try another search</p>
 <ul class="govuk-list govuk-list--bullet">
 <li>with different keywords</li>
 <li>and/or a wider radius</li>
@@ -73,7 +73,7 @@ Or <a href="/subscriptions/new?search_criteria%5Blocation%5D=&amp;search_criteri
 </span>
 <p class="govuk-!-margin-1">Subscribers</p>
 <ul class="govuk-list govuk-list--bullet">
-<li>get an email when new jobs match their search j</li>
+<li>get an email when new jobs match their search</li>
 <li>can unsubscribe at any time</li>
 <li>receive no more than 1 email a day</li>
 </ul>`,
