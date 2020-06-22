@@ -32,3 +32,8 @@ submit_performance_platform:
   cron: '0 04 * * *'
   class: 'SubmitPerformancePlatformJob'
   queue: submit_performance_platform
+
+clear_emergency_login_keys:
+  cron: '30 0 1 * *'
+  class: 'ClearEmergencyLoginKeysJob'
+  queue: clear_emergency_login_keys
