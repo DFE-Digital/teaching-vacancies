@@ -8,17 +8,18 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     only: %i[new create check_your_email choose_organisation]
   before_action :redirect_for_dsi_authentication,
     only: %i[new create check_your_email change_organisation choose_organisation]
+  before_action :redirect_unauthorised_users, only: %i[create]
 
   def new; end
 
   def create
-    redirect_to new_auth_email_path unless user_authorised?
     session.update(urn: get_urn)
     Rails.logger.info("Updated session with URN #{session[:urn]}")
     redirect_to school_path
   end
 
   def destroy
+    Rails.logger.info("Hiring staff clicked sign out via fallback authentication: #{session[:oid]}")
     end_session_and_redirect
   end
 
@@ -51,6 +52,10 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   end
 
   private
+
+  def redirect_unauthorised_users
+    redirect_to new_auth_email_path unless user_authorised?
+  end
 
   def user_authorised?
     user = User.find_by(oid: session[:session_id]) rescue nil
