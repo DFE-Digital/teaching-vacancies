@@ -38,9 +38,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     information = GetInformationFromLoginKey.new(get_key)
     @reason_for_failing_sign_in, @schools = information.reason_for_failing_sign_in, information.schools
     update_session_without_urn(information.details_to_update_in_session)
-    if @schools&.size == 1
-      redirect_to auth_email_create_session_path(urn: @schools.first.urn)
-    end
+    redirect_to auth_email_create_session_path(urn: @schools.first.urn) if @schools&.one?
     # TODO: include school_groups here when we have implemented school groups/trusts/LAs
   end
 

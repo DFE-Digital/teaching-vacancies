@@ -10,6 +10,6 @@ class HiringStaff::SignIn::BaseSessionsController < HiringStaff::BaseController
       flash_message = { success: I18n.t('messages.access.signed_out') }
     end
     session.destroy
-    redirect_to new_identifications_path, flash_message
+    redirect_to new_identifications_path, { notice: I18n.t("messages.access.#{notice_key}") }
   end
 end
