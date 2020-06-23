@@ -666,8 +666,8 @@ en:
       view:
         only_published: You can only view published jobs
     access:
-      signed_out_for_inactivity: You have been signed out due to inactivity
-      signed_out: You have been signed out
+      signed_out_for_inactivity: You have been signed out because you have been inactive for %{duration}
+      signed_out: You have signed out
     feedback:
       submitted: Your feedback has been successfully submitted
     subscriptions:

@@ -23,7 +23,8 @@ RSpec.feature 'Hiring staff session' do
       expect(page.current_url).to include CGI.escape(auth_dfe_signout_url)
       visit auth_dfe_signout_path
 
-      expect(page).to have_content(I18n.t('messages.access.signed_out_for_inactivity'))
+      expect(page).to have_content('signed out')
+      expect(page).to have_content('inactive')
     end
   end
 

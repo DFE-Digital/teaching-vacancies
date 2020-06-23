@@ -10,6 +10,7 @@ class HiringStaff::BaseController < ApplicationController
   helper_method :current_school
 
   include AuthenticationConcerns
+  include ActionView::Helpers::DateHelper
 
   def redirect_to_root_if_read_only
     redirect_to root_path if ReadOnlyFeature.enabled?
@@ -50,5 +51,9 @@ class HiringStaff::BaseController < ApplicationController
     url = URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end")
     url.query = { post_logout_redirect_uri: auth_dfe_signout_url, id_token_hint: session[:id_token] }.to_query
     url.to_s
+  end
+
+  def timeout_period_as_string
+    distance_of_time_in_words(TIMEOUT_PERIOD).gsub('about ', '')
   end
 end
