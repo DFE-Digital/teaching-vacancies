@@ -27,22 +27,12 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def call
-    self.vacancies = Vacancy.search(
-      search_query,
-      aroundLatLng: location_filter[:coordinates],
-      aroundRadius: location_filter[:radius],
-      replica: search_replica,
-      hitsPerPage: hits_per_page,
-      filters: search_filter,
-      page: page
-    )
+    self.vacancies = search
     self.stats = build_stats(
-      vacancies.raw_answer['page'],
-      vacancies.raw_answer['nbPages'],
-      vacancies.raw_answer['hitsPerPage'],
-      vacancies.raw_answer['nbHits']
+      vacancies.raw_answer['page'], vacancies.raw_answer['nbPages'],
+      vacancies.raw_answer['hitsPerPage'], vacancies.raw_answer['nbHits']
     )
-    set_coordinates(location_filter[:coordinates])
+    self.coordinates = location_filter[:coordinates]
   end
 
   def to_hash
@@ -50,7 +40,6 @@ class VacancyAlgoliaSearchBuilder
       keyword: keyword,
       location_category: location_category,
       location: location,
-      coordinates: location_filter[:coordinates],
       radius: radius,
       jobs_sort: sort_by
     }
@@ -98,8 +87,16 @@ class VacancyAlgoliaSearchBuilder
     build_search_replica
   end
 
-  def set_coordinates(coordinates)
-    self.coordinates = coordinates
+  def search
+    Vacancy.search(
+      search_query,
+      aroundLatLng: location_filter[:coordinates],
+      aroundRadius: location_filter[:radius],
+      replica: search_replica,
+      hitsPerPage: hits_per_page,
+      filters: search_filter,
+      page: page
+    )
   end
 
   def initialize_location(location_category, location, radius)
