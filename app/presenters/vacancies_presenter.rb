@@ -11,7 +11,7 @@ class VacanciesPresenter < BasePresenter
                       jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
                       hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
 
-  def initialize(vacancies, searched:, total_count:, coordinates:)
+  def initialize(vacancies, searched:, total_count:, coordinates: '')
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
     @total_count = total_count
