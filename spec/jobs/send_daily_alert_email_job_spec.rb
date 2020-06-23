@@ -70,42 +70,5 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
 
       job.vacancies_for_subscription(subscription)
     end
-
-    context 'subscription created before algolia' do
-      before(:each) do
-        @school = create(:school, :secondary, town: 'Abingdon', geolocation: Geocoder::DEFAULT_STUB_COORDINATES)
-
-        @draft_vacancy = create(:vacancy, :draft, job_title: 'English Teacher', subjects: ['English'])
-        @expired_vacancy = create(:vacancy, :expired, job_title: 'Drama Teacher', subjects: ['Drama'])
-
-        @valid_vacancy = create(
-          :vacancy, :published, job_title: 'Maths Teacher', subjects: ['Maths'], school: @school,
-          working_patterns: ['full_time'], job_roles: ['Suitable for NQTs'],
-          publish_on: Time.zone.today, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 2.hours
-        )
-
-        @invalid_vacancy = create(
-          :vacancy, :published, job_title: 'English Teacher', subjects: ['English'], school: @school,
-          working_patterns: ['part_time'], job_roles: ['Teacher'],
-          publish_on: Time.zone.today, expires_on: 5.days.from_now, expiry_time: Time.zone.now + 5.days + 2.hours
-        )
-      end
-
-      let(:search_criteria) do
-        {
-          subject: 'Maths',
-          job_title: 'Teacher',
-          working_patterns: ['full_time'],
-          phases: ['primary', 'secondary'],
-          newly_qualified_teacher: 'true'
-        }.to_json
-
-        it 'returns the matching vacancies' do
-          vacancies = job.vacancies_for_subscription(subscription)
-          expect(vacancies.count).to eql(1)
-          expect(vacancies[0].job_title).to eql('Maths Teacher')
-        end
-      end
-    end
   end
 end
