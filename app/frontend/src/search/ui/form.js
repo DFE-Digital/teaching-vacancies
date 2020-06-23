@@ -17,3 +17,11 @@ export const removeGeocodeAttributes = () => {
   removeDataAttribute(document.querySelector('#location'), 'coordinates');
   removeDataAttribute(document.querySelector('#radius'), 'radius');
 };
+
+export const setPolygonAttributes = (polygon) => {
+  setDataAttribute(document.querySelector('#location'), 'polygon', `${polygon}`);
+};
+
+export const removePolygonAttributes = () => {
+  removeDataAttribute(document.querySelector('#location'), 'polygon');
+};

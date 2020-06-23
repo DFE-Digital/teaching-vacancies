@@ -3,7 +3,7 @@ import instantsearch from 'instantsearch.js';
 
 import { getFilters, getQuery } from './query';
 import { getKeyword } from './ui/input/keyword';
-import { getCoords } from './ui/input/location';
+import { getCoords, getPolygon } from './ui/input/location';
 import { getRadius } from './ui/input/radius';
 
 // This is the public API key which can be safely used in your frontend code.
@@ -30,11 +30,19 @@ export const onSearch = (helper) => {
     helper.setState(getNewState(helper.state, { aroundLatLng: getCoords() }));
   }
 
+  if (getPolygon()) {
+    helper.setState(getNewState(helper.state, { insidePolygon: getPolygon() }));
+  }
+
   if (getRadius()) {
     helper.setState(getNewState(helper.state, { aroundRadius: getRadius() }));
-    helper.setQuery(getKeyword());
   } else {
     helper.setState(getNewState(helper.state, { aroundRadius: 'all' }));
+  }
+
+  if (getRadius() || getPolygon()) {
+    helper.setQuery(getKeyword());
+  } else {
     helper.setQuery(getQuery());
   }
 
