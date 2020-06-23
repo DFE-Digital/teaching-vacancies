@@ -3,9 +3,9 @@ import 'regenerator-runtime/runtime';
 import '../polyfill/classlist.polyfill';
 
 import {
-  connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu, connectStats,
+  connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
 } from 'instantsearch.js/es/connectors';
-import { hits, pagination, configure } from 'instantsearch.js/es/widgets';
+import { hits, configure } from 'instantsearch.js/es/widgets';
 
 import { searchClient } from './client';
 
@@ -14,7 +14,8 @@ import { templates, renderContent } from './ui/hits';
 import { onSubmit as locationSubmit } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
-import { renderSortSelect } from './ui/sort';
+import { renderSortSelectInput } from './ui/sort';
+import { renderPagination } from './ui/pagination';
 import { renderStats } from './ui/stats';
 import { renderRadiusSelect } from './ui/input/radius';
 import { locations } from './data/locations';
@@ -29,7 +30,8 @@ const searchClientInstance = searchClient(ALGOLIA_INDEX);
 const searchBox = connectSearchBox(renderSearchBox);
 const autocomplete = connectAutocomplete(renderAutocomplete);
 const heading = connectHits(renderContent);
-const sortBy = connectSortBy(renderSortSelect);
+const sortBy = connectSortBy(renderSortSelectInput);
+const pagination = connectPagination(renderPagination);
 const statsBottom = connectStats(renderStats);
 const statsTop = connectStats(renderStats);
 const locationRadius = connectMenu(renderRadiusSelect);
@@ -85,13 +87,18 @@ searchClientInstance.addWidgets([
   }),
   sortBy({
     container: document.querySelector('#jobs_sort_form'),
-    element: '#jobs_sort',
+    element: document.querySelector('#jobs_sort_select'),
     items: [
       { label: 'most relevant first', value: 'Vacancy' },
       { label: 'newest job listing', value: 'Vacancy_publish_on_desc' },
       { label: 'least time to apply', value: 'Vacancy_expiry_time_asc' },
       { label: 'most time to apply', value: 'Vacancy_expiry_time_desc' },
     ],
+  }),
+  pagination({
+    container: document.querySelector('.pagination-results'),
+    scrollTo: document.querySelector('#main-content'),
+    padding: 2,
   }),
   statsBottom({
     container: document.querySelector('#vacancies-stats-bottom'),
@@ -112,19 +119,6 @@ searchClientInstance.addWidgets([
     },
   }),
 ]);
-
-if (document.querySelector('#pagination-hits')) {
-  searchClientInstance.addWidgets([
-    pagination({
-      container: '#pagination-hits',
-      cssClasses: {
-        list: ['pagination'],
-        item: 'pagination__item',
-        selectedItem: 'active',
-      },
-    }),
-  ]);
-}
 
 document.querySelector('.filters-form').addEventListener('submit', (e) => {
   e.preventDefault();

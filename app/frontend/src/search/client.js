@@ -24,6 +24,8 @@ export const getNewState = (state, add) => {
 };
 
 export const onSearch = (helper) => {
+  const page = helper.getPage(); // subsequent setQuery calls reset the page to 0
+
   if (getCoords()) {
     helper.setState(getNewState(helper.state, { aroundLatLng: getCoords() }));
   }
@@ -37,6 +39,8 @@ export const onSearch = (helper) => {
   }
 
   helper.setState(getNewState(helper.state, { filters: getFilters() }));
+
+  helper.setPage(page);
 
   return helper.search();
 };

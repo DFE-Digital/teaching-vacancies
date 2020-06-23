@@ -3,6 +3,7 @@ import { enableRadiusSelect, disableRadiusSelect } from './radius';
 import { getGeolocatedCoordinates } from '../../../lib/api';
 
 export const onSubmit = (query, locations, client) => {
+  client.helper.setPage(0); // if the search input changes, the page should be reset to 0
   if (shouldNotGeocode(query, locations)) {
     disableRadiusSelect();
     removeGeocodeAttributes();

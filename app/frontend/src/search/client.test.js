@@ -39,11 +39,17 @@ jest.mock('./query');
 
 describe('onSearch', () => {
   const helper = {};
-  let performSearch = null; let setState = null; let
+  let getPage = null; let setPage = null; let performSearch = null; let setState = null; let
     setQuery = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
+
+    helper.getPage = jest.fn();
+    getPage = jest.spyOn(helper, 'getPage');
+
+    helper.setPage = jest.fn();
+    setPage = jest.spyOn(helper, 'setPage');
 
     helper.search = jest.fn();
     performSearch = jest.spyOn(helper, 'search');
@@ -56,11 +62,14 @@ describe('onSearch', () => {
   });
 
   test('search state is correctly set when coordinates of location present only', () => {
+    getPage.mockReturnValue(0);
     getCoords.mockReturnValue('51.7687925059338, 0.09572273060949459');
     getFilters.mockReturnValue('filters');
     getRadius.mockReturnValue(undefined);
 
     onSearch(helper);
+    expect(getPage).toHaveBeenCalledTimes(1);
+    expect(setPage).toHaveBeenNthCalledWith(1, 0);
     expect(getCoords).toHaveBeenCalledTimes(2);
     expect(performSearch).toHaveBeenCalledTimes(1);
 
@@ -73,11 +82,14 @@ describe('onSearch', () => {
   });
 
   test('search state is correctly set when no coordinates available', () => {
+    getPage.mockReturnValue(0);
     getCoords.mockReturnValue(undefined);
     getFilters.mockReturnValue('filters');
     getRadius.mockReturnValue(undefined);
 
     onSearch(helper);
+    expect(getPage).toHaveBeenCalledTimes(1);
+    expect(setPage).toHaveBeenNthCalledWith(1, 0);
     expect(getCoords).toHaveBeenCalledTimes(1);
     expect(performSearch).toHaveBeenCalledTimes(1);
 
@@ -89,12 +101,15 @@ describe('onSearch', () => {
   });
 
   test('search state is correctly set when coordinates available and radius given', () => {
+    getPage.mockReturnValue(0);
     getCoords.mockReturnValue('51.7687925059338, 0.09572273060949459');
     getFilters.mockReturnValue('filters');
     getRadius.mockReturnValue(10);
     getKeyword.mockReturnValue('physics');
 
     onSearch(helper);
+    expect(getPage).toHaveBeenCalledTimes(1);
+    expect(setPage).toHaveBeenNthCalledWith(1, 0);
     expect(getCoords).toHaveBeenCalledTimes(2);
     expect(performSearch).toHaveBeenCalledTimes(1);
 
@@ -107,11 +122,14 @@ describe('onSearch', () => {
   });
 
   test('interacts with instant search correctly', () => {
+    getPage.mockReturnValue(0);
     getCoords.mockReturnValue(undefined);
     getFilters.mockReturnValue('filters');
     getRadius.mockReturnValue(10);
 
     onSearch(helper);
+    expect(getPage).toHaveBeenCalledTimes(1);
+    expect(setPage).toHaveBeenNthCalledWith(1, 0);
     expect(getCoords).toHaveBeenCalledTimes(1);
     expect(performSearch).toHaveBeenCalledTimes(1);
 
