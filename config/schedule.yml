@@ -18,6 +18,11 @@ import_school_data:
   class: 'UpdateSchoolsDataFromSourceJob'
   queue: import_school_data
 
+remove_vacancies_that_expired_yesterday:
+  cron: '0 03 * * *'
+  class: 'RemoveVacanciesThatExpiredYesterday'
+  queue: remove_vacancies_that_expired_yesterday
+
 reset_sessions:
   cron: '0 02 * * *'
   class: 'ResetSessionsJob'

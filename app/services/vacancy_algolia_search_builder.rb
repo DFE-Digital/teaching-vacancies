@@ -14,6 +14,8 @@ class VacancyAlgoliaSearchBuilder
     self.keyword = params[:keyword]
 
     self.location_filter = {}
+    # Although we are no longer indexing expired and pending vacancies, we need to maintain this filter for now as
+    # expired vacancies only get removed from the index once a day.
     self.search_filter = 'listing_status:published AND '\
                          "publication_date_timestamp <= #{published_today_filter} AND "\
                          "expires_at_timestamp > #{expired_now_filter}"
