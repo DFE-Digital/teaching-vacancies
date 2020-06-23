@@ -42,7 +42,7 @@ class VacancyAlgoliaSearchBuilder
       vacancies.raw_answer['hitsPerPage'],
       vacancies.raw_answer['nbHits']
     )
-    self.coordinates = location_filter[:coordinates]
+    set_coordinates(location_filter[:coordinates])
   end
 
   def to_hash
@@ -96,6 +96,10 @@ class VacancyAlgoliaSearchBuilder
     build_search_query
     build_location_filter if location_category.blank?
     build_search_replica
+  end
+
+  def set_coordinates(coordinates)
+    self.coordinates = coordinates
   end
 
   def initialize_location(location_category, location, radius)

@@ -5,7 +5,6 @@ import '../polyfill/remove.polyfill';
 
 import {
   connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
-  connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats,
 } from 'instantsearch.js/es/connectors';
 import { hits, configure } from 'instantsearch.js/es/widgets';
 
@@ -104,33 +103,9 @@ searchClientInstance.addWidgets([
   }),
 ]);
 
-if (document.querySelector('#pagination-hits')) {
-  searchClientInstance.addWidgets([
-    pagination({
-      container: '#pagination-hits',
-      cssClasses: {
-        list: ['pagination'],
-        item: 'pagination__item',
-        selectedItem: 'active',
-      },
-    }),
-  ]);
-}
-
 // Initialise Algolia client
 document.querySelector('.filters-form input[type="submit"]').addEventListener('click', () => {
   if (!searchClientInstance.started) {
-    const jobSortSelect = document.getElementById('jobs_sort_select');
-    const jobSortSubmitButton = document.getElementById('submit_job_sort');
-
-    if (jobSortSubmitButton) {
-      jobSortSubmitButton.remove();
-    }
-
-    if (jobSortSelect) {
-      jobSortSelect.remove();
-    }
-
     searchClientInstance.start();
   }
 });
