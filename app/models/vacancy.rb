@@ -80,6 +80,13 @@ class Vacancy < ApplicationRecord
     # rubocop:enable Rails/SkipsModelValidations
   end
 
+  # I'm excluding expires_on from the where clause as expiry_time seems to be exactly tracking it-as expected.
+  # TODO: remove expires_on completely from the attributes and only use expiry_time. Ticket to follow.
+  def self.remove_vacancies_that_expired_yesterday!
+    expired_records = where('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
+    index.delete_objects(expired_records.map(&:id)) if expired_records.present?
+  end
+
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/LineLength
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do

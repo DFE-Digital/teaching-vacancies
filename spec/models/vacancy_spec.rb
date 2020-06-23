@@ -36,6 +36,21 @@ RSpec.describe Vacancy, type: :model do
         described_class.reindex
       end
     end
+
+    describe '#remove_vacancies_that_expired_yesterday!' do
+      it 'selects all records that expired yesterday' do
+        expect(described_class).to receive(:where)
+          .with('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
+        described_class.remove_vacancies_that_expired_yesterday!
+      end
+
+      it 'calls .index.delete_objects on the expired records' do
+        vacancy = double(Vacancy, id: 'ABC123')
+        allow(described_class).to receive(:where).and_return([vacancy])
+        expect(described_class).to receive_message_chain('index.delete_objects').with(['ABC123'])
+        described_class.remove_vacancies_that_expired_yesterday!
+      end
+    end
   end
 
   describe 'validations' do
