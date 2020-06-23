@@ -20,6 +20,37 @@ rake data:schools:import
 We use [Algolia's](https://algolia.com) search-as-a-service offering to provide an advanced search experience for our
 jobseekers. 
 
+### Environment Variables 
+
+```bash
+ALGOLIA_APP_ID=<Get from API Keys on Algolia Dashboard>
+ALGOLIA_SEARCH_API_KEY=<Get from API Keys on Algolia Dashboard>
+ALGOLIA_WRITE_API_KEY=<Get from API Keys on Algolia Dashboard>
+```
+
+Use keys for one of the existing development sandboxes, or make new ones, if you are working locally.
+
+### Quickstart
+
+```ruby
+  # To manually load an index with live records for the first time:
+  Vacancy.reindex!
+  # This now only loads records that are scoped `.live`
+
+  # To update a live index with newly published records using minimal operations:
+  Vacancy.update_index!
+
+  # To remove records that expired yesterday:
+  Vacancy.remove_vacancies_that_expired_yesterday!
+
+  # To remove all expired vacancies. 
+  Vacancy.index.delete_objects(Vacancy.expired.map(&:id))
+  # You should generally avoid doing this as it will create a large number of unnecessary operations 
+  # once these are being filtered out of the regular indexing operations.
+```
+
+Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
+
 ### Development
 
 When developing with [Algolia](https://algolia.com) you will find that *non-production environments will not start if
@@ -36,7 +67,7 @@ toes.
 ### Indexing live records
 
 We originally started by indexing all records. It became apparent that this had unnecessary cost implications, so the
-codebase was refactored to index only live (or `listed`) records. The [Algolia](https://algoliac.om) Rails plug in is
+codebase was refactored to index only live (or `listed`) records. The [Algolia](https://algoliac.om) Rails plugin is
 now set so it automatically updates existing live records if they change. 
 
 NOTE: The default `#reindex!` method, added by the Algolia gem, has been overridden so it only indexes Vacancies records
