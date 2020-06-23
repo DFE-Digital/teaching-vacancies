@@ -3,7 +3,7 @@ require 'geocoding'
 class VacancyAlgoliaSearchBuilder
   include ActiveModel::Model
 
-  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats,
+  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats, :coordinates,
                 :search_query, :location_filter, :search_replica, :search_filter,
                 :vacancies
 
@@ -27,21 +27,12 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def call
-    self.vacancies = Vacancy.search(
-      search_query,
-      aroundLatLng: location_filter[:coordinates],
-      aroundRadius: location_filter[:radius],
-      replica: search_replica,
-      hitsPerPage: hits_per_page,
-      filters: search_filter,
-      page: page
-    )
+    self.vacancies = search
     self.stats = build_stats(
-      vacancies.raw_answer['page'],
-      vacancies.raw_answer['nbPages'],
-      vacancies.raw_answer['hitsPerPage'],
-      vacancies.raw_answer['nbHits']
+      vacancies.raw_answer['page'], vacancies.raw_answer['nbPages'],
+      vacancies.raw_answer['hitsPerPage'], vacancies.raw_answer['nbHits']
     )
+    self.coordinates = location_filter[:coordinates]
   end
 
   def to_hash
@@ -94,6 +85,18 @@ class VacancyAlgoliaSearchBuilder
     build_search_query
     build_location_filter if location_category.blank?
     build_search_replica
+  end
+
+  def search
+    Vacancy.search(
+      search_query,
+      aroundLatLng: location_filter[:coordinates],
+      aroundRadius: location_filter[:radius],
+      replica: search_replica,
+      hitsPerPage: hits_per_page,
+      filters: search_filter,
+      page: page
+    )
   end
 
   def initialize_location(location_category, location, radius)

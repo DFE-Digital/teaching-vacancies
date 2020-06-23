@@ -1,4 +1,4 @@
-import { updateUrlQueryParams, convertMilesToMetres } from '../../../lib/utils';
+import { convertMilesToMetres, updateUrlQueryParams } from '../../../lib/utils';
 
 export const enableRadiusSelect = () => {
   if (document.querySelector('#radius')) {
@@ -21,8 +21,8 @@ export const disableRadiusSelect = () => {
 };
 
 export const getRadius = () => {
-  if (document.querySelector('#radius') && document.querySelector('#radius').dataset.radius) {
-    return convertMilesToMetres(document.querySelector('#radius').dataset.radius);
+  if (document.getElementById('radius') && document.getElementById('radius').dataset.radius) {
+    return convertMilesToMetres(document.getElementById('radius').dataset.radius);
   }
   return false;
 };
@@ -34,8 +34,16 @@ export const renderRadiusSelect = (renderOptions, isFirstRender) => {
     widgetParams.inputElement.addEventListener('change', (event) => {
       widgetParams.onSelection(event.target.value);
     });
-    disableRadiusSelect();
   }
 
   return query ? updateUrlQueryParams(widgetParams.key, query) : false;
 };
+
+const radiusSelect = {
+  getRadius,
+  enableRadiusSelect,
+  disableRadiusSelect,
+  renderRadiusSelect,
+};
+
+export default radiusSelect;

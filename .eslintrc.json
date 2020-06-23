@@ -27,6 +27,7 @@
         "eol-last": 1,
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
         "import/prefer-default-export": 0,
+        "import/no-named-as-default-member": 0,
         "no-unused-expressions": ["error", { "allowTernary": true }]
     },
     "root": true

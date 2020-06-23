@@ -1,4 +1,4 @@
-import { onSubmit } from './keyword';
+import { onSubmit, getKeyword } from './keyword';
 
 describe('keyword search box', () => {
   const client = {};
@@ -18,6 +18,13 @@ describe('keyword search box', () => {
       onSubmit(client);
       expect(setPage).toHaveBeenNthCalledWith(1, 0);
       expect(performSearch).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getKeyword', () => {
+    test('to return a string from input box', () => {
+      document.body.innerHTML = '<input id="keyword" />';
+      expect(typeof getKeyword()).toBe('string');
     });
   });
 });

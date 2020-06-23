@@ -1,4 +1,5 @@
 import { enableSubmitButton } from './form';
+import { updateUrlQueryParams } from '../../lib/utils';
 
 export const renderSearchBox = (renderOptions, isFirstRender) => {
   const { widgetParams } = renderOptions;
@@ -14,6 +15,7 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
 
     widgetParams.container.addEventListener('submit', (e) => {
       e.preventDefault();
+      updateUrlQueryParams(widgetParams.key, widgetParams.inputElement.value, window.location.href);
       widgetParams.onSubmit(widgetParams.inputElement.value);
     });
   }

@@ -1,9 +1,10 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '../polyfill/classlist.polyfill';
+import '../polyfill/remove.polyfill';
 
 import {
-  connectSearchBox, connectAutocomplete, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
+  connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
 } from 'instantsearch.js/es/connectors';
 import { hits, configure } from 'instantsearch.js/es/widgets';
 
@@ -11,13 +12,13 @@ import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
 import { templates, renderContent } from './ui/hits';
-import { onSubmit as locationSubmit } from './ui/input/location';
+import { onSubmit as locationSubmit, getCoords } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelectInput } from './ui/sort';
 import { renderPagination } from './ui/pagination';
 import { renderStats } from './ui/stats';
-import { renderRadiusSelect } from './ui/input/radius';
+import { disableRadiusSelect, renderRadiusSelect } from './ui/input/radius';
 import { locations } from './data/locations';
 import { updateUrlQueryParams, setDataAttribute } from '../lib/utils';
 import { enableSubmitButton } from './ui/form';
@@ -28,7 +29,6 @@ const SEARCH_THRESHOLD = 3;
 const searchClientInstance = searchClient(ALGOLIA_INDEX);
 
 const searchBox = connectSearchBox(renderSearchBox);
-const autocomplete = connectAutocomplete(renderAutocomplete);
 const heading = connectHits(renderContent);
 const sortBy = connectSortBy(renderSortSelectInput);
 const pagination = connectPagination(renderPagination);
@@ -41,10 +41,6 @@ const locationSearchBox = searchBox({
   inputElement: document.getElementById('location'),
   key: 'location',
   autofocus: true,
-  queryHook(query, search) {
-    updateUrlQueryParams('location', document.querySelector('#location').value, window.location.href);
-    search(query);
-  },
   onSubmit: (query) => locationSubmit(query, locations, searchClientInstance),
 });
 
@@ -53,25 +49,12 @@ const keywordSearchBox = searchBox({
   inputElement: document.getElementById('keyword'),
   key: 'keyword',
   autofocus: true,
-  queryHook(query, search) {
-    updateUrlQueryParams('keyword', document.querySelector('#keyword').value, window.location.href);
-    search(query);
-  },
   onSubmit: () => keywordSubmit(searchClientInstance),
 });
 
 searchClientInstance.addWidgets([
   configure({
     hitsPerPage: 10,
-  }),
-  autocomplete({
-    container: document.querySelector('#location-search'),
-    input: document.querySelector('#location'),
-    dataset: locations,
-    threshold: SEARCH_THRESHOLD,
-    onSelection: (value) => {
-      updateUrlQueryParams('location', value, window.location.href);
-    },
   }),
   locationSearchBox,
   keywordSearchBox,
@@ -120,9 +103,24 @@ searchClientInstance.addWidgets([
   }),
 ]);
 
-document.querySelector('.filters-form').addEventListener('submit', (e) => {
-  e.preventDefault();
+// Initialise Algolia client
+document.querySelector('.filters-form input[type="submit"]').addEventListener('click', () => {
   if (!searchClientInstance.started) {
     searchClientInstance.start();
   }
+});
+
+if (!getCoords()) {
+  disableRadiusSelect();
+}
+
+// Initialise custom autcomplete
+renderAutocomplete({
+  container: document.querySelector('#location-search'),
+  input: document.querySelector('#location'),
+  dataset: locations,
+  threshold: SEARCH_THRESHOLD,
+  onSelection: (value) => {
+    updateUrlQueryParams('location', value, window.location.href);
+  },
 });
