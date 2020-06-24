@@ -13,7 +13,7 @@ It replaces the DSI sign in method with one whereby the user is prompted to ente
 Here are the steps to follow to use our contingency fallback sign-in method. 
 
 First, decide whether to switch on the fallback authentication. This call should be made by the Product Owner if they are available.
-   - An alternative to this fallback sign in method could be replacing DSI with a notice to users. To do this, we would reinstate the environment variable and code which was deleted in commit [`🔥 Remove FEATURE_SIGN_IN_ALERT flag`](https://github.com/DFE-Digital/teacher-vacancy-service/pull/1647/commits/0458874730fed3fdb25053e217be50bc4677e705).
+   - An alternative to this fallback sign in method could be replacing DSI with a notice to users. To do this, we would reinstate the environment variable and code which was deleted in commit [`🔥 Remove FEATURE_SIGN_IN_ALERT flag`](https://github.com/DFE-Digital/teacher-vacancy-service/commit/bc12fb9808c955f86cd87e62648a76786516e2c3).
 
 ### Switching it on
 
@@ -29,8 +29,6 @@ Save space in the database by deleting all `EmergencyLoginKey`s:
 rake db:emergencyloginkeys:clear
 ```
 
-If you don't do this, the (currently) monthly job `ClearEmergencyLoginKeys` will pick it up later.
-
 ## Optional extras
 
 End all sessions (without warning users beforehand):
@@ -39,7 +37,7 @@ End all sessions (without warning users beforehand):
 rake db:sessions:clear
 ```
 
-This does not end any sessions cached by DSI.
+This does not end any sessions cached by DSI (assuming DSI is live).
 
 ### Configuration
 
@@ -62,6 +60,4 @@ end
 
 # Example query: how many sessions were created today?
 Session.where('created_at > ?', Time.zone.today).size # => 13519
-
-# Here is some pre-fallback production data for comparison.
 ```
