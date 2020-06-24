@@ -5,5 +5,5 @@
 -#    total_pages:   total number of pages
 -#    per_page:      number of items to fetch per page
 -#    remote:        data-remote
-%li.pagination__item
-  = link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, rel: 'next', remote: remote, class: 'pagination__link'
+%li
+  = link_to_unless current_page.last?, 'Next', url, rel: 'next', remote: remote, class: 'pagination__item pagination--next'
