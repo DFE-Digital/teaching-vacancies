@@ -112,7 +112,9 @@ FactoryBot.create(:vacancy,
                   salary: '£28,000',
                   leadership: leadership,
                   publish_on: Time.zone.today + 1.year,
-                  expires_on: Time.zone.today + 2.years)
+                  expires_on: Time.zone.today + 2.years,
+                  starts_on: Time.zone.today + 3.years,
+                )
 
 # expired vacancy
 expired_one = FactoryBot.build(:vacancy,

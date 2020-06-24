@@ -1,6 +1,8 @@
 require 'rails_helper'
-RSpec.feature 'Hiring staff can sign out' do
+RSpec.feature 'Hiring staff can sign out with DfE Sign In' do
   let(:school) { create(:school) }
+
+  before { allow(AuthenticationFallback).to receive(:enabled?).and_return(false) }
 
   scenario 'as an authenticated user' do
     stub_hiring_staff_auth(urn: school.urn)

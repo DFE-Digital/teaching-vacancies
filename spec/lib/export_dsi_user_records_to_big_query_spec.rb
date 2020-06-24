@@ -18,16 +18,16 @@ RSpec.describe ExportDsiUsersToBigQuery do
 
   let(:dfe_sign_in_api) { double(DFESignIn::API) }
   let(:number_of_pages) { 1 }
-  let(:api_response) { succesful_api_response }
+  let(:api_response) { successful_api_response }
 
-  let(:succesful_api_response) do
+  let(:successful_api_response) do
     json_response(
       "users": [user],
       "numberOfPages": number_of_pages
     )
   end
 
-  let(:unsuccesful_api_response) do
+  let(:unsuccessful_api_response) do
     json_response(
       "success": false,
       "message": 'jwt expired'
@@ -86,7 +86,7 @@ RSpec.describe ExportDsiUsersToBigQuery do
     end
 
     context 'when DSI API fails' do
-      let(:api_response) { unsuccesful_api_response }
+      let(:api_response) { unsuccessful_api_response }
 
       it 'raises a runtime error' do
         expect { subject.run! }.to raise_error(RuntimeError)

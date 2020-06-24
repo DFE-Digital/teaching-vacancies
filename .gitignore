@@ -54,8 +54,7 @@ terraform.tfstate.d/
 workspace-variables/*.tfvars
 
 # ENV files
-.env
-.envrc
+.env*
 
 # Certificates
 config/localhost/https/*.key

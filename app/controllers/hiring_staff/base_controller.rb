@@ -35,11 +35,11 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_user_last_activity_at
-    return redirect_to dsi_logout_url if current_user&.last_activity_at.blank?
+    return redirect_to logout_endpoint if current_user&.last_activity_at.blank?
 
     if Time.zone.now > (current_user.last_activity_at + TIMEOUT_PERIOD)
       session[:signing_out_for_inactivity] = true
-      redirect_to dsi_logout_url
+      redirect_to logout_endpoint
     end
   end
 
@@ -47,10 +47,15 @@ class HiringStaff::BaseController < ApplicationController
     current_user&.update(last_activity_at: Time.zone.now)
   end
 
-  def dsi_logout_url
+  def logout_endpoint
+    return auth_email_sign_out_path if AuthenticationFallback.enabled?
     url = URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end")
     url.query = { post_logout_redirect_uri: auth_dfe_signout_url, id_token_hint: session[:id_token] }.to_query
     url.to_s
+  end
+
+  def redirect_signed_in_users
+    return redirect_to school_path if session.key?(:urn)
   end
 
   def timeout_period_as_string

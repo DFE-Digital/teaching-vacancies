@@ -3,13 +3,6 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if ENV['FEATURE_SIGN_IN_ALERT'].to_s == "true"
-      .govuk-error-summary{ aria: { labelledby: "error-summary-title" }, role: "alert", tabindex: "-1" }
-        %h2.govuk-error-summary__title
-          = t('.you_might_have_problems_signing_in')
-        .govuk-error-summary__body
-          = t('.some_of_our_users')
-
     %h1.govuk-heading-l= t('sign_in.title')
 
     %p= t('pages.home.signin.description')

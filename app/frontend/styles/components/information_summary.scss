@@ -12,7 +12,7 @@
 .govuk-info-summary__body {
   @extend .govuk-error-summary__body;
 
-  > a {
+  > a.govuk-button {
     margin-right: govuk-spacing(3);
   }
 }

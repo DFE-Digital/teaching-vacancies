@@ -268,11 +268,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         edit_date('expires_on', expiry_date)
 
         expect(page.body).to include(I18n.t('messages.jobs.listing_updated', job_title: vacancy.job_title))
-        # Used a regex here as I was getting failures with a straight string comparison. For reasons that aren't clear,
-        # the string to be matched was being reported as " 6 July 2373" whereas the date the in the body was
-        # "\n6 July 2373".  The leading newline was causing the match to fail. Given it was a plain matcher, I'm not
-        # sure where the space was coming from-it *should not* have been there and the string should match.
-        expect(page).to have_content(/#{expiry_date}/)
+        # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
+        # due to a leading newline in the body ("\n1 July 2020").
+        expect(page).to have_content(expiry_date.to_s.strip)
       end
 
       scenario 'tracks the vacancy update' do

@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(version: 2020_06_12_192733) do
     t.index ["vacancy_id"], name: "index_documents_on_vacancy_id"
   end
 
+  create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "not_valid_after", null: false
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_emergency_login_keys_on_user_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.uuid "sluggable_id", null: false
@@ -223,9 +231,9 @@ ActiveRecord::Schema.define(version: 2020_06_12_192733) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
+    t.string "job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
-    t.string "job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true
@@ -255,6 +263,7 @@ ActiveRecord::Schema.define(version: 2020_06_12_192733) do
   end
 
   add_foreign_key "documents", "vacancies"
+  add_foreign_key "emergency_login_keys", "users"
   add_foreign_key "schools", "detailed_school_types"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end

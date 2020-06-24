@@ -203,10 +203,6 @@
         "value": "${cloud_storage_bucket}"
       },
       {
-        "name": "FEATURE_SIGN_IN_ALERT",
-        "value": "${feature_sign_in_alert}"
-      },
-      {
         "name": "ALGOLIA_APP_ID",
         "value": "${algolia_app_id}"
       },

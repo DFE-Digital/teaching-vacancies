@@ -38,12 +38,27 @@ Rails.application.routes.draw do
   # Sign in
   resource :sessions, only: %i[destroy], controller: 'hiring_staff/sessions'
 
+  # Authentication fallback with emailed magic link
+  get 'auth/email/sessions/new', to: 'hiring_staff/sign_in/email/sessions#new',
+    as: 'new_auth_email'
+  post 'auth/email/sessions/check-your-email', to: 'hiring_staff/sign_in/email/sessions#check_your_email',
+    as: 'auth_email_check_your_email'
+  get 'auth/email/sessions/choose-organisation', to: 'hiring_staff/sign_in/email/sessions#choose_organisation',
+    as: 'auth_email_choose_organisation'
+  get 'auth/email/sessions/sign-in', to: 'hiring_staff/sign_in/email/sessions#create',
+    as: 'auth_email_create_session'
+  get 'auth/email/sessions/sign-out', to: 'hiring_staff/sign_in/email/sessions#destroy',
+    as: 'auth_email_sign_out'
+  get 'auth/email/sessions/change-organisation', to: 'hiring_staff/sign_in/email/sessions#change_organisation',
+    as: 'auth_email_change_organisation'
+
   # DfE Sign In
   resource :sessions,
-           only: %i[create new],
-           as: :dfe,
-           path: '/dfe/sessions',
-           controller: 'hiring_staff/sign_in/dfe/sessions'
+            only: %i[create new],
+            as: :dfe,
+            path: '/dfe/sessions',
+            controller: 'hiring_staff/sign_in/dfe/sessions'
+
   get '/auth/dfe/callback', to: 'hiring_staff/sign_in/dfe/sessions#create'
   get '/auth/dfe/signout', to: 'hiring_staff/sign_in/dfe/sessions#destroy'
   get '/auth/failure', to: 'hiring_staff/sign_in/dfe/sessions#new'

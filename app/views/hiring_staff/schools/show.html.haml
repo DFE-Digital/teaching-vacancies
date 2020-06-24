@@ -5,7 +5,10 @@
     %h1.govuk-heading-l.mb0
       = t('schools.jobs.index', school: @school.name)
     - if @multiple_schools
-      = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
+      - if AuthenticationFallback.enabled?
+        = link_to t('sign_in.organisation.change'), auth_email_change_organisation_path, class: 'govuk-link'
+      - else
+        = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
       %br
       %br
 

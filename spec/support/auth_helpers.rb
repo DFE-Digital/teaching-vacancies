@@ -87,7 +87,7 @@ module AuthHelpers
 
   def stub_sign_in_with_single_organisation(user_id: 'some-user-id',
                                             fixture_file:
-                                            'dfe_sing_in_user_user_organisations_response_with_single.json')
+                                            'dfe_sign_in_user_user_organisations_response_with_single.json')
     authorisation_response = File.read(Rails.root.join('spec', 'fixtures', fixture_file))
 
     stub_request(

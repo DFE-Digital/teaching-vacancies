@@ -7,7 +7,7 @@
 
 - else
   %p= t('.description')
-  - if ENV['FEATURE_SIGN_IN_ALERT'].to_s == 'true'
+  - if AuthenticationFallback.enabled?
     = link_to t('sign_in.link'), new_identifications_path, class: 'govuk-button identifications-button'
   - else
     = render 'hiring_staff/identifications/signin', home: true
