@@ -12,7 +12,6 @@ import 'src/deleteDocument';
 import 'src/details';
 import 'src/dismissableElement';
 import 'src/disabledInputs';
-import 'src/fetchLocation';
 import 'src/googleOptimise';
 import 'src/googleTagManagerUrlSnippet';
 import 'src/removeCommaFromNumber';

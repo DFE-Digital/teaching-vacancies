@@ -1,6 +1,5 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import '../polyfill/classlist.polyfill';
 import '../polyfill/remove.polyfill';
 
 import {
