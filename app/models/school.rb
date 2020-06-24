@@ -8,6 +8,9 @@ class School < ApplicationRecord
 
   has_many :vacancies
 
+  has_many :school_group_memberships
+  has_many :school_groups, through: :school_group_memberships
+
   validates :urn, uniqueness: true
 
   delegate :name, to: :region, prefix: true

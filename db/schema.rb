@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_19_124028) do
+ActiveRecord::Schema.define(version: 2020_06_24_135605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -113,6 +113,16 @@ ActiveRecord::Schema.define(version: 2020_06_19_124028) do
     t.text "code"
     t.index ["code"], name: "index_regions_on_code", unique: true
     t.index ["name"], name: "index_regions_on_name", unique: true
+  end
+
+  create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id"
+    t.uuid "school_group_id"
+  end
+
+  create_table "school_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "uid", null: false
+    t.json "gias_data"
   end
 
   create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
