@@ -34,7 +34,7 @@ rake db:emergencyloginkeys:clear
 End all sessions (without warning users beforehand):
 
 ```
-rake db:sessions:clear
+rails db:sessions:clear
 ```
 
 This does not end any sessions cached by DSI (assuming DSI is live).
