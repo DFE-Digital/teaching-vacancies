@@ -39,7 +39,7 @@ rails db:sessions:clear
 
 This does not end any sessions cached by DSI (assuming DSI is live).
 
-### Configuration
+### Configuration
 
 Adjust the length of time before an EmergencyLoginKey expires with `EMERGENCY_LOGIN_KEY_DURATION` in [`HiringStaff::SignIn::Email::SessionsController`](app/controllers/hiring_staff/sign_in/email/sessions_controller.rb)
 
