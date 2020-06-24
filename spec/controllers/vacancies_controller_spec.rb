@@ -121,6 +121,15 @@ RSpec.describe VacanciesController, type: :controller do
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
       end
+
+      context 'when parameters include the sort by relevancy option' do
+        let(:sort) { 'most_relevant' }
+
+        it 'does not set a search replica on VacancyAlgoliaSearchBuilder' do
+          subject
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to be_nil
+        end
+      end
     end
 
     context 'feature flagging' do

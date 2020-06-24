@@ -1,9 +1,11 @@
 module SearchHelper
+  DEFAULT_INDEX = 'Vacancy_test_publish_on_desc'
+
   def mock_algolia_search(result, query, algolia_hash = {})
     arguments_to_algolia = {
       aroundLatLng: algolia_hash[:aroundLatLng] || nil,
       aroundRadius: algolia_hash[:aroundRadius] || nil,
-      replica: algolia_hash[:replica] || nil,
+      replica: algolia_hash[:replica] || DEFAULT_INDEX,
       hitsPerPage: algolia_hash[:hitsPerPage] || 10,
       filters: algolia_hash[:filters] ||
         "publication_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\

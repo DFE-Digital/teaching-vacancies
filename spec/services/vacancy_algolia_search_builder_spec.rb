@@ -103,8 +103,8 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
           {}
         end
 
-        it 'does not use a search replica' do
-          expect(subject.search_replica).to be_nil
+        it 'uses the default search replica' do
+          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}")
         end
       end
 
@@ -115,8 +115,8 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
           }
         end
 
-        it 'does not use a search replica' do
-          expect(subject.search_replica).to be_nil
+        it 'uses the default search replica' do
+          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}")
         end
       end
 
@@ -127,20 +127,32 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
           }
         end
 
-        it 'does not use a search replica' do
-          expect(subject.search_replica).to be_nil
+        it 'uses the default search replica' do
+          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}")
         end
       end
 
       context 'valid sort specified' do
         let(:params) do
           {
-            jobs_sort: 'publish_on_desc'
+            jobs_sort: 'expiry_time_desc'
           }
         end
 
         it 'uses the correct search replica' do
-          expect(subject.search_replica).to eql('Vacancy_publish_on_desc')
+          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_desc")
+        end
+      end
+
+      context 'sort by relevancy specified' do
+        let(:params) do
+          {
+            jobs_sort: 'most_relevant'
+          }
+        end
+
+        it 'uses the correct search replica' do
+          expect(subject.search_replica).to be_nil
         end
       end
     end
