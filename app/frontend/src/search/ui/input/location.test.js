@@ -61,7 +61,7 @@ describe('location search box', () => {
   });
 
   describe('geocodeSuccess', () => {
-    test('does not performs search if unsuccesful', () => {
+    test('does not perform search if unsuccessful', () => {
       const coords = { success: false };
       geocodeSuccess(coords, client);
       expect(performSearch).not.toHaveBeenCalled();

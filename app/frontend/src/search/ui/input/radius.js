@@ -27,6 +27,13 @@ export const getRadius = () => {
   return false;
 };
 
+export const getRadiusMiles = () => {
+  if (document.getElementById('radius') && document.getElementById('radius').dataset.radius) {
+    return document.getElementById('radius').dataset.radius;
+  }
+  return false;
+};
+
 export const renderRadiusSelect = (renderOptions, isFirstRender) => {
   const { query, widgetParams } = renderOptions;
 

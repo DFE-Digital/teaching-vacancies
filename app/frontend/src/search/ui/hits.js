@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { createHeadingMarkup } from './heading';
-import { addJobAlertMarkup, getJobAlertLink, removeJobAlertMarkup } from './alert';
+import { addJobAlertMarkup, getJobAlertLink } from './alert';
 
 export const renderContent = (renderOptions) => {
   const { results, widgetParams } = renderOptions;
@@ -12,12 +12,8 @@ export const renderContent = (renderOptions) => {
       location: document.getElementById('location').value,
     });
 
-    if (results.query.length >= widgetParams.threshold) {
-      addJobAlertMarkup(widgetParams.container);
-      document.querySelector('#job-alert-link').href = getJobAlertLink(window.location.href);
-    } else {
-      removeJobAlertMarkup();
-    }
+    addJobAlertMarkup(widgetParams.container);
+    document.querySelector('#job-alert-link').href = getJobAlertLink(window.location.href);
     hideServerMarkup();
   }
 };
