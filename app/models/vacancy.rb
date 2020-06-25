@@ -37,15 +37,59 @@ class Vacancy < ApplicationRecord
 
   include Redis::Objects
 
-  include AlgoliaSearch
-  AlgoliaSearch::IndexSettings::DEFAULT_BATCH_SIZE = 100
-
   # For guidance on sanity-checking an indexing change, read documentation/algolia_sanity_check.md
+  include AlgoliaSearch
+
+  # NOTE: the `if: :listed?` filter in the `algoliasearch` stanza below *only* excludes records from being *added* to
+  # the index. It DOES NOT prevent the ruby client from checking that the record exists in the Algolia index in the
+  # first place. Even if the record should not be in the index (unpublished or expired records), the client still
+  # consumes an Algolia operation to try and look it up if it appears in canonical list of records returned by the
+  # model.
+  #
+  # To illustrate: if you run the unmodified `Vacancy.reindex!` on a recent (2020-06-18) production dataset you will
+  # consume more than 30,000 operations on the Algolia app. This occurs because it looks up each of the 30,000+
+  # expired/unpublished records before it applies the `:listed?` filter. It only indexes about 470 records. I am not
+  # 100% certain, but it seems this is done so it can remove records that should not be in the index according to the
+  # filter.
+  #
+  # If, however, you run `Vacancy.live.reindex!`, which scopes the list to only the "published" records, it only
+  # consumes slightly more operation than there are indexable records.
+  def self.reindex!
+    live.algolia_reindex!
+  end
+
+  def self.reindex
+    live.algolia_reindex
+  end
+
+  # This is intended as a one-shot method used in conjuntion with `algolia_index...if: :listed?` to clear ununsed
+  # records from the production db. It should be deleted after it is successfully run.
+  def self.full_reindex!
+    algolia_reindex!
+  end
+
+  # This is the main method you should use most of the time when bulk-adding new records to the algolia index. It will
+  # not use any additional operations checking records that have been indexed once. NOTE: if a record has been indexed
+  # already and it is updated with new or additional information, the `auto_index: true` will do the work of keeping the
+  # changes in sync with the algolia index. This method is solely for preventing us paying for unnecessary usage when
+  # adding records that have become `live` since the last time it was run.
+  def self.update_index!
+    unindexed.algolia_reindex!
+    # rubocop:disable Rails/SkipsModelValidations
+    unindexed.update_all(initially_indexed: true)
+    # rubocop:enable Rails/SkipsModelValidations
+  end
+
+  # I'm excluding expires_on from the where clause as expiry_time seems to be exactly tracking it-as expected.
+  # TODO: remove expires_on completely from the attributes and only use expiry_time. Ticket to follow.
+  def self.remove_vacancies_that_expired_yesterday!
+    expired_records = where('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
+    index.delete_objects(expired_records.map(&:id)) if expired_records.present?
+  end
 
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Metrics/LineLength
-  # There must be a better way to pass these settings to the block, but everything seems to break
-  algoliasearch index_name: Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}" : 'Vacancy', auto_index: Rails.env.production?, auto_remove: Rails.env.production?, synchronous: Rails.env.test?, disable_indexing: !(Rails.env.production? || Rails.env.test?) do
+  algoliasearch auto_index: true, auto_remove: true, if: :listed? do
     attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
 
     attribute :expires_at do
@@ -119,15 +163,15 @@ class Vacancy < ApplicationRecord
 
     attributesForFaceting [:job_roles, :working_patterns, :school, :listing_status]
 
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc" : 'Vacancy_publish_on_desc', inherit: true do
+    add_replica 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
     end
 
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_desc" : 'Vacancy_expiry_time_desc', inherit: true do
+    add_replica 'Vacancy_expiry_time_desc', inherit: true do
       ranking ['desc(expires_at_timestamp)']
     end
 
-    add_replica Rails.env.test? ? "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_expiry_time_asc" : 'Vacancy_expiry_time_asc', inherit: true do
+    add_replica 'Vacancy_expiry_time_asc', inherit: true do
       ranking ['asc(expires_at_timestamp)']
     end
   end
@@ -181,28 +225,29 @@ class Vacancy < ApplicationRecord
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
-                      :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
+    :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
+  scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
   scope :applicable_by_time, (-> { where('expiry_time IS NOT NULL AND expiry_time >= ?', Time.zone.now) })
   scope :applicable_by_date, (-> { where('expiry_time IS NULL AND expires_on >= ?', Time.zone.today) })
-  scope :active, (-> { where(status: %i[published draft]) })
-  scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
-  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
-  scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
+  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
   scope :expired, (-> { expired_by_time.or(expired_by_date) })
   scope :expired_by_time, (-> { published.where('expiry_time IS NOT NULL AND expiry_time < ?', Time.zone.now) })
   scope :expired_by_date, (-> { published.where('expiry_time IS NULL AND expires_on < ?', Time.zone.today) })
+  scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
   scope :live, (-> { live_by_date.or(live_by_time) })
   scope :live_by_time, (lambda {
-                          published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
-                                          Time.zone.today, Time.zone.now)
-                        })
+    published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
+                    Time.zone.today, Time.zone.now)
+  })
   scope :live_by_date, (lambda {
-                          published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
-                                          Time.zone.today, Time.zone.today)
-                        })
-  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
+    published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
+                    Time.zone.today, Time.zone.today)
+  })
+  scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
+  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+  scope :unindexed, (-> { live.where(initially_indexed: false) })
 
   paginates_per 10
 
@@ -228,8 +273,12 @@ class Vacancy < ApplicationRecord
     }
   end
 
+  # `publish_on` is nullable, so you can't use `!publish_on.try(:future?)` as `publish_on = nil` will yield an
+  # unintended `true` result.
+  #
+  # I've deliberately chosen `#try` over `#&.` for long-term readability.
   def listed?
-    published? && !publish_on.future? && expires_on.future?
+    published? && (publish_on.try(:today?) || publish_on.try(:past?)) && expiry_time.try(:future?)
   end
 
   def as_indexed_json(_arg = {})
