@@ -58,12 +58,6 @@ gem 'validate_url', '~> 1.0.8'
 gem 'webpacker'
 gem 'xml-sitemap'
 
-group :test, :development, :staging do
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'rails-controller-testing', '~> 1.0'
-end
-
 group :development do
   gem 'launchy'
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -77,9 +71,12 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'coffee-rails'
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec-rails'
 end
 
