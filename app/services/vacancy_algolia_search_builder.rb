@@ -9,6 +9,7 @@ class VacancyAlgoliaSearchBuilder
 
   DEFAULT_RADIUS = 10
   DEFAULT_HITS_PER_PAGE = 10
+  DEFAULT_SORT = 'publish_on_desc'
 
   def initialize(params)
     self.keyword = params[:keyword]
@@ -118,7 +119,9 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def build_search_replica
-    return nil if sort_by.blank?
+    # Returning nil means the search should use the main index, not a replica
+    return nil if sort_by == 'most_relevant'
+    self.sort_by = DEFAULT_SORT if sort_by.blank?
     self.search_replica = ['Vacancy', sort_by].reject(&:blank?).join('_')
   end
 

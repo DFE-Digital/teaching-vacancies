@@ -8,7 +8,7 @@ export const renderSortSelectInput = (renderOptions, isFirstRender) => {
 
     if (document.querySelector('#jobs_sort_select')) {
       document.querySelector('#jobs_sort_select').addEventListener('change', (event) => {
-        refine(getSearchReplicaName(event.target.value));
+        refine(getSearchIndexName(event.target.value));
       });
     }
   }
@@ -22,4 +22,10 @@ export const renderSortSelectInput = (renderOptions, isFirstRender) => {
   }
 };
 
-export const getSearchReplicaName = (selected) => (selected ? `Vacancy_${selected}` : 'Vacancy');
+export const getSearchIndexName = (selected) => {
+  const defaultSearchIndexName = 'Vacancy_publish_on_desc';
+  if (selected === 'most_relevant') {
+    return 'Vacancy';
+  }
+  return selected ? `Vacancy_${selected}` : defaultSearchIndexName;
+};

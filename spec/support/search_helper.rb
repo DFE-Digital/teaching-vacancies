@@ -1,5 +1,5 @@
 module SearchHelper
-  DEFAULT_INDEX = 'Vacancy_test_publish_on_desc'
+  DEFAULT_INDEX = "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_publish_on_desc"
 
   def mock_algolia_search(result, query, algolia_hash = {})
     arguments_to_algolia = {

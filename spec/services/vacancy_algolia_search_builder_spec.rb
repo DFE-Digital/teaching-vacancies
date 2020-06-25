@@ -98,13 +98,17 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     end
 
     context '#sort' do
+      let(:default_search_replica) do
+        "Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}"
+      end
+
       context 'no sort specified' do
         let(:params) do
           {}
         end
 
         it 'uses the default search replica' do
-          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}")
+          expect(subject.search_replica).to eql(default_search_replica)
         end
       end
 
@@ -116,7 +120,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
         end
 
         it 'uses the default search replica' do
-          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}")
+          expect(subject.search_replica).to eql(default_search_replica)
         end
       end
 
@@ -128,7 +132,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
         end
 
         it 'uses the default search replica' do
-          expect(subject.search_replica).to eql("Vacancy_test#{ENV.fetch('GITHUB_RUN_ID', '')}_#{VacancyAlgoliaSearchBuilder::DEFAULT_SORT}")
+          expect(subject.search_replica).to eql(default_search_replica)
         end
       end
 
