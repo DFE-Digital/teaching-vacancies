@@ -33,6 +33,11 @@ submit_performance_platform:
   class: 'SubmitPerformancePlatformJob'
   queue: submit_performance_platform
 
+clear_emergency_login_keys:
+  cron: '30 0 1 * *'
+  class: 'ClearEmergencyLoginKeysJob'
+  queue: clear_emergency_login_keys
+
 update_algolia_index:
   cron: '*/5 * * * *'
   class: 'UpdateAlgoliaIndex'
