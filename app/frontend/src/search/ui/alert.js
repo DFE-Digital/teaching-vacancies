@@ -1,24 +1,31 @@
 /* eslint-disable max-len */
 import { extractQueryParams } from '../../lib/utils';
+import { getRadiusMiles } from './input/radius';
+import { shouldNotGeocode } from './input/location';
+import { locations } from '../data/locations';
 import '../../polyfill/remove.polyfill';
 
 const JOB_ALERT_URL = '/subscriptions/new';
 
-export const getJobAlertLinkParam = (key, value) => `${encodeURIComponent(`search_criteria[${key}]`)}=${value.replace(' ', '+')}&`;
+export const getJobAlertLinkParam = (key, value, array) => `${encodeURIComponent(`search_criteria[${key}]${array ? '[]' : ''}`)}=${value.replace(' ', '+')}&`;
 
 export const getJobAlertLink = (url) => {
-  const paramsObj = extractQueryParams(url, ['keyword', 'location', 'radius']);
+  const paramsObj = extractQueryParams(url, ['keyword', 'location']);
   let queryString = '';
 
   Object.keys(paramsObj).map((key) => {
     queryString += getJobAlertLinkParam(key, paramsObj[key]);
 
-    if (key === 'location') {
+    if (key === 'location' && shouldNotGeocode(paramsObj[key], locations)) {
       queryString += getJobAlertLinkParam('location_category', paramsObj[key]);
     }
 
     return true;
   });
+
+  if (getRadiusMiles()) {
+    queryString += getJobAlertLinkParam('radius', getRadiusMiles().toString());
+  }
 
   return `${JOB_ALERT_URL}?${queryString}`;
 };
@@ -29,6 +36,12 @@ export const addJobAlertMarkup = (container) => {
   }
 
   return true;
+};
+
+export const updateNoResultsLink = () => {
+  if (document.querySelector('#job-alert-link-search')) {
+    document.querySelector('#job-alert-link-search').href = getJobAlertLink(window.location.href);
+  }
 };
 
 export const removeJobAlertMarkup = () => {

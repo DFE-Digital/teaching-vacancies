@@ -12,6 +12,7 @@ import { searchClient } from './client';
 
 import { renderSearchBox } from './ui/input';
 import { templates, renderContent } from './ui/hits';
+import { updateNoResultsLink } from './ui/alert';
 import { onSubmit as locationSubmit, getCoords } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
@@ -108,6 +109,10 @@ document.querySelector('.filters-form input[type="submit"]').addEventListener('c
   if (!searchClientInstance.started) {
     searchClientInstance.start();
   }
+});
+
+searchClientInstance.on('render', () => {
+  updateNoResultsLink();
 });
 
 if (!getCoords()) {

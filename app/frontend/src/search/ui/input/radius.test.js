@@ -1,4 +1,9 @@
-import radiusSelect, { getRadius, enableRadiusSelect, disableRadiusSelect } from './radius';
+import radiusSelect, {
+  getRadius,
+  getRadiusMiles,
+  enableRadiusSelect,
+  disableRadiusSelect,
+} from './radius';
 
 describe('Radius select', () => {
   describe('getRadius', () => {
@@ -21,6 +26,29 @@ describe('Radius select', () => {
       <option value="5">5 miles</option>
   </select>`;
       expect(getRadius()).toBe(false);
+    });
+  });
+
+  describe('getRadiusMiles', () => {
+    test('to be truthy when radius data attribute is present', () => {
+      document.body.innerHTML = `<select name="radius" id="radius" data-radius="10"><option value="1">1 mile</option>
+      <option value="5">5 miles</option>
+  </select>`;
+      expect(getRadiusMiles()).toBe('10');
+    });
+
+    test('to be false when radius data attribute is not present', () => {
+      document.body.innerHTML = `<select name="radius" id="radius"><option value="1">1 mile</option>
+      <option value="5">5 miles</option>
+  </select>`;
+      expect(getRadiusMiles()).toBe(false);
+    });
+
+    test('to be false when radius element is not present', () => {
+      document.body.innerHTML = `<select name="radius" id="wrong-id"><option value="1">1 mile</option>
+      <option value="5">5 miles</option>
+  </select>`;
+      expect(getRadiusMiles()).toBe(false);
     });
   });
 
