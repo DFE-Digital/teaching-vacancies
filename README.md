@@ -66,9 +66,14 @@ toes.
 
 #### Note on Free-Tier Algolia Apps
 
-Free/Community Tier Apps do not have team functionality. This means that you will not be able to access the dashboard
+Community Apps, which are free, do not have team functionality. This means that you will not be able to access the dashboard
 for apps that other people have created and they will not be able to access the dashboard for yours. If you need to
 share an app dashboard between multiple users create it using the `teachingjobs` account. 
+
+This **only applies** to the `dev` (1RWSKBURHA - 'TVS DEV PAAS') and `staging` (CFWW19M6GM - 'TVS STAGING PAAS') shared 
+apps and any community apps you want to create for your own use/development work. It also does not affect your ability to
+use apps for which you have the API keys. It **only** stops you from viewing the dashboard for **community apps** you 
+did not create. 
 
 ### Indexing live records
 
