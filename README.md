@@ -64,6 +64,12 @@ we can keep track of these and clear them out occasionally.
 Let your colleagues know if you take over an existing development app to be sure you don't accidentally step on anyone's
 toes. 
 
+#### Note on Free-Tier Algolia Apps
+
+Free/Community Tier Apps do not have team functionality. This means that you will not be able to access the dashboard
+for apps that other people have created and they will not be able to access the dashboard for yours. If you need to
+share an app dashboard between multiple users create it using the `teachingjobs` account. 
+
 ### Indexing live records
 
 We originally started by indexing all records. It became apparent that this had unnecessary cost implications, so the
