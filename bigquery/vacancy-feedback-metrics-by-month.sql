@@ -9,7 +9,8 @@ SELECT
   SAFE_DIVIDE(exclusive_hires,
     feedback_available) AS exclusive_hires_rate,
   SAFE_DIVIDE(exclusive_hires_upperbound,
-    feedback_available) AS exclusive_hires_rate_upperbound
+    feedback_available) AS exclusive_hires_rate_upperbound,
+  SAFE_DIVIDE(exclusive_hires,feedback_available) AS exclusivity_rate
 FROM (
   SELECT
     DATE_TRUNC(publish_on,MONTH) AS month,
@@ -26,7 +27,8 @@ FROM (
         "hired_tvs")
       AND listed_elsewhere IN ("not_listed",
         "listed_free",
-        "listed_dont_know")) AS exclusive_hires_upperbound
+        "listed_dont_know")) AS exclusive_hires_upperbound,
+    COUNTIF(listed_elsewhere IN ("not_listed")) AS exclusive_listings
   FROM
     `teacher-vacancy-service.production_dataset.feb20_vacancy`
   WHERE
