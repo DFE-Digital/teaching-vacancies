@@ -5,6 +5,54 @@ RSpec.describe Vacancy, type: :model do
   it { should belong_to(:publisher_user) }
   it { should have_many(:documents) }
 
+  context 'indexing for search' do
+    describe '#update_index!' do
+      it { should have_db_column(:initially_indexed) }
+      it { should have_db_index(:initially_indexed) }
+
+      it 'indexes `live` records where `initially_indexed == false`' do
+        allow(described_class).to receive_message_chain('unindexed.update_all').with({ initially_indexed: true })
+        expect(described_class).to receive_message_chain('unindexed.algolia_reindex!')
+        described_class.update_index!
+      end
+
+      it 'flags indexed records as `initially_indexed = true`' do
+        allow(described_class).to receive_message_chain('unindexed.algolia_reindex!')
+        expect(described_class).to receive_message_chain('unindexed.update_all').with({ initially_indexed: true })
+        described_class.update_index!
+      end
+    end
+
+    describe '#reindex!' do
+      it 'is overridden so that it only indexes vacancies scoped as `live`' do
+        expect(described_class).to receive_message_chain('live.algolia_reindex!')
+        described_class.reindex!
+      end
+    end
+
+    describe '#reindex' do
+      it 'is overridden so that it only indexes vacancies scoped as `live`' do
+        expect(described_class).to receive_message_chain('live.algolia_reindex')
+        described_class.reindex
+      end
+    end
+
+    describe '#remove_vacancies_that_expired_yesterday!' do
+      it 'selects all records that expired yesterday' do
+        expect(described_class).to receive(:where)
+          .with('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
+        described_class.remove_vacancies_that_expired_yesterday!
+      end
+
+      it 'calls .index.delete_objects on the expired records' do
+        vacancy = double(Vacancy, id: 'ABC123')
+        allow(described_class).to receive(:where).and_return([vacancy])
+        expect(described_class).to receive_message_chain('index.delete_objects').with(['ABC123'])
+        described_class.remove_vacancies_that_expired_yesterday!
+      end
+    end
+  end
+
   describe 'validations' do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
@@ -100,17 +148,60 @@ RSpec.describe Vacancy, type: :model do
     end
 
     context '#listed?' do
-      it 'returns true if the vacancy is currently listed' do
-        job = create(:vacancy, :published)
-
-        expect(job.listed?).to be true
+      let(:datetime) do
+        instance_double(DateTime)
       end
 
-      it 'returns false if the vacancy is not yet listed' do
-        job = build(:vacancy, :published, slug: 'value', publish_on: Time.zone.tomorrow)
-        job.save(validate: false)
+      subject do
+        build(:vacancy, :published)
+      end
 
-        expect(job.listed?).to be false
+      it 'does not break if #expiry_time is nil' do
+        subject.expiry_time = nil
+        expect { subject.listed? }.not_to raise_error
+      end
+
+      it 'checks #expiry_time is in the future' do
+        allow(subject).to receive(:expiry_time).and_return(datetime)
+        expect(datetime).to receive(:future?)
+        subject.listed?
+      end
+
+      it 'checks #published?' do
+        expect(subject).to receive(:published?)
+        subject.listed?
+      end
+
+      it 'checks if #published == "draft" (yields published? == false)' do
+        subject.status = 'draft'
+        expect(subject.listed?).to be_falsey
+      end
+
+      context '#publish_on' do
+        before do
+          allow(subject).to receive(:publish_on).and_return(datetime)
+          allow(datetime).to receive(:past?)
+          allow(datetime).to receive(:today?)
+        end
+
+        it 'checks if #publish_on is in the past' do
+          expect(datetime).to receive(:past?)
+          subject.listed?
+        end
+
+        it 'checks if #publish_on is today' do
+          expect(datetime).to receive(:today?)
+          subject.listed?
+        end
+
+        it 'does not break if publish_on is nil' do
+          subject.publish_on = nil
+          expect { subject.listed? }.not_to raise_error
+        end
+      end
+
+      it 'return true if all the conditions are met' do
+        expect(subject.listed?).to be_truthy
       end
     end
   end
@@ -130,11 +221,11 @@ RSpec.describe Vacancy, type: :model do
   context 'scopes' do
     let(:expired_earlier_today) do
       build(:vacancy, expires_on: Time.zone.today,
-                      expiry_time: Time.zone.now - 1.hour)
+            expiry_time: Time.zone.now - 1.hour)
     end
     let(:expires_later_today) do
       create(:vacancy, status: :published,
-                       expiry_time: Time.zone.now + 1.hour)
+             expiry_time: Time.zone.now + 1.hour)
     end
     describe '#applicable' do
       context 'when expiry time not given' do

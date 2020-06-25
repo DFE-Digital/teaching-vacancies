@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_192733) do
+ActiveRecord::Schema.define(version: 2020_06_19_124028) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "fuzzystrmatch"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "activities", force: :cascade do |t|
     t.uuid "trackable_id"
@@ -224,9 +226,9 @@ ActiveRecord::Schema.define(version: 2020_06_12_192733) do
     t.integer "total_get_more_info_clicks"
     t.datetime "total_get_more_info_clicks_updated_at"
     t.integer "working_patterns", array: true
+    t.boolean "pro_rata_salary"
     t.integer "listed_elsewhere"
     t.integer "hired_status"
-    t.boolean "pro_rata_salary"
     t.datetime "stats_updated_at"
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
@@ -239,9 +241,11 @@ ActiveRecord::Schema.define(version: 2020_06_12_192733) do
     t.string "subjects", array: true
     t.text "school_visits"
     t.text "how_to_apply"
+    t.boolean "initially_indexed", default: false
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
+    t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"

@@ -2,44 +2,6 @@
 
 [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
 
-### Prerequisites
- - [Docker](https://docs.docker.com/docker-for-mac) greater than or equal to `18.03.1-ce-mac64 (24245)`
-
-     We recommend you install Docker from the link above, _not_ using homebrew.
-
-### Setting up the project
-
-1. Copy the docker environment variables:
-
-```bash
-cp docker-compose.env.sample docker-compose.env
-```
-
-2. Navigate to the secrets repository, and [fill in][docs-to-read-secrets] any missing secrets from the [docker-compose.env.gpg][secret-docker-compose].
-
-```
-bin/pass secrets/dev/docker-compose.env > path/to/teacher-vacancy-service/docker-compose.env
-```
-
-3. [Follow these instructions to configure HTTPS](config/localhost/https/README.md)
-
-4. Build the docker container, set up the database, and start the application at https://localhost:3000
-
-```bash
-bin/drebuild
-```
-
-[secret-docker-compose]:
-https://github.com/DFE-Digital/teaching-vacancies-service-secrets/blob/master/secrets/dev/docker-compose.env.gpg
-[docs-to-read-secrets]:
-https://github.com/DFE-Digital/teaching-vacancies-service-secrets#reading-secrets
-
-### Starting the application
-
-```bash
-bin/dstart
-```
-
 ## User accounts & data
 
 Before you can log in to the application locally you will need a __DfE Sign-in__ and an __invitation to join Teaching
@@ -50,50 +12,81 @@ Vacancies__. Talk to the team to get these set up.
 Populate your environment with real school data. This is taken from
 [GIAS](https://get-information-schools.service.gov.uk/)
 
-In Docker:
-
-```bash
-bin/drake data:schools:import
-```
-
-Outside Docker:
-
 ```bash
 rake data:schools:import
 ```
+## Algolia indexing
+
+We use [Algolia's](https://algolia.com) search-as-a-service offering to provide an advanced search experience for our
+jobseekers. 
+
+### Environment Variables 
+
+```bash
+ALGOLIA_APP_ID=<Get from API Keys on Algolia Dashboard>
+ALGOLIA_SEARCH_API_KEY=<Get from API Keys on Algolia Dashboard>
+ALGOLIA_WRITE_API_KEY=<Get from API Keys on Algolia Dashboard>
+```
+
+Use keys for one of the existing development sandboxes, or make new ones, if you are working locally.
+
+### Quickstart
+
+```ruby
+  # To manually load an index with live records for the first time:
+  Vacancy.reindex!
+  # This now only loads records that are scoped `.live`
+
+  # To update a live index with newly published records using minimal operations:
+  Vacancy.update_index!
+
+  # To remove records that expired yesterday:
+  Vacancy.remove_vacancies_that_expired_yesterday!
+
+  # To remove all expired vacancies. 
+  Vacancy.index.delete_objects(Vacancy.expired.map(&:id))
+  # You should generally avoid doing this as it will create a large number of unnecessary operations 
+  # once these are being filtered out of the regular indexing operations.
+```
+
+Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
+
+### Development
+
+When developing with [Algolia](https://algolia.com) you will find that *non-production environments will not start if
+you try to use the Algolia production app*. There are multiple Algolia `Development` apps available and you are free to
+make more if you need them. Details and api keys for the existing ones are available on the Algolia dashboard. You can
+also make as many more free-tier apps as you like for testing, dev, etc.  
+
+If you do make new free-tier Algolia apps please make sure you include your name and/or ticket/PR numbers in the name so
+we can keep track of these and clear them out occasionally. 
+
+Let your colleagues know if you take over an existing development app to be sure you don't accidentally step on anyone's
+toes. 
+
+#### Note on Free-Tier Algolia Apps
+
+Free/Community Tier Apps do not have team functionality. This means that you will not be able to access the dashboard
+for apps that other people have created and they will not be able to access the dashboard for yours. If you need to
+share an app dashboard between multiple users create it using the `teachingjobs` account. 
+
+### Indexing live records
+
+We originally started by indexing all records. It became apparent that this had unnecessary cost implications, so the
+codebase was refactored to index only live (or `listed`) records. The [Algolia](https://algoliac.om) Rails plugin is
+now set so it automatically updates existing live records if they change. 
+
+NOTE: The default `#reindex!` method, added by the Algolia gem, has been overridden so it only indexes Vacancies records
+that fall under the scope `#live`. This is to ensure that expired and unpublished records do not get accidentally added. 
 
 ## Running the tests
 
-There are two ways that you can run the tests.
+### Ruby 
 
-### In development
-
-Because the setup and teardown introduces quite some latency, we use the spring service to start up all dependencies in
-a docker container. This makes the test run faster.
-
-Get the test server up and running
-```bash
-bin/dtest-server
-```
-
-Run the specs. When no arguments are specified, the default rake task is executed.
+This uses a standard `rspec` and `rubocop` stack. To run these locally:
 
 ```bash
-bin/dspec <args>
-```
-
-To run a single spec file, the `args` are simply the path to the desired spec file:line number, e.g.
-
-```bash
-bin/dspec spec/features/job_seekers_can_view_vacancies_spec.rb:23
-```
-
-### Full run (before you push to github)
-
-Rebuilds the test server, runs rubocop checks, all tests (both specs and javascript) and cleans up.
-
-```bash
-bin/dtests
+bin/rake
 ```
 
 ## Troubleshooting
@@ -103,29 +96,22 @@ _I see Page Not Found when I log in and try to create a job listing_
 Try importing the school data if you have not already. When your sign in account was created, it was assigned to a
 school via a URN, and you may not have a school in your database with the same URN.
 
-## Running outside of docker
+## Dependencies
 
-### Background
-
-It may be useful to be able to run the codebase outside of the docker containers. For example, you might be working a
-small VM or a slow machine and docker would introduce an unnecessarily high overhead.
-
-### Dependencies
-
-#### Baseline
+### Baseline
 
 ```bash
 Ruby 2.6.6
 ```
 
-#### Services
+### Services
 
 Make sure you have the following services configured and running on your development background:
 
  * [Postgresql](https://postgresql.org)
  * [Redis](https://redis.io)
 
-#### Test and development dependencies
+### Test and development dependencies
 
  * [PhantomJS](https://phantomjs.org)
 

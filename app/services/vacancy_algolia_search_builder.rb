@@ -14,6 +14,8 @@ class VacancyAlgoliaSearchBuilder
     self.keyword = params[:keyword]
 
     self.location_filter = {}
+    # Although we are no longer indexing expired and pending vacancies, we need to maintain this filter for now as
+    # expired vacancies only get removed from the index once a day.
     self.search_filter = 'listing_status:published AND '\
                          "publication_date_timestamp <= #{published_today_filter} AND "\
                          "expires_at_timestamp > #{expired_now_filter}"
@@ -117,11 +119,7 @@ class VacancyAlgoliaSearchBuilder
 
   def build_search_replica
     return nil if sort_by.blank?
-    self.search_replica = ['Vacancy', test_search_replica, sort_by].reject(&:blank?).join('_')
-  end
-
-  def test_search_replica
-    Rails.env.test? ? "test#{ENV.fetch('GITHUB_RUN_ID', '')}" : ''
+    self.search_replica = ['Vacancy', sort_by].reject(&:blank?).join('_')
   end
 
   def published_today_filter
