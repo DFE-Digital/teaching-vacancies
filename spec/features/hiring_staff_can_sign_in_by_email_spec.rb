@@ -22,8 +22,8 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
   end
 
   context 'user flow' do
-    let(:school) { create(:school) }
-    let(:other_school) { create(:school) }
+    let(:school) { create(:school, name: 'Some school') }
+    let(:other_school) { create(:school, name: 'Some other school') }
     let(:user) { create(:user, dsi_data: dsi_data, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
