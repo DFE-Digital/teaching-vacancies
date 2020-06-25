@@ -24,9 +24,12 @@ class ImportSchoolGroupData
   end
 
   def create_school_groups(row)
-    SchoolGroup.transaction do
-      school_group = convert_to_school_group(row)
-      school_group.save
+    # Only import MAT data
+    if row['Group Type (code)'] == '06'
+      SchoolGroup.transaction do
+        school_group = convert_to_school_group(row)
+        school_group.save
+      end
     end
   end
 
