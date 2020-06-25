@@ -44,6 +44,7 @@ class SubscriptionPresenter < BasePresenter
   def search_criteria_field(field, value)
     return if field.eql?('radius')
     return if field.eql?('location_category')
+    return if field.eql?('jobs_sort')
 
     return render_location_filter(
       search_criteria_to_h['location_category'], value, search_criteria_to_h['radius']
