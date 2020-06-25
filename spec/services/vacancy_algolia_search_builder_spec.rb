@@ -88,7 +88,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       end
     end
 
-    describe '#sort' do
+    context 'sorting' do
       let(:keyword) { nil }
       let(:jobs_sort) { nil }
       let(:params) do
