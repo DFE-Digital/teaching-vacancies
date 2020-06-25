@@ -7,16 +7,11 @@ RSpec.describe ImportSchoolGroupData do
   let(:csv_url) { 'https://csv_endpoint.csv/magic_endpoint/test.csv' }
   let(:temp_file_location) { '/some_temporary_location/test.csv' }
 
-  let(:row) { { 'Group UID': uid } }
-  let(:school_group) { double('school_group') }
-  let(:uid) { 'test_uid' }
-
-  before do
-    stub_const("#{ImportSchoolGroupData}::CSV_URL", csv_url)
-    stub_const("#{ImportSchoolGroupData}::TEMP_CSV_FILE_LOCATION", temp_file_location)
-  end
-
   context '#convert_to_school_group' do
+    let(:row) { { 'Group UID': uid } }
+    let(:school_group) { double('school_group') }
+    let(:uid) { 'test_uid' }
+
     before do
       allow(SchoolGroup).to receive(:find_or_initialize_by).with(
         hash_including(uid: row['Group UID'])).and_return(school_group)
@@ -40,7 +35,7 @@ RSpec.describe ImportSchoolGroupData do
       let(:request_status) { 404 }
 
       it 'raises an HTTP error' do
-        expect { subject.send(:save_csv_file) }.to raise_error do
+        expect { subject.send(:save_csv_file, csv_url, temp_file_location) }.to raise_error do
           HTTParty::ResponseError.new('SchoolGroup CSV file not found.')
         end
       end
@@ -50,7 +45,7 @@ RSpec.describe ImportSchoolGroupData do
       let(:request_status) { 500 }
 
       it 'raises an HTTP error' do
-        expect { subject.send(:save_csv_file) }.to raise_error do
+        expect { subject.send(:save_csv_file, csv_url, temp_file_location) }.to raise_error do
           HTTParty::ResponseError.new('Unexpected problem downloading SchoolGroup CSV file.')
         end
       end
@@ -65,7 +60,7 @@ RSpec.describe ImportSchoolGroupData do
 
       it 'opens a file' do
         expect(File).to receive(:write).with(temp_file_location, request_body, hash_including(mode: 'wb'))
-        subject.send(:save_csv_file)
+        subject.send(:save_csv_file, csv_url, temp_file_location)
       end
     end
   end
