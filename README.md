@@ -51,6 +51,18 @@ Use keys for one of the existing development sandboxes, or make new ones, if you
 
 Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
 
+### Timed jobs 
+
+There are two timed jobs that run in sidekiq cron: 
+
+#### `UpdateAlgoliaIndex`
+
+This runs every five minutes and add vacancies with matured `publish_on` times to the index. 
+
+#### `RemoveVacanciesThatExpiredYesterday`
+
+This runs at 03:00 every day and does exactly what the name says it does. Daily removal is not a problem because expired vacancies that have not yet been removed will be filtered out by the search client and do not show to jobseekers. 
+
 ### Development
 
 When developing with [Algolia](https://algolia.com) you will find that *non-production environments will not start if
@@ -86,7 +98,7 @@ that fall under the scope `#live`. This is to ensure that expired and unpublishe
 
 ## Running the tests
 
-### Ruby 
+### Ruby
 
 This uses a standard `rspec` and `rubocop` stack. To run these locally:
 
