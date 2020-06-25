@@ -90,76 +90,34 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
     context 'sorting' do
       let(:keyword) { nil }
-      let(:jobs_sort) { nil }
+      let(:jobs_sort) { '' }
       let(:params) do
         { keyword: keyword, location: location, jobs_sort: jobs_sort }
       end
 
-      describe 'default sort strategies per scenario when no sort strategy is specified' do
-        context 'and a keyword is specified' do
+      describe 'default sort strategies per scenario when: no sort strategy is specified,' do
+        context 'and a keyword is specified,' do
           let(:keyword) { 'maths teacher' }
-          context 'and a location is specified' do
+          context 'and a location is specified,' do
             it_behaves_like 'a search in the base Vacancy index'
           end
 
-          context 'and a location is NOT specified' do
+          context 'and a location is NOT specified,' do
             let(:location) { nil }
-            it_behaves_like 'a search in the base Vacancy index'
-          end
-
-          context 'and a location is NOT specified (empty string)' do
-            let(:location) { '' }
             it_behaves_like 'a search in the base Vacancy index'
           end
         end
 
-        context 'and a keyword is NOT specified' do
-          context 'and a location is specified' do
+        context 'and a keyword is NOT specified,' do
+          context 'and a location is specified,' do
             it_behaves_like 'a search in the default search replica'
           end
 
-          context 'and a location is NOT specified' do
+          context 'and a location is NOT specified,' do
             let(:location) { nil }
             it_behaves_like 'a search in the default search replica'
 
-            context 'with jobs_sort param present but empty' do
-              let(:jobs_sort) { '' }
-              it_behaves_like 'a search in the default search replica'
-            end
-          end
-
-          context 'and a location is NOT specified (empty string)' do
-            let(:location) { '' }
-            it_behaves_like 'a search in the default search replica'
-
-            context 'with jobs_sort param present but empty' do
-              let(:jobs_sort) { '' }
-              it_behaves_like 'a search in the default search replica'
-            end
-          end
-        end
-
-        context 'and a keyword is NOT specified (empty string)' do
-          let(:keyword) { '' }
-          context 'and a location is specified' do
-            it_behaves_like 'a search in the default search replica'
-          end
-
-          context 'and a location is NOT specified' do
-            let(:location) { nil }
-            it_behaves_like 'a search in the default search replica'
-
-            context 'with jobs_sort param present but empty' do
-              let(:jobs_sort) { '' }
-              it_behaves_like 'a search in the default search replica'
-            end
-          end
-
-          context 'and a location is NOT specified (empty string)' do
-            let(:location) { '' }
-            it_behaves_like 'a search in the default search replica'
-
-            context 'with jobs_sort param present but empty' do
+            context 'with jobs_sort param present but empty,' do
               let(:jobs_sort) { '' }
               it_behaves_like 'a search in the default search replica'
             end
@@ -167,19 +125,19 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
         end
       end
 
-      context 'when an invalid sort strategy is specified' do
+      context 'when an invalid sort strategy is specified,' do
         let(:jobs_sort) { 'worst_listing' }
         it_behaves_like 'a search in the default search replica'
       end
 
-      context 'when a valid non-default sort strategy is specified' do
+      context 'when a valid non-default sort strategy is specified,' do
         let(:jobs_sort) { 'expiry_time_desc' }
 
         it 'uses the specified search replica' do
           expect(subject.search_replica).to eql('Vacancy_expiry_time_desc')
         end
 
-        context 'and a keyword is specified' do
+        context 'and a keyword is specified,' do
           let(:keyword) { 'maths teacher' }
 
           it 'uses the specified search replica' do
