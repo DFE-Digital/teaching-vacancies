@@ -4,10 +4,12 @@ import '../polyfill/remove.polyfill';
 import '../loader';
 import { getPostcodeFromCoordinates } from './api';
 import { enableRadiusSelect, disableRadiusSelect } from '../search/ui/input/radius';
+import Rollbar from './logging'
 
 const loader = new GOVUK.Loader();
 
 export const ERROR_MESSAGE = 'Unable to find your location';
+export const LOGGING_MESSAGE = '[Module: currentLocation]: Unable to find user location';
 
 export const startLoading = (container, input) => {
   input.disabled = true;
@@ -56,6 +58,7 @@ export const onFailiure = () => {
   currentLocation.showErrorMessage(document.getElementById('current-location'));
   disableRadiusSelect();
   currentLocation.stopLoading(document.querySelector('.js-location-finder'), document.querySelector('.js-location-finder__input'));
+  Rollbar.log(LOGGING_MESSAGE);
 };
 
 export const postcodeFromPosition = (position) => getPostcodeFromCoordinates(position.coords.latitude, position.coords.longitude).then((response) => {
