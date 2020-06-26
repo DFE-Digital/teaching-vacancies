@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  web:
+    build:
+      target: production
+      args:
+        bundleWithout: 'development'
+    image: ${DOCKERHUB_USERNAME:-dfedigital}/${DOCKERHUB_IMAGE_NAME:-teaching-vacancies}:${GITHUB_SHA}
+    env_file:
+      - .env
