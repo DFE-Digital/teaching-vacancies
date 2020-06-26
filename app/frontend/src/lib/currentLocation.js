@@ -96,9 +96,9 @@ const currentLocation = {
 
 export default currentLocation;
 
-if (navigator.geolocation) {
-  window.addEventListener('DOMContentLoaded', (event) => {
-    showLocationLink(document.querySelector('.js-location-finder'));
-    init();
-  });
-}
+window.addEventListener('DOMContentLoaded', () => {
+  if (navigator.geolocation && document.querySelector('.js-location-finder')) {
+      showLocationLink(document.querySelector('.js-location-finder'));
+      init();
+  }
+});
