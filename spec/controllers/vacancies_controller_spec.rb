@@ -121,6 +121,21 @@ RSpec.describe VacanciesController, type: :controller do
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
       end
+
+      context 'when parameters do not include a keyword' do
+        let(:params) do
+          {
+            keyword: '',
+            location: 'Torquay',
+            jobs_sort: ''
+          }
+        end
+
+        it 'sets the search replica on VacancyAlgoliaSearchBuilder to the default sort strategy: newest listing' do
+          subject
+          expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql('Vacancy_publish_on_desc')
+        end
+      end
     end
 
     context 'feature flagging' do

@@ -1,5 +1,17 @@
 require 'rails_helper'
 
+RSpec.shared_examples 'a search in the base Vacancy index' do
+  it 'does not use any search replica' do
+    expect(subject.search_replica).to be_nil
+  end
+end
+
+RSpec.shared_examples 'a search in the default search replica' do
+  it 'uses the default search replica' do
+    expect(subject.search_replica).to eql('Vacancy_publish_on_desc')
+  end
+end
+
 RSpec.describe VacancyAlgoliaSearchBuilder do
   subject { described_class.new(params) }
 
@@ -20,13 +32,9 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     }
   end
 
-  context '#initialize' do
+  describe '#initialize' do
     context '#keyword' do
-      let(:params) do
-        {
-          keyword: keyword
-        }
-      end
+      let(:params) { { keyword: keyword } }
 
       it 'adds keyword to the search query' do
         expect(subject.search_query).to eql(keyword)
@@ -35,11 +43,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
     context '#location' do
       context 'location category specified' do
-        let(:params) do
-          {
-            location_category: location_category
-          }
-        end
+        let(:params) { { location_category: location_category } }
 
         it 'adds location to the search query and not the location filter' do
           expect(subject.search_query).to eql(location_category)
@@ -49,11 +53,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
       context 'location specified' do
         context 'no radius specified' do
-          let(:params) do
-            {
-              location: location
-            }
-          end
+          let(:params) { { location: location } }
 
           it 'carries out geographical search around a coordinate location with the default radius' do
             expect(subject.search_query).not_to include(location)
@@ -66,12 +66,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
 
         context 'radius specified' do
           let(:radius) { 30 }
-          let(:params) do
-            {
-              location: location,
-              radius: radius
-            }
-          end
+          let(:params) { { location: location, radius: radius } }
 
           it 'carries out geographical search around a coordinate location with the specified radius' do
             expect(subject.search_query).not_to include(location)
@@ -84,11 +79,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       end
 
       context 'location specified that is also a location category' do
-        let(:params) do
-          {
-            location: location_category
-          }
-        end
+        let(:params) { { location: location_category } }
 
         it 'adds the location to the search query' do
           expect(subject.search_query).to eql(location_category)
@@ -97,56 +88,67 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       end
     end
 
-    context '#sort' do
-      context 'no sort specified' do
-        let(:params) do
-          {}
+    context 'sorting' do
+      let(:keyword) { nil }
+      let(:jobs_sort) { '' }
+      let(:params) do
+        { keyword: keyword, location: location, jobs_sort: jobs_sort }
+      end
+
+      describe 'default sort strategies per scenario when: no sort strategy is specified,' do
+        context 'and a keyword is specified,' do
+          let(:keyword) { 'maths teacher' }
+          context 'and a location is specified,' do
+            it_behaves_like 'a search in the base Vacancy index'
+          end
+
+          context 'and a location is NOT specified,' do
+            let(:location) { nil }
+            it_behaves_like 'a search in the base Vacancy index'
+          end
         end
 
-        it 'does not use a search replica' do
-          expect(subject.search_replica).to be_nil
+        context 'and a keyword is NOT specified,' do
+          context 'and a location is specified,' do
+            it_behaves_like 'a search in the default search replica'
+          end
+
+          context 'and a location is NOT specified,' do
+            let(:location) { nil }
+            it_behaves_like 'a search in the default search replica'
+
+            context 'with jobs_sort param present but empty,' do
+              let(:jobs_sort) { '' }
+              it_behaves_like 'a search in the default search replica'
+            end
+          end
         end
       end
 
-      context 'default sort specified' do
-        let(:params) do
-          {
-            jobs_sort: ''
-          }
-        end
-
-        it 'does not use a search replica' do
-          expect(subject.search_replica).to be_nil
-        end
+      context 'when an invalid sort strategy is specified,' do
+        let(:jobs_sort) { 'worst_listing' }
+        it_behaves_like 'a search in the default search replica'
       end
 
-      context 'invalid sort specified' do
-        let(:params) do
-          {
-            jobs_sort: 'bad_sort'
-          }
+      context 'when a valid non-default sort strategy is specified,' do
+        let(:jobs_sort) { 'expiry_time_desc' }
+
+        it 'uses the specified search replica' do
+          expect(subject.search_replica).to eql('Vacancy_expiry_time_desc')
         end
 
-        it 'does not use a search replica' do
-          expect(subject.search_replica).to be_nil
-        end
-      end
+        context 'and a keyword is specified,' do
+          let(:keyword) { 'maths teacher' }
 
-      context 'valid sort specified' do
-        let(:params) do
-          {
-            jobs_sort: 'publish_on_desc'
-          }
-        end
-
-        it 'uses the correct search replica' do
-          expect(subject.search_replica).to eql('Vacancy_publish_on_desc')
+          it 'uses the specified search replica' do
+            expect(subject.search_replica).to eql('Vacancy_expiry_time_desc')
+          end
         end
       end
     end
   end
 
-  context '#build_stats' do
+  describe '#build_stats' do
     let(:params) { {} }
     let(:page) { 0 }
     let(:pages) { 6 }
@@ -180,7 +182,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     end
   end
 
-  context '#call' do
+  describe '#call' do
     let!(:expired_now) { Time.zone.now }
     let(:sort_by) { '' }
     let(:search_replica) { nil }

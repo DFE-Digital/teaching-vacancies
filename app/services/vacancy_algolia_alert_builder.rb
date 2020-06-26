@@ -13,11 +13,9 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
                          "expires_at_timestamp > #{expired_now_filter}"
     self.filter_array = []
 
-    self.sort_by = subscription_hash[:jobs_sort]
-
     build_subscription_filters(subscription_hash)
     build_search_filter
-
+    initialize_sort_by(subscription_hash[:jobs_sort])
     initialize_location(subscription_hash[:location_category], subscription_hash[:location], subscription_hash[:radius])
     initialize_search
   end

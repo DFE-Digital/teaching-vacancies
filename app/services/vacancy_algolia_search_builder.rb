@@ -20,10 +20,10 @@ class VacancyAlgoliaSearchBuilder
                          "publication_date_timestamp <= #{published_today_filter} AND "\
                          "expires_at_timestamp > #{expired_now_filter}"
 
-    self.sort_by = params[:jobs_sort] if valid_sort?(params[:jobs_sort])
     self.hits_per_page = params[:per_page] || DEFAULT_HITS_PER_PAGE
     self.page = params[:page]
 
+    initialize_sort_by(params[:jobs_sort])
     initialize_location(params[:location_category], params[:location], params[:radius])
     initialize_search
   end
@@ -110,6 +110,15 @@ class VacancyAlgoliaSearchBuilder
 
   def build_search_query
     self.search_query = [keyword, location_category].reject(&:blank?).join(' ')
+  end
+
+  def initialize_sort_by(jobs_sort_param)
+    # A blank `sort_by` results in a search on the main index, Vacancy.
+    if jobs_sort_param.blank? || !valid_sort?(jobs_sort_param)
+      self.sort_by = keyword.blank? ? 'publish_on_desc' : ''
+    else
+      self.sort_by = jobs_sort_param
+    end
   end
 
   def build_location_filter
