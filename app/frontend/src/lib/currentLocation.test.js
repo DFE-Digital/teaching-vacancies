@@ -1,5 +1,5 @@
 import currentLocation, {
-  onSuccess, onFailiure, showErrorMessage, ERROR_MESSAGE,
+  onSuccess, onFailiure, showErrorMessage, ERROR_MESSAGE, postcodeFromPosition,
 } from './currentLocation';
 import radius from '../search/ui/input/radius';
 
@@ -7,7 +7,8 @@ jest.mock('../search/ui/input/radius');
 
 describe('location search box', () => {
   let showErrorMessageMock = null; let stopLoadingMock = null; let enableRadiusMock = null; let
-    disableRadiusMock = null;
+    disableRadiusMock = null; let onSuccessMock = null; let
+    onFailiureMock = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -53,6 +54,43 @@ describe('location search box', () => {
     test('displays correct message in error displayed', () => {
       showErrorMessage(document.getElementById('current-location'));
       expect(document.querySelector('.govuk-error-message').innerHTML).toBe(ERROR_MESSAGE);
+    });
+  });
+
+  describe('postcodeFromPosition', () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
+      currentLocation.onSuccess = jest.fn();
+      onSuccessMock = jest.spyOn(currentLocation, 'onSuccess');
+
+      currentLocation.onFailiure = jest.fn();
+      onFailiureMock = jest.spyOn(currentLocation, 'onFailiure');
+    });
+
+    test('calls onSuccess handler when API returns postcode', () => {
+      postcodeFromPosition({
+        coords: {
+          latitude: 10,
+          longitude: 10,
+        },
+      }, () => Promise.resolve({ status: 200, result: [{ postcode: 'E2 0BT' }] }))
+        .then(() => {
+          expect(onSuccessMock).toHaveBeenCalled();
+          expect(onFailureMock).not.toHaveBeenCalled();
+        });
+    });
+
+    test('calls onFailiure handler when API returns falsy value', () => {
+      postcodeFromPosition({
+        coords: {
+          latitude: 10,
+          longitude: 10,
+        },
+      }, () => Promise.resolve({ status: 200, result: null }))
+        .then(() => {
+          expect(onFailureMock).toHaveBeenCalled();
+          expect(onSuccessMock).not.toHaveBeenCalled();
+        });
     });
   });
 });

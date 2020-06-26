@@ -4,7 +4,7 @@ import '../polyfill/remove.polyfill';
 import '../loader';
 import { getPostcodeFromCoordinates } from './api';
 import { enableRadiusSelect, disableRadiusSelect } from '../search/ui/input/radius';
-import Rollbar from './logging'
+import Rollbar from './logging';
 
 const loader = new GOVUK.Loader();
 
@@ -61,7 +61,7 @@ export const onFailiure = () => {
   Rollbar.log(LOGGING_MESSAGE);
 };
 
-export const postcodeFromPosition = (position) => getPostcodeFromCoordinates(position.coords.latitude, position.coords.longitude).then((response) => {
+export const postcodeFromPosition = (position, apiPromise) => apiPromise(position.coords.latitude, position.coords.longitude).then((response) => {
   if (response && response.result) {
     onSuccess(response.result[0].postcode, document.getElementById('location'));
   } else {
@@ -77,7 +77,9 @@ export const init = () => {
 
     startLoading(document.querySelector('.js-location-finder'), document.querySelector('.js-location-finder__input'));
 
-    navigator.geolocation.getCurrentPosition(postcodeFromPosition, stopLoading);
+    navigator.geolocation.getCurrentPosition((data) => {
+      postcodeFromPosition(data, getPostcodeFromCoordinates);
+    }, stopLoading);
   });
 
   document.querySelector('.js-location-finder__input').addEventListener('focus', () => {
