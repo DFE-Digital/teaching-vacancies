@@ -5,6 +5,7 @@ import 'styles/application.scss';
 
 import Rails from 'rails-ujs';
 
+import 'src/lib/currentLocation'
 import 'src/addTitleToGoogleMapsIframe';
 import 'src/addVacancyStateToDataLayer';
 import 'src/deleteAccordionControl';
@@ -12,7 +13,6 @@ import 'src/deleteDocument';
 import 'src/details';
 import 'src/dismissableElement';
 import 'src/disabledInputs';
-import 'src/fetchLocation';
 import 'src/googleOptimise';
 import 'src/googleTagManagerUrlSnippet';
 import 'src/removeCommaFromNumber';
