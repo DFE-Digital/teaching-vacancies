@@ -1,7 +1,6 @@
 import { setGeocodeAttributes, removeGeocodeAttributes } from '../form';
 import { enableRadiusSelect, disableRadiusSelect } from './radius';
 import { getGeolocatedCoordinates } from '../../../lib/api';
-import '../../../lib/currentLocation';
 
 export const onSubmit = (query, locations, client) => {
   client.helper.setPage(0); // if the search input changes, the page should be reset to 0
