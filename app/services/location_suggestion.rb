@@ -1,5 +1,6 @@
 class LocationSuggestion
   MINIMUM_LOCATION_INPUT_LENGTH = 3
+  NUMBER_OF_SUGGESTIONS = 5
 
   class InsufficientLocationInput < StandardError; end
   class MissingLocationInput < StandardError; end
@@ -14,11 +15,11 @@ class LocationSuggestion
   end
 
   def suggest_locations
-    predictions = get_suggestions_from_google['predictions'].take(5)
+    predictions = get_suggestions_from_google['predictions'].take(NUMBER_OF_SUGGESTIONS)
     suggestions = predictions.map { |prediction| prediction['description'] }
-    matched_terms = predictions.map {
+    matched_terms = predictions.map do
       |prediction| prediction['terms'].select { |term| term['offset'] == 0 }.map { |hit| hit['value'] }
-    }
+    end
     return suggestions, matched_terms
   end
 
