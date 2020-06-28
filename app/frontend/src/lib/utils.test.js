@@ -7,17 +7,17 @@ describe('constructNewUrlWithParams', () => {
     expect(constructNewUrlWithParam(
       'location',
       's',
-      'https://jobs?radius=20&location=&job_title=#vacancy-results',
+      'https://jobs?radius=20&location=&job_title=#job-count',
     )).toBe(
-      'https://jobs?radius=20&location=s&job_title=#vacancy-results',
+      'https://jobs?radius=20&location=s&job_title=#job-count',
     );
 
     expect(constructNewUrlWithParam(
       'location',
       'so',
-      'https://jobs?radius=20&location=s&job_title=#vacancy-results',
+      'https://jobs?radius=20&location=s&job_title=#job-count',
     )).toBe(
-      'https://jobs?radius=20&location=so&job_title=#vacancy-results',
+      'https://jobs?radius=20&location=so&job_title=#job-count',
     );
   });
 });
@@ -74,7 +74,7 @@ describe('convertEpochToUnixTimestamp', () => {
 
 describe('extractQueryParams', () => {
   test('extracts specified query parameters as object of key values from a url string', () => {
-    const url = '/jobs?utf8=%E2%9C%93&keyword=physics&location=london&jobs_sort=&commit=Search#vacancy-results';
+    const url = '/jobs?utf8=%E2%9C%93&keyword=physics&location=london&jobs_sort=&commit=Search#job-count';
     expect(extractQueryParams(url, ['keyword', 'location'])).toStrictEqual({ keyword: 'physics', location: 'london' });
     expect(extractQueryParams(url, ['keyword', 'place'])).toStrictEqual({ keyword: 'physics' });
   });

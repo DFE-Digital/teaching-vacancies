@@ -7,7 +7,7 @@ describe('getJobAlertLink', () => {
     <option value="50">50 miles</option>
 </select>`;
 
-    resultsUrl = 'jobs?utf8=✓&keyword=&location=harlow&commit=Search#vacancy-results';
+    resultsUrl = 'jobs?utf8=✓&keyword=&location=harlow&commit=Search#job-count';
 
     expect(getJobAlertLink(resultsUrl))
       .toBe('/subscriptions/new?search_criteria%5Blocation%5D=harlow&search_criteria%5Bradius%5D=10&');
@@ -19,7 +19,7 @@ describe('getJobAlertLink', () => {
     document.body.innerHTML = `<select name="radius" id="radius"><option value="10">10 mile</option>
       <option value="50">50 miles</option>
   </select>`;
-    resultsUrl = 'jobs?utf8=✓&keyword=teacher&location=london&commit=Search#vacancy-results';
+    resultsUrl = 'jobs?utf8=✓&keyword=teacher&location=london&commit=Search#job-count';
     expect(getJobAlertLink(resultsUrl))
       .toBe('/subscriptions/new?search_criteria%5Bkeyword%5D=teacher&search_criteria%5Blocation%5D=london&search_criteria%5Blocation_category%5D=london&');
 
