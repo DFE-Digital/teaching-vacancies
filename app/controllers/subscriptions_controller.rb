@@ -2,6 +2,7 @@ class SubscriptionsController < ApplicationController
   include ParameterSanitiser
 
   before_action :check_email_alerts_feature_flag, except: :unsubscribe
+  skip_before_action :verify_authenticity_token, only: :create
 
   def new
     subscription = Subscription.new(search_criteria: search_criteria_params.to_json)
