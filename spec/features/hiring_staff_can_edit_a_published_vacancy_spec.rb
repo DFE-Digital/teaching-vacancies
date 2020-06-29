@@ -95,28 +95,6 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect(page).to have_content('Assistant Head Teacher')
       end
 
-      scenario 'can edit job role for a legacy vacancy' do
-        # rubocop:disable Rails/SkipsModelValidations
-        vacancy.update_columns(job_roles: [])
-        # rubocop:enable Rails/SkipsModelValidations
-
-        visit edit_school_job_path(vacancy.id)
-
-        expect(page).to have_content(I18n.t('jobs.job_details'))
-        expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
-        expect(page).to have_selector('.new-job_details')
-
-        click_header_link(I18n.t('jobs.job_details'))
-
-        fill_in_job_specification_form_fields(vacancy)
-
-        click_on I18n.t('buttons.update_job')
-
-        expect(page).to have_content(I18n.t('jobs.job_details'))
-        expect(page).to_not have_selector('.new-job_details')
-        expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
-      end
-
       scenario 'ensures the vacancy slug is updated when the title is saved' do
         vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
         visit edit_school_job_path(vacancy.id)

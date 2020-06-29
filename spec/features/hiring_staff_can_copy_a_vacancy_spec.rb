@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.feature 'Copying a vacancy' do
   let(:school) { create(:school) }
 
@@ -182,43 +183,6 @@ RSpec.feature 'Copying a vacancy' do
 
       click_on I18n.t('buttons.save_and_continue')
       expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.invalid'))
-    end
-  end
-
-  context '#job_roles' do
-    context 'when a copied job has no job role set' do
-      scenario 'it shows the job role field' do
-        original_vacancy = build(:vacancy, :past_publish, job_roles: nil, school: school)
-        original_vacancy.save(validate: false)
-
-        visit school_path
-
-        within('table.vacancies') do
-          click_on I18n.t('jobs.copy_link')
-        end
-
-        within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
-        end
-        expect(page).to have_content(I18n.t('jobs.job_roles'))
-      end
-    end
-
-    context 'when a copied job has job role set' do
-      scenario 'it does not show the job role field' do
-        original_vacancy = create(:vacancy, school: school)
-
-        visit school_path
-
-        within('table.vacancies') do
-          click_on I18n.t('jobs.copy_link')
-        end
-
-        within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
-        end
-        expect(page).to_not have_content(I18n.t('jobs.job_roles'))
-      end
     end
   end
 
