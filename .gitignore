@@ -51,7 +51,8 @@ terraform.tfstate.d/
 ./*.tfstate
 .terraform/
 .terraform.tfstate.lock.info
-workspace-variables/*.tfvars
+*.tfvars
+tokens
 
 # ENV files
 .env*

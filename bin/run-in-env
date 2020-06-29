@@ -1,0 +1,131 @@
+#!/usr/bin/env ruby
+
+require 'getoptlong'
+require 'logger'
+require 'yaml'
+require 'aws-sdk-ssm'
+require 'erb'
+
+@log = Logger.new(STDOUT)
+@log.level = Logger::INFO
+
+def usage
+  puts <<~EOF
+  Usage: run_in_env.sh -e <env> [-o <output>] [-f <output_file>] [-- <command>]
+  Arguments:
+    -e (--env): environment
+    -o (--output):
+      stdout (default): Write raw config to standard out
+      env_file: Write to a .env file to set up shell environment. Must provide -f
+      subshell: Run command in a subshell with env. variables. Must provide command
+      tf_subshell: Run command in a subshell with terraform env. variables. Must provide command
+    -f (--output_file): path to output file
+  EOF
+  exit(1)
+end
+
+def should_run_command_in_subshell(output)
+  output == 'subshell' || output == 'tf_subshell'
+end
+
+def run_command_with_env(config_map, command)
+  @log.debug 'Running command: ' + command
+  ENV.update(config_map)
+  exec command
+end
+
+def pull_config_from_aws(env)
+  param_name = "/config/#{env}"
+  @log.debug('Fetching parameter ' + param_name)
+  ssm_client = Aws::SSM::Client.new(region: 'eu-west-2')
+
+  response = ssm_client.get_parameter({
+    name: param_name,
+    with_decryption: true,
+  })
+
+  YAML.load(response.parameter.value)
+end
+
+def make_tf_vars_map(config_map)
+  @log.debug 'Transforming variables into terraform TF_VAR_* variables'
+
+  config_map.map { |k, v| ["TF_VAR_#{k}", v] }.to_h
+end
+
+def create_env_file(config_map, output_file)
+  @log.debug 'Writing shell environment file: ' + output_file
+  shell_template = <<~EOF
+  <% for k,v in config_map %><%= k %>=<%= v %>
+  <% end %>
+  EOF
+  erb = ERB.new shell_template
+
+  File.write(output_file, erb.result)
+end
+
+##### Configuration #####
+opts = GetoptLong.new(
+  [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+  [ '--env', '-e', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--output', '-o', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--output_file', '-f', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--verbose', '-v', GetoptLong::NO_ARGUMENT ]
+)
+
+env = nil
+output = nil
+output_file = nil
+command = nil
+
+opts.each do |opt, arg|
+  case opt
+  when '--help'
+    usage
+  when '--env'
+    env = arg
+  when '--output'
+    output = arg
+  when '--output_file'
+    output_file = arg
+  when '--verbose'
+    @log.level = Logger::DEBUG
+  end
+end
+
+##### Validation #####
+usage unless env
+output = 'stdout' unless output
+
+if should_run_command_in_subshell(output)
+  command = ARGV[0..].join(' ')
+  usage unless command != ''
+end
+
+if output == 'env_file' && ! output_file
+  usage
+end
+
+##### Pull data #####
+@log.debug 'Running in environment: ' + env
+config_map = pull_config_from_aws env
+
+##### Transform #####
+if output == 'tf_subshell'
+  config_map = make_tf_vars_map config_map
+end
+
+@log.debug "Configuration: #{config_map}"
+
+##### Output #####
+if output == 'stdout'
+  puts config_map
+end
+
+if output == 'env_file'
+  create_env_file(config_map, output_file)
+end
+
+if should_run_command_in_subshell(output)
+  run_command_with_env(config_map, command)
+end

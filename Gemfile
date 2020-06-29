@@ -59,6 +59,7 @@ gem 'webpacker'
 gem 'xml-sitemap'
 
 group :development do
+  gem 'aws-sdk-ssm', '~> 1.83.0'
   gem 'launchy'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
