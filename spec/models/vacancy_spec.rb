@@ -56,7 +56,6 @@ RSpec.describe Vacancy, type: :model do
   describe 'validations' do
     context 'a new record' do
       it { should validate_presence_of(:job_title) }
-      it { should validate_presence_of(:job_roles) }
       it { should validate_presence_of(:job_summary) }
       it { should validate_presence_of(:working_patterns) }
       it { should validate_presence_of(:salary) }
