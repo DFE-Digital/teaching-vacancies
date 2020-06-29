@@ -36,7 +36,7 @@ export const showLocationLink = (container) => {
 };
 
 export const showErrorMessage = (link) => {
-  if (!document.getElementsByClassName('js-location-finder__link .govuk-error-message')[0]) {
+  if (!document.querySelector('.js-location-finder__link .govuk-error-message')) {
     const errorMessage = document.createElement('div');
     errorMessage.classList.add('govuk-error-message');
     errorMessage.classList.add('govuk-!-margin-top-2');
@@ -46,8 +46,8 @@ export const showErrorMessage = (link) => {
 };
 
 export const removeErrorMessage = () => {
-  if (document.getElementsByClassName('js-location-finder__link .govuk-error-message')[0]) {
-    document.getElementsByClassName('js-location-finder__link .govuk-error-message')[0].remove();
+  if (document.querySelector('.js-location-finder__link .govuk-error-message')) {
+    document.querySelector('.js-location-finder__link .govuk-error-message').remove();
   }
 };
 
@@ -82,7 +82,10 @@ export const init = () => {
 
     navigator.geolocation.getCurrentPosition((data) => {
       postcodeFromPosition(data, getPostcodeFromCoordinates);
-    }, stopLoading);
+    }, () => {
+      stopLoading(containerEl, inputEl);
+      showErrorMessage(document.getElementById('current-location'));
+    });
   });
 
   inputEl.addEventListener('focus', () => {
