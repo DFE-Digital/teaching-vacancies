@@ -24,14 +24,6 @@
         %span#copy_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
 
-      - unless @vacancy.job_roles.present?
-        = f.govuk_collection_check_boxes :job_roles,
-          job_role_options,
-          :itself,
-          :itself,
-          legend: { text: t('helpers.fieldset.job_specification_form.job_roles_html') },
-          hint_text: t('helpers.hint.job_specification_form.job_roles')
-
       - unless @vacancy.about_school.present?
         = f.govuk_text_area :about_school,
           label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: current_school.name), size: 's' },

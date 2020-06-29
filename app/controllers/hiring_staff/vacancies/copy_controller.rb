@@ -28,10 +28,8 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
   end
 
   def copy_form_params
-    strip_empty_checkboxes(:copy_vacancy_form, [:job_roles])
     params.require(:copy_vacancy_form).permit(:state, :job_title, :about_school,
                                               :publish_on, :expires_on, :starts_on,
-                                              :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem,
-                                              job_roles: [])
+                                              :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
   end
 end
