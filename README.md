@@ -1,8 +1,16 @@
 # Teacher Vacancy Service (TVS)
 
-[API Documentation](https://docs.teaching-vacancies.service.gov.uk)
+* [Algolia Indexing](#algolia-indexing)
+* [API Documentation](https://docs.teaching-vacancies.service.gov.uk) (External link)
+* [API Keys](#api-keys)
+* [Dependencies](#dependencies)
+* [Importing school data](#importing-school-data)
+* [Misc](#misc)
+* [Running the tests](#running-the-tests)
+* [Troubleshooting](#troubleshooting)
+* [User accounts](#user-accounts)
 
-## User accounts & data
+## User accounts 
 
 Before you can log in to the application locally you will need a __DfE Sign-in__ and an __invitation to join Teaching
 Vacancies__. Talk to the team to get these set up.
