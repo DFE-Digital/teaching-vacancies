@@ -8,6 +8,9 @@ import Rollbar from './logging';
 
 const loader = new GOVUK.Loader();
 
+const containerEl = document.getElementsByClassName('js-location-finder')[0];
+const inputEl = document.getElementsByClassName('js-location-finder__input')[0];
+
 export const ERROR_MESSAGE = 'Unable to find your location';
 export const LOGGING_MESSAGE = '[Module: currentLocation]: Unable to find user location';
 
@@ -51,13 +54,13 @@ export const removeErrorMessage = () => {
 export const onSuccess = (postcode, element) => {
   element.value = postcode;
   enableRadiusSelect();
-  currentLocation.stopLoading(document.querySelector('.js-location-finder'), document.querySelector('.js-location-finder__input'));
+  currentLocation.stopLoading(containerEl, inputEl);
 };
 
 export const onFailiure = () => {
   currentLocation.showErrorMessage(document.getElementById('current-location'));
   disableRadiusSelect();
-  currentLocation.stopLoading(document.querySelector('.js-location-finder'), document.querySelector('.js-location-finder__input'));
+  currentLocation.stopLoading(containerEl, inputEl);
   Rollbar.log(LOGGING_MESSAGE);
 };
 
@@ -75,14 +78,17 @@ export const init = () => {
   document.getElementById('current-location').addEventListener('click', (event) => {
     event.stopPropagation();
 
-    startLoading(document.querySelector('.js-location-finder'), document.querySelector('.js-location-finder__input'));
+    startLoading(containerEl, inputEl);
 
     navigator.geolocation.getCurrentPosition((data) => {
       postcodeFromPosition(data, getPostcodeFromCoordinates);
-    }, stopLoading);
+    }, () => {
+      stopLoading(containerEl, inputEl);
+      showErrorMessage(document.getElementById('current-location'));
+    });
   });
 
-  document.querySelector('.js-location-finder__input').addEventListener('focus', () => {
+  inputEl.addEventListener('focus', () => {
     removeErrorMessage();
   });
 };
@@ -97,8 +103,8 @@ const currentLocation = {
 export default currentLocation;
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (navigator.geolocation && document.querySelector('.js-location-finder')) {
-      showLocationLink(document.querySelector('.js-location-finder'));
+  if (navigator.geolocation && containerEl) {
+      showLocationLink(containerEl);
       init();
   }
 });
