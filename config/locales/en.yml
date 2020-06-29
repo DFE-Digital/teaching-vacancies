@@ -118,7 +118,7 @@ en:
         starts_on: "Date job starts"
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
-        job_roles_html: "Job role (<span class='text-red'>Required</span>)"
+        job_roles: Job role
         subjects: Subject(s)
         working_pattern_html: "Working patterns (<span class='text-red'>Required</span>)"
       pay_package_form:
