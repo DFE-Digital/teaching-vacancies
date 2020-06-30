@@ -29,11 +29,11 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
         tags: ${{ env.GITHUB_SHA }}
-        target: production        
+        target: production
 
   deploy_production:
     name: Deploy to Production
-    needs: [deploy_image]
+    needs: [build_image]
     runs-on: ubuntu-latest
 
     steps:
@@ -66,7 +66,7 @@ jobs:
         cf7 api $CF_API_ENDPOINT
         cf7 auth
         cf7 target -o $CF_ORG -s $CF_SPACE
-        cf7 push -f paas/web/manifest-docker.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA -var APP_NAME=teaching-vacancies-docker-staging
+        cf7 push -f paas/web/manifest-docker.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA --var APP_NAME=teaching-vacancies-docker-staging
       env:
         CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
