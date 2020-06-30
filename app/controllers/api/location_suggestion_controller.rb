@@ -3,7 +3,11 @@ class Api::LocationSuggestionController < Api::ApplicationController
   before_action :check_valid_params, only: %i[show]
 
   def show
-    suggestions, matched_terms = LocationSuggestion.new(location).suggest_locations
+    begin
+      suggestions, matched_terms = LocationSuggestion.new(location).suggest_locations
+    rescue HTTParty::ResponseError, LocationSuggestion::GooglePlacesAutocompleteError => e
+      return render(json: { error: e }, status: :bad_request)
+    end
 
     render json: {
       query: location,
