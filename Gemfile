@@ -15,8 +15,6 @@ gem 'algoliasearch-rails'
 gem 'array_enum'
 gem 'breasal', '~> 0.0.1'
 gem 'browser'
-gem 'colorize'
-gem 'faraday_middleware-aws-signers-v4'
 gem 'figaro'
 gem 'friendly_id'
 gem 'geocoder'
@@ -46,7 +44,6 @@ gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2
 gem 'recaptcha'
 gem 'redis'
 gem 'redis-objects'
-gem 'roadie-rails'
 gem 'rollbar', '~> 2.22'
 gem 'rubocop', '~> 0.77.0'
 gem 'rubocop-rails_config', '~> 0.9.0'
@@ -70,8 +67,6 @@ end
 group :development, :test do
   gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'coffee-rails'
-  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
@@ -88,7 +83,6 @@ group :test do
   gem 'mock_redis'
   gem 'poltergeist'
   gem 'rack_session_access'
-  gem 'rspec-collection_matchers'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'webmock', '~> 3.7'
 end
