@@ -48,7 +48,7 @@ RSpec.describe ImportantDatesForm, type: :model do
         important_dates = ImportantDatesForm.new(starts_on: nil)
         important_dates.valid?
 
-        expect(important_dates).to have(:no).errors_on(:starts_on)
+        expect(important_dates.errors.messages[:starts_on]).to be_empty
       end
 
       it 'must be in the future' do
