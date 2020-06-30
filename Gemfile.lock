@@ -100,7 +100,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    colorize (0.8.1)
     concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     crack (0.4.3)
@@ -529,7 +528,6 @@ DEPENDENCIES
   byebug
   capybara (~> 3.29)
   coffee-rails
-  colorize
   database_cleaner
   dotenv-rails
   factory_bot_rails
