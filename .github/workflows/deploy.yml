@@ -5,10 +5,35 @@ on:
     branches:
       - master
 
-jobs:
-  deploy:
-    name: Deploy to Production
+env:
+ DOCKERHUB_REPOSITORY: 'dfedigital/teaching-vacancies'
 
+jobs:
+  build_image:
+    name: build & publish docker image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout Code
+
+    - name: prepare env
+      run: |
+        gpg --quiet --batch --yes --decrypt --passphrase="$DOTENV_PASSPHRASE" --output .env dotenv.gpg
+      env:
+        DOTENV_PASSPHRASE: ${{ secrets.DOTENV_PASSPHRASE }}
+
+    - name: build and push docker image
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: ${{ env.DOCKERHUB_REPOSITORY }}
+        tags: ${{ env.GITHUB_SHA }}
+        target: production        
+
+  deploy_production:
+    name: Deploy to Production
+    needs: [deploy_image]
     runs-on: ubuntu-latest
 
     steps:
@@ -36,13 +61,23 @@ jobs:
         cf7 push --strategy rolling -f paas/web/manifest-production.yml
         cf7 push -f paas/worker/manifest-production.yml
 
+    - name: Deploy docker image
+      run: |
+        cf7 api $CF_API_ENDPOINT
+        cf7 auth
+        cf7 target -o $CF_ORG -s $CF_SPACE
+        cf7 push -f paas/web/manifest-docker.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA -var APP_NAME=teaching-vacancies-docker-staging
+      env:
+        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+        CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_ORG: ${{ secrets.CF_ORG }}
+        CF_SPACE: ${{ secrets.CF_STAGING_SPACE }}
+
   notify:
-    needs: deploy
-
+    needs: deploy_production
     name: Slack notification
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Send slack message to twd_tv_dev channel
         uses: rtCamp/action-slack-notify@v2.0.2

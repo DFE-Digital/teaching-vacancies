@@ -17,7 +17,7 @@ RUN apk add --no-cache libxml2 libxslt libpq tzdata nodejs && \
         bundle exec rake webpacker:compile
 
 # this stage reduces the image size.
-FROM ruby:2.6.6-alpine AS prod
+FROM ruby:2.6.6-alpine AS production
 WORKDIR /teacher-vacancy
 
 COPY --from=dev-build /teacher-vacancy /teacher-vacancy
@@ -29,6 +29,7 @@ RUN apk update && apk add --no-cache libxml2 libxslt libpq tzdata nodejs && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
         rm -rf node_modules log tmp yarn.lock && \
         rm -rf /usr/local/bundle/cache && \
+        rm -rf .env && touch .env && \
         find /usr/local/bundle/gems -name "*.c" -delete && \
         find /usr/local/bundle/gems -name "*.h" -delete && \
         find /usr/local/bundle/gems -name "*.o" -delete && \

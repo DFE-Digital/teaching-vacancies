@@ -56,6 +56,9 @@ tokens
 
 # ENV files
 .env*
+dotenv*
+!dotenv*.gpg
+**/**/cf-vars*.yml
 
 # Certificates
 config/localhost/https/*.key

@@ -14,7 +14,7 @@ services:
     build:
       context: .
       target: dev-build
-    image: teacher-vacancy-services
+    image: teaching-vacancies
     ports:
       - '3000:3000'
     environment:
@@ -29,7 +29,7 @@ services:
       - redis
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"
   sidekiq:
-    image: teacher-vacancy-services
+    image: teaching-vacancies
     environment:
       RAILS_ENV: development
       DATABASE_URL: 'postgres://postgres:password@db:5432/tvs_development?template=template0&pool=5&encoding=unicode'

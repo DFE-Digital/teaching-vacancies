@@ -13,6 +13,10 @@ package-lock.json
 /terraform/*
 *.tf
 
+#.env files
+dotenv*
+**/**/cf-vars*.yml
+
 config/application.yml
 config/localhost/https/*.key
 config/localhost/https/*.crt
