@@ -44,7 +44,6 @@ gem 'rails-html-sanitizer', '~> 1.3.0' # Must be above this version due to CVE-2
 gem 'recaptcha'
 gem 'redis'
 gem 'redis-objects'
-gem 'roadie-rails'
 gem 'rollbar', '~> 2.22'
 gem 'rubocop', '~> 0.77.0'
 gem 'rubocop-rails_config', '~> 0.9.0'
