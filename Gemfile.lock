@@ -93,13 +93,6 @@ GEM
       xpath (~> 3.2)
     cliver (0.3.2)
     coderay (1.1.2)
-    coffee-rails (5.0.0)
-      coffee-script (>= 2.2.0)
-      railties (>= 5.2.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     crack (0.4.3)
@@ -118,7 +111,6 @@ GEM
     erubis (2.7.0)
     et-orbi (1.2.4)
       tzinfo
-    execjs (2.7.0)
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
     factory_bot_rails (5.1.1)
@@ -519,7 +511,6 @@ DEPENDENCIES
   bullet
   byebug
   capybara (~> 3.29)
-  coffee-rails
   database_cleaner
   dotenv-rails
   factory_bot_rails
