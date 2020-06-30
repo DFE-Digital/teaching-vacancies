@@ -10,12 +10,14 @@ See main README.md for instructions how to create new dev indexes.
   end
 end
 
-if !Rails.env.production? && ENV.fetch('ALGOLIA_APP_ID') == ALGOLIA_PRODUCTION_APP_ID
+if !Rails.env.production? && ENV['ALGOLIA_APP_ID'] == ALGOLIA_PRODUCTION_APP_ID
   raise AlgoliaEnvironmentError.new
 end
 
-AlgoliaSearch.configuration = {
-  application_id: ENV.fetch('ALGOLIA_APP_ID'),
-  api_key: ENV.fetch('ALGOLIA_WRITE_API_KEY'),
-  pagination_backend: :kaminari
-}
+if ENV['ALGOLIA_APP_ID']
+  AlgoliaSearch.configuration = {
+    application_id: ENV['ALGOLIA_APP_ID'],
+    api_key: ENV['ALGOLIA_WRITE_API_KEY'],
+    pagination_backend: :kaminari
+  }
+end
