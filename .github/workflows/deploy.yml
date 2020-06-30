@@ -6,7 +6,7 @@ on:
       - master
 
 env:
- DOCKERHUB_REPOSITORY: 'dfedigital/teaching-vacancies'
+ DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
 
 jobs:
   build_image:
@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
-        tags: ${{ env.GITHUB_SHA }}
+        tags: ${{ github.sha }}
         target: production
 
   deploy_production:
@@ -48,6 +48,7 @@ jobs:
         sudo cp /tmp/cf7 /usr/local/bin/cf7
 
     - name: Deploy to production
+      if: github.ref == 'refs/heads/master'
       env:
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
