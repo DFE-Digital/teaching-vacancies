@@ -20,7 +20,7 @@ class LocationSuggestion
     matched_terms = predictions.map do
       |prediction| prediction['terms'].select { |term| term['offset'] == 0 }.map { |hit| hit['value'] }
     end
-    return suggestions, matched_terms
+    [suggestions, matched_terms]
   end
 
   private
