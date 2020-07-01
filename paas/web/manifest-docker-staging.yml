@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: ((APP_NAME))
+  - name: teaching-vacancies-docker-staging
     docker:
       image: ((IMAGE_NAME))
     env:

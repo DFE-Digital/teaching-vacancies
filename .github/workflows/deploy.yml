@@ -67,7 +67,7 @@ jobs:
         cf7 api $CF_API_ENDPOINT
         cf7 auth
         cf7 target -o $CF_ORG -s $CF_SPACE
-        cf7 push -f paas/web/manifest-docker.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA --var APP_NAME=teaching-vacancies-docker-staging
+        cf7 push -f paas/web/manifest-docker-staging.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
         cf7 push -f paas/worker/manifest-docker-staging.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
       env:
         CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
