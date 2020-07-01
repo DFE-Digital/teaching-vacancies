@@ -1,5 +1,5 @@
 import currentLocation, {
-  onSuccess, onFailiure, showErrorMessage, ERROR_MESSAGE, postcodeFromPosition,
+  onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, postcodeFromPosition,
 } from './currentLocation';
 import radius from '../search/ui/input/radius';
 
@@ -8,7 +8,7 @@ jest.mock('../search/ui/input/radius');
 describe('location search box', () => {
   let showErrorMessageMock = null; let stopLoadingMock = null; let enableRadiusMock = null; let
     disableRadiusMock = null; let onSuccessMock = null; let
-    onFailiureMock = null;
+    onFailureMock = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -27,7 +27,7 @@ describe('location search box', () => {
 
   describe('onFaliure', () => {
     test('updates the UI correctly and adds error message', () => {
-      onFailiure();
+      onFailure();
       expect(document.getElementById('location').value).toBe('');
       expect(disableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
@@ -63,8 +63,8 @@ describe('location search box', () => {
       currentLocation.onSuccess = jest.fn();
       onSuccessMock = jest.spyOn(currentLocation, 'onSuccess');
 
-      currentLocation.onFailiure = jest.fn();
-      onFailiureMock = jest.spyOn(currentLocation, 'onFailiure');
+      currentLocation.onFailure = jest.fn();
+      onFailureMock = jest.spyOn(currentLocation, 'onFailure');
     });
 
     test('calls onSuccess handler when API returns postcode', () => {
@@ -80,7 +80,7 @@ describe('location search box', () => {
         });
     });
 
-    test('calls onFailiure handler when API returns falsy value', () => {
+    test('calls onFailure handler when API returns falsy value', () => {
       postcodeFromPosition({
         coords: {
           latitude: 10,

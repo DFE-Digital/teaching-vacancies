@@ -85,7 +85,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
           click_on 'Return to your search results'
 
-          expect(page.find('#keyword').value).to eq('teacher')
+          expect(page.find_field('keyword-field').value).to eq('teacher')
         end
       end
     end

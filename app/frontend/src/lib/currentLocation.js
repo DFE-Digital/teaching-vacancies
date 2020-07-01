@@ -57,7 +57,7 @@ export const onSuccess = (postcode, element) => {
   currentLocation.stopLoading(containerEl, inputEl);
 };
 
-export const onFailiure = () => {
+export const onFailure = () => {
   currentLocation.showErrorMessage(document.getElementById('current-location'));
   disableRadiusSelect();
   currentLocation.stopLoading(containerEl, inputEl);
@@ -68,10 +68,10 @@ export const postcodeFromPosition = (position, apiPromise) => apiPromise(positio
   if (response && response.result) {
     onSuccess(response.result[0].postcode, document.getElementById('location'));
   } else {
-    onFailiure();
+    onFailure();
   }
 }).catch(() => {
-  onFailiure();
+  onFailure();
 });
 
 export const init = () => {
