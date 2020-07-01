@@ -7,7 +7,7 @@ https://github.com/DFE-Digital/login.dfe.oidc
 
 ## Getting set up for development
 
-You will need 4 files for this task. Access them from the [secrets repository][secrets-repository]:
+You will need 4 files for this task. Access them from our secrets store (Keybase at time of writing):
 
 - RootCA.pem
 - RootCA.key
