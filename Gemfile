@@ -46,8 +46,6 @@ gem 'recaptcha'
 gem 'redis'
 gem 'redis-objects'
 gem 'rollbar', '~> 2.22'
-gem 'rubocop', '~> 0.77.0'
-gem 'rubocop-rails_config', '~> 0.9.0'
 gem 'sanitize', '~> 5.2'
 gem 'sidekiq'
 gem 'sidekiq-cron', '~> 1.1'
@@ -75,6 +73,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec-rails'
+  gem 'rubocop', '~> 0.77.0'
+  gem 'rubocop-rails_config', '~> 0.9.0'
 end
 
 group :test do
