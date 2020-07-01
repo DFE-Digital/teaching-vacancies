@@ -1,12 +1,15 @@
 ---
 applications:
-  - name: ((APP_NAME))
+  - name: teaching-vacancies-worker-docker-staging
     docker:
       image: ((IMAGE_NAME))
     env:
       RAILS_ENV: staging
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    health-check-type: process
     instances: 1
     memory: 512M
+    no-route: true
     services:
       - teaching-vacancies-postgres-staging
       - teaching-vacancies-redis-staging
