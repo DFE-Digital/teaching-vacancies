@@ -13,7 +13,7 @@ test:
   database: tvs_test
 
 staging:
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
