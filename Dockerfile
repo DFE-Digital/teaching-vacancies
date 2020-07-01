@@ -9,12 +9,11 @@ RUN apk add --no-cache libxml2 libxslt libpq tzdata nodejs && \
         apk add --no-cache --virtual .gem-installdeps $DEV_PACKAGES && \
         gem install bundler:2.1.4 --no-document && \
         bundle -v && \
-        bundle install --no-binstubs --retry=5 --jobs=4 --no-cache && \
+        bundle install --no-binstubs --retry=5 --jobs=4 --no-cache --without development test && \
         echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
         yarn install --check-files && \
-        bundle exec rake assets:precompile && \
-        bundle exec rake webpacker:compile
+        RAILS_ENV=staging bundle exec rake webpacker:compile
 
 # this stage reduces the image size.
 FROM ruby:2.6.6-alpine AS production
