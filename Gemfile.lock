@@ -93,6 +93,7 @@ GEM
       xpath (~> 3.2)
     cliver (0.3.2)
     coderay (1.1.2)
+    colorize (0.8.1)
     concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     crack (0.4.3)
@@ -505,6 +506,7 @@ DEPENDENCIES
   bullet
   byebug
   capybara (~> 3.29)
+  colorize
   database_cleaner
   factory_bot_rails
   faker
