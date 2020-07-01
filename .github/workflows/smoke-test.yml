@@ -50,5 +50,5 @@ jobs:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: Smoke Test
           SLACK_TITLE: Smoke test failed
-          SLACK_MESSAGE: 'Production website smoke test has failed :cry:'
+          SLACK_MESSAGE: 'Production website smoke test has failed :cry: @channel'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
