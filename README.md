@@ -36,7 +36,6 @@ jobseekers.
 
 ```bash
 ALGOLIA_APP_ID=<Get from API Keys on Algolia Dashboard>
-ALGOLIA_SEARCH_API_KEY=<Get from API Keys on Algolia Dashboard>
 ALGOLIA_WRITE_API_KEY=<Get from API Keys on Algolia Dashboard>
 ```
 

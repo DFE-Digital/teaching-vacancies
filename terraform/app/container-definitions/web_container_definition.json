@@ -209,10 +209,6 @@
       {
         "name": "ALGOLIA_WRITE_API_KEY",
         "value": "${algolia_write_api_key}"
-      },
-      {
-        "name": "ALGOLIA_SEARCH_API_KEY",
-        "value": "${algolia_search_api_key}"
       }
     ]
   }
