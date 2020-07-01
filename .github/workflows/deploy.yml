@@ -16,12 +16,6 @@ jobs:
     - uses: actions/checkout@v2
       name: Checkout Code
 
-    - name: prepare env
-      run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="$DOTENV_PASSPHRASE" --output .env dotenv.gpg
-      env:
-        DOTENV_PASSPHRASE: ${{ secrets.DOTENV_PASSPHRASE }}
-
     - name: build and push docker image
       uses: docker/build-push-action@v1.1.0
       with:
