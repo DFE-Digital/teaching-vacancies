@@ -266,7 +266,7 @@ class Vacancy < ApplicationRecord
   end
 
   def location
-    SchoolPresenter.new(school).location
+    SchoolPresenter.new(school).location if school.present?
   end
 
   def coordinates
