@@ -22,3 +22,18 @@ monitoring-plan: ## Validate monitoring changes
 monitoring-apply: ## Apply monitoring changes
 		TF_WORKSPACE=monitoring terraform init -upgrade=true -input=false terraform/monitoring \
 		&& bin/run-in-env -e monitoring -o tf_subshell -- terraform apply -input=false -auto-approve terraform/monitoring
+
+dev:
+		$(eval env=dev)
+
+staging:
+		$(eval env=staging)
+
+deploy-local-image:
+		$(eval repository=dfedigital/teaching-vacancies)
+		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
+		docker build -t $(repository):$(tag) .
+		docker push $(repository):$(tag)
+		cf7 target -o dfe-teacher-services -s teaching-vacancies-$(env)
+		cf7 push -f paas/web/manifest-docker-$(env).yml --var IMAGE_NAME=$(repository):$(tag)
+		cf7 push -f paas/worker/manifest-docker-$(env).yml --var IMAGE_NAME=$(repository):$(tag)
