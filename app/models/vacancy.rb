@@ -222,7 +222,7 @@ class Vacancy < ApplicationRecord
 
   has_many :documents
 
-  delegate :name, to: :school, prefix: true, allow_nil: false
+  delegate :name, to: :school, prefix: true, allow_nil: true
   delegate :geolocation, to: :school, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
