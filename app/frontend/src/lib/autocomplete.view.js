@@ -5,7 +5,7 @@ export const create = (container, input, onSelect) => {
     const ul = document.createElement('ul');
     ul.setAttribute('id', 'location__listbox');
     ul.setAttribute('role', 'listbox');
-    ul.setAttribute('tabindex', 0);
+    ul.setAttribute('tabindex', -1);
 
     ul.classList.add('autocomplete__menu');
     ul.classList.add('autocomplete__menu--overlay');
@@ -88,7 +88,7 @@ export const getOptionIndex = (el) => parseInt(el.getAttribute('aria-posinset'),
 
 export const getFocusedOption = (container) => container.getElementsByClassName('autocomplete__option--focused')[0];
 
-export const getOptionHtml = (refinement) => (hit, index, options) => `<li class="autocomplete__option" id="autocomplete__input__option--${index}" role="option" tabindex="0" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
+export const getOptionHtml = (refinement) => (hit, index, options) => `<li class="autocomplete__option" id="autocomplete__input__option--${index}" role="option" tabindex="-1" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
 
 export const highlightRefinement = (text, refinement) => {
   const index = text.toLowerCase().indexOf(refinement.toLowerCase());
