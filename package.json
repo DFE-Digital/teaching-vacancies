@@ -2,8 +2,7 @@
   "name": "teacher-vacancy-service",
   "private": true,
   "engine": {
-    "node": ">=8.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "dependencies": {
     "@rails/webpacker": "4.2.2",
