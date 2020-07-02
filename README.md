@@ -214,6 +214,26 @@ The source of truth for the Ruby version is the [Gemfile](/Gemfile#L3).
 
 You can use a tool like [asdf](https://asdf-vm.com/#/) to manage your versions of multiple languages.
 
+#### NodeJS
+
+Minimum version required:
+
+```bash
+$ node -v
+
+node (>=) 8.0.0
+```
+
+The source of truth for the NodeJS version is [package.json](/package.json).
+
+*** N.B NPM comes by default with nodeJS but [Yarn](https://classic.yarnpkg.com/en/) is the favoured package manager and should be used so the correct lock file is maintained when new packages are added or removed. ***
+
+To install Yarn (as global dependency)
+
+```bash
+npm install yarn -g
+```
+
 #### Services
 
 Make sure you have the following services configured and running on your development background:
