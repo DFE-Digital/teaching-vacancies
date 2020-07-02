@@ -1,6 +1,10 @@
 {
   "name": "teacher-vacancy-service",
   "private": true,
+  "engine": {
+    "node": "8",
+    "npm": "6"
+  },
   "dependencies": {
     "@rails/webpacker": "4.2.2",
     "algoliasearch": "~4.2.0",
@@ -15,6 +19,7 @@
     "rollbar": "^2.17.0"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.21.2",
@@ -28,7 +33,9 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "test": "yarn run js:check && yarn run sass:check",
+    "server": "rails s -b 'ssl://localhost:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'",
+    "dev": "./bin/webpack-dev-server",
+    "test": "concurrently \"yarn run js:test\" \"yarn run js:lint\" \"yarn run sass:check\"",
     "js:check": "yarn run js:lint && yarn run js:test",
     "sass:check": "yarn run sass:lint",
     "js:test": "jest",
