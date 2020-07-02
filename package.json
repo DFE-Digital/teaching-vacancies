@@ -28,6 +28,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
+    "dev": "./bin/webpack-dev-server",
     "test": "yarn run js:check && yarn run sass:check",
     "js:check": "yarn run js:lint && yarn run js:test",
     "sass:check": "yarn run sass:lint",

@@ -5,6 +5,7 @@
 * [API Keys](#api-keys)
 * [Dependencies](#dependencies)
 * [GovUK PaaS](/documentation/govuk-paas.md)
+* [Front end development](#front-end-development)
 * [Importing school data](#importing-school-data)
 * [Logging](/documentation/logging.md)
 * [Misc](#misc)
@@ -133,6 +134,46 @@ bundle exec rspec
 
 ```bash
 npm test
+```
+
+### Javascript
+
+The full test suite including linting can be runn as serial tasks using the command:
+
+```bash
+npm test
+```
+
+#### Unit tests
+
+Tests are written using [Jest](https://jestjs.io/) and be run using:
+
+```bash
+npm run js:test
+```
+
+To generate a coverage report of unit tests you can run:
+
+```bash
+npm run js:test:coverage
+```
+
+#### Linting
+
+Linting of Javascript files uses [ESLint](https://eslint.org/) and the ruleset is extended using [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb) which are widely acknowledged as a comprehensive ruleset for modern Javascript. To run Javascript linting:
+
+```bash
+npm run js:lint
+```
+
+### SASS
+
+#### Linting
+
+Linting of SASS files uses [Stylelint](https://stylelint.io/) default ruleset and can be run using:
+
+```bash
+npm run sass:lint
 ```
 
 ---
