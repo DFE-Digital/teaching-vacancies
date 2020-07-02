@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_135605) do
+ActiveRecord::Schema.define(version: 2020_07_02_121350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -221,7 +221,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_135605) do
     t.integer "status"
     t.date "expires_on"
     t.date "publish_on"
-    t.uuid "school_id", null: false
+    t.uuid "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
