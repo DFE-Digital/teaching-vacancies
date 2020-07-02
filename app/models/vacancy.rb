@@ -261,6 +261,10 @@ class Vacancy < ApplicationRecord
   counter :page_view_counter
   counter :get_more_info_counter
 
+  def school_or_school_group
+    school.presence || school_group.presence
+  end
+
   def location
     SchoolPresenter.new(school).location
   end
