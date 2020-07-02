@@ -5,6 +5,7 @@ applications:
       image: ((IMAGE_NAME))
     env:
       RAILS_ENV: staging
+    command: bundle exec rake cf:on_first_instance db:migrate && rails s
     instances: 1
     memory: 512M
     services:
