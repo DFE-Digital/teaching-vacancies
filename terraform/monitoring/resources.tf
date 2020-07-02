@@ -1,5 +1,5 @@
 module prometheus_all {
-  source = "git::https://github.com/DFE-Digital/bat-platform-building-blocks.git//terraform/modules/prometheus_all?ref=dev"
+  source = "git::https://github.com/DFE-Digital/bat-platform-building-blocks.git//terraform/modules/prometheus_all"
 
   name                    = var.name
   space_id                = data.cloudfoundry_space.monitoring.id
