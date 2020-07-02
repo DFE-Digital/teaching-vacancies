@@ -12,6 +12,7 @@ package-lock.json
 # Ignore terraform files
 /terraform/*
 *.tf
+*.tfvars
 
 #.env files
 dotenv*
