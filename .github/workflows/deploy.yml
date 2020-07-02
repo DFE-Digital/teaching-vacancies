@@ -9,18 +9,12 @@ env:
  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
 
 jobs:
-  build_image:
-    name: build & publish docker image
+  deploy:
+    name: build docker image and deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
-
-    - name: prepare env
-      run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="$DOTENV_PASSPHRASE" --output .env dotenv.gpg
-      env:
-        DOTENV_PASSPHRASE: ${{ secrets.DOTENV_PASSPHRASE }}
 
     - name: build and push docker image
       uses: docker/build-push-action@v1.1.0
@@ -31,15 +25,6 @@ jobs:
         tags: ${{ github.sha }}
         target: production
 
-  deploy_production:
-    name: Deploy to Production
-    needs: [build_image]
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
     - name: Install cf client
       env:
         CF_CLI_VERSION: 7.0.0-beta.30
@@ -47,37 +32,37 @@ jobs:
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
         sudo cp /tmp/cf7 /usr/local/bin/cf7
 
-    - name: Deploy to production
-      if: github.ref == 'refs/heads/master'
-      env:
-        CF_USERNAME: ${{ secrets.CF_USERNAME }}
-        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
-        CF_SPACE: ${{ secrets.CF_SPACE }}
-        CF_ORG: ${{ secrets.CF_ORG }}
-      run: |
-        cf7 api $CF_API_ENDPOINT
-        cf7 auth
-        cf7 target -o $CF_ORG -s $CF_SPACE
-        cf7 push --strategy rolling -f paas/web/manifest-production.yml
-        cf7 push -f paas/worker/manifest-production.yml
-
-    - name: Deploy docker image
-      run: |
-        cf7 api $CF_API_ENDPOINT
-        cf7 auth
-        cf7 target -o $CF_ORG -s $CF_SPACE
-        cf7 push -f paas/web/manifest-docker-staging.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
-        cf7 push -f paas/worker/manifest-docker-staging.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
+    - name: Deploy to staging
       env:
         CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
         CF_USERNAME: ${{ secrets.CF_USERNAME }}
         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
         CF_ORG: ${{ secrets.CF_ORG }}
         CF_SPACE: ${{ secrets.CF_STAGING_SPACE }}
+      run: |
+        cf7 api $CF_API_ENDPOINT
+        cf7 auth
+        cf7 target -o $CF_ORG -s $CF_SPACE
+        cf7 push --strategy rolling -f paas/web/manifest-docker-staging.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
+        cf7 push -f paas/worker/manifest-docker-staging.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
+
+    - name: Deploy to production
+      if: github.ref == 'refs/heads/master'
+      env:
+        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+        CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_ORG: ${{ secrets.CF_ORG }}
+        CF_SPACE: ${{ secrets.CF_SPACE }}
+      run: |
+        cf7 api $CF_API_ENDPOINT
+        cf7 auth
+        cf7 target -o $CF_ORG -s $CF_SPACE
+        cf7 push --strategy rolling -f paas/web/manifest-docker-production.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
+        cf7 push -f paas/worker/manifest-docker-production.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$GITHUB_SHA
 
   notify:
-    needs: deploy_production
+    needs: deploy
     name: Slack notification
     runs-on: ubuntu-latest
     steps:
