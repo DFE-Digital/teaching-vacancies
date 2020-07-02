@@ -61,11 +61,17 @@ dotenv*
 **/**/cf-vars*.yml
 
 # Certificates
-config/localhost/https/*.key
-config/localhost/https/*.crt
-localhost.key
-localhost.crt
-rootCA.pem
+*.pem
+*.key
+*.crt
 
 # GCP development credentails
 serviceAccount.json
+
+# Redis
+dump.rdb
+
+# Database dumps
+*.sql
+*backup*
+*dump*

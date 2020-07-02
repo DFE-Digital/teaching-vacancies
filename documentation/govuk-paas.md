@@ -1,11 +1,7 @@
 # GOV.UK PaaS
 
 ## Get GOV.UK PaaS account
-Contact your organisation manager to get an account in `dfe-teacher-services` organization and in the relevant spaces:
-
-- [teaching-vacancies-dev](https://teaching-vacancies-dev.london.cloudapps.digital)
-- [teaching-vacancies-staging](https://tvs.staging.dxw.net)
-- [teaching-vacancies-production](https://teaching-vacancies.service.gov.uk)
+You will need to get an account in `dfe-teacher-services` organization. An organisation manager will grant you access to the relevant spaces. This should be requested in the Slack channel #digital-tools-support.
 
 ## Install Cloud Foundry CLI v7 on Mac
 We use version 7 because it enables processes that we use for Sidekiq and rolling deployments.
@@ -15,7 +11,7 @@ brew install cloudfoundry/tap/cf7-cli
 ```
 
 ## Set environment variables
-We recommend something like `direnv` to load environment variables scoped into the folder
+We recommend something like [`direnv`](/documentation/direnv.md) to load environment variables scoped into the folder
 
 ```bash
 cp .env.example .env

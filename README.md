@@ -4,33 +4,38 @@
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk) (External link)
 * [API Keys](#api-keys)
 * [Dependencies](#dependencies)
+* [GovUK PaaS](/documentation/govuk-paas.md)
 * [Importing school data](#importing-school-data)
+* [Logging](/documentation/logging.md)
 * [Misc](#misc)
 * [Running the tests](#running-the-tests)
+* [Secrets](#secrets)
+* [Setup](#setup) (Start here!)
 * [Troubleshooting](#troubleshooting)
 * [User accounts](#user-accounts)
 
 ## User accounts 
 
-Before you can log in to the application locally you will need a __DfE Sign-in__ and an __invitation to join Teaching
-Vacancies__. Talk to the team to get these set up.
+Before you can log in to the application locally, you will need to create a __DfE Sign-In__ account, be invited to a school, and be approved to join Teaching Vacancies. Once for the DfE Sign-In *production* environment, and once for DfE Sign-In *test* (staging) environment. Talk to the team to get these set up.
 
 ---
 
-## Importing school data
+## Secrets
 
-Populate your environment with real school data. This is taken from
-[GIAS](https://get-information-schools.service.gov.uk/)
+We currently use Keybase to manage our secrets. You will need to create an account, and be added to the team teachingjobs_dev as a writer. Then you will be able to clone and push to the secrets repo.
 
-```bash
-rake data:schools:import
-```
+![Keybase Git](/documentation/images/keybase.png)
+
+For details on specific API keys, see [API Keys](#api-keys).
+
 ---
 
 ## Algolia indexing
 
-We use [Algolia's](https://algolia.com) search-as-a-service offering to provide an advanced search experience for our
-jobseekers. 
+We use [Algolia's](https://algolia.com) search-as-a-service offering to provide an advanced search experience for our jobseekers.
+
+To log in to the Algolia dashboard, you will need access to the teachingjobs@digital.education.gov.uk shared user, as the team size is limited by our payment tier.
+
 
 ### Environment Variables 
 
@@ -86,7 +91,9 @@ If you do make new free-tier Algolia apps please make sure you include your name
 we can keep track of these and clear them out occasionally. 
 
 Let your colleagues know if you take over an existing development app to be sure you don't accidentally step on anyone's
-toes. 
+toes.
+
+![Algolia ](/documentation/images/algolia.png)
 
 #### Note on Free-Tier Algolia Apps
 
@@ -118,41 +125,77 @@ This uses a standard `rspec` and `rubocop` stack. To run these locally:
 
 ```bash
 bin/rake
+# or
+bundle exec rspec
+```
+
+### JavaScript
+
+```bash
+npm test
 ```
 
 ---
 
 ## Troubleshooting
 
-_I see Page Not Found when I log in and try to create a job listing_
+* I see Page Not Found when I log in and try to create a job listing.
 
-Try importing the school data if you have not already. When your sign in account was created, it was assigned to a
-school via a URN, and you may not have a school in your database with the same URN.
+Try importing the school data if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
 
 ---
 
-## Dependencies
+## Setup
 
-### Baseline
+Welcome! :tada: :fireworks:
+
+As you are on-boarded, please make a note of any issues you come across, and update the [documentation](https://docs.google.com/document/d/1qWU4qZ-17Y_ULlwD-rAM4rznaD6iNozV80kqO5ZRc0s), to improve the process for the next person.
+
+First, clone the project with SSH:
 
 ```bash
-Ruby 2.6.6
+git clone git@github.com:DFE-Digital/teacher-vacancy-service.git
 ```
 
-### Services
+If you are on a new device, remember to [generate a new SSH key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+### Dependencies
+
+#### Ruby version
+
+```bash
+$ ruby --version
+
+ruby 2.6.6
+```
+
+The source of truth for the Ruby version is the [Gemfile](/Gemfile#L3).
+
+You can use a tool like [asdf](https://asdf-vm.com/#/) to manage your versions of multiple languages.
+
+#### Services
 
 Make sure you have the following services configured and running on your development background:
 
- * [Postgresql](https://postgresql.org)
- * [Redis](https://redis.io)
+* [PostgreSQL](#postgresql-setup) (database)
 
-### Test and development dependencies
+* [Redis](https://redis.io/topics/quickstart). Run the Redis server outside the project folder to avoid creating files in it.
+
+* Sidekiq (performs cron jobs)
+  
+```bash
+bundle exec sidekiq -C config/sidekiq.yml
+```
+
+#### Test and development dependency
 
  * [PhantomJS](https://phantomjs.org)
 
-### Installation and setup
+#### PostgreSQL Setup
 
-Once you have Postgresql running add a new user:
+If you are on a Mac, you most likely have PostgreSQL installed already.
+
+With PostgreSQL installed and running, add a new user to [PostgreSQL](https://postgresql.org). Feel free to use any other method you are familiar with for adding postgres users. This is only an example. [Here](https://github.com/DFE-Digital/teacher-vacancy-service/wiki/PostgreSQL-Quickstart) is another.
 
 ```bash
 createuser --interactive --pwprompt
@@ -161,28 +204,83 @@ createuser --interactive --pwprompt
 For running local development and test environments, you can safely grant the user superuser access when asked.  **DO
 NOT** do this for production environments.
 
-Feel free to use any other method you are familiar with for adding postgres users. This is only an example.
+#### Environment Variables
 
-Next, copy `dotenv.sample` to `.env`, edit it and change:
+Have you copied the secrets onto your development machine? If not, [go and do that now](#secrets).
+
+Then, copy the contents of `development.env.example` from the secrets into a new file called `.env` in the teacher_vacancy_service directory.
+
+We recommend using something like [`direnv`](/documentation/direnv.md) to load environment variables scoped into the folder.
+
+Add your the details of your personal Algolia app (which you created earlier by following [this documentation](#development)) in the relevant space in your `.env`.
+
+Set up the HTTPS certificates following the [HTTPS README](https://github.com/DFE-Digital/teacher-vacancy-service/blob/master/config/localhost/https/README.md). You will find them in the folder 'localhost-certificates' in the [secrets](#secrets).
+
+#### Install libraries
+
+Install the dependency libraries:
 
 ```bash
-DATABASE_URL=postgres://<user>:<password>@localhost/<desired-database-name>
+bundle # for Ruby gem dependencies
+yarn install --check-files # for JavaScript packages
 ```
 
-Now, install your gem dependencies, then create and populate your database:
+Then create and populate your database:
 
 ```bash
-bundle
 bundle exec rake db:create db:environment:set db:schema:load
 ```
 
-Finally, run your tests:
+#### Importing school data
+
+Populate your environment with real school data. This is taken from
+[GIAS](https://get-information-schools.service.gov.uk/). It might take a while, so make a cup of tea while you wait.
 
 ```bash
-bundle exec rake
+rake data:schools:import
 ```
 
-If everything passes, you're ready to get to work.
+Finally, [run your tests](#running-the-tests). If everything passes:
+
+#### Run the server
+
+To run the server outside docker:
+
+```bash
+rails s -b 'ssl://localhost:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'
+```
+
+
+Look at that, you’re up and running! Visit https://localhost:3000/ and you’re ready to go.
+
+---
+
+## Misc
+
+### RSpec formatters - Fuubar
+
+Fuubar is a fast-failing progress bar formatter for RSpec. I've added the gem, but know from experience it isn't to
+everyone's taste. If you want to use it, either start RSpec with the formatter switch:
+
+```bash
+bundle exec rspec --format Fuubar
+```
+
+or add it to your global `~/.rspec`:
+
+```bash
+--format Fuubar
+```
+
+### Getting production-like data for local development
+
+You can use conduit to create a dump of production data. See [this section](https://github.com/DFE-Digital/teacher-vacancy-service/blob/master/documentation/govuk-paas.md#backuprestore-govuk-paas-postgres-service-database) of the GovUK PaaS docs. Then you can load this into your local database:
+
+```bash
+psql tvs_development < backup.sql
+```
+
+---
 
 ---
 
@@ -328,29 +426,10 @@ Used by the app to report performance data to [Skylight](https://www.skylight.io
 Managed by digital-tools.
 
 ### NOTIFY_KEY
-Used to integrate with the Notify API.
+Used to integrate with the GovUK Notify API.
 1. Access https://www.notifications.service.gov.uk/
 1. Navigate to API integration > API keys
 1. Click `Revoke` on the old key
 1. Click Create an API key
 1. Add a specific name, select the type of key and click `Continue`
 1. Copy the key to `set-*-govuk-paas-env.sh` and update NOTIFY_KEY
-
----
-
-## Misc
-
-### RSpec formatters - Fuubar
-
-Fuubar is a fast-failing progress bar formatter for RSpec. I've added the gem, but know from experience it isn't to
-everyone's taste. If you want to use it, either start RSpec with the formatter switch:
-
-```bash
-bundle exec rspec --format Fuubar
-```
-
-or add it to your global `~/.rspec`:
-
-```bash
---format Fuubar
-```

@@ -16,7 +16,7 @@ You will need 4 files for this task. Access them from our secrets store (Keybase
 
 1. Open Keychain Access on your Mac and go to the Certificates category in your System keychain. Once there, import the `rootCA.pem`  `File > Import Items`. Double click the imported certificate and change the “When using this certificate:” dropdown to Always Trust in the Trust section.
 
-2. Copy both `local.key` and `local.crt` into this application here: `config/localhost/https/`.
+2. Copy both `local.key` and `local.crt` into this application, in `config/localhost/https/`:
 
 ```bash
 # from ~/teacher_vacancy_service:

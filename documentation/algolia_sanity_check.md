@@ -2,7 +2,7 @@
 
 This is a quick how-to on how to get quick feedback when writing changes to the Algolia indexing. It's not a substitute for tests.
 
-Sanity-check whether a change to the index breaks the indexing by using the below configuration in your development environment, and either running `Vacancy.reindex` in the rails console or populating your database.
+Sanity-check whether a change to the index breaks the indexing by using something like the below configuration in your development environment, and either running `Vacancy.reindex` in the rails console or populating your database.
 
 ```ruby
 algoliasearch per_environment: true, disable_indexing: Rails.env.production? do
@@ -16,5 +16,7 @@ Double-check that you aren't about to put data in the real database with:
 ```ruby
 Vacancy.index.name # should be e.g. Vacancy_staging
 ```
+
+## Important
 
 You will also need to comment out or adapt the add_replica blocks, as they also specify index names.
