@@ -138,10 +138,10 @@ npm test
 
 ### Javascript
 
-The full test suite including linting can be runn as serial tasks using the command:
+The full test suite including linting can be run as parallel tasks using the command:
 
 ```bash
-npm test
+yarn test
 ```
 
 #### Unit tests
@@ -149,13 +149,13 @@ npm test
 Tests are written using [Jest](https://jestjs.io/) and be run using:
 
 ```bash
-npm run js:test
+yarn run js:test
 ```
 
 To generate a coverage report of unit tests you can run:
 
 ```bash
-npm run js:test:coverage
+yarn run js:test:coverage
 ```
 
 #### Linting
@@ -163,7 +163,7 @@ npm run js:test:coverage
 Linting of Javascript files uses [ESLint](https://eslint.org/) and the ruleset is extended using [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb) which are widely acknowledged as a comprehensive ruleset for modern Javascript. To run Javascript linting:
 
 ```bash
-npm run js:lint
+yarn run js:lint
 ```
 
 ### SASS
@@ -173,7 +173,7 @@ npm run js:lint
 Linting of SASS files uses [Stylelint](https://stylelint.io/) default ruleset and can be run using:
 
 ```bash
-npm run sass:lint
+yarn run sass:lint
 ```
 
 ---
@@ -291,8 +291,23 @@ To run the server outside docker:
 rails s -b 'ssl://localhost:3000?key=config/localhost/https/local.key&cert=config/localhost/https/local.crt'
 ```
 
+or
+
+```bash
+yarn run server
+```
 
 Look at that, you’re up and running! Visit https://localhost:3000/ and you’re ready to go.
+
+##### Front end development
+
+As the app is a Rails application, a tool called Webpacker is used for compiling frontend assets. Webpacker is a wrapper around [Webpack](https://webpack.js.org/), the popular asset pipeline tool for bundling assets. The Webpack dev server can be started in its own terminal tab using:
+
+```bash
+yarn run dev
+```
+
+This will re-bundle assets when files are saved for faster development.
 
 ---
 
