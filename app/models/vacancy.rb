@@ -144,7 +144,12 @@ class Vacancy < ApplicationRecord
         religious_character: school.gias_data['ReligiousCharacter (name)'],
         region: school.region&.name,
         school_type: school.school_type&.label&.singularize,
-        town: school.town }
+        town: school.town } if school.present?
+    end
+
+    attribute :school_group do
+      school_group = self.school_group
+      { uid: school_group&.uid }
     end
 
     attribute :start_date do
@@ -179,11 +184,11 @@ class Vacancy < ApplicationRecord
   # rubocop:enable Metrics/BlockLength
 
   def lat
-    self.school.geolocation&.x&.to_f
+    self.school.geolocation&.x&.to_f if school.present?
   end
 
   def lng
-    self.school.geolocation&.y&.to_f
+    self.school.geolocation&.y&.to_f if school.present?
   end
 
   extend FriendlyId
@@ -222,8 +227,8 @@ class Vacancy < ApplicationRecord
 
   has_many :documents
 
-  delegate :name, to: :school, prefix: true, allow_nil: true
-  delegate :geolocation, to: :school, prefix: true, allow_nil: true
+  delegate :name, to: :school_or_school_group, prefix: true, allow_nil: true
+  delegate :geolocation, to: :school_or_school_group, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
     :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -270,11 +275,11 @@ class Vacancy < ApplicationRecord
   end
 
   def coordinates
-    return if school_geolocation.nil?
+    return if school_or_school_group_geolocation.nil?
 
     {
-      lat: school_geolocation.x.to_f,
-      lon: school_geolocation.y.to_f
+      lat: school_or_school_group_geolocation.x.to_f,
+      lon: school_or_school_group_geolocation.y.to_f
     }
   end
 
@@ -357,7 +362,7 @@ class Vacancy < ApplicationRecord
   def slug_candidates
     [
       :job_title,
-      %i[job_title school_name],
+      %i[job_title school_or_school_group_name],
       %i[job_title location],
     ]
   end
