@@ -61,7 +61,7 @@
   - if @vacancy.school.geolocation
     %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
     = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
-                                                          lat: @vacancy.school_geolocation.x,
-                                                          lng: @vacancy.school_geolocation.y }
+                                                          lat: @vacancy.school_or_school_group_geolocation.x,
+                                                          lng: @vacancy.school_or_school_group_geolocation.y }
 
     %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
