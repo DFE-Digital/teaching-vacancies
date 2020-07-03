@@ -101,6 +101,21 @@ cf7 ssh <app_name>
 cf7 ssh <app_name> -t -c "/tmp/lifecycle/launcher /home/vcap/app 'rails console' ''"
 ```
 
+**NOTE:** This didn't work as expected on the new docker containers.  If you get the following error: 
+
+```bash
+cf7 ssh <app_name> -t -c "/tmp/lifecycle/launcher /home/vcap/app 'rails console' ''"
+Invalid metadata - unexpected end of JSON input%
+```
+
+use this workaround:
+
+```bash
+cf7 ssh <app_name>
+cd /teacher-vacancy
+/usr/local/bin/bundle exec rails console
+```
+
 ## Run task
 ```bash
 cf7 run-task <app_name> -c "rails task:name"
