@@ -23,7 +23,7 @@ describe('keyword search box', () => {
 
   describe('getKeyword', () => {
     test('to return a string from input box', () => {
-      document.body.innerHTML = '<input id="keyword-field" />';
+      document.body.innerHTML = '<input id="keyword" />';
       expect(typeof getKeyword()).toBe('string');
     });
   });

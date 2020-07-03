@@ -12,7 +12,7 @@ import { searchClient } from './client';
 import { renderSearchBox } from './ui/input';
 import { templates, renderContent } from './ui/hits';
 import { updateNoResultsLink } from './ui/alert';
-import { onSubmit as locationSubmit, getCoords } from './ui/input/location';
+import { onSubmit as locationSubmit, onChange as locationChange, getCoords } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
 import { renderAutocomplete } from '../lib/autocomplete';
 import { renderSortSelectInput } from './ui/sort';
@@ -24,7 +24,7 @@ import { updateUrlQueryParams, setDataAttribute } from '../lib/utils';
 import { enableSubmitButton } from './ui/form';
 
 const ALGOLIA_INDEX = 'Vacancy';
-const SEARCH_THRESHOLD = 3;
+const SEARCH_THRESHOLD = 2;
 
 const searchClientInstance = searchClient(ALGOLIA_INDEX);
 
@@ -127,4 +127,8 @@ renderAutocomplete({
   onSelection: (value) => {
     updateUrlQueryParams('location', value, window.location.href);
   },
+});
+
+document.getElementById('location').addEventListener('input', (e) => {
+  locationChange(e.target.value);
 });

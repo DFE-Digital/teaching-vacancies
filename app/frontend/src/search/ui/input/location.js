@@ -15,6 +15,14 @@ export const onSubmit = (query, locations, client) => {
   }
 };
 
+export const onChange = (value) => {
+  if (/\d/.test(value)) {
+    enableRadiusSelect();
+  } else {
+    disableRadiusSelect();
+  }
+};
+
 export const shouldNotGeocode = (query, locations) => query.length && locations.indexOf(query.toLowerCase()) > -1; // eslint-disable-line
 
 export const geocodeSuccess = (coords, client) => {

@@ -1,4 +1,9 @@
-import { shouldNotGeocode, onSubmit, geocodeSuccess } from './location';
+import {
+  shouldNotGeocode,
+  onSubmit,
+  geocodeSuccess,
+  onChange,
+} from './location';
 import { locations } from '../../data/locations';
 
 import { getGeolocatedCoordinates } from '../../../lib/api';
@@ -57,6 +62,18 @@ describe('location search box', () => {
       expect(setPage).toHaveBeenNthCalledWith(1, 0);
       expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
       expect(getGeolocatedCoordinates).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onChange (input)', () => {
+    test('disables the radius input if the input value does not contain a number', () => {
+      onChange('london');
+      expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
+    });
+
+    test('enables the radius input if the input value does contain a number', () => {
+      onChange('w1');
+      expect(enableRadiusSelect).toHaveBeenCalledTimes(1);
     });
   });
 
