@@ -6,7 +6,6 @@ import 'styles/application.scss';
 import Rails from 'rails-ujs';
 
 import 'src/lib/currentLocation';
-import 'src/locationAutocomplete';
 import 'src/addTitleToGoogleMapsIframe';
 import 'src/addVacancyStateToDataLayer';
 import 'src/deleteAccordionControl';

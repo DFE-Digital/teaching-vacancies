@@ -38,7 +38,7 @@ export const create = (container, input, onSelect) => {
 };
 
 export const show = (options, container, input) => {
-  render(options, container, input);
+  autocomplete.render(options, container, input);
 
   getRenderedList(container).classList.add('autocomplete__menu--visible');
   getRenderedList(container).classList.remove('autocomplete__menu--hidden');
@@ -102,7 +102,8 @@ const autocomplete = {
   show,
   hide,
   focus,
-  create
+  create,
+  render
 };
 
 export default autocomplete;

@@ -1,13 +1,14 @@
 import autocomplete, { isActive, getOptions, renderAutocomplete } from './autocomplete';
+import view, { show, hide } from './autocomplete.view';
 
 describe('autocomplete', () => {
   describe('isActive', () => {
-    test('should activate autocomplete if threshold has been met', () => {
+    test('activates autocomplete if threshold has been met', () => {
       expect(isActive(3, 'sou')).toBe(true);
       expect(isActive(3, 'sout')).toBe(true);
     });
 
-    test('should not activate autocomplete if threshold hasnt been met', () => {
+    test('doesnt activate autocomplete if threshold hasnt been met', () => {
       expect(isActive(3, 'so')).toBe(false);
       expect(isActive(3, '')).toBe(false);
     });
@@ -23,12 +24,12 @@ describe('autocomplete', () => {
   ];
 
   describe('getOptions', () => {
-    test('should return an array of matches from the options array that contain the supplied string', () => {
+    test('returns an array of matches from the options array that contain the supplied string', () => {
       expect(getOptions(options, 'appl')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
       expect(getOptions(options, 'a')).toEqual(['apple', 'banana', 'apple apple', 'banana apple', 'applebanana']);
     });
 
-    test('should return an array of matches from the options irrespective of letter case', () => {
+    test('does notreturn an array of matches from the options irrespective of letter case', () => {
       expect(getOptions(options, 'Appl')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
       expect(getOptions(options, 'ApPL')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
     });
@@ -37,12 +38,12 @@ describe('autocomplete', () => {
 
 describe('autocomplete view', () => {
 
-  let hideMock = null, showMock = null, focusMock = null, onSelection = jest.fn(), container = null, input = null;
+  let hideMock = null, showMock = null, focusMock = null, renderMock = null, onSelection = jest.fn();
 
   document.body.innerHTML = '<div id="container"><input id="input" /></div>';
 
-  container = document.getElementById('container');
-  input = document.getElementById('input');
+  const container = document.getElementById('container');
+  const input = document.getElementById('input');
 
   beforeAll(() => {
     autocomplete.view.hide = jest.fn();
@@ -108,6 +109,42 @@ describe('autocomplete view', () => {
       input.dispatchEvent(event);
 
       expect(focusMock).toHaveBeenNthCalledWith(2, container, 'previous', input);
+    });
+  });
+
+  describe('display methods', () => {
+    beforeAll(() => {
+      view.render = jest.fn();
+      renderMock = jest.spyOn(view, 'render');
+  
+      renderAutocomplete({
+        container,
+        input,
+        dataset: ['option 1', 'option 2', 'choice 3'],
+        threshold: 3,
+        onSelection
+      });
+    });
+
+    test('show sets appropriate class and a11y attributes',() => {
+      const options = ['option 1', 'option 2', 'choice 3'];
+      show(options, container, input);
+      const optionList = container.querySelector('ul');
+
+      expect(renderMock).toHaveBeenNthCalledWith(1, options, container, input);
+      expect(input.getAttribute('aria-expanded')).toBe('true');
+      expect(optionList.classList.contains('autocomplete__menu--visible')).toBe(true);
+      expect(optionList.classList.contains('autocomplete__menu--hidden')).toBe(false);
+    });
+
+    test('hide sets appropriate class and a11y attributes',() => {
+      hide(container, input);
+      const optionList = container.querySelector('ul');
+
+      expect(renderMock).not.toHaveBeenCalled();
+      expect(input.getAttribute('aria-expanded')).toBe('false');
+      expect(optionList.classList.contains('autocomplete__menu--visible')).toBe(false);
+      expect(optionList.classList.contains('autocomplete__menu--hidden')).toBe(true);
     });
   });
 });
