@@ -84,7 +84,7 @@ group :test do
   gem 'mock_redis'
   gem 'poltergeist'
   gem 'rack_session_access'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers'
   gem 'webmock', '~> 3.7'
 end
 

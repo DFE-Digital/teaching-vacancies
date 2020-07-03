@@ -555,7 +555,7 @@ DEPENDENCIES
   rubocop (~> 0.77.0)
   rubocop-rails_config (~> 0.9.0)
   sanitize (~> 5.2)
-  shoulda-matchers (~> 3.1)
+  shoulda-matchers
   sidekiq
   sidekiq-cron (~> 1.1)
   skylight
