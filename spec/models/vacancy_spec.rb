@@ -3,7 +3,7 @@ RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school).optional }
   it { should belong_to(:school_group).optional }
-  it { should belong_to(:publisher_user) }
+  it { should belong_to(:publisher_user).optional }
   it { should have_many(:documents) }
 
   context 'indexing for search' do
