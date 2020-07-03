@@ -7,10 +7,18 @@ export const renderSearchBox = (renderOptions, isFirstRender) => {
   if (isFirstRender) {
     widgetParams.inputElement.addEventListener('input', () => {
       enableSubmitButton(widgetParams.container);
+
+      if (widgetParams.onChange) {
+        widgetParams.onChange(widgetParams.inputElement.value);
+      }
     });
 
     widgetParams.inputElement.addEventListener('change', () => {
       enableSubmitButton(widgetParams.container);
+
+      if (widgetParams.onChange) {
+        widgetParams.onChange(widgetParams.inputElement.value);
+      }
     });
 
     widgetParams.container.addEventListener('submit', (e) => {

@@ -6,7 +6,8 @@
     = f.govuk_text_field :keyword,
       label: { text: t('jobs.filters.keyword') },
       placeholder: t('jobs.filters.keyword_hint'),
-      value: @vacancies_search.keyword
+      value: @vacancies_search.keyword,
+      id: 'keyword'
 
     // This partial does not yet use GDS Formbuilder.
     = render 'shared/location_search_tag', extra_label_class: nil
