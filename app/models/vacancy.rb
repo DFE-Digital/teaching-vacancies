@@ -147,11 +147,6 @@ class Vacancy < ApplicationRecord
         town: school.town } if school.present?
     end
 
-    attribute :school_group do
-      school_group = self.school_group
-      { uid: school_group&.uid }
-    end
-
     attribute :start_date do
       self.starts_on&.to_s
     end
@@ -228,7 +223,6 @@ class Vacancy < ApplicationRecord
   has_many :documents
 
   delegate :name, to: :school_or_school_group, prefix: true, allow_nil: true
-  delegate :geolocation, to: :school_or_school_group, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
     :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -275,11 +269,11 @@ class Vacancy < ApplicationRecord
   end
 
   def coordinates
-    return if school_or_school_group_geolocation.nil?
+    return if school&.geolocation.nil?
 
     {
-      lat: school_or_school_group_geolocation.x.to_f,
-      lon: school_or_school_group_geolocation.y.to_f
+      lat: school.geolocation.x.to_f,
+      lon: school.geolocation.y.to_f
     }
   end
 
