@@ -13,7 +13,7 @@ export const create = (container, input, onSelect) => {
     input.after(ul);
 
     document.addEventListener('click', () => {
-      hide(container, input);
+      autocomplete.hide(container, input);
     });
 
     ul.addEventListener('click', (e) => {
@@ -27,10 +27,10 @@ export const create = (container, input, onSelect) => {
 
       switch (e.code) {
         case 'ArrowDown':
-          focus(container, 'next', input);
+          autocomplete.focus(container, 'next', input);
           break;
         case 'ArrowUp':
-          focus(container, 'previous', input);
+          autocomplete.focus(container, 'previous', input);
           break;
       }
     });
@@ -38,7 +38,7 @@ export const create = (container, input, onSelect) => {
 };
 
 export const show = (options, container, input) => {
-  render(options, container, input);
+  autocomplete.render(options, container, input);
 
   getRenderedList(container).classList.add('autocomplete__menu--visible');
   getRenderedList(container).classList.remove('autocomplete__menu--hidden');
@@ -98,3 +98,12 @@ export const highlightRefinement = (text, refinement) => {
   }
 };
 
+const autocomplete = {
+  show,
+  hide,
+  focus,
+  create,
+  render
+};
+
+export default autocomplete;
