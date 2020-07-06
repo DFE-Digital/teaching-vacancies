@@ -84,8 +84,6 @@ cf7 env <app_name>
 
 ## Set environment variable
 
-### Set all environment variables for the app
-
 Set all the variables defined in `.env.example`. There are scripts to facilitate that in the Git repository on Keybase.
 
 Update the script `set- <your environment> -govuk-paas-env.sh` with the correct variables, and then run it. For example:
@@ -94,12 +92,15 @@ Update the script `set- <your environment> -govuk-paas-env.sh` with the correct 
 bash set-dev-govuk-paas-env.sh
 ```
 
-### Set an individual variable
-```bash
-cf7 set-env <app_name> ENV_VAR_NAME env_var_value
-```
 Remember to restart the app, using `--strategy rolling` if you wish to avoid downtime. In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
 ```bash
+cf7 restart <app_name> --strategy rolling
+```
+
+You can also set an individual variable directly:
+
+```bash
+cf7 set-env <app_name> ENV_VAR_NAME env_var_value
 cf7 restart <app_name> --strategy rolling
 ```
 
