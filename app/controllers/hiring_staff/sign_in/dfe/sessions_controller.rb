@@ -36,10 +36,11 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
     session.update(
       session_id: user_id,
       urn: school_urn,
+      uid: school_group_uid,
       multiple_schools: authorisation_permissions.many_schools?,
       id_token: id_token
     )
-    Rails.logger.info("Updated session with URN #{session[:urn]}")
+    Rails.logger.info("Updated session with URN #{session[:urn]} or UID #{session[:uid]}")
     audit_successful_authorisation
   end
 
@@ -57,6 +58,10 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
 
   def school_urn
     auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
+  end
+
+  def school_group_uid
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
   end
 
   def organisation_id
@@ -77,7 +82,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
     if authorisation_permissions.authorised?
       update_session(authorisation_permissions)
       update_user_last_activity_at
-      redirect_to school_path
+      redirect_to_organisation_path
     else
       not_authorised
     end
