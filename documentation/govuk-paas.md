@@ -83,6 +83,18 @@ cf7 env <app_name>
 ```
 
 ## Set environment variable
+
+### Set all environment variables for the app
+
+Set all the variables defined in `.env.example`. There are scripts to facilitate that in the Git repository on Keybase.
+
+Update the script `set- <your environment> -govuk-paas-env.sh` with the correct variables, and then run it. For example:
+
+```bash
+bash set-dev-govuk-paas-env.sh
+```
+
+### Set an individual variable
 ```bash
 cf7 set-env <app_name> ENV_VAR_NAME env_var_value
 ```
@@ -187,9 +199,6 @@ Get log destination from Papertrail
 ```bash
 cf7 create-user-provided-service teaching-vacancies-papertrail-(dev|staging|production) -l syslog-tls://logsX.papertrailapp.com:XXXXX
 ```
-
-### Set environment variables for the app
-Set all the variables defined in `.env.example`. There are scripts to facilitate that in the Git repository on Keybase.
 
 ## Backup/Restore GOV.UK PaaS Postgres service database
 Install Conduit plugin
