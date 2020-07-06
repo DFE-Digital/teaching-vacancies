@@ -7,8 +7,6 @@ class HiringStaff::BaseController < ApplicationController
     :check_session,
     :check_terms_and_conditions
 
-  helper_method :current_school
-
   include AuthenticationConcerns
   include ActionView::Helpers::DateHelper
 
@@ -22,10 +20,6 @@ class HiringStaff::BaseController < ApplicationController
 
   def check_terms_and_conditions
     redirect_to terms_and_conditions_path unless current_user&.accepted_terms_and_conditions?
-  end
-
-  def current_school
-    @current_school ||= School.find_by!(urn: session[:urn])
   end
 
   def current_user
