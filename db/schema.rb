@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_135605) do
+ActiveRecord::Schema.define(version: 2020_07_02_125917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -221,7 +221,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_135605) do
     t.integer "status"
     t.date "expires_on"
     t.date "publish_on"
-    t.uuid "school_id", null: false
+    t.uuid "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
@@ -252,12 +252,14 @@ ActiveRecord::Schema.define(version: 2020_06_24_135605) do
     t.text "school_visits"
     t.text "how_to_apply"
     t.boolean "initially_indexed", default: false
+    t.uuid "school_group_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
+    t.index ["school_group_id"], name: "index_vacancies_on_school_group_id"
     t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
@@ -279,5 +281,6 @@ ActiveRecord::Schema.define(version: 2020_06_24_135605) do
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "users"
   add_foreign_key "schools", "detailed_school_types"
+  add_foreign_key "vacancies", "school_groups"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end

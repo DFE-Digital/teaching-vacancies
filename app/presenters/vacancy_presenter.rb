@@ -105,8 +105,8 @@ class VacancyPresenter < BasePresenter
     }
   end
 
-  def job_title_and_school
-    "#{job_title} at #{school_name}"
+  def job_title_and_school_or_school_group_name
+    "#{job_title} at #{school_or_school_group_name}"
   end
 
   def show_job_roles

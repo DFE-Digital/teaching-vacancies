@@ -1,8 +1,9 @@
 require 'rails_helper'
 RSpec.describe Vacancy, type: :model do
   subject { Vacancy.new(school: build(:school)) }
-  it { should belong_to(:school) }
-  it { should belong_to(:publisher_user) }
+  it { should belong_to(:school).optional }
+  it { should belong_to(:school_group).optional }
+  it { should belong_to(:publisher_user).optional }
   it { should have_many(:documents) }
 
   context 'indexing for search' do
@@ -382,12 +383,23 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe 'delegate school_name' do
-    it 'should return the school name for the vacancy' do
-      school = create(:school, name: 'St James School')
-      vacancy = create(:vacancy, school: school)
+  describe '#school_or_school_group_name' do
+    context 'when vacancy has a school' do
+      it 'returns the school name for the vacancy' do
+        school = create(:school, name: 'St James School')
+        vacancy = create(:vacancy, school: school)
 
-      expect(vacancy.school_name).to eq('St James School')
+        expect(vacancy.school_or_school_group_name).to eq(school.name)
+      end
+    end
+
+    context 'when vacancy has a school_group' do
+      it 'returns the school_group name for the vacancy' do
+        school_group = create(:school_group)
+        vacancy = create(:vacancy, :with_school_group, school_group: school_group)
+
+        expect(vacancy.school_or_school_group_name).to eq(school_group.name)
+      end
     end
   end
 

@@ -33,6 +33,11 @@ FactoryBot.define do
     supporting_documents { 'yes' }
     working_patterns { ['full_time'] }
 
+    trait :with_school_group do
+      association :school, strategy: :null
+      association :school_group
+    end
+
     trait :fail_minimum_validation do
       education { Faker::Lorem.paragraph[0..8] }
       experience { Faker::Lorem.paragraph[0..7] }

@@ -144,7 +144,7 @@ class Vacancy < ApplicationRecord
         religious_character: school.gias_data['ReligiousCharacter (name)'],
         region: school.region&.name,
         school_type: school.school_type&.label&.singularize,
-        town: school.town }
+        town: school.town } if school.present?
     end
 
     attribute :start_date do
@@ -179,11 +179,11 @@ class Vacancy < ApplicationRecord
   # rubocop:enable Metrics/BlockLength
 
   def lat
-    self.school.geolocation&.x&.to_f
+    self.school.geolocation&.x&.to_f if school.present?
   end
 
   def lng
-    self.school.geolocation&.y&.to_f
+    self.school.geolocation&.y&.to_f if school.present?
   end
 
   extend FriendlyId
@@ -211,7 +211,8 @@ class Vacancy < ApplicationRecord
   }
 
   belongs_to :publisher_user, class_name: 'User', optional: true
-  belongs_to :school, optional: false
+  belongs_to :school, optional: true
+  belongs_to :school_group, optional: true
   belongs_to :subject, optional: true
   belongs_to :first_supporting_subject, class_name: 'Subject', optional: true
   belongs_to :second_supporting_subject, class_name: 'Subject', optional: true
@@ -221,8 +222,7 @@ class Vacancy < ApplicationRecord
 
   has_many :documents
 
-  delegate :name, to: :school, prefix: true, allow_nil: false
-  delegate :geolocation, to: :school, prefix: true, allow_nil: true
+  delegate :name, to: :school_or_school_group, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
     :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -260,16 +260,20 @@ class Vacancy < ApplicationRecord
   counter :page_view_counter
   counter :get_more_info_counter
 
+  def school_or_school_group
+    school.presence || school_group.presence
+  end
+
   def location
-    SchoolPresenter.new(school).location
+    SchoolPresenter.new(school).location if school.present?
   end
 
   def coordinates
-    return if school_geolocation.nil?
+    return if school&.geolocation.nil?
 
     {
-      lat: school_geolocation.x.to_f,
-      lon: school_geolocation.y.to_f
+      lat: school.geolocation.x.to_f,
+      lon: school.geolocation.y.to_f
     }
   end
 
@@ -352,7 +356,7 @@ class Vacancy < ApplicationRecord
   def slug_candidates
     [
       :job_title,
-      %i[job_title school_name],
+      %i[job_title school_or_school_group_name],
       %i[job_title location],
     ]
   end
