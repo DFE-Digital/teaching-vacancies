@@ -17,7 +17,7 @@ module SignInAuditConcerns
   end
 
   def audit_successful_authorisation
-    Auditor::Audit.new(current_school, 'dfe-sign-in.authorisation.success', current_session_id).log
+    Auditor::Audit.new(current_organisation, 'dfe-sign-in.authorisation.success', current_session_id).log
   end
 
   def audit_failed_authorisation
