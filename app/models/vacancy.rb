@@ -358,6 +358,7 @@ class Vacancy < ApplicationRecord
       :job_title,
       %i[job_title school_or_school_group_name],
       %i[job_title location],
+      :id
     ]
   end
 

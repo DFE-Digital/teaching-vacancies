@@ -144,6 +144,11 @@ en:
         publish_on_html: "Date job will be listed (<span class='text-red'>Required</span>)"
         expires_on_html: "Date application is due (<span class='text-red'>Required</span>)"
         starts_on: "Date job starts"
+      job_location_form:
+        job_location_options:
+          at_one_school: 'At one school in the trust'
+          central_office: "At the trust's central office"
+        job_location_html: "Where will the job be based? (<span class='text-red'>Required</span>)"
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
         job_roles: Job role
@@ -323,6 +328,7 @@ en:
     per_year_pro_rata: 'per year pro rata'
     per_year_fte: 'per year (full-time equivalent)'
     create_a_job_title: 'Create a job listing for %{organisation}'
+    create_a_job_for_school_group_title: 'Create a job listing'
     copy_job_title: 'Copy %{job_title}'
     new_job_listing_details: New job listing details
     review_page_title: 'Review the job listing — Create a job listing for %{organisation}'

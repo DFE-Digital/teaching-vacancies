@@ -1,0 +1,30 @@
+- if @vacancy.present?
+  - content_for :page_title_prefix, page_title_prefix(@vacancy, @job_location_form, t('jobs.job_location'))
+- else
+  - content_for :page_title_prefix, "#{@job_location_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_location')} — #{t('jobs.create_a_job_for_school_group_title')}"
+
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+
+- if @vacancy.present? && @vacancy&.state != 'create'
+  = link_to t('buttons.cancel_and_return'), edit_school_job_path(@vacancy.id), class: 'govuk-back-link'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @job_location_form, url: @job_location_url, html: { method: @job_location_url_method } do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l
+        = t('jobs.job_location')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
+      = f.govuk_collection_radio_buttons :job_location,
+        @job_location_options,
+        :first,
+        :second,
+        legend: { text: t('helpers.fieldset.job_location_form.job_location_html') }
+        
+      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+  .govuk-grid-column-one-third
+    = render 'hiring_staff/vacancies/sidebar'

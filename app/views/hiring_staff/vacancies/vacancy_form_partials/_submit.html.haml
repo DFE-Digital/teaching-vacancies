@@ -2,4 +2,5 @@
   = f.govuk_submit t('buttons.update_job'), classes: 'update-listing-gtm disabled-on-load'
 - else
   = f.govuk_submit classes: 'govuk-!-margin-bottom-5 save-listing-gtm'
-  = f.govuk_submit t('buttons.save_and_return_later'), secondary: true, classes: 'button-link save-and-return-listing-gtm'
+  - unless @job_location_form.present? # || the other form
+    = f.govuk_submit t('buttons.save_and_return_later'), secondary: true, classes: 'button-link save-and-return-listing-gtm'

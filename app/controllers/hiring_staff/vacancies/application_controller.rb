@@ -20,9 +20,9 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def set_vacancy
     if params[:job_id]
-      @vacancy = current_school.vacancies.find(params[:job_id])
+      @vacancy = Vacancy.find(params[:job_id])
     elsif session_vacancy_id
-      @vacancy = current_school.vacancies.find(session_vacancy_id)
+      @vacancy = Vacancy.find(session_vacancy_id)
     end
   end
 
@@ -40,8 +40,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def update_vacancy(attributes, vacancy = nil)
-    vacancy ||= current_school.vacancies.find(session_vacancy_id)
-
+    vacancy ||= Vacancy.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do

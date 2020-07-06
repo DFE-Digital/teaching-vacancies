@@ -112,8 +112,4 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     end
     @vacancy.update(state: state)
   end
-
-  def school_group_user?
-    session[:uid] != '' && session[:uid] != nil
-  end
 end

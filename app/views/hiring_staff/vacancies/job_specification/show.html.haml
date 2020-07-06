@@ -7,6 +7,9 @@
 
 - if @vacancy.present? && @vacancy&.state != 'create'
   = link_to t('buttons.cancel_and_return'), edit_organisation_job_path(@vacancy.id), class: 'govuk-back-link'
+- elsif @vacancy.present? && @vacancy.job_location.present?
+  = link_to t('buttons.back'), job_location_organisation_job_path, class: 'govuk-back-link'
+
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

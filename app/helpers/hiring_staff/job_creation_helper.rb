@@ -1,9 +1,10 @@
 module HiringStaff::JobCreationHelper
   def current_step
+    step = params[:create_step]
     if school_group_user?
-      params[:create_step]
+      step
     else
-      params[:create_step] - HiringStaff::Vacancies::ApplicationController::NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
+      step - HiringStaff::Vacancies::ApplicationController::NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
     end
   end
 
