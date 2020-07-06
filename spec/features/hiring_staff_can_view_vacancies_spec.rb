@@ -9,7 +9,7 @@ RSpec.feature 'School viewing vacancies' do
   scenario 'A school should see advisory text when there are no vacancies' do
     visit school_path
 
-    expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
+    expect(page).to have_content(I18n.t('schools.jobs.index', organisation: school.name))
     expect(page).not_to have_css('table.vacancies')
     expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
   end
@@ -20,7 +20,7 @@ RSpec.feature 'School viewing vacancies' do
 
     visit school_path
 
-    expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
+    expect(page).to have_content(I18n.t('schools.jobs.index', organisation: school.name))
     expect(page).to have_content(vacancy1.job_title)
     expect(page).to have_content(vacancy2.job_title)
   end

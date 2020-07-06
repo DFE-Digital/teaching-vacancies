@@ -540,7 +540,7 @@ en:
     no_information: 'No information available'
     map_aria_label: 'Interactive map showing school location'
     jobs:
-      index: 'Jobs at %{school}'
+      index: 'Jobs at %{organisation}'
     no_jobs:
       heading: You have no job listings to manage
       intro: 'To create a job listing for your school, you will need the following information:'
