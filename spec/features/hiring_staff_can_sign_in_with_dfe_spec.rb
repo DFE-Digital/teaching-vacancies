@@ -3,7 +3,7 @@ require 'message_encryptor'
 
 RSpec.shared_examples 'a successful sign in' do
   scenario 'it signs in the user successfully' do
-    expect(page).to have_content("Jobs at #{school.name}")
+    expect(page).to have_content("Jobs at #{organisation.name}")
     within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
     within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
   end
@@ -11,11 +11,19 @@ RSpec.shared_examples 'a successful sign in' do
   scenario 'adds entries in the audit log' do
     activity = PublicActivity::Activity.last
     expect(activity.key).to eq('dfe-sign-in.authorisation.success')
-    expect(activity.trackable.urn).to eq(school.urn)
+    if activity.trackable.is_a?(School)
+      expect(activity.trackable.urn).to eq(organisation.urn)
+    else
+      expect(activity.trackable.uid).to eq(organisation.uid)
+    end
 
     authorisation = PublicActivity::Activity.last
     expect(authorisation.key).to eq('dfe-sign-in.authorisation.success')
-    expect(authorisation.trackable.urn).to eq(school.urn)
+    if authorisation.trackable.is_a?(School)
+      expect(authorisation.trackable.urn).to eq(organisation.urn)
+    else
+      expect(authorisation.trackable.uid).to eq(organisation.uid)
+    end
   end
 end
 
@@ -74,7 +82,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
   end
 
   context 'with valid credentials that match a school' do
-    let!(:school) { create(:school, urn: '110627') }
+    let!(:organisation) { create(:school, urn: '110627') }
 
     before(:each) do
       stub_authentication_step email: dsi_email_address
@@ -90,7 +98,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
     scenario 'it redirects the sign in page to the school page' do
       visit new_identifications_path
-      expect(page).to have_content("Jobs at #{school.name}")
+      expect(page).to have_content("Jobs at #{organisation.name}")
       expect(current_path).to eql(school_path)
     end
 
@@ -98,7 +106,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       let!(:other_school) { create(:school, urn: '101010') }
 
       scenario 'allows the user to switch between organisations' do
-        expect(page).to have_content("Jobs at #{school.name}")
+        expect(page).to have_content("Jobs at #{organisation.name}")
 
         # Mock switching organisations from within DfE Sign In
         stub_authentication_step(
@@ -111,6 +119,29 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         click_on 'Change organisation'
         expect(page).to have_content("Jobs at #{other_school.name}")
       end
+    end
+  end
+
+  context 'with valid credentials that match a SchoolGroup' do
+    let(:organisation) { create(:school_group) }
+
+    before do
+      allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
+
+      stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: dsi_email_address)
+      stub_authorisation_step
+      stub_sign_in_with_multiple_organisations
+
+      visit root_path
+      sign_in_user
+    end
+
+    it_behaves_like 'a successful sign in'
+
+    scenario 'it redirects the sign in page to the SchoolGroup page' do
+      visit new_identifications_path
+      expect(page).to have_content("Jobs at #{organisation.name}")
+      expect(current_path).to eql(school_group_temporary_path)
     end
   end
 

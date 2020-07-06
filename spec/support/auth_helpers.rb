@@ -15,14 +15,15 @@ module AuthHelpers
     allow(fake_env).to receive(env_field_for_password.to_sym).and_return(env_value_for_password)
   end
 
-  def stub_hiring_staff_auth(urn:, session_id: 'session_id', email: nil)
-    page.set_rack_session(urn: urn)
+  def stub_hiring_staff_auth(urn: nil, uid: nil, session_id: 'session_id', email: nil)
+    page.set_rack_session(urn: urn) if urn.present?
+    page.set_rack_session(uid: uid) if uid.present?
     page.set_rack_session(session_id: session_id)
     create(:user, oid: session_id, email: email, last_activity_at: Time.zone.now)
   end
 
   def stub_authentication_step(organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
-                               school_urn: '110627',
+                               school_urn: '110627', school_group_uid: nil,
                                email: 'an-email@example.com')
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
@@ -34,7 +35,8 @@ module AuthHelpers
         raw_info: {
           organisation: {
             id: organisation_id,
-            urn: school_urn
+            urn: school_urn,
+            uid: school_group_uid
           }
         }
       }
