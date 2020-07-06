@@ -31,7 +31,8 @@ RSpec.configure do |config|
     default_url_options[:host] = DOMAIN.to_s
   end
 
-  config.before(:each) do
+  config.before do
+    allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(false)
     Algolia::WebMock.mock!
   end
 
