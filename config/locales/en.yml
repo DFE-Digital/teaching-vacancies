@@ -329,6 +329,7 @@ en:
     review_heading: 'Review the job listing'
     copy_review_heading: Review the new job listing
     edit_job_title: 'Edit %{job_title}'
+    job_location: 'Job location'
     job_specification: 'Job specification'
     pay_package: 'Pay package'
     important_dates: 'Important dates and deadlines'

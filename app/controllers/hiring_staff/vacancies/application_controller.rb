@@ -2,6 +2,8 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
+  NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS = 1
+
   before_action :set_vacancy
 
   def school_id
@@ -25,7 +27,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def current_step
-    params[:create_step]
+    if school_group_user?
+      params[:create_step]
+    else
+      params[:create_step] - NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
+    end
   end
 
   def store_vacancy_attributes(attributes)

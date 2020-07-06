@@ -12,7 +12,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def new
     reset_session_vacancy!
-    redirect_to job_specification_organisation_job_path
+    redirect_to school_group_user? ? job_location_organisation_job_path : job_specification_organisation_job_path
   end
 
   def edit
@@ -111,5 +111,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
       state = 'review'
     end
     @vacancy.update(state: state)
+  end
+
+  def school_group_user?
+    session[:uid] != '' && session[:uid] != nil
   end
 end
