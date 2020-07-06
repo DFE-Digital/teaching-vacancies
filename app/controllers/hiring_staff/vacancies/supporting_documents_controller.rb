@@ -38,7 +38,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
     if session[:current_step].eql?(:review) && @supporting_documents_form.supporting_documents == 'yes'
       redirect_to school_job_documents_path(@vacancy.id)
     else
-      redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
+      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
   end
 end

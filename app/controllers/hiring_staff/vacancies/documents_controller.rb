@@ -14,7 +14,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   before_action :redirect_unless_supporting_documents
   before_action only: %i[create] do
     save_vacancy_as_draft_if_save_and_return_later({}, @vacancy)
-    redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
+    redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
   end
 
   before_action :set_documents_form, only: %i[show create]

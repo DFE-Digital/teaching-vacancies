@@ -16,7 +16,7 @@ class HiringStaff::Vacancies::ImportantDatesController < HiringStaff::Vacancies:
     if @important_dates_form.complete_and_valid?
       update_vacancy(@important_dates_form.params_to_save, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
+      return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
 
     render :show
