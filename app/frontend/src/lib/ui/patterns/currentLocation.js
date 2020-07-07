@@ -1,10 +1,10 @@
-import '../polyfill/classlist.polyfill';
-import '../polyfill/after.polyfill';
-import '../polyfill/remove.polyfill';
-import '../loader';
-import { getPostcodeFromCoordinates } from './api';
-import { enableRadiusSelect, disableRadiusSelect } from '../search/ui/input/radius';
-import Rollbar from './logging';
+import '../../polyfill/classlist.polyfill';
+import '../../polyfill/after.polyfill';
+import '../../polyfill/remove.polyfill';
+import '../../../loader';
+import { getPostcodeFromCoordinates } from '../../api';
+import { enableRadiusSelect, disableRadiusSelect } from '../../../search/ui/input/radius';
+import Rollbar from '../../logging';
 
 const loader = new GOVUK.Loader();
 

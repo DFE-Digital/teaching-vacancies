@@ -1,4 +1,4 @@
-import URLSearchParams from '../polyfill/URLSearchParams.polyfill';
+import URLSearchParams from './polyfill/URLSearchParams.polyfill';
 
 export const constructNewUrlWithParam = (key, value, url) => {
   const re = new RegExp(`[\\?&]${key}=([^&#]*)`);

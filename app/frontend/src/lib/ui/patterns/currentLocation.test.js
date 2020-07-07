@@ -1,9 +1,9 @@
 import currentLocation, {
   onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, postcodeFromPosition,
 } from './currentLocation';
-import radius from '../search/ui/input/radius';
+import radius from '../../../search/ui/input/radius';
 
-jest.mock('../search/ui/input/radius');
+jest.mock('../../../search/ui/input/radius');
 
 describe('location search box', () => {
   let showErrorMessageMock = null; let stopLoadingMock = null; let enableRadiusMock = null; let
