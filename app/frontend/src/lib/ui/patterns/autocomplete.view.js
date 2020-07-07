@@ -1,4 +1,4 @@
-import '../polyfill/after.polyfill';
+import '../../polyfill/after.polyfill';
 
 export const create = (container, input, onSelect) => {
   if (!getRenderedList(container)) {

@@ -16,7 +16,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'base/mixins';
 @import 'base/utilities';
 @import 'components/awaiting_feedback_vacancies';
-@import '../src/lib/autocomplete';
+@import '../src/lib/ui/patterns/autocomplete';
 @import 'components/banners';
 @import 'components/check_your_answers';
 @import 'components/checkboxes';
