@@ -23,6 +23,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
 
   context 'user flow' do
     let(:school) { create(:school, name: 'Some school') }
+    let(:school_group) { create(:school_group) }
     let(:other_school) { create(:school, name: 'Some other school') }
     let(:user) { create(:user, dsi_data: dsi_data, accepted_terms_at: 1.day.ago) }
 
@@ -46,13 +47,17 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
 
     context 'a user with multiple organisations' do
       let(:dsi_data) do
-        { 'school_urns'=>[school.urn, other_school.urn], 'school_group_uids'=>['3409', '1623'] }
+        { 'school_urns'=>[school.urn, other_school.urn], 'school_group_uids'=>[school_group.uid, '1623'] }
       end
 
       let(:other_login_key) do
         user.emergency_login_keys.create(
           not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION
         )
+      end
+
+      before do
+        allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
       end
 
       scenario 'can sign in, choose an org, change org, sign out' do
@@ -84,8 +89,8 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
             .with(user: user)
             .and_return(other_login_key)
           click_on I18n.t('sign_in.organisation.change')
-          click_on(other_school.name)
-          expect(page).to have_content("Jobs at #{other_school.name}")
+          click_on(school_group.name)
+          expect(page).to have_content("Jobs at #{school_group.name}")
           expect { other_login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
           # Can sign out
@@ -115,28 +120,61 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
     end
 
     context 'a user with only one organisation' do
-      let(:dsi_data) do
-        { 'school_urns'=>[school.urn], 'school_group_uids'=>[] }
+      context 'organisation is a School' do
+        let(:dsi_data) do
+          { 'school_urns'=>[school.urn], 'school_group_uids'=>[] }
+        end
+
+        scenario 'can sign in and bypass choice of org' do
+          freeze_time do
+            visit root_path
+            click_sign_in
+
+            # Expect to send an email
+            expect(message_delivery).to receive(:deliver_later)
+
+            fill_in 'user[email]', with: user.email
+            click_on 'commit'
+            expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+
+            # Expect that the link in the email goes to the landing page
+            visit auth_email_choose_organisation_path(login_key: login_key.id)
+
+            expect(page).not_to have_content('Choose your organisation')
+            expect(page).to have_content("Jobs at #{school.name}")
+            expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
+          end
+        end
       end
 
-      scenario 'can sign in and bypass choice of org' do
-        freeze_time do
-          visit root_path
-          click_sign_in
+      context 'organisation is a SchoolGroup' do
+        let(:dsi_data) do
+          { 'school_urns'=>[], 'school_group_uids'=>[school_group.uid] }
+        end
 
-          # Expect to send an email
-          expect(message_delivery).to receive(:deliver_later)
+        before do
+          allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
+        end
 
-          fill_in 'user[email]', with: user.email
-          click_on 'commit'
-          expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+        scenario 'can sign in and bypass choice of org' do
+          freeze_time do
+            visit root_path
+            click_sign_in
 
-          # Expect that the link in the email goes to the landing page
-          visit auth_email_choose_organisation_path(login_key: login_key.id)
+            # Expect to send an email
+            expect(message_delivery).to receive(:deliver_later)
 
-          expect(page).not_to have_content('Choose your organisation')
-          expect(page).to have_content("Jobs at #{school.name}")
-          expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
+            fill_in 'user[email]', with: user.email
+            click_on 'commit'
+            expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+
+            # Expect that the link in the email goes to the landing page
+            visit auth_email_choose_organisation_path(login_key: login_key.id)
+
+            expect(page).not_to have_content('Choose your organisation')
+            expect(page).to have_content("Jobs at #{school_group.name}")
+            expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
+          end
         end
       end
     end

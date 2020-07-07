@@ -1,5 +1,5 @@
 class GetInformationFromLoginKey
-  attr_reader :reason_for_failing_sign_in, :schools
+  attr_reader :reason_for_failing_sign_in, :schools, :school_groups
 
   def initialize(key)
     @key = key
@@ -24,8 +24,9 @@ class GetInformationFromLoginKey
   def process_key
     @user = get_user
     @schools = get_schools
+    @school_groups = SchoolGroupJobsFeature.enabled? ? get_school_groups : []
     @key.destroy
-    @reason_for_failing_sign_in = 'no_orgs' if @schools.empty?
+    @reason_for_failing_sign_in = 'no_orgs' if @schools.empty? && @school_groups.empty?
   end
 
   def get_schools
@@ -35,6 +36,15 @@ class GetInformationFromLoginKey
       scratch.push SchoolPresenter.new(school_query.first) unless school_query.empty?
     end
     scratch.sort_by { |school| school.name }
+  end
+
+  def get_school_groups
+    scratch = []
+    @user&.dsi_data&.dig('school_group_uids')&.each do |uid|
+      school_group_query = SchoolGroup.where(uid: uid)
+      scratch.push(school_group_query.first) unless school_group_query.empty?
+    end
+    scratch.sort_by { |school_group| school_group.name }
   end
 
   def get_user

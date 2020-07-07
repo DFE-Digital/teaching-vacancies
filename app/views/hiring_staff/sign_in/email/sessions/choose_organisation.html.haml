@@ -17,3 +17,7 @@
       - @schools.each do |school|
         = link_to(school.location, auth_email_create_session_path(urn: school.urn), class: 'govuk-link')
         %br
+
+      - @school_groups.each do |school_group|
+        = link_to(school_group.name, auth_email_create_session_path(uid: school_group.uid), class: 'govuk-link')
+        %br

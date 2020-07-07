@@ -21,10 +21,10 @@ module AuthenticationConcerns
   end
 
   def current_school
-    @current_school ||= School.find_by!(urn: session[:urn])
+    @current_school ||= School.find_by!(urn: session[:urn]) if session[:urn].present?
   end
 
   def current_school_group
-    @current_school_group ||= SchoolGroup.find_by!(uid: session[:uid])
+    @current_school_group ||= SchoolGroup.find_by!(uid: session[:uid]) if session[:uid].present?
   end
 end

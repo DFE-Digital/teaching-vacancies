@@ -15,7 +15,7 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_session
-    redirect_to new_identifications_path unless session.key?(:urn)
+    redirect_to new_identifications_path unless session[:urn].present? || session[:uid].present?
   end
 
   def check_terms_and_conditions
@@ -50,9 +50,9 @@ class HiringStaff::BaseController < ApplicationController
 
   def redirect_signed_in_users
     if SchoolGroupJobsFeature.enabled?
-      return redirect_to school_group_temporary_path if session.key?(:uid)
+      return redirect_to school_group_temporary_path if session[:uid].present?
     end
-    return redirect_to school_path if session.key?(:urn)
+    return redirect_to school_path if session[:urn].present?
   end
 
   def timeout_period_as_string
