@@ -266,7 +266,7 @@ RSpec.shared_examples 'no basic auth' do
                                 env_value_for_password: nil)
       school = create(:school)
 
-      get school_path(school)
+      get organisation_path(school)
 
       expect(response).to have_http_status(302)
     end

@@ -4,7 +4,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def show
     vacancy = find_active_vacancy_by_id
     unless vacancy.published?
-      return redirect_to school_job_review_path(vacancy.id),
+      return redirect_to organisation_job_review_path(vacancy.id),
                          notice: I18n.t('messages.jobs.view.only_published')
     end
     @vacancy = VacancyPresenter.new(vacancy)
@@ -12,19 +12,19 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def new
     reset_session_vacancy!
-    redirect_to job_specification_school_job_path
+    redirect_to job_specification_organisation_job_path
   end
 
   def edit
     vacancy = current_school.vacancies.find(id)
-    return redirect_to school_job_review_path(vacancy.id) unless vacancy.published?
+    return redirect_to organisation_job_review_path(vacancy.id) unless vacancy.published?
 
     vacancy.update(state: 'edit_published') unless vacancy&.state == 'edit_published'
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
   def review
-    return redirect_to school_job_path(@vacancy.id),
+    return redirect_to organisation_job_path(@vacancy.id),
                        notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
 
     reset_session_vacancy!
@@ -49,11 +49,11 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
 
-    redirect_to school_path, success: I18n.t('messages.jobs.delete_html', job_title: @vacancy.job_title)
+    redirect_to organisation_path, success: I18n.t('messages.jobs.delete_html', job_title: @vacancy.job_title)
   end
 
   def preview
-    return redirect_to school_job_path(@vacancy.id),
+    return redirect_to organisation_job_path(@vacancy.id),
                        notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
     redirect_to_incomplete_step unless @vacancy.valid?
     @vacancy = VacancyPresenter.new(@vacancy)
@@ -80,12 +80,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def redirect_to_incomplete_step
-    return redirect_to school_job_job_specification_path(@vacancy.id) unless step_valid?(JobSpecificationForm)
-    return redirect_to school_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
-    return redirect_to school_job_important_dates_path(@vacancy.id) unless step_valid?(ImportantDatesForm)
-    return redirect_to school_job_supporting_documents_path(@vacancy.id) unless step_valid?(SupportingDocumentsForm)
-    return redirect_to school_job_application_details_path(@vacancy.id) unless step_valid?(ApplicationDetailsForm)
-    return redirect_to school_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)
+    return redirect_to organisation_job_job_specification_path(@vacancy.id) unless step_valid?(JobSpecificationForm)
+    return redirect_to organisation_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
+    return redirect_to organisation_job_important_dates_path(@vacancy.id) unless step_valid?(ImportantDatesForm)
+    return redirect_to organisation_job_supporting_documents_path(@vacancy.id) unless
+      step_valid?(SupportingDocumentsForm)
+    return redirect_to organisation_job_application_details_path(@vacancy.id) unless step_valid?(ApplicationDetailsForm)
+    return redirect_to organisation_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)
   end
 
   def clear_cache_and_step

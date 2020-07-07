@@ -4,7 +4,7 @@
   Edit description for
   = @organisation.name
 
-= form_for @organisation do |form|
+= form_for @organisation, url: organisation_path do |form|
 
   - if @organisation.errors.any?
     %div.govuk-error-summary{ role: "alert", 'aria-labelledby' => "school-error-heading", tabindex: '-1' }

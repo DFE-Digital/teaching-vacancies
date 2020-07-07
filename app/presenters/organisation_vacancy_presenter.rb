@@ -34,19 +34,19 @@ class OrganisationVacancyPresenter < BasePresenter
   end
 
   def preview_path
-    url_helpers.school_job_path(model.id)
+    url_helpers.organisation_job_path(model.id)
   end
 
   def edit_path
-    url_helpers.edit_school_job_path(model.id)
+    url_helpers.edit_organisation_job_path(model.id)
   end
 
   def copy_path
-    url_helpers.new_school_job_copy_path(model.id)
+    url_helpers.new_organisation_job_copy_path(model.id)
   end
 
   def delete_path
-    url_helpers.school_job_path(id: model.id)
+    url_helpers.organisation_job_path(id: model.id)
   end
 
   private

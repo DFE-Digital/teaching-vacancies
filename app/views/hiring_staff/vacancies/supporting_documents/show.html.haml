@@ -2,13 +2,13 @@
 = render 'hiring_staff/vacancies/vacancy_form_partials/title'
 
 - if @vacancy.present? && @vacancy&.state != 'create'
-  = link_to t('buttons.cancel_and_return'), edit_school_job_path(@vacancy.id), class: 'govuk-back-link'
+  = link_to t('buttons.cancel_and_return'), edit_organisation_job_path(@vacancy.id), class: 'govuk-back-link'
 - else
-  = link_to t('buttons.back'), school_job_important_dates_path(@vacancy.id), class: 'govuk-back-link'
+  = link_to t('buttons.back'), organisation_job_important_dates_path(@vacancy.id), class: 'govuk-back-link'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @supporting_documents_form, url: school_job_supporting_documents_path(@vacancy.id), html: { method: "patch" } do |f|
+    = form_for @supporting_documents_form, url: organisation_job_supporting_documents_path(@vacancy.id), html: { method: "patch" } do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l

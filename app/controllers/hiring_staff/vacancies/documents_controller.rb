@@ -41,7 +41,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       render :destroy, layout: false, status: delete_operation_status ? :ok : :bad_request
     else
       flash[flash_type] = flash_message
-      redirect_to school_job_documents_path(@vacancy.id)
+      redirect_to organisation_job_documents_path(@vacancy.id)
     end
   end
 
@@ -65,11 +65,11 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
       @vacancy.save
     end
 
-    redirect_to school_job_supporting_documents_path(@vacancy.id) unless @vacancy.supporting_documents
+    redirect_to organisation_job_supporting_documents_path(@vacancy.id) unless @vacancy.supporting_documents
   end
 
   def next_step
-    school_job_application_details_path(@vacancy.id)
+    organisation_job_application_details_path(@vacancy.id)
   end
 
   def process_documents

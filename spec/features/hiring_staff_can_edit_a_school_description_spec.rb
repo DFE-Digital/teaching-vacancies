@@ -8,7 +8,7 @@ RSpec.feature 'Editing a School’s description' do
   end
 
   scenario 'updating a description' do
-    visit school_path
+    visit organisation_path
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(school.description)
@@ -21,7 +21,7 @@ RSpec.feature 'Editing a School’s description' do
   end
 
   scenario 'removing a description' do
-    visit school_path
+    visit organisation_path
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(school.description)
@@ -35,7 +35,7 @@ RSpec.feature 'Editing a School’s description' do
 
   scenario 'audits changes to the school\'s description' do
     description = school.description
-    visit school_path
+    visit organisation_path
 
     click_on 'Change description'
     fill_in 'Description', with: ''

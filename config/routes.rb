@@ -66,11 +66,11 @@ Rails.application.routes.draw do
 
   resource :terms_and_conditions, only: %i[show update], controller: 'hiring_staff/terms_and_conditions'
 
-  get 'school_group', to: 'hiring_staff/schools#placeholder', as: 'school_group_temporary'
+  get 'school_group', to: 'hiring_staff/organisations#placeholder', as: 'school_group_temporary'
 
-  resource :school, only: %i[show edit update], controller: 'hiring_staff/schools' do
+  resource :organisation, only: %i[show edit update], controller: 'hiring_staff/organisations' do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
-      get 'jobs(/:type)', to: 'hiring_staff/schools#show', defaults: { type: :published }, as: :jobs_with_type
+      get 'jobs(/:type)', to: 'hiring_staff/organisations#show', defaults: { type: :published }, as: :jobs_with_type
     end
     resources :jobs, only: %i[new edit destroy delete show], controller: 'hiring_staff/vacancies' do
       get 'review',

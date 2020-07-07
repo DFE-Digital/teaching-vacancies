@@ -16,7 +16,7 @@
   .govuk-grid-column-full
     .govuk-form-group.create-a-job
     - if @organisation.vacancies.active.any?
-      = link_to t('buttons.create_job'), new_school_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
+      = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
       .overflow-scroll
         = render partial: 'vacancies', locals: { organisation: @organisation, vacancies: @vacancies }
     - else
@@ -38,7 +38,7 @@
           %td.govuk-table__cell
             = @organisation.description.presence || 'Not provided'
           %td.govuk-table__cell.change-answer
-            = link_to edit_school_path, class: 'govuk-link' do
+            = link_to edit_organisation_path, class: 'govuk-link' do
               = t('buttons.change')
               %span.govuk-visually-hidden
                 description

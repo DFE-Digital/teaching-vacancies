@@ -50,7 +50,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def set_up_url
     @job_specification_url_method = @vacancy&.id.present? ? 'patch' : 'post'
     @job_specification_url = @vacancy&.id.present? ?
-      school_job_job_specification_path(@vacancy.id) : job_specification_school_job_path(school_id: current_school.id)
+      organisation_job_job_specification_path(@vacancy.id) :
+      job_specification_organisation_job_path(school_id: current_school.id)
   end
 
   def set_up_job_specification_form
@@ -79,7 +80,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
         @job_specification_form.vacancy.job_title
       )
     else
-      redirect_to jobs_with_type_school_path('draft')
+      redirect_to jobs_with_type_organisation_path('draft')
     end
   end
 
@@ -94,6 +95,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    school_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+    organisation_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
   end
 end

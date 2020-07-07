@@ -25,7 +25,7 @@ RSpec.feature 'Copying a vacancy' do
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
 
-      visit school_path
+      visit organisation_path
 
       within('table.vacancies') do
         click_on I18n.t('jobs.copy_link')
@@ -35,7 +35,7 @@ RSpec.feature 'Copying a vacancy' do
 
       click_on(I18n.t('buttons.cancel_copy'), class: 'govuk-back-link')
 
-      expect(page.current_path).to eql(school_path)
+      expect(page.current_path).to eql(organisation_path)
       expect(page).not_to have_content('A new job title')
     end
 
@@ -46,7 +46,7 @@ RSpec.feature 'Copying a vacancy' do
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
 
-      visit school_path
+      visit organisation_path
 
       within('table.vacancies') do
         click_on I18n.t('jobs.copy_link')
@@ -56,7 +56,7 @@ RSpec.feature 'Copying a vacancy' do
 
       click_on(I18n.t('buttons.cancel_copy'), class: 'govuk-link')
 
-      expect(page.current_path).to eql(school_path)
+      expect(page.current_path).to eql(organisation_path)
       expect(page).not_to have_content('A new job title')
     end
   end
@@ -72,7 +72,7 @@ RSpec.feature 'Copying a vacancy' do
     new_vacancy.publish_on = 0.days.from_now
     new_vacancy.expiry_time = new_vacancy.expires_on = 30.days.from_now
 
-    visit school_path
+    visit organisation_path
 
     within('table.vacancies') do
       click_on I18n.t('jobs.copy_link')
@@ -109,7 +109,7 @@ RSpec.feature 'Copying a vacancy' do
     scenario 'a job can be successfully copied' do
       original_vacancy = create(:vacancy, :future_publish, school: school)
 
-      visit school_path
+      visit organisation_path
 
       click_on I18n.t('jobs.pending_jobs')
       within('table.vacancies') do
@@ -138,7 +138,7 @@ RSpec.feature 'Copying a vacancy' do
       new_vacancy.publish_on = 0.days.from_now
       new_vacancy.expires_on = 30.days.from_now
 
-      visit school_path
+      visit organisation_path
 
       click_on I18n.t('jobs.expired_jobs')
       within('table.vacancies') do
@@ -168,7 +168,7 @@ RSpec.feature 'Copying a vacancy' do
       new_vacancy.publish_on = 0.days.from_now
       new_vacancy.expiry_time = new_vacancy.expires_on
 
-      visit school_path
+      visit organisation_path
 
       within('table.vacancies') do
         click_on I18n.t('jobs.copy_link')
@@ -192,7 +192,7 @@ RSpec.feature 'Copying a vacancy' do
         original_vacancy = build(:vacancy, :past_publish, about_school: nil, school: school)
         original_vacancy.save(validate: false)
 
-        visit school_path
+        visit organisation_path
 
         within('table.vacancies') do
           click_on I18n.t('jobs.copy_link')
@@ -209,7 +209,7 @@ RSpec.feature 'Copying a vacancy' do
       scenario 'it does not show the about_school field' do
         original_vacancy = create(:vacancy, school: school)
 
-        visit school_path
+        visit organisation_path
 
         within('table.vacancies') do
           click_on I18n.t('jobs.copy_link')
@@ -232,7 +232,7 @@ RSpec.feature 'Copying a vacancy' do
     let(:new_vacancy) { build(:vacancy, original_vacancy.attributes.merge(new_attributes)) }
 
     before do
-      visit school_path
+      visit organisation_path
 
       within('table.vacancies') do
         click_on I18n.t('jobs.copy_link')

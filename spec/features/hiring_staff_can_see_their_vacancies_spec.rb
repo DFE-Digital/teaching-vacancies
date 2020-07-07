@@ -7,7 +7,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     stub_hiring_staff_auth(urn: school.urn)
     vacancy = create(:vacancy, school: school, status: 'published')
 
-    visit school_path
+    visit organisation_path
 
     click_on(vacancy.job_title)
 
@@ -20,7 +20,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
       school = create(:school)
 
       stub_hiring_staff_auth(urn: school.urn)
-      visit school_path
+      visit organisation_path
 
       expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
     end
@@ -47,7 +47,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
         create(:vacancy, :published, school: school)
       end
 
-      visit school_path
+      visit organisation_path
 
       expect(page).to have_content(I18n.t('jobs.published_jobs'))
       expect(page).to have_content(I18n.t('jobs.draft_jobs'))
@@ -56,7 +56,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     end
 
     scenario 'with published vacancies' do
-      visit school_path
+      visit organisation_path
 
       within('.tab-list') do
         click_on(I18n.t('jobs.published_jobs'))
@@ -71,7 +71,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     end
 
     scenario 'with draft vacancies' do
-      visit school_path
+      visit organisation_path
 
       within('.tab-list') do
         click_on(I18n.t('jobs.draft_jobs'))
@@ -87,7 +87,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     end
 
     scenario 'with pending vacancies' do
-      visit school_path
+      visit organisation_path
 
       within('.tab-list') do
         click_on(I18n.t('jobs.pending_jobs'))
@@ -103,7 +103,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     end
 
     scenario 'with expired vacancies' do
-      visit school_path
+      visit organisation_path
 
       within('.tab-list') do
         click_on(I18n.t('jobs.expired_jobs'))
@@ -125,7 +125,7 @@ RSpec.feature 'Hiring staff can see their vacancies' do
 
       scenario 'shows the last updated at' do
         draft_vacancy
-        visit school_path
+        visit organisation_path
 
         within('.tab-list') do
           click_on(I18n.t('jobs.draft_jobs'))

@@ -47,6 +47,6 @@ class HiringStaff::Vacancies::ImportantDatesController < HiringStaff::Vacancies:
   end
 
   def next_step
-    school_job_supporting_documents_path(@vacancy.id)
+    organisation_job_supporting_documents_path(@vacancy.id)
   end
 end

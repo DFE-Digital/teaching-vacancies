@@ -14,14 +14,14 @@
         - if @vacancy.publish_today?
           %p= link_to t('jobs.confirmation_page.view_posted_job'), job_path(@vacancy), class: 'reversed-link'
         - else
-          %p= link_to t('jobs.confirmation_page.view_posted_job'), school_job_path(@vacancy.id), class: 'reversed-link'
+          %p= link_to t('jobs.confirmation_page.view_posted_job'), organisation_job_path(@vacancy.id), class: 'reversed-link'
 
-        %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', school_path, class: 'reversed-link')).html_safe
+        %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your school\'s dashboard', organisation_path, class: 'reversed-link')).html_safe
 
   .govuk-grid-column-two-thirds
     %h3.govuk-heading-m= t('jobs.confirmation_page.next_step')
     %p= t('jobs.confirmation_page.date_posted', date: @vacancy.publish_on)
     %p= t('jobs.confirmation_page.date_expires', application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
     %p
-      = link_to(t('jobs.confirmation_page.feedback_link'), new_school_job_feedback_path(@vacancy.id), class: 'govuk-link')
+      = link_to(t('jobs.confirmation_page.feedback_link'), new_organisation_job_feedback_path(@vacancy.id), class: 'govuk-link')
       = t('jobs.confirmation_page.feedback_time')

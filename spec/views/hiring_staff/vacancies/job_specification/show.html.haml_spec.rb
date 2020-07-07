@@ -6,7 +6,8 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
     # environment.
     # rubocop:disable Rails/HttpPositionalArguments
     Rails.application.routes.draw do
-      get :job_specification_school_job, to: 'dummy#step_one', defaults: { create_step: 1, step_title: 'Step 1 title' }
+      get :job_specification_organisation_job, to: 'dummy#step_one',
+                                               defaults: { create_step: 1, step_title: 'Step 1 title' }
       get :step_two, to: 'job#step_one', defaults: { create_step: 2, step_title: 'Step 2 title' }
     end
     # rubocop:enable Rails/HttpPositionalArguments
@@ -25,7 +26,7 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
     allow(view).to receive(:params).and_return({ create_step: 1 })
     assign(:job_specification_form, JobSpecificationForm.new)
     assign(:job_specification_url_method, 'post')
-    assign(:job_specification_url, job_specification_school_job_path(school_id: 'school_id'))
+    assign(:job_specification_url, job_specification_organisation_job_path(school_id: 'school_id'))
     render
   end
 

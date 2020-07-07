@@ -1,4 +1,4 @@
-class HiringStaff::SchoolsController < HiringStaff::BaseController
+class HiringStaff::OrganisationsController < HiringStaff::BaseController
   def placeholder; end
 
   def show
@@ -30,7 +30,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
       Auditor::Audit.new(@organisation, 'school.update', current_session_id).log do
         @organisation.save
       end
-      return redirect_to school_path
+      return redirect_to organisation_path
     end
 
     render :edit

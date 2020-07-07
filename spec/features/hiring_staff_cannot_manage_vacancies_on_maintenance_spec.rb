@@ -10,7 +10,7 @@ RSpec.feature 'Hiring staff cannot manage vacancies on maintenance' do
 
       stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
 
-      visit school_path
+      visit organisation_path
     end
 
     it 'redirects to home page' do
@@ -28,11 +28,11 @@ RSpec.feature 'Hiring staff cannot manage vacancies on maintenance' do
 
       stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
 
-      visit school_path
+      visit organisation_path
     end
 
     it 'redirects to school page' do
-      expect(current_path).to eq(school_path)
+      expect(current_path).to eq(organisation_path)
     end
   end
 end

@@ -101,6 +101,6 @@ module VacanciesHelper
     else
       state = 'draft'
     end
-    jobs_with_type_school_path(state)
+    jobs_with_type_organisation_path(state)
   end
 end

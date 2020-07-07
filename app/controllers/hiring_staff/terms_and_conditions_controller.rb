@@ -10,7 +10,7 @@ class HiringStaff::TermsAndConditionsController < HiringStaff::BaseController
     if @terms_and_conditions_form.valid?
       current_user.update(accepted_terms_at: Time.zone.now)
       audit_toc_acceptance
-      redirect_to school_path
+      redirect_to organisation_path
     else
       render :show
     end

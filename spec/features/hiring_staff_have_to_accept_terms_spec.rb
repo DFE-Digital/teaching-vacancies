@@ -12,7 +12,7 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
     before { current_user.update(accepted_terms_at: nil) }
 
     scenario 'they will see the terms and conditions' do
-      visit school_path
+      visit organisation_path
 
       expect(page).to have_content(I18n.t('terms_and_conditions.please_accept'))
     end
@@ -88,7 +88,7 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
     scenario 'they will not see the terms and conditions' do
       current_user.update(accepted_terms_at: Time.zone.now)
 
-      visit school_path
+      visit organisation_path
 
       expect(page).not_to have_content(I18n.t('terms_and_conditions.please_accept'))
     end

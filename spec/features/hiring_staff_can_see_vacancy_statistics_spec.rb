@@ -19,7 +19,7 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
     end
 
     before do
-      visit school_path(school)
+      visit organisation_path(school)
     end
 
     context 'page views are nil' do
@@ -53,7 +53,7 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
     end
 
     before do
-      visit jobs_with_type_school_path(:expired)
+      visit jobs_with_type_organisation_path(:expired)
     end
 
     context 'page views are nil' do

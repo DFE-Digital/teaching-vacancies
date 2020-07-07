@@ -2,11 +2,11 @@
 
 %h1.govuk-heading-m= t('jobs.copy_job_title', job_title: @copy_form.vacancy.job_title.downcase)
 
-= link_to t('buttons.cancel_copy'), school_path, class: 'govuk-back-link govuk-!-margin-bottom-5'
+= link_to t('buttons.cancel_copy'), organisation_path, class: 'govuk-back-link govuk-!-margin-bottom-5'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @copy_form, url: school_job_copy_path, data: { vacancy_state: 'copy' } do |f|
+    = form_for @copy_form, url: organisation_job_copy_path, data: { vacancy_state: 'copy' } do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l
@@ -48,4 +48,4 @@
 
       = f.govuk_submit classes: 'govuk-!-margin-bottom-5'
 
-    = link_to t('buttons.cancel_copy'), school_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'
+    = link_to t('buttons.cancel_copy'), organisation_path, class: 'govuk-link govuk-link--no-visited-state govuk-!-font-size-19'

@@ -29,6 +29,6 @@ class HiringStaff::Vacancies::ApplicationDetailsController < HiringStaff::Vacanc
   end
 
   def next_step
-    school_job_job_summary_path(@vacancy.id)
+    organisation_job_job_summary_path(@vacancy.id)
   end
 end

@@ -138,24 +138,24 @@ RSpec.describe VacanciesHelper, type: :helper do
     end
 
     it 'returns draft jobs link for draft jobs' do
-      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('draft'))
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_organisation_path('draft'))
     end
 
     it 'returns pending jobs link for scheduled jobs' do
       allow(vacancy).to receive(:published?).and_return(true)
       allow(vacancy).to receive_message_chain(:expiry_time, :future?).and_return(true)
-      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('pending'))
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_organisation_path('pending'))
     end
 
     it 'returns published jobs link for published jobs' do
       allow(vacancy).to receive(:listed?).and_return(true)
-      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('published'))
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_organisation_path('published'))
     end
 
     it 'returns expired jobs link for expired jobs' do
       allow(vacancy).to receive(:published?).and_return(true)
       allow(vacancy).to receive_message_chain(:expiry_time, :past?).and_return(true)
-      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_school_path('expired'))
+      expect(back_to_manage_jobs_link(vacancy)).to eql(jobs_with_type_organisation_path('expired'))
     end
   end
 end
