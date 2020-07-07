@@ -20,14 +20,14 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def set_vacancy
     if params[:job_id]
-      @vacancy = Vacancy.find(params[:job_id])
+      @vacancy = current_organisation.vacancies.find(params[:job_id])
     elsif session_vacancy_id
-      @vacancy = Vacancy.find(session_vacancy_id)
+      @vacancy = current_organisation.vacancies.find(session_vacancy_id)
     end
   end
 
   def current_step
-    if school_group_user?
+    if session[:uid].present?
       params[:create_step]
     else
       params[:create_step] - NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
@@ -40,7 +40,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def update_vacancy(attributes, vacancy = nil)
-    vacancy ||= Vacancy.find(session_vacancy_id)
+    vacancy ||= current_organisation.vacancies.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do

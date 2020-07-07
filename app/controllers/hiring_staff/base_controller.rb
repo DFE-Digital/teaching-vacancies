@@ -28,10 +28,6 @@ class HiringStaff::BaseController < ApplicationController
     @current_user ||= User.find_or_create_by(oid: current_session_id)
   end
 
-  def school_group_user?
-    session[:uid] != '' && session[:uid] != nil
-  end
-
   def check_user_last_activity_at
     return redirect_to logout_endpoint if current_user&.last_activity_at.blank?
 

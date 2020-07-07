@@ -1,7 +1,6 @@
 class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::ApplicationController
   before_action :redirect_unless_school_group_user_flag_on
   before_action :set_up_url
-  before_action :set_up_job_location_options
   before_action :set_up_job_location_form, only: %i[create update]
 
   def show
@@ -20,7 +19,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     if @job_location_form.complete_and_valid?
       session_vacancy_id ? update_vacancy(job_location_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_location_form.vacancy.attributes)
-      return redirect_to_next_step_if_save_and_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+      return redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
     end
 
     render :show
@@ -47,12 +46,6 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
       school_job_job_location_path(@vacancy.id) : job_location_school_job_path(school_group_id: current_school_group.id)
   end
 
-  def set_up_job_location_options
-    @job_location_options = [
-      ['at_one_school', I18n.t('helpers.fieldset.job_location_form.job_location_options.at_one_school')],
-      ['central_office', I18n.t('helpers.fieldset.job_location_form.job_location_options.central_office')]]
-  end
-
   def set_up_job_location_form
     @job_location_form = JobLocationForm.new(job_location_form_params)
   end
@@ -77,7 +70,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     if session[:current_step].eql?(:review) && @job_location_form.job_location == 'at_one_school'
       redirect_to school_job_school_path(@vacancy.id)
     else
-      redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
+      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
   end
 

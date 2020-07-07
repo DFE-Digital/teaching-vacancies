@@ -26,6 +26,11 @@ class Vacancy < ApplicationRecord
     [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
   ]
 
+  JOB_LOCATION_OPTIONS = [
+    [I18n.t('helpers.fieldset.job_location_form.job_location_options.at_one_school'), 'at_one_school'],
+    [I18n.t('helpers.fieldset.job_location_form.job_location_options.central_office'), 'central_office']
+  ]
+
   include ApplicationHelper
   include Auditor::Model
   include DateHelper
