@@ -47,7 +47,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_school_job_path
 
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         mandatory_fields = %w[job_title working_patterns]
 
@@ -66,7 +66,7 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
         within('h2.govuk-heading-l') do
@@ -78,7 +78,7 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(Vacancy.last.state).to eql('create')
       end
@@ -87,7 +87,7 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         activity = Vacancy.last.activities.last
         expect(activity.session_id).to eq(session_id)
@@ -101,9 +101,9 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('jobs.errors_present'))
@@ -118,10 +118,10 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 7))
         within('h2.govuk-heading-l') do
@@ -135,12 +135,12 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('jobs.errors_present'))
@@ -170,13 +170,13 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
         within('h2.govuk-heading-l') do
@@ -190,15 +190,15 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
-        click_on I18n.t('buttons.save_and_continue') # submit empty form
+        click_on I18n.t('buttons.continue') # submit empty form
 
         expect(page)
           .to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.supporting_documents.inclusion'))
@@ -208,16 +208,16 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
         within('h2.govuk-heading-l') do
@@ -229,16 +229,16 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         choose 'Yes'
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 4, total: 7))
         within('h2.govuk-heading-l') do
@@ -384,18 +384,18 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('jobs.errors_present'))
@@ -411,19 +411,19 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_application_details_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 7))
         within('h2.govuk-heading-l') do
@@ -437,21 +437,21 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_application_details_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('jobs.errors_present'))
@@ -470,22 +470,22 @@ RSpec.feature 'Creating a vacancy' do
         visit new_school_job_path
 
         fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_pay_package_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_application_details_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_job_summary_form_fields(vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
         within('h2.govuk-heading-l') do
@@ -501,7 +501,7 @@ RSpec.feature 'Creating a vacancy' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
@@ -516,16 +516,16 @@ RSpec.feature 'Creating a vacancy' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_important_dates_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           select_no_for_supporting_documents
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
@@ -540,19 +540,19 @@ RSpec.feature 'Creating a vacancy' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_important_dates_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           select_no_for_supporting_documents
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_application_details_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
           visit school_job_path(id: v.id)
@@ -567,22 +567,22 @@ RSpec.feature 'Creating a vacancy' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_important_dates_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           select_no_for_supporting_documents
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_application_details_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_job_summary_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           expect(Vacancy.last.state).to eql('review')
           expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
@@ -595,22 +595,22 @@ RSpec.feature 'Creating a vacancy' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_important_dates_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           select_no_for_supporting_documents
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_application_details_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_job_summary_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           expect(Vacancy.last.state).to eql('review')
           expect(page).to have_content(I18n.t('jobs.current_step', step: 7, total: 7))
@@ -761,22 +761,22 @@ RSpec.feature 'Creating a vacancy' do
           visit new_school_job_path
 
           fill_in_job_specification_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_pay_package_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_important_dates_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           select_no_for_supporting_documents
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_application_details_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           fill_in_job_summary_form_fields(vacancy)
-          click_on I18n.t('buttons.save_and_continue')
+          click_on I18n.t('buttons.continue')
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
 
@@ -954,7 +954,7 @@ RSpec.feature 'Creating a vacancy' do
         expect(find_field('important_dates_form[expires_on(2i)]').value).to eql(yesterday_date.month.to_s)
         expect(find_field('important_dates_form[expires_on(1i)]').value).to eql(yesterday_date.year.to_s)
 
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
           expect(page).to have_content(I18n.t('jobs.errors_present'))
@@ -972,7 +972,7 @@ RSpec.feature 'Creating a vacancy' do
         fill_in 'important_dates_form[expires_on(3i)]', with: expiry_date.day
         fill_in 'important_dates_form[expires_on(2i)]', with: expiry_date.month
         fill_in 'important_dates_form[expires_on(1i)]', with: expiry_date.year
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         click_on I18n.t('jobs.submit_listing.button')
         expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))

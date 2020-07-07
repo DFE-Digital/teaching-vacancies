@@ -83,7 +83,7 @@ RSpec.feature 'Copying a vacancy' do
     end
 
     fill_in_copy_vacancy_form_fields(new_vacancy)
-    click_on I18n.t('buttons.save_and_continue')
+    click_on I18n.t('buttons.continue')
 
     within('h2.govuk-heading-l') do
       expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
@@ -120,7 +120,7 @@ RSpec.feature 'Copying a vacancy' do
         expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
       end
 
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
 
       within('h2.govuk-heading-l') do
         expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
@@ -150,7 +150,7 @@ RSpec.feature 'Copying a vacancy' do
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
 
       within('h2.govuk-heading-l') do
         expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
@@ -181,7 +181,7 @@ RSpec.feature 'Copying a vacancy' do
       fill_in_copy_vacancy_form_fields(new_vacancy)
       fill_in 'copy_vacancy_form[expires_on(2i)]', with: '090'
 
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
       expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.invalid'))
     end
   end
@@ -241,7 +241,7 @@ RSpec.feature 'Copying a vacancy' do
       expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
     end
 
     context 'when publish on is blank' do

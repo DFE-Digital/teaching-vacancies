@@ -17,7 +17,7 @@ RSpec.feature 'Hiring staff session' do
     visit new_school_job_path
 
     travel (HiringStaff::BaseController::TIMEOUT_PERIOD + 1.minute) do
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
 
       # A request to logout is sent to DfE Sign-in system. On success DSI comes back at auth_dfe_signout_path
       expect(page.current_url).to include "#{ENV['DFE_SIGN_IN_ISSUER']}/session/end"
@@ -33,7 +33,7 @@ RSpec.feature 'Hiring staff session' do
     visit new_school_job_path
 
     travel (HiringStaff::BaseController::TIMEOUT_PERIOD - 1.minute) do
-      click_on I18n.t('buttons.save_and_continue')
+      click_on I18n.t('buttons.continue')
 
       expect(page.current_path).to eq job_specification_school_job_path
     end

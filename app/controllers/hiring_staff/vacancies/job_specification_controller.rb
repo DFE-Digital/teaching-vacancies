@@ -28,7 +28,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     elsif @job_specification_form.complete_and_valid?
       session_vacancy_id ? update_vacancy(job_specification_form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@job_specification_form.vacancy.attributes)
-      return redirect_to_next_step_if_save_and_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+      return redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
     end
 
     render :show
@@ -39,7 +39,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       remove_subject_fields(@vacancy) unless @vacancy.subjects.nil?
       update_vacancy(job_specification_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_save_and_continue(@vacancy.id, @vacancy.job_title)
+      return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
 
     render :show

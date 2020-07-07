@@ -43,7 +43,7 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on I18n.t('buttons.create_job')
 
         fill_in_job_specification_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         expect(page.current_path).to eql(school_job_pay_package_path(created_vacancy.id))
@@ -67,11 +67,11 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on I18n.t('buttons.create_job')
 
         fill_in_job_specification_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page.current_path).to eql(school_job_important_dates_path(created_vacancy.id))
 
@@ -96,11 +96,11 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on I18n.t('buttons.create_job')
 
         fill_in_job_specification_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page.current_path).to eql(school_job_important_dates_path(created_vacancy.id))
 
@@ -128,14 +128,14 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on I18n.t('buttons.create_job')
 
         fill_in_job_specification_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page.current_path).to eql(school_job_supporting_documents_path(created_vacancy.id))
 
@@ -158,17 +158,17 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on I18n.t('buttons.create_job')
 
         fill_in_job_specification_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page.current_path).to eql(school_job_application_details_path(created_vacancy.id))
 
@@ -191,20 +191,20 @@ RSpec.feature 'Hiring staff can save and return later' do
         click_on I18n.t('buttons.create_job')
 
         fill_in_job_specification_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
         created_vacancy = Vacancy.find_by(job_title: @vacancy.job_title)
 
         fill_in_pay_package_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_important_dates_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         select_no_for_supporting_documents
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         fill_in_application_details_form_fields(@vacancy)
-        click_on I18n.t('buttons.save_and_continue')
+        click_on I18n.t('buttons.continue')
 
         expect(page.current_path).to eql(school_job_job_summary_path(created_vacancy.id))
 

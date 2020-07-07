@@ -56,8 +56,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
                 success: I18n.t('messages.jobs.draft_saved_html', job_title: job_title)
   end
 
-  def redirect_to_next_step_if_save_and_continue(vacancy_id, job_title = nil)
-    if params[:commit] == I18n.t('buttons.save_and_continue')
+  def redirect_to_next_step_if_continue(vacancy_id, job_title = nil)
+    if params[:commit] == I18n.t('buttons.continue')
       redirect_to_next_step(vacancy_id)
     elsif params[:commit] == I18n.t('buttons.update_job')
       redirect_to edit_school_job_path(vacancy_id), success: {
