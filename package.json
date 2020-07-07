@@ -13,6 +13,7 @@
     "govuk-frontend": "3.4.0",
     "instantsearch.js": "^4.4.1",
     "jquery": "^3.5.0",
+    "rails-erb-loader": "^5.5.2",
     "rails-ujs": "^5.2.3",
     "regenerator-runtime": "^0.13.5",
     "rollbar": "^2.17.0"
@@ -23,6 +24,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.21.2",
     "jest": "^25.4.0",
+    "jest-erb-transformer": "^1.0.2",
     "jsdom": "^16.2.2",
     "stylelint": "^13.5.0",
     "stylelint-config-sass-guidelines": "^7.0.0",
@@ -43,6 +45,15 @@
     "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
   },
   "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx",
+      "ts",
+      "tsx",
+      "node",
+      "erb"
+    ],
     "testMatch": [
       "<rootDir>/app/frontend/src/**/*.test.js"
     ],

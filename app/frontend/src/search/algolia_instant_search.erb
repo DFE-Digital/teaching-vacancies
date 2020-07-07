@@ -1,0 +1,3 @@
+import algoliasearch from 'algoliasearch';
+const search = algoliasearch('<%= ENV["ALGOLIA_APP_ID"] %>', '<%= ENV["ALGOLIA_SEARCH_API_KEY"] %>');
+export default search;
