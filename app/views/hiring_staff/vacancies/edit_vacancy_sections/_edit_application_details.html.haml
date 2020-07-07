@@ -3,7 +3,7 @@
 %h2.govuk-heading-m.app-task-list__section#application_details_heading
   %span.app-task-list__section-number 5.
   = t('jobs.application_details')
-  = link_to t('buttons.change'), school_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_application_details')
+  = link_to t('buttons.change'), organisation_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_application_details')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 

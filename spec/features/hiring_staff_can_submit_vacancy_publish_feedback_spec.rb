@@ -15,7 +15,7 @@ RSpec.feature 'Vacancy publish feedback' do
     let(:draft_job) { create(:vacancy, :complete, :draft, school_id: school.id) }
 
     scenario 'can not be accessed for non-published vacancies' do
-      visit new_school_job_feedback_path(draft_job.id)
+      visit new_organisation_job_feedback_path(draft_job.id)
 
       expect(page).to have_content('Page not found')
     end
@@ -27,7 +27,7 @@ RSpec.feature 'Vacancy publish feedback' do
     scenario 'can not be accessed for non-published vacancies' do
       create(:vacancy_publish_feedback, vacancy: published_job)
 
-      visit new_school_job_feedback_path(published_job.id)
+      visit new_organisation_job_feedback_path(published_job.id)
 
       expect(page).to have_content(I18n.t('errors.vacancy_publish_feedback.already_submitted'))
     end
@@ -37,7 +37,7 @@ RSpec.feature 'Vacancy publish feedback' do
     let(:published_job) { create(:vacancy, :complete, school_id: school.id) }
 
     scenario 'must have a participation response' do
-      visit new_school_job_feedback_path(published_job.id)
+      visit new_organisation_job_feedback_path(published_job.id)
       fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
 
       click_on 'Submit feedback'
@@ -46,7 +46,7 @@ RSpec.feature 'Vacancy publish feedback' do
     end
 
     scenario 'must have an email when participation response is Yes' do
-      visit new_school_job_feedback_path(published_job.id)
+      visit new_organisation_job_feedback_path(published_job.id)
       choose_yes_to_participation
 
       click_on 'Submit feedback'
@@ -55,7 +55,7 @@ RSpec.feature 'Vacancy publish feedback' do
     end
 
     scenario 'Can be successfully submitted for a published vacancy' do
-      visit new_school_job_feedback_path(published_job.id)
+      visit new_organisation_job_feedback_path(published_job.id)
 
       fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
       choose_no_to_participation
@@ -67,7 +67,7 @@ RSpec.feature 'Vacancy publish feedback' do
     end
 
     scenario 'creates a feedback record' do
-      visit new_school_job_feedback_path(published_job.id)
+      visit new_organisation_job_feedback_path(published_job.id)
 
       fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
       choose_yes_to_participation
@@ -84,7 +84,7 @@ RSpec.feature 'Vacancy publish feedback' do
     end
 
     scenario 'logs an audit activity' do
-      visit new_school_job_feedback_path(published_job.id)
+      visit new_organisation_job_feedback_path(published_job.id)
 
       fill_in 'vacancy_publish_feedback[comment]', with: 'Perfect!'
       choose_no_to_participation

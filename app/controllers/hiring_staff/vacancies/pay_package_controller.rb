@@ -27,6 +27,6 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
   end
 
   def next_step
-    school_job_important_dates_path(@vacancy.id)
+    organisation_job_important_dates_path(@vacancy.id)
   end
 end

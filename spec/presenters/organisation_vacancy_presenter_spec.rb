@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe SchoolVacancyPresenter do
+RSpec.describe OrganisationVacancyPresenter do
   let(:vacancy) { create(:vacancy) }
   let(:presenter) { described_class.new(vacancy) }
 

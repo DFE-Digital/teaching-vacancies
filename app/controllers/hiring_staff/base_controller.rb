@@ -50,7 +50,7 @@ class HiringStaff::BaseController < ApplicationController
 
   def redirect_signed_in_users
     return redirect_to school_group_temporary_path if session[:uid].present?
-    return redirect_to school_path if session[:urn].present?
+    return redirect_to organisation_path if session[:urn].present?
   end
 
   def timeout_period_as_string

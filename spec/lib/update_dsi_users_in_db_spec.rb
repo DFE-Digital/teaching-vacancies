@@ -29,9 +29,9 @@ RSpec.describe UpdateDfeSignInUsers do
       expect(user_with_one_school.dsi_data['school_urns']).to eq(['111111'])
       expect(user_with_one_school.dsi_data['school_group_uids']).to eq(Array.new)
 
-      user_with_multiple_schools_and_orgs = User.find_by(email: 'bar@example.com')
-      expect(user_with_multiple_schools_and_orgs.dsi_data['school_urns']).to eq(['333333', '555555'])
-      expect(user_with_multiple_schools_and_orgs.dsi_data['school_group_uids']).to eq(['222222', '444444'])
+      user_with_multiple_orgs = User.find_by(email: 'bar@example.com')
+      expect(user_with_multiple_orgs.dsi_data['school_urns']).to eq(['333333', '555555'])
+      expect(user_with_multiple_orgs.dsi_data['school_group_uids']).to eq(['222222', '444444'])
     end
 
     it 'raises an error when it finds no users in the response' do

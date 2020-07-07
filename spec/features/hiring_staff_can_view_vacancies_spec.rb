@@ -7,7 +7,7 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'A school should see advisory text when there are no vacancies' do
-    visit school_path
+    visit organisation_path
 
     expect(page).to have_content(I18n.t('schools.jobs.index', organisation: school.name))
     expect(page).not_to have_css('table.vacancies')
@@ -18,7 +18,7 @@ RSpec.feature 'School viewing vacancies' do
     vacancy1 = create(:vacancy, school: school)
     vacancy2 = create(:vacancy, school: school)
 
-    visit school_path
+    visit organisation_path
 
     expect(page).to have_content(I18n.t('schools.jobs.index', organisation: school.name))
     expect(page).to have_content(vacancy1.job_title)
@@ -28,7 +28,7 @@ RSpec.feature 'School viewing vacancies' do
   scenario 'A draft vacancy show page should show a flash message with the status' do
     vacancy = create(:vacancy, school: school, status: 'draft')
 
-    visit school_job_path(vacancy.id)
+    visit organisation_job_path(vacancy.id)
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
@@ -37,7 +37,7 @@ RSpec.feature 'School viewing vacancies' do
 
   scenario 'A published vacancy show page should not show a flash message with the status' do
     vacancy = create(:vacancy, school: school, status: 'published')
-    visit school_job_path(vacancy.id)
+    visit organisation_job_path(vacancy.id)
 
     expect(page).to have_content(school.name)
     expect(page).to have_content(vacancy.job_title)
@@ -45,7 +45,7 @@ RSpec.feature 'School viewing vacancies' do
 
   scenario 'clicking on more information should not increment the counter' do
     vacancy = create(:vacancy, school: school, status: 'published')
-    visit school_job_path(vacancy.id)
+    visit organisation_job_path(vacancy.id)
 
     expect { click_on I18n.t('jobs.apply') }.to change { vacancy.get_more_info_counter.to_i }.by(0)
   end

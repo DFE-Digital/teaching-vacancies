@@ -6,7 +6,7 @@ RSpec.feature 'Hiring staff can only see their school' do
       school = create(:school)
       stub_hiring_staff_auth(urn: school.urn)
 
-      visit school_path
+      visit organisation_path
 
       expect(page).to have_content(school.name)
     end
@@ -17,7 +17,7 @@ RSpec.feature 'Hiring staff can only see their school' do
       create(:school)
       stub_hiring_staff_auth(urn: 'foo')
 
-      visit school_path
+      visit organisation_path
 
       expect(page).to have_content('Page not found')
     end

@@ -31,12 +31,12 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
 
   def next_step
     @supporting_documents_form.supporting_documents == 'yes' ?
-      school_job_documents_path(@vacancy.id) : school_job_application_details_path(@vacancy.id)
+      organisation_job_documents_path(@vacancy.id) : organisation_job_application_details_path(@vacancy.id)
   end
 
   def redirect_to_documents_or_next_step
     if session[:current_step].eql?(:review) && @supporting_documents_form.supporting_documents == 'yes'
-      redirect_to school_job_documents_path(@vacancy.id)
+      redirect_to organisation_job_documents_path(@vacancy.id)
     else
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end

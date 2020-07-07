@@ -15,7 +15,7 @@ class HiringStaff::SignIn::BaseSessionsController < HiringStaff::BaseController
 
   def redirect_to_organisation_path
     if current_organisation.is_a?(School)
-      redirect_to school_path
+      redirect_to organisation_path
     else
       redirect_to school_group_temporary_path
     end

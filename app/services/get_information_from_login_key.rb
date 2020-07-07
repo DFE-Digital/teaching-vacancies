@@ -7,7 +7,7 @@ class GetInformationFromLoginKey
   end
 
   def details_to_update_in_session
-    { has_multiple_schools: has_multiple_schools,
+    { has_multiple_organisations: has_multiple_organisations,
       oid: @user&.oid }
   end
 
@@ -51,7 +51,7 @@ class GetInformationFromLoginKey
     @key.user_id ? User.find(@key.user_id) : nil
   end
 
-  def has_multiple_schools
+  def has_multiple_organisations
     @schools ? @schools.size > 1 : nil
   end
 end

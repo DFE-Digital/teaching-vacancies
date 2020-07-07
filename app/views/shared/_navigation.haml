@@ -1,7 +1,7 @@
 %nav
   %ul.govuk-header__navigation.mobile-header-top-border{ id: "navigation", "aria-label": "Top Level Navigation" }
     - if authenticated? && !ReadOnlyFeature.enabled?
-      %li{ class: active_link_class(school_path) }= link_to t('nav.school_page_link'), school_path, class: 'govuk-header__link'
+      %li{ class: active_link_class(organisation_path) }= link_to t('nav.school_page_link'), organisation_path, class: 'govuk-header__link'
       %li{ class: active_link_class(root_path) }= link_to t('nav.jobseekers_index_link'), root_path, class: 'govuk-header__link'
       %li{ class: active_link_class(sessions_path) }= link_to t('nav.sign_out'), sessions_path, method: :delete, class: 'govuk-header__link'
     - else

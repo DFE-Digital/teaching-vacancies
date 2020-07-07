@@ -15,14 +15,14 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
   context 'editing an incomplete draft vacancy' do
     before do
-      visit new_school_job_path
+      visit new_organisation_job_path
       fill_in_job_specification_form_fields(vacancy)
       click_on I18n.t('buttons.continue')
     end
 
     context '#redirects_to' do
       scenario 'incomplete pay package step' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
         within('h2.govuk-heading-l') do
@@ -31,7 +31,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'incomplete important dates step' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -46,7 +46,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'incomplete supporting documents step' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -69,7 +69,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'documents step if YES selected for supporting documents' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -95,7 +95,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'application details step if NO selected for supporting documents' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -121,7 +121,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'incomplete application details step' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -149,7 +149,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'incomplete job summary step' do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -186,7 +186,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
     context 'after editing a different vacancy' do
       # We use the session to store vacancy attributes, make sure it doesn't leak between edits.
       before do
-        visit edit_school_job_path(id: draft_vacancy.id)
+        visit edit_organisation_job_path(id: draft_vacancy.id)
 
         draft_vacancy.salary = 'Pay scale 1 to Pay scale 2'
         draft_vacancy.benefits = 'Gym, health insurance'
@@ -209,13 +209,13 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       scenario 'then editing the draft redirects to incomplete step' do
-        visit school_job_path(id: draft_vacancy.id)
+        visit organisation_job_path(id: draft_vacancy.id)
         expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
       end
 
       def edit_a_published_vacancy
         published_vacancy = create(:vacancy, :published, school: school)
-        visit edit_school_job_path(published_vacancy.id)
+        visit edit_organisation_job_path(published_vacancy.id)
         click_header_link(I18n.t('jobs.application_details'))
 
         fill_in 'application_details_form[application_link]', with: 'https://example.com'
@@ -232,7 +232,7 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
     let(:vacancy) { create(:vacancy, :draft, school: school) }
 
     scenario 'vacancy state is edit' do
-      visit school_job_review_path(vacancy.id, edit_draft: true)
+      visit organisation_job_review_path(vacancy.id, edit_draft: true)
 
       expect(Vacancy.last.state).to eql('edit')
       within('h2.govuk-heading-l') do
@@ -242,13 +242,13 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
 
     context '#cancel_and_return_later' do
       scenario 'can cancel and return from job details page' do
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
 
         click_header_link(I18n.t('jobs.job_details'))
         expect(page).to have_content(I18n.t('buttons.cancel_and_return'))
 
         click_on I18n.t('buttons.cancel_and_return')
-        expect(page.current_path).to eql(school_job_review_path(vacancy.id))
+        expect(page.current_path).to eql(organisation_job_review_path(vacancy.id))
       end
     end
   end

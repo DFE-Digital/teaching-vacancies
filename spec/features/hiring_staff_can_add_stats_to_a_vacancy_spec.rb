@@ -17,13 +17,13 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     let!(:third_vacancy) { create(:vacancy, :expired, school: school) }
 
     scenario 'hiring staff can see notification badge' do
-      visit school_path
+      visit organisation_path
 
       expect(page).to have_selector(NOTIFICATION_BADGE_SELECTOR, text: 3)
     end
 
     scenario 'hiring staff can see notice of vacancies awaiting feedback' do
-      visit school_path
+      visit organisation_path
 
       within('div.govuk-notification--notice') do
         expect(page).to have_content('3 jobs')
@@ -31,7 +31,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     end
 
     scenario 'continously displays the number of vacancies awaiting feedback' do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 3)
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, text: vacancy.job_title)
@@ -50,7 +50,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     end
 
     scenario 'when adding feedback, it saves feedback to the model' do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       submit_feedback_for(vacancy)
 
@@ -60,7 +60,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     end
 
     scenario 'when an option is not selected in a javascript disabled browser', js: false do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       within('tr', text: vacancy.job_title) do
         select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
@@ -77,7 +77,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     end
 
     scenario 'when an option is not selected in a javascript enabled browser' do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       within('tr', text: vacancy.job_title) do
         select I18n.t('jobs.feedback.hired_status.hired_tvs'), from: 'vacancy_hired_status'
@@ -94,7 +94,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     end
 
     scenario 'input error styling only displays on blank selection field(s)' do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       within('tr', text: vacancy.job_title) do
         click_on I18n.t('buttons.submit')
@@ -116,7 +116,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
     end
 
     scenario 'when all feedback has been submitted' do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       expect(page).to have_selector(JOB_TITLE_LINK_SELECTOR, count: 3)
 
@@ -133,7 +133,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
       invalid_vacancy = create(:vacancy, :expired, starts_on: invalid_starts_on_date, school: school)
       expect(invalid_vacancy.valid?).to eq(false)
 
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
       submit_feedback_for(invalid_vacancy)
 
       invalid_vacancy.reload
@@ -144,7 +144,7 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
 
   context 'when there are no vacancies awaiting feedback' do
     scenario 'hiring staff can not see notification badge' do
-      visit jobs_with_type_school_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       expect(page).to_not have_selector(NOTIFICATION_BADGE_SELECTOR)
       expect(page).to have_content(I18n.t('jobs.no_awaiting_feedback'))

@@ -117,7 +117,7 @@ RSpec.describe Authorisation do
     end
   end
 
-  describe '#many_schools?' do
+  describe '#many_organisations?' do
     subject do
       described_class.new(
         organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
@@ -130,7 +130,7 @@ RSpec.describe Authorisation do
       let(:user_id) { '161d1f6a-44f1-4a1a-940d-d1088c439da7' }
       it 'has many' do
         stub_sign_in_with_multiple_organisations(user_id: user_id)
-        expect(subject.many_schools?).to be(true)
+        expect(subject.many_organisations?).to be(true)
       end
     end
 
@@ -138,7 +138,7 @@ RSpec.describe Authorisation do
       let(:user_id) { 'another_user_id' }
       it 'has many' do
         stub_sign_in_with_multiple_organisations(user_id: user_id)
-        expect(subject.many_schools?).to be(true)
+        expect(subject.many_organisations?).to be(true)
       end
     end
 
@@ -146,7 +146,7 @@ RSpec.describe Authorisation do
       let(:user_id) { 'another_user_id' }
       it 'does not have many' do
         stub_sign_in_with_single_organisation(user_id: user_id)
-        expect(subject.many_schools?).to be(false)
+        expect(subject.many_organisations?).to be(false)
       end
     end
 
@@ -157,7 +157,7 @@ RSpec.describe Authorisation do
           :get,
           "https://test-url.local/users/#{user_id}/organisations"
         ).to_return(status: 500)
-        expect(subject.many_schools?).to be(nil)
+        expect(subject.many_organisations?).to be(nil)
       end
     end
   end

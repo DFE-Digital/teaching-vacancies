@@ -11,7 +11,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     let(:vacancy) { create(:vacancy, :draft, school: school) }
 
     scenario 'redirects to the review vacancy page' do
-      visit edit_school_job_path(vacancy.id)
+      visit edit_organisation_job_path(vacancy.id)
 
       expect(page).to have_content(I18n.t('jobs.review_heading'))
     end
@@ -30,13 +30,13 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     end
 
     scenario 'shows all vacancy information' do
-      visit edit_school_job_path(vacancy.id)
+      visit edit_organisation_job_path(vacancy.id)
 
       verify_all_vacancy_details(vacancy)
     end
 
     scenario 'takes you to the edit page' do
-      visit edit_school_job_path(vacancy.id)
+      visit edit_organisation_job_path(vacancy.id)
 
       within('h1.govuk-heading-m') do
         expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -44,7 +44,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     end
 
     scenario 'vacancy state is edit_published' do
-      visit edit_school_job_path(vacancy.id)
+      visit edit_organisation_job_path(vacancy.id)
       expect(Vacancy.last.state).to eql('edit_published')
 
       click_header_link(I18n.t('jobs.job_details'))
@@ -52,26 +52,26 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     end
 
     scenario 'create a job sidebar is not present' do
-      visit edit_school_job_path(vacancy.id)
+      visit edit_organisation_job_path(vacancy.id)
 
       expect(page).to_not have_content('Creating a job listing steps')
     end
 
     context '#cancel_and_return_later' do
       scenario 'can cancel and return from job details page' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         click_header_link(I18n.t('jobs.job_details'))
         expect(page).to have_content(I18n.t('buttons.cancel_and_return'))
 
         click_on I18n.t('buttons.cancel_and_return')
-        expect(page.current_path).to eql(edit_school_job_path(vacancy.id))
+        expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
       end
     end
 
     context '#job_specification' do
       scenario 'can not be edited when validation fails' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -85,7 +85,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can be successfully edited' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
@@ -97,7 +97,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
       scenario 'ensures the vacancy slug is updated when the title is saved' do
         vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
@@ -113,7 +113,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'tracks the vacancy update' do
         job_title = vacancy.job_title
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
@@ -129,7 +129,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
         fill_in 'job_specification_form[job_title]', with: 'Assistant Head Teacher'
@@ -139,7 +139,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
     context '#pay_package' do
       scenario 'can not be edited when validation fails' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -156,7 +156,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can be successfully edited' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.pay_package'))
 
         fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
@@ -169,7 +169,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'tracks the vacancy update' do
         salary = vacancy.salary
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.pay_package'))
 
         fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
@@ -187,7 +187,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.pay_package'))
 
         fill_in 'pay_package_form[salary]', with: 'Pay scale 1 to Pay scale 2'
@@ -204,7 +204,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can not be edited when validation fails' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -222,7 +222,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can not be saved when expiry time validation fails' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -239,7 +239,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can be successfully edited' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.important_dates'))
 
         expiry_date = Time.zone.today + 1.week
@@ -252,7 +252,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'tracks the vacancy update' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.important_dates'))
 
         expiry_date = Time.zone.today + 1.week
@@ -270,7 +270,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.important_dates'))
 
         expiry_date = Time.zone.today + 1.week
@@ -283,7 +283,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
             vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
             vacancy.save(validate: false)
             vacancy = VacancyPresenter.new(vacancy)
-            visit edit_school_job_path(vacancy.id)
+            visit edit_organisation_job_path(vacancy.id)
 
             click_header_link(I18n.t('jobs.important_dates'))
             expect(page).to have_content(I18n.t('jobs.publication_date'))
@@ -302,7 +302,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
           scenario 'renders the publication date as text and allows editing' do
             vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days, school: school)
             vacancy = VacancyPresenter.new(vacancy)
-            visit edit_school_job_path(vacancy.id)
+            visit edit_organisation_job_path(vacancy.id)
             click_header_link(I18n.t('jobs.important_dates'))
 
             expect(page).to have_css('#important_dates_form_publish_on_3i')
@@ -325,7 +325,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         vacancy.documents = []
         vacancy.save
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
@@ -345,7 +345,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
     context '#application_details' do
       scenario 'can not be edited when validation fails' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -361,7 +361,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can be successfully edited' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         click_header_link(I18n.t('jobs.application_details'))
         vacancy.application_link = 'https://tvs.com'
@@ -377,7 +377,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'tracks the vacancy update' do
         application_link = vacancy.application_link
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.application_details'))
 
         fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
@@ -394,7 +394,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.application_details'))
 
         fill_in 'application_details_form[application_link]', with: 'https://schooljobs.com'
@@ -404,7 +404,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
     context '#job_summary' do
       scenario 'can not be edited when validation fails' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
 
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
@@ -420,7 +420,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'can be successfully edited' do
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_summary'))
 
         fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
@@ -433,7 +433,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       scenario 'tracks the vacancy update' do
         job_summary = vacancy.job_summary
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_summary'))
 
         fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'
@@ -451,7 +451,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
-        visit edit_school_job_path(vacancy.id)
+        visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_summary'))
 
         fill_in 'job_summary_form[job_summary]', with: 'A summary about the job.'

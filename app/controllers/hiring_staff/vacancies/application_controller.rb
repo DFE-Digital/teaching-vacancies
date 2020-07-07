@@ -52,7 +52,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_to_draft(vacancy_id, job_title)
-    redirect_to jobs_with_type_school_path('draft'),
+    redirect_to jobs_with_type_organisation_path('draft'),
                 success: I18n.t('messages.jobs.draft_saved_html', job_title: job_title)
   end
 
@@ -60,7 +60,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     if params[:commit] == I18n.t('buttons.continue')
       redirect_to_next_step(vacancy_id)
     elsif params[:commit] == I18n.t('buttons.update_job')
-      redirect_to edit_school_job_path(vacancy_id), success: {
+      redirect_to edit_organisation_job_path(vacancy_id), success: {
         title: I18n.t('messages.jobs.listing_updated', job_title: job_title),
         body: I18n.t('messages.jobs.manage_jobs_html', link: helpers.back_to_manage_jobs_link(@vacancy))
       }
@@ -68,7 +68,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_to_next_step(vacancy_id)
-    next_path = session[:current_step].eql?(:review) ? school_job_review_path(vacancy_id) : next_step
+    next_path = session[:current_step].eql?(:review) ? organisation_job_review_path(vacancy_id) : next_step
     redirect_to next_path
   end
 
@@ -78,7 +78,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def review_path_with_errors(vacancy)
-    school_job_review_path(job_id: vacancy.id, anchor: 'errors', source: 'publish')
+    organisation_job_review_path(job_id: vacancy.id, anchor: 'errors', source: 'publish')
   end
 
   def redirect_unless_vacancy
@@ -86,7 +86,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_unless_vacancy_session_id
-    redirect_to job_specification_school_job_path(school_id: current_school.id) unless session_vacancy_id
+    redirect_to job_specification_organisation_job_path(school_id: current_school.id) unless session_vacancy_id
   end
 
   def retrieve_job_from_db

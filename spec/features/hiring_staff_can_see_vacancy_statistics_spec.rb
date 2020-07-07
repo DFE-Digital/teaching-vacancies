@@ -19,12 +19,12 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
     end
 
     before do
-      visit school_path(school)
+      visit organisation_path(school)
     end
 
     context 'page views are nil' do
       scenario 'page views show zero' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
+        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
           expect(page.find('td[4]')).to have_content('0')
         end
       end
@@ -34,7 +34,7 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
       let(:total_pageviews) { 100 }
 
       scenario 'page views show the page view count' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
+        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
           expect(page.find('td[4]')).to have_content(total_pageviews)
         end
       end
@@ -53,12 +53,12 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
     end
 
     before do
-      visit jobs_with_type_school_path(:expired)
+      visit jobs_with_type_organisation_path(:expired)
     end
 
     context 'page views are nil' do
       scenario 'page views show zero' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
+        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
           expect(page.find('td[4]')).to have_content('0')
         end
       end
@@ -68,7 +68,7 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
       let(:total_pageviews) { 100 }
 
       scenario 'page views show the page view count' do
-        within("tr#school_vacancy_presenter_#{vacancy.id}") do
+        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
           expect(page.find('td[4]')).to have_content(total_pageviews)
         end
       end

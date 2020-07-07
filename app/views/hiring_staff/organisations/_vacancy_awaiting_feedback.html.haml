@@ -1,5 +1,5 @@
 %tr.govuk-table__row.vacancy[vacancy]
-  = form_for vacancy, url: school_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: 'patch', class: 'submit_feedback', data: { option_not_selected_message: t('messages.jobs.feedback.inline_error') } } do |f|
+  = form_for vacancy, url: organisation_job_statistics_path(vacancy.id), html: { id: vacancy.id, method: 'patch', class: 'submit_feedback', data: { option_not_selected_message: t('messages.jobs.feedback.inline_error') } } do |f|
     %td.govuk-table__cell
       = link_to vacancy.job_title, vacancy.preview_path, class: 'govuk-link view-vacancy-link', id: 'job-title'
     %td.govuk-table__cell= vacancy.publish_on

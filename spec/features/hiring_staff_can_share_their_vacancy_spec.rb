@@ -9,7 +9,7 @@ RSpec.feature 'Hiring staff can share their vacancy' do
   scenario 'A school can visit their page as the job seeker would' do
     vacancy = create(:vacancy, school: school)
 
-    visit school_path
+    visit organisation_path
 
     click_on(vacancy.job_title)
     click_on(I18n.t('jobs.view_public_link'))

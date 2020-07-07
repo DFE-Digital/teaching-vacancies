@@ -12,7 +12,7 @@ RSpec.feature 'Creating a vacancy' do
     school = create(:school, name: 'Salisbury School')
     stub_hiring_staff_auth(urn: school.urn)
 
-    visit school_path
+    visit organisation_path
 
     expect(page).to have_content('Salisbury School')
     expect(page).to have_content(/#{school.address}/)
@@ -36,16 +36,16 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     scenario 'redirects to step 1, job specification' do
-      visit new_school_job_path
+      visit new_organisation_job_path
 
-      expect(page.current_path).to eq(job_specification_school_job_path)
+      expect(page.current_path).to eq(job_specification_organisation_job_path)
       expect(page).to have_content(I18n.t('jobs.create_a_job_title', school: school.name))
       expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
     end
 
     context '#job_specification' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         click_on I18n.t('buttons.continue')
 
@@ -63,7 +63,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 2, pay package, when submitted successfully' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -75,7 +75,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'vacancy state is create' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -84,7 +84,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'tracks the vacancy creation' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -98,7 +98,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#pay_package' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -115,7 +115,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 3, important dates, when submitted successfuly' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -132,7 +132,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#important_dates' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -167,7 +167,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 4, supporting documents, when submitted successfuly' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -187,7 +187,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#supporting_documents' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -205,7 +205,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 4, application details, when choosing no' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -226,7 +226,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to step 3, upload_documents, when choosing yes' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -254,7 +254,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'hiring staff can select a file for upload' do
-        visit school_job_documents_path(documents_vacancy.id)
+        visit organisation_job_documents_path(documents_vacancy.id)
         page.attach_file('documents-form-documents-field', Rails.root.join('spec/fixtures/files/blank_job_spec.pdf'))
         expect(page.find('#documents-form-documents-field').value).to_not be nil
       end
@@ -273,7 +273,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays uploaded file in a table' do
-          visit school_job_documents_path(documents_vacancy.id)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           upload_document(
             'new_documents_form',
@@ -285,7 +285,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays error message when invalid file type is uploaded' do
-          visit school_job_documents_path(documents_vacancy.id)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           allow_any_instance_of(HiringStaff::Vacancies::DocumentsController)
             .to receive_message_chain(:valid_content_type?).and_return(false)
@@ -301,7 +301,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'displays error message when large file is uploaded' do
           stub_const("#{HiringStaff::Vacancies::DocumentsController}::FILE_SIZE_LIMIT", 1.kilobyte)
-          visit school_job_documents_path(documents_vacancy.id)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           upload_document(
             'new_documents_form',
@@ -315,7 +315,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays error message when virus file is uploaded' do
-          visit school_job_documents_path(documents_vacancy.id)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           allow(document_upload).to receive(:safe_download).and_return(false)
 
@@ -329,7 +329,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'displays error message when file not uploaded' do
-          visit school_job_documents_path(documents_vacancy.id)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           allow(document_upload).to receive(:google_error).and_return(true)
 
@@ -352,7 +352,7 @@ RSpec.feature 'Creating a vacancy' do
           create :document, vacancy: documents_vacancy, name: 'delete_me.pdf'
           create :document, vacancy: documents_vacancy, name: 'do_not_delete_me.pdf'
 
-          visit school_job_documents_path(documents_vacancy.id)
+          visit organisation_job_documents_path(documents_vacancy.id)
 
           find('[data-file-name="delete_me.pdf"]').click
         end
@@ -381,7 +381,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#application_details' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -408,7 +408,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to the job summary page when submitted successfully' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -434,7 +434,7 @@ RSpec.feature 'Creating a vacancy' do
 
     context '#job_summary' do
       scenario 'is invalid unless all mandatory fields are submitted' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -467,7 +467,7 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to the vacancy review page when submitted successfully' do
-        visit new_school_job_path
+        visit new_organisation_job_path
 
         fill_in_job_specification_form_fields(vacancy)
         click_on I18n.t('buttons.continue')
@@ -498,13 +498,13 @@ RSpec.feature 'Creating a vacancy' do
     context '#review' do
       context 'redirects the user back to the last incomplete step' do
         scenario 'redirects to step 2, pay package, when that step has not been completed' do
-          visit new_school_job_path
+          visit new_organisation_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit school_job_path(id: v.id)
+          visit organisation_job_path(id: v.id)
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
           within('h2.govuk-heading-l') do
@@ -513,7 +513,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'redirects to step 5, application details, when that step has not been completed' do
-          visit new_school_job_path
+          visit new_organisation_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
@@ -528,7 +528,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('buttons.continue')
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit school_job_path(id: v.id)
+          visit organisation_job_path(id: v.id)
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
           within('h2.govuk-heading-l') do
@@ -537,7 +537,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'redirects to step 6, job summary, when that step has not been completed' do
-          visit new_school_job_path
+          visit new_organisation_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
@@ -555,7 +555,7 @@ RSpec.feature 'Creating a vacancy' do
           click_on I18n.t('buttons.continue')
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
-          visit school_job_path(id: v.id)
+          visit organisation_job_path(id: v.id)
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 6, total: 7))
           within('h2.govuk-heading-l') do
@@ -564,7 +564,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'vacancy state is review when all steps completed' do
-          visit new_school_job_path
+          visit new_organisation_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
@@ -592,7 +592,7 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'vacancy state is review' do
-          visit new_school_job_path
+          visit new_organisation_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
@@ -640,14 +640,14 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'is not available for published vacancies' do
         vacancy = create(:vacancy, :published, school_id: school.id)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
 
-        expect(page).to have_current_path(school_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id))
       end
 
       scenario 'lists all the vacancy details correctly' do
         vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.review_heading'))
 
@@ -663,7 +663,7 @@ RSpec.feature 'Creating a vacancy' do
                    school_id: school.id,
                    working_patterns: ['full_time'])
           )
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
 
@@ -680,7 +680,7 @@ RSpec.feature 'Creating a vacancy' do
                    school_id: school.id,
                    working_patterns: ['part_time'])
           )
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
 
@@ -697,7 +697,7 @@ RSpec.feature 'Creating a vacancy' do
                    school_id: school.id,
                    working_patterns: ['full_time', 'part_time'])
           )
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
 
@@ -708,7 +708,7 @@ RSpec.feature 'Creating a vacancy' do
       context 'edit job_specification_details' do
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
@@ -724,7 +724,7 @@ RSpec.feature 'Creating a vacancy' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           current_title = vacancy.job_title
           current_slug = vacancy.slug
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
@@ -740,7 +740,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
           fill_in 'job_specification_form[job_title]', with: ''
@@ -758,7 +758,7 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'editing the supporting_documents' do
         scenario 'updates the vacancy details' do
-          visit new_school_job_path
+          visit new_organisation_job_path
 
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
@@ -794,7 +794,7 @@ RSpec.feature 'Creating a vacancy' do
       context 'editing the application_details' do
         scenario 'fails validation until values are set correctly' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
@@ -813,7 +813,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'fails validation correctly when an invalid link is entered' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
@@ -832,7 +832,7 @@ RSpec.feature 'Creating a vacancy' do
 
         scenario 'updates the vacancy details' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
           expect(page).to have_content(I18n.t('jobs.current_step', step: 5, total: 7))
@@ -847,7 +847,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'tracks any changes' do
           vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
           contact_email = vacancy.contact_email
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
           fill_in 'application_details_form[contact_email]', with: 'an@email.com'
@@ -861,7 +861,7 @@ RSpec.feature 'Creating a vacancy' do
 
       scenario 'redirects to the school vacancy page when published' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
 
         expect(page).to have_content(I18n.t('jobs.confirmation_page.view_posted_job'))
@@ -873,7 +873,7 @@ RSpec.feature 'Creating a vacancy' do
         current_user = User.find_by(oid: session_id)
         vacancy = create(:vacancy, :draft, school: school)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
 
         expect(vacancy.reload.publisher_user_id).to eq(current_user.id)
@@ -882,7 +882,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'view the published listing as a job seeker' do
         vacancy = create(:vacancy, :draft, school_id: school.id)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
 
         click_on I18n.t('jobs.submit_listing.button')
         save_page
@@ -896,7 +896,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'view the full-time published listing as a job seeker' do
           vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time'])
 
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
           click_on I18n.t('jobs.submit_listing.button')
           save_page
@@ -911,7 +911,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'view the part-time published listing as a job seeker' do
           vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['part_time'])
 
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
           click_on I18n.t('jobs.submit_listing.button')
           save_page
@@ -926,7 +926,7 @@ RSpec.feature 'Creating a vacancy' do
         scenario 'view the full- and part-time published listing as a job seeker' do
           vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time', 'part_time'])
 
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
 
           click_on I18n.t('jobs.submit_listing.button')
           save_page
@@ -943,7 +943,7 @@ RSpec.feature 'Creating a vacancy' do
         vacancy.assign_attributes expires_on: yesterday_date
         vacancy.save(validate: false)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.current_step', step: 3, total: 7))
         within('h2.govuk-heading-l') do
@@ -981,18 +981,18 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'can be published at a later date' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
         expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
-        visit school_job_path(vacancy.id)
+        visit organisation_job_path(vacancy.id)
         expect(page).to have_content('Date listed')
         expect(page).to have_content("#{format_date(vacancy.publish_on)}")
       end
 
       scenario 'displays the expiration date and time on the confirmation page' do
         vacancy = create(:vacancy, :draft, school_id: school.id, expiry_time: Time.zone.now + 5.days)
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
 
         expect(page).to have_content(
@@ -1005,7 +1005,7 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'tracks publishing information' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
 
         activity = vacancy.activities.last
@@ -1016,11 +1016,11 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'a published vacancy cannot be republished' do
         vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
 
-        visit school_job_review_path(vacancy.id)
+        visit organisation_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
         expect(page).to have_content('The job listing has been completed')
 
-        visit school_job_publish_path(vacancy.id)
+        visit organisation_job_publish_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('messages.jobs.already_published'))
       end
@@ -1028,8 +1028,8 @@ RSpec.feature 'Creating a vacancy' do
       scenario 'a published vacancy cannot be edited' do
         vacancy = create(:vacancy, :published, school_id: school.id)
 
-        visit school_job_review_path(vacancy.id)
-        expect(page.current_path).to eq(school_job_path(vacancy.id))
+        visit organisation_job_review_path(vacancy.id)
+        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
         expect(page).to have_content(I18n.t('messages.jobs.already_published'))
       end
 
@@ -1040,7 +1040,7 @@ RSpec.feature 'Creating a vacancy' do
           expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
             .to receive(:update_google_index).with(vacancy)
 
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_on I18n.t('jobs.submit_listing.button')
         end
       end
@@ -1051,7 +1051,7 @@ RSpec.feature 'Creating a vacancy' do
 
           expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)
 
-          visit school_job_review_path(vacancy.id)
+          visit organisation_job_review_path(vacancy.id)
           click_on I18n.t('jobs.submit_listing.button')
         end
       end
