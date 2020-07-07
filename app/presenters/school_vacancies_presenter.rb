@@ -7,7 +7,7 @@ class SchoolVacanciesPresenter < BasePresenter
     @sort = sort
     raise ArgumentError unless self.class.valid_types.include?(@vacancy_type)
 
-    @vacancies = send(@vacancy_type).map { |v| SchoolVacancyPresenter.new(v) }
+    @vacancies = send(@vacancy_type).map { |v| OrganisationVacancyPresenter.new(v) }
   end
 
   def self.valid_types

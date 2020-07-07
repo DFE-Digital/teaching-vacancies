@@ -55,7 +55,7 @@ RSpec.feature 'School deleting vacancies' do
   def delete_vacancy(school, vacancy_id)
     visit school_path(school)
 
-    within("tr#school_vacancy_presenter_#{vacancy_id}") do
+    within("tr#organisation_vacancy_presenter_#{vacancy_id}") do
       click_on 'Delete'
     end
   end

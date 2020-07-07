@@ -21,7 +21,7 @@
   .govuk-grid-column-two-thirds
     %h3.govuk-heading-m= t('jobs.confirmation_page.next_step')
     %p= t('jobs.confirmation_page.date_posted', date: @vacancy.publish_on)
-    %p= t('jobs.confirmation_page.date_expires', application_deadline: SchoolVacancyPresenter.new(@vacancy).application_deadline)
+    %p= t('jobs.confirmation_page.date_expires', application_deadline: OrganisationVacancyPresenter.new(@vacancy).application_deadline)
     %p
       = link_to(t('jobs.confirmation_page.feedback_link'), new_school_job_feedback_path(@vacancy.id), class: 'govuk-link')
       = t('jobs.confirmation_page.feedback_time')

@@ -1,4 +1,4 @@
-class SchoolVacancyPresenter < BasePresenter
+class OrganisationVacancyPresenter < BasePresenter
   include DateHelper
   include ActionView::Helpers::UrlHelper
 

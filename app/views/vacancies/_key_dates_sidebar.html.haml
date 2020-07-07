@@ -2,7 +2,7 @@
   %aside.vacancy--metadata
     - unless @vacancy.expired?
       %h3.govuk-heading-s
-        = SchoolVacancyPresenter.new(@vacancy).days_to_apply
+        = OrganisationVacancyPresenter.new(@vacancy).days_to_apply
     %ul.key-dates-timeline{ class: 'govuk-!-margin-bottom-0' }
       - if @vacancy.starts_on.present?
         %li.key-dates-timeline__item
@@ -14,7 +14,7 @@
         %h3.key-dates-timeline__title.govuk-heading-s
           = t('jobs.application_deadline')
         %p.key-dates-timeline__by
-          = SchoolVacancyPresenter.new(@vacancy).application_deadline
+          = OrganisationVacancyPresenter.new(@vacancy).application_deadline
       %li.key-dates-timeline__item
         %h3.key-dates-timeline__title.govuk-heading-s
           = t('jobs.publish_on')
