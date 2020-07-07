@@ -38,7 +38,7 @@ class Authorisation
     role_ids.include?(dfe_sign_in_service_access_role_id)
   end
 
-  def many_schools?
+  def many_organisations?
     org_api_path = "/users/#{user_id}/organisations"
     response = get_dfe_sign_in_api_response(org_api_path)
     return JSON.parse(response.body).count > 1 if response.code.eql?('200')

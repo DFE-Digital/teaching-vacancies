@@ -49,7 +49,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     return unless options[:oid]
     session.update(
       session_id: options[:oid],
-      multiple_schools: options[:has_multiple_schools]
+      multiple_organisations: options[:has_multiple_organisations]
     )
     Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
   end

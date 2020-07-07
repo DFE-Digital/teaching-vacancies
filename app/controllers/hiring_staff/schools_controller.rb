@@ -2,7 +2,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   def placeholder; end
 
   def show
-    @multiple_schools = session_has_multiple_schools?
+    @multiple_organisations = session_has_multiple_organisations?
     @school = SchoolPresenter.new(current_school)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies_presenter = OrganisationVacanciesPresenter.new(@school, @sort, params[:type])
@@ -38,8 +38,8 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
 
   private
 
-  def session_has_multiple_schools?
-    session.key?(:multiple_schools) && session[:multiple_schools] == true
+  def session_has_multiple_organisations?
+    session[:multiple_organisations] == true
   end
 
   def sort_column

@@ -4,7 +4,7 @@
   .govuk-grid-column-full
     %h1.govuk-heading-l.mb0
       = t('schools.jobs.index', organisation: @school.name)
-    - if @multiple_schools
+    - if @multiple_organisations
       - if AuthenticationFallback.enabled?
         = link_to t('sign_in.organisation.change'), auth_email_change_organisation_path, class: 'govuk-link'
       - else
