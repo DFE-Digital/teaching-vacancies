@@ -23,6 +23,8 @@
         legend: { text: t('helpers.fieldset.supporting_documents_form.supporting_documents_html') },
         hint_text: t('helpers.hint.supporting_documents_form.supporting_documents')
 
-      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+      = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
+      = render 'hiring_staff/vacancies/vacancy_form_partials/save_and_return_submit', f: f
+
   .govuk-grid-column-one-third
     = render 'hiring_staff/vacancies/sidebar'

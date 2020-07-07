@@ -35,7 +35,8 @@
         label: { text: t('helpers.fieldset.application_details_form.application_link'), size: 's' },
         hint_text: t('helpers.hint.application_details_form.application_link')
 
-      = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+      = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
+      = render 'hiring_staff/vacancies/vacancy_form_partials/save_and_return_submit', f: f
 
   .govuk-grid-column-one-third
     - unless @vacancy.published? || @vacancy.state == 'copy'
