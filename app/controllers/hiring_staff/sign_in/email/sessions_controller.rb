@@ -39,8 +39,6 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     @reason_for_failing_sign_in = information.reason_for_failing_sign_in
     @schools, @school_groups = information.schools, information.school_groups
     update_session_without_urn_or_uid(information.details_to_update_in_session)
-    # .to_i used to convert nil to 0
-    only_one_organisation? = @schools&.count.to_i + @school_groups&.count.to_i == 1
     redirect_to auth_email_create_session_path(urn: @schools&.first&.urn, uid: @school_groups&.first&.uid) if
       only_one_organisation?
   end
@@ -91,5 +89,10 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   def user_authorised?
     user = User.find_by(oid: session[:session_id]) rescue nil
     user&.dsi_data&.dig('school_group_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
+  end
+
+  def only_one_organisation?
+    # .to_i used to convert nil to 0
+    @schools&.count.to_i + @school_groups&.count.to_i == 1
   end
 end

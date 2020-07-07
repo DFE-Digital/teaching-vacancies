@@ -61,7 +61,9 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
   end
 
   def school_group_uid
-    auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
+    if SchoolGroupJobsFeature.enabled?
+      auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
+    end
   end
 
   def organisation_id
@@ -79,7 +81,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
   end
 
   def check_authorisation(authorisation_permissions)
-    if authorisation_permissions.authorised?
+    if authorisation_permissions.authorised? && organisation_id_present
       update_session(authorisation_permissions)
       update_user_last_activity_at
       redirect_to_organisation_path
@@ -90,5 +92,9 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
 
   def redirect_for_fallback_authentication
     redirect_to new_auth_email_path if AuthenticationFallback.enabled?
+  end
+
+  def organisation_id_present
+    school_urn.present? || school_group_uid.present?
   end
 end

@@ -49,9 +49,7 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def redirect_signed_in_users
-    if SchoolGroupJobsFeature.enabled?
-      return redirect_to school_group_temporary_path if session[:uid].present?
-    end
+    return redirect_to school_group_temporary_path if session[:uid].present?
     return redirect_to school_path if session[:urn].present?
   end
 
