@@ -1,6 +1,6 @@
 ---
 name: Feature work template
-about: This is the standard template for creating new technical work for featrues
+about: This is the standard template for creating new technical work for features
 title: ''
 labels: ''
 assignees: ''
@@ -23,7 +23,7 @@ Refer to the following Figma Screens for anything relating to design or IA.
 If you have any questions, clarify with Design before proceeding.  In the event of any corrections, please ensure the Figmas are updated and notes of conversations are recorded in this issue for future reference. 
 
 ## Done when (required - with boilerplate)
-- [ ] **Specific steps that are are required before the code is PR'd **
+- [ ] **Specific steps that are are required before the code is merged **
 
 ### Standard boilerplate - adjust as neeed.
 - [ ] The rendered pages **exactly match** the listed figmas.
