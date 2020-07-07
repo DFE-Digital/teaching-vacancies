@@ -7,8 +7,6 @@ class HiringStaff::BaseController < ApplicationController
     :check_session,
     :check_terms_and_conditions
 
-  helper_method :current_school
-
   include AuthenticationConcerns
   include ActionView::Helpers::DateHelper
 
@@ -17,15 +15,11 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_session
-    redirect_to new_identifications_path unless session.key?(:urn)
+    redirect_to new_identifications_path unless session[:urn].present? || session[:uid].present?
   end
 
   def check_terms_and_conditions
     redirect_to terms_and_conditions_path unless current_user&.accepted_terms_and_conditions?
-  end
-
-  def current_school
-    @current_school ||= School.find_by!(urn: session[:urn])
   end
 
   def current_user
@@ -55,7 +49,8 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def redirect_signed_in_users
-    return redirect_to school_path if session.key?(:urn)
+    return redirect_to school_group_temporary_path if session[:uid].present?
+    return redirect_to school_path if session[:urn].present?
   end
 
   def timeout_period_as_string

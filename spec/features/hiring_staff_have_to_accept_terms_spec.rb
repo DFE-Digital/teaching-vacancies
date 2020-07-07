@@ -26,7 +26,7 @@ RSpec.feature 'Hiring staff accepts terms and conditions' do
       click_on I18n.t('buttons.accept_and_continue')
 
       current_user.reload
-      expect(page).to have_content(I18n.t('schools.jobs.index', school: school.name))
+      expect(page).to have_content(I18n.t('schools.jobs.index', organisation: school.name))
       expect(current_user).to be_accepted_terms_and_conditions
     end
 

@@ -1,4 +1,6 @@
 class HiringStaff::SchoolsController < HiringStaff::BaseController
+  def placeholder; end
+
   def show
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :controller do
+  let(:session) { double('session') }
   let(:vacancy) { double('vacancy') }
   let(:vacancy_id) { double('test_vacancy_id') }
   let(:school_id) { double('test_school_id') }
@@ -9,8 +10,10 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
   before do
     allow(job_specification_form).to receive(:new)
 
-    allow(controller).to receive(:session).and_return(double('session').as_null_object)
-    allow(controller).to receive_message_chain(:session, :key?).with(:urn).and_return(true)
+    allow(controller).to receive(:session).and_return(session)
+    allow(session).to receive(:[]).with(:urn).and_return('urn')
+    allow(session).to receive(:[]).with(:vacancy_attributes).and_return(nil)
+    allow(session).to receive(:id).and_return(nil)
     allow(controller).to receive_message_chain(:current_user, :accepted_terms_and_conditions?).and_return(true)
     allow(controller).to receive_message_chain(:current_user, :last_activity_at).and_return(Time.zone.now)
     allow(controller).to receive_message_chain(:current_user, :update)
