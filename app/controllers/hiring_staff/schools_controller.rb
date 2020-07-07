@@ -5,7 +5,7 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
     @multiple_schools = session_has_multiple_schools?
     @school = SchoolPresenter.new(current_school)
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    @vacancy_presenter = SchoolVacanciesPresenter.new(@school, @sort, params[:type])
+    @vacancies_presenter = OrganisationVacanciesPresenter.new(@school, @sort, params[:type])
     @awaiting_feedback_count = @school.vacancies.awaiting_feedback.count
 
     render_draft_saved_message if params[:from_review]

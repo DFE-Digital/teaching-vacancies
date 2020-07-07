@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe SchoolVacanciesPresenter do
+RSpec.describe OrganisationVacanciesPresenter do
   before do
     @school = create(:school)
     @draft_vacancies = create_list(:vacancy, 5, :draft, school: @school)
@@ -21,7 +21,7 @@ RSpec.describe SchoolVacanciesPresenter do
   let(:presenter) { described_class.new(@school, sort, type) }
 
   it 'returns the school' do
-    expect(presenter.school).to eq(@school)
+    expect(presenter.organisation).to eq(@school)
   end
 
   describe 'sorting' do
