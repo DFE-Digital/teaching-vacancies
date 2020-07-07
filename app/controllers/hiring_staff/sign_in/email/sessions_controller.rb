@@ -37,7 +37,8 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   def choose_organisation
     information = GetInformationFromLoginKey.new(get_key)
     @reason_for_failing_sign_in = information.reason_for_failing_sign_in
-    @schools, @school_groups = information.schools, information.school_groups
+    @schools = information.schools
+    @school_groups = information.school_groups
     update_session_without_urn_or_uid(information.details_to_update_in_session)
     redirect_to auth_email_create_session_path(urn: @schools&.first&.urn, uid: @school_groups&.first&.uid) if
       only_one_organisation?
