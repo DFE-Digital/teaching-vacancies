@@ -3,10 +3,10 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
 
   def show
     @multiple_organisations = session_has_multiple_organisations?
-    @school = SchoolPresenter.new(current_school)
+    @organisation = organisation_presenter
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    @vacancies_presenter = OrganisationVacanciesPresenter.new(@school, @sort, params[:type])
-    @awaiting_feedback_count = @school.vacancies.awaiting_feedback.count
+    @vacancies_presenter = OrganisationVacanciesPresenter.new(@organisation, @sort, params[:type])
+    @awaiting_feedback_count = @organisation.vacancies.awaiting_feedback.count
 
     render_draft_saved_message if params[:from_review]
 
@@ -15,28 +15,33 @@ class HiringStaff::SchoolsController < HiringStaff::BaseController
   end
 
   def edit
-    @school = current_school
+    @organisation = current_organisation
     return if params[:description].nil?
 
-    @school.description = params[:description].presence
-    @school.valid?
+    @organisation.description = params[:description].presence
+    @organisation.valid?
   end
 
   def update
-    school = current_school
-    school.description = params[:school][:description]
+    @organisation = current_organisation
+    @organisation.description = params[:school][:description]
 
-    if school.valid?
-      Auditor::Audit.new(school, 'school.update', current_session_id).log do
-        school.save
+    if @organisation.valid?
+      Auditor::Audit.new(@organisation, 'school.update', current_session_id).log do
+        @organisation.save
       end
-      redirect_to school_path
-    else
-      redirect_to edit_school_path(description: school.description)
+      return redirect_to school_path
     end
+
+    render :edit
   end
 
   private
+
+  def organisation_presenter
+    return SchoolPresenter.new(current_organisation) if current_organisation.is_a?(School)
+    # TODO: Implement SchoolGroupPresenter
+  end
 
   def session_has_multiple_organisations?
     session[:multiple_organisations] == true

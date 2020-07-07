@@ -536,7 +536,7 @@ en:
     not_given: 'Not given'
     search_heading: 'Publish a job'
     search_subheading: 'Which school is the job job for?'
-    info: 'About %{school}'
+    info: 'About %{organisation}'
     no_information: 'No information available'
     map_aria_label: 'Interactive map showing school location'
     jobs:
