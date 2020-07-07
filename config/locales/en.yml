@@ -612,6 +612,11 @@ en:
         heading: "You have subscribed to a job alert for '%{reference}'."
         subheading: 'We’ll email you details of any new jobs that match the following search criteria:'
         expiry_text_html: "Your job alert subscription will end on %{date}."
+      your_feedback: >-
+        Teaching Vacancies is a free job-listing service from the Department for Education. It helps
+        schools to save money on recruitment and you to take the next step in your career. 
+        [Your feedback](https://teaching-vacancies.service.gov.uk/feedback/new) will help
+        us improve the service.
     manage: Manage your subscription
     unsubscribe: Unsubscribe
     labels:
