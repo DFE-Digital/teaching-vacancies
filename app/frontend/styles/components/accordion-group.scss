@@ -3,15 +3,15 @@
     margin-bottom: 10px;
 }
 
-.accordian-group {
-    .accordian-content__group.govuk-accordion__section--expanded {
+.accordion-group {
+    .accordion-content__group.govuk-accordion__section--expanded {
         border-bottom:1px solid $govuk-border-colour;
         padding-bottom: 10px;
     }
 
-    .accordian-group-heading {
+    .accordion-group-heading {
         background-color: govuk-colour('light-grey');
-        padding: 7px;
+        padding: 10px 0;
     }
 
     .govuk-accordion__controls {
@@ -31,6 +31,7 @@
 
     .govuk-accordion__section-button {
         font-size: $small-font-size;
+        padding: 0 13px;
     }
 
     .govuk-accordion__section-content {
