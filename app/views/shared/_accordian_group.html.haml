@@ -1,0 +1,25 @@
+-# Usage to include accordian group
+-# = render partial: 'shared/accordian_group', locals: { :title => 'Job Filters', items: [{ :title => 'locations' }, { :title => 'created by' }] }
+
+.accordian-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
+  - if title.present?
+    .govuk-accordion__section.govuk-accordion__title
+      .govuk-accordion__section-header
+        %h3.govuk-accordion__section-heading.accordian-group-heading
+          %span.govuk-accordion__section-button{ id: "accordion-default-heading-title" }
+            = title
+
+      .govuk-accordion__section-content{ id: "accordion-default-content-title", aria: { labelledby: "accordion-default-heading-title" } }
+        %p.govuk-body
+          = 'filter pills'
+
+  - items.each_with_index do |filter, index|
+    .govuk-accordion__section.accordian-content__group
+      .govuk-accordion__section-header
+        %h3.govuk-accordion__section-heading
+          %span.govuk-accordion__section-button{ id: "accordion-default-heading-#{index}" }
+            = filter[:title]
+
+      .govuk-accordion__section-content{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" } }
+        %p.govuk-body
+          = filter[:title] + ' content'

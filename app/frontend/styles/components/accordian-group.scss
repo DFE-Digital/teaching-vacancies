@@ -1,0 +1,40 @@
+.js-enabled .govuk-accordion {
+    border: none;
+    margin-bottom: 10px;
+}
+
+.accordian-group {
+    .accordian-content__group.govuk-accordion__section--expanded {
+        border-bottom:1px solid $govuk-border-colour;
+        padding-bottom: 10px;
+    }
+
+    .accordian-group-heading {
+        background-color: govuk-colour('light-grey');
+        padding: 7px;
+    }
+
+    .govuk-accordion__controls {
+        display: none;
+    }
+
+    .govuk-accordion__title {
+        .govuk-accordion__icon {
+            display: none;
+        }
+    }
+
+    .govuk-accordion__section-header {
+        border: none;
+        padding: 10px 0;
+    }
+
+    .govuk-accordion__section-button {
+        font-size: $small-font-size;
+    }
+
+    .govuk-accordion__section-content {
+        border: 3px solid govuk-colour('light-grey');
+        padding: 10px;
+    }
+}
