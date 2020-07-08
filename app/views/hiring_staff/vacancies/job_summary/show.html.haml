@@ -1,5 +1,5 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @job_summary_form, t('jobs.job_summary'))
-= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+= render 'hiring_staff/vacancies/vacancy_form_partials/heading'
 
 - if @vacancy.present? && @vacancy&.state != 'create'
   = link_to t('buttons.cancel_and_return'), edit_organisation_job_path(@vacancy.id), class: 'govuk-back-link'
