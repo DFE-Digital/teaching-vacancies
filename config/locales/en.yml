@@ -288,10 +288,10 @@ en:
     per_year: 'per year'
     per_year_pro_rata: 'per year pro rata'
     per_year_fte: 'per year (full-time equivalent)'
-    create_a_job_title: 'Create a job listing for %{school}'
+    create_a_job_title: 'Create a job listing for %{organisation}'
     copy_job_title: 'Copy %{job_title}'
     new_job_listing_details: New job listing details
-    review_page_title: 'Review the job listing — Create a job listing for %{school}'
+    review_page_title: 'Review the job listing — Create a job listing for %{organisation}'
     review_heading: 'Review the job listing'
     copy_review_heading: Review the new job listing
     edit_job_title: 'Edit %{job_title}'
@@ -349,7 +349,7 @@ en:
       heading: 'Preview this job listing'
       message: 'See how this job listing will appear to jobseekers on Teaching Vacancies'
       button: 'Preview job listing'
-      page_title: 'Preview job listing for %{school}'
+      page_title: 'Preview job listing for %{organisation}'
       summary:
         heading_html: 'Preview of &#8216;%{title}&#8217;'
         body_html:
@@ -418,7 +418,7 @@ en:
       time_updated: Date last updated
     confirmation_page:
       submitted: 'The job listing has been completed'
-      page_title: 'The job listing for %{school} has been completed'
+      page_title: 'The job listing for %{organisation} has been completed'
       view_posted_job: 'View your job listing'
       dashboard_link: 'You can also view, amend or delete it on %{link}'
       next_step: 'What happens next'

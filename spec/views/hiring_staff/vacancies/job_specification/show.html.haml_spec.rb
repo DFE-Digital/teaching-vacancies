@@ -20,7 +20,7 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
   end
 
   before do
-    allow(view).to receive(:current_school).and_return(instance_double(School).as_null_object)
+    allow(view).to receive(:current_organisation).and_return(instance_double(School).as_null_object)
     # Configured via the params set on the routes, as shown above. Exposed using a helper method, but that isn't
     # important for *this* test.
     allow(view).to receive(:params).and_return({ create_step: 1 })

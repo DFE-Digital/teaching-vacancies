@@ -53,15 +53,15 @@ module VacanciesHelper
   def page_title_prefix(vacancy, form_object, page_heading)
     if %w(create review).include?(vacancy.state)
       "#{form_object.errors.present? ?
-        'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', school: current_school.name)}"
+        'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
     else
       "#{form_object.errors.present? ?
         'Error: ' : ''}Edit the #{page_heading}"
     end
   end
 
-  def review_page_title_prefix(vacancy, school = current_school)
-    page_title = I18n.t('jobs.review_page_title', school: school.name)
+  def review_page_title_prefix(vacancy, organisation = current_organisation)
+    page_title = I18n.t('jobs.review_page_title', organisation: organisation.name)
     "#{vacancy.errors.present? ? 'Error: ' : ''}#{page_title}"
   end
 
@@ -70,11 +70,14 @@ module VacanciesHelper
     I18n.t('jobs.review_heading')
   end
 
-  def page_title(vacancy, school = current_school)
-    return I18n.t('jobs.copy_job_title',
-                  job_title: vacancy.job_title.downcase) if vacancy.state == 'copy'
-    return I18n.t('jobs.create_a_job_title', school: school.name) if %w(create review).include?(vacancy.state)
-    I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
+  def page_title(vacancy, organisation = current_organisation)
+    if vacancy.state == 'copy'
+      I18n.t('jobs.copy_job_title', job_title: vacancy.job_title.downcase)
+    elsif %w(create review).include?(vacancy.state)
+      I18n.t('jobs.create_a_job_title', organisation: organisation.name)
+    else
+      I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
+    end
   end
 
   def missing_subjects?(vacancy)
