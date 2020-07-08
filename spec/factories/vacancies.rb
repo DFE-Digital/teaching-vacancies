@@ -17,6 +17,7 @@ FactoryBot.define do
     expiry_time { expires_on&.change(sec: 0) }
     hired_status { nil }
     how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
+    job_location { ['at_one_school', 'central_office'].sample }
     job_summary { Faker::Lorem.paragraph(sentence_count: 4) }
     job_roles { ['Teacher'] }
     job_title { Faker::Lorem.sentence[1...30].strip }

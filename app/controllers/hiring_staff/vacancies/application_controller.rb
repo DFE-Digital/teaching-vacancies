@@ -2,8 +2,6 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
-  NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS = 1
-
   before_action :set_vacancy
 
   include HiringStaff::JobCreationHelper

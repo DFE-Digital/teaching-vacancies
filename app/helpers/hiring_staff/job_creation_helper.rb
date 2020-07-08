@@ -1,10 +1,12 @@
 module HiringStaff::JobCreationHelper
+  NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS = 1
+
   def current_step
     step = params[:create_step]
     if session[:uid].present?
       step
     else
-      step - HiringStaff::Vacancies::ApplicationController::NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
+      step - NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
     end
   end
 
@@ -19,7 +21,7 @@ module HiringStaff::JobCreationHelper
       # Remove steps that apply only to school-group level users
       steps_to_display.delete(steps_to_display.first)
       # Renumber the steps
-      steps_to_display.each { |step| step[:number] -= 1 }
+      steps_to_display.each { |step| step[:number] -= NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS }
     end
     steps_to_display
   end

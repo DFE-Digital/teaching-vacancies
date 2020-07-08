@@ -3,7 +3,7 @@ require 'get_subject_name'
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   include GetSubjectName
 
-  before_action :set_up_url, only: %i[show]
+  before_action :set_up_url
   before_action :set_up_form, only: %i[create update]
 
   include FirstStepFormConcerns

@@ -7,8 +7,8 @@ RSpec.describe 'hiring_staff/vacancies/_sidebar' do
       # environment.
       # rubocop:disable Rails/HttpPositionalArguments
       Rails.application.routes.draw do
-        get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
-        get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
+        get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step for SchoolGroup users only' }
+        get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step for all user types' }
       end
       # rubocop:enable Rails/HttpPositionalArguments
 
@@ -24,20 +24,23 @@ RSpec.describe 'hiring_staff/vacancies/_sidebar' do
       render
     end
 
-    it 'the first step number is displayed' do
-      expect(render).to have_css('.app-step-nav__circle--number', text: '1')
+    context 'when the user is a SchoolGroup-level user' do
+      before do
+        allow(session).to receive(:[]).with(:uid).and_return('1234')
+        render
+      end
+
+      it 'the correct steps are rendered with correct numbers in correct order' do
+        expect(render.gsub("\n", '')).to match(
+          /Step.*1.*#{'Step for SchoolGroup users only'}.*Step.*2.*#{'Step for all user types'}/
+        )
+      end
     end
 
-    it 'the first step title is displayed' do
-      expect(render).to have_css('.js-step-title-text', text: 'Step one')
-    end
-
-    it 'the second step number is displayed' do
-      expect(render).to have_css('.app-step-nav__circle--number', text: '2')
-    end
-
-    it 'the second step title is displayed' do
-      expect(render).to have_css('.js-step-title-text', text: 'Step two')
+    context 'when the user is a School-level user' do
+      it 'the correct steps are rendered with correct numbers in correct order' do
+        expect(render.gsub("\n", '')).to match(/Step.*1.*#{'Step for all user types'}/)
+        expect(render.gsub("\n", '')).not_to match(/Step.*2/) end
     end
   end
 end

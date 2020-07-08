@@ -47,7 +47,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
         get :show
         expect(controller.instance_variable_get(:@form_submission_url_method)).to eql('post')
         expect(controller.instance_variable_get(:@form_submission_url))
-          .to eql(job_specification_organisation_job_path(school_id: school_id))
+          .to eql(job_specification_organisation_job_path)
       end
     end
   end
