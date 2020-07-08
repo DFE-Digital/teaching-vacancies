@@ -88,7 +88,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   end
 
   def user_authorised?
-    user = User.find_by(oid: session[:session_id]) rescue nil
+    user = User.find_by(oid: session.to_h['session_id']) rescue nil
     user&.dsi_data&.dig('school_group_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
   end
 

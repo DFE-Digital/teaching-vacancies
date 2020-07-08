@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_session_id
-    session[:session_id]
+    session.to_h['session_id']
   end
 
   private
