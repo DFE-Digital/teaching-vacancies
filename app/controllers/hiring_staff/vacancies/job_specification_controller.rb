@@ -49,9 +49,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def set_up_url
     @job_specification_url_method = @vacancy&.id.present? ? 'patch' : 'post'
-    @job_specification_url = @vacancy&.id.present? ?
-      organisation_job_job_specification_path(@vacancy.id) :
+    if @vacancy&.id.present?
+      @job_specification_url = organisation_job_job_specification_path(@vacancy.id)
+    else
       job_specification_organisation_job_path(school_id: current_school.id)
+    end
   end
 
   def set_up_job_specification_form
@@ -64,6 +66,20 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
           .permit(:state, :job_title,
                   job_roles: [], working_patterns: [], subjects: [])
           .merge(completed_step: current_step)
+  end
+
+  def save_vacancy_without_validation
+    @job_specification_form.vacancy.school_id = current_school.id
+    @job_specification_form.vacancy.send :set_slug
+    @job_specification_form.vacancy.status = :draft
+    Auditor::Audit.new(@job_specification_form.vacancy, 'vacancy.create', current_session_id).log do
+      @job_specification_form.vacancy.save(validate: false)
+    end
+    @job_specification_form.vacancy
+  end
+
+  def next_step
+    organisation_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
   end
 
   def remove_subject_fields(vacancy)
@@ -82,19 +98,5 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     else
       redirect_to jobs_with_type_organisation_path('draft')
     end
-  end
-
-  def save_vacancy_without_validation
-    @job_specification_form.vacancy.school_id = current_school.id
-    @job_specification_form.vacancy.send :set_slug
-    @job_specification_form.vacancy.status = :draft
-    Auditor::Audit.new(@job_specification_form.vacancy, 'vacancy.create', current_session_id).log do
-      @job_specification_form.vacancy.save(validate: false)
-    end
-    @job_specification_form.vacancy
-  end
-
-  def next_step
-    organisation_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
   end
 end

@@ -42,8 +42,11 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
 
   def set_up_url
     @job_location_url_method = @vacancy&.id.present? ? 'patch' : 'post'
-    @job_location_url = @vacancy&.id.present? ?
-    organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path(school_group_id: current_school_group.id)
+    if @vacancy&.id.present?
+      @job_location_url = organisation_job_job_location_path(@vacancy.id)
+    else
+      @job_location_url = job_location_organisation_job_path(school_group_id: current_school_group.id)
+    end
   end
 
   def set_up_job_location_form
@@ -54,24 +57,6 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     (params[:job_location_form] || params)
       .permit(:state, :job_location)
       .merge(completed_step: current_step)
-  end
-
-  def next_step
-    vacancy_id = @vacancy&.id.present? ? @vacancy.id : session_vacancy_id
-    if @job_location_form.job_location == 'at_one_school'
-      # TODO: make this path exist
-      organisation_job_school_path(vacancy_id)
-    elsif @job_location_form.job_location == 'central_office'
-      organisation_job_job_specification_path(vacancy_id)
-    end
-  end
-
-  def redirect_to_school_selection_or_next_step
-    if session[:current_step].eql?(:review) && @job_location_form.job_location == 'at_one_school'
-      redirect_to organisation_job_school_path(@vacancy.id)
-    else
-      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
-    end
   end
 
   def save_vacancy_without_validation
@@ -85,7 +70,25 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     @job_location_form.vacancy
   end
 
+  def next_step
+    vacancy_id = @vacancy&.id.present? ? @vacancy.id : session_vacancy_id
+    if @job_location_form.job_location == 'at_one_school'
+      # TODO: make this path exist
+      organisation_job_school_path(vacancy_id)
+    elsif @job_location_form.job_location == 'central_office'
+      organisation_job_job_specification_path(vacancy_id)
+    end
+  end
+
   def redirect_unless_school_group_user_flag_on
     redirect_to job_specification_organisation_job_path(request.parameters) unless SchoolGroupJobsFeature.enabled?
+  end
+
+  def redirect_to_school_selection_or_next_step
+    if session[:current_step].eql?(:review) && @job_location_form.job_location == 'at_one_school'
+      redirect_to organisation_job_school_path(@vacancy.id)
+    else
+      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
+    end
   end
 end
