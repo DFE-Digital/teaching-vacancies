@@ -1,11 +1,11 @@
--# Usage to include accordian group
--# = render partial: 'shared/accordian_group', locals: { :title => 'Job Filters', items: [{ :title => 'locations' }, { :title => 'created by' }] }
+-# Usage to include accordion group
+-# = render partial: 'shared/accordion_group', locals: { :title => 'Job Filters', items: [{ :title => 'locations' }, { :title => 'created by' }] }
 
-.accordian-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
+.accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
   - if title.present?
     .govuk-accordion__section.govuk-accordion__title
       .govuk-accordion__section-header
-        %h3.govuk-accordion__section-heading.accordian-group-heading
+        %h3.govuk-accordion__section-heading.accordion-group-heading
           %span.govuk-accordion__section-button{ id: "accordion-default-heading-title" }
             = title
 
@@ -14,7 +14,7 @@
           = 'filter pills'
 
   - items.each_with_index do |filter, index|
-    .govuk-accordion__section.accordian-content__group
+    .govuk-accordion__section.accordion-content__group
       .govuk-accordion__section-header
         %h3.govuk-accordion__section-heading
           %span.govuk-accordion__section-button{ id: "accordion-default-heading-#{index}" }
