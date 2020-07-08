@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_080945) do
 
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
-    t.string "slug", null: false
+    t.string "slug"
     t.text "job_summary"
     t.text "benefits"
     t.date "starts_on"

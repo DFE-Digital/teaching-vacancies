@@ -60,15 +60,15 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     vacancy_id = @vacancy&.id.present? ? @vacancy.id : session_vacancy_id
     if @job_location_form.job_location == 'at_one_school'
       # TODO: make this path exist
-      school_job_school_path(vacancy_id)
+      organisation_job_school_path(vacancy_id)
     elsif @job_location_form.job_location == 'central_office'
-      school_job_job_specification_path(vacancy_id)
+      organisation_job_job_specification_path(vacancy_id)
     end
   end
 
   def redirect_to_school_selection_or_next_step
     if session[:current_step].eql?(:review) && @job_location_form.job_location == 'at_one_school'
-      redirect_to school_job_school_path(@vacancy.id)
+      redirect_to organisation_job_school_path(@vacancy.id)
     else
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
@@ -78,7 +78,6 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     if job_location_form_params[:job_location] == 'central_office'
       @job_location_form.vacancy.school_group_id = current_school_group.id
     end
-    @job_location_form.vacancy.send :set_slug
     @job_location_form.vacancy.status = :draft
     Auditor::Audit.new(@job_location_form.vacancy, 'vacancy.create', current_session_id).log do
       @job_location_form.vacancy.save(validate: false)
@@ -87,6 +86,6 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   end
 
   def redirect_unless_school_group_user_flag_on
-    redirect_to job_specification_school_job_path(request.parameters) unless SchoolGroupJobsFeature.enabled?
+    redirect_to job_specification_organisation_job_path(request.parameters) unless SchoolGroupJobsFeature.enabled?
   end
 end
