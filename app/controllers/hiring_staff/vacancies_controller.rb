@@ -16,7 +16,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def edit
-    vacancy = current_school.vacancies.find(id)
+    vacancy = current_organisation.vacancies.find(id)
     return redirect_to organisation_job_review_path(vacancy.id) unless vacancy.published?
 
     vacancy.update(state: 'edit_published') unless vacancy&.state == 'edit_published'
@@ -60,7 +60,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def summary
-    vacancy = current_school.vacancies.published.find(vacancy_id)
+    vacancy = current_organisation.vacancies.published.find(vacancy_id)
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
@@ -99,7 +99,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def find_active_vacancy_by_id
-    current_school.vacancies.active.find(id)
+    current_organisation.vacancies.active.find(id)
   end
 
   def update_vacancy_state

@@ -43,7 +43,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   def set_up_url
     @job_location_url_method = @vacancy&.id.present? ? 'patch' : 'post'
     @job_location_url = @vacancy&.id.present? ?
-      school_job_job_location_path(@vacancy.id) : job_location_school_job_path(school_group_id: current_school_group.id)
+    organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path(school_group_id: current_school_group.id)
   end
 
   def set_up_job_location_form
