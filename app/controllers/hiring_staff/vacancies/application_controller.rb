@@ -6,6 +6,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   before_action :set_vacancy
 
+  include HiringStaff::JobCreationHelper
+
   def school_id
     params.permit![:school_id]
   end
@@ -23,14 +25,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
       @vacancy = current_organisation.vacancies.find(params[:job_id])
     elsif session_vacancy_id
       @vacancy = current_organisation.vacancies.find(session_vacancy_id)
-    end
-  end
-
-  def current_step
-    if session[:uid].present?
-      params[:create_step]
-    else
-      params[:create_step] - NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
     end
   end
 
