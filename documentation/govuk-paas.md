@@ -111,19 +111,6 @@ cf7 ssh <app_name>
 
 ## Access Rails console
 ```bash
-cf7 ssh <app_name> -t -c "/tmp/lifecycle/launcher /home/vcap/app 'rails console' ''"
-```
-
-**NOTE:** This didn't work as expected on the new docker containers.  If you get the following error: 
-
-```bash
-cf7 ssh <app_name> -t -c "/tmp/lifecycle/launcher /home/vcap/app 'rails console' ''"
-Invalid metadata - unexpected end of JSON input%
-```
-
-use this workaround:
-
-```bash
 cf7 ssh <app_name>
 cd /teacher-vacancy
 /usr/local/bin/bundle exec rails console
@@ -134,21 +121,39 @@ cd /teacher-vacancy
 cf7 run-task <app_name> -c "rails task:name"
 ```
 
-## Deploy to dev
-Make sure you are logged in `teaching-vacancies-dev` space.
+## Deploy to dev or staging via commandline
+This builds and deploys a Docker image from local code.
 
 ```bash
-cf7 push -f paas/web/manifest-dev.yml
-cf7 push -f paas/worker/manifest-dev.yml
+make <PaaS-space> deploy-local-image
 ```
+performs these steps:
 
-## Deploy to staging
-Make sure you are logged in `teaching-vacancies-staging` space.
+- Builds and tags a Docker image from local code
+- Pushes the image to Docker Hub
+- Deploys the Docker image to PaaS
+
+You need:
+- Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
+- `SpaceDeveloper` role in the paas space you want to deploy to
+- Log in to Docker Hub and GOV.UK PaaS in your terminal
 
 ```bash
-cf7 push -f paas/web/manifest-staging.yml
-cf7 push -f paas/worker/manifest-staging.yml
+make dev deploy-local-image # Deploy to dev
+make staging deploy-local-image # Deploy to staging
 ```
+
+## Deploy to dev or staging via a commit to GitHub
+This builds and deploys a Docker image from code in `dev` or `staging` branches.
+
+Push to the `dev` or `staging` branch.
+The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch.yml) performs these steps:
+
+- Builds and tags a Docker image from code in the GitHub branch
+- Pushes the image to Docker Hub
+- Deploys the Docker image to PaaS
+- Sends a Slack notification to the `#twd_tv_dev` channel
+
 
 ## CI/CD with GitHub Actions
 Tests run every time is pushed on a branch.
