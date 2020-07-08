@@ -31,8 +31,8 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
     context 'vacancy id is present' do
       it 'uses the update action' do
         get :show
-        expect(controller.instance_variable_get(:@job_specification_url_method)).to eql('patch')
-        expect(controller.instance_variable_get(:@job_specification_url))
+        expect(controller.instance_variable_get(:@form_submission_url_method)).to eql('patch')
+        expect(controller.instance_variable_get(:@form_submission_url))
           .to eql(organisation_job_job_specification_path(vacancy_id))
       end
     end
@@ -45,8 +45,8 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
 
       it 'uses the create action' do
         get :show
-        expect(controller.instance_variable_get(:@job_specification_url_method)).to eql('post')
-        expect(controller.instance_variable_get(:@job_specification_url))
+        expect(controller.instance_variable_get(:@form_submission_url_method)).to eql('post')
+        expect(controller.instance_variable_get(:@form_submission_url))
           .to eql(job_specification_organisation_job_path(school_id: school_id))
       end
     end

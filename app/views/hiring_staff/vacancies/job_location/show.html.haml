@@ -1,7 +1,7 @@
 - if @vacancy.present?
-  - content_for :page_title_prefix, page_title_prefix(@vacancy, @job_location_form, t('jobs.job_location'))
+  - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t('jobs.job_location'))
 - else
-  - content_for :page_title_prefix, "#{@job_location_form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_location')} — #{t('jobs.create_a_job_title_no_org')}"
+  - content_for :page_title_prefix, "#{@form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_location')} — #{t('jobs.create_a_job_title_no_org')}"
 
 
 = render 'hiring_staff/vacancies/vacancy_form_partials/heading'
@@ -11,7 +11,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @job_location_form, url: @job_location_url, html: { method: @job_location_url_method } do |f|
+    = form_for @form, url: @form_submission_url, html: { method: @form_submission_url_method } do |f|
       = f.govuk_error_summary
 
       %h2.govuk-heading-l
