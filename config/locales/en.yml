@@ -665,6 +665,44 @@ en:
             one: "A new job matching your search criteria '%{reference}' was posted yesterday."
             other: "%{count} new jobs matching your search criteria '%{reference}' were posted yesterday."
           unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+  nqt_job_alerts:
+    page_title: Sign up for NQT job alerts
+    heading: Sign up for NQT job alerts
+    intro:
+      teaching_vacancies: >-
+        Teaching vacancies is a free job-listing service from the Department for Education. It helps schools to save
+        money on recruitment and you to take the first step in your new career.
+      content: >-
+        Setting up an alert can help make your search for a teaching job easier. You’ll receive an email every morning
+        with any new jobs matching your search criteria that have been listed. You can then follow the links to Teaching
+        Vacancies and find out more about any role that you’re interested in.
+      unsubscribe: >-
+        You can unsubscribe at any time by following the instructions in the job alert. You’ll also be able to find
+        links to change your search criteria and set up a new or additional alert if you need to.
+    form:
+      labels:
+        keywords_html: "Keywords (<span class='text-red'>Required</span>)"
+        location_html: "Location (<span class='text-red'>Required</span>)"
+        email_html: "Email address (<span class='text-red'>Required</span>)"
+      hints:
+        keywords: >-
+          Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
+          You can use any keywords that describe your ideal role.
+        location: >-
+          Tell us where you’re looking for a job and we’ll email you any results within a 10 mile radius.
+        email: Enter your email address. We will only use it to send you job alerts.
+      placeholders:
+        keywords: Humanities, KS3, primary teacher, for example
+        location: City, town or postcode, for example
+    confirm:
+      heading: What happens next
+      splash:
+        heading: Your job alert has been set up
+        message: We sent a confirmation email to %{email}
+      keywords: 'Keywords:'
+      location: 'Location:'
+      intro: "We'll email you any teaching jobs suitable for NQTs that match your search criteria:"
+      unsubscribe: You can unsubscribe by following the link at the bottom of the email.
   terms_and_conditions:
     page_title: 'Terms and Conditions'
     intro: >-
@@ -702,6 +740,7 @@ en:
     cancel_copy: 'Cancel copy'
     cancel_and_return: Cancel and return
     back_to_manage_jobs: Back to manage jobs
+    go_to_teaching_vacancies: Go to Teaching Vacancies
     subscribe: Subscribe
 
   messages:
