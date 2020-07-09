@@ -1,0 +1,77 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - dev
+      - staging
+
+env:
+ DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+
+jobs:
+  deploy:
+    name: build docker image and deploy
+    runs-on: ubuntu-latest
+    outputs:
+      BRANCH: ${{ steps.set_env_vars.outputs.BRANCH }}
+      TAG: ${{ steps.set_env_vars.outputs.TAG }}
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout Code
+
+    - name: Set environment variables
+      id: set_env_vars
+      run: |
+        BRANCH=$(echo ${GITHUB_REF} | cut -d/ -f3)
+        BRANCH=staging
+        TAG=${BRANCH}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
+        echo ::set-env name=BRANCH::${BRANCH}
+        echo ::set-env name=TAG::${TAG}
+        echo ::set-output name=BRANCH::${BRANCH}
+        echo ::set-output name=TAG::${TAG}
+
+    - name: build and push docker image
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: ${{ env.DOCKERHUB_REPOSITORY }}
+        tags: ${{ env.TAG }}
+        target: production
+
+    - name: Install cf client
+      env:
+        CF_CLI_VERSION: 7.0.0-beta.30
+      run: |
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${CF_CLI_VERSION}" | tar -zx -C /tmp
+        sudo cp /tmp/cf7 /usr/local/bin/cf7
+
+    - name: Deploy
+      env:
+        CF_API_ENDPOINT: ${{ secrets.CF_API_ENDPOINT }}
+        CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+        CF_ORG: ${{ secrets.CF_ORG }}
+        CF_SPACE: teaching-vacancies-${{ env.BRANCH }}
+      run: |
+        cf7 api $CF_API_ENDPOINT
+        cf7 auth
+        cf7 target -o $CF_ORG -s $CF_SPACE
+        cf7 push --strategy rolling -f paas/web/manifest-docker-${BRANCH}.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$TAG
+        cf7 push -f paas/worker/manifest-docker-${BRANCH}.yml --var IMAGE_NAME=$DOCKERHUB_REPOSITORY:$TAG
+
+  notify:
+    needs: deploy
+    name: Slack notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send slack message to twd_tv_dev channel
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_ICON_EMOJI: ':tada:'
+          SLACK_TITLE: Successful deployment
+          SLACK_MESSAGE: 'Deployment of ${{ needs.deploy.outputs.TAG }} to ${{ needs.deploy.outputs.BRANCH }} on GOV.UK PaaS successful :rocket:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
