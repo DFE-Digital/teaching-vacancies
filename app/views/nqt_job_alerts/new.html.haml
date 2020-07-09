@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-xl{ class: 'govuk-!-margin-bottom-6' }= t('nqt_job_alerts.heading')
 
-    %p.govuk-body= t('nqt_job_alerts.intro.teaching_vacancies')
+    %p.govuk-body-l= t('nqt_job_alerts.intro.teaching_vacancies')
     %p.govuk-body= t('nqt_job_alerts.intro.content')
 
     = form_for @nqt_job_alerts_form, url: new_nqt_job_alert_path do |f|
@@ -14,17 +14,20 @@
         label: { text: t('nqt_job_alerts.form.labels.keywords_html'), size: 's' },
         hint_text: t('nqt_job_alerts.form.hints.keywords'),
         placeholder: t('nqt_job_alerts.form.placeholders.keywords'),
+        width: 'two-thirds',
         required: true
 
       = f.govuk_text_field :location,
         label: { text: t('nqt_job_alerts.form.labels.location_html'), size: 's' },
         hint_text: t('nqt_job_alerts.form.hints.location'),
         placeholder: t('nqt_job_alerts.form.placeholders.location'),
+        width: 'two-thirds',
         required: true
 
       = f.govuk_email_field :email,
         label: { text: t('nqt_job_alerts.form.labels.email_html'), size: 's' },
         hint_text: t('nqt_job_alerts.form.hints.email'),
+        width: 'two-thirds',
         required: true
 
       = recaptcha_v3(action: 'subscription')

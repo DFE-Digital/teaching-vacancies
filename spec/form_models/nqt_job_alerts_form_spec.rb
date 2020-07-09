@@ -92,7 +92,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       it 'validates uniqueness of job alert' do
         expect(subject.valid?).to be(false)
         expect(subject.errors.messages[:base]).to include(
-          'Job alert already exists'
+          I18n.t('nqt_job_alerts.form.errors.duplicate_alert')
         )
       end
     end

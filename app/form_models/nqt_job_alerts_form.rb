@@ -48,6 +48,7 @@ class NqtJobAlertsForm
   end
 
   def unique_job_alert
-    errors.add(:base, 'Job alert already exists') if SubscriptionFinder.new(job_alert_params).exists?
+    errors.add(:base, I18n.t('nqt_job_alerts.form.errors.duplicate_alert')) if
+      SubscriptionFinder.new(job_alert_params).exists?
   end
 end
