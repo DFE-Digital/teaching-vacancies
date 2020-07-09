@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     resource :confirmation, only: [:show]
   end
 
+  get 'sign-up-for-NQT-job-alerts', to: 'nqt_job_alerts#new', as: 'nqt_job_alerts'
+  post 'sign-up-for-NQT-job-alerts', to: 'nqt_job_alerts#create', as: 'new_nqt_job_alert'
+
   namespace :api do
     scope 'v:api_version', api_version: /[1]/ do
       resources :jobs, only: %i[index show], controller: 'vacancies'
