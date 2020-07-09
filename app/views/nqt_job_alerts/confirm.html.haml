@@ -1,0 +1,29 @@
+- content_for :page_title_prefix, t('nqt_job_alerts.page_title')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    .govuk-panel.govuk-panel--confirmation.nqt-job-alert-success-gtm
+      %span.hod-checkmark
+        %svg{ xmlns: "http://www.w3.org/2000/svg", role: "presentation", focusable: "false", viewBox: "0 0 25 25", height: "40", width: "40" }
+          %path{ fill: "currentColor", d: "M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z" }
+
+      %h1.govuk-panel__title= t('nqt_job_alerts.confirm.splash.heading')
+
+      .govuk-panel__body
+        %p= t('nqt_job_alerts.confirm.splash.message', email: @nqt_job_alerts_form.email)
+
+    %h2.govuk-heading-l= t('nqt_job_alerts.confirm.heading')
+    %p.govuk-body= t('nqt_job_alerts.confirm.intro')
+
+    .govuk-inset-text
+      %ul.govuk-list
+        %li
+          %span{ class: 'govuk-!-font-weight-bold'}= t('nqt_job_alerts.confirm.keywords')
+          = @nqt_job_alerts_form.keywords
+        %li
+          %span{ class: 'govuk-!-font-weight-bold'}= t('nqt_job_alerts.confirm.location')
+          = @nqt_job_alerts_form.location_reference
+
+    %p.govuk-body= t('nqt_job_alerts.confirm.unsubscribe')
+
+    %p= link_to t('buttons.go_to_teaching_vacancies'), jobs_path(keyword: "nqt #{@nqt_job_alerts_form.keywords}", location: @nqt_job_alerts_form.location), class: 'govuk-link govuk-link--no-visited-state'
