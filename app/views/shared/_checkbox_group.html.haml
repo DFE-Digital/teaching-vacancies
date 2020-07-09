@@ -1,0 +1,12 @@
+- if search
+  .search-input
+    %input.govuk-input{ placeholder: "Search" }
+    %button{type: "submit"}
+      %i.fa.fa-search
+.govuk-form-group
+  .govuk-checkboxes.govuk-checkboxes--small
+    = form_for '', url: 'url', html: { method: 'post' } do |f|
+      = f.govuk_collection_check_boxes :content,
+        options,
+        :first,
+        :first

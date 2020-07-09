@@ -1,0 +1,25 @@
+.search-input {
+  background: white;
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+
+  input {
+    width: 100%;
+    padding: 20px 60px 20px 40px;
+    display: block;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 12px;
+    z-index: 2;
+  }
+}
