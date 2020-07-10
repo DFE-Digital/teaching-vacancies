@@ -8,6 +8,7 @@ import {
 import { hits, configure } from 'instantsearch.js/es/widgets';
 
 import { searchClient } from './client';
+import Client from './algolia_instant_search'; // eslint-disable-line
 
 import { renderSearchBox } from './ui/input';
 import { templates, renderContent } from './ui/hits';
@@ -26,7 +27,7 @@ import { enableSubmitButton } from './ui/form';
 const ALGOLIA_INDEX = 'Vacancy';
 const SEARCH_THRESHOLD = 2;
 
-const searchClientInstance = searchClient(ALGOLIA_INDEX);
+const searchClientInstance = searchClient(ALGOLIA_INDEX, Client);
 
 const searchBox = connectSearchBox(renderSearchBox);
 const heading = connectHits(renderContent);
