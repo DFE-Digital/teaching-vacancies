@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: teaching-vacancies-worker-docker-dev
+  - name: teaching-vacancies-worker-dev
     docker:
       image: ((IMAGE_NAME))
     env:
