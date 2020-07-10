@@ -23,10 +23,6 @@ export const hideServerMarkup = () => {
     document.querySelector('ul.vacancies').style.display = 'none';
   }
 
-  if (document.querySelector('#server-no-results')) {
-    document.querySelector('#server-no-results').style.display = 'none';
-  }
-
   if (document.querySelector('ul.pagination-server')) {
     document.querySelector('ul.pagination-server').style.display = 'none';
   }
@@ -61,8 +57,7 @@ export const templates = {
 </dl>
 </article>
 `,
-  empty: `<div id="client-no-results">
-<div class="divider-bottom">
+  empty: `<div class="divider-bottom">
 <p class="govuk-heading-m">Try another search</p>
 <ul class="govuk-list govuk-list--bullet">
 <li>with different keywords</li>
@@ -77,6 +72,5 @@ Or <a href="/subscriptions/new?search_criteria%5Blocation%5D=&amp;search_criteri
 <li>get an email when new jobs match their search</li>
 <li>can unsubscribe at any time</li>
 <li>receive no more than 1 email a day</li>
-</ul>
-</div>`,
+</ul>`,
 };

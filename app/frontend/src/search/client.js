@@ -1,4 +1,4 @@
-
+import algoliasearch from 'algoliasearch';
 import instantsearch from 'instantsearch.js';
 
 import { getFilters, getQuery } from './query';
@@ -8,10 +8,11 @@ import { getRadius } from './ui/input/radius';
 
 // This is the public API key which can be safely used in your frontend code.
 // This key is usable for search queries and list the indices you've got access to.
+export const search = algoliasearch('QM2YE0HRBW', '4082ba44346a92023eac1f794d739dd1');
 
-export const searchClient = (indexName, Client) => instantsearch({
+export const searchClient = (indexName) => instantsearch({
   indexName,
-  searchClient: Client,
+  searchClient: search,
   searchFunction(helper) {
     onSearch(helper);
   },
@@ -43,3 +44,5 @@ export const onSearch = (helper) => {
 
   return helper.search();
 };
+
+export const index = (indexName) => search.initIndex(indexName);
