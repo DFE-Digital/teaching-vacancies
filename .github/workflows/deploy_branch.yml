@@ -24,7 +24,6 @@ jobs:
       id: set_env_vars
       run: |
         BRANCH=$(echo ${GITHUB_REF} | cut -d/ -f3)
-        BRANCH=staging
         TAG=${BRANCH}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
         echo ::set-env name=BRANCH::${BRANCH}
         echo ::set-env name=TAG::${TAG}
