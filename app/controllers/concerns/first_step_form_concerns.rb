@@ -1,7 +1,7 @@
 # Methods shared by controllers which can serve Step 1
 # HiringStaff::Vacancies::JobSpecificationController is school-level users' Step 1
 module FirstStepFormConcerns
-  def set_up_form
+  def set_up_form(form_class)
     @form = form_class.new(form_params)
   end
 

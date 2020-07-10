@@ -4,7 +4,9 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   include GetSubjectName
 
   before_action :set_up_url
-  before_action :set_up_form, only: %i[create update]
+  before_action only: %i[create update] do
+    set_up_form(JobSpecificationForm)
+  end
 
   include FirstStepFormConcerns
 
@@ -52,10 +54,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def form_submission_path(vacancy_id = nil)
     vacancy_id.present? ? organisation_job_job_specification_path(vacancy_id) : job_specification_organisation_job_path
-  end
-
-  def form_class
-    JobSpecificationForm
   end
 
   def form_params

@@ -1,7 +1,9 @@
 class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::ApplicationController
   before_action :redirect_unless_school_group_user_flag_on
   before_action :set_up_url
-  before_action :set_up_form, only: %i[create update]
+  before_action only: %i[create update] do
+    set_up_form(JobLocationForm)
+  end
 
   include FirstStepFormConcerns
 
@@ -42,10 +44,6 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
 
   def form_submission_path(vacancy_id = nil)
     vacancy_id.present? ? organisation_job_job_location_path(vacancy_id) : job_location_organisation_job_path
-  end
-
-  def form_class
-    JobLocationForm
   end
 
   def form_params
