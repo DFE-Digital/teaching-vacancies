@@ -121,6 +121,8 @@ Rails.application.routes.draw do
         to: 'hiring_staff/vacancies/job_specification#create',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_details') }
     end
+
+    resources :schools, only: %i[index edit update], controller: 'hiring_staff/organisations/schools'
   end
 
   match '/401', to: 'errors#unauthorised', via: :all

@@ -1,0 +1,22 @@
+= content_for :page_title_prefix, @organisation.name.titlecase
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    %h2.govuk-heading-m.mb0
+      = @organisation.name
+
+    = link_to t('buttons.back'), organisation_schools_path, class: 'govuk-back-link'
+
+    = form_for @organisation, url: organisation_school_path(@organisation) do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l
+        = t('.title')
+
+      = f.govuk_text_area :description,
+        label: { text: t('helpers.fieldset.organisation_form.description'), size: 's' },
+        hint_text: t('helpers.hint.organisation_form.description'),
+        rows: 10
+
+      = f.govuk_submit t('buttons.save_changes'), classes: 'disabled-on-load'

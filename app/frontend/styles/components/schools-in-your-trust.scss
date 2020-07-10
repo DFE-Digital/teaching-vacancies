@@ -1,0 +1,17 @@
+.missing-information {
+  border-top: 5px solid $govuk-brand-colour;
+  padding-top: govuk-spacing(2);
+}
+
+.schools {
+  border-top: 5px solid govuk-colour("orange");
+  margin-top: govuk-spacing(2);
+  padding: govuk-spacing(2) 0;
+}
+
+.school-table {
+  border: 10px solid $govuk-border-colour;
+  padding: govuk-spacing(2);
+  margin-top: govuk-spacing(2);
+  margin-bottom: govuk-spacing(3);
+}

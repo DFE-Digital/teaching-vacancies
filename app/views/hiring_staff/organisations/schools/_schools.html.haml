@@ -1,0 +1,35 @@
+- current_organisation.schools.each do |school|
+  .school-table
+    %table.govuk-table
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header{ colspan: "2" }
+            %h2.govuk-heading-m
+              = school.name.titlecase
+          %th.govuk-table__header
+      %tbody.govuk-table__body
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.description')
+          %td.govuk-table__cell
+            - if school.description.present?
+              = truncate(school.description, length: 130)
+              %br
+            = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(school), class: 'govuk-link govuk-link--no-visited-state'
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.address')
+          %td.govuk-table__cell
+            - school.address
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.school_age')
+          %td.govuk-table__cell
+            = school.minimum_age
+            to
+            = school.maximum_age
+        %tr.govuk-table__row
+          %td.govuk-table__cell
+            %strong.strong= t('schools.urn')
+          %td.govuk-table__cell
+            = school.urn

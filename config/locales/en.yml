@@ -31,6 +31,19 @@ en:
           Some of our users are having having trouble signing in. We're working on the problem now. If you can't sign
           in, try again soon.
         you_might_have_problems_signing_in: Sorry, the service is unavailable
+    organisations:
+      schools:
+        index:
+          contact_support: contact our support team
+          title: Schools in your trust
+          description: Jobseekers will see this information in job listings about the schools and job locations within the trust
+          schools: Schools (%{count})
+          missing_information_title: Is information missing or incorrect?
+          missing_information_description_html: >-
+            If a school in your trust is missing from this list,
+            or the information isn't correct, please %{mail_to}.
+        edit:
+          title: Change description
     temp_login:
       heading: Temporary login
       please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
@@ -63,6 +76,7 @@ en:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
+    trusts_index_link: 'Schools in your trust'
     jobseekers_index_link: 'View public jobs'
     find_job: 'Find a teaching job'
     back: 'Back'
@@ -142,6 +156,8 @@ en:
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
+      organisation_form:
+        description: Description of school or trust
     hint:
       copy_vacancy_form:
         publish_on: For example, 01 01 2020
@@ -183,6 +199,10 @@ en:
           Give a brief summary of the job that job seekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
         about_school: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
+      organisation_form:
+        description: Jobseekers will see this description of the school in the job listing
+  organisation:
+    view_more_or_change: View more or change
   jobs:
     current_step: "Step %{step} of %{total}"
     errors_present: Please correct the following errors
@@ -569,6 +589,12 @@ en:
       up_to: 'Up to %{capacity} %{pupils}'
       pupils: 'pupil'
     view_ofsted_report: 'View Ofsted report'
+    urn: Unique identifier (URN)
+  school_groups:
+    address: Trust address
+    description: Description
+    group_type: Group type
+    uid: Unique identifier (UID)
   subscriptions:
     benefits:
       title: Subscribers
@@ -614,7 +640,7 @@ en:
         expiry_text_html: "Your job alert subscription will end on %{date}."
       your_feedback: >-
         Teaching Vacancies is a free job-listing service from the Department for Education. It helps
-        schools to save money on recruitment and you to take the next step in your career. 
+        schools to save money on recruitment and you to take the next step in your career.
         [Your feedback](https://teaching-vacancies.service.gov.uk/feedback/new) will help
         us improve the service.
     manage: Manage your subscription
@@ -670,6 +696,7 @@ en:
     find: 'Find'
     continue: 'Continue'
     save_and_return_later: 'Save and return later'
+    save_changes: 'Save changes'
     submit: 'Submit'
     update_job: 'Update listing'
     cancel_copy: 'Cancel copy'
@@ -703,9 +730,10 @@ en:
       signed_out: You have signed out
     feedback:
       submitted: Your feedback has been successfully submitted
+    organisation:
+      description_updated_html: 'Description updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>'
     subscriptions:
       created: Email subscription created successfully.
-
   errors:
     jobs:
       unable_to_publish_title: We were unable to publish this job
