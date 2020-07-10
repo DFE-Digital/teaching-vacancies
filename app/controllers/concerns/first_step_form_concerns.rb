@@ -5,12 +5,12 @@ module FirstStepFormConcerns
     @form = form_class.new(form_params)
   end
 
-  def save_form_params_on_vacancy_without_validation(vacancy)
-    vacancy.status = :draft
-    Auditor::Audit.new(vacancy, 'vacancy.create', current_session_id).log do
-      vacancy.save(validate: false)
+  def save_form_params_on_vacancy_without_validation
+    @form.vacancy.status = :draft
+    Auditor::Audit.new(@form.vacancy, 'vacancy.create', current_session_id).log do
+      @form.vacancy.save(validate: false)
     end
-    vacancy
+    @form.vacancy
   end
 
   def set_up_url

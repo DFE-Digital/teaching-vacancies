@@ -1,4 +1,12 @@
 module VacancyHelpers
+  def fill_in_job_location_form_field(vacancy)
+    find('label[for="job-location-form-job-location-at-one-school-field"]').click
+  end
+
+  def fill_in_school_form_field(school)
+    find("label[for=\"school-form-school-id-#{school.id}-field\"]").click
+  end
+
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
 

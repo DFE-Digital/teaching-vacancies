@@ -30,9 +30,11 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     reset_session_vacancy!
     store_vacancy_attributes(@vacancy.attributes)
 
+
     unless @vacancy.valid?
       redirect_to_incomplete_step
     else
+
       update_vacancy_state
       set_completed_step
     end
@@ -80,6 +82,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def redirect_to_incomplete_step
+    if !step_valid?(SchoolForm) && @vacancy.job_location == 'at_one_school' && current_organisation.is_a?(SchoolGroup)
+      return redirect_to organisation_job_school_path(@vacancy.id)
+    end
     return redirect_to organisation_job_job_specification_path(@vacancy.id) unless step_valid?(JobSpecificationForm)
     return redirect_to organisation_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
     return redirect_to organisation_job_important_dates_path(@vacancy.id) unless step_valid?(ImportantDatesForm)

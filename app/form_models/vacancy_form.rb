@@ -13,7 +13,7 @@ class VacancyForm
       params.except(:documents_attributes, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
     )
   end
-  
+
   def complete_and_valid?
     existing_errors = errors.dup
     is_valid = valid?

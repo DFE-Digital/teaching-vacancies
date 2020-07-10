@@ -13,7 +13,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     elsif session[:vacancy_attributes].present?
       @form = JobLocationForm.new(session[:vacancy_attributes])
     else
-      @form = JobLocationForm.new
+      @form = JobLocationForm.new(school_group_id: current_school_group.id)
     end
   end
 
@@ -21,7 +21,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     store_vacancy_attributes(@form.vacancy.attributes)
 
     if @form.complete_and_valid?
-      session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation(@form.vacancy)
+      session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@form.vacancy.attributes)
       return redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
     end
@@ -52,11 +52,9 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
       .merge(completed_step: current_step)
   end
 
-  def save_vacancy_without_validation(vacancy)
-    if form_params[:job_location] == 'central_office'
-      vacancy.school_group_id = current_school_group.id
-    end
-    save_form_params_on_vacancy_without_validation(vacancy)
+  def save_vacancy_without_validation
+    @form.vacancy.school_group_id = current_school_group.id
+    save_form_params_on_vacancy_without_validation
   end
 
   def next_step

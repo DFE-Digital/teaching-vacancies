@@ -16,8 +16,8 @@ module AuthHelpers
   end
 
   def stub_hiring_staff_auth(urn: nil, uid: nil, session_id: 'session_id', email: nil)
-    page.set_rack_session(urn: urn) if urn.present?
-    page.set_rack_session(uid: uid) if uid.present?
+    urn.present? ? page.set_rack_session(urn: urn) : page.set_rack_session(urn: '')
+    uid.present? ? page.set_rack_session(uid: uid) : page.set_rack_session(uid: '')
     page.set_rack_session(session_id: session_id)
     create(:user, oid: session_id, email: email, last_activity_at: Time.zone.now)
   end

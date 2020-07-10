@@ -1,6 +1,7 @@
 require 'rails_helper'
 RSpec.feature 'Hiring staff can edit a vacancy' do
   let(:school) { create(:school) }
+  let(:school_group) { create(:school_group) }
   let(:session_id) { SecureRandom.uuid }
 
   before(:each) do
@@ -25,6 +26,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                     I18n.t('jobs.job_role_options.sen_specialist')
                                    ],
                                   school: school,
+                                  school_group: school_group,
                                   working_patterns: ['full_time', 'part_time'],
                                   publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
     end

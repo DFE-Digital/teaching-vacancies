@@ -18,7 +18,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     elsif session[:vacancy_attributes].present?
       @form = JobSpecificationForm.new(session[:vacancy_attributes])
     else
-      @form = JobSpecificationForm.new(school_id: current_school.id)
+      @form = JobSpecificationForm.new(school_id: current_school.try(:id),
+                                       school_group_id: current_school_group.try(:id))
     end
   end
 
@@ -28,7 +29,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if params[:commit] == I18n.t('buttons.save_and_return_later')
       return save_vacancy_as_draft
     elsif @form.complete_and_valid?
-      session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation(@form.vacancy)
+      session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@form.vacancy.attributes)
       return redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
     end
@@ -43,7 +44,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       update_google_index(@vacancy) if @vacancy.listed?
       return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
-
 
     render :show
   end
@@ -62,10 +62,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
           .merge(completed_step: current_step)
   end
 
-  def save_vacancy_without_validation(vacancy)
-    vacancy.school_id = current_school.id
-    vacancy.send :set_slug
-    save_form_params_on_vacancy_without_validation(vacancy)
+  def save_vacancy_without_validation
+    @form.vacancy.school_id = current_school.try(:id)
+    @form.vacancy.school_group_id = current_school_group.try(:id)
+    @form.vacancy.send :set_slug
+    save_form_params_on_vacancy_without_validation
   end
 
   def next_step
@@ -80,7 +81,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def save_vacancy_as_draft
     if @form.vacancy.job_title.present?
-      save_vacancy_without_validation(@form.vacancy)
+      save_vacancy_without_validation
       redirect_to_draft(
         @form.vacancy.id,
         @form.vacancy.job_title
