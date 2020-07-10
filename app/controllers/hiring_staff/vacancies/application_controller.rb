@@ -6,10 +6,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   include HiringStaff::JobCreationHelper
 
-  def school_id
-    params.permit![:school_id]
-  end
-
   def vacancy_id
     params.permit![:job_id]
   end
