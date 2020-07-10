@@ -86,6 +86,10 @@ Rails.application.routes.draw do
         only: %i[show update],
         controller: 'hiring_staff/vacancies/job_location',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
+      resource :school,
+        only: %i[show update],
+        controller: 'hiring_staff/vacancies/school',
+        defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
       resource :job_specification,
         only: %i[show update],
         controller: 'hiring_staff/vacancies/job_specification',

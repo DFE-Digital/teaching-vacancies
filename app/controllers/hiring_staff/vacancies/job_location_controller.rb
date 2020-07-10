@@ -1,11 +1,11 @@
 class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::ApplicationController
+  include FirstStepFormConcerns
+
   before_action :redirect_unless_school_group_user_flag_on
   before_action :set_up_url
   before_action only: %i[create update] do
     set_up_form(JobLocationForm)
   end
-
-  include FirstStepFormConcerns
 
   def show
     if @vacancy.present?
@@ -62,15 +62,10 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   def next_step
     vacancy_id = @vacancy&.id.present? ? @vacancy.id : session_vacancy_id
     if @form.job_location == 'at_one_school'
-      # TODO: make this path exist
       organisation_job_school_path(vacancy_id)
     elsif @form.job_location == 'central_office'
       organisation_job_job_specification_path(vacancy_id)
     end
-  end
-
-  def redirect_unless_school_group_user_flag_on
-    redirect_to job_specification_organisation_job_path(request.parameters) unless SchoolGroupJobsFeature.enabled?
   end
 
   def redirect_to_school_selection_or_next_step

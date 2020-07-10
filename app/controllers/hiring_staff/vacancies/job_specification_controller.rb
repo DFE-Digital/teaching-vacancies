@@ -2,14 +2,12 @@ require 'get_subject_name'
 
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
   include GetSubjectName
+  include FirstStepFormConcerns
 
   before_action :set_up_url
   before_action only: %i[create update] do
     set_up_form(JobSpecificationForm)
   end
-
-  include FirstStepFormConcerns
-
   before_action only: %i[update] do
     save_vacancy_as_draft_if_save_and_return_later(form_params, @vacancy)
   end

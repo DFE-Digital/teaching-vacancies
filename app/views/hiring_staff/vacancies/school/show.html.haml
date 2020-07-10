@@ -1,0 +1,31 @@
+- content_for :page_title_prefix, page_title_prefix(@vacancy, @school_form, t('jobs.job_location'))
+= render 'hiring_staff/vacancies/vacancy_form_partials/heading'
+
+- if @vacancy.present? && @vacancy&.state != 'create'
+  = link_to t('buttons.cancel_and_return'), edit_organisation_job_path(@vacancy.id), class: 'govuk-back-link'
+- elsif @vacancy.present?
+  = link_to t('buttons.back'), organisation_job_job_location_path(@vacancy.id), class: 'govuk-back-link'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @school_form, url: organisation_job_school_path(@vacancy.id), html: { method: "patch" } do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l
+        = t('jobs.job_location')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
+      = f.govuk_collection_radio_buttons :school_id,
+        @school_options,
+        :id,
+        :name,
+        :location,
+        legend: { text: t('helpers.fieldset.school_form.job_location_html') }
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
+      = render 'hiring_staff/vacancies/vacancy_form_partials/save_and_return_submit', f: f
+
+  .govuk-grid-column-one-third
+    - unless @vacancy.published? || @vacancy.state == 'copy'
+      = render 'hiring_staff/vacancies/sidebar'

@@ -149,6 +149,8 @@ en:
           at_one_school: 'At one school in the trust'
           central_office: "At the trust's central office"
         job_location_html: "Where will the job be based? (<span class='text-red'>Required</span>)"
+      school_form:
+        job_location_html: "In which school will the job be based? (<span class='text-red'>Required</span>)"
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
         job_roles: Job role
