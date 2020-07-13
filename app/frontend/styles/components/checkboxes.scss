@@ -46,3 +46,11 @@
 .js-disabled-border {
   border-top: 5px solid govuk-colour('light-grey');
 }
+
+.bold-checkbox-labels {
+  > .govuk-checkboxes__item {
+    > .govuk-checkboxes__label {
+      font-weight: bold;
+    }
+  }
+}
