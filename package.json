@@ -5,6 +5,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@ministryofjustice/frontend": "^0.0.19-alpha",
     "@rails/webpacker": "4.2.2",
     "algoliasearch": "~4.2.0",
     "axios": "^0.19.2",

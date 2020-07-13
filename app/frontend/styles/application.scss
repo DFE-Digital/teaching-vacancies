@@ -10,8 +10,8 @@ $govuk-font-url-function: frontend-font-url;
 $govuk-image-url-function: frontend-image-url;
 
 @import '~govuk-frontend/govuk/all';
+@import '~@ministryofjustice/frontend/moj/all';
 
-// @import 'base/frontend';
 @import 'global/variables';
 @import 'base/mixins';
 @import 'base/utilities';
