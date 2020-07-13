@@ -6,9 +6,14 @@ import { getKeyword } from './ui/input/keyword';
 import { getCoords } from './ui/input/location';
 import { getRadius } from './ui/input/radius';
 
+export const clientElement = document.getElementsByClassName('filter-form')[0];
+
 // This is the public API key which can be safely used in your frontend code.
 // This key is usable for search queries and list the indices you've got access to.
-export const search = algoliasearch('QM2YE0HRBW', '4082ba44346a92023eac1f794d739dd1');
+export const search = algoliasearch(
+  clientElement ? clientElement.getAttribute('data-app') : '',
+  clientElement ? clientElement.getAttribute('data-api') : '',
+);
 
 export const searchClient = (indexName) => instantsearch({
   indexName,
