@@ -4,6 +4,11 @@
 }
 
 .accordion-group {
+    .govuk-form-group {
+        max-height: 214px;
+        overflow: scroll;
+    }
+
     .accordion-content__group.govuk-accordion__section--expanded {
         border-bottom: 1px solid $govuk-border-colour;
         padding-bottom: govuk-spacing(2);
