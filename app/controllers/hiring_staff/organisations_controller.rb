@@ -1,4 +1,6 @@
 class HiringStaff::OrganisationsController < HiringStaff::BaseController
+  before_action :redirect_to_user_preferences, except: :placeholder
+
   def placeholder; end
 
   def show
@@ -41,6 +43,21 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
   def organisation_presenter
     return SchoolPresenter.new(current_organisation) if current_organisation.is_a?(School)
     # TODO: Implement SchoolGroupPresenter
+  end
+
+  def redirect_to_user_preferences
+    if current_organisation.is_a?(SchoolGroup) && current_user_preferences.nil?
+      redirect_to organisation_user_preference_path
+    # TODO: Remove when organisations controller can tolerate SchoolGroup objects
+    elsif current_organisation.is_a?(SchoolGroup)
+      redirect_to school_group_temporary_path
+    end
+  end
+
+  def current_user_preferences
+    UserPreference.find_by(
+      user_id: current_user.id, school_group_id: current_organisation.id
+    ) if current_organisation.is_a?(SchoolGroup)
   end
 
   def session_has_multiple_organisations?

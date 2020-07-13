@@ -84,7 +84,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
     if authorisation_permissions.authorised? && organisation_id_present
       update_session(authorisation_permissions)
       update_user_last_activity_at
-      redirect_to_organisation_path
+      redirect_to organisation_path
     else
       not_authorised
     end

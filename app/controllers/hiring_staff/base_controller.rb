@@ -49,11 +49,16 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def redirect_signed_in_users
-    return redirect_to school_group_temporary_path if session[:uid].present?
-    return redirect_to organisation_path if session[:urn].present?
+    return redirect_to organisation_path if session[:urn].present? || session[:uid].present?
   end
 
   def timeout_period_as_string
     distance_of_time_in_words(TIMEOUT_PERIOD).gsub('about ', '')
+  end
+
+  def strip_empty_checkboxes(form_key, fields)
+    fields.each do |field|
+      params[form_key][field] = params[form_key][field]&.reject(&:blank?)
+    end
   end
 end

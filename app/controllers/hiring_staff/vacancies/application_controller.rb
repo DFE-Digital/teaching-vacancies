@@ -111,12 +111,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
 
-  def strip_empty_checkboxes(form_key, fields)
-    fields.each do |field|
-      params[form_key][field] = params[form_key][field]&.reject(&:blank?)
-    end
-  end
-
   def flatten_date_hash(hash, field)
     %w(1 2 3).map { |i| hash[:"#{field}(#{i}i)"].to_i }
   end
