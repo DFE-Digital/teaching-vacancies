@@ -1,3 +1,4 @@
+-- DO NOT MODIFY: Auto-created by BigQuery extension for Firestore.
 -- Retrieves the latest document change events for all live documents.
 --   timestamp: The Firestore timestamp at which the event took place.
 --   operation: One of INSERT, UPDATE, DELETE, IMPORT.
