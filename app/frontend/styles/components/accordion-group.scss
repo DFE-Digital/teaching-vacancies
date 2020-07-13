@@ -1,12 +1,12 @@
 .js-enabled .govuk-accordion {
     border: none;
-    margin-bottom: 10px;
+    margin-bottom: govuk-spacing(2);
 }
 
 .accordion-group {
     .accordion-content__group.govuk-accordion__section--expanded {
-        border-bottom:1px solid $govuk-border-colour;
-        padding-bottom: 10px;
+        border-bottom: 1px solid $govuk-border-colour;
+        padding-bottom: govuk-spacing(2);
     }
 
     .accordion-group-heading {
@@ -22,6 +22,10 @@
         .govuk-accordion__icon {
             display: none;
         }
+
+        .govuk-accordion__section-header {
+            padding: 0 0 10px
+        }
     }
 
     .govuk-accordion__section-header {
@@ -30,12 +34,12 @@
     }
 
     .govuk-accordion__section-button {
-        font-size: $small-font-size;
+        font-size: 1.1875rem;
         padding: 0 13px;
     }
 
     .govuk-accordion__section-content {
         border: 5px solid govuk-colour('light-grey');
-        padding: 10px;
+        padding: govuk-spacing(2);
     }
 }

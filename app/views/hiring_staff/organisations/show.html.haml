@@ -2,7 +2,7 @@
 
 .school.govuk-grid-row
   .govuk-grid-column-full
-    %h1.govuk-heading-l.mb0
+    %h1.govuk-heading-l{ class: 'govuk-!-margin-bottom-2' }
       = t('schools.jobs.index', organisation: @organisation.name)
     - if @multiple_organisations
       - if AuthenticationFallback.enabled?
@@ -10,11 +10,7 @@
       - else
         = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
 
-.govuk-grid-row{ class: 'govuk-!-margin-top-9' }
-  .govuk-grid-column-one-quarter
-    = render partial: 'shared/filter_group', locals: { content: @vacancies_presenter.vacancies[0] , filters: { :title => 'Filter group heading', :items => [{ :key => 'working_pattern', :title => 'Working patterns'}, { :key => 'subject', :title => 'Subjects', :search => true }] } }
-
-  .govuk-grid-column-three-quarters
+  .govuk-grid-column-full
     .govuk-form-group.create-a-job
       - if @organisation.vacancies.active.any?
         = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0'
