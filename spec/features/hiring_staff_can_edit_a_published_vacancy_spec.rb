@@ -1,7 +1,6 @@
 require 'rails_helper'
 RSpec.feature 'Hiring staff can edit a vacancy' do
   let(:school) { create(:school) }
-  let(:school_group) { create(:school_group) }
   let(:session_id) { SecureRandom.uuid }
 
   before(:each) do

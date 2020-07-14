@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :vacancy do
     association :leadership
     association :school
+    association :school_group
 
     after :create do |vacancy|
       create_list :document, 3, vacancy: vacancy
@@ -33,6 +34,11 @@ FactoryBot.define do
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     supporting_documents { 'yes' }
     working_patterns { ['full_time'] }
+
+    trait :with_school do
+      association :school_group, strategy: :null
+      association :school
+    end
 
     trait :with_school_group do
       association :school, strategy: :null
