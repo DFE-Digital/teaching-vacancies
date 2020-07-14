@@ -49,7 +49,7 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def redirect_signed_in_users
-    return redirect_to organisation_path if session[:urn].present? || session[:uid].present?
+    redirect_to organisation_path if current_organisation.present?
   end
 
   def timeout_period_as_string

@@ -6,14 +6,14 @@ class HiringStaff::Organisations::UserPreferenceController < HiringStaff::BaseCo
   end
 
   def update
-    @user_preference_form = UserPreferenceForm.new(current_user, current_organisation, user_preferences_form_params)
+    @user_preference_form = UserPreferenceForm.new(current_user, current_organisation, user_preference_form_params)
 
     if @user_preference_form.valid?
       @user_preference_form.save
-      return redirect_to organisation_path
+      redirect_to organisation_path
+    else
+      render :show
     end
-
-    render :show
   end
 
   private
@@ -26,14 +26,13 @@ class HiringStaff::Organisations::UserPreferenceController < HiringStaff::BaseCo
     end
   end
 
-  def user_preferences_form_params
+  def user_preference_form_params
     update_managed_organisations
     strip_empty_checkboxes(:user_preference_form, [:managed_organisations, :managed_school_urns])
     params.require(:user_preference_form).permit(managed_organisations: [], managed_school_urns: [])
   end
 
   def verify_school_group
-    return redirect_to organisation_path,
-           danger: 'You are not allowed' unless current_organisation.is_a?(SchoolGroup)
+    redirect_to organisation_path, danger: 'You are not allowed' unless current_organisation.is_a?(SchoolGroup)
   end
 end
