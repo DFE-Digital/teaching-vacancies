@@ -25,13 +25,6 @@ WITH
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.title') AS title,
-      ARRAY(
-      SELECT
-        *
-      FROM
-        UNNEST(SPLIT(LOWER(REGEXP_REPLACE(JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
-                    '$.json'),
-                  '$.title'),r'[^a-zA-Z0-9]', '')),' '))) AS words_from_scraped_title,
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.description') AS description,
