@@ -1,6 +1,7 @@
 module VacancyHelpers
   def fill_in_job_location_form_field(vacancy)
-    find('label[for="job-location-form-job-location-at-one-school-field"]').click
+    hyphenated_location = vacancy.job_location.split('_').join('-')
+    find("label[for=\"job-location-form-job-location-#{hyphenated_location}-field\"]").click
   end
 
   def fill_in_school_form_field(school)
