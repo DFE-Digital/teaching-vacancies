@@ -1,12 +1,18 @@
   # Transforms the latest versions of scraped vacancy NoSQL documents from Firestore in scraped_vacancies_raw_latest into SQL-queriable rows
-  # Also matches vacancies to schools where possible to allow this to be joined to the schools table.
+  # Also matches vacancies to schools where possible to allow this to be joined to the schools table, and if this is possible matches vacancies to vacancies on Teaching Vacancies.
 WITH
+  TV_vacancy AS (
+  SELECT
+    id,
+    job_title
+  FROM
+    `teacher-vacancy-service.production_dataset.feb20_vacancy`),
   scraped_vacancy AS (
   SELECT
     *
   FROM (
     SELECT
-      DISTINCT CAST(JSON_EXTRACT(DATA,
+      CAST(JSON_EXTRACT(DATA,
           '$.scraped') AS BOOL) AS scraped,
       JSON_EXTRACT_SCALAR(DATA,
         '$.url') AS scraped_url,
@@ -19,6 +25,13 @@ WITH
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.title') AS title,
+      ARRAY(
+      SELECT
+        *
+      FROM
+        UNNEST(SPLIT(LOWER(REGEXP_REPLACE(JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
+                    '$.json'),
+                  '$.title'),r'[^a-zA-Z0-9]', '')),' '))) AS words_from_scraped_title,
       JSON_EXTRACT_SCALAR(JSON_EXTRACT_SCALAR(DATA,
           '$.json'),
         '$.description') AS description,
@@ -102,31 +115,91 @@ WITH
     #exclude matches with schools which were closed or had not yet been created in GIAS on the date when the vacancy was published (note - will exclude a match if a school published a vacancy during academisation - i.e. after the new academy had been created in GIAS but before the old school had officially closed - because in this case we can't work out whether recruitment was for the old or the new school
       (school.data_establishmentstatus_name != "Closed"
         OR school.data_closedate > scraped_vacancy.publish_on)
-      AND CAST(school.created_at AS DATE) <= scraped_vacancy.publish_on )
+      AND CAST(school.created_at AS DATE) <= scraped_vacancy.publish_on ),
+    vacancies_joined_to_schools AS (
+    SELECT
+      scraped_vacancy.*,
+      vacancy_matches.school_urn,
+      school.name AS school_name
+    FROM
+      scraped_vacancy
+    LEFT JOIN
+      vacancy_matches
+    ON
+      scraped_vacancy.scraped_url=vacancy_matches.scraped_url
+    LEFT JOIN
+      `teacher-vacancy-service.production_dataset.feb20_school` AS school
+    ON
+      school_urn=school.urn
+    WHERE
+      scraped_vacancy.scraped_url IN ( # only include matches with only 1 possible school
+      SELECT
+        scraped_url AS scraped_url,
+      FROM
+        vacancy_matches
+      GROUP BY
+        scraped_url
+      HAVING
+        COUNT(*)=1 )
+      OR vacancy_matches.school_urn IS NULL
+    ORDER BY
+      scraped_url ASC ),
+    vacancy_to_vacancy_matches AS (
+    SELECT
+      vacancies_joined_to_schools.scraped_url,
+      TV_vacancy.id AS vacancy_id
+    FROM
+      vacancies_joined_to_schools
+    LEFT JOIN
+      `teacher-vacancy-service.production_dataset.feb20_school` AS school
+    ON
+      vacancies_joined_to_schools.school_urn=school.urn
+    LEFT JOIN
+      `teacher-vacancy-service.production_dataset.feb20_vacancy` AS TV_vacancy
+    ON
+      school.id=TV_vacancy.school_id #only match vacancies to TV vacancies from the matched school in our database
+      AND ( (
+        SELECT
+          SAFE_DIVIDE(COUNTIF(scraped_words IS NULL
+          OR TV_words IS NULL),COUNTIF(scraped_words IS NOT NULL
+          AND TV_words IS NOT NULL)) #number of words that are in one title but not in the other as a proportion of the number of words that are in both titles
+        FROM (
+          SELECT
+            *
+          FROM
+            UNNEST(SPLIT(LOWER(REGEXP_REPLACE(TV_vacancy.job_title,r'[^a-zA-Z0-9]', '')),' ')) AS words
+          WHERE words NOT IN ('at','of','to','and','or','for','with','but','may','be','as','x','from','including','per','in') #don't count these words when working out the proportion
+            ) AS scraped_words
+        FULL JOIN (
+          SELECT
+            *
+          FROM
+            UNNEST(SPLIT(LOWER(REGEXP_REPLACE(TV_vacancy.job_title,r'[^a-zA-Z0-9]', '')),' ')) AS words
+          WHERE words NOT IN ('at','of','to','and','or','for','with','but','may','be','as','x','from','including','per','in')
+            ) AS TV_words
+        ON
+          scraped_words=TV_words))<0.2 #allow only 1 in 5 words to be in one title but not in the other
+      AND vacancies_joined_to_schools.publish_on > DATE_SUB(TV_vacancy.publish_on, INTERVAL 14 DAY) #only match vacancies which were published within a fortnight of a vacancy in our database
+      AND vacancies_joined_to_schools.publish_on < DATE_ADD(TV_vacancy.publish_on, INTERVAL 14 DAY) )
   SELECT
-    scraped_vacancy.*,
-    vacancy_matches.school_urn,
-    school.name AS school_name
+    vacancies_joined_to_schools.*,
+    vacancy_to_vacancy_matches.vacancy_id
   FROM
-    scraped_vacancy
+    vacancies_joined_to_schools
   LEFT JOIN
-    vacancy_matches
+    vacancy_to_vacancy_matches
   ON
-    scraped_vacancy.scraped_url=vacancy_matches.scraped_url
-  LEFT JOIN
-    `teacher-vacancy-service.production_dataset.feb20_school`AS school
-  ON
-    school_urn=school.urn
+    vacancies_joined_to_schools.scraped_url=vacancy_to_vacancy_matches.scraped_url
   WHERE
-    scraped_vacancy.scraped_url IN ( # only include matches with only 1 possible school
+    vacancies_joined_to_schools.scraped_url IN ( # only include matches with only 1 possible school
     SELECT
       scraped_url AS scraped_url,
     FROM
-      vacancy_matches
+      vacancy_to_vacancy_matches
     GROUP BY
       scraped_url
     HAVING
       COUNT(*)=1 )
-    OR vacancy_matches.school_urn IS NULL
+    OR vacancy_id IS NULL
   ORDER BY
     scraped_url ASC
