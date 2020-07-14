@@ -134,6 +134,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def redirect_unless_school_group_user_flag_on
-    redirect_to job_specification_organisation_job_path(request.parameters) unless SchoolGroupJobsFeature.enabled?
+    redirect_to organisation_path unless SchoolGroupJobsFeature.enabled?
   end
 end

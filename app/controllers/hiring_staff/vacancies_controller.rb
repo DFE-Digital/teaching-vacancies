@@ -12,7 +12,11 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def new
     reset_session_vacancy!
-    redirect_to session[:uid].present? ? job_location_organisation_job_path : job_specification_organisation_job_path
+    if current_organisation.is_a?(SchoolGroup)
+      redirect_to job_location_organisation_job_path
+    elsif current_organisation.is_a?(School)
+      redirect_to job_specification_organisation_job_path
+    end
   end
 
   def edit
