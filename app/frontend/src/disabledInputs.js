@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   var allInputs = document.querySelectorAll('input');
   var textAreaInputs = document.querySelectorAll('textarea.govuk-textarea');
-  var submitInput = document.querySelector('input[type="submit"].update-listing-gtm');
+  var submitInput = document.querySelector('input[type="submit"].disabled-on-load');
 
   if (allInputs && submitInput) {
     submitInput.disabled = true;

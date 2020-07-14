@@ -1,0 +1,24 @@
+= content_for :page_title_prefix, current_organisation.name
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    %h1.govuk-heading-xl.mb0
+      = t('.title')
+    %p
+      = t('.description')
+
+    = render 'school_group'
+
+    %h2.govuk-heading-l.mb0
+      = t('.schools', count: current_organisation.schools.count)
+
+    .schools
+      = render 'schools'
+
+  .govuk-grid-column-one-third
+    .missing-information
+      %h3.govuk-heading-m
+        = t('.missing_information_title')
+      %p
+        = t('.missing_information_description_html', mail_to: mail_to(t('help.email'), t('.contact_support'), class: 'govuk-link'))

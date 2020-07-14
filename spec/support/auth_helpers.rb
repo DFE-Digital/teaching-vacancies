@@ -97,6 +97,15 @@ module AuthHelpers
       "https://test-url.local/users/#{user_id}/organisations"
     ).to_return(body: authorisation_response, status: 200)
   end
+
+  def sign_in_user
+    within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
+    click_on(I18n.t('sign_in.link'))
+  end
+
+  def stub_accepted_terms_and_conditions
+    create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
+  end
 end
 
 RSpec.shared_examples 'basic auth' do

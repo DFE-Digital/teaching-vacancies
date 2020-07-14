@@ -1,0 +1,31 @@
+%table.govuk-table
+  %thead.govuk-table__head
+    %tr.govuk-table__row
+      %th.govuk-table__header{ colspan: "2" }
+        %h2.govuk-heading-l
+          = current_organisation.name
+      %th.govuk-table__header
+  %tbody.govuk-table__body
+    %tr.govuk-table__row
+      %td.govuk-table__cell
+        %strong.strong= t('school_groups.description')
+      %td.govuk-table__cell
+        - if current_organisation.description.present?
+          = truncate(current_organisation.description, length: 130)
+          %br
+        = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(current_organisation, school_group: true), class: 'govuk-link govuk-link--no-visited-state'
+    %tr.govuk-table__row
+      %td.govuk-table__cell
+        %strong.strong= t('school_groups.address')
+      %td.govuk-table__cell
+        = location(current_organisation)
+    %tr.govuk-table__row
+      %td.govuk-table__cell
+        %strong.strong= t('school_groups.group_type')
+      %td.govuk-table__cell
+        = current_organisation.group_type
+    %tr.govuk-table__row
+      %td.govuk-table__cell
+        %strong.strong= t('school_groups.uid')
+      %td.govuk-table__cell
+        = current_organisation.uid
