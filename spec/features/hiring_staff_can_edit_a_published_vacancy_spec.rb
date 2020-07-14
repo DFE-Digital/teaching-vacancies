@@ -25,23 +25,18 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                     I18n.t('jobs.job_role_options.sen_specialist')
                                    ],
                                   school: school,
-                                  school_group: school_group,
                                   working_patterns: ['full_time', 'part_time'],
                                   publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
     end
 
-    scenario 'shows all vacancy information' do
-      visit edit_organisation_job_path(vacancy.id)
-
-      verify_all_vacancy_details(vacancy)
-    end
-
-    scenario 'takes you to the edit page' do
+    scenario 'takes you to the edit page showing all vacancy information' do
       visit edit_organisation_job_path(vacancy.id)
 
       within('h1.govuk-heading-m') do
         expect(page).to have_content(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
       end
+
+      verify_all_vacancy_details(vacancy)
     end
 
     scenario 'vacancy state is edit_published' do
