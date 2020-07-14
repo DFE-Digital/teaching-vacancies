@@ -6,7 +6,7 @@ import { getKeyword } from './ui/input/keyword';
 import { getCoords } from './ui/input/location';
 import { getRadius } from './ui/input/radius';
 
-export const clientElement = document.getElementsByClassName('filter-form')[0];
+export const clientElement = document.getElementsByClassName('filters-form')[0];
 
 // This is the public API key which can be safely used in your frontend code.
 // This key is usable for search queries and list the indices you've got access to.
