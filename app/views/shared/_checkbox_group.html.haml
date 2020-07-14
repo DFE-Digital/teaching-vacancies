@@ -1,3 +1,4 @@
+-# for options see https://www.rubydoc.info/gems/govuk_design_system_formbuilder/GOVUKDesignSystemFormBuilder/Builder#govuk_collection_check_boxes-instance_method
 - if search
   .search-input
     %input.govuk-input.search-input__input{ placeholder: "Search" }
@@ -6,7 +7,7 @@
 .govuk-form-group
   .govuk-checkboxes.govuk-checkboxes--small
     = form_for '', url: 'url', html: { method: 'post' } do |f|
-      = f.govuk_collection_check_boxes :content,
+      = f.govuk_collection_check_boxes :options,
         options,
         :first,
         :first

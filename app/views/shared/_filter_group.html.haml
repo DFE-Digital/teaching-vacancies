@@ -1,5 +1,14 @@
--# Usage to include accordion group
--# = render partial: 'shared/accordion_group', locals: { content: @vacancies_presenter.vacancies[0] , filters: { :title => 'filter group heading', :items => [{ :key => 'working_pattern', :title => 'Working patterns'}, { :key => 'subject', :title => 'Subjects', :search => true }] } }
+-# Usage to include filter group
+-#
+-# = render partial: 'shared/filter_group', locals: {
+-#   filters: {
+-#     :title => 'filter group heading',
+-#     :items => [
+-#       { :options => <Array>, :title => 'Working patterns'},
+-#       { :options => <Array>, :title => 'Subjects', :search => true }
+-#     ]
+-#   }
+-# }
 
 .accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
 
@@ -57,4 +66,4 @@
             = filter[:title]
 
       .govuk-accordion__section-content{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" } }
-        = render partial: 'shared/checkbox_group', locals: { :search => filter[:search], content: content[filter[:key]], options: eval("#{filter[:key]}_options") }
+        = render partial: 'shared/checkbox_group', locals: { :search => filter[:search], options: filter[:options] }
