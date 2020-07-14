@@ -613,8 +613,8 @@ en:
     location_radius_text: Within %{radius} miles of %{location}
     location_category_text: In %{location}
     reference: 'for'
-    next_steps:
-      "You'll receive a single job alert email at the end of any day when 1 or more matching jobs are first published."
+    next_steps: >-
+      You’ll receive an email every morning with any new job that’s been listed that matches your search criteria.
     confirmation:
       header: 'Your email subscription has started'
       receipt_confirmation: We have sent a confirmation email to %{email}.
@@ -674,11 +674,9 @@ en:
         save money on recruitment and is here to help you to take the first step in your career.
       content: >-
         Setting up an alert can help make your search for a teaching job easier. You’ll receive an email every morning
-        with any new job that’s been listed that matches your search criteria. You can then follow the link to Teaching
-        Vacancies and find out more about the role, or roles, that you’re interested in.
+        with any new job that’s been listed that matches your search criteria.
       unsubscribe: >-
-        You can unsubscribe at any time by following the instructions in the job alert. You’ll also be able to find
-        links to change your search criteria and set up a new or additional alert if you need to.
+        You can unsubscribe at any time by following the instructions in the job alert
     form:
       labels:
         keywords_html: "Keywords (<span class='text-red'>Required</span>)"
