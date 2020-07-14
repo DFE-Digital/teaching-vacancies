@@ -17,10 +17,10 @@ class NqtJobAlertsController < ApplicationController
       subscription.save
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later
-      return render :confirm
+      render :confirm
+    else
+      render :new
     end
-
-    render :new
   end
 
   private
