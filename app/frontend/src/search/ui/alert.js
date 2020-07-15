@@ -3,7 +3,7 @@ import { extractQueryParams } from '../../lib/utils';
 import { getRadiusMiles } from './input/radius';
 import { shouldNotGeocode } from './input/location';
 import { locations } from '../data/locations';
-import '../../polyfill/remove.polyfill';
+import '../../lib/polyfill/remove.polyfill';
 
 const JOB_ALERT_URL = '/subscriptions/new';
 

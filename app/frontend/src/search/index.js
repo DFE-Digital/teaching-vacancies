@@ -1,6 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import '../polyfill/remove.polyfill';
+import '../lib/polyfill/remove.polyfill';
 
 import {
   connectSearchBox, connectHits, connectSortBy, connectMenu, connectStats, connectPagination,
@@ -14,7 +14,7 @@ import { templates, renderContent } from './ui/hits';
 import { updateNoResultsLink } from './ui/alert';
 import { onSubmit as locationSubmit, onChange as locationChange, getCoords } from './ui/input/location';
 import { onSubmit as keywordSubmit } from './ui/input/keyword';
-import { renderAutocomplete } from '../lib/autocomplete';
+import { renderAutocomplete } from '../lib/ui/patterns/autocomplete';
 import { renderSortSelectInput } from './ui/sort';
 import { renderPagination } from './ui/pagination';
 import { renderStats } from './ui/stats';
