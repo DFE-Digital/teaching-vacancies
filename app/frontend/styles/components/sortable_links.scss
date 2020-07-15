@@ -31,6 +31,10 @@
 
   form {
     display: inline-block;
+
+    @include govuk-media-query($until: tablet) {
+      width: 100%;
+    }
   }
 }
 
