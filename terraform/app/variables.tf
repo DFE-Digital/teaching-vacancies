@@ -37,3 +37,17 @@ variable "cloudwatch_slack_channel" {
 variable "cloudwatch_ops_genie_api_key" {
   description = "The ops genie api key for sending alerts to ops genie"
 }
+
+# Statuscake
+variable "statuscake_username" {
+  description = "The Statuscake username"
+}
+
+variable "statuscake_apikey" {
+  description = "The Statuscake API key"
+}
+
+variable "statuscake_alerts" {
+  description = "What will Statuscake alert on. A Terraform 0.11 map of 8 values - website_name, website_url, test_type, check_rate, contact_id, trigger_rate, custom_header, status_codes"
+  type = "map"
+}

@@ -7,6 +7,12 @@ provider "template" {
   version = "~> 1.0.0"
 }
 
+provider "statuscake" {
+  username = "${var.statuscake_username}"
+  apikey   ="${var.statuscake_apikey}"
+}
+
+
 /*
 Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
@@ -43,4 +49,13 @@ module "cloudfront" {
   offline_bucket_domain_name    = "${var.offline_bucket_domain_name}"
   offline_bucket_origin_path    = "${var.offline_bucket_origin_path}"
   domain                        = "${var.domain}"
+}
+
+module "statuscake" {
+  source = "./modules/statuscake"
+
+  environment              = "${terraform.workspace}"
+  project_name             = "${var.project_name}"
+  statuscake_alerts        = "${var.statuscake_alerts}"
+
 }
