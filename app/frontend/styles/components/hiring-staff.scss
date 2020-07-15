@@ -20,8 +20,11 @@ body.hiring-staff {
 
 }
 
-.create-a-job > a {
-  margin-bottom: 0;
+.create-a-job {
+  text-align: right;
+  > a {
+    margin-bottom: 0;
+  }
 }
 
 .button-link {
