@@ -1,6 +1,19 @@
-variable "environment" {}
-variable "project_name" {}
+variable "environment" {
+}
+
+variable "project_name" {
+}
+
 variable "statuscake_alerts" {
-  description = "What will Statuscake alert on. A Terraform 0.11 map of 8 values - website_name, website_url, test_type, check_rate, contact_id, trigger_rate, custom_header, status_codes"
-  type = "map"
+  description = "Define Statuscake alerts with the attributes below"
+  type = map(object({
+    website_name  = string
+    website_url   = string
+    test_type     = string
+    check_rate    = string
+    contact_group = list(string)
+    trigger_rate  = string
+    custom_header = string
+    status_codes  = string
+  }))
 }

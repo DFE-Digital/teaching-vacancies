@@ -13,13 +13,17 @@ variable "cloudfront_certificate_arn" {
 
 variable "cloudfront_aliases" {
   description = "Match this value to the alias associated with the cloudfront_certificate_arn, eg. tvs.staging.dxw.net"
-  type        = "list"
+  type        = list(string)
 }
 
-variable "offline_bucket_domain_name" {}
-variable "offline_bucket_origin_path" {}
+variable "offline_bucket_domain_name" {
+}
 
-variable "domain" {}
+variable "offline_bucket_origin_path" {
+}
+
+variable "domain" {
+}
 
 variable "cloudfront_origin_domain_name" {
   default = ""
@@ -48,6 +52,15 @@ variable "statuscake_apikey" {
 }
 
 variable "statuscake_alerts" {
-  description = "What will Statuscake alert on. A Terraform 0.11 map of 8 values - website_name, website_url, test_type, check_rate, contact_id, trigger_rate, custom_header, status_codes"
-  type = "map"
+  description = "Define Statuscake alerts with the attributes below"
+  type = map(object({
+    website_name  = string
+    website_url   = string
+    test_type     = string
+    check_rate    = string
+    contact_group = list(string)
+    trigger_rate  = string
+    custom_header = string
+    status_codes  = string
+  }))
 }
