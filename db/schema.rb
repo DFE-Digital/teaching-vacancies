@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_080433) do
+ActiveRecord::Schema.define(version: 2020_07_10_080945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -197,6 +197,15 @@ ActiveRecord::Schema.define(version: 2020_07_10_080433) do
     t.index ["task", "date"], name: "index_transaction_auditors_on_task_and_date", unique: true
   end
 
+  create_table "user_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "managed_organisations"
+    t.uuid "user_id"
+    t.uuid "school_group_id"
+    t.string "managed_school_urns", array: true
+    t.index ["school_group_id"], name: "index_user_preferences_on_school_group_id"
+    t.index ["user_id"], name: "index_user_preferences_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "oid"
     t.datetime "accepted_terms_at"
@@ -282,6 +291,8 @@ ActiveRecord::Schema.define(version: 2020_07_10_080433) do
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "users"
   add_foreign_key "schools", "detailed_school_types"
+  add_foreign_key "user_preferences", "school_groups"
+  add_foreign_key "user_preferences", "users"
   add_foreign_key "vacancies", "school_groups"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end

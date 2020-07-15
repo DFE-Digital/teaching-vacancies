@@ -18,6 +18,20 @@ en:
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
   hiring_staff:
+    managed_organisations:
+      page_title: Update your preferences
+      panel:
+        title: Manage your view for %{organisation}
+        body: You can now see job listings from all schools in your trust, or choose to see specific schools' listings
+      options:
+        all: All schools and trust head office
+        school_group: Trust head office
+      labels:
+        select_organisations: Select which schools' job listings you would like to see
+        select_organisations_html: >-
+          Select which schools' job listings you would like to see (<span class='text-red'>Required</span>)
+      hints:
+        select_organisations: You can change this at any time
     identifications:
       new:
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
@@ -724,25 +738,25 @@ en:
       Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018
       (the date we began recording statistics).
   buttons:
-    accept_and_continue: 'Accept and continue'
-    back: 'Back'
-    search: 'Search'
-    change: 'Change'
-    continue: 'Continue'
-    create_job: 'Create a job listing'
-    delete: 'Delete'
-    dismiss: 'Dismiss'
-    find: 'Find'
-    continue: 'Continue'
-    save_and_return_later: 'Save and return later'
-    save_changes: 'Save changes'
-    submit: 'Submit'
-    update_job: 'Update listing'
-    cancel_copy: 'Cancel copy'
-    cancel_and_return: Cancel and return
+    accept_and_continue: Accept and continue
+    back: Back
     back_to_manage_jobs: Back to manage jobs
+    cancel_copy: Cancel copy
+    cancel_and_return: Cancel and return
+    change: Change
+    continue: Continue
+    create_job: Create a job listing
+    delete: Delete
+    dismiss: Dismiss
+    find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
+    save_and_return_later: Save and return later
+    save_changes: Save changes
+    search: Search
+    skip_this_step: Skip this step
+    submit: Submit
     subscribe: Subscribe
+    update_job: Update listing
 
   messages:
     jobs:

@@ -126,6 +126,8 @@ Rails.application.routes.draw do
     end
 
     resources :schools, only: %i[index edit update], controller: 'hiring_staff/organisations/schools'
+    resource :managed_organisations, only: %i[show update],
+                                     controller: 'hiring_staff/organisations/managed_organisations'
   end
 
   match '/401', to: 'errors#unauthorised', via: :all

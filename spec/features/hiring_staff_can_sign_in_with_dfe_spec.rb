@@ -124,10 +124,12 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
 
   context 'with valid credentials that match a SchoolGroup' do
     let(:organisation) { create(:school_group) }
+    let(:user_preference) { instance_double(UserPreference) }
 
     context 'SchoolGroupJobsFeature enabled' do
       before do
         allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
+        allow(UserPreference).to receive(:find_by).and_return(user_preference)
 
         stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: dsi_email_address)
         stub_authorisation_step
@@ -137,12 +139,22 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         sign_in_user
       end
 
-      it_behaves_like 'a successful sign in'
+      context 'when user preferences have been set' do
+        it_behaves_like 'a successful sign in'
 
-      scenario 'it redirects the sign in page to the SchoolGroup page' do
-        visit new_identifications_path
-        expect(page).to have_content("Jobs at #{organisation.name}")
-        expect(current_path).to eql(school_group_temporary_path)
+        scenario 'it redirects the sign in page to the SchoolGroup page' do
+          visit new_identifications_path
+          expect(page).to have_content("Jobs at #{organisation.name}")
+          expect(current_path).to eql(school_group_temporary_path)
+        end
+      end
+
+      context 'when user preferences have not been set' do
+        let(:user_preference) { nil }
+
+        scenario 'it redirects the sign in page to the managed organisations user preference page' do
+          expect(current_path).to eql(organisation_managed_organisations_path)
+        end
       end
     end
 

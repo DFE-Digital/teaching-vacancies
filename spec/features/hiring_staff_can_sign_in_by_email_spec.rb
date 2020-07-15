@@ -58,6 +58,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
 
       before do
         allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
+        allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
       end
 
       scenario 'can sign in, choose an org, change org, sign out' do
@@ -155,6 +156,7 @@ RSpec.feature 'Hiring staff signing in with fallback email authentication' do
         context 'SchoolGroupJobsFeature enabled' do
           before do
             allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
+            allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
           end
 
           scenario 'can sign in and bypass choice of org' do
