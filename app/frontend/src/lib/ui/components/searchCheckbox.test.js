@@ -1,4 +1,4 @@
-import { init, stringExistsInString } from './searchCheckbox';
+import { init, substringExistsInString } from './searchCheckbox';
 
 describe('search group of checkboxes', () => {
 
@@ -19,10 +19,10 @@ describe('search group of checkboxes', () => {
 
   describe('module methods', () => {
     test('returns true if string exists in string irrespective of letter casing', () => {
-      expect(stringExistsInString('abc', 'abc')).toBe(true);
-      expect(stringExistsInString('abc', 'ab')).toBe(true);
-      expect(stringExistsInString('abc', 'aB')).toBe(true);
-      expect(stringExistsInString('abc', 'bd')).toBe(false);
+      expect(substringExistsInString('abc', 'abc')).toBe(true);
+      expect(substringExistsInString('abc', 'ab')).toBe(true);
+      expect(substringExistsInString('abc', 'aB')).toBe(true);
+      expect(substringExistsInString('abc', 'bd')).toBe(false);
     });
   });
 });

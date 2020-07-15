@@ -10,7 +10,7 @@
       - else
         = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
 
-  .govuk-grid-column-full
+  .govuk-grid-column-full{ class: 'govuk-!-margin-top-9' }
     .govuk-form-group.create-a-job
       - if @organisation.vacancies.active.any?
         = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0'

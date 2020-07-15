@@ -15,10 +15,10 @@ export const init = (container) => {
 
 export const filterCheckboxes = (checkboxes, input) => Array.from(checkboxes).map(checkbox => checkboxDisplay(checkbox, input));
 
-export const stringExistsInString = (original, input) => original.toUpperCase().indexOf(input.toUpperCase()) > -1;
+export const substringExistsInString = (original, input) => original.toUpperCase().indexOf(input.toUpperCase()) > -1;
 
 export const checkboxDisplay = (checkbox, input) => {
-  if (stringExistsInString(checkbox.value, input.value)) {
+  if (substringExistsInString(checkbox.value, input.value)) {
     checkbox.parentElement.style.display = 'block';
   } else {
     checkbox.parentElement.style.display = 'none';
@@ -26,5 +26,8 @@ export const checkboxDisplay = (checkbox, input) => {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  init(document.getElementsByClassName('accordion-content__group')[0]);
+  const groups = document.getElementsByClassName('accordion-content__group');
+  if (groups.length) {
+    Array.from(groups).filter(group => group.getElementsByClassName('search-input').length).map(group => init(group));
+  }
 });
