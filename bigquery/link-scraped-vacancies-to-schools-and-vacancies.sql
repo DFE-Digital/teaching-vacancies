@@ -1,6 +1,11 @@
   # Transforms the latest versions of scraped vacancy NoSQL documents from Firestore in scraped_vacancies_raw_latest into SQL-queriable rows
   # Also matches vacancies to schools where possible to allow this to be joined to the schools table, and if this is possible matches vacancies to vacancies on Teaching Vacancies.
 WITH
+  stop_words AS (
+  SELECT
+    *
+  FROM
+    UNNEST(['at','of','to','and','or','for','with','but','may','be','as','x','from','including','per','in']) ),
   TV_vacancy AS (
   SELECT
     id,
@@ -154,22 +159,32 @@ WITH
       AND ( (
         SELECT
           SAFE_DIVIDE(COUNTIF(scraped_words IS NULL
-          OR TV_words IS NULL),COUNTIF(scraped_words IS NOT NULL
-          AND TV_words IS NOT NULL)) #number of words that are in one title but not in the other as a proportion of the number of words that are in both titles
+              OR TV_words IS NULL),
+            COUNTIF(scraped_words IS NOT NULL
+              AND TV_words IS NOT NULL)) #number of words that are in one title but not in the other as a proportion of the number of words that are in both titles
         FROM (
           SELECT
             *
           FROM
             UNNEST(SPLIT(LOWER(REGEXP_REPLACE(TV_vacancy.job_title,r'[^a-zA-Z0-9]', '')),' ')) AS words
-          WHERE words NOT IN ('at','of','to','and','or','for','with','but','may','be','as','x','from','including','per','in') #don't count these words when working out the proportion
+          WHERE
+            words NOT IN (
+            SELECT
+              *
+            FROM
+              stop_words) #don't count these words when working out the proportion
             ) AS scraped_words
         FULL JOIN (
           SELECT
             *
           FROM
             UNNEST(SPLIT(LOWER(REGEXP_REPLACE(TV_vacancy.job_title,r'[^a-zA-Z0-9]', '')),' ')) AS words
-          WHERE words NOT IN ('at','of','to','and','or','for','with','but','may','be','as','x','from','including','per','in')
-            ) AS TV_words
+          WHERE
+            words NOT IN (
+            SELECT
+              *
+            FROM
+              stop_words) ) AS TV_words
         ON
           scraped_words=TV_words))<0.2 #allow only 1 in 5 words to be in one title but not in the other
       AND vacancies_joined_to_schools.publish_on > DATE_SUB(TV_vacancy.publish_on, INTERVAL 14 DAY) #only match vacancies which were published within a fortnight of a vacancy in our database
