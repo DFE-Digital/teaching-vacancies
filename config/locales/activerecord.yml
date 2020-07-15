@@ -76,6 +76,15 @@ en:
         job_summary_form:
           attributes:
             <<: *job_summary_errors
+        nqt_job_alerts_form:
+          attributes:
+            keywords:
+              blank: Enter keyword(s)
+            location:
+              blank: Enter a location
+            email:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)
