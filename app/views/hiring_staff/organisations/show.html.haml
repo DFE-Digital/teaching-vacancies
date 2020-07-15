@@ -13,7 +13,7 @@
   .govuk-grid-column-full{ class: 'govuk-!-margin-top-5' }
     .govuk-form-group
       - if @organisation.vacancies.active.any?
-        .create-a-job
+        .dashboard-header
           = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0'
         .overflow-scroll
           = render partial: 'vacancies', locals: { organisation: @organisation, vacancies: @vacancies }
