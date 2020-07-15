@@ -1,0 +1,25 @@
+.search-input {
+  background: white;
+  position: relative;
+  width: 100%;
+  margin-bottom: govuk-spacing(2);
+
+  input {
+    width: 100%;
+    padding: govuk-spacing(4) govuk-spacing(9) govuk-spacing(4) govuk-spacing(7);
+    display: block;
+  }
+
+  button {
+    @include govuk-font(19);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 12px;
+    z-index: 2;
+  }
+}

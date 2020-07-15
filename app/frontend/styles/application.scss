@@ -10,14 +10,15 @@ $govuk-font-url-function: frontend-font-url;
 $govuk-image-url-function: frontend-image-url;
 
 @import '~govuk-frontend/govuk/all';
+@import '~@ministryofjustice/frontend/moj/all';
 
-// @import 'base/frontend';
 @import 'global/variables';
 @import 'base/mixins';
 @import 'base/utilities';
 @import 'components/awaiting_feedback_vacancies';
-@import '../src/lib/autocomplete';
+@import '../src/lib/ui/patterns/autocomplete';
 @import 'components/banners';
+@import 'components/accordion-group';
 @import 'components/check_your_answers';
 @import 'components/checkboxes';
 @import 'components/currency-input';
@@ -39,6 +40,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'components/school';
 @import 'components/schools-in-your-trust';
 @import 'components/search_panel';
+@import 'components/search_input';
 @import 'components/select';
 @import 'components/share-url';
 @import 'components/signin';

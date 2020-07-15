@@ -38,7 +38,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     expect(body_lines[3]).to match(/#{I18n.t('subscriptions.email.confirmation.subheading', email: email)}/)
     expect(body_lines[5]).to match(/\* Subject: English/)
     expect(body_lines[6]).to match(/\Suitable for NQTs/)
-    expect(body_lines[8]).to include('You&#39;ll receive')
+    expect(body_lines[8]).to match(/#{I18n.t('subscriptions.next_steps')}/)
   end
 
   it 'has an unsubscribe link' do

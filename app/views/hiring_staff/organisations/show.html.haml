@@ -2,25 +2,22 @@
 
 .school.govuk-grid-row
   .govuk-grid-column-full
-    %h1.govuk-heading-l.mb0
+    %h1.govuk-heading-l{ class: 'govuk-!-margin-bottom-2' }
       = t('schools.jobs.index', organisation: @organisation.name)
     - if @multiple_organisations
       - if AuthenticationFallback.enabled?
         = link_to t('sign_in.organisation.change'), auth_email_change_organisation_path, class: 'govuk-link'
       - else
         = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
-      %br
-      %br
 
-.govuk-grid-row
-  .govuk-grid-column-full
+  .govuk-grid-column-full{ class: 'govuk-!-margin-top-9' }
     .govuk-form-group.create-a-job
-    - if @organisation.vacancies.active.any?
-      = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
-      .overflow-scroll
-        = render partial: 'vacancies', locals: { organisation: @organisation, vacancies: @vacancies }
-    - else
-      = render partial: 'no_vacancies', locals: { organisation: @organisation }
+      - if @organisation.vacancies.active.any?
+        = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0'
+        .overflow-scroll
+          = render partial: 'vacancies', locals: { organisation: @organisation, vacancies: @vacancies }
+      - else
+        = render partial: 'no_vacancies', locals: { organisation: @organisation }
 
 .govuk-grid-row
   .govuk-grid-column-full
