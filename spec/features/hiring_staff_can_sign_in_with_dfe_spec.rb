@@ -152,8 +152,8 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
       context 'when user preferences have not been set' do
         let(:user_preference) { nil }
 
-        scenario 'it redirects the sign in page to the UserPreference page' do
-          expect(current_path).to eql(organisation_user_preference_path)
+        scenario 'it redirects the sign in page to the managed organisations user preference page' do
+          expect(current_path).to eql(organisation_managed_organisations_path)
         end
       end
     end

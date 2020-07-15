@@ -1,4 +1,4 @@
-class UserPreferenceForm
+class ManagedOrganisationsForm
   include ActiveModel::Model
 
   attr_accessor :current_preference, :current_organisation, :current_user,

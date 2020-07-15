@@ -47,7 +47,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
 
   def redirect_to_user_preferences
     if current_organisation.is_a?(SchoolGroup) && current_user_preferences.nil?
-      redirect_to organisation_user_preference_path
+      redirect_to organisation_managed_organisations_path
     # TODO: Remove when organisations controller can tolerate SchoolGroup objects
     elsif current_organisation.is_a?(SchoolGroup)
       redirect_to school_group_temporary_path

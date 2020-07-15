@@ -69,7 +69,6 @@ Rails.application.routes.draw do
   get 'school_group', to: 'hiring_staff/organisations#placeholder', as: 'school_group_temporary'
 
   resource :organisation, only: %i[show edit update], controller: 'hiring_staff/organisations' do
-    resource :user_preference, only: %i[show update], controller: 'hiring_staff/organisations/user_preference'
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
       get 'jobs(/:type)', to: 'hiring_staff/organisations#show', defaults: { type: :published }, as: :jobs_with_type
     end
@@ -124,6 +123,8 @@ Rails.application.routes.draw do
     end
 
     resources :schools, only: %i[index edit update], controller: 'hiring_staff/organisations/schools'
+    resource :managed_organisations, only: %i[show update],
+                                     controller: 'hiring_staff/organisations/managed_organisations'
   end
 
   match '/401', to: 'errors#unauthorised', via: :all

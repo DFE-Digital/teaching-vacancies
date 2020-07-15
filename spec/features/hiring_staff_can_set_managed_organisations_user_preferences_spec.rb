@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Hiring staff can set user preferences' do
+RSpec.feature 'Hiring staff can set managed organisations user preferences' do
   let(:school_group) { create(:school_group) }
   let(:school_1) { create(:school) }
   let(:school_2) { create(:school) }
@@ -30,13 +30,15 @@ RSpec.feature 'Hiring staff can set user preferences' do
   end
 
   scenario "it allows school group users to select which organisation's jobs they want to manage" do
-    visit organisation_user_preference_path
+    visit organisation_managed_organisations_path
 
-    expect(page).to have_content(I18n.t('hiring_staff.preferences.panel.title', organisation: school_group.name))
+    expect(page).to have_content(
+      I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name)
+    )
 
-    check I18n.t('hiring_staff.preferences.select_organisations_form.options.school_group'),
-          name: 'user_preference_form[managed_organisations][]', visible: false
-    check school_1.name, name: 'user_preference_form[managed_school_urns][]', visible: false
+    check I18n.t('hiring_staff.managed_organisations.options.school_group'),
+          name: 'managed_organisations_form[managed_organisations][]', visible: false
+    check school_1.name, name: 'managed_organisations_form[managed_school_urns][]', visible: false
 
     click_on I18n.t('buttons.continue')
 

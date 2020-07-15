@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe HiringStaff::Organisations::UserPreferenceController, type: :controller do
+RSpec.describe HiringStaff::Organisations::ManagedOrganisationsController, type: :controller do
   before do
     allow(controller).to receive_message_chain(:current_organisation, :is_a?).with(:SchoolGroup).and_return(true)
   end
 
-  describe '#user_preference_form_params' do
+  describe '#managed_organisations_form_params' do
     let(:params) do
-      { user_preference_form: {
+      { managed_organisations_form: {
           managed_school_urns: ['']
         },
         commit: commit
@@ -22,7 +22,7 @@ RSpec.describe HiringStaff::Organisations::UserPreferenceController, type: :cont
       let(:commit) { I18n.t('buttons.skip_this_step') }
 
       it 'sets managed_organisations to all in the params' do
-        expect(controller.send(:user_preference_form_params)[:managed_organisations]).to eql(['all'])
+        expect(controller.send(:managed_organisations_form_params)[:managed_organisations]).to eql(['all'])
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe HiringStaff::Organisations::UserPreferenceController, type: :cont
       let(:commit) { I18n.t('buttons.continue') }
 
       it 'sets managed_organisations to [] in the params' do
-        expect(controller.send(:user_preference_form_params)[:managed_organisations]).to eql([])
+        expect(controller.send(:managed_organisations_form_params)[:managed_organisations]).to eql([])
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserPreferenceForm, type: :model do
+RSpec.describe ManagedOrganisationsForm, type: :model do
   let(:current_user) { create(:user) }
   let(:current_organisation) { create(:school_group) }
 
