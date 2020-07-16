@@ -9,11 +9,11 @@ assignees: ''
 
 (optional - url is an example only) [Link to project planner](https://dfedigital.atlassian.net/browse/TEVA-1010) 
 
-## Background
+## Background (required)
 
-(required) Why are we doing this work? Describe the thinking, the user need and who was involved.  For people without GitHub accounts please use their position instead of their name (i.e. 'Product Manager' or 'Product').  Make it as detailed as necessary.  
+Why are we doing this work? Describe the thinking, the user need and who was involved.  For people without GitHub accounts please use their position instead of their name (i.e. 'Product Manager' or 'Product').  Make it as detailed as necessary.  
 
-## Design/IA (optional showing boilerplate)
+## Design/IA (optional)
 
 Refer to the following Figma Screens for anything relating to design or IA.
 
@@ -22,7 +22,7 @@ Refer to the following Figma Screens for anything relating to design or IA.
 
 If you have any questions, clarify with Design before proceeding.  In the event of any corrections, please ensure the Figmas are updated and notes of conversations are recorded in this issue for future reference. 
 
-## Done when (required - with boilerplate)
+## Done when (required)
 - [ ] **Specific steps that are are required before the code is merged **
 
 ### Standard boilerplate - adjust as neeed.
