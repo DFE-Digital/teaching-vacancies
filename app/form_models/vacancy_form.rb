@@ -14,6 +14,7 @@ class VacancyForm
     )
   end
 
+  # This method is only necessary for forms with specific error messages for date inputs.
   def complete_and_valid?
     existing_errors = errors.dup
     is_valid = valid?

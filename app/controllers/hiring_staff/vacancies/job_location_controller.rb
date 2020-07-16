@@ -18,13 +18,13 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   def create
     store_vacancy_attributes(@form.vacancy.attributes)
 
-    if @form.complete_and_valid?
+    if @form.valid?
       session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@form.vacancy.attributes)
       return redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+    else
+      render :show
     end
-
-    render :show
   end
 
   def update
@@ -33,9 +33,9 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       return redirect_to_school_selection_or_next_step
+    else
+      render :show
     end
-
-    render :show
   end
 
   private

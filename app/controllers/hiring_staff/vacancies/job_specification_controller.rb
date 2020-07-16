@@ -27,7 +27,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
     if params[:commit] == I18n.t('buttons.save_and_return_later')
       return save_vacancy_as_draft
-    elsif @form.complete_and_valid?
+    elsif @form.valid?
       session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation
       store_vacancy_attributes(@form.vacancy.attributes)
       return redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
