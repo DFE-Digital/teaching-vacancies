@@ -34,6 +34,7 @@ class Vacancy < ApplicationRecord
   include ApplicationHelper
   include Auditor::Model
   include DateHelper
+  include VacancyJobLocationValidations
   include VacancyJobSpecificationValidations
   include VacancyPayPackageValidations
   include VacancyImportantDateValidations

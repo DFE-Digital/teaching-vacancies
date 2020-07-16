@@ -19,7 +19,7 @@ module HiringStaff::JobCreationHelper
 
     if session[:uid].blank?
       # Remove steps that apply only to school-group level users
-      steps_to_display.delete(steps_to_display.first)
+      steps_to_display.delete(steps_to_display.first) # Job location step 1a
       # Renumber the steps
       steps_to_display.each { |step| step[:number] -= NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS }
     end

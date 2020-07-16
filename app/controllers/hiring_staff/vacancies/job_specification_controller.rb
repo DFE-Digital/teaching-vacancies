@@ -44,6 +44,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
 
+
     render :show
   end
 

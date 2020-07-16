@@ -1,4 +1,8 @@
 en:
+  job_location_errors: &job_location_errors
+    job_location:
+      inclusion: Select the location where the job will be based
+      blank: Select the location where the job will be based
   job_specification_errors: &job_specification_errors
     job_title:
       blank: Enter a job title
@@ -61,6 +65,9 @@ en:
   activemodel:
     errors:
       models:
+        job_location_form:
+          attributes:
+            <<: *job_location_errors
         job_specification_form:
           attributes:
             <<: *job_specification_errors
@@ -98,6 +105,7 @@ en:
       models:
         vacancy:
           attributes:
+            <<: *job_location_errors
             <<: *job_specification_errors
             <<: *pay_package_errors
             <<: *important_dates_errors

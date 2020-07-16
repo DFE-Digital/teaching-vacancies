@@ -2,7 +2,7 @@
 
 - if authenticated?
   %div.manage-vacancies
-    %p= "#{t('pages.home.signed_in.description')} #{current_school.name}"
+    %p= "#{t('pages.home.signed_in.description')} #{current_organisation.name}"
     = link_to t('pages.home.signed_in.manage_link'), organisation_path, class: 'govuk-button manage-vacancies'
 
 - else
