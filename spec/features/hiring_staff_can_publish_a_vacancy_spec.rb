@@ -52,7 +52,7 @@ RSpec.feature 'Creating a vacancy' do
         mandatory_fields = %w[job_title working_patterns]
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('jobs.errors_present'))
+          expect(page).to have_content('There is a problem')
         end
 
         mandatory_fields.each do |field|
@@ -106,7 +106,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('jobs.errors_present'))
+          expect(page).to have_content('There is a problem')
         end
 
         within_row_for(text: I18n.t('jobs.salary')) do
@@ -143,7 +143,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('jobs.errors_present'))
+          expect(page).to have_content('There is a problem')
         end
 
         within_row_for(element: 'legend',
@@ -398,7 +398,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('jobs.errors_present'))
+          expect(page).to have_content('There is a problem')
         end
 
         within_row_for(text: strip_tags(I18n.t('helpers.fieldset.application_details_form.contact_email_html'))) do
@@ -454,7 +454,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('jobs.errors_present'))
+          expect(page).to have_content('There is a problem')
         end
 
         within_row_for(text: I18n.t('jobs.job_summary')) do
@@ -957,7 +957,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         within('.govuk-error-summary') do
-          expect(page).to have_content(I18n.t('jobs.errors_present'))
+          expect(page).to have_content('There is a problem')
         end
 
         within_row_for(element: 'legend',

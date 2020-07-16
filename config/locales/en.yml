@@ -219,7 +219,6 @@ en:
     view_more_or_change: View more or change
   jobs:
     current_step: "Step %{step} of %{total}"
-    errors_present: Please correct the following errors
     notification_labels:
       new: new
       action_required: action required
