@@ -7,6 +7,14 @@ namespace :data do
     end
   end
 
+  desc 'Import school group data'
+  namespace :school_groups do
+    task import: :environment do
+      Rails.logger.debug("Running school group import task in #{Rails.env}")
+      ImportSchoolGroupDataJob.perform_later
+    end
+  end
+
   desc 'Export location category data'
   namespace :location_categories do
     task export: :environment do
