@@ -1,6 +1,4 @@
 class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::ApplicationController
-  include FirstStepFormConcerns
-
   before_action :redirect_unless_school_group_user_flag_on
   before_action :set_up_url
   before_action only: %i[create update] do
