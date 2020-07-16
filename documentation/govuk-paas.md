@@ -136,7 +136,7 @@ performs these steps:
 You need:
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
 - `SpaceDeveloper` role in the paas space you want to deploy to
-- Log in to Docker Hub and GOV.UK PaaS in your terminal
+- Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
 
 ```bash
 make dev deploy-local-image # Deploy to dev
