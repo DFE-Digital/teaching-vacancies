@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "default" {
   origin {
-    domain_name = "${var.cloudfront_origin_domain_name}"
+    domain_name = var.cloudfront_origin_domain_name
     origin_id   = "${var.project_name}-${var.environment}-default-origin"
 
     custom_origin_config {
@@ -10,14 +10,14 @@ resource "aws_cloudfront_distribution" "default" {
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
 
-    custom_header = {
-      name = "X-Forwarded-Host"
-      value = "${var.domain}"
+    custom_header {
+      name  = "X-Forwarded-Host"
+      value = var.domain
     }
   }
 
   origin {
-    domain_name = "${var.offline_bucket_domain_name}"
+    domain_name = var.offline_bucket_domain_name
     origin_id   = "${var.project_name}-${var.environment}-offline"
   }
 
@@ -46,7 +46,7 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   enabled = true
-  aliases = "${var.cloudfront_aliases}"
+  aliases = var.cloudfront_aliases
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -55,7 +55,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     forwarded_values {
       query_string = true
-      headers      = "${var.default_header_list}"
+      headers      = var.default_header_list
 
       cookies {
         forward = "all"
@@ -75,7 +75,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     path_pattern = "${var.offline_bucket_origin_path}/*"
 
-    forwarded_values = {
+    forwarded_values {
       query_string = false
 
       cookies {
@@ -97,7 +97,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     path_pattern = "/assets/*"
 
-    forwarded_values = {
+    forwarded_values {
       query_string = false
       headers      = ["Host"]
 
@@ -120,7 +120,7 @@ resource "aws_cloudfront_distribution" "default" {
 
     path_pattern = "/api/*"
 
-    forwarded_values = {
+    forwarded_values {
       query_string = true
       headers      = ["Authorization"]
 
@@ -145,12 +145,13 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "${var.cloudfront_certificate_arn}"
+    acm_certificate_arn = var.cloudfront_certificate_arn
     ssl_support_method  = "sni-only"
   }
 
-  tags {
+  tags = {
     Name        = "${var.project_name}-${var.environment}"
-    Environment = "${var.environment}"
+    Environment = var.environment
   }
 }
+
