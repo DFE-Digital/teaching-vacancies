@@ -85,6 +85,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def redirect_to_incomplete_step
     if !step_valid?(SchoolForm) && @vacancy.job_location == 'at_one_school' && current_organisation.is_a?(SchoolGroup)
       return redirect_to organisation_job_school_path(@vacancy.id)
@@ -97,6 +98,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     return redirect_to organisation_job_application_details_path(@vacancy.id) unless step_valid?(ApplicationDetailsForm)
     return redirect_to organisation_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def clear_cache_and_step
     flash.clear

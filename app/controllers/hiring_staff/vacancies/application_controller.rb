@@ -2,9 +2,9 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
-  before_action :set_vacancy
-
   include HiringStaff::JobCreationHelper
+
+  before_action :set_vacancy
 
   def vacancy_id
     params.permit![:job_id]

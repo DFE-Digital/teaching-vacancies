@@ -16,7 +16,7 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
     if @school_form.valid?
       update_vacancy(school_form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
+      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     else
       render :show
     end
