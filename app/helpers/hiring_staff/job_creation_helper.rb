@@ -11,19 +11,28 @@ module HiringStaff::JobCreationHelper
   end
 
   def steps_to_display
-    steps_to_display = Rails.application.routes.routes.select { |r|
+    steps = Rails.application.routes.routes.select { |r|
       r.defaults.has_key?(:create_step) && r.defaults.has_key?(:step_title)
     }.map { |r|
       { number: r.defaults[:create_step], title: r.defaults[:step_title] }
     }.sort_by { |r| r[:number] }.uniq { |r| r[:number] }
 
     if session[:uid].blank?
-      # Remove steps that apply only to school-group level users
-      steps_to_display.delete(steps_to_display.first) # Job location step 1a
-      # Renumber the steps
-      steps_to_display.each { |step| step[:number] -= NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS }
+      steps = remove_school_group_user_only_steps(steps)
+      steps = renumber_steps_for_single_school_users(steps)
     end
-    steps_to_display
+    steps
+  end
+
+  def remove_school_group_user_only_steps(steps)
+    # Step 1a and 1b: Job location and school selection
+    NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS.times { steps.delete(steps.first) }
+    steps
+  end
+
+  def renumber_steps_for_single_school_users(steps)
+    steps.each { |step| step[:number] -= NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS }
+    steps
   end
 
   def total_steps
