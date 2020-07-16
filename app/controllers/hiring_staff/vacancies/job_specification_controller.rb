@@ -41,10 +41,10 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       remove_subject_fields(@vacancy) unless @vacancy.subjects.nil?
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
+      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
+    else
+      render :show
     end
-
-    render :show
   end
 
   private

@@ -34,11 +34,9 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     reset_session_vacancy!
     store_vacancy_attributes(@vacancy.attributes)
 
-
     unless @vacancy.valid?
       redirect_to_incomplete_step
     else
-
       update_vacancy_state
       set_completed_step
     end
