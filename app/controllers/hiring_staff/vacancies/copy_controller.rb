@@ -28,7 +28,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
   end
 
   def copy_form_params
-    params.require(:copy_vacancy_form).permit(:state, :job_title, :about_school,
+    params.require(:copy_vacancy_form).permit(:state, :job_title, :about_organisation,
                                               :publish_on, :expires_on, :starts_on,
                                               :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
   end

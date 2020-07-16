@@ -45,7 +45,7 @@ en:
   job_summary_errors: &job_summary_errors
     job_summary:
       blank: Enter a job summary
-    about_school:
+    about_organisation:
       blank: Enter a description of the school
   hiring_staff_user_preference_errors:
     managed_organisations:

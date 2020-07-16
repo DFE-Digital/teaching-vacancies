@@ -32,7 +32,7 @@ json.hiringOrganization do
   json.set! '@type', 'School'
   json.name vacancy.school.name
   json.identifier vacancy.school.urn
-  json.description vacancy.about_school
+  json.description vacancy.about_organisation
 end
 
 json.validThrough vacancy.expires_on.end_of_day.to_time.iso8601

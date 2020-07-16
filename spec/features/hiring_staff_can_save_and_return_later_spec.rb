@@ -209,7 +209,7 @@ RSpec.feature 'Hiring staff can save and return later' do
         expect(page.current_path).to eql(organisation_job_job_summary_path(created_vacancy.id))
 
         fill_in 'job_summary_form[job_summary]', with: ''
-        fill_in 'job_summary_form[about_school]', with: @vacancy.about_school
+        fill_in 'job_summary_form[about_organisation]', with: @vacancy.about_organisation
         click_on I18n.t('buttons.save_and_return_later')
 
         expect(page.current_path).to eql(jobs_with_type_organisation_path('draft'))
@@ -219,7 +219,7 @@ RSpec.feature 'Hiring staff can save and return later' do
 
         expect(page.current_path).to eql(organisation_job_job_summary_path(created_vacancy.id))
         expect(find_field('job_summary_form[job_summary]').value).to eql('')
-        expect(find_field('job_summary_form[about_school]').value).to eql(@vacancy.about_school)
+        expect(find_field('job_summary_form[about_organisation]').value).to eql(@vacancy.about_organisation)
       end
     end
   end

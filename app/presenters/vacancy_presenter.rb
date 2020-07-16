@@ -23,9 +23,9 @@ class VacancyPresenter < BasePresenter
     simple_format(model.job_summary)
   end
 
-  def about_school
-    if model.about_school.present?
-      simple_format(model.about_school)
+  def about_organisation
+    if model.about_organisation.present?
+      simple_format(model.about_organisation)
     elsif school.description.present?
       simple_format(school.description)
     end

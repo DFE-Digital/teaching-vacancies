@@ -25,7 +25,7 @@ class JobPosting
       publish_on: publish_on_or_today,
       expires_on: expires_on_or_future,
       job_summary: @schema['description'],
-      about_school: @schema['hiringOrganization']['description'],
+      about_organisation: @schema['hiringOrganization']['description'],
       school: school_by_urn_or_random
     }
   end

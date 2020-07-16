@@ -68,7 +68,7 @@ module VacancyHelpers
 
   def fill_in_job_summary_form_fields(vacancy)
     fill_in 'job_summary_form[job_summary]', with: vacancy.job_summary
-    fill_in 'job_summary_form[about_school]', with: vacancy.about_school
+    fill_in 'job_summary_form[about_organisation]', with: vacancy.about_organisation
   end
 
   def fill_in_copy_vacancy_form_fields(vacancy)
@@ -112,7 +112,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.application_link)
 
     expect(page.html).to include(vacancy.job_summary)
-    expect(page.html).to include(vacancy.about_school)
+    expect(page.html).to include(vacancy.about_organisation)
   end
 
   def verify_vacancy_show_page_details(vacancy)
@@ -132,7 +132,7 @@ module VacancyHelpers
     expect(page.html).to include(vacancy.how_to_apply)
 
     expect(page.html).to include(vacancy.job_summary)
-    expect(page.html).to include(vacancy.about_school)
+    expect(page.html).to include(vacancy.about_organisation)
 
     if vacancy.documents.any?
       expect(page).to have_content(I18n.t('jobs.supporting_documents'))
@@ -185,7 +185,7 @@ module VacancyHelpers
         '@type': 'School',
         'name': vacancy.school.name,
         'identifier': vacancy.school.urn,
-        'description': vacancy.about_school
+        'description': vacancy.about_organisation
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
     }

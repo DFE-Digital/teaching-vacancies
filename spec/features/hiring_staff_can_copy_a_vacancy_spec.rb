@@ -186,10 +186,10 @@ RSpec.feature 'Copying a vacancy' do
     end
   end
 
-  context '#about_school' do
-    context 'when a copied job has no about_school set' do
-      scenario 'it shows the about_school field' do
-        original_vacancy = build(:vacancy, :past_publish, about_school: nil, school: school)
+  context '#about_organisation' do
+    context 'when a copied job has no about_organisation set' do
+      scenario 'it shows the about_organisation field' do
+        original_vacancy = build(:vacancy, :past_publish, about_organisation: nil, school: school)
         original_vacancy.save(validate: false)
 
         visit organisation_path
@@ -201,12 +201,12 @@ RSpec.feature 'Copying a vacancy' do
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
         end
-        expect(page).to have_content(I18n.t('jobs.about_school', school: school.name))
+        expect(page).to have_content(I18n.t('jobs.about_organisation', school: school.name))
       end
     end
 
-    context 'when a copied job has about_school set' do
-      scenario 'it does not show the about_school field' do
+    context 'when a copied job has about_organisation set' do
+      scenario 'it does not show the about_organisation field' do
         original_vacancy = create(:vacancy, school: school)
 
         visit organisation_path
@@ -218,7 +218,7 @@ RSpec.feature 'Copying a vacancy' do
         within('h1.govuk-heading-m') do
           expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
         end
-        expect(page).to_not have_content(I18n.t('jobs.about_school', school: school.name))
+        expect(page).to_not have_content(I18n.t('jobs.about_organisation', school: school.name))
       end
     end
   end

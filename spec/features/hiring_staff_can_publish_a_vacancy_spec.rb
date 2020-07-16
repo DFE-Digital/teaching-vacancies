@@ -461,7 +461,7 @@ RSpec.feature 'Creating a vacancy' do
           expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_summary.blank')))
         end
 
-        within_row_for(text: I18n.t('jobs.about_school', school: school.name)) do
+        within_row_for(text: I18n.t('jobs.about_organisation', school: school.name)) do
           expect(page).to have_content(school.description)
         end
       end

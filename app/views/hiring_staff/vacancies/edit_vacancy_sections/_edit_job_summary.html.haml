@@ -13,6 +13,6 @@
     %dd.app-check-your-answers__answer.first-question= @vacancy.job_summary
 
   .app-check-your-answers__contents
-    %dt.app-check-your-answers__question#about_school
-      %h4.govuk-heading-s= t('jobs.about_school', school: current_school.name)
-    %dd.app-check-your-answers__answer= @vacancy.about_school
+    %dt.app-check-your-answers__question#about_organisation
+      %h4.govuk-heading-s= t('jobs.about_organisation', school: current_school.name)
+    %dd.app-check-your-answers__answer= @vacancy.about_organisation

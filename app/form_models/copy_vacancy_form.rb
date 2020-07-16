@@ -20,7 +20,7 @@ class CopyVacancyForm < VacancyForm
     self.vacancy.status = 'draft'
 
     self.job_title = vacancy.job_title
-    self.about_school = vacancy.about_school
+    self.about_organisation = vacancy.about_organisation
     self.publish_on = nil if vacancy.publish_on.past?
 
     reset_date_fields if vacancy.expires_on.past?

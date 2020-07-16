@@ -7,7 +7,7 @@ FactoryBot.define do
       create_list :document, 3, vacancy: vacancy
     end
 
-    about_school { Faker::Lorem.paragraph(sentence_count: 4) }
+    about_organisation { Faker::Lorem.paragraph(sentence_count: 4) }
     application_link { Faker::Internet.url }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }

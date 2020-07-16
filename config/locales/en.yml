@@ -169,7 +169,7 @@ en:
         application_link: Link to online application
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
-        about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
+        about_organisation_html: "About %{school} (<span class='text-red'>Required</span>)"
       organisation_form:
         description: Description of school or trust
     hint:
@@ -212,7 +212,7 @@ en:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
-        about_school: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
+        about_organisation: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
       organisation_form:
         description: Jobseekers will see this description of the school in the job listing
   organisation:
@@ -371,7 +371,7 @@ en:
     time_at: ' at '
     publication_date: 'Date job will be listed'
     job_summary: 'Job summary'
-    about_school: 'About %{school}'
+    about_organisation: 'About %{school}'
     review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
     review_future:
       'Review your entries for each section below, making any changes before you submit the listing for publication.'

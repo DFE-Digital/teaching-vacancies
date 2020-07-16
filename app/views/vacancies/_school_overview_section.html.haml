@@ -44,10 +44,10 @@
           %td.govuk-table__cell
             = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link link-wrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
 
-  - if @vacancy.about_school.present?
+  - if @vacancy.about_organisation.present?
     %h4.govuk-heading-s
       = t('schools.info', organisation: @vacancy.school.name)
-    %p= @vacancy.about_school
+    %p= @vacancy.about_organisation
 
   - if @vacancy.school_visits.present?
     %h4.govuk-heading-s

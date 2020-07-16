@@ -62,32 +62,32 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe '#about_school' do
-    context 'vacancy about_school is NOT nil' do
-      it 'returns the about_school content' do
+  describe '#about_organisation' do
+    context 'vacancy about_organisation is NOT nil' do
+      it 'returns the about_organisation content' do
         vacancy = VacancyPresenter.new(
-          build(:vacancy, about_school: 'Information about the school')
+          build(:vacancy, about_organisation: 'Information about the school')
         )
-        expect(vacancy.about_school).to eq('<p>Information about the school</p>')
+        expect(vacancy.about_organisation).to eq('<p>Information about the school</p>')
       end
     end
 
-    context 'vacancy about_school is nil' do
+    context 'vacancy about_organisation is nil' do
       context 'school description is NOT nil' do
         it 'returns the school description' do
           vacancy = VacancyPresenter.new(
-            build(:vacancy, about_school: nil, school: build(:school, description: 'School description'))
+            build(:vacancy, about_organisation: nil, school: build(:school, description: 'School description'))
           )
-          expect(vacancy.about_school).to eq('<p>School description</p>')
+          expect(vacancy.about_organisation).to eq('<p>School description</p>')
         end
       end
 
       context 'school description is nil' do
         it 'returns nil' do
           vacancy = VacancyPresenter.new(
-            build(:vacancy, about_school: nil, school: build(:school, description: nil))
+            build(:vacancy, about_organisation: nil, school: build(:school, description: nil))
           )
-          expect(vacancy.about_school).to be nil
+          expect(vacancy.about_organisation).to be nil
         end
       end
     end
