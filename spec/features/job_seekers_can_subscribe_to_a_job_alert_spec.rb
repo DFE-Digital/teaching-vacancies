@@ -96,7 +96,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
         fill_in 'subscription[email]', with: 'jane.doe@example'
         click_on 'Subscribe'
 
-        expect(page).to have_content('Please correct the following error')
+        expect(page).to have_content('There is a problem')
         expect(page).to have_content('Enter an email address in the correct format, like name@example.com')
       end
 
