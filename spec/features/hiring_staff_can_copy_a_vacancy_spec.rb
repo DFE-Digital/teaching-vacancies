@@ -61,7 +61,6 @@ RSpec.feature 'Copying a vacancy' do
     end
   end
 
-
   scenario 'a job can be successfully copied and published' do
     original_vacancy = build(:vacancy, :past_publish, school: school)
     original_vacancy.save(validate: false) # Validation prevents publishing on a past date
@@ -183,43 +182,6 @@ RSpec.feature 'Copying a vacancy' do
 
       click_on I18n.t('buttons.continue')
       expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.invalid'))
-    end
-  end
-
-  context '#about_school' do
-    context 'when a copied job has no about_school set' do
-      scenario 'it shows the about_school field' do
-        original_vacancy = build(:vacancy, :past_publish, about_school: nil, school: school)
-        original_vacancy.save(validate: false)
-
-        visit organisation_path
-
-        within('table.vacancies') do
-          click_on I18n.t('jobs.copy_link')
-        end
-
-        within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
-        end
-        expect(page).to have_content(I18n.t('jobs.about_school', school: school.name))
-      end
-    end
-
-    context 'when a copied job has about_school set' do
-      scenario 'it does not show the about_school field' do
-        original_vacancy = create(:vacancy, school: school)
-
-        visit organisation_path
-
-        within('table.vacancies') do
-          click_on I18n.t('jobs.copy_link')
-        end
-
-        within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
-        end
-        expect(page).to_not have_content(I18n.t('jobs.about_school', school: school.name))
-      end
     end
   end
 

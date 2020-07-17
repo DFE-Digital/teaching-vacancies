@@ -5,30 +5,15 @@ class CopyVacancy
 
   def initialize(vacancy)
     @vacancy = vacancy
+    setup_new_vacancy
+    reset_candidate_specification if @vacancy.any_candidate_specification?
+    copy_legacy_subjects
   end
 
   def call
-    @new_vacancy = @vacancy.dup
-    @new_vacancy.status = :draft
-    @new_vacancy.weekly_pageviews = 0
-    @new_vacancy.weekly_pageviews_updated_at = Time.zone.now
-    @new_vacancy.total_pageviews = 0
-    @new_vacancy.total_pageviews_updated_at = Time.zone.now
-    @new_vacancy.total_get_more_info_clicks = 0
-    @new_vacancy.total_get_more_info_clicks_updated_at = Time.zone.now
-
-    if @vacancy.any_candidate_specification?
-      @new_vacancy.experience = nil
-      @new_vacancy.education = nil
-      @new_vacancy.qualifications = nil
-    end
-
-    copy_legacy_subjects
-
-    @new_vacancy.save
-
+    @new_vacancy.send(:set_slug)
+    @new_vacancy.save(validate: false)
     copy_documents
-
     @new_vacancy
   end
 
@@ -55,5 +40,25 @@ class CopyVacancy
       get_subject_name(@vacancy.first_supporting_subject),
       get_subject_name(@vacancy.second_supporting_subject)
     ].uniq.reject(&:blank?) unless @new_vacancy.subjects.any?
+    @new_vacancy.subject = nil
+    @new_vacancy.first_supporting_subject = nil
+    @new_vacancy.second_supporting_subject = nil
+  end
+
+  def reset_candidate_specification
+    @new_vacancy.experience = nil
+    @new_vacancy.education = nil
+    @new_vacancy.qualifications = nil
+  end
+
+  def setup_new_vacancy
+    @new_vacancy = @vacancy.dup
+    @new_vacancy.status = :draft
+    @new_vacancy.weekly_pageviews = 0
+    @new_vacancy.weekly_pageviews_updated_at = Time.zone.now
+    @new_vacancy.total_pageviews = 0
+    @new_vacancy.total_pageviews_updated_at = Time.zone.now
+    @new_vacancy.total_get_more_info_clicks = 0
+    @new_vacancy.total_get_more_info_clicks_updated_at = Time.zone.now
   end
 end

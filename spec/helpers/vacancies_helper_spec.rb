@@ -69,7 +69,7 @@ RSpec.describe VacanciesHelper, type: :helper do
       allow(vacancy).to receive(:state).and_return('copy')
       allow(vacancy).to receive(:job_title).and_return('Test job title')
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.copy_job_title', job_title: 'test job title'))
+      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.copy_job_title', job_title: 'Test job title'))
     end
 
     it 'returns create a job title if vacancy state is create' do
