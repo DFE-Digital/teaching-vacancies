@@ -26,7 +26,7 @@ export const checkboxDisplay = (checkbox, input) => {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const groups = document.getElementsByClassName('accordion-content__group');
+  const groups = document.getElementsByClassName('tv-checkbox__group');
   if (groups.length) {
     Array.from(groups).filter(group => group.getElementsByClassName('search-input').length).map(group => init(group));
   }

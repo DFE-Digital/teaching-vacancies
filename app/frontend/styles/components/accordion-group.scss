@@ -3,11 +3,22 @@
   margin-bottom: govuk-spacing(2);
 }
 
-.accordion-group {
+.tv-checkbox__group {
+  border: govuk-spacing(1) solid govuk-colour("light-grey");
+  padding: govuk-spacing(2);
+
   .govuk-form-group {
     max-height: 214px;
     overflow: scroll;
+    margin-bottom: govuk-spacing(1);
   }
+
+  .govuk-checkboxes__item label {
+    font-weight: $bold-font-weight;
+  }
+}
+
+.accordion-group {
 
   .accordion-content__group .govuk-accordion__section--expanded {
     border-bottom: 1px solid $govuk-border-colour;
@@ -44,11 +55,6 @@
   .govuk-accordion__section-button {
     font-size: 1.1875rem;
     padding: 0 13px;
-  }
-
-  .govuk-accordion__section-content {
-    border: govuk-spacing(1) solid govuk-colour("light-grey");
-    padding: govuk-spacing(2);
   }
 
   .moj-filter__selected {

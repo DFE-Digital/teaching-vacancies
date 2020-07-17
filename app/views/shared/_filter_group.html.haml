@@ -4,15 +4,15 @@
 -#   filters: {
 -#     :title => 'filter group heading',
 -#     :items => [
--#       { :options => <Array>, :title => 'Working patterns'},
--#       { :options => <Array>, :title => 'Subjects', :search => true }
+-#       { :f => f, :options => <Array>, :title => 'Working patterns'},
+-#       { :f => f, :options => <Array>, :title => 'Subjects', :search => true }
 -#     ]
 -#   }
 -# }
 
 .accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
 
-  - if filters.present?
+  - if filters.present? && filters[:control]
     .govuk-accordion__section.govuk-accordion__title.moj-filter
       .govuk-accordion__section-header.moj-filter__header
         %h3.govuk-accordion__section-heading.accordion-group-heading
@@ -66,4 +66,4 @@
             = filter[:title]
 
       .govuk-accordion__section-content{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" } }
-        = render partial: 'shared/checkbox_group', locals: { :search => filter[:search], options: filter[:options] }
+        = render 'shared/checkbox_group', filter[:search], f: f, attribute_name: :subjects, options: filter[:options], value_method: :first, text_method: :first, hint_method: :last

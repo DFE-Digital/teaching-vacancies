@@ -10,7 +10,7 @@
       - else
         = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
 
-  .govuk-grid-column-full{ class: 'govuk-!-margin-top-5' }
+  .govuk-grid-column-full
     .govuk-form-group
       - if @organisation.vacancies.active.any?
         .dashboard-header
