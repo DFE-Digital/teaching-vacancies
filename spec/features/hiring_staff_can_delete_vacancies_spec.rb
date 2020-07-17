@@ -4,7 +4,7 @@ RSpec.feature 'School deleting vacancies' do
   let(:vacancy) { create(:vacancy, school: school) }
   let(:session_id) { SecureRandom.uuid }
 
-  before(:each) do
+  before do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
     stub_document_deletion_of_vacancy
   end
@@ -65,9 +65,9 @@ RSpec.feature 'School deleting vacancies' do
     # to wrap the vacancy, instead of creating its own new vacancy object.
     # We need to use a `vacancy` object created in the test so that we can stub out the method
     # Vacancy#delete_documents, which otherwise will attempt HTTP connections.
-    hiring_staff_vacancies_controller = HiringStaff::VacanciesController.new
-    allow(HiringStaff::VacanciesController).to receive(:new).and_return(hiring_staff_vacancies_controller)
-    allow(hiring_staff_vacancies_controller).to receive(:find_active_vacancy_by_id).and_return(vacancy)
+    allow_any_instance_of(HiringStaff::Vacancies::ApplicationController).to receive_message_chain(
+      :current_school, :vacancies, :find
+    ).and_return(vacancy)
     allow(vacancy).to receive(:delete_documents).and_return(nil)
   end
 end

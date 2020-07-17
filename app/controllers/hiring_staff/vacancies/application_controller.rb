@@ -19,6 +19,8 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def set_vacancy
     if params[:job_id]
       @vacancy = current_school.vacancies.find(params[:job_id])
+    elsif params[:id]
+      @vacancy = current_school.vacancies.find(params[:id])
     elsif session_vacancy_id
       @vacancy = current_school.vacancies.find(session_vacancy_id)
     end

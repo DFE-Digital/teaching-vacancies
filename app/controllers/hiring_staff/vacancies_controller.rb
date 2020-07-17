@@ -1,13 +1,12 @@
 class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationController
-  before_action :set_vacancy, only: %i[review preview]
+  before_action :set_vacancy, only: %i[destroy edit preview review show summary]
+  before_action :redirect_if_published, only: %i[preview review]
+  before_action :redirect_unless_permitted, only: %i[preview summary]
 
   def show
-    vacancy = find_active_vacancy_by_id
-    unless vacancy.published?
-      return redirect_to organisation_job_review_path(vacancy.id),
-                         notice: I18n.t('messages.jobs.view.only_published')
-    end
-    @vacancy = VacancyPresenter.new(vacancy)
+    return redirect_to organisation_job_review_path(@vacancy.id),
+                       notice: I18n.t('messages.jobs.view.only_published') unless @vacancy.published?
+    @vacancy = VacancyPresenter.new(@vacancy)
   end
 
   def new
@@ -16,25 +15,20 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def edit
-    vacancy = current_school.vacancies.find(id)
-    return redirect_to organisation_job_review_path(vacancy.id) unless vacancy.published?
-
-    vacancy.update(state: 'edit_published') unless vacancy&.state == 'edit_published'
-    @vacancy = VacancyPresenter.new(vacancy)
+    return redirect_to organisation_job_review_path(@vacancy.id) unless @vacancy.published?
+    @vacancy.update(state: 'edit_published')
+    @vacancy = VacancyPresenter.new(@vacancy)
   end
 
   def review
-    return redirect_to organisation_job_path(@vacancy.id),
-                       notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
-
     reset_session_vacancy!
     store_vacancy_attributes(@vacancy.attributes)
 
-    unless @vacancy.valid?
-      redirect_to_incomplete_step
-    else
+    if @vacancy.valid? || %w(copy edit_published).include?(@vacancy.state)
       update_vacancy_state
       set_completed_step
+    else
+      redirect_to_incomplete_step
     end
 
     session[:current_step] = :review
@@ -43,40 +37,41 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def destroy
-    @vacancy = find_active_vacancy_by_id
     @vacancy.delete_documents
     @vacancy.trash!
     remove_google_index(@vacancy)
     Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
-
     redirect_to organisation_path, success: I18n.t('messages.jobs.delete_html', job_title: @vacancy.job_title)
   end
 
   def preview
-    return redirect_to organisation_job_path(@vacancy.id),
-                       notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
-    redirect_to_incomplete_step unless @vacancy.valid?
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
   def summary
-    vacancy = current_school.vacancies.published.find(vacancy_id)
-    @vacancy = VacancyPresenter.new(vacancy)
+    @vacancy = VacancyPresenter.new(@vacancy)
   end
 
   private
 
-  def id
-    params.require(:id)
-  end
-
-  def vacancy_id
-    params.require(:job_id)
-  end
-
   def step_valid?(step_form)
     validation = step_form.new(@vacancy.attributes)
     (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
+  end
+
+  def redirect_if_published
+    return redirect_to organisation_job_path(@vacancy.id),
+                       notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
+  end
+
+  def redirect_unless_permitted
+    if @vacancy.state == 'copy' && !@vacancy.valid?
+      redirect_to organisation_job_review_path(@vacancy.id)
+    elsif @vacancy.state == 'edit_published' && !@vacancy.valid?
+      redirect_to edit_organisation_job_path(@vacancy.id)
+    elsif !@vacancy.valid?
+      redirect_to_incomplete_step
+    end
   end
 
   def redirect_to_incomplete_step
@@ -96,10 +91,6 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def set_completed_step
     @vacancy.update(completed_step: current_step)
-  end
-
-  def find_active_vacancy_by_id
-    current_school.vacancies.active.find(id)
   end
 
   def update_vacancy_state
