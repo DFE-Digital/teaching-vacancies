@@ -1,13 +1,13 @@
-provider "aws" {
+provider aws {
   region  = var.region
   version = "~> 2.70.0"
 }
 
-provider "template" {
+provider template {
   version = "~> 2.1.2"
 }
 
-provider "statuscake" {
+provider statuscake {
   username = var.statuscake_username
   apikey   = var.statuscake_apikey
   version  = "~> 1.0.0"

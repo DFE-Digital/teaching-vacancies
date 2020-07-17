@@ -1,4 +1,4 @@
-output "workspace" {
+output workspace {
   value = terraform.workspace
 }
 
