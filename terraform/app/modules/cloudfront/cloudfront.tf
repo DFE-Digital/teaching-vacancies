@@ -1,4 +1,4 @@
-resource "aws_cloudfront_distribution" "default" {
+resource aws_cloudfront_distribution default {
   origin {
     domain_name = var.cloudfront_origin_domain_name
     origin_id   = "${var.project_name}-${var.environment}-default-origin"

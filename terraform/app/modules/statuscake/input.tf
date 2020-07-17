@@ -1,10 +1,10 @@
-variable "environment" {
+variable environment {
 }
 
-variable "project_name" {
+variable project_name {
 }
 
-variable "statuscake_alerts" {
+variable statuscake_alerts {
   description = "Define Statuscake alerts with the attributes below"
   type = map(object({
     website_name  = string
