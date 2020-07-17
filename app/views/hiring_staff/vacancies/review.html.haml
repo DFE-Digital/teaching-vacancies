@@ -4,14 +4,13 @@
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
     = render 'hiring_staff/vacancies/edit_heading'
+    = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
 
     %p.govuk-body-l
       - if @vacancy.publish_on.today?
         = t('jobs.review')
       - else
         = t('jobs.review_future')
-
-    = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
 
     %ol.app-task-list
       %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'

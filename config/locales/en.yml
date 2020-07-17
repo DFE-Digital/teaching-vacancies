@@ -762,8 +762,11 @@ en:
     jobs:
       already_published: This job has already been published
       new_sections:
-        heading: 'New section'
-        message: 'Improve your job listing using the new sections and features below'
+        heading: New section
+        message: Improve your job listing using the new sections and features below
+      action_required:
+        heading: Action required
+        message: You must complete the required actions below in order to publish this listing
       feedback:
         awaiting:
           one: You have %{count} job awaiting feedback

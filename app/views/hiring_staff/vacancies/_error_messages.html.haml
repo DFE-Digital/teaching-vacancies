@@ -1,11 +1,8 @@
 - if errors.any?
-  #errors.govuk-error-summary{ role: 'alert', tabindex: '-1' }
-    %h2.govuk-error-summary__title
-      = t('errors.title', count: errors.count)
-    .govuk-error-summary__body
-      %ul.govuk-list.govuk-error-summary__list
-        - errors.each do |attribute, error|
-          - if attribute == :expiry_time
-            %li= link_to error, "##{attribute}"
-          - else
-            %li= link_to errors.full_message(attribute, error), "##{attribute}"
+  #errors.govuk-notification.govuk-notification--danger{ role: 'alert', tabindex: '-1' }
+    .govuk-notification__title= t('messages.jobs.action_required.heading')
+    .govuk-notification__body= t('messages.jobs.action_required.message')
+    %ul.govuk-list.govuk-notification__list
+      - errors.each do |attribute, error|
+        %li
+          %a.govuk-link.govuk-link--no-visited-state{ href: "##{attribute}" }= error

@@ -101,7 +101,8 @@ dt.app-check-your-answers__question > h4 {
   vertical-align: middle;
 }
 
-.action-required {
+.action-required-tag {
+  @extend .notification-tag;
   background-color: govuk-colour('red');
 }
 
