@@ -301,6 +301,15 @@ Populate your environment with real school data. This is taken from
 rake data:schools:import
 ```
 
+#### Importing school group data
+
+You can also populate your environment with real school group (trust) data. This is also taken from
+[GIAS](https://get-information-schools.service.gov.uk/). 
+
+```bash
+rake data:school_groups:import
+```
+
 Finally, [run your tests](#running-the-tests). If everything passes:
 
 #### Run the server
