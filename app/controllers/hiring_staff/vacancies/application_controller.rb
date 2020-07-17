@@ -136,7 +136,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def add_errors_to_form(errors, form_object)
     errors.each do |field, error|
-      form_object.errors.add(field, error)
+      form_object.errors.messages[field].unshift(error)
     end
   end
 end
