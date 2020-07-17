@@ -63,33 +63,11 @@ RSpec.describe VacancyPresenter do
   end
 
   describe '#about_school' do
-    context 'vacancy about_school is NOT nil' do
-      it 'returns the about_school content' do
-        vacancy = VacancyPresenter.new(
-          build(:vacancy, about_school: 'Information about the school')
-        )
-        expect(vacancy.about_school).to eq('<p>Information about the school</p>')
-      end
-    end
+    it 'sanitizes and transforms about_school into HTML' do
+      vacancy = build(:vacancy, about_school: '<script> call();</script>Sanitized content')
+      presenter = VacancyPresenter.new(vacancy)
 
-    context 'vacancy about_school is nil' do
-      context 'school description is NOT nil' do
-        it 'returns the school description' do
-          vacancy = VacancyPresenter.new(
-            build(:vacancy, about_school: nil, school: build(:school, description: 'School description'))
-          )
-          expect(vacancy.about_school).to eq('<p>School description</p>')
-        end
-      end
-
-      context 'school description is nil' do
-        it 'returns nil' do
-          vacancy = VacancyPresenter.new(
-            build(:vacancy, about_school: nil, school: build(:school, description: nil))
-          )
-          expect(vacancy.about_school).to be nil
-        end
-      end
+      expect(presenter.about_school).to eq('<p> call();Sanitized content</p>')
     end
   end
 

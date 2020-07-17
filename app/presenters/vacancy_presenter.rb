@@ -24,11 +24,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def about_school
-    if model.about_school.present?
-      simple_format(model.about_school)
-    elsif school.description.present?
-      simple_format(school.description)
-    end
+    simple_format(model.about_school)
   end
 
   def school_visits
