@@ -1,14 +1,14 @@
 import { renderAutocomplete } from './lib/autocomplete';
 import { locations } from './search/data/locations';
 
-$(document).ready(function () {
-    if ($('#new_').length) {
+window.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('new_')) {
         renderAutocomplete({
-                container: document.querySelector('#new_'),
-                input: document.querySelector('#location'),
-                dataset: locations,
-                threshold: 3,
-                onSelection: () => { }
-        })
+            container: document.getElementById('new_'),
+            input: document.getElementById('location'),
+            dataset: locations,
+            threshold: 3,
+            onSelection: () => { }
+        });
     }
 });

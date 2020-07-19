@@ -38,7 +38,7 @@ describe('autocomplete', () => {
 
 describe('autocomplete view', () => {
 
-  let hideMock = null, showMock = null, focusMock = null, renderMock = null, onSelection = jest.fn();
+  let hideMock = null, showMock = null, focusMock = null, renderMock = null, onSelect = jest.fn();
 
   document.body.innerHTML = '<div id="container"><input id="input" /></div>';
 
@@ -60,7 +60,7 @@ describe('autocomplete view', () => {
       input,
       dataset: ['option 1', 'option 2', 'choice 3'],
       threshold: 3,
-      onSelection
+      onSelect
     });
   });
 
@@ -79,7 +79,7 @@ describe('autocomplete view', () => {
       const optionList = container.querySelector('ul');
       const event = new Event('click');
       optionList.dispatchEvent(event);
-      expect(onSelection).toHaveBeenCalledTimes(1);
+      expect(onSelect).toHaveBeenCalledTimes(1);
     });
 
 
@@ -122,7 +122,7 @@ describe('autocomplete view', () => {
         input,
         dataset: ['option 1', 'option 2', 'choice 3'],
         threshold: 3,
-        onSelection
+        onSelect
       });
     });
 
