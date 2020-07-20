@@ -1,4 +1,4 @@
-class FeatureFlag
+class Flag
   def initialize(name, is_feature: true)
     @name = name.upcase
     @is_feature = is_feature

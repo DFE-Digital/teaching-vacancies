@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FeatureFlag do
+RSpec.describe Flag do
   context 'when the flag is a feature flag' do
     subject { described_class.new('email_alerts') }
 
