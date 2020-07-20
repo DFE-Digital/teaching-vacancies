@@ -16,10 +16,11 @@ class HiringStaff::Vacancies::ImportantDatesController < HiringStaff::Vacancies:
     if @important_dates_form.complete_and_valid?
       update_vacancy(@important_dates_form.params_to_save, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
-      return redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
+      redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
+    else
+      add_errors_to_form(@date_errors, @important_dates_form)
+      render :show
     end
-
-    render :show
   end
 
   private
@@ -28,9 +29,8 @@ class HiringStaff::Vacancies::ImportantDatesController < HiringStaff::Vacancies:
     publish_in_past = @vacancy.published? && @vacancy.reload.publish_on.past?
     delete_publish_on_params if publish_in_past
     dates_to_convert = publish_in_past ? [:starts_on, :expires_on] : [:starts_on, :publish_on, :expires_on]
-    date_errors = convert_multiparameter_attributes_to_dates(:important_dates_form, dates_to_convert)
+    @date_errors = convert_multiparameter_attributes_to_dates(:important_dates_form, dates_to_convert)
     @important_dates_form = ImportantDatesForm.new(important_dates_params)
-    add_errors_to_form(date_errors, @important_dates_form)
   end
 
   def important_dates_params

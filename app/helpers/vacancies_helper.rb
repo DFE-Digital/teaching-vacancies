@@ -72,7 +72,7 @@ module VacanciesHelper
 
   def page_title(vacancy, organisation = current_organisation)
     if vacancy.state == 'copy'
-      I18n.t('jobs.copy_job_title', job_title: vacancy.job_title.downcase)
+      I18n.t('jobs.copy_job_title', job_title: vacancy.job_title)
     elsif %w(create review).include?(vacancy.state)
       I18n.t('jobs.create_a_job_title', organisation: organisation.name)
     else

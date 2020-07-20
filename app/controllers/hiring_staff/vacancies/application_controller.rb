@@ -18,9 +18,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def set_vacancy
     if params[:job_id]
-      @vacancy = current_school.vacancies.find(params[:job_id])
+      @vacancy = current_organisation.vacancies.find(params[:job_id])
+    elsif params[:id]
+      @vacancy = current_organisation.vacancies.find(params[:id])
     elsif session_vacancy_id
-      @vacancy = current_school.vacancies.find(session_vacancy_id)
+      @vacancy = current_organisation.vacancies.find(session_vacancy_id)
     end
   end
 
@@ -34,7 +36,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def update_vacancy(attributes, vacancy = nil)
-    vacancy ||= current_school.vacancies.find(session_vacancy_id)
+    vacancy ||= current_organisation.vacancies.find(session_vacancy_id)
 
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
@@ -90,7 +92,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def retrieve_job_from_db
-    current_school.vacancies.published.find(vacancy_id).attributes
+    current_organisation.vacancies.published.find(vacancy_id).attributes
   end
 
   def source_update?
@@ -136,7 +138,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def add_errors_to_form(errors, form_object)
     errors.each do |field, error|
-      form_object.errors.add(field, error)
+      form_object.errors.messages[field].unshift(error)
     end
   end
 end

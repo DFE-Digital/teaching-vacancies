@@ -79,6 +79,10 @@ en:
         job_summary_form:
           attributes:
             <<: *job_summary_errors
+        copy_vacancy_form:
+          attributes:
+            <<: *job_specification_errors
+            <<: *important_dates_errors
         nqt_job_alerts_form:
           attributes:
             keywords:
@@ -104,24 +108,6 @@ en:
             <<: *supporting_documents_errors
             <<: *application_details_errors
             <<: *job_summary_errors
-            publish_on:
-              blank: Enter the date job will be listed
-              before_today: Date job will be listed must be either today or in the future
-              invalid: Use the correct format for date job will be listed
-            expires_on:
-              blank: Enter the date application is due
-              before_today: Date application is due must be in the future
-              before_publish_on: Date application is due must be after date job will be listed
-              invalid: Use the correct format for date application is due
-            expiry_time:
-              blank: Enter the time application is due
-              wrong_format: Use the correct format for time application is due
-              must_be_am_pm: Select am or pm
-            starts_on:
-              before_today: Date job starts must be in the future
-              before_publish_on: Date job starts must be after date job will be listed
-              before_expires_on: Date job starts must be after date application is due
-              invalid: Use the correct format for date the job starts
         vacancy_publish_feedback:
           attributes:
             user_participation_response:

@@ -7,7 +7,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
-  context 'attempting to edit a draft vacancy' do
+  context 'when attempting to edit a draft vacancy' do
     let(:vacancy) { create(:vacancy, :draft, school: school) }
 
     scenario 'redirects to the review vacancy page' do
@@ -17,7 +17,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     end
   end
 
-  context 'editing a published vacancy' do
+  context 'when editing a published vacancy' do
     let(:vacancy) do
       VacancyPresenter.new(create(:vacancy, :complete,
                                   job_roles: [
@@ -27,6 +27,23 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                   school: school,
                                   working_patterns: ['full_time', 'part_time'],
                                   publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
+    end
+
+    context 'when the vacancy is now invalid' do
+      before do
+        vacancy.about_school = nil
+        vacancy.save(validate: false)
+      end
+
+      scenario 'shows action required error message' do
+        visit edit_organisation_job_path(vacancy.id)
+
+        within '#errors.govuk-notification--danger' do
+          expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
+          expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
+          expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank'))
+        end
+      end
     end
 
     scenario 'shows all vacancy information' do
@@ -57,7 +74,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       expect(page).to_not have_content('Creating a job listing steps')
     end
 
-    context '#cancel_and_return_later' do
+    describe '#cancel_and_return_later' do
       scenario 'can cancel and return from job details page' do
         visit edit_organisation_job_path(vacancy.id)
 
@@ -69,7 +86,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
-    context '#job_specification' do
+    describe '#job_specification' do
       scenario 'can not be edited when validation fails' do
         visit edit_organisation_job_path(vacancy.id)
 
@@ -137,7 +154,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
-    context '#pay_package' do
+    describe '#pay_package' do
       scenario 'can not be edited when validation fails' do
         visit edit_organisation_job_path(vacancy.id)
 
@@ -195,7 +212,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
-    context '#important_dates' do
+    describe '#important_dates' do
       def edit_date(date_type, date)
         fill_in "important_dates_form[#{date_type}(3i)]", with: date&.day.presence || ''
         fill_in "important_dates_form[#{date_type}(2i)]", with: date&.month.presence || ''
@@ -277,8 +294,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         edit_date('expires_on', expiry_date)
       end
 
-      context 'if the job post has already been published' do
-        context 'and the publication date is in the past' do
+      context 'when the job post has already been published' do
+        context 'when the publication date is in the past' do
           scenario 'renders the publication date as text and does not allow editing' do
             vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
             vacancy.save(validate: false)
@@ -298,7 +315,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
           end
         end
 
-        context 'and the publication date is in the future' do
+        context 'when the publication date is in the future' do
           scenario 'renders the publication date as text and allows editing' do
             vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days, school: school)
             vacancy = VacancyPresenter.new(vacancy)
@@ -319,7 +336,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
-    context '#supporting_documents' do
+    describe '#supporting_documents' do
       scenario 'can edit documents for a legacy vacancy' do
         vacancy.supporting_documents = nil
         vacancy.documents = []
@@ -329,7 +346,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
-        expect(page).to have_selector('.new-supporting_documents')
+        expect(page).to have_selector('.new--supporting_documents')
 
         click_header_link(I18n.t('jobs.supporting_documents'))
 
@@ -338,12 +355,12 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         click_on I18n.t('buttons.update_job')
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-        expect(page).to_not have_selector('.new-supporting_documents')
+        expect(page).to_not have_selector('.new--supporting_documents')
         expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
       end
     end
 
-    context '#application_details' do
+    describe '#application_details' do
       scenario 'can not be edited when validation fails' do
         visit edit_organisation_job_path(vacancy.id)
 
@@ -402,7 +419,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
     end
 
-    context '#job_summary' do
+    describe '#job_summary' do
       scenario 'can not be edited when validation fails' do
         visit edit_organisation_job_path(vacancy.id)
 

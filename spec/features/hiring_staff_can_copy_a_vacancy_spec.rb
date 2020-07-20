@@ -61,7 +61,6 @@ RSpec.feature 'Copying a vacancy' do
     end
   end
 
-
   scenario 'a job can be successfully copied and published' do
     original_vacancy = build(:vacancy, :past_publish, school: school)
     original_vacancy.save(validate: false) # Validation prevents publishing on a past date
@@ -103,6 +102,65 @@ RSpec.feature 'Copying a vacancy' do
 
     new_application_deadline = "#{format_date(new_vacancy.expires_on)} at #{format_time(new_vacancy.expiry_time)}"
     expect(page).to have_content(new_application_deadline)
+  end
+
+  context 'when the original job is now invalid' do
+    scenario 'the job can be successfully copied but not published until valid' do
+      original_vacancy = build(:vacancy, :complete, school: school, about_school: nil)
+      original_vacancy.send(:set_slug)
+      original_vacancy.save(validate: false)
+
+      visit organisation_path
+
+      new_vacancy = original_vacancy.dup
+      new_vacancy.job_title = 'A new job title'
+      new_vacancy.starts_on = 35.days.from_now
+      new_vacancy.publish_on = 0.days.from_now
+      new_vacancy.expiry_time = new_vacancy.expires_on = 30.days.from_now
+
+      within('table.vacancies') do
+        click_on I18n.t('jobs.copy_link')
+      end
+
+      within('h1.govuk-heading-m') do
+        expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
+      end
+
+      fill_in_copy_vacancy_form_fields(new_vacancy)
+      click_on I18n.t('buttons.continue')
+
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
+      end
+
+      within '#errors.govuk-notification--danger' do
+        expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
+        expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank'))
+      end
+
+      click_on I18n.t('jobs.submit_listing.button')
+      within '#errors.govuk-notification--danger' do
+        expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
+        expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank'))
+      end
+
+      click_header_link(I18n.t('jobs.job_summary'))
+      fill_in 'job_summary_form[about_school]', with: 'Some description about the school'
+      click_on I18n.t('buttons.update_job')
+
+      within('h2.govuk-heading-l') do
+        expect(page).to have_content(I18n.t('jobs.copy_review_heading'))
+      end
+      expect(page).to have_content('Some description about the school')
+
+      click_on I18n.t('jobs.submit_listing.button')
+      expect(page).to have_content(I18n.t('jobs.confirmation_page.submitted'))
+
+      click_on I18n.t('jobs.confirmation_page.view_posted_job')
+      expect(page).to have_content('Some description about the school')
+    end
   end
 
   context 'when the original job is pending/scheduled/future_publish' do
@@ -183,43 +241,6 @@ RSpec.feature 'Copying a vacancy' do
 
       click_on I18n.t('buttons.continue')
       expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.invalid'))
-    end
-  end
-
-  context '#about_school' do
-    context 'when a copied job has no about_school set' do
-      scenario 'it shows the about_school field' do
-        original_vacancy = build(:vacancy, :past_publish, about_school: nil, school: school)
-        original_vacancy.save(validate: false)
-
-        visit organisation_path
-
-        within('table.vacancies') do
-          click_on I18n.t('jobs.copy_link')
-        end
-
-        within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
-        end
-        expect(page).to have_content(I18n.t('jobs.about_school', school: school.name))
-      end
-    end
-
-    context 'when a copied job has about_school set' do
-      scenario 'it does not show the about_school field' do
-        original_vacancy = create(:vacancy, school: school)
-
-        visit organisation_path
-
-        within('table.vacancies') do
-          click_on I18n.t('jobs.copy_link')
-        end
-
-        within('h1.govuk-heading-m') do
-          expect(page).to have_content(I18n.t('jobs.copy_job_title', job_title: original_vacancy.job_title))
-        end
-        expect(page).to_not have_content(I18n.t('jobs.about_school', school: school.name))
-      end
     end
   end
 

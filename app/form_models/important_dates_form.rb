@@ -18,22 +18,8 @@ class ImportantDatesForm < VacancyForm
     super(params)
   end
 
-  def completed?
-    publish_on && expires_on && expiry_time
-  end
-
   def disable_editing_publish_on?
     published? && vacancy.reload.publish_on.past?
-  end
-
-  def attributes
-    vacancy_attributes = @vacancy.attributes
-    vacancy_attributes.merge!(
-      expiry_time_hh: expiry_time_hh,
-      expiry_time_mm: expiry_time_mm,
-      expiry_time_meridiem: expiry_time_meridiem,
-    )
-    vacancy_attributes
   end
 
   def params_to_save

@@ -5,7 +5,7 @@ RSpec.describe 'pages/home/_signin.html.haml' do
     before do
       allow(view).to receive(:authenticated?).and_return(true)
       school = create(:school, name: 'Salisbury School')
-      allow(view).to receive(:current_school) { school }
+      allow(view).to receive(:current_organisation) { school }
       render
     end
 
