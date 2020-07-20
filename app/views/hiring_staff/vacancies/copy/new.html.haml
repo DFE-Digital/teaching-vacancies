@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, "#{@copy_form.errors.present? ? 'Error: ' : ''}Copy a job for #{current_school.name}"
+- content_for :page_title_prefix, "#{@copy_form.errors.present? ? 'Error: ' : ''}Copy a job for #{current_organisation.name}"
 
 %h1.govuk-heading-m= t('jobs.copy_job_title', job_title: @copy_form.vacancy.job_title)
 

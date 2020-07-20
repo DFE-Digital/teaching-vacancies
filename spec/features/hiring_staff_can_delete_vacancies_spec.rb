@@ -66,7 +66,7 @@ RSpec.feature 'School deleting vacancies' do
     # We need to use a `vacancy` object created in the test so that we can stub out the method
     # Vacancy#delete_documents, which otherwise will attempt HTTP connections.
     allow_any_instance_of(HiringStaff::Vacancies::ApplicationController).to receive_message_chain(
-      :current_school, :vacancies, :find
+      :current_organisation, :vacancies, :find
     ).and_return(vacancy)
     allow(vacancy).to receive(:delete_documents).and_return(nil)
   end
