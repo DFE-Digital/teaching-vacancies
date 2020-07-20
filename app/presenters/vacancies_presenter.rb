@@ -6,11 +6,6 @@ class VacanciesPresenter < BasePresenter
   attr_reader :searched, :total_count, :coordinates
   alias_method :user_search?, :searched
 
-  CSV_ATTRIBUTES = %w[title description salary jobBenefits datePosted educationRequirements qualifications
-                      experienceRequirements employmentType jobLocation.addressLocality
-                      jobLocation.addressRegion jobLocation.streetAddress jobLocation.postalCode url
-                      hiringOrganization.type hiringOrganization.name hiringOrganization.identifier].freeze
-
   def initialize(vacancies, searched:, total_count:, coordinates: '')
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @searched = searched
@@ -39,13 +34,6 @@ class VacanciesPresenter < BasePresenter
     else
       I18n.t('jobs.search_result_heading.without_search_html',
         jobs_count: number_with_delimiter(total_count), count: total_count)
-    end
-  end
-
-  def to_csv
-    CSV.generate(headers: true) do |csv|
-      csv << CSV_ATTRIBUTES
-      decorated_collection.map { |vacancy| csv << to_csv_row(vacancy) }
     end
   end
 
@@ -78,26 +66,4 @@ class VacanciesPresenter < BasePresenter
       protocol: 'https'
     }
   end
-
-  # rubocop:disable Metrics/AbcSize
-  def to_csv_row(vacancy)
-    [vacancy.job_title,
-     vacancy.job_summary,
-     vacancy.salary,
-     vacancy.benefits,
-     vacancy.publish_on.to_time.iso8601,
-     vacancy.education,
-     vacancy.qualifications,
-     vacancy.experience,
-     vacancy.working_patterns_for_job_schema,
-     vacancy.school.town,
-     vacancy.school&.region&.name,
-     vacancy.school.address,
-     vacancy.school.postcode,
-     job_url(vacancy, protocol: 'https'),
-     'School',
-     vacancy.school.name,
-     vacancy.school.urn]
-  end
-  # rubocop:enable Metrics/AbcSize
 end

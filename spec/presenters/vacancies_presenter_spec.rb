@@ -102,49 +102,6 @@ RSpec.describe VacanciesPresenter do
     end
   end
 
-  describe '#to_csv' do
-    let!(:vacancy) { create(:vacancy, job_title: 'School teacher') }
-    let!(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
-
-    it 'returns the correct data' do
-      vacancies = [vacancy]
-      vacancies_presenter = VacanciesPresenter.new(
-        vacancies,
-        searched: false,
-        total_count: vacancies.count
-      )
-      vacancies_text = vacancies_presenter.to_csv
-      vacancies_csv = CSV.parse(vacancies_text)
-
-      expect(vacancies_csv[0]).to eq(%w[title description salary jobBenefits datePosted educationRequirements
-                                        qualifications experienceRequirements employmentType
-                                        jobLocation.addressLocality jobLocation.addressRegion
-                                        jobLocation.streetAddress jobLocation.postalCode url
-                                        hiringOrganization.type hiringOrganization.name
-                                        hiringOrganization.identifier])
-
-      expect(vacancies_csv[1]).to eq([vacancy_presenter.job_title,
-                                      vacancy_presenter.job_summary,
-                                      vacancy_presenter.salary,
-                                      vacancy_presenter.benefits,
-                                      vacancy_presenter.publish_on.to_time.iso8601,
-                                      vacancy_presenter.education,
-                                      vacancy_presenter.qualifications,
-                                      vacancy_presenter.experience,
-                                      vacancy_presenter.working_patterns_for_job_schema,
-                                      vacancy_presenter.school.town,
-                                      vacancy_presenter.school&.region&.name,
-                                      vacancy_presenter.school.address,
-                                      vacancy_presenter.school.postcode,
-                                      Rails.application.routes.url_helpers.job_url(
-                                        vacancy_presenter, protocol: 'https'
-                                      ),
-                                      'School',
-                                      vacancy_presenter.school.name,
-                                      vacancy_presenter.school.urn])
-    end
-  end
-
   describe '#previous_api_url' do
     let(:vacancies_presenter) {
       VacanciesPresenter.new(
