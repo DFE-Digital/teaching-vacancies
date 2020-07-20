@@ -1,10 +1,8 @@
-import { enableRadiusSelect, disableRadiusSelect } from './radius';
+import { enableRadiusSelect } from './radius';
 
 export const onChange = (value) => {
   if (/\d/.test(value)) {
     enableRadiusSelect();
-  } else {
-    disableRadiusSelect();
   }
 };
 
