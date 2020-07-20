@@ -1,5 +1,5 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @documents_form, t('jobs.supporting_documents'))
-= render 'hiring_staff/vacancies/vacancy_form_partials/title'
+= render 'hiring_staff/vacancies/vacancy_form_partials/heading'
 
 - if @vacancy.present? && @vacancy&.state != 'create'
   = link_to t('buttons.cancel_and_return'), edit_organisation_job_path(@vacancy.id), class: 'govuk-back-link'
@@ -34,6 +34,7 @@
         %p.js-documents__no-files= t('jobs.no_files_message')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
+
   .govuk-grid-column-one-third
     - unless @vacancy.published? || @vacancy.state == 'copy'
       = render 'hiring_staff/vacancies/sidebar'
