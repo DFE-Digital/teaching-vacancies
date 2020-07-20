@@ -6,8 +6,8 @@ FEATURE_EMAIL_ALERTS = ENV['FEATURE_EMAIL_ALERTS']
 FEATURE_IMPORT_VACANCIES = ENV['FEATURE_IMPORT_VACANCIES']
 FEATURE_SCHOOL_GROUP_JOBS = ENV['FEATURE_SCHOOL_GROUP_JOBS']
 
-AuthenticationFallback = FeatureFlag.new('authentication_fallback', is_feature: false)
-ReadOnlyFeature = FeatureFlag.new('read_only')
-EmailAlertsFeature = FeatureFlag.new('email_alerts')
-ImportVacanciesFeature = FeatureFlag.new('import_vacancies')
-SchoolGroupJobsFeature = FeatureFlag.new('school_group_jobs')
+AuthenticationFallback = Flag.new('authentication_fallback', is_feature: false)
+ReadOnlyFeature = Flag.new('read_only')
+EmailAlertsFeature = Flag.new('email_alerts')
+ImportVacanciesFeature = Flag.new('import_vacancies')
+SchoolGroupJobsFeature = Flag.new('school_group_jobs')
