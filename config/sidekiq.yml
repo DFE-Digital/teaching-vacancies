@@ -16,6 +16,7 @@
   - [export_tables, 1]
   - [export_users, 1]
   - [import_school_data, 1]
+  - [import_school_group_data, 1]
   - [reset_sessions, 1]
   - [seed_vacancies_from_api, 1]
   - [submit_performance_platform, 1]
