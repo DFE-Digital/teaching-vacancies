@@ -5,7 +5,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
 
   def show
     @multiple_organisations = session_has_multiple_organisations?
-    @organisation = organisation_presenter
+    @organisation = current_organisation
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
     @vacancies_presenter = OrganisationVacanciesPresenter.new(@organisation, @sort, params[:type])
     @awaiting_feedback_count = @organisation.vacancies.awaiting_feedback.count
@@ -39,11 +39,6 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
   end
 
   private
-
-  def organisation_presenter
-    return SchoolPresenter.new(current_organisation) if current_organisation.is_a?(School)
-    # TODO: Implement SchoolGroupPresenter
-  end
 
   def redirect_to_user_preferences
     if current_organisation.is_a?(SchoolGroup) && current_user_preferences.nil?

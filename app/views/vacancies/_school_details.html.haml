@@ -1,6 +1,6 @@
 %dl.school--details
   %dt= t('schools.address')
-  %dd= @vacancy.school.full_address
+  %dd= full_address(@vacancy.school)
 
   - if @vacancy.school.phase.present?
     %dt= t('schools.phase')

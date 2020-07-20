@@ -7,7 +7,7 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.type')
         %td.govuk-table__cell
-          = @vacancy.school.school_type_with_religious_character
+          = school_type_with_religious_character(@vacancy.school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
@@ -17,18 +17,18 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.school_size')
         %td.govuk-table__cell
-          = @vacancy.school.school_size
+          = school_size(@vacancy.school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.age_range')
         %td.govuk-table__cell
-          = @vacancy.school.age_range
+          = age_range(@vacancy.school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.ofsted_report')
-        - if @vacancy.school.ofsted_report.present?
+        - if ofsted_report(@vacancy.school).present?
           %td.govuk-table__cell
-            = link_to(t('schools.view_ofsted_report'), @vacancy.school.ofsted_report, class: 'govuk-link wordwrap', target: '_blank')
+            = link_to(t('schools.view_ofsted_report'), ofsted_report(@vacancy.school), class: 'govuk-link wordwrap', target: '_blank')
         - else
           %td.govuk-table__cell
             = t('schools.no_information')
@@ -56,7 +56,7 @@
 
   %h4.govuk-heading-s
     = t('schools.school_location')
-  %p= @vacancy.school.full_address
+  %p= full_address(@vacancy.school)
 
   - if @vacancy.school.geolocation
     %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }

@@ -265,7 +265,7 @@ class Vacancy < ApplicationRecord
   end
 
   def location
-    SchoolPresenter.new(school).location if school.present?
+    [school_or_school_group&.name, school_or_school_group&.town, school_or_school_group&.county].reject(&:blank?)
   end
 
   def coordinates

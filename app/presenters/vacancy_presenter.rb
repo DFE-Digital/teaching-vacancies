@@ -57,10 +57,6 @@ class VacancyPresenter < BasePresenter
     model.expiry_time < Time.zone.now
   end
 
-  def school
-    @school ||= SchoolPresenter.new(model.school)
-  end
-
   def publish_today?
     model.publish_on == Time.zone.today
   end

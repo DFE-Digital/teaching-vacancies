@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AlertMailer, type: :mailer do
   include DateHelper
+  include OrganisationHelper
   include ERB::Util
 
   let(:body) { mail.body.raw_source }
@@ -44,7 +45,7 @@ RSpec.describe AlertMailer, type: :mailer do
         )
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
-        expect(body).to match(/#{html_escape(vacancy_presenter.location)}/)
+        expect(body).to match(/#{html_escape(location(vacancies.first.school))}/)
 
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
@@ -70,13 +71,13 @@ RSpec.describe AlertMailer, type: :mailer do
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(campaign_params))}/)
-        expect(body).to match(/#{html_escape(first_vacancy_presenter.location)}/)
+        expect(body).to match(/#{html_escape(location(vacancies.first.school))}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
 
         expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(campaign_params))}/)
-        expect(body).to match(/#{html_escape(second_vacancy_presenter.location)}/)
+        expect(body).to match(/#{html_escape(location(vacancies.last.school))}/)
         expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
       end

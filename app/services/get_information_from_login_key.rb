@@ -33,7 +33,7 @@ class GetInformationFromLoginKey
     scratch = []
     @user&.dsi_data&.dig('school_urns')&.each do |urn|
       school_query = School.where(urn: urn)
-      scratch.push SchoolPresenter.new(school_query.first) unless school_query.empty?
+      scratch.push school_query.first unless school_query.empty?
     end
     scratch.sort_by { |school| school.name }
   end

@@ -1,13 +1,13 @@
 %li.vacancy{ 'role': 'listitem', 'tab-index': '0'}
   %h2.govuk-heading-m.mb0= link_to vacancy.job_title, job_path(vacancy), class: 'govuk-link view-vacancy-link'
-  %p.govuk-body= vacancy.location
+  %p.govuk-body= location(vacancy.school)
   %dl
     %dt= t('jobs.salary')
     %dd.double
       = vacancy.salary
     %dt= t('jobs.school_type')
     %dd.double
-      = vacancy.school.school_type_with_religious_character
+      = school_type_with_religious_character(vacancy.school)
     - if vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double
