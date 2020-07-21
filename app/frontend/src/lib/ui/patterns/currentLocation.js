@@ -104,7 +104,7 @@ export default currentLocation;
 
 window.addEventListener('DOMContentLoaded', () => {
   if (navigator.geolocation && containerEl) {
-      showLocationLink(containerEl);
-      init();
+    showLocationLink(containerEl);
+    init();
   }
 });

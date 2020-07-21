@@ -1,4 +1,5 @@
-;(function (global) {
+/* eslint-disable */
+  ;(function (global) {
   'use strict'
 
   var $ = global.jQuery

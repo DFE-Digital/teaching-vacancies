@@ -1,4 +1,5 @@
-(function (arr) {
+/* eslint-disable */
+ (function (arr) {
     arr.forEach(function (item) {
       if (item.hasOwnProperty('remove')) {
         return;

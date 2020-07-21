@@ -32,6 +32,8 @@ export const create = (container, input, onSelect = () => {}) => {
         case 'ArrowUp':
           autocomplete.focus(container, 'previous', input);
           break;
+        default:
+          break;
       }
     });
   }
@@ -45,7 +47,11 @@ export const show = (options, container, input) => {
   input.setAttribute('aria-expanded', true);
 
   Array.from(getCurrentOptionElementsArray(container))
-    .forEach((element) => element.addEventListener('focus', (e) => input.value = e.target.dataset.location, true));
+    .forEach((element) => element.addEventListener('focus', (e) => setInputValue(input, e.target.dataset.location), true));
+};
+
+export const setInputValue = (input, value) => {
+  input.value = value;
 };
 
 export const hide = (container, input) => {
@@ -65,8 +71,15 @@ export const isPopulated = (container) => getCurrentOptionElementsArray(containe
 export const focus = (container, direction, input) => {
   if (isPopulated(container)) {
     const elements = getFocusableOptions(container);
-    elements.current && elements.current.classList.remove('autocomplete__option--focused');
-    elements[direction] && elements[direction].classList.add('autocomplete__option--focused');
+
+    if (elements.current) {
+      elements.current.classList.remove('autocomplete__option--focused');
+    }
+
+    if (elements[direction]) {
+      elements[direction].classList.add('autocomplete__option--focused');
+    }
+
     input.value = elements[direction] ? elements[direction].dataset.location : '';
   }
 };
@@ -88,7 +101,12 @@ export const getOptionIndex = (el) => parseInt(el.getAttribute('aria-posinset'),
 
 export const getFocusedOption = (container) => container.getElementsByClassName('autocomplete__option--focused')[0];
 
-export const getOptionHtml = (refinement) => (hit, index, options) => `<li class="autocomplete__option" id="autocomplete__input__option--${index}" role="option" tabindex="-1" aria-setsize="${options.length + 1}" aria-posinset=${index} data-location="${hit.toLowerCase()}">${highlightRefinement(hit, refinement)}</li>`;
+export const getOptionHtml = (refinement) => (hit, index, options) => `
+<li class="autocomplete__option" id="autocomplete__input__option--${index}"
+role="option" tabindex="-1" aria-setsize="${options.length + 1}" aria-posinset=${index}
+data-location="${hit.toLowerCase()}">
+${highlightRefinement(hit, refinement)}
+</li>`;
 
 export const highlightRefinement = (text, refinement) => {
   const index = text.toLowerCase().indexOf(refinement.toLowerCase());
@@ -96,6 +114,8 @@ export const highlightRefinement = (text, refinement) => {
   if (index >= 0) {
     return `${text.substring(0, index)}<span class='highlight'>${text.substring(index, index + refinement.length)}</span><span>${text.substring(index + refinement.length, text.length)}</span>`;
   }
+
+  return false;
 };
 
 const autocomplete = {
@@ -103,7 +123,7 @@ const autocomplete = {
   hide,
   focus,
   create,
-  render
+  render,
 };
 
 export default autocomplete;

@@ -1,4 +1,5 @@
 /*! (c) Andrea Giammarchi - ISC */
+/* eslint-disable */
 var self = this || /* istanbul ignore next */ {};
 try {
   (function (URLSearchParams, plus) {

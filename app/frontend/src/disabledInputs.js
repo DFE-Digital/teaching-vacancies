@@ -1,16 +1,17 @@
-document.addEventListener('DOMContentLoaded', function() {
-  var allInputs = document.querySelectorAll('input');
-  var textAreaInputs = document.querySelectorAll('textarea.govuk-textarea');
-  var submitInput = document.querySelector('input[type="submit"].disabled-on-load');
+/* eslint-disable */
+document.addEventListener('DOMContentLoaded', () => {
+  const allInputs = document.querySelectorAll('input');
+  const textAreaInputs = document.querySelectorAll('textarea.govuk-textarea');
+  const submitInput = document.querySelector('input[type="submit"].disabled-on-load');
 
   if (allInputs && submitInput) {
     submitInput.disabled = true;
 
-    var inputArray = [];
+    const inputArray = [];
     Array.prototype.push.apply(inputArray, allInputs);
 
-    inputArray.forEach(function(input) {
-      input.addEventListener('input', function() {
+    inputArray.forEach((input) => {
+      input.addEventListener('input', () => {
         if (submitInput.disabled) {
           submitInput.disabled = false;
         }
@@ -21,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if (textAreaInputs && submitInput) {
     submitInput.disabled = true;
 
-    var textAreaInputArray = [];
+    const textAreaInputArray = [];
     Array.prototype.push.apply(textAreaInputArray, textAreaInputs);
 
-    textAreaInputArray.forEach(function(input) {
-      input.addEventListener('input', function() {
+    textAreaInputArray.forEach((input) => {
+      input.addEventListener('input', () => {
         if (submitInput.disabled) {
           submitInput.disabled = false;
         }

@@ -6,7 +6,7 @@ export const constructNewUrlWithParam = (key, value, url) => {
 };
 
 export const updateUrlQueryParams = (key, value, url) => {
-  history.replaceState({}, null, constructNewUrlWithParam(key, value, url));
+  window.history.replaceState({}, null, constructNewUrlWithParam(key, value, url));
 };
 
 export const extractQueryParams = (url, keys) => {
@@ -23,12 +23,12 @@ export const extractQueryParams = (url, keys) => {
 };
 
 export const stringMatchesPostcode = (postcode) => {
-  postcode = postcode.replace(/\s/g, '');
+  const noSpacePostcode = postcode.replace(/\s/g, '');
   const regex = /^[A-Za-z]{1,2}[0-9]{1,2}[A-Za-z]? ?[0-9][A-Z]{2}$/i;
-  return regex.test(postcode);
+  return regex.test(noSpacePostcode);
 };
 
-export const stringContainsNumber = string => /\d/.test(string)
+export const stringContainsNumber = (string) => /\d/.test(string);
 
 export const convertMilesToMetres = (miles) => Math.ceil(parseInt(miles, 10) * 1609.34);
 

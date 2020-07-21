@@ -1,9 +1,10 @@
-import ClipboardJS from 'clipboard'
+/* eslint-disable */
+import ClipboardJS from 'clipboard';
 
-$(document).ready(function(){
+$(document).ready(() => {
   new ClipboardJS('.copy-to-clipboard');
 
-  $('.copy-to-clipboard').click(function(event) {
+  $('.copy-to-clipboard').click((event) => {
     event.preventDefault();
   });
 });

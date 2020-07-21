@@ -13,7 +13,8 @@
         "describe": "readonly",
         "test": "readonly",
         "expect": "readonly",
-        "history": "readonly"
+        "history": true,
+        "GOVUK": "readonly"
     },
     "parserOptions": {
         "ecmaVersion": 2018,
@@ -28,7 +29,8 @@
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
         "import/prefer-default-export": 0,
         "import/no-named-as-default-member": 0,
-        "no-unused-expressions": ["error", { "allowTernary": true }]
+        "no-unused-expressions": ["error", { "allowTernary": true }],
+        "no-param-reassign": [2, { "props": false }]
     },
     "root": true
 }
