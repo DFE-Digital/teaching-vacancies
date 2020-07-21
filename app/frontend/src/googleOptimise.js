@@ -1,6 +1,7 @@
-var google_optimize_activate = function() {
+/* eslint-disable */
+const google_optimize_activate = function () {
   window.dataLayer = window.dataLayer || [];
-  dataLayer.push({'event': 'optimize.activate'});
+  dataLayer.push({ event: 'optimize.activate' });
 };
 
 $(document).ready(google_optimize_activate);

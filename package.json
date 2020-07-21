@@ -11,6 +11,7 @@
     "clipboard": "^2.0.4",
     "govuk-frontend": "3.4.0",
     "jquery": "^3.5.0",
+    "jsdom": "^16.2.2",
     "rails-ujs": "^5.2.3",
     "rollbar": "^2.17.0"
   },
@@ -20,7 +21,6 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.21.2",
     "jest": "^25.4.0",
-    "jsdom": "^16.2.2",
     "stylelint": "^13.5.0",
     "stylelint-config-sass-guidelines": "^7.0.0",
     "stylelint-config-standard": "^20.0.0",
@@ -36,7 +36,7 @@
     "sass:check": "yarn run sass:lint",
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
-    "js:lint": "eslint ./app/frontend/src/search",
+    "js:lint": "eslint ./app/frontend/src",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
   },
   "jest": {
@@ -47,7 +47,7 @@
       "<rootDir>/app/frontend/src/lib/testSetup.js"
     ],
     "coveragePathIgnorePatterns": [
-      "<rootDir>/app/frontend/src/polyfill/*"
+      "<rootDir>/app/frontend/src/lib/polyfill/*"
     ]
   }
 }

@@ -1,5 +1,5 @@
 import {
-  getNewState, getUnixTimestampForDayStart, constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, extractQueryParams, stringContainsNumber
+  getNewState, getUnixTimestampForDayStart, constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, extractQueryParams, stringContainsNumber,
 } from './utils';
 
 describe('getNewState', () => {
@@ -90,7 +90,7 @@ describe('stringContainsNumber', () => {
   test('is falsy when supplied string doesnt contain a number', () => {
     expect(stringContainsNumber('alex')).toBe(false);
   });
-})
+});
 
 describe('convertMilesToMetres', () => {
   test('converts an integer of number of miles to the equivalent in metres', () => {

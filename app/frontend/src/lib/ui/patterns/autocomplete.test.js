@@ -37,8 +37,8 @@ describe('autocomplete', () => {
 });
 
 describe('autocomplete view', () => {
-
-  let hideMock = null, showMock = null, focusMock = null, renderMock = null, onSelect = jest.fn();
+  let hideMock = null; let showMock = null; let focusMock = null; let renderMock = null; const
+    onSelect = jest.fn();
 
   document.body.innerHTML = '<div id="container"><input id="input" /></div>';
 
@@ -60,7 +60,7 @@ describe('autocomplete view', () => {
       input,
       dataset: ['option 1', 'option 2', 'choice 3'],
       threshold: 3,
-      onSelect
+      onSelect,
     });
   });
 
@@ -70,7 +70,7 @@ describe('autocomplete view', () => {
 
   describe('create method', () => {
     test('sets correct a11y attributes', () => {
-      const optionList = container.querySelector('ul')
+      const optionList = container.querySelector('ul');
       expect(optionList.getAttribute('tabindex')).toBe('-1');
       expect(optionList.getAttribute('role')).toBe('listbox');
     });
@@ -82,7 +82,6 @@ describe('autocomplete view', () => {
       expect(onSelect).toHaveBeenCalledTimes(1);
     });
 
-
     test('clicking on page closes hide autocomplete options', () => {
       const event = new Event('click');
       document.dispatchEvent(event);
@@ -91,7 +90,7 @@ describe('autocomplete view', () => {
     });
 
     test('shows correct autocomplete options', () => {
-      input.value = 'option'
+      input.value = 'option';
       const event = new Event('input');
       input.dispatchEvent(event);
       expect(showMock).toHaveBeenCalledTimes(1);
@@ -116,17 +115,17 @@ describe('autocomplete view', () => {
     beforeAll(() => {
       view.render = jest.fn();
       renderMock = jest.spyOn(view, 'render');
-  
+
       renderAutocomplete({
         container,
         input,
         dataset: ['option 1', 'option 2', 'choice 3'],
         threshold: 3,
-        onSelect
+        onSelect,
       });
     });
 
-    test('show sets appropriate class and a11y attributes',() => {
+    test('show sets appropriate class and a11y attributes', () => {
       const options = ['option 1', 'option 2', 'choice 3'];
       show(options, container, input);
       const optionList = container.querySelector('ul');
@@ -137,7 +136,7 @@ describe('autocomplete view', () => {
       expect(optionList.classList.contains('autocomplete__menu--hidden')).toBe(false);
     });
 
-    test('hide sets appropriate class and a11y attributes',() => {
+    test('hide sets appropriate class and a11y attributes', () => {
       hide(container, input);
       const optionList = container.querySelector('ul');
 

@@ -18,7 +18,7 @@ export const getOptions = (dataset, query) => dataset.filter((option) => option.
 
 const autocomplete = {
   view,
-  renderAutocomplete
-}
+  renderAutocomplete,
+};
 
 export default autocomplete;

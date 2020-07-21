@@ -1,24 +1,25 @@
+/* eslint-disable */
 function addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(detailsElement) {
-    var expandedText = detailsElement.getAttribute('data-summary-expanded');
-    var collapsedText = detailsElement.getAttribute('data-summary-collapsed');
-    var summaryTextElement = detailsElement.getElementsByClassName('govuk-details__summary-text').item(0);
-    var hasAllPropertiesToBeDynamic = summaryTextElement && collapsedText && expandedText;
+  const expandedText = detailsElement.getAttribute('data-summary-expanded');
+  const collapsedText = detailsElement.getAttribute('data-summary-collapsed');
+  const summaryTextElement = detailsElement.getElementsByClassName('govuk-details__summary-text').item(0);
+  const hasAllPropertiesToBeDynamic = summaryTextElement && collapsedText && expandedText;
 
-    if(hasAllPropertiesToBeDynamic) {
+  if (hasAllPropertiesToBeDynamic) {
+    summaryTextElement.textContent = collapsedText;
+
+    detailsElement.addEventListener('toggle', () => {
+      if (detailsElement.open) {
+        summaryTextElement.textContent = expandedText;
+      } else {
         summaryTextElement.textContent = collapsedText;
-
-        detailsElement.addEventListener('toggle', function () {
-            if (detailsElement.open) {
-                summaryTextElement.textContent = expandedText;
-            } else {
-                summaryTextElement.textContent = collapsedText;
-            }
-        });
-    }
+      }
+    });
+  }
 }
 
-$( document ).ready(function() {
-    $('details').each(function(_, details) {
-        addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(details);
-    });
+$(document).ready(() => {
+  $('details').each((_, details) => {
+    addDynamicSummaryTextForExpandedAndCollapsedDetailsTag(details);
+  });
 });

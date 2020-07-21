@@ -1,9 +1,16 @@
 import { init, substringExistsInString } from './searchCheckbox';
 
 describe('search group of checkboxes', () => {
-
   beforeEach(() => {
-    document.body.innerHTML = '<div class="accordion-content__group"><input type="text" class="search-input__input" /><div class="govuk-checkboxes__item"><input type="checkbox" value="abc" class="govuk-checkboxes__input" /></div><div class="govuk-checkboxes__item"><input type="checkbox" value="xyz" class="govuk-checkboxes__input" /></div></div>';
+    document.body.innerHTML = `<div class="accordion-content__group">
+<input type="text" class="search-input__input" />
+<div class="govuk-checkboxes__item">
+<input type="checkbox" value="abc" class="govuk-checkboxes__input" />
+</div>
+<div class="govuk-checkboxes__item">
+<input type="checkbox" value="xyz" class="govuk-checkboxes__input" />
+</div>
+</div>`;
   });
 
   describe('module behaviour', () => {
