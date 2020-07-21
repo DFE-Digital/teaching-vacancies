@@ -33,8 +33,4 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
     strip_empty_checkboxes(:managed_organisations_form, [:managed_organisations, :managed_school_urns])
     params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_urns: [])
   end
-
-  def verify_school_group
-    redirect_to organisation_path, danger: 'You are not allowed' unless current_organisation.is_a?(SchoolGroup)
-  end
 end

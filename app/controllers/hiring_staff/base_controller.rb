@@ -61,4 +61,8 @@ class HiringStaff::BaseController < ApplicationController
       params[form_key][field] = params[form_key][field]&.reject(&:blank?)
     end
   end
+
+  def verify_school_group
+    redirect_to organisation_path, danger: 'You are not allowed' unless current_organisation.is_a?(SchoolGroup)
+  end
 end
