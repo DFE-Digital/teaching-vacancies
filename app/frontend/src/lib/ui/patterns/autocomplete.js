@@ -1,7 +1,7 @@
 import view from './autocomplete.view';
 
 export const renderAutocomplete = (widgetParams) => {
-  view.create(widgetParams.container, widgetParams.input, widgetParams.onSelection);
+  view.create(widgetParams.container, widgetParams.input, widgetParams.onSelect);
 
   widgetParams.input.addEventListener('input', () => {
     const options = getOptions(widgetParams.dataset, widgetParams.input.value);

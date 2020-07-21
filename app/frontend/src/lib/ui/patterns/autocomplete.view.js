@@ -1,6 +1,6 @@
 import '../../polyfill/after.polyfill';
 
-export const create = (container, input, onSelect) => {
+export const create = (container, input, onSelect = () => {}) => {
   if (!getRenderedList(container)) {
     const ul = document.createElement('ul');
     ul.setAttribute('id', 'location__listbox');

@@ -1,6 +1,33 @@
 import {
-  getUnixTimestampForDayStart, constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, extractQueryParams, stringContainsNumber
+  getNewState, getUnixTimestampForDayStart, constructNewUrlWithParam, stringMatchesPostcode, convertMilesToMetres, convertEpochToUnixTimestamp, extractQueryParams, stringContainsNumber
 } from './utils';
+
+describe('getNewState', () => {
+  test('returns state object with new properties', () => {
+    expect(getNewState(
+      { prop: 'has this' },
+      { newProp: 'add' },
+    )).toStrictEqual({
+      prop: 'has this',
+      newProp: 'add',
+    });
+
+    expect(getNewState(
+      { prop: 'has this' },
+      { prop: 'overwrite' },
+    )).toStrictEqual({
+      prop: 'overwrite',
+    });
+  });
+
+  test('does not mutate state', () => {
+    const state = { prop: 'has this' };
+    getNewState(state, { newProp: 'add' });
+    expect(state).toStrictEqual({
+      prop: 'has this',
+    });
+  });
+});
 
 describe('constructNewUrlWithParams', () => {
   test('activates autocomplete if threshold has been met', () => {

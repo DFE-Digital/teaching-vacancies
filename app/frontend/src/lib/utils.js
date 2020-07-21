@@ -50,3 +50,8 @@ export const setDataAttribute = (element, key, value) => {
     element.dataset[key] = value;
   }
 };
+
+export const getNewState = (state, add) => {
+  const updatedState = { ...state, ...add };
+  return updatedState;
+};
