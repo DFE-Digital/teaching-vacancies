@@ -6,9 +6,11 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
     # environment.
     # rubocop:disable Rails/HttpPositionalArguments
     Rails.application.routes.draw do
-      get :job_specification_organisation_job, to: 'dummy#step_one',
-                                               defaults: { create_step: 1, step_title: 'Step 1 title' }
-      get :step_two, to: 'job#step_one', defaults: { create_step: 2, step_title: 'Step 2 title' }
+      get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step 1 title' }
+      get :job_specification_organisation_job, to: 'job#step_two',
+                                               defaults: { create_step: 2, step_title: 'Step 2 title' }
+      get :step_two_a, to: 'job#step_three_a', defaults: { create_step: 3, step_title: 'Step 3a title' }
+      get :step_two_b, to: 'job#step_three_b', defaults: { create_step: 3, step_title: 'Step 3b title' }
     end
     # rubocop:enable Rails/HttpPositionalArguments
 
@@ -23,18 +25,32 @@ RSpec.describe 'hiring_staff/vacancies/job_specification/show' do
     allow(view).to receive(:current_organisation).and_return(instance_double(School).as_null_object)
     # Configured via the params set on the routes, as shown above. Exposed using a helper method, but that isn't
     # important for *this* test.
-    allow(view).to receive(:params).and_return({ create_step: 1 })
-    assign(:job_specification_form, JobSpecificationForm.new)
-    assign(:job_specification_url_method, 'post')
-    assign(:job_specification_url, job_specification_organisation_job_path(school_id: 'school_id'))
+    allow(view).to receive(:params).and_return({ create_step: 2 })
+    assign(:form, JobSpecificationForm.new)
+    assign(:form_submission_url_method, 'post')
+    assign(:form_submission_url, job_specification_organisation_job_path)
     render
   end
 
-  it 'shows the correct number of steps as calculated from routes' do
-    expect(render).to match(/Step \d of 2/)
+  context 'for SchoolGroup-level users' do
+    before { allow(session).to receive(:[]).with(:uid).and_return ('1234') }
+
+    it 'shows the correct number of steps as calculated from routes' do
+      expect(render).to match(/Step \d of 3/)
+    end
+
+    it 'shows the current step to the user' do
+      expect(render).to match(/Step 2 of \d/)
+    end
   end
 
-  it 'shows the current step to the user' do
-    expect(render).to match(/Step 1 of \d/)
+  context 'for School-level users' do
+    it 'shows the correct number of steps as calculated from routes' do
+      expect(render).to match(/Step \d of 2/)
+    end
+
+    it 'shows the current step to the user' do
+      expect(render).to match(/Step 1 of \d/)
+    end
   end
 end
