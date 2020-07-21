@@ -7,7 +7,7 @@
   %h1.govuk-heading-xl{ class: 'govuk-!-margin-bottom-2' }
     = @vacancy.job_title
   %h4.govuk-caption-l.job-caption{ class: 'govuk-!-margin-top-0' }
-    = @vacancy.location
+    = location(@vacancy.school_or_school_group)
 
 .govuk-grid-row
 

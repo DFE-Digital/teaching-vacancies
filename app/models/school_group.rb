@@ -12,4 +12,20 @@ class SchoolGroup < ApplicationRecord
   def group_type
     gias_data['Group Type']
   end
+
+  def address
+    gias_data['Group Contact Address 3']
+  end
+
+  def town
+    gias_data['Group Contact Town']
+  end
+
+  def county
+    gias_data['Group Contact County']
+  end
+
+  def postcode
+    gias_data['Group Contact Postcode']
+  end
 end

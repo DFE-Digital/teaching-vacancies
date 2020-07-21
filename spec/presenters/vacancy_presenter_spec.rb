@@ -34,17 +34,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  describe '#location' do
-    it 'returns the school location' do
-      vacancy = VacancyPresenter.new(build(:vacancy))
-      school = SchoolPresenter.new(vacancy.school)
-      expect(vacancy).to receive(:school).and_return(school)
-      expect(school).to receive(:location)
-
-      vacancy.location
-    end
-  end
-
   describe '#publish_today?' do
     it 'verifies that the publish_on is set to today' do
       vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Time.zone.today))
