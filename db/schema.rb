@@ -262,6 +262,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_080945) do
     t.text "school_visits"
     t.text "how_to_apply"
     t.boolean "initially_indexed", default: false
+    t.string "job_location"
     t.uuid "school_group_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
