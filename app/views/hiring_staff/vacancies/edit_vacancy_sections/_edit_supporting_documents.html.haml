@@ -1,7 +1,7 @@
 = render 'hiring_staff/vacancies/section_tag', section: 'supporting_documents'
 
 %h2.govuk-heading-m.app-task-list__section#supporting_documents_heading
-  %span.app-task-list__section-number 4.
+  %span.app-task-list__section-number= edit_vacancy_section_number(:supporting_documents, current_organisation)
   = t('jobs.supporting_documents')
   = link_to t('buttons.change'), organisation_job_documents_path(job_id: @vacancy.id, change: true), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_supporting_documents')
 

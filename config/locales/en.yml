@@ -471,14 +471,16 @@ en:
       feedback_time: '(takes 30 seconds)'
     aria_labels:
       content: Content
-      change_job_details: 'Change job details'
-      change_pay_package: 'Change pay package'
-      change_supporting_documents: 'Change supporting documents'
-      change_application_details: 'Change applying for the job'
-      change_job_summary: 'Change job summary'
-      apply_link: 'Learn more about this role and how to apply for it (link opens external website in a new window)'
-      contact_email_link: 'Email link for job contact email — %{email}'
-      flexible_working: 'Flexible working'
+      change_job_location: Change job location
+      change_job_details: Change job details
+      change_pay_package: Change pay package
+      change_important_dates: Change important dates
+      change_supporting_documents: Change supporting documents
+      change_application_details: Change applying for the job
+      change_job_summary: Change job summary
+      apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
+      contact_email_link: Email link for job contact email — %{email}
+      flexible_working: Flexible working
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       deadline_date: 'For example, %{date}'
@@ -616,6 +618,9 @@ en:
     description: Description
     group_type: Group type
     uid: Unique identifier (UID)
+    job_location_heading:
+      central_office: At central office
+      at_one_school: Single school
   subscriptions:
     benefits:
       title: Subscribers

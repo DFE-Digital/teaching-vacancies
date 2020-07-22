@@ -36,6 +36,24 @@ module OrganisationHelper
     end
   end
 
+  def edit_vacancy_section_number(section, organisation)
+    sections = {
+      job_location: 1,
+      job_details: 2,
+      pay_package: 3,
+      important_dates: 4,
+      supporting_documents: 5,
+      application_details: 6,
+      job_summary: 7,
+    }
+    section_number = organisation.is_a?(SchoolGroup) ? sections[section] : sections[section] - 1
+    "#{section_number}."
+  end
+
+  def school_group_location_heading(job_location)
+    I18n.t("school_groups.job_location_heading.#{job_location}")
+  end
+
   private
 
   def number_of_pupils(school)

@@ -7,6 +7,8 @@
     = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
 
     %ol.app-task-list
+      - if current_organisation.is_a?(SchoolGroup)
+        %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_location'
       %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
       %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
       %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_important_dates'
