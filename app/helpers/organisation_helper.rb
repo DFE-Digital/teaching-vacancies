@@ -17,7 +17,7 @@ module OrganisationHelper
   def school_size(school)
     if school.gias_data.present?
       return number_of_pupils(school) if school.gias_data['NumberOfPupils'].present?
-      return school_capacity if school.gias_data['SchoolCapacity'].present?
+      return school_capacity(school) if school.gias_data['SchoolCapacity'].present?
     end
     t('schools.no_information')
   end
