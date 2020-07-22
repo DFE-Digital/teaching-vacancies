@@ -2,7 +2,7 @@
 = render 'hiring_staff/vacancies/error_tag', attributes: [:job_summary, :about_school], section: 'job_summary'
 
 %h2.govuk-heading-m.app-task-list__section#job_summary_heading
-  %span.app-task-list__section-number 6.
+  %span.app-task-list__section-number= edit_vacancy_section_number(:job_summary, current_organisation)
   = t('jobs.job_summary')
   = link_to t('buttons.change'), organisation_job_job_summary_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_summary')
 
