@@ -1,0 +1,31 @@
+- if @vacancy.present?
+  - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t('jobs.job_location'))
+- else
+  - content_for :page_title_prefix, "#{@form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_location')} — #{t('jobs.create_a_job_title_no_org')}"
+
+= render 'hiring_staff/vacancies/vacancy_form_partials/heading'
+
+- if @vacancy.present? && @vacancy&.state != 'create'
+  = link_to t('buttons.cancel_and_return'), edit_organisation_job_path(@vacancy.id), class: 'govuk-back-link'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: @form_submission_url, html: { method: @form_submission_url_method } do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l
+        = t('jobs.job_location')
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
+
+      = f.govuk_collection_radio_buttons :job_location,
+        Vacancy::JOB_LOCATION_OPTIONS,
+        :second,
+        :first,
+        legend: { text: t('helpers.fieldset.job_location_form.job_location_html') }
+
+      = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
+
+  .govuk-grid-column-one-third
+    - unless @vacancy&.published? || @vacancy&.state == 'copy'
+      = render 'hiring_staff/vacancies/sidebar'

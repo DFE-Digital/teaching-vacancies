@@ -2,11 +2,9 @@ require 'auditor'
 require 'indexing'
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
-  before_action :set_vacancy
+  include HiringStaff::JobCreationHelper
 
-  def school_id
-    params.permit![:school_id]
-  end
+  before_action :set_vacancy
 
   def vacancy_id
     params.permit![:job_id]
@@ -26,10 +24,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     end
   end
 
-  def current_step
-    params[:create_step]
-  end
-
   def store_vacancy_attributes(attributes)
     session[:vacancy_attributes] ||= {}
     session[:vacancy_attributes].merge!(attributes.compact)
@@ -37,7 +31,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def update_vacancy(attributes, vacancy = nil)
     vacancy ||= current_organisation.vacancies.find(session_vacancy_id)
-
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do
@@ -140,5 +133,14 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     errors.each do |field, error|
       form_object.errors.messages[field].unshift(error)
     end
+  end
+
+  def set_up_form(form_class)
+    @form = form_class.new(form_params)
+  end
+
+  def set_up_url
+    @form_submission_url_method = @vacancy&.persisted? ? 'patch' : 'post'
+    @form_submission_url = form_submission_path(@vacancy&.id)
   end
 end

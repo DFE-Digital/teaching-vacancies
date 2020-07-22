@@ -19,6 +19,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
     allow(controller).to receive_message_chain(:current_user, :update)
 
     allow(vacancy).to receive(:id).and_return(vacancy_id)
+    allow(vacancy).to receive(:persisted?).and_return(true)
     allow(vacancy).to receive(:state).and_return('create')
     controller.instance_variable_set(:@vacancy, vacancy)
   end
@@ -28,11 +29,11 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       allow(vacancy).to receive(:attributes).and_return(double('attributes').as_null_object)
     end
 
-    context 'vacancy id is present' do
+    context 'vacancy is present' do
       it 'uses the update action' do
         get :show
-        expect(controller.instance_variable_get(:@job_specification_url_method)).to eql('patch')
-        expect(controller.instance_variable_get(:@job_specification_url))
+        expect(controller.instance_variable_get(:@form_submission_url_method)).to eql('patch')
+        expect(controller.instance_variable_get(:@form_submission_url))
           .to eql(organisation_job_job_specification_path(vacancy_id))
       end
     end
@@ -45,9 +46,9 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
 
       it 'uses the create action' do
         get :show
-        expect(controller.instance_variable_get(:@job_specification_url_method)).to eql('post')
-        expect(controller.instance_variable_get(:@job_specification_url))
-          .to eql(job_specification_organisation_job_path(school_id: school_id))
+        expect(controller.instance_variable_get(:@form_submission_url_method)).to eql('post')
+        expect(controller.instance_variable_get(:@form_submission_url))
+          .to eql(job_specification_organisation_job_path)
       end
     end
   end

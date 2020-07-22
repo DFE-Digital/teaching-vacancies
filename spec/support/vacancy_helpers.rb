@@ -1,8 +1,18 @@
 module VacancyHelpers
+  def fill_in_job_location_form_field(vacancy)
+    hyphenated_location = vacancy.job_location.split('_').join('-')
+    find("label[for=\"job-location-form-job-location-#{hyphenated_location}-field\"]").click
+  end
+
+  def fill_in_school_form_field(school)
+    find("label[for=\"school-form-school-id-#{school.id}-field\"]").click
+  end
+
   def fill_in_job_specification_form_fields(vacancy)
     fill_in 'job_specification_form[job_title]', with: vacancy.job_title
 
-    vacancy.model_working_patterns.each do |working_pattern|
+    working_patterns = vacancy.try(:model_working_patterns).presence || vacancy.working_patterns
+    working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
             name: 'job_specification_form[working_patterns][]',
             visible: false

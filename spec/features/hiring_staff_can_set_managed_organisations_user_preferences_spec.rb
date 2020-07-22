@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Hiring staff can set managed organisations user preferences' do
   let(:school_group) { create(:school_group) }
-  let(:school_1) { create(:school) }
-  let(:school_2) { create(:school) }
+  let(:school_1) { create(:school, name: 'Happy Rainbows School') }
+  let(:school_2) { create(:school, name: 'Dreary Grey School') }
   let(:user_preference) { UserPreference.last }
 
   before do
