@@ -140,7 +140,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def set_up_url
-    @form_submission_url_method = @vacancy&.id.present? ? 'patch' : 'post'
+    @form_submission_url_method = @vacancy&.persisted? ? 'patch' : 'post'
     @form_submission_url = form_submission_path(@vacancy&.id)
   end
 end

@@ -27,7 +27,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       save_vacancy_as_draft
     elsif @form.valid?
       session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation
-      redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+      redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
       render :show
     end
@@ -94,6 +94,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def next_step
-    organisation_job_pay_package_path(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+    organisation_job_pay_package_path(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
   end
 end

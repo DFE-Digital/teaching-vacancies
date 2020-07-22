@@ -18,7 +18,7 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   def create
     store_vacancy_attributes(@form.vacancy.attributes)
     if @form.valid?
-      redirect_to_next_step_if_continue(@vacancy&.id.present? ? @vacancy.id : session_vacancy_id)
+      redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
       render :show
     end
@@ -45,7 +45,7 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def next_step
-    vacancy_id = @vacancy&.id.present? ? @vacancy.id : session_vacancy_id
+    vacancy_id = @vacancy&.persisted? ? @vacancy.id : session_vacancy_id
     vacancy_id.present? ? organisation_job_job_specification_path(@vacancy.id) : job_specification_organisation_job_path
   end
 
