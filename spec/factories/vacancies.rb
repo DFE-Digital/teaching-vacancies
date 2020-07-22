@@ -36,6 +36,12 @@ FactoryBot.define do
     trait :with_school_group do
       association :school, strategy: :null
       association :school_group
+      job_location { 'central_office' }
+    end
+
+    trait :with_school_group_at_school do
+      association :school_group
+      job_location { 'at_one_school' }
     end
 
     trait :fail_minimum_validation do

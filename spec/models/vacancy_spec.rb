@@ -1,6 +1,5 @@
 require 'rails_helper'
 RSpec.describe Vacancy, type: :model do
-  subject { Vacancy.new(school: build(:school)) }
   it { should belong_to(:school).optional }
   it { should belong_to(:school_group).optional }
   it { should belong_to(:publisher_user).optional }
@@ -56,10 +55,14 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'validations' do
     context 'a new record' do
-      it { should validate_presence_of(:job_title) }
+      it { should validate_presence_of(:about_school) }
+      it { should validate_presence_of(:contact_email) }
+      it { should validate_presence_of(:expires_on) }
       it { should validate_presence_of(:job_summary) }
-      it { should validate_presence_of(:working_patterns) }
+      it { should validate_presence_of(:job_title) }
+      it { should validate_presence_of(:publish_on) }
       it { should validate_presence_of(:salary) }
+      it { should validate_presence_of(:working_patterns) }
     end
 
     context 'a record saved with job spec details' do
