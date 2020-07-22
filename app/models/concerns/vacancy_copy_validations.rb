@@ -1,7 +1,7 @@
 module VacancyCopyValidations
   extend ActiveSupport::Concern
   include ApplicationHelper
-  include DateHelper
+  include DatesHelper
 
   include VacancyImportantDateValidations
   include VacancyExpiryTimeFieldValidations

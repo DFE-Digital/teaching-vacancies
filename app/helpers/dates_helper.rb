@@ -1,4 +1,4 @@
-module DateHelper
+module DatesHelper
   class FormatDateError < RuntimeError; end
 
   def format_date(date, format = :default)
