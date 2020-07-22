@@ -50,6 +50,10 @@ module OrganisationHelper
     "#{section_number}."
   end
 
+  def school_group_location_heading(job_location)
+    I18n.t("school_groups.job_location_heading.#{job_location}")
+  end
+
   private
 
   def number_of_pupils(school)

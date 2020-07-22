@@ -1,0 +1,16 @@
+= render 'hiring_staff/vacancies/section_tag', section: 'job_location'
+= render 'hiring_staff/vacancies/error_tag', attributes: [:job_location, :school_id], section: 'job_location'
+
+%h2.govuk-heading-m.app-task-list__section#job_location_heading
+  %span.app-task-list__section-number= edit_vacancy_section_number(:job_location, current_organisation)
+  = t('jobs.job_location')
+  = link_to t('buttons.change'), organisation_job_job_location_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_job_location')
+
+%dl.app-check-your-answers.app-check-your-answers--short
+
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question.first-question#job_location
+      %h4.govuk-heading-s= school_group_location_heading(@vacancy.job_location)
+    %dd.app-check-your-answers__answer.first-question
+      %div{ class: 'govuk-!-font-weight-bold' }= @vacancy.school_or_school_group.name
+      = location(@vacancy.school_or_school_group)
