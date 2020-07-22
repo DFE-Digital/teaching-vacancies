@@ -56,7 +56,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   end
 
   def redirect_to_school_selection_or_next_step
-    if session[:current_step].eql?(:review) && @form.job_location == 'at_one_school'
+    if @vacancy.state != 'create' && @form.job_location == 'at_one_school'
       redirect_to organisation_job_school_path(@vacancy.id)
     else
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
