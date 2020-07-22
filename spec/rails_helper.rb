@@ -40,6 +40,7 @@ RSpec.configure do |config|
   config.include ApplicationHelpers
   config.include DateHelper
   config.include VacancyHelpers
+  config.include OrganisationHelper
   config.include AuthHelpers
   config.include CapybaraHelper, type: :feature
   config.include SearchHelper
