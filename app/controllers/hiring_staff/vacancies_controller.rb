@@ -98,7 +98,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def update_vacancy_state
-    if params[:edit_draft] == 'true'
+    if params[:edit_draft] == 'true' || @vacancy&.state == 'edit'
       state = 'edit'
     elsif @vacancy&.state == 'copy'
       state = 'copy'
