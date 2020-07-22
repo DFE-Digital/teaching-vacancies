@@ -47,6 +47,8 @@ module HiringStaff::JobCreationHelper
     completed_step = 0
     if vacancy.present?
       completed_step = vacancy.completed_step.presence || 0
+    elsif session[:vacancy_attributes].present?
+      completed_step = session[:vacancy_attributes]['completed_step'].presence || 0
     end
     return 'app-step-nav__step--visited' if
       step_number != current_step && step_number <= completed_step
