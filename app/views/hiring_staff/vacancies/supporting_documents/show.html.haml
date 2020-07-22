@@ -26,4 +26,4 @@
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
   .govuk-grid-column-one-third
-    = render 'hiring_staff/vacancies/sidebar'
+    = render(CreateAJobSidebarComponent.new(vacancy: @vacancy))
