@@ -38,7 +38,7 @@ RSpec.configure do |config|
 
   config.include ActionView::Helpers::NumberHelper
   config.include ApplicationHelpers
-  config.include DateHelper
+  config.include DatesHelper
   config.include VacancyHelpers
   config.include OrganisationHelper
   config.include AuthHelpers

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AlertMailer, type: :mailer do
-  include DateHelper
+  include DatesHelper
   include OrganisationHelper
   include ERB::Util
 

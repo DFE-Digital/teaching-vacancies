@@ -4,7 +4,7 @@ class ImportantDatesForm < VacancyForm
 
   attr_accessor :params, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
 
-  include DateHelper
+  include DatesHelper
 
   include VacancyImportantDateValidations
   include VacancyExpiryTimeFieldValidations

@@ -1,5 +1,5 @@
 class OrganisationVacancyPresenter < BasePresenter
-  include DateHelper
+  include DatesHelper
   include ActionView::Helpers::UrlHelper
 
   def page_views

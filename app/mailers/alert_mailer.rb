@@ -1,6 +1,6 @@
 class AlertMailer < ApplicationMailer
   self.delivery_job = DailyAlertMailerJob
-  add_template_helper(DateHelper)
+  add_template_helper(DatesHelper)
 
   def daily_alert(subscription_id, vacancy_ids)
     @subscription = Subscription.find(subscription_id)
