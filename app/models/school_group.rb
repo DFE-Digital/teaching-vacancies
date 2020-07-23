@@ -14,7 +14,7 @@ class SchoolGroup < ApplicationRecord
   end
 
   def address
-    gias_data['Group Contact Address 3']
+    gias_data['Group Contact Street']
   end
 
   def town
