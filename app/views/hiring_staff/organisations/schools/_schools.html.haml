@@ -1,4 +1,4 @@
-- current_organisation.schools.each do |school|
+- current_organisation.schools.order(:name).each do |school|
   .school-table
     %table.govuk-table
       %thead.govuk-table__head
