@@ -6,12 +6,15 @@ module OrganisationHelper
   end
 
   def full_address(organisation)
-    [organisation.address, organisation.town, organisation.county, organisation.postcode].compact.join(', ')
+    [organisation.address, organisation.town, organisation.county, organisation.postcode].reject(&:blank?).join(', ')
   end
 
-  def school_type_with_religious_character(school)
-    school_type = school.school_type.label.singularize
-    school.has_religious_character? ? school_type + ', ' + school.gias_data['ReligiousCharacter (name)'] : school_type
+  def organisation_type(organisation)
+    if organisation.is_a?(School)
+      school_type_with_religious_character(organisation)
+    else
+      organisation.group_type
+    end
   end
 
   def school_size(school)
@@ -19,7 +22,7 @@ module OrganisationHelper
       return number_of_pupils(school) if school.gias_data['NumberOfPupils'].present?
       return school_capacity(school) if school.gias_data['SchoolCapacity'].present?
     end
-    t('schools.no_information')
+    I18n.t('schools.no_information')
   end
 
   def ofsted_report(school)
@@ -57,14 +60,19 @@ module OrganisationHelper
   private
 
   def number_of_pupils(school)
-    t('schools.size.enrolled', pupils: pupils, number: school.gias_data['NumberOfPupils'])
+    I18n.t('schools.size.enrolled', pupils: pupils, number: school.gias_data['NumberOfPupils'])
   end
 
   def school_capacity(school)
-    t('schools.size.up_to', capacity: school.gias_data['SchoolCapacity'], pupils: pupils)
+    I18n.t('schools.size.up_to', capacity: school.gias_data['SchoolCapacity'], pupils: pupils)
   end
 
   def pupils
-    t('schools.size.pupils').pluralize
+    I18n.t('schools.size.pupils').pluralize
+  end
+
+  def school_type_with_religious_character(school)
+    school_type = school.school_type.label.singularize
+    school.has_religious_character? ? school_type + ', ' + school.gias_data['ReligiousCharacter (name)'] : school_type
   end
 end

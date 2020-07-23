@@ -20,7 +20,7 @@
       - if @vacancies.any?
         %ul.vacancies{ 'role': 'list' }
           - @vacancies.each do |vacancy|
-            = render partial: 'vacancy', locals: { vacancy: vacancy }
+            = render(VacancySummaryComponent.new(vacancy: vacancy))
 
       - elsif @vacancies.user_search?
         .divider-bottom

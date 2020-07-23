@@ -1,0 +1,24 @@
+%li.vacancy{ 'role': 'listitem', 'tab-index': '0'}
+  %h2.govuk-heading-m.mb0= link_to @vacancy.job_title, job_path(@vacancy), class: 'govuk-link view-vacancy-link'
+  %p.govuk-body= location(@vacancy.school_or_school_group)
+  %dl
+    %dt= t('jobs.salary')
+    %dd.double
+      = @vacancy.salary
+    - if @vacancy.school
+      %dt= t('jobs.school_type')
+    - else
+      %dt= t('jobs.trust_type')
+    %dd.double
+      = organisation_type(@vacancy.school_or_school_group)
+    - if @vacancy.working_patterns?
+      %dt= t('jobs.working_patterns')
+      %dd.double
+        = @vacancy.working_patterns
+    %dt= t('jobs.expires_on')
+    - if @vacancy.expiry_time.nil?
+      %dd.double
+        = format_date(@vacancy.expires_on)
+    - else
+      %dd.double
+        = expiry_date_and_time(@vacancy)
