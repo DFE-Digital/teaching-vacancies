@@ -93,6 +93,7 @@ WITH
   vacancy_matches AS (
   SELECT
     DISTINCT scraped_vacancy.scraped_url,
+    school.id AS school_id,
     school.urn AS school_urn,
     school.name AS school_name,
     school.data_establishmentstatus_name AS school_status,
@@ -117,6 +118,7 @@ WITH
     vacancies_joined_to_schools AS (
     SELECT
       scraped_vacancy.*,
+      vacancy_matches.school_id,
       vacancy_matches.school_urn,
       school.name AS school_name
     FROM
