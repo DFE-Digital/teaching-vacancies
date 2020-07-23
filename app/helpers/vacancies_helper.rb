@@ -106,4 +106,8 @@ module VacanciesHelper
     end
     jobs_with_type_organisation_path(state)
   end
+
+  def expiry_date_and_time(vacancy)
+    format_date(vacancy.expires_on) + ' at ' + vacancy.expiry_time.strftime('%-l:%M %P')
+  end
 end

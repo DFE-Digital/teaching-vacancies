@@ -38,7 +38,6 @@ RSpec.configure do |config|
   end
 
   config.include ActionView::Helpers::NumberHelper
-  config.include Rails.application.routes.url_helpers
   config.include ApplicationHelpers
   config.include DatesHelper
   config.include OrganisationHelper

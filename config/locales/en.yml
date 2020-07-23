@@ -270,6 +270,7 @@ en:
       today: 'Deadline is today'
       tomorrow: 'Deadline is tomorrow'
     school_type: 'School type'
+    trust_type: 'Trust type'
     publish_on: 'Date listed'
     expires_on: 'Closing date'
     start_on: 'Date job starts'
@@ -616,11 +617,19 @@ en:
   school_groups:
     address: Trust address
     description: Description
+    email: 'Trust email'
     group_type: Group type
+    info: 'About %{school_group}'
+    school_group_location: 'Head office location'
+    trust_overview: Trust overview
+    trust_visits: 'Arrange a visit to %{school_group}'
+    type: 'Trust type'
     uid: Unique identifier (UID)
     job_location_heading:
       central_office: At central office
       at_one_school: Single school
+    website: 'Trust website'
+    school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:
     benefits:
       title: Subscribers
