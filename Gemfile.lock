@@ -468,6 +468,8 @@ GEM
     validate_url (1.0.8)
       activemodel (>= 3.0.0)
       public_suffix
+    view_component (2.16.0)
+      activesupport (>= 5.0.0, < 7.0)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -563,6 +565,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
   validate_url (~> 1.0.8)
+  view_component
   web-console (>= 3.3.0)
   webmock (~> 3.7)
   webpacker

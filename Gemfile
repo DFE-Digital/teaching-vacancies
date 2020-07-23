@@ -51,6 +51,7 @@ gem 'sidekiq'
 gem 'sidekiq-cron', '~> 1.1'
 gem 'skylight'
 gem 'validate_url', '~> 1.0.8'
+gem 'view_component'
 gem 'webpacker'
 gem 'xml-sitemap'
 
