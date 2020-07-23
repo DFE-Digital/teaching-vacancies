@@ -110,4 +110,8 @@ module VacanciesHelper
   def expiry_date_and_time(vacancy)
     format_date(vacancy.expires_on) + ' at ' + vacancy.expiry_time.strftime('%-l:%M %P')
   end
+
+  def vacancy_or_organisation_description(vacancy)
+    vacancy.about_school.presence || vacancy.school_or_school_group.description.presence
+  end
 end

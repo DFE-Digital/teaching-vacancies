@@ -7,7 +7,7 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.type')
         %td.govuk-table__cell
-          = school_type_with_religious_character(@vacancy.school)
+          = organisation_type(@vacancy.school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
@@ -42,12 +42,12 @@
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('jobs.contact_email')
           %td.govuk-table__cell
-            = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link link-wrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: url_for(only_path: false))
+            = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link link-wrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: job_url(@vacancy))
 
-  - if strip_tags(@vacancy.about_school).present?
+  - if @vacancy.about_school.present?
     %h4.govuk-heading-s
       = t('schools.info', organisation: @vacancy.school.name)
-    %p= @vacancy.about_school
+    %p= vacancy_or_organisation_description(@vacancy)
 
   - if @vacancy.school_visits.present?
     %h4.govuk-heading-s

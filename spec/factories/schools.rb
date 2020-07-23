@@ -31,6 +31,7 @@ FactoryBot.define do
     postcode { Faker::Address.postcode }
     town { Faker::Address.city }
     urn { Faker::Number.number(digits: 6) }
+    url { Faker::Internet.url }
 
     trait :nursery do
       phase { :nursery }
