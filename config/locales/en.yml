@@ -173,10 +173,11 @@ en:
         contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
         school_visits: School visits
         how_to_apply: How to apply
+        trust_visits: Trust visits
         application_link: Link to online application
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
-        about_school_html: "About %{school} (<span class='text-red'>Required</span>)"
+        about_organisation_html: "About %{organisation} (<span class='text-red'>Required</span>)"
       organisation_form:
         description: Description of school or trust
     hint:
@@ -213,13 +214,14 @@ en:
         contact_email: This email address will be shown publicly as a point of contact
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         how_to_apply: Explain how to apply for the job, referring to any relevant documents
+        trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
         application_link: >-
           Leave this blank unless candidates can apply directly on the school or council website
       job_summary_form:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
-        about_school: "This will appear next to the job details under 'School overview'. Feel free to adapt this text"
+        about_organisation: "This will appear next to the job details under '%{organisation} overview'. Feel free to adapt this text"
       organisation_form:
         description: Jobseekers will see this description of the school in the job listing
   organisation:
@@ -373,6 +375,7 @@ en:
     contact_email_body: 'Regarding the job at %{url}'
     school_visits: 'School visit instructions'
     school_visits_heading: 'Arranging a visit to %{school}'
+    trust_visits: 'Trust visit instructions'
     how_to_apply: 'Application instructions'
     applying_for_the_job: Applying for the job
     deadline_date: 'Date application is due'

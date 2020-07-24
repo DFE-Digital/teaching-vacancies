@@ -39,7 +39,7 @@ RSpec.feature 'Creating a vacancy' do
       visit new_organisation_job_path
 
       expect(page.current_path).to eq(job_specification_organisation_job_path)
-      expect(page).to have_content(I18n.t('jobs.create_a_job_title', organisation: school.name))
+      expect(page).to have_content(I18n.t('jobs.create_a_job_title_no_org'))
       expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
     end
 

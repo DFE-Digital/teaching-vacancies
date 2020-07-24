@@ -22,9 +22,10 @@
         rows: 10,
         required: true
 
+      - organisation = @vacancy.school_or_school_group.is_a?(SchoolGroup) ? 'Trust' : 'School'
       = f.govuk_text_area :about_school,
-        label: { text: t('helpers.fieldset.job_summary_form.about_school_html', school: @vacancy.school_or_school_group.name), size: 's' },
-        hint_text: t('helpers.hint.job_summary_form.about_school'),
+        label: { text: t('helpers.fieldset.job_summary_form.about_organisation_html', organisation: @vacancy.school_or_school_group.name), size: 's' },
+        hint_text: t('helpers.hint.job_summary_form.about_organisation', organisation: "#{organisation}" ),
         value: @vacancy.about_school.presence || @vacancy.school_or_school_group.description.presence.to_s,
         rows: 10,
         required: true
