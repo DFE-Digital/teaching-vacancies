@@ -26,7 +26,7 @@ jobs:
         echo $GITHUB_EVENT_ACTION
         echo "::set-env name=TF_WORKSPACE::$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_web_app_name::teaching-vacancies-pr-$TF_WORKSPACE_NAME"
-        echo "::set-env name=TF_VAR_postgres_service_name::teaching-postgres-vacancies-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_VAR_postgres_service_name::teaching-vacancies-postgres-pr-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_redis_service_name::teaching-vacancies-redis-pr-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_papertrail_service_name::teaching-vacancies-papertrail-pr-$TF_WORKSPACE_NAME"
       env:
