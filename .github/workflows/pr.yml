@@ -23,37 +23,24 @@ jobs:
     - name: prepare env variables
       run: |
         set -eux
-        echo "::set-env name=tf_workspace_name::$TF_WORKSPACE_NAME"
-        echo "::set-env name=web_app_name::teaching-vacancies-pr-$TF_WORKSPACE_NAME"
-        echo "::set-env name=postgres_service_name::teaching-postgres-vacancies-pr-$TF_WORKSPACE_NAME"
-        echo "::set-env name=redis_service_name::teaching-vacancies-redis-pr-$TF_WORKSPACE_NAME"
-        echo "::set-env name=papertrail_service_name::teaching-vacancies-papertrail-pr-$TF_WORKSPACE_NAME"
+        echo $GITHUB_EVENT_ACTION
+        echo "::set-env name=TF_WORKSPACE::$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_VAR_web_app_name::teaching-vacancies-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_VAR_postgres_service_name::teaching-postgres-vacancies-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_VAR_redis_service_name::teaching-vacancies-redis-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_VAR_papertrail_service_name::teaching-vacancies-papertrail-pr-$TF_WORKSPACE_NAME"
       env:
         TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
-
-    - name: display env variables
-      run: |
-        set -eux
-        echo $tf_workspace_name
-        echo $web_app_name
-        echo $postgres_service_name
-        echo $redis_service_name
-        echo $papertrail_service_name
-        echo $TF_POSTGRES_SERVICE_NAME
-      env:
-        TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
-        TF_POSTGRES_SERVICE_NAME: ${{ env.postgres_service_name }}
+        GITHUB_EVENT_ACTION: ${{ github.event.action }}
 
     - name: terraform workspace init
       run: |
         pwd && terraform init
-        terraform workspace select $TF_WORKSPACE_NAME || terraform workspace new $TF_WORKSPACE_NAME
+        terraform workspace select $TF_WORKSPACE || terraform workspace new $TF_WORKSPACE
       working-directory: ./terraform/paas
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_WORKSPACE_NAME: pr
-        #TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
 
     - name: terraform plan & apply
       if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -69,12 +56,6 @@ jobs:
         TF_VAR_cf_space_name: 'teaching-vacancies-review'
         TF_VAR_app_docker_image: 'dfedigital/teaching-vacancies:59fdf784712e8312fc7db42b5ef29e46454356d7'
         TF_VAR_app_stopped : true
-        ## TODO append PR number to all these names
-        TF_VAR_web_app_name: 'teaching-vacancies-review'
-        TF_VAR_worker_app_name: 'teaching-vacancies-worker-review'
-        TF_VAR_postgres_service_name: 'teaching-vacancies-postgres-review'
-        TF_VAR_redis_service_name: 'teaching-vacancies-redis-review'
-        TF_VAR_papertrail_service_name: 'teaching-vacancies-papertrail-review'
     
     - name: terraform destory (on PR closed)
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -90,9 +71,3 @@ jobs:
         TF_VAR_cf_space_name: 'teaching-vacancies-review'
         TF_VAR_app_docker_image: 'dfedigital/teaching-vacancies:59fdf784712e8312fc7db42b5ef29e46454356d7'
         TF_VAR_app_stopped : true
-        ## TODO append PR number to all these names
-        TF_VAR_web_app_name: 'teaching-vacancies-review'
-        TF_VAR_worker_app_name: 'teaching-vacancies-worker-review'
-        TF_VAR_postgres_service_name: 'teaching-vacancies-postgres-review'
-        TF_VAR_redis_service_name: 'teaching-vacancies-redis-review'
-        TF_VAR_papertrail_service_name: 'teaching-vacancies-papertrail-review'
