@@ -35,7 +35,7 @@ jobs:
 
     - name: terraform workspace init
       run: |
-        pwd && terraform init
+        pwd && terraform init -backend-config="workspace_key_prefix=env/review"
         terraform workspace select $TF_WORKSPACE || terraform workspace new $TF_WORKSPACE
       working-directory: ./terraform/paas
       env:
