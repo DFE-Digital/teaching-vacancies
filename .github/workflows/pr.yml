@@ -34,12 +34,13 @@ jobs:
         TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
         GITHUB_EVENT_ACTION: ${{ github.event.action }}
 
-    - name: Post PR Comment
+    - name: Post PR comment
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
       run: |
         curl --header "Accept: application/vnd.github.v3+json" \
              --header "Authorization: Bearer ${{ github.token }}" \
              --request POST \
-             --data '{"body": "This is a test github actions comment"}' \
+             --data '{"body": "Review app deployed to https://$TF_VAR_web_app_name.london.cloudapps.digital"}' \
              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
 
     - name: terraform workspace init
@@ -81,3 +82,12 @@ jobs:
         TF_VAR_cf_space_name: 'teaching-vacancies-review'
         TF_VAR_app_docker_image: 'dfedigital/teaching-vacancies:59fdf784712e8312fc7db42b5ef29e46454356d7'
         TF_VAR_app_stopped : true
+
+    - name: Post PR comment
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      run: |
+        curl --header "Accept: application/vnd.github.v3+json" \
+             --header "Authorization: Bearer ${{ github.token }}" \
+             --request POST \
+             --data '{"body": "Review app deployed to https://$TF_VAR_web_app_name.london.cloudapps.digital"}' \
+             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
