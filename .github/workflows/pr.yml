@@ -80,7 +80,7 @@ jobs:
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
       working-directory: ./terraform/paas
       run: |
-        terraform plan -destory -out tfdestroy
+        terraform plan -destroy -out=tfdestroy
         terraform apply -auto-approve "tfdestroy"
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
