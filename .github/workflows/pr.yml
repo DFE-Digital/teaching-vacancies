@@ -26,12 +26,21 @@ jobs:
         echo $GITHUB_EVENT_ACTION
         echo "::set-env name=TF_WORKSPACE_NAME::$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_web_app_name::teaching-vacancies-$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_VAR_worker_app_name::teaching-vacancies-worker-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_postgres_service_name::teaching-vacancies-postgres-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_redis_service_name::teaching-vacancies-redis-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_papertrail_service_name::teaching-vacancies-papertrail-$TF_WORKSPACE_NAME"
       env:
         TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
         GITHUB_EVENT_ACTION: ${{ github.event.action }}
+
+    - name: Post PR Comment
+      run: |
+        curl --header "Accept: application/vnd.github.v3+json" \
+             --header "Authorization: Bearer ${{ github.token }}" \
+             --request POST \
+             --data '{"body": "This is a test github actions comment"}' \
+             https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
 
     - name: terraform workspace init
       run: |
