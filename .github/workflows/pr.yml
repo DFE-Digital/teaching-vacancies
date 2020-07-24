@@ -1,10 +1,9 @@
 name: PR
 
 on:
-  push:
-    branches: [ terraform-for-paas ]
   pull_request:
     branches: [ master ]
+    types: [assigned, opened, synchronize, reopened, closed]
 
 jobs:
 
@@ -20,6 +19,17 @@ jobs:
         wget -O $TF_PLUGINS_DIR/terraform-provider-cloudfoundry https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/v0.12.2/terraform-provider-cloudfoundry_linux_amd64
         chmod +x $TF_PLUGINS_DIR/terraform-provider-cloudfoundry
         ls -l $TF_PLUGINS_DIR
+    
+    - name: debug
+      run: |
+        set -eux
+        echo $EVENT_NAME
+        echo $THE_EVENT
+        echo $EVENT_ACTION
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        THE_EVENT: ${{ toJSON(github.event) }}
+        EVENT_ACTION: ${{ github.event.action }}
 
     - name: terraform workspace init
       run: |
@@ -29,7 +39,7 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_WORKSPACE_NAME : pr
+        TF_WORKSPACE_NAME :${{ format('pr-{0}', github.event.number) }}
 
     - name: terraform plan & apply
       working-directory: ./terraform/paas
