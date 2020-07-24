@@ -20,16 +20,29 @@ jobs:
         chmod +x $TF_PLUGINS_DIR/terraform-provider-cloudfoundry
         ls -l $TF_PLUGINS_DIR
     
-    - name: debug
+    - name: prepare env variables
       run: |
         set -eux
-        echo $EVENT_NAME
-        echo $THE_EVENT
-        echo $EVENT_ACTION
+        echo "::set-env name=tf_workspace_name::$TF_WORKSPACE_NAME"
+        echo "::set-env name=web_app_name::teaching-vacancies-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=postgres_service_name::teaching-postgres-vacancies-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=redis_service_name::teaching-vacancies-redis-pr-$TF_WORKSPACE_NAME"
+        echo "::set-env name=papertrail_service_name::teaching-vacancies-papertrail-pr-$TF_WORKSPACE_NAME"
       env:
-        EVENT_NAME: ${{ github.event_name }}
-        THE_EVENT: ${{ toJSON(github.event) }}
-        EVENT_ACTION: ${{ github.event.action }}
+        TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
+
+    - name: display env variables
+      run: |
+        set -eux
+        echo $tf_workspace_name
+        echo $web_app_name
+        echo $postgres_service_name
+        echo $redis_service_name
+        echo $papertrail_service_name
+        echo $TF_POSTGRES_SERVICE_NAME
+      env:
+        TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
+        TF_POSTGRES_SERVICE_NAME: ${{ env.postgres_service_name }}
 
     - name: terraform workspace init
       run: |
@@ -42,6 +55,7 @@ jobs:
         TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}
 
     - name: terraform plan & apply
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
       working-directory: ./terraform/paas
       run: |
         terraform plan -out tfplan
@@ -60,3 +74,25 @@ jobs:
         TF_VAR_postgres_service_name: 'teaching-vacancies-postgres-review'
         TF_VAR_redis_service_name: 'teaching-vacancies-redis-review'
         TF_VAR_papertrail_service_name: 'teaching-vacancies-papertrail-review'
+    
+    - name: terraform destory (on PR closed)
+      if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      working-directory: ./terraform/paas
+      run: |
+        terraform plan -destory -out tfdestroy
+        terraform apply -auto-approve "tfdestroy"
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        TF_VAR_cf_user: ${{ secrets.CF_USERNAME }}
+        TF_VAR_cf_password: ${{ secrets.CF_PASSWORD }}
+        TF_VAR_cf_space_name: 'teaching-vacancies-review'
+        TF_VAR_app_docker_image: 'dfedigital/teaching-vacancies:59fdf784712e8312fc7db42b5ef29e46454356d7'
+        TF_VAR_app_stopped : true
+        ## TODO append PR number to all these names
+        TF_VAR_web_app_name: 'teaching-vacancies-review'
+        TF_VAR_worker_app_name: 'teaching-vacancies-worker-review'
+        TF_VAR_postgres_service_name: 'teaching-vacancies-postgres-review'
+        TF_VAR_redis_service_name: 'teaching-vacancies-redis-review'
+        TF_VAR_papertrail_service_name: 'teaching-vacancies-papertrail-review'
+    
