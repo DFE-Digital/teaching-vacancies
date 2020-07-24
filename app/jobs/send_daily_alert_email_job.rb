@@ -2,6 +2,8 @@ class SendDailyAlertEmailJob < ApplicationJob
   queue_as :queue_daily_alerts
 
   def perform
+    return unless Rails.env.production?
+
     Subscription.all.each do |s|
       next if s.alert_run_today?
 
