@@ -24,7 +24,7 @@ jobs:
       run: |
         set -eux
         echo $GITHUB_EVENT_ACTION
-        echo "::set-env name=TF_WORKSPACE::$TF_WORKSPACE_NAME"
+        echo "::set-env name=TF_WORKSPACE_NAME::$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_web_app_name::teaching-vacancies-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_postgres_service_name::teaching-vacancies-postgres-$TF_WORKSPACE_NAME"
         echo "::set-env name=TF_VAR_redis_service_name::teaching-vacancies-redis-$TF_WORKSPACE_NAME"
@@ -35,8 +35,9 @@ jobs:
 
     - name: terraform workspace init
       run: |
+        set -eux
         pwd && terraform init -backend-config="workspace_key_prefix=env/review"
-        terraform workspace select $TF_WORKSPACE || terraform workspace new $TF_WORKSPACE
+        terraform workspace select $TF_WORKSPACE_NAME || terraform workspace new $TF_WORKSPACE_NAME
       working-directory: ./terraform/paas
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
