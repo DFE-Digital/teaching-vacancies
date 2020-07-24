@@ -2,7 +2,7 @@
   %h2.govuk-heading-m
     =t('jobs.filters.title')
 
-  = form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path, method: :get, html: { class: 'filters-form', role: 'search' } do |f|
+  = form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path, method: :get, html: { class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
     = f.govuk_text_field :keyword,
       label: { text: t('jobs.filters.keyword') },
       placeholder: t('jobs.filters.keyword_hint'),
