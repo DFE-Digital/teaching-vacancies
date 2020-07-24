@@ -18,7 +18,7 @@ export const startLoading = (container, input) => {
   input.disabled = true;
   container.classList.add('js-location-finder--loading');
   loader.init({
-    container: 'js-location-finder__input-container',
+    container: 'location-search',
     size: 32,
     label: true,
     labelText: 'Finding location...',
@@ -38,6 +38,8 @@ export const showLocationLink = (container) => {
 export const showErrorMessage = (link) => {
   if (!document.querySelector('.js-location-finder__link .govuk-error-message')) {
     const errorMessage = document.createElement('div');
+    errorMessage.setAttribute('role', 'alert');
+    errorMessage.id = 'js-location-finder__error';
     errorMessage.classList.add('govuk-error-message');
     errorMessage.classList.add('govuk-!-margin-top-2');
     errorMessage.innerHTML = ERROR_MESSAGE;

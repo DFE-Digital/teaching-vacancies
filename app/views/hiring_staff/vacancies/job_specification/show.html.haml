@@ -20,7 +20,6 @@
 
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.govuk_text_field :job_title,
-          id: 'job_specification_form_job_title',
           label: { text: t('helpers.fieldset.job_specification_form.job_title_html'), size: 's' },
           hint_text: t('helpers.hint.job_specification_form.job_title'),
           class: 'govuk-input string required govuk-js-character-count',

@@ -1,7 +1,6 @@
 .govuk-form-group.js-location-finder#location-search
   = label_tag 'location', t('jobs.filters.location'), class: "govuk-label #{extra_label_class}"
-  .js-location-finder__input-container#js-location-finder__input-container
-    = search_field_tag :location, @vacancies_search&.location, class: 'govuk-input js-location-finder__input app-site-search__input app-site-search__input--default', placeholder: t('jobs.filters.location_hint'), autocomplete: 'off',  "aria-expanded": "true", "aria-owns": "location__listbox", "aria-autocomplete": "list", role: "combobox", 'data-coordinates': @vacancies_search&.coordinates
-  .js-location-finder__link.govuk-body-s
-    or
-    = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
+  = search_field_tag :location, @vacancies_search&.location, class: 'govuk-input js-location-finder__input app-site-search__input app-site-search__input--default', placeholder: t('jobs.filters.location_hint'), autocomplete: 'off',  "aria": { expanded: "false", owns: "location__listbox", autocomplete: "list", describedby: "js-location-finder__error" }, role: "combobox", 'data-coordinates': @vacancies_search&.coordinates
+.js-location-finder__link.govuk-body-s
+  or
+  = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
