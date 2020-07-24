@@ -6,7 +6,7 @@ RSpec.feature 'Viewing the home page' do
   scenario 'searching from the blue box lands on the jobs index page' do
     within '.search_panel' do
       fill_in 'location', with: 'bristol'
-      fill_in 'keyword', with: 'math'
+      fill_in 'keyword-field', with: 'math'
 
       page.find('.govuk-button[type=submit]').click
     end
@@ -14,7 +14,7 @@ RSpec.feature 'Viewing the home page' do
     expect(page.current_path).to eq(jobs_path)
 
     expect(find_field('location').value).to eq 'bristol'
-    expect(find_field('keyword').value).to eq 'math'
+    expect(find_field('keyword-field').value).to eq 'math'
   end
 
   context 'request headers' do

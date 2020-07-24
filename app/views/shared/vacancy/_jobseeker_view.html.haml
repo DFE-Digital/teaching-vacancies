@@ -36,7 +36,8 @@
       - else
         = render(SchoolOverviewComponent.new(vacancy: @vacancy))
 
-    %h4.govuk-heading-s.share-this-job
-      = t('jobs.share_this_job')
+    %section
+      %h4.govuk-heading-s.share-this-job
+        = t('jobs.share_this_job')
 
-    = render '/shared/vacancy/share_buttons'
+      = render '/shared/vacancy/share_buttons'

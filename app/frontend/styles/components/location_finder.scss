@@ -4,7 +4,7 @@
     background: #fff;
     left: 0;
     position: absolute;
-    top: 0;
+    top: govuk-spacing(6);
     user-select: none;
     width: 100%;
   }
@@ -21,11 +21,13 @@
   }
 }
 
-.js-location-finder__input-container {
+.js-location-finder {
   position: relative;
 }
 
-.js-enabled .js-geolocation-supported {
+form .govuk-form-group.js-geolocation-supported {
+  margin-bottom: 0;
+
   .js-location-finder__link {
     display: block;
   }

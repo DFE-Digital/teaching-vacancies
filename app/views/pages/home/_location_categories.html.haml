@@ -4,7 +4,7 @@
   .govuk-grid-column-full
     %h3.govuk-heading-s #{ t('.counties') }
 
-    %ul.govuk-list.four-column-list
+    %ul.govuk-list.four-column-list{ aria: { label: "#{t('.counties')} list" } }
       - COUNTIES.each do |county|
         %li
           = link_to county, location_category_path(county), class: 'govuk-link'
@@ -12,7 +12,7 @@
   .govuk-grid-column-full
     %h3.govuk-heading-s #{ t('.cities') }
 
-    %ul.govuk-list.four-column-list
+    %ul.govuk-list.four-column-list{ aria: { label: "#{t('.cities')} list" } }
       - CITIES.each do |city|
         %li
           = link_to city, location_category_path(city), class: 'govuk-link'
@@ -20,7 +20,7 @@
   .govuk-grid-column-full
     %h3.govuk-heading-s #{ t('.boroughs') }
 
-    %ul.govuk-list.four-column-list
+    %ul.govuk-list.four-column-list{ aria: { label: "#{t('.boroughs')} list" } }
       - BOROUGHS.each do |borough|
         %li
           = link_to borough, location_category_path(borough), class: 'govuk-link'

@@ -5,6 +5,7 @@ export const create = (container, input, onSelect = () => {}) => {
     const ul = document.createElement('ul');
     ul.setAttribute('id', 'location__listbox');
     ul.setAttribute('role', 'listbox');
+    ul.setAttribute('aria-label', 'Suggested locations');
     ul.setAttribute('tabindex', -1);
 
     ul.classList.add('autocomplete__menu');

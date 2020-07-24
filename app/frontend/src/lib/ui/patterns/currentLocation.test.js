@@ -53,7 +53,7 @@ describe('location search box', () => {
 
     test('displays correct message in error displayed', () => {
       showErrorMessage(document.getElementById('current-location'));
-      expect(document.querySelector('.govuk-error-message').innerHTML).toBe(ERROR_MESSAGE);
+      expect(document.getElementById('js-location-finder__error').innerHTML).toBe(ERROR_MESSAGE);
     });
   });
 
