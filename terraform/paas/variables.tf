@@ -18,7 +18,7 @@ variable app_stopped { default = false }
 
 variable app_docker_image {}
 
-variable no_of_instances { default = 2 }
+variable no_of_instances { default = 1 }
 
 variable app_memory { default = 512 }
 
