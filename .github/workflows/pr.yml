@@ -23,6 +23,7 @@ jobs:
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
         tags: ${{ github.sha }}
         target: production
+        cache_froms: ${{ format('{0}:{1}', env.DOCKERHUB_REPOSITORY, github.sha) }}
 
   deploy:
     needs: build
