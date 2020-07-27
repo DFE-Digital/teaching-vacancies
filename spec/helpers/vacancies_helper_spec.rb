@@ -69,27 +69,35 @@ RSpec.describe VacanciesHelper, type: :helper do
       allow(vacancy).to receive(:state).and_return('copy')
       allow(vacancy).to receive(:job_title).and_return('Test job title')
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.copy_job_title', job_title: 'Test job title'))
+      expect(page_title(vacancy)).to eql(I18n.t('jobs.copy_job_title', job_title: 'Test job title'))
     end
 
     it 'returns create a job title if vacancy state is create' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('create')
+      allow(vacancy).to receive(:school_or_school_group).and_return(school)
+      allow(school).to receive(:name).and_return('school')
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.create_a_job_title', organisation: school.name))
+      organisation = vacancy.school_or_school_group.name
+
+      expect(page_title(vacancy)).to eql(I18n.t('jobs.create_a_job_title', organisation: organisation))
     end
 
     it 'returns create a job title if vacancy state is review' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('review')
+      allow(vacancy).to receive(:school_or_school_group).and_return(school)
+      allow(school).to receive(:name).and_return('school')
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.create_a_job_title', organisation: school.name))
+      organisation = vacancy.school_or_school_group.name
+
+      expect(page_title(vacancy)).to eql(I18n.t('jobs.create_a_job_title', organisation: organisation))
     end
 
     it 'returns edit job title' do
       allow(vacancy).to receive(:published?).and_return(true)
 
-      expect(page_title(vacancy, school)).to eql(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
+      expect(page_title(vacancy)).to eql(I18n.t('jobs.edit_job_title', job_title: vacancy.job_title))
     end
   end
 

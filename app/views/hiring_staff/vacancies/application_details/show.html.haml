@@ -21,9 +21,11 @@
         hint_text: t('helpers.hint.application_details_form.contact_email'),
         required: true
 
+      - organisation = @vacancy.school_or_school_group.is_a?(SchoolGroup) ? 'trust_visits' : 'school_visits'
+
       = f.govuk_text_area :school_visits,
-        label: { text: t('helpers.fieldset.application_details_form.school_visits'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.school_visits'),
+        label: { text: t("helpers.fieldset.application_details_form.#{organisation}"), size: 's' },
+        hint_text: t("helpers.hint.application_details_form.#{organisation}"),
         rows: 10
 
       = f.govuk_text_area :how_to_apply,
