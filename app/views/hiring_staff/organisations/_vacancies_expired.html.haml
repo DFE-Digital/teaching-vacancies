@@ -9,7 +9,6 @@
                     %th.govuk-table__header= table_header_sort_by(t('jobs.job_title'), 'expired', column: 'job_title', sort: @sort)
                     %th.govuk-table__header= table_header_sort_by(t('jobs.publish_on'), 'expired', column: 'publish_on', sort: @sort)
                     %th.govuk-table__header= table_header_sort_by(t('jobs.expired_on'), 'expired', column: 'expires_on', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.page_views'), 'expired', column: 'total_pageviews', sort: @sort)
                     %th.govuk-table__header{ colspan: 2 }= t('jobs.actions')
             %tbody.govuk-table__body
                 - presenter.vacancies.each do |vacancy|

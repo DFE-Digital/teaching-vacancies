@@ -2,6 +2,5 @@
   %td.govuk-table__cell= link_to vacancy.job_title, vacancy.preview_path, class: 'govuk-link view-vacancy-link'
   %td.govuk-table__cell= vacancy.publish_on
   %td.govuk-table__cell= vacancy.expires_on
-  %td.govuk-table__cell= vacancy.page_views
   %td.govuk-table__cell= link_to t('jobs.copy_link'), vacancy.copy_path, class: 'govuk-link', method: :get
   %td.govuk-table__cell= link_to t('jobs.delete_link'), vacancy.delete_path, class: 'govuk-link', method: :delete, data: { confirm: t('jobs.are_you_sure', job_title: vacancy.job_title) }
