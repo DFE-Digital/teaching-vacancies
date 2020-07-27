@@ -105,7 +105,7 @@ export const getFocusedOption = (container) => container.getElementsByClassName(
 export const getOptionHtml = (refinement) => (hit, index, options) => `
 <li class="autocomplete__option" id="autocomplete__input__option--${index}"
 role="option" tabindex="-1" aria-setsize="${options.length + 1}" aria-posinset=${index}
-data-location="${hit.toLowerCase()}">
+data-location="${hit}">
 ${highlightRefinement(hit, refinement)}
 </li>`;
 
@@ -116,7 +116,7 @@ export const highlightRefinement = (text, refinement) => {
     return `${text.substring(0, index)}<span class='highlight'>${text.substring(index, index + refinement.length)}</span><span>${text.substring(index + refinement.length, text.length)}</span>`;
   }
 
-  return false;
+  return text;
 };
 
 const autocomplete = {
