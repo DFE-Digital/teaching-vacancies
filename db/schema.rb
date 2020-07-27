@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_080945) do
+ActiveRecord::Schema.define(version: 2020_07_27_095226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -212,6 +212,8 @@ ActiveRecord::Schema.define(version: 2020_07_10_080945) do
     t.string "email"
     t.jsonb "dsi_data"
     t.datetime "last_activity_at"
+    t.string "family_name"
+    t.string "given_name"
     t.index ["oid"], name: "index_users_on_oid", unique: true
   end
 
@@ -246,9 +248,9 @@ ActiveRecord::Schema.define(version: 2020_07_10_080945) do
     t.integer "total_get_more_info_clicks"
     t.datetime "total_get_more_info_clicks_updated_at"
     t.integer "working_patterns", array: true
-    t.boolean "pro_rata_salary"
     t.integer "listed_elsewhere"
     t.integer "hired_status"
+    t.boolean "pro_rata_salary"
     t.datetime "stats_updated_at"
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
@@ -262,8 +264,8 @@ ActiveRecord::Schema.define(version: 2020_07_10_080945) do
     t.text "school_visits"
     t.text "how_to_apply"
     t.boolean "initially_indexed", default: false
-    t.string "job_location"
     t.uuid "school_group_id"
+    t.string "job_location"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"

@@ -14,6 +14,8 @@ class UpdateDfeSignInUsers
       User.transaction do
         user = User.find_or_initialize_by(oid: dsi_user['userId'])
         user.email = dsi_user['email']
+        user.given_name = dsi_user['givenName']
+        user.family_name = dsi_user['familyName']
         # When a user is associated with multiple organisations,
         # DfE Sign In returns 1 user object per organisation.
         # Each of these user objects has the same userId.
