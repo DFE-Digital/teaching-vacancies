@@ -631,6 +631,9 @@ en:
     job_location_heading:
       central_office: At central office
       at_one_school: Single school
+      review:
+        central_office: Trust head office
+        at_one_school: Single school
     website: 'Trust website'
     school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:
