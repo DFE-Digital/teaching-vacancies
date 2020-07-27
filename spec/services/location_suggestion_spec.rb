@@ -59,13 +59,13 @@ RSpec.describe LocationSuggestion do
   context '#suggestion_locations' do
     let(:parsed_response) { { 'predictions': predictions }.deep_stringify_keys }
     let(:predictions) { [
-      { 'description': 'place, UK',
+      { 'description': 'place, region, UK',
         'terms': [{ 'offset': 0, 'value': 'place' }, { 'offset': 5, 'value': 'UK' }] },
-      { 'description': 'different_place, UK',
+      { 'description': 'different_place, region, UK',
         'terms': [{ 'offset': 0, 'value': 'different_place' }, { 'offset': 5, 'value': 'UK' }] }
     ] }
 
-    let(:suggestions) { ['place, UK', 'different_place, UK'] }
+    let(:suggestions) { ['place, region', 'different_place, region'] }
     let(:matched_terms) { [['place'], ['different_place']] }
 
     before do
