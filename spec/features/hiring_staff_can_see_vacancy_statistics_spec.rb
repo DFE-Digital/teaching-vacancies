@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Hiring staff can see vacancy statistics' do
+RSpec.feature 'Hiring staff can NOT see vacancy statistics' do
   let(:school) { create(:school) }
   let(:total_pageviews) { nil }
   let(:total_get_more_info_clicks) { nil }
@@ -22,22 +22,10 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
       visit organisation_path(school)
     end
 
-    context 'page views are nil' do
-      scenario 'page views show zero' do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[4]')).to have_content('0')
-        end
-      end
-    end
+    # The removed tests for page view displays can be found in the git history.
 
-    context 'page views are present' do
-      let(:total_pageviews) { 100 }
-
-      scenario 'page views show the page view count' do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[4]')).to have_content(total_pageviews)
-        end
-      end
+    scenario 'page views are not shown' do
+      expect(page).not_to have_content('Total views')
     end
   end
 
@@ -56,22 +44,11 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
       visit jobs_with_type_organisation_path(:expired)
     end
 
-    context 'page views are nil' do
-      scenario 'page views show zero' do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[4]')).to have_content('0')
-        end
-      end
-    end
 
-    context 'page views are present' do
-      let(:total_pageviews) { 100 }
+    # The removed tests for page view displays can be found in the git history.
 
-      scenario 'page views show the page view count' do
-        within("tr#organisation_vacancy_presenter_#{vacancy.id}") do
-          expect(page.find('td[4]')).to have_content(total_pageviews)
-        end
-      end
+    scenario 'page views are not shown' do
+      expect(page).not_to have_content('Total views')
     end
   end
 end
