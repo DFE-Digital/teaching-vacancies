@@ -3,8 +3,14 @@ import view from './autocomplete.view';
 export const renderAutocomplete = (widgetParams) => {
   view.create(widgetParams.container, widgetParams.input, widgetParams.onSelect);
 
-  widgetParams.input.addEventListener('input', () => {
-    const options = getOptions(widgetParams.dataset, widgetParams.input.value);
+  widgetParams.input.addEventListener('input', async () => {
+    let options;
+
+    if (widgetParams.input.value.length >= 3) {
+      options = await getOptions(widgetParams.input.value);
+    } else {
+      options = [];
+    }
 
     isActive(widgetParams.threshold, widgetParams.input.value)
       ? view.show(options, widgetParams.container, widgetParams.input)
@@ -14,7 +20,16 @@ export const renderAutocomplete = (widgetParams) => {
 
 export const isActive = (threshold, currentInput) => (currentInput ? currentInput.length >= threshold : false);
 
-export const getOptions = (dataset, query) => dataset.filter((option) => option.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+export const getOptions = async (query) => {
+  let options = [];
+  await fetch(`https://localhost:3000/api/v1/location_suggestion/${query}.json`)
+    .then((data) => data.json())
+    .then((data) => {
+      options = data.suggestions;
+    });
+
+  return options;
+};
 
 const autocomplete = {
   view,
