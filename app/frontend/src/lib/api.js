@@ -13,3 +13,11 @@ export const getPlaceOptionsFromSearchQuery = (query) => axios.get(`/api/v1/loca
   .catch((error) => {
     Rollbar.log(`${error} Search query: ${query}`);
   });
+
+const api = {
+  getGeolocatedCoordinates,
+  getPostcodeFromCoordinates,
+  getPlaceOptionsFromSearchQuery
+};
+
+export default api;

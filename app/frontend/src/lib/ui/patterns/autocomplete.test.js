@@ -1,5 +1,6 @@
-import autocomplete, { isActive, getOptions, renderAutocomplete } from './autocomplete';
+import autocomplete, { isActive, renderAutocomplete } from './autocomplete';
 import view, { show, hide } from './autocomplete.view';
+import api, { getPlaceOptionsFromSearchQuery } from '../../api';
 
 describe('autocomplete', () => {
   describe('isActive', () => {
@@ -11,27 +12,6 @@ describe('autocomplete', () => {
     test('doesnt activate autocomplete if threshold hasnt been met', () => {
       expect(isActive(3, 'so')).toBe(false);
       expect(isActive(3, '')).toBe(false);
-    });
-  });
-
-  const options = [
-    'apple',
-    'banana',
-    'apple apple',
-    'banana apple',
-    'applebanana',
-    'cherry',
-  ];
-
-  describe('getOptions', () => {
-    test('returns an array of matches from the options array that contain the supplied string', () => {
-      expect(getOptions(options, 'appl')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
-      expect(getOptions(options, 'a')).toEqual(['apple', 'banana', 'apple apple', 'banana apple', 'applebanana']);
-    });
-
-    test('does notreturn an array of matches from the options irrespective of letter case', () => {
-      expect(getOptions(options, 'Appl')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
-      expect(getOptions(options, 'ApPL')).toEqual(['apple', 'apple apple', 'banana apple', 'applebanana']);
     });
   });
 });
@@ -55,10 +35,13 @@ describe('autocomplete view', () => {
     autocomplete.view.focus = jest.fn();
     focusMock = jest.spyOn(autocomplete.view, 'focus');
 
+    const suggestions = ['option 1', 'option 2', 'choice 3'];
+
+    api.getPlaceOptionsFromSearchQuery = jest.fn(() => suggestions);
+
     renderAutocomplete({
       container,
       input,
-      dataset: ['option 1', 'option 2', 'choice 3'],
       threshold: 3,
       onSelect,
     });
