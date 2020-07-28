@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_27_095226) do
+ActiveRecord::Schema.define(version: 2020_07_28_145709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -106,6 +106,15 @@ ActiveRecord::Schema.define(version: 2020_07_27_095226) do
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
     t.index ["title"], name: "index_leaderships_on_title", unique: true
+  end
+
+  create_table "location_polygons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "location_type"
+    t.float "boundary", array: true
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
