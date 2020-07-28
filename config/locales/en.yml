@@ -574,6 +574,7 @@ en:
     phase: 'Education phase'
     type: 'School type'
     website: 'School website'
+    website_link_text: '%{school} website (opens in a new window)'
     search_label: 'School name'
     description: 'Description'
     school_age: 'School age'
