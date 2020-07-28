@@ -1,9 +1,13 @@
 module HiringStaff::JobCreationHelper
   NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS = 1
 
+  def school_group_user?
+    session[:uid].present?
+  end
+
   def current_step
     step = params[:create_step]
-    if session[:uid].present?
+    if school_group_user?
       step
     else
       step - NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS
@@ -17,7 +21,7 @@ module HiringStaff::JobCreationHelper
       { number: r.defaults[:create_step], title: r.defaults[:step_title] }
     }.sort_by { |r| r[:number] }.uniq { |r| r[:number] }
 
-    if session[:uid].blank?
+    unless school_group_user?
       steps = remove_school_group_user_only_steps(steps)
       steps = renumber_steps_for_single_school_users(steps)
     end
@@ -47,6 +51,8 @@ module HiringStaff::JobCreationHelper
     completed_step = 0
     if vacancy.present?
       completed_step = vacancy.completed_step.presence || 0
+    elsif session[:vacancy_attributes].present?
+      completed_step = session[:vacancy_attributes]['completed_step'].presence || 0
     end
     return 'app-step-nav__step--visited' if
       step_number != current_step && step_number <= completed_step
