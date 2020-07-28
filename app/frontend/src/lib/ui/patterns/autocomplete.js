@@ -1,35 +1,27 @@
 import view from './autocomplete.view';
+import { getPlaceOptionsFromSearchQuery } from '../../api';
 
 export const renderAutocomplete = (widgetParams) => {
   view.create(widgetParams.container, widgetParams.input, widgetParams.onSelect);
 
   widgetParams.input.addEventListener('input', async () => {
-    let options;
-
     if (widgetParams.input.value.length >= 3) {
-      options = await getOptions(widgetParams.input.value);
+      getPlaceOptionsFromSearchQuery(widgetParams.input.value).then((options) => {
+        updateLocationListBox(widgetParams, options);
+      });
     } else {
-      options = [];
+      updateLocationListBox(widgetParams, []);
     }
-
-    isActive(widgetParams.threshold, widgetParams.input.value)
-      ? view.show(options, widgetParams.container, widgetParams.input)
-      : view.hide(widgetParams.container, widgetParams.input);
   });
 };
 
-export const isActive = (threshold, currentInput) => (currentInput ? currentInput.length >= threshold : false);
-
-export const getOptions = async (query) => {
-  let options = [];
-  await fetch(`https://localhost:3000/api/v1/location_suggestion/${query}.json`)
-    .then((data) => data.json())
-    .then((data) => {
-      options = data.suggestions;
-    });
-
-  return options;
+export const updateLocationListBox = (widgetParams, options) => {
+  isActive(widgetParams.threshold, widgetParams.input.value)
+    ? view.show(options, widgetParams.container, widgetParams.input)
+    : view.hide(widgetParams.container, widgetParams.input);
 };
+
+export const isActive = (threshold, currentInput) => (currentInput ? currentInput.length >= threshold : false);
 
 const autocomplete = {
   view,
