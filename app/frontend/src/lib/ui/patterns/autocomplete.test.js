@@ -1,6 +1,6 @@
 import autocomplete, { isActive, renderAutocomplete } from './autocomplete';
 import view, { show, hide } from './autocomplete.view';
-import api, { getPlaceOptionsFromSearchQuery } from '../../api';
+import api, { getLocationSuggestionsFromSearchQuery } from '../../api';
 
 describe('autocomplete', () => {
   describe('isActive', () => {
@@ -37,7 +37,7 @@ describe('autocomplete view', () => {
 
     const suggestions = ['option 1', 'option 2', 'choice 3'];
 
-    api.getPlaceOptionsFromSearchQuery = jest.fn(() => suggestions);
+    api.getLocationSuggestionsFromSearchQuery = jest.fn(() => suggestions);
 
     renderAutocomplete({
       container,

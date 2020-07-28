@@ -7,7 +7,7 @@ export const getPostcodeFromCoordinates = (latitude, longitude) => axios.get('ht
   params: { latitude, longitude },
 }).then((response) => response.data);
 
-export const getPlaceOptionsFromSearchQuery = (query) => axios.get(`/api/v1/location_suggestion/${query}.json`)
+export const getLocationSuggestionsFromSearchQuery = (query) => axios.get(`/api/v1/location_suggestion/${query}.json`)
   .then((response) => response.data)
   .then((data) => data.suggestions)
   .catch((error) => {
@@ -17,7 +17,7 @@ export const getPlaceOptionsFromSearchQuery = (query) => axios.get(`/api/v1/loca
 const api = {
   getGeolocatedCoordinates,
   getPostcodeFromCoordinates,
-  getPlaceOptionsFromSearchQuery
+  getLocationSuggestionsFromSearchQuery
 };
 
 export default api;
