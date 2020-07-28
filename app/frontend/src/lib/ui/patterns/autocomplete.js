@@ -1,13 +1,13 @@
 import view from './autocomplete.view';
-import { getPlaceOptionsFromSearchQuery } from '../../api';
+import { getLocationSuggestionsFromSearchQuery } from '../../api';
 
 export const renderAutocomplete = (widgetParams) => {
   view.create(widgetParams.container, widgetParams.input, widgetParams.onSelect);
 
   widgetParams.input.addEventListener('input', async () => {
     if (widgetParams.input.value.length >= 3) {
-      getPlaceOptionsFromSearchQuery(widgetParams.input.value).then((options) => {
-        updateLocationListBox(widgetParams, options);
+      getLocationSuggestionsFromSearchQuery(widgetParams.input.value).then((suggestions) => {
+        updateLocationListBox(widgetParams, suggestions);
       });
     } else {
       updateLocationListBox(widgetParams, []);
