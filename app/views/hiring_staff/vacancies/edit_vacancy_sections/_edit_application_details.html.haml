@@ -18,7 +18,7 @@
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#school_visits
-      %h4.govuk-heading-s= t("jobs.#{organisation}")
+      %h4.govuk-heading-s= t("jobs.#{organisation_type_basic(@vacancy.school_or_school_group)}_visits")
     %dd.app-check-your-answers__answer= @vacancy.school_visits.presence || t('jobs.not_defined')
 
   .app-check-your-answers__contents
