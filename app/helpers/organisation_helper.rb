@@ -35,7 +35,7 @@ module OrganisationHelper
     if school.minimum_age && school.maximum_age?
       "#{school.minimum_age} to #{school.maximum_age}"
     else
-      t('schools.not_given')
+      I18n.t('schools.not_given')
     end
   end
 
