@@ -17,6 +17,14 @@ module OrganisationHelper
     end
   end
 
+  def organisation_type_basic(organisation)
+    if organisation.is_a?(School)
+      'school'
+    else
+      'trust'
+    end
+  end
+
   def school_size(school)
     if school.gias_data.present?
       return number_of_pupils(school) if school.gias_data['NumberOfPupils'].present?

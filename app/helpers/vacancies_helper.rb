@@ -71,12 +71,10 @@ module VacanciesHelper
   end
 
   def page_title(vacancy)
-    organisation = vacancy.school_or_school_group.present? ? vacancy.school_or_school_group.name : ''
-
     if vacancy.state == 'copy'
       I18n.t('jobs.copy_job_title', job_title: vacancy.job_title)
     elsif %w(create review).include?(vacancy.state)
-      I18n.t('jobs.create_a_job_title', organisation: "#{organisation}")
+      I18n.t('jobs.create_a_job_title', organisation: vacancy.school_or_school_group&.name.presence || '')
     else
       I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
     end
