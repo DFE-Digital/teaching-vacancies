@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SchoolOverviewComponent, type: :component do
+RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   let(:school) { create(:school) }
   let(:vacancy) { create(:vacancy, school: school) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }

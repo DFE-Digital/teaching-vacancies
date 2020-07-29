@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VacancySummaryComponent, type: :component do
+RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   context 'when vacancy organisation is a school' do
     let(:school) { create(:school) }
     let(:vacancy) { create(:vacancy, school: school) }

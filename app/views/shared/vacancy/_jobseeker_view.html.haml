@@ -29,12 +29,12 @@
             - else
               = t('schools.school_overview')
 
-      = render(VacancyDetailsComponent.new(vacancy: @vacancy))
+      = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
 
       - if @vacancy.school_group
-        = render(SchoolGroupOverviewComponent.new(vacancy: @vacancy))
+        = render(Jobseekers::SchoolGroupOverviewComponent.new(vacancy: @vacancy))
       - else
-        = render(SchoolOverviewComponent.new(vacancy: @vacancy))
+        = render(Jobseekers::SchoolOverviewComponent.new(vacancy: @vacancy))
 
     %section
       %h4.govuk-heading-s.share-this-job

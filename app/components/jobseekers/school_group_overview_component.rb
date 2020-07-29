@@ -1,4 +1,4 @@
-class SchoolGroupOverviewComponent < ViewComponent::Base
+class Jobseekers::SchoolGroupOverviewComponent < ViewComponent::Base
   include OrganisationHelper
   include VacanciesHelper
 
