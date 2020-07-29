@@ -1,4 +1,4 @@
-class VacancySummaryComponent < ViewComponent::Base
+class Jobseekers::VacancySummaryComponent < ViewComponent::Base
   include OrganisationHelper
   include DatesHelper
   include VacanciesHelper
