@@ -158,7 +158,7 @@ RSpec.describe Subscription, type: :model do
         .to receive(:expired_now_filter)
         .and_return(expired_now.to_datetime.to_i)
       allow(vacancies).to receive(:count).and_return(10)
-      mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
+      mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
     end
 
     after { travel_back }

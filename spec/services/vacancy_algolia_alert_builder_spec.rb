@@ -21,7 +21,8 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
       aroundRadius: location_radius,
       replica: search_replica,
       hitsPerPage: max_subscription_results,
-      filters: search_filter
+      filters: search_filter,
+      typoTolerance: false
     }
   end
 
@@ -100,7 +101,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
       before do
         allow(vacancies).to receive(:count).and_return(10)
-        mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
+        mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
       end
 
       it 'carries out alert search with correct criteria' do
@@ -132,7 +133,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
       before do
         allow(vacancies).to receive(:count).and_return(10)
-        mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
+        mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
       end
 
       it 'carries out alert search with correct criteria' do
