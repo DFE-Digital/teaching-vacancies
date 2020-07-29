@@ -1,4 +1,4 @@
-class Organisations::SchoolOverviewComponent < ViewComponent::Base
+class HiringStaff::SchoolOverviewComponent < ViewComponent::Base
   include OrganisationHelper
 
   def initialize(organisation:)
