@@ -328,11 +328,16 @@ RSpec.describe Vacancy, type: :model do
           expired = build(:vacancy, :expired)
           expired.send :set_slug
           expired.save(validate: false)
+
           create_list(:vacancy, 3, :future_publish)
-          create_list(:vacancy, 4, :trashed)
+
+          trashed = build(:vacancy, :trashed)
+          trashed.send :set_slug
+          trashed.save(validate: false)
 
           expect(Vacancy.live.count).to eq(live.count)
           expect(Vacancy.live).to_not include(expired)
+          expect(Vacancy.live).to_not include(trashed)
         end
 
         it 'includes vacancies that expire today' do
