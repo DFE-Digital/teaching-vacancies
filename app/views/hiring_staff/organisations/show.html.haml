@@ -20,4 +20,4 @@
       - else
         = render partial: 'no_vacancies', locals: { organisation: @organisation }
 
-  = render(Organisations::SchoolOverviewComponent.new(organisation: @organisation))
+  = render(HiringStaff::SchoolOverviewComponent.new(organisation: @organisation))

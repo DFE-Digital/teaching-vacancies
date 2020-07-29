@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Organisations::SchoolOverviewComponent, type: :component do
+RSpec.describe HiringStaff::SchoolOverviewComponent, type: :component do
   let!(:inline_component) { render_inline(described_class.new(organisation: organisation)) }
 
   context 'when organisation is a SchoolGroup' do

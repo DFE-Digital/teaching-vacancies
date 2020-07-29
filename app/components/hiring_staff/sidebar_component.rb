@@ -1,4 +1,4 @@
-class CreateAJobSidebarComponent < ViewComponent::Base
+class HiringStaff::SidebarComponent < ViewComponent::Base
   delegate :set_active_step_class, to: :helpers
   delegate :set_visited_step_class, to: :helpers
   delegate :steps_to_display, to: :helpers

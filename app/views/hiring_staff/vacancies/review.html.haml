@@ -34,4 +34,4 @@
     = link_to t('buttons.back_to_manage_jobs'), jobs_with_type_organisation_path('draft', from_review: @vacancy.id), class: 'govuk-link govuk-link--no-visited-state'
 
   .govuk-grid-column-one-third
-    = render(CreateAJobSidebarComponent.new(vacancy: @vacancy))
+    = render(HiringStaff::SidebarComponent.new(vacancy: @vacancy))

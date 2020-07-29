@@ -36,7 +36,7 @@
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
   .govuk-grid-column-one-third
-    = render(CreateAJobSidebarComponent.new(vacancy: @vacancy))
+    = render(HiringStaff::SidebarComponent.new(vacancy: @vacancy))
 
 - content_for :after_main do
   = render 'shared/file_remove_confirmation_dialogue'

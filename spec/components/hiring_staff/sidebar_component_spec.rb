@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CreateAJobSidebarComponent, type: :component do
+RSpec.describe HiringStaff::SidebarComponent, type: :component do
   let(:vacancy) { create(:vacancy, completed_step: completed_step) }
   let(:completed_step) { 0 }
   let(:current_step) { 1 }
