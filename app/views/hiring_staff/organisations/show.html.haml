@@ -17,7 +17,6 @@
           = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0'
         .overflow-scroll
           = render partial: 'vacancies', locals: { organisation: @organisation, vacancies: @vacancies }
-      - else
-        = render partial: 'no_vacancies', locals: { organisation: @organisation }
+      = render(HiringStaff::NoVacanciesComponent.new(organisation: @organisation))
 
   = render(HiringStaff::SchoolOverviewComponent.new(organisation: @organisation))
