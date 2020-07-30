@@ -37,11 +37,13 @@ FactoryBot.define do
       association :school, strategy: :null
       association :school_group
       job_location { 'central_office' }
+      readable_job_location { 'Trust head office' }
     end
 
     trait :with_school_group_at_school do
       association :school_group
       job_location { 'at_one_school' }
+      readable_job_location { school.name }
     end
 
     trait :fail_minimum_validation do
