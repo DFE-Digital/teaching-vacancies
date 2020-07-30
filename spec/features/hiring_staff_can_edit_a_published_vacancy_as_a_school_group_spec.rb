@@ -18,7 +18,7 @@ RSpec.feature 'Editing a published vacancy' do
     scenario 'can edit job location' do
       visit edit_organisation_job_path(vacancy.id)
 
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
+      expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.central_office'))
       expect(page).to have_content(location(school_group))
 
       click_header_link(I18n.t('jobs.job_location'))
@@ -31,7 +31,7 @@ RSpec.feature 'Editing a published vacancy' do
       click_on I18n.t('buttons.update_job')
 
       expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
+      expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.at_one_school'))
       expect(page).to have_content(location(school_1))
 
       click_header_link(I18n.t('jobs.job_location'))
@@ -44,7 +44,7 @@ RSpec.feature 'Editing a published vacancy' do
       click_on I18n.t('buttons.update_job')
 
       expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
+      expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.at_one_school'))
       expect(page).to have_content(location(school_2))
 
       click_header_link(I18n.t('jobs.job_location'))
@@ -53,7 +53,7 @@ RSpec.feature 'Editing a published vacancy' do
       click_on I18n.t('buttons.update_job')
 
       expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
-      expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
+      expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.central_office'))
       expect(page).to have_content(location(school_group))
     end
   end
