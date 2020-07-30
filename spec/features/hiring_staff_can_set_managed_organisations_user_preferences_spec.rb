@@ -42,7 +42,7 @@ RSpec.feature 'Hiring staff can set managed organisations user preferences' do
 
     click_on I18n.t('buttons.continue')
 
-    expect(page.current_path).to eql(school_group_temporary_path)
+    expect(page.current_path).to eql(organisation_path)
     expect(user_preference.managed_organisations).to eql('school_group')
     expect(user_preference.managed_school_urns).to eql([school_1.urn])
   end

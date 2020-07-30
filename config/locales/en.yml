@@ -342,6 +342,7 @@ en:
     copy_review_heading: Review the new job listing
     edit_job_title: 'Edit %{job_title}'
     job_location: 'Job location'
+    location: Location
     pay_package: 'Pay package'
     important_dates: 'Important dates and deadlines'
     supporting_documents: 'Supporting documents'
@@ -447,10 +448,15 @@ en:
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
     published_jobs: Published jobs
+    published_jobs_with_count: '%{count} Published jobs'
     pending_jobs: Scheduled jobs
+    pending_jobs_with_count: '%{count} Scheduled jobs'
     draft_jobs: Draft jobs
+    draft_jobs_with_count: '%{count} Draft jobs'
     expired_jobs: Expired jobs
+    expired_jobs_with_count: '%{count} Expired jobs'
     awaiting_feedback_jobs: Jobs awaiting feedback
+    awaiting_feedback_jobs_with_count: '%{count} Jobs awaiting feedback'
     expired_on: Expired on
     no_published_jobs: You currently have no published jobs
     no_expired_jobs: You currently have no expired jobs

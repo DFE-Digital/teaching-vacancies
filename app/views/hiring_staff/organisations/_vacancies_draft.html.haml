@@ -1,16 +1,18 @@
 %section.govuk-tabs__panel
-    %h2.govuk-heading-m= t("jobs.draft_jobs")
+  %h2.govuk-heading-m= t("jobs.draft_jobs_with_count", count: vacancies.count)
 
-    - if presenter.vacancies.any?
-        %table{ class: 'vacancies govuk-table govuk-!-margin-top-4' }
-            %thead.govuk-table__head
-                %tr.govuk-table__row
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.job_title'), 'draft', column: 'job_title', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.draft.time_created'), 'draft', column: 'created_at', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.draft.time_updated'), 'draft', column: 'updated_at', sort: @sort)
-                    %th.govuk-table__header{ colspan: 2}= t('jobs.actions')
-            %tbody.govuk-table__body
-                - presenter.vacancies.each do |vacancy|
-                    = render partial: 'vacancy_draft', locals: { vacancy: vacancy, organisation: presenter.organisation }
-    - else
-        %p= t("jobs.no_draft_jobs")
+  - if vacancies.any?
+    %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), "draft", column: "job_title", sort: sort)
+          - if organisation.is_a?(SchoolGroup)
+            %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "draft", column: "readable_job_location", sort: sort)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.draft.time_created"), "draft", column: "created_at", sort: sort)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.draft.time_updated"), "draft", column: "updated_at", sort: sort)
+          %th.govuk-table__header{ colspan: 2 }= t("jobs.actions")
+      %tbody.govuk-table__body
+        - vacancies.each do |vacancy|
+          = render "hiring_staff/organisations/vacancy_draft", vacancy: vacancy, organisation: organisation
+  - else
+    %p.govuk-body= t("jobs.no_draft_jobs")

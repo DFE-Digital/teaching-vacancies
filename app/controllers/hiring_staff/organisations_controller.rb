@@ -1,13 +1,11 @@
 class HiringStaff::OrganisationsController < HiringStaff::BaseController
-  before_action :redirect_to_user_preferences, except: :placeholder
-
-  def placeholder; end
+  before_action :redirect_to_user_preferences
 
   def show
     @multiple_organisations = session_has_multiple_organisations?
     @organisation = current_organisation
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    @vacancies_presenter = OrganisationVacanciesPresenter.new(@organisation, @sort, params[:type])
+    @selected_type = params[:type]
     @awaiting_feedback_count = @organisation.vacancies.awaiting_feedback.count
 
     render_draft_saved_message if params[:from_review]
@@ -43,9 +41,6 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
   def redirect_to_user_preferences
     if current_organisation.is_a?(SchoolGroup) && current_user_preferences.nil?
       redirect_to organisation_managed_organisations_path
-    # TODO: Remove when organisations controller can tolerate SchoolGroup objects
-    elsif current_organisation.is_a?(SchoolGroup)
-      redirect_to school_group_temporary_path
     end
   end
 

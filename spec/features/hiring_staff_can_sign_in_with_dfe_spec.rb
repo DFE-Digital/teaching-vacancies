@@ -145,7 +145,7 @@ RSpec.feature 'Hiring staff signing-in with DfE Sign In' do
         scenario 'it redirects the sign in page to the SchoolGroup page' do
           visit new_identifications_path
           expect(page).to have_content("Jobs at #{organisation.name}")
-          expect(current_path).to eql(school_group_temporary_path)
+          expect(current_path).to eql(organisation_path)
         end
       end
 

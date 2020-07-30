@@ -18,9 +18,14 @@ module HiringStaff::SchoolsHelper
     params.merge(overwrite).permit(school_vacancy_params_whitelist)
   end
 
-  def awaiting_feedback_badge(count)
-    return if count.zero?
-
-    tag.span count, class: 'notification', 'data-test': 'expired-vacancies-with-feedback-outstanding'
+  def awaiting_feedback_tab(count)
+    if count.zero?
+      t('jobs.awaiting_feedback_jobs')
+    else
+      content_tag :span do
+        content_tag(:span, t('jobs.awaiting_feedback_jobs')) +
+        content_tag(:span, count, class: 'notification', data: { test: 'expired-vacancies-with-feedback-outstanding' })
+      end
+    end
   end
 end

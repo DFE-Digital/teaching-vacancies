@@ -1,0 +1,11 @@
+.dashboard-header
+  = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0"
+.overflow-scroll
+  .govuk-tabs
+    %h2.govuk-tabs__title= t("aria_labels.content")
+    %ul.govuk-tabs__list.tab-list{ class: "govuk-!-margin-top-6" }
+      - @vacancy_types.each do |vacancy_type|
+        %li.govuk-tabs__list-item{ class: selected_class(vacancy_type) }
+          = vacancy_type_tab_link(vacancy_type)
+
+    = render "hiring_staff/organisations/vacancies_#{@selected_type}", organisation: @organisation, vacancies: @vacancies, sort: @sort

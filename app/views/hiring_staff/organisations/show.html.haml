@@ -12,11 +12,7 @@
 
   .govuk-grid-column-full
     .govuk-form-group
-      - if @organisation.vacancies.active.any?
-        .dashboard-header
-          = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0'
-        .overflow-scroll
-          = render partial: 'vacancies', locals: { organisation: @organisation, vacancies: @vacancies }
+      = render(HiringStaff::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type))
       = render(HiringStaff::NoVacanciesComponent.new(organisation: @organisation))
 
   = render(HiringStaff::SchoolOverviewComponent.new(organisation: @organisation))
