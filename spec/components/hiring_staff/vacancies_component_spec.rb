@@ -17,9 +17,10 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
   context 'when organisation has active vacancies' do
     let(:organisation) { create(:school, name: 'A school with jobs') }
     let!(:vacancy) { create(:vacancy, :published, school: organisation) }
-    let!(:inline_component) do
-      render_inline(described_class.new(organisation: organisation, sort: sort, selected_type: selected_type))
+    let!(:component) do
+      described_class.new(organisation: organisation, sort: sort, selected_type: selected_type)
     end
+    let!(:inline_component) { render_inline(component) }
 
     it 'renders the vacancies component' do
       expect(inline_component.css('.govuk-tabs').to_html).not_to be_blank
@@ -50,6 +51,37 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
           inline_component.css('.govuk-table.vacancies > tbody > tr > td#vacancy_location').to_html
         ).to include(vacancy.readable_job_location)
       end
+    end
+  end
+
+  # Unit test for now, until we use the method in a feature
+  describe '#job_location_options' do
+    let!(:school_group) { create(:school_group) }
+    let!(:school_1) { create(:school, name: 'A school with two jobs') }
+    let!(:school_2) { create(:school, name: 'A school with no jobs') }
+
+    let(:component) do
+      described_class.new(organisation: school_group, sort: sort, selected_type: selected_type)
+    end
+
+    before do
+      create(:vacancy, :published, :with_school_group_at_school,
+        school: school_1,
+        school_group: school_group)
+      create(:vacancy, :published, :with_school_group_at_school,
+        school: school_1,
+        school_group: school_group)
+      create(:vacancy, :published, :with_school_group, school_group: school_group)
+      school_group.schools = [school_1, school_2]
+      school_group.save
+    end
+
+    it 'lists the school names, trust head office, and the number of published jobs at each' do
+      expect(component.instance_variable_get(:@job_location_options)).to eq([
+          'Trust head office (1)',
+          'A school with no jobs (0)',
+          'A school with two jobs (2)'
+      ])
     end
   end
 end
