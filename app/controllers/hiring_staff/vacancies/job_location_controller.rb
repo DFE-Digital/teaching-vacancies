@@ -15,8 +15,8 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   end
 
   def create
+    @form.vacancy.readable_job_location = readable_job_location(@form.vacancy.job_location)
     store_vacancy_attributes(@form.vacancy.attributes)
-
     if @form.valid?
       redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
@@ -26,6 +26,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
 
   def update
     if @form.valid?
+      @vacancy.update(readable_job_location: readable_job_location(@form.vacancy.job_location))
       @vacancy.update(school_id: nil) if @form.job_location == 'central_office'
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
@@ -61,5 +62,9 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     else
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
+  end
+
+  def readable_job_location(job_location)
+    I18n.t('hiring_staff.organisations.school_groups.readable_job_location') if job_location == 'central_office'
   end
 end

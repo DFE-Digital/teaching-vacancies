@@ -16,6 +16,9 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def create
+    @form.vacancy.readable_job_location = readable_job_location(
+      session[:vacancy_attributes]['job_location'], @form.vacancy.school.name
+    )
     store_vacancy_attributes(@form.vacancy.attributes)
     if @form.valid?
       redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
@@ -26,6 +29,9 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
 
   def update
     if @form.valid?
+      @vacancy.update(
+        readable_job_location: readable_job_location(@vacancy.job_location, @form.vacancy.school.name)
+      )
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
@@ -51,5 +57,9 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
 
   def set_school_options
     @school_options = current_organisation.schools
+  end
+
+  def readable_job_location(job_location, school_name)
+    school_name if job_location == 'at_one_school'
   end
 end

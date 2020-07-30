@@ -46,6 +46,9 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         expect(Vacancy.last.state).to eql('create')
+        expect(Vacancy.last.readable_job_location).to eql(
+          I18n.t('hiring_staff.organisations.school_groups.readable_job_location')
+        )
         activity = Vacancy.last.activities.last
         expect(activity.session_id).to eql(session_id)
         expect(activity.key).to eql('vacancy.create')
@@ -104,6 +107,7 @@ RSpec.feature 'Creating a vacancy' do
         click_on I18n.t('buttons.continue')
 
         expect(Vacancy.last.state).to eql('create')
+        expect(Vacancy.last.readable_job_location).to eql(school.name)
         activity = Vacancy.last.activities.last
         expect(activity.session_id).to eql(session_id)
         expect(activity.key).to eql('vacancy.create')
