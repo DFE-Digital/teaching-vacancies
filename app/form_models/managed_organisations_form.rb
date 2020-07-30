@@ -1,5 +1,6 @@
 class ManagedOrganisationsForm
   include ActiveModel::Model
+  include OrganisationHelper
 
   attr_accessor :current_preference, :current_organisation, :current_user,
                 :managed_organisations, :managed_school_urns, :school_options
@@ -14,8 +15,9 @@ class ManagedOrganisationsForm
     )
     @managed_organisations = params[:managed_organisations] || current_preference.managed_organisations
     @managed_school_urns = params[:managed_school_urns] || current_preference.managed_school_urns
-    @school_options = current_organisation.schools.present? ?
-      current_organisation.schools.sort_by { |school| school.name } : []
+    @school_options = current_organisation.schools.order(:name).map do |school|
+      OpenStruct.new({ name: school.name, urn: school.urn, address: full_address(school) })
+    end
   end
 
   def save
