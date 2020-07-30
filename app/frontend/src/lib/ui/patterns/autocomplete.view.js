@@ -1,11 +1,11 @@
 import '../../polyfill/after.polyfill';
 
-export const create = (container, input, onSelect = () => {}) => {
+export const create = (container, input, key) => {
   if (!getRenderedList(container)) {
     const ul = document.createElement('ul');
-    ul.setAttribute('id', 'location__listbox');
+    ul.setAttribute('id', `${key}__listbox`);
     ul.setAttribute('role', 'listbox');
-    ul.setAttribute('aria-label', 'Suggested locations');
+    ul.setAttribute('aria-label', `Suggested ${key}s`);
     ul.setAttribute('tabindex', -1);
 
     ul.classList.add('autocomplete__menu');
@@ -18,9 +18,8 @@ export const create = (container, input, onSelect = () => {}) => {
     });
 
     ul.addEventListener('click', (e) => {
-      input.value = e.target.dataset.location;
+      setInputValue(e.target.dataset[key]);
       input.dispatchEvent(new Event('change', { bubbles: true }));
-      onSelect(e.target.dataset.location);
     });
 
     input.addEventListener('keyup', (e) => {
@@ -28,10 +27,10 @@ export const create = (container, input, onSelect = () => {}) => {
 
       switch (e.code) {
         case 'ArrowDown':
-          autocomplete.focus(container, 'next', input);
+          autocomplete.focus(container, 'next', input, key);
           break;
         case 'ArrowUp':
-          autocomplete.focus(container, 'previous', input);
+          autocomplete.focus(container, 'previous', input, key);
           break;
         default:
           break;
@@ -40,15 +39,15 @@ export const create = (container, input, onSelect = () => {}) => {
   }
 };
 
-export const show = (options, container, input) => {
-  autocomplete.render(options, container, input);
+export const show = (options, container, input, key) => {
+  autocomplete.render(options, container, input, key);
 
   getRenderedList(container).classList.add('autocomplete__menu--visible');
   getRenderedList(container).classList.remove('autocomplete__menu--hidden');
   input.setAttribute('aria-expanded', true);
 
   Array.from(getCurrentOptionElementsArray(container))
-    .forEach((element) => element.addEventListener('focus', (e) => setInputValue(input, e.target.dataset.location), true));
+    .forEach((element) => element.addEventListener('focus', (e) => setInputValue(input, e.target.dataset[key]), true));
 };
 
 export const setInputValue = (input, value) => {
@@ -61,15 +60,15 @@ export const hide = (container, input) => {
   input.setAttribute('aria-expanded', false);
 };
 
-export const render = (options, container, input) => {
-  container.querySelector('ul').innerHTML = options.map(getOptionHtml(input.value)).join('');
+export const render = (options, container, input, key) => {
+  container.querySelector('ul').innerHTML = options.map(getOptionHtml(input.value, key)).join('');
 };
 
 export const getRenderedList = (container) => container.querySelector('ul');
 
 export const isPopulated = (container) => getCurrentOptionElementsArray(container).length;
 
-export const focus = (container, direction, input) => {
+export const focus = (container, direction, input, key) => {
   if (isPopulated(container)) {
     const elements = getFocusableOptions(container);
 
@@ -81,7 +80,7 @@ export const focus = (container, direction, input) => {
       elements[direction].classList.add('autocomplete__option--focused');
     }
 
-    input.value = elements[direction] ? elements[direction].dataset.location : '';
+    input.value = elements[direction] ? elements[direction].dataset[key] : '';
   }
 };
 
@@ -102,10 +101,10 @@ export const getOptionIndex = (el) => parseInt(el.getAttribute('aria-posinset'),
 
 export const getFocusedOption = (container) => container.getElementsByClassName('autocomplete__option--focused')[0];
 
-export const getOptionHtml = (refinement) => (hit, index, options) => `
+export const getOptionHtml = (refinement, key) => (hit, index, options) => `
 <li class="autocomplete__option" id="autocomplete__input__option--${index}"
 role="option" tabindex="-1" aria-setsize="${options.length + 1}" aria-posinset=${index}
-data-location="${hit}">
+data-${key}="${hit}">
 ${highlightRefinement(hit, refinement)}
 </li>`;
 
