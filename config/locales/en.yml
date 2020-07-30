@@ -58,6 +58,8 @@ en:
             or the information isn't correct, please %{mail_to}.
         edit:
           title: Change description
+      school_groups:
+        readable_job_location: Trust head office
     temp_login:
       heading: Temporary login
       please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
