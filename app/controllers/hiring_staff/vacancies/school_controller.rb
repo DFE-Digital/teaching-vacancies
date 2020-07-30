@@ -1,4 +1,6 @@
 class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::ApplicationController
+  include OrganisationHelper
+
   before_action :verify_school_group
   before_action :set_up_url
   before_action :set_school_options, only: %i[show update]
@@ -56,7 +58,9 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def set_school_options
-    @school_options = current_organisation.schools
+    @school_options = current_organisation.schools.order(:name).map do |school|
+      OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
+    end
   end
 
   def readable_job_location(job_location, school_name)
