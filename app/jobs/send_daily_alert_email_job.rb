@@ -17,6 +17,7 @@ class SendDailyAlertEmailJob < ApplicationJob
   end
 
   def vacancies_for_subscription(subscription)
-    subscription.vacancies_for_range(Time.zone.yesterday, Time.zone.today).limit(500)
+    subscription.vacancies_for_range(Time.zone.yesterday, Time.zone.today)
+      .limit(VacancyAlgoliaAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS)
   end
 end

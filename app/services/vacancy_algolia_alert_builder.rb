@@ -27,7 +27,8 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
       aroundRadius: location_filter[:radius],
       replica: search_replica,
       hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
-      filters: search_filter
+      filters: search_filter,
+      typoTolerance: false
     )
     Rails.logger.info(
       "#{vacancies.count} vacancies found for job alert with criteria: #{subscription_hash}, "\

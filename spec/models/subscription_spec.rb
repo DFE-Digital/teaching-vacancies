@@ -148,7 +148,7 @@ RSpec.describe Subscription, type: :model do
     let(:algolia_search_args) do
       {
         filters: search_filter,
-        hitsPerPage: 500
+        hitsPerPage: VacancyAlgoliaAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS
       }
     end
 
@@ -158,7 +158,7 @@ RSpec.describe Subscription, type: :model do
         .to receive(:expired_now_filter)
         .and_return(expired_now.to_datetime.to_i)
       allow(vacancies).to receive(:count).and_return(10)
-      mock_algolia_search(vacancies, algolia_search_query, algolia_search_args)
+      mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
     end
 
     after { travel_back }
