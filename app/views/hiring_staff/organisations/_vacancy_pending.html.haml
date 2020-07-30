@@ -1,5 +1,7 @@
 %tr.govuk-table__row.vacancy[vacancy]
   %td.govuk-table__cell= link_to vacancy.job_title, vacancy.preview_path, class: 'govuk-link view-vacancy-link'
+  - if organisation.is_a?(SchoolGroup)
+    %td.govuk-table__cell#vacancy_location= vacancy.readable_job_location
   %td.govuk-table__cell= vacancy.publish_on
   %td.govuk-table__cell= vacancy.expires_on
   %td.govuk-table__cell= link_to t('jobs.edit_link'), vacancy.edit_path, class: 'govuk-link'
