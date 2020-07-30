@@ -1,18 +1,19 @@
-
 %section.govuk-tabs__panel
-    %h2.govuk-heading-m= t("jobs.expired_jobs")
+  %h2.govuk-heading-m= t("jobs.expired_jobs_with_count", count: vacancies.count)
 
-    - if presenter.vacancies.any?
-        %table{ class: 'vacancies govuk-table govuk-!-margin-top-4' }
-            %thead.govuk-table__head
-                %tr.govuk-table__row
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.job_title'), 'expired', column: 'job_title', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.publish_on'), 'expired', column: 'publish_on', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.expired_on'), 'expired', column: 'expires_on', sort: @sort)
-                    %th.govuk-table__header= table_header_sort_by(t('jobs.page_views'), 'expired', column: 'total_pageviews', sort: @sort)
-                    %th.govuk-table__header{ colspan: 2 }= t('jobs.actions')
-            %tbody.govuk-table__body
-                - presenter.vacancies.each do |vacancy|
-                    = render partial: 'vacancy_expired', locals: { vacancy: vacancy, organisation: presenter.organisation }
-    - else
-        %p= t("jobs.no_expired_jobs")
+  - if vacancies.any?
+    %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
+      %thead.govuk-table__head
+        %tr.govuk-table__row
+          %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), "expired", column: "job_title", sort: sort)
+          - if organisation.is_a?(SchoolGroup)
+            %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "expired", column: "readable_job_location", sort: sort)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.publish_on"), "expired", column: "publish_on", sort: sort)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.expired_on"), "expired", column: "expires_on", sort: sort)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.page_views"), "expired", column: "total_pageviews", sort: sort)
+          %th.govuk-table__header{ colspan: 2 }= t("jobs.actions")
+      %tbody.govuk-table__body
+        - vacancies.each do |vacancy|
+          = render "hiring_staff/organisations/vacancy_expired", vacancy: vacancy, organisation: organisation
+  - else
+    %p.govuk-body= t("jobs.no_expired_jobs")
