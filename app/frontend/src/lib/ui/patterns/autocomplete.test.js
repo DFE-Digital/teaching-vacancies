@@ -78,7 +78,7 @@ describe('autocomplete view', () => {
       expect(hideMock).toHaveBeenCalledWith(container, input);
     });
 
-    test('input shows options', () => {
+    test('when user inputs number of characters above threshhold the options are retrieved', () => {
       input.value = 'option';
       const event = new Event('input');
       input.dispatchEvent(event);
@@ -86,7 +86,7 @@ describe('autocomplete view', () => {
       expect(showOptionsMock).toHaveBeenCalledWith(getOptions, container, input, key);
     });
 
-    test('input clears options', () => {
+    test('when user inputs number of characters below threshhold the options are cleared', () => {
       input.value = 'op';
       const event = new Event('input');
       input.dispatchEvent(event);
@@ -94,13 +94,13 @@ describe('autocomplete view', () => {
       expect(clearOptionsMock).toHaveBeenCalledWith(container, input);
     });
 
-    test('clears options', () => {
+    test('clears options calls the appropriate show options method in the view', () => {
       clearOptions(container, input);
       expect(hideMock).toHaveBeenCalledTimes(1);
       expect(hideMock).toHaveBeenCalledWith(container, input);
     });
 
-    test('shows options', () => {
+    test('shows suggestions when the promise is resolved with options ', () => {
       showOptions(() => Promise.resolve(suggestions), container, input, key).then(() => {
         expect(showMock).toHaveBeenCalledTimes(1);
         expect(showMock).toHaveBeenCalledWith(suggestions, container, input, key);
