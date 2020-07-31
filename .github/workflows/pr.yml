@@ -81,7 +81,7 @@ jobs:
         TF_VAR_app_stopped : true
         TF_VAR_papertrail_url: ${{ secrets.PAPERTRAIL_URL_DEV }}
     
-    - name: terraform destory (on PR closed)
+    - name: terraform destroy (on PR closed)
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
       working-directory: ./terraform/paas
       run: |
