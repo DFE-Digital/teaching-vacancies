@@ -65,7 +65,7 @@ RSpec.describe LocationSuggestion do
         'terms': [{ 'offset': 0, 'value': 'different_place' }, { 'offset': 5, 'value': 'UK' }] }
     ] }
 
-    let(:suggestions) { ['place, region', 'different_place, region'] }
+    let(:suggestions) { ['place, region, UK', 'different_place, region, UK'] }
     let(:matched_terms) { [['place'], ['different_place']] }
 
     before do
