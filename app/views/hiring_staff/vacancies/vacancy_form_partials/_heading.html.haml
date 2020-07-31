@@ -1,5 +1,5 @@
 %h1.govuk-heading-m
-  = @vacancy.present? ? page_title(@vacancy) : t('jobs.create_a_job_title_no_org')
+  = @vacancy.present? ? page_title(@vacancy) : page_title_no_vacancy
   - unless %w(copy edit edit_published).include?(@vacancy&.state)
     %span.govuk-caption-m
-      = t('jobs.current_step', step: current_step,  total: total_steps)
+      = t('jobs.current_step', step: current_step, total: total_steps)
