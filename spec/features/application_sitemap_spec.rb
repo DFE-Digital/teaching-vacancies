@@ -10,7 +10,7 @@ RSpec.feature 'Application sitemap', sitemap: true do
       document = Nokogiri::XML::Document.parse(body)
       nodes = document.search('url')
 
-      expect(nodes.count).to eq(154)
+      expect(nodes.count).to eq(231)
       expect(nodes.search("loc[text()='#{root_url(protocol: 'https')}']").text)
         .to eq(root_url(protocol: 'https'))
 
