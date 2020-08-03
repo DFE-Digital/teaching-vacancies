@@ -1,0 +1,59 @@
+{
+  "displayFieldName": "tcity15cd",
+  "fieldAliases": {
+   "tcity15nm": "tcity15nm"
+  },
+  "geometryType": "esriGeometryPolygon",
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326
+  },
+  "fields": [
+   {
+    "name": "tcity15nm",
+    "type": "esriFieldTypeString",
+    "alias": "tcity15nm",
+    "length": 20
+   }
+  ],
+  "features": [
+   {
+    "attributes": {
+     "tcity15nm": "Bath"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -2.378057667799660,
+        51.40636195864397
+       ],
+       [
+        -2.378776462314479,
+        51.40635963722366
+       ]
+      ]
+    ]
+   }
+  },
+  {
+    "attributes": {
+     "tcity15nm": "Non-existent City"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -2.378057667799660,
+        51.40636195864397
+       ],
+       [
+        -2.378776462314479,
+        51.40635963722366
+       ]
+      ]
+    ]
+   }
+  }
+ ]
+}

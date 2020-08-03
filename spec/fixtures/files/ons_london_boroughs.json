@@ -1,0 +1,59 @@
+{
+  "displayFieldName": "ctyua19cd",
+  "fieldAliases": {
+   "ctyua19nm": "ctyua19nm"
+  },
+  "geometryType": "esriGeometryPolygon",
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326
+  },
+  "fields": [
+   {
+    "name": "ctyua19nm",
+    "type": "esriFieldTypeString",
+    "alias": "ctyua19nm",
+    "length": 36
+   }
+  ],
+  "features": [
+   {
+    "attributes": {
+     "ctyua19nm": "Tower Hamlets"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        0.004562496029994090,
+        51.50833566307333
+       ],
+       [
+        -0.005710530794815389,
+        51.5051084208278
+       ]
+      ]
+     ]
+    }
+   },
+   {
+    "attributes": {
+     "ctyua19nm": "Non-existent London Borough"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -0.01225968705471211,
+        51.64622869718953
+       ],
+       [
+        0.02271954169695882,
+        51.64111549380256
+       ]
+      ]
+     ]
+    }
+   }
+  ]
+ }

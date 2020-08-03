@@ -1,6 +1,6 @@
 class LocationPolygon < ApplicationRecord
   scope :cities, -> { where(location_type: 'cities') }
   scope :counties, -> { where(location_type: 'counties') }
-  scope :local_authorities, -> { where(location_type: 'local_authorities') }
+  scope :london_boroughs, -> { where(location_type: 'london_boroughs') }
   scope :regions, -> { where(location_type: 'regions') }
 end
