@@ -32,16 +32,16 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
   private
 
   def job_location_options
-    locations = Set.new
-    locations.add(I18n.t('hiring_staff.organisations.school_groups.readable_job_location'))
-    @organisation.schools.sort_by { |school| school.name }.each do |school|
-      locations.add(school.name)
-    end
+    jobs_at_central_office = @vacancies.select { |v| v.job_location == 'central_office' }
 
-    options = []
-    locations.each do |loc|
-      jobs_at_location = @vacancies.select { |v| v.readable_job_location == loc }
-      options.push("#{loc} (#{jobs_at_location.count})")
+    options = [[
+      "#{I18n.t('hiring_staff.organisations.school_groups.readable_job_location')} (#{jobs_at_central_office.count})",
+      'school_group'
+    ]]
+
+    @organisation.schools.sort_by { |school| school.name }.each do |school|
+      jobs_at_school = @vacancies.select { |v| v.readable_job_location == school.name }
+      options.push(["#{school.name} (#{jobs_at_school.count})", school.urn])
     end
     options
   end

@@ -57,8 +57,8 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
   # Unit test for now, until we use the method in a feature
   describe '#job_location_options' do
     let!(:school_group) { create(:school_group) }
-    let!(:school_1) { create(:school, name: 'A school with two jobs') }
-    let!(:school_2) { create(:school, name: 'A school with no jobs') }
+    let!(:school_1) { create(:school, name: 'A school with two jobs', urn: 123) }
+    let!(:school_2) { create(:school, name: 'A school with no jobs', urn: 321) }
 
     let(:component) do
       described_class.new(organisation: school_group, sort: sort, selected_type: selected_type)
@@ -78,9 +78,9 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
     it 'lists the school names, trust head office, and the number of published jobs at each' do
       expect(component.instance_variable_get(:@job_location_options)).to eq([
-          'Trust head office (1)',
-          'A school with no jobs (0)',
-          'A school with two jobs (2)'
+          ['Trust head office (1)', 'school_group'],
+          ['A school with no jobs (0)', '321'],
+          ['A school with two jobs (2)', '123']
       ])
     end
   end
