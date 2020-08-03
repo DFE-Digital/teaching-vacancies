@@ -1,0 +1,59 @@
+{
+  "displayFieldName": "RGN19CD",
+  "fieldAliases": {
+   "rgn19nm": "rgn19nm"
+  },
+  "geometryType": "esriGeometryPolygon",
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326
+  },
+  "fields": [
+   {
+    "name": "rgn19nm",
+    "type": "esriFieldTypeString",
+    "alias": "rgn19nm",
+    "length": 24
+   }
+  ],
+  "features": [
+   {
+    "attributes": {
+     "rgn19nm": "North East"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -2.034357509173770,
+        55.81108536609426
+       ],
+       [
+        -1.984109739770587,
+        55.76476249008624
+       ]
+      ]
+     ]
+    }
+   },
+   {
+    "attributes": {
+     "rgn19nm": "Non-existent Region"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -2.034357509173770,
+        55.81108536609426
+       ],
+       [
+        -1.984109739770587,
+        55.76476249008624
+       ]
+      ]
+     ]
+    }
+   }
+  ]
+}

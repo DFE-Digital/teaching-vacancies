@@ -1,0 +1,59 @@
+{
+  "displayFieldName": "ctyua19cd",
+  "fieldAliases": {
+   "ctyua19nm": "ctyua19nm"
+  },
+  "geometryType": "esriGeometryPolygon",
+  "spatialReference": {
+   "wkid": 4326,
+   "latestWkid": 4326
+  },
+  "fields": [
+   {
+    "name": "ctyua19nm",
+    "type": "esriFieldTypeString",
+    "alias": "ctyua19nm",
+    "length": 36
+   }
+  ],
+  "features": [
+  {
+    "attributes": {
+      "ctyua19nm": "Essex"
+    },
+    "geometry": {
+      "rings": [
+      [
+      [
+        0.7031775640867785,
+        52.06527324936047
+      ],
+      [
+        0.7162633765871526,
+        52.04868719748913
+      ]
+     ]
+     ]
+    }
+   },
+   {
+    "attributes": {
+     "ctyua19nm": "Non-existent County"
+    },
+    "geometry": {
+     "rings": [
+      [
+       [
+        -1.17763328634218,
+        54.69918640516416
+       ],
+       [
+        -1.173981176753913,
+        54.69182388992937
+       ]
+      ]
+     ]
+    }
+   }
+  ]
+}
