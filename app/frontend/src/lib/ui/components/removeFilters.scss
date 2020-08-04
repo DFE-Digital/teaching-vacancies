@@ -1,0 +1,9 @@
+.moj-filter {
+  .moj-filter__heading-action .govuk-link {
+    font-size: 1rem;
+  }
+
+  .moj-filter__content .govuk-heading-s {
+    @include govuk-font(19, $weight: regular);
+  }
+}

@@ -12,11 +12,13 @@ $govuk-image-url-function: frontend-image-url;
 @import '~govuk-frontend/govuk/all';
 @import '~@ministryofjustice/frontend/moj/all';
 
+@import '../src/lib/ui/patterns/autocomplete';
+@import '../src/lib/ui/components/removeFilters';
+
 @import 'global/variables';
 @import 'base/mixins';
 @import 'base/utilities';
 @import 'components/awaiting_feedback_vacancies';
-@import '../src/lib/ui/patterns/autocomplete';
 @import 'components/banners';
 @import 'components/accordion-group';
 @import 'components/check_your_answers';
