@@ -7,12 +7,12 @@ window.addEventListener('DOMContentLoaded', () => {
 export const addRemoveEvent = (button, onRemove) => {
   button.addEventListener('click', (e) => {
     e.preventDefault();
-    removeFilters.removeFilter(removeFilters.getFilterGroup(button.dataset.group), button.dataset.key, onRemove);
+    filterGroup.clearFilter(filterGroup.getFilterGroup(button.dataset.group), button.dataset.key, onRemove);
   });
 };
 
-export const removeFilter = (group, key, onRemove) => {
-  removeFilters.findFilterCheckbox(group, key).checked = false;
+export const clearFilter = (group, key, onRemove) => {
+  filterGroup.findFilterCheckbox(group, key).checked = false;
   onRemove();
 };
 
@@ -20,10 +20,10 @@ export const getFilterGroup = (groupName) => Array.from(document.getElementsByCl
 
 export const findFilterCheckbox = (groupEl, key) => Array.from(groupEl.getElementsByClassName('govuk-checkboxes__input')).filter((checkbox) => checkbox.value === key)[0];
 
-const removeFilters = {
-  removeFilter,
+const filterGroup = {
+  clearFilter,
   getFilterGroup,
   findFilterCheckbox,
 };
 
-export default removeFilters;
+export default filterGroup;

@@ -1,18 +1,18 @@
-import removeFilters, {
+import filterGroup, {
   addRemoveEvent,
-  removeFilter,
+  clearFilter,
   getFilterGroup,
   findFilterCheckbox,
-} from './removeFilters';
+} from './filterGroup';
 
-describe('removeFilters', () => {
-  let removeFilterMock = null;
+describe('filterGroup', () => {
+  let clearFilterMock = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
 
-    removeFilters.removeFilter = jest.fn();
-    removeFilterMock = jest.spyOn(removeFilters, 'removeFilter');
+    filterGroup.clearFilter = jest.fn();
+    clearFilterMock = jest.spyOn(filterGroup, 'clearFilter');
   });
 
   describe('addRemoveEvent', () => {
@@ -20,22 +20,22 @@ describe('removeFilters', () => {
       document.body.innerHTML = '<button id="test-button" data-group="filter-group" data-key="filter-key">click me</button>';
       const button = document.getElementById('test-button');
       const onRemove = jest.fn();
-      removeFilters.getFilterGroup = jest.fn(() => 'group');
+      filterGroup.getFilterGroup = jest.fn(() => 'group');
       addRemoveEvent(button, onRemove);
       button.dispatchEvent(new Event('click'));
-      expect(removeFilterMock).toHaveBeenCalledWith('group', 'filter-key', onRemove);
+      expect(clearFilterMock).toHaveBeenCalledWith('group', 'filter-key', onRemove);
     });
   });
 
-  describe('removeFilter', () => {
+  describe('clearFilter', () => {
     test('ds', () => {
       document.body.innerHTML = '<input id="test-checkbox" type="checkbox" class="govuk-checkboxes__input" value="filter-key" checked />';
       const checkbox = document.getElementById('test-checkbox');
       expect(checkbox.checked).toBe(true);
 
       const onRemove = jest.fn();
-      removeFilters.findFilterCheckbox = jest.fn(() => checkbox);
-      removeFilter('something', 'something', onRemove);
+      filterGroup.findFilterCheckbox = jest.fn(() => checkbox);
+      clearFilter('something', 'something', onRemove);
       expect(checkbox.checked).toBe(false);
     });
   });

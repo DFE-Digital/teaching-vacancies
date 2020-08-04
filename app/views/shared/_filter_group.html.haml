@@ -23,17 +23,17 @@
               = filters[:title]
 
       .govuk-accordion__section-content{ id: "accordion-default-content-title", aria: { labelledby: "accordion-default-heading-title" } }
-        - filters[:items].each do |group|
-          .moj-filter__content
+        .moj-filter__content
+          .moj-filter__selected
+            .selected-filters__heading{ class: 'govuk-!-margin-bottom-2' }
+              .govuk-body{ class: 'govuk-!-margin-bottom-0' }
+                = 'Selected filters'
+              %a.govuk-link.govuk-link--no-visited-state{ href: ''}
+                = 'Clear filters'
 
-            .moj-filter__selected
+            - filters[:items].each do |group|
               .govuk-heading-s{ class: 'govuk-!-margin-bottom-0' }
                 = group[:title]
-
-              .moj-filter__heading-action
-                %p
-                  %a.govuk-link.govuk-link--no-visited-state{ href: ''}
-                    = 'Clear filters'
 
               %ul.moj-filter-tags
                 %li

@@ -1,0 +1,27 @@
+.moj-filter {
+  .moj-filter__heading-action .govuk-link {
+    font-size: 1rem;
+  }
+
+  .moj-filter__content {
+    .govuk-heading-s {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .govuk-body {
+      font-size: 1rem;
+      font-weight: normal;
+    }
+  }
+  
+  .selected-filters__heading {
+    position: relative;
+
+    .govuk-link {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}
