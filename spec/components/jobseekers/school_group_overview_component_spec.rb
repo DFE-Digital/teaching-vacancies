@@ -11,12 +11,8 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
     expect(rendered_component).to include(organisation_type(vacancy.school_group))
   end
 
-  it 'renders the trust website label' do
-    expect(rendered_component).to include(I18n.t('school_groups.website'))
-  end
-
-  it 'renders the trust email label' do
-    expect(rendered_component).to include(I18n.t('school_groups.email'))
+  it 'renders the trust email' do
+    expect(rendered_component).to include(vacancy.contact_email)
   end
 
   it 'renders about school or organisation description' do
