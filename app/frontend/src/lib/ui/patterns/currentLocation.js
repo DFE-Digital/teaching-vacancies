@@ -1,4 +1,3 @@
-import '../../polyfill/classlist.polyfill';
 import '../../polyfill/after.polyfill';
 import '../../polyfill/remove.polyfill';
 import '../../../loader';
