@@ -56,9 +56,12 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
   def set_filters(vacancies, filters)
     return vacancies if filters.none? || filters[:managed_organisations] == 'all'
 
-    in_school_urns = filters[:managed_school_urns]&.any? ? vacancies.in_school_urns(filters[:managed_school_urns]) : []
-    in_central_office = filters[:managed_organisations] == 'school_group' ? vacancies.in_central_office : []
+    return vacancies.in_school_ids(filters[:managed_school_ids]) if
+      filters[:managed_school_ids]&.any? && filters[:managed_organisations] != 'school_group'
 
-    in_school_urns + in_central_office
+    return vacancies.in_central_office if
+      filters[:managed_organisations] == 'school_group' && filters[:managed_school_ids]&.none?
+
+    vacancies.in_school_ids(filters[:managed_school_ids]).or(vacancies.in_central_office)
   end
 end

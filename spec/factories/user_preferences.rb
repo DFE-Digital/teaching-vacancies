@@ -3,6 +3,6 @@ FactoryBot.define do
     association :school_group
     association :user
     managed_organisations { 'all' }
-    managed_school_urns { [] }
+    managed_school_ids { [] }
   end
 end
