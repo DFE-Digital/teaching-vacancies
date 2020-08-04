@@ -12,7 +12,7 @@
 
   .govuk-grid-column-full
     .govuk-form-group
-      = render(HiringStaff::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type))
+      = render(HiringStaff::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters))
       = render(HiringStaff::NoVacanciesComponent.new(organisation: @organisation))
 
   = render(HiringStaff::SchoolOverviewComponent.new(organisation: @organisation))

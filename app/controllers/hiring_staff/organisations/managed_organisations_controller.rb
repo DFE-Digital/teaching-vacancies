@@ -1,17 +1,18 @@
 class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::BaseController
+  include OrganisationHelper
+
   before_action :verify_school_group
+  before_action :set_school_options
 
   def show
-    @managed_organisations_form = ManagedOrganisationsForm.new(current_user, current_organisation)
+    @managed_organisations_form = ManagedOrganisationsForm.new(vacancy_filter.to_h)
   end
 
   def update
-    @managed_organisations_form = ManagedOrganisationsForm.new(
-      current_user, current_organisation, managed_organisations_form_params
-    )
+    @managed_organisations_form = ManagedOrganisationsForm.new(managed_organisations_params)
 
-    if @managed_organisations_form.valid?
-      @managed_organisations_form.save
+    if @managed_organisations_form.valid? || params[:commit] == 'Skip this step'
+      vacancy_filter.update(managed_organisations_params)
       redirect_to organisation_path
     else
       render :show
@@ -20,17 +21,17 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
 
   private
 
-  def update_managed_organisations
-    if params[:commit] == I18n.t('buttons.skip_this_step')
-      params[:managed_organisations_form][:managed_organisations] = ['all']
-    elsif params[:managed_organisations_form][:managed_organisations].blank?
-      params[:managed_organisations_form][:managed_organisations] = []
-    end
+  def managed_organisations_params
+    params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_urns: [])
   end
 
-  def managed_organisations_form_params
-    update_managed_organisations
-    strip_empty_checkboxes(:managed_organisations_form, [:managed_organisations, :managed_school_urns])
-    params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_urns: [])
+  def vacancy_filter
+    @vacancy_filter ||= HiringStaff::VacancyFilter.new(current_user, current_school_group)
+  end
+
+  def set_school_options
+    @school_options = current_organisation.schools.order(:name).map do |school|
+      OpenStruct.new({ urn: school.urn, name: school.name, address: full_address(school) })
+    end
   end
 end

@@ -5,6 +5,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
     @multiple_organisations = session_has_multiple_organisations?
     @organisation = current_organisation
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
+    @filters = HiringStaff::VacancyFilter.new(current_user, current_school_group).to_h
     @selected_type = params[:type]
     @awaiting_feedback_count = @organisation.vacancies.awaiting_feedback.count
 
