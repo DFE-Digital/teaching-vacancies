@@ -9,7 +9,7 @@ class VacanciesController < ApplicationController
       @vacancies_search.vacancies,
       searched: @vacancies_search.any?,
       total_count: @vacancies_search.vacancies.raw_answer['nbHits'],
-      coordinates: @vacancies_search.coordinates
+      coordinates: @vacancies_search.point_coordinates
     )
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true

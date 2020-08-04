@@ -23,8 +23,9 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
   def call
     self.vacancies = Vacancy.search(
       search_query,
-      aroundLatLng: location_filter[:coordinates],
+      aroundLatLng: location_filter[:point_coordinates],
       aroundRadius: location_filter[:radius],
+      insidePolygon: location_polygon,
       replica: search_replica,
       hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
       filters: search_filter,

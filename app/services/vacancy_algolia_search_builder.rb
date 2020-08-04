@@ -3,8 +3,8 @@ require 'geocoding'
 class VacancyAlgoliaSearchBuilder
   include ActiveModel::Model
 
-  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats, :coordinates,
-                :search_query, :location_filter, :search_replica, :search_filter,
+  attr_accessor :keyword, :location_category, :location, :radius, :sort_by, :page, :hits_per_page, :stats,
+                :search_query, :location_filter, :location_polygon, :point_coordinates, :search_replica, :search_filter,
                 :vacancies
 
   DEFAULT_RADIUS = 10
@@ -34,7 +34,7 @@ class VacancyAlgoliaSearchBuilder
       vacancies.raw_answer['page'], vacancies.raw_answer['nbPages'],
       vacancies.raw_answer['hitsPerPage'], vacancies.raw_answer['nbHits']
     )
-    self.coordinates = location_filter[:coordinates]
+    self.point_coordinates = location_filter[:point_coordinates]
   end
 
   def to_hash
@@ -92,8 +92,9 @@ class VacancyAlgoliaSearchBuilder
   def search
     Vacancy.search(
       search_query,
-      aroundLatLng: location_filter[:coordinates],
+      aroundLatLng: location_filter[:point_coordinates],
       aroundRadius: location_filter[:radius],
+      insidePolygon: location_polygon,
       replica: search_replica,
       hitsPerPage: hits_per_page,
       filters: search_filter,
@@ -106,6 +107,7 @@ class VacancyAlgoliaSearchBuilder
     self.radius = (radius || DEFAULT_RADIUS).to_i
     self.location_category = (location.present? && LocationCategory.include?(location)) ?
       location : location_category
+    self.location_polygon = nil
   end
 
   def build_search_query
@@ -122,7 +124,7 @@ class VacancyAlgoliaSearchBuilder
   end
 
   def build_location_filter
-    self.location_filter[:coordinates] = Geocoding.new(location).coordinates if location.present?
+    self.location_filter[:point_coordinates] = Geocoding.new(location).coordinates if location.present?
     self.location_filter[:radius] = convert_radius_in_miles_to_metres(radius) if location.present?
   end
 
