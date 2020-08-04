@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_30_091409) do
+ActiveRecord::Schema.define(version: 2020_08_04_075056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2020_07_30_091409) do
     t.string "managed_organisations"
     t.uuid "user_id"
     t.uuid "school_group_id"
-    t.string "managed_school_urns", array: true
+    t.string "managed_school_ids", array: true
     t.index ["school_group_id"], name: "index_user_preferences_on_school_group_id"
     t.index ["user_id"], name: "index_user_preferences_on_user_id"
   end

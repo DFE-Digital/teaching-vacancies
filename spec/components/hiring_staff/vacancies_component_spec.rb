@@ -69,7 +69,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
     let!(:inline_component) { render_inline(subject) }
 
-    let(:filters) { { managed_school_urns: [school_oxford.urn], managed_organisations: '' } }
+    let(:filters) { { managed_school_ids: [school_oxford.id], managed_organisations: '' } }
 
     it 'renders the vacancy in Oxford' do
       expect(rendered_component).to include(school_oxford.name)

@@ -22,7 +22,7 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
   private
 
   def managed_organisations_params
-    params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_urns: [])
+    params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_ids: [])
   end
 
   def vacancy_filter
@@ -31,7 +31,7 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
 
   def set_school_options
     @school_options = current_organisation.schools.order(:name).map do |school|
-      OpenStruct.new({ urn: school.urn, name: school.name, address: full_address(school) })
+      OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
   end
 end

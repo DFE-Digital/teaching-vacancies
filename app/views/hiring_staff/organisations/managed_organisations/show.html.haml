@@ -26,9 +26,9 @@
           label: { text: t('hiring_staff.managed_organisations.options.school_group') },
           hint_text: full_address(current_organisation)
 
-        = f.govuk_collection_check_boxes :managed_school_urns,
+        = f.govuk_collection_check_boxes :managed_school_ids,
           @school_options,
-          :urn,
+          :id,
           :name,
           :address,
           legend: { text: t('hiring_staff.managed_organisations.labels.select_organisations'), hidden: true },

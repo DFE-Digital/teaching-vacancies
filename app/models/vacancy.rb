@@ -253,7 +253,7 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :unindexed, (-> { live.where(initially_indexed: false) })
-  scope :in_school_urns, (-> (urns) { joins(:school).where('schools.urn': urns) })
+  scope :in_school_ids, (-> (ids) { where(school_id: ids) })
   scope :in_central_office, (-> { where(job_location: 'central_office') })
 
   paginates_per 10
