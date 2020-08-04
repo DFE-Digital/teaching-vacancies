@@ -16,16 +16,16 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
     build_subscription_filters(subscription_hash)
     build_search_filter
     initialize_sort_by(subscription_hash[:jobs_sort])
-    initialize_location(subscription_hash[:location_category], subscription_hash[:location], subscription_hash[:radius])
+    initialize_location(subscription_hash)
     initialize_search
   end
 
   def call
     self.vacancies = Vacancy.search(
-      search_query,
+      keyword,
       aroundLatLng: location_filter[:point_coordinates],
       aroundRadius: location_filter[:radius],
-      insidePolygon: location_polygon,
+      insidePolygon: location_polygon_boundary,
       replica: search_replica,
       hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
       filters: search_filter,
@@ -33,7 +33,7 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
     )
     Rails.logger.info(
       "#{vacancies.count} vacancies found for job alert with criteria: #{subscription_hash}, "\
-      "search_query: #{search_query}, replica: #{search_replica}, location_filter: #{location_filter} "\
+      "search_query: #{keyword}, replica: #{search_replica}, location_filter: #{location_filter} "\
       "and filters: #{search_filter}"
     )
     vacancies

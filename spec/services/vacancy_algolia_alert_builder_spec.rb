@@ -11,16 +11,15 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
   let(:date_today) { Time.zone.today.to_datetime }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
   let(:location_radius) { subject.convert_radius_in_miles_to_metres(default_radius) }
-  let(:location_polygon) { nil }
+  let(:location_polygon_boundary) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
 
-  let(:algolia_search_query) { search_query }
-  let(:algolia_search_args) do
+  let(:expected_algolia_search_args) do
     {
       aroundLatLng: location_point_coordinates,
       aroundRadius: location_radius,
-      insidePolygon: location_polygon,
+      insidePolygon: location_polygon_boundary,
       replica: search_replica,
       hitsPerPage: max_subscription_results,
       filters: search_filter,
@@ -59,7 +58,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
     context '#initialize' do
       context '#keyword' do
         it 'adds subject and job_title to the keyword' do
-          expect(subject.search_query).to eql(search_query)
+          expect(subject.keyword).to eql(search_query)
         end
       end
 
@@ -103,7 +102,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
       before do
         allow(vacancies).to receive(:count).and_return(10)
-        mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
+        mock_algolia_search_for_job_alert(vacancies, search_query, expected_algolia_search_args)
       end
 
       it 'carries out alert search with correct criteria' do
@@ -115,7 +114,6 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
   context 'subscription created after algolia' do
     let(:vacancies) { double('vacancies') }
-    let(:search_query) { keyword }
     let(:subscription_hash) do
       {
         location: location,
@@ -135,7 +133,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
       before do
         allow(vacancies).to receive(:count).and_return(10)
-        mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
+        mock_algolia_search_for_job_alert(vacancies, keyword, expected_algolia_search_args)
       end
 
       it 'carries out alert search with correct criteria' do
