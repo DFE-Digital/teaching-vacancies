@@ -230,6 +230,14 @@ en:
     view_more_or_change: View more or change
   jobs:
     current_step: "Step %{step} of %{total}"
+    dashboard_filters:
+      apply_filters: Apply filters
+      hide_filters: Hide filters
+      show_filters: Show filters
+      heading:
+        zero: Showing all jobs
+        one: 1 filter applied
+        other: '%{count} filters applied'
     notification_labels:
       new: new
       action_required: action required
@@ -775,6 +783,7 @@ en:
       (the date we began recording statistics).
   buttons:
     accept_and_continue: Accept and continue
+    apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
     cancel_copy: Cancel copy
@@ -786,6 +795,7 @@ en:
     dismiss: Dismiss
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
+    hide_filters: Hide filters
     save_and_return_later: Save and return later
     save_changes: Save changes
     search: Search

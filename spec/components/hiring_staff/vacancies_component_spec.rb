@@ -4,9 +4,12 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
   let(:sort) { VacancySort.new.update(column: 'job_title', order: 'desc') }
   let(:selected_type) { 'published' }
   let(:filters) { {} }
+  let(:filters_form) { ManagedOrganisationsForm.new(filters) }
 
   subject do
-    described_class.new(organisation: organisation, sort: sort, selected_type: selected_type, filters: filters)
+    described_class.new(
+      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form
+    )
   end
 
   context 'when organisation has no active vacancies' do
@@ -42,16 +45,29 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
       it 'does not render the vacancy readable job location in the table' do
         expect(inline_component.css('.govuk-table.vacancies > tbody > tr > td#vacancy_location').to_html).to be_blank
       end
+
+      it 'does not render the filters sidebar' do
+        expect(
+          inline_component.css('.new_managed_organisations_form > input[type="submit"]')
+        ).to be_blank
+      end
     end
 
     context 'when the organisation is a school group' do
       let(:organisation) { create(:school_group) }
       let!(:vacancy) { create(:vacancy, :published, :with_school_group, school_group: organisation) }
+      let(:filters) { { managed_school_ids: [], managed_organisations: 'school_group' } }
 
       it 'renders the vacancy readable job location in the table' do
         expect(
           inline_component.css('.govuk-table.vacancies > tbody > tr > td#vacancy_location').to_html
         ).to include(vacancy.readable_job_location)
+      end
+
+      it 'renders the filters sidebar' do
+        expect(
+          inline_component.css('.new_managed_organisations_form > input[type="submit"]').attribute('value').value
+        ).to eql(I18n.t('buttons.apply_filters'))
       end
     end
   end
