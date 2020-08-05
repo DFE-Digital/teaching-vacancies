@@ -8,7 +8,7 @@ class ExportTablesToBigQuery
   BIGQUERY_TABLE_PREFIX = 'feb20'.freeze
 
   # Attributes with postgres schema types that do not exist in BigQuery.
-  CONVERT_THESE_TYPES = { point: :float, text: :string, uuid: :string }.freeze
+  CONVERT_THESE_TYPES = { point: :float, text: :string, uuid: :string, json: :string }.freeze
 
   # Skip attributes that cannot be queried, we do not report on or that frequently break the import.
   # Drop gias_data because it is aliased to data. This alias allows all records to be handled the same way and dropping
@@ -86,7 +86,7 @@ class ExportTablesToBigQuery
     @bigquery_data = {}
 
     table.columns.map do |c|
-      next if DROP_THESE_ATTRIBUTES.include?(c.name)
+      next if DROP_THESE_ATTRIBUTES.include?(c.name) && table.name != 'SchoolGroup'
       data = record.send(c.name)
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
@@ -96,6 +96,7 @@ class ExportTablesToBigQuery
       data = data.to_s if c.name == 'subjects'
       data = data.to_s if c.name == 'working_patterns'
       data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
+      data = data.to_s if c.type == :json
       @bigquery_data[c.name] = data
     end
 
@@ -174,7 +175,7 @@ class ExportTablesToBigQuery
     @bigquery_schema = {}
 
     table.columns.map do |c|
-      next if DROP_THESE_ATTRIBUTES.include?(c.name)
+      next if DROP_THESE_ATTRIBUTES.include?(c.name) && table.name != 'SchoolGroup'
       @bigquery_schema[c.name] = ENUM_ATTRIBUTES[c.name] || CONVERT_THESE_TYPES[c.type] || c.type
     end.compact
 
