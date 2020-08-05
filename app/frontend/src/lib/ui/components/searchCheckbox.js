@@ -5,6 +5,10 @@ export const init = (container) => {
   input.addEventListener('input', (e) => {
     filterCheckboxes(checkboxes, e.target);
   });
+
+  input.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 };
 
 export const filterCheckboxes = (checkboxes, input) => Array.from(checkboxes).map((checkbox) => checkboxDisplay(checkbox, input));

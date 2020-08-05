@@ -1,4 +1,15 @@
 .moj-filter {
+
+  box-shadow: none;
+
+  .moj-filter__header {
+    background: none;
+    border: 1px solid white;
+    padding-bottom: govuk-spacing(1);
+    border-bottom: 2px solid govuk-colour("light-grey");
+    margin-bottom: govuk-spacing(2);
+  }
+
   .moj-filter__heading-action .govuk-link {
     font-size: 1rem;
   }
@@ -23,5 +34,14 @@
       right: 0;
       top: 0;
     }
+  }
+
+  .moj-filter-tags {
+    margin-top: govuk-spacing(1);
+  }
+
+  .moj-filter__tag:after {
+    height: 0;
+    width: 0;
   }
 }

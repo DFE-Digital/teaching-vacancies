@@ -44,7 +44,7 @@
                     %i.fa.fa-close
 
   - filters[:items].each_with_index do |group, index|
-    .govuk-accordion__section.accordion-content__group
+    .govuk-accordion__section.accordion-content__group.filter-group__container
       .govuk-accordion__section-header
         %h3.govuk-accordion__section-heading
           %span.govuk-accordion__section-button{ id: "accordion-default-heading-#{index}" }

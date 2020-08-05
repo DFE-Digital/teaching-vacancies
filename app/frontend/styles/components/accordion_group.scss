@@ -1,0 +1,86 @@
+.js-enabled .govuk-accordion {
+  border: none;
+  margin-bottom: govuk-spacing(2);
+}
+
+.js-enabled .govuk-accordion__icon {
+  right: govuk-spacing(1);
+}
+
+.js-enabled .govuk-accordion__section-content {
+  padding: 0 0 govuk-spacing(3) 0;
+}
+
+.js-enabled .govuk-accordion__section-header {
+  border-top: none;
+}
+
+.tv-checkbox__group {
+  border: govuk-spacing(1) solid govuk-colour("light-grey");
+  padding: govuk-spacing(2);
+
+  .govuk-form-group {
+    max-height: 214px;
+    overflow: scroll;
+    margin-bottom: govuk-spacing(1);
+  }
+
+  .govuk-checkboxes__item label {
+    font-weight: $bold-font-weight;
+  }
+}
+
+.accordion-content__group .govuk-accordion__section--expanded {
+  border-bottom: 1px solid $govuk-border-colour;
+  padding-bottom: govuk-spacing(2);
+}
+
+.accordion-group-heading {
+  padding: govuk-spacing(2) 0;
+}
+
+.govuk-accordion__section-content {
+  padding: 0 0 govuk-spacing(3) 0;
+  border-bottom: 3px solid govuk-colour("light-grey");
+}
+
+.govuk-accordion__section-content {
+  padding: 0;
+
+}
+
+.govuk-accordion__controls {
+  display: none;
+}
+
+.govuk-accordion__title {
+  .govuk-accordion__icon {
+    display: none;
+  }
+}
+
+.govuk-accordion__section-header {
+  border: none;
+  padding: govuk-spacing(2) 0;
+}
+
+.govuk-accordion__section-button {
+  font-size: 1rem;
+  padding: 0 0 govuk-spacing(1) 0;
+}
+
+.moj-filter__selected {
+  box-shadow: none;
+  padding: govuk-spacing(2);
+  position: relative;
+}
+
+.moj-filter__heading-action {
+  position: absolute;
+  top: govuk-spacing(2);
+  right: govuk-spacing(2);
+
+  p {
+    margin: 0;
+  }
+}
