@@ -3,5 +3,5 @@ terraform {
 
   required_providers {
     cloudfoundry = "~> 0.12"
-  }  
+  }
 }

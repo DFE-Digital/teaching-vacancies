@@ -50,6 +50,10 @@ variable paas_password {
   default = ""
 }
 
+variable paas_postgres_service_plan {
+  default = "tiny-unencrypted-11"
+}
+
 variable paas_space_name {
 }
 

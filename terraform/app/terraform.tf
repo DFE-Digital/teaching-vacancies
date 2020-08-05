@@ -13,12 +13,12 @@ For SSO authentication
 */
 
 provider cloudfoundry {
-  api_url             = var.paas_api_url
-  password            = var.paas_password != "" ? var.paas_password : null
-  sso_passcode        = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
-  store_tokens_path   = "./tokens"
-  user                = var.paas_user != "" ? var.paas_user : null
-  version             = "~> 0.12"
+  api_url           = var.paas_api_url
+  password          = var.paas_password != "" ? var.paas_password : null
+  sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
+  store_tokens_path = "./tokens"
+  user              = var.paas_user != "" ? var.paas_user : null
+  version           = "~> 0.12"
 }
 
 provider statuscake {
@@ -72,9 +72,10 @@ module cloudwatch {
 module paas {
   source = "./modules/paas"
 
-  environment  = terraform.workspace
-  project_name = var.project_name
-  space_name   = var.paas_space_name
+  environment           = terraform.workspace
+  project_name          = var.project_name
+  postgres_service_plan = var.paas_postgres_service_plan
+  space_name            = var.paas_space_name
 
 }
 
