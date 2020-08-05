@@ -7,8 +7,6 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
     @filters = filters
     @filters_form = filters_form
 
-    set_managed_school_ids if organisation.is_a?(SchoolGroup)
-
     @selected_type = selected_type&.to_sym || :published
     @vacancy_types = %i[published pending draft expired awaiting_feedback]
 
@@ -68,20 +66,19 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
   end
 
   def set_filters(vacancies, filters)
+    school_group_in_school_ids = filters[:managed_school_ids]&.include?('school_group')
+
     return vacancies if filters.none? || filters[:managed_organisations] == 'all'
 
-    return vacancies.in_school_ids(filters[:managed_school_ids]) if
-      filters[:managed_school_ids]&.any? && filters[:managed_organisations] != 'school_group'
-
     return vacancies.in_central_office if
-      filters[:managed_organisations] == 'school_group' && filters[:managed_school_ids]&.none?
+      filters[:managed_school_ids] == ['school_group']
 
-    vacancies.in_school_ids(filters[:managed_school_ids]).or(vacancies.in_central_office)
-  end
+    return vacancies.in_school_ids(filters[:managed_school_ids]) if
+      filters[:managed_school_ids]&.any? && !school_group_in_school_ids
 
-  def set_managed_school_ids
-    @filters[:managed_school_ids] ||= []
-    @filters[:managed_school_ids].push('school_group') if @filters[:managed_organisations]&.include?('school_group')
+    vacancies
+      .in_school_ids(filters[:managed_school_ids]&.reject { |school_id| school_id == 'school_group' })
+      .or(vacancies.in_central_office)
   end
 
   def set_school_options

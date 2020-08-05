@@ -87,9 +87,9 @@ RSpec.feature 'Hiring staff can filter vacancies in their dashboard' do
     end
   end
 
-  context 'when managed_organisations is school_group' do
-    let(:managed_organisations) { 'school_group' }
-    let(:managed_school_ids) { [] }
+  context 'when managed_school_ids contains school_group' do
+    let(:managed_organisations) { '' }
+    let(:managed_school_ids) { ['school_group'] }
 
     scenario 'it shows filtered published vacancies' do
       visit organisation_path

@@ -37,13 +37,30 @@ RSpec.feature 'Hiring staff can set managed organisations user preferences' do
     )
 
     check I18n.t('hiring_staff.managed_organisations.options.school_group'),
+          name: 'managed_organisations_form[managed_school_ids][]', visible: false
+    check school_1.name, name: 'managed_organisations_form[managed_school_ids][]', visible: false
+
+    click_on I18n.t('buttons.continue')
+
+    expect(page.current_path).to eql(organisation_path)
+    expect(user_preference.managed_school_ids).to eql(['school_group', school_1.id])
+  end
+
+  scenario 'it allows school group users to select to manage all jobs' do
+    visit organisation_managed_organisations_path
+
+    expect(page).to have_content(
+      I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name)
+    )
+
+    check I18n.t('hiring_staff.managed_organisations.options.all'),
           name: 'managed_organisations_form[managed_organisations][]', visible: false
     check school_1.name, name: 'managed_organisations_form[managed_school_ids][]', visible: false
 
     click_on I18n.t('buttons.continue')
 
     expect(page.current_path).to eql(organisation_path)
-    expect(user_preference.managed_organisations).to eql('school_group')
-    expect(user_preference.managed_school_ids).to eql([school_1.id])
+    expect(user_preference.managed_organisations).to eql('all')
+    expect(user_preference.managed_school_ids).to eql([])
   end
 end
