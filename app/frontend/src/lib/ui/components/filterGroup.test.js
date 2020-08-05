@@ -8,11 +8,12 @@ import filterGroup, {
   getFilterCheckboxesInGroup,
   unCheckCheckbox,
   getFilterGroups,
+  addFilterChangeEvent,
   CHECKBOX_CLASS_SELECTOR,
 } from './filterGroup';
 
 describe('filterGroup', () => {
-  let removeFilterMock = null; let removeAllFiltersMock = null; let onRemove = null;
+  let removeFilterMock = null; let removeAllFiltersMock = null; let onRemove = null; let filterChangeHandlerMock = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -22,6 +23,9 @@ describe('filterGroup', () => {
 
     filterGroup.removeAllFiltersHandler = jest.fn();
     removeAllFiltersMock = jest.spyOn(filterGroup, 'removeAllFiltersHandler');
+
+    filterGroup.filterChangeHandler = jest.fn();
+    filterChangeHandlerMock = jest.spyOn(filterGroup, 'filterChangeHandler');
 
     onRemove = jest.fn();
   });
@@ -128,6 +132,19 @@ describe('filterGroup', () => {
       document.body.innerHTML = `<div id="group"><input class="${CHECKBOX_CLASS_SELECTOR}" /><input value="y" /><input class="${CHECKBOX_CLASS_SELECTOR}" /></div>`;
       const group = document.getElementById('group');
       expect(getFilterCheckboxesInGroup(group).length).toBe(2);
+    });
+  });
+
+  describe('addFilterChangeEvent', () => {
+    test('adds event listener to element that calls handler with correct arguments', () => {
+      document.body.innerHTML = '<div id="test-group" class="group"></div><div class="group"></div>';
+      const groups = document.getElementsByClassName('group');
+      const group = document.getElementById('test-group');
+
+      addFilterChangeEvent(groups);
+      group.dispatchEvent(new Event('click'));
+
+      expect(filterChangeHandlerMock).toHaveBeenCalledWith(group);
     });
   });
 });

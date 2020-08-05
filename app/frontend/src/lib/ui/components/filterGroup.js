@@ -9,6 +9,8 @@ window.addEventListener('DOMContentLoaded', () => {
   if (clearButton) {
     addRemoveAllFiltersEvent(clearButton, () => getForm(clearButton).submit());
   }
+
+  addFilterChangeEvent(document.getElementsByClassName('filter-group__container'));
 });
 
 export const getForm = (el) => el.closest('form');
@@ -37,6 +39,16 @@ export const removeAllFiltersHandler = (onClear) => {
   onClear();
 };
 
+export const addFilterChangeEvent = (groups) => {
+  Array.from(groups).map((group) => group.addEventListener('click', (e) => filterGroup.filterChangeHandler(e.target)));
+};
+
+export const filterChangeHandler = (el) => {
+  if (el.className === CHECKBOX_CLASS_SELECTOR) {
+    getForm(el).submit();
+  }
+};
+
 export const unCheckCheckbox = (checkbox) => { checkbox.checked = false; };
 
 export const getFilterGroup = (groupName) => getFilterGroups().filter((group) => group.dataset.group === groupName)[0];
@@ -55,6 +67,8 @@ const filterGroup = {
   unCheckCheckbox,
   findFilterCheckboxInGroup,
   getFilterCheckboxesInGroup,
+  addFilterChangeEvent,
+  filterChangeHandler,
 };
 
 export default filterGroup;
