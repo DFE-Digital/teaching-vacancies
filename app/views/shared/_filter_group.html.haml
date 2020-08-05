@@ -28,7 +28,7 @@
             .selected-filters__heading{ class: 'govuk-!-margin-bottom-2' }
               .govuk-body{ class: 'govuk-!-margin-bottom-0' }
                 = 'Selected filters'
-              %a.govuk-link.govuk-link--no-visited-state{ href: ''}
+              %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'clear-filters' }
                 = 'Clear filters'
 
             - filters[:items].each do |group|
