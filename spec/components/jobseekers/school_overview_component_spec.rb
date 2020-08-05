@@ -7,6 +7,26 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
 
   before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
+  describe '#render?' do
+    let(:school_group) { create(:school_group) }
+
+    context 'when vacancy is at a trust head office' do
+      let(:vacancy) { create(:vacancy, :with_school_group, school_group: school_group) }
+
+      it 'does not render the component' do
+        expect(rendered_component).to be_blank
+      end
+    end
+
+    context 'when vacancy is at a single school in a trust' do
+      let(:vacancy) { create(:vacancy, :with_school_group_at_school, school_group: school_group) }
+
+      it 'renders the component' do
+        expect(rendered_component).not_to be_blank
+      end
+    end
+  end
+
   it 'renders the school type' do
     expect(rendered_component).to include(organisation_type(vacancy.school))
   end
