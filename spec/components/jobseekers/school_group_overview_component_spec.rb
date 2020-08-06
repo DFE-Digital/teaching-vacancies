@@ -2,10 +2,36 @@ require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }
-  let(:vacancy) { create(:vacancy, school_group: school_group) }
+  let(:vacancy) { create(:vacancy, :with_school_group, school_group: school_group) } # use factory helper
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
+
+  describe '#render?' do
+    let(:school) { create(:school) }
+
+    context 'when vacancy is at a school without a trust' do
+      let(:vacancy) { create(:vacancy, school: school) }
+
+      it 'does not render the component' do
+        expect(rendered_component).to be_blank
+      end
+    end
+
+    context 'when vacancy is at a single school in a trust' do
+      let(:vacancy) { create(:vacancy, :with_school_group_at_school, school_group: school_group) }
+
+      it 'does not render the component' do
+        expect(rendered_component).to be_blank
+      end
+    end
+
+    context 'when vacancy is at a trust head office' do
+      it 'renders the component' do
+        expect(rendered_component).not_to be_blank
+      end
+    end
+  end
 
   it 'renders the trust type' do
     expect(rendered_component).to include(organisation_type(vacancy.school_group))
