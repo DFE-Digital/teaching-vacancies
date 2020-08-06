@@ -53,7 +53,7 @@ en:
     job_summary:
       blank: Enter a job summary
     about_school:
-      blank: Enter a description of the school
+      blank: Enter a description of the %{organisation}
   hiring_staff_user_preference_errors:
     managed_organisations:
       blank: Please select an option
