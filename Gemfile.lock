@@ -169,7 +169,7 @@ GEM
       signet (~> 0.7)
     gov_uk_date_fields (4.1.0)
       rails (>= 5.0.7.2)
-    govuk_design_system_formbuilder (1.1.11)
+    govuk_design_system_formbuilder (1.2.6)
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
@@ -521,7 +521,7 @@ DEPENDENCIES
   google-cloud-storage
   google_drive
   gov_uk_date_fields
-  govuk_design_system_formbuilder (~> 1.1.11)
+  govuk_design_system_formbuilder (~> 1.2.6)
   haml-rails
   high_voltage (~> 3.1)
   httparty

@@ -24,7 +24,7 @@ gem 'google-cloud-bigquery'
 gem 'google-cloud-storage'
 gem 'google_drive', require: false
 gem 'gov_uk_date_fields'
-gem 'govuk_design_system_formbuilder', '~> 1.1.11'
+gem 'govuk_design_system_formbuilder', '~> 1.2.6'
 gem 'haml-rails'
 gem 'high_voltage', '~> 3.1'
 gem 'httparty'
