@@ -93,6 +93,14 @@ algolia_app_id = ''
 algolia_write_api_key = ''
 algolia_search_api_key = ''
 
+# Gov.UK PaaS
+paas_api_url = ""
+paas_space_name = "teaching-vacancies-staging"
+paas_user = ""
+paas_password = ""
+paas_sso_passcode = ""
+paas_postgres_service_plan = "small-11"
+
 # Statuscake
 
 statuscake_username = ''

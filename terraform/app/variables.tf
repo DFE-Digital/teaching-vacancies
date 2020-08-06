@@ -42,6 +42,33 @@ variable cloudwatch_ops_genie_api_key {
   description = "The ops genie api key for sending alerts to ops genie"
 }
 
+# Gov.UK PaaS
+variable paas_api_url {
+}
+
+variable paas_password {
+  default = ""
+}
+
+variable paas_postgres_service_plan {
+  default = "tiny-unencrypted-11"
+}
+
+variable paas_space_name {
+}
+
+variable paas_sso_passcode {
+  default = ""
+}
+
+variable paas_store_tokens_path {
+  default = ""
+}
+
+variable paas_user {
+  default = ""
+}
+
 # Statuscake
 variable statuscake_username {
   description = "The Statuscake username"
