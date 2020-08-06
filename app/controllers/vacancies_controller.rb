@@ -2,6 +2,7 @@ class VacanciesController < ApplicationController
   include ParameterSanitiser
 
   def index
+    @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
     @vacancies_search = VacancyAlgoliaSearchBuilder.new(algolia_search_params)
     @vacancies_search.call
     @vacancies = VacanciesPresenter.new(
@@ -39,7 +40,9 @@ class VacanciesController < ApplicationController
   private
 
   def algolia_search_params
-    params.permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page)
+    (params[:jobs_search_form] || params)
+      .permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page)
+      .merge(params.permit(:page, :jobs_sort))
   end
 
   def old_vacancy_path?(vacancy)

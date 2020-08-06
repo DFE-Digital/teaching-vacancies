@@ -1,11 +1,34 @@
 %h1.govuk-heading-m= t('jobs.heading')
 
-= form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path(anchor: 'vacancy-results'), method: :get do |f|
+= form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path(anchor: 'vacancy-results'), html: { method: 'get' } do |f|
 
   = f.govuk_text_field :keyword,
     label: { text: t('jobs.filters.keyword'), size: 's' },
     placeholder: t('jobs.filters.keyword_hint')
 
-  = render 'shared/location_search_tag', location: nil, extra_label_class: 'govuk-label--s'
+  = f.govuk_text_field :location,
+    label: { text: t('jobs.filters.location'), size: 's' },
+    placeholder: t('jobs.filters.location_hint'),
+    class: 'govuk-input js-location-finder__input',
+    form_group_classes: 'js-location-finder location-search',
+    'autocomplete': 'off',
+    'aria-expanded': 'false',
+    'aria-owns': 'location_listbox',
+    'aria-autocomplete': 'list',
+    'aria-describedby': 'js-location-finder__error',
+    'role': 'combobox',
+    'data-coordinates': @vacancies_search&.coordinates
 
-  = f.govuk_submit t('buttons.search'), classes: 'govuk-!-margin-0'
+  = f.govuk_collection_select :radius,
+    radius_filter_options,
+    :last,
+    :first,
+    label: { text: t('jobs.filters.within_radius'), size: 's' },
+    html_options: { class: 'govuk-!-width-full' },
+    form_group_classes: 'location-radius-select location-radius-select-inline-block'
+
+  .js-location-finder__link.govuk-body-s
+    or
+    = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
+
+  = f.govuk_submit t('buttons.search'), classes: "govuk-button govuk-button--start govuk-!-margin-0"

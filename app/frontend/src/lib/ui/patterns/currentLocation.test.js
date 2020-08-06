@@ -22,13 +22,13 @@ describe('location search box', () => {
     enableRadiusMock = jest.spyOn(radius, 'enableRadiusSelect');
     disableRadiusMock = jest.spyOn(radius, 'disableRadiusSelect');
 
-    document.body.innerHTML = '<div class="js-location-finder"><input type="text" id="location" class="js-location-finder__input" /></div>';
+    document.body.innerHTML = '<div class="js-location-finder"><input type="text" id="jobs-search-form-location-field" class="js-location-finder__input" /></div>';
   });
 
   describe('onFaliure', () => {
     test('updates the UI correctly and adds error message', () => {
       onFailure();
-      expect(document.getElementById('location').value).toBe('');
+      expect(document.getElementById('jobs-search-form-location-field').value).toBe('');
       expect(disableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
       expect(showErrorMessageMock).toHaveBeenCalled();
@@ -37,8 +37,8 @@ describe('location search box', () => {
 
   describe('onSuccess', () => {
     test('updates the UI correctly and enables radius control', () => {
-      onSuccess('W12 8QT', document.getElementById('location'));
-      expect(document.getElementById('location').value).toBe('W12 8QT');
+      onSuccess('W12 8QT', document.getElementById('jobs-search-form-location-field'));
+      expect(document.getElementById('jobs-search-form-location-field').value).toBe('W12 8QT');
       expect(enableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
       expect(showErrorMessageMock).not.toHaveBeenCalled();
