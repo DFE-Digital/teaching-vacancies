@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'dfe_sign_in_api'
 
 RSpec.shared_examples 'a DFE Sign In endpoint' do
   context 'when the external response status is 500' do

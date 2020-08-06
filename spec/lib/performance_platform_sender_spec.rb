@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'performance_platform_sender'
 
 RSpec.describe PerformancePlatformSender::Base do
   let(:type) { :transactions }

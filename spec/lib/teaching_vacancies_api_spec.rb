@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'teaching_vacancies_api'
 
 RSpec.describe TeachingVacancies::API do
   describe '#vacancies' do

@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'update_dsi_users_in_db'
-require 'spec_helper'
 
 RSpec.describe UpdateDfeSignInUsers do
   let(:test_file_1_path) { Rails.root.join('spec/fixtures/dfe_sign_in_service_users_response_page_1.json') }

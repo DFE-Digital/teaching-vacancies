@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'export_dsi_approvers_to_big_query'
 
 RSpec.describe ExportDsiApproversToBigQuery do
   before do

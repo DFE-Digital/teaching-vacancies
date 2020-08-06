@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'message_encryptor'
 
 RSpec.describe 'MessageEnryptor' do
   describe 'it can #encrypt and #decrypt data' do

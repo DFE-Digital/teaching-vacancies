@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'geocoding'
 
 RSpec.describe Geocoding do
   context 'Retrieving the coordinates for a postcode' do
