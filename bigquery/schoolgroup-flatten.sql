@@ -48,8 +48,7 @@ FROM (
     JSON_EXTRACT_SCALAR(gias_data,
       '$.Head of Group Last Name') AS head_last_name,
     JSON_EXTRACT_SCALAR(gias_data,
-      '$.UKPRN') AS UKPRN,
-    REPLACE(gias_data,"=>",":")
+      '$.UKPRN') AS UKPRN
   FROM (
     SELECT
       id,
