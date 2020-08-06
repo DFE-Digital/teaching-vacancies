@@ -13,7 +13,7 @@ module VacancyJobSummaryValidations
       organisation = 'school'
     end
     errors.add(:about_school,
-      I18n.t('activerecord.errors.models.vacancy.attributes.about_school.blank',
+      I18n.t('job_summary_errors.about_school.blank',
       organisation: organisation)
     ) if about_school.blank?
   end

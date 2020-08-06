@@ -136,14 +136,14 @@ RSpec.feature 'Copying a vacancy' do
       within '#errors.govuk-notification--danger' do
         expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
         expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
-        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
       end
 
       click_on I18n.t('jobs.submit_listing.button')
       within '#errors.govuk-notification--danger' do
         expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
         expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
-        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
       end
 
       click_header_link(I18n.t('jobs.job_summary'))

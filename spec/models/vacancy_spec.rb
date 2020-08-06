@@ -55,7 +55,11 @@ RSpec.describe Vacancy, type: :model do
 
   describe 'validations' do
     context 'a new record' do
-      it { should validate_presence_of(:about_school) }
+      it 'should validate presence of about_school' do
+        subject.about_school = ''
+        subject.valid?
+        expect(subject.errors[:about_school].first).to eq('Enter a description of the school')
+      end
       it { should validate_presence_of(:contact_email) }
       it { should validate_presence_of(:expires_on) }
       it { should validate_presence_of(:job_summary) }
