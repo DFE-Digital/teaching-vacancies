@@ -1,7 +1,4 @@
 require 'rails_helper'
-require 'update_school_data'
-require 'open-uri'
-require 'spec_helper'
 
 # TODO: Refactor this from a set of integration tests into a set of unit tests.
 RSpec.describe UpdateSchoolData do

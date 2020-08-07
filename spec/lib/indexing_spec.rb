@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'indexing'
 
 RSpec.describe Indexing do
   let(:url) { 'https://google.com' }

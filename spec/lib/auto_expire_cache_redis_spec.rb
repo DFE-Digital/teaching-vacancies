@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'auto_expire_cache_redis'
 
 RSpec.describe AutoExpireCacheRedis do
   let(:mock_redis) { MockRedis.new }
