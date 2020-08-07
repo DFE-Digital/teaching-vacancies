@@ -12,6 +12,17 @@ WITH
     job_title
   FROM
     `teacher-vacancy-service.production_dataset.feb20_vacancy`),
+  school_group AS (
+  SELECT
+    id,
+    uid,
+    name,
+    postcode,
+    status,
+    earliest_date_opened,
+    date_closed
+  FROM
+    `teacher-vacancy-service.production_dataset.feb20_schoolgroup_flattened`),
   scraped_vacancy AS (
   SELECT
     *
@@ -90,7 +101,7 @@ WITH
     scraped
     AND NOT expired_before_scrape
     AND location_address_country = "United Kingdom"),
-  vacancy_matches AS (
+  vacancy_to_school_matches AS (
   SELECT
     DISTINCT scraped_vacancy.scraped_url,
     school.id AS school_id,
@@ -115,45 +126,86 @@ WITH
       (school.data_establishmentstatus_name != "Closed"
         OR school.data_closedate > scraped_vacancy.publish_on)
       AND CAST(school.created_at AS DATE) <= scraped_vacancy.publish_on ),
-    vacancies_joined_to_schools AS (
+    vacancy_to_schoolgroup_matches AS (
+    SELECT
+      DISTINCT scraped_vacancy.scraped_url,
+      school_group.id AS school_group_id,
+      school_group.uid AS school_group_uid,
+      school_group.name AS school_group_name,
+      school_group.status AS school_group_status,
+      school_group.date_closed AS school_group_closedate,
+      school_group.earliest_date_opened AS school_group_opendate,
+    FROM
+      scraped_vacancy
+    INNER JOIN
+      school_group
+    ON
+    IF
+      ( scraped_vacancy.location_address_postcode=school_group.postcode
+        AND LOWER(scraped_vacancy.hiring_organisation_name)=LOWER(school_group.name),
+        TRUE,
+        scraped_vacancy.location_address_postcode=school_group.postcode )
+    WHERE
+      #exclude matches with school groups which were closed or had not yet been opened on the date when the vacancy was published
+      (school_group.status != "Closed"
+        OR school_group.date_closed > scraped_vacancy.publish_on)
+      AND school_group.earliest_date_opened <= scraped_vacancy.publish_on ),
+    vacancies_joined_to_schools_and_groups AS (
     SELECT
       scraped_vacancy.*,
-      vacancy_matches.school_id,
-      vacancy_matches.school_urn,
-      school.name AS school_name
+      vacancy_to_school_matches.school_id,
+      vacancy_to_school_matches.school_urn,
+      school.name AS school_name,
+      vacancy_to_schoolgroup_matches.school_group_id,
+      vacancy_to_schoolgroup_matches.school_group_uid,
+      vacancy_to_schoolgroup_matches.school_group_name
     FROM
       scraped_vacancy
     LEFT JOIN
-      vacancy_matches
+      vacancy_to_school_matches
     ON
-      scraped_vacancy.scraped_url=vacancy_matches.scraped_url
+      scraped_vacancy.scraped_url=vacancy_to_school_matches.scraped_url
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_school` AS school
     ON
       school_urn=school.urn
+    LEFT JOIN
+      vacancy_to_schoolgroup_matches
+    ON
+      scraped_vacancy.scraped_url=vacancy_to_schoolgroup_matches.scraped_url
     WHERE
-      scraped_vacancy.scraped_url IN ( # only include matches with only 1 possible school
-      SELECT
-        scraped_url AS scraped_url,
-      FROM
-        vacancy_matches
-      GROUP BY
-        scraped_url
-      HAVING
-        COUNT(*)=1 )
-      OR vacancy_matches.school_urn IS NULL
+      (scraped_vacancy.scraped_url IN ( # only include matches with only 1 possible school or which don't match any schools
+        SELECT
+          scraped_url AS scraped_url,
+        FROM
+          vacancy_to_school_matches
+        GROUP BY
+          scraped_url
+        HAVING
+          COUNT(*)=1 )
+        OR vacancy_to_school_matches.school_urn IS NULL)
+      AND (scraped_vacancy.scraped_url IN ( # only include matches with only 1 possible school group or which don't match any school groups
+        SELECT
+          scraped_url AS scraped_url,
+        FROM
+          vacancy_to_schoolgroup_matches
+        GROUP BY
+          scraped_url
+        HAVING
+          COUNT(*)=1 )
+        OR vacancy_to_schoolgroup_matches.school_group_id IS NULL)
     ORDER BY
       scraped_url ASC ),
     vacancy_to_vacancy_matches AS (
     SELECT
-      vacancies_joined_to_schools.scraped_url,
+      vacancies_joined_to_schools_and_groups.scraped_url,
       TV_vacancy.id AS vacancy_id
     FROM
-      vacancies_joined_to_schools
+      vacancies_joined_to_schools_and_groups
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_school` AS school
     ON
-      vacancies_joined_to_schools.school_urn=school.urn
+      vacancies_joined_to_schools_and_groups.school_urn=school.urn
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_vacancy` AS TV_vacancy
     ON
@@ -189,19 +241,47 @@ WITH
               stop_words) ) AS TV_words
         ON
           scraped_words=TV_words))<0.2 #allow only 1 in 5 words to be in one title but not in the other
-      AND vacancies_joined_to_schools.publish_on > DATE_SUB(TV_vacancy.publish_on, INTERVAL 14 DAY) #only match vacancies which were published within a fortnight of a vacancy in our database
-      AND vacancies_joined_to_schools.publish_on < DATE_ADD(TV_vacancy.publish_on, INTERVAL 14 DAY) )
+      AND vacancies_joined_to_schools_and_groups.publish_on > DATE_SUB(TV_vacancy.publish_on, INTERVAL 14 DAY) #only match vacancies which were published within a fortnight of a vacancy in our database
+      AND vacancies_joined_to_schools_and_groups.publish_on < DATE_ADD(TV_vacancy.publish_on, INTERVAL 14 DAY) )
   SELECT
-    vacancies_joined_to_schools.*,
+    vacancies_joined_to_schools_and_groups.*,
+  IF
+    (LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%head%'
+      OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%ordinat%'
+      OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%principal%',
+      "leadership",
+    IF
+      ((vacancies_joined_to_schools_and_groups.title LIKE '%TA%'
+          OR vacancies_joined_to_schools_and_groups.title LIKE '%TAs%'
+          OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '% assistant%' #picks up teaching assistant, learning support assistant etc.
+          OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%intervention %')
+        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%admin%'
+        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%account%'
+        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%marketing%'
+        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%admission%'
+        AND LOWER(vacancies_joined_to_schools_and_groups.title) NOT LIKE '%care%',
+        "teaching_assistant",
+      IF
+        (LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%teacher%'
+          OR LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%lecturer%',
+          "teacher",
+          NULL))) AS vacancy_category,
+  IF
+    (vacancies_joined_to_schools_and_groups.school_id IS NOT NULL,
+      "school",
+    IF
+      (vacancies_joined_to_schools_and_groups.school_group_id IS NOT NULL,
+        "school_group",
+        NULL)) AS vacancy_source,
     vacancy_to_vacancy_matches.vacancy_id
   FROM
-    vacancies_joined_to_schools
+    vacancies_joined_to_schools_and_groups
   LEFT JOIN
     vacancy_to_vacancy_matches
   ON
-    vacancies_joined_to_schools.scraped_url=vacancy_to_vacancy_matches.scraped_url
+    vacancies_joined_to_schools_and_groups.scraped_url=vacancy_to_vacancy_matches.scraped_url
   WHERE
-    vacancies_joined_to_schools.scraped_url IN ( # only include matches with only 1 possible school
+    vacancies_joined_to_schools_and_groups.scraped_url IN ( # only include matches with only 1 possible school
     SELECT
       scraped_url AS scraped_url,
     FROM
