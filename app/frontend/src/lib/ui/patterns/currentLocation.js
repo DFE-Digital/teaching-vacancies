@@ -18,7 +18,7 @@ export const startLoading = (container, input) => {
   input.disabled = true;
   container.classList.add('js-location-finder--loading');
   loader.init({
-    container: 'location-search',
+    container: 'jobs_search_form[location]',
     size: 32,
     label: true,
     labelText: 'Finding location...',
@@ -68,7 +68,7 @@ export const onFailure = () => {
 
 export const postcodeFromPosition = (position, apiPromise) => apiPromise(position.coords.latitude, position.coords.longitude).then((response) => {
   if (response && response.result) {
-    onSuccess(response.result[0].postcode, document.getElementById('location'));
+    onSuccess(response.result[0].postcode, document.getElementById('jobs-search-form-location-field'));
   } else {
     onFailure();
   }
@@ -77,22 +77,24 @@ export const postcodeFromPosition = (position, apiPromise) => apiPromise(positio
 });
 
 export const init = () => {
-  document.getElementById('current-location').addEventListener('click', (event) => {
-    event.stopPropagation();
+  if (document.getElementById('current-location')) {
+    document.getElementById('current-location').addEventListener('click', (event) => {
+      event.stopPropagation();
 
-    startLoading(containerEl, inputEl);
+      startLoading(containerEl, inputEl);
 
-    navigator.geolocation.getCurrentPosition((data) => {
-      postcodeFromPosition(data, getPostcodeFromCoordinates);
-    }, () => {
-      stopLoading(containerEl, inputEl);
-      showErrorMessage(document.getElementById('current-location'));
+      navigator.geolocation.getCurrentPosition((data) => {
+        postcodeFromPosition(data, getPostcodeFromCoordinates);
+      }, () => {
+        stopLoading(containerEl, inputEl);
+        showErrorMessage(document.getElementById('current-location'));
+      });
     });
-  });
 
-  inputEl.addEventListener('focus', () => {
-    removeErrorMessage();
-  });
+    inputEl.addEventListener('focus', () => {
+      removeErrorMessage();
+    });
+  }
 };
 
 const currentLocation = {

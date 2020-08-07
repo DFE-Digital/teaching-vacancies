@@ -1,24 +1,37 @@
 %aside.filter-vacancies
-  %h2.govuk-heading-m
-    =t('jobs.filters.title')
+  %h2.govuk-heading-m= t('jobs.filters.title')
 
-  = form_for VacancyAlgoliaSearchBuilder.new({}), as: '', url: jobs_path, method: :get, html: { class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
+  = form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path(anchor: 'vacancy-results'), method: :get, html: { class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
+
     = f.govuk_text_field :keyword,
-      label: { text: t('jobs.filters.keyword') },
+      label: { text: t('jobs.filters.keyword'), size: 's' },
       placeholder: t('jobs.filters.keyword_hint'),
       value: @vacancies_search.keyword
 
-    // This partial does not yet use GDS Formbuilder.
-    = render 'shared/location_search_tag', extra_label_class: nil
+    = f.govuk_text_field :location,
+      label: { text: t('jobs.filters.location'), size: 's' },
+      placeholder: t('jobs.filters.location_hint'),
+      class: 'govuk-input js-location-finder__input',
+      form_group_classes: 'js-location-finder location-search',
+      'autocomplete': 'off',
+      'aria-expanded': 'false',
+      'aria-owns': 'location_listbox',
+      'aria-autocomplete': 'list',
+      'aria-describedby': 'js-location-finder__error',
+      'role': 'combobox',
+      'data-coordinates': @vacancies_search&.coordinates
 
-    // This select does not yet use GDS Formbuilder.
-    // We are currently unable to apply attributes (such as class
-    // and disabled) directly to GovUK Design Formbuilder select elements.
-    // Issue: https://github.com/DFE-Digital/govuk_design_system_formbuilder/issues/153
-    // I have added a draft of the eventual code to this issue.
-    .govuk-form-group.govuk-inset-text#location-radius-select
-      = label_tag 'radius', t('jobs.filters.within_radius'), class: 'govuk-label'
-      = select_tag 'radius', options_for_select(radius_filter_options, @vacancies_search.radius), disabled: @vacancies_search.disable_radius?, class: 'govuk-select govuk-!-width-full'
+    .js-location-finder__link.govuk-body-s
+      or
+      = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
+
+    = f.govuk_collection_select :radius,
+      radius_filter_options,
+      :last,
+      :first,
+      label: { text: t('jobs.filters.within_radius'), size: 's' },
+      html_options: { class: 'govuk-!-width-full' },
+      form_group_classes: 'govuk-inset-text location-radius-select location-radius-select-block'
 
     = f.hidden_field :jobs_sort, value: @vacancies_search.sort_by
 

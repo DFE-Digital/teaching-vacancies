@@ -85,7 +85,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
 
           click_on 'Return to your search results'
 
-          expect(page.find_field('keyword-field').value).to eq('teacher')
+          expect(page.find_field('jobs_search_form[keyword]').value).to eq('teacher')
         end
       end
     end
@@ -118,7 +118,7 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       visit jobs_path
 
       within '.filters-form' do
-        fill_in 'keyword-field', with: 'English'
+        fill_in 'jobs_search_form[keyword]', with: 'English'
         page.find('.govuk-button[type=submit]').click
       end
 

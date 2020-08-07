@@ -506,9 +506,9 @@ en:
     filters:
       title: 'Search job listings'
       keyword: 'Keywords'
-      keyword_hint: 'Job title or subject, for example'
+      keyword_hint: 'Humanities, KS2, primary, NQT for example'
       location: 'Enter a location'
-      location_hint: 'City, town or postcode, for example'
+      location_hint: 'City, town or postcode'
       use_current_location: 'use current location'
       within_radius: 'Within a radius of'
       number_of_miles:

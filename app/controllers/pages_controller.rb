@@ -1,6 +1,10 @@
 class PagesController < ApplicationController
   include HighVoltage::StaticPage
 
+  def home
+    @jobs_search_form = VacancyAlgoliaSearchForm.new(params)
+  end
+
   def invalid_page
     redirect_to '/404'
   end
