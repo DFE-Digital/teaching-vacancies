@@ -100,6 +100,7 @@ paas_user = ""
 paas_password = ""
 paas_sso_passcode = ""
 paas_postgres_service_plan = "small-11"
+paas_redis_service_plan = "tiny-4_x
 
 # Statuscake
 
