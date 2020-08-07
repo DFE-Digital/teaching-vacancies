@@ -6,6 +6,8 @@ applications:
     env:
       RAILS_ENV: staging
     command: bundle exec rake cf:on_first_instance db:migrate && rails s
+    health-check-type: http
+    health-check-http-endpoint: /check    
     instances: 2
     memory: 512M
     services:
