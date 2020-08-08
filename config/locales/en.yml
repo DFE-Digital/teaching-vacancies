@@ -1220,6 +1220,11 @@ en:
       delete_error: 'An error occurred while removing the file.'
       no_keep_file: 'No, keep file'
       yes_remove_file: 'Yes, remove file'
+    filter_group:
+      close_all_filter_groups: 'Close all'
+      current_selected_filters: 'Selected filters'
+      clear_all_filters: 'Clear filters'
+      remove_filter_hidden: 'Remove this filter'
   updates:
     heading: Updates
     updates_description_html: >-

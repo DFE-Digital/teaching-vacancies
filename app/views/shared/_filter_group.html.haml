@@ -1,6 +1,6 @@
 -# Usage to include filter group
 -#
--# = render 'shared/filter_group', :f => <FormBuilder form>,
+-# = render 'shared/filter_group', f: <FormBuilder form>,
 -#   filters: {
 -#     :title => <String>,
 -#     :removeButtons => <Boolean>,
@@ -17,31 +17,33 @@
         %span.moj-filter__heading-title
           %h2.govuk-heading-s
             = filters[:title]
-        %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'close-all-accordion' }
-          = 'Close all'
+        %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'close-all-groups' }
+          = t('shared.filter_group.close_all_filter_groups')
 
     - if filters[:totalCount] > 0 && filters[:removeButtons]
       .moj-filter__content
         .moj-filter__selected
           .selected-filters__heading{ class: 'govuk-!-margin-bottom-2' }
             .govuk-body{ class: 'govuk-!-margin-bottom-0' }
-              = 'Selected filters'
+              = t('shared.filter_group.current_selected_filters')
             %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'clear-filters-button' }
-              = 'Clear filters'
+              = t('shared.filter_group.clear_all_filters')
 
           - filters[:items].each do |group|
-            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0' }
+            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
               = group[:title]
 
             %ul.moj-filter-tags
-              - group[:options].each do |school|
-                - if group[:selected].include? school.id
+              - group[:options].each do |tag|
+                - if group[:selected].include? tag.id
                   %li
-                    %button.moj-filter__tag{ data: { group: group[:key], key: school.id } }
+                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.id } }
                       %span.govuk-visually-hidden
-                        = 'Remove this filter'
-                      = school.name
+                        = t('shared.filter_group.remove_filter_hidden')
+                      = tag.name
                       %i.fa.fa-close
+
+= f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 
 .accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
 

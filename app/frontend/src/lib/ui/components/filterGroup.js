@@ -2,18 +2,22 @@ import '../../polyfill/closest.polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 
-window.addEventListener('DOMContentLoaded', () => {
-  Array.from(document.getElementsByClassName('moj-filter__tag')).map((removeButton) => addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
+window.addEventListener('DOMContentLoaded', () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups'));
 
-  const clearButton = document.getElementById('clear-filters-button');
+export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector) => {
+  Array.from(document.getElementsByClassName(removeButtonSelector)).map((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
+
+  const clearButton = document.getElementById(clearButtonSelector);
   if (clearButton) {
-    addRemoveAllFiltersEvent(clearButton, () => getSubmitButton(clearButton).click());
+    filterGroup.addRemoveAllFiltersEvent(clearButton, () => getSubmitButton(clearButton).click());
   }
 
-  addFilterChangeEvent(document.getElementsByClassName('filter-group__container'));
+  addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
 
-  document.getElementById('close-all-accordion').addEventListener('click', closeAllSectionsHandler);
-});
+  if (document.getElementById(closeButtonSelector)) {
+    document.getElementById(closeButtonSelector).addEventListener('click', closeAllSectionsHandler);
+  }
+};
 
 export const closeAllSectionsHandler = (e) => {
   e.preventDefault();
@@ -77,6 +81,8 @@ const filterGroup = {
   findFilterCheckboxInGroup,
   getFilterCheckboxesInGroup,
   addFilterChangeEvent,
+  addRemoveFilterEvent,
+  addRemoveAllFiltersEvent,
   filterChangeHandler,
 };
 

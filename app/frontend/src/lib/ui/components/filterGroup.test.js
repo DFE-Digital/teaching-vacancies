@@ -1,4 +1,5 @@
 import filterGroup, {
+  init,
   addRemoveFilterEvent,
   addRemoveAllFiltersEvent,
   removeFilterHandler,
@@ -16,25 +17,43 @@ import filterGroup, {
 } from './filterGroup';
 
 describe('filterGroup', () => {
-  let removeFilterMock = null; let removeAllFiltersMock = null; let onRemove = null; let filterChangeHandlerMock = null;
+  let onRemove = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
 
-    filterGroup.removeFilterHandler = jest.fn();
-    removeFilterMock = jest.spyOn(filterGroup, 'removeFilterHandler');
-
-    filterGroup.removeAllFiltersHandler = jest.fn();
-    removeAllFiltersMock = jest.spyOn(filterGroup, 'removeAllFiltersHandler');
-
-    filterGroup.filterChangeHandler = jest.fn();
-    filterChangeHandlerMock = jest.spyOn(filterGroup, 'filterChangeHandler');
-
     onRemove = jest.fn();
+  });
+
+  describe('init', () => {
+    test('adds event listener to element that calls handler with correct arguments', () => {
+      filterGroup.addRemoveFilterEvent = jest.fn();
+      const addRemoveFilterEventMock = jest.spyOn(filterGroup, 'addRemoveFilterEvent');
+
+      filterGroup.addRemoveAllFiltersEvent = jest.fn();
+      const addRemoveAllFiltersEventMock = jest.spyOn(filterGroup, 'addRemoveAllFiltersEvent');
+
+      document.body.innerHTML = `<div>
+<button class="moj-filter__tag">remove</button>
+<button class="moj-filter__tag">remove</button>
+<button id="clear-filters-button">remove</button>
+<button id="close-all-groups">remove</button>
+</div>
+<div class="filter-group__container"></div>
+<div class="filter-group__container"></div>`;
+
+      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups');
+
+      expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
+      expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('addRemoveFilterEvent', () => {
     test('adds event listener to element that calls handler with correct arguments', () => {
+      filterGroup.removeFilterHandler = jest.fn();
+      const removeFilterMock = jest.spyOn(filterGroup, 'removeFilterHandler');
+
       document.body.innerHTML = '<button id="test-button" data-group="filter-group" data-key="filter-key">click me</button>';
       const button = document.getElementById('test-button');
       filterGroup.getFilterGroup = jest.fn(() => 'group');
@@ -47,6 +66,9 @@ describe('filterGroup', () => {
 
   describe('addRemoveAllFiltersEvent', () => {
     test('adds event listener to element that calls handler with correct arguments', () => {
+      filterGroup.removeAllFiltersHandler = jest.fn();
+      const removeAllFiltersMock = jest.spyOn(filterGroup, 'removeAllFiltersHandler');
+
       document.body.innerHTML = '<a id="remove-filters">remove all</a>';
       const button = document.getElementById('remove-filters');
       addRemoveAllFiltersEvent(button, onRemove);
@@ -144,6 +166,9 @@ describe('filterGroup', () => {
 
   describe('addFilterChangeEvent', () => {
     test('adds event listener to element that calls handler with correct arguments', () => {
+      filterGroup.filterChangeHandler = jest.fn();
+      const filterChangeHandlerMock = jest.spyOn(filterGroup, 'filterChangeHandler');
+
       document.body.innerHTML = '<div id="test-group" class="group"></div><div class="group"></div>';
       const groups = document.getElementsByClassName('group');
       const group = document.getElementById('test-group');
