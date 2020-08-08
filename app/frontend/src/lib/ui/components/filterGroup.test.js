@@ -9,6 +9,9 @@ import filterGroup, {
   unCheckCheckbox,
   getFilterGroups,
   addFilterChangeEvent,
+  getSubmitButton,
+  closeAllSectionsHandler,
+  filterChangeHandler,
   CHECKBOX_CLASS_SELECTOR,
 } from './filterGroup';
 
@@ -37,6 +40,7 @@ describe('filterGroup', () => {
       filterGroup.getFilterGroup = jest.fn(() => 'group');
       addRemoveFilterEvent(button, onRemove);
       button.dispatchEvent(new Event('click'));
+
       expect(removeFilterMock).toHaveBeenCalledWith('group', 'filter-key', onRemove);
     });
   });
@@ -47,6 +51,7 @@ describe('filterGroup', () => {
       const button = document.getElementById('remove-filters');
       addRemoveAllFiltersEvent(button, onRemove);
       button.dispatchEvent(new Event('click'));
+
       expect(removeAllFiltersMock).toHaveBeenCalledWith(onRemove);
     });
   });
@@ -91,6 +96,7 @@ describe('filterGroup', () => {
     test('finds the container element for a group of filters', () => {
       document.body.innerHTML = '<div class="filter-group__checkboxes" data-group="x"></div><div id="should-find" class="filter-group__checkboxes" data-group="y"></div>';
       const shouldFind = document.getElementById('should-find');
+
       expect(getFilterGroup('y')).toEqual(shouldFind);
     });
   });
@@ -105,6 +111,7 @@ describe('filterGroup', () => {
 
       const group = document.getElementById('group');
       const shouldFind = document.getElementById('should-find');
+
       expect(findFilterCheckboxInGroup(group, 'y')).toEqual(undefined);
       expect(findFilterCheckboxInGroup(group, 'z')).toEqual(shouldFind);
     });
@@ -145,6 +152,56 @@ describe('filterGroup', () => {
       group.dispatchEvent(new Event('click'));
 
       expect(filterChangeHandlerMock).toHaveBeenCalledWith(group);
+    });
+  });
+
+  describe('filterChangeHandler', () => {
+    test('submits the form only if a filter checkbox is clicked', () => {
+      document.body.innerHTML = `<form>
+  <div>
+  <input type="text" id="should-submit" class="${CHECKBOX_CLASS_SELECTOR}" />
+  <span id="should-not-submit">abc</span>
+  </div>
+  <input type="submit" id="submit-button" />
+  </form>`;
+
+      const submitButton = document.getElementById('submit-button');
+      const shouldNotSubmit = document.getElementById('should-not-submit');
+      const shouldSubmit = document.getElementById('should-submit');
+
+      submitButton.click = jest.fn();
+      const submitMock = jest.spyOn(submitButton, 'click');
+
+      filterChangeHandler(shouldNotSubmit);
+      expect(submitMock).not.toHaveBeenCalled();
+
+      filterChangeHandler(shouldSubmit);
+      expect(submitMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('getSubmitButton', () => {
+    test('finds and returns the DOM element of the submit button for the form thst supplied element is in', () => {
+      document.body.innerHTML = '<form><div><input type="checkbox" id="test-element" /></div><div><input type="submit" id="find-this" /></div></form>';
+
+      const submitButton = document.getElementById('find-this');
+      const found = getSubmitButton(document.getElementById('test-element'));
+
+      expect(found).toBe(submitButton);
+    });
+  });
+
+  describe('closeAllSectionsHandler', () => {
+    test('removes the class selector from all filter groups that makes them visible', () => {
+      document.body.innerHTML = '<div class="govuk-accordion__section"></div><div class="govuk-accordion__section"></div><div class="govuk-accordion__section"></div>';
+
+      const event = { preventDefault: jest.fn() };
+      const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
+
+      closeAllSectionsHandler(event);
+
+      expect(dontFollowLinkMock).toHaveBeenCalled();
+      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(0);
     });
   });
 });

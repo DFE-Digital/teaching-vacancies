@@ -3,17 +3,24 @@ import '../../polyfill/closest.polyfill';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 
 window.addEventListener('DOMContentLoaded', () => {
-  Array.from(document.getElementsByClassName('moj-filter__tag')).map((removeButton) => addRemoveFilterEvent(removeButton, () => getForm(removeButton).submit()));
+  Array.from(document.getElementsByClassName('moj-filter__tag')).map((removeButton) => addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
 
-  const clearButton = document.getElementById('clear-filters');
+  const clearButton = document.getElementById('clear-filters-button');
   if (clearButton) {
-    addRemoveAllFiltersEvent(clearButton, () => getForm(clearButton).submit());
+    addRemoveAllFiltersEvent(clearButton, () => getSubmitButton(clearButton).click());
   }
 
   addFilterChangeEvent(document.getElementsByClassName('filter-group__container'));
+
+  document.getElementById('close-all-accordion').addEventListener('click', closeAllSectionsHandler);
 });
 
-export const getForm = (el) => el.closest('form');
+export const closeAllSectionsHandler = (e) => {
+  e.preventDefault();
+  Array.from(document.getElementsByClassName('govuk-accordion__section')).map((section) => section.classList.remove('govuk-accordion__section--expanded'));
+};
+
+export const getSubmitButton = (el) => Array.from(el.closest('form').getElementsByTagName('input')).filter((input) => input.type === 'submit')[0];
 
 export const addRemoveFilterEvent = (el, onClear) => {
   el.addEventListener('click', (e) => {
@@ -40,12 +47,14 @@ export const removeAllFiltersHandler = (onClear) => {
 };
 
 export const addFilterChangeEvent = (groups) => {
-  Array.from(groups).map((group) => group.addEventListener('click', (e) => filterGroup.filterChangeHandler(e.target)));
+  Array.from(groups).map((group) => group.addEventListener('click', (e) => {
+    filterGroup.filterChangeHandler(e.target);
+  }));
 };
 
 export const filterChangeHandler = (el) => {
   if (el.className === CHECKBOX_CLASS_SELECTOR) {
-    getForm(el).submit();
+    getSubmitButton(el).click();
   }
 };
 

@@ -5,9 +5,10 @@
   .moj-filter__header {
     background: none;
     border: 1px solid white;
-    padding-bottom: govuk-spacing(1);
+    padding: 0;
     border-bottom: 2px solid govuk-colour("light-grey");
     margin-bottom: govuk-spacing(2);
+    font-size: 1rem;
   }
 
   .moj-filter__heading-action .govuk-link {
@@ -30,6 +31,7 @@
     position: relative;
 
     .govuk-link {
+      font-weight: normal;
       position: absolute;
       right: 0;
       top: 0;
