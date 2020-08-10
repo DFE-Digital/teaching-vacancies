@@ -1,76 +1,65 @@
 -# Usage to include filter group
 -#
--# = render partial: 'shared/filter_group', locals: {
+-# = render 'shared/filter_group', f: <FormBuilder form>,
 -#   filters: {
--#     :title => 'filter group heading',
+-#     :title => <String>,
+-#     :removeButtons => <Boolean>,
+-#     :totalCount => <Integer>,
 -#     :items => [
--#       { :f => f, :options => <Array>, :title => 'Working patterns'},
--#       { :f => f, :options => <Array>, :title => 'Subjects', :search => true }
+-#       { :options => <Array>, :title => <String>, :search => <Boolean>, :key => <String> }
 -#     ]
 -#   }
--# }
+
+- if filters.present?
+  .moj-filter
+    .moj-filter__header
+      .selected-filters__heading
+        %span.moj-filter__heading-title
+          %h2.govuk-heading-s
+            = filters[:title]
+        %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'close-all-groups' }
+          = t('shared.filter_group.close_all_filter_groups')
+
+    - if filters[:totalCount] > 0 && filters[:removeButtons]
+      .moj-filter__content
+        .moj-filter__selected
+          .selected-filters__heading{ class: 'govuk-!-margin-bottom-2' }
+            .govuk-body{ class: 'govuk-!-margin-bottom-0' }
+              = t('shared.filter_group.current_selected_filters')
+            %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'clear-filters-button' }
+              = t('shared.filter_group.clear_all_filters')
+
+          - filters[:items].each do |group|
+            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
+              = group[:title]
+
+            %ul.moj-filter-tags
+              - group[:options].each do |tag|
+                - if group[:selected].include? tag.id
+                  %li
+                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.id } }
+                      %span.govuk-visually-hidden
+                        = t('shared.filter_group.remove_filter_hidden')
+                      = tag.name
+                      %i.fa.fa-close
+
+= f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
 
 .accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
 
-  - if filters.present? && filters[:control]
-    .govuk-accordion__section.govuk-accordion__title.moj-filter
-      .govuk-accordion__section-header.moj-filter__header
-        %h3.govuk-accordion__section-heading.accordion-group-heading
-          %span.govuk-accordion__section-button.moj-filter__heading-title{ id: "accordion-default-heading-title" }
-            %h2.govuk-heading-s
-              = filters[:title]
-
-      .govuk-accordion__section-content{ id: "accordion-default-content-title", aria: { labelledby: "accordion-default-heading-title" } }
-        .moj-filter__content
-          .moj-filter__selected
-            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0' }
-              = 'Subjects'
-
-            .moj-filter__heading-action
-              %p
-                %a.govuk-link.govuk-link--no-visited-state{ href: ""}
-                  = 'Clear filters'
-
-            %ul.moj-filter-tags
-              %li
-                %a.moj-filter__tag{ href: "/path/to/remove/this" }
-                  %span.govuk-visually-hidden
-                    = 'Remove this filter'
-                  = 'Art and design'
-                  %i.fa.fa-close
-
-          .moj-filter__selected
-            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0' }
-              = 'Working patterns'
-
-            %ul.moj-filter-tags
-              %li
-                %a.moj-filter__tag{ href: "/path/to/remove/this" }
-                  %span.govuk-visually-hidden
-                    = 'Remove this filter'
-                  = 'Full-time'
-                  %i.fa.fa-close
-
-              %li
-                %a.moj-filter__tag{ href: "/path/to/remove/this" }
-                  %span.govuk-visually-hidden
-                    = 'Remove this filter'
-                  = 'Part-time'
-                  %i.fa.fa-close
-
-  - filters[:items].each_with_index do |filter, index|
-    .govuk-accordion__section.accordion-content__group
+  - filters[:items].each_with_index do |group, index|
+    .govuk-accordion__section.accordion-content__group.filter-group__container
       .govuk-accordion__section-header
         %h3.govuk-accordion__section-heading
           %span.govuk-accordion__section-button{ id: "accordion-default-heading-#{index}" }
-            = filter[:title]
+            = group[:title]
 
-      .govuk-accordion__section-content{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" } }
+      .govuk-accordion__section-content.filter-group__checkboxes{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" }, data: { group: group[:key] } }
         = render 'shared/checkbox_group', f: f,
-          search: filter[:search],
-          attribute_name: filter[:attribute],
-          options: filter[:options],
-          value_method: filter[:value_method],
-          text_method: filter[:text_method],
-          hint_method: filter[:hint_method],
-          small: filter[:small]
+          search: group[:search],
+          attribute_name: group[:attribute],
+          options: group[:options],
+          value_method: group[:value_method],
+          text_method: group[:text_method],
+          hint_method: group[:hint_method],
+          small: group[:small]

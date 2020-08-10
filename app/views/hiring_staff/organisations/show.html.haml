@@ -10,7 +10,12 @@
       - else
         = link_to t('sign_in.organisation.change'), auth_dfe_callback_path, class: 'govuk-link'
 
-  = render(HiringStaff::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form))
-  = render(HiringStaff::NoVacanciesComponent.new(organisation: @organisation))
+  .govuk-grid-column-full
+    .dashboard-header.govuk-grid-row
+      = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0"
 
-  = render(HiringStaff::SchoolOverviewComponent.new(organisation: @organisation))
+    .govuk-grid-row{ class: "govuk-!-margin-top-6" }
+      = render(HiringStaff::VacanciesComponent.new(organisation: @organisation, sort: @sort, selected_type: @selected_type, filters: @filters, filters_form: @managed_organisations_form))
+      = render(HiringStaff::NoVacanciesComponent.new(organisation: @organisation))
+
+    = render(HiringStaff::SchoolOverviewComponent.new(organisation: @organisation))

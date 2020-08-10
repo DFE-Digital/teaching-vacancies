@@ -2,22 +2,15 @@
   .govuk-grid-column-one-quarter
     = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
       = render 'shared/filter_group', f: f,
-        filters: { title: 'Job filters', items: [{ title: 'Locations', attribute: :managed_school_ids, options: @school_options, value_method: :id, text_method: :name, small: true }] }
+        filters: { title: 'Filter results', removeButtons: true, totalCount: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @school_options, value_method: :id, text_method: :name, small: true }] }
 
       = f.hidden_field :jobs_type, value: @selected_type
-      = f.govuk_submit t('buttons.apply_filters')
 
 %div{ class: grid_column_class }
-  .dashboard-header
-    - if @organisation.is_a?(SchoolGroup)
-      .filters-information
-        %button.govuk-button.govuk-button--secondary{ class: "govuk-!-margin-bottom-0" }= t('buttons.hide_filters')
-        %span.govuk-body{ class: "govuk-!-margin-left-3" }= filters_applied_text
-    = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0"
   .overflow-scroll
     .govuk-tabs
       %h2.govuk-tabs__title= t("aria_labels.content")
-      %ul.govuk-tabs__list.tab-list{ class: "govuk-!-margin-top-6" }
+      %ul.govuk-tabs__list.tab-list
         - @vacancy_types.each do |vacancy_type|
           %li.govuk-tabs__list-item{ class: selected_class(vacancy_type) }
             = vacancy_type_tab_link(vacancy_type)
