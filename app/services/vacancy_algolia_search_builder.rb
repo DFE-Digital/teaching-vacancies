@@ -122,7 +122,7 @@ class VacancyAlgoliaSearchBuilder
       # This applies only to regions and counties: large areas for which there is
       # very little value in using a point coordinate, and for which there is a
       # low chance of ambiguity (unlike Clapham borough vs Clapham village in Bedfordshire)
-      Rollbar.log(:info,
+      Rollbar.log(:error,
         "A location category search was performed as a text search as no LocationPolygon could
         be found with the name '#{location_category.downcase}'.")
       self.keyword = [keyword, location_category].reject(&:blank?).join(' ')
