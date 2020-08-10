@@ -26,7 +26,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                    ],
                                   school: school,
                                   working_patterns: ['full_time', 'part_time'],
-                                  publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
+                                  publish_on: Time.zone.today, expires_on: Time.zone.tomorrow,
+                                  job_location: 'at_one_school'))
     end
 
     context 'when the vacancy is now invalid' do

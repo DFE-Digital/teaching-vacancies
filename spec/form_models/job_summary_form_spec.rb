@@ -27,7 +27,8 @@ RSpec.describe JobSummaryForm, type: :model do
 
           it 'requests the user to complete the about school field' do
             expect(job_summary_form.valid?).to be false
-            expect(job_summary_form.errors.messages[:about_school].first).to match(/school/)
+            expect(job_summary_form.errors.messages[:about_school].first)
+              .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
           end
         end
 
@@ -36,7 +37,8 @@ RSpec.describe JobSummaryForm, type: :model do
 
           it 'requests the user to complete the about school field' do
             expect(job_summary_form.valid?).to be false
-            expect(job_summary_form.errors.messages[:about_school].first).to match(/school/)
+            expect(job_summary_form.errors.messages[:about_school].first)
+              .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
           end
         end
 
@@ -45,7 +47,8 @@ RSpec.describe JobSummaryForm, type: :model do
 
           it 'requests the user to complete the about trust field' do
             expect(job_summary_form.valid?).to be false
-            expect(job_summary_form.errors.messages[:about_school].first).to match(/trust/)
+            expect(job_summary_form.errors.messages[:about_school].first)
+              .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'trust'))
           end
         end
       end

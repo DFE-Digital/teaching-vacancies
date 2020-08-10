@@ -106,7 +106,8 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when the original job is now invalid' do
     scenario 'the job can be successfully copied but not published until valid' do
-      original_vacancy = build(:vacancy, :complete, school: school, about_school: nil)
+      original_vacancy = build(:vacancy, :complete,
+                              school: school, about_school: nil, job_location: 'at_one_school')
       original_vacancy.send(:set_slug)
       original_vacancy.save(validate: false)
 
@@ -136,14 +137,14 @@ RSpec.feature 'Copying a vacancy' do
       within '#errors.govuk-notification--danger' do
         expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
         expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
-        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school or trust'))
       end
 
       click_on I18n.t('jobs.submit_listing.button')
       within '#errors.govuk-notification--danger' do
         expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
         expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
-        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school or trust'))
       end
 
       click_header_link(I18n.t('jobs.job_summary'))

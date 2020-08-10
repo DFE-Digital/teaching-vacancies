@@ -7,14 +7,20 @@ module VacancyJobSummaryValidations
   end
 
   def about_school_must_not_be_blank
-    if defined?(vacancy) && vacancy.job_location == 'central_office'
-      organisation = 'trust'
-    else
-      organisation = 'school'
+    return if about_school.present?
+    # Since vacancy is set by VacancyForm.initialize, it can be undefined here.
+    begin
+      if vacancy&.job_location == 'central_office'
+        organisation = 'trust'
+      else
+        organisation = 'school'
+      end
+    rescue NameError
+      organisation = 'school or trust'
     end
     errors.add(:about_school,
       I18n.t('job_summary_errors.about_school.blank',
       organisation: organisation)
-    ) if about_school.blank?
+    )
   end
 end

@@ -58,7 +58,7 @@ RSpec.describe Vacancy, type: :model do
       it 'should validate presence of about_school' do
         subject.about_school = ''
         subject.valid?
-        expect(subject.errors[:about_school].first).to eq('Enter a description of the school')
+        expect(subject.errors[:about_school].first).to eq('Enter a description of the school or trust')
       end
       it { should validate_presence_of(:contact_email) }
       it { should validate_presence_of(:expires_on) }
