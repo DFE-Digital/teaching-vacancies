@@ -10,7 +10,7 @@
     - else
       %dt= t('jobs.trust_type')
     %dd.double
-      = organisation_type(@vacancy.school_or_school_group)
+      = organisation_type(organisation: @vacancy.school_or_school_group, with_age_range: true)
     - if @vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double

@@ -7,7 +7,7 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.type')
         %td.govuk-table__cell
-          = organisation_type(@vacancy.school)
+          = organisation_type(organisation: @vacancy.school, with_age_range: false)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
