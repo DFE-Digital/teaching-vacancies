@@ -19,6 +19,11 @@
     %dd.app-check-your-answers__answer= @vacancy.show_job_roles.presence || t('jobs.not_defined')
 
   .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#suitable_for_nqt
+      %h4.govuk-heading-s= t('jobs.suitable_for_nqt')
+    %dd.app-check-your-answers__answer= @vacancy.suitable_for_nqt&.capitalize
+
+  .app-check-your-answers__contents
     %dt.app-check-your-answers__question#subjects
       %h4.govuk-heading-s= t('jobs.subjects')
     %dd.app-check-your-answers__answer= @vacancy.show_subjects.presence || t('jobs.not_defined')

@@ -330,6 +330,7 @@ en:
     job_details: 'Job details'
     job_title: 'Job title'
     job_roles: 'Job role'
+    suitable_for_nqt: Is this job suitable for NQTs?
     job_role_options:
       teacher: 'Teacher'
       leadership: 'Leadership'
