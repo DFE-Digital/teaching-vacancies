@@ -16,6 +16,7 @@ module SearchHelper
     {
       aroundLatLng: algolia_hash[:aroundLatLng] || nil,
       aroundRadius: algolia_hash[:aroundRadius] || nil,
+      insidePolygon: algolia_hash[:insidePolygon] || nil,
       replica: algolia_hash[:replica] || nil,
       hitsPerPage: algolia_hash[:hitsPerPage] || 10,
       filters: algolia_hash[:filters] ||
