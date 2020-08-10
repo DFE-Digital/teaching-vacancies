@@ -2,33 +2,9 @@
 
 = form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path(anchor: 'vacancy-results'), html: { method: 'get' } do |f|
 
-  = f.govuk_text_field :keyword,
-    label: { text: t('jobs.filters.keyword'), size: 's' },
-    placeholder: t('jobs.filters.keyword_hint')
-
-  = f.govuk_text_field :location,
-    label: { text: t('jobs.filters.location'), size: 's' },
-    placeholder: t('jobs.filters.location_hint'),
-    class: 'govuk-input js-location-finder__input',
-    form_group_classes: 'js-location-finder location-search',
-    'autocomplete': 'off',
-    'aria-expanded': 'false',
-    'aria-owns': 'location_listbox',
-    'aria-autocomplete': 'list',
-    'aria-describedby': 'js-location-finder__error',
-    'role': 'combobox',
-    'data-coordinates': @vacancies_search&.point_coordinates
-
-  = f.govuk_collection_select :radius,
-    radius_filter_options,
-    :last,
-    :first,
-    label: { text: t('jobs.filters.within_radius'), size: 's' },
-    html_options: { class: 'govuk-!-width-full' },
-    form_group_classes: 'location-radius-select location-radius-select-inline-block'
-
-  .js-location-finder__link.govuk-body-s
-    or
-    = link_to t('jobs.filters.use_current_location'), '#', id: 'current-location', class: 'govuk-link govuk-link--no-visited-state'
+  = render 'shared/search/keyword', f: f
+  = render 'shared/search/location', f: f
+  = render 'shared/search/radius', f: f, filters: false
+  = render 'shared/search/current_location'
 
   = f.govuk_submit t('buttons.search'), classes: "govuk-button govuk-button--start govuk-!-margin-0"

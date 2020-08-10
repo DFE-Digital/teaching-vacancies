@@ -1,0 +1,11 @@
+= f.govuk_text_field :location,
+  label: { text: t('jobs.filters.location'), size: 's' },
+  placeholder: t('jobs.filters.location_hint'),
+  class: 'govuk-input js-location-finder__input',
+  form_group_classes: 'js-location-finder location-search',
+  'autocomplete': 'off',
+  'aria-expanded': 'false',
+  'aria-owns': 'location_listbox',
+  'aria-autocomplete': 'list',
+  'role': 'combobox',
+  'data-coordinates': @vacancies_search&.point_coordinates
