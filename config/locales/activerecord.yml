@@ -14,6 +14,8 @@ en:
       invalid_characters: Job title must not contain any HTML tags
     job_roles:
       blank: Select a job role
+    suitable_for_nqt:
+      inclusion: Please indicate whether or not the job is suitable for NQTs
     working_patterns:
       blank: Select a working pattern
   pay_package_errors: &pay_package_errors

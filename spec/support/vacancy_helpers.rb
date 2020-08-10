@@ -24,6 +24,8 @@ module VacancyHelpers
             visible: false
     end
 
+    find("label[for='job-specification-form-suitable-for-nqt-#{vacancy.suitable_for_nqt}-field']").click
+
     vacancy.subjects&.each do |subject|
       check subject,
             name: 'job_specification_form[subjects][]',

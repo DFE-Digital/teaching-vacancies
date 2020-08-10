@@ -52,4 +52,32 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       end
     end
   end
+
+  describe '#append_suitable_for_nqts_to_job_roles' do
+    let(:params) do
+      { job_specification_form: { suitable_for_nqt: suitable_for_nqt, job_roles: [] } }
+    end
+
+    before do
+      allow(controller).to receive(:params).and_return(params)
+    end
+
+    context 'when suitable for nqts is yes' do
+      let(:suitable_for_nqt) { 'yes' }
+
+      it 'appends Suitable for NQTs to job roles' do
+        subject.send(:append_suitable_for_nqts_to_job_roles)
+        expect(controller.params[:job_specification_form][:job_roles]).to eql(['Suitable for NQTs'])
+      end
+    end
+
+    context 'when suitable for nqts is no' do
+      let(:suitable_for_nqt) { 'no' }
+
+      it 'does not append Suitable for NQTs to job roles' do
+        subject.send(:append_suitable_for_nqts_to_job_roles)
+        expect(controller.params[:job_specification_form][:job_roles]).to be_blank
+      end
+    end
+  end
 end

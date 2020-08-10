@@ -4,6 +4,16 @@ RSpec.describe JobSpecificationForm, type: :model do
   subject { JobSpecificationForm.new({}) }
 
   context 'validations' do
+    describe '#suitable_for_nqt' do
+      let(:job_specification) { JobSpecificationForm.new(suitable_for_nqt: nil) }
+
+      it 'requests an entry in the field' do
+        expect(job_specification.valid?).to be false
+        expect(job_specification.errors.messages[:suitable_for_nqt][0])
+          .to eq('Please indicate whether or not the job is suitable for NQTs')
+      end
+    end
+
     describe '#working_patterns' do
       let(:job_specification) { JobSpecificationForm.new(working_patterns: nil) }
 
@@ -76,12 +86,14 @@ RSpec.describe JobSpecificationForm, type: :model do
     it 'a JobSpecificationForm can be converted to a vacancy' do
       job_specification_form = JobSpecificationForm.new(state: 'create', job_title: 'English Teacher',
                                                         job_roles: [I18n.t('jobs.job_role_options.teacher')],
+                                                        suitable_for_nqt: 'no',
                                                         working_patterns: ['full_time'],
                                                         subjects: ['Maths'])
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
       expect(job_specification_form.vacancy.job_roles).to include(I18n.t('jobs.job_role_options.teacher'))
+      expect(job_specification_form.vacancy.suitable_for_nqt).to eq('no')
       expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
       expect(job_specification_form.vacancy.subjects).to include('Maths')
     end

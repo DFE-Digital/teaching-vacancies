@@ -34,13 +34,19 @@
         legend: { text: t('helpers.fieldset.job_specification_form.job_roles') },
         hint_text: t('helpers.hint.job_specification_form.job_roles')
 
+      = f.govuk_collection_radio_buttons :suitable_for_nqt,
+        %w[yes no],
+        :to_s,
+        :capitalize,
+        legend: { text: t('helpers.fieldset.job_specification_form.suitable_for_nqt_html') }
+
       = f.govuk_fieldset legend: { text: t('helpers.fieldset.job_specification_form.subjects') } do
 
         %label{ for: 'job-specification-form-subject-search' }
           %span.govuk-visually-hidden
             Subject filter
         %span.govuk-hint#job-specification-form-subjects-hint
-          =t('helpers.hint.job_specification_form.subjects_hint')
+          =t('helpers.hint.job_specification_form.subjects')
 
         %div{ class: 'govuk-!-margin-bottom-6' }
           = render 'shared/checkbox_group', search: true, f: f, attribute_name: :subjects, options: subject_options, value_method: :first, text_method: :first, hint_method: :last, small: true
