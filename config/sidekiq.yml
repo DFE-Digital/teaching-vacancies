@@ -17,9 +17,11 @@
   - [export_users, 1]
   - [import_school_data, 1]
   - [import_school_group_data, 1]
+  - [remove_vacancies_that_expired_yesterday, 1]
   - [reset_sessions, 1]
   - [seed_vacancies_from_api, 1]
   - [submit_performance_platform, 1]
+  - [update_algolia_index, 1]
   - [update_dsi_users_in_db, 1]
 mailers:
   :concurrency: 2
@@ -45,9 +47,13 @@ export_tables:
   :concurrency: 1
 export_users:
   :concurrency: 1
+remove_vacancies_that_expired_yesterday:
+  :concurrency: 1
 reset_sessions:
   :concurrency: 1
 submit_performance_platform:
+  :concurrency: 1
+update_algolia_index:
   :concurrency: 1
 update_dsi_users_in_db:
   :concurrency: 1
