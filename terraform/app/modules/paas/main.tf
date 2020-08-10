@@ -10,3 +10,9 @@ resource cloudfoundry_service_instance redis_instance {
   space        = data.cloudfoundry_space.space.id
   service_plan = data.cloudfoundry_service.redis.service_plans["${var.redis_service_plan}"]
 }
+
+resource cloudfoundry_user_provided_service papertrail {
+  name             = local.papertrail_service_name
+  space            = data.cloudfoundry_space.space.id
+  syslog_drain_url = var.papertrail_url
+}

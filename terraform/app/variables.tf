@@ -73,6 +73,9 @@ variable paas_user {
   default = ""
 }
 
+variable papertrail_url {
+}
+
 # Statuscake
 variable statuscake_username {
   description = "The Statuscake username"
