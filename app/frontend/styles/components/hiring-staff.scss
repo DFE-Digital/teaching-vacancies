@@ -21,10 +21,14 @@ body.hiring-staff {
 }
 
 .dashboard-header {
-  text-align: right;
   > a {
+    float: right;
     margin-bottom: 0;
   }
+}
+
+.filters-information {
+  display: inline-block;
 }
 
 .button-link {
