@@ -8,16 +8,14 @@ class Vacancy < ApplicationRecord
     nqt_suitable: 3
   }.freeze
 
-  FLEXIBLE_WORKING_PATTERN_OPTIONS = {
-    'part_time' => 100,
-    'job_share' => 101,
-    'compressed_hours' => 102,
-    'staggered_hours' => 103
-  }.freeze
-
   WORKING_PATTERN_OPTIONS = {
-    'full_time' => 0
-  }.merge(FLEXIBLE_WORKING_PATTERN_OPTIONS).freeze
+    full_time: 0,
+    part_time: 100,
+    job_share: 101
+    # Legacy vacancies can have these options too
+    # compressed_hours: 102,
+    # staggered_hours: 103
+  }.freeze
 
   JOB_SORTING_OPTIONS = [
     [I18n.t('jobs.sort_by.most_relevant'), ''],
@@ -261,8 +259,6 @@ class Vacancy < ApplicationRecord
 
   validates :slug, presence: true
 
-  before_save :update_flexible_working, if: :will_save_change_to_working_patterns_or_flexible_working?
-  before_save :update_pro_rata_salary, if: :will_save_change_to_working_patterns?
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
 
   counter :page_view_counter
@@ -326,12 +322,6 @@ class Vacancy < ApplicationRecord
     send(:set_slug)
   end
 
-  def flexible_working?
-    return flexible_working unless flexible_working.nil?
-
-    derived_flexible_working?
-  end
-
   def attributes
     super().merge('working_patterns' => working_patterns, 'job_roles' => job_roles)
   end
@@ -367,31 +357,6 @@ class Vacancy < ApplicationRecord
       %i[job_title school_or_school_group_name],
       %i[job_title location]
     ]
-  end
-
-  def derived_flexible_working?
-    working_patterns.select { |working_pattern| FLEXIBLE_WORKING_PATTERN_OPTIONS.key?(working_pattern) }.any?
-  end
-
-  def will_save_change_to_working_patterns_or_flexible_working?
-    will_save_change_to_working_patterns? || will_save_change_to_flexible_working?
-  end
-
-  def update_flexible_working
-    return if skip_update_callbacks?
-    return if flexible_working.nil?
-
-    self.flexible_working = nil if flexible_working == derived_flexible_working?
-  end
-
-  def update_pro_rata_salary
-    return if skip_update_callbacks?
-
-    self.pro_rata_salary = nil if pro_rata_salary.blank?
-
-    return if pro_rata_salary.nil?
-
-    self.pro_rata_salary = working_patterns == ['part_time'] ? true : nil
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at

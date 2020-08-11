@@ -6,8 +6,8 @@ module VacanciesHelper
   end
 
   def working_pattern_options
-    Vacancy::WORKING_PATTERN_OPTIONS.map do |key, _value|
-      [Vacancy.human_attribute_name("working_patterns.#{key}"), key]
+    Vacancy::WORKING_PATTERN_OPTIONS.keys.map do |key|
+      [Vacancy.human_attribute_name("working_patterns.#{key}"), key.to_s]
     end
   end
 

@@ -502,17 +502,12 @@ en:
       change_job_summary: Change job summary
       apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
       contact_email_link: Email link for job contact email — %{email}
-      flexible_working: Flexible working
       sort_by_link: Sort jobs by %{column} in %{order}ending order
     form_hints:
       deadline_date: 'For example, %{date}'
       publication_date: 'For example, %{date}'
       contact_email: 'This email address will be shown publicly as a point of contact'
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
-    form_warnings:
-      working_pattern: >-
-        If you select flexible working patterns (anything other than 'full-time')
-        candidates will be asked to email you for details.
     filters:
       title: 'Search job listings'
       keyword: 'Keywords'

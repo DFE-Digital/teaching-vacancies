@@ -7,9 +7,7 @@ RSpec.describe VacanciesHelper, type: :helper do
         [
           ['Full-time', 'full_time'],
           ['Part-time', 'part_time'],
-          ['Job share', 'job_share'],
-          ['Compressed hours', 'compressed_hours'],
-          ['Staggered hours', 'staggered_hours']
+          ['Job share', 'job_share']
         ]
       )
     end
