@@ -8,6 +8,7 @@
     "@ministryofjustice/frontend": "^0.0.19-alpha",
     "@rails/webpacker": "4.2.2",
     "axios": "^0.19.2",
+    "classlist-polyfill": "^1.2.0",
     "clipboard": "^2.0.4",
     "govuk-frontend": "3.4.0",
     "jquery": "^3.5.0",

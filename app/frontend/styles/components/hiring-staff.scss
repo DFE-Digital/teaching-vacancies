@@ -25,10 +25,14 @@ body.hiring-staff {
     float: right;
     margin-bottom: 0;
   }
-}
 
-.filters-information {
-  display: inline-block;
+  .filters-information {
+    display: inline-block;
+
+    .filters-applied-text {
+      line-height: 2em;
+    }
+  }
 }
 
 .button-link {

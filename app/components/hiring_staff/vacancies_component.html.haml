@@ -1,12 +1,19 @@
-- if @organisation.is_a?(SchoolGroup)
-  .govuk-grid-column-one-quarter
-    = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
-      = render 'shared/filter_group', f: f,
-        filters: { title: 'Filter results', removeButtons: true, totalCount: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @school_options, value_method: :id, text_method: :name, small: true }] }
+.moj-filter-sidebar
+  - if @organisation.is_a?(SchoolGroup)
+    .govuk-grid-column-one-quarter
+      = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
+        = render 'shared/filter_group', f: f,
+          filters: { title: 'Job Filters', removeButtons: true, totalCount: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @school_options, value_method: :id, text_method: :name, small: true }] }
 
-      = f.hidden_field :jobs_type, value: @selected_type
+        = f.hidden_field :jobs_type, value: @selected_type
 
-%div{ class: grid_column_class }
+.moj-filter-layout__content{ class: grid_column_class }
+  .dashboard-header{ class: "govuk-!-margin-bottom-5" }
+    - if @organisation.is_a?(SchoolGroup)
+      .filters-information.moj-action-bar
+        %button.govuk-button.govuk-button--secondary{ class: "govuk-!-margin-bottom-0 moj-action-bar__filter", id: "toggle-filters-sidebar" }= t('buttons.hide_filters')
+        %span.govuk-body{ class: "govuk-!-margin-left-3 filters-applied-text" }= filters_applied_text
+    = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0"
   .overflow-scroll
     .govuk-tabs
       %h2.govuk-tabs__title= t("aria_labels.content")
