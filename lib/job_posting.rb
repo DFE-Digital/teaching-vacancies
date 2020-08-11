@@ -26,6 +26,9 @@ class JobPosting
       expires_on: expires_on_or_future,
       job_summary: @schema['description'],
       about_school: @schema['hiringOrganization']['description'],
+      suitable_for_nqt: @schema['occupationalCategory']
+        .split(', ')
+        .include?(I18n.t('jobs.job_role_options.nqt_suitable')) ? 'yes' : 'no',
       school: school_by_urn_or_random
     }
   end

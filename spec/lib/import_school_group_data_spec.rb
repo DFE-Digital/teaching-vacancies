@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'import_school_group_data'
 
 RSpec.describe ImportSchoolGroupData do
   let(:subject) { ImportSchoolGroupData.new }

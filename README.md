@@ -6,7 +6,7 @@
 * [Dependencies](#dependencies)
 * [GovUK PaaS](/documentation/govuk-paas.md)
 * [Front end development](#front-end-development)
-* [Importing school data](#importing-school-data)
+* [Importing data](#importing-data)
 * [Logging](/documentation/logging.md)
 * [Misc](#misc)
 * [Running the tests](#running-the-tests)
@@ -182,7 +182,7 @@ yarn run sass:lint
 
 * I see Page Not Found when I log in and try to create a job listing.
 
-Try importing the school data if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
+Try [importing the school data](#importing-school-data) if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
 
 ---
 
@@ -292,7 +292,20 @@ Then create and populate your database:
 bundle exec rake db:create db:environment:set db:schema:load
 ```
 
-#### Importing school data
+#### Importing data
+
+##### Importing location polygons data
+
+Run these rake tasks to populate your database with LocationPolygons (which are used in some cases to search by location).
+
+```ruby
+rake data:location_polygons:import_cities
+rake data:location_polygons:import_counties
+rake data:location_polygons:import_london_boroughs
+rake data:location_polygons:import_regions
+```
+
+##### Importing school data
 
 Populate your environment with real school data. This is taken from
 [GIAS](https://get-information-schools.service.gov.uk/). It might take a while, so make a cup of tea while you wait.
@@ -301,7 +314,7 @@ Populate your environment with real school data. This is taken from
 rake data:schools:import
 ```
 
-#### Importing school group data
+##### Importing school group data
 
 You can also populate your environment with real school group (trust) data. This is also taken from
 [GIAS](https://get-information-schools.service.gov.uk/). 

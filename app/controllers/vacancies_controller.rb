@@ -2,13 +2,14 @@ class VacanciesController < ApplicationController
   include ParameterSanitiser
 
   def index
+    @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
     @vacancies_search = VacancyAlgoliaSearchBuilder.new(algolia_search_params)
     @vacancies_search.call
     @vacancies = VacanciesPresenter.new(
       @vacancies_search.vacancies,
       searched: @vacancies_search.any?,
       total_count: @vacancies_search.vacancies.raw_answer['nbHits'],
-      coordinates: @vacancies_search.coordinates
+      coordinates: @vacancies_search.point_coordinates
     )
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
@@ -39,7 +40,9 @@ class VacanciesController < ApplicationController
   private
 
   def algolia_search_params
-    params.permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page)
+    (params[:jobs_search_form] || params)
+      .permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page)
+      .merge(params.permit(:page, :jobs_sort))
   end
 
   def old_vacancy_path?(vacancy)

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'job_posting'
 
 RSpec.describe JobPosting do
   let(:data) do

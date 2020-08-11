@@ -33,6 +33,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
     context 'when the vacancy is now invalid' do
       before do
         vacancy.about_school = nil
+        vacancy.suitable_for_nqt = nil
         vacancy.save(validate: false)
       end
 
@@ -43,6 +44,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
           expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
           expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
           expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
+          expect(page).to have_content(I18n.t('job_specification_errors.suitable_for_nqt.inclusion'))
         end
       end
     end

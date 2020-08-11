@@ -74,9 +74,10 @@ module paas {
 
   environment           = terraform.workspace
   project_name          = var.project_name
+  papertrail_url        = var.papertrail_url
   postgres_service_plan = var.paas_postgres_service_plan
+  redis_service_plan    = var.paas_redis_service_plan
   space_name            = var.paas_space_name
-
 }
 
 module statuscake {

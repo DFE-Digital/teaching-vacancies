@@ -6,20 +6,20 @@ import { getLocationSuggestions } from '../lib/api';
 const SEARCH_THRESHOLD = 3;
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('location')) {
+  if (document.getElementById('jobs-search-form-location-field')) {
     if (!getCoords()) {
       disableRadiusSelect();
     }
 
     renderAutocomplete({
-      container: document.getElementById('location-search'),
-      input: document.getElementById('location'),
+      container: document.getElementsByClassName('location-search')[0],
+      input: document.getElementById('jobs-search-form-location-field'),
       threshold: SEARCH_THRESHOLD,
       getOptions: getLocationSuggestions,
       key: 'location',
     });
 
-    document.getElementById('location').addEventListener('input', (e) => {
+    document.getElementById('jobs-search-form-location-field').addEventListener('input', (e) => {
       locationChange(e.target.value);
     });
   }

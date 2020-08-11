@@ -1,3 +1,5 @@
+import '../../polyfill/closest.polyfill';
+
 export const init = (container) => {
   const checkboxes = container.getElementsByClassName('govuk-checkboxes__input');
   const input = container.getElementsByClassName('search-input__input')[0];
@@ -6,8 +8,8 @@ export const init = (container) => {
     filterCheckboxes(checkboxes, e.target);
   });
 
-  input.addEventListener('change', (e) => {
-    filterCheckboxes(checkboxes, e.target);
+  input.addEventListener('click', (e) => {
+    e.stopPropagation();
   });
 };
 
@@ -15,8 +17,18 @@ export const filterCheckboxes = (checkboxes, input) => Array.from(checkboxes).ma
 
 export const substringExistsInString = (original, input) => original.toUpperCase().indexOf(input.toUpperCase()) > -1;
 
+export const getStringForMatch = (checkbox) => {
+  let matchString = '';
+
+  if (checkbox.nextSibling) {
+    matchString = checkbox.nextSibling.innerHTML;
+  }
+
+  return `${checkbox.value}${matchString}`;
+};
+
 export const checkboxDisplay = (checkbox, input) => {
-  if (substringExistsInString(checkbox.value, input.value)) {
+  if (substringExistsInString(getStringForMatch(checkbox), input.value)) {
     checkbox.parentElement.style.display = 'block';
   } else {
     checkbox.parentElement.style.display = 'none';

@@ -54,6 +54,10 @@ variable paas_postgres_service_plan {
   default = "tiny-unencrypted-11"
 }
 
+variable paas_redis_service_plan {
+  default = "tiny-4_x"
+}
+
 variable paas_space_name {
 }
 
@@ -67,6 +71,9 @@ variable paas_store_tokens_path {
 
 variable paas_user {
   default = ""
+}
+
+variable papertrail_url {
 }
 
 # Statuscake

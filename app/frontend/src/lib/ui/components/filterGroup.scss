@@ -1,0 +1,48 @@
+.moj-filter {
+
+  box-shadow: none;
+
+  .moj-filter__header {
+    background: none;
+    border: 1px solid govuk-colour("white");
+    padding: 0;
+    border-bottom: 2px solid govuk-colour("light-grey");
+    margin-bottom: govuk-spacing(2);
+    font-size: 1rem;
+  }
+
+  .moj-filter__heading-action .govuk-link {
+    font-size: 1rem;
+  }
+
+  .moj-filter__content {
+    .govuk-heading-s {
+      font-size: 1rem;
+    }
+
+    .govuk-body {
+      font-size: 1rem;
+      font-weight: normal;
+    }
+  }
+  
+  .selected-filters__heading {
+    position: relative;
+
+    .govuk-link {
+      font-weight: normal;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  .moj-filter-tags {
+    margin-top: govuk-spacing(1);
+  }
+
+  .moj-filter__tag:after {
+    height: 0;
+    width: 0;
+  }
+}

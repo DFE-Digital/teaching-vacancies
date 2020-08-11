@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'performance_platform'
 
 RSpec.describe PerformancePlatform::TransactionsByChannel do
   before(:each) do

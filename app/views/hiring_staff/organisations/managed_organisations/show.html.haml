@@ -21,11 +21,6 @@
 
         .govuk-body{ class: 'govuk-!-margin-left-2 govuk-!-margin-bottom-2' } Or
 
-        = f.govuk_check_box :managed_organisations,
-          'school_group',
-          label: { text: t('hiring_staff.managed_organisations.options.school_group') },
-          hint_text: full_address(current_organisation)
-
         = f.govuk_collection_check_boxes :managed_school_ids,
           @school_options,
           :id,

@@ -1,19 +1,18 @@
-.govuk-grid-row.no-jobs-border{ class: 'govuk-!-margin-top-5 govuk-!-margin-bottom-5' }
-  .govuk-grid-column-full
-    %h2.govuk-heading-m= t('schools.no_jobs.heading')
+.govuk-grid-column-full
+  .govuk-grid-row.no-jobs-border{ class: 'govuk-!-margin-top-5 govuk-!-margin-bottom-5' }
+    .govuk-grid-column-full
+      %h2.govuk-heading-m= t('schools.no_jobs.heading')
 
-    = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
+      %p= t('schools.no_jobs.intro')
 
-    %p= t('schools.no_jobs.intro')
+    .govuk-grid-column-one-third
+      %h2.govuk-heading-s Required
+      %ul.govuk-list.govuk-list--bullet
+        - t('schools.no_jobs.bullets.required').each do |bullet|
+          %li= bullet
 
-  .govuk-grid-column-one-third
-    %h2.govuk-heading-s Required
-    %ul.govuk-list.govuk-list--bullet
-      - t('schools.no_jobs.bullets.required').each do |bullet|
-        %li= bullet
-
-  .govuk-grid-column-one-third
-    %h2.govuk-heading-s Optional
-    %ul.govuk-list.govuk-list--bullet
-      - t('schools.no_jobs.bullets.optional').each do |bullet|
-        %li= bullet
+    .govuk-grid-column-one-third
+      %h2.govuk-heading-s Optional
+      %ul.govuk-list.govuk-list--bullet
+        - t('schools.no_jobs.bullets.optional').each do |bullet|
+          %li= bullet

@@ -14,8 +14,6 @@ class HiringStaff::VacancyFilter
     if managed_organisations&.include?('all') || (managed_organisations.blank? && managed_school_ids&.none?)
       @managed_organisations = 'all'
       @managed_school_ids = []
-    elsif managed_organisations&.include?('school_group')
-      @managed_organisations = 'school_group'
     end
 
     @user_preference.update(managed_organisations: managed_organisations, managed_school_ids: managed_school_ids)
