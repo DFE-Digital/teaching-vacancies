@@ -11,15 +11,9 @@ module OrganisationHelper
 
   def organisation_type(organisation: organisation, with_age_range: false)
     return organisation.group_type unless organisation.is_a?(School)
-    school_type = school_type_and_religious_character(organisation)
-    school_type.push age_range_or_nil(organisation) if with_age_range
-    school_type.reject(&:blank?).join(', ')
-  end
-
-  def school_type_and_religious_character(school)
-    school_type = [school.school_type.label.singularize]
-    school_type.push school.gias_data['ReligiousCharacter (name)'] if school.has_religious_character?
-    school_type
+    school_type_details = [organisation.school_type.label.singularize, organisation.religious_character]
+    school_type_details.push age_range(organisation) if with_age_range
+    school_type_details.reject(&:blank?).reject { |str| str == I18n.t('schools.not_given') }.join(', ')
   end
 
   def organisation_type_basic(organisation)
@@ -41,11 +35,8 @@ module OrganisationHelper
   end
 
   def age_range(school)
-    age_range_or_nil(school) || I18n.t('schools.not_given')
-  end
-
-  def age_range_or_nil(school)
-    "#{school.minimum_age} to #{school.maximum_age}" if school.minimum_age? && school.maximum_age?
+    return I18n.t('schools.not_given') unless school.minimum_age? && school.maximum_age?
+    "#{school.minimum_age} to #{school.maximum_age}"
   end
 
   def edit_vacancy_section_number(section, organisation)
