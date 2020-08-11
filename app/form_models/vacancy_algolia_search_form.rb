@@ -5,7 +5,7 @@ class VacancyAlgoliaSearchForm
 
   def initialize(params = {})
     @keyword = params[:keyword]
-    @location = params[:location]
+    @location = params[:location] || params[:location_category]
     @radius = params[:radius] || 10
     @jobs_sort = params[:jobs_sort]
     @location_category = params[:location_category]
