@@ -9,13 +9,11 @@ module VacancyJobSummaryValidations
   def about_school_must_not_be_blank
     return if about_school.present?
     # Since vacancy is set by VacancyForm.initialize, it can be undefined here.
-    begin
-      if vacancy&.job_location == 'central_office'
-        organisation = 'trust'
-      else
-        organisation = 'school'
-      end
-    rescue NameError
+    if defined?(vacancy) && vacancy&.job_location == 'central_office'
+      organisation = 'trust'
+    elsif defined?(vacancy)
+      organisation = 'school'
+    else
       organisation = 'school or trust'
     end
     errors.add(:about_school,
