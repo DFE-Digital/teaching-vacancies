@@ -28,7 +28,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   end
 
   it 'renders the school type' do
-    expect(rendered_component).to include(organisation_type(vacancy.school))
+    expect(rendered_component).to include(organisation_type(organisation: vacancy.school))
   end
 
   it 'renders the education phase' do

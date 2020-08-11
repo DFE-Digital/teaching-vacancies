@@ -25,7 +25,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the school type' do
-      expect(rendered_component).to include(organisation_type(vacancy.school))
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.school, with_age_range: true))
     end
 
     it 'renders the working pattern' do
@@ -71,7 +71,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the trust type' do
-      expect(rendered_component).to include(organisation_type(vacancy.school_group))
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.school_group))
     end
 
     it 'renders the working pattern' do
