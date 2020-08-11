@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_10_112728) do
+ActiveRecord::Schema.define(version: 2020_08_11_135836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_112728) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
-    t.string "job_roles", array: true
+    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
     t.text "about_school"
@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_112728) do
     t.string "job_location"
     t.string "readable_job_location"
     t.string "suitable_for_nqt"
+    t.integer "job_roles", array: true
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"

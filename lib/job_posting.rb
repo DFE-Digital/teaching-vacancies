@@ -9,10 +9,11 @@ class JobPosting
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def map_schema_to_vacancy_fields
     {
       job_title: @schema['title'],
-      job_roles: @schema['occupationalCategory'].split(', '),
+      job_roles: @schema['occupationalCategory'].split(', ').map { |x| x.downcase.to_sym },
       salary: @schema['salary'],
       benefits: @schema['jobBenefits'],
       education: @schema['educationRequirements'],
@@ -32,6 +33,7 @@ class JobPosting
       school: school_by_urn_or_random
     }
   end
+  # rubocop:enable Metrics/AbcSize
 
   def school_by_urn_or_random
     School.find_by(urn: @schema['hiringOrganization']['identifier']) || random_school

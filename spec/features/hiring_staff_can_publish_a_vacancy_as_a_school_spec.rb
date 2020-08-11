@@ -27,10 +27,7 @@ RSpec.feature 'Creating a vacancy' do
     let(:suitable_for_nqt) { 'no' }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
-                                 job_roles: [
-                                   I18n.t('jobs.job_role_options.teacher'),
-                                   I18n.t('jobs.job_role_options.sen_specialist')
-                                  ],
+                                 job_roles: [:teacher, :sen_specialist],
                                  school: school,
                                  suitable_for_nqt: suitable_for_nqt,
                                  working_patterns: ['full_time', 'part_time'],
@@ -85,7 +82,7 @@ RSpec.feature 'Creating a vacancy' do
           fill_in_job_specification_form_fields(vacancy)
           click_on I18n.t('buttons.continue')
 
-          expect(Vacancy.last.job_roles).to include(I18n.t('jobs.job_role_options.nqt_suitable'))
+          expect(Vacancy.last.job_roles).to include('nqt_suitable')
         end
       end
 

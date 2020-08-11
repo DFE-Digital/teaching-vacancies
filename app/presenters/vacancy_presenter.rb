@@ -102,7 +102,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def show_job_roles
-    model.job_roles&.join(', ')
+    model.job_roles&.map { |job_role| I18n.t("jobs.job_role_options.#{job_role}") }.join(', ')
   end
 
   def show_subjects

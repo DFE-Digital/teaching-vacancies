@@ -85,14 +85,14 @@ RSpec.describe JobSpecificationForm, type: :model do
   context 'when all attributes are valid' do
     it 'a JobSpecificationForm can be converted to a vacancy' do
       job_specification_form = JobSpecificationForm.new(state: 'create', job_title: 'English Teacher',
-                                                        job_roles: [I18n.t('jobs.job_role_options.teacher')],
+                                                        job_roles: [:teacher],
                                                         suitable_for_nqt: 'no',
                                                         working_patterns: ['full_time'],
                                                         subjects: ['Maths'])
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
-      expect(job_specification_form.vacancy.job_roles).to include(I18n.t('jobs.job_role_options.teacher'))
+      expect(job_specification_form.vacancy.job_roles).to eq(['teacher'])
       expect(job_specification_form.vacancy.suitable_for_nqt).to eq('no')
       expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
       expect(job_specification_form.vacancy.subjects).to include('Maths')

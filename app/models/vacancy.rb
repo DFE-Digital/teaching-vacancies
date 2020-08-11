@@ -1,12 +1,12 @@
 require 'auditor'
 
 class Vacancy < ApplicationRecord
-  JOB_ROLE_OPTIONS = [
-    I18n.t('jobs.job_role_options.teacher'),
-    I18n.t('jobs.job_role_options.leadership'),
-    I18n.t('jobs.job_role_options.sen_specialist'),
-    I18n.t('jobs.job_role_options.nqt_suitable'),
-  ].freeze
+  JOB_ROLE_OPTIONS = {
+    teacher: 0,
+    leadership: 1,
+    sen_specialist: 2,
+    nqt_suitable: 3
+  }.freeze
 
   FLEXIBLE_WORKING_PATTERN_OPTIONS = {
     'part_time' => 100,
@@ -197,6 +197,7 @@ class Vacancy < ApplicationRecord
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: { published: 0, draft: 1, trashed: 2 }
+  array_enum job_roles: JOB_ROLE_OPTIONS
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
   enum listed_elsewhere: {
     listed_paid: 0,
@@ -332,7 +333,7 @@ class Vacancy < ApplicationRecord
   end
 
   def attributes
-    super().merge('working_patterns' => working_patterns)
+    super().merge('working_patterns' => working_patterns, 'job_roles' => job_roles)
   end
 
   def skip_update_callbacks(value = true)
