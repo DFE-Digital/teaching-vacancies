@@ -11,7 +11,7 @@ RSpec.describe School, type: :model do
     let(:religious_character) { 'Roman Catholic' }
     let(:gias_data) { { 'ReligiousCharacter (name)' => religious_character } }
 
-    before { allow(subject).to receive(:gias_data).and_return gias_data }
+    subject { build(:school, gias_data: gias_data) }
 
     it 'returns religious character' do
       expect(subject.religious_character).to eq 'Roman Catholic'
