@@ -49,7 +49,7 @@ class VacancyAlgoliaAlertBuilder < VacancyAlgoliaSearchBuilder
       |working_pattern| "working_patterns:#{working_pattern}"
     }&.join(' OR ')
 
-    job_roles = "job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}'" if
+    job_roles = "job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}' OR job_roles:nqt_suitable" if
       subscription_hash[:newly_qualified_teacher] == 'true'
 
     phases = subscription_hash[:phases]&.map {

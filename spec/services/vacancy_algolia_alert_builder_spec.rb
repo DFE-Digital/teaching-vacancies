@@ -77,7 +77,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
         it 'adds NQT filter' do
           expect(subject.filter_array).to include(
-            "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}')"
+            "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}' OR job_roles:nqt_suitable)"
           )
         end
 
@@ -96,7 +96,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_datetime.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
         " #{date_today.to_i}) AND (working_patterns:full_time OR working_patterns:part_time) AND "\
-        "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}') AND "\
+        "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}' OR job_roles:nqt_suitable) AND "\
         '(school.phase:secondary OR school.phase:primary)'
       end
 
