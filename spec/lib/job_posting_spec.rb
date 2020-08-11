@@ -5,10 +5,7 @@ RSpec.describe JobPosting do
     {
       '@type' => 'JobPosting',
       'title' => 'Teacher of English',
-      'occupationalCategory' => [
-        I18n.t('jobs.job_role_options.nqt_suitable'),
-        I18n.t('jobs.job_role_options.sen_specialist')
-      ],
+      'occupationalCategory' => 'TEACHER, SEN_SPECIALIST',
       'salary' => 'Pay scale 1 to Pay scale 2',
       'jobBenefits' => '<p>This is an exceptional opportunity to make a difference within a positive environment.</p>',
       'datePosted' => date_posted,

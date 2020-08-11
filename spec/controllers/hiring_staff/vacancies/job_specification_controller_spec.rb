@@ -67,7 +67,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
 
       it 'appends Suitable for NQTs to job roles' do
         subject.send(:append_suitable_for_nqts_to_job_roles)
-        expect(controller.params[:job_specification_form][:job_roles]).to eql(['Suitable for NQTs'])
+        expect(controller.params[:job_specification_form][:job_roles]).to eql([:nqt_suitable])
       end
     end
 

@@ -18,7 +18,7 @@ FactoryBot.define do
     hired_status { nil }
     how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
     job_summary { Faker::Lorem.paragraph(sentence_count: 4) }
-    job_roles { ['Teacher'] }
+    job_roles { [:teacher] }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
     publish_on { Time.zone.today }

@@ -19,7 +19,7 @@ module VacancyHelpers
     end
 
     vacancy.job_roles&.each do |job_role|
-      check job_role,
+      check I18n.t("jobs.job_role_options.#{job_role}"),
             name: 'job_specification_form[job_roles][]',
             visible: false
     end

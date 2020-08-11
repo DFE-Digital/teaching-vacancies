@@ -20,10 +20,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   context 'when editing a published vacancy' do
     let(:vacancy) do
       VacancyPresenter.new(create(:vacancy, :complete,
-                                  job_roles: [
-                                    I18n.t('jobs.job_role_options.teacher'),
-                                    I18n.t('jobs.job_role_options.sen_specialist')
-                                   ],
+                                  job_roles: [:teacher, :sen_specialist],
                                   school: school,
                                   working_patterns: ['full_time', 'part_time'],
                                   publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))

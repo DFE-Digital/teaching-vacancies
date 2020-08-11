@@ -61,7 +61,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def append_suitable_for_nqts_to_job_roles
     if params[:job_specification_form][:suitable_for_nqt] == 'yes'
-      params[:job_specification_form][:job_roles] |= [I18n.t('jobs.job_role_options.nqt_suitable')]
+      params[:job_specification_form][:job_roles] |= [:nqt_suitable]
     end
   end
 
