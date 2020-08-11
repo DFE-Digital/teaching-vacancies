@@ -1,5 +1,5 @@
 = render 'hiring_staff/vacancies/section_tag', section: 'job_details'
-= render 'hiring_staff/vacancies/error_tag', attributes: [:job_title, :job_roles, :subjects, :working_patterns], section: 'job_details'
+= render 'hiring_staff/vacancies/error_tag', attributes: [:job_title, :job_roles, :suitable_for_nqt, :subjects, :working_patterns], section: 'job_details'
 
 %h2.govuk-heading-m.app-task-list__section#job_details_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:job_details, current_organisation)
