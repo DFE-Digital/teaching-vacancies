@@ -7,6 +7,8 @@ module VacancyJobSpecificationValidations
     validates :job_title, length: { minimum: 4, maximum: 100 }, if: :job_title?
     validate :job_title_has_no_tags?, if: :job_title?
 
+    validates :suitable_for_nqt, inclusion: { in: %w[yes no] }
+
     validates :working_patterns, presence: true
   end
 

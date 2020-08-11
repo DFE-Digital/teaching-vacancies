@@ -52,10 +52,17 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def form_params
     strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles, :subjects])
+    append_suitable_for_nqts_to_job_roles
     params.require(:job_specification_form)
-          .permit(:state, :job_title,
+          .permit(:state, :job_title, :suitable_for_nqt,
                   job_roles: [], working_patterns: [], subjects: [])
           .merge(completed_step: current_step)
+  end
+
+  def append_suitable_for_nqts_to_job_roles
+    if params[:job_specification_form][:suitable_for_nqt] == 'yes'
+      params[:job_specification_form][:job_roles] |= [I18n.t('jobs.job_role_options.nqt_suitable')]
+    end
   end
 
   def remove_subject_fields(vacancy)

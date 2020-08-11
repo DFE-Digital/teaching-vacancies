@@ -156,6 +156,7 @@ en:
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
         job_roles: Job role
+        suitable_for_nqt_html: "Is this job suitable for NQTs? (<span class='text-red'>Required</span>)"
         subjects: Subject(s)
         working_pattern_html: "Working patterns (<span class='text-red'>Required</span>)"
       pay_package_form:
@@ -193,7 +194,7 @@ en:
           For secondary school roles include subject and, if relevant,
           level of seniority ('Subject leader for science', for example).
         job_roles: 'Select all that describe the role'
-        subjects_hint: What subject(s) will the teacher focus on?
+        subjects: What subject(s) will the teacher focus on?
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
@@ -329,6 +330,7 @@ en:
     job_details: 'Job details'
     job_title: 'Job title'
     job_roles: 'Job role'
+    suitable_for_nqt: Is this job suitable for NQTs?
     job_role_options:
       teacher: 'Teacher'
       leadership: 'Leadership'

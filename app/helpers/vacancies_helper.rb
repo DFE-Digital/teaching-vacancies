@@ -2,7 +2,7 @@ module VacanciesHelper
   WORD_EXCEPTIONS = ['and', 'the', 'of', 'upon'].freeze
 
   def job_role_options
-    Vacancy::JOB_ROLE_OPTIONS
+    Vacancy::JOB_ROLE_OPTIONS.reject { |job_role| job_role == I18n.t('jobs.job_role_options.nqt_suitable') }
   end
 
   def working_pattern_options

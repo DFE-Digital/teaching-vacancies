@@ -24,6 +24,7 @@ RSpec.feature 'Creating a vacancy' do
   end
 
   context 'creating a new vacancy' do
+    let(:suitable_for_nqt) { 'no' }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  job_roles: [
@@ -31,6 +32,7 @@ RSpec.feature 'Creating a vacancy' do
                                    I18n.t('jobs.job_role_options.sen_specialist')
                                   ],
                                  school: school,
+                                 suitable_for_nqt: suitable_for_nqt,
                                  working_patterns: ['full_time', 'part_time'],
                                  publish_on: Time.zone.today))
     end
@@ -71,6 +73,19 @@ RSpec.feature 'Creating a vacancy' do
         expect(page).to have_content(I18n.t('jobs.current_step', step: 2, total: 7))
         within('h2.govuk-heading-l') do
           expect(page).to have_content(I18n.t('jobs.pay_package'))
+        end
+      end
+
+      context 'when job is selected as suitable for NQTs' do
+        let(:suitable_for_nqt) { 'yes' }
+
+        scenario 'Suitable for NQTs is appended to the job roles' do
+          visit new_organisation_job_path
+
+          fill_in_job_specification_form_fields(vacancy)
+          click_on I18n.t('buttons.continue')
+
+          expect(Vacancy.last.job_roles).to include(I18n.t('jobs.job_role_options.nqt_suitable'))
         end
       end
 

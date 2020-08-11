@@ -31,6 +31,7 @@ FactoryBot.define do
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     supporting_documents { 'yes' }
+    suitable_for_nqt { 'no' }
     working_patterns { ['full_time'] }
 
     trait :with_school_group do
