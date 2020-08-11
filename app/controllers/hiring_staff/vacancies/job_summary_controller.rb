@@ -23,7 +23,9 @@ class HiringStaff::Vacancies::JobSummaryController < HiringStaff::Vacancies::App
   private
 
   def job_summary_form_params
-    params.require(:job_summary_form).permit(:state, :job_summary, :about_school).merge(completed_step: current_step)
+    params.require(:job_summary_form)
+      .permit(:state, :job_summary, :about_school)
+      .merge(completed_step: current_step, job_location: @vacancy.job_location)
   end
 
   def next_step

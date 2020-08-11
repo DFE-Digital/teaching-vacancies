@@ -23,7 +23,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
                                   job_roles: [:teacher, :sen_specialist],
                                   school: school,
                                   working_patterns: ['full_time', 'part_time'],
-                                  publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
+                                  publish_on: Time.zone.today, expires_on: Time.zone.tomorrow,
+                                  job_location: 'at_one_school'))
     end
 
     context 'when the vacancy is now invalid' do
@@ -39,7 +40,7 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
         within '#errors.govuk-notification--danger' do
           expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
           expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
-          expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank'))
+          expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
           expect(page).to have_content(I18n.t('job_specification_errors.suitable_for_nqt.inclusion'))
         end
       end
