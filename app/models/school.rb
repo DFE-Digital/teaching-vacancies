@@ -38,9 +38,10 @@ class School < ApplicationRecord
     set_geolocation_from_easting_and_northing
   end
 
-  def has_religious_character?
-    return false if !self.respond_to?(:gias_data) || self.gias_data == nil
-    ['None', 'Does not apply', nil].exclude?(self.gias_data['ReligiousCharacter (name)'])
+  def religious_character
+    return if !self.respond_to?(:gias_data) || self.gias_data == nil
+    return if ['None', 'Does not apply'].include?(self.gias_data['ReligiousCharacter (name)'])
+    self.gias_data['ReligiousCharacter (name)']
   end
 
   private

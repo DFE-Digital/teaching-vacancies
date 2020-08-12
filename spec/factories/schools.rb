@@ -25,6 +25,8 @@ FactoryBot.define do
       "Trusts (name)": Faker::Company.name + ' Trust'
       } }
     local_authority { Faker::Address.state_abbr }
+    minimum_age { 11 }
+    maximum_age { 18 }
     name { Faker::Educator.secondary_school.strip }
     northing { '1' }
     phase { :secondary }

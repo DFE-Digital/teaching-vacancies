@@ -144,7 +144,7 @@ class Vacancy < ApplicationRecord
         detailed_school_type: school.detailed_school_type&.label,
         local_authority: school.local_authority,
         phase: school.phase,
-        religious_character: school.gias_data['ReligiousCharacter (name)'],
+        religious_character: school.religious_character,
         region: school.region&.name,
         school_type: school.school_type&.label&.singularize,
         town: school.town } if school.present?

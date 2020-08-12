@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
-  context 'when vacancy organisation is a school' do
+  let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
+
+  before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
+
+  context 'when vacancy is at a school that is not in a trust' do
     let(:school) { create(:school) }
     let(:vacancy) { create(:vacancy, school: school) }
-    let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
-
-    before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
 
     it 'renders the title' do
       expect(rendered_component).to include(vacancy_presenter.job_title)
@@ -25,7 +26,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the school type' do
-      expect(rendered_component).to include(organisation_type(vacancy.school))
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.school, with_age_range: true))
     end
 
     it 'renders the working pattern' do
@@ -47,20 +48,17 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
   end
 
-  context 'when vacancy organisation is a school_group' do
-    let(:school_group) { create(:school_group) }
-    let(:vacancy) { create(:vacancy, school_group: school_group, school: nil) }
-    let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
+  context 'when vacancy is at a single school in a trust' do
+    let(:vacancy) { create(:vacancy, :with_school_group_at_school) }
 
-    before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
-
-    it 'renders the title' do
-      expect(rendered_component).to include(vacancy_presenter.job_title)
+    it 'renders the trust type' do
+      expect(rendered_component)
+        .to include(organisation_type(organisation: vacancy.school, with_age_range: true))
     end
+  end
 
-    it 'renders the salary' do
-      expect(rendered_component).to include(vacancy_presenter.salary)
-    end
+  context 'when vacancy is at central office in a trust' do
+    let(:vacancy) { create(:vacancy, :with_school_group) }
 
     it 'renders the address' do
       assert_includes rendered_component, location(vacancy.school_group)
@@ -71,25 +69,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the trust type' do
-      expect(rendered_component).to include(organisation_type(vacancy.school_group))
-    end
-
-    it 'renders the working pattern' do
-      expect(rendered_component).to include(vacancy_presenter.working_patterns)
-    end
-
-    context 'when expiry time is nil' do
-      let(:vacancy) { create(:vacancy, school_group: school_group, expiry_time: nil) }
-
-      it 'renders the date it expires on but not the time' do
-        expect(rendered_component).to include(format_date(vacancy.expires_on))
-      end
-    end
-
-    context 'when expiry time is not nil' do
-      it 'renders the date and time it expires at' do
-        expect(rendered_component).to include(expiry_date_and_time(vacancy))
-      end
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.school_group))
     end
   end
 end

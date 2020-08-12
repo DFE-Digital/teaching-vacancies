@@ -27,9 +27,18 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
     end
   end
 
-  it 'renders the school type' do
-    expect(rendered_component).to include(organisation_type(vacancy.school))
+  context 'rendering the school type' do
+    it 'renders the school type' do
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.school,
+        with_age_range: false))
+    end
+
+    it 'does not render the age range as part of the school type' do
+      expect(rendered_component).not_to include(organisation_type(organisation: vacancy.school,
+        with_age_range: true))
+    end
   end
+
 
   it 'renders the education phase' do
     expect(rendered_component).to include(vacancy.school.phase.titleize)

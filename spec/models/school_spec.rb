@@ -7,24 +7,30 @@ RSpec.describe School, type: :model do
   it { should have_many(:school_group_memberships) }
   it { should have_many(:school_groups) }
 
-  describe '#has_religious_character?' do
-    before do
-      subject.gias_data = {}.to_json
+  describe '#religious_character' do
+    let(:religious_character) { 'Roman Catholic' }
+    let(:gias_data) { { 'ReligiousCharacter (name)' => religious_character } }
+
+    subject { build(:school, gias_data: gias_data) }
+
+    it 'returns religious character' do
+      expect(subject.religious_character).to eq 'Roman Catholic'
     end
 
-    it 'returns false when the school has no gias_data' do
-      subject.gias_data = nil
-      expect(subject.has_religious_character?).to be false
+    context 'when the school has no religious character' do
+      let(:religious_character) { 'Does not apply' }
+
+      it 'returns nil' do
+        expect(subject.religious_character).to eq nil
+      end
     end
 
-    it 'returns false when the school has no religious_character' do
-      allow(subject.gias_data).to receive(:[]).with('ReligiousCharacter (name)').and_return 'Does not apply'
-      expect(subject.has_religious_character?).to be false
-    end
+    context 'when the school has no gias_data' do
+      let(:gias_data) { nil }
 
-    it 'returns true when the school has a religious character' do
-      allow(subject.gias_data).to receive(:[]).with('ReligiousCharacter (name)').and_return 'Roman Catholic'
-      expect(subject.has_religious_character?).to be true
+      it 'returns nil' do
+        expect(subject.religious_character).to eq nil
+      end
     end
   end
 
