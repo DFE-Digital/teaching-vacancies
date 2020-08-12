@@ -282,6 +282,7 @@ en:
       remaining: '%{days_remaining} days remaining to apply'
       today: 'Deadline is today'
       tomorrow: 'Deadline is tomorrow'
+    organisation_overview: '%{organisation_type} overview'
     school_type: 'School type'
     trust_type: 'Trust type'
     publish_on: 'Date listed'
@@ -581,7 +582,6 @@ en:
       We'll only use this to tell you about opportunities to take part in user research that helps us improve
       Department for Education services.
   schools:
-    school_overview: 'School overview'
     address: 'Address'
     school_location: 'School location'
     phase: 'Education phase'
@@ -638,7 +638,6 @@ en:
     group_type: Group type
     info: 'About %{school_group}'
     school_group_location: 'Head office location'
-    trust_overview: Trust overview
     trust_visits: 'Arrange a visit to %{school_group}'
     type: 'Trust type'
     uid: Unique identifier (UID)

@@ -478,4 +478,32 @@ RSpec.describe Vacancy, type: :model do
       end
     end
   end
+
+  describe '#overview_heading' do
+    context 'a vacancy at a trust head office' do
+      subject { build(:vacancy, :with_school_group) }
+
+      it 'enables translation to generate a TRUST overview heading' do
+        expect(subject.overview_heading).to eq('Trust overview')
+      end
+    end
+
+    context 'a vacancy at a single school' do
+      subject { build(:vacancy) }
+
+      context 'at a trust' do
+        it 'enables translation to generate a SCHOOL overview heading' do
+          expect(subject.overview_heading).to eq('School overview')
+        end
+      end
+
+      context 'NOT at a trust' do
+        subject { build(:vacancy, :with_school_group_at_school) }
+
+        it 'enables translation to generate a SCHOOL overview heading' do
+          expect(subject.overview_heading).to eq('School overview')
+        end
+      end
+    end
+  end
 end

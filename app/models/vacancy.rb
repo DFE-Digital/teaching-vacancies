@@ -342,6 +342,11 @@ class Vacancy < ApplicationRecord
     self.documents.each { |document| DocumentDelete.new(document).delete }
   end
 
+  def overview_heading
+    type = self.job_location == 'central_office' ? 'trust' : 'school'
+    I18n.t('jobs.organisation_overview', organisation_type: type.capitalize)
+  end
+
   private
 
   def expires_at
