@@ -42,7 +42,7 @@ class Subscription < ApplicationRecord
   end
 
   def vacancies_for_range(date_from, date_to)
-    VacancyAlgoliaAlertBuilder.new(
+    Algolia::VacancyAlertBuilder.new(
       search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to)
     ).call
   end

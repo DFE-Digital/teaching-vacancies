@@ -1,12 +1,12 @@
-- if @vacancies_search.location_category_search?
-  = content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@vacancies_search.location_category), keyword: @vacancies_search.keyword)
-  = content_for :page_description,  t('jobs.location_description', location: format_location_name(@vacancies_search.location_category))
+- if @vacancies_search.location_search.location_category_search?
+  = content_for :page_title_prefix, t('jobs.location_search_heading', location: format_location_name(@vacancies_search.location_search.location_category), keyword: @vacancies_search.keyword)
+  = content_for :page_description,  t('jobs.location_description', location: format_location_name(@vacancies_search.location_search.location_category))
 - else
   = content_for :page_title_prefix, t('jobs.heading')
 = render partial: 'head_links'
 
 %h1#job-count{ class: 'govuk-!-margin-bottom-2 govuk-heading-xl govuk-!-font-weight-regular', role: 'heading', 'aria-level': '1' }
-  = raw @vacancies.search_heading(location: @vacancies_search.location, keyword: @vacancies_search.keyword)
+  = raw @vacancies.search_heading(location: @vacancies_search.location_search.location, keyword: @vacancies_search.keyword)
 - if @vacancies.user_search?
   = render(partial: 'subscribe_link', locals: { search_criteria: @vacancies_search.only_active_to_hash }) if EmailAlertsFeature.enabled? && !ReadOnlyFeature.enabled?
 .govuk-grid-row{ class: 'govuk-!-margin-top-9' }

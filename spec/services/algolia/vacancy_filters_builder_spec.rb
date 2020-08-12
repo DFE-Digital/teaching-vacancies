@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VacancyAlgoliaFiltersBuilder do
+RSpec.describe Algolia::VacancyFiltersBuilder do
   subject { described_class.new(filters_hash) }
 
   let(:filters_hash) do
@@ -20,6 +20,8 @@ RSpec.describe VacancyAlgoliaFiltersBuilder do
   let(:phases) { ['secondary', 'primary'] }
   let(:working_patterns) { ['full_time', 'part_time'] }
   let(:newly_qualified_teacher) { nil }
+  let(:published_today_filter) { Time.zone.today.to_datetime.to_i }
+  let(:expired_now_filter) { Time.zone.now.to_datetime.to_i }
 
   describe '#build_date_filters' do
     context 'when no dates are supplied' do
@@ -74,14 +76,30 @@ RSpec.describe VacancyAlgoliaFiltersBuilder do
       end
     end
 
-    it 'builds the correct query' do
-      expect(subject.filter_query).to eql(
-        "(publication_date_timestamp >= #{from_date.to_datetime.to_i} AND" \
-        " publication_date_timestamp <= #{to_date.to_datetime.to_i}) AND " \
-        '(job_roles:teacher OR job_roles:sen_specialist) AND ' \
-        '(school.phase:secondary OR school.phase:primary) AND ' \
-        '(working_patterns:full_time OR working_patterns:part_time)'
-      )
+    context 'when filters are present' do
+      let(:expired_now) { Time.zone.now }
+
+      before do
+        travel_to(expired_now)
+        allow_any_instance_of(Algolia::VacancyFiltersBuilder)
+          .to receive(:expired_now_filter)
+          .and_return(expired_now.to_datetime.to_i)
+      end
+
+      after { travel_back }
+
+      it 'builds the correct query' do
+        expect(subject.filter_query).to eql(
+          '(listing_status:published AND'\
+          " publication_date_timestamp <= #{published_today_filter} AND"\
+          " expires_at_timestamp > #{expired_now_filter}) AND "\
+          "(publication_date_timestamp >= #{from_date.to_datetime.to_i} AND" \
+          " publication_date_timestamp <= #{to_date.to_datetime.to_i}) AND " \
+          '(job_roles:teacher OR job_roles:sen_specialist) AND ' \
+          '(school.phase:secondary OR school.phase:primary) AND ' \
+          '(working_patterns:full_time OR working_patterns:part_time)'
+        )
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VacancyAlgoliaAlertBuilder do
+RSpec.describe Algolia::VacancyAlertBuilder do
   subject { described_class.new(subscription_hash) }
 
   let!(:expired_now) { Time.zone.now }
@@ -10,7 +10,7 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
   let(:default_radius) { 10 }
   let(:date_today) { Time.zone.today.to_datetime }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-  let(:location_radius) { subject.convert_radius_in_miles_to_metres(default_radius) }
+  let(:location_radius) { (default_radius * 1.60934 * 1000).to_i }
   let(:location_polygon_boundary) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
@@ -20,16 +20,16 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
       aroundLatLng: location_point_coordinates,
       aroundRadius: location_radius,
       insidePolygon: location_polygon_boundary,
+      filters: search_filter,
       replica: search_replica,
       hitsPerPage: max_subscription_results,
-      filters: search_filter,
       typoTolerance: false
     }
   end
 
   before do
     travel_to(expired_now)
-    allow_any_instance_of(VacancyAlgoliaAlertBuilder)
+    allow_any_instance_of(Algolia::VacancyFiltersBuilder)
       .to receive(:expired_now_filter)
       .and_return(expired_now.to_datetime.to_i)
   end
@@ -64,25 +64,25 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
 
       context '#build_subscription_filters' do
         it 'adds date filter' do
-          expect(subject.filter_array).to include(
+          expect(subject.search_filters).to include(
             "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
           )
         end
 
         it 'adds working patterns filter' do
-          expect(subject.filter_array).to include(
+          expect(subject.search_filters).to include(
             '(working_patterns:full_time OR working_patterns:part_time)'
           )
         end
 
         it 'adds NQT filter' do
-          expect(subject.filter_array).to include(
-            "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}' OR job_roles:nqt_suitable)"
+          expect(subject.search_filters).to include(
+            '(job_roles:nqt_suitable)'
           )
         end
 
         it 'adds school phase filter' do
-          expect(subject.filter_array).to include(
+          expect(subject.search_filters).to include(
             '(school.phase:secondary OR school.phase:primary)'
           )
         end
@@ -95,9 +95,10 @@ RSpec.describe VacancyAlgoliaAlertBuilder do
         '(listing_status:published AND '\
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_datetime.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
-        " #{date_today.to_i}) AND (working_patterns:full_time OR working_patterns:part_time) AND "\
-        "(job_roles:'#{I18n.t('jobs.job_role_options.nqt_suitable')}' OR job_roles:nqt_suitable) AND "\
-        '(school.phase:secondary OR school.phase:primary)'
+        " #{date_today.to_i}) AND "\
+        '(school.phase:secondary OR school.phase:primary) AND '\
+        '(working_patterns:full_time OR working_patterns:part_time) AND '\
+        '(job_roles:nqt_suitable)'
       end
 
       before do

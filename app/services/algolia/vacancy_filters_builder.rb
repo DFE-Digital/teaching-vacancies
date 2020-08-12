@@ -1,5 +1,11 @@
-class VacancyAlgoliaFiltersBuilder
+class Algolia::VacancyFiltersBuilder
   def initialize(filters_hash)
+    # Although we are no longer indexing expired and pending vacancies, we need to maintain this filter for now as
+    # expired vacancies only get removed from the index once a day.
+    @search_filter = 'listing_status:published AND '\
+                     "publication_date_timestamp <= #{published_today_filter} AND "\
+                     "expires_at_timestamp > #{expired_now_filter}"
+
     @from_date = filters_hash[:from_date]
     @to_date = filters_hash[:to_date]
 
@@ -14,6 +20,7 @@ class VacancyAlgoliaFiltersBuilder
     build_filters
 
     filter_array = []
+    filter_array << "(#{@search_filter})"
     filter_array << "(#{@dates_filter})" if @dates_filter.present?
     filter_array << "(#{@job_roles_filter})" if @job_roles_filter.present?
     filter_array << "(#{@phases_filter})" if @phases_filter.present?
@@ -22,7 +29,6 @@ class VacancyAlgoliaFiltersBuilder
 
     filter_array.reject(&:blank?).join(' AND ')
   end
-
 
   private
 
@@ -37,14 +43,20 @@ class VacancyAlgoliaFiltersBuilder
 
   def build_date_filters
     return if @from_date.blank? && @to_date.blank?
-
     from_date_filter = "publication_date_timestamp >= #{@from_date.to_datetime.to_i}" if @from_date.present?
     to_date_filter = "publication_date_timestamp <= #{@to_date.to_datetime.to_i}" if @to_date.present?
-
     [from_date_filter, to_date_filter].reject(&:blank?).join(' AND ')
   end
 
   def build_filter_string(attribute, value)
     "#{attribute}:#{value}"
+  end
+
+  def published_today_filter
+    Time.zone.today.to_datetime.to_i
+  end
+
+  def expired_now_filter
+    Time.zone.now.to_datetime.to_i
   end
 end

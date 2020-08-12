@@ -3,13 +3,14 @@ class VacanciesController < ApplicationController
 
   def index
     @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
-    @vacancies_search = VacancyAlgoliaSearchBuilder.new(algolia_search_params)
+    @vacancies_search = Algolia::VacancySearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies_search.call
     @vacancies = VacanciesPresenter.new(
       @vacancies_search.vacancies,
+      coordinates: @vacancies_search.point_coordinates,
+      facet_count: @vacancies_search.facet_count,
       searched: @vacancies_search.any?,
-      total_count: @vacancies_search.vacancies.raw_answer['nbHits'],
-      coordinates: @vacancies_search.point_coordinates
+      total_count: @vacancies_search.vacancies.raw_answer['nbHits']
     )
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
@@ -41,7 +42,8 @@ class VacanciesController < ApplicationController
 
   def algolia_search_params
     (params[:jobs_search_form] || params)
-      .permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page)
+      .permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page,
+              job_roles: [], phases: [], working_patterns: [])
       .merge(params.permit(:page, :jobs_sort))
   end
 
@@ -72,6 +74,6 @@ class VacanciesController < ApplicationController
   end
 
   def audit_row
-    @vacancies_search.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer['nbHits'])
+    @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer['nbHits'])
   end
 end

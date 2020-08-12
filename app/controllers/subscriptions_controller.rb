@@ -48,7 +48,9 @@ class SubscriptionsController < ApplicationController
   end
 
   def search_criteria_params
-    params.require(:search_criteria).permit(:keyword, :location, :location_category, :radius, :jobs_sort)
+    params.require(:search_criteria)
+          .permit(:keyword, :location, :location_category, :radius, :jobs_sort,
+                  job_roles: [], phases: [], working_patterns: [])
   end
 
   def check_email_alerts_feature_flag
