@@ -2,9 +2,10 @@
 -#
 -# = render 'shared/filter_group', f: <FormBuilder form>,
 -#   filters: {
--#     :title => <String>,
--#     :removeButtons => <Boolean>,
--#     :totalCount => <Integer>,
+-#     title: <String>,
+-#     removeButtons: <Boolean>,
+-#     totalCount: <Integer>,
+-#     closeAll: <Boolean>,
 -#     :items => [
 -#       { :options => <Array>, :title => <String>, :search => <Boolean>, :key => <String> }
 -#     ]
@@ -17,8 +18,9 @@
         %span.moj-filter__heading-title
           %h2.govuk-heading-s
             = filters[:title]
-        %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'close-all-groups' }
-          = t('shared.filter_group.close_all_filter_groups')
+        - if filters[:closeAll]
+          %button.govuk-link.govuk-link--no-visited-state{ id: 'close-all-groups' }
+            = t('shared.filter_group.close_all_filter_groups')
 
     - if filters[:totalCount] > 0 && filters[:removeButtons]
       .moj-filter__content
@@ -26,7 +28,7 @@
           .selected-filters__heading{ class: 'govuk-!-margin-bottom-2' }
             .govuk-body{ class: 'govuk-!-margin-bottom-0' }
               = t('shared.filter_group.current_selected_filters')
-            %a.govuk-link.govuk-link--no-visited-state{ href: '', id: 'clear-filters-button' }
+            %button.govuk-link.govuk-link--no-visited-state{ id: 'clear-filters-button' }
               = t('shared.filter_group.clear_all_filters')
 
           - filters[:items].each do |group|
@@ -38,14 +40,14 @@
                 - if group[:selected].include? tag.id
                   %li
                     %button.moj-filter__tag{ data: { group: group[:key], key: tag.id } }
+                      %i.fa.fa-close
                       %span.govuk-visually-hidden
                         = t('shared.filter_group.remove_filter_hidden')
                       = tag.name
-                      %i.fa.fa-close
 
-= f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2"
+= f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-submit"
 
-.accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion"} }
+.accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion" } }
 
   - filters[:items].each_with_index do |group, index|
     .govuk-accordion__section.accordion-content__group.filter-group__container

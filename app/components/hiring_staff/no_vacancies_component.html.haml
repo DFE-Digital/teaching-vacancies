@@ -3,6 +3,8 @@
     .govuk-grid-column-full
       %h2.govuk-heading-m= t('schools.no_jobs.heading')
 
+      = link_to t('buttons.create_job'), new_organisation_job_path, class: 'govuk-button govuk-!-margin-bottom-0'
+
       %p= t('schools.no_jobs.intro')
 
     .govuk-grid-column-one-third

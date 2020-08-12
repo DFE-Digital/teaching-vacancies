@@ -1,4 +1,5 @@
 import '../../polyfill/closest.polyfill';
+import 'classlist-polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 
@@ -16,6 +17,21 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
 
   if (document.getElementById(closeButtonSelector)) {
     document.getElementById(closeButtonSelector).addEventListener('click', closeAllSectionsHandler);
+  }
+
+  const toggleButton = document.getElementById('toggle-filters-sidebar');
+
+  if (toggleButton) {
+    toggleButton.addEventListener('click', () => {
+      document.getElementsByClassName('moj-filter-sidebar')[0].classList.toggle('moj-filter-sidebar__hidden');
+      document.getElementsByClassName('moj-filter-layout__content')[0].classList.toggle('govuk-grid-column-three-quarters');
+
+      if (document.getElementsByClassName('moj-filter-sidebar')[0].classList.contains('moj-filter-sidebar__hidden')) {
+        toggleButton.innerHTML = 'Show filters';
+      } else {
+        toggleButton.innerHTML = 'Hide filters';
+      }
+    });
   }
 };
 

@@ -20,7 +20,7 @@
   padding: govuk-spacing(2);
 
   .govuk-form-group {
-    max-height: 214px;
+    max-height: 194px;
     overflow: scroll;
     margin-bottom: govuk-spacing(1);
   }
@@ -41,9 +41,8 @@
   border-bottom: 3px solid govuk-colour("light-grey");
 }
 
-.govuk-accordion__section-content {
-  padding: 0;
-
+.js-enabled .govuk-accordion__section-content {
+  padding: 0 0 govuk-spacing(2) 0;
 }
 
 .govuk-accordion__controls {
@@ -62,7 +61,7 @@
 }
 
 .govuk-accordion__section-button {
-  font-size: 1rem;
+  font-size: 1.2rem;
   padding: 0 0 govuk-spacing(1) 0;
 }
 

@@ -1,18 +1,41 @@
-.moj-filter {
+.filter-group__container {
+  border-bottom: 1px solid #b1b4b6;
+}
 
+.js-enabled .filters-submit {
+  display: none;
+}
+
+.moj-filter-sidebar {
+  &.moj-filter-sidebar__hidden {
+    display: none;
+  }
+}
+
+.moj-filter {
   box-shadow: none;
 
-  .moj-filter__header {
+  .moj-filter__selected .govuk-link {
+    border: none;
     background: none;
-    border: 1px solid govuk-colour("white");
-    padding: 0;
-    border-bottom: 2px solid govuk-colour("light-grey");
-    margin-bottom: govuk-spacing(2);
+    color: $govuk-link-colour;
     font-size: 1rem;
+    text-decoration: underline;
+    padding: 0;
   }
 
-  .moj-filter__heading-action .govuk-link {
-    font-size: 1rem;
+  .moj-filter__header {
+
+    padding: 8px govuk-spacing(2);
+
+    &.search-filters {
+      background: none;
+      border: 1px solid govuk-colour("white");
+      padding: 0;
+      border-bottom: 2px solid #b1b4b6;
+      margin-bottom: govuk-spacing(2);
+      font-size: 1rem;
+    }
   }
 
   .moj-filter__content {
