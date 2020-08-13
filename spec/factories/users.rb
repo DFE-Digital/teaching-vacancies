@@ -16,7 +16,7 @@ FactoryBot.define do
         }.call
       } }
     email { Faker::Internet.email }
-    family_name { Faker::Name.last_name }
+    family_name { Faker::Name.last_name.gsub("'", '') }
     given_name { Faker::Name.first_name }
     oid { Faker::Crypto.md5 }
   end

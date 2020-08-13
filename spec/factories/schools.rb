@@ -13,7 +13,7 @@ FactoryBot.define do
     gias_data { {
       "CloseDate": nil,
       "HeadFirstName": Faker::Name.first_name,
-      "HeadLastName": Faker::Name.last_name,
+      "HeadLastName": Faker::Name.last_name.gsub("'", ''),
       "HeadPreferredJobTitle": Faker::Name.prefix.gsub('.', ''),
       "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
       "NumberOfPupils": Faker::Number.number(digits: 3),
@@ -22,12 +22,12 @@ FactoryBot.define do
       "ReligiousCharacter (name)": RELIGIOUS_CHARACTERS.sample,
       "SchoolCapacity": Faker::Number.number(digits: 4),
       "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-      "Trusts (name)": Faker::Company.name + ' Trust'
+      "Trusts (name)": Faker::Company.name.gsub("'", '') + ' Trust'
       } }
     local_authority { Faker::Address.state_abbr }
     minimum_age { 11 }
     maximum_age { 18 }
-    name { Faker::Educator.secondary_school.strip }
+    name { Faker::Educator.secondary_school.strip.gsub("'", '') }
     northing { '1' }
     phase { :secondary }
     postcode { Faker::Address.postcode }
