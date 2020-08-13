@@ -12,6 +12,12 @@
   }
 }
 
+.moj-action-bar__filter {
+  &::after {
+    width: 0;
+  }
+}
+
 .moj-filter {
   box-shadow: none;
 
@@ -22,6 +28,9 @@
     font-size: 1rem;
     text-decoration: underline;
     padding: 0;
+    border-color: none;
+    box-shadow: none;
+    cursor: pointer;
   }
 
   .moj-filter__header {
@@ -62,6 +71,10 @@
 
   .moj-filter-tags {
     margin-top: govuk-spacing(1);
+
+    .moj-filter__tag {
+      cursor: pointer;
+    }
   }
 
   .moj-filter__tag:after {
