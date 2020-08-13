@@ -11,5 +11,13 @@ namespace :data do
         Organisation.create(school_group.attributes)
       end
     end
+
+    desc 'Update organisations data'
+    task update: :environment do
+      # rubocop:disable Rails/SkipsModelValidations
+      Organisation.where('urn IS NOT NULL').update_all(type: 'School')
+      Organisation.where('uid IS NOT NULL').update_all(type: 'SchoolGroup')
+      # rubocop:enable Rails/SkipsModelValidations
+    end
   end
 end
