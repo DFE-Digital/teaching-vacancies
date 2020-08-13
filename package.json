@@ -51,5 +51,8 @@
       "<rootDir>/app/frontend/src/lib/polyfill/*",
       "<rootDir>/app/frontend/src/loader.js"
     ]
+  },
+  "resolutions": {
+    "serialize-javascript": "^3.1.0"
   }
 }
