@@ -5,21 +5,22 @@
 -#     title: <String>,
 -#     removeButtons: <Boolean>,
 -#     totalCount: <Integer>,
+-#     :has_submit_button => <Boolean>,
 -#     closeAll: <Boolean>,
 -#     :items => [
--#       { :options => <Array>, :title => <String>, :search => <Boolean>, :key => <String> }
+-#       {:title => <String>, :key => <String>, :search => <Boolean>, attribute: <Symbol>, :options => <Array>, value_method: <Symbol>, text_method: <Symbol>, small: <Boolean> }
 -#     ]
 -#   }
 
 - if filters.present?
   .moj-filter
-    .moj-filter__header
-      .selected-filters__heading
-        %span.moj-filter__heading-title
-          %h2.govuk-heading-s
-            = filters[:title]
-        - if filters[:closeAll]
-          %button.govuk-link.govuk-link--no-visited-state{ id: 'close-all-groups' }
+    - if filters[:title]
+      .moj-filter__header
+        .selected-filters__heading
+          %span.moj-filter__heading-title
+            %h2.govuk-heading-s
+              = filters[:title]
+          %a.govuk-link.govuk-link--no-visited-state{ id: 'close-all-groups' }
             = t('shared.filter_group.close_all_filter_groups')
 
     - if filters[:totalCount] > 0 && filters[:removeButtons]
@@ -45,7 +46,8 @@
                         = t('shared.filter_group.remove_filter_hidden')
                       = tag.name
 
-= f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-submit"
+- if filters[:has_submit_button]
+  = f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-submit"
 
 .accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion" } }
 
