@@ -1,18 +1,16 @@
 import '../../polyfill/remove.polyfill';
 
-const LOCATION_HINT = 'City, town or postcode';
-
-export const init = (targetEl) => {
+export const add = (targetEl, placeholder) => {
   targetEl.insertAdjacentHTML('afterend', loaderSvg);
   targetEl.style.padding = '5px 5px 5px 36px';
-  targetEl.placeholder = 'Finding Location...';
+  targetEl.placeholder = placeholder;
 };
 
-export const stop = (targetEl) => {
+export const remove = (targetEl, placeholder) => {
   const loader = document.getElementById('loader');
   targetEl.style.padding = '5px';
   loader.remove();
-  targetEl.setAttribute('placeholder', LOCATION_HINT);
+  targetEl.setAttribute('placeholder', placeholder);
 };
 
 const loaderSvg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="govuk-c-loader__spinner" id="loader" width="32" height="32" viewBox="-32 -32 64 64" preserveAspectRatio="xMidYMid meet">
@@ -31,8 +29,8 @@ const loaderSvg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" class="
 </svg>`;
 
 const loader = {
-  init,
-  stop,
-}
+  add,
+  remove,
+};
 
 export default loader;

@@ -14,11 +14,11 @@ export const LOGGING_MESSAGE = '[Module: currentLocation]: Unable to find user l
 export const startLoading = (container, input) => {
   input.disabled = true;
   container.classList.add('js-location-finder--loading');
-  loader.init(document.getElementById('jobs-search-form-location-field'));
+  loader.add(document.getElementById('jobs-search-form-location-field'), 'Finding Location...');
 };
 
 export const stopLoading = (container, input) => {
-  loader.stop(document.getElementById('jobs-search-form-location-field'));
+  loader.remove(document.getElementById('jobs-search-form-location-field'), 'City, town or postcode');
   container.classList.remove('js-location-finder--loading');
   input.removeAttribute('disabled');
 };
