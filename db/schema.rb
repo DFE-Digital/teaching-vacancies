@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_160130) do
+ActiveRecord::Schema.define(version: 2020_08_12_111621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -115,6 +115,39 @@ ActiveRecord::Schema.define(version: 2020_08_11_160130) do
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "name"
+    t.text "description"
+    t.string "urn"
+    t.string "uid"
+    t.integer "phase"
+    t.string "url"
+    t.integer "minimum_age"
+    t.integer "maximum_age"
+    t.string "address"
+    t.string "town"
+    t.string "county"
+    t.string "postcode"
+    t.string "local_authority"
+    t.text "locality"
+    t.text "address3"
+    t.text "easting"
+    t.text "northing"
+    t.point "geolocation"
+    t.json "gias_data"
+    t.uuid "school_type_id"
+    t.uuid "region_id"
+    t.uuid "detailed_school_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["detailed_school_type_id"], name: "index_organisations_on_detailed_school_type_id"
+    t.index ["region_id"], name: "index_organisations_on_region_id"
+    t.index ["school_type_id"], name: "index_organisations_on_school_type_id"
+    t.index ["uid"], name: "index_organisations_on_uid"
+    t.index ["urn"], name: "index_organisations_on_urn"
   end
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
