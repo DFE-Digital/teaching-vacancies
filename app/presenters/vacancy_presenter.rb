@@ -79,7 +79,7 @@ class VacancyPresenter < BasePresenter
   def working_patterns_for_job_schema
     return unless working_patterns?
 
-    model_working_patterns.map(&:upcase).join(', ')
+    model_working_patterns.compact.map(&:upcase).join(', ')
   end
 
   def to_row
