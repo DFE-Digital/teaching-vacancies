@@ -1,0 +1,19 @@
+.js-location-finder {
+
+  .govuk-c-loader__spinner {
+    position: absolute;
+    left: 4px;
+    top: 32px;
+    animation: spin 1.5s infinite linear;
+    transform: translateZ(0);
+  };
+};
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

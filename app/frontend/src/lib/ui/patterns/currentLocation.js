@@ -1,11 +1,9 @@
 import '../../polyfill/after.polyfill';
 import '../../polyfill/remove.polyfill';
-import '../../../loader';
+import loader from '../components/loader';
 import { getPostcodeFromCoordinates } from '../../api';
 import { enableRadiusSelect, disableRadiusSelect } from '../../../search/ui/input/radius';
 import Rollbar from '../../logging';
-
-const loader = new GOVUK.Loader();
 
 const containerEl = document.getElementsByClassName('js-location-finder')[0];
 const inputEl = document.getElementsByClassName('js-location-finder__input')[0];
@@ -16,22 +14,18 @@ export const LOGGING_MESSAGE = '[Module: currentLocation]: Unable to find user l
 export const startLoading = (container, input) => {
   input.disabled = true;
   container.classList.add('js-location-finder--loading');
-  loader.init({
-    container: 'jobs_search_form[location]',
-    size: 32,
-    label: true,
-    labelText: 'Finding location...',
-  });
+  loader.init(document.getElementById('jobs-search-form-location-field'));
 };
 
 export const stopLoading = (container, input) => {
-  loader.stop();
+  loader.stop(document.getElementById('jobs-search-form-location-field'));
   container.classList.remove('js-location-finder--loading');
   input.removeAttribute('disabled');
 };
 
 export const showLocationLink = (container) => {
   container.classList.add('js-geolocation-supported');
+  container.id = 'location-search';
 };
 
 export const showErrorMessage = (link) => {
