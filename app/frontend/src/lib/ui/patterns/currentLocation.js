@@ -11,14 +11,17 @@ const inputEl = document.getElementsByClassName('js-location-finder__input')[0];
 export const ERROR_MESSAGE = 'Unable to find your location';
 export const LOGGING_MESSAGE = '[Module: currentLocation]: Unable to find user location';
 
+export const DEFAULT_PLACEHOLDER = 'City, town or postcode';
+export const LOADING_PLACEHOLDER = 'Finding Location...';
+
 export const startLoading = (container, input) => {
   input.disabled = true;
   container.classList.add('js-location-finder--loading');
-  loader.add(document.getElementById('jobs-search-form-location-field'), 'Finding Location...');
+  loader.add(document.getElementById('jobs-search-form-location-field'), LOADING_PLACEHOLDER);
 };
 
 export const stopLoading = (container, input) => {
-  loader.remove(document.getElementById('jobs-search-form-location-field'), 'City, town or postcode');
+  loader.remove(document.getElementById('jobs-search-form-location-field'), DEFAULT_PLACEHOLDER);
   container.classList.remove('js-location-finder--loading');
   input.removeAttribute('disabled');
 };
