@@ -1,14 +1,15 @@
 import currentLocation, {
-  onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, postcodeFromPosition,
+  startLoading, stopLoading, onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER, postcodeFromPosition,
 } from './currentLocation';
 import radius from '../../../search/ui/input/radius';
+import loader from '../components/loader';
 
 jest.mock('../../../search/ui/input/radius');
 
-describe('location search box', () => {
+describe('current location', () => {
   let showErrorMessageMock = null; let stopLoadingMock = null; let enableRadiusMock = null; let
     disableRadiusMock = null; let onSuccessMock = null; let
-    onFailureMock = null;
+    onFailureMock = null; let addLoaderMock = null; let removeLoaderMock = null; let input = null; let container = null;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -22,7 +23,34 @@ describe('location search box', () => {
     enableRadiusMock = jest.spyOn(radius, 'enableRadiusSelect');
     disableRadiusMock = jest.spyOn(radius, 'disableRadiusSelect');
 
-    document.body.innerHTML = '<div class="js-location-finder"><input type="text" id="jobs-search-form-location-field" class="js-location-finder__input" /></div>';
+    loader.add = jest.fn();
+    addLoaderMock = jest.spyOn(loader, 'add');
+
+    loader.remove = jest.fn();
+    removeLoaderMock = jest.spyOn(loader, 'remove');
+
+    document.body.innerHTML = `<div class="js-location-finder" id="test-container">
+<input type="text" id="jobs-search-form-location-field" class="js-location-finder__input" />
+</div>`;
+
+    input = document.getElementById('jobs-search-form-location-field');
+    container = document.getElementById('test-container');
+  });
+
+  describe('startLoading', () => {
+    test('adds loader to UI', () => {
+      startLoading(container, input);
+      expect(addLoaderMock).toHaveBeenCalledWith(input, LOADING_PLACEHOLDER);
+      expect(removeLoaderMock).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('stopLoading', () => {
+    test('removes loader from UI', () => {
+      stopLoading(container, input);
+      expect(addLoaderMock).not.toHaveBeenCalled();
+      expect(removeLoaderMock).toHaveBeenCalledWith(input, DEFAULT_PLACEHOLDER);
+    });
   });
 
   describe('onFaliure', () => {
