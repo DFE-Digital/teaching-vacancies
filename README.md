@@ -15,7 +15,7 @@
 * [Troubleshooting](#troubleshooting)
 * [User accounts](#user-accounts)
 
-## User accounts 
+## User accounts
 
 Before you can log in to the application locally, you will need to create a __DfE Sign-In__ account, be invited to a school, and be approved to join Teaching Vacancies. Once for the DfE Sign-In *production* environment, and once for DfE Sign-In *test* (staging) environment. Talk to the team to get these set up.
 
@@ -38,7 +38,7 @@ We use [Algolia's](https://algolia.com) search-as-a-service offering to provide 
 To log in to the Algolia dashboard, you will need access to the teachingjobs@digital.education.gov.uk shared user, as the team size is limited by our payment tier.
 
 
-### Environment Variables 
+### Environment Variables
 
 ```bash
 ALGOLIA_APP_ID=<Get from API Keys on Algolia Dashboard>
@@ -61,35 +61,35 @@ Use keys for one of the existing development sandboxes, or make new ones, if you
   # To remove records that expired yesterday:
   Vacancy.remove_vacancies_that_expired_yesterday!
 
-  # To remove all expired vacancies. 
+  # To remove all expired vacancies.
   Vacancy.index.delete_objects(Vacancy.expired.map(&:id))
-  # You should generally avoid doing this as it will create a large number of unnecessary operations 
+  # You should generally avoid doing this as it will create a large number of unnecessary operations
   # once these are being filtered out of the regular indexing operations.
 ```
 
 Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
 
-### Timed jobs 
+### Timed jobs
 
-There are two timed jobs that run in sidekiq cron: 
+There are two timed jobs that run in sidekiq cron:
 
 #### `UpdateAlgoliaIndex`
 
-This runs every five minutes and add vacancies with matured `publish_on` times to the index. 
+This runs every five minutes and add vacancies with matured `publish_on` times to the index.
 
 #### `RemoveVacanciesThatExpiredYesterday`
 
-This runs at 03:00 every day and does exactly what the name says it does. Daily removal is not a problem because expired vacancies that have not yet been removed will be filtered out by the search client and do not show to jobseekers. 
+This runs at 03:00 every day and does exactly what the name says it does. Daily removal is not a problem because expired vacancies that have not yet been removed will be filtered out by the search client and do not show to jobseekers.
 
 ### Development
 
 When developing with [Algolia](https://algolia.com) you will find that *non-production environments will not start if
 you try to use the Algolia production app*. There are multiple Algolia `Development` apps available and you are free to
 make more if you need them. Details and api keys for the existing ones are available on the Algolia dashboard. You can
-also make as many more free-tier apps as you like for testing, dev, etc.  
+also make as many more free-tier apps as you like for testing, dev, etc.
 
 If you do make new free-tier Algolia apps please make sure you include your name and/or ticket/PR numbers in the name so
-we can keep track of these and clear them out occasionally. 
+we can keep track of these and clear them out occasionally.
 
 Let your colleagues know if you take over an existing development app to be sure you don't accidentally step on anyone's
 toes.
@@ -100,21 +100,21 @@ toes.
 
 Community Apps, which are free, do not have team functionality. This means that you will not be able to access the dashboard
 for apps that other people have created and they will not be able to access the dashboard for yours. If you need to
-share an app dashboard between multiple users create it using the `teachingjobs` account. 
+share an app dashboard between multiple users create it using the `teachingjobs` account.
 
-This **only applies** to the `dev` (1RWSKBURHA - 'TVS DEV PAAS') and `staging` (CFWW19M6GM - 'TVS STAGING PAAS') shared 
+This **only applies** to the `dev` (1RWSKBURHA - 'TVS DEV PAAS') and `staging` (CFWW19M6GM - 'TVS STAGING PAAS') shared
 apps and any community apps you want to create for your own use/development work. It also does not affect your ability to
-use apps for which you have the API keys. It **only** stops you from viewing the dashboard for **community apps** you 
-did not create. 
+use apps for which you have the API keys. It **only** stops you from viewing the dashboard for **community apps** you
+did not create.
 
 ### Indexing live records
 
 We originally started by indexing all records. It became apparent that this had unnecessary cost implications, so the
 codebase was refactored to index only live (or `listed`) records. The [Algolia](https://algoliac.om) Rails plugin is
-now set so it automatically updates existing live records if they change. 
+now set so it automatically updates existing live records if they change.
 
 NOTE: The default `#reindex!` method, added by the Algolia gem, has been overridden so it only indexes Vacancies records
-that fall under the scope `#live`. This is to ensure that expired and unpublished records do not get accidentally added. 
+that fall under the scope `#live`. This is to ensure that expired and unpublished records do not get accidentally added.
 
 ---
 
@@ -243,7 +243,7 @@ Make sure you have the following services configured and running on your develop
 * [Redis](https://redis.io/topics/quickstart). Run the Redis server outside the project folder to avoid creating files in it.
 
 * Sidekiq (performs cron jobs)
-  
+
 ```bash
 bundle exec sidekiq -C config/sidekiq.yml
 ```
@@ -317,7 +317,7 @@ rake data:schools:import
 ##### Importing school group data
 
 You can also populate your environment with real school group (trust) data. This is also taken from
-[GIAS](https://get-information-schools.service.gov.uk/). 
+[GIAS](https://get-information-schools.service.gov.uk/).
 
 ```bash
 rake data:school_groups:import
@@ -378,6 +378,19 @@ You can use conduit to create a dump of production data. See [this section](http
 psql tvs_development < backup.sql
 ```
 
+### Integration between Jira and Github
+
+The integration allows to see the status of development from within the jira issue. You can see the
+status of branches, commits and pull requests as well as navigate to them to show the detail in Github.
+
+To enable this, the following formatting must be used:
+- Branch: Prefix with the issue id. Ex: `TEVA-1155-test-jira-github-integration`
+- Commit: Prefix with the issue id between square bracket. Ex: `[TEVA-1155] Update Readme`
+- Pull request: Prefix with the issue id between square bracket. If the branch was prefixed correctly,
+this should be automatically added for you. Ex: `[TEVA-1155] Document Jira-Github integration`
+
+The branch, commit or pull request will then appear in the `Development` side panel within the issue.
+
 ---
 
 ---
@@ -414,7 +427,7 @@ In order to generate a new secret key:
 1. Run the `rails secret` task from the repo, it will generate a new secret key
 1. You need to generate a different key per environment
 1. Update `SECRET_KEY_BASE` in `set-*-govuk-paas-env.sh`
- 
+
 ### ROLLBAR_ACCESS_TOKEN
 Used to report server-side errors to Rollbar.
 1. Navigate to: Setting > Project access tokens
@@ -443,7 +456,7 @@ __Once you are inside:__
 1. Update `DFE_SIGN_IN_SECRET` and `DFE_SIGN_IN_PASSWORD` in the relevant `set-*-govuk-paas-env.sh` script file
 
 ### Google API Keys
-There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive. 
+There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive.
 - `GOOGLE_MAPS_API_KEY` is used for Google Maps
 - `GOOGLE_API_JSON_KEY` is used for analytics, indexing and drive
 - `BIG_QUERY_API_JSON_KEY` is used for writing tables into BigQuery
@@ -452,10 +465,10 @@ There are several different API keys in use in different environments. There are
 __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. They will need to be normalized in to `JSON` strings to be used in ENV variables.__
 
 1. Go to the [Google Cloud Console API credentials section](https://console.cloud.google.com/apis/credentials?authuser=1&project=teacher-vacancy-service)
-1. Always use your own login if it has sufficient permissions. 
+1. Always use your own login if it has sufficient permissions.
     * If it does not, request them on [#digital-tools-support](https://ukgovernmentdfe.slack.com/archives/CMS9V0JQL)
-    * Please only use teachingjobs@digital.education.gov.uk as a last resort. 
-    
+    * Please only use teachingjobs@digital.education.gov.uk as a last resort.
+
 #### For a string-based API key follow this workflow:
 1. Click 'CREATE CREDENTIALS' in the toolbar at the top of the page
 1. Choose 'API key'
@@ -468,7 +481,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 1. Create one key per API and enviroment and use the minimum necessary permission(s) for that key
 1. Click 'Save'
 1. Copy your new key from the table and update it in the relevant `set-*-govuk-paas-env.sh` script files in the `teachinjobs_secrets` repo.
-1. Do a rolling restart on the updated environment for the application 
+1. Do a rolling restart on the updated environment for the application
 1. Check that everything works as expected
 1. Delete the old API key from the Credentials table in the Google Cloud console
 1. Notify anyone who needs to know that the key has been changed
@@ -476,7 +489,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 #### For a `JSON` API keys follow this workflow:
 
 ##### To change a key on an existing service account (most common scenario):
-1. You are now back on the dashboard. Find your new service account and click on it. 
+1. You are now back on the dashboard. Find your new service account and click on it.
 1. Click 'ADD KEY'
 1. Pick 'Create new key'
 1. Choose 'JSON' and click CREATE
@@ -502,11 +515,11 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 1. Click 'CREATE CREDENTIALS' in the toolbar at the top of the page
 1. Choose 'Service Account'
 1. In 'Service account name' give the account a clear, descriptive name including environment details where applicable
-1. Add a concise description of what the service account is for and what enviroments it is to be used in in 'Service account description'. 
+1. Add a concise description of what the service account is for and what enviroments it is to be used in in 'Service account description'.
 1. Click 'Create'
-1. Add at least one role to restict the service account to a service. Use the minimum necessary permission(s) for the role. 
+1. Add at least one role to restict the service account to a service. Use the minimum necessary permission(s) for the role.
 1. Click 'Continue'
-1. So far, our service account have not required user or group access, so you can skip the next step (click 'DONE'). This may change in the future. 
+1. So far, our service account have not required user or group access, so you can skip the next step (click 'DONE'). This may change in the future.
 
 
 ### ORDNANCE_SURVEY_API_KEY
