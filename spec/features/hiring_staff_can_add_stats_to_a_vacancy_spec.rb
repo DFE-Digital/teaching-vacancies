@@ -6,15 +6,23 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
   JOB_TITLE_LINK_SELECTOR = '#job-title.view-vacancy-link'.freeze
 
   let(:school) { create(:school) }
+
   before(:each) do
     stub_hiring_staff_auth(urn: school.urn)
-    create(:vacancy, :published_slugged, school: school)
+    vacancy = create(:vacancy, :published_slugged)
+    vacancy.organisation_vacancies.create(organisation: school)
   end
 
   context 'when there are vacancies awaiting feedback' do
-    let!(:vacancy) { create(:vacancy, :expired, school: school) }
-    let!(:another_vacancy) { create(:vacancy, :expired, school: school) }
-    let!(:third_vacancy) { create(:vacancy, :expired, school: school) }
+    let!(:vacancy) { create(:vacancy, :expired) }
+    let!(:another_vacancy) { create(:vacancy, :expired) }
+    let!(:third_vacancy) { create(:vacancy, :expired) }
+
+    before(:each) do
+      vacancy.organisation_vacancies.create(organisation: school)
+      another_vacancy.organisation_vacancies.create(organisation: school)
+      third_vacancy.organisation_vacancies.create(organisation: school)
+    end
 
     scenario 'hiring staff can see notification badge' do
       visit organisation_path
@@ -130,7 +138,9 @@ RSpec.feature 'Submitting effectiveness feedback on expired vacancies', js: true
 
     scenario 'when adding feedback to an invalid vacancy, it saves the feedback to the model' do
       invalid_starts_on_date = 10.days.ago
-      invalid_vacancy = create(:vacancy, :expired, starts_on: invalid_starts_on_date, school: school)
+      invalid_vacancy = create(:vacancy, :expired, starts_on: invalid_starts_on_date)
+      invalid_vacancy.organisation_vacancies.create(organisation: school)
+
       expect(invalid_vacancy.valid?).to eq(false)
 
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)

@@ -4,9 +4,7 @@ RSpec.feature 'Creating a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
 
-  before(:each) do
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
-  end
+  before(:each) { stub_hiring_staff_auth(urn: school.urn, session_id: session_id) }
 
   scenario 'Visiting the school page' do
     school = create(:school, name: 'Salisbury School')
@@ -28,7 +26,6 @@ RSpec.feature 'Creating a vacancy' do
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
                                  job_roles: [:teacher, :sen_specialist],
-                                 school: school,
                                  suitable_for_nqt: suitable_for_nqt,
                                  working_patterns: ['full_time', 'part_time'],
                                  publish_on: Time.zone.today))
@@ -261,9 +258,9 @@ RSpec.feature 'Creating a vacancy' do
     end
 
     context '#documents' do
-      let(:documents_vacancy) do
-        create(:vacancy, school: school)
-      end
+      let(:documents_vacancy) { create(:vacancy) }
+
+      before { documents_vacancy.organisation_vacancies.create(organisation: school) }
 
       scenario 'hiring staff can select a file for upload' do
         visit organisation_job_documents_path(documents_vacancy.id)
@@ -650,7 +647,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'is not available for published vacancies' do
-        vacancy = create(:vacancy, :published, school_id: school.id)
+        vacancy = create(:vacancy, :published)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
 
@@ -658,7 +656,10 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'lists all the vacancy details correctly' do
-        vacancy = VacancyPresenter.new(create(:vacancy, :complete, :draft, school_id: school.id))
+        vacancy = create(:vacancy, :complete, :draft)
+        vacancy.organisation_vacancies.create(organisation: school)
+
+        vacancy = VacancyPresenter.new(vacancy)
         visit organisation_job_review_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.review_heading'))
@@ -668,13 +669,11 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is full-time' do
         scenario 'lists all the full-time vacancy details correctly' do
-          vacancy = VacancyPresenter.new(
-            create(:vacancy,
-                   :complete,
-                   :draft,
-                   school_id: school.id,
-                   working_patterns: ['full_time'])
-          )
+          vacancy = create(:vacancy, :complete, :draft, working_patterns: ['full_time'])
+          vacancy.organisation_vacancies.create(organisation: school)
+
+          vacancy = VacancyPresenter.new(vacancy)
+
           visit organisation_job_review_path(vacancy.id)
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
@@ -685,13 +684,11 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is part-time' do
         scenario 'lists all the part-time vacancy details correctly' do
-          vacancy = VacancyPresenter.new(
-            create(:vacancy,
-                   :complete,
-                   :draft,
-                   school_id: school.id,
-                   working_patterns: ['part_time'])
-          )
+          vacancy = create(:vacancy, :complete, :draft, working_patterns: ['part_time'])
+          vacancy.organisation_vacancies.create(organisation: school)
+
+          vacancy = VacancyPresenter.new(vacancy)
+
           visit organisation_job_review_path(vacancy.id)
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
@@ -702,13 +699,11 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is both full- and part-time' do
         scenario 'lists all the working pattern vacancy details correctly' do
-          vacancy = VacancyPresenter.new(
-            create(:vacancy,
-                   :complete,
-                   :draft,
-                   school_id: school.id,
-                   working_patterns: ['full_time', 'part_time'])
-          )
+          vacancy = create(:vacancy, :complete, :draft, working_patterns: ['full_time', 'part_time'])
+          vacancy.organisation_vacancies.create(organisation: school)
+
+          vacancy = VacancyPresenter.new(vacancy)
+
           visit organisation_job_review_path(vacancy.id)
 
           expect(page).to have_content(I18n.t('jobs.review_heading'))
@@ -719,7 +714,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'edit job_specification_details' do
         scenario 'updates the vacancy details' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
@@ -733,7 +729,8 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'tracks any changes to  the vacancy details' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           current_title = vacancy.job_title
           current_slug = vacancy.slug
           visit organisation_job_review_path(vacancy.id)
@@ -751,7 +748,8 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'fails validation until values are set correctly' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.job_details'))
 
@@ -805,7 +803,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'editing the application_details' do
         scenario 'fails validation until values are set correctly' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
@@ -824,7 +823,8 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'fails validation correctly when an invalid link is entered' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
@@ -843,7 +843,8 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'updates the vacancy details' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
 
@@ -857,7 +858,8 @@ RSpec.feature 'Creating a vacancy' do
         end
 
         scenario 'tracks any changes' do
-          vacancy = create(:vacancy, :draft, :complete, school_id: school.id)
+          vacancy = create(:vacancy, :draft, :complete)
+          vacancy.organisation_vacancies.create(organisation: school)
           contact_email = vacancy.contact_email
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t('jobs.application_details'))
@@ -872,7 +874,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'redirects to the school vacancy page when published' do
-        vacancy = create(:vacancy, :draft, school_id: school.id)
+        vacancy = create(:vacancy, :draft)
+        vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
 
@@ -883,7 +886,8 @@ RSpec.feature 'Creating a vacancy' do
     context '#publish' do
       scenario 'adds the current user as a contact for feedback on the published vacancy' do
         current_user = User.find_by(oid: session_id)
-        vacancy = create(:vacancy, :draft, school: school)
+        vacancy = create(:vacancy, :draft)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
@@ -892,7 +896,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'view the published listing as a job seeker' do
-        vacancy = create(:vacancy, :draft, school_id: school.id)
+        vacancy = create(:vacancy, :draft)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
 
@@ -906,7 +911,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is full-time' do
         scenario 'view the full-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time'])
+          vacancy = create(:vacancy, :draft, working_patterns: ['full_time'])
+          vacancy.organisation_vacancies.create(organisation: school)
 
           visit organisation_job_review_path(vacancy.id)
 
@@ -921,7 +927,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is part-time' do
         scenario 'view the part-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['part_time'])
+          vacancy = create(:vacancy, :draft, working_patterns: ['part_time'])
+          vacancy.organisation_vacancies.create(organisation: school)
 
           visit organisation_job_review_path(vacancy.id)
 
@@ -936,7 +943,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'when the listing is both full- and part-time' do
         scenario 'view the full- and part-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, working_patterns: ['full_time', 'part_time'])
+          vacancy = create(:vacancy, :draft, working_patterns: ['full_time', 'part_time'])
+          vacancy.organisation_vacancies.create(organisation: school)
 
           visit organisation_job_review_path(vacancy.id)
 
@@ -951,7 +959,8 @@ RSpec.feature 'Creating a vacancy' do
 
       scenario 'cannot be published unless the details are valid' do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy.organisation_vacancies.create(organisation: school)
         vacancy.assign_attributes expires_on: yesterday_date
         vacancy.save(validate: false)
 
@@ -991,7 +1000,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'can be published at a later date' do
-        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
@@ -1003,7 +1013,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'displays the expiration date and time on the confirmation page' do
-        vacancy = create(:vacancy, :draft, school_id: school.id, expiry_time: Time.zone.now + 5.days)
+        vacancy = create(:vacancy, :draft, expiry_time: Time.zone.now + 5.days)
+        vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t('jobs.submit_listing.button')
 
@@ -1015,7 +1026,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'tracks publishing information' do
-        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
@@ -1026,7 +1038,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'a published vacancy cannot be republished' do
-        vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.tomorrow)
+        vacancy = create(:vacancy, :draft, publish_on: Time.zone.tomorrow)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
         click_on 'Confirm and submit job'
@@ -1038,7 +1051,8 @@ RSpec.feature 'Creating a vacancy' do
       end
 
       scenario 'a published vacancy cannot be edited' do
-        vacancy = create(:vacancy, :published, school_id: school.id)
+        vacancy = create(:vacancy, :published)
+        vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
         expect(page.current_path).to eq(organisation_job_path(vacancy.id))
@@ -1047,7 +1061,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'adds a job to update the Google index in the queue' do
         scenario 'if the vacancy is published immediately' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
+          vacancy = create(:vacancy, :draft, publish_on: Time.zone.today)
+          vacancy.organisation_vacancies.create(organisation: school)
 
           expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
             .to receive(:update_google_index).with(vacancy)
@@ -1059,7 +1074,8 @@ RSpec.feature 'Creating a vacancy' do
 
       context 'updates the published vacancy audit table' do
         scenario 'when the vacancy is published' do
-          vacancy = create(:vacancy, :draft, school_id: school.id, publish_on: Time.zone.today)
+          vacancy = create(:vacancy, :draft, publish_on: Time.zone.today)
+          vacancy.organisation_vacancies.create(organisation: school)
 
           expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)
 

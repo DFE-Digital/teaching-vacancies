@@ -6,17 +6,14 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   end
 
   def show
-    attributes = @vacancy.present? ? @vacancy.attributes : session[:vacancy_attributes]
-    if attributes.present?
-      @form = JobLocationForm.new(attributes)
-    else
-      @form = JobLocationForm.new(school_group_id: current_school_group.id)
-    end
+    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes] || {})
+    @form = JobLocationForm.new(attributes)
   end
 
   def create
     @form.vacancy.readable_job_location = readable_job_location(@form.vacancy.job_location)
     store_vacancy_attributes(@form.vacancy.attributes)
+    session[:organisation_id] = current_organisation.id
     if @form.valid?
       redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
@@ -27,7 +24,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   def update
     if @form.valid?
       @vacancy.update(readable_job_location: readable_job_location(@form.vacancy.job_location))
-      @vacancy.update(school_id: nil) if @form.job_location == 'central_office'
+      set_organisations(@vacancy, current_school_group.id) if @form.job_location == 'central_office'
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       redirect_to_school_selection_or_next_step

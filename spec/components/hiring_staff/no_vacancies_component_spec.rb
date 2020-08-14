@@ -4,7 +4,7 @@ RSpec.describe HiringStaff::NoVacanciesComponent, type: :component do
   let(:organisation) { build(:school) }
 
   before do
-    allow(organisation).to receive_message_chain(:vacancies, :active, :none?).and_return(no_vacancies)
+    allow(Vacancy).to receive_message_chain(:in_organisation_ids, :active, :none?).and_return(no_vacancies)
     render_inline(described_class.new(organisation: organisation))
   end
 

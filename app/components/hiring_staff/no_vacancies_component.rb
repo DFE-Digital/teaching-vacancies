@@ -4,6 +4,6 @@ class HiringStaff::NoVacanciesComponent < ViewComponent::Base
   end
 
   def render?
-    @organisation.vacancies.active.none?
+    @organisation.all_vacancies.active.none?
   end
 end

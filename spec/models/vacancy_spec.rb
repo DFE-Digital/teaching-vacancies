@@ -1,9 +1,9 @@
 require 'rails_helper'
 RSpec.describe Vacancy, type: :model do
-  it { should belong_to(:school).optional }
-  it { should belong_to(:school_group).optional }
   it { should belong_to(:publisher_user).optional }
   it { should have_many(:documents) }
+  it { should have_many(:organisation_vacancies) }
+  it { should have_many(:organisations) }
 
   context 'indexing for search' do
     describe '#update_index!' do
@@ -11,28 +11,28 @@ RSpec.describe Vacancy, type: :model do
       it { should have_db_index(:initially_indexed) }
 
       it 'indexes `live` records where `initially_indexed == false`' do
-        allow(described_class).to receive_message_chain('unindexed.update_all').with({ initially_indexed: true })
-        expect(described_class).to receive_message_chain('unindexed.algolia_reindex!')
+        allow(described_class).to receive_message_chain(:unindexed, :update_all).with({ initially_indexed: true })
+        expect(described_class).to receive_message_chain(:unindexed, :algolia_reindex!)
         described_class.update_index!
       end
 
       it 'flags indexed records as `initially_indexed = true`' do
-        allow(described_class).to receive_message_chain('unindexed.algolia_reindex!')
-        expect(described_class).to receive_message_chain('unindexed.update_all').with({ initially_indexed: true })
+        allow(described_class).to receive_message_chain(:unindexed, :algolia_reindex!)
+        expect(described_class).to receive_message_chain(:unindexed, :update_all).with({ initially_indexed: true })
         described_class.update_index!
       end
     end
 
     describe '#reindex!' do
       it 'is overridden so that it only indexes vacancies scoped as `live`' do
-        expect(described_class).to receive_message_chain('live.algolia_reindex!')
+        expect(described_class).to receive_message_chain(:live, :includes, :algolia_reindex!)
         described_class.reindex!
       end
     end
 
     describe '#reindex' do
       it 'is overridden so that it only indexes vacancies scoped as `live`' do
-        expect(described_class).to receive_message_chain('live.algolia_reindex')
+        expect(described_class).to receive_message_chain(:live, :includes, :algolia_reindex)
         described_class.reindex
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe Vacancy, type: :model do
       it 'calls .index.delete_objects on the expired records' do
         vacancy = double(Vacancy, id: 'ABC123')
         allow(described_class).to receive(:where).and_return([vacancy])
-        expect(described_class).to receive_message_chain('index.delete_objects').with(['ABC123'])
+        expect(described_class).to receive_message_chain(:index, :delete_objects).with(['ABC123'])
         described_class.remove_vacancies_that_expired_yesterday!
       end
     end
@@ -126,12 +126,17 @@ RSpec.describe Vacancy, type: :model do
   describe 'friendly_id generated slug' do
     context '#slug' do
       it 'the slug cannot be duplicate' do
-        green_school = build(:school, name: 'Green school', town: 'Greenway', county: 'Mars')
-        blue_school = build(:school, name: 'Blue school')
-        first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: blue_school)
-        second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
-        third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
-        fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher', school: green_school)
+        green_school = create(:school, name: 'Green school', town: 'Greenway', county: 'Mars')
+        blue_school = create(:school, name: 'Blue school')
+
+        first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+          organisation_vacancies_attributes: [{ organisation: blue_school }])
+        second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+          organisation_vacancies_attributes: [{ organisation: green_school }])
+        third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+          organisation_vacancies_attributes: [{ organisation: green_school }])
+        fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
+          organisation_vacancies_attributes: [{ organisation: green_school }])
 
         expect(first_maths_teacher.slug).to eq('maths-teacher')
         expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
@@ -395,22 +400,24 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe '#school_or_school_group_name' do
+  describe '#organisation_name' do
     context 'when vacancy has a school' do
       it 'returns the school name for the vacancy' do
         school = create(:school, name: 'St James School')
-        vacancy = create(:vacancy, school: school)
+        vacancy = create(:vacancy)
+        vacancy.organisation_vacancies.create(organisation: school)
 
-        expect(vacancy.school_or_school_group_name).to eq(school.name)
+        expect(vacancy.organisation_name).to eq(school.name)
       end
     end
 
     context 'when vacancy has a school_group' do
       it 'returns the school_group name for the vacancy' do
         school_group = create(:school_group)
-        vacancy = create(:vacancy, :with_school_group, school_group: school_group)
+        vacancy = create(:vacancy, :at_central_office)
+        vacancy.organisation_vacancies.create(organisation: school_group)
 
-        expect(vacancy.school_or_school_group_name).to eq(school_group.name)
+        expect(vacancy.organisation_name).to eq(school_group.name)
       end
     end
   end

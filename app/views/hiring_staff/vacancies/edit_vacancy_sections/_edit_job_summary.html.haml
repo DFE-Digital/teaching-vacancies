@@ -15,5 +15,5 @@
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#about_school
-      %h4.govuk-heading-s= t('jobs.about_school', school: @vacancy.school_or_school_group.name)
+      %h4.govuk-heading-s= t('jobs.about_school', school: @vacancy.organisation.name)
     %dd.app-check-your-answers__answer= @vacancy.about_school

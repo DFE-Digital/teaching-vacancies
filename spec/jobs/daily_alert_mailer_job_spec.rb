@@ -3,10 +3,15 @@ require 'rails_helper'
 RSpec.describe DailyAlertMailerJob, type: :job do
   include ActiveJob::TestHelper
 
+  let(:school) { create(:school) }
   let(:vacancies) { create_list(:vacancy, 5) }
   let(:subscription) { create(:daily_subscription) }
   let(:alert_run) { create(:alert_run, subscription: subscription) }
   let(:job) { AlertMailer.daily_alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
+
+  before do
+    vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
+  end
 
   it 'creates a run' do
     job_id = 'ABC1234'

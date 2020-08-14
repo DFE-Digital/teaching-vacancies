@@ -12,7 +12,7 @@ RSpec.feature 'Creating a vacancy' do
   end
 
   context 'when job is located at school group central office' do
-    let(:vacancy) { build(:vacancy, :with_school_group, :complete) }
+    let(:vacancy) { build(:vacancy, :at_central_office, :complete) }
 
     describe '#job_location' do
       scenario 'redirects to job details when submitted successfully but vacancy is not created' do
@@ -59,7 +59,12 @@ RSpec.feature 'Creating a vacancy' do
 
   context 'when job is located at a single school in the school group' do
     let(:vacancy) do
-      build(:vacancy, :with_school_group_at_school, :complete, school_group: school_group, school: school)
+      build(:vacancy, :at_one_school, :complete)
+    end
+
+    before do
+      vacancy.organisation_vacancies.build(organisation: school)
+      vacancy.organisation_vacancies.build(organisation: school_group)
     end
 
     describe '#job_location' do

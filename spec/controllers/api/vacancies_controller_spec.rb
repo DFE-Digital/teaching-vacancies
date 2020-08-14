@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::VacanciesController, type: :controller do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
+  let(:school) { create(:school) }
 
   before(:each, :json) do
     request.accept = 'application/json'
@@ -57,7 +58,9 @@ RSpec.describe Api::VacanciesController, type: :controller do
     it 'retrieves all available vacancies' do
       skip_vacancy_publish_on_validation
       published_vacancy = create(:vacancy)
+      published_vacancy.organisation_vacancies.create(organisation: school)
       expired_vacancy = create(:vacancy, :expired)
+      expired_vacancy.organisation_vacancies.create(organisation: school)
 
       vacancies = [published_vacancy, expired_vacancy]
 
@@ -115,6 +118,8 @@ RSpec.describe Api::VacanciesController, type: :controller do
   describe 'GET /api/v1/jobs/:id.json', json: true do
     render_views
     let(:vacancy) { create(:vacancy) }
+
+    before { vacancy.organisation_vacancies.create(organisation: school) }
 
     it 'returns status :not_found if the request format is not JSON' do
       get :show, params: { id: vacancy.slug, api_version: 1 }, format: :html
@@ -194,8 +199,8 @@ RSpec.describe Api::VacanciesController, type: :controller do
           hiring_organization = {
             'hiringOrganization': {
               '@type': 'School',
-              'name': vacancy.school.name,
-              'identifier': vacancy.school.urn,
+              'name': vacancy.organisation.name,
+              'identifier': vacancy.organisation.urn,
               'description': "<p>#{vacancy.about_school}</p>"
             }
           }

@@ -5,7 +5,8 @@ RSpec.feature 'Hiring staff can see their vacancies' do
     school = create(:school, northing: '1', easting: '2')
 
     stub_hiring_staff_auth(urn: school.urn)
-    vacancy = create(:vacancy, school: school, status: 'published')
+    vacancy = create(:vacancy, status: 'published')
+    vacancy.organisation_vacancies.create(organisation: school)
 
     visit organisation_path
 
@@ -29,23 +30,26 @@ RSpec.feature 'Hiring staff can see their vacancies' do
   context 'viewing the lists of jobs on the school page' do
     let(:school) { create(:school) }
 
-    let!(:published_vacancy) { create(:vacancy, :published, school: school) }
-    let!(:draft_vacancy) { create(:vacancy, :draft, school: school) }
-    let!(:pending_vacancy) { create(:vacancy, :future_publish, school: school) }
+    let!(:published_vacancy) { create(:vacancy, :published) }
+    let!(:draft_vacancy) { create(:vacancy, :draft) }
+    let!(:pending_vacancy) { create(:vacancy, :future_publish) }
     let!(:expired_vacancy) do
-      expired_vacancy = build(:vacancy, :expired, school: school)
+      expired_vacancy = build(:vacancy, :expired)
       expired_vacancy.save(validate: false)
       expired_vacancy
     end
 
     before do
+      published_vacancy.organisation_vacancies.create(organisation: school)
+      draft_vacancy.organisation_vacancies.create(organisation: school)
+      pending_vacancy.organisation_vacancies.create(organisation: school)
+      expired_vacancy.organisation_vacancies.create(organisation: school)
       stub_hiring_staff_auth(urn: school.urn)
     end
 
     scenario 'jobs are split into sections' do
-      5.times do
-        create(:vacancy, :published, school: school)
-      end
+      vacancies = create_list(:vacancy, 5, :published)
+      vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
 
       visit organisation_path
 
@@ -120,8 +124,10 @@ RSpec.feature 'Hiring staff can see their vacancies' do
 
     context 'when a draft vacancy has been updated' do
       let!(:draft_vacancy) do
-        create(:vacancy, :draft, school: school, created_at: 3.days.ago, updated_at: 1.day.ago)
+        create(:vacancy, :draft, created_at: 3.days.ago, updated_at: 1.day.ago)
       end
+
+      before { draft_vacancy.organisation_vacancies.create(organisation: school) }
 
       scenario 'shows the last updated at' do
         draft_vacancy

@@ -84,7 +84,7 @@ class Algolia::VacancySearchBuilder
   end
 
   def search
-    Vacancy.search(
+    Vacancy.includes(organisation_vacancies: :organisation).search(
       @keyword,
       aroundLatLng: @location_search.location_filter[:point_coordinates],
       aroundRadius: @location_search.location_filter[:radius],

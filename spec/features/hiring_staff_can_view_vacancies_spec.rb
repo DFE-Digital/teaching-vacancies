@@ -15,8 +15,10 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'A school can see a list of vacancies' do
-    vacancy1 = create(:vacancy, school: school)
-    vacancy2 = create(:vacancy, school: school)
+    vacancy1 = create(:vacancy)
+    vacancy1.organisation_vacancies.create(organisation: school)
+    vacancy2 = create(:vacancy)
+    vacancy2.organisation_vacancies.create(organisation: school)
 
     visit organisation_path
 
@@ -26,7 +28,8 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'A draft vacancy show page should show a flash message with the status' do
-    vacancy = create(:vacancy, school: school, status: 'draft')
+    vacancy = create(:vacancy, status: 'draft')
+    vacancy.organisation_vacancies.create(organisation: school)
 
     visit organisation_job_path(vacancy.id)
 
@@ -36,7 +39,9 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'A published vacancy show page should not show a flash message with the status' do
-    vacancy = create(:vacancy, school: school, status: 'published')
+    vacancy = create(:vacancy, status: 'published')
+    vacancy.organisation_vacancies.create(organisation: school)
+
     visit organisation_job_path(vacancy.id)
 
     expect(page).to have_content(school.name)
@@ -44,7 +49,9 @@ RSpec.feature 'School viewing vacancies' do
   end
 
   scenario 'clicking on more information should not increment the counter' do
-    vacancy = create(:vacancy, school: school, status: 'published')
+    vacancy = create(:vacancy, status: 'published')
+    vacancy.organisation_vacancies.create(organisation: school)
+
     visit organisation_job_path(vacancy.id)
 
     expect { click_on I18n.t('jobs.apply') }.to change { vacancy.get_more_info_counter.to_i }.by(0)

@@ -1,17 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
-  let(:school_group) { create(:school_group) }
-  let(:vacancy) { create(:vacancy, :with_school_group, school_group: school_group) } # use factory helper
+  let(:organisation) { create(:school_group) }
+  let(:vacancy) { create(:vacancy, :at_central_office) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
-  before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
+  before do
+    vacancy.organisation_vacancies.create(organisation: organisation)
+    render_inline(described_class.new(vacancy: vacancy_presenter))
+  end
 
   describe '#render?' do
-    let(:school) { create(:school) }
-
     context 'when vacancy is at a school without a trust' do
-      let(:vacancy) { create(:vacancy, school: school) }
+      let(:organisation) { create(:school) }
+      let(:vacancy) { create(:vacancy) }
 
       it 'does not render the component' do
         expect(rendered_component).to be_blank
@@ -19,7 +21,7 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
     end
 
     context 'when vacancy is at a single school in a trust' do
-      let(:vacancy) { create(:vacancy, :with_school_group_at_school, school_group: school_group) }
+      let(:vacancy) { create(:vacancy, :at_one_school) }
 
       it 'does not render the component' do
         expect(rendered_component).to be_blank
@@ -34,7 +36,7 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
   end
 
   it 'renders the trust type' do
-    expect(rendered_component).to include(organisation_type(organisation: vacancy.school_group))
+    expect(rendered_component).to include(organisation_type(organisation: vacancy.organisation))
   end
 
   it 'renders the trust email' do
@@ -51,6 +53,6 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
   end
 
   it 'renders the head office location' do
-    expect(rendered_component).to include(full_address(vacancy.school_group))
+    expect(rendered_component).to include(full_address(vacancy.organisation))
   end
 end

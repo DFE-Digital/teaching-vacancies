@@ -4,7 +4,7 @@ en:
       inclusion: Select the location where the job will be based
       blank: Select the location where the job will be based
   school_errors: &school_errors
-    school_id:
+    organisation_id:
       blank: Select the school where the job will be based
   job_specification_errors: &job_specification_errors
     job_title:

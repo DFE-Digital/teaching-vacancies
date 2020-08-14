@@ -17,6 +17,7 @@ RSpec.describe AlertMailer, type: :mailer do
     allow_any_instance_of(Subscription).to receive(:token) { token }
     subscription
   end
+  let(:school) { create(:school) }
 
   describe 'daily_alert' do
     before(:each) do
@@ -26,6 +27,10 @@ RSpec.describe AlertMailer, type: :mailer do
     let(:mail) { described_class.daily_alert(subscription.id, vacancies.pluck(:id)) }
     let(:vacancies) { create_list(:vacancy, 1, :published) }
     let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: 'daily_alert' } }
+
+    before do
+      vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
+    end
 
     context 'with a single vacancy' do
       let(:vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
@@ -45,7 +50,7 @@ RSpec.describe AlertMailer, type: :mailer do
         )
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.first.school))}/)
+        expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
 
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
@@ -60,6 +65,10 @@ RSpec.describe AlertMailer, type: :mailer do
       let(:first_vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
       let(:second_vacancy_presenter) { VacancyPresenter.new(vacancies.last) }
 
+      before do
+        vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
+      end
+
       it 'shows vacancies' do
         expect(mail.subject).to eq(
           I18n.t(
@@ -71,13 +80,13 @@ RSpec.describe AlertMailer, type: :mailer do
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.first.school))}/)
+        expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
 
         expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.last.school))}/)
+        expect(body).to match(/#{html_escape(location(vacancies.last.organisation))}/)
         expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
       end

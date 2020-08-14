@@ -4,14 +4,11 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
   let!(:vacancy) do
     VacancyPresenter.new(build(:vacancy, :complete,
                                job_title: 'Draft vacancy',
-                               school: school,
                                working_patterns: ['full_time', 'part_time']))
   end
   let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
 
-  before do
-    stub_hiring_staff_auth(urn: school.urn)
-  end
+  before { stub_hiring_staff_auth(urn: school.urn) }
 
   context 'editing an incomplete draft vacancy' do
     before do
@@ -214,7 +211,8 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
       end
 
       def edit_a_published_vacancy
-        published_vacancy = create(:vacancy, :published, school: school)
+        published_vacancy = create(:vacancy, :published)
+        published_vacancy.organisation_vacancies.create(organisation: school)
         visit edit_organisation_job_path(published_vacancy.id)
         click_header_link(I18n.t('jobs.application_details'))
 
@@ -229,7 +227,9 @@ RSpec.feature 'Hiring staff can edit a draft vacancy' do
   end
 
   context 'editing a complete draft vacancy' do
-    let(:vacancy) { create(:vacancy, :draft, school: school) }
+    let(:vacancy) { create(:vacancy, :draft) }
+
+    before { vacancy.organisation_vacancies.create(organisation: school) }
 
     scenario 'vacancy state is edit' do
       visit organisation_job_review_path(vacancy.id, edit_draft: true)

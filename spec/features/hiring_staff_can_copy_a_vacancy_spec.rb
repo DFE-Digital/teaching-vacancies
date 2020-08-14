@@ -19,8 +19,9 @@ RSpec.feature 'Copying a vacancy' do
 
   context '#cancel_copy' do
     scenario 'a copy can be cancelled using the cancel copy back link' do
-      original_vacancy = build(:vacancy, :past_publish, school: school)
+      original_vacancy = build(:vacancy, :past_publish)
       original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+      original_vacancy.organisation_vacancies.create(organisation: school)
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
@@ -40,8 +41,9 @@ RSpec.feature 'Copying a vacancy' do
     end
 
     scenario 'a copy can be cancelled using the cancel copy link' do
-      original_vacancy = build(:vacancy, :past_publish, school: school)
+      original_vacancy = build(:vacancy, :past_publish)
       original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+      original_vacancy.organisation_vacancies.create(organisation: school)
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
@@ -62,10 +64,12 @@ RSpec.feature 'Copying a vacancy' do
   end
 
   scenario 'a job can be successfully copied and published' do
-    original_vacancy = build(:vacancy, :past_publish, school: school)
+    original_vacancy = build(:vacancy, :past_publish)
     original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+    original_vacancy.organisation_vacancies.create(organisation: school)
 
     new_vacancy = original_vacancy.dup
+    new_vacancy.organisation_vacancies.build(organisation: school)
     new_vacancy.job_title = 'A new job title'
     new_vacancy.starts_on = 35.days.from_now
     new_vacancy.publish_on = 0.days.from_now
@@ -106,10 +110,10 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when the original job is now invalid' do
     scenario 'the job can be successfully copied but not published until valid' do
-      original_vacancy = build(:vacancy, :complete,
-                              school: school, about_school: nil, job_location: 'at_one_school')
+      original_vacancy = build(:vacancy, :complete, about_school: nil, job_location: 'at_one_school')
       original_vacancy.send(:set_slug)
       original_vacancy.save(validate: false)
+      original_vacancy.organisation_vacancies.create(organisation: school)
 
       visit organisation_path
 
@@ -166,7 +170,8 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when the original job is pending/scheduled/future_publish' do
     scenario 'a job can be successfully copied' do
-      original_vacancy = create(:vacancy, :future_publish, school: school)
+      original_vacancy = create(:vacancy, :future_publish)
+      original_vacancy.organisation_vacancies.create(organisation: school)
 
       visit organisation_path
 
@@ -189,7 +194,8 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when the original job has expired' do
     scenario 'a job can be successfully copied' do
-      original_vacancy = create(:vacancy, :expired, school: school)
+      original_vacancy = create(:vacancy, :expired)
+      original_vacancy.organisation_vacancies.create(organisation: school)
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
@@ -219,8 +225,9 @@ RSpec.feature 'Copying a vacancy' do
 
   context 'when a copied job has an invalid date' do
     scenario 'it shows a validation error' do
-      original_vacancy = build(:vacancy, :past_publish, school: school)
+      original_vacancy = build(:vacancy, :past_publish)
       original_vacancy.save(validate: false) # Validation prevents publishing on a past date
+      original_vacancy.organisation_vacancies.create(organisation: school)
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = 'A new job title'
@@ -247,8 +254,9 @@ RSpec.feature 'Copying a vacancy' do
 
   describe 'validations' do
     let!(:original_vacancy) do
-      vacancy = build(:vacancy, :past_publish, school: school)
+      vacancy = build(:vacancy, :past_publish)
       vacancy.save(validate: false) # Validation prevents publishing on a past date
+      vacancy.organisation_vacancies.create(organisation: school)
       vacancy
     end
     let(:new_vacancy) { build(:vacancy, original_vacancy.attributes.merge(new_attributes)) }

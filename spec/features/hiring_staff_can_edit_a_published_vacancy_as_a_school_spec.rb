@@ -4,11 +4,12 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
   let(:session_id) { SecureRandom.uuid }
 
   before(:each) do
+    vacancy.organisation_vacancies.create(organisation: school)
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
   context 'when attempting to edit a draft vacancy' do
-    let(:vacancy) { create(:vacancy, :draft, school: school) }
+    let(:vacancy) { create(:vacancy, :draft) }
 
     scenario 'redirects to the review vacancy page' do
       visit edit_organisation_job_path(vacancy.id)
@@ -19,12 +20,10 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
   context 'when editing a published vacancy' do
     let(:vacancy) do
-      VacancyPresenter.new(create(:vacancy, :complete,
-                                  job_roles: [:teacher, :sen_specialist],
-                                  school: school,
-                                  working_patterns: ['full_time', 'part_time'],
-                                  publish_on: Time.zone.today, expires_on: Time.zone.tomorrow,
-                                  job_location: 'at_one_school'))
+      VacancyPresenter.new(
+        create(:vacancy, :complete, job_location: 'at_one_school',
+          job_roles: [:teacher, :sen_specialist], working_patterns: ['full_time', 'part_time'],
+          publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
     end
 
     context 'when the vacancy is now invalid' do
@@ -113,7 +112,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       end
 
       scenario 'ensures the vacancy slug is updated when the title is saved' do
-        vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug', school: school)
+        vacancy = create(:vacancy, :published, slug: 'the-vacancy-slug')
+        vacancy.organisation_vacancies.create(organisation: school)
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t('jobs.job_details'))
 
@@ -297,8 +297,9 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
       context 'when the job post has already been published' do
         context 'when the publication date is in the past' do
           scenario 'renders the publication date as text and does not allow editing' do
-            vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago, school: school)
+            vacancy = build(:vacancy, :published, slug: 'test-slug', publish_on: 1.day.ago)
             vacancy.save(validate: false)
+            vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)
 
@@ -317,7 +318,8 @@ RSpec.feature 'Hiring staff can edit a vacancy' do
 
         context 'when the publication date is in the future' do
           scenario 'renders the publication date as text and allows editing' do
-            vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days, school: school)
+            vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days)
+            vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)
             click_header_link(I18n.t('jobs.important_dates'))

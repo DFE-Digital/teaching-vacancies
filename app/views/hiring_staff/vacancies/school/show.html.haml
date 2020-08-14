@@ -20,8 +20,8 @@
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
-      = f.govuk_collection_radio_buttons :school_id,
-        @school_options,
+      = f.govuk_collection_radio_buttons :organisation_id,
+        @organisation_options,
         :id,
         :name,
         :address,
