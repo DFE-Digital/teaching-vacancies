@@ -1,5 +1,6 @@
 class Algolia::VacancyLocationBuilder
   DEFAULT_RADIUS = 10
+  MILES_TO_METRES = 1.60934 * 1000
 
   attr_reader :location, :location_category, :location_filter,
               :location_polygon, :location_polygon_boundary, :missing_polygon
@@ -52,6 +53,6 @@ class Algolia::VacancyLocationBuilder
   end
 
   def convert_radius_in_miles_to_metres(radius)
-    (radius * 1.60934 * 1000).to_i
+    (radius * MILES_TO_METRES).to_i
   end
 end

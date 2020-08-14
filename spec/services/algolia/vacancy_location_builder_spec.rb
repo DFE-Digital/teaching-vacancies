@@ -67,7 +67,7 @@ RSpec.describe Algolia::VacancyLocationBuilder do
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: (10 * 1.60934 * 1000).to_i
+            radius: (10 * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i
           })
         end
       end
@@ -81,7 +81,7 @@ RSpec.describe Algolia::VacancyLocationBuilder do
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: (radius * 1.60934 * 1000).to_i
+            radius: (radius * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i
           })
         end
       end

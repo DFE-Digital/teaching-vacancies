@@ -29,9 +29,7 @@ RSpec.describe VacanciesController, type: :controller do
 
       context 'sort params' do
         let(:expected_safe_values) { { jobs_sort: 'Text' } }
-        let(:params) do
-          { jobs_sort: "<body onload=alert('test1')>Text</script>" }
-        end
+        let(:params) { { jobs_sort: "<body onload=alert('test1')>Text</script>" } }
 
         it 'passes sanitised params to Algolia::VacancySearchBuilder' do
           expect(Algolia::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
@@ -40,9 +38,7 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       context 'search auditor' do
-        let(:params) do
-          { keyword: 'Teacher' }
-        end
+        let(:params) { { keyword: 'Teacher' } }
 
         it 'should call the search auditor' do
           expect(AuditSearchEventJob).to receive(:perform_later).with(hash_including(keyword: 'Teacher'))

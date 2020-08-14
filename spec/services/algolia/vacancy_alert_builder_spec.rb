@@ -10,7 +10,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
   let(:default_radius) { 10 }
   let(:date_today) { Time.zone.today.to_datetime }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-  let(:location_radius) { (default_radius * 1.60934 * 1000).to_i }
+  let(:location_radius) { (default_radius * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i }
   let(:location_polygon_boundary) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
