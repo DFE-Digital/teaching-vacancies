@@ -27,8 +27,6 @@ class School < Organisation
     all_through: 7,
   }
 
-  alias_attribute :data, :gias_data
-
   def easting=(easting)
     self[:easting] = easting
     set_geolocation_from_easting_and_northing
