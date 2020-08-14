@@ -37,13 +37,13 @@
 
             %ul.moj-filter-tags
               - group[:options].each do |tag|
-                - if group[:selected].include? tag.id
+                - if group[:selected].include? tag.send(group[:value_method])
                   %li
-                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.id } }
+                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.send(group[:value_method]) } }
                       %i.fa.fa-close
                       %span.govuk-visually-hidden
                         = t('shared.filter_group.remove_filter_hidden')
-                      = tag.name
+                      = tag.send(group[:text_method])
 
 = f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-submit"
 

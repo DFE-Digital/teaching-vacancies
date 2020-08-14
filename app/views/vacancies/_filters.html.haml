@@ -1,7 +1,6 @@
-%aside.filter-vacancies
-  %h2.govuk-heading-m= t('jobs.filters.title')
-
-  = form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path(anchor: 'vacancy-results'), method: :get, html: { class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
+= form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path(anchor: 'vacancy-results'), method: :get, html: { class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
+  %aside.filter-vacancies{ class: "govuk-!-margin-bottom-3" }
+    %h2.govuk-heading-m= t('jobs.filters.title')
 
     = render 'shared/search/keyword', f: f
     = render 'shared/search/location', f: f
@@ -10,3 +9,6 @@
 
     = f.hidden_field :jobs_sort, value: @vacancies_search&.sort_by
     = f.govuk_submit t('buttons.search'), classes: 'govuk-button mb0 govuk-!-width-full'
+
+  %aside
+    = render 'shared/filter_group', f: f, filters: { title: 'Filter results', removeButtons: true, totalCount: @jobs_search_form.total_filters, items: [{ title: 'Job role', key: 'job_roles', search: false, attribute: :job_roles, selected: @jobs_search_form.job_roles, options: @jobs_search_form.job_role_options, value_method: :first, text_method: :last, small: true }, { title: 'Education phase', key: 'phases', search: false, attribute: :phases, selected: @jobs_search_form.phases, options: @jobs_search_form.school_phase_options, value_method: :first, text_method: :last, small: true }, { title: 'Working pattern', key: 'working_patterns', search: false, attribute: :working_patterns, selected: @jobs_search_form.working_patterns, options: @jobs_search_form.working_pattern_options, value_method: :first, text_method: :last, small: true }]}

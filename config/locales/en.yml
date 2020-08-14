@@ -308,17 +308,17 @@ en:
     leadership_level: 'Leadership level'
     search_result_heading:
       without_search_html:
-        one: There is <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job listed
-        other: There are <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs listed
+        one: There is <span class='govuk-!-font-weight-bold'>%{count}</span> job listed
+        other: There are <span class='govuk-!-font-weight-bold'>%{count}</span> jobs listed
       keyword_html:
-        one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
-        other: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs match <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
+        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
+        other: <span class='govuk-!-font-weight-bold'>%{count}</span> jobs match <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
       location_html:
-        one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job found near <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
-        other: <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs found near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
+        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job found near <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
+        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs found near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
       keyword_location_html:
-        one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
-        other: <span class="govuk-!-font-weight-bold">%{jobs_count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
+        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
+        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
     no_jobs:
       intro: 'Try another search'
       suggestions:
@@ -336,6 +336,19 @@ en:
       leadership: 'Leadership'
       sen_specialist: 'SEN specialist'
       nqt_suitable: 'Suitable for NQTs'
+    school_phase_options:
+      all_through: All through
+      middle_deemed_primary: Middle deemed primary
+      middle_deemed_secondary: Middle deemed secondary
+      not_applicable: Not applicable
+      nursery: Nursery
+      primary: Primary
+      secondary: Secondary
+      sixteen_plus: 16+
+    working_pattern_options:
+      full_time: Full-time
+      part_time: Part-time
+      job_share: Job share
     job_summary: 'Job summary'
     salary: 'Salary'
     benefits: 'Employee benefits'

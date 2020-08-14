@@ -3,14 +3,11 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :coordinates, :searched, :total_count
-  alias_method :user_search?, :searched
+  attr_reader :coordinates
 
-  def initialize(vacancies, coordinates: '', searched:, total_count:)
+  def initialize(vacancies, coordinates: '')
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @coordinates = coordinates
-    @searched = searched
-    @total_count = total_count
     super(vacancies)
   end
 
@@ -20,22 +17,6 @@ class VacanciesPresenter < BasePresenter
 
   def any?
     decorated_collection.count.nonzero?
-  end
-
-  def search_heading(keyword: '', location: '')
-    if keyword.present? && location.present?
-      I18n.t('jobs.search_result_heading.keyword_location_html',
-        jobs_count: number_with_delimiter(total_count), location: location, keyword: keyword, count: total_count)
-    elsif keyword.present?
-      I18n.t('jobs.search_result_heading.keyword_html',
-        jobs_count: number_with_delimiter(total_count), keyword: keyword, count: total_count)
-    elsif location.present?
-      I18n.t('jobs.search_result_heading.location_html',
-        jobs_count: number_with_delimiter(total_count), location: location, count: total_count)
-    else
-      I18n.t('jobs.search_result_heading.without_search_html',
-        jobs_count: number_with_delimiter(total_count), count: total_count)
-    end
   end
 
   def current_api_url
