@@ -6,9 +6,10 @@ class Jobseekers::StartPageFiltersComponent < ViewComponent::Base
   end
 
   def start_page_filters_hash
-    { removeButtons: false,
-      totalCount: job_role_options.size,
+    { remove_buttons: false,
+      total_count: job_role_options.size,
       has_submit_button: false,
+
       items: [
         { options: job_role_options,
           title: 'Job roles',
