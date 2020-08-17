@@ -118,20 +118,4 @@ module VacanciesHelper
   def vacancy_or_organisation_description(vacancy)
     vacancy.about_school.presence || vacancy.school_or_school_group.description.presence
   end
-
-  def service_start_page_filters_hash
-    { removeButtons: false,
-      totalCount: job_role_options.size,
-      has_submit_button: false,
-      items: [
-        { options: job_role_options,
-          title: 'Job roles',
-          search: false,
-          attribute: :job_roles,
-          value_method: :last,
-          text_method: :first,
-          small: true }
-        ]
-      }
-  end
 end

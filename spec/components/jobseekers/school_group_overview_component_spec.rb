@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }
-  let(:vacancy) { create(:vacancy, :with_school_group, school_group: school_group) } # use factory helper
+  let(:vacancy) { create(:vacancy, :with_school_group, school_group: school_group) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before { render_inline(described_class.new(vacancy: vacancy_presenter)) }
