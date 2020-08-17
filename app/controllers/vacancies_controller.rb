@@ -8,7 +8,6 @@ class VacanciesController < ApplicationController
     @vacancies = VacanciesPresenter.new(
       @vacancies_search.vacancies,
       coordinates: @vacancies_search.point_coordinates,
-      facet_count: @vacancies_search.facet_count,
       searched: @vacancies_search.any?,
       total_count: @vacancies_search.vacancies.raw_answer['nbHits']
     )

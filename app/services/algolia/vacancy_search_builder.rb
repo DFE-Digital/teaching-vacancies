@@ -1,11 +1,10 @@
 require 'geocoding'
 
 class Algolia::VacancySearchBuilder
-  attr_reader :facet_count, :keyword, :location_search,
+  attr_reader :keyword, :location_search,
               :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies
 
   DEFAULT_HITS_PER_PAGE = 10
-  FACET_ATTRIBUTES = ['job_roles', 'school.phase', 'working_patterns']
 
   def initialize(form_hash)
     @params_hash = form_hash
@@ -22,7 +21,6 @@ class Algolia::VacancySearchBuilder
       @vacancies.raw_answer['page'], @vacancies.raw_answer['nbPages'],
       @vacancies.raw_answer['hitsPerPage'], @vacancies.raw_answer['nbHits']
     )
-    @facet_count = @vacancies.raw_answer['facets']
     @point_coordinates = @location_search.location_filter[:point_coordinates]
   end
 
@@ -92,7 +90,6 @@ class Algolia::VacancySearchBuilder
       aroundRadius: @location_search.location_filter[:radius],
       insidePolygon: @location_search.location_polygon_boundary,
       filters: @search_filters,
-      facets: FACET_ATTRIBUTES,
       replica: @search_replica,
       hitsPerPage: @hits_per_page,
       page: @page

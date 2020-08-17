@@ -3,13 +3,12 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :coordinates, :facet_count, :searched, :total_count
+  attr_reader :coordinates, :searched, :total_count
   alias_method :user_search?, :searched
 
-  def initialize(vacancies, coordinates: '', facet_count: {}, searched:, total_count:)
+  def initialize(vacancies, coordinates: '', searched:, total_count:)
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @coordinates = coordinates
-    @facet_count = facet_count
     @searched = searched
     @total_count = total_count
     super(vacancies)

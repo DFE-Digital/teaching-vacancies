@@ -1,7 +1,6 @@
 module SearchHelper
   def mock_algolia_search_for_job_alert(result, query, algolia_hash = {})
     arguments_to_algolia = get_arguments_to_algolia(algolia_hash)
-    arguments_to_algolia.delete(:facets)
     arguments_to_algolia[:typoTolerance] = false
     mock_algolia_search_base(result, query, algolia_hash, arguments_to_algolia)
   end
@@ -19,7 +18,6 @@ module SearchHelper
       aroundRadius: algolia_hash[:aroundRadius] || nil,
       insidePolygon: algolia_hash[:insidePolygon] || nil,
       filters: algolia_hash[:filters] || nil,
-      facets: Algolia::VacancySearchBuilder::FACET_ATTRIBUTES,
       replica: algolia_hash[:replica] || nil,
       hitsPerPage: algolia_hash[:hitsPerPage] || 10,
     }
