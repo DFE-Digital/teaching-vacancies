@@ -12,18 +12,11 @@ RSpec.shared_examples 'a search in the default search replica' do
   end
 end
 
-RSpec.shared_examples 'a search using polygons' do
-  it 'sets the correct attributes' do
-    expect(subject.location_category).to eql(polygonable_location)
-    expect(subject.location_polygon).to eq(location_polygon)
-    expect(subject.location_filter).to eql({})
-  end
-end
-
-RSpec.describe VacancyAlgoliaSearchBuilder do
+RSpec.describe Algolia::VacancySearchBuilder do
   subject { described_class.new(params) }
 
   let(:keyword) { 'maths teacher' }
+  let(:location) { nil }
   let(:point_location) { 'SW1A 1AA' }
   let(:polygonable_location) { 'Bath' }
   let(:polygon_coordinates) { [51.406361958644, -2.3780576677997, 51.4063596372237, -2.3787764623145] }
@@ -45,95 +38,60 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       end
     end
 
-    context '#initialize_location' do
-      context 'polygonable location specified' do
-        context 'by location parameter' do
-          let(:params) { { location: polygonable_location } }
+    context 'when a location search polygon is missing' do
+      let(:params) { { keyword: keyword, location: polygonable_location } }
 
-          it_behaves_like 'a search using polygons'
-        end
-
-        context 'by location_category parameter' do
-          let(:params) { { location_category: polygonable_location } }
-
-          it_behaves_like 'a search using polygons'
-        end
-
-        context 'by location_category parameter and location parameter' do
-          let(:params) { { location_category: polygonable_location, location: polygonable_location } }
-
-          it_behaves_like 'a search using polygons'
-        end
-
-        context 'and polygon coordinate lookup fails (for large areas)' do
-          let(:params) { { keyword: keyword, location_category: 'North West' } }
-
-          it 'appends location to keyword' do
-            expect(subject.location_category).to eq 'North West'
-            expect(subject.location_polygon).to be nil
-            expect(subject.location_filter).to eql({})
-            expect(subject.keyword).to eql("#{keyword} North West")
-          end
-        end
+      before do
+        allow_any_instance_of(Algolia::VacancyLocationBuilder).to receive(:missing_polygon).and_return(true)
       end
 
-      context 'non-polygonable location' do
-        context 'and no radius specified' do
-          let(:params) { { location: point_location } }
+      it 'appends location to the keyword' do
+        expect(subject.keyword).to eql('maths teacher Bath')
+      end
 
-          it 'sets location filter around the location with the default radius' do
-            expect(subject.location_category).to be nil
-            expect(subject.location_polygon).to be nil
-            expect(subject.location_filter).to eql({
-              point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-              radius: subject.convert_radius_in_miles_to_metres(default_radius)
-            })
-          end
-        end
+      it 'appends location to keyword in the active params hash' do
+        expect(subject.only_active_to_hash[:keyword]).to eql('maths teacher Bath')
+      end
+    end
 
-        context 'and radius specified' do
-          let(:radius) { 30 }
-          let(:params) { { location: point_location, radius: radius } }
+    context 'when a location_category_search is carried out' do
+      let(:params) { { keyword: keyword, location: polygonable_location } }
 
-          it 'carries out geographical search around a coordinate location with the specified radius' do
-            expect(subject.location_category).to be nil
-            expect(subject.location_polygon).to be nil
-            expect(subject.location_filter).to eql({
-              point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-              radius: subject.convert_radius_in_miles_to_metres(radius)
-            })
-          end
-        end
+      before do
+        allow_any_instance_of(Algolia::VacancyLocationBuilder).to receive(:location_category_search?)
+                                                              .and_return(true)
+      end
+
+      it 'sets location_category in the active params hash' do
+        expect(subject.only_active_to_hash[:location_category]).to eql('Bath')
       end
     end
 
     context 'sorting' do
       let(:keyword) { nil }
       let(:jobs_sort) { '' }
-      let(:params) do
-        { keyword: keyword, location: point_location, jobs_sort: jobs_sort }
-      end
+      let(:params) { { keyword: keyword, location: location, jobs_sort: jobs_sort } }
 
       describe 'default sort strategies per scenario when: no sort strategy is specified,' do
         context 'and a keyword is specified,' do
           let(:keyword) { 'maths teacher' }
           context 'and a location is specified,' do
+            let(:location) { point_location }
             it_behaves_like 'a search in the base Vacancy index'
           end
 
           context 'and a location is NOT specified,' do
-            let(:location) { nil }
             it_behaves_like 'a search in the base Vacancy index'
           end
         end
 
         context 'and a keyword is NOT specified,' do
           context 'and a location is specified,' do
+            let(:location) { point_location }
             it_behaves_like 'a search in the default search replica'
           end
 
           context 'and a location is NOT specified,' do
-            let(:location) { nil }
             it_behaves_like 'a search in the default search replica'
 
             context 'with jobs_sort param present but empty,' do
@@ -173,9 +131,9 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     let(:search_replica) { nil }
     let(:default_hits_per_page) { 10 }
     let(:search_filter) do
-      'listing_status:published AND '\
-      "publication_date_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\
-      "expires_at_timestamp > #{expired_now.to_datetime.to_i}"
+      '(listing_status:published AND '\
+       "publication_date_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\
+       "expires_at_timestamp > #{expired_now.to_datetime.to_i})"
     end
     let(:page) { 1 }
 
@@ -203,14 +161,8 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     end
 
     before do
-      travel_to(expired_now)
-      allow_any_instance_of(VacancyAlgoliaSearchBuilder)
-        .to receive(:expired_now_filter)
-        .and_return(expired_now.to_datetime.to_i)
       mock_algolia_search(vacancies, keyword, expected_algolia_search_args)
     end
-
-    after { travel_back }
 
     context 'a location category search' do
       let(:location) { polygonable_location }
@@ -227,7 +179,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     context 'a geographical radius location search' do
       let(:location) { point_location }
       let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-      let(:location_radius) { subject.convert_radius_in_miles_to_metres(default_radius) }
+      let(:location_radius) { (default_radius * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i }
       let(:location_polygon_boundary) { nil }
 
       it 'carries out search with correct criteria' do
@@ -245,7 +197,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
     let(:total_results) { 57 }
 
     it 'returns the correct array' do
-      expect(subject.build_stats(page, pages, results_per_page, total_results)).to eql(
+      expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql(
         [1, 10, total_results]
       )
     end
@@ -254,7 +206,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       let(:total_results) { 0 }
 
       it 'returns the correct array' do
-        expect(subject.build_stats(page, pages, results_per_page, total_results)).to eql(
+        expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql(
           [0, 0, total_results]
         )
       end
@@ -264,7 +216,7 @@ RSpec.describe VacancyAlgoliaSearchBuilder do
       let(:page) { 5 }
 
       it 'returns the correct array' do
-        expect(subject.build_stats(page, pages, results_per_page, total_results)).to eql(
+        expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql(
           [51, total_results, total_results]
         )
       end

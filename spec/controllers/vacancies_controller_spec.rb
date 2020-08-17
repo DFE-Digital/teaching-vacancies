@@ -13,6 +13,7 @@ RSpec.describe VacanciesController, type: :controller do
 
     context 'when parameters include syntax' do
       context 'search params' do
+        let(:expected_safe_values) { { keyword: 'Text' } }
         let(:params) do
           {
             keyword: "<body onload=alert('test1')>Text</body>",
@@ -20,54 +21,27 @@ RSpec.describe VacanciesController, type: :controller do
           }
         end
 
-        it 'passes only safe values to VacancyAlgoliaSearchBuilder' do
-          expected_safe_values = {
-            'keyword' => 'Text',
-            'location' => ''
-          }
-
-          expect(VacancyAlgoliaSearchBuilder).to receive(:new)
-            .with(expected_safe_values)
-            .and_call_original
-
+        it 'passes only safe values to Algolia::VacancySearchBuilder' do
+          expect(Algolia::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
           subject
         end
       end
 
       context 'sort params' do
-        let(:params) do
-          {
-            jobs_sort: "<body onload=alert('test1')>Text</script>"
-          }
-        end
+        let(:expected_safe_values) { { jobs_sort: 'Text' } }
+        let(:params) { { jobs_sort: "<body onload=alert('test1')>Text</script>" } }
 
-        it 'passes sanitised params to VacancyAlgoliaSearchBuilder' do
-          expected_safe_values = {
-            'jobs_sort' => 'Text'
-          }
-
-          expect(VacancyAlgoliaSearchBuilder).to receive(:new)
-            .with(expected_safe_values)
-            .and_call_original
-
+        it 'passes sanitised params to Algolia::VacancySearchBuilder' do
+          expect(Algolia::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
           subject
         end
       end
 
       context 'search auditor' do
-        let(:params) do
-          {
-            keyword: 'Teacher'
-          }
-        end
+        let(:params) { { keyword: 'Teacher' } }
 
         it 'should call the search auditor' do
-          expect(AuditSearchEventJob).to receive(:perform_later).with(
-            hash_including(
-              keyword: 'Teacher'
-            )
-          )
-
+          expect(AuditSearchEventJob).to receive(:perform_later).with(hash_including(keyword: 'Teacher'))
           subject
         end
 
@@ -80,7 +54,6 @@ RSpec.describe VacanciesController, type: :controller do
 
         it 'should not call the search auditor if no search parameters are given' do
           expect(AuditSearchEventJob).to_not receive(:perform_later)
-
           get :index
         end
       end
@@ -98,7 +71,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'when parameters include the sort by newest listing option' do
         let(:sort) { 'publish_on_desc' }
 
-        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+        it 'sets the search replica on Algolia::VacancySearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
@@ -107,7 +80,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'when parameters include the sort by most time to apply option' do
         let(:sort) { 'expiry_time_desc' }
 
-        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+        it 'sets the search replica on Algolia::VacancySearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
@@ -116,7 +89,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'when parameters include the sort by least time to apply option' do
         let(:sort) { 'expiry_time_asc' }
 
-        it 'sets the search replica on VacancyAlgoliaSearchBuilder' do
+        it 'sets the search replica on Algolia::VacancySearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
@@ -131,7 +104,7 @@ RSpec.describe VacanciesController, type: :controller do
           }
         end
 
-        it 'sets the search replica on VacancyAlgoliaSearchBuilder to the default sort strategy: newest listing' do
+        it 'sets the search replica on Algolia::VacancySearchBuilder to the default sort strategy: newest listing' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql('Vacancy_publish_on_desc')
         end
@@ -199,14 +172,12 @@ RSpec.describe VacanciesController, type: :controller do
       it 'should call the track method if cookies not set' do
         expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
         expect(vacancy_page_view).to receive(:track)
-
         subject
       end
 
       it 'should not call the track method if smoke_test cookies set' do
         expect(VacancyPageView).not_to receive(:new).with(vacancy)
         cookies[:smoke_test] = '1'
-
         subject
       end
     end

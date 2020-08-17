@@ -148,13 +148,13 @@ RSpec.describe Subscription, type: :model do
     let(:algolia_search_args) do
       {
         filters: search_filter,
-        hitsPerPage: VacancyAlgoliaAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS
+        hitsPerPage: Algolia::VacancyAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS
       }
     end
 
     before do
       travel_to expired_now
-      allow_any_instance_of(VacancyAlgoliaAlertBuilder)
+      allow_any_instance_of(Algolia::VacancyFiltersBuilder)
         .to receive(:expired_now_filter)
         .and_return(expired_now.to_datetime.to_i)
       allow(vacancies).to receive(:count).and_return(10)
