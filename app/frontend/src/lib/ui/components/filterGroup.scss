@@ -6,6 +6,13 @@
   display: none;
 }
 
+.js-enabled .moj-filter .selected-filters__heading {
+
+  .govuk-link {
+    display: block;
+  }
+}
+
 .moj-filter-sidebar {
   &.moj-filter-sidebar__hidden {
     display: none;
@@ -62,6 +69,7 @@
     position: relative;
 
     .govuk-link {
+      display: none;
       font-weight: normal;
       position: absolute;
       right: 0;
@@ -74,6 +82,11 @@
 
     .moj-filter__tag {
       cursor: pointer;
+      border-radius: govuk-spacing(1);
+
+      .fa-close {
+        color: $govuk-link-colour;
+      }
     }
   }
 
