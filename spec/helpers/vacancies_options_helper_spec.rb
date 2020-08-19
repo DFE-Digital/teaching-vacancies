@@ -5,6 +5,7 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
     before do
       allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(:multi_school_jobs_enabled?)
     end
+    
     context 'when MultiSchoolJobsFeature is enabled' do
       let (:multi_school_jobs_enabled?) { true }
 
