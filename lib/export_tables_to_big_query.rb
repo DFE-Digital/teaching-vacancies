@@ -23,6 +23,7 @@ class ExportTablesToBigQuery
     geolocation
     gias_data
     job_summary
+    legacy_job_roles
     qualifications
     supporting_documents
   ].freeze
@@ -31,12 +32,13 @@ class ExportTablesToBigQuery
   ENUM_ATTRIBUTES = {
     'frequency' => :string,
     'hired_status' => :string,
+    'job_roles' => :string,
     'listed_elsewhere' => :string,
     'phase' => :string,
     'search_criteria' => :string,
     'status' => :string,
-    'visit_purpose' => :string,
     'user_participation_response' => :string,
+    'visit_purpose' => :string,
     'working_patterns' => :string,
   }.freeze
 
@@ -71,9 +73,9 @@ class ExportTablesToBigQuery
     tables.each do |table|
       bigquery_load(table.constantize)
     rescue StandardError => e
-      # If any table causes an uncaught error, no data from any table is sent.
-      # Therefore we should catch errors, skip the failing tables, and alert the
-      # team (devs + PA) to any failing tables.
+      # If any table causes an uncaught error, no data from any later table is sent.
+      # Catch errors and skip the failing tables
+      # TODO: alert the team (devs + PA) to any failing tables.
       Rails.logger.error({ bigquery_export: 'error', status: 'handled', table: table, message: e })
     end
     Rails.logger.info({ bigquery_export: 'finished' }.to_json)
