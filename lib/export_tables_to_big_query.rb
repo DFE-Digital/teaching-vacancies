@@ -71,7 +71,6 @@ class ExportTablesToBigQuery
     tables.each do |table|
       bigquery_load(table.constantize)
     rescue StandardError => e
-      binding.pry
       # If any table causes an uncaught error, no data from any table is sent.
       # Therefore we should catch errors, skip the failing tables, and alert the
       # team (devs + PA) to any failing tables.
