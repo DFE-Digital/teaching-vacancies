@@ -74,9 +74,8 @@ class ExportTablesToBigQuery
       bigquery_load(table.constantize)
     rescue StandardError => e
       # If any table causes an uncaught error, no data from any later table is sent.
-      # Therefore we should catch errors, skip the failing tables, and alert the
-      # team (devs + PA) to any failing tables.
-      # This handles the error catching, but not the alerting to the team.
+      # Catch errors and skip the failing tables
+      # TODO: alert the team (devs + PA) to any failing tables.
       Rails.logger.error({ bigquery_export: 'error', status: 'handled', table: table, message: e })
     end
     Rails.logger.info({ bigquery_export: 'finished' }.to_json)
