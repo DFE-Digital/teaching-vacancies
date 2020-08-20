@@ -6,7 +6,7 @@ FactoryBot.define do
     association :school_type
     association :region
 
-    address { Faker::Address.street_name }
+    address { Faker::Address.street_name.gsub("'", '') }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     easting { '1' }
