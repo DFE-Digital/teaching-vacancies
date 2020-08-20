@@ -22,8 +22,8 @@ provider cloudfoundry {
 }
 
 provider statuscake {
-  username = var.statuscake_username
-  apikey   = var.statuscake_apikey
+  username = local.infra_secrets.statuscake_username
+  apikey   = local.infra_secrets.statuscake_apikey
   version  = "~> 1.0.0"
 }
 
@@ -46,6 +46,7 @@ terraform {
   }
 }
 
+
 module cloudfront {
   source = "./modules/cloudfront"
 
@@ -53,7 +54,7 @@ module cloudfront {
   project_name                  = var.project_name
   cloudfront_origin_domain_name = var.cloudfront_origin_domain_name
   cloudfront_aliases            = var.cloudfront_aliases
-  cloudfront_certificate_arn    = var.cloudfront_certificate_arn
+  cloudfront_certificate_arn    = local.infra_secrets.cloudfront_certificate_arn
   offline_bucket_domain_name    = var.offline_bucket_domain_name
   offline_bucket_origin_path    = var.offline_bucket_origin_path
   domain                        = var.domain
@@ -64,20 +65,31 @@ module cloudwatch {
 
   environment       = terraform.workspace
   project_name      = var.project_name
-  slack_hook_url    = var.cloudwatch_slack_hook_url
+  slack_hook_url    = local.infra_secrets.cloudwatch_slack_hook_url
   slack_channel     = var.cloudwatch_slack_channel
-  ops_genie_api_key = var.cloudwatch_ops_genie_api_key
+  ops_genie_api_key = local.infra_secrets.cloudwatch_ops_genie_api_key
 }
 
 module paas {
   source = "./modules/paas"
 
-  environment           = terraform.workspace
-  project_name          = var.project_name
-  papertrail_url        = var.papertrail_url
-  postgres_service_plan = var.paas_postgres_service_plan
-  redis_service_plan    = var.paas_redis_service_plan
-  space_name            = var.paas_space_name
+  environment                    = terraform.workspace
+  app_docker_image               = var.paas_app_docker_image
+  app_env_values                 = local.paas_app_env_values
+  app_start_timeout              = var.paas_app_start_timeout
+  app_stopped                    = var.paas_app_stopped
+  papertrail_url                 = local.infra_secrets.papertrail_url
+  parameter_store_environment    = var.parameter_store_environment
+  project_name                   = var.project_name
+  postgres_service_plan          = var.paas_postgres_service_plan
+  redis_service_plan             = var.paas_redis_service_plan
+  space_name                     = var.paas_space_name
+  web_app_deployment_strategy    = var.paas_web_app_deployment_strategy
+  web_app_instances              = var.paas_web_app_instances
+  web_app_memory                 = var.paas_web_app_memory
+  worker_app_deployment_strategy = var.paas_worker_app_deployment_strategy
+  worker_app_instances           = var.paas_worker_app_instances
+  worker_app_memory              = var.paas_worker_app_memory
 }
 
 module statuscake {

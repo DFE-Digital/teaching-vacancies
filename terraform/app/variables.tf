@@ -7,9 +7,6 @@ variable region {
 }
 
 # CloudFront
-variable cloudfront_certificate_arn {
-  description = "Create and verify a certificate through AWS Certificate Manager to acquire this"
-}
 
 variable cloudfront_aliases {
   description = "Match this value to the alias associated with the cloudfront_certificate_arn, eg. tvs.staging.dxw.net"
@@ -30,16 +27,8 @@ variable cloudfront_origin_domain_name {
 }
 
 # Cloudwatch
-variable cloudwatch_slack_hook_url {
-  description = "The slack hook that cloudwatch alarms are sent to"
-}
-
 variable cloudwatch_slack_channel {
   description = "The slack channel that cloudwatch alarms are sent to"
-}
-
-variable cloudwatch_ops_genie_api_key {
-  description = "The ops genie api key for sending alerts to ops genie"
 }
 
 # Gov.UK PaaS
@@ -48,6 +37,20 @@ variable paas_api_url {
 
 variable paas_password {
   default = ""
+}
+
+variable paas_app_docker_image {}
+
+variable paas_app_start_timeout {
+  default = 300
+}
+
+variable paas_app_stopped {
+  default = false
+}
+
+variable parameter_store_environment {
+  default = "dev"
 }
 
 variable paas_postgres_service_plan {
@@ -73,18 +76,31 @@ variable paas_user {
   default = ""
 }
 
-variable papertrail_url {
+variable paas_web_app_deployment_strategy {
+  default = "blue-green-v2"
+}
+
+variable paas_web_app_instances {
+  default = 1
+}
+
+variable paas_web_app_memory {
+  default = 512
+}
+
+variable paas_worker_app_deployment_strategy {
+  default = "blue-green-v2"
+}
+
+variable paas_worker_app_instances {
+  default = 1
+}
+
+variable paas_worker_app_memory {
+  default = 512
 }
 
 # Statuscake
-variable statuscake_username {
-  description = "The Statuscake username"
-}
-
-variable statuscake_apikey {
-  description = "The Statuscake API key"
-}
-
 variable statuscake_alerts {
   description = "Define Statuscake alerts with the attributes below"
   type = map(object({
@@ -98,4 +114,9 @@ variable statuscake_alerts {
     status_codes  = string
   }))
   default = {}
+}
+
+locals {
+  paas_app_env_values = yamldecode(file("${path.module}/../workspace-variables/${var.parameter_store_environment}_app_env.yml"))
+  infra_secrets       = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
 }
