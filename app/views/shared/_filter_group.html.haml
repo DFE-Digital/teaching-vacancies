@@ -13,7 +13,7 @@
 
 - if filters.present?
   .moj-filter
-    .moj-filter__header
+    %div{ class: "#{filters[:closeAll] ? 'selected-filters__heading--close-all' : 'moj-filter__header'}" }
       .selected-filters__heading
         %span.moj-filter__heading-title
           %h2.govuk-heading-s
@@ -32,8 +32,9 @@
               = t('shared.filter_group.clear_all_filters')
 
           - filters[:items].each do |group|
-            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
-              = group[:title]
+            - if group[:selected].count > 0
+              .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
+                = group[:title]
 
             %ul.moj-filter-tags
               - group[:options].each do |tag|

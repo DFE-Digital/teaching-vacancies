@@ -218,15 +218,31 @@ describe('filterGroup', () => {
 
   describe('closeAllSectionsHandler', () => {
     test('removes the class selector from all filter groups that makes them visible', () => {
-      document.body.innerHTML = '<div class="govuk-accordion__section"></div><div class="govuk-accordion__section"></div><div class="govuk-accordion__section"></div>';
+      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section"></div>`;
 
-      const event = { preventDefault: jest.fn() };
+      const event = { preventDefault: jest.fn(), target: { innerText: 'Close all' } };
       const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
 
       closeAllSectionsHandler(event);
 
       expect(dontFollowLinkMock).toHaveBeenCalled();
       expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(0);
+    });
+
+    test('adds the class selector from all filter groups that makes them visible', () => {
+      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section"></div>`;
+
+      const event = { preventDefault: jest.fn(), target: { innerText: 'Open all' } };
+      const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
+
+      closeAllSectionsHandler(event);
+
+      expect(dontFollowLinkMock).toHaveBeenCalled();
+      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(3);
     });
   });
 });

@@ -28,7 +28,16 @@
 .moj-filter {
   box-shadow: none;
 
-  .moj-filter__selected .govuk-link {
+  .selected-filters__heading--close-all {
+    border-bottom: 2px solid $govuk-border-colour;
+    margin-bottom: govuk-spacing(2);
+
+    .govuk-heading-s {
+      margin-bottom: govuk-spacing(2);
+    }
+  }
+
+  .selected-filters__heading .govuk-link {
     border: none;
     background: none;
     color: $govuk-link-colour;
@@ -64,7 +73,7 @@
       font-weight: normal;
     }
   }
-  
+
   .selected-filters__heading {
     position: relative;
 
