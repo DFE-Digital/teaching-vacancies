@@ -19,8 +19,8 @@
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
       = f.govuk_collection_radio_buttons :job_location,
-        Vacancy::JOB_LOCATION_OPTIONS,
-        :second,
+        job_location_options,
+        :last,
         :first,
         legend: { text: t('helpers.fieldset.job_location_form.job_location_html') }
 
