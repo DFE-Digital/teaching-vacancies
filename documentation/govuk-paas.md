@@ -11,6 +11,9 @@ brew install cloudfoundry/tap/cf7-cli
 ```
 
 ## Set environment variables
+
+See "Environment variables" in the README to fetch the required variables for each environment.
+
 We recommend something like [`direnv`](/documentation/direnv.md) to load environment variables scoped into the folder
 
 ```bash
@@ -84,23 +87,18 @@ cf7 env <app_name>
 
 ## Set environment variable
 
-Set all the variables defined in `.env.example`. There are scripts to facilitate that in the Git repository on Keybase.
+Environment variables are stored in AWS SSM Parameter store and in the repository. Terraform sets them automatically when it deploys the applications to paas.
 
-Update the script `set- <your environment> -govuk-paas-env.sh` with the correct variables, and then run it. For example:
-
-```bash
-./set-dev-govuk-paas-env.sh
-```
-
-Remember to restart the app, using `--strategy rolling` if you wish to avoid downtime. In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
-```bash
-cf7 restart <app_name> --strategy rolling
-```
-
-You can also set an individual variable directly:
+Should you wish to override an individual variable directly:
 
 ```bash
 cf7 set-env <app_name> ENV_VAR_NAME env_var_value
+cf7 restart <app_name> --strategy rolling
+```
+
+Remember to restart the app, using `--strategy rolling` if you wish to avoid downtime.
+In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
+```bash
 cf7 restart <app_name> --strategy rolling
 ```
 
@@ -125,18 +123,19 @@ cf7 run-task <app_name> -c "rails task:name"
 This builds and deploys a Docker image from local code.
 
 ```bash
-make <PaaS-space> deploy-local-image
+passcode=<passcode> make <environment> deploy-local-image
 ```
 performs these steps:
 
 - Builds and tags a Docker image from local code
 - Pushes the image to Docker Hub
-- Deploys the Docker image to PaaS
+- Runs terraform to deploy the docker image
 
 You need:
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
 - `SpaceDeveloper` role in the paas space you want to deploy to
 - Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
+- Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
 
 ```bash
 make dev deploy-local-image # Deploy to dev
@@ -154,57 +153,10 @@ The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch
 - Deploys the Docker image to PaaS
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
-
 ## CI/CD with GitHub Actions
 Tests run every time is pushed on a branch.
 
 When a PR is approved and merged into `master` branch an automatic deploy is triggered to `production` environment.
-
-## Set up environment on GOV.UK PaaS
-
-### Create services
-All the services are specified in the `manifest.yml` file and are automatically bound on deploy.
-
-```
-teaching-vacancies-dev -> manifest-dev.yml
-teaching-vacancies-staging -> manifest-staging.yml
-teaching-vacancies-production -> manifest-production.yml
-```
-Make sure you are logged in the relevant space.
-
-#### Postgres
-- dev
-  ```bash
-  cf7 create-service postgres tiny-unencrypted-11 teaching-vacancies-postgres-dev -c '{"enable_extensions": ["pgcrypto", "fuzzystrmatch", "plpgsql"]}'
-  ```
-- staging
-  ```bash
-  cf7 create-service postgres tiny-unencrypted-11 teaching-vacancies-postgres-staging -c '{"enable_extensions": ["pgcrypto", "fuzzystrmatch", "plpgsql"]}'
-  ```
-- production
-  ```bash
-  cf7 create-service postgres medium-ha-11 teaching-vacancies-postgres-production -c '{"enable_extensions": ["pgcrypto", "fuzzystrmatch", "plpgsql"]}'
-  ```
-
-#### Redis
-- dev
-  ```bash
-  cf7 create-service redis tiny-4.x teaching-vacancies-redis-dev
-  ```
-- staging
-  ```bash
-  cf7 create-service redis tiny-4.x teaching-vacancies-redis-staging
-  ```
-- production
-  ```bash
-  cf7 create-service redis small-ha-4.x teaching-vacancies-redis-production
-  ```
-
-#### Papertrail
-Get log destination from Papertrail
-```bash
-cf7 create-user-provided-service teaching-vacancies-papertrail-(dev|staging|production) -l syslog-tls://logsX.papertrailapp.com:XXXXX
-```
 
 ## Backup/Restore GOV.UK PaaS Postgres service database
 Install Conduit plugin
@@ -221,3 +173,21 @@ cf7 conduit $CF_POSTGRES_SERVICE_ORIGIN -- pg_dump -x --no-owner -c -f backup.sq
 ```bash
 cf7 conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
 ```
+
+## Set up a new environment
+- Create file `terraform/workspace-variables/<env>.tfvars`
+- Create file `terraform/workspace-variables/<env>_app_env.yml`
+- Create SSM parameters of type `SecureString`:
+  - `/tvs/<env>/app/BIG_QUERY_API_JSON_KEY`
+  - `/tvs/<env>/app/CLOUD_STORAGE_API_JSON_KEY`
+  - `/tvs/<env>/app/GOOGLE_API_JSON_KEY`
+  - `/tvs/<env>/app/secrets`
+  - `/tvs/<env>/infra/secrets`
+- Run:
+  ```shell
+  export TF_VAR_paas_sso_passcode=<passcode obtained from https://login.london.cloud.service.gov.uk/passcode>
+  export TF_WORKSPACE=<env>
+  export TF_VAR_paas_app_docker_image=dfedigital/teaching-vacancies:<tag>
+  terraform init terraform/app
+  terraform apply -var-file terraform/workspace-variables/<env>.tfvars terraform/app
+  ```
