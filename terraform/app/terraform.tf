@@ -36,7 +36,7 @@ Store infrastructure state in a remote store (instead of local machine):
 https://www.terraform.io/docs/state/purpose.html
 */
 terraform {
-  required_version = ">= 0.12.6"
+  required_version = ">= 0.12.29"
 
   backend "s3" {
     bucket  = "terraform-state-002"
