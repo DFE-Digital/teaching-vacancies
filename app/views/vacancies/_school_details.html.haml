@@ -2,9 +2,9 @@
   %dt= t('schools.address')
   %dd= full_address(@vacancy.organisation)
 
-  - if @vacancy.organisation.phase.present?
+  - if school_phase(@vacancy.organisation).present?
     %dt= t('schools.phase')
-    %dd= @vacancy.organisation.phase.titleize
+    %dd= school_phase(@vacancy.organisation)
 
   - if @vacancy.organisation.school_type.present?
     %dt= t('schools.type')

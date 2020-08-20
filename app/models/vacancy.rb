@@ -144,6 +144,7 @@ class Vacancy < ApplicationRecord
         detailed_school_type: (organisation.detailed_school_type&.label if organisation.is_a?(School)),
         local_authority: organisation.local_authority,
         phase: organisation.phase,
+        readable_phases: organisation.readable_phases,
         religious_character: (organisation.religious_character if organisation.is_a?(School)),
         region: (organisation.region&.name if organisation.is_a?(School)),
         school_type: (organisation.school_type&.label&.singularize if organisation.is_a?(School)),
@@ -164,7 +165,7 @@ class Vacancy < ApplicationRecord
 
     geoloc :lat, :lng
 
-    attributesForFaceting [:job_roles, :working_patterns, 'school.phase', :listing_status]
+    attributesForFaceting [:job_roles, :working_patterns, 'school.readable_phases', :listing_status]
 
     add_replica 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']

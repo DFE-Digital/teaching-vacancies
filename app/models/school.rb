@@ -25,6 +25,17 @@ class School < Organisation
     all_through: 7,
   }
 
+  READABLE_PHASE_MAPPINGS = {
+    not_applicable: [],
+    nursery: ['primary'],
+    primary: ['primary'],
+    middle_deemed_primary: ['middle'],
+    middle_deemed_secondary: ['middle'],
+    secondary: ['secondary'],
+    sixteen_plus: ['16-19'],
+    all_through: ['primary', 'secondary', '16-19']
+  }.freeze
+
   def easting=(easting)
     self[:easting] = easting
     set_geolocation_from_easting_and_northing

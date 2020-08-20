@@ -42,7 +42,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   end
 
   it 'renders the education phase' do
-    expect(rendered_component).to include(vacancy.organisation.phase.titleize)
+    expect(rendered_component).to include(school_phase(vacancy.organisation))
   end
 
   context 'when the number of pupils is present' do
