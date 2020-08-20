@@ -1,31 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe VacanciesHelper, type: :helper do
-  describe '#working_pattern_options' do
-    it 'returns an array of vacancy working patterns' do
-      expect(helper.working_pattern_options).to eq(
-        [
-          ['Full-time', 'full_time'],
-          ['Part-time', 'part_time'],
-          ['Job share', 'job_share']
-        ]
-      )
-    end
-  end
-
-  describe '#job_sorting_options' do
-    it 'returns an array of vacancy job sorting options' do
-      expect(helper.job_sorting_options).to eq(
-        [
-          [I18n.t('jobs.sort_by.most_relevant'), ''],
-          [I18n.t('jobs.sort_by.publish_on.descending'), 'publish_on_desc'],
-          [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
-          [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
-        ]
-      )
-    end
-  end
-
   describe '#new_sections' do
     let(:vacancy) { double('vacancy').as_null_object }
 
