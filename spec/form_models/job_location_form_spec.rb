@@ -15,17 +15,6 @@ RSpec.describe JobLocationForm, type: :model do
           )
         end
       end
-
-      context 'when job location has an unexpected value' do
-        let(:job_location) { 'at_the_supermarket' }
-
-        it 'requests an entry in the field' do
-          expect(job_location_form.valid?).to be false
-          expect(job_location_form.errors.messages[:job_location]).to include(
-            I18n.t('activemodel.errors.models.job_location_form.attributes.job_location.inclusion')
-          )
-        end
-      end
     end
   end
 
