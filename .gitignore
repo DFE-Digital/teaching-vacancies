@@ -51,7 +51,6 @@ terraform.tfstate.d/
 ./*.tfstate
 .terraform/
 .terraform.tfstate.lock.info
-*.tfvars
 tokens
 
 # ENV files
