@@ -3,9 +3,9 @@ import 'classlist-polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 
-window.addEventListener('DOMContentLoaded', () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups'));
+window.addEventListener('DOMContentLoaded', () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button'));
 
-export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector) => {
+export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector) => {
   Array.from(document.getElementsByClassName(removeButtonSelector)).map((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
 
   const clearButton = document.getElementById(clearButtonSelector);
@@ -38,6 +38,18 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
       }
     });
   }
+
+  const mobileFiltersButton = document.getElementById(mobileFiltersButtonSelector);
+
+  if (mobileFiltersButton) {
+    mobileFiltersButton.addEventListener('click', () => {
+      Array.from(document.getElementsByClassName('filters--hide-mobile')).map((element) => showMobileFilters(element));
+    });
+  }
+};
+
+export const showMobileFilters = (element) => {
+  element.classList.toggle('filters--show-mobile');
 };
 
 export const closeAllSectionsHandler = (e) => {

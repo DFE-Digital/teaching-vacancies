@@ -3,7 +3,7 @@
     .govuk-grid-column-one-quarter
       = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
         = render 'shared/filter_group', f: f,
-          filters: { title: 'Job Filters', removeButtons: true, totalCount: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @school_options, value_method: :id, text_method: :name, small: true }] }
+          filters: { title: 'Job Filters', remove_buttons: true, total_count: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @school_options, value_method: :id, text_method: :name, small: true }] }
 
         = f.hidden_field :jobs_type, value: @selected_type
 

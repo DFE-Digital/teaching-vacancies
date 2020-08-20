@@ -34,6 +34,7 @@ describe('filterGroup', () => {
       const addRemoveAllFiltersEventMock = jest.spyOn(filterGroup, 'addRemoveAllFiltersEvent');
 
       document.body.innerHTML = `<div>
+<h2 id="mobile-filters-button"></h2>
 <button class="moj-filter__tag">remove</button>
 <button class="moj-filter__tag">remove</button>
 <button id="clear-filters-button">remove</button>
@@ -42,7 +43,7 @@ describe('filterGroup', () => {
 <div class="filter-group__container"></div>
 <div class="filter-group__container"></div>`;
 
-      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups');
+      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups, mobile-filters-button');
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
