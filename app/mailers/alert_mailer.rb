@@ -6,7 +6,7 @@ class AlertMailer < ApplicationMailer
     @subscription = Subscription.find(subscription_id)
     vacancies = Vacancy.where(id: vacancy_ids).order(:expires_on).order(:expiry_time)
 
-    @vacancies = VacanciesPresenter.new(vacancies, searched: false, total_count: vacancies.count)
+    @vacancies = VacanciesPresenter.new(vacancies)
 
     subject_key =
       if @vacancies.many?

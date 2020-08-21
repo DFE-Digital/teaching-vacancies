@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe SubscriptionPresenter do
   let(:presenter) { described_class.new(subscription) }
   let(:subscription) { Subscription.new(search_criteria: search_criteria.to_json, reference: reference) }
@@ -43,7 +44,7 @@ RSpec.describe SubscriptionPresenter do
       let(:search_criteria) { { phases: ['secondary', 'sixteen_plus'] } }
 
       it 'formats and returns the phases' do
-        expect(presenter.filtered_search_criteria['phases']).to eq('Secondary, Sixteen plus')
+        expect(presenter.filtered_search_criteria['education_phases']).to eq('Secondary, 16+')
       end
     end
 
@@ -74,7 +75,7 @@ RSpec.describe SubscriptionPresenter do
           'subject' => 'maths',
           'job_title' => 'leader',
           'working_patterns' => 'Part-time',
-          'phases' => 'Secondary, Sixteen plus',
+          'education_phases' => 'Secondary, 16+',
           '' => 'Suitable for NQTs'
         )
       end

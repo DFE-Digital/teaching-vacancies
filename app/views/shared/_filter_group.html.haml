@@ -3,9 +3,10 @@
 -# = render 'shared/filter_group', f: <FormBuilder form>,
 -#   filters: {
 -#     title: <String>,
--#     removeButtons: <Boolean>,
--#     totalCount: <Integer>,
--#     closeAll: <Boolean>,
+-#     remove_buttons: <Boolean>,
+-#     total_count: <Integer>,
+-#     close_all: <Boolean>,
+-#     mobile: <Boolean>,
 -#     :items => [
 -#       { :options => <Array>, :title => <String>, :search => <Boolean>, :key => <String> }
 -#     ]
@@ -13,17 +14,17 @@
 
 - if filters.present?
   .moj-filter
-    .moj-filter__header
-      .selected-filters__heading
+    %div{ class: "#{filters[:close_all] ? 'selected-filters__heading--close-all' : 'moj-filter__header'}" }
+      .selected-filters__heading{ class: "#{filters[:mobile] ? 'selected-filters__heading--mobile' : ''}" }
         %span.moj-filter__heading-title
-          %h2.govuk-heading-s
+          %h2.govuk-heading-s{ class: "#{filters[:mobile] ? 'filter-results__heading--mobile' : ''}", id: "#{filters[:mobile] ? 'mobile-filters-button' : ''}" }
             = filters[:title]
-        - if filters[:closeAll]
-          %button.govuk-link.govuk-link--no-visited-state{ id: 'close-all-groups' }
+        - if filters[:close_all]
+          %button.govuk-link.govuk-link--no-visited-state{ id: 'close-all-groups', class: "#{filters[:mobile] ? 'filters--hide-mobile' : ''}" }
             = t('shared.filter_group.close_all_filter_groups')
 
-    - if filters[:totalCount] > 0 && filters[:removeButtons]
-      .moj-filter__content
+    - if filters[:total_count] > 0 && filters[:remove_buttons]
+      .moj-filter__content{ class: "#{filters[:mobile] ? 'filters--hide-mobile' : ''}" }
         .moj-filter__selected
           .selected-filters__heading{ class: 'govuk-!-margin-bottom-2' }
             .govuk-body{ class: 'govuk-!-margin-bottom-0' }
@@ -32,22 +33,23 @@
               = t('shared.filter_group.clear_all_filters')
 
           - filters[:items].each do |group|
-            .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
-              = group[:title]
+            - if group[:selected].count > 0
+              .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
+                = group[:title]
 
             %ul.moj-filter-tags
               - group[:options].each do |tag|
-                - if group[:selected].include? tag.id
+                - if group[:selected].include? tag.send(group[:value_method])
                   %li
-                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.id } }
+                    %button.moj-filter__tag{ data: { group: group[:key], key: tag.send(group[:value_method]) } }
                       %i.fa.fa-close
                       %span.govuk-visually-hidden
                         = t('shared.filter_group.remove_filter_hidden')
-                      = tag.name
+                      = tag.send(group[:text_method])
 
 = f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-submit"
 
-.accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion" } }
+.accordion-group.govuk-accordion{ id: 'accordion-default', data: { module: "govuk-accordion" }, class: "#{filters[:mobile] ? 'filters--hide-mobile' : ''}" }
 
   - filters[:items].each_with_index do |group, index|
     .govuk-accordion__section.accordion-content__group.filter-group__container

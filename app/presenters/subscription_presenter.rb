@@ -49,6 +49,7 @@ class SubscriptionPresenter < BasePresenter
     return render_location_filter(
       search_criteria_to_h['location_category'], value, search_criteria_to_h['radius']
     ) if field.eql?('location')
+    return render_job_roles_filter(value) if field.eql?('job_roles')
     return render_working_patterns_filter(value) if field.eql?('working_patterns')
     return render_phases_filter(value) if field.eql?('phases')
     return render_nqt_filter(value) if field.eql?('newly_qualified_teacher')
@@ -64,12 +65,16 @@ class SubscriptionPresenter < BasePresenter
     return { location: I18n.t('subscriptions.location_radius_text', radius: radius, location: location) } if radius
   end
 
+  def render_job_roles_filter(value)
+    { job_roles: value.map { |role| I18n.t("jobs.job_role_options.#{role}") }.join(', ') }
+  end
+
   def render_working_patterns_filter(value)
-    { working_patterns: value.map(&:humanize).join(', ').gsub(/Part time/, 'Part-time').gsub(/Full time/, 'Full-time') }
+    { working_patterns: value.map { |role| I18n.t("jobs.working_pattern_options.#{role}") }.join(', ') }
   end
 
   def render_phases_filter(value)
-    { phases: value.map(&:humanize).join(', ') }
+    { education_phases: value.map { |role| I18n.t("jobs.school_phase_options.#{role}") }.join(', ') }
   end
 
   def render_nqt_filter(value)

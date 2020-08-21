@@ -3,12 +3,11 @@
   = content_for :page_description,  t('jobs.location_description', location: format_location_name(@vacancies_search.location_search.location_category))
 - else
   = content_for :page_title_prefix, t('jobs.heading')
-= render partial: 'head_links'
+= render 'head_links'
 
-%h1#job-count{ class: 'govuk-!-margin-bottom-2 govuk-heading-xl govuk-!-font-weight-regular', role: 'heading', 'aria-level': '1' }
-  = raw @vacancies.search_heading(location: @vacancies_search.location_search.location, keyword: @vacancies_search.keyword)
-- if @vacancies.user_search?
-  = render(partial: 'subscribe_link', locals: { search_criteria: @vacancies_search.only_active_to_hash }) if EmailAlertsFeature.enabled? && !ReadOnlyFeature.enabled?
+= render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
+= render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search))
+
 .govuk-grid-row{ class: 'govuk-!-margin-top-9' }
   .govuk-grid-column-one-third
     = render 'filters'
@@ -22,7 +21,7 @@
           - @vacancies.each do |vacancy|
             = render(Jobseekers::VacancySummaryComponent.new(vacancy: vacancy))
 
-      - elsif @vacancies.user_search?
+      - elsif @vacancies_search.any?
         .divider-bottom
           %p.govuk-heading-m
             = t('jobs.no_jobs.intro')

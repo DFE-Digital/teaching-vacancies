@@ -10,7 +10,7 @@ class Api::VacanciesController < Api::ApplicationController
                      .page(page_number)
                      .per(MAX_API_RESULTS_PER_PAGE)
                      .order(publish_on: :desc)
-    @vacancies = VacanciesPresenter.new(records, searched: false, total_count: records.count)
+    @vacancies = VacanciesPresenter.new(records)
 
     respond_to do |format|
       format.json

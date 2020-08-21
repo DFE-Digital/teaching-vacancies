@@ -47,6 +47,14 @@ class ApplicationController < ActionController::Base
     session.to_h['session_id']
   end
 
+  def strip_empty_checkboxes(form_key, fields)
+    if params[form_key].present?
+      fields.each do |field|
+        params[form_key][field] = params[form_key][field]&.reject(&:blank?)
+      end
+    end
+  end
+
   private
 
   def http_user
