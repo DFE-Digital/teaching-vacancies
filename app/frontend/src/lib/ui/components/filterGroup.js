@@ -2,6 +2,8 @@ import '../../polyfill/closest.polyfill';
 import 'classlist-polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
+export const CLOSE_ALL_TEXT = 'Close all';
+export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener('DOMContentLoaded', () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button'));
 
@@ -16,12 +18,8 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
 
   if (document.getElementById(closeButtonSelector)) {
-    if (document.getElementById(closeButtonSelector).innerText === 'Close all' && document.getElementsByClassName('govuk-accordion__section--expanded').length === 0) {
-      document.getElementById(closeButtonSelector).innerText = 'Open all';
-    } else if (document.getElementById(closeButtonSelector).innerText === 'Open all' && document.getElementsByClassName('govuk-accordion__section--expanded').length > 0) {
-      document.getElementById(closeButtonSelector).innerText = 'Close all';
-    }
-    document.getElementById(closeButtonSelector).addEventListener('click', closeAllSectionsHandler);
+    displayOpenOrCloseText(document.getElementById(closeButtonSelector), document.getElementsByClassName('govuk-accordion__section--expanded').length);
+    document.getElementById(closeButtonSelector).addEventListener('click', openOrCloseAllSectionsHandler);
   }
 
   const toggleButton = document.getElementById('toggle-filters-sidebar');
@@ -39,27 +37,33 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
     });
   }
 
-  const mobileFiltersButton = document.getElementById(mobileFiltersButtonSelector);
-
-  if (mobileFiltersButton) {
-    mobileFiltersButton.addEventListener('click', () => {
-      Array.from(document.getElementsByClassName('filters--hide-mobile')).map((element) => showMobileFilters(element));
+  if (document.getElementById(mobileFiltersButtonSelector)) {
+    document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
+      Array.from(document.getElementsByClassName('filters--hide-mobile')).map((element) => element.classList.toggle('filters--show-mobile'));
     });
   }
 };
 
-export const showMobileFilters = (element) => {
-  element.classList.toggle('filters--show-mobile');
+export const displayOpenOrCloseText = (targetElement, expandedElements) => {
+  if (expandedElements === 0) {
+    targetElement.innerText = OPEN_ALL_TEXT;
+  } else if (expandedElements > 0) {
+    targetElement.innerText = CLOSE_ALL_TEXT;
+  }
 };
 
-export const closeAllSectionsHandler = (e) => {
+export const openOrCloseAllSectionsHandler = (e) => {
   e.preventDefault();
-  if (e.target.innerText === 'Close all') {
+  openOrCloseAllSections(e.target);
+};
+
+export const openOrCloseAllSections = (targetElement) => {
+  if (targetElement.innerText === CLOSE_ALL_TEXT) {
     Array.from(document.getElementsByClassName('govuk-accordion__section')).map((section) => section.classList.remove('govuk-accordion__section--expanded'));
-    e.target.innerText = 'Open all';
-  } else if (e.target.innerText === 'Open all') {
+    targetElement.innerText = OPEN_ALL_TEXT;
+  } else if (targetElement.innerText === OPEN_ALL_TEXT) {
     Array.from(document.getElementsByClassName('govuk-accordion__section')).map((section) => section.classList.add('govuk-accordion__section--expanded'));
-    e.target.innerText = 'Close all';
+    targetElement.innerText = CLOSE_ALL_TEXT;
   }
 };
 

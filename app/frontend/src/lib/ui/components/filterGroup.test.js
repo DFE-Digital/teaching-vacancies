@@ -11,9 +11,13 @@ import filterGroup, {
   getFilterGroups,
   addFilterChangeEvent,
   getSubmitButton,
-  closeAllSectionsHandler,
+  displayOpenOrCloseText,
+  openOrCloseAllSectionsHandler,
+  openOrCloseAllSections,
   filterChangeHandler,
   CHECKBOX_CLASS_SELECTOR,
+  CLOSE_ALL_TEXT,
+  OPEN_ALL_TEXT,
 } from './filterGroup';
 
 describe('filterGroup', () => {
@@ -217,16 +221,16 @@ describe('filterGroup', () => {
     });
   });
 
-  describe('closeAllSectionsHandler', () => {
+  describe('openOrCloseAllSectionsHandler', () => {
     test('removes the class selector from all filter groups that makes them visible', () => {
       document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
       <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
       <div class="govuk-accordion__section"></div>`;
 
-      const event = { preventDefault: jest.fn(), target: { innerText: 'Close all' } };
+      const event = { preventDefault: jest.fn(), target: { innerText: CLOSE_ALL_TEXT } };
       const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
 
-      closeAllSectionsHandler(event);
+      openOrCloseAllSectionsHandler(event);
 
       expect(dontFollowLinkMock).toHaveBeenCalled();
       expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(0);
@@ -237,12 +241,54 @@ describe('filterGroup', () => {
       <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
       <div class="govuk-accordion__section"></div>`;
 
-      const event = { preventDefault: jest.fn(), target: { innerText: 'Open all' } };
+      const event = { preventDefault: jest.fn(), target: { innerText: OPEN_ALL_TEXT } };
       const dontFollowLinkMock = jest.spyOn(event, 'preventDefault');
 
-      closeAllSectionsHandler(event);
+      openOrCloseAllSectionsHandler(event);
 
       expect(dontFollowLinkMock).toHaveBeenCalled();
+      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(3);
+    });
+  });
+
+  describe('displayOpenOrCloseText', () => {
+    test('displays open text when all elements are closed', () => {
+      const targetElement = { innerText: CLOSE_ALL_TEXT };
+      const expandedElements = 0;
+
+      displayOpenOrCloseText(targetElement, expandedElements);
+      expect(targetElement.innerText).toEqual(OPEN_ALL_TEXT);
+    });
+
+    test('displays close text when not all elements are closed', () => {
+      const targetElement = { innerText: OPEN_ALL_TEXT };
+      const expandedElements = 2;
+
+      displayOpenOrCloseText(targetElement, expandedElements);
+      expect(targetElement.innerText).toEqual(CLOSE_ALL_TEXT);
+    });
+  });
+
+  describe('openOrCloseAllSections', () => {
+    test('closes all elements when called', () => {
+      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section"></div>`;
+      const targetElement = { innerText: CLOSE_ALL_TEXT };
+
+      openOrCloseAllSections(targetElement);
+      expect(targetElement.innerText).toEqual(OPEN_ALL_TEXT);
+      expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(0);
+    });
+
+    test('opens all elements when called', () => {
+      document.body.innerHTML = `<div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section govuk-accordion__section--expanded"></div>
+      <div class="govuk-accordion__section"></div>`;
+      const targetElement = { innerText: OPEN_ALL_TEXT };
+
+      openOrCloseAllSections(targetElement);
+      expect(targetElement.innerText).toEqual(CLOSE_ALL_TEXT);
       expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(3);
     });
   });
