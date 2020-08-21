@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_105100) do
+ActiveRecord::Schema.define(version: 2020_08_18_111239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_105100) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
+  
   create_table "activities", force: :cascade do |t|
     t.uuid "trackable_id"
     t.string "trackable_type"
@@ -305,7 +305,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_105100) do
     t.text "how_to_apply"
     t.boolean "initially_indexed", default: false
     t.uuid "school_group_id"
-    t.string "job_location"
+    t.integer "job_location"
     t.string "readable_job_location"
     t.string "suitable_for_nqt"
     t.integer "job_roles", array: true

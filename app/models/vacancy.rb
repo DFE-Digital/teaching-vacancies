@@ -24,10 +24,11 @@ class Vacancy < ApplicationRecord
     [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
   ]
 
-  JOB_LOCATION_OPTIONS = [
-    [I18n.t('helpers.fieldset.job_location_form.job_location_options.at_one_school'), 'at_one_school'],
-    [I18n.t('helpers.fieldset.job_location_form.job_location_options.central_office'), 'central_office']
-  ]
+  JOB_LOCATION_OPTIONS = {
+    at_one_school: 0,
+    at_multiple_schools: 1,
+    central_office: 2,
+  }.freeze
 
   include ApplicationHelper
   include Auditor::Model
@@ -195,6 +196,7 @@ class Vacancy < ApplicationRecord
   friendly_id :slug_candidates, use: %w[slugged history]
 
   enum status: { published: 0, draft: 1, trashed: 2 }
+  enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
   array_enum job_roles: JOB_ROLE_OPTIONS
   array_enum working_patterns: WORKING_PATTERN_OPTIONS
   enum listed_elsewhere: {
