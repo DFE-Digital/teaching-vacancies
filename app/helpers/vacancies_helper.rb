@@ -42,15 +42,26 @@ module VacanciesHelper
 
   def page_title(vacancy)
     return I18n.t('jobs.copy_job_title', job_title: vacancy.job_title) if vacancy.state == 'copy'
-    return I18n.t('jobs.create_a_job_title', organisation: vacancy.school_or_school_group&.name.presence || '') if
+    return I18n.t('jobs.create_a_job_title', organisation: page_title_job_location(vacancy.location)) if
       %w(create review).include?(vacancy.state)
     I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
   end
 
+  def page_title_job_location(location)
+    binding.pry
+    if location == 'at_one_school'
+      vacancy.school_or_school_group&.name.presence
+    elsif location == 'central_office'
+      vacancy.school_or_school_group&.name.presence
+    else
+      'multiple schools'
+    end
+  end
+
   def page_title_no_vacancy
-    return I18n.t('jobs.create_a_job_title', organisation: session[:vacancy_attributes]['readable_job_location']) if
-      session[:vacancy_attributes].present? && session[:vacancy_attributes]['school_id'].present? &&
-      session[:vacancy_attributes]['job_location'] == 'at_one_school'
+    binding.pry
+    return I18n.t('jobs.create_a_job_title', organisation: page_title_job_location(session[:vacancy_attributes]['job_location'])) if
+      session[:vacancy_attributes].present? && (session[:vacancy_attributes]['school_id'].present? || session[:vacancy_attributes]['job_location'] == 'at_multiple_schools')
     I18n.t('jobs.create_a_job_title', organisation: current_organisation.name)
   end
 

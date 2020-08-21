@@ -50,7 +50,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     vacancy_id = @vacancy&.persisted? ? @vacancy.id : session_vacancy_id
     if @form.job_location == 'at_one_school'
       vacancy_id.present? ? organisation_job_school_path(vacancy_id) : school_organisation_job_path
-    elsif @form.job_location == 'central_office'
+    elsif %w(central_office at_multiple_schools).include?(@form.job_location)
       vacancy_id.present? ?
         organisation_job_job_specification_path(vacancy_id) : job_specification_organisation_job_path
     end
