@@ -33,7 +33,7 @@
               = t('shared.filter_group.clear_all_filters')
 
           - filters[:items].each do |group|
-            - if group[:selected].count > 0
+            - if group[:selected]&.count > 0
               .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
                 = group[:title]
 
