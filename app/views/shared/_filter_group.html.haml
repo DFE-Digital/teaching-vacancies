@@ -33,13 +33,13 @@
               = t('shared.filter_group.clear_all_filters')
 
           - filters[:items].each do |group|
-            - if group[:selected]&.count > 0
+            - if group[:selected]&.any?
               .govuk-heading-s{ class: 'govuk-!-margin-bottom-0 govuk-!-font-weight-bold' }
                 = group[:title]
 
             %ul.moj-filter-tags
               - group[:options].each do |tag|
-                - if group[:selected].include? tag.send(group[:value_method])
+                - if group[:selected]&.include?(tag.send(group[:value_method]))
                   %li
                     %button.moj-filter__tag{ data: { group: group[:key], key: tag.send(group[:value_method]) } }
                       %i.fa.fa-close
