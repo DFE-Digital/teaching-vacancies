@@ -31,7 +31,7 @@ class Algolia::VacancySearchBuilder
   end
 
   def any?
-    filters = only_active_to_hash
+    filters = only_active_to_hash.dup
     filters.delete_if { |k, _| k.eql?(:radius) }
     filters.any?
   end

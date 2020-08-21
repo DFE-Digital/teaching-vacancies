@@ -114,44 +114,89 @@ RSpec.feature 'A job seeker can subscribe to a job alert' do
       end
     end
 
-    scenario 'can successfuly subscribe to a new alert' do
-      visit jobs_path
+    context 'when a location category search is carried out' do
+      scenario 'can successfuly subscribe to a new alert' do
+        visit jobs_path
 
-      within '.filters-form' do
-        fill_in 'jobs_search_form[keyword]', with: 'English'
-        fill_in 'jobs_search_form[location]', with: 'London'
-        check I18n.t('jobs.job_role_options.teacher'), name: 'jobs_search_form[job_roles][]', visible: false
-        check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'jobs_search_form[job_roles][]', visible: false
-        check I18n.t('jobs.working_pattern_options.full_time'),
-              name: 'jobs_search_form[working_patterns][]', visible: false
-        click_on I18n.t('buttons.search')
+        within '.filters-form' do
+          fill_in 'jobs_search_form[keyword]', with: 'English'
+          fill_in 'jobs_search_form[location]', with: 'London'
+          check I18n.t('jobs.job_role_options.teacher'), name: 'jobs_search_form[job_roles][]', visible: false
+          check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'jobs_search_form[job_roles][]', visible: false
+          check I18n.t('jobs.working_pattern_options.full_time'),
+                name: 'jobs_search_form[working_patterns][]', visible: false
+          click_on I18n.t('buttons.search')
+        end
+
+        click_on I18n.t('subscriptions.link.text')
+
+        expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
+        expect(page).to have_content('Keyword: English')
+        expect(page).to have_content('Location: In London')
+        expect(page).to have_content('Job roles: Teacher, Suitable for NQTs')
+        expect(page).to have_content('Working patterns: Full-time')
+
+        fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+        fill_in 'subscription[reference]', with: 'Daily alerts for: English'
+
+        message_delivery = instance_double(ActionMailer::MessageDelivery)
+        expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
+        expect(message_delivery).to receive(:deliver_later)
+        click_on 'Subscribe'
+
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+        click_on 'Return to your search results'
+
+        expect(page.current_path).to eql(jobs_path)
+
+        activities = PublicActivity::Activity.all
+        keys = activities.pluck(:key)
+        expect(keys).to include('subscription.daily_alert.new')
+        expect(keys).to include('subscription.daily_alert.create')
       end
+    end
 
-      click_on I18n.t('subscriptions.link.text')
+    context 'when a location search is carried out' do
+      scenario 'can successfuly subscribe to a new alert' do
+        visit jobs_path
 
-      expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
-      expect(page).to have_content('Keyword: English')
-      expect(page).to have_content('Location: In London')
-      expect(page).to have_content('Job roles: Teacher, Suitable for NQTs')
-      expect(page).to have_content('Working patterns: Full-time')
+        within '.filters-form' do
+          fill_in 'jobs_search_form[keyword]', with: 'English'
+          fill_in 'jobs_search_form[location]', with: 'SW1A 1AA'
+          select '40 miles', from: 'jobs_search_form[radius]'
+          check I18n.t('jobs.job_role_options.teacher'), name: 'jobs_search_form[job_roles][]', visible: false
+          check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'jobs_search_form[job_roles][]', visible: false
+          check I18n.t('jobs.working_pattern_options.full_time'),
+                name: 'jobs_search_form[working_patterns][]', visible: false
+          click_on I18n.t('buttons.search')
+        end
 
-      fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
-      fill_in 'subscription[reference]', with: 'Daily alerts for: English'
+        click_on I18n.t('subscriptions.link.text')
 
-      message_delivery = instance_double(ActionMailer::MessageDelivery)
-      expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
-      expect(message_delivery).to receive(:deliver_later)
-      click_on 'Subscribe'
+        expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
+        expect(page).to have_content('Keyword: English')
+        expect(page).to have_content('Location: Within 40 miles of SW1A 1AA')
+        expect(page).to have_content('Job roles: Teacher, Suitable for NQTs')
+        expect(page).to have_content('Working patterns: Full-time')
 
-      expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
-      click_on 'Return to your search results'
+        fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+        fill_in 'subscription[reference]', with: 'Daily alerts for: English'
 
-      expect(page.current_path).to eql(jobs_path)
+        message_delivery = instance_double(ActionMailer::MessageDelivery)
+        expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
+        expect(message_delivery).to receive(:deliver_later)
+        click_on 'Subscribe'
 
-      activities = PublicActivity::Activity.all
-      keys = activities.pluck(:key)
-      expect(keys).to include('subscription.daily_alert.new')
-      expect(keys).to include('subscription.daily_alert.create')
+        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+        click_on 'Return to your search results'
+
+        expect(page.current_path).to eql(jobs_path)
+
+        activities = PublicActivity::Activity.all
+        keys = activities.pluck(:key)
+        expect(keys).to include('subscription.daily_alert.new')
+        expect(keys).to include('subscription.daily_alert.create')
+      end
     end
   end
 end
