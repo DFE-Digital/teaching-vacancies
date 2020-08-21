@@ -98,4 +98,51 @@ RSpec.describe ApplicationController, type: :controller do
       expect(response.headers['X-Robots-Tag']).to eq('noindex, nofollow')
     end
   end
+
+  describe '#strip_empty_checkboxes' do
+    context 'when the checkbox value is an Array' do
+      let(:params) do
+        { test_form: { test_field: checkboxes } }
+      end
+
+      before do
+        allow(controller).to receive(:params).and_return(params)
+      end
+
+      context 'no empty checkboxes added by GOVUKDesignSystemFormBuilder' do
+        let(:checkboxes) { ['first_box', 'second_box'] }
+
+        it 'removes nothing from the array' do
+          subject.strip_empty_checkboxes(:test_form, [:test_field])
+          expect(controller.params[:test_form][:test_field]).to eql(checkboxes)
+        end
+      end
+
+      context 'empty checkbox added by GOVUKDesignSystemFormBuilder' do
+        let(:checkboxes) { ['first_box', 'second_box', ''] }
+        let(:stripped_checkboxes) { ['first_box', 'second_box'] }
+
+        it 'removes empty checkbox from the array' do
+          subject.strip_empty_checkboxes(:test_form, [:test_field])
+          expect(controller.params[:test_form][:test_field]).to eql(stripped_checkboxes)
+        end
+      end
+    end
+
+    context 'when the checkbox value is a String' do
+      let(:params) do
+        { test_form: { array_field: ['first_box', ''], string_field: '' } }
+      end
+
+      before do
+        allow(controller).to receive(:params).and_return(params)
+      end
+
+      it 'removes empty checkbox from the array without error' do
+        subject.strip_empty_checkboxes(:test_form, [:array_field, :string_field])
+        expect(controller.params[:test_form][:array_field]).to eql(['first_box'])
+        expect(controller.params[:test_form][:string_field]).to eql('')
+      end
+    end
+  end
 end

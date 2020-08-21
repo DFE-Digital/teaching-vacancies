@@ -57,35 +57,6 @@ RSpec.describe HiringStaff::Vacancies::ApplicationController, type: :controller 
     end
   end
 
-  describe '#strip_empty_checkboxes' do
-    let(:params) do
-      { test_form: { test_field: checkboxes } }
-    end
-
-    before do
-      allow(controller).to receive(:params).and_return(params)
-    end
-
-    context 'no empty checkboxes added by GOVUKDesignSystemFormBuilder' do
-      let(:checkboxes) { ['first_box', 'second_box'] }
-
-      it 'removes nothing from the array' do
-        subject.strip_empty_checkboxes(:test_form, [:test_field])
-        expect(controller.params[:test_form][:test_field]).to eql(checkboxes)
-      end
-    end
-
-    context 'empty checkbox added by GOVUKDesignSystemFormBuilder' do
-      let(:checkboxes) { ['first_box', 'second_box', ''] }
-      let(:stripped_checkboxes) { ['first_box', 'second_box'] }
-
-      it 'removes empty checkbox from the array' do
-        subject.strip_empty_checkboxes(:test_form, [:test_field])
-        expect(controller.params[:test_form][:test_field]).to eql(stripped_checkboxes)
-      end
-    end
-  end
-
   describe '#convert_multiparameter_attributes_to_dates' do
     let(:params) do
       { test_form: dates }
