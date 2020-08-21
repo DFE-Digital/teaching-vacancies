@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   def strip_empty_checkboxes(form_key, fields)
     if params[form_key].present?
       fields.each do |field|
-        params[form_key][field] = params[form_key][field]&.reject(&:blank?)
+        params[form_key][field] = params[form_key][field]&.reject(&:blank?) unless params[form_key][field].is_a?(String)
       end
     end
   end
