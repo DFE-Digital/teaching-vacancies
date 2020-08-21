@@ -10,7 +10,8 @@ class Algolia::VacancyFiltersBuilder
     @to_date = filters_hash[:to_date]
 
     @job_roles = filters_hash[:job_roles]
-    @phases = filters_hash[:phases]
+    # Legacy filters included phases, so legacy URLs may contain empty arrays here
+    @phases = filters_hash[:phases]&.reject(&:blank?)
     @working_patterns = filters_hash[:working_patterns]
 
     @suitable_for_nqt = filters_hash[:newly_qualified_teacher]
