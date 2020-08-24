@@ -60,8 +60,4 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     end
   end
-
-  def readable_job_location(job_location)
-    I18n.t('hiring_staff.organisations.school_groups.readable_job_location') if job_location == 'central_office'
-  end
 end
