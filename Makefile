@@ -23,9 +23,15 @@ monitoring-apply: ## Apply monitoring changes
 		TF_WORKSPACE=monitoring terraform init -upgrade=true -input=false terraform/monitoring \
 		&& bin/run-in-env -e monitoring -o tf_subshell -- terraform apply -input=false -auto-approve terraform/monitoring
 
+.PHONY: dev
 dev:
 		$(eval env=dev)
 
+.PHONY: review
+review:
+		$(eval env=review)
+
+.PHONY: staging
 staging:
 		$(eval env=staging)
 
@@ -34,6 +40,13 @@ deploy-local-image:
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
 		docker build -t $(repository):$(tag) .
 		docker push $(repository):$(tag)
-		cf7 target -o dfe-teacher-services -s teaching-vacancies-$(env)
-		cf7 push -f paas/web/manifest-docker-$(env).yml --var IMAGE_NAME=$(repository):$(tag)
-		cf7 push -f paas/worker/manifest-docker-$(env).yml --var IMAGE_NAME=$(repository):$(tag)
+		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+		$(eval export TF_WORKSPACE=$(env))
+		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
+		terraform init -input=false terraform/app
+		terraform apply -input=false -var-file terraform/workspace-variables/$(env).tfvars -auto-approve terraform/app
+
+.PHONY: print-env
+print-env:
+		$(if $(env), , $(error Usage: make <env> print-env))
+		@bin/run-in-env -t /tvs/dev/app -y terraform/workspace-variables/$(env)_app_env.yml -o env_stdout

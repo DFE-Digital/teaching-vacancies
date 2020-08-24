@@ -265,11 +265,26 @@ createuser --interactive --pwprompt
 For running local development and test environments, you can safely grant the user superuser access when asked.  **DO
 NOT** do this for production environments.
 
+#### AWS credentials
+
+When onboarded, you will be provided with an AWS admin user. You can use it to access the AWS console at:
+https://teaching-vacancies.signin.aws.amazon.com/console.
+
+For programmatic access, including application deployment using terraform, create an API key for yourself in the AWS IAM section.
+Then use the [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) to configure the access key locally.
+
 #### Environment Variables
 
-Have you copied the secrets onto your development machine? If not, [go and do that now](#secrets).
+Environment variables (eg: feature flags) are stored in `terraform/workspace-variables/<env>_app_env.yml` files
+and secrets (eg: API keys) are stored in AWS SSM Parameter store in `/tvs/<env>/app/*` and `/tvs/<env>/infra/*`.
 
-Then, copy the contents of `development.env.example` from the secrets into a new file called `.env` in the teacher_vacancy_service directory.
+Run the following command to fetch the dev variables and output to a shell environment file:
+
+```
+make -s dev print-env > .env
+```
+
+You need [AWS credentials](#aws-credentials) to read and write from SSM.
 
 We recommend using something like [`direnv`](/documentation/direnv.md) to load environment variables scoped into the folder.
 

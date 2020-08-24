@@ -6,20 +6,26 @@ require 'yaml'
 require 'aws-sdk-ssm'
 require 'erb'
 
+OUTPUT_LIST = ['stdout', 'env_stdout', 'env_file', 'subshell', 'tf_subshell']
+
 @log = Logger.new(STDOUT)
 @log.level = Logger::INFO
 
 def usage
   puts <<~EOF
-  Usage: run_in_env.sh -e <env> [-o <output>] [-f <output_file>] [-- <command>]
+  Usage: run_in_env.sh [-p <parameter>]... [-t <parameter-path>]... [-o <output>] [-f <output_file>] [-v] [-- <command>]
   Arguments:
-    -e (--env): environment
+    -p (--parameter): parameter name in AWS SSM Parameter store. Can be repeated
+    -t (--parameter-path): parameter path in AWS SSM Parameter store hierarchy. Can be repeated
+    -y (--yaml-file): path to yaml file containing parameters. Can be repeated
     -o (--output):
       stdout (default): Write raw config to standard out
+      env_stdout: Write list of shell variables to standard out
       env_file: Write to a .env file to set up shell environment. Must provide -f
       subshell: Run command in a subshell with env. variables. Must provide command
       tf_subshell: Run command in a subshell with terraform env. variables. Must provide command
     -f (--output_file): path to output file
+    -v (--verbose): verbose output
   EOF
   exit(1)
 end
@@ -34,17 +40,53 @@ def run_command_with_env(config_map, command)
   exec command
 end
 
-def pull_config_from_aws(env)
-  param_name = "/config/#{env}"
-  @log.debug('Fetching parameter ' + param_name)
+def pull_ssm_parameters(parameters)
+  @log.debug 'Fetching parameters ' + parameters.to_s
+  config_map = {}
   ssm_client = Aws::SSM::Client.new(region: 'eu-west-2')
 
-  response = ssm_client.get_parameter({
-    name: param_name,
-    with_decryption: true,
-  })
+  parameters.each { |parameter_path|
+    response = ssm_client.get_parameter({
+      name: parameter_path,
+      with_decryption: true,
+    })
+    parameter_map = YAML.load(response.parameter.value)
+    config_map.update parameter_map
+  }
 
-  YAML.load(response.parameter.value)
+  config_map
+end
+
+def pull_ssm_parameter_paths(parameter_paths)
+  @log.debug 'Fetching parameters in paths ' + parameter_paths.to_s
+  config_map = {}
+  ssm_client = Aws::SSM::Client.new(region: 'eu-west-2')
+
+  parameter_paths.each { |parameter_path|
+    response = ssm_client.get_parameters_by_path({
+      path: parameter_path,
+      recursive: true,
+      with_decryption: true
+    })
+    response.parameters.each { |parameter|
+      parameter_map = YAML.load(parameter.value)
+      config_map.update parameter_map
+    }
+  }
+
+  config_map
+end
+
+def read_from_yaml_files(yaml_files)
+  @log.debug 'Fetching parameters from files ' + yaml_files.to_s
+  config_map = {}
+
+  yaml_files.each{ |yaml_file|
+    parameter_map = YAML.load_file(yaml_file)
+    config_map.update parameter_map
+  }
+
+  config_map
 end
 
 def make_tf_vars_map(config_map)
@@ -53,27 +95,50 @@ def make_tf_vars_map(config_map)
   config_map.map { |k, v| ["TF_VAR_#{k}", v] }.to_h
 end
 
-def create_env_file(config_map, output_file)
-  @log.debug 'Writing shell environment file: ' + output_file
+def stringify(config_map)
+  @log.debug 'Converting non string values to strings'
+
+  config_map.map { |k, v|
+    v = v.to_s unless v.is_a? String
+    [k, v]
+  }.to_h
+end
+
+def sort_by_key(config_map)
+  config_map.sort.to_h
+end
+
+def env_var_list(config_map)
   shell_template = <<~EOF
   <% for k,v in config_map %><%= k %>=<%= v %>
   <% end %>
   EOF
   erb = ERB.new shell_template
 
-  File.write(output_file, erb.result)
+  erb.result
+end
+
+def create_env_file(config_map, output_file)
+  @log.debug 'Writing shell environment file: ' + output_file
+  output = env_var_list(config_map)
+
+  File.write(output_file, output)
 end
 
 ##### Configuration #####
 opts = GetoptLong.new(
   [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
-  [ '--env', '-e', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--parameter', '-p', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--parameter-path', '-t', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--yaml-file', '-y', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--output', '-o', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--output_file', '-f', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--verbose', '-v', GetoptLong::NO_ARGUMENT ]
 )
 
-env = nil
+parameters = []
+parameter_paths = []
+yaml_files = []
 output = nil
 output_file = nil
 command = nil
@@ -82,8 +147,12 @@ opts.each do |opt, arg|
   case opt
   when '--help'
     usage
-  when '--env'
-    env = arg
+  when '--parameter'
+    parameters << arg
+  when '--parameter-path'
+    parameter_paths << arg
+  when '--yaml-file'
+    yaml_files << arg
   when '--output'
     output = arg
   when '--output_file'
@@ -94,8 +163,13 @@ opts.each do |opt, arg|
 end
 
 ##### Validation #####
-usage unless env
-output = 'stdout' unless output
+usage if parameters.empty? && parameter_paths.empty? && yaml_files.empty?
+
+if output
+  usage unless OUTPUT_LIST.include? output
+else
+  output = 'stdout'
+end
 
 if should_run_command_in_subshell(output)
   command = ARGV[0..].join(' ')
@@ -107,19 +181,40 @@ if output == 'env_file' && ! output_file
 end
 
 ##### Pull data #####
-@log.debug 'Running in environment: ' + env
-config_map = pull_config_from_aws env
+config_map = {}
+
+unless parameters.empty?
+  config_map.update pull_ssm_parameters parameters
+end
+
+unless parameter_paths.empty?
+  config_map.update pull_ssm_parameter_paths parameter_paths
+end
+
+unless yaml_files.empty?
+  config_map.update read_from_yaml_files yaml_files
+end
 
 ##### Transform #####
 if output == 'tf_subshell'
   config_map = make_tf_vars_map config_map
 end
 
+if should_run_command_in_subshell(output)
+  config_map = stringify(config_map)
+end
+
+config_map = sort_by_key(config_map)
+
 @log.debug "Configuration: #{config_map}"
 
 ##### Output #####
 if output == 'stdout'
   puts config_map
+end
+
+if output == 'env_stdout'
+  puts env_var_list(config_map)
 end
 
 if output == 'env_file'

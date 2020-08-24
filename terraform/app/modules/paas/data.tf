@@ -1,3 +1,19 @@
+data aws_ssm_parameter app_env_api_key_big_query {
+  name = "/tvs/${var.parameter_store_environment}/app/BIG_QUERY_API_JSON_KEY"
+}
+
+data aws_ssm_parameter app_env_api_key_cloud_storage {
+  name = "/tvs/${var.parameter_store_environment}/app/CLOUD_STORAGE_API_JSON_KEY"
+}
+
+data aws_ssm_parameter app_env_api_key_google {
+  name = "/tvs/${var.parameter_store_environment}/app/GOOGLE_API_JSON_KEY"
+}
+
+data aws_ssm_parameter app_env_secrets {
+  name = "/tvs/${var.parameter_store_environment}/app/secrets"
+}
+
 data cloudfoundry_org org {
   name = "dfe-teacher-services"
 }
