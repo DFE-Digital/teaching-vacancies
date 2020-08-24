@@ -25,6 +25,8 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
+        TAG=${GITHUB_SHA}
+        echo ::set-env name=TAG::${TAG}
         echo ::set-env name=CF_PROVIDER_BINARY::terraform-provider-cloudfoundry_${CF_PROVIDER_VERSION}
         echo ::set-env name=CF_PROVIDER_URL::https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/${CF_PROVIDER_VERSION}/terraform-provider-cloudfoundry_linux_amd64
 
@@ -34,7 +36,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
-        tags: ${{ github.sha }}
+        tags: ${{ env.TAG }}
         target: production
 
     - name: Install Terraform CloudFoundry Provider
