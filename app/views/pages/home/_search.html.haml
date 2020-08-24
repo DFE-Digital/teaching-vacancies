@@ -6,5 +6,6 @@
   = render 'shared/search/location', f: f
   = render 'shared/search/radius', f: f, filters: false
   = render 'shared/search/current_location'
+  = render 'pages/home/filters', f: f
 
   = f.govuk_submit t('buttons.search'), classes: "govuk-button govuk-button--start govuk-!-margin-0"

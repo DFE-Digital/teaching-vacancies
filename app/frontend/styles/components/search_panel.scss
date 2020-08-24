@@ -5,29 +5,10 @@
 
   h1,
   label,
-  .govuk-accordion__section-button,
   .govuk-link,
+  .govuk-label.govuk-label--s,
   .js-location-finder__link {
     color: govuk-colour('white');
-  }
-
-  .govuk-accordion__icon::before,
-  .govuk-accordion__icon::after,
-  .govuk-fieldset {
-    background-color: govuk-colour('white');
-  }
-
-  .govuk-accordion__section-content {
-    padding-top: 0;
-  }
-
-  .govuk-checkboxes__item,
-  .govuk-checkboxes__item label {
-    color: govuk-colour('black');
-  }
-
-  .govuk-fieldset {
-    padding-left: 10px;
   }
 
   .govuk-form-group {
@@ -36,6 +17,8 @@
     .govuk-button {
       @include govuk-responsive-margin(2, 'bottom');
     }
+
+    overflow: hidden;
   }
 
   .govuk-button--start {
@@ -68,6 +51,28 @@
     @media (max-width: 850px) {
       display: block;
       width: 100%;
+    }
+  }
+
+  .govuk-details__summary:not(:focus) {
+    color: govuk-colour('white');
+  }
+
+  .govuk-fieldset {
+    label {
+      color: govuk-colour('black');
+    }
+  }
+
+  .tv-checkbox__group {
+    background-color: govuk-colour('white');
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .govuk-form-group {
+      margin-bottom: 0;
+      // max-height is set when overflow: auto, but this page uses no scroll for govuk-form-groups
+      max-height: none;
     }
   }
 }

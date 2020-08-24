@@ -65,7 +65,7 @@ FactoryBot.create(:vacancy,
                   job_title: 'Physics Teacher',
                   subject: Subject.find_by!(name: 'Physics'),
                   school: academy,
-                  working_patterns: ['full_time', 'compressed_hours'],
+                  working_patterns: ['full_time', 'job_share'],
                   salary: '£35,000',
                   leadership: leadership)
 

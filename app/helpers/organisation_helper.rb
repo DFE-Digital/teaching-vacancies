@@ -9,7 +9,7 @@ module OrganisationHelper
     [organisation.address, organisation.town, organisation.county, organisation.postcode].reject(&:blank?).join(', ')
   end
 
-  def organisation_type(organisation: organisation, with_age_range: false)
+  def organisation_type(organisation:, with_age_range: false)
     return organisation.group_type unless organisation.is_a?(School)
     school_type_details = [organisation.school_type.label.singularize, organisation.religious_character]
     school_type_details.push age_range(organisation) if with_age_range

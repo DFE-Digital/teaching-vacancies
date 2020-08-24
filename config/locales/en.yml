@@ -337,7 +337,7 @@ en:
       leadership: 'Leadership'
       sen_specialist: 'SEN specialist'
       nqt_suitable: 'Suitable for NQTs'
-    school_phase_options:
+    education_phase_options:
       all_through: All through
       middle_deemed_primary: Middle deemed primary
       middle_deemed_secondary: Middle deemed secondary
@@ -533,18 +533,10 @@ en:
       number_of_miles:
         one: '%{count} mile'
         other: '%{count} miles'
-      subject: 'Subject'
-      subject_hint: 'Maths, for example'
-      job_title: 'Job title'
-      job_title_hint: 'Leader, for example'
-      working_pattern: 'Working pattern'
-      education_phase: 'Education phase'
-      education_phase_divider: 'or'
-      nqt_suitable: 'Suitable for NQTs'
-      clear_filters: 'Reset search'
-      summary_expanded: 'Show fewer filters'
-      summary_collapsed: 'Show more filters'
-      summary_nojs: 'Advanced filters'
+      add_more_filters: 'Add more filters'
+      job_roles: 'Job role'
+      phases: 'Education phase'
+      working_patterns: 'Working pattern'
     feedback:
       listed_elsewhere:
         listed_paid: 'Yes, on one or more paid services'

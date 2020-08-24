@@ -8,6 +8,8 @@ export const OPEN_ALL_TEXT = 'Open all';
 window.addEventListener('DOMContentLoaded', () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button'));
 
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector) => {
+  if (!isFormAutoSubmitEnabled(groupContainerSelector)) { return; }
+
   Array.from(document.getElementsByClassName(removeButtonSelector)).map((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
 
   const clearButton = document.getElementById(clearButtonSelector);
@@ -50,6 +52,14 @@ export const displayOpenOrCloseText = (targetElement, expandedElements) => {
   } else if (expandedElements > 0) {
     targetElement.innerText = CLOSE_ALL_TEXT;
   }
+};
+
+export const isFormAutoSubmitEnabled = (groupContainerSelector) => {
+  if (!document.getElementsByClassName(groupContainerSelector).length) {
+    return false;
+  }
+  const form = document.getElementsByClassName(groupContainerSelector)[0].closest('form');
+  return form && form.dataset.autoSubmit;
 };
 
 export const openOrCloseAllSectionsHandler = (e) => {

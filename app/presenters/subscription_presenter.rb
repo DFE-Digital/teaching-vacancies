@@ -74,7 +74,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_phases_filter(value)
-    { education_phases: value.map { |role| I18n.t("jobs.school_phase_options.#{role}") }.join(', ') }
+    { education_phases: value.map { |role| I18n.t("jobs.education_phase_options.#{role}") }.join(', ') }
   end
 
   def render_nqt_filter(value)

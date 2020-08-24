@@ -1,7 +1,7 @@
 .moj-filter-sidebar
   - if @organisation.is_a?(SchoolGroup)
     .govuk-grid-column-one-quarter
-      = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
+      = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch", data: { 'auto-submit': true } } do |f|
         = render 'shared/filter_group', f: f,
           filters: { title: 'Job Filters', remove_buttons: true, total_count: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @organisation_options, value_method: :id, text_method: :name, small: true }] }
 
