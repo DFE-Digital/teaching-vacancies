@@ -1,7 +1,9 @@
 module OrganisationHelper
   OFSTED_REPORT_ENDPOINT = 'https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/'
 
-  def location(organisation)
+  def location(organisation, job_location: nil)
+    return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+      job_location.presence == 'at_multiple_schools'
     [organisation.name, organisation.town, organisation.county].reject(&:blank?).join(', ')
   end
 

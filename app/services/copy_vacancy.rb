@@ -76,7 +76,7 @@ class CopyVacancy
       @new_vacancy.readable_job_location = @new_vacancy.organisation_name
     else
       @new_vacancy.job_location = 'central_office'
-      @new_vacancy.readable_job_location = I18n.t('hiring_staff.organisations.school_groups.readable_job_location')
+      @new_vacancy.readable_job_location = I18n.t('hiring_staff.organisations.readable_job_location.central_office')
     end
   end
 end

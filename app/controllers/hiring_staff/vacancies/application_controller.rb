@@ -39,6 +39,14 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     vacancy
   end
 
+  def readable_job_location(job_location, school_name: nil)
+    if job_location == 'at_one_school'
+      school_name
+    elsif %w(at_multiple_schools central_office).include?(job_location)
+      I18n.t("hiring_staff.organisations.readable_job_location.#{job_location}")
+    end
+  end
+
   def set_organisations(vacancy, organisation_id)
     vacancy.organisation_vacancies.delete_all
     vacancy.organisation_vacancies.create(organisation_id: organisation_id)

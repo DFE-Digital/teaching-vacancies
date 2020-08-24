@@ -47,7 +47,7 @@ RSpec.feature 'Creating a vacancy' do
 
         expect(Vacancy.last.state).to eql('create')
         expect(Vacancy.last.readable_job_location).to eql(
-          I18n.t('hiring_staff.organisations.school_groups.readable_job_location')
+          I18n.t('hiring_staff.organisations.readable_job_location.central_office')
         )
         activity = Vacancy.last.activities.last
         expect(activity.session_id).to eql(session_id)

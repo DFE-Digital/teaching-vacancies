@@ -22,7 +22,7 @@ RSpec.feature 'Editing a published vacancy' do
       expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.central_office'))
       expect(page).to have_content(location(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
-        I18n.t('hiring_staff.organisations.school_groups.readable_job_location')
+        I18n.t('hiring_staff.organisations.readable_job_location.central_office')
       )
 
       click_header_link(I18n.t('jobs.job_location'))
@@ -62,7 +62,7 @@ RSpec.feature 'Editing a published vacancy' do
       expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.central_office'))
       expect(page).to have_content(location(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
-        I18n.t('hiring_staff.organisations.school_groups.readable_job_location')
+        I18n.t('hiring_staff.organisations.readable_job_location.central_office')
       )
     end
   end
