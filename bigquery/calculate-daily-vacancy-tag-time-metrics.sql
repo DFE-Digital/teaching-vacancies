@@ -155,7 +155,7 @@ SELECT
   all_vacancy_in_scope_metrics.total_in_scope_live_vacancies AS total_in_scope_live_vacancies,
   all_benchmarks.benchmark_total_live_vacancies AS benchmark_total_live_vacancies,
   SAFE_DIVIDE(all_vacancy_in_scope_metrics.total_in_scope_live_vacancies,
-    all_benchmarks.benchmark_total_live_vacancies) AS total_live_vacancies_as_proportion_of_benchmark,
+    all_benchmarks.benchmark_total_live_vacancies) AS total_in_scope_live_vacancies_as_proportion_of_benchmark,
   SAFE_DIVIDE(SUM(vacancy_metrics.vacancies_published) OVER (PARTITION BY tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) - SUM(vacancy_metrics.vacancies_expired) OVER (PARTITION BY tag ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),
     all_vacancy_metrics.total_live_vacancies) AS proportion_of_live_vacancies_with_this_tag
 FROM
