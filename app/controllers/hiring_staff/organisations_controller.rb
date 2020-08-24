@@ -59,7 +59,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
   end
 
   def render_draft_saved_message
-    vacancy = current_organisation.vacancies.find(params[:from_review])
+    vacancy = current_organisation.all_vacancies.find(params[:from_review])
     flash.now[:success] = I18n.t('messages.jobs.draft_saved_html', job_title: vacancy&.job_title)
   end
 end

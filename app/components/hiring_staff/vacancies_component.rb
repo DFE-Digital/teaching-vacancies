@@ -10,15 +10,12 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
     @selected_type = selected_type&.to_sym || :published
     @vacancy_types = %i[published pending draft expired awaiting_feedback]
 
-    @vacancies = send(@selected_type)
-    @school_options = set_school_options if organisation.is_a?(SchoolGroup)
-
-    @vacancies = set_filters(@vacancies, @filters) if organisation.is_a?(SchoolGroup)
-    @vacancies = @vacancies.map { |v| OrganisationVacancyPresenter.new(v) }
+    set_organisation_options if @organisation.is_a?(SchoolGroup)
+    set_vacancies
   end
 
   def render?
-    @organisation.vacancies.active.any?
+    @organisation.all_vacancies.active.any?
   end
 
   def selected_class(vacancy_type)
@@ -45,48 +42,30 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
 
   private
 
-  def draft
-    @organisation.vacancies.draft.order(@sort.column => @sort.order)
+  def set_vacancies
+    @vacancies =
+      if @filters[:managed_school_ids]&.any?
+        Vacancy.in_organisation_ids(@filters[:managed_school_ids])
+      else
+        @organisation.all_vacancies
+      end
+    @vacancies = @vacancies.send(selected_scope)
+    @vacancies = @vacancies.order(@sort.column => @sort.order)
+    @vacancies = @vacancies.map { |v| OrganisationVacancyPresenter.new(v) }
   end
 
-  def pending
-    @organisation.vacancies.pending.order(@sort.column => @sort.order)
+  def selected_scope
+    @selected_type == :published ? :live : @selected_type
   end
 
-  def expired
-    @organisation.vacancies.expired.order(@sort.column => @sort.order)
-  end
-
-  def published
-    @organisation.vacancies.live.order(@sort.column => @sort.order)
-  end
-
-  def awaiting_feedback
-    @organisation.vacancies.awaiting_feedback.order(@sort.column => @sort.order)
-  end
-
-  def set_filters(vacancies, filters)
-    school_group_in_school_ids = filters[:managed_school_ids]&.include?('school_group')
-
-    return vacancies if filters.none? || filters[:managed_organisations] == 'all'
-
-    return vacancies.in_central_office if
-      filters[:managed_school_ids] == ['school_group']
-
-    return vacancies.in_school_ids(filters[:managed_school_ids]) if
-      filters[:managed_school_ids]&.any? && !school_group_in_school_ids
-
-    vacancies
-      .in_school_ids(filters[:managed_school_ids]&.reject { |school_id| school_id == 'school_group' })
-      .or(vacancies.in_central_office)
-  end
-
-  def set_school_options
-    @school_options = @organisation.schools.order(:name).map do |school|
-      OpenStruct.new({ id: school.id, name: "#{school.name} (#{@vacancies.in_school_ids(school.id).count})" })
+  def set_organisation_options
+    @organisation_options = @organisation.schools.order(:name).map do |school|
+      count = Vacancy.in_organisation_ids(school.id).send(selected_scope).count
+      OpenStruct.new({ id: school.id, name: "#{school.name} (#{count})" })
     end
-    @school_options.unshift(
-      OpenStruct.new({ id: 'school_group', name: "Trust head office (#{@vacancies.in_central_office.count})" })
+    count = Vacancy.in_organisation_ids(@organisation.id).send(selected_scope).count
+    @organisation_options.unshift(
+      OpenStruct.new({ id: @organisation.id, name: "Trust head office (#{count})" })
     )
   end
 end

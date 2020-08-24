@@ -12,12 +12,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def show
-    attributes = @vacancy.present? ? @vacancy.attributes : session[:vacancy_attributes]
-    if attributes.present?
-      @form = JobSpecificationForm.new(attributes)
-    else
-      @form = JobSpecificationForm.new(school_id: current_school.id)
-    end
+    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes] || {})
+    @form = JobSpecificationForm.new(attributes)
   end
 
   def create
@@ -81,7 +77,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def save_vacancy_without_validation
-    set_school_or_school_group_id
+    set_organisation_vacancies
     @form.vacancy.send :set_slug
     @form.vacancy.status = :draft
     @form.vacancy.assign_attributes(session[:vacancy_attributes])
@@ -92,11 +88,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     @form.vacancy
   end
 
-  def set_school_or_school_group_id
+  def set_organisation_vacancies
     if current_organisation.is_a?(School)
-      @form.vacancy.school_id = current_organisation.id
+      @form.vacancy.organisation_vacancies.build(organisation: current_organisation)
     elsif current_organisation.is_a?(SchoolGroup)
-      @form.vacancy.school_group_id = current_organisation.id
+      @form.vacancy.organisation_vacancies.build(organisation_id: session[:organisation_id])
     end
   end
 

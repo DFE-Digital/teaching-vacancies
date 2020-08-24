@@ -27,7 +27,7 @@ RSpec.describe JobPosting do
       'aboutSchool' => 'Some information about the school'
     }
   end
-  let(:school_by_urn) { build(:school, urn: '136352') }
+  let(:school_by_urn) { create(:school, urn: '136352') }
   let(:job_posting) { JobPosting.new(data) }
   let(:date_posted) { Time.zone.now.iso8601 }
   let(:valid_through) { 1.week.from_now.iso8601 }
@@ -46,7 +46,7 @@ RSpec.describe JobPosting do
       it 'assigns a random school' do
         allow(School).to receive(:offset).and_return(double(first: random_school))
         vacancy = to_vacancy
-        expect(vacancy.school).to eql(random_school)
+        expect(vacancy.organisation).to eql(random_school)
       end
     end
 

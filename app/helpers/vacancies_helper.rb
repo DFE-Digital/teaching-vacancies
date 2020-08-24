@@ -42,7 +42,7 @@ module VacanciesHelper
 
   def page_title(vacancy)
     return I18n.t('jobs.copy_job_title', job_title: vacancy.job_title) if vacancy.state == 'copy'
-    return I18n.t('jobs.create_a_job_title', organisation: vacancy.school_or_school_group&.name.presence || '') if
+    return I18n.t('jobs.create_a_job_title', organisation: vacancy.organisation&.name.presence || '') if
       %w(create review).include?(vacancy.state)
     I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
   end
@@ -86,6 +86,6 @@ module VacanciesHelper
   end
 
   def vacancy_or_organisation_description(vacancy)
-    vacancy.about_school.presence || vacancy.school_or_school_group.description.presence
+    vacancy.about_school.presence || vacancy.organisation.description.presence
   end
 end

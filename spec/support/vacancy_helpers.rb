@@ -5,7 +5,7 @@ module VacancyHelpers
   end
 
   def fill_in_school_form_field(school)
-    find("label[for=\"school-form-school-id-#{school.id}-field\"]").click
+    find("label[for=\"school-form-organisation-id-#{school.id}-field\"]").click
   end
 
   def fill_in_job_specification_form_fields(vacancy)
@@ -186,17 +186,17 @@ module VacancyHelpers
         '@type': 'Place',
         'address': {
           '@type': 'PostalAddress',
-          'addressLocality': vacancy.school.town,
-          'addressRegion': vacancy.school.region.name,
-          'streetAddress': vacancy.school.address,
-          'postalCode': vacancy.school.postcode,
+          'addressLocality': vacancy.organisation.town,
+          'addressRegion': vacancy.organisation.region.name,
+          'streetAddress': vacancy.organisation.address,
+          'postalCode': vacancy.organisation.postcode,
         },
       },
       'url': job_url(vacancy),
       'hiringOrganization': {
         '@type': 'School',
-        'name': vacancy.school.name,
-        'identifier': vacancy.school.urn,
+        'name': vacancy.organisation.name,
+        'identifier': vacancy.organisation.urn,
         'description': vacancy.about_school
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
@@ -208,7 +208,7 @@ module VacancyHelpers
   def verify_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).not_to have_content(vacancy.publish_on)
     expect(page.find('.vacancy')).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page.find('.vacancy')).to have_content(vacancy.school.school_type.label.singularize)
+    expect(page.find('.vacancy')).to have_content(vacancy.organisation.school_type.label.singularize)
 
     verify_shared_vacancy_list_page_details(vacancy)
   end

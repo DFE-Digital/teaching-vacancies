@@ -4,15 +4,16 @@ RSpec.feature 'Hiring staff can filter vacancies in their dashboard' do
   let(:school_group) { create(:school_group) }
   let(:school_1) { create(:school, name: 'Happy Rainbows School') }
   let(:school_2) { create(:school, name: 'Dreary Grey School') }
-  let!(:school_group_vacancy) { create(:vacancy, :published, :with_school_group, school_group: school_group) }
-  let!(:school_1_vacancy) { create(:vacancy, :published, :with_school_group_at_school,
-                                   school: school_1, school_group: school_group) }
-  let!(:school_1_draft_vacancy) { create(:vacancy, :draft, :with_school_group_at_school,
-                                         school: school_1, school_group: school_group) }
-  let!(:school_2_draft_vacancy) { create(:vacancy, :draft, :with_school_group_at_school,
-                                         school: school_2, school_group: school_group) }
+  let!(:school_group_vacancy) { create(:vacancy, :published, :at_central_office) }
+  let!(:school_1_vacancy) { create(:vacancy, :published, :at_one_school) }
+  let!(:school_1_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
+  let!(:school_2_draft_vacancy) { create(:vacancy, :draft, :at_one_school) }
 
   before do
+    school_group_vacancy.organisation_vacancies.create(organisation: school_group)
+    school_1_vacancy.organisation_vacancies.create(organisation: school_1)
+    school_1_draft_vacancy.organisation_vacancies.create(organisation: school_1)
+    school_2_draft_vacancy.organisation_vacancies.create(organisation: school_2)
     allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
 
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
@@ -90,9 +91,9 @@ RSpec.feature 'Hiring staff can filter vacancies in their dashboard' do
     end
   end
 
-  context 'when managed_school_ids contains school_group' do
+  context 'when managed_school_ids contains school_group_id' do
     let(:managed_organisations) { '' }
-    let(:managed_school_ids) { ['school_group'] }
+    let(:managed_school_ids) { [school_group.id] }
 
     scenario 'it shows filtered published vacancies' do
       visit organisation_path

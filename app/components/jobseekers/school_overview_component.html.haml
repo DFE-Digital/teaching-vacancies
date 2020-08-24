@@ -7,28 +7,28 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.type')
         %td.govuk-table__cell
-          = organisation_type(organisation: @vacancy.school, with_age_range: false)
+          = organisation_type(organisation: @vacancy.organisation, with_age_range: false)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
         %td.govuk-table__cell
-          = @vacancy.school.phase.titleize
+          = @vacancy.organisation.phase.titleize
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.school_size')
         %td.govuk-table__cell
-          = school_size(@vacancy.school)
+          = school_size(@vacancy.organisation)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.age_range')
         %td.govuk-table__cell
-          = age_range(@vacancy.school)
+          = age_range(@vacancy.organisation)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.ofsted_report')
-        - if ofsted_report(@vacancy.school).present?
+        - if ofsted_report(@vacancy.organisation).present?
           %td.govuk-table__cell
-            = link_to(t('schools.view_ofsted_report'), ofsted_report(@vacancy.school), class: 'govuk-link wordwrap', target: '_blank')
+            = link_to(t('schools.view_ofsted_report'), ofsted_report(@vacancy.organisation), class: 'govuk-link wordwrap', target: '_blank')
         - else
           %td.govuk-table__cell
             = t('schools.no_information')
@@ -36,7 +36,7 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.website')
         %td.govuk-table__cell
-          = link_to("#{@vacancy.school.name} website (opens in a new window)", @vacancy.school.url, class: 'govuk-link link-wrap', target: '_blank')
+          = link_to("#{@vacancy.organisation.name} website (opens in a new window)", @vacancy.organisation.url, class: 'govuk-link link-wrap', target: '_blank')
       - if @vacancy.contact_email.present?
         %tr.govuk-table__row
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
@@ -46,22 +46,22 @@
 
   - if @vacancy.about_school.present?
     %h4.govuk-heading-s
-      = t('schools.info', organisation: @vacancy.school.name)
+      = t('schools.info', organisation: @vacancy.organisation.name)
     %p= vacancy_or_organisation_description(@vacancy)
 
   - if @vacancy.school_visits.present?
     %h4.govuk-heading-s
-      = t('jobs.school_visits_heading', school: @vacancy.school.name)
+      = t('jobs.school_visits_heading', school: @vacancy.organisation.name)
     %p= @vacancy.school_visits
 
   %h4.govuk-heading-s
     = t('schools.school_location')
-  %p= full_address(@vacancy.school)
+  %p= full_address(@vacancy.organisation)
 
-  - if @vacancy.school.geolocation
+  - if @vacancy.organisation.geolocation
     %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
-    = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.school.name,
-                                                          lat: @vacancy.school.geolocation.x,
-                                                          lng: @vacancy.school.geolocation.y }
+    = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.organisation.name,
+                                                          lat: @vacancy.organisation.geolocation.x,
+                                                          lng: @vacancy.organisation.geolocation.y }
 
     %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}

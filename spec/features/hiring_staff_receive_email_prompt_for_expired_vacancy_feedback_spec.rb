@@ -16,15 +16,15 @@ RSpec.feature 'Creating a vacancy' do
   context 'Hiring staff has expired vacancy that is not older than 2 weeks' do
     scenario 'does not receive feedback prompt e-mail' do
       current_user = User.find_by(oid: session_id)
-      create(
+      vacancy = create(
         :vacancy,
         :published,
-        school: school,
         job_title: 'Vacancy',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today + 1.week,
         publisher_user_id: current_user.id
       )
+      vacancy.organisation_vacancies.create(organisation: school)
 
       travel 2.weeks do
         perform_enqueued_jobs do
@@ -39,35 +39,35 @@ RSpec.feature 'Creating a vacancy' do
   context 'Hiring staff has 2 expired vacancies that are older than 2 weeks' do
     scenario 'receives feedback prompt email with 2 vacancies' do
       current_user = User.find_by(oid: session_id)
-      create(
+      vacancy = create(
         :vacancy,
         :published,
-        school: school,
         job_title: 'Job one',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
         publisher_user_id: current_user.id
       )
+      vacancy.organisation_vacancies.create(organisation: school)
 
-      create(
+      vacancy = create(
         :vacancy,
         :published,
-        school: school,
         job_title: 'Job two',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
         publisher_user_id: current_user.id
       )
+      vacancy.organisation_vacancies.create(organisation: school)
 
-      create(
+      vacancy = create(
         :vacancy,
         :published,
-        school: school,
         job_title: 'Job three',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today + 2.weeks,
         publisher_user_id: current_user.id
       )
+      vacancy.organisation_vacancies.create(organisation: school)
 
       travel 2.weeks do
         perform_enqueued_jobs do
@@ -87,25 +87,25 @@ RSpec.feature 'Creating a vacancy' do
     scenario 'both receives feedback prompt emails' do
       current_user = User.find_by(oid: session_id)
       another_user = create(:user, email: 'another@user.com')
-      create(
+      vacancy = create(
         :vacancy,
         :published,
-        school: school,
         job_title: 'Job one',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
         publisher_user_id: current_user.id
       )
+      vacancy.organisation_vacancies.create(organisation: school)
 
-      create(
+      vacancy = create(
         :vacancy,
         :published,
-        school: school,
         job_title: 'Job two',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
         publisher_user_id: another_user.id
       )
+      vacancy.organisation_vacancies.create(organisation: school)
 
       travel 2.weeks do
         perform_enqueued_jobs do

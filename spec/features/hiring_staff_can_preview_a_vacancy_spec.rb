@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.feature 'Hiring staff can preview a vacancy' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
-  let(:vacancy) { create(:vacancy, :draft, school: school) }
+  let(:vacancy) { create(:vacancy, :draft) }
 
   before(:each) do
+    vacancy.organisation_vacancies.create(organisation: school)
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 

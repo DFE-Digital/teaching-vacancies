@@ -1,8 +1,13 @@
 require 'rails_helper'
 
 RSpec.feature 'Viewing a single published vacancy' do
+  let(:school) { create(:school) }
+
   scenario 'Published vacancies are viewable' do
-    published_vacancy = VacancyPresenter.new(create(:vacancy, :published))
+    vacancy = create(:vacancy, :published)
+    vacancy.organisation_vacancies.create(organisation: school)
+
+    published_vacancy = VacancyPresenter.new(vacancy)
 
     visit job_path(published_vacancy)
 
@@ -10,7 +15,10 @@ RSpec.feature 'Viewing a single published vacancy' do
   end
 
   scenario 'Unpublished vacancies are not accessible' do
-    draft_vacancy = create(:vacancy, :draft)
+    vacancy = create(:vacancy, :draft)
+    vacancy.organisation_vacancies.create(organisation: school)
+
+    draft_vacancy = VacancyPresenter.new(vacancy)
 
     visit job_path(draft_vacancy)
 
@@ -19,19 +27,22 @@ RSpec.feature 'Viewing a single published vacancy' do
   end
 
   scenario 'Job post with a future publish_on date are not accessible' do
-    job_post = create(:vacancy, :future_publish)
+    vacancy = create(:vacancy, :future_publish)
+    vacancy.organisation_vacancies.create(organisation: school)
 
-    visit job_path(job_post)
+    visit job_path(vacancy)
 
     expect(page).to have_content('Page not found')
-    expect(page).to_not have_content(job_post.job_title)
+    expect(page).to_not have_content(vacancy.job_title)
   end
 
   scenario 'Expired vacancies display a warning message' do
     current_vacancy = create(:vacancy)
+    current_vacancy.organisation_vacancies.create(organisation: school)
     expired_vacancy = build(:vacancy, :expired)
     expired_vacancy.send :set_slug
     expired_vacancy.save(validate: false)
+    expired_vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(current_vacancy)
     expect(page).to have_no_content('This job post has expired')
@@ -42,6 +53,7 @@ RSpec.feature 'Viewing a single published vacancy' do
 
   scenario 'A single vacancy must contain JobPosting schema.org mark up' do
     vacancy = create(:vacancy, :job_schema)
+    vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(vacancy)
 
@@ -53,6 +65,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     vacancy = build(:vacancy, job_roles: nil)
     vacancy.send :set_slug
     vacancy.save(validate: false)
+    vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(vacancy)
     expect(page).to have_content(vacancy.job_title)
@@ -62,6 +75,8 @@ RSpec.feature 'Viewing a single published vacancy' do
   context 'A user viewing a vacancy' do
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
+      vacancy.organisation_vacancies.create(organisation: school)
+
       visit job_path(vacancy)
 
       click_on I18n.t('jobs.apply')
@@ -73,6 +88,7 @@ RSpec.feature 'Viewing a single published vacancy' do
       vacancy = build(:vacancy, education: nil, qualifications: nil,
                                 experience: nil, benefits: nil, slug: 'vacancy')
       vacancy.save(validate: false)
+      vacancy.organisation_vacancies.create(organisation: school)
 
       visit job_path(vacancy)
 
@@ -85,6 +101,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     context 'without supporting documents attached but candidate spec' do
       before do
         vacancy = create(:vacancy, :published)
+        vacancy.organisation_vacancies.create(organisation: school)
         vacancy.documents = []
         vacancy.save
         visit job_path(vacancy)
@@ -104,6 +121,7 @@ RSpec.feature 'Viewing a single published vacancy' do
     context 'with supporting documents attached and candidate spec' do
       before do
         vacancy = create(:vacancy, :published)
+        vacancy.organisation_vacancies.create(organisation: school)
         vacancy.education = nil
         vacancy.qualifications = nil
         vacancy.experience = nil
@@ -125,6 +143,7 @@ RSpec.feature 'Viewing a single published vacancy' do
 
     scenario 'the page view is tracked' do
       vacancy = create(:vacancy, :published)
+      vacancy.organisation_vacancies.create(organisation: school)
 
       expect { visit job_path(vacancy) }.to change { vacancy.page_view_counter.to_i }.by(1)
     end
@@ -132,7 +151,9 @@ RSpec.feature 'Viewing a single published vacancy' do
 
   context 'when the old vacancy URL is used' do
     scenario 'vacancy is viewable' do
-      published_vacancy = VacancyPresenter.new(create(:vacancy, :published))
+      vacancy = create(:vacancy, :published)
+      vacancy.organisation_vacancies.create(organisation: school)
+      published_vacancy = VacancyPresenter.new(vacancy)
 
       visit vacancy_path(published_vacancy)
 
@@ -141,7 +162,9 @@ RSpec.feature 'Viewing a single published vacancy' do
 
     context 'when the vacancy\'s url changes' do
       scenario 'the user is still able to use the old url' do
-        vacancy = VacancyPresenter.new(create(:vacancy, :published))
+        vacancy = create(:vacancy, :published)
+        vacancy.organisation_vacancies.create(organisation: school)
+        vacancy = VacancyPresenter.new(vacancy)
         old_path = job_path(vacancy)
         vacancy.job_title = 'A new job title'
         vacancy.refresh_slug
@@ -158,7 +181,9 @@ RSpec.feature 'Viewing a single published vacancy' do
   context 'meta tags' do
     include ActionView::Helpers::SanitizeHelper
     scenario 'the vacancy\'s meta data are rendered correctly' do
-      vacancy = VacancyPresenter.new(create(:vacancy, :published))
+      vacancy = create(:vacancy, :published)
+      vacancy.organisation_vacancies.create(organisation: school)
+      vacancy = VacancyPresenter.new(vacancy)
       visit job_path(vacancy)
 
       expect(page.find('meta[name="description"]', visible: false)['content'])
@@ -166,7 +191,9 @@ RSpec.feature 'Viewing a single published vacancy' do
     end
 
     scenario 'the vacancy\'s open graph meta data are rendered correctly' do
-      vacancy = VacancyPresenter.new(create(:vacancy, :published))
+      vacancy = create(:vacancy, :published)
+      vacancy.organisation_vacancies.create(organisation: school)
+      vacancy = VacancyPresenter.new(vacancy)
       visit job_path(vacancy)
 
       expect(page.find('meta[property="og:description"]', visible: false)['content'])

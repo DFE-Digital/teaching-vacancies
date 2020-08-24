@@ -10,7 +10,7 @@ class VacancyForm
 
   def initialize(params = {})
     @vacancy = Vacancy.new(
-      params.except(:documents_attributes, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
+      params.except(:organisation_id, :documents_attributes, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
     )
   end
 

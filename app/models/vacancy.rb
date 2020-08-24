@@ -59,11 +59,11 @@ class Vacancy < ApplicationRecord
   # If, however, you run `Vacancy.live.reindex!`, which scopes the list to only the "published" records, it only
   # consumes slightly more operation than there are indexable records.
   def self.reindex!
-    live.algolia_reindex!
+    live.includes(organisation_vacancies: :organisation).algolia_reindex!
   end
 
   def self.reindex
-    live.algolia_reindex
+    live.includes(organisation_vacancies: :organisation).algolia_reindex
   end
 
   # This is intended as a one-shot method used in conjuntion with `algolia_index...if: :listed?` to clear ununsed
@@ -138,17 +138,16 @@ class Vacancy < ApplicationRecord
       self.publish_on&.to_datetime&.to_i
     end
 
-    attribute :school do
-      school = self.school
-      { name: school.name,
-        county: school.county,
-        detailed_school_type: school.detailed_school_type&.label,
-        local_authority: school.local_authority,
-        phase: school.phase,
-        religious_character: school.religious_character,
-        region: school.region&.name,
-        school_type: school.school_type&.label&.singularize,
-        town: school.town } if school.present?
+    attribute :organisation do
+      { name: organisation.name,
+        county: organisation.county,
+        detailed_school_type: (organisation.detailed_school_type&.label if organisation.is_a?(School)),
+        local_authority: organisation.local_authority,
+        phase: organisation.phase,
+        religious_character: (organisation.religious_character if organisation.is_a?(School)),
+        region: (organisation.region&.name if organisation.is_a?(School)),
+        school_type: (organisation.school_type&.label&.singularize if organisation.is_a?(School)),
+        town: organisation.town } if organisation.present?
     end
 
     attribute :start_date do
@@ -183,11 +182,11 @@ class Vacancy < ApplicationRecord
   # rubocop:enable Metrics/BlockLength
 
   def lat
-    self.school.geolocation&.x&.to_f if school.present?
+    self.organisation.geolocation&.x&.to_f if organisation.present?
   end
 
   def lng
-    self.school.geolocation&.y&.to_f if school.present?
+    self.organisation.geolocation&.y&.to_f if organisation.present?
   end
 
   extend FriendlyId
@@ -217,8 +216,6 @@ class Vacancy < ApplicationRecord
   }
 
   belongs_to :publisher_user, class_name: 'User', optional: true
-  belongs_to :school, optional: true
-  belongs_to :school_group, optional: true
   belongs_to :subject, optional: true
   belongs_to :first_supporting_subject, class_name: 'Subject', optional: true
   belongs_to :second_supporting_subject, class_name: 'Subject', optional: true
@@ -228,7 +225,11 @@ class Vacancy < ApplicationRecord
 
   has_many :documents
 
-  delegate :name, to: :school_or_school_group, prefix: true, allow_nil: true
+  has_many :organisation_vacancies, dependent: :destroy
+  has_many :organisations, through: :organisation_vacancies
+  accepts_nested_attributes_for :organisation_vacancies
+
+  delegate :name, to: :organisation, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
     :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -254,8 +255,10 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :unindexed, (-> { live.where(initially_indexed: false) })
-  scope :in_school_ids, (-> (ids) { where(school_id: ids) })
   scope :in_central_office, (-> { where(job_location: 'central_office') })
+  scope :in_organisation_ids, -> (ids) do
+    joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids })
+  end
 
   paginates_per 10
 
@@ -266,20 +269,20 @@ class Vacancy < ApplicationRecord
   counter :page_view_counter
   counter :get_more_info_counter
 
-  def school_or_school_group
-    school.presence || school_group.presence
+  def organisation
+    organisation_vacancies.first&.organisation
   end
 
   def location
-    [school_or_school_group&.name, school_or_school_group&.town, school_or_school_group&.county].reject(&:blank?)
+    [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end
 
   def coordinates
-    return if school&.geolocation.nil?
+    return if organisation&.geolocation.nil?
 
     {
-      lat: school.geolocation.x.to_f,
-      lon: school.geolocation.y.to_f
+      lat: organisation.geolocation.x.to_f,
+      lon: organisation.geolocation.y.to_f
     }
   end
 
@@ -295,7 +298,7 @@ class Vacancy < ApplicationRecord
     as_json(
       methods: %i[coordinates],
       include: {
-        school: { methods: %i[region_name], only: %i[phase name postcode address town county local_authority] },
+        organisation: { methods: %i[region_name], only: %i[phase name postcode address town county local_authority] },
         subject: { only: %i[name] },
         first_supporting_subject: { only: %i[name] },
         second_supporting_subject: { only: %i[name] }
@@ -356,7 +359,7 @@ class Vacancy < ApplicationRecord
   def slug_candidates
     [
       :job_title,
-      %i[job_title school_or_school_group_name],
+      %i[job_title organisation_name],
       %i[job_title location]
     ]
   end

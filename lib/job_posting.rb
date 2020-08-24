@@ -30,7 +30,7 @@ class JobPosting
       suitable_for_nqt: @schema['occupationalCategory']
         .split(', ')
         .include?(I18n.t('jobs.job_role_options.nqt_suitable')) ? 'yes' : 'no',
-      school: school_by_urn_or_random
+      organisation_vacancies_attributes: [{ organisation: school_by_urn_or_random }]
     }
   end
   # rubocop:enable Metrics/AbcSize

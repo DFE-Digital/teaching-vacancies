@@ -12,13 +12,13 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
 
     let!(:vacancy) do
       create(:vacancy,
-             school: school,
              status: status,
              total_pageviews: total_pageviews,
              total_get_more_info_clicks: total_get_more_info_clicks)
     end
 
     before do
+      vacancy.organisation_vacancies.create(organisation: school)
       visit organisation_path(school)
     end
 
@@ -45,7 +45,6 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
     let!(:vacancy) do
       expired_vacancy = build(:vacancy,
                               :expired,
-                              school: school,
                               total_pageviews: total_pageviews,
                               total_get_more_info_clicks: total_get_more_info_clicks)
       expired_vacancy.save(validate: false)
@@ -53,6 +52,7 @@ RSpec.feature 'Hiring staff can see vacancy statistics' do
     end
 
     before do
+      vacancy.organisation_vacancies.create(organisation: school)
       visit jobs_with_type_organisation_path(:expired)
     end
 

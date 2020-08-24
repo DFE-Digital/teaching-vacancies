@@ -43,7 +43,7 @@ RSpec.feature 'Hiring staff can set managed organisations user preferences' do
     click_on I18n.t('buttons.continue')
 
     expect(page.current_path).to eql(organisation_path)
-    expect(user_preference.managed_school_ids).to eql(['school_group', school_1.id])
+    expect(user_preference.managed_school_ids).to eql([school_group.id, school_1.id])
   end
 
   scenario 'it allows school group users to select to manage all jobs' do

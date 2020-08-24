@@ -80,17 +80,15 @@ RSpec.describe VacancyPresenter do
 
   describe '#working_patterns' do
     it 'returns nil if working_patterns is unset' do
-      vacancy = VacancyPresenter.new(create(:vacancy,
-                                            :without_working_patterns,
-                                            school: create(:school, name: 'Smith High School')))
+      vacancy = VacancyPresenter.new(create(:vacancy, :without_working_patterns))
+      vacancy.organisation_vacancies.create(organisation: create(:school, name: 'Smith High School'))
 
       expect(vacancy.working_patterns).to be_nil
     end
 
     it 'returns a working patterns string if working_patterns is set' do
-      vacancy = VacancyPresenter.new(create(:vacancy,
-                                            school: create(:school, name: 'Smith High School'),
-                                            working_patterns: ['full_time', 'part_time']))
+      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: ['full_time', 'part_time']))
+      vacancy.organisation_vacancies.create(organisation: create(:school, name: 'Smith High School'))
 
       expect(vacancy.working_patterns).to eq(I18n.t('jobs.working_patterns_info_many',
                                                     patterns: 'full-time, part-time'))
@@ -99,17 +97,15 @@ RSpec.describe VacancyPresenter do
 
   describe '#working_patterns_for_job_schema' do
     it 'returns nil if working_patterns is unset' do
-      vacancy = VacancyPresenter.new(create(:vacancy,
-                                            :without_working_patterns,
-                                            school: create(:school, name: 'Smith High School')))
+      vacancy = VacancyPresenter.new(create(:vacancy, :without_working_patterns))
+      vacancy.organisation_vacancies.create(organisation: create(:school, name: 'Smith High School'))
 
       expect(vacancy.working_patterns_for_job_schema).to be_nil
     end
 
     it 'returns a working patterns string if working_patterns is set' do
-      vacancy = VacancyPresenter.new(create(:vacancy,
-                                            school: create(:school, name: 'Smith High School'),
-                                            working_patterns: ['full_time', 'part_time']))
+      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: ['full_time', 'part_time']))
+      vacancy.organisation_vacancies.create(organisation: create(:school, name: 'Smith High School'))
 
       expect(vacancy.working_patterns_for_job_schema).to eq('FULL_TIME, PART_TIME')
     end
@@ -132,17 +128,21 @@ RSpec.describe VacancyPresenter do
   end
 
   describe '#to_row' do
-    let(:vacancy) { VacancyPresenter.new(create(:vacancy)) }
+    let!(:vacancy) { create(:vacancy) }
+    let!(:school) { create(:school) }
+    let!(:organisation_vacancy) { vacancy.organisation_vacancies.create(organisation: school) }
+    let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
+
     before do
-      allow(vacancy).to receive(:id).and_return('123a-456b-789c')
-      allow(vacancy).to receive(:slug).and_return('my-new-vacancy')
+      allow(vacancy_presenter).to receive(:id).and_return('123a-456b-789c')
+      allow(vacancy_presenter).to receive(:slug).and_return('my-new-vacancy')
     end
 
     it 'creates a CSV row representation of the vacancy' do
-      expect(vacancy.to_row).to be_a(Hash)
-      expect(vacancy.to_row[:id]).to eq('123a-456b-789c')
-      expect(vacancy.to_row[:slug]).to eq('my-new-vacancy')
-      expect(vacancy.to_row[:status]).to eq('published')
+      expect(vacancy_presenter.to_row).to be_a(Hash)
+      expect(vacancy_presenter.to_row[:id]).to eq('123a-456b-789c')
+      expect(vacancy_presenter.to_row[:slug]).to eq('my-new-vacancy')
+      expect(vacancy_presenter.to_row[:status]).to eq('published')
     end
   end
 end

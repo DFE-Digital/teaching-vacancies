@@ -3,8 +3,11 @@ require 'rails_helper'
 RSpec.describe AuditPublishedVacancyJob, type: :job do
   include ActiveJob::TestHelper
 
+  let(:school) { create(:school) }
   let(:vacancy) { create(:vacancy) }
   subject(:job) { described_class.perform_later(vacancy.id) }
+
+  before { vacancy.organisation_vacancies.create(organisation: school) }
 
   it 'queues the job' do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)

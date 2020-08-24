@@ -5,9 +5,10 @@ RSpec.feature 'Editing a published vacancy' do
   let(:school_1) { create(:school, name: 'First school') }
   let(:school_2) { create(:school, name: 'Second school') }
   let(:session_id) { SecureRandom.uuid }
-  let(:vacancy) { create(:vacancy, :with_school_group, :complete, school_group: school_group) }
+  let(:vacancy) { create(:vacancy, :at_central_office, :complete) }
 
   before do
+    vacancy.organisation_vacancies.create(organisation: school_group)
     allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)

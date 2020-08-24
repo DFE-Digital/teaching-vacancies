@@ -7,7 +7,8 @@ RSpec.feature 'Hiring staff can share their vacancy' do
   end
 
   scenario 'A school can visit their page as the job seeker would' do
-    vacancy = create(:vacancy, school: school)
+    vacancy = create(:vacancy)
+    vacancy.organisation_vacancies.create(organisation: school)
 
     visit organisation_path
 

@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :vacancy do
     association :leadership
-    association :school
 
     after :create do |vacancy|
       create_list :document, 3, vacancy: vacancy
@@ -34,17 +33,13 @@ FactoryBot.define do
     suitable_for_nqt { 'no' }
     working_patterns { ['full_time'] }
 
-    trait :with_school_group do
-      association :school, strategy: :null
-      association :school_group
+    trait :at_central_office do
       job_location { 'central_office' }
-      readable_job_location { 'Trust head office' }
+      readable_job_location { I18n.t('hiring_staff.organisations.school_groups.readable_job_location') }
     end
 
-    trait :with_school_group_at_school do
-      association :school_group
+    trait :at_one_school do
       job_location { 'at_one_school' }
-      readable_job_location { school.name }
     end
 
     trait :fail_minimum_validation do

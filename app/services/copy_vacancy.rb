@@ -6,6 +6,8 @@ class CopyVacancy
   def initialize(vacancy)
     @vacancy = vacancy
     setup_new_vacancy
+    setup_organisation_vacancies
+    setup_job_location
     reset_candidate_specification if @vacancy.any_candidate_specification?
     copy_legacy_subjects
   end
@@ -60,5 +62,21 @@ class CopyVacancy
     @new_vacancy.total_pageviews_updated_at = Time.zone.now
     @new_vacancy.total_get_more_info_clicks = 0
     @new_vacancy.total_get_more_info_clicks_updated_at = Time.zone.now
+  end
+
+  def setup_organisation_vacancies
+    @vacancy.organisation_vacancies.each do |organisation_vacancy|
+      @new_vacancy.organisation_vacancies.build(organisation: organisation_vacancy.organisation)
+    end
+  end
+
+  def setup_job_location
+    if @new_vacancy.organisation.is_a?(School)
+      @new_vacancy.job_location = 'at_one_school'
+      @new_vacancy.readable_job_location = @new_vacancy.organisation_name
+    else
+      @new_vacancy.job_location = 'central_office'
+      @new_vacancy.readable_job_location = I18n.t('hiring_staff.organisations.school_groups.readable_job_location')
+    end
   end
 end

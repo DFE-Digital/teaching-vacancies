@@ -7,8 +7,6 @@ class School < Organisation
   belongs_to :detailed_school_type, optional: true
   belongs_to :region
 
-  has_many :vacancies
-
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 

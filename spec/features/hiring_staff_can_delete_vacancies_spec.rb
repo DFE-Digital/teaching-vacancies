@@ -1,16 +1,18 @@
 require 'rails_helper'
 RSpec.feature 'School deleting vacancies' do
   let(:school) { create(:school) }
-  let(:vacancy) { create(:vacancy, school: school) }
+  let(:vacancy) { create(:vacancy) }
   let(:session_id) { SecureRandom.uuid }
 
   before do
+    vacancy.organisation_vacancies.create(organisation: school)
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
     stub_document_deletion_of_vacancy
   end
 
   scenario 'A school can delete a vacancy from a list' do
-    vacancy2 = create(:vacancy, school: school)
+    vacancy2 = create(:vacancy)
+    vacancy2.organisation_vacancies.create(organisation: school)
 
     delete_vacancy(school, vacancy.id)
 
@@ -66,7 +68,7 @@ RSpec.feature 'School deleting vacancies' do
     # We need to use a `vacancy` object created in the test so that we can stub out the method
     # Vacancy#delete_documents, which otherwise will attempt HTTP connections.
     allow_any_instance_of(HiringStaff::Vacancies::ApplicationController).to receive_message_chain(
-      :current_organisation, :vacancies, :find
+      :current_organisation, :all_vacancies, :find
     ).and_return(vacancy)
     allow(vacancy).to receive(:delete_documents).and_return(nil)
   end

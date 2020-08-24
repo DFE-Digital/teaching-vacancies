@@ -59,7 +59,8 @@ RSpec.describe VacancyPublishFeedback, type: :model do
     let(:school) { create(:school) }
     let(:created_at) { '2019-01-01T00:00:00+00:00' }
     let(:user) { create(:user) }
-    let(:vacancy) { create(:vacancy, school: school) }
+    let(:vacancy) { create(:vacancy) }
+    let!(:vacancy_organisation) { vacancy.organisation_vacancies.create(organisation: school) }
     let(:rating) { 5 }
     let(:comment) { 'Great!' }
     let(:user_participation_response) { :interested }

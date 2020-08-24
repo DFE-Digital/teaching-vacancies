@@ -7,12 +7,12 @@ RSpec.feature 'Vacancy publish feedback' do
     choose('vacancy-publish-feedback-user-participation-response-not-interested-field')
   }
 
-  before(:each) do
-    stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
-  end
+  before { stub_hiring_staff_auth(urn: school.urn, session_id: session_id) }
 
   context 'The feedback page can not be accessed for a draft job post' do
-    let(:draft_job) { create(:vacancy, :complete, :draft, school_id: school.id) }
+    let(:draft_job) { create(:vacancy, :complete, :draft) }
+
+    before { draft_job.organisation_vacancies.create(organisation: school) }
 
     scenario 'can not be accessed for non-published vacancies' do
       visit new_organisation_job_feedback_path(draft_job.id)
@@ -22,7 +22,9 @@ RSpec.feature 'Vacancy publish feedback' do
   end
 
   context 'The feedback page can not be accessed for a vacancy that has already received feedback' do
-    let(:published_job) { create(:vacancy, :complete, school_id: school.id) }
+    let(:published_job) { create(:vacancy, :complete) }
+
+    before { published_job.organisation_vacancies.create(organisation: school) }
 
     scenario 'can not be accessed for non-published vacancies' do
       create(:vacancy_publish_feedback, vacancy: published_job)
@@ -34,7 +36,9 @@ RSpec.feature 'Vacancy publish feedback' do
   end
 
   context 'Submiting feedback for a published vacancy' do
-    let(:published_job) { create(:vacancy, :complete, school_id: school.id) }
+    let(:published_job) { create(:vacancy, :complete) }
+
+    before { published_job.organisation_vacancies.create(organisation: school) }
 
     scenario 'must have a participation response' do
       visit new_organisation_job_feedback_path(published_job.id)

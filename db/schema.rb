@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_111239) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-  
+
   create_table "activities", force: :cascade do |t|
     t.uuid "trackable_id"
     t.string "trackable_type"
@@ -115,6 +115,11 @@ ActiveRecord::Schema.define(version: 2020_08_18_111239) do
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "organisation_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organisation_id"
+    t.uuid "vacancy_id"
   end
 
   create_table "organisations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -295,9 +300,9 @@ ActiveRecord::Schema.define(version: 2020_08_18_111239) do
     t.uuid "publisher_user_id"
     t.datetime "expiry_time"
     t.string "supporting_documents"
-    t.string "legacy_job_roles", array: true
     t.string "salary"
     t.integer "completed_step"
+    t.string "legacy_job_roles", array: true
     t.text "about_school"
     t.string "state", default: "create"
     t.string "subjects", array: true

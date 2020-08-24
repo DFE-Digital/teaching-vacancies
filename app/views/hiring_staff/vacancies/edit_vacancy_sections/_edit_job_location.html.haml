@@ -13,5 +13,5 @@
       %h4.govuk-heading-s= t("school_groups.job_location_heading.review.#{@vacancy.job_location}")
 
     %dd.app-check-your-answers__answer.first-question
-      %div{ class: 'govuk-!-font-weight-bold' }= @vacancy.school_or_school_group.name
-      = location(@vacancy.school_or_school_group)
+      %div{ class: 'govuk-!-font-weight-bold' }= @vacancy.organisation.name
+      = location(@vacancy.organisation)

@@ -2,7 +2,7 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
   include OrganisationHelper
 
   before_action :verify_school_group
-  before_action :set_school_options
+  before_action :set_organisation_options
 
   def show
     @managed_organisations_form = ManagedOrganisationsForm.new(vacancy_filter.to_h)
@@ -33,12 +33,12 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
     @vacancy_filter ||= HiringStaff::VacancyFilter.new(current_user, current_school_group)
   end
 
-  def set_school_options
-    @school_options = current_organisation.schools.order(:name).map do |school|
+  def set_organisation_options
+    @organisation_options = current_organisation.schools.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
-    @school_options.unshift(
-      OpenStruct.new({ id: 'school_group',
+    @organisation_options.unshift(
+      OpenStruct.new({ id: current_organisation.id,
                        name: I18n.t('hiring_staff.managed_organisations.options.school_group'),
                        address: full_address(current_organisation) })
     )

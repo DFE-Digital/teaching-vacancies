@@ -2,7 +2,7 @@ class VacancyPresenter < BasePresenter
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::UrlHelper
 
-  delegate :location, to: :school
+  delegate :location, to: :organisation
   delegate :working_patterns, to: :model, prefix: true
   delegate :job_roles, to: :model, prefix: true
 
@@ -91,13 +91,13 @@ class VacancyPresenter < BasePresenter
       publish_on: publish_on,
       expires_on: expires_on,
       starts_on: starts_on,
-      school_urn: school.urn,
-      school_county: school.county
+      school_urn: organisation.urn,
+      school_county: organisation.county
     }
   end
 
-  def job_title_and_school_or_school_group_name
-    "#{job_title} at #{school_or_school_group_name}"
+  def job_title_and_organisation_name
+    "#{job_title} at #{organisation_name}"
   end
 
   def show_job_roles

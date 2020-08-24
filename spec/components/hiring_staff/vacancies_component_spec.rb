@@ -24,7 +24,10 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
   context 'when organisation has active vacancies' do
     let(:organisation) { create(:school, name: 'A school with jobs') }
-    let!(:vacancy) { create(:vacancy, :published, school: organisation) }
+    let(:vacancy) { create(:vacancy, :published) }
+
+    before { vacancy.organisation_vacancies.create(organisation: organisation) }
+
     let!(:inline_component) { render_inline(subject) }
 
     it 'renders the vacancies component' do
@@ -55,8 +58,8 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
     context 'when the organisation is a school group' do
       let(:organisation) { create(:school_group) }
-      let!(:vacancy) { create(:vacancy, :published, :with_school_group, school_group: organisation) }
-      let(:filters) { { managed_school_ids: [], managed_organisations: 'school_group' } }
+      let!(:vacancy) { create(:vacancy, :published, :at_central_office) }
+      let(:filters) { { managed_school_ids: [], managed_organisations: organisation.id } }
 
       it 'renders the vacancy readable job location in the table' do
         expect(
@@ -74,18 +77,23 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
   context 'when filtering results' do
     let(:organisation) { create(:school_group) }
-    let!(:school_oxford) { create(:school, name: 'Oxford') }
-    let!(:school_cambridge) { create(:school, name: 'Cambridge') }
-    let!(:vacancy_oxford) { create(:vacancy, :published, :with_school_group_at_school,
-      school_group: organisation, school: school_oxford)
-    }
-    let!(:vacancy_cambridge) { create(:vacancy, :published, :with_school_group_at_school,
-      school_group: organisation, school: school_cambridge)
-    }
+    let(:school_oxford) { create(:school, name: 'Oxford') }
+    let(:school_cambridge) { create(:school, name: 'Cambridge') }
+    let(:vacancy_oxford) do
+      create(:vacancy, :published, :at_one_school, readable_job_location: school_oxford.name)
+    end
+    let(:vacancy_cambridge) do
+      create(:vacancy, :published, :at_one_school, readable_job_location: school_cambridge.name)
+    end
+    let(:filters) { { managed_school_ids: [school_oxford.id], managed_organisations: '' } }
+
+    before do
+      vacancy_oxford.organisation_vacancies.create(organisation: school_oxford)
+      vacancy_cambridge.organisation_vacancies.create(organisation: organisation)
+      vacancy_cambridge.organisation_vacancies.create(organisation: school_cambridge)
+    end
 
     let!(:inline_component) { render_inline(subject) }
-
-    let(:filters) { { managed_school_ids: [school_oxford.id], managed_organisations: '' } }
 
     it 'renders the vacancy in Oxford' do
       expect(rendered_component).to include(school_oxford.name)

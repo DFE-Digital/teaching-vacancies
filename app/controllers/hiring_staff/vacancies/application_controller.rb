@@ -16,11 +16,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def set_vacancy
     if params[:job_id]
-      @vacancy = current_organisation.vacancies.find(params[:job_id])
+      @vacancy = current_organisation.all_vacancies.find(params[:job_id])
     elsif params[:id]
-      @vacancy = current_organisation.vacancies.find(params[:id])
+      @vacancy = current_organisation.all_vacancies.find(params[:id])
     elsif session_vacancy_id
-      @vacancy = current_organisation.vacancies.find(session_vacancy_id)
+      @vacancy = current_organisation.all_vacancies.find(session_vacancy_id)
     end
   end
 
@@ -30,13 +30,18 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def update_vacancy(attributes, vacancy = nil)
-    vacancy ||= current_organisation.vacancies.find(session_vacancy_id)
+    vacancy ||= current_organisation.all_vacancies.find(session_vacancy_id)
     vacancy.assign_attributes(attributes)
     vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do
       vacancy.save(validate: false)
     end
     vacancy
+  end
+
+  def set_organisations(vacancy, organisation_id)
+    vacancy.organisation_vacancies.delete_all
+    vacancy.organisation_vacancies.create(organisation_id: organisation_id)
   end
 
   def save_vacancy_as_draft_if_save_and_return_later(attributes, vacancy)
@@ -87,7 +92,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def retrieve_job_from_db
-    current_organisation.vacancies.published.find(vacancy_id).attributes
+    current_organisation.all_vacancies.published.find(vacancy_id).attributes
   end
 
   def source_update?

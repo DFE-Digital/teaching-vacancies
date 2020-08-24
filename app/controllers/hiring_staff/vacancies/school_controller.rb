@@ -3,7 +3,7 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
 
   before_action :verify_school_group
   before_action :set_up_url
-  before_action :set_school_options, only: %i[show update]
+  before_action :set_organisation_options, only: %i[show update]
   before_action only: %i[create update] do
     set_up_form(SchoolForm)
   end
@@ -18,10 +18,9 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def create
-    @form.vacancy.readable_job_location = readable_job_location(
-      session[:vacancy_attributes]['job_location'], @form.vacancy.school.name
-    )
+    @form.vacancy.readable_job_location = readable_job_location(session[:vacancy_attributes]['job_location'])
     store_vacancy_attributes(@form.vacancy.attributes)
+    session[:organisation_id] = school.id
     if @form.valid?
       redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
@@ -31,10 +30,8 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
 
   def update
     if @form.valid?
-      @vacancy.update(
-        readable_job_location: readable_job_location(@vacancy.job_location, @form.vacancy.school.name)
-      )
-      update_vacancy(form_params, @vacancy)
+      @vacancy.update(readable_job_location: readable_job_location(@vacancy.job_location))
+      set_organisations(@vacancy, school.id)
       update_google_index(@vacancy) if @vacancy.listed?
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     else
@@ -49,7 +46,7 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def form_params
-    params.require(:school_form).permit(:state, :school_id).merge(completed_step: current_step)
+    params.require(:school_form).permit(:state, :organisation_id).merge(completed_step: current_step)
   end
 
   def next_step
@@ -57,13 +54,17 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
     vacancy_id.present? ? organisation_job_job_specification_path(@vacancy.id) : job_specification_organisation_job_path
   end
 
-  def set_school_options
-    @school_options = current_organisation.schools.order(:name).map do |school|
+  def set_organisation_options
+    @organisation_options = current_organisation.schools.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
   end
 
-  def readable_job_location(job_location, school_name)
-    school_name if job_location == 'at_one_school'
+  def school
+    current_organisation.schools.find(form_params[:organisation_id])
+  end
+
+  def readable_job_location(job_location)
+    school.name if job_location == 'at_one_school'
   end
 end
