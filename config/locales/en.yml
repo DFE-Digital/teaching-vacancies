@@ -338,14 +338,10 @@ en:
       sen_specialist: 'SEN specialist'
       nqt_suitable: 'Suitable for NQTs'
     education_phase_options:
-      all_through: All through
-      middle_deemed_primary: Middle deemed primary
-      middle_deemed_secondary: Middle deemed secondary
-      not_applicable: Not applicable
-      nursery: Nursery
       primary: Primary
+      middle: Middle
       secondary: Secondary
-      sixteen_plus: 16+
+      16-19: 16-19
     working_pattern_options:
       full_time: Full-time
       part_time: Part-time

@@ -41,10 +41,10 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context 'with the phases filter' do
-      let(:search_criteria) { { phases: ['secondary', 'sixteen_plus'] } }
+      let(:search_criteria) { { phases: ['secondary', '16-19'] } }
 
       it 'formats and returns the phases' do
-        expect(presenter.filtered_search_criteria['education_phases']).to eq('Secondary, 16+')
+        expect(presenter.filtered_search_criteria['education_phases']).to eq('Secondary, 16-19')
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe SubscriptionPresenter do
     context 'with unsorted filters' do
       let(:search_criteria) do
         {
-          phases: ['secondary', 'sixteen_plus'],
+          phases: ['secondary', '16-19'],
           radius: '10',
           job_title: 'leader',
           newly_qualified_teacher: 'true',
@@ -75,7 +75,7 @@ RSpec.describe SubscriptionPresenter do
           'subject' => 'maths',
           'job_title' => 'leader',
           'working_patterns' => 'Part-time',
-          'education_phases' => 'Secondary, 16+',
+          'education_phases' => 'Secondary, 16-19',
           '' => 'Suitable for NQTs'
         )
       end
@@ -135,10 +135,10 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context 'when array values in search criteria' do
-      let(:search_criteria) { { phases: ['primary', 'secondary', 'sixteen_plus'] } }
+      let(:search_criteria) { { phases: ['primary', 'secondary', '16-19'] } }
 
       it 'makes them human readable' do
-        expect(to_row[:phases]).to eq('primary, secondary, sixteen_plus')
+        expect(to_row[:phases]).to eq('primary, secondary, 16-19')
       end
     end
   end

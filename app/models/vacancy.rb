@@ -165,7 +165,7 @@ class Vacancy < ApplicationRecord
 
     geoloc :lat, :lng
 
-    attributesForFaceting [:job_roles, :working_patterns, 'school.readable_phases', :listing_status]
+    attributesForFaceting [:job_roles, :working_patterns, 'organisation.readable_phases', :listing_status]
 
     add_replica 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
