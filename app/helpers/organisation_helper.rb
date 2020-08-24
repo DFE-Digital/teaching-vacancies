@@ -20,6 +20,10 @@ module OrganisationHelper
     organisation.is_a?(School) ? 'school' : 'trust'
   end
 
+  def school_phase(school)
+    school.readable_phases&.map(&:capitalize)&.reject(&:blank?)&.join(', ')
+  end
+
   def school_size(school)
     if school.gias_data.present?
       return number_of_pupils(school) if school.gias_data['NumberOfPupils'].present?

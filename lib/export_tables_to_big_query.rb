@@ -25,6 +25,7 @@ class ExportTablesToBigQuery
     job_summary
     legacy_job_roles
     qualifications
+    readable_phases
     supporting_documents
   ].freeze
 

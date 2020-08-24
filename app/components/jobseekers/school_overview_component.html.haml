@@ -12,7 +12,7 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
         %td.govuk-table__cell
-          = @vacancy.organisation.phase.titleize
+          = school_phase(@vacancy.organisation)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.school_size')

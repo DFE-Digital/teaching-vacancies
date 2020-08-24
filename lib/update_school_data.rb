@@ -28,6 +28,8 @@ class UpdateSchoolData
     town: 'Town',
   }
 
+  READABLE_PHASE_MAPPINGS = School::READABLE_PHASE_MAPPINGS
+
   def run!
     save_csv_file
     CSV.foreach(csv_file_location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
@@ -50,8 +52,13 @@ class UpdateSchoolData
     set_region(school, row)
     set_school_type(school, row)
     set_gias_data_as_json(school, row)
+    set_readable_phases(school)
 
     school
+  end
+
+  def set_readable_phases(school)
+    school.readable_phases = READABLE_PHASE_MAPPINGS[school.phase.to_sym]
   end
 
   def set_complex_properties(school, row)

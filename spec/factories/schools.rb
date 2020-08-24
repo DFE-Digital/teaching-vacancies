@@ -30,6 +30,7 @@ FactoryBot.define do
     name { Faker::Educator.secondary_school.strip.gsub("'", '') }
     northing { '1' }
     phase { :secondary }
+    readable_phases { ['secondary'] }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city }
     urn { Faker::Number.number(digits: 6) }
@@ -37,14 +38,17 @@ FactoryBot.define do
 
     trait :nursery do
       phase { :nursery }
+      readable_phases { ['nursery'] }
     end
 
     trait :primary do
       phase { :primary }
+      readable_phases { ['primary'] }
     end
 
     trait :secondary do
       phase { :secondary }
+      readable_phases { ['secondary'] }
     end
 
     trait :in_london do
