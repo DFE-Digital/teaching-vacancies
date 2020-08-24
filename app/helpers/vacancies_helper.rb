@@ -42,16 +42,30 @@ module VacanciesHelper
 
   def page_title(vacancy)
     return I18n.t('jobs.copy_job_title', job_title: vacancy.job_title) if vacancy.state == 'copy'
-    return I18n.t('jobs.create_a_job_title', organisation: vacancy.organisation&.name.presence || '') if
+    return I18n.t('jobs.create_a_job_title', organisation: organisation_from_job_location(vacancy)) if
       %w(create review).include?(vacancy.state)
     I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
   end
 
+  def organisation_from_job_location(vacancy)
+    case vacancy.job_location
+    when 'at_one_school', 'central_office' then vacancy.organisation_name
+    when 'at_multiple_schools' then 'multiple schools'
+    end
+  end
+
   def page_title_no_vacancy
-    return I18n.t('jobs.create_a_job_title', organisation: session[:vacancy_attributes]['readable_job_location']) if
-      session[:vacancy_attributes].present? && session[:vacancy_attributes]['school_id'].present? &&
-      session[:vacancy_attributes]['job_location'] == 'at_one_school'
-    I18n.t('jobs.create_a_job_title', organisation: current_organisation.name)
+    organisation_for_title =
+      if session[:vacancy_attributes] && session[:vacancy_attributes]['job_location'] == 'at_one_school'
+        session[:vacancy_attributes]['readable_job_location']
+      elsif session[:vacancy_attributes] && session[:vacancy_attributes]['job_location'] == 'at_multiple_schools'
+        'multiple schools'
+      else
+        current_organisation.name
+      end
+
+    organisation_for_title ?
+      I18n.t('jobs.create_a_job_title', organisation: organisation_for_title) : I18n.t('jobs.create_a_job_title_no_org')
   end
 
   def missing_subjects?(vacancy)
