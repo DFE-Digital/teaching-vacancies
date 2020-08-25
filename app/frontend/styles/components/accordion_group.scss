@@ -31,6 +31,10 @@
     font-size: 0.9em;
   }
 
+  .checkbox-label__bold .govuk-checkboxes__item label {
+    font-weight: $bold-font-weight;
+  }
+
   .govuk-checkboxes__item {
     margin-left: govuk-spacing(2);
     margin-top: 2px;
