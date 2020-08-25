@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_160723) do
+ActiveRecord::Schema.define(version: 2020_08_25_081501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -168,47 +168,11 @@ ActiveRecord::Schema.define(version: 2020_08_20_160723) do
     t.uuid "school_group_id"
   end
 
-  create_table "school_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "uid", null: false
-    t.json "gias_data"
-    t.text "description"
-  end
-
   create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label", null: false
     t.text "code"
     t.index ["code"], name: "index_school_types_on_code", unique: true
     t.index ["label"], name: "index_school_types_on_label", unique: true
-  end
-
-  create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.string "urn", null: false
-    t.string "address", null: false
-    t.string "town", null: false
-    t.string "county"
-    t.string "postcode", null: false
-    t.integer "phase"
-    t.string "url"
-    t.integer "minimum_age"
-    t.integer "maximum_age"
-    t.uuid "school_type_id"
-    t.uuid "region_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "locality"
-    t.text "address3"
-    t.uuid "detailed_school_type_id"
-    t.text "easting"
-    t.text "northing"
-    t.point "geolocation"
-    t.string "local_authority"
-    t.json "gias_data"
-    t.index ["detailed_school_type_id"], name: "index_schools_on_detailed_school_type_id"
-    t.index ["region_id"], name: "index_schools_on_region_id"
-    t.index ["school_type_id"], name: "index_schools_on_school_type_id"
-    t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -281,7 +245,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_160723) do
     t.integer "status"
     t.date "expires_on"
     t.date "publish_on"
-    t.uuid "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "reference", default: -> { "gen_random_uuid()" }, null: false
@@ -310,7 +273,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_160723) do
     t.text "school_visits"
     t.text "how_to_apply"
     t.boolean "initially_indexed", default: false
-    t.uuid "school_group_id"
     t.integer "job_location"
     t.string "readable_job_location"
     t.string "suitable_for_nqt"
@@ -321,8 +283,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_160723) do
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
-    t.index ["school_group_id"], name: "index_vacancies_on_school_group_id"
-    t.index ["school_id"], name: "index_vacancies_on_school_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
   end
@@ -342,7 +302,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_160723) do
 
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "users"
-  add_foreign_key "schools", "detailed_school_types"
   add_foreign_key "user_preferences", "users"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end
