@@ -48,8 +48,8 @@ RSpec.describe VacanciesHelper, type: :helper do
     it 'returns create a job title if vacancy state is create' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('create')
-      allow(vacancy).to receive(:organisation).and_return(school)
-      allow(school).to receive(:name).and_return('Teaching Vacancies Academy')
+      allow(vacancy).to receive(:job_location).and_return('at_one_school')
+      allow(vacancy).to receive(:organisation_name).and_return('Teaching Vacancies Academy')
 
       expect(page_title(vacancy)).to eql(I18n.t('jobs.create_a_job_title', organisation: 'Teaching Vacancies Academy'))
     end
@@ -57,8 +57,8 @@ RSpec.describe VacanciesHelper, type: :helper do
     it 'returns create a job title if vacancy state is review' do
       allow(vacancy).to receive(:published?).and_return(false)
       allow(vacancy).to receive(:state).and_return('review')
-      allow(vacancy).to receive(:organisation).and_return(school)
-      allow(school).to receive(:name).and_return('Teaching Vacancies Academy')
+      allow(vacancy).to receive(:job_location).and_return('at_one_school')
+      allow(vacancy).to receive(:organisation_name).and_return('Teaching Vacancies Academy')
 
       expect(page_title(vacancy)).to eql(I18n.t('jobs.create_a_job_title', organisation: 'Teaching Vacancies Academy'))
     end
