@@ -18,7 +18,7 @@ export const create = (container, input, key) => {
     });
 
     ul.addEventListener('click', (e) => {
-      setInputValue(e.target.dataset[key]);
+      setInputValue(input, e.target.dataset[key]);
       input.dispatchEvent(new Event('change', { bubbles: true }));
     });
 
@@ -45,9 +45,6 @@ export const show = (options, container, input, key) => {
   getRenderedList(container).classList.add('autocomplete__menu--visible');
   getRenderedList(container).classList.remove('autocomplete__menu--hidden');
   input.setAttribute('aria-expanded', true);
-
-  Array.from(getCurrentOptionElementsArray(container))
-    .forEach((element) => element.addEventListener('focus', (e) => setInputValue(input, e.target.dataset[key]), true));
 };
 
 export const setInputValue = (input, value) => {
