@@ -1,3 +1,7 @@
+.filter-group__container {
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
 .js-enabled .filters-submit {
   display: none;
 }
