@@ -103,8 +103,8 @@ class ExportTablesToBigQuery
     end
 
     if table.column_names.include?('geolocation')
-      @bigquery_data['geolocation_x'] = record.geolocation.x
-      @bigquery_data['geolocation_y'] = record.geolocation.y
+      @bigquery_data['geolocation_x'] = record.geolocation&.x
+      @bigquery_data['geolocation_y'] = record.geolocation&.y
     end
 
     json_record = record.data if record.respond_to?(:data)
