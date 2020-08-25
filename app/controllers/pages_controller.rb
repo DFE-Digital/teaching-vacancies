@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   include HighVoltage::StaticPage
 
   def home
-    @jobs_search_form = VacancyAlgoliaSearchForm.new(params)
+    @jobs_search_form = VacancyAlgoliaSearchForm.new
   end
 
   def invalid_page
