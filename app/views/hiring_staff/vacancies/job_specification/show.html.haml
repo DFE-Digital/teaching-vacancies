@@ -51,7 +51,7 @@
           =t('helpers.hint.job_specification_form.subjects')
 
         %div{ class: 'govuk-!-margin-bottom-6' }
-          = render 'shared/checkbox_group', classes: 'checkbox-label__bold', search: true, f: f, attribute_name: :subjects, options: subject_options, value_method: :first, text_method: :first, hint_method: :last, small: true
+          = render 'shared/checkbox_group', classes: 'checkbox-label__bold', f: f, search: true, scroll: true, attribute_name: :subjects, options: subject_options, value_method: :first, text_method: :first, hint_method: :last, small: true
 
       = f.govuk_collection_check_boxes :working_patterns,
         working_pattern_options,

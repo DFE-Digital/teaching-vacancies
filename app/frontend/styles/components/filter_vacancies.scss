@@ -35,11 +35,6 @@
     padding: 10px;
     width: 100%;
 
-    &--scrollable {
-      height: 220px;
-      overflow: auto;
-    }
-
     label {
       background: govuk-colour('white');
       font-size: $small-font-size;
