@@ -29,11 +29,11 @@ paas_worker_app_memory              = 1536
 # StatusCake
 
 statuscake_alerts = {
-  "tvsstg" = {
+  "tvsprod" = {
     website_name  = "teaching-vacancies-production"
     website_url   = "https://teaching-vacancies.service.gov.uk/check"
     test_type     = "HTTP"
-    check_rate    = "60"
+    check_rate    = "30"
     contact_group = [183741]
     trigger_rate  = "0"
     custom_header = "{\"Content-Type\": \"application/x-www-form-urlencoded\"}"
