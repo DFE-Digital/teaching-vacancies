@@ -2,8 +2,7 @@
   %summary.govuk-details__summary
     %span.govuk-details__summary-text
       =t('jobs.filters.add_more_filters')
-  -# TODO: add 'education_phases' to array once the list of options has been reduced
-  - ['job_roles', 'working_patterns'].each do |filter_type|
+  - ['job_roles', 'phases', 'working_patterns'].each do |filter_type|
     %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
       %h3.govuk-label.govuk-label--s{ id: "checkbox-group-heading-#{filter_type}" }
         = t("jobs.filters.#{filter_type}")

@@ -5,7 +5,7 @@ class VacancyAlgoliaSearchForm
               :location, :location_category, :radius,
               :job_roles, :phases, :working_patterns,
               :jobs_sort, :page,
-              :job_role_options, :education_phase_options, :working_pattern_options,
+              :job_role_options, :phase_options, :working_pattern_options,
               :total_filters
 
   def initialize(params = {})
@@ -44,9 +44,7 @@ class VacancyAlgoliaSearchForm
 
   def set_facet_options
     @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("jobs.job_role_options.#{option}")] }
-    @education_phase_options = School.phases.keys.map do |option|
-      [option, I18n.t("jobs.education_phase_options.#{option}")]
-    end
+    @phase_options = [['primary', 'Primary'], ['middle', 'Middle'], ['secondary', 'Secondary'], ['16-19', '16-19']]
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("jobs.working_pattern_options.#{option}")]
     end

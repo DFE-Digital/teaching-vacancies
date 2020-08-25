@@ -13,10 +13,9 @@ RSpec.feature 'Searching on the home page' do
       check I18n.t('jobs.job_role_options.nqt_suitable'),
             name: 'jobs_search_form[job_roles][]',
             visible: false
-      # Uncomment once we include education phase on the search filters
-      # check I18n.t('jobs.education_phase_options.primary'),
-      #       name: 'jobs_search_form[phases][]',
-      #       visible: false
+      check I18n.t('jobs.education_phase_options.primary'),
+            name: 'jobs_search_form[phases][]',
+            visible: false
       check I18n.t('jobs.working_pattern_options.part_time'),
             name: 'jobs_search_form[working_patterns][]',
             visible: false
@@ -34,8 +33,8 @@ RSpec.feature 'Searching on the home page' do
     expect(find_field('jobs_search_form[location]').value).to eq 'bristol'
     expect(page).to have_css('.moj-filter__tag', count: 3)
     expect(page.find('#jobs-search-form-job-roles-nqt-suitable-field')).to be_checked
-    # expect(page.find('#jobs-search-form-education-phases-primary-field')).to be_checked
-    # expect(page.find('#jobs-search-form-education-phases-secondary-field')).not_to be_checked
+    expect(page.find('#jobs-search-form-education-phases-primary-field')).to be_checked
+    expect(page.find('#jobs-search-form-education-phases-secondary-field')).not_to be_checked
     expect(page.find('#jobs-search-form-working-patterns-part-time-field')).to be_checked
     expect(page.find('#jobs-search-form-working-patterns-full-time-field')).to be_checked
   end

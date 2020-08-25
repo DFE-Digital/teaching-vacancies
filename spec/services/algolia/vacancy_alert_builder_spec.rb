@@ -83,7 +83,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
 
         it 'adds school phase filter' do
           expect(subject.search_filters).to include(
-            '(school.readable_phases:secondary OR school.readable_phases:primary)'
+            '(organisation.readable_phases:secondary OR organisation.readable_phases:primary)'
           )
         end
       end
@@ -96,7 +96,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_datetime.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
         " #{date_today.to_i}) AND "\
-        '(school.readable_phases:secondary OR school.readable_phases:primary) AND '\
+        '(organisation.readable_phases:secondary OR organisation.readable_phases:primary) AND '\
         '(working_patterns:full_time OR working_patterns:part_time) AND '\
         '(job_roles:nqt_suitable)'
       end
