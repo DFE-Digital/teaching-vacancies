@@ -1,3 +1,5 @@
+repository=dfedigital/teaching-vacancies
+
 .PHONY: build
 build: ## Create a new image
 		docker-compose build
@@ -35,16 +37,31 @@ review:
 staging:
 		$(eval env=staging)
 
-deploy-local-image:
-		$(eval repository=dfedigital/teaching-vacancies)
+.PHONY: build-local-image
+build-local-image:
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
 		docker build -t $(repository):$(tag) .
 		docker push $(repository):$(tag)
+
+.PHONY: deploy-local-image
+deploy-local-image: build-local-image deploy
+
+.PHONY: init-terraform
+init-terraform:
+		$(if $(passcode), , $(error Missing environment variable "passcode"))
+		$(if $(tag), , $(error Missing environment variable "tag"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		$(eval export TF_WORKSPACE=$(env))
 		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
 		terraform init -input=false terraform/app
+
+.PHONY: deploy
+deploy: init-terraform
 		terraform apply -input=false -var-file terraform/workspace-variables/$(env).tfvars -auto-approve terraform/app
+
+.PHONY: deploy-plan
+deploy-plan: init-terraform
+		terraform plan -var-file terraform/workspace-variables/$(env).tfvars terraform/app
 
 .PHONY: print-env
 print-env:
