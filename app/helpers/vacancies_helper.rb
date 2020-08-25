@@ -48,10 +48,7 @@ module VacanciesHelper
   end
 
   def organisation_from_job_location(vacancy)
-    case vacancy.job_location
-    when 'at_one_school', 'central_office' then vacancy.organisation_name
-    when 'at_multiple_schools' then 'multiple schools'
-    end
+    vacancy.job_location == 'at_multiple_schools' ? 'multiple schools' : vacancy.organisation_name
   end
 
   def page_title_no_vacancy
