@@ -17,8 +17,6 @@
     .govuk-button {
       @include govuk-responsive-margin(2, 'bottom');
     }
-
-    overflow: hidden;
   }
 
   .govuk-button--start {
@@ -73,6 +71,7 @@
       margin-bottom: 0;
       // max-height is set when overflow: auto, but this page uses no scroll for govuk-form-groups
       max-height: none;
+      overflow: hidden;
     }
   }
 }
