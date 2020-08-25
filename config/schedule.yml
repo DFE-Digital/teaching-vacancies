@@ -23,6 +23,11 @@ import_school_group_data:
   class: 'ImportSchoolGroupDataJob'
   queue: import_school_group_data
 
+refresh_cached_vacancy_statistics:
+  cron: '*/15 * * * *'
+  class: 'RefreshCachedVacancyStatisticsJob'
+  queue: refresh_cached_vacancy_statistics
+
 remove_vacancies_that_expired_yesterday:
   cron: '0 03 * * *'
   class: 'RemoveVacanciesThatExpiredYesterday'
