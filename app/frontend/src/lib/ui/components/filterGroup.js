@@ -1,6 +1,7 @@
 import '../../polyfill/closest.polyfill';
 import '../../polyfill/from.polyfill';
 import 'classlist-polyfill';
+import toggleFilterPanel from './panel';
 
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
@@ -56,6 +57,14 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
       }
     });
   }
+  toggleFilterPanel({
+    hideText: 'Hide filters',
+    showText: 'Show filters',
+    container: document.getElementsByClassName('moj-filter-sidebar')[0],
+    toggleClass: 'moj-filter-sidebar__hidden',
+    toggleButton: document.getElementById('toggle-filters-sidebar'),
+    onToggleHandler: () => document.getElementsByClassName('moj-filter-layout__content')[0].classList.toggle('govuk-grid-column-three-quarters'),
+  });
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
     document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
