@@ -34,6 +34,7 @@ class ExportTablesToBigQuery
     'frequency' => :string,
     'hired_status' => :string,
     'job_roles' => :string,
+    'job_location' => :string,
     'listed_elsewhere' => :string,
     'phase' => :string,
     'search_criteria' => :string,
@@ -112,7 +113,7 @@ class ExportTablesToBigQuery
 
     json_record.map do |key, value|
       data = value.presence
-      data = Date.parse(data).to_s(:db) if data.is_a?(String) && data.match?(/^\d{2}\-\d{2}\-\d{4}/)
+      data = Date.parse(data).to_s(:db) if data.is_a?(String) && data.match?(/^\d{2}[-\/]\d{2}[-\/]\d{4}/)
       data = data.to_i if data.is_a?(String) && data.match?(/^\d+$/)
       @bigquery_data[data_key_name(key)] = data
     end
