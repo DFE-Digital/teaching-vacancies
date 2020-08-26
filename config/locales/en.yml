@@ -521,6 +521,7 @@ en:
       application_deadline_time: 'For example, 9:00 am or 5:00 pm'
     filters:
       title: 'Search job listings'
+      job_filters: 'Job Filters'
       keyword: 'Keywords'
       keyword_hint: 'Humanities, KS2, primary, NQT for example'
       location: 'Enter a location'
