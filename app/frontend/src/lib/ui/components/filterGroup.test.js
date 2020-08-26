@@ -49,11 +49,11 @@ describe('filterGroup', () => {
 <button id="clear-filters-button">remove</button>
 <button id="close-all-groups">remove</button>
 </div>
-<div class="filter-group__container"><div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
-<div class="filter-group__container"><div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filter-group__container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filter-group__container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
 </form>`;
 
-      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-button');
+      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header');
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
@@ -325,22 +325,22 @@ describe('filterGroup', () => {
       <form data-auto-submit="true">
         <div><button id="close-all-groups">Open all</button></div>
         <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
-          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
         </div>
         <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
-          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
         </div>
-        <div class="govuk-accordion__section filter-group__container">
-          <div class="header"><h3 class="heading"><button id="closed-section-button" class="govuk-accordion__section-button"></button></h3></div>
+        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
+          <div class="govuk-accordion__section-header" id="closed-section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
         </div>
       </form>
       `;
 
-      const buttonElement = document.getElementById('closed-section-button');
+      const sectionHeaderElement = document.getElementById('closed-section-header');
       const openOrCloseAllSelector = 'close-all-groups';
 
-      addUpdateOpenOrCloseEvent(buttonElement, openOrCloseAllSelector);
-      buttonElement.dispatchEvent(new Event('click'));
+      addUpdateOpenOrCloseEvent(sectionHeaderElement, openOrCloseAllSelector);
+      sectionHeaderElement.dispatchEvent(new Event('click'));
 
       expect(document.getElementById(openOrCloseAllSelector).innerText).toEqual(CLOSE_ALL_TEXT);
     });
@@ -350,22 +350,22 @@ describe('filterGroup', () => {
       <form data-auto-submit="true">
         <div><button id="close-all-groups">Close all</button></div>
         <div class="govuk-accordion__section filter-group__container">
-          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
         </div>
         <div class="govuk-accordion__section filter-group__container">
-          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
         </div>
-        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
-          <div class="header"><h3 class="heading"><button id="open-section-button" class="govuk-accordion__section-button"></button></h3></div>
+        <div class="govuk-accordion__section filter-group__container">
+          <div class="govuk-accordion__section-header" id="open-section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
         </div>
       </form>
       `;
 
-      const buttonElement = document.getElementById('open-section-button');
+      const sectionHeaderElement = document.getElementById('open-section-header');
       const openOrCloseAllSelector = 'close-all-groups';
 
-      addUpdateOpenOrCloseEvent(buttonElement, openOrCloseAllSelector);
-      buttonElement.dispatchEvent(new Event('click'));
+      addUpdateOpenOrCloseEvent(sectionHeaderElement, openOrCloseAllSelector);
+      sectionHeaderElement.dispatchEvent(new Event('click'));
 
       expect(document.getElementById(openOrCloseAllSelector).innerText).toEqual(OPEN_ALL_TEXT);
     });

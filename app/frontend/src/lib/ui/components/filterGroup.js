@@ -7,7 +7,7 @@ export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener(
   'DOMContentLoaded',
-  () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-button'),
+  () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header'),
 );
 
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
@@ -63,17 +63,11 @@ export const displayOpenOrCloseText = (targetElement, expandedElements, maxEleme
   }
 };
 
-export const addUpdateOpenOrCloseEvent = (buttonElement, openOrCloseAllSelector) => {
+export const addUpdateOpenOrCloseEvent = (sectionHeaderElement, openOrCloseAllSelector) => {
   const openOrCloseAllElement = document.getElementById(openOrCloseAllSelector);
   if (openOrCloseAllElement) {
-    buttonElement.addEventListener('click', (e) => {
-      let expandedElements = document.getElementsByClassName('govuk-accordion__section--expanded').length;
-      if (e.target.parentElement.parentElement.parentElement.classList.contains('govuk-accordion__section--expanded') && expandedElements !== 0) {
-        expandedElements -= 1;
-      } else {
-        expandedElements += 1;
-      }
-      displayOpenOrCloseText(openOrCloseAllElement, expandedElements, document.getElementsByClassName('govuk-accordion__section').length);
+    sectionHeaderElement.addEventListener('click', () => {
+      displayOpenOrCloseText(openOrCloseAllElement, document.getElementsByClassName('govuk-accordion__section--expanded').length, document.getElementsByClassName('govuk-accordion__section').length);
     });
   }
 };
