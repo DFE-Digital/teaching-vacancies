@@ -58,6 +58,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
     });
   }
   toggleFilterPanel({
+    key: 'dashboard',
     hideText: 'Hide filters',
     showText: 'Show filters',
     container: document.getElementsByClassName('moj-filter-sidebar')[0],
