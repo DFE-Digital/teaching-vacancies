@@ -75,8 +75,8 @@ jobs:
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
       run: |
         terraform plan -destroy -out=tfdestroy
-        terraform apply -auto-approve "tfdestroy"
-        terraform workspace select default && terraform workspace delete ${TF_WORKSPACE_NAME}
+        # terraform apply -auto-approve "tfdestroy"
+        # terraform workspace select default && terraform workspace delete ${TF_WORKSPACE_NAME}
 
     - name: Post PR comment
       if: github.event_name == 'pull_request' && github.event.action != 'closed'
