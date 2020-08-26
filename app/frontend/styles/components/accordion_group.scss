@@ -43,6 +43,10 @@
   .govuk-hint {
     margin-left: govuk-spacing(2);
   }
+
+  .govuk-checkboxes__hint {
+    margin-left: 1px;
+  }
 }
 
 .accordion-content__group .govuk-accordion__section--expanded {
