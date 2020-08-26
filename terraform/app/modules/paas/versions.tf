@@ -1,8 +1,13 @@
 terraform {
-  required_version = ">= 0.12"
 
   required_providers {
-    aws          = "~> 2.70.0"
-    cloudfoundry = "~> 0.12"
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 3.3.0"
+    }
+    cloudfoundry = {
+      source  = "terraform.implied.local.mirror/cloudfoundrylocal/cloudfoundry"
+      version = "0.12.2"
+    }
   }
 }

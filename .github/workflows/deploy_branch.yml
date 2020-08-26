@@ -24,7 +24,7 @@ jobs:
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.12.29
+        terraform_version: 0.13.1
 
     - name: Set environment variables
       id: set_env_vars
@@ -33,8 +33,8 @@ jobs:
         TAG=${BRANCH}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
         echo ::set-env name=BRANCH::${BRANCH}
         echo ::set-env name=TAG::${TAG}
-        echo ::set-env name=CF_PROVIDER_BINARY::terraform-provider-cloudfoundry_${CF_PROVIDER_VERSION}
-        echo ::set-env name=CF_PROVIDER_URL::https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/${CF_PROVIDER_VERSION}/terraform-provider-cloudfoundry_linux_amd64
+        echo ::set-env name=CF_PROVIDER_BINARY::terraform-provider-cloudfoundry_v${CF_PROVIDER_VERSION}
+        echo ::set-env name=CF_PROVIDER_URL::https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/v${CF_PROVIDER_VERSION}/terraform-provider-cloudfoundry_linux_amd64
         echo ::set-output name=BRANCH::${BRANCH}
         echo ::set-output name=TAG::${TAG}
 
@@ -47,15 +47,20 @@ jobs:
         tags: ${{ env.TAG }}
         target: production
 
-    - name: Install Terraform CloudFoundry Provider
+    - name: Terraform install CloudFoundry provider
       run: |
-        CF_PROVIDER_DIR=$HOME/.terraform.d/plugins/linux_amd64
+        CF_PROVIDER_DIR=$HOME/.local/share/terraform/plugins/terraform.implied.local.mirror/cloudfoundrylocal/cloudfoundry/${CF_PROVIDER_VERSION}/linux_amd64
         mkdir -p ${CF_PROVIDER_DIR}
         wget -O ${CF_PROVIDER_DIR}/${CF_PROVIDER_BINARY} ${CF_PROVIDER_URL}
         chmod +x ${CF_PROVIDER_DIR}/${CF_PROVIDER_BINARY}
         echo "Content of directory ${CF_PROVIDER_DIR}:"
         cd ${CF_PROVIDER_DIR} && pwd
         ls -l
+
+    - name: Terraform fmt check
+      run: |
+        set -eux
+        terraform fmt -check -recursive terraform/app
 
     - name: Deploy
       env:

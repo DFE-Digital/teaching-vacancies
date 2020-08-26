@@ -6,29 +6,31 @@ variable region {
   default = "eu-west-2"
 }
 
+variable environment {
+  default = "dev"
+}
+
 # CloudFront
 
-variable cloudfront_aliases {
-  description = "Match this value to the alias associated with the cloudfront_certificate_arn, eg. tvs.staging.dxw.net"
-  type        = list(string)
+variable cloudfront_distributions {
+  description = "Define Cloudfront distributions with the attributes below"
+  type = map(object({
+    cloudfront_aliases            = list(string)
+    offline_bucket_domain_name    = string
+    offline_bucket_origin_path    = string
+    cloudfront_origin_domain_name = string
+    domain                        = string
+  }))
+  default = {}
 }
 
-variable offline_bucket_domain_name {
-}
-
-variable offline_bucket_origin_path {
-}
-
-variable domain {
-}
-
-variable cloudfront_origin_domain_name {
-  default = ""
-}
-
-# Cloudwatch
-variable cloudwatch_slack_channel {
-  description = "The slack channel that cloudwatch alarms are sent to"
+# CloudWatch
+variable cloudwatch_slack_channels {
+  description = "Define slack channels CloudWatch should sent alerts to"
+  type = map(object({
+    cloudwatch_slack_channel = string
+  }))
+  default = {}
 }
 
 # Gov.UK PaaS
@@ -51,6 +53,10 @@ variable paas_app_stopped {
 
 variable parameter_store_environment {
   default = "dev"
+}
+
+variable paas_papertrail_service_binding_enable {
+  default = true
 }
 
 variable paas_postgres_service_plan {

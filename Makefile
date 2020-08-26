@@ -59,12 +59,13 @@ init-terraform:
 init-terraform-review:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(if $(tag), , $(error Missing environment variable "tag"))
-		$(if $(prnum), , $(error Missing environment variable "prnum"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
-		$(eval export TF_WORKSPACE=$(prnum))
-		#terraform workspace new $(prnum) terraform/app
-		terraform init -backend-config="workspace_key_prefix=env/review" terraform/app
+		$(eval export TF_WORKSPACE=$(env))
+		$(if $(prnum), , $(error Missing environment variable "prnum"))
+		$(eval export TF_VAR_environment=review-$(prnum))
+		terraform init -input=false terraform/app
+		terraform fmt -check -recursive terraform/app
 		terraform plan -var-file terraform/workspace-variables/$(env).tfvars terraform/app
 		#terraform apply -input=false -var-file terraform/workspace-variables/$(env).tfvars -auto-approve terraform/app
 
