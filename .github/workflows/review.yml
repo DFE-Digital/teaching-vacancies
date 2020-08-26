@@ -69,7 +69,8 @@ jobs:
         export TF_WORKSPACE=${TF_WORKSPACE_NAME}
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
         terraform init -input=false terraform/app
-        terraform apply -var-file terraform/workspace-variables/review.tfvars -auto-approve -input=false terraform/app
+        terraform plan -var-file terraform/workspace-variables/review.tfvars -input=false terraform/app
+        #terraform apply -var-file terraform/workspace-variables/review.tfvars -auto-approve -input=false terraform/app
 
     - name: Terraform destroy (on PR closed)
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
