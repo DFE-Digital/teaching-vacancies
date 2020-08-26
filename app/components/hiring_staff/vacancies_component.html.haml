@@ -1,24 +1,24 @@
 .moj-filter-sidebar
   - if @organisation.is_a?(SchoolGroup)
-    .govuk-grid-column-one-quarter
+    .govuk-grid-column-one-third
       = form_for @filters_form, url: organisation_managed_organisations_path, html: { method: "patch", data: { 'auto-submit': true } } do |f|
         = render 'shared/filter_group', f: f, filters: { title: t('jobs.filters.job_filters'), remove_buttons: true, total_count: @filters[:managed_school_ids]&.count, items: [{ title: 'Locations', key: 'locations', search: true, attribute: :managed_school_ids, selected: @filters[:managed_school_ids], options: @organisation_options, value_method: :id, text_method: :label, selected_method: :name, small: true }] }
 
         = f.hidden_field :jobs_type, value: @selected_type
 
 .moj-filter-layout__content{ class: grid_column_class }
-  .dashboard-header{ class: "govuk-!-margin-bottom-5" }
-    - if @organisation.is_a?(SchoolGroup)
+  - if @organisation.is_a?(SchoolGroup)
+    .dashboard-header{ class: "govuk-!-margin-bottom-5" } 
       .filters-information.moj-action-bar
         %button.govuk-button.govuk-button--secondary{ class: "govuk-!-margin-bottom-0 moj-action-bar__filter", id: "toggle-filters-sidebar" }= t('buttons.hide_filters')
         %span.govuk-body{ class: "govuk-!-margin-left-3 filters-applied-text" }= filters_applied_text
-    = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0"
-  .overflow-scroll
-    .govuk-tabs
-      %h2.govuk-tabs__title= t('jobs.aria_labels.content')
-      %ul.govuk-tabs__list.tab-list
-        - @vacancy_types.each do |vacancy_type|
-          %li.govuk-tabs__list-item{ class: selected_class(vacancy_type) }
-            = vacancy_type_tab_link(vacancy_type)
-
-      = render "hiring_staff/organisations/vacancies_#{@selected_type}", organisation: @organisation, vacancies: @vacancies, sort: @sort
+      = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 float-right"
+  .moj-scrollable-pane.moj-scrollable-pane-shadow
+    .moj-scrollable-pane__wrapper
+      .govuk-tabs.desktop-container-width
+        %h2.govuk-tabs__title= t('jobs.aria_labels.content')
+        %ul.govuk-tabs__list.tab-list.desktop-container-width
+          - @vacancy_types.each do |vacancy_type|
+            %li.govuk-tabs__list-item{ class: selected_class(vacancy_type) }
+              = vacancy_type_tab_link(vacancy_type)
+        = render "hiring_staff/organisations/vacancies_#{@selected_type}", organisation: @organisation, vacancies: @vacancies, sort: @sort

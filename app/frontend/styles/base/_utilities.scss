@@ -28,18 +28,16 @@
   word-break: break-word;
 }
 
-.overflow-scroll {
-  @include govuk-media-query($until: tablet) {
-    overflow: scroll;
-  }
-}
-
 .strong {
   font-weight: bold;
 }
 
 .display-none {
   display: none;
+}
+
+.float-right {
+  float: right;
 }
 
 .inline {

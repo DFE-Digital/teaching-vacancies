@@ -8,6 +8,12 @@ body.hiring-staff {
     }
   }
 
+  .desktop-container-width {
+    @include govuk-media-query($from: tablet) {
+      width: 1200px;
+    }
+  }
+
   &.vacancies_index,
   &.vacancies_show,
   &.vacancies_preview {
@@ -21,11 +27,6 @@ body.hiring-staff {
 }
 
 .dashboard-header {
-  > a {
-    float: right;
-    margin-bottom: 0;
-  }
-
   .filters-information {
     display: inline-block;
 

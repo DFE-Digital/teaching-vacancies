@@ -1,4 +1,4 @@
-%section.govuk-tabs__panel.desktop-container-width
+%section.govuk-tabs__panel
   %h2.govuk-heading-m= t("jobs.awaiting_feedback_jobs_with_count", count: vacancies.count, jobs: vacancies.count == 1 ? t("jobs.job") : t("jobs.job").pluralize)
 
   - if vacancies.any?

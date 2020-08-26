@@ -41,12 +41,12 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   if (toggleButton) {
     toggleButton.addEventListener('click', () => {
       document.getElementsByClassName('moj-filter-sidebar')[0].classList.toggle('moj-filter-sidebar__hidden');
-      if (document.getElementsByClassName('moj-filter-layout__content')[0].classList.contains('govuk-grid-column-three-quarters')) {
-        document.getElementsByClassName('moj-filter-layout__content')[0].classList.remove('govuk-grid-column-three-quarters');
+      if (document.getElementsByClassName('moj-filter-layout__content')[0].classList.contains('govuk-grid-column-two-thirds')) {
+        document.getElementsByClassName('moj-filter-layout__content')[0].classList.remove('govuk-grid-column-two-thirds');
         document.getElementsByClassName('moj-filter-layout__content')[0].classList.add('govuk-grid-column-full');
       } else if (document.getElementsByClassName('moj-filter-layout__content')[0].classList.contains('govuk-grid-column-full')) {
         document.getElementsByClassName('moj-filter-layout__content')[0].classList.remove('govuk-grid-column-full');
-        document.getElementsByClassName('moj-filter-layout__content')[0].classList.add('govuk-grid-column-three-quarters');
+        document.getElementsByClassName('moj-filter-layout__content')[0].classList.add('govuk-grid-column-two-thirds');
       }
 
       if (document.getElementsByClassName('moj-filter-sidebar')[0].classList.contains('moj-filter-sidebar__hidden')) {
