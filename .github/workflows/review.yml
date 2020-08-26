@@ -1,0 +1,104 @@
+name: Review
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [opened, synchronize, closed]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  CF_PROVIDER_VERSION: v0.12.2
+  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+  TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
+  TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
+  TF_WORKSPACE_NAME: ${{ format('pr-{0}', github.event.number) }}  
+
+jobs:
+  deploy:
+    name: Create review app
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      name: Checkout Code
+
+    - name: Terraform pin version
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.12.29
+
+    - name: Set environment variables
+      id: set_env_vars
+      run: |
+        TAG=${GITHUB_SHA}
+        echo ::set-env name=TAG::${TAG}
+        echo ::set-env name=CF_PROVIDER_BINARY::terraform-provider-cloudfoundry_${CF_PROVIDER_VERSION}
+        echo ::set-env name=CF_PROVIDER_URL::https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/${CF_PROVIDER_VERSION}/terraform-provider-cloudfoundry_linux_amd64
+
+    - name: Build and push docker image
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: ${{ env.DOCKERHUB_REPOSITORY }}
+        tags: ${{ env.TAG }}
+        target: production
+        cache_froms: ${{ format('{0}:{1}', env.DOCKERHUB_REPOSITORY, github.sha) }}
+
+    - name: Terraform install CloudFoundry provider
+      run: |
+        CF_PROVIDER_DIR=$HOME/.terraform.d/plugins/linux_amd64
+        mkdir -p ${CF_PROVIDER_DIR}
+        wget -O ${CF_PROVIDER_DIR}/${CF_PROVIDER_BINARY} ${CF_PROVIDER_URL}
+        chmod +x ${CF_PROVIDER_DIR}/${CF_PROVIDER_BINARY}
+        echo "Content of directory ${CF_PROVIDER_DIR}:"
+        cd ${CF_PROVIDER_DIR} && pwd
+        ls -l
+
+    - name: Terraform workspace init
+      run: |
+        set -eux
+        export TF_WORKSPACE=${PR_NAME}
+        pwd && terraform init -backend-config="workspace_key_prefix=env/review"
+
+    - name: Terraform deploy
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      run: |
+        export TF_WORKSPACE=${TF_WORKSPACE_NAME}
+        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
+        terraform init -input=false terraform/app
+        terraform apply -var-file terraform/workspace-variables/review.tfvars -auto-approve -input=false terraform/app
+
+    - name: Terraform destroy (on PR closed)
+      if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      run: |
+        terraform plan -destroy -out=tfdestroy
+        terraform apply -auto-approve "tfdestroy"
+        terraform workspace select default && terraform workspace delete ${TF_WORKSPACE_NAME}
+
+    - name: Post PR comment
+      if: github.event_name == 'pull_request' && github.event.action != 'closed'
+      run: |
+        curl --header "Accept: application/vnd.github.v3+json" \
+             --header "Authorization: Bearer ${{ github.token }}" \
+             --request POST \
+             --data '{"body": "Review app deployed to https://${TF_WORKSPACE_NAME}.london.cloudapps.digital"}' \
+             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
+
+  notify:
+    needs: deploy
+    name: Slack notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send slack message to twd_tv_dev channel
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Deployment
+          SLACK_ICON_EMOJI: ':tada:'
+          SLACK_TITLE: Successful deployment
+          SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://${TF_WORKSPACE_NAME}.london.cloudapps.digital :rocket:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
