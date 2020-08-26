@@ -2,7 +2,7 @@ name: Review
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ TEVA-797-pseudo-master ]
     types: [opened, synchronize, closed]
 
 env:
