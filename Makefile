@@ -51,9 +51,20 @@ init-terraform:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(if $(tag), , $(error Missing environment variable "tag"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		$(eval export TF_WORKSPACE=$(env))
 		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
+		$(eval export TF_WORKSPACE=$(env))
 		terraform init -input=false terraform/app
+
+.PHONY: init-terraform-review
+init-terraform-review:
+		$(if $(passcode), , $(error Missing environment variable "passcode"))
+		$(if $(tag), , $(error Missing environment variable "tag"))
+		$(if $(prnum), , $(error Missing environment variable "prnum"))
+		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
+		$(eval export TF_WORKSPACE=$(prnum))
+		terraform init -backend-config="workspace_key_prefix=env/review" terraform/app
+		terraform plan -var-file terraform/workspace-variables/$(env).tfvars terraform/app
 
 .PHONY: deploy
 deploy: init-terraform
