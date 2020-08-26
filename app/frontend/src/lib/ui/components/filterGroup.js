@@ -5,10 +5,15 @@ export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
-window.addEventListener('DOMContentLoaded', () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button'));
+window.addEventListener(
+  'DOMContentLoaded',
+  () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-button'),
+);
 
-export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector) => {
+export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
   if (!isFormAutoSubmitEnabled(groupContainerSelector)) { return; }
+
+  Array.from(document.getElementsByClassName(accordionButtonsSelector)).map((accordionButton) => filterGroup.addUpdateOpenOrCloseEvent(accordionButton, closeButtonSelector));
 
   Array.from(document.getElementsByClassName(removeButtonSelector)).map((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
 
@@ -20,7 +25,11 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   addFilterChangeEvent(document.getElementsByClassName(groupContainerSelector));
 
   if (document.getElementById(closeButtonSelector)) {
-    displayOpenOrCloseText(document.getElementById(closeButtonSelector), document.getElementsByClassName('govuk-accordion__section--expanded').length);
+    displayOpenOrCloseText(
+      document.getElementById(closeButtonSelector),
+      document.getElementsByClassName('govuk-accordion__section--expanded').length,
+      document.getElementsByClassName('govuk-accordion__section').length,
+    );
     document.getElementById(closeButtonSelector).addEventListener('click', openOrCloseAllSectionsHandler);
   }
 
@@ -46,11 +55,26 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   }
 };
 
-export const displayOpenOrCloseText = (targetElement, expandedElements) => {
+export const displayOpenOrCloseText = (targetElement, expandedElements, maxElements) => {
   if (expandedElements === 0) {
     targetElement.innerText = OPEN_ALL_TEXT;
-  } else if (expandedElements > 0) {
+  } else if (expandedElements === maxElements) {
     targetElement.innerText = CLOSE_ALL_TEXT;
+  }
+};
+
+export const addUpdateOpenOrCloseEvent = (buttonElement, openOrCloseAllSelector) => {
+  const openOrCloseAllElement = document.getElementById(openOrCloseAllSelector);
+  if (openOrCloseAllElement) {
+    buttonElement.addEventListener('click', (e) => {
+      let expandedElements = document.getElementsByClassName('govuk-accordion__section--expanded').length;
+      if (e.target.parentElement.parentElement.parentElement.classList.contains('govuk-accordion__section--expanded') && expandedElements !== 0) {
+        expandedElements -= 1;
+      } else {
+        expandedElements += 1;
+      }
+      displayOpenOrCloseText(openOrCloseAllElement, expandedElements, document.getElementsByClassName('govuk-accordion__section').length);
+    });
   }
 };
 
@@ -136,6 +160,7 @@ const filterGroup = {
   addFilterChangeEvent,
   addRemoveFilterEvent,
   addRemoveAllFiltersEvent,
+  addUpdateOpenOrCloseEvent,
   filterChangeHandler,
 };
 

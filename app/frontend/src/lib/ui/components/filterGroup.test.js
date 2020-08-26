@@ -19,6 +19,7 @@ import filterGroup, {
   CHECKBOX_CLASS_SELECTOR,
   CLOSE_ALL_TEXT,
   OPEN_ALL_TEXT,
+  addUpdateOpenOrCloseEvent,
 } from './filterGroup';
 
 describe('filterGroup', () => {
@@ -38,6 +39,9 @@ describe('filterGroup', () => {
       filterGroup.addRemoveAllFiltersEvent = jest.fn();
       const addRemoveAllFiltersEventMock = jest.spyOn(filterGroup, 'addRemoveAllFiltersEvent');
 
+      filterGroup.addUpdateOpenOrCloseEvent = jest.fn();
+      const addUpdateOpenOrCloseEventMock = jest.spyOn(filterGroup, 'addUpdateOpenOrCloseEvent');
+
       document.body.innerHTML = `<form data-auto-submit="true"><div>
 <h2 id="mobile-filters-button"></h2>
 <button class="moj-filter__tag">remove</button>
@@ -45,14 +49,15 @@ describe('filterGroup', () => {
 <button id="clear-filters-button">remove</button>
 <button id="close-all-groups">remove</button>
 </div>
-<div class="filter-group__container"></div>
-<div class="filter-group__container"></div>
+<div class="filter-group__container"><div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filter-group__container"><div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
 </form>`;
 
-      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups, mobile-filters-button');
+      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-button');
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
+      expect(addUpdateOpenOrCloseEventMock).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -274,16 +279,18 @@ describe('filterGroup', () => {
     test('displays open text when all elements are closed', () => {
       const targetElement = { innerText: CLOSE_ALL_TEXT };
       const expandedElements = 0;
+      const maxElements = 2;
 
-      displayOpenOrCloseText(targetElement, expandedElements);
+      displayOpenOrCloseText(targetElement, expandedElements, maxElements);
       expect(targetElement.innerText).toEqual(OPEN_ALL_TEXT);
     });
 
-    test('displays close text when not all elements are closed', () => {
+    test('displays close text when all elements are open', () => {
       const targetElement = { innerText: OPEN_ALL_TEXT };
       const expandedElements = 2;
+      const maxElements = 2;
 
-      displayOpenOrCloseText(targetElement, expandedElements);
+      displayOpenOrCloseText(targetElement, expandedElements, maxElements);
       expect(targetElement.innerText).toEqual(CLOSE_ALL_TEXT);
     });
   });
@@ -309,6 +316,58 @@ describe('filterGroup', () => {
       openOrCloseAllSections(targetElement);
       expect(targetElement.innerText).toEqual(CLOSE_ALL_TEXT);
       expect(document.getElementsByClassName('govuk-accordion__section--expanded').length).toEqual(3);
+    });
+  });
+
+  describe('addUpdateOpenOrCloseEvent', () => {
+    test('displays close all when all elements are open', () => {
+      document.body.innerHTML = `
+      <form data-auto-submit="true">
+        <div><button id="close-all-groups">Open all</button></div>
+        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
+          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+        </div>
+        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
+          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+        </div>
+        <div class="govuk-accordion__section filter-group__container">
+          <div class="header"><h3 class="heading"><button id="closed-section-button" class="govuk-accordion__section-button"></button></h3></div>
+        </div>
+      </form>
+      `;
+
+      const buttonElement = document.getElementById('closed-section-button');
+      const openOrCloseAllSelector = 'close-all-groups';
+
+      addUpdateOpenOrCloseEvent(buttonElement, openOrCloseAllSelector);
+      buttonElement.dispatchEvent(new Event('click'));
+
+      expect(document.getElementById(openOrCloseAllSelector).innerText).toEqual(CLOSE_ALL_TEXT);
+    });
+
+    test('displays open all when all elements are closed', () => {
+      document.body.innerHTML = `
+      <form data-auto-submit="true">
+        <div><button id="close-all-groups">Close all</button></div>
+        <div class="govuk-accordion__section filter-group__container">
+          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+        </div>
+        <div class="govuk-accordion__section filter-group__container">
+          <div class="header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
+        </div>
+        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
+          <div class="header"><h3 class="heading"><button id="open-section-button" class="govuk-accordion__section-button"></button></h3></div>
+        </div>
+      </form>
+      `;
+
+      const buttonElement = document.getElementById('open-section-button');
+      const openOrCloseAllSelector = 'close-all-groups';
+
+      addUpdateOpenOrCloseEvent(buttonElement, openOrCloseAllSelector);
+      buttonElement.dispatchEvent(new Event('click'));
+
+      expect(document.getElementById(openOrCloseAllSelector).innerText).toEqual(OPEN_ALL_TEXT);
     });
   });
 });
