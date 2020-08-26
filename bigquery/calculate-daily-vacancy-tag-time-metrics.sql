@@ -9,7 +9,6 @@ WITH
     vacancy.id,
     MIN(vacancy.publish_on) AS publish_on,
     MIN(vacancy.expires_on) AS expires_on,
-    vacancy.school_id,
     vacancy.job_roles AS job_roles,
     COUNT(document.id) AS number_of_documents
   FROM
@@ -24,14 +23,12 @@ WITH
         "draft"))
   GROUP BY
     vacancy.id,
-    school_id,
     job_roles ),
   vacancies_in_scope AS (
   SELECT
     vacancy.id,
     MIN(vacancy.publish_on) AS publish_on,
     MIN(vacancy.expires_on) AS expires_on,
-    vacancy.school_id,
     vacancy.job_roles AS job_roles,
     vacancy.category AS category,
     COUNT(document.id) AS number_of_documents
@@ -47,7 +44,6 @@ WITH
         "draft"))
   GROUP BY
     vacancy.id,
-    school_id,
     job_roles,
     category),
   scraped_vacancies_in_scope AS (
@@ -55,14 +51,12 @@ WITH
     scraped_vacancy.scraped_url AS url,
     MIN(scraped_vacancy.publish_on) AS publish_on,
     MIN(scraped_vacancy.expires_on) AS expires_on,
-    scraped_vacancy.school_id,
     scraped_vacancy.vacancy_category AS category,
     scraped_vacancy.source AS source
   FROM
     `teacher-vacancy-service.production_dataset.scraped_vacancies_in_scope` AS scraped_vacancy
   GROUP BY
     url,
-    school_id,
     category,
     source ),
   all_vacancy_metrics AS (
