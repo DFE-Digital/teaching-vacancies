@@ -1,11 +1,13 @@
 import '../../polyfill/closest.polyfill';
 import '../../polyfill/from.polyfill';
 import 'classlist-polyfill';
-import toggleFilterPanel from './panel';
+import { togglePanel as toggleFilterPanel } from './panel';
 
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
+export const CLOSED_CLASS = 'govuk-grid-column-full';
+export const OPEN_CLASS = 'govuk-grid-column-three-quarters';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
@@ -37,34 +39,27 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
     document.getElementById(closeButtonSelector).addEventListener('click', openOrCloseAllSectionsHandler);
   }
 
-  const toggleButton = document.getElementById('toggle-filters-sidebar');
+  const content = document.getElementsByClassName('moj-filter-layout__content')[0];
 
-  if (toggleButton) {
-    toggleButton.addEventListener('click', () => {
-      document.getElementsByClassName('moj-filter-sidebar')[0].classList.toggle('moj-filter-sidebar__hidden');
-      if (document.getElementsByClassName('moj-filter-layout__content')[0].classList.contains('govuk-grid-column-two-thirds')) {
-        document.getElementsByClassName('moj-filter-layout__content')[0].classList.remove('govuk-grid-column-two-thirds');
-        document.getElementsByClassName('moj-filter-layout__content')[0].classList.add('govuk-grid-column-full');
-      } else if (document.getElementsByClassName('moj-filter-layout__content')[0].classList.contains('govuk-grid-column-full')) {
-        document.getElementsByClassName('moj-filter-layout__content')[0].classList.remove('govuk-grid-column-full');
-        document.getElementsByClassName('moj-filter-layout__content')[0].classList.add('govuk-grid-column-two-thirds');
-      }
-
-      if (document.getElementsByClassName('moj-filter-sidebar')[0].classList.contains('moj-filter-sidebar__hidden')) {
-        toggleButton.innerHTML = 'Show filters';
-      } else {
-        toggleButton.innerHTML = 'Hide filters';
-      }
-    });
-  }
   toggleFilterPanel({
-    key: 'dashboard',
+    componentKey: 'dashboard',
     hideText: 'Hide filters',
     showText: 'Show filters',
     container: document.getElementsByClassName('moj-filter-sidebar')[0],
     toggleClass: 'moj-filter-sidebar__hidden',
     toggleButton: document.getElementById('toggle-filters-sidebar'),
-    onToggleHandler: () => document.getElementsByClassName('moj-filter-layout__content')[0].classList.toggle('govuk-grid-column-three-quarters'),
+    onToggleHandler: () => {
+      content.classList.toggle(OPEN_CLASS);
+      content.classList.toggle(CLOSED_CLASS);
+    },
+    onClosedHandler: () => {
+      content.classList.remove(OPEN_CLASS);
+      content.classList.add(CLOSED_CLASS);
+    },
+    onOpenedHandler: () => {
+      content.classList.add(OPEN_CLASS);
+      content.classList.remove(CLOSED_CLASS);
+    },
   });
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
