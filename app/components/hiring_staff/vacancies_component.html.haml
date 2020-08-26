@@ -21,4 +21,4 @@
           - @vacancy_types.each do |vacancy_type|
             %li.govuk-tabs__list-item{ class: selected_class(vacancy_type) }
               = vacancy_type_tab_link(vacancy_type)
-        = render "hiring_staff/organisations/vacancies_#{@selected_type}", organisation: @organisation, vacancies: @vacancies, sort: @sort
+        = render "hiring_staff/organisations/vacancies_#{@selected_type}", selected_type: @selected_type, organisation: @organisation, vacancies: @vacancies, sort: @sort
