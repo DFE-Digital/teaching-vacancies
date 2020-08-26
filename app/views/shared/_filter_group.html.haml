@@ -45,7 +45,7 @@
                       %i.fa.fa-close
                       %span.govuk-visually-hidden
                         = t('shared.filter_group.remove_filter_hidden')
-                      = tag.send(group[:text_method])
+                      = tag.send(group[:selected_method])
 
 = f.govuk_submit t('buttons.apply_filters'), classes: "govuk-!-margin-top-4 govuk-!-margin-bottom-2 filters-submit"
 

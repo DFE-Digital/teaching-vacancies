@@ -61,11 +61,11 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
   def set_organisation_options
     @organisation_options = @organisation.schools.order(:name).map do |school|
       count = Vacancy.in_organisation_ids(school.id).send(selected_scope).count
-      OpenStruct.new({ id: school.id, name: "#{school.name} (#{count})" })
+      OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
     end
     count = Vacancy.in_organisation_ids(@organisation.id).send(selected_scope).count
     @organisation_options.unshift(
-      OpenStruct.new({ id: @organisation.id, name: "Trust head office (#{count})" })
+      OpenStruct.new({ id: @organisation.id, name: 'Trust head office', label: "Trust head office (#{count})" })
     )
   end
 end
