@@ -88,7 +88,7 @@ class ExportTablesToBigQuery
     @bigquery_data = {}
 
     table.columns.map do |c|
-      next if DROP_THESE_ATTRIBUTES.include?(c.name) && table.name != 'SchoolGroup'
+      next if DROP_THESE_ATTRIBUTES.include?(c.name)
       data = record.send(c.name)
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
@@ -177,7 +177,7 @@ class ExportTablesToBigQuery
     @bigquery_schema = {}
 
     table.columns.map do |c|
-      next if DROP_THESE_ATTRIBUTES.include?(c.name) && table.name != 'SchoolGroup'
+      next if DROP_THESE_ATTRIBUTES.include?(c.name)
       @bigquery_schema[c.name] = ENUM_ATTRIBUTES[c.name] || CONVERT_THESE_TYPES[c.type] || c.type
     end.compact
 
@@ -186,8 +186,9 @@ class ExportTablesToBigQuery
       @bigquery_schema['geolocation_y'] = :float
     end
 
-    json_template = table.where.not(data: nil).first.data.presence if table.first.respond_to?(:data)
-    return @bigquery_schema if json_template.nil?
+    return @bigquery_schema unless table == Organisation
+
+    json_template = School.where.not(data: nil).first.data.merge(SchoolGroup.where.not(data: nil).first.data)
 
     json_template.sort_by { |k, _| k }.map do |key, value|
       data_type = :string
