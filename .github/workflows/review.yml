@@ -87,18 +87,18 @@ jobs:
              --data '{"body": "Review app deployed to https://${TF_WORKSPACE_NAME}.london.cloudapps.digital"}' \
              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
 
-  notify:
-    needs: deploy
-    name: Slack notification
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send slack message to twd_tv_dev channel
-        uses: rtCamp/action-slack-notify@v2.0.2
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SLACK_CHANNEL: twd_tv_dev
-          SLACK_USERNAME: CI Deployment
-          SLACK_ICON_EMOJI: ':tada:'
-          SLACK_TITLE: Successful deployment
-          SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://${TF_WORKSPACE_NAME}.london.cloudapps.digital :rocket:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  # notify:
+  #   needs: deploy
+  #   name: Slack notification
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Send slack message to twd_tv_dev channel
+  #       uses: rtCamp/action-slack-notify@v2.0.2
+  #       if: github.event_name == 'pull_request' && github.event.action != 'closed'
+  #       env:
+  #         SLACK_CHANNEL: twd_tv_dev
+  #         SLACK_USERNAME: CI Deployment
+  #         SLACK_ICON_EMOJI: ':tada:'
+  #         SLACK_TITLE: Successful deployment
+  #         SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://${TF_WORKSPACE_NAME}.london.cloudapps.digital :rocket:'
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
