@@ -7,6 +7,8 @@
 
 - if @vacancy.present? && @vacancy&.state != 'create'
   = render 'hiring_staff/vacancies/vacancy_form_partials/cancel_and_return_link'
+- else
+  = link_to t('buttons.back'), @previous_step_path, class: 'govuk-back-link'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

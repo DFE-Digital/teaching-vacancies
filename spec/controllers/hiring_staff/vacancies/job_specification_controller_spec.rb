@@ -80,4 +80,47 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
       end
     end
   end
+
+  describe '#set_up_previous_step_path' do
+    before do
+      allow(session).to receive(:[]).with(:vacancy_attributes).and_return(vacancy_attributes)
+    end
+
+    context 'when current organisation is a School' do
+      let(:vacancy_attributes) { {} }
+
+      before do
+        allow(controller).to receive_message_chain(:current_organisation, :is_a?).with(School).and_return(true)
+      end
+
+      it 'sets the previous step path to the dashboard page' do
+        subject.send(:set_up_previous_step_path)
+        expect(controller.instance_variable_get(:@previous_step_path)).to eql(organisation_path)
+      end
+    end
+
+    context 'when current organisation is a SchoolGroup' do
+      before do
+        allow(controller).to receive_message_chain(:current_organisation, :is_a?).with(School).and_return(false)
+      end
+
+      context 'when job_location is at_one_school' do
+        let(:vacancy_attributes) { { 'job_location' => 'at_one_school' } }
+
+        it 'sets the previous step path to schools page' do
+          subject.send(:set_up_previous_step_path)
+          expect(controller.instance_variable_get(:@previous_step_path)).to eql(school_organisation_job_path)
+        end
+      end
+
+      context 'when job_location is central_office' do
+        let(:vacancy_attributes) { { 'job_location' => 'central_office' } }
+
+        it 'sets the previous step path to job_location page' do
+          subject.send(:set_up_previous_step_path)
+          expect(controller.instance_variable_get(:@previous_step_path)).to eql(job_location_organisation_job_path)
+        end
+      end
+    end
+  end
 end
