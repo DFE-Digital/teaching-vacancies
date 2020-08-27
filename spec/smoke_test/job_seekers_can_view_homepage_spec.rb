@@ -4,8 +4,11 @@ require 'i18n_helper'
 RSpec.describe 'Page availability', js: true, smoke_test: true do
   context 'Job seeker visits vacancy page' do
     it 'should ensure users can search and view a job vacancy page' do
-      page = Capybara::Session.new(:poltergeist)
-      page.driver.set_cookie('smoke_test', '1', domain: 'teaching-vacancies.service.gov.uk')
+      page = Capybara::Session.new(:selenium_chrome_headless)
+
+      page.visit 'https://teaching-vacancies.service.gov.uk/404' # you need to be on the domain to set the cookie
+
+      page.driver.browser.manage.add_cookie(name: 'smoke_test', value: '1', domain: 'teaching-vacancies.service.gov.uk')
 
       page.visit 'https://teaching-vacancies.service.gov.uk/'
       expect(page).to have_content(I18n.t('jobs.heading'))
