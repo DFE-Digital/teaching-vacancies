@@ -79,12 +79,12 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 3.29'
+  gem 'capybara', '~> 3.33'
   gem 'database_cleaner'
   gem 'fuubar'
   gem 'mock_redis'
-  gem 'poltergeist'
   gem 'rack_session_access'
+  gem 'selenium-webdriver', '~> 3.142'
   gem 'shoulda-matchers'
   gem 'webmock', '~> 3.7'
 end
