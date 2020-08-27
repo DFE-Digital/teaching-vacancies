@@ -26,12 +26,12 @@ describe('panel', () => {
   });
 
   describe('toggleButtonText', () => {
-    test('changes button text to show panel state when panel is hidden', () => {
+    test('changes button text to hide panel text when panel is visible', () => {
       toggleButtonText(options);
       expect(button.innerHTML).toBe(HIDE_BUTTON_TEXT);
     });
 
-    test('changes button text to hide panel state when panel is visible', () => {
+    test('changes button text to show panel text when panel is hidden', () => {
       container.classList.toggle(CLOSED_CLASS);
       toggleButtonText(options);
       expect(button.innerHTML).toBe(SHOW_BUTTON_TEXT);

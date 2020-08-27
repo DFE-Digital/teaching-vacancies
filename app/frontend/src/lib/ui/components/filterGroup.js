@@ -7,7 +7,7 @@ export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 export const CLOSED_CLASS = 'govuk-grid-column-full';
-export const OPEN_CLASS = 'govuk-grid-column-three-quarters';
+export const OPEN_CLASS = 'govuk-grid-column-two-thirds';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
