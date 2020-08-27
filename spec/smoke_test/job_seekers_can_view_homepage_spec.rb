@@ -1,4 +1,4 @@
-require 'browser_test_helper'
+require 'capybara/rspec'
 require 'i18n_helper'
 
 RSpec.describe 'Page availability', js: true, smoke_test: true do

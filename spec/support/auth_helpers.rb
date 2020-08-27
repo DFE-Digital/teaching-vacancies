@@ -106,6 +106,14 @@ module AuthHelpers
     click_on(I18n.t('sign_in.link'))
   end
 
+  def sign_out_via_dsi
+    # A request to logout is sent to DfE Sign-in system. On success DSI comes back at auth_dfe_signout_path
+    expect(current_url).to include "#{ENV['DFE_SIGN_IN_ISSUER']}/session/end"
+    # TODO fix system specs to change default host to localhost:3000
+    expect(current_url).to include CGI.escape(auth_dfe_signout_url(host: '127.0.0.1'))
+    visit auth_dfe_signout_path
+  end
+
   def stub_accepted_terms_and_conditions
     create(:user, oid: '161d1f6a-44f1-4a1a-940d-d1088c439da7', accepted_terms_at: 1.day.ago)
   end
