@@ -1,4 +1,5 @@
 import '../../polyfill/closest.polyfill';
+import '../../polyfill/from.polyfill';
 import 'classlist-polyfill';
 
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
