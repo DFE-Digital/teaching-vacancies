@@ -8,7 +8,7 @@
 -#     close_all: <Boolean>,
 -#     mobile: <Boolean>,
 -#     :items => [
--#       { :options => <Array>, :title => <String>, :search => <Boolean>, :key => <String> }
+-#       { :options => <Array>, :title => <String>, :search => <Boolean>, :scroll => <Boolean>, :key => <String> }
 -#     ]
 -#   }
 
@@ -61,6 +61,7 @@
       .govuk-accordion__section-content.filter-group__checkboxes{ id: "accordion-default-content-#{index}", aria: { labelledby: "accordion-default-heading-#{index}" }, data: { group: group[:key] } }
         = render 'shared/checkbox_group', f: f,
           search: group[:search],
+          scroll: group[:scroll],
           attribute_name: group[:attribute],
           options: group[:options],
           value_method: group[:value_method],

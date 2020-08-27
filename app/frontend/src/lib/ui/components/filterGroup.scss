@@ -1,3 +1,7 @@
+.filter-group__container {
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
 .js-enabled .filters-submit {
   display: none;
 }
@@ -89,7 +93,7 @@
       background: none;
       border: 1px solid govuk-colour("white");
       padding: 0;
-      border-bottom: 2px solid #b1b4b6;
+      border-bottom: 2px solid $govuk-border-colour;
       margin-bottom: govuk-spacing(2);
       font-size: 1rem;
     }
