@@ -1,10 +1,18 @@
+$desktop-container-width: 1200px;
+
 body.hiring-staff {
   .govuk-width-container {
     @include govuk-media-query($from: desktop) {
       margin-left: auto;
       margin-right: auto;
-      max-width: 1200px;
+      max-width: $desktop-container-width;
       width: 90%;
+    }
+  }
+
+  .desktop-container-width {
+    @include govuk-media-query($from: tablet) {
+      width: $desktop-container-width;
     }
   }
 
@@ -21,11 +29,6 @@ body.hiring-staff {
 }
 
 .dashboard-header {
-  > a {
-    float: right;
-    margin-bottom: 0;
-  }
-
   .filters-information {
     display: inline-block;
 

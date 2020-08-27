@@ -37,7 +37,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
     it 'renders the number of jobs in the heading' do
       expect(
         inline_component.css('section.govuk-tabs__panel > h2.govuk-heading-m').to_html
-      ).to include('1 Published jobs')
+      ).to include('1 published job')
     end
 
     it 'renders the vacancy job title in the table' do
