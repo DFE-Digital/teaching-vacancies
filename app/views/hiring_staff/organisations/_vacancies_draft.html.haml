@@ -1,5 +1,5 @@
 %section.govuk-tabs__panel
-  %h2.govuk-heading-m= render(HiringStaff::InlineComponents::VacanciesCountHeadingComponent.new(vacancies: vacancies, selected_type: selected_type))
+  %h2.govuk-heading-m= t("jobs.#{selected_type}_jobs_with_count", count: vacancies.count)
 
   - if vacancies.any?
     %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }

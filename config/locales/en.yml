@@ -468,22 +468,36 @@ en:
     share_on_facebook: Share to Facebook
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
-    job: job
     published_jobs: Published jobs
-    published_jobs_with_count: '%{count} published %{jobs}'
+    published_jobs_with_count:
+      zero: 'No published jobs'
+      one: '1 published job'
+      other: '%{count} published jobs'
     pending_jobs: Scheduled jobs
-    pending_jobs_with_count: '%{count} scheduled %{jobs}'
+    pending_jobs_with_count:
+      zero: 'No scheduled jobs'
+      one: '1 scheduled job'
+      other: '%{count} scheduled jobs'
     draft_jobs: Draft jobs
-    draft_jobs_with_count: '%{count} draft %{jobs}'
+    draft_jobs_with_count:
+      zero: 'No draft jobs'
+      one: '1 draft job'
+      other: '%{count} draft jobs'
     expired_jobs: Expired jobs
-    expired_jobs_with_count: '%{count} expired %{jobs}'
+    expired_jobs_with_count:
+      zero: 'No expired jobs'
+      one: '1 expired job'
+      other: '%{count} expired jobs'
     awaiting_feedback_jobs: Jobs awaiting feedback
-    awaiting_feedback_jobs_with_count: '%{count} %{jobs} awaiting feedback'
+    awaiting_feedback_jobs_with_count:
+      zero: 'No jobs awaiting feedback'
+      one: '1 job awaiting feedback'
+      other: '%{count} jobs awaiting feedback'
     expired_on: Expired on
     no_published_jobs: You currently have no published jobs
     no_expired_jobs: You currently have no expired jobs
     no_draft_jobs: You currently have no draft jobs
-    no_pending_jobs: You currently have no pending jobs
+    no_pending_jobs: You currently have no scheduled jobs
     edit_link: Edit
     copy_link: Copy
     delete_link: Delete
