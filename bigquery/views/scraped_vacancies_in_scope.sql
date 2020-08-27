@@ -4,7 +4,7 @@ SELECT
 FROM
   `teacher-vacancy-service.production_dataset.scraped_vacancies` AS scraped_vacancies
 LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_school` AS school
+  `teacher-vacancy-service.production_dataset.school` AS school
 ON
   scraped_vacancies.school_id=school.id
 LEFT JOIN
@@ -14,11 +14,9 @@ ON
 WHERE
   scraped
   AND NOT expired_before_scrape
-  AND (CAST(detailed_school_type.code AS NUMERIC) IN ( #exclude schools recorded in our database which have an out of scope establishment type
-    SELECT
-      code
-    FROM
-      `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)
+  AND (detailed_school_type_in_scope
     OR detailed_school_type.code IS NULL)
-  AND vacancy_category IN ("teacher","leadership") #i.e. not null or teaching_assistant
-  AND (school_id IS NOT NULL OR school_group_id IS NOT NULL)
+  AND vacancy_category IN ("teacher",
+    "leadership") #i.e. not null or teaching_assistant
+  AND (school_id IS NOT NULL
+    OR school_group_id IS NOT NULL)

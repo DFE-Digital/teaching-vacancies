@@ -19,10 +19,10 @@ WITH
     name,
     postcode,
     status,
-    earliest_date_opened,
+    date_opened,
     date_closed
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_schoolgroup_flattened`),
+    `teacher-vacancy-service.production_dataset.schoolgroup`),
   scraped_vacancy AS (
   SELECT
     *
@@ -107,14 +107,14 @@ WITH
     school.id AS school_id,
     school.urn AS school_urn,
     school.name AS school_name,
-    school.data_establishmentstatus_name AS school_status,
-    school.data_closedate AS school_closedate,
-    school.data_opendate AS school_opendate,
-    school.created_at AS school_createddate
+    school.status AS school_status,
+    school.date_closed AS school_closedate,
+    school.date_opened AS school_opendate,
+    school.date_created AS school_createddate
   FROM
     scraped_vacancy
   INNER JOIN
-    `teacher-vacancy-service.production_dataset.feb20_school` AS school
+    `teacher-vacancy-service.production_dataset.school` AS school
   ON
   IF
     ( scraped_vacancy.location_address_postcode=school.postcode
@@ -123,9 +123,9 @@ WITH
       scraped_vacancy.location_address_postcode=school.postcode )
   WHERE
     #exclude matches with schools which were closed or had not yet been created in GIAS on the date when the vacancy was published (note - will exclude a match if a school published a vacancy during academisation - i.e. after the new academy had been created in GIAS but before the old school had officially closed - because in this case we can't work out whether recruitment was for the old or the new school
-      (school.data_establishmentstatus_name != "Closed"
-        OR school.data_closedate > scraped_vacancy.publish_on)
-      AND CAST(school.created_at AS DATE) <= scraped_vacancy.publish_on ),
+      (school.status != "Closed"
+        OR school.date_closed > scraped_vacancy.publish_on)
+      AND date_created <= scraped_vacancy.publish_on ),
     vacancy_to_schoolgroup_matches AS (
     SELECT
       DISTINCT scraped_vacancy.scraped_url,
@@ -134,7 +134,7 @@ WITH
       school_group.name AS school_group_name,
       school_group.status AS school_group_status,
       school_group.date_closed AS school_group_closedate,
-      school_group.earliest_date_opened AS school_group_opendate,
+      school_group.date_opened AS school_group_opendate,
     FROM
       scraped_vacancy
     INNER JOIN
@@ -149,7 +149,7 @@ WITH
       #exclude matches with school groups which were closed or had not yet been opened on the date when the vacancy was published
       (school_group.status != "Closed"
         OR school_group.date_closed > scraped_vacancy.publish_on)
-      AND school_group.earliest_date_opened <= scraped_vacancy.publish_on ),
+      AND school_group.date_opened <= scraped_vacancy.publish_on ),
     vacancies_joined_to_schools_and_groups AS (
     SELECT
       scraped_vacancy.*,
@@ -166,7 +166,7 @@ WITH
     ON
       scraped_vacancy.scraped_url=vacancy_to_school_matches.scraped_url
     LEFT JOIN
-      `teacher-vacancy-service.production_dataset.feb20_school` AS school
+      `teacher-vacancy-service.production_dataset.school` AS school
     ON
       school_urn=school.urn
     LEFT JOIN
@@ -203,13 +203,17 @@ WITH
     FROM
       vacancies_joined_to_schools_and_groups
     LEFT JOIN
-      `teacher-vacancy-service.production_dataset.feb20_school` AS school
+      `teacher-vacancy-service.production_dataset.school` AS school
     ON
       vacancies_joined_to_schools_and_groups.school_urn=school.urn
     LEFT JOIN
+      `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS TV_organisationvacancy
+    ON
+      school.id=TV_organisationvacancy.organisation_id
+    LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_vacancy` AS TV_vacancy
     ON
-      school.id=TV_vacancy.school_id #only match vacancies to TV vacancies from the matched school in our database
+      TV_organisationvacancy.vacancy_id=TV_vacancy.id #only match vacancies to TV vacancies from the matched school in our database
       AND ( (
         SELECT
           SAFE_DIVIDE(COUNTIF(scraped_words IS NULL

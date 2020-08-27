@@ -1,4 +1,3 @@
-  #new version of this query that takes into account whether schools were open or closed on each day
 WITH
   dates AS ( #the range of dates we're calculating for - later, we could use this to limit the start date so we don't overwrite previously calculated data
   SELECT
@@ -9,29 +8,23 @@ WITH
   SELECT
     URN,
     id,
-    data_CloseDate AS closed_date,
-    data_OpenDate AS opened_date,
-    CAST(created_at AS DATE) AS created_at_date,
-    data_EstablishmentStatus_name AS status,
-    data_TypeOfEstablishment_name AS establishment_type
+    date_closed,
+    date_opened,
+    CAST(date_created AS DATE) AS date_created,
+    status
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_school`
+    `teacher-vacancy-service.production_dataset.school`
   WHERE
-    ((data_CloseDate IS NULL
-        AND data_EstablishmentStatus_name != "Closed")
-      OR (data_EstablishmentStatus_name = "Closed"
-        AND data_CloseDate > '2018-05-03'))
-    AND data_TypeOfEstablishment_code IN (
-    SELECT
-      Code
-    FROM
-      `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`)),
+    ((date_closed IS NULL
+        AND status != "Closed")
+      OR (status = "Closed"
+        AND date_closed > '2018-05-03'))
+    AND detailed_school_type_in_scope),
   vacancies AS (
   SELECT
     vacancy.id,
     vacancy.publish_on,
     vacancy.expires_on,
-    vacancy.school_id,
     COUNT(document.id) AS number_of_documents
   FROM
     `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
@@ -46,8 +39,7 @@ WITH
   GROUP BY
     vacancy.id,
     publish_on,
-    expires_on,
-    school_id ),
+    expires_on),
   vacancy_metrics AS (
   SELECT
     dates.date AS date,
@@ -100,18 +92,18 @@ WITH
       dates.date AS date,
     IF
       ((schools.status != "Closed" #if the school is not currently closed
-          OR schools.closed_date > dates.date) #or if the school closed after the date we're calculating for
+          OR schools.date_closed > dates.date) #or if the school closed after the date we're calculating for
         AND (schools.status != "Proposed to open" #and if the school is not currently proposed to open
-          OR schools.opened_date <= dates.date #or if the school opened before the date we're calculating for
+          OR schools.date_opened <= dates.date #or if the school opened before the date we're calculating for
           )
-        AND schools.created_at_date <= dates.date,
+        AND schools.date_created <= dates.date,
         #and if the school was first listed on GIAS before or on the date we're calculating for
         TRUE,
         FALSE) AS in_scope,
     IF
       ((schools.status = "Closed"
-          AND schools.closed_date <= dates.date)
-        OR schools.opened_date > dates.date,
+          AND schools.date_closed <= dates.date)
+        OR schools.date_opened > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not signed up, regardless of whether this is before or after 20th November 2019
       IF
@@ -131,8 +123,8 @@ WITH
             FALSE))) AS signed_up,
     IF
       ((schools.status = "Closed"
-          AND schools.closed_date <= dates.date)
-        OR schools.opened_date > dates.date,
+          AND schools.date_closed <= dates.date)
+        OR schools.date_opened > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having published
       IF
@@ -141,8 +133,8 @@ WITH
           FALSE)) AS has_published_so_far,
     IF
       ((schools.status = "Closed"
-          AND schools.closed_date <= dates.date)
-        OR schools.opened_date > dates.date,
+          AND schools.date_closed <= dates.date)
+        OR schools.date_opened > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having published in the last year
       IF
@@ -152,8 +144,8 @@ WITH
           FALSE)) AS has_published_in_the_last_year,
     IF
       ((schools.status = "Closed"
-          AND schools.closed_date <= dates.date)
-        OR schools.opened_date > dates.date,
+          AND schools.date_closed <= dates.date)
+        OR schools.date_opened > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having published in the last quarter
       IF
@@ -163,8 +155,8 @@ WITH
           FALSE)) AS has_published_in_the_last_quarter,
     IF
       ((schools.status = "Closed"
-          AND schools.closed_date <= dates.date)
-        OR schools.opened_date > dates.date,
+          AND schools.date_closed <= dates.date)
+        OR schools.date_opened > dates.date,
         FALSE,
         #mark schools which were closed or had not yet opened as not having had live vacancies
       IF
@@ -185,15 +177,19 @@ WITH
     ON
       CAST(users.school_urn AS STRING) = schools.urn
     LEFT JOIN
+      `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS organisationvacancy
+    ON
+      schools.id=organisationvacancy.organisation_id
+    LEFT JOIN
       vacancies
     ON
-      vacancies.school_id = schools.id
+      vacancies.id=organisationvacancy.vacancy_id
     GROUP BY
       urn,
       date,
-      closed_date,
-      opened_date,
-      created_at_date,
+      date_closed,
+      date_opened,
+      date_created,
       schools.status,
       historic_signups.School_been_added,
       historic_signups.Date_first_signed_up)
