@@ -25,25 +25,6 @@ describe('panel', () => {
     };
   });
 
-  describe('toggleButtonText', () => {
-    test('changes button text to hide panel text when panel is visible', () => {
-      toggleButtonText(options);
-      expect(button.innerHTML).toBe(HIDE_BUTTON_TEXT);
-    });
-
-    test('changes button text to show panel text when panel is hidden', () => {
-      container.classList.toggle(CLOSED_CLASS);
-      toggleButtonText(options);
-      expect(button.innerHTML).toBe(SHOW_BUTTON_TEXT);
-    });
-  });
-
-  describe('isPanelClosed', () => {
-    test('changes button text to show panel state when panel is hidden', () => {
-      expect(isPanelClosed(container, CLOSED_CLASS)).toBe(true);
-    });
-  });
-
   describe('togglePanel', () => {
     test('calls toggle handler when button is clicked', () => {
       const toggleMock = jest.spyOn(options, 'onToggleHandler');
@@ -54,10 +35,10 @@ describe('panel', () => {
 
     test('toggles supplied class when button is clicked', () => {
       options.toggleButton.dispatchEvent(new Event('click'));
-      expect(container.classList.contains(CLOSED_CLASS)).toBe(true);
+      expect(container.classList.contains(CLOSED_CLASS)).toBe(false);
 
       options.toggleButton.dispatchEvent(new Event('click'));
-      expect(container.classList.contains(CLOSED_CLASS)).toBe(false);
+      expect(container.classList.contains(CLOSED_CLASS)).toBe(true);
     });
 
     test('sets the correct initial state of the panel', () => {
@@ -72,6 +53,20 @@ describe('panel', () => {
       const closePanelMock = jest.spyOn(panel, 'closePanel');
       togglePanel(options);
       expect(closePanelMock).toHaveBeenCalledWith(options);
+    });
+  });
+
+  describe('toggleButtonText', () => {
+    test('changes button text to show panel text when panel is hidden', () => {
+      toggleButtonText(options);
+      expect(button.innerHTML).toBe(SHOW_BUTTON_TEXT);
+      expect(isPanelClosed(container, CLOSED_CLASS)).toBe(true);
+    });
+    test('changes button text to hide panel text when panel is visible', () => {
+      container.classList.toggle(CLOSED_CLASS);
+      toggleButtonText(options);
+      expect(button.innerHTML).toBe(HIDE_BUTTON_TEXT);
+      expect(isPanelClosed(container, CLOSED_CLASS)).toBe(false);
     });
   });
 });

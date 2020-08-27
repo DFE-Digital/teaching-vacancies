@@ -5,6 +5,10 @@ const LOCALSTORAGE_COMPONENT_KEY = 'panel';
 export const togglePanel = (options) => {
   if (!localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
     localStorage.setItem(LOCALSTORAGE_COMPONENT_KEY, '{}');
+    localStorage.setItem(
+      LOCALSTORAGE_COMPONENT_KEY,
+      JSON.stringify({ [options.componentKey]: 'open' }),
+    );
   }
 
   if (options.toggleButton) {
