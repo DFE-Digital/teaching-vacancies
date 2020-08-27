@@ -19,6 +19,8 @@ import filterGroup, {
   CHECKBOX_CLASS_SELECTOR,
   CLOSE_ALL_TEXT,
   OPEN_ALL_TEXT,
+  ACCORDION_SECTION_CLASS_SELECTOR,
+  ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR,
   addUpdateOpenOrCloseEvent,
 } from './filterGroup';
 
@@ -320,24 +322,21 @@ describe('filterGroup', () => {
   });
 
   describe('addUpdateOpenOrCloseEvent', () => {
-    test('displays close all when all elements are open', () => {
-      document.body.innerHTML = `
-      <form data-auto-submit="true">
-        <div><button id="close-all-groups">Open all</button></div>
-        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
-          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
-        </div>
-        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
-          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
-        </div>
-        <div class="govuk-accordion__section govuk-accordion__section--expanded filter-group__container">
-          <div class="govuk-accordion__section-header" id="closed-section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
-        </div>
-      </form>
+    const accordionTemplate = (allOpen) => {
+      const expandedClass = allOpen ? ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR : '';
+      return `
+      <div><button id="close-all-groups"></button></div>
+      <div class="${ACCORDION_SECTION_CLASS_SELECTOR} ${expandedClass}"><div></div></div>
+      <div class="${ACCORDION_SECTION_CLASS_SELECTOR} ${expandedClass}"><div id="click-this-header"></div></div>
       `;
+    };
 
-      const sectionHeaderElement = document.getElementById('closed-section-header');
-      const openOrCloseAllSelector = 'close-all-groups';
+    const openOrCloseAllSelector = 'close-all-groups';
+
+    test('displays close all when all elements are open', () => {
+      document.body.innerHTML = accordionTemplate(true);
+
+      const sectionHeaderElement = document.getElementById('click-this-header');
 
       addUpdateOpenOrCloseEvent(sectionHeaderElement, openOrCloseAllSelector);
       sectionHeaderElement.dispatchEvent(new Event('click'));
@@ -346,23 +345,9 @@ describe('filterGroup', () => {
     });
 
     test('displays open all when all elements are closed', () => {
-      document.body.innerHTML = `
-      <form data-auto-submit="true">
-        <div><button id="close-all-groups">Close all</button></div>
-        <div class="govuk-accordion__section filter-group__container">
-          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
-        </div>
-        <div class="govuk-accordion__section filter-group__container">
-          <div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
-        </div>
-        <div class="govuk-accordion__section filter-group__container">
-          <div class="govuk-accordion__section-header" id="open-section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div>
-        </div>
-      </form>
-      `;
+      document.body.innerHTML = accordionTemplate(false);
 
-      const sectionHeaderElement = document.getElementById('open-section-header');
-      const openOrCloseAllSelector = 'close-all-groups';
+      const sectionHeaderElement = document.getElementById('click-this-header');
 
       addUpdateOpenOrCloseEvent(sectionHeaderElement, openOrCloseAllSelector);
       sectionHeaderElement.dispatchEvent(new Event('click'));

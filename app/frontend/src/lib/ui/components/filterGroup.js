@@ -1,6 +1,8 @@
 import '../../polyfill/closest.polyfill';
 import 'classlist-polyfill';
 
+export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
+export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
@@ -27,8 +29,8 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   if (document.getElementById(closeButtonSelector)) {
     displayOpenOrCloseText(
       document.getElementById(closeButtonSelector),
-      document.getElementsByClassName('govuk-accordion__section--expanded').length,
-      document.getElementsByClassName('govuk-accordion__section').length,
+      document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length,
+      document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR).length,
     );
     document.getElementById(closeButtonSelector).addEventListener('click', openOrCloseAllSectionsHandler);
   }
@@ -67,7 +69,11 @@ export const addUpdateOpenOrCloseEvent = (sectionHeaderElement, openOrCloseAllSe
   const openOrCloseAllElement = document.getElementById(openOrCloseAllSelector);
   if (openOrCloseAllElement) {
     sectionHeaderElement.addEventListener('click', () => {
-      displayOpenOrCloseText(openOrCloseAllElement, document.getElementsByClassName('govuk-accordion__section--expanded').length, document.getElementsByClassName('govuk-accordion__section').length);
+      displayOpenOrCloseText(
+        openOrCloseAllElement,
+        document.getElementsByClassName(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR).length,
+        document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR).length,
+      );
     });
   }
 };
@@ -87,10 +93,10 @@ export const openOrCloseAllSectionsHandler = (e) => {
 
 export const openOrCloseAllSections = (targetElement) => {
   if (targetElement.innerText === CLOSE_ALL_TEXT) {
-    Array.from(document.getElementsByClassName('govuk-accordion__section')).map((section) => section.classList.remove('govuk-accordion__section--expanded'));
+    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).map((section) => section.classList.remove(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
     targetElement.innerText = OPEN_ALL_TEXT;
   } else if (targetElement.innerText === OPEN_ALL_TEXT) {
-    Array.from(document.getElementsByClassName('govuk-accordion__section')).map((section) => section.classList.add('govuk-accordion__section--expanded'));
+    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).map((section) => section.classList.add(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
     targetElement.innerText = CLOSE_ALL_TEXT;
   }
 };
