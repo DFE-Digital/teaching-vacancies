@@ -63,8 +63,10 @@ init-terraform-review:
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
 		$(eval export TF_WORKSPACE=$(prnum))
+		#terraform workspace new $(prnum) terraform/app
 		terraform init -backend-config="workspace_key_prefix=env/review" terraform/app
 		terraform plan -var-file terraform/workspace-variables/$(env).tfvars terraform/app
+		#terraform apply -input=false -var-file terraform/workspace-variables/$(env).tfvars -auto-approve terraform/app
 
 .PHONY: deploy
 deploy: init-terraform
