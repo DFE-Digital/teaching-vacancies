@@ -6,7 +6,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
   end
 
   def show
-    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes] || {})
+    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes]&.symbolize_keys || {})
     @form = JobLocationForm.new(attributes)
   end
 

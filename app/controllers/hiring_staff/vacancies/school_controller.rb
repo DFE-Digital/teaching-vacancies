@@ -3,7 +3,7 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
 
   before_action :verify_school_group
   before_action :set_up_url
-  before_action :set_organisation_options, only: %i[show update]
+  before_action :set_organisation_options
   before_action only: %i[create update] do
     set_up_form(SchoolForm)
   end
@@ -12,16 +12,20 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def show
-    attributes = @vacancy.present? ? @vacancy.attributes : session[:vacancy_attributes]
+    if @vacancy.present?
+      attributes = @vacancy.attributes
+    else
+      attributes = session[:vacancy_attributes].merge(organisation_id: session[:organisation_id]).symbolize_keys
+    end
     return redirect_to next_step if attributes['job_location'] == 'central_office'
     @form = SchoolForm.new(attributes)
   end
 
   def create
     @form.vacancy.readable_job_location = readable_job_location(session[:vacancy_attributes]['job_location'],
-                                                                school_name: school.name)
+                                                                school_name: school&.name)
     store_vacancy_attributes(@form.vacancy.attributes)
-    session[:organisation_id] = school.id
+    session[:organisation_id] = school&.id
     if @form.valid?
       redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
@@ -62,6 +66,6 @@ class HiringStaff::Vacancies::SchoolController < HiringStaff::Vacancies::Applica
   end
 
   def school
-    current_organisation.schools.find(form_params[:organisation_id])
+    current_organisation.schools.find(form_params[:organisation_id]) if form_params[:organisation_id].present?
   end
 end

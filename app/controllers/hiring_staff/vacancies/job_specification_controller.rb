@@ -4,6 +4,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   include GetSubjectName
 
   before_action :set_up_url
+  before_action :set_up_previous_step_path, only: %i[show]
   before_action only: %i[create update] do
     set_up_form(JobSpecificationForm)
   end
@@ -12,7 +13,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def show
-    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes] || {})
+    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes]&.symbolize_keys || {})
     @form = JobSpecificationForm.new(attributes)
   end
 
@@ -92,11 +93,21 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if current_organisation.is_a?(School)
       @form.vacancy.organisation_vacancies.build(organisation: current_organisation)
     elsif current_organisation.is_a?(SchoolGroup)
-      @form.vacancy.organisation_vacancies.build(organisation_id: session[:organisation_id])
+      @form.vacancy.organisation_vacancies.build(organisation_id: session[:vacancy_attributes]['organisation_id'])
     end
   end
 
   def next_step
     organisation_job_pay_package_path(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
+  end
+
+  def set_up_previous_step_path
+    if current_organisation.is_a?(School)
+      @previous_step_path = organisation_path
+    elsif session[:vacancy_attributes].present? && session[:vacancy_attributes]['job_location'] == 'at_one_school'
+      @previous_step_path = school_organisation_job_path
+    elsif session[:vacancy_attributes].present? && session[:vacancy_attributes]['job_location'] == 'central_office'
+      @previous_step_path = job_location_organisation_job_path
+    end
   end
 end
