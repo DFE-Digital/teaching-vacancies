@@ -8,18 +8,21 @@ IF
   (table LIKE "scraped_vacancies%"
     AND (
     SELECT
-      COUNTIF(CAST(timestamp_url_found AS DATE) >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+      COUNTIF(CAST(timestamp AS DATE) >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
     FROM
-      `teacher-vacancy-service.production_dataset.scraped_vacancies`)=0,
+      `teacher-vacancy-service.production_dataset.scraped_vacancies_raw_changelog`
+    WHERE
+      operation="CREATE")=0,
     "No new URLs to crawl obtained last night.",
   IF
     (table LIKE "scraped_vacancies%"
       AND ((
         SELECT
-          COUNTIF(CAST(timestamp_url_found AS DATE) >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
-            AND title IS NOT NULL)
+          COUNTIF(CAST(timestamp AS DATE) >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
         FROM
-          `teacher-vacancy-service.production_dataset.scraped_vacancies`)=0),
+          `teacher-vacancy-service.production_dataset.scraped_vacancies_raw_changelog`
+        WHERE
+          operation="UPDATE")=0),
       "No new vacancies crawled last night.",
     IF
       (table NOT LIKE "CALCULATED_working_patterns_by_month%"
@@ -95,6 +98,7 @@ FROM (
       `teacher-vacancy-service.production_dataset.__TABLES__`
     WHERE
       TYPE != 3 #exclude tables which are just Google Sheets - these don't have meaningful time/size data in __TABLES__
+      AND TYPE != 2 #exclude views of tables, which aren't actually written to by any scheduled queries so don't need monitoring
       AND table_id NOT LIKE "STATIC%" #don't monitor tables that don't change
       AND table_id != 'CALCULATED_table_error_status' #don't monitor the table this query outputs to as we haven't written to it yet
       ))
