@@ -1,4 +1,5 @@
 import '../../polyfill/closest.polyfill';
+import '../../polyfill/from.polyfill';
 
 export const init = (container) => {
   const checkboxes = container.getElementsByClassName('govuk-checkboxes__input');
