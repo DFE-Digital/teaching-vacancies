@@ -7,7 +7,7 @@ export const togglePanel = (options) => {
     localStorage.setItem(LOCALSTORAGE_COMPONENT_KEY, '{}');
     localStorage.setItem(
       LOCALSTORAGE_COMPONENT_KEY,
-      JSON.stringify({ [options.componentKey]: 'open' }),
+      JSON.stringify({ [options.componentKey]: options.defaultState }),
     );
   }
 
