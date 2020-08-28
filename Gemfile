@@ -80,7 +80,6 @@ end
 
 group :test do
   gem 'capybara', '~> 3.33'
-  gem 'database_cleaner'
   gem 'fuubar'
   gem 'mock_redis'
   gem 'rack_session_access'

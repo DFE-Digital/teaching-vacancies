@@ -5,6 +5,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
   let(:school) { create(:school) }
 
   before(:each, :json) do
+    request.host = '127.0.0.1'
     request.accept = 'application/json'
   end
 
@@ -61,7 +62,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
       published_vacancy.organisation_vacancies.create(organisation: school)
       expired_vacancy = create(:vacancy, :expired)
       expired_vacancy.organisation_vacancies.create(organisation: school)
-
       vacancies = [published_vacancy, expired_vacancy]
 
       get :index, params: { api_version: 1 }
