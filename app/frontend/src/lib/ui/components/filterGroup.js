@@ -42,6 +42,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   const content = document.getElementsByClassName('moj-filter-layout__content')[0];
 
   toggleFilterPanel({
+    defaultState: 'closed',
     componentKey: 'dashboard',
     hideText: 'Hide filters',
     showText: 'Show filters',
