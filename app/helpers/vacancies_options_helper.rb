@@ -12,7 +12,7 @@ module VacanciesOptionsHelper
 
   def job_role_options
     Vacancy::JOB_ROLE_OPTIONS.except(:nqt_suitable).map do |key, _value|
-      [I18n.t("jobs.job_role_options.#{key}"), key]
+      [I18n.t("jobs.job_role_options.#{key}"), key.to_s]
     end
   end
 
