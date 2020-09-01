@@ -11,6 +11,10 @@
   border-top: none;
 }
 
+.checkbox-label__bold .govuk-checkboxes__item label {
+  font-weight: $bold-font-weight;
+}
+
 .tv-checkbox__group {
   border: govuk-spacing(1) solid govuk-colour("light-grey");
   padding: govuk-spacing(2);
@@ -21,12 +25,7 @@
   }
 
   .govuk-checkboxes__item label {
-    font-weight: $regular-font-weight;
     font-size: 0.9em;
-  }
-
-  .checkbox-label__bold .govuk-checkboxes__item label {
-    font-weight: $bold-font-weight;
   }
 
   .govuk-checkboxes__item {
