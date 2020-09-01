@@ -4,7 +4,7 @@ module OmniAuth
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/PerceivedComplexity
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       # rubocop:disable Style/GuardClause
       # Please refer to this commit to read why this has been copied from: https://github.com/m0n9oose/omniauth_openid_connect/blob/master/lib/omniauth/strategies/openid_connect.rb
       def callback_phase
@@ -45,7 +45,7 @@ module OmniAuth
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/CyclomaticComplexity
       # rubocop:enable Metrics/PerceivedComplexity
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
       # rubocop:enable Style/GuardClause
     end
   end

@@ -7,7 +7,7 @@ RSpec.describe FeedbackPromptMailer, type: :mailer do
 
   describe 'prompt_for_feedback' do
     before(:each) do
-      stub_const('NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES', '')
+      stub_const('NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES', 'not-nil')
     end
     let(:email_address) { 'dummy@dum.com' }
     let(:mail) { described_class.prompt_for_feedback(email_address, vacancies) }

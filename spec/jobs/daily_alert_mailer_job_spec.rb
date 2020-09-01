@@ -10,6 +10,7 @@ RSpec.describe DailyAlertMailerJob, type: :job do
   let(:job) { AlertMailer.daily_alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
 
   before do
+    stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil')
     vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
   end
 

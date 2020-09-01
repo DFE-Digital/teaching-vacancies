@@ -1,7 +1,7 @@
 # https://github.com/cyu/rack-cors
-# rubocop:disable Metrics/LineLength
+# rubocop:disable Layout/LineLength
 Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.env.test?, logger: (-> { Rails.logger }) do
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   allow do
     # Allow all domains access to jobs API
     origins '*'

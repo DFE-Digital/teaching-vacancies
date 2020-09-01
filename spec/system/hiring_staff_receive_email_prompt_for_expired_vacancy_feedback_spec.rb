@@ -7,6 +7,7 @@ RSpec.describe 'Creating a vacancy' do
   before(:each) do
     ActionMailer::Base.deliveries.clear
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id, email: 'test@mail.com')
+    stub_const('NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES', 'not-nil')
   end
 
   after(:each) do

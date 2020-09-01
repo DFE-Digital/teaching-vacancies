@@ -92,7 +92,7 @@ class Vacancy < ApplicationRecord
   end
 
   # rubocop:disable Metrics/BlockLength
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
     attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
 
@@ -179,7 +179,7 @@ class Vacancy < ApplicationRecord
       ranking ['asc(expires_at_timestamp)']
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/BlockLength
 
   def lat
