@@ -3,96 +3,62 @@ inherit_gem:
     - config/rails.yml
 
 AllCops:
-    TargetRubyVersion: 2.6
-    Exclude:
-      - 'db/migrate/**/*'
-      - 'db/schema.rb'
-      - 'bin/**/*'
-      - 'config/initializers/assets.rb'
-      - 'vendor/**/*'
-      - 'node_modules/**/*'
-      - 'tmp/**/*'
-
-Rails:
-    Enabled: true
-
-Rails/HasManyOrHasOneDependent:
-    Enabled: false
-
-Bundler/OrderedGems:
-    Enabled: true
-
-Style/Alias:
-    Enabled: false
-
-Style/FrozenStringLiteralComment:
-    Enabled: false
-
-Style/NumericLiterals:
-    Enabled: false
+  TargetRubyVersion: 2.6
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
 
 Layout/TrailingEmptyLines:
-    Enabled: false
-
-Style/TrailingCommaInArguments:
-    Enabled: false
-
-Style/StringLiterals:
-    EnforcedStyle: single_quotes
-
-Style/TrailingCommaInHashLiteral:
-    Enabled: false
-
-Style/TrailingCommaInArrayLiteral:
-    Enabled: false
-
-Style/Documentation:
-    Enabled: false
-
-Style/DoubleNegation:
-    Enabled: false
-
-Style/WordArray:
-    Enabled: false
-
-Style/ClassAndModuleChildren:
-    Enabled: false
-
-Metrics/ClassLength:
-    Enabled: false
-
-Metrics/MethodLength:
-    Max: 50
-    Exclude:
-
-Metrics/AbcSize:
-    Max: 25
-    Exclude:
-      - 'spec/**/*'
-      - 'app/jobs/performance_platform_feedback_queue_job.rb'
-      - 'lib/export_tables_to_big_query.rb'
-
-Metrics/ModuleLength:
-    Exclude:
-      - 'spec/support/vacancy_helpers.rb'
-
-Metrics/LineLength:
-    Max: 120
-    Exclude:
-      - 'config/initializers/performance_platform.rb'
-
-Metrics/BlockLength:
-    Max: 40
-    Exclude:
-      - 'spec/**/*'
-      - 'config/routes.rb'
-      - 'lib/tasks/data.rake'
+  Enabled: false
 
 Layout/EmptyLinesAroundAccessModifier:
-    Enabled: false
-
-Layout/SpaceInsideBlockBraces:
-    EnforcedStyleForEmptyBraces: no_space
+  Enabled: false
 
 Layout/IndentationWidth:
-    Enabled: false
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Max: 25
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/export_tables_to_big_query.rb'
+
+Metrics/BlockLength:
+  Max: 40
+  Exclude:
+    - 'spec/**/*'
+    - 'config/routes.rb'
+    - 'lib/tasks/data.rake'
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 50
+
+Rails:
+  Enabled: true
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false

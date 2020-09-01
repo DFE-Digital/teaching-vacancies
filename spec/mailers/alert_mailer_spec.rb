@@ -21,7 +21,7 @@ RSpec.describe AlertMailer, type: :mailer do
 
   describe 'daily_alert' do
     before(:each) do
-      stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', '')
+      stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil')
     end
 
     let(:mail) { described_class.daily_alert(subscription.id, vacancies.pluck(:id)) }

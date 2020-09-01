@@ -4,7 +4,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   include ERB::Util
 
   before(:each) do
-    stub_const('NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE', '')
+    stub_const('NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE', 'not-nil')
     travel_to Time.zone.local(2019, 01, 01, 01, 01, 01)
   end
 

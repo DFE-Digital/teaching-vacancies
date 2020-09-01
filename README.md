@@ -370,21 +370,6 @@ This will re-bundle assets when files are saved for faster development.
 
 ## Misc
 
-### RSpec formatters - Fuubar
-
-Fuubar is a fast-failing progress bar formatter for RSpec. I've added the gem, but know from experience it isn't to
-everyone's taste. If you want to use it, either start RSpec with the formatter switch:
-
-```bash
-bundle exec rspec --format Fuubar
-```
-
-or add it to your global `~/.rspec`:
-
-```bash
---format Fuubar
-```
-
 ### Getting production-like data for local development
 
 You can use conduit to create a dump of production data. See [this section](https://github.com/DFE-Digital/teacher-vacancy-service/blob/master/documentation/govuk-paas.md#backuprestore-govuk-paas-postgres-service-database) of the GovUK PaaS docs. Then you can load this into your local database:
