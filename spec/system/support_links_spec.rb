@@ -6,7 +6,7 @@ RSpec.describe 'A visitor to the website can access the support links' do
     click_on 'Cookies'
 
     expect(page).to have_content('Cookies')
-    expect(page).to have_content("'Teaching Vacancies' puts small files (known as 'cookies') onto your computer " \
+    expect(page).to have_content("Teaching Vacancies puts small files (known as 'cookies') onto your computer " \
                                  'to collect information about how you use the service.')
   end
 

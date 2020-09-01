@@ -910,15 +910,15 @@ en:
       purpose: Purpose
       expires: Expires
       explainer: >-
-        "'Teaching Vacancies' puts small files (known as 'cookies') onto your computer to collect information about
-        how you use the service."
+        Teaching Vacancies puts small files (known as 'cookies') onto your computer to collect information about
+        how you use the service.
       cookies_are_used_to:
         title: 'Cookies are used to:'
         list:
           - measure how you use the service so it can be updated and improved based on your needs
           - remember the notifications you've seen so that we don't show them to you again
           - remember who you are and when you have logged in so we can show you information relevant to you
-      not_used_to_identify: "'Teaching Vacancies' cookies aren't used to identify you personally."
+      not_used_to_identify: "Teaching Vacancies cookies aren't used to identify you personally."
       find_out_more_about_cookies: Find out more about %{how_to_manage_url}
       how_to_manage: how to manage cookies.
       how_we_use:
