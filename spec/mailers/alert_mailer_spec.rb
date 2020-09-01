@@ -55,8 +55,7 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
 
         expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
-
-        expect(body).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/unsubscribe})
+        expect(body).to include(subscription_unsubscribe_url(subscription_id: subscription.token, protocol: 'http'))
       end
     end
 

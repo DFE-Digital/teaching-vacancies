@@ -43,6 +43,8 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
   it 'has an unsubscribe link' do
     expect(body_lines[10]).to match(/#{I18n.t('subscriptions.email.unsubscribe_text_html')}/)
-    expect(body_lines.last).to match(%r{http:\/\/localhost:3000\/subscriptions\/#{subscription.token}\/unsubscribe})
+    expect(body_lines.last).to include(
+      subscription_unsubscribe_url(subscription_id: subscription.token, protocol: 'http')
+    )
   end
 end

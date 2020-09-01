@@ -25,7 +25,7 @@ class Subscription < ApplicationRecord
   def self.find_and_verify_by_token(token)
     data = encryptor.decrypt_and_verify(token)
     find(data[:id])
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
+  rescue ActiveSupport::MessageEncryptor::InvalidMessage
     raise ActiveRecord::RecordNotFound
   end
 
