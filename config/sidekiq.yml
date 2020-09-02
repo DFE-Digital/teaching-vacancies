@@ -1,3 +1,5 @@
+:max_retries: 5
+
 :queues:
   - [email_daily_alerts, 4]
   - [mailers, 3]
