@@ -5,19 +5,35 @@ RSpec.describe ImportSchoolGroupDataJob, type: :job do
 
   subject(:job) { described_class.perform_later }
 
-  it 'queues the job' do
-    expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
+  before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }
+
+  context 'when DisableExpensiveJobs is not enabled' do
+    let(:disable_expensive_jobs_enabled?) { false }
+
+    it 'queues the job' do
+      expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
+    end
+
+    it 'is in the import_school_group_data queue' do
+      expect(job.queue_name).to eq('import_school_group_data')
+    end
+
+    it 'executes perform' do
+      import_school_group_data = double(:mock)
+      expect(ImportSchoolGroupData).to receive(:new).and_return(import_school_group_data)
+      expect(import_school_group_data).to receive(:run!)
+
+      perform_enqueued_jobs { job }
+    end
   end
 
-  it 'is in the import_school_group_data queue' do
-    expect(job.queue_name).to eq('import_school_group_data')
-  end
+  context 'when DisableExpensiveJobs is enabled' do
+    let(:disable_expensive_jobs_enabled?) { true }
 
-  it 'executes perform' do
-    import_school_group_data = double(:mock)
-    expect(ImportSchoolGroupData).to receive(:new).and_return(import_school_group_data)
-    expect(import_school_group_data).to receive(:run!)
+    it 'does not perform the job' do
+      expect(ImportSchoolGroupData).not_to receive(:new)
 
-    perform_enqueued_jobs { job }
+      perform_enqueued_jobs { job }
+    end
   end
 end

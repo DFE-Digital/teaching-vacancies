@@ -2,6 +2,7 @@
 AUTHENTICATION_FALLBACK: false
 BIG_QUERY_DATASET: production_dataset
 CLOUD_STORAGE_BUCKET: tvs_production
+DISABLE_EXPENSIVE_JOBS: false
 DOMAIN: teaching-vacancies.service.gov.uk
 FEATURE_EMAIL_ALERTS: true
 FEATURE_MULTI_SCHOOL_JOBS: false
