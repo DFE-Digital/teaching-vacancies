@@ -51,6 +51,7 @@ RSpec.configure do |config|
 
   config.before do
     allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(false)
+    allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
     Algolia::WebMock.mock!
   end
 

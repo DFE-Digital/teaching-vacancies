@@ -1,5 +1,5 @@
 = render 'hiring_staff/vacancies/section_tag', section: 'job_location'
-= render 'hiring_staff/vacancies/error_tag', attributes: [:job_location, :school_id], section: 'job_location'
+= render 'hiring_staff/vacancies/error_tag', attributes: [:job_location, :organisation_id, :organisation_ids], section: 'job_location'
 
 %h2.govuk-heading-m.app-task-list__section#job_location_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:job_location, current_organisation)

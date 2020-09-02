@@ -84,9 +84,9 @@ Rails.application.routes.draw do
         only: %i[show update],
         controller: 'hiring_staff/vacancies/job_location',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
-      resource :school,
+      resource :schools,
         only: %i[show update],
-        controller: 'hiring_staff/vacancies/school',
+        controller: 'hiring_staff/vacancies/schools',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
       resource :job_specification,
         only: %i[show update],
@@ -130,11 +130,11 @@ Rails.application.routes.draw do
       post :job_location,
         to: 'hiring_staff/vacancies/job_location#create',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
-      get :school,
-        to: 'hiring_staff/vacancies/school#show',
+      get :schools,
+        to: 'hiring_staff/vacancies/schools#show',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
-      post :school,
-        to: 'hiring_staff/vacancies/school#create',
+      post :schools,
+        to: 'hiring_staff/vacancies/schools#create',
         defaults: { create_step: 1, step_title: I18n.t('jobs.job_location') }
       get :job_specification,
         to: 'hiring_staff/vacancies/job_specification#show',

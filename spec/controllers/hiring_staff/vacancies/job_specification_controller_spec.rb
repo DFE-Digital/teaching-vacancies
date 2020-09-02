@@ -27,6 +27,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
   describe '#set_up_url' do
     before do
       allow(vacancy).to receive(:attributes).and_return(double('attributes').as_null_object)
+      allow(vacancy).to receive(:job_location).and_return(nil)
     end
 
     context 'vacancy is present' do
@@ -83,6 +84,8 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
 
   describe '#set_up_previous_step_path' do
     before do
+      allow(vacancy).to receive(:present?).and_return(false)
+      allow(vacancy).to receive(:job_location).and_return(nil)
       allow(session).to receive(:[]).with(:vacancy_attributes).and_return(vacancy_attributes)
     end
 
@@ -109,7 +112,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
 
         it 'sets the previous step path to schools page' do
           subject.send(:set_up_previous_step_path)
-          expect(controller.instance_variable_get(:@previous_step_path)).to eql(school_organisation_job_path)
+          expect(controller.instance_variable_get(:@previous_step_path)).to eql(schools_organisation_job_path)
         end
       end
 
