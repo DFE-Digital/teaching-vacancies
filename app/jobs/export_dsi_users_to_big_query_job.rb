@@ -5,7 +5,9 @@ class ExportDsiUsersToBigQueryJob < ApplicationJob
   queue_as :export_users
 
   def perform
-    ExportDsiUsersToBigQuery.new.run!
-    ExportDsiApproversToBigQuery.new.run!
+    if Rails.env.production?
+      ExportDsiUsersToBigQuery.new.run!
+      ExportDsiApproversToBigQuery.new.run!
+    end
   end
 end

@@ -13,11 +13,23 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
     expect(job.queue_name).to eq('import_school_data')
   end
 
-  it 'executes perform' do
-    update_school_data = double(:mock)
-    expect(UpdateSchoolData).to receive(:new).and_return(update_school_data)
-    expect(update_school_data).to receive(:run!)
+  context 'when in the production environment' do
+    before { allow(Rails.env).to receive(:production?).and_return(true) }
 
-    perform_enqueued_jobs { job }
+    it 'executes perform' do
+      update_school_data = double(:mock)
+      expect(UpdateSchoolData).to receive(:new).and_return(update_school_data)
+      expect(update_school_data).to receive(:run!)
+
+      perform_enqueued_jobs { job }
+    end
+  end
+
+  context 'when in non-production environments' do
+    it 'does not execute perform' do
+      expect(UpdateSchoolData).not_to receive(:new)
+
+      perform_enqueued_jobs { job }
+    end
   end
 end
