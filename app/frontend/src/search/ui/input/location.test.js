@@ -11,7 +11,7 @@ describe('location search box', () => {
   describe('onChange (input)', () => {
     test('disables the radius input if the input value does not contain a number', () => {
       onChange('london');
-      expect(disableRadiusSelect).not.toHaveBeenCalled();
+      expect(disableRadiusSelect).toHaveBeenCalledTimes(1);
     });
 
     test('enables the radius input if the input value does contain a number', () => {
