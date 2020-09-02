@@ -4,7 +4,8 @@ variable environment {
 variable app_docker_image {
 }
 
-variable app_env_values {}
+variable app_env_values {
+}
 
 variable app_start_timeout {
   default = 300
@@ -12,6 +13,9 @@ variable app_start_timeout {
 
 variable app_stopped {
   default = false
+}
+
+variable papertrail_service_binding_enable {
 }
 
 variable papertrail_url {
@@ -61,7 +65,21 @@ locals {
     yamldecode(data.aws_ssm_parameter.app_env_api_key_cloud_storage.value),
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
   )
-  app_env_secrets          = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)
+  app_env_secrets = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)
+  app_environment = merge(
+    local.app_env_api_keys,
+    local.app_env_secrets,
+    var.app_env_values
+  )
+  app_cloudfoundry_service_instances = [
+    cloudfoundry_service_instance.postgres_instance.id,
+    cloudfoundry_service_instance.redis_instance.id
+  ]
+  app_user_provided_service_bindings = var.papertrail_service_binding_enable ? [cloudfoundry_user_provided_service.papertrail.id] : []
+  app_service_bindings = concat(
+    local.app_cloudfoundry_service_instances,
+    local.app_user_provided_service_bindings
+  )
   papertrail_service_name  = "${var.project_name}-papertrail-${var.environment}"
   postgres_service_name    = "${var.project_name}-postgres-${var.environment}"
   redis_service_name       = "${var.project_name}-redis-${var.environment}"
@@ -69,9 +87,4 @@ locals {
   web_app_start_command    = "bundle exec rake cf:on_first_instance db:migrate && rails s"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.project_name}-worker-${var.environment}"
-  app_environment = merge(
-    local.app_env_api_keys,
-    local.app_env_secrets,
-    var.app_env_values
-  )
 }

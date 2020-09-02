@@ -71,3 +71,22 @@ jobs:
 
       - name: Run SASS lint
         run: yarn run sass:lint
+
+  terraform-lint:
+    name: Run Terraform check
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Terraform pin version
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.1
+
+      - name: Terraform fmt check
+        run: |
+          set -eux
+          terraform fmt -check -recursive terraform

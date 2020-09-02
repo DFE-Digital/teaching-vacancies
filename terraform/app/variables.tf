@@ -6,29 +6,31 @@ variable region {
   default = "eu-west-2"
 }
 
+variable environment {
+  default = "dev"
+}
+
 # CloudFront
 
-variable cloudfront_aliases {
-  description = "Match this value to the alias associated with the cloudfront_certificate_arn, eg. tvs.staging.dxw.net"
-  type        = list(string)
+variable distribution_list {
+  description = "Define Cloudfront distributions with the attributes below"
+  type = map(object({
+    cloudfront_aliases            = list(string)
+    offline_bucket_domain_name    = string
+    offline_bucket_origin_path    = string
+    cloudfront_origin_domain_name = string
+    domain                        = string
+  }))
+  default = {}
 }
 
-variable offline_bucket_domain_name {
-}
-
-variable offline_bucket_origin_path {
-}
-
-variable domain {
-}
-
-variable cloudfront_origin_domain_name {
-  default = ""
-}
-
-# Cloudwatch
-variable cloudwatch_slack_channel {
-  description = "The slack channel that cloudwatch alarms are sent to"
+# CloudWatch
+variable channel_list {
+  description = "Define slack channels CloudWatch should send alerts to"
+  type = map(object({
+    cloudwatch_slack_channel = string
+  }))
+  default = {}
 }
 
 # Gov.UK PaaS
@@ -49,8 +51,16 @@ variable paas_app_stopped {
   default = false
 }
 
+variable app_environment {
+  default = "dev"
+}
+
 variable parameter_store_environment {
   default = "dev"
+}
+
+variable paas_papertrail_service_binding_enable {
+  default = true
 }
 
 variable paas_postgres_service_plan {
@@ -117,6 +127,6 @@ variable statuscake_alerts {
 }
 
 locals {
-  paas_app_env_values = yamldecode(file("${path.module}/../workspace-variables/${var.parameter_store_environment}_app_env.yml"))
+  paas_app_env_values = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets       = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
 }

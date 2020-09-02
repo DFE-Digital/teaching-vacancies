@@ -32,14 +32,11 @@ resource cloudfoundry_app web_app {
   stopped  = var.app_stopped
   strategy = var.web_app_deployment_strategy
   timeout  = var.app_start_timeout
-  service_binding {
-    service_instance = cloudfoundry_service_instance.postgres_instance.id
-  }
-  service_binding {
-    service_instance = cloudfoundry_service_instance.redis_instance.id
-  }
-  service_binding {
-    service_instance = cloudfoundry_user_provided_service.papertrail.id
+  dynamic "service_binding" {
+    for_each = local.app_service_bindings
+    content {
+      service_instance = service_binding.value
+    }
   }
   environment = local.app_environment
 }
@@ -61,14 +58,11 @@ resource cloudfoundry_app worker_app {
   stopped           = var.app_stopped
   strategy          = var.worker_app_deployment_strategy
   timeout           = var.app_start_timeout
-  service_binding {
-    service_instance = cloudfoundry_service_instance.postgres_instance.id
-  }
-  service_binding {
-    service_instance = cloudfoundry_service_instance.redis_instance.id
-  }
-  service_binding {
-    service_instance = cloudfoundry_user_provided_service.papertrail.id
+  dynamic "service_binding" {
+    for_each = local.app_service_bindings
+    content {
+      service_instance = service_binding.value
+    }
   }
   environment = local.app_environment
 }

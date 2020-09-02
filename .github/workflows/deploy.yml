@@ -7,7 +7,7 @@ on:
 
 env:
  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
- CF_PROVIDER_VERSION: v0.12.2
+ CF_PROVIDER_VERSION: 0.12.4
 
 jobs:
   deploy:
@@ -20,15 +20,14 @@ jobs:
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.12.29
+        terraform_version: 0.13.1
 
     - name: Set environment variables
       id: set_env_vars
       run: |
         TAG=${GITHUB_SHA}
         echo ::set-env name=TAG::${TAG}
-        echo ::set-env name=CF_PROVIDER_BINARY::terraform-provider-cloudfoundry_${CF_PROVIDER_VERSION}
-        echo ::set-env name=CF_PROVIDER_URL::https://github.com/cloudfoundry-community/terraform-provider-cf/releases/download/${CF_PROVIDER_VERSION}/terraform-provider-cloudfoundry_linux_amd64
+        echo ::set-env name=DOCKER_BUILDKIT::1
 
     - name: build and push docker image
       uses: docker/build-push-action@v1.1.0
@@ -38,16 +37,6 @@ jobs:
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
         tags: ${{ env.TAG }}
         target: production
-
-    - name: Install Terraform CloudFoundry Provider
-      run: |
-        CF_PROVIDER_DIR=$HOME/.terraform.d/plugins/linux_amd64
-        mkdir -p ${CF_PROVIDER_DIR}
-        wget -O ${CF_PROVIDER_DIR}/${CF_PROVIDER_BINARY} ${CF_PROVIDER_URL}
-        chmod +x ${CF_PROVIDER_DIR}/${CF_PROVIDER_BINARY}
-        echo "Content of directory ${CF_PROVIDER_DIR}:"
-        cd ${CF_PROVIDER_DIR} && pwd
-        ls -l
 
     - name: Deploy to staging
       env:

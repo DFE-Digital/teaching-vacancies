@@ -1,27 +1,24 @@
-name: Deploy
+name: Review
 
 on:
-  push:
-    branches:
-      - dev
-      - staging
+  pull_request:
+    branches: [ master ]
+    types: [opened, synchronize]
 
 env:
- DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
- CF_PROVIDER_VERSION: 0.12.4
+  CF_PROVIDER_VERSION: 0.12.4
+  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+  PR_NAME: ${{ format('pr-{0}', github.event.number) }}  
 
 jobs:
   deploy:
-    name: build docker image and deploy
+    name: Create review app
     runs-on: ubuntu-latest
-    outputs:
-      BRANCH: ${{ steps.set_env_vars.outputs.BRANCH }}
-      TAG: ${{ steps.set_env_vars.outputs.TAG }}
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
 
-    - name: Pin Terraform version
+    - name: Terraform pin version
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 0.13.1
@@ -29,15 +26,11 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
-        BRANCH=$(echo ${GITHUB_REF} | cut -d/ -f3)
-        TAG=${BRANCH}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
-        echo ::set-env name=BRANCH::${BRANCH}
+        TAG=review-${PR_NAME}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
         echo ::set-env name=TAG::${TAG}
-        echo ::set-output name=BRANCH::${BRANCH}
-        echo ::set-output name=TAG::${TAG}
         echo ::set-env name=DOCKER_BUILDKIT::1
 
-    - name: build and push docker image
+    - name: Build and push docker image
       uses: docker/build-push-action@v1.1.0
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -46,17 +39,26 @@ jobs:
         tags: ${{ env.TAG }}
         target: production
 
-    - name: Deploy
+    - name: Terraform deploy
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
+        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}      
       run: |
-        export TF_WORKSPACE=${BRANCH}
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
+        export TF_VAR_environment=review-${PR_NAME}
+        export TF_WORKSPACE=review
         terraform init -input=false terraform/app
-        terraform apply -var-file terraform/workspace-variables/${BRANCH}.tfvars -auto-approve -input=false terraform/app
+        terraform apply -var-file terraform/workspace-variables/review.tfvars -auto-approve -input=false terraform/app
+
+    - name: Post PR comment
+      run: |
+        curl --header "Accept: application/vnd.github.v3+json" \
+             --header "Authorization: Bearer ${{ github.token }}" \
+             --request POST \
+             --data '{"body": "Review app deployed to https://teaching-vacancies-review-${{ format('pr-{0}', github.event.number) }}.london.cloudapps.digital"}' \
+             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
 
   notify:
     needs: deploy
@@ -70,5 +72,5 @@ jobs:
           SLACK_USERNAME: CI Deployment
           SLACK_ICON_EMOJI: ':tada:'
           SLACK_TITLE: Successful deployment
-          SLACK_MESSAGE: 'Deployment of ${{ needs.deploy.outputs.TAG }} to ${{ needs.deploy.outputs.BRANCH }} on GOV.UK PaaS successful :rocket:'
+          SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://teaching-vacancies-review-${{ env.PR_NAME }}.london.cloudapps.digital :rocket:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

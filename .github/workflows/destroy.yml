@@ -1,0 +1,44 @@
+name: Destroy
+
+on:
+  pull_request:
+    branches: [ master ]
+    types: [closed]
+
+env:
+  CF_PROVIDER_VERSION: 0.12.4
+  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
+  PR_NAME: ${{ format('pr-{0}', github.event.number) }}  
+
+jobs:
+  deploy:
+    name: Destroy review app
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout Code
+
+    - name: Terraform pin version
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.13.1
+
+    - name: Set environment variables
+      id: set_env_vars
+      run: |
+        TAG=review-${PR_NAME}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
+        echo ::set-env name=TAG::${TAG}
+
+    - name: Terraform destroy (on PR closed)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
+        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}      
+      run: |
+        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
+        export TF_VAR_environment=review-${PR_NAME}
+        export TF_WORKSPACE=review
+        terraform init -input=false terraform/app
+        terraform plan -var-file terraform/workspace-variables/review.tfvars -destroy -out=tfdestroy terraform/app
+        terraform apply -auto-approve "tfdestroy" 
