@@ -12,7 +12,7 @@ distribution_list = {
     offline_bucket_domain_name    = "tvs-offline.s3.amazonaws.com"
     offline_bucket_origin_path    = "/school-jobs-offline"
     cloudfront_origin_domain_name = "teaching-vacancies-staging.london.cloudapps.digital"
-    domain                        = "staging.teaching-vacancies.service.gov.uk"
+    domain                        = "tvs.staging.dxw.net"
   }
 }
 
