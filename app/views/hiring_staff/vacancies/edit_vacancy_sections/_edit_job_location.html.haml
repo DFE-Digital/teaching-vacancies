@@ -13,5 +13,6 @@
       %h4.govuk-heading-s= t("school_groups.job_location_heading.review.#{@vacancy.job_location}")
 
     %dd.app-check-your-answers__answer.first-question
-      %div{ class: 'govuk-!-font-weight-bold' }= @vacancy.organisation.name
-      = location(@vacancy.organisation)
+      - @vacancy.organisations.each do |organisation|
+        %div{ class: 'govuk-!-font-weight-bold' }= organisation.name
+        = location(organisation)

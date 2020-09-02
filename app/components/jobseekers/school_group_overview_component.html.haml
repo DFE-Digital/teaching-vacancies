@@ -7,7 +7,7 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('school_groups.type')
         %td.govuk-table__cell
-          = @vacancy.organisation.group_type
+          = @vacancy.parent_organisation.group_type
       - if @vacancy.contact_email.present?
         %tr.govuk-table__row
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
@@ -16,23 +16,23 @@
             = mail_to @vacancy.contact_email, @vacancy.contact_email, class: 'govuk-link link-wrap', subject: t('jobs.contact_email_subject', job: @vacancy.job_title), body: t('jobs.contact_email_body', url: job_url(@vacancy))
 
   %h4.govuk-heading-s
-    = t('school_groups.info', school_group: @vacancy.organisation.name)
+    = t('school_groups.info', school_group: @vacancy.parent_organisation.name)
   %p= vacancy_or_organisation_description(@vacancy)
 
   %h4.govuk-heading-s
-    = t('school_groups.trust_visits', school_group: @vacancy.organisation.name)
+    = t('school_groups.trust_visits', school_group: @vacancy.parent_organisation.name)
   %p= @vacancy.school_visits
 
   %h4.govuk-heading-s
     = t('school_groups.school_group_location')
-  %p= full_address(@vacancy.organisation)
+  %p= full_address(@vacancy.parent_organisation)
 
   -# TODO: Unable to show the map as we cannot extract geolocation data from GIAS
 
-  -# - if @vacancy.organisation.geolocation
+  -# - if @vacancy.parent_organisation.geolocation
   -#   %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
-  -#   = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.organisation.name,
-  -#                                                         lat: @vacancy.organisation.geolocation.x,
-  -#                                                         lng: @vacancy.organisation.geolocation.y }
+  -#   = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
+  -#                                                         lat: @vacancy.parent_organisation.geolocation.x,
+  -#                                                         lng: @vacancy.parent_organisation.geolocation.y }
 
   -#   %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}

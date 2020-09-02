@@ -348,6 +348,10 @@ class Vacancy < ApplicationRecord
     self.documents.each { |document| DocumentDelete.new(document).delete }
   end
 
+  def parent_organisation
+    self.organisations.many? ? self.organisations.first.school_groups.first : self.organisation
+  end
+
   private
 
   def expires_at

@@ -1,5 +1,5 @@
 - content_for :page_title_prefix do
-  #{@vacancy.job_title} - #{@vacancy.organisation_name}
+  #{@vacancy.job_title} - #{@vacancy.parent_organisation.name}
 
 .vacancy
 
@@ -18,7 +18,7 @@
           .og_image= image_pack_tag 'og_image.jpg'
           .og_text
             .og_url= t('app.title')
-            .og_title #{@vacancy.job_title} - #{@vacancy.organisation_name}
+            .og_title #{@vacancy.job_title} - #{@vacancy.parent_organisation.name}
             .og_description= truncate(strip_tags(@vacancy.job_summary), length: 76, separator: ' ')
         .og-caption
           Your job listing will appear on Facebook in a format similar to the above.

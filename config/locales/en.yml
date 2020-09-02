@@ -59,7 +59,8 @@ en:
         edit:
           title: Change description
       readable_job_location:
-        at_multiple_schools: More than one school (%{count})
+        at_multiple_schools: More than one school
+        at_multiple_schools_with_count: More than one school (%{count})
         central_office: Trust head office
     temp_login:
       heading: Temporary login
@@ -228,7 +229,11 @@ en:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
-        about_organisation: "This will appear next to the job details under '%{organisation} overview'. Feel free to adapt this text"
+        about_organisation: >-
+          This will appear next to the job details under '%{organisation} overview'. Feel free to adapt this text
+        about_schools: >-
+          Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
+          the trust
       organisation_form:
         description: Jobseekers will see this description of the school in the job listing
   organisation:

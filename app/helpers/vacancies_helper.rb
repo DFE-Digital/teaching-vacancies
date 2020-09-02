@@ -99,4 +99,27 @@ module VacanciesHelper
   def vacancy_or_organisation_description(vacancy)
     vacancy.about_school.presence || vacancy.organisation.description.presence
   end
+
+  def vacancy_about_school_label_organisation(vacancy)
+    vacancy.organisations.many? ? 'the schools' : vacancy.organisation.name
+  end
+
+  def vacancy_about_school_hint_text(vacancy)
+    return I18n.t('helpers.hint.job_summary_form.about_schools') if vacancy.organisations.many?
+    return I18n.t('helpers.hint.job_summary_form.about_organisation', organisation: 'Trust') if
+      vacancy.organisation.is_a?(SchoolGroup)
+    I18n.t('helpers.hint.job_summary_form.about_organisation', organisation: 'School')
+  end
+
+  def vacancy_about_school_value(vacancy)
+    return '' if vacancy.organisations.many?
+    vacancy_or_organisation_description(vacancy)
+  end
+
+  def vacancy_job_location(vacancy)
+    organisation = vacancy.parent_organisation
+    return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+      vacancy&.job_location == 'at_multiple_schools'
+    [organisation.name, organisation.town, organisation.county].compact.join(', ')
+  end
 end
