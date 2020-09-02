@@ -35,6 +35,18 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
     end
   end
 
+  describe '#job_role_options' do
+    it 'returns an array of vacancy job role options' do
+      expect(helper.job_role_options).to eq(
+        [
+          ['Teacher', 'teacher'],
+          ['Leadership', 'leadership'],
+          ['SEN specialist', 'sen_specialist']
+        ]
+      )
+    end
+  end
+
   describe '#job_sorting_options' do
     it 'returns an array of vacancy job sorting options' do
       expect(helper.job_sorting_options).to eq(
