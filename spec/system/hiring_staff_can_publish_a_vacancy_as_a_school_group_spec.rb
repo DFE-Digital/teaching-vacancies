@@ -62,11 +62,6 @@ RSpec.describe 'Creating a vacancy' do
       build(:vacancy, :at_one_school, :complete)
     end
 
-    before do
-      vacancy.organisation_vacancies.build(organisation: school)
-      vacancy.organisation_vacancies.build(organisation: school_group)
-    end
-
     describe '#job_location' do
       context 'when no school is selected' do
         scenario 'displays error message and vacancy is not created' do
@@ -148,6 +143,7 @@ RSpec.describe 'Creating a vacancy' do
 
         expect(Vacancy.last.state).to eql('create')
         expect(Vacancy.last.readable_job_location).to eql(school.name)
+        expect(Vacancy.last.organisation).to eql(school)
         activity = Vacancy.last.activities.last
         expect(activity.session_id).to eql(session_id)
         expect(activity.key).to eql('vacancy.create')

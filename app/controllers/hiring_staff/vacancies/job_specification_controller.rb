@@ -93,7 +93,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if current_organisation.is_a?(School)
       @form.vacancy.organisation_vacancies.build(organisation: current_organisation)
     elsif current_organisation.is_a?(SchoolGroup)
-      @form.vacancy.organisation_vacancies.build(organisation_id: session[:vacancy_attributes]['organisation_id'])
+      @form.vacancy.organisation_vacancies.build(organisation_id: session[:organisation_id])
     end
   end
 
