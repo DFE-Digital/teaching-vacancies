@@ -213,8 +213,8 @@ describe('filterGroup', () => {
 
   describe('filterChangeHandler', () => {
     test('submits the form only if a filter checkbox is clicked', () => {
-      document.body.innerHTML = `<form>
-  <div>
+      document.body.innerHTML = `<form data-auto-submit="true">
+  <div class="filter-group__container">
   <input type="text" id="should-submit" class="${CHECKBOX_CLASS_SELECTOR}" />
   <span id="should-not-submit">abc</span>
   </div>

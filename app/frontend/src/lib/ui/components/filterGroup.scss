@@ -2,15 +2,8 @@
   border-bottom: 1px solid $govuk-border-colour;
 }
 
-.js-enabled .filters-submit {
+.js-enabled .filters-submit__container {
   display: none;
-}
-
-.js-enabled .moj-filter .selected-filters__heading {
-
-  .govuk-link {
-    display: block;
-  }
 }
 
 .moj-filter-sidebar {
@@ -24,16 +17,78 @@
     width: 0;
   }
 }
+.js-enabled .moj-filter .selected-filters__heading {
 
-.filters--hide-mobile {
+  .govuk-link {
+    display: block;
+  }
+}
+
+.js-enabled .moj-filter .selected-filters__heading--mobile .mobile-only {
+  display: none;
+}
+
+.js-enabled .moj-filter .selected-filters__heading--mobile .close-all {
+  display: block;
+}
+
+.filter-container {
   @media only screen and (max-width: 640px) {
-    display: none !important;
+
+    .accordion-group {
+      display: none;
+    }
+
+    .moj-filter__content {
+      display: none;
+    }
+
+    .close-all {
+      display: none !important
+    }
   }
 }
 
 .filters--show-mobile {
   @media only screen and (max-width: 640px) {
-    display: block !important;
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: govuk-colour("white");
+    width: 100%;
+    height: 100%;
+    padding: govuk-spacing(2) govuk-spacing(3) 65px;
+    box-sizing: border-box;
+    overflow: auto;
+
+    .mobile-only {
+      display: block !important;
+    }
+
+    .accordion-group {
+      display: block;
+    }
+
+    .moj-filter__content {
+      display: block;
+    }
+
+    .filters-submit__container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 2000;
+      box-sizing: border-box;
+      width: 100%;
+      background-color: govuk-colour("white");
+      display: flex;
+    }
+
+    .filters-submit__button {
+      margin: 0 govuk-spacing(3);
+    }
   }
 }
 

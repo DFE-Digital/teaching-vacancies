@@ -51,7 +51,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
       it 'does not render the filters sidebar' do
         expect(
-          inline_component.css('.new_managed_organisations_form > input[type="submit"]')
+          inline_component.css('.new_managed_organisations_form input[type="submit"]')
         ).to be_blank
       end
     end
@@ -69,7 +69,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
       it 'renders the filters sidebar' do
         expect(
-          inline_component.css('.new_managed_organisations_form > input[type="submit"]').attribute('value').value
+          inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute('value').value
         ).to eql(I18n.t('buttons.apply_filters'))
       end
     end
