@@ -107,3 +107,13 @@ dt.app-check-your-answers__question > h4 {
   font-size: 19px;
   margin-left: 20px;
 }
+
+.app-check-your-answers__answer.schools-review-list {
+  .school-in-review-list {
+    margin-bottom: govuk-spacing(5);
+  }
+
+  .school-in-review-list:last-child {
+    margin-bottom: govuk-spacing(2);
+  }
+}
