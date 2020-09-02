@@ -5,6 +5,8 @@ class ExportDsiUsersToBigQueryJob < ApplicationJob
   queue_as :export_users
 
   def perform
+    return if DisableExpensiveJobs.enabled?
+
     ExportDsiUsersToBigQuery.new.run!
     ExportDsiApproversToBigQuery.new.run!
   end
