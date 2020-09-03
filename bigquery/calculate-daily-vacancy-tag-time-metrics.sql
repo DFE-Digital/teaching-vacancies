@@ -12,15 +12,11 @@ WITH
     vacancy.job_roles AS job_roles,
     COUNT(document.id) AS number_of_documents
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
+    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.feb20_document` AS document
   ON
     document.vacancy_id=vacancy.id
-  WHERE
-    (status NOT IN ("trashed",
-        "deleted",
-        "draft"))
   GROUP BY
     vacancy.id,
     job_roles ),
@@ -38,10 +34,6 @@ WITH
     `teacher-vacancy-service.production_dataset.feb20_document` AS document
   ON
     document.vacancy_id=vacancy.id
-  WHERE
-    (status NOT IN ("trashed",
-        "deleted",
-        "draft"))
   GROUP BY
     vacancy.id,
     job_roles,
