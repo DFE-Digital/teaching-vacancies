@@ -58,6 +58,23 @@ FactoryBot.define do
     trait :outside_london do
       association :region, name: 'East of England'
     end
+
+    trait :catholic do
+      gias_data { {
+        "CloseDate": nil,
+        "HeadFirstName": Faker::Name.first_name,
+        "HeadLastName": Faker::Name.last_name.gsub("'", ''),
+        "HeadPreferredJobTitle": Faker::Name.prefix.gsub('.', ''),
+        "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
+        "NumberOfPupils": Faker::Number.number(digits: 3),
+        "OfstedRating (name)": OFSTED_RATINGS.sample,
+        "OpenDate": Faker::Date.between(from: 10000.days.ago, to: 1000.days.ago),
+        "ReligiousCharacter (name)": 'Roman Catholic',
+        "SchoolCapacity": Faker::Number.number(digits: 4),
+        "TelephoneNum": Faker::Number.number(digits: 11).to_s,
+        "Trusts (name)": Faker::Company.name.gsub("'", '') + ' Trust'
+        } }
+    end
   end
 
   factory :academy, parent: :school do

@@ -18,6 +18,11 @@ module OrganisationHelper
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t('schools.not_given') }.join(', ')
   end
 
+  def organisation_types(organisations)
+    organisations.map { |organisation| organisation_type(organisation: organisation, with_age_range: true) }
+                 .uniq.join(', ')
+  end
+
   def organisation_type_basic(organisation)
     organisation.is_a?(School) ? 'school' : 'trust'
   end

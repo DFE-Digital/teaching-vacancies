@@ -1,16 +1,13 @@
 %li.vacancy{ 'role': 'listitem', 'tab-index': '0'}
   %h2.govuk-heading-m.mb0= link_to @vacancy.job_title, job_path(@vacancy), class: 'govuk-link view-vacancy-link'
-  %p.govuk-body= location(@vacancy.parent_organisation)
+  %p.govuk-body= location(@vacancy.parent_organisation, job_location: @vacancy.job_location)
   %dl
     %dt= t('jobs.salary')
     %dd.double
       = @vacancy.salary
-    - if @vacancy.parent_organisation.is_a?(School)
-      %dt= t('jobs.school_type')
-    - else
-      %dt= t('jobs.trust_type')
+    %dt= @vacancy.job_location == 'central_office' ? t('jobs.trust_type') : t('jobs.school_type')
     %dd.double
-      = organisation_type(organisation: @vacancy.parent_organisation, with_age_range: true)
+      = organisation_types(@vacancy.organisations)
     - if @vacancy.working_patterns?
       %dt= t('jobs.working_patterns')
       %dd.double
