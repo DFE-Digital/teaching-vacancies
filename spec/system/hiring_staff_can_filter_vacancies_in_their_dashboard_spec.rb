@@ -14,7 +14,6 @@ RSpec.describe 'Hiring staff can filter vacancies in their dashboard' do
     school_1_vacancy.organisation_vacancies.create(organisation: school_1)
     school_1_draft_vacancy.organisation_vacancies.create(organisation: school_1)
     school_2_draft_vacancy.organisation_vacancies.create(organisation: school_2)
-    allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
 
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)

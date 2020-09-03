@@ -7,7 +7,6 @@ RSpec.describe 'Creating a vacancy' do
   let(:session_id) { SecureRandom.uuid }
 
   before do
-    allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
     allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(true)
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
