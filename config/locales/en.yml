@@ -607,30 +607,16 @@ en:
       We'll only use this to tell you about opportunities to take part in user research that helps us improve
       Department for Education services.
   schools:
-    school_overview: 'School overview'
-    address: 'Address'
-    school_location: 'School location'
-    phase: 'Education phase'
-    type: 'School type'
-    website: 'School website'
-    website_link_text: '%{school} website (opens in a new window)'
-    search_label: 'School name'
-    description: 'Description'
-    school_age: 'School age'
-    age_range: 'Age range'
-    ofsted_report: 'Ofsted report'
-    school_size: 'School size'
-    not_given: 'Not given'
-    search_heading: 'Publish a job'
-    search_subheading: 'Which school is the job job for?'
+    about_schools: About the schools
+    address: Address
+    age_range: Age range
+    description: Description
     info: 'About %{organisation}'
-    no_information: 'No information available'
-    map_aria_label: 'Interactive map showing school location'
     jobs:
       index: 'Jobs at %{organisation}'
+    map_aria_label: Interactive map showing school location
+    no_information: 'No information available'
     no_jobs:
-      heading: You have no job listings to manage
-      intro: 'To create a job listing for your school, you will need the following information:'
       bullets:
         required:
           - job title
@@ -651,12 +637,30 @@ en:
           - how to arrange a school visit
           - how to apply
           - link to online application
+      heading: You have no job listings to manage
+      intro: 'To create a job listing for your school, you will need the following information:'
+    not_given: Not given
+    ofsted_report: Ofsted report
+    phase: Education phase
+    school_age: School age
+    school_details: School details
+    school_location: School location
+    school_overview: School overview
+    school_size: School size
+    schools_overview: Schools overview
+    schools_visits: Arranging a visit to one of the schools
+    search_heading: 'Publish a job'
+    search_label: 'School name'
+    search_subheading: 'Which school is the job job for?'
     size:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
       pupils: 'pupil'
-    view_ofsted_report: 'View Ofsted report'
+    type: 'School type'
     urn: Unique identifier (URN)
+    view_ofsted_report: 'View Ofsted report'
+    website: 'School website'
+    website_link_text: '%{school} website (opens in a new window)'
   school_groups:
     address: Trust address
     description: Description

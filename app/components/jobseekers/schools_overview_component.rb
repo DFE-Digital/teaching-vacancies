@@ -1,4 +1,4 @@
-class Jobseekers::SchoolOverviewComponent < ViewComponent::Base
+class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
   include OrganisationHelper
   include VacanciesHelper
 
@@ -7,6 +7,6 @@ class Jobseekers::SchoolOverviewComponent < ViewComponent::Base
   end
 
   def render?
-    @vacancy.at_one_school?
+    @vacancy.at_multiple_schools?
   end
 end
