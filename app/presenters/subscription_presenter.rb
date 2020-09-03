@@ -37,7 +37,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def available_filter_hash
-    Hash[SEARCH_CRITERIA_SORT_ORDER.collect { |v| [v, nil] }]
+    SEARCH_CRITERIA_SORT_ORDER.index_with { |el| nil }
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity

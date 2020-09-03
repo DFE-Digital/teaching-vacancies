@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   def append_info_to_payload(payload)
     super
     payload[:remote_ip] = request_ip
-    payload[:session_id] = "#{session.id[0..7]}…" if session.id
+    payload[:session_id] = "#{session.id.to_s[0..7]}…" if session.id
   end
 
   def set_root_headers
