@@ -7,7 +7,7 @@
   %h1.govuk-heading-xl{ class: 'govuk-!-margin-bottom-2' }
     = @vacancy.job_title
   %h2.govuk-caption-l.job-caption{ class: 'govuk-!-margin-top-0' }
-    = location(@vacancy.organisation, job_location: @vacancy.job_location)
+    = vacancy_job_location(@vacancy)
 
 .govuk-grid-row
 
@@ -24,7 +24,7 @@
             = t('jobs.job_details')
         %li.govuk-tabs__list-item
           %a.govuk-tabs__tab.tab-links-override{ href: "#school-overview" }
-            - if @vacancy.organisation.is_a?(SchoolGroup)
+            - if @vacancy.parent_organisation.is_a?(SchoolGroup)
               = t('school_groups.trust_overview')
             - else
               = t('schools.school_overview')

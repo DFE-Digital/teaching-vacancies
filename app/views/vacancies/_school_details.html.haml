@@ -1,16 +1,16 @@
 %dl.school--details
   %dt= t('schools.address')
-  %dd= full_address(@vacancy.organisation)
+  %dd= full_address(@vacancy.parent_organisation)
 
-  - if school_phase(@vacancy.organisation).present?
+  - if school_phase(@vacancy.parent_organisation).present?
     %dt= t('schools.phase')
-    %dd= school_phase(@vacancy.organisation)
+    %dd= school_phase(@vacancy.parent_organisation)
 
-  - if @vacancy.organisation.school_type.present?
+  - if @vacancy.parent_organisation.school_type.present?
     %dt= t('schools.type')
-    %dd= @vacancy.organisation.school_type.label
+    %dd= @vacancy.parent_organisation.school_type.label
 
-  - if @vacancy.organisation.url.present?
+  - if @vacancy.parent_organisation.url.present?
     %dt= t('schools.website')
     %dd
-      = link_to("#{@vacancy.organisation.name} website (opens in a new window)", @vacancy.organisation.url, class: 'govuk-link wordwrap', target: '_blank')
+      = link_to("#{@vacancy.parent_organisation.name} website (opens in a new window)", @vacancy.parent_organisation.url, class: 'govuk-link wordwrap', target: '_blank')

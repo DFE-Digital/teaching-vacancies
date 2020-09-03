@@ -43,7 +43,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     if job_location == 'at_one_school'
       school_name
     elsif job_location == 'at_multiple_schools'
-      I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools', count: schools_count)
+      I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools_with_count', count: schools_count)
     elsif job_location == 'central_office'
       I18n.t('hiring_staff.organisations.readable_job_location.central_office')
     end
