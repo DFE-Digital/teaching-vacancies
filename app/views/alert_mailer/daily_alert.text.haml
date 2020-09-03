@@ -5,7 +5,7 @@
 \
 - @vacancies.each do |vacancy|
   = notify_link(vacancy.share_url(source: 'subscription', medium: 'email', campaign: 'daily_alert'), vacancy.job_title).html_safe
-  = location(vacancy.organisation)
+  = location(vacancy.parent_organisation, job_location: vacancy.job_location)
   \
   = "Salary: #{vacancy.salary}"
   - if vacancy.working_patterns?

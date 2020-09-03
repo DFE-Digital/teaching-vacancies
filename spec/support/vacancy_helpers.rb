@@ -186,17 +186,17 @@ module VacancyHelpers
         '@type': 'Place',
         'address': {
           '@type': 'PostalAddress',
-          'addressLocality': vacancy.organisation.town,
-          'addressRegion': vacancy.organisation.region.name,
-          'streetAddress': vacancy.organisation.address,
-          'postalCode': vacancy.organisation.postcode,
+          'addressLocality': vacancy.parent_organisation.town,
+          'addressRegion': vacancy.parent_organisation.region.name,
+          'streetAddress': vacancy.parent_organisation.address,
+          'postalCode': vacancy.parent_organisation.postcode,
         },
       },
       'url': job_url(vacancy, host: '127.0.0.1'), # TODO fix system specs to change default host to localhost:3000
       'hiringOrganization': {
         '@type': 'School',
-        'name': vacancy.organisation.name,
-        'identifier': vacancy.organisation.urn,
+        'name': vacancy.parent_organisation.name,
+        'identifier': vacancy.parent_organisation.urn,
         'description': vacancy.about_school
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
@@ -208,7 +208,7 @@ module VacancyHelpers
   def verify_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).not_to have_content(vacancy.publish_on)
     expect(page.find('.vacancy')).not_to have_content(vacancy.starts_on) if vacancy.starts_on?
-    expect(page.find('.vacancy')).to have_content(vacancy.organisation.school_type.label.singularize)
+    expect(page.find('.vacancy')).to have_content(vacancy.parent_organisation.school_type.label.singularize)
 
     verify_shared_vacancy_list_page_details(vacancy)
   end

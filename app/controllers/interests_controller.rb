@@ -12,7 +12,7 @@ class InterestsController < ApplicationController
     AuditExpressInterestEventJob.perform_later(
       datestamp: Time.zone.now.iso8601.to_s,
       vacancy_id: vacancy.id,
-      school_urn: vacancy.organisation.urn,
+      school_urn: vacancy.parent_organisation.urn,
       application_link: vacancy.application_link
     )
   end

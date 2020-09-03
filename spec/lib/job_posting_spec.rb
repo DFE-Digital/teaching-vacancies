@@ -46,7 +46,7 @@ RSpec.describe JobPosting do
       it 'assigns a random school' do
         allow(School).to receive(:offset).and_return(double(first: random_school))
         vacancy = to_vacancy
-        expect(vacancy.organisation).to eql(random_school)
+        expect(vacancy.parent_organisation).to eql(random_school)
       end
     end
 

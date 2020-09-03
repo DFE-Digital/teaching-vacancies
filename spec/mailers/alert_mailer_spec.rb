@@ -64,10 +64,6 @@ RSpec.describe AlertMailer, type: :mailer do
       let(:first_vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
       let(:second_vacancy_presenter) { VacancyPresenter.new(vacancies.last) }
 
-      before do
-        vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
-      end
-
       it 'shows vacancies' do
         expect(mail.subject).to eq(
           I18n.t(

@@ -36,7 +36,7 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
   end
 
   it 'renders the trust type' do
-    expect(rendered_component).to include(organisation_type(organisation: vacancy.organisation))
+    expect(rendered_component).to include(organisation_type(organisation: vacancy.parent_organisation))
   end
 
   it 'renders the trust email' do
@@ -53,6 +53,6 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
   end
 
   it 'renders the head office location' do
-    expect(rendered_component).to include(full_address(vacancy.organisation))
+    expect(rendered_component).to include(full_address(vacancy.parent_organisation))
   end
 end

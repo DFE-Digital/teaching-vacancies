@@ -20,7 +20,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the address' do
-      expect(rendered_component).to include(location(vacancy.organisation))
+      expect(rendered_component).to include(location(vacancy.parent_organisation))
     end
 
     it 'renders the school type label' do
@@ -28,7 +28,8 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the school type' do
-      expect(rendered_component).to include(organisation_type(organisation: vacancy.organisation, with_age_range: true))
+      expect(rendered_component)
+        .to include(organisation_type(organisation: vacancy.parent_organisation, with_age_range: true))
     end
 
     it 'renders the working pattern' do
@@ -55,7 +56,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
 
     it 'renders the trust type' do
       expect(rendered_component)
-        .to include(organisation_type(organisation: vacancy.organisation, with_age_range: true))
+        .to include(organisation_type(organisation: vacancy.parent_organisation, with_age_range: true))
     end
   end
 
@@ -64,7 +65,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     let(:organisation) { create(:school_group) }
 
     it 'renders the address' do
-      assert_includes rendered_component, location(vacancy.organisation)
+      assert_includes rendered_component, location(vacancy.parent_organisation)
     end
 
     it 'renders the trust type label' do
@@ -72,7 +73,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the trust type' do
-      expect(rendered_component).to include(organisation_type(organisation: vacancy.organisation))
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.parent_organisation))
     end
   end
 end
