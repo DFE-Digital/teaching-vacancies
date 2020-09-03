@@ -28,14 +28,26 @@ monitoring-apply: ## Apply monitoring changes
 .PHONY: dev
 dev:
 		$(eval env=dev)
+		$(eval var_file=dev)
 
 .PHONY: review
 review:
-		$(eval env=review)
+		$(if $(pr), , $(error Missing environment variable "pr"))
+		$(eval env=review-pr-$(pr))
+		$(eval var_file=review)
+		$(eval backend_config=-backend-config="workspace_key_prefix=review:")
+
 
 .PHONY: staging
 staging:
 		$(eval env=staging)
+		$(eval var_file=staging)
+
+.PHONY: production
+production:
+		$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+		$(eval env=production)
+		$(eval var_file=production)
 
 .PHONY: build-local-image
 build-local-image:
@@ -51,17 +63,17 @@ init-terraform:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(if $(tag), , $(error Missing environment variable "tag"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		$(eval export TF_WORKSPACE=$(env))
 		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
-		terraform init -input=false terraform/app
+		terraform init -input=false $(backend_config) terraform/app
+		terraform workspace select $(env) terraform/app || terraform workspace new $(env) terraform/app
 
 .PHONY: deploy
 deploy: init-terraform
-		terraform apply -input=false -var-file terraform/workspace-variables/$(env).tfvars -auto-approve terraform/app
+		terraform apply -input=false -var-file terraform/workspace-variables/$(var_file).tfvars -auto-approve terraform/app
 
 .PHONY: deploy-plan
 deploy-plan: init-terraform
-		terraform plan -var-file terraform/workspace-variables/$(env).tfvars terraform/app
+		terraform plan -var-file terraform/workspace-variables/$(var_file).tfvars terraform/app
 
 .PHONY: print-env
 print-env:
