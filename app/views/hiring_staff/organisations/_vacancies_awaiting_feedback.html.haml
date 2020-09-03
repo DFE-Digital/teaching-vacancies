@@ -9,7 +9,6 @@
         %th.govuk-table__header.job-title-table-header= table_header_sort_by(t("jobs.job_title"), "awaiting_feedback", column: "job_title", sort: sort)
         - if organisation.is_a?(SchoolGroup)
           %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "awaiting_feedback", column: "readable_job_location", sort: sort)
-        %th.govuk-table__header= table_header_sort_by(t("jobs.publish_on"), "awaiting_feedback", column: "publish_on", sort: sort)
         %th.govuk-table__header= table_header_sort_by(t("jobs.expired_on"), "awaiting_feedback", column: "expires_on", sort: sort)
         %th.govuk-table__header{ class: "govuk-!-width-one-quarter" }= t("jobs.job_filled")
         %th.govuk-table__header{ class: "govuk-!-width-one-quarter" }= t("jobs.listed_elsewhere")
