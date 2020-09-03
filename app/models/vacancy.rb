@@ -258,7 +258,7 @@ class Vacancy < ApplicationRecord
   scope :unindexed, (-> { live.where(initially_indexed: false) })
   scope :in_central_office, (-> { where(job_location: 'central_office') })
   scope :in_organisation_ids, -> (ids) do
-    joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids })
+    joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct
   end
 
   paginates_per 10

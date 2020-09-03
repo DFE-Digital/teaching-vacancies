@@ -59,7 +59,7 @@ en:
         edit:
           title: Change description
       readable_job_location:
-        at_multiple_schools: More than one school
+        at_multiple_schools: More than one school (%{count})
         central_office: Trust head office
     temp_login:
       heading: Temporary login
@@ -155,6 +155,8 @@ en:
         job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
       school_form:
         job_location_html: In which school will the job be based? (<span class='text-red'>Required</span>)
+      schools_form:
+        job_location_html: In which schools will the job be based? (<span class='text-red'>Required</span>)
       job_specification_form:
         job_title_html: "Job title (<span class='text-red'>Required</span>)"
         job_roles: Job role
@@ -667,6 +669,7 @@ en:
       review:
         central_office: Trust head office
         at_one_school: Single school
+        at_multiple_schools: At more than one school in the trust
     website: 'Trust website'
     school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:

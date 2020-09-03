@@ -13,8 +13,8 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def show
-    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes]&.symbolize_keys || {})
-    @form = JobSpecificationForm.new(attributes)
+    attributes = @vacancy.present? ? @vacancy.attributes : (session[:vacancy_attributes] || {})
+    @form = JobSpecificationForm.new(attributes.symbolize_keys)
   end
 
   def create
@@ -81,7 +81,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     set_organisation_vacancies
     @form.vacancy.send :set_slug
     @form.vacancy.status = :draft
-    @form.vacancy.assign_attributes(session[:vacancy_attributes])
+    @form.vacancy.assign_attributes(session[:vacancy_attributes].except('organisation_id', 'organisation_ids'))
     Auditor::Audit.new(@form.vacancy, 'vacancy.create', current_session_id).log do
       @form.vacancy.save(validate: false)
     end
@@ -93,7 +93,11 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     if current_organisation.is_a?(School)
       @form.vacancy.organisation_vacancies.build(organisation: current_organisation)
     elsif current_organisation.is_a?(SchoolGroup)
-      @form.vacancy.organisation_vacancies.build(organisation_id: session[:organisation_id])
+      organisation_ids = [session[:vacancy_attributes]['organisation_ids'],
+                          [session[:vacancy_attributes]['organisation_id']]].compact.reduce([], :concat)
+      organisation_ids.each do |organisation_id|
+        @form.vacancy.organisation_vacancies.build(organisation_id: organisation_id)
+      end
     end
   end
 
@@ -102,12 +106,15 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def set_up_previous_step_path
+    job_location = @vacancy&.job_location.presence || session[:vacancy_attributes]&.[]('job_location')
     if current_organisation.is_a?(School)
       @previous_step_path = organisation_path
-    elsif session[:vacancy_attributes].present? && session[:vacancy_attributes]['job_location'] == 'at_one_school'
-      @previous_step_path = school_organisation_job_path
-    elsif session[:vacancy_attributes].present? && session[:vacancy_attributes]['job_location'] == 'central_office'
-      @previous_step_path = job_location_organisation_job_path
+    elsif %w(at_one_school at_multiple_schools).include?(job_location)
+      @previous_step_path = @vacancy.present? ?
+        organisation_job_schools_path(@vacancy.id) : schools_organisation_job_path
+    elsif job_location == 'central_office'
+      @previous_step_path = @vacancy.present? ?
+        organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path
     end
   end
 end

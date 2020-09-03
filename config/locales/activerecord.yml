@@ -3,9 +3,12 @@ en:
     job_location:
       inclusion: Select the location where the job will be based
       blank: Select the location where the job will be based
-  school_errors: &school_errors
+  schools_errors: &schools_errors
     organisation_id:
       blank: Select the school where the job will be based
+    organisation_ids:
+      blank: Select the schools where the job will be based
+      invalid: Select more than one school
   job_specification_errors: &job_specification_errors
     job_title:
       blank: Enter a job title
@@ -70,9 +73,9 @@ en:
   activemodel:
     errors:
       models:
-        school_form:
+        schools_form:
           attributes:
-            <<: *school_errors
+            <<: *schools_errors
         job_location_form:
           attributes:
             <<: *job_location_errors
@@ -117,7 +120,7 @@ en:
       models:
         vacancy:
           attributes:
-            <<: *school_errors
+            <<: *schools_errors
             <<: *job_location_errors
             <<: *job_specification_errors
             <<: *pay_package_errors

@@ -5,7 +5,7 @@ module VacancyHelpers
   end
 
   def fill_in_school_form_field(school)
-    find("label[for=\"school-form-organisation-id-#{school.id}-field\"]").click
+    find("label[for=\"schools-form-organisation-id-#{school.id}-field\"]").click
   end
 
   def fill_in_job_specification_form_fields(vacancy)

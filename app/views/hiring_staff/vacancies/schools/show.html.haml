@@ -5,10 +5,8 @@
 
 = render 'hiring_staff/vacancies/vacancy_form_partials/heading'
 
-- if @vacancy.present? && @vacancy&.state != 'create'
-  = render 'hiring_staff/vacancies/vacancy_form_partials/cancel_and_return_link'
-- else
-  = link_to t('buttons.back'), job_location_organisation_job_path, class: 'govuk-back-link'
+- if @vacancy.blank? || @vacancy&.state == 'create'
+  = link_to t('buttons.back'), @previous_step_path, class: 'govuk-back-link'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -20,12 +18,22 @@
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
-      = f.govuk_collection_radio_buttons :organisation_id,
-        @organisation_options,
-        :id,
-        :name,
-        :address,
-        legend: { text: t('helpers.fieldset.school_form.job_location_html') }
+      - if @multiple_schools
+        = f.govuk_collection_check_boxes :organisation_ids,
+          @organisation_options,
+          :id,
+          :name,
+          :address,
+          legend: { text: t('helpers.fieldset.schools_form.job_location_html') },
+          classes: 'checkbox-label__bold'
+
+      - else
+        = f.govuk_collection_radio_buttons :organisation_id,
+          @organisation_options,
+          :id,
+          :name,
+          :address,
+          legend: { text: t('helpers.fieldset.school_form.job_location_html') }
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
 

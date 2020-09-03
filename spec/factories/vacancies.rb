@@ -42,6 +42,10 @@ FactoryBot.define do
       job_location { 'at_one_school' }
     end
 
+    trait :at_multiple_schools do
+      job_location { 'at_multiple_schools' }
+    end
+
     trait :fail_minimum_validation do
       education { Faker::Lorem.paragraph[0..8] }
       experience { Faker::Lorem.paragraph[0..7] }

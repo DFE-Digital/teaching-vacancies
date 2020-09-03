@@ -31,7 +31,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def update_vacancy(attributes, vacancy = nil)
     vacancy ||= current_organisation.all_vacancies.find(session_vacancy_id)
-    vacancy.assign_attributes(attributes)
+    vacancy.assign_attributes(attributes.except('organisation_id', 'organisation_ids'))
     vacancy.refresh_slug
     Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do
       vacancy.save(validate: false)
@@ -39,17 +39,21 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     vacancy
   end
 
-  def readable_job_location(job_location, school_name: nil)
+  def readable_job_location(job_location, school_name: nil, schools_count: nil)
     if job_location == 'at_one_school'
       school_name
-    elsif %w(at_multiple_schools central_office).include?(job_location)
-      I18n.t("hiring_staff.organisations.readable_job_location.#{job_location}")
+    elsif job_location == 'at_multiple_schools'
+      I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools', count: schools_count)
+    elsif job_location == 'central_office'
+      I18n.t('hiring_staff.organisations.readable_job_location.central_office')
     end
   end
 
-  def set_organisations(vacancy, organisation_id)
+  def set_organisations(vacancy, organisation_ids)
     vacancy.organisation_vacancies.delete_all
-    vacancy.organisation_vacancies.create(organisation_id: organisation_id)
+    organisation_ids.each do |organisation_id|
+      vacancy.organisation_vacancies.create(organisation_id: organisation_id)
+    end
   end
 
   def save_vacancy_as_draft_if_save_and_return_later(attributes, vacancy)
