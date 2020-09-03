@@ -45,9 +45,9 @@ jobs:
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
-        export TF_WORKSPACE=staging
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
         terraform init -input=false terraform/app
+        terraform workspace select staging terraform/app || terraform workspace new staging terraform/app
         terraform apply -var-file terraform/workspace-variables/staging.tfvars -auto-approve -input=false terraform/app
 
     - name: Deploy to production
@@ -58,9 +58,8 @@ jobs:
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
-        export TF_WORKSPACE=production
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        terraform init -input=false terraform/app
+        terraform workspace select production terraform/app || terraform workspace new production terraform/app
         terraform apply -var-file terraform/workspace-variables/production.tfvars -auto-approve -input=false terraform/app
 
   notify:

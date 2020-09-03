@@ -53,9 +53,9 @@ jobs:
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
-        export TF_WORKSPACE=${BRANCH}
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
         terraform init -input=false terraform/app
+        terraform workspace select ${BRANCH} terraform/app || terraform workspace new ${BRANCH} terraform/app
         terraform apply -var-file terraform/workspace-variables/${BRANCH}.tfvars -auto-approve -input=false terraform/app
 
   notify:
