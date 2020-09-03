@@ -78,6 +78,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   end
 
   def save_vacancy_without_validation
+    set_job_location_fields
     set_organisation_vacancies
     @form.vacancy.send :set_slug
     @form.vacancy.status = :draft
@@ -98,6 +99,14 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
       organisation_ids.each do |organisation_id|
         @form.vacancy.organisation_vacancies.build(organisation_id: organisation_id)
       end
+    end
+  end
+
+  def set_job_location_fields
+    if current_organisation.is_a?(School)
+      @form.vacancy.job_location = 'at_one_school'
+      @form.vacancy.readable_job_location = readable_job_location('at_one_school',
+                                                                  school_name: current_organisation.name)
     end
   end
 
