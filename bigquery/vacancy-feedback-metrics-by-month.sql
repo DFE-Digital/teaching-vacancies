@@ -69,7 +69,7 @@ FROM (
         AND listed_elsewhere IN ("not_listed",
           "listed_free",
           "listed_dont_know")) AS exclusive_hires_upperbound,
-      COUNTIF(listed_elsewhere IN ("not_listed")) AS exclusive_listings
+      COUNTIF(listed_elsewhere IN ("not_listed","listed_free")) AS exclusive_listings
     FROM
       `teacher-vacancy-service.production_dataset.vacancies_published`
     GROUP BY
