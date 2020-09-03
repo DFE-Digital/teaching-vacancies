@@ -29,7 +29,7 @@ WITH
     #count this as vacancies which have been published and have not yet expired
     MAX(publish_on) AS date_last_published
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
+    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS organisationvacancy
   ON
@@ -38,9 +38,6 @@ WITH
     `teacher-vacancy-service.production_dataset.school` AS school
   ON
     organisationvacancy.organisation_id=school.id
-  WHERE
-    vacancy.status != "trashed" #exclude deleted vacancies from the counts above
-    AND vacancy.status != "draft" #exclude vacancies which have not (yet) been published from the counts above
   GROUP BY
     urn)
 SELECT

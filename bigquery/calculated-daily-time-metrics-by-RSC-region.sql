@@ -27,11 +27,7 @@ WITH
     publish_on,
     expires_on
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_vacancy`
-  WHERE
-    (status NOT IN ("trashed",
-        "deleted",
-        "draft")) ),
+    `teacher-vacancy-service.production_dataset.vacancies_published` ),
   metrics AS (
   SELECT
     date,
