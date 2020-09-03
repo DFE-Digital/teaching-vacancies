@@ -1,19 +1,18 @@
-%section.govuk-tabs__panel
-  %h2.govuk-heading-m= t("jobs.#{selected_type}_jobs_with_count", count: vacancies.count)
+%h2.govuk-heading-m= t("jobs.#{selected_type}_jobs_with_count", count: vacancies.count)
 
-  - if vacancies.any?
-    %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
-      %thead.govuk-table__head
-        %tr.govuk-table__row
-          %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), "published", column: "job_title", sort: sort)
-          - if organisation.is_a?(SchoolGroup)
-            %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "published", column: "readable_job_location", sort: sort)
-          %th.govuk-table__header= table_header_sort_by(t("jobs.publish_on"), "published", column: "publish_on", sort: sort)
-          %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), "published", column: "expires_on", sort: sort)
-          %th.govuk-table__header= table_header_sort_by(t("jobs.page_views"), "published", column: "total_pageviews", sort: sort)
-          %th.govuk-table__header{ colspan: 3 }= t("jobs.actions")
-      %tbody.govuk-table__body
-        - vacancies.each do |vacancy|
-          = render "hiring_staff/organisations/vacancy_published", vacancy: vacancy, organisation: organisation
-  - else
-    %p.govuk-body= t("jobs.no_published_jobs")
+- if vacancies.any?
+  %table.govuk-table.vacancies{ class: "govuk-!-margin-top-4" }
+    %thead.govuk-table__head
+      %tr.govuk-table__row
+        %th.govuk-table__header= table_header_sort_by(t("jobs.job_title"), "published", column: "job_title", sort: sort)
+        - if organisation.is_a?(SchoolGroup)
+          %th.govuk-table__header= table_header_sort_by(t("jobs.location"), "published", column: "readable_job_location", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.publish_on"), "published", column: "publish_on", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.expires_on"), "published", column: "expires_on", sort: sort)
+        %th.govuk-table__header= table_header_sort_by(t("jobs.page_views"), "published", column: "total_pageviews", sort: sort)
+        %th.govuk-table__header{ colspan: 3 }= t("jobs.actions")
+    %tbody.govuk-table__body
+      - vacancies.each do |vacancy|
+        = render "hiring_staff/organisations/vacancy_published", vacancy: vacancy, organisation: organisation
+- else
+  %p.govuk-body= t("jobs.no_published_jobs")
