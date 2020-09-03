@@ -91,6 +91,13 @@ class Vacancy < ApplicationRecord
     index.delete_objects(expired_records.map(&:id)) if expired_records.present?
   end
 
+  def self.remove_vacancies_that_expired_between_january_1_and_yesterday!
+    expired_records = where('expiry_time BETWEEN ? AND ?', Time.zone.now.beginning_of_year, Time.zone.yesterday.midnight)
+    expired_records.in_batches do |relation|
+      index.delete_objects(relation.map(&:id))
+    end
+  end
+
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Layout/LineLength
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
