@@ -10,9 +10,9 @@ SELECT
   CAST(SUM(exclusive_hires_rate*vacancies_published) AS INT64) AS exclusive_hires,
   CAST(SUM(exclusive_hires_rate_upperbound*vacancies_published) AS INT64) AS exclusive_hires_upperbound,
   CAST(SUM(exclusivity_rate*vacancies_published) AS INT64) AS exclusive_listings,
-  SUM(exclusivity_rate*vacancies_published*IF(category IN ("teacher","leadership"),1200,0)) AS savings, #assume that only teachers and leadership exclusive hires save schools £1200/vacancy, and that other vacancies do not
+  SUM(exclusive_hires_rate*vacancies_published*IF(category IN ("teacher","leadership"),1200,0)) AS savings, #assume that only teachers and leadership exclusive hires save schools £1200/vacancy, and that other vacancies do not
   
-  SAFE_DIVIDE(SUM(exclusive_listings),SUM(feedback_available))*SUM(vacancies_published)*1200 AS raw_savings, #estimate of savings, assuming all categories of vacancy behave the same and save schools the same amount of money
+  SAFE_DIVIDE(SUM(exclusive_hires),SUM(feedback_available))*SUM(vacancies_published)*1200 AS raw_savings, #estimate of savings, assuming all categories of vacancy behave the same and save schools the same amount of money
 
   # Extrapolations from hiring staff feedback to estimates of total numbers of vacancies which were hires, exclusive etc, unnormalised (i.e. assuming all categories of vacancy behave the same)
   SUM(hires_through_tv) AS hires_through_tv_feedback,
