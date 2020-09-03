@@ -30,11 +30,7 @@ FROM (
         "listed_dont_know")) AS exclusive_hires_upperbound,
     COUNTIF(listed_elsewhere IN ("not_listed")) AS exclusive_listings
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_vacancy`
-  WHERE
-    status NOT IN ("trashed",
-      "deleted",
-      "draft")
+    `teacher-vacancy-service.production_dataset.vacancies_published`
   GROUP BY
     month)
 WHERE
