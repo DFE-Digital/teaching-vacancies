@@ -199,8 +199,8 @@ RSpec.describe Api::VacanciesController, type: :controller do
           hiring_organization = {
             'hiringOrganization': {
               '@type': 'School',
-              'name': vacancy.organisation.name,
-              'identifier': vacancy.organisation.urn,
+              'name': vacancy.parent_organisation.name,
+              'identifier': vacancy.parent_organisation.urn,
               'description': "<p>#{vacancy.about_school}</p>"
             }
           }

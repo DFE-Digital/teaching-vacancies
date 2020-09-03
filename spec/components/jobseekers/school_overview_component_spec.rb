@@ -31,23 +31,23 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
 
   context 'rendering the school type' do
     it 'renders the school type' do
-      expect(rendered_component).to include(organisation_type(organisation: vacancy.organisation,
+      expect(rendered_component).to include(organisation_type(organisation: vacancy.parent_organisation,
         with_age_range: false))
     end
 
     it 'does not render the age range as part of the school type' do
-      expect(rendered_component).not_to include(organisation_type(organisation: vacancy.organisation,
+      expect(rendered_component).not_to include(organisation_type(organisation: vacancy.parent_organisation,
         with_age_range: true))
     end
   end
 
   it 'renders the education phase' do
-    expect(rendered_component).to include(school_phase(vacancy.organisation))
+    expect(rendered_component).to include(school_phase(vacancy.parent_organisation))
   end
 
   context 'when the number of pupils is present' do
     it 'renders the school size as the number of pupils' do
-      expect(rendered_component).to include(school_size(vacancy.organisation))
+      expect(rendered_component).to include(school_size(vacancy.parent_organisation))
     end
   end
 
@@ -56,7 +56,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
       let(:school) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => 1000 }) }
 
       it 'renders the school capacity as the school size' do
-        expect(rendered_component).to include(school_size(vacancy.organisation))
+        expect(rendered_component).to include(school_size(vacancy.parent_organisation))
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
       let(:school) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => nil }) }
 
       it 'renders the school no information translation' do
-        expect(rendered_component).to include(school_size(vacancy.organisation))
+        expect(rendered_component).to include(school_size(vacancy.parent_organisation))
       end
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
     let(:organisation) { create(:school, gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
 
     it 'renders the osted report' do
-      expect(rendered_component).to include(ofsted_report(vacancy.organisation))
+      expect(rendered_component).to include(ofsted_report(vacancy.parent_organisation))
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   end
 
   it 'renders a link to the school website' do
-    expect(rendered_component).to include(vacancy.organisation.url)
+    expect(rendered_component).to include(vacancy.parent_organisation.url)
   end
 
   it 'renders the contact email' do
@@ -100,6 +100,6 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   end
 
   it 'renders the head office location' do
-    expect(rendered_component).to include(full_address(vacancy.organisation))
+    expect(rendered_component).to include(full_address(vacancy.parent_organisation))
   end
 end

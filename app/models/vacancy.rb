@@ -230,7 +230,7 @@ class Vacancy < ApplicationRecord
   has_many :organisations, through: :organisation_vacancies
   accepts_nested_attributes_for :organisation_vacancies
 
-  delegate :name, to: :organisation, prefix: true, allow_nil: true
+  delegate :name, to: :parent_organisation, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
     :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
@@ -364,7 +364,7 @@ class Vacancy < ApplicationRecord
   def slug_candidates
     [
       :job_title,
-      %i[job_title organisation_name],
+      %i[job_title parent_organisation_name],
       %i[job_title location]
     ]
   end

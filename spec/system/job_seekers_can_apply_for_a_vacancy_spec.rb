@@ -46,7 +46,7 @@ RSpec.describe 'Job seekers can apply for a vacancy' do
       express_interest_event = {
         datestamp: timestamp.to_s,
         vacancy_id: vacancy.id,
-        school_urn: vacancy.organisation.urn,
+        school_urn: vacancy.parent_organisation.urn,
         application_link: vacancy.application_link
       }
 

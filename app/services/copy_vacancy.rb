@@ -71,9 +71,9 @@ class CopyVacancy
   end
 
   def setup_job_location
-    if @new_vacancy.organisation.is_a?(School)
+    if @new_vacancy.parent_organisation.is_a?(School)
       @new_vacancy.job_location = 'at_one_school'
-      @new_vacancy.readable_job_location = @new_vacancy.organisation_name
+      @new_vacancy.readable_job_location = @new_vacancy.parent_organisation.name
     else
       @new_vacancy.job_location = 'central_office'
       @new_vacancy.readable_job_location = I18n.t('hiring_staff.organisations.readable_job_location.central_office')

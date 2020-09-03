@@ -13,7 +13,7 @@ class VacancyPublishFeedback < ApplicationRecord
       Time.zone.now.to_s,
       user&.oid,
       vacancy.id,
-      vacancy.organisation.urn,
+      vacancy.parent_organisation.urn,
       rating,
       comment,
       created_at.to_s,

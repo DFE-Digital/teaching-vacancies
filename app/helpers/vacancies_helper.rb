@@ -48,7 +48,7 @@ module VacanciesHelper
   end
 
   def organisation_from_job_location(vacancy)
-    vacancy.job_location == 'at_multiple_schools' ? 'multiple schools' : vacancy.organisation_name
+    vacancy.job_location == 'at_multiple_schools' ? 'multiple schools' : vacancy.parent_organisation_name
   end
 
   def page_title_no_vacancy
@@ -97,17 +97,17 @@ module VacanciesHelper
   end
 
   def vacancy_or_organisation_description(vacancy)
-    vacancy.about_school.presence || vacancy.organisation.description.presence
+    vacancy.about_school.presence || vacancy.parent_organisation.description.presence
   end
 
   def vacancy_about_school_label_organisation(vacancy)
-    vacancy.organisations.many? ? 'the schools' : vacancy.organisation.name
+    vacancy.organisations.many? ? 'the schools' : vacancy.parent_organisation.name
   end
 
   def vacancy_about_school_hint_text(vacancy)
     return I18n.t('helpers.hint.job_summary_form.about_schools') if vacancy.organisations.many?
     return I18n.t('helpers.hint.job_summary_form.about_organisation', organisation: 'Trust') if
-      vacancy.organisation.is_a?(SchoolGroup)
+      vacancy.parent_organisation.is_a?(SchoolGroup)
     I18n.t('helpers.hint.job_summary_form.about_organisation', organisation: 'School')
   end
 

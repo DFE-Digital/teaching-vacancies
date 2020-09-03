@@ -400,14 +400,14 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  describe '#organisation_name' do
+  describe '#parent_organisation_name' do
     context 'when vacancy has a school' do
       it 'returns the school name for the vacancy' do
         school = create(:school, name: 'St James School')
         vacancy = create(:vacancy)
         vacancy.organisation_vacancies.create(organisation: school)
 
-        expect(vacancy.organisation_name).to eq(school.name)
+        expect(vacancy.parent_organisation_name).to eq(school.name)
       end
     end
 
@@ -417,7 +417,7 @@ RSpec.describe Vacancy, type: :model do
         vacancy = create(:vacancy, :at_central_office)
         vacancy.organisation_vacancies.create(organisation: school_group)
 
-        expect(vacancy.organisation_name).to eq(school_group.name)
+        expect(vacancy.parent_organisation_name).to eq(school_group.name)
       end
     end
   end
