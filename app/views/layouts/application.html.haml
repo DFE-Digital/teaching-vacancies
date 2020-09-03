@@ -32,7 +32,7 @@
     = render partial: 'shared/google_tag_manager_body'
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
-    %a.govuk-skip-link{ href: "#main-content" } Skip to main content
+    = render 'shared/skip_links'
     %header.govuk-header{ "data-module": "govuk-header", role: "banner" }
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
