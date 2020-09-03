@@ -32,13 +32,9 @@ FROM (
   FROM
     UNNEST(GENERATE_DATE_ARRAY('2018-08-01',DATE_TRUNC(CURRENT_DATE(),MONTH),INTERVAL 1 MONTH)) AS month
   LEFT JOIN
-    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
+    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
   ON
     DATE_TRUNC(vacancy.publish_on,MONTH)=month
-  WHERE
-    status != "draft"
-    AND status != "trashed"
-    AND status != "deleted"
   GROUP BY
     month )
 ORDER BY
