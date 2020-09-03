@@ -48,8 +48,8 @@ jobs:
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
         export TF_VAR_environment=review-${PR_NAME}
-        export TF_WORKSPACE=review
-        terraform init -input=false terraform/app
+        terraform init -input=false -backend-config="workspace_key_prefix=review:" terraform/app
+        terraform workspace select review-${PR_NAME} terraform/app || terraform workspace new review-${PR_NAME} terraform/app
         terraform apply -var-file terraform/workspace-variables/review.tfvars -auto-approve -input=false terraform/app
 
     - name: Post PR comment
