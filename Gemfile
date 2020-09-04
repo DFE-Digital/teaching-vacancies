@@ -84,6 +84,7 @@ group :test do
   gem 'rack_session_access'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
+  gem 'simplecov', require: false
   gem 'webmock'
 end
 
