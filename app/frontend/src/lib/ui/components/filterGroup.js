@@ -65,7 +65,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
     document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
-      Array.from(document.getElementsByClassName('filter-container')).map((element) => element.classList.toggle('filters--show-mobile'));
+      document.getElementsByClassName('filter-container')[0].classList.toggle('filters--show-mobile');
 
       if (document.getElementsByClassName('filters--show-mobile').length) {
         document.getElementsByClassName('filters--show-mobile')[0].closest('form').removeAttribute('data-auto-submit');
@@ -74,9 +74,10 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   }
 
   if (document.getElementById('return-to-results')) {
-    document.getElementById('return-to-results').addEventListener('click', () => {
-      Array.from(document.getElementsByClassName('filter-container')).map((element) => element.classList.toggle('filters--show-mobile'));
-    });
+    document.getElementById('return-to-results').addEventListener(
+      'click',
+      () => Array.from(document.getElementsByClassName('filter-container')).map((element) => element.classList.toggle('filters--show-mobile')),
+    );
   }
 };
 
