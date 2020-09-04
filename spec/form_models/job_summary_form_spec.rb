@@ -22,7 +22,7 @@ RSpec.describe JobSummaryForm, type: :model do
       let(:job_summary_form) { JobSummaryForm.new(about_school: nil, job_location: job_location) }
 
       context 'when about school is blank' do
-        context 'for a vacancy at a single school in a trust' do
+        context 'when vacancy job_location is at_one_school' do
           let(:job_location) { 'at_one_school' }
 
           it 'requests the user to complete the about school field' do
@@ -32,23 +32,23 @@ RSpec.describe JobSummaryForm, type: :model do
           end
         end
 
-        context 'for a vacancy at a single school NOT in a trust' do
-          let(:job_location) { nil }
-
-          it 'requests the user to complete the about school field' do
-            expect(job_summary_form.valid?).to be false
-            expect(job_summary_form.errors.messages[:about_school].first)
-              .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
-          end
-        end
-
-        context 'for a vacancy at a school group' do
+        context 'when vacancy job_location is central_office' do
           let(:job_location) { 'central_office' }
 
           it 'requests the user to complete the about trust field' do
             expect(job_summary_form.valid?).to be false
             expect(job_summary_form.errors.messages[:about_school].first)
               .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'trust'))
+          end
+        end
+
+        context 'when vacancy job_location is at_multiple_schools' do
+          let(:job_location) { 'at_multiple_schools' }
+
+          it 'requests the user to complete the about trust field' do
+            expect(job_summary_form.valid?).to be false
+            expect(job_summary_form.errors.messages[:about_school].first)
+              .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'schools'))
           end
         end
       end

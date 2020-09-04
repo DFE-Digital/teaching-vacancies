@@ -20,7 +20,7 @@ RSpec.describe 'Editing a draft vacancy' do
       visit organisation_job_review_path(vacancy.id)
 
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
-      expect(page).to have_content(location(school_group))
+      expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
         I18n.t('hiring_staff.organisations.readable_job_location.central_office')
       )
@@ -36,7 +36,7 @@ RSpec.describe 'Editing a draft vacancy' do
 
       expect(page.current_path).to eql(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
-      expect(page).to have_content(location(school_1))
+      expect(page).to have_content(full_address(school_1))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(school_1.name)
 
       click_header_link(I18n.t('jobs.job_location'))
@@ -50,7 +50,7 @@ RSpec.describe 'Editing a draft vacancy' do
 
       expect(page.current_path).to eql(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
-      expect(page).to have_content(location(school_2))
+      expect(page).to have_content(full_address(school_2))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(school_2.name)
 
       click_header_link(I18n.t('jobs.job_location'))
@@ -74,7 +74,7 @@ RSpec.describe 'Editing a draft vacancy' do
 
       expect(page.current_path).to eql(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
-      expect(page).to have_content(location(school_group))
+      expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
         I18n.t('hiring_staff.organisations.readable_job_location.central_office')
       )
