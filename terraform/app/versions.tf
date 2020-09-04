@@ -2,12 +2,12 @@ terraform {
   required_version = ">= 0.13.1"
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.4.0"
+      source  = "-/aws"
+      version = "~> 3.5.0"
     }
     cloudfoundry = {
       source  = "cloudfoundry-community/cloudfoundry"
-      version = "0.12.4"
+      version = ">= 0.12.4"
     }
     statuscake = {
       source  = "terraform-providers/statuscake"
