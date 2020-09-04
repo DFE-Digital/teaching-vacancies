@@ -49,7 +49,7 @@ RSpec.describe AlertMailer, type: :mailer do
           /A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted yesterday/
         )
         expect(body).to match(/---/)
-        expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(campaign_params))}/)
+        expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
 
         expect(body).to match(/#{vacancy_presenter.working_patterns}/)
@@ -74,13 +74,13 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
-        expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(campaign_params))}/)
+        expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
 
         expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
-        expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(campaign_params))}/)
+        expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.last.organisation))}/)
         expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)

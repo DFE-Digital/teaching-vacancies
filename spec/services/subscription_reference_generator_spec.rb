@@ -15,7 +15,7 @@ RSpec.describe SubscriptionReferenceGenerator do
       end
 
       it 'returns nil' do
-        service = described_class.new(params)
+        service = described_class.new(**params)
 
         expect(service.generate).to eq(nil)
       end
@@ -25,7 +25,7 @@ RSpec.describe SubscriptionReferenceGenerator do
       let(:params) { { search_criteria: { 'keyword' => 'maths and science', 'radius' => 20 } } }
 
       it 'returns a reference containing the subject' do
-        service = described_class.new(params)
+        service = described_class.new(**params)
 
         expect(service.generate).to include('Maths and science jobs')
       end
@@ -35,7 +35,7 @@ RSpec.describe SubscriptionReferenceGenerator do
       let(:params) { { search_criteria: { 'location' => 'SW1A 1AA', 'radius' => 40 } } }
 
       it 'returns a reference containing the location and radius' do
-        service = described_class.new(params)
+        service = described_class.new(**params)
 
         expect(service.generate).to include('within 40 miles of SW1A 1AA')
       end
