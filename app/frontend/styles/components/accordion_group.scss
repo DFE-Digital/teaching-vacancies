@@ -105,3 +105,13 @@
     margin: 0;
   }
 }
+
+#school-overview {
+  .govuk-accordion__section-header {
+    border-top: 1px solid #b1b4b6;
+  }
+
+  .govuk-accordion__controls {
+    display: block;
+  }
+}

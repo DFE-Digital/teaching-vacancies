@@ -24,14 +24,17 @@
             = t('jobs.job_details')
         %li.govuk-tabs__list-item
           %a.govuk-tabs__tab.tab-links-override{ href: "#school-overview" }
-            - if @vacancy.parent_organisation.is_a?(SchoolGroup)
-              = t('school_groups.trust_overview')
-            - else
+            - if @vacancy.at_one_school?
               = t('schools.school_overview')
+            - elsif @vacancy.at_multiple_schools?
+              = t('schools.schools_overview')
+            - elsif @vacancy.central_office?
+              = t('school_groups.trust_overview')
 
       = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
       = render(Jobseekers::SchoolGroupOverviewComponent.new(vacancy: @vacancy))
       = render(Jobseekers::SchoolOverviewComponent.new(vacancy: @vacancy))
+      = render(Jobseekers::SchoolsOverviewComponent.new(vacancy: @vacancy))
 
     %section
       %h4.govuk-heading-s.share-this-job

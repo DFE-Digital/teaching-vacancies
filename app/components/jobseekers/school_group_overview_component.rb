@@ -7,6 +7,6 @@ class Jobseekers::SchoolGroupOverviewComponent < ViewComponent::Base
   end
 
   def render?
-    @vacancy.job_location == 'central_office'
+    @vacancy.central_office?
   end
 end
