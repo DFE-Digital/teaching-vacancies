@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-injectDocumentsTable = function (documentsInput) {
+const injectDocumentsTable = function (documentsInput) {
   const filesList = documentsInput.files;
 
   if (filesList && filesList.length) {

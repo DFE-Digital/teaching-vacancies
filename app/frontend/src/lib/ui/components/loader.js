@@ -7,9 +7,9 @@ export const add = (targetEl, placeholder) => {
 };
 
 export const remove = (targetEl, placeholder) => {
-  const loader = document.getElementById('loader');
+  const loaderEl = document.getElementById('loader');
   targetEl.style.padding = '5px';
-  loader.remove();
+  loaderEl.remove();
   targetEl.setAttribute('placeholder', placeholder);
 };
 
