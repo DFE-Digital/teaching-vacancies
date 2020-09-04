@@ -7,7 +7,6 @@ class CopyVacancy
     @vacancy = vacancy
     setup_new_vacancy
     setup_organisation_vacancies
-    setup_job_location
     reset_candidate_specification if @vacancy.any_candidate_specification?
     copy_legacy_subjects
   end
@@ -67,16 +66,6 @@ class CopyVacancy
   def setup_organisation_vacancies
     @vacancy.organisation_vacancies.each do |organisation_vacancy|
       @new_vacancy.organisation_vacancies.build(organisation: organisation_vacancy.organisation)
-    end
-  end
-
-  def setup_job_location
-    if @new_vacancy.parent_organisation.is_a?(School)
-      @new_vacancy.job_location = 'at_one_school'
-      @new_vacancy.readable_job_location = @new_vacancy.parent_organisation.name
-    else
-      @new_vacancy.job_location = 'central_office'
-      @new_vacancy.readable_job_location = I18n.t('hiring_staff.organisations.readable_job_location.central_office')
     end
   end
 end
