@@ -3,6 +3,8 @@
   @include govuk-font(19);
   @include govuk-responsive-margin(9, 'bottom');
   margin-top: 0;
+  padding-left: govuk-spacing(6);
+  width: fill-available;
   @include govuk-media-query($from: desktop) {
     display: table;
   }
@@ -36,11 +38,6 @@
     border-bottom-width: 0;
     display: table-row;
   }
-}
-
-.app-check-your-answers {
-  padding-left: govuk-spacing(6);
-  width: fill-available;
 }
 
 .app-check-your-answers__question,

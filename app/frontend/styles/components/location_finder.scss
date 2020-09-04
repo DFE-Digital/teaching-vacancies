@@ -1,4 +1,7 @@
 .js-location-finder {
+
+  position: relative;
+
   .govuk-c-loader {
     @extend .govuk-input;
     background: #fff;
@@ -13,10 +16,6 @@
     line-height: 26px;
     vertical-align: top;
   }
-}
-
-.js-location-finder {
-  position: relative;
 }
 
 form .govuk-form-group.js-geolocation-supported {

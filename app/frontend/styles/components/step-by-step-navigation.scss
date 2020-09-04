@@ -33,6 +33,7 @@
   @include govuk-font(16, $weight: bold);
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .app-step-nav-related--singular {
@@ -54,10 +55,6 @@
   @include govuk-media-query($from: tablet) {
     margin-bottom: 5px;
   }
-}
-
-.app-step-nav-related__links {
-  list-style: none;
 }
 
 .app-step-nav-related__link-item {
