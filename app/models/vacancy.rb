@@ -94,7 +94,7 @@ class Vacancy < ApplicationRecord
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Layout/LineLength
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
-    attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns
+    attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
 
     attribute :expires_at do
       expires_at = format_date(self.expires_on)
@@ -163,8 +163,6 @@ class Vacancy < ApplicationRecord
       VacancyPresenter.new(self).working_patterns
     end
 
-    geoloc :lat, :lng
-
     attributesForFaceting [:job_roles, :working_patterns, 'organisation.readable_phases', :listing_status]
 
     add_replica 'Vacancy_publish_on_desc', inherit: true do
@@ -182,12 +180,10 @@ class Vacancy < ApplicationRecord
   # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/BlockLength
 
-  def lat
-    self.organisation.geolocation&.x&.to_f if organisation.present?
-  end
-
-  def lng
-    self.organisation.geolocation&.y&.to_f if organisation.present?
+  def _geoloc
+    self.organisations.map do |organisation|
+      { lat: organisation.geolocation&.x&.to_f, lng: organisation.geolocation&.y&.to_f }
+    end
   end
 
   extend FriendlyId
