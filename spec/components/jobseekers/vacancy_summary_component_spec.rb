@@ -4,10 +4,11 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   context 'when vacancy job_location is at_one_school' do
-    let(:vacancy) { create(:vacancy, :at_one_school) }
+    let(:vacancy) do
+      create(:vacancy, :at_one_school, organisation_vacancies_attributes: [{ organisation: organisation }])
+    end
 
     before do
-      vacancy.organisation_vacancies.create(organisation: organisation)
       render_inline(described_class.new(vacancy: vacancy_presenter))
     end
 
@@ -40,7 +41,11 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       end
 
       context 'when expiry time is nil' do
-        let(:vacancy) { create(:vacancy, expiry_time: nil) }
+        let(:vacancy) do
+          create(:vacancy, :at_one_school, expiry_time: nil, organisation_vacancies_attributes: [
+            { organisation: organisation }
+          ])
+        end
 
         it 'renders the date it expires on but not the time' do
           expect(rendered_component).to include(format_date(vacancy.expires_on))
@@ -65,20 +70,21 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   end
 
   context 'when vacancy job_location is at_multiple_schools' do
-    let(:vacancy) { create(:vacancy, :at_multiple_schools) }
     let(:school_type) { create(:school_type, label: 'Academy') }
     let(:school_group) { create(:school_group) }
     let(:school_1) { create(:school, :catholic, school_type: school_type) }
     let(:school_2) { create(:school, :catholic, school_type: school_type) }
     let(:school_3) { create(:school, :catholic, school_type: school_type, minimum_age: 16) }
+    let(:vacancy) do
+      create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
+        { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }
+      ])
+    end
 
     before do
       SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
       SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
       SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
-      vacancy.organisation_vacancies.create(organisation: school_1)
-      vacancy.organisation_vacancies.create(organisation: school_2)
-      vacancy.organisation_vacancies.create(organisation: school_3)
       render_inline(described_class.new(vacancy: vacancy_presenter))
     end
 
