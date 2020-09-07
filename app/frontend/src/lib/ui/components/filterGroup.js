@@ -74,10 +74,10 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   }
 
   if (document.getElementById('return-to-results')) {
-    document.getElementById('return-to-results').addEventListener(
-      'click',
-      () => Array.from(document.getElementsByClassName('filter-container')).map((element) => element.classList.toggle('filters--show-mobile')),
-    );
+    document.getElementById('return-to-results').addEventListener('click', (e) => {
+      e.preventDefault();
+      return Array.from(document.getElementsByClassName('filter-container')).map((element) => element.classList.toggle('filters--show-mobile'));
+    });
   }
 };
 
