@@ -203,6 +203,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
+    htmlentities (4.3.4)
     httparty (0.18.1)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -383,6 +384,10 @@ GEM
     retriable (3.1.2)
     rexml (3.2.4)
     rollbar (3.0.0)
+    rspec (3.9.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -399,6 +404,9 @@ GEM
       rspec-expectations (~> 3.9)
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
+    rspec-sonarqube-formatter (1.3.0)
+      htmlentities (~> 4.3.3)
+      rspec (~> 3.0)
     rspec-support (3.9.3)
     rubocop (0.81.0)
       jaro_winkler (~> 1.5.1)
@@ -570,6 +578,7 @@ DEPENDENCIES
   redis-objects
   rollbar
   rspec-rails
+  rspec-sonarqube-formatter
   rubocop (~> 0.81.0)
   rubocop-rails_config
   sanitize

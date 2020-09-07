@@ -34,6 +34,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup sonarqube
+        uses: warchant/setup-sonar-scanner@v1
+
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
@@ -79,7 +82,24 @@ jobs:
         run: bin/rails db:create db:schema:load
 
       - name: Run tests
-        run: bundle exec rspec
+        run: bundle exec rspec --format RspecSonarqubeFormatter --out ${{ github.workspace }}/out/test-report.xml --format documentation
+
+      - name: Keep Code Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Code_Coverage
+          path: ${{ github.workspace }}/coverage/*
+
+      - name: Run sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: sonar-scanner
+           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+           -Dsonar.organization=dfe-digital
+           -Dsonar.host.url=https://sonarcloud.io/
+           -Dsonar.projectKey=DFE-Digital_teacher-vacancy-service
+           -Dsonar.testExecutionReportPaths=${{ github.workspace }}/out/test-report.xml
+           -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
 
   frontend-tests:
     name: Run jest
