@@ -74,6 +74,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  gem 'rspec-sonarqube-formatter', require: false
   gem 'rubocop', '~> 0.81.0'
   gem 'rubocop-rails_config'
 end
