@@ -1,3 +1,5 @@
+import 'promise-polyfill';
+
 import '../../polyfill/after.polyfill';
 import '../../polyfill/remove.polyfill';
 import loader from '../components/loader';

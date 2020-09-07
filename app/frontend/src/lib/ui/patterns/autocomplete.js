@@ -1,3 +1,4 @@
+import 'promise-polyfill';
 import view from './autocomplete.view';
 
 export const renderAutocomplete = (widgetParams) => {
