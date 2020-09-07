@@ -5,16 +5,17 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   let(:school_1) { create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
   let(:school_2) { create(:school, name: 'Cambridge Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
   let(:school_3) { create(:school, name: 'London LSE', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
-  let(:vacancy) { create(:vacancy, :at_multiple_schools) }
+  let(:vacancy) do
+    create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
+      { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }
+    ])
+  end
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before do
     school_group.school_group_memberships.create(school: school_1)
     school_group.school_group_memberships.create(school: school_2)
     school_group.school_group_memberships.create(school: school_3)
-    vacancy.organisation_vacancies.create(organisation: school_1)
-    vacancy.organisation_vacancies.create(organisation: school_2)
-    vacancy.organisation_vacancies.create(organisation: school_3)
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end
 
@@ -38,7 +39,11 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     end
 
     context 'when vacancy job_location is at_multiple_schools' do
-      let(:vacancy) { create(:vacancy, :at_multiple_schools) }
+      let(:vacancy) do
+        create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
+          { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }
+        ])
+      end
 
       it 'renders the component' do
         expect(rendered_component).not_to be_blank
