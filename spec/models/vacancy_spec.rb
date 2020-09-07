@@ -399,6 +399,25 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
+  describe '#schools' do
+    let(:school_1) { create(:school, name: 'St James School') }
+    let(:school_2) { create(:school, name: 'St Marys School') }
+    let(:trust) { create(:school_group) }
+    let(:vacancy) { create(:vacancy) }
+
+    before do
+      vacancy.organisation_vacancies.create(organisation: school_1)
+      vacancy.organisation_vacancies.create(organisation: school_2)
+      vacancy.organisation_vacancies.create(organisation: trust)
+    end
+
+    it 'returns a relation of the associated schools and not the associated trust' do
+      expect(vacancy.schools).to include school_1
+      expect(vacancy.schools).to include school_2
+      expect(vacancy.schools).not_to include trust
+    end
+  end
+
   describe '#parent_organisation_name' do
     context 'when vacancy has a school' do
       it 'returns the school name for the vacancy' do

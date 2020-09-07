@@ -79,6 +79,11 @@ FactoryBot.define do
         }
       end
     end
+
+    trait :no_geolocation do
+      easting { nil }
+      northing { nil }
+    end
   end
 
   factory :academy, parent: :school do

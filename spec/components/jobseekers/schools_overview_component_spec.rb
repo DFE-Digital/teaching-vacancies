@@ -1,13 +1,17 @@
 require 'rails_helper'
+require 'pry'
 
 RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }
-  let(:school_1) do
-    create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) },
-                    website: 'https://this-is-a-test-url.tvs')
-  end
-  let(:school_2) { create(:school, name: 'Cambridge Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
-  let(:school_3) { create(:school, name: 'London LSE', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
+  let(:geolocation_trait) { nil }
+  let(:school_1) { create(:school, geolocation_trait, name: 'Oxford Uni',
+                          gias_data: { 'URN' => Faker::Number.number(digits: 6) },
+                          website: 'https://this-is-a-test-url.tvs') }
+  let(:school_2) { create(:school, geolocation_trait, name: 'Cambridge Uni',
+                          gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
+  let(:school_3) { create(:school, geolocation_trait, name: 'London LSE',
+                          gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
+  
   let(:vacancy) do
     create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
       { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }
@@ -24,6 +28,7 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
 
   describe '#render?' do
     context 'when vacancy job_location is central_office' do
+      # organisation is never referenced.
       let(:organisation) { create(:school_group) }
       let(:vacancy) { create(:vacancy, :central_office) }
 
@@ -108,5 +113,21 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
 
   it 'renders the school visits' do
     expect(rendered_component).to include(vacancy.school_visits)
+  end
+
+  it 'renders the location heading for multiple schools' do
+    expect(rendered_component).to include('School locations')
+  end
+
+  it 'shows the map' do
+    expect(rendered_component).to include('map_zoom')
+  end
+
+  context 'when no school has a geolocation' do
+    let(:geolocation_trait) { :no_geolocation }
+
+    it 'does not show the map' do
+      expect(rendered_component).not_to include('map_zoom')
+    end
   end
 end
