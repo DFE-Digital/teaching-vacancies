@@ -92,8 +92,30 @@
   }
 }
 
+.filters--show-mobile {
+  .filter-results__heading--applied {
+    display: none !important;
+  }
+}
+
 .moj-filter {
   box-shadow: none;
+
+  .filter-results__heading--applied {
+    display: none;
+
+    @media only screen and (max-width: 640px) {
+      display: block;
+      text-decoration: none;
+      color: govuk-colour("black");
+      font-weight: normal;
+      margin: 0 govuk-spacing(1);
+    }
+  }
+
+  .moj-filter__heading-title {
+    display: flex;
+  }
 
   .filter-results__heading--mobile {
     @media only screen and (max-width: 640px) {
@@ -103,6 +125,7 @@
       cursor: pointer;
       font-weight: bold;
       margin-bottom: govuk-spacing(2);
+      margin-right: govuk-spacing(1);
       margin-top: 0;
       text-decoration: underline;
     }

@@ -19,6 +19,7 @@
           %span.moj-filter__heading-title
             %h2.govuk-heading-s{ class: "#{filters[:mobile] ? 'filter-results__heading--mobile' : ''}", id: "#{filters[:mobile] ? 'mobile-filters-button' : ''}" }
               = filters[:title]
+            %span.govuk-body.filter-results__heading--applied= "#{filters[:total_count] > 0 ? "(#{filters[:total_count]} applied)" : ''}"
           - if filters[:close_all]
             %button.govuk-link.govuk-link--no-visited-state.mobile-only{ id: 'return-to-results' }
               = 'Return to results'
