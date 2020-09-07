@@ -114,4 +114,8 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   it 'renders the head office location' do
     expect(rendered_component).to include(full_address(vacancy.parent_organisation))
   end
+
+  it 'renders the location heading for a singular school' do
+    expect(rendered_component).to include('School location')
+  end
 end

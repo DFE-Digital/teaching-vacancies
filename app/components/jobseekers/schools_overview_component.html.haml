@@ -92,10 +92,14 @@
       = t('schools.schools_visits')
     = @vacancy.school_visits
 
-  - if @vacancy.parent_organisation.geolocation
+  %h4.govuk-heading-s
+    = t('schools.school_location.many')
+
+  - if any_school_has_a_geolocation?
     %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
-    = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
-                                                          lat: @vacancy.parent_organisation.geolocation.x,
-                                                          lng: @vacancy.parent_organisation.geolocation.y }
+    -# TODO: Update the below
+    -# = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
+    -#                                                       lat: @vacancy.parent_organisation.geolocation.x,
+    -#                                                       lng: @vacancy.parent_organisation.geolocation.y }
 
     %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}

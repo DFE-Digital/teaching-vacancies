@@ -63,7 +63,7 @@
     %p= @vacancy.school_visits
 
   %h4.govuk-heading-s
-    = t('schools.school_location')
+    = t('schools.school_location.one')
   %p= full_address(@vacancy.parent_organisation)
 
   - if @vacancy.parent_organisation.geolocation

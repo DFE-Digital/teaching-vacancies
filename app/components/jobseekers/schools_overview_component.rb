@@ -9,4 +9,15 @@ class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
   def render?
     @vacancy.at_multiple_schools?
   end
+
+  def any_school_has_a_geolocation?
+    @vacancy.schools.each { |school|
+      return true if school.geolocation
+    }
+    false
+  end
+
+  def schools_with_a_geolocation
+    @vacancy.schools.select { |school| school.geolocation }
+  end
 end
