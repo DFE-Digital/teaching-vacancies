@@ -57,7 +57,6 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
       end
 
       before do
-        allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
         allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
       end
 
@@ -155,7 +154,6 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
         context 'SchoolGroupJobsFeature enabled' do
           before do
-            allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
             allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
           end
 
@@ -182,6 +180,10 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
         end
 
         context 'SchoolGroupJobsFeature disabled' do
+          before do
+            allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(false)
+          end
+
           scenario 'cannot sign in' do
             freeze_time do
               visit root_path

@@ -8,8 +8,6 @@ RSpec.describe 'Schools in your trust' do
   let(:school_3) { create(:school) }
 
   before do
-    allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
-
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)

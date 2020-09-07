@@ -128,7 +128,6 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
 
     context 'SchoolGroupJobsFeature enabled' do
       before do
-        allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(true)
         allow(UserPreference).to receive(:find_by).and_return(user_preference)
 
         stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: dsi_email_address)
@@ -160,6 +159,7 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
 
     context 'SchoolGroupJobsFeature disabled' do
       before do
+        allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(false)
         stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: 'test@email.com')
         stub_authorisation_step
       end
