@@ -25,10 +25,7 @@ RSpec.describe 'Editing a draft vacancy' do
         I18n.t('hiring_staff.organisations.readable_job_location.central_office')
       )
 
-      click_header_link(I18n.t('jobs.job_location'))
-      vacancy.job_location = 'at_one_school'
-      fill_in_job_location_form_field(vacancy)
-      click_on I18n.t('buttons.update_job')
+      change_job_location(vacancy, 'at_one_school')
 
       expect(page.current_path).to eql(organisation_job_schools_path(vacancy.id))
       fill_in_school_form_field(school_1)
@@ -39,10 +36,7 @@ RSpec.describe 'Editing a draft vacancy' do
       expect(page).to have_content(full_address(school_1))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(school_1.name)
 
-      click_header_link(I18n.t('jobs.job_location'))
-      vacancy.job_location = 'at_one_school'
-      fill_in_job_location_form_field(vacancy)
-      click_on I18n.t('buttons.update_job')
+      change_job_location(vacancy, 'at_one_school')
 
       expect(page.current_path).to eql(organisation_job_schools_path(vacancy.id))
       fill_in_school_form_field(school_2)
@@ -53,10 +47,7 @@ RSpec.describe 'Editing a draft vacancy' do
       expect(page).to have_content(full_address(school_2))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(school_2.name)
 
-      click_header_link(I18n.t('jobs.job_location'))
-      vacancy.job_location = 'at_multiple_schools'
-      fill_in_job_location_form_field(vacancy)
-      click_on I18n.t('buttons.update_job')
+      change_job_location(vacancy, 'at_multiple_schools')
 
       expect(page.current_path).to eql(organisation_job_schools_path(vacancy.id))
       check school_1.name, name: 'schools_form[organisation_ids][]', visible: false
@@ -67,10 +58,7 @@ RSpec.describe 'Editing a draft vacancy' do
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql('More than one school (2)')
 
-      click_header_link(I18n.t('jobs.job_location'))
-      vacancy.job_location = 'central_office'
-      fill_in_job_location_form_field(vacancy)
-      click_on I18n.t('buttons.update_job')
+      change_job_location(vacancy, 'central_office')
 
       expect(page.current_path).to eql(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(I18n.t("school_groups.job_location_heading.review.#{vacancy.job_location}"))

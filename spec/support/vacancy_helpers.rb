@@ -4,6 +4,13 @@ module VacancyHelpers
     find("label[for=\"job-location-form-job-location-#{hyphenated_location}-field\"]").click
   end
 
+  def change_job_location(vacancy, location)
+    vacancy.job_location = location
+    click_header_link(I18n.t('jobs.job_location'))
+    fill_in_job_location_form_field(vacancy)
+    click_on I18n.t('buttons.update_job')
+  end
+
   def fill_in_school_form_field(school)
     find("label[for=\"schools-form-organisation-id-#{school.id}-field\"]").click
   end

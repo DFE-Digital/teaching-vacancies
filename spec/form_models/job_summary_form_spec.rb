@@ -45,7 +45,7 @@ RSpec.describe JobSummaryForm, type: :model do
         context 'when vacancy job_location is at_multiple_schools' do
           let(:job_location) { 'at_multiple_schools' }
 
-          it 'requests the user to complete the about trust field' do
+          it 'requests the user to complete the about schools field' do
             expect(job_summary_form.valid?).to be false
             expect(job_summary_form.errors.messages[:about_school].first)
               .to eq(I18n.t('job_summary_errors.about_school.blank', organisation: 'schools'))
