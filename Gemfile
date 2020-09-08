@@ -85,7 +85,7 @@ group :test do
   gem 'rack_session_access'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
+  gem 'simplecov', '<= 0.17.1', require: false # Newer versions of simplecov are not compatible with Sonarqube
   gem 'webmock'
 end
 
