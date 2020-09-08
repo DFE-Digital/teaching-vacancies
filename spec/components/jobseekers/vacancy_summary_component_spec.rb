@@ -94,8 +94,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     it 'renders the unique school types' do
-      expect(rendered_component)
-        .to include('Academy, Roman Catholic, 11 to 18, Academy, Roman Catholic, 16 to 18')
+      expect(rendered_component).to include(organisation_types(vacancy.organisations))
     end
   end
 
