@@ -103,3 +103,22 @@ resource aws_iam_user_policy_attachment cloudfront {
   user       = aws_iam_user.deploy.name
   policy_arn = aws_iam_policy.cloudfront.arn
 }
+
+# Upload DB backups to S3
+
+data aws_iam_policy_document upload_db_backups_to_s3 {
+  statement {
+    actions   = ["s3:PutObject"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.db_backups.bucket}/*"]
+  }
+}
+
+resource aws_iam_policy upload_db_backups_to_s3 {
+  name   = "upload_db_backups_to_s3"
+  policy = data.aws_iam_policy_document.upload_db_backups_to_s3.json
+}
+
+resource aws_iam_user_policy_attachment upload_db_backups_to_s3 {
+  user       = aws_iam_user.deploy.name
+  policy_arn = aws_iam_policy.upload_db_backups_to_s3.arn
+}
