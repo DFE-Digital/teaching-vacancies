@@ -38,3 +38,10 @@ Create a **new** database using the latest snapshot of the RDS instance. See [GD
 
 ### Restore point-in-time backup
 GDS have access to the RDS instances and can restore point-in-time with a resolution of 1 second. It's a manual process and must be requested from paas support.
+
+### Restore from S3 backup
+We keep our own nightly backups in S3. In case the RDS instance and all its backups are gone, we still have
+this option.
+* Recreate the empty database with terraform
+* Get the latest backup from S3 bucket `530003481352-tv-db-backups`. They are gzipped SQL files with the date in the file name.
+* Load the data into the new database. See: "Backup/Restore GOV.UK PaaS Postgres service database" in [GOV.UK PaaS](govuk-paas.md)
