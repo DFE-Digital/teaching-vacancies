@@ -1,0 +1,9 @@
+#!/bin/bash
+set -eu
+
+FILENAME=backup.sql
+DATE=$(date +'%F')
+BUCKET=530003481352-tv-db-backups
+
+gzip "$FILENAME"
+aws s3 cp "${FILENAME}.gz" "s3://${BUCKET}/${DATE}-${FILENAME}.gz"

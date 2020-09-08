@@ -73,4 +73,5 @@ dump.rdb
 # Database dumps
 *.sql
 *backup*
+!bin/upload-db-backup
 *dump*
