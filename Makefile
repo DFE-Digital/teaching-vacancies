@@ -79,3 +79,12 @@ deploy-plan: init-terraform
 print-env:
 		$(if $(env), , $(error Usage: make <env> print-env))
 		@bin/run-in-env -t /tvs/dev/app -y terraform/workspace-variables/$(env)_app_env.yml -o env_stdout
+
+terraform-common-init:
+		terraform init terraform/common
+
+terraform-common-plan: terraform-common-init
+		terraform plan terraform/common
+
+terraform-common-apply: terraform-common-init
+		terraform apply terraform/common
