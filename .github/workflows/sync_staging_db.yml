@@ -47,6 +47,12 @@ jobs:
         CF_POSTGRES_SERVICE_TARGET: teaching-vacancies-postgres-staging
       run: bin/sync-db
 
+    - name: Upload backup to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: bin/upload-db-backup
+
   sync_notify:
     needs: sync
     name: Slack notification
@@ -60,5 +66,5 @@ jobs:
           SLACK_USERNAME: CI Deployment
           SLACK_ICON_EMOJI: ':tada:'
           SLACK_TITLE: Successful syncing
-          SLACK_MESSAGE: 'Successful syncing staging from production database :rocket:'
+          SLACK_MESSAGE: 'Successful database backup and sync :rocket:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
