@@ -28,8 +28,6 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
 
   describe '#render?' do
     context 'when vacancy job_location is central_office' do
-      # organisation is never referenced.
-      let(:organisation) { create(:school_group) }
       let(:vacancy) { create(:vacancy, :central_office) }
 
       it 'does not render the component' do
@@ -38,7 +36,6 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     end
 
     context 'when vacancy job_location is at at_one_school' do
-      let(:organisation) { create(:school_group) }
       let(:vacancy) { create(:vacancy, :at_one_school) }
 
       it 'does not render the component' do
