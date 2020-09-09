@@ -105,7 +105,7 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   end
 
   it 'renders all the school links to the school website' do
-    [school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
+    [school_1, school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
   end
 
   it 'renders the school visits' do
@@ -116,31 +116,33 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     expect(rendered_component).to include('School locations')
   end
 
-  it 'shows the map' do
-    expect(rendered_component).to include('map_zoom')
+  context 'when at least one school has a geolocation' do
+    it 'shows the map' do
+      expect(rendered_component).to include('School locations')
+      expect(rendered_component).to include('map_zoom')
+    end
   end
 
   context 'when no school has a geolocation' do
     let(:geolocation_trait) { :no_geolocation }
 
     it 'does not show the map' do
+      expect(rendered_component).not_to include('School locations')
       expect(rendered_component).not_to include('map_zoom')
     end
   end
 
-  describe '#schools_with_a_geolocation' do
-    context 'when all schools have a geolocation' do
-      it 'returns schools with a present geolocation' do
-        expect(described_class.new(vacancy: vacancy_presenter).schools_with_a_geolocation)
-          .to eq [school_1, school_2, school_3]
+  describe '#schools_map_data' do
+    context 'when the school has a url' do
+      let(:school_1_data) do
+        JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data).each do |school|
+          @school_1_data = school if school['name'] == school_1.name
+        end
+        @school_1_data
       end
-    end
 
-    context 'when no school has a geolocation' do
-      let(:geolocation_trait) { :no_geolocation }
-
-      it 'omits schools with a blank geolocation' do
-        expect(described_class.new(vacancy: vacancy_presenter).schools_with_a_geolocation).to be_empty
+      it 'includes the school name link' do
+        expect(school_1_data['name_link']).to eq "<a href=\"#{school_1.url}\">#{school_1.name}</a>"
       end
     end
   end
