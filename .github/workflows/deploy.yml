@@ -10,13 +10,25 @@ env:
  CF_PROVIDER_VERSION: 0.12.4
 
 jobs:
+  turnstyle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: softprops/turnstyle@v1
+      name: Check workflow concurrency
+      with:
+        poll-interval-seconds: 20
+        same-branch-only: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     name: build docker image and deploy
+    needs: turnstyle
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
-
+      
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1
       with:

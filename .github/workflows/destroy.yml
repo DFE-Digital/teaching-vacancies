@@ -11,8 +11,20 @@ env:
   PR_NAME: ${{ format('pr-{0}', github.event.number) }}  
 
 jobs:
+  turnstyle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: softprops/turnstyle@v1
+      name: Check workflow concurrency
+      with:
+        poll-interval-seconds: 20
+        same-branch-only: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     name: Destroy review app
+    needs: turnstyle
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
