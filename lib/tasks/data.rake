@@ -15,14 +15,6 @@ namespace :data do
     end
   end
 
-  desc 'Export location category data'
-  namespace :location_categories do
-    task export: :environment do
-      Rails.logger.debug("Running location category export task in #{Rails.env}")
-      LocationCategory.export
-    end
-  end
-
   desc 'Import location polygons'
   namespace :location_polygons do
     task import_regions: :environment do
