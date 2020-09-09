@@ -127,4 +127,21 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
       expect(rendered_component).not_to include('map_zoom')
     end
   end
+
+  describe '#schools_with_a_geolocation' do
+    context 'when all schools have a geolocation' do
+      it 'returns schools with a present geolocation' do
+        expect(described_class.new(vacancy: vacancy_presenter).schools_with_a_geolocation)
+          .to eq [school_1, school_2, school_3]
+      end
+    end
+
+    context 'when no school has a geolocation' do
+      let(:geolocation_trait) { :no_geolocation }
+
+      it 'omits schools with a blank geolocation' do
+        expect(described_class.new(vacancy: vacancy_presenter).schools_with_a_geolocation).to be_empty
+      end
+    end
+  end
 end

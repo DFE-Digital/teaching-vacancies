@@ -16,4 +16,8 @@ class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
     }
     false
   end
+
+  def schools_with_a_geolocation
+    @vacancy.schools.select { |school| school.geolocation }
+  end
 end
