@@ -45,7 +45,7 @@ RSpec.describe 'Schools in your trust' do
     click_button I18n.t('buttons.save_changes')
 
     expect(page).to have_content('New description of the trust')
-    expect(page).to have_content("Description updated for #{school_group.name}")
+    expect(page).to have_content("Details updated for #{school_group.name}")
 
     visit edit_organisation_school_path(school_1)
 
@@ -53,6 +53,6 @@ RSpec.describe 'Schools in your trust' do
     click_button I18n.t('buttons.save_changes')
 
     expect(page).to have_content('New description of the school')
-    expect(page).to have_content("Description updated for #{school_1.name}")
+    expect(page).to have_content("Details updated for #{school_1.name}")
   end
 end
