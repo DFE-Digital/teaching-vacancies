@@ -12,18 +12,18 @@ class SchoolGroup < Organisation
   end
 
   def address
-    gias_data['Group Contact Street']
+    gias_data['Group Locality']
   end
 
   def town
-    gias_data['Group Contact Town']
+    gias_data['Group Town']
   end
 
   def county
-    gias_data['Group Contact County']
+    gias_data['Group County']
   end
 
   def postcode
-    gias_data['Group Contact Postcode']
+    gias_data['Group Postcode']
   end
 end
