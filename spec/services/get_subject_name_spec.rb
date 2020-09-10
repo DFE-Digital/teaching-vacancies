@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+include GetSubjectName
+
 RSpec.describe GetSubjectName do
   describe '#get_subject_name' do
     let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
