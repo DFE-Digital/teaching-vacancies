@@ -17,6 +17,7 @@ import filterGroup, {
   openOrCloseAllSections,
   filterChangeHandler,
   CHECKBOX_CLASS_SELECTOR,
+  CHECKBOX_GROUP_CLASS_SELECTOR,
   CLOSE_ALL_TEXT,
   OPEN_ALL_TEXT,
   ACCORDION_SECTION_CLASS_SELECTOR,
@@ -51,11 +52,11 @@ describe('filterGroup', () => {
 <button id="clear-filters-button">remove</button>
 <button id="close-all-groups">remove</button>
 </div>
-<div class="filter-group__container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
-<div class="filter-group__container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filters__groups-container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
+<div class="filters__groups-container"><div class="govuk-accordion__section-header"><h3 class="heading"><button class="govuk-accordion__section-button"></button></h3></div></div>
 </form>`;
 
-      init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header');
+      init('filters__groups-container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header');
 
       expect(addRemoveFilterEventMock).toHaveBeenCalledTimes(2);
       expect(addRemoveAllFiltersEventMock).toHaveBeenCalledTimes(1);
@@ -127,10 +128,10 @@ describe('filterGroup', () => {
   });
 
   describe('removeAllFiltersHandler', () => {
-    document.body.innerHTML = `<div class="filter-group__checkboxes">
+    document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}">
 <input type="checkbox" class="${CHECKBOX_CLASS_SELECTOR}" checked />
 </div>
-<div class="filter-group__checkboxes">
+<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}">
 <input type="checkbox" class="${CHECKBOX_CLASS_SELECTOR}" checked />
 </div>`;
 
@@ -147,7 +148,7 @@ describe('filterGroup', () => {
 
   describe('getFilterGroup', () => {
     test('finds the container element for a group of filters', () => {
-      document.body.innerHTML = '<div class="filter-group__checkboxes" data-group="x"></div><div id="should-find" class="filter-group__checkboxes" data-group="y"></div>';
+      document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}" data-group="x"></div><div id="should-find" class="${CHECKBOX_GROUP_CLASS_SELECTOR}" data-group="y"></div>`;
       const shouldFind = document.getElementById('should-find');
 
       expect(getFilterGroup('y')).toEqual(shouldFind);
@@ -182,7 +183,7 @@ describe('filterGroup', () => {
 
   describe('getFilterGroups', () => {
     test('finds all filter group container elements', () => {
-      document.body.innerHTML = '<div class="filter-group__checkboxes"></div><div></div><div class="filter-group__checkboxes"></div>';
+      document.body.innerHTML = `<div class="${CHECKBOX_GROUP_CLASS_SELECTOR}"></div><div></div><div class="${CHECKBOX_GROUP_CLASS_SELECTOR}"></div>`;
       expect(getFilterGroups().length).toBe(2);
     });
   });
@@ -214,7 +215,7 @@ describe('filterGroup', () => {
   describe('filterChangeHandler', () => {
     test('submits the form only if a filter checkbox is clicked', () => {
       document.body.innerHTML = `<form data-auto-submit="true">
-  <div class="filter-group__container">
+  <div class="filters__groups-container">
   <input type="text" id="should-submit" class="${CHECKBOX_CLASS_SELECTOR}" />
   <span id="should-not-submit">abc</span>
   </div>

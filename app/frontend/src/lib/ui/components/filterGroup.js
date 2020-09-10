@@ -6,6 +6,7 @@ import { togglePanel as toggleFilterPanel } from './panel';
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
+export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters__group-checkboxes';
 export const CLOSED_CLASS = 'govuk-grid-column-full';
 export const OPEN_CLASS = 'govuk-grid-column-two-thirds';
 export const CLOSE_ALL_TEXT = 'Close all';
@@ -13,7 +14,7 @@ export const OPEN_ALL_TEXT = 'Open all';
 
 window.addEventListener(
   'DOMContentLoaded',
-  () => init('filter-group__container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header'),
+  () => init('filters__groups-container', 'moj-filter__tag', 'clear-filters-button', 'close-all-groups', 'mobile-filters-button', 'govuk-accordion__section-header'),
 );
 
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
@@ -65,7 +66,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
 
   if (document.getElementById(mobileFiltersButtonSelector)) {
     document.getElementById(mobileFiltersButtonSelector).addEventListener('click', () => {
-      document.getElementsByClassName('filter-container')[0].classList.toggle('filters--show-mobile');
+      document.getElementsByClassName('filters')[0].classList.toggle('filters--show-mobile');
 
       if (document.getElementsByClassName('filters--show-mobile').length) {
         document.getElementsByClassName('filters--show-mobile')[0].closest('form').removeAttribute('data-auto-submit');
@@ -76,7 +77,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
   if (document.getElementById('return-to-results')) {
     document.getElementById('return-to-results').addEventListener('click', (e) => {
       e.preventDefault();
-      return Array.from(document.getElementsByClassName('filter-container')).map((element) => element.classList.toggle('filters--show-mobile'));
+      return Array.from(document.getElementsByClassName('filters')).map((element) => element.classList.toggle('filters--show-mobile'));
     });
   }
 };
@@ -158,7 +159,7 @@ export const addFilterChangeEvent = (groups) => {
 };
 
 export const filterChangeHandler = (el) => {
-  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('filter-group__container')) {
+  if (el.className === CHECKBOX_CLASS_SELECTOR && isFormAutoSubmitEnabled('filters__groups-container')) {
     getSubmitButton(el).click();
   }
 };
@@ -167,7 +168,7 @@ export const unCheckCheckbox = (checkbox) => { checkbox.checked = false; };
 
 export const getFilterGroup = (groupName) => getFilterGroups().filter((group) => group.dataset.group === groupName)[0];
 
-export const getFilterGroups = () => Array.from(document.getElementsByClassName('filter-group__checkboxes'));
+export const getFilterGroups = () => Array.from(document.getElementsByClassName(CHECKBOX_GROUP_CLASS_SELECTOR));
 
 export const findFilterCheckboxInGroup = (groupEl, key) => getFilterCheckboxesInGroup(groupEl).filter((checkbox) => checkbox.value === key)[0];
 
