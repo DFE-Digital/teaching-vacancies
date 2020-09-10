@@ -2,6 +2,8 @@ SELECT
   CAST(created_at AS date) AS created_date,
   CAST(updated_at AS date) AS updated_date,
   expires_on AS expires_date,
+  recaptcha_score,
+  IF(recaptcha_score IS NULL,NULL,recaptcha_score > 0.5) AS human,
   ARRAY_TO_STRING(ARRAY(   #extract all search criteria from the JSON, except radius (because this is meaningless without location)
     SELECT
       *
