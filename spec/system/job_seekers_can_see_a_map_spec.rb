@@ -9,7 +9,7 @@ RSpec.describe 'Viewing a vacancy' do
     vacancy = create(:vacancy)
     vacancy.organisation_vacancies.create(organisation: school)
     visit job_path(vacancy)
-    expect(page).to have_css('div#map_zoom')
+    expect(page).to have_css('div#map')
   end
 
   scenario 'should not display a map when a school has no geocoding' do
@@ -17,6 +17,6 @@ RSpec.describe 'Viewing a vacancy' do
     vacancy = create(:vacancy)
     vacancy.organisation_vacancies.create(organisation: school)
     visit job_path(vacancy)
-    expect(page).not_to have_css('div#map_zoom')
+    expect(page).not_to have_css('div#map')
   end
 end

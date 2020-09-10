@@ -42,7 +42,7 @@
   -# TODO: Unable to show the map as we cannot extract geolocation data from GIAS
 
   -# - if @vacancy.parent_organisation.geolocation
-  -#   %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
+  -#   %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
   -#   = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
   -#                                                         lat: @vacancy.parent_organisation.geolocation.x,
   -#                                                         lng: @vacancy.parent_organisation.geolocation.y }

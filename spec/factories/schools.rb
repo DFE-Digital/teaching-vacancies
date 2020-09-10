@@ -34,7 +34,7 @@ FactoryBot.define do
     phase { :secondary }
     readable_phases { %w[secondary] }
     postcode { Faker::Address.postcode }
-    town { Faker::Address.city }
+    town { Faker::Address.city.gsub("'", '') }
     urn { Faker::Number.number(digits: 6) }
     url { Faker::Internet.url }
 
