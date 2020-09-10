@@ -13,7 +13,7 @@
         - if current_organisation.description.present?
           = truncate(current_organisation.description, length: 130)
           %br
-        = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(current_organisation, school_group: true), class: 'govuk-link govuk-link--no-visited-state'
+        = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(current_organisation), class: 'govuk-link govuk-link--no-visited-state'
     %tr.govuk-table__row
       %td.govuk-table__cell
         %strong.strong= t('school_groups.address')

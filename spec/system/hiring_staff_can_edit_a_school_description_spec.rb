@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe 'Editing a School’s description' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
@@ -15,9 +16,11 @@ RSpec.describe 'Editing a School’s description' do
 
     click_on 'Change description'
     fill_in 'Description', with: 'Our school prides itself on excellence.'
-    click_on 'Save'
+    click_on I18n.t('buttons.save_changes')
 
     expect(page).to have_content('Our school prides itself on excellence.')
+    expect(page).to have_content("Description updated for #{school.name}")
+    expect(page.current_path).to eql(organisation_path)
   end
 
   scenario 'removing a description' do
@@ -28,22 +31,10 @@ RSpec.describe 'Editing a School’s description' do
 
     click_on 'Change description'
     fill_in 'Description', with: ''
-    click_on 'Save'
+    click_on I18n.t('buttons.save_changes')
 
     expect(page).to have_content('Description Not provided')
-  end
-
-  scenario 'audits changes to the school\'s description' do
-    description = school.description
-    visit organisation_path
-
-    click_on 'Change description'
-    fill_in 'Description', with: ''
-    click_on 'Save'
-
-    activity = school.activities.last
-    expect(activity.session_id).to eq(session_id)
-    expect(activity.key).to eq('school.update')
-    expect(activity.parameters.symbolize_keys).to eq(description: [description, ''])
+    expect(page).to have_content("Description updated for #{school.name}")
+    expect(page.current_path).to eql(organisation_path)
   end
 end

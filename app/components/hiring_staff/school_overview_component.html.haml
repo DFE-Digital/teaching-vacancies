@@ -13,7 +13,7 @@
         %td.govuk-table__cell
           = @organisation.description.presence || 'Not provided'
         %td.govuk-table__cell.change-answer
-          = link_to edit_organisation_path, class: 'govuk-link' do
+          = link_to edit_organisation_school_path(@organisation), class: 'govuk-link' do
             = t('buttons.change')
             %span.govuk-visually-hidden
               description

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'message_encryptor'
 
 RSpec.describe 'Schools in your trust' do
   let(:school_group) { create(:school_group) }
@@ -46,6 +45,7 @@ RSpec.describe 'Schools in your trust' do
 
     expect(page).to have_content('New description of the trust')
     expect(page).to have_content("Details updated for #{school_group.name}")
+    expect(page.current_path).to eql(organisation_schools_path)
 
     visit edit_organisation_school_path(school_1)
 
@@ -54,5 +54,6 @@ RSpec.describe 'Schools in your trust' do
 
     expect(page).to have_content('New description of the school')
     expect(page).to have_content("Details updated for #{school_1.name}")
+    expect(page.current_path).to eql(organisation_schools_path)
   end
 end
