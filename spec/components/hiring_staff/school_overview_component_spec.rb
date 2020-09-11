@@ -37,9 +37,7 @@ RSpec.describe HiringStaff::SchoolOverviewComponent, type: :component do
     end
 
     it 'renders the school website link' do
-      expect(inline_component.css("a[href='#{organisation.url}']").to_html).to include(
-        I18n.t('schools.website_link_text', school: organisation.name)
-      )
+      expect(rendered_component).to include(organisation.url)
     end
   end
 end

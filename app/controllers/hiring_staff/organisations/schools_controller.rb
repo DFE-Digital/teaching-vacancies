@@ -4,10 +4,17 @@ class HiringStaff::Organisations::SchoolsController < HiringStaff::BaseControlle
 
   def index; end
 
-  def edit; end
+  def edit
+    @organisation_form = OrganisationForm.new(
+      { description: @organisation.description, website: @organisation.website }
+    )
+  end
 
   def update
-    if @organisation.update(description: description)
+    @organisation_form = OrganisationForm.new(organisation_params)
+
+    if @organisation_form.valid?
+      @organisation.update(organisation_params)
       redirect_to_organisation_or_organisation_schools_path
     else
       render :edit
@@ -24,8 +31,8 @@ class HiringStaff::Organisations::SchoolsController < HiringStaff::BaseControlle
     @redirect_path = current_organisation.is_a?(School) ? organisation_path : organisation_schools_path
   end
 
-  def description
-    (params[:school_group] || params[:school])[:description]
+  def organisation_params
+    params.require(:organisation_form).permit(:description, :website)
   end
 
   def redirect_to_organisation_or_organisation_schools_path

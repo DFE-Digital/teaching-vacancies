@@ -46,6 +46,8 @@ en:
           in, try again soon.
         you_might_have_problems_signing_in: Sorry, the service is unavailable
     organisations:
+      aria_change_description: '%{organisation_type} description'
+      aria_change_website: '%{organisation_type} website'
       schools:
         index:
           contact_support: contact our support team
@@ -188,6 +190,7 @@ en:
         about_organisation_html: "About %{organisation} (<span class='text-red'>Required</span>)"
       organisation_form:
         description: Description of %{organisation_type}
+        website: '%{organisation_type} website'
     hint:
       copy_vacancy_form:
         publish_on: For example, 01 01 2020
@@ -238,6 +241,7 @@ en:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
   organisation:
     view_more_or_change: View more or change
+    add_website_address: Add website address
   jobs:
     current_step: "Step %{step} of %{total}"
     dashboard_filters:
@@ -660,7 +664,7 @@ en:
     urn: Unique identifier (URN)
     view_ofsted_report: 'View Ofsted report'
     website: 'School website'
-    website_link_text: '%{school} website (opens in a new window)'
+    website_link_text: '%{organisation_name} website (opens in a new window)'
   school_groups:
     address: Trust address
     description: Description
