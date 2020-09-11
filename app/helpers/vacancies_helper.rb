@@ -106,9 +106,9 @@ module VacanciesHelper
 
   def vacancy_about_school_hint_text(vacancy)
     return I18n.t('helpers.hint.job_summary_form.about_schools') if vacancy.organisations.many?
-    return I18n.t('helpers.hint.job_summary_form.about_organisation', organisation: 'Trust') if
+    return I18n.t('helpers.hint.job_summary_form.about_organisation', organisation_type: 'Trust') if
       vacancy.parent_organisation.is_a?(SchoolGroup)
-    I18n.t('helpers.hint.job_summary_form.about_organisation', organisation: 'School')
+    I18n.t('helpers.hint.job_summary_form.about_organisation', organisation_type: 'School')
   end
 
   def vacancy_about_school_value(vacancy)

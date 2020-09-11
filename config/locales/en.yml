@@ -57,7 +57,7 @@ en:
             If a school in your trust is missing from this list,
             or the information isn't correct, please %{mail_to}.
         edit:
-          title: Change description
+          title: Change %{organisation_type} details
       readable_job_location:
         at_multiple_schools: More than one school
         at_multiple_schools_with_count: More than one school (%{count})
@@ -187,7 +187,7 @@ en:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_organisation_html: "About %{organisation} (<span class='text-red'>Required</span>)"
       organisation_form:
-        description: Description of school or trust
+        description: Description of %{organisation_type}
     hint:
       copy_vacancy_form:
         publish_on: For example, 01 01 2020
@@ -230,12 +230,12 @@ en:
           Give a brief summary of the job that job seekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
         about_organisation: >-
-          This will appear next to the job details under '%{organisation} overview'. Feel free to adapt this text
+          This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
         about_schools: >-
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
           the trust
       organisation_form:
-        description: Jobseekers will see this description of the school in the job listing
+        description: Jobseekers will see this description of the %{organisation_type} in the job listing
   organisation:
     view_more_or_change: View more or change
   jobs:
@@ -863,7 +863,7 @@ en:
     feedback:
       submitted: Your feedback has been successfully submitted
     organisation:
-      description_updated_html: 'Description updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>'
+      description_updated_html: 'Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>'
     subscriptions:
       created: Email subscription created successfully.
   errors:
