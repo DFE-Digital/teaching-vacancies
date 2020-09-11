@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UpdatesParser do
-  let(:date) { Date.new(2020, 04, 10) }
+  let(:date) { Date.parse('2020-04-10') }
   let(:update_paths) do
     [
       'path/noHtmlOrDateFile',
@@ -10,7 +10,7 @@ RSpec.describe UpdatesParser do
       'path/_update_title_2020_400_100.html.erb',
       'path/_2020_400_100.html.erb',
       'path/_2020_04_10.html.erb',
-      'path/_valid_update_title_2020_04_10.html.erb'
+      'path/_valid_update_title_2020_04_10.html.erb',
     ]
   end
 

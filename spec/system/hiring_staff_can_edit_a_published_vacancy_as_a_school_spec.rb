@@ -22,8 +22,9 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
     let(:vacancy) do
       VacancyPresenter.new(
         create(:vacancy, :complete, job_location: 'at_one_school',
-          job_roles: [:teacher, :sen_specialist], working_patterns: ['full_time', 'part_time'],
-          publish_on: Time.zone.today, expires_on: Time.zone.tomorrow))
+                                    job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
+                                    publish_on: Time.zone.today, expires_on: Time.zone.tomorrow),
+      )
     end
 
     context 'when the vacancy is now invalid' do
@@ -196,7 +197,7 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
         expect(activity.key).to eq('vacancy.update')
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(
-          salary: [salary, 'Pay scale 1 to Pay scale 2']
+          salary: [salary, 'Pay scale 1 to Pay scale 2'],
         )
       end
 
@@ -233,7 +234,7 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
         within_row_for(element: 'legend',
                        text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
           expect(page).to have_content(
-            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.blank')
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.blank'),
           )
         end
       end
@@ -279,7 +280,7 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
         expect(activity.key).to eq('vacancy.update')
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(
-          expires_on: [vacancy.expires_on.to_s, expiry_date.to_s]
+          expires_on: [vacancy.expires_on.to_s, expiry_date.to_s],
         )
       end
 
@@ -462,7 +463,7 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
         expect(activity.key).to eq('vacancy.update')
         expect(activity.session_id).to eq(session_id)
         expect(activity.parameters.symbolize_keys).to include(
-          job_summary: [strip_tags(job_summary), 'A summary about the job.']
+          job_summary: [strip_tags(job_summary), 'A summary about the job.'],
         )
       end
 

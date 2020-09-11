@@ -87,7 +87,7 @@ RSpec.describe VacancyPresenter do
     end
 
     it 'returns a working patterns string if working_patterns is set' do
-      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: ['full_time', 'part_time']))
+      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: %w[full_time part_time]))
       vacancy.organisation_vacancies.create(organisation: create(:school, name: 'Smith High School'))
 
       expect(vacancy.working_patterns).to eq(I18n.t('jobs.working_patterns_info_many',
@@ -104,7 +104,7 @@ RSpec.describe VacancyPresenter do
     end
 
     it 'returns a working patterns string if working_patterns is set' do
-      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: ['full_time', 'part_time']))
+      vacancy = VacancyPresenter.new(create(:vacancy, working_patterns: %w[full_time part_time]))
       vacancy.organisation_vacancies.create(organisation: create(:school, name: 'Smith High School'))
 
       expect(vacancy.working_patterns_for_job_schema).to eq('FULL_TIME, PART_TIME')

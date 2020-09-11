@@ -7,7 +7,7 @@ class UpdateDfeSignInUsers
     get_response_pages.each { |page| convert_to_users(page) }
   end
 
-  private
+private
 
   def convert_to_users(dsi_users)
     dsi_users.each do |dsi_user|
@@ -19,9 +19,10 @@ class UpdateDfeSignInUsers
         # When a user is associated with multiple organisations,
         # DfE Sign In returns 1 user object per organisation.
         # Each of these user objects has the same userId.
-        urn, uid = dsi_user['organisation']['URN'], dsi_user['organisation']['UID']
-        school_urns = user.dsi_data&.[]('school_urns') || Array.new
-        school_group_uids = user.dsi_data&.[]('school_group_uids') || Array.new
+        urn = dsi_user['organisation']['URN']
+        uid = dsi_user['organisation']['UID']
+        school_urns = user.dsi_data&.[]('school_urns') || []
+        school_group_uids = user.dsi_data&.[]('school_group_uids') || []
         user.dsi_data = {
           school_urns: (school_urns | [urn]).compact,
           school_group_uids: (school_group_uids | [uid]).compact,

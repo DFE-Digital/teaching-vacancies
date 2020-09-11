@@ -8,9 +8,9 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
 
   context 'when no TOKEN is set' do
     it 'aborts execution' do
-      expect do
+      expect {
         PerformancePlatform::TransactionsByChannel.new(nil)
-      end.to raise_error(ArgumentError, 'No token set. Note that this task should only be executed in production.')
+      }.to raise_error(ArgumentError, 'No token set. Note that this task should only be executed in production.')
     end
   end
 

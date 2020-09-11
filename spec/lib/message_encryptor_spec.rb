@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'MessageEnryptor' do
   describe 'it can #encrypt and #decrypt data' do
     it 'an array' do
-      data = ['an', 'array', 'of', 'data']
+      data = %w[an array of data]
       encrypted_data = MessageEncryptor.new(data).encrypt
 
       expect(MessageEncryptor.new(encrypted_data).decrypt).to eq(data)

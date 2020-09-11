@@ -7,9 +7,8 @@ class JobPosting
     Vacancy.new(map_schema_to_vacancy_fields)
   end
 
-  private
+private
 
-  # rubocop:disable Metrics/AbcSize
   def map_schema_to_vacancy_fields
     {
       job_title: @schema['title'],
@@ -27,13 +26,10 @@ class JobPosting
       expires_on: expires_on_or_future,
       job_summary: @schema['description'],
       about_school: @schema['hiringOrganization']['description'],
-      suitable_for_nqt: @schema['occupationalCategory']
-        .split(', ')
-        .include?(I18n.t('jobs.job_role_options.nqt_suitable')) ? 'yes' : 'no',
+      suitable_for_nqt: (@schema['occupationalCategory'].split(', ').include?(I18n.t('jobs.job_role_options.nqt_suitable')) ? 'yes' : 'no'),
       organisation_vacancies_attributes: [{ organisation: school_by_urn_or_random }]
     }
   end
-  # rubocop:enable Metrics/AbcSize
 
   def school_by_urn_or_random
     School.find_by(urn: @schema['hiringOrganization']['identifier']) || random_school

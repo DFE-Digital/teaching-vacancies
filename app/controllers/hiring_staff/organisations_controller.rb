@@ -16,7 +16,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
       @awaiting_feedback_count.positive?
   end
 
-  private
+private
 
   def redirect_to_user_preferences
     if current_organisation.is_a?(SchoolGroup) && current_user_preferences.nil?

@@ -20,6 +20,7 @@ class OrganisationVacancyPresenter < BasePresenter
     elsif model.expires_on == Time.zone.tomorrow
       return I18n.t('jobs.days_to_apply.tomorrow')
     end
+
     days_remaining = (model.expires_on - Time.zone.today).to_i
     I18n.t('jobs.days_to_apply.remaining', days_remaining: days_remaining)
   end
@@ -49,7 +50,7 @@ class OrganisationVacancyPresenter < BasePresenter
     url_helpers.organisation_job_path(id: model.id)
   end
 
-  private
+private
 
   def url_helpers
     Rails.application.routes.url_helpers

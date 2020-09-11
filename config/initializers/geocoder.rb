@@ -14,5 +14,5 @@ Geocoder.configure(
   units: :mi,
   cache: AutoExpireCacheRedis.new(redis, redis_ttl),
   cache_prefix: 'geocoder:',
-  distance: :spherical
+  distance: :spherical,
 )

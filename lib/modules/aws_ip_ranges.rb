@@ -1,7 +1,7 @@
 module AWSIpRanges
   # Used based on this AWS instruction: https://forums.aws.amazon.com/ann.jspa?annID=2051
   PATH = 'https://ip-ranges.amazonaws.com/ip-ranges.json'.freeze
-  COMPATIBLE_REGIONS = ['GLOBAL', 'eu-west-2'].freeze
+  COMPATIBLE_REGIONS = %w[GLOBAL eu-west-2].freeze
 
   def self.cloudfront_ips
     uri = URI(PATH)
@@ -14,8 +14,13 @@ module AWSIpRanges
       response = http_connection.start { |http| http.get(uri.path) }
 
       parse_json_for_ips(response.body)
-    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
-           Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+    rescue Timeout::Error,
+           Errno::EINVAL,
+           Errno::ECONNRESET,
+           EOFError,
+           Net::HTTPBadResponse,
+           Net::HTTPHeaderSyntaxError,
+           Net::ProtocolError => e
       Rails.logger.warn("Unable to setup Rack Proxies to acquire the correct remote_ip: #{e.class}")
       []
     end

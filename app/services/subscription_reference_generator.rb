@@ -16,17 +16,17 @@ class SubscriptionReferenceGenerator
     reference
   end
 
-  private
+private
 
   def location_part
     return unless location? || search_criteria['location_category'].present?
 
-    search_criteria['location_category'].present? ?
-      "in #{search_criteria['location_category']}" :
-      "within #{search_criteria['radius']} miles of #{search_criteria['location'].strip}"
+    return "in #{search_criteria['location_category']}" if search_criteria['location_category'].present?
+
+    "within #{search_criteria['radius']} miles of #{search_criteria['location'].strip}"
   end
 
   def location?
-    ['location', 'radius'].all? { |key| search_criteria.key?(key) }
+    %w[location radius].all? { |key| search_criteria.key?(key) }
   end
 end

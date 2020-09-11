@@ -40,7 +40,7 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
     end
   end
 
-  private
+private
 
   def set_vacancies
     @vacancies =
@@ -65,7 +65,7 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
     end
     count = Vacancy.in_organisation_ids(@organisation.id).send(selected_scope).count
     @organisation_options.unshift(
-      OpenStruct.new({ id: @organisation.id, name: 'Trust head office', label: "Trust head office (#{count})" })
+      OpenStruct.new({ id: @organisation.id, name: 'Trust head office', label: "Trust head office (#{count})" }),
     )
   end
 end

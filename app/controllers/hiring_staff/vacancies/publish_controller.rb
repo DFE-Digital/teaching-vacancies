@@ -1,8 +1,10 @@
 class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::ApplicationController
   def create
     vacancy = Vacancy.find(vacancy_id)
-    return redirect_to organisation_job_path(vacancy.id),
-                       notice: I18n.t('messages.jobs.already_published') if vacancy.published?
+    if vacancy.published?
+      return redirect_to organisation_job_path(vacancy.id),
+                         notice: I18n.t('messages.jobs.already_published')
+    end
 
     if PublishVacancy.new(vacancy, current_user).call
       audit_publish_vacancy(vacancy)
@@ -15,7 +17,7 @@ class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::Applic
     end
   end
 
-  private
+private
 
   def vacancy_id
     params.permit(:job_id)[:job_id]

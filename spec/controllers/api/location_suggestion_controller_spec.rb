@@ -45,7 +45,7 @@ RSpec.describe Api::LocationSuggestionController, type: :controller do
 
     context 'location is 3 or more characters long' do
       let(:suggestions) { ['first playful place, UK', 'second place, UK'] }
-      let(:matched_terms) { [['playful', 'place'], ['place']] }
+      let(:matched_terms) { [%w[playful place], %w[place]] }
 
       before do
         allow(location_suggestion).to receive(:suggest_locations).and_return([suggestions, matched_terms])

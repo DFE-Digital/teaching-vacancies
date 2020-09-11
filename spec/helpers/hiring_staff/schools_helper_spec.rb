@@ -8,7 +8,7 @@ RSpec.describe HiringStaff::SchoolsHelper, type: :helper do
 
       expect(result).to eq(
         '<a class="govuk-link sortable-link sortby--asc" aria-label="Sort jobs by foo in ascending order" '\
-        'href="/organisation/jobs/pending?sort_column=job_title&amp;sort_order=asc">foo</a>'
+        'href="/organisation/jobs/pending?sort_column=job_title&amp;sort_order=asc">foo</a>',
       )
     end
 
@@ -19,7 +19,7 @@ RSpec.describe HiringStaff::SchoolsHelper, type: :helper do
 
         expect(result).to eq(
           '<a class="govuk-link sortable-link sortby--desc active" aria-label="Sort jobs by foo in descending order" '\
-          'href="/organisation/jobs?sort_column=job_title&amp;sort_order=desc">foo</a>'
+          'href="/organisation/jobs?sort_column=job_title&amp;sort_order=desc">foo</a>',
         )
       end
     end

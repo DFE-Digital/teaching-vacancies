@@ -30,7 +30,7 @@ RSpec.describe VacancyPublishFeedback, type: :model do
 
         expect(feedback.valid?).to eq(false)
         expect(feedback.errors.messages[:email]).to eq(
-          ['Enter an email address in the correct format, like name@example.com']
+          ['Enter an email address in the correct format, like name@example.com'],
         )
       end
     end

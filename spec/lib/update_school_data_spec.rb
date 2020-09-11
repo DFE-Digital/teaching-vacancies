@@ -38,7 +38,7 @@ RSpec.describe UpdateSchoolData do
     before do
       stub_request(
         :get,
-        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
       ).to_return(body: 'Not Found', status: 404)
     end
 
@@ -53,7 +53,7 @@ RSpec.describe UpdateSchoolData do
     before do
       stub_request(
         :get,
-        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
       ).to_return(body: 'Not Found', status: 500)
     end
 
@@ -68,7 +68,7 @@ RSpec.describe UpdateSchoolData do
     before do
       stub_request(
         :get,
-        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
       ).to_return(body:
                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
@@ -90,7 +90,7 @@ RSpec.describe UpdateSchoolData do
       csv = File.read(test_file_path)
       stub_request(
         :get,
-        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
       ).to_return(body: csv)
     end
 
@@ -127,7 +127,8 @@ RSpec.describe UpdateSchoolData do
       # testing every expected attribute change does not substantially add to the quality of the tests.
       it 'updates the school name' do
         expect {
-          UpdateSchoolData.new.run!; school.reload
+          UpdateSchoolData.new.run!
+          school.reload
         }.to change(school, :name).from('?').to("Sir John Cass's Foundation Primary School")
       end
     end
@@ -137,7 +138,7 @@ RSpec.describe UpdateSchoolData do
     it 'is converted to include the protocol' do
       stub_request(
         :get,
-        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
       ).to_return(body:
                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \
@@ -153,7 +154,7 @@ RSpec.describe UpdateSchoolData do
     it 'does not return a value if the website is not set' do
       stub_request(
         :get,
-        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv"
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata#{datestring}.csv",
       ).to_return(body:
                   'URN,EstablishmentName,EstablishmentTypeGroup (code),' \
                   'TypeOfEstablishment (code),GOR (code),SchoolWebsite,Street,' \

@@ -10,7 +10,7 @@ class SendExpiredVacancyFeedbackEmailJob < ApplicationJob
     end
   end
 
-  private
+private
 
   def expired_vacancies
     Vacancy.where(expires_on: Time.zone.now - 2.weeks, hired_status: nil)

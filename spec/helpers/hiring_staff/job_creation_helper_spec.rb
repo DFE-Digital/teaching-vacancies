@@ -28,37 +28,10 @@ RSpec.describe HiringStaff::JobCreationHelper do
       around do |example|
         # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
         # environment.
-        # rubocop:disable Rails/HttpPositionalArguments
         Rails.application.routes.draw do
           get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
           get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
         end
-        # rubocop:enable Rails/HttpPositionalArguments
-
-        example.run
-
-        Rails.application.routes_reloader.reload!
-      end
-
-      it 'returns an array of arrays with the step number and step title to be displayed' do
-        expect(helper.steps_to_display).to eql([
-          { number: 1, title: 'Step one' },
-          { number: 2, title: 'Step two' }
-        ])
-      end
-    end
-
-    context 'steps are not ordered in `routes.rb`' do
-      around do |example|
-        # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
-        # environment.
-        # rubocop:disable Rails/HttpPositionalArguments
-        Rails.application.routes.draw do
-          get :step_three, to: 'job#step_three', defaults: { create_step: 3, step_title: 'Step three' }
-          get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
-          get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
-        end
-        # rubocop:enable Rails/HttpPositionalArguments
 
         example.run
 
@@ -69,22 +42,19 @@ RSpec.describe HiringStaff::JobCreationHelper do
         expect(helper.steps_to_display).to eql([
           { number: 1, title: 'Step one' },
           { number: 2, title: 'Step two' },
-          { number: 3, title: 'Step three' }
         ])
       end
     end
 
-    context 'multiple routes are part of the same step' do
+    context 'steps are not ordered in `routes.rb`' do
       around do |example|
         # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
         # environment.
-        # rubocop:disable Rails/HttpPositionalArguments
         Rails.application.routes.draw do
+          get :step_three, to: 'job#step_three', defaults: { create_step: 3, step_title: 'Step three' }
           get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
-          get :step_one_a, to: 'job#step_one_a', defaults: { create_step: 1, step_title: 'Step one' }
           get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
         end
-        # rubocop:enable Rails/HttpPositionalArguments
 
         example.run
 
@@ -94,7 +64,31 @@ RSpec.describe HiringStaff::JobCreationHelper do
       it 'returns an array of arrays with the step number and step title to be displayed' do
         expect(helper.steps_to_display).to eql([
           { number: 1, title: 'Step one' },
-          { number: 2, title: 'Step two' }
+          { number: 2, title: 'Step two' },
+          { number: 3, title: 'Step three' },
+        ])
+      end
+    end
+
+    context 'multiple routes are part of the same step' do
+      around do |example|
+        # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
+        # environment.
+        Rails.application.routes.draw do
+          get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_one_a, to: 'job#step_one_a', defaults: { create_step: 1, step_title: 'Step one' }
+          get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
+        end
+
+        example.run
+
+        Rails.application.routes_reloader.reload!
+      end
+
+      it 'returns an array of arrays with the step number and step title to be displayed' do
+        expect(helper.steps_to_display).to eql([
+          { number: 1, title: 'Step one' },
+          { number: 2, title: 'Step two' },
         ])
       end
     end
@@ -107,12 +101,10 @@ RSpec.describe HiringStaff::JobCreationHelper do
       around do |example|
         # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
         # environment.
-        # rubocop:disable Rails/HttpPositionalArguments
         Rails.application.routes.draw do
           get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
           get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
         end
-        # rubocop:enable Rails/HttpPositionalArguments
 
         example.run
 
@@ -128,13 +120,11 @@ RSpec.describe HiringStaff::JobCreationHelper do
       around do |example|
         # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
         # environment.
-        # rubocop:disable Rails/HttpPositionalArguments
         Rails.application.routes.draw do
           get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
           get :step_one_a, to: 'job#step_one_a', defaults: { create_step: 1, step_title: 'Step one' }
           get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
         end
-        # rubocop:enable Rails/HttpPositionalArguments
 
         example.run
 
@@ -149,13 +139,11 @@ RSpec.describe HiringStaff::JobCreationHelper do
         around do |example|
           # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
           # environment.
-          # rubocop:disable Rails/HttpPositionalArguments
           Rails.application.routes.draw do
             get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
             get :step_one_a, to: 'job#step_one_a', defaults: { create_step: 1, step_title: 'Step one' }
             get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
           end
-          # rubocop:enable Rails/HttpPositionalArguments
 
           example.run
 
@@ -180,13 +168,11 @@ RSpec.describe HiringStaff::JobCreationHelper do
         around do |example|
           # Rubocop mistakes the verb-based route definitions for the identically named commands used to interact with
           # environment.
-          # rubocop:disable Rails/HttpPositionalArguments
           Rails.application.routes.draw do
             get :step_one, to: 'job#step_one', defaults: { create_step: 1, step_title: 'Step one' }
             get :step_two, to: 'job#step_two', defaults: { create_step: 2, step_title: 'Step two' }
             get :step_three, to: 'job#step_three', defaults: { create_step: 3, step_title: 'Step three' }
           end
-          # rubocop:enable Rails/HttpPositionalArguments
 
           example.run
 

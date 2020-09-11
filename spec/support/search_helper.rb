@@ -10,7 +10,7 @@ module SearchHelper
     mock_algolia_search_base(result, query, algolia_hash, arguments_to_algolia)
   end
 
-  private
+private
 
   def get_arguments_to_algolia(algolia_hash)
     {
@@ -27,7 +27,7 @@ module SearchHelper
     arguments_to_algolia[:page] = algolia_hash[:page] if algolia_hash[:page].present?
     allow(Vacancy).to receive(:search).with(
       query,
-      arguments_to_algolia
+      arguments_to_algolia,
     ).and_return(result)
   end
 end

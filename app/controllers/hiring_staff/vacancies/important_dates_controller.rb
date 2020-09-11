@@ -23,12 +23,12 @@ class HiringStaff::Vacancies::ImportantDatesController < HiringStaff::Vacancies:
     end
   end
 
-  private
+private
 
   def set_up_important_dates_form
     publish_in_past = @vacancy.published? && @vacancy.reload.publish_on.past?
     delete_publish_on_params if publish_in_past
-    dates_to_convert = publish_in_past ? [:starts_on, :expires_on] : [:starts_on, :publish_on, :expires_on]
+    dates_to_convert = publish_in_past ? %i[starts_on expires_on] : %i[starts_on publish_on expires_on]
     @date_errors = convert_multiparameter_attributes_to_dates(:important_dates_form, dates_to_convert)
     @important_dates_form = ImportantDatesForm.new(important_dates_params)
   end

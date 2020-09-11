@@ -38,12 +38,11 @@ RSpec.describe CopyVacancy do
     context '#documents' do
       it 'copies documents when copying a vacancy' do
         document = create(:document,
-          name: 'Test.png',
-          size: 1000,
-          content_type: 'image/png',
-          download_url: 'test/test.png',
-          google_drive_id: 'testid'
-        )
+                          name: 'Test.png',
+                          size: 1000,
+                          content_type: 'image/png',
+                          download_url: 'test/test.png',
+                          google_drive_id: 'testid')
         vacancy = create(:vacancy, documents: [document])
 
         result = described_class.new(vacancy).call
@@ -66,10 +65,12 @@ RSpec.describe CopyVacancy do
       let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
       let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
       let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }
-      let(:vacancy) { create(
-        :vacancy, subjects: subjects, subject: subject,
-        first_supporting_subject: first_supporting_subject, second_supporting_subject: second_supporting_subject
-      ) }
+      let(:vacancy) do
+        create(
+          :vacancy, subjects: subjects, subject: subject,
+                    first_supporting_subject: first_supporting_subject, second_supporting_subject: second_supporting_subject
+        )
+      end
 
       context 'subjects array is nil' do
         let(:subjects) { nil }

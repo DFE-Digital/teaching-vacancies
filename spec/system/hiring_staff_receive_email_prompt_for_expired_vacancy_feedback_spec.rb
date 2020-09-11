@@ -23,7 +23,7 @@ RSpec.describe 'Creating a vacancy' do
         job_title: 'Vacancy',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today + 1.week,
-        publisher_user_id: current_user.id
+        publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
@@ -46,7 +46,7 @@ RSpec.describe 'Creating a vacancy' do
         job_title: 'Job one',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
-        publisher_user_id: current_user.id
+        publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
@@ -56,7 +56,7 @@ RSpec.describe 'Creating a vacancy' do
         job_title: 'Job two',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
-        publisher_user_id: current_user.id
+        publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
@@ -66,7 +66,7 @@ RSpec.describe 'Creating a vacancy' do
         job_title: 'Job three',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today + 2.weeks,
-        publisher_user_id: current_user.id
+        publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
@@ -94,7 +94,7 @@ RSpec.describe 'Creating a vacancy' do
         job_title: 'Job one',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
-        publisher_user_id: current_user.id
+        publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 
@@ -104,7 +104,7 @@ RSpec.describe 'Creating a vacancy' do
         job_title: 'Job two',
         publish_on: Time.zone.today,
         expires_on: Time.zone.today,
-        publisher_user_id: another_user.id
+        publisher_user_id: another_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
 

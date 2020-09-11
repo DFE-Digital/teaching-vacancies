@@ -8,7 +8,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form
+      organisation: organisation, sort: sort, selected_type: selected_type, filters: filters, filters_form: filters_form,
     )
   end
 
@@ -36,7 +36,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
     it 'renders the number of jobs in the heading' do
       expect(
-        inline_component.css('section.govuk-tabs__panel > h2.govuk-heading-m').to_html
+        inline_component.css('section.govuk-tabs__panel > h2.govuk-heading-m').to_html,
       ).to include('1 published job')
     end
 
@@ -51,7 +51,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
       it 'does not render the filters sidebar' do
         expect(
-          inline_component.css('.new_managed_organisations_form input[type="submit"]')
+          inline_component.css('.new_managed_organisations_form input[type="submit"]'),
         ).to be_blank
       end
     end
@@ -63,13 +63,13 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
       it 'renders the vacancy readable job location in the table' do
         expect(
-          inline_component.css('.govuk-table.vacancies > tbody > tr > td#vacancy_location').to_html
+          inline_component.css('.govuk-table.vacancies > tbody > tr > td#vacancy_location').to_html,
         ).to include(vacancy.readable_job_location)
       end
 
       it 'renders the filters sidebar' do
         expect(
-          inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute('value').value
+          inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute('value').value,
         ).to eql(I18n.t('buttons.apply_filters'))
       end
     end

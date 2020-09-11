@@ -14,7 +14,7 @@ class UpdateSchoolData
     locality: ['Locality', :presence],
     phase: ['PhaseOfEducation (code)', :to_i],
     url: ['SchoolWebsite', nil],
-  }
+  }.freeze
 
   SIMPLE_MAPPINGS = {
     address: 'Street',
@@ -26,7 +26,7 @@ class UpdateSchoolData
     northing: 'Northing',
     postcode: 'Postcode',
     town: 'Town',
-  }
+  }.freeze
 
   READABLE_PHASE_MAPPINGS = School::READABLE_PHASE_MAPPINGS
 
@@ -42,7 +42,7 @@ class UpdateSchoolData
     File.delete(csv_file_location)
   end
 
-  private
+private
 
   def convert_to_school(row)
     school = School.find_or_initialize_by(urn: row['URN'])
@@ -65,12 +65,12 @@ class UpdateSchoolData
     COMPLEX_MAPPINGS.each do |attribute_name, value|
       row_key = value.first
       transformation = value.last
-      if attribute_name == :url
+      school[attribute_name] = if attribute_name == :url
         # Addressable::URI ensures we store a valid URL.
-        school[attribute_name] = Addressable::URI.heuristic_parse(row[row_key]).to_s
-      else
-        school[attribute_name] = row[row_key].send(transformation)
-      end
+        Addressable::URI.heuristic_parse(row[row_key]).to_s
+                               else
+        row[row_key].send(transformation)
+                               end
     end
   end
 

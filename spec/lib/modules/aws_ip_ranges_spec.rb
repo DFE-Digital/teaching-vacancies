@@ -37,7 +37,7 @@ RSpec.describe AWSIpRanges do
         '205.251.250.0/23',
         '205.251.252.0/23',
         '205.251.254.0/24',
-        '216.137.32.0/19'
+        '216.137.32.0/19',
       ]
 
       expect(AWSIpRanges.cloudfront_ips).to eql(expected_result)
@@ -81,7 +81,7 @@ RSpec.describe AWSIpRanges do
         Net::HTTPBadResponse,
         Net::HTTPHeaderSyntaxError,
         Net::ProtocolError,
-        Net::OpenTimeout
+        Net::OpenTimeout,
       ].each do |error|
         context "when #{error} is raised" do
           it 'returns an empty array' do

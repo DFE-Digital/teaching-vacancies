@@ -10,11 +10,11 @@ class Algolia::VacancyLocationBuilder
     @radius = (radius || DEFAULT_RADIUS).to_i
     @location_filter = {}
 
-    if @location.present? && LocationCategory.include?(@location)
-      @location_category = @location
-    else
-      @location_category = location_category
-    end
+    @location_category = if @location.present? && LocationCategory.include?(@location)
+      @location
+                         else
+      location_category
+                         end
 
     if location_category_search?
       initialize_location_polygon
@@ -25,10 +25,10 @@ class Algolia::VacancyLocationBuilder
 
   def location_category_search?
     (@location_category && LocationCategory.include?(@location_category)) ||
-    (@location && LocationCategory.include?(@location))
+      (@location && LocationCategory.include?(@location))
   end
 
-  private
+private
 
   def initialize_location_polygon
     @location_polygon = LocationPolygon.find_by(name: @location_category.downcase)
@@ -42,7 +42,7 @@ class Algolia::VacancyLocationBuilder
       Rollbar.log(
         :error,
         "A location category search was performed as a text search as no LocationPolygon could
-        be found with the name '#{@location_category.downcase}'."
+        be found with the name '#{@location_category.downcase}'.",
       )
       @missing_polygon = true
     end

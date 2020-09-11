@@ -20,6 +20,7 @@ module GetSubjectName
 
     return subject.name if subject_option_names.include?(subject.name)
     return SUBJECT_SYNONYMS[subject.name] if subject_option_names.include?(SUBJECT_SYNONYMS[subject.name])
+
     nil
   end
 end

@@ -15,11 +15,9 @@ module HiringStaff::JobCreationHelper
   end
 
   def steps_to_display
-    steps = Rails.application.routes.routes.select { |r|
-      r.defaults.has_key?(:create_step) && r.defaults.has_key?(:step_title)
-    }.map { |r|
-      { number: r.defaults[:create_step], title: r.defaults[:step_title] }
-    }.sort_by { |r| r[:number] }.uniq { |r| r[:number] }
+    steps = Rails.application.routes.routes.select { |r| r.defaults.key?(:create_step) && r.defaults.key?(:step_title) }
+                                           .map { |r| { number: r.defaults[:create_step], title: r.defaults[:step_title] } }
+                                           .sort_by { |r| r[:number] }.uniq { |r| r[:number] }
 
     unless school_group_user?
       steps = remove_school_group_user_only_steps(steps)

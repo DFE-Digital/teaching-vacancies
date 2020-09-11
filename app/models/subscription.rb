@@ -43,7 +43,7 @@ class Subscription < ApplicationRecord
 
   def vacancies_for_range(date_from, date_to)
     Algolia::VacancyAlertBuilder.new(
-      search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to)
+      search_criteria_to_h.symbolize_keys.merge(from_date: date_from, to_date: date_to),
     ).call
   end
 
@@ -59,7 +59,7 @@ class Subscription < ApplicationRecord
     alert_runs.find_or_create_by(run_on: Time.zone.today)
   end
 
-  private
+private
 
   def default_reference
     return unless new_record? && reference.blank?

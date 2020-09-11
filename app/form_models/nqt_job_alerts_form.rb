@@ -1,7 +1,8 @@
 class NqtJobAlertsForm
   include ActiveModel::Model
 
-  attr_accessor :keywords, :location, :email, :location_reference
+  attr_accessor :keywords, :location, :email
+  attr_writer :location_reference
 
   validates :keywords, presence: true
   validates :location, presence: true
@@ -32,14 +33,14 @@ class NqtJobAlertsForm
     end
   end
 
-  private
+private
 
   def nqt_job_alert_hash
     {
       keyword: "nqt #{keywords}",
       location: location,
       radius: 10,
-      location_category: (location_category if location_category)
+      location_category: location_category.presence
     }.compact
   end
 

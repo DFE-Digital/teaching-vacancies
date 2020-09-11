@@ -20,7 +20,7 @@ class HiringStaff::Vacancies::JobSummaryController < HiringStaff::Vacancies::App
     render :show
   end
 
-  private
+private
 
   def job_summary_form_params
     params.require(:job_summary_form)

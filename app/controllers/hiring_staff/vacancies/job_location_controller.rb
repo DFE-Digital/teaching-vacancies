@@ -33,7 +33,7 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
     end
   end
 
-  private
+private
 
   def form_submission_path(vacancy_id)
     vacancy_id.present? ? organisation_job_job_location_path(vacancy_id) : job_location_organisation_job_path
@@ -45,16 +45,15 @@ class HiringStaff::Vacancies::JobLocationController < HiringStaff::Vacancies::Ap
 
   def next_step
     vacancy_id = @vacancy&.persisted? ? @vacancy.id : session_vacancy_id
-    if %w(at_one_school at_multiple_schools).include?(@form.job_location)
+    if %w[at_one_school at_multiple_schools].include?(@form.job_location)
       vacancy_id.present? ? organisation_job_schools_path(vacancy_id) : schools_organisation_job_path
     elsif @form.job_location == 'central_office'
-      vacancy_id.present? ?
-        organisation_job_job_specification_path(vacancy_id) : job_specification_organisation_job_path
+      vacancy_id.present? ? organisation_job_job_specification_path(vacancy_id) : job_specification_organisation_job_path
     end
   end
 
   def redirect_to_school_selection_or_next_step
-    if @vacancy.state != 'create' && %w(at_one_school at_multiple_schools).include?(@form.job_location)
+    if @vacancy.state != 'create' && %w[at_one_school at_multiple_schools].include?(@form.job_location)
       redirect_to organisation_job_schools_path(@vacancy.id)
     else
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)

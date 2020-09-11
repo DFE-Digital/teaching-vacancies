@@ -16,12 +16,12 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
 
   let(:from_date) { Time.zone.today }
   let(:to_date) { Time.zone.today }
-  let(:job_roles) { ['teacher', 'sen_specialist'] }
-  let(:phases) { ['secondary', 'primary'] }
-  let(:working_patterns) { ['full_time', 'part_time'] }
+  let(:job_roles) { %w[teacher sen_specialist] }
+  let(:phases) { %w[secondary primary] }
+  let(:working_patterns) { %w[full_time part_time] }
   let(:newly_qualified_teacher) { nil }
-  let(:published_today_filter) { Time.zone.today.to_datetime.to_i }
-  let(:expired_now_filter) { Time.zone.now.to_datetime.to_i }
+  let(:published_today_filter) { Time.zone.today.to_time.to_i }
+  let(:expired_now_filter) { Time.zone.now.to_time.to_i }
 
   describe '#build_date_filters' do
     context 'when no dates are supplied' do
@@ -37,7 +37,7 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
       let(:to_date) { nil }
 
       it 'builds the correct date filter' do
-        expect(subject.send(:build_date_filters)).to eql("publication_date_timestamp >= #{from_date.to_datetime.to_i}")
+        expect(subject.send(:build_date_filters)).to eql("publication_date_timestamp >= #{from_date.to_time.to_i}")
       end
     end
 
@@ -45,15 +45,15 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
       let(:from_date) { nil }
 
       it 'builds the correct date filter' do
-        expect(subject.send(:build_date_filters)).to eql("publication_date_timestamp <= #{to_date.to_datetime.to_i}")
+        expect(subject.send(:build_date_filters)).to eql("publication_date_timestamp <= #{to_date.to_time.to_i}")
       end
     end
 
     context 'when both dates are supplied' do
       it 'builds the correct date filter' do
         expect(subject.send(:build_date_filters)).to eql(
-          "publication_date_timestamp >= #{from_date.to_datetime.to_i} AND " \
-          "publication_date_timestamp <= #{to_date.to_datetime.to_i}"
+          "publication_date_timestamp >= #{from_date.to_time.to_i} AND " \
+          "publication_date_timestamp <= #{to_date.to_time.to_i}",
         )
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
         travel_to(expired_now)
         allow_any_instance_of(Algolia::VacancyFiltersBuilder)
           .to receive(:expired_now_filter)
-          .and_return(expired_now.to_datetime.to_i)
+          .and_return(expired_now.to_time.to_i)
       end
 
       after { travel_back }
@@ -93,11 +93,11 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
           '(listing_status:published AND'\
           " publication_date_timestamp <= #{published_today_filter} AND"\
           " expires_at_timestamp > #{expired_now_filter}) AND "\
-          "(publication_date_timestamp >= #{from_date.to_datetime.to_i} AND" \
-          " publication_date_timestamp <= #{to_date.to_datetime.to_i}) AND " \
+          "(publication_date_timestamp >= #{from_date.to_time.to_i} AND" \
+          " publication_date_timestamp <= #{to_date.to_time.to_i}) AND " \
           '(job_roles:teacher OR job_roles:sen_specialist) AND ' \
           '(organisation.readable_phases:secondary OR organisation.readable_phases:primary) AND ' \
-          '(working_patterns:full_time OR working_patterns:part_time)'
+          '(working_patterns:full_time OR working_patterns:part_time)',
         )
       end
     end

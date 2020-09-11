@@ -1,6 +1,6 @@
 require 'geocoding'
 class Api::CoordinatesController < Api::ApplicationController
-  before_action :verify_json_request, only: ['show']
+  before_action :verify_json_request, only: %i[show]
 
   def show
     lat, lng = Geocoding.new(location).coordinates
@@ -12,7 +12,7 @@ class Api::CoordinatesController < Api::ApplicationController
     }
   end
 
-  private
+private
 
   def location
     params[:location]

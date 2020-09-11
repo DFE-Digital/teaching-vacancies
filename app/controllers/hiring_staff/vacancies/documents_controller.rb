@@ -2,12 +2,15 @@ require 'google/apis/drive_v3'
 
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
   CONTENT_TYPES_ALLOWED = %w[ application/pdf
-                              image/jpeg image/png
+                              image/jpeg
+                              image/png
                               video/mp4
-                              application/msword application/vnd.ms-excel application/vnd.ms-powerpoint
+                              application/msword
+                              application/vnd.ms-excel
+                              application/vnd.ms-powerpoint
                               application/vnd.openxmlformats-officedocument.wordprocessingml.document
                               application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-                              application/vnd.openxmlformats-officedocument.presentationml.presentation ]
+                              application/vnd.openxmlformats-officedocument.presentationml.presentation ].freeze
   FILE_SIZE_LIMIT = 10.megabytes
 
   before_action :redirect_unless_vacancy
@@ -45,7 +48,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     end
   end
 
-  private
+private
 
   def set_documents_form
     @documents_form = DocumentsForm.new
@@ -87,7 +90,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
 
     document_upload = DocumentUpload.new(
       upload_path: document_params.tempfile.path,
-      name: document_params.original_filename
+      name: document_params.original_filename,
     )
 
     return if errors_on_file?(document_params.original_filename)
@@ -103,7 +106,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   def add_file_type_error(filename)
     @documents_form.errors.add(
       :documents,
-      t('jobs.file_type_error_message', filename: filename)
+      t('jobs.file_type_error_message', filename: filename),
     )
   end
 
@@ -111,8 +114,8 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
     @documents_form.errors.add(
       :documents,
       t('jobs.file_size_error_message',
-      filename: filename,
-      size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT))
+        filename: filename,
+        size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)),
     )
   end
 

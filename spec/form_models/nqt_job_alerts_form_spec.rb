@@ -44,7 +44,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       it 'validates presence of keywords' do
         expect(subject.valid?).to be(false)
         expect(subject.errors.messages[:keywords]).to include(
-          I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.keywords.blank')
+          I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.keywords.blank'),
         )
       end
     end
@@ -55,7 +55,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       it 'validates presence of location' do
         expect(subject.valid?).to be(false)
         expect(subject.errors.messages[:location]).to include(
-          I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.location.blank')
+          I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.location.blank'),
         )
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
         it 'validates presence of email' do
           expect(subject.valid?).to be(false)
           expect(subject.errors.messages[:email]).to include(
-            I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.email.blank')
+            I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.email.blank'),
           )
         end
       end
@@ -78,7 +78,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
         it 'validates validity of email' do
           expect(subject.valid?).to be(false)
           expect(subject.errors.messages[:email]).to include(
-            I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.email.invalid')
+            I18n.t('activemodel.errors.models.nqt_job_alerts_form.attributes.email.invalid'),
           )
         end
       end
@@ -92,7 +92,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       it 'validates uniqueness of job alert' do
         expect(subject.valid?).to be(false)
         expect(subject.errors.messages[:base]).to include(
-          I18n.t('nqt_job_alerts.form.errors.duplicate_alert')
+          I18n.t('nqt_job_alerts.form.errors.duplicate_alert'),
         )
       end
     end

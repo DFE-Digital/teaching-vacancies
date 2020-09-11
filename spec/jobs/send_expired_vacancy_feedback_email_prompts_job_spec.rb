@@ -63,7 +63,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
       it 'sends an email with both vacancies' do
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
           email_of_hiring_staff,
-          a_collection_containing_exactly(*expired_vacancies)
+          a_collection_containing_exactly(*expired_vacancies),
         )
         send_expired_vacancy_feedback_emails
       end
@@ -98,11 +98,11 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
       it 'sends one email for each hiring staff' do
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
           first_hiring_staff.email,
-          [first_expired_vacancy]
+          [first_expired_vacancy],
         )
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
           second_hiring_staff.email,
-          [second_expired_vacancy]
+          [second_expired_vacancy],
         )
         send_expired_vacancy_feedback_emails
       end

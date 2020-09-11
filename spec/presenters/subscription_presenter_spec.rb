@@ -33,7 +33,7 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context 'with the working_patterns filter' do
-      let(:search_criteria) { { working_patterns: ['part_time'] } }
+      let(:search_criteria) { { working_patterns: %w[part_time] } }
 
       it 'formats and returns the working pattern' do
         expect(presenter.filtered_search_criteria['working_patterns']).to eq('Part-time')
@@ -41,7 +41,7 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context 'with the phases filter' do
-      let(:search_criteria) { { phases: ['secondary', '16-19'] } }
+      let(:search_criteria) { { phases: %w[secondary 16-19] } }
 
       it 'formats and returns the phases' do
         expect(presenter.filtered_search_criteria['education_phases']).to eq('Secondary, 16-19')
@@ -59,12 +59,12 @@ RSpec.describe SubscriptionPresenter do
     context 'with unsorted filters' do
       let(:search_criteria) do
         {
-          phases: ['secondary', '16-19'],
+          phases: %w[secondary 16-19],
           radius: '10',
           job_title: 'leader',
           newly_qualified_teacher: 'true',
           location: 'EC2 9AN',
-          working_patterns: ['part_time'],
+          working_patterns: %w[part_time],
           subject: 'maths'
         }
       end
@@ -76,7 +76,7 @@ RSpec.describe SubscriptionPresenter do
           'job_title' => 'leader',
           'working_patterns' => 'Part-time',
           'education_phases' => 'Secondary, 16-19',
-          '' => 'Suitable for NQTs'
+          '' => 'Suitable for NQTs',
         )
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe SubscriptionPresenter do
           'job_title' => 'leader',
           '' => 'Suitable for NQTs',
           'something' => 'test',
-          'something_else' => 'testing'
+          'something_else' => 'testing',
         )
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context 'when array values in search criteria' do
-      let(:search_criteria) { { phases: ['primary', 'secondary', '16-19'] } }
+      let(:search_criteria) { { phases: %w[primary secondary 16-19] } }
 
       it 'makes them human readable' do
         expect(to_row[:phases]).to eq('primary, secondary, 16-19')

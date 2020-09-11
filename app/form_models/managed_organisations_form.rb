@@ -11,7 +11,7 @@ class ManagedOrganisationsForm
     @managed_school_ids = params[:managed_school_ids]
   end
 
-  private
+private
 
   def at_least_one_option_selected
     return if managed_organisations.present? || managed_school_ids.any?

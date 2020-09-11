@@ -14,7 +14,7 @@ class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::App
     end
   end
 
-  private
+private
 
   def update_vacancy(vacancy)
     vacancy.listed_elsewhere = statistics_params[:listed_elsewhere]

@@ -11,14 +11,14 @@ class GetInformationFromLoginKey
       oid: @user&.oid }
   end
 
-  private
+private
 
   def deny_sign_in
-    if @key&.expired?
-      @reason_for_failing_sign_in = 'expired'
-    else
-      @reason_for_failing_sign_in = 'no_key'
-    end
+    @reason_for_failing_sign_in = if @key&.expired?
+      'expired'
+                                  else
+      'no_key'
+                                  end
   end
 
   def process_key
@@ -35,7 +35,7 @@ class GetInformationFromLoginKey
       school_query = School.where(urn: urn)
       scratch.push school_query.first unless school_query.empty?
     end
-    scratch.sort_by { |school| school.name }
+    scratch.sort_by(&:name)
   end
 
   def get_school_groups
@@ -44,7 +44,7 @@ class GetInformationFromLoginKey
       school_group_query = SchoolGroup.where(uid: uid)
       scratch.push(school_group_query.first) unless school_group_query.empty?
     end
-    scratch.sort_by { |school_group| school_group.name }
+    scratch.sort_by(&:name)
   end
 
   def get_user

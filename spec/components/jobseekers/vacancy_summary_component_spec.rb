@@ -43,7 +43,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       context 'when expiry time is nil' do
         let(:vacancy) do
           create(:vacancy, :at_one_school, expiry_time: nil, organisation_vacancies_attributes: [
-            { organisation: organisation }
+            { organisation: organisation },
           ])
         end
 

@@ -23,7 +23,7 @@ RSpec.describe SubscriptionFinder do
           :daily_subscription,
           email: 'foo@email.com',
           search_criteria: 'bar',
-          frequency: 'daily'
+          frequency: 'daily',
         )
       end
 
@@ -46,7 +46,7 @@ RSpec.describe SubscriptionFinder do
           .with(
             email: '',
             search_criteria: 'Text',
-            frequency: ''
+            frequency: '',
           )
           .and_return(empty_active_record_relation)
 

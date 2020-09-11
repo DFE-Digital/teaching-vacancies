@@ -42,7 +42,7 @@ module AuthHelpers
             uid: school_group_uid
           }
         }
-      }
+      },
     )
   end
 
@@ -53,29 +53,29 @@ module AuthHelpers
 
     stub_request(
       :get,
-      "https://test-url.local/services/test-service-id/organisations/#{organisation_id}/users/#{user_id}"
+      "https://test-url.local/services/test-service-id/organisations/#{organisation_id}/users/#{user_id}",
     ).to_return(body: authorisation_response, status: 200)
   end
 
   def stub_authorisation_step_with_not_found
     authorisation_response = File.read(
-      Rails.root.join('spec/fixtures/dfe_sign_in_missing_authorisation_response.html')
+      Rails.root.join('spec/fixtures/dfe_sign_in_missing_authorisation_response.html'),
     )
 
     stub_request(
       :get,
-      'https://test-url.local/services/test-service-id/organisations/939eac36-0777-48c2-9c2c-b87c948a9ee0/users/161d1f6a-44f1-4a1a-940d-d1088c439da7'
+      'https://test-url.local/services/test-service-id/organisations/939eac36-0777-48c2-9c2c-b87c948a9ee0/users/161d1f6a-44f1-4a1a-940d-d1088c439da7',
     ).to_return(body: authorisation_response, status: 404)
   end
 
   def stub_authorisation_step_with_external_error
     authorisation_response = File.read(
-      Rails.root.join('spec/fixtures/dfe_sign_in_authorisation_external_error.json')
+      Rails.root.join('spec/fixtures/dfe_sign_in_authorisation_external_error.json'),
     )
 
     stub_request(
       :get,
-      'https://test-url.local/services/test-service-id/organisations/939eac36-0777-48c2-9c2c-b87c948a9ee0/users/161d1f6a-44f1-4a1a-940d-d1088c439da7'
+      'https://test-url.local/services/test-service-id/organisations/939eac36-0777-48c2-9c2c-b87c948a9ee0/users/161d1f6a-44f1-4a1a-940d-d1088c439da7',
     ).to_return(body: authorisation_response, status: 500)
   end
 
@@ -86,7 +86,7 @@ module AuthHelpers
 
     stub_request(
       :get,
-      "https://test-url.local/users/#{user_id}/organisations"
+      "https://test-url.local/users/#{user_id}/organisations",
     ).to_return(body: authorisation_response, status: 200)
   end
 
@@ -97,7 +97,7 @@ module AuthHelpers
 
     stub_request(
       :get,
-      "https://test-url.local/users/#{user_id}/organisations"
+      "https://test-url.local/users/#{user_id}/organisations",
     ).to_return(body: authorisation_response, status: 200)
   end
 
@@ -109,7 +109,7 @@ module AuthHelpers
   def sign_out_via_dsi
     # A request to logout is sent to DfE Sign-in system. On success DSI comes back at auth_dfe_signout_path
     expect(current_url).to include "#{ENV['DFE_SIGN_IN_ISSUER']}/session/end"
-    # TODO fix system specs to change default host to localhost:3000
+    # TODO: fix system specs to change default host to localhost:3000
     expect(current_url).to include CGI.escape(auth_dfe_signout_url(host: '127.0.0.1'))
     visit auth_dfe_signout_path
   end

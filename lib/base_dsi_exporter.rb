@@ -10,11 +10,12 @@ class BaseDsiBigQueryExporter
     @dataset = bigquery.dataset ENV.fetch('BIG_QUERY_DATASET')
   end
 
-  private
+private
 
   def delete_table(table_name)
     table = dataset.table table_name
     return if table.nil?
+
     dataset.reload! if table.delete
   end
 end

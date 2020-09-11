@@ -32,7 +32,7 @@ FactoryBot.define do
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     supporting_documents { 'yes' }
     suitable_for_nqt { 'no' }
-    working_patterns { ['full_time'] }
+    working_patterns { %w[full_time] }
 
     trait :at_central_office do
       job_location { 'central_office' }
@@ -58,7 +58,7 @@ FactoryBot.define do
     trait :fail_maximum_validation do
       education { Faker::Lorem.characters(number: 1005) }
       experience { Faker::Lorem.characters(number: 1010) }
-      job_summary { Faker::Lorem.characters(number: 50001) }
+      job_summary { Faker::Lorem.characters(number: 50_001) }
       job_title { Faker::Lorem.characters(number: 150) }
       salary { Faker::Lorem.characters(number: 257) }
       qualifications { Faker::Lorem.characters(number: 1002) }
@@ -110,7 +110,7 @@ FactoryBot.define do
     end
 
     trait :job_schema do
-      working_patterns { ['full_time', 'part_time'] }
+      working_patterns { %w[full_time part_time] }
       education { Faker::Lorem.paragraph }
       benefits { Faker::Lorem.sentence }
     end

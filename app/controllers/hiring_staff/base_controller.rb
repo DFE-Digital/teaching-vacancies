@@ -2,10 +2,10 @@ class HiringStaff::BaseController < ApplicationController
   TIMEOUT_PERIOD = 60.minutes
 
   before_action :check_user_last_activity_at,
-    :update_user_last_activity_at,
-    :redirect_to_root_if_read_only,
-    :check_session,
-    :check_terms_and_conditions
+                :update_user_last_activity_at,
+                :redirect_to_root_if_read_only,
+                :check_session,
+                :check_terms_and_conditions
 
   include AuthenticationConcerns
   include ActionView::Helpers::DateHelper
@@ -29,9 +29,9 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def current_user_preferences
-    UserPreference.find_by(
-      user_id: current_user.id, school_group_id: current_organisation.id
-    ) if current_organisation.is_a?(SchoolGroup)
+    return unless current_organisation.is_a?(SchoolGroup)
+
+    UserPreference.find_by(user_id: current_user.id, school_group_id: current_organisation.id)
   end
 
   def check_user_last_activity_at
@@ -49,6 +49,7 @@ class HiringStaff::BaseController < ApplicationController
 
   def logout_endpoint
     return auth_email_sign_out_path if AuthenticationFallback.enabled?
+
     url = URI.parse("#{ENV['DFE_SIGN_IN_ISSUER']}/session/end")
     url.query = { post_logout_redirect_uri: auth_dfe_signout_url, id_token_hint: session[:id_token] }.to_query
     url.to_s

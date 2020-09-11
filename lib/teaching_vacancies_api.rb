@@ -8,7 +8,7 @@ module TeachingVacancies
       json['data'].take(limit)
     end
 
-    private
+  private
 
     def api_url(endpoint)
       BASE_URL + endpoint

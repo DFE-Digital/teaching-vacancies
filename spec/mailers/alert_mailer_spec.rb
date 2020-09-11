@@ -39,14 +39,14 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.subject).to eq(
           I18n.t(
             'job_alerts.alert.email.daily.subject.one',
-            reference: subscription.reference
-          )
+            reference: subscription.reference,
+          ),
         )
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/# #{I18n.t('app.title')}/)
         expect(body).to match(
-          /A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted yesterday/
+          /A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted yesterday/,
         )
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
@@ -68,8 +68,8 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.subject).to eq(
           I18n.t(
             'job_alerts.alert.email.daily.subject.many',
-            reference: subscription.reference
-          )
+            reference: subscription.reference,
+          ),
         )
         expect(mail.to).to eq([subscription.email])
 

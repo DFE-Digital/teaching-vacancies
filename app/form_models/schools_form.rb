@@ -10,7 +10,7 @@ class SchoolsForm < VacancyForm
     super
   end
 
-  private
+private
 
   def organisation_id_present_one_school
     errors.add(:organisation_id, I18n.t('schools_errors.organisation_id.blank')) if

@@ -4,10 +4,11 @@ RSpec.describe HiringStaff::VacancyFilter do
   let(:user) { create :user }
   let(:school_group) { create :school_group }
   let(:managed_organisations) { 'school_group' }
-  let(:managed_school_ids) { ['1234', '5678'] }
-  let!(:user_preference) { create :user_preference, user: user, school_group: school_group,
-    managed_organisations: managed_organisations, managed_school_ids: managed_school_ids
-  }
+  let(:managed_school_ids) { %w[1234 5678] }
+  let!(:user_preference) do
+    create :user_preference, user: user, school_group: school_group,
+                             managed_organisations: managed_organisations, managed_school_ids: managed_school_ids
+  end
 
   subject { described_class.new(user, school_group) }
 
@@ -26,7 +27,7 @@ RSpec.describe HiringStaff::VacancyFilter do
 
     context 'when new_managed_organisations is not all' do
       let(:new_organisations) { nil }
-      let(:new_school_ids) { ['4321', '8765'] }
+      let(:new_school_ids) { %w[4321 8765] }
 
       it 'updates user_preference managed_organisations' do
         expect(user_preference.reload.managed_organisations).to eq new_organisations
@@ -38,8 +39,8 @@ RSpec.describe HiringStaff::VacancyFilter do
     end
 
     context 'when new_managed_organisations is all' do
-      let(:new_organisations) { ['all'] }
-      let(:new_school_ids) { ['4321', '8765'] }
+      let(:new_organisations) { %w[all] }
+      let(:new_school_ids) { %w[4321 8765] }
 
       it 'updates user_preference managed_organisations to all' do
         expect(user_preference.reload.managed_organisations).to eq 'all'

@@ -47,7 +47,7 @@ RSpec.describe Vacancy, type: :model do
       it 'calls .index.delete_objects on the expired records' do
         vacancy = double(Vacancy, id: 'ABC123')
         allow(described_class).to receive(:where).and_return([vacancy])
-        expect(described_class).to receive_message_chain(:index, :delete_objects).with(['ABC123'])
+        expect(described_class).to receive_message_chain(:index, :delete_objects).with(%w[ABC123])
         described_class.remove_vacancies_that_expired_yesterday!
       end
     end
@@ -129,13 +129,13 @@ RSpec.describe Vacancy, type: :model do
         blue_school = create(:school, name: 'Blue school')
 
         first_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-          organisation_vacancies_attributes: [{ organisation: blue_school }])
+                                                           organisation_vacancies_attributes: [{ organisation: blue_school }])
         second_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-          organisation_vacancies_attributes: [{ organisation: green_school }])
+                                                            organisation_vacancies_attributes: [{ organisation: green_school }])
         third_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-          organisation_vacancies_attributes: [{ organisation: green_school }])
+                                                           organisation_vacancies_attributes: [{ organisation: green_school }])
         fourth_maths_teacher = create(:vacancy, :published, job_title: 'Maths Teacher',
-          organisation_vacancies_attributes: [{ organisation: green_school }])
+                                                            organisation_vacancies_attributes: [{ organisation: green_school }])
 
         expect(first_maths_teacher.slug).to eq('maths-teacher')
         expect(second_maths_teacher.slug).to eq('maths-teacher-green-school')
@@ -232,11 +232,11 @@ RSpec.describe Vacancy, type: :model do
   context 'scopes' do
     let(:expired_earlier_today) do
       build(:vacancy, expires_on: Time.zone.today,
-            expiry_time: Time.zone.now - 1.hour)
+                      expiry_time: Time.zone.now - 1.hour)
     end
     let(:expires_later_today) do
       create(:vacancy, status: :published,
-             expiry_time: Time.zone.now + 1.hour)
+                       expiry_time: Time.zone.now + 1.hour)
     end
     describe '#applicable' do
       context 'when expiry time not given' do

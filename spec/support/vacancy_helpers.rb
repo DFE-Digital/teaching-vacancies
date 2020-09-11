@@ -199,7 +199,7 @@ module VacancyHelpers
           'postalCode': vacancy.parent_organisation.postcode,
         },
       },
-      'url': job_url(vacancy, host: '127.0.0.1'), # TODO fix system specs to change default host to localhost:3000
+      'url': job_url(vacancy, host: '127.0.0.1'), # TODO: fix system specs to change default host to localhost:3000
       'hiringOrganization': {
         '@type': 'School',
         'name': vacancy.parent_organisation.name,
@@ -220,7 +220,7 @@ module VacancyHelpers
     verify_shared_vacancy_list_page_details(vacancy)
   end
 
-  private
+private
 
   def verify_shared_vacancy_list_page_details(vacancy)
     expect(page.find('.vacancy')).to have_content(vacancy.job_title)

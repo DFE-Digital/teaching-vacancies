@@ -1,7 +1,7 @@
 require 'base_dsi_exporter'
 
 class ExportDsiUsersToBigQuery < BaseDsiBigQueryExporter
-  TABLE_NAME = 'dsi_users'
+  TABLE_NAME = 'dsi_users'.freeze
 
   def run!
     delete_table(TABLE_NAME)
@@ -11,7 +11,7 @@ class ExportDsiUsersToBigQuery < BaseDsiBigQueryExporter
     raise "#{e.message}, while writing data from DSI /users endpoint. Flag this to Steven + Comms team"
   end
 
-  private
+private
 
   def present_for_big_query(batch)
     batch.map do |user|

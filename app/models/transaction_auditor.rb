@@ -21,7 +21,7 @@ class TransactionAuditor < ApplicationRecord
       log(task, date, false)
     end
 
-    private
+  private
 
     def log(task, date, success)
       TransactionAuditor.where(task: task, date: date).first_or_create.update(success: success)

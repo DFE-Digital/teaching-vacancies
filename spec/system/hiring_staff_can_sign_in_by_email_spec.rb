@@ -29,7 +29,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
     let(:login_key) do
       user.emergency_login_keys.create(
-        not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION
+        not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
       )
     end
 
@@ -47,12 +47,12 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
     context 'a user with multiple organisations' do
       let(:dsi_data) do
-        { 'school_urns'=>[school.urn, other_school.urn], 'school_group_uids'=>[school_group.uid, '1623'] }
+        { 'school_urns' => [school.urn, other_school.urn], 'school_group_uids' => [school_group.uid, '1623'] }
       end
 
       let(:other_login_key) do
         user.emergency_login_keys.create(
-          not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION
+          not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
         )
       end
 
@@ -122,7 +122,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
     context 'a user with only one organisation' do
       context 'organisation is a School' do
         let(:dsi_data) do
-          { 'school_urns'=>[school.urn], 'school_group_uids'=>[] }
+          { 'school_urns' => [school.urn], 'school_group_uids' => [] }
         end
 
         scenario 'can sign in and bypass choice of org' do
@@ -149,7 +149,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
       context 'organisation is a SchoolGroup' do
         let(:dsi_data) do
-          { 'school_urns'=>[], 'school_group_uids'=>[school_group.uid] }
+          { 'school_urns' => [], 'school_group_uids' => [school_group.uid] }
         end
 
         context 'SchoolGroupJobsFeature enabled' do
@@ -209,7 +209,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
     end
   end
 
-  private
+private
 
   def click_sign_in
     within('.signin') { click_on(I18n.t('sign_in.link')) }

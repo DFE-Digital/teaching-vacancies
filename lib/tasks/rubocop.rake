@@ -3,7 +3,6 @@ if Rails.env.development? || Rails.env.test?
 
   desc 'Run rubocop - configure in .rubocop.yml'
   # Docs say this can be safely ignored/skipped if the task does not require an environment. Rubocop does not.
-  # rubocop:disable Rails/RakeEnvironment
   task :rubocop do
     RuboCop::RakeTask.new(:rubocop) do |t|
       t.options = ['--display-cop-names']
@@ -11,5 +10,4 @@ if Rails.env.development? || Rails.env.test?
   end
 
   task(:default).clear.enhance(%i[rubocop spec])
-  task(:default).comment = 'Run rubocop checks'
 end

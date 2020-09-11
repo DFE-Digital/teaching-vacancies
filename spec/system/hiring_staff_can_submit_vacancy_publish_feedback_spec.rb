@@ -3,9 +3,9 @@ RSpec.describe 'Vacancy publish feedback' do
   let(:school) { create(:school) }
   let(:session_id) { SecureRandom.uuid }
   let(:choose_yes_to_participation) { choose('vacancy-publish-feedback-user-participation-response-interested-field') }
-  let(:choose_no_to_participation) {
+  let(:choose_no_to_participation) do
     choose('vacancy-publish-feedback-user-participation-response-not-interested-field')
-  }
+  end
 
   before { stub_hiring_staff_auth(urn: school.urn, session_id: session_id) }
 
@@ -66,7 +66,7 @@ RSpec.describe 'Vacancy publish feedback' do
 
       click_on I18n.t('feedback.submit')
       expect(page).to have_content(
-        strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: published_job.job_title))
+        strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: published_job.job_title)),
       )
     end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Vacancy publish feedback' do
 
       click_on I18n.t('feedback.submit')
       expect(page).to have_content(
-        strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: published_job.job_title))
+        strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: published_job.job_title)),
       )
 
       activity = published_job.activities.last

@@ -169,7 +169,7 @@ RSpec.describe 'Submitting effectiveness feedback on expired vacancies', js: tru
     end
 
     expect(page).to have_content(
-      strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: vacancy.job_title))
+      strip_tags(I18n.t('messages.jobs.feedback.submitted_html', job_title: vacancy.job_title)),
     )
   end
 end

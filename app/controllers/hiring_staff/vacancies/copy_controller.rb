@@ -19,7 +19,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
     end
   end
 
-  private
+private
 
   def copy_form_params
     params.require(:copy_vacancy_form).permit(:state, :job_title, :publish_on, :expires_on, :starts_on,
@@ -28,7 +28,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
 
   def set_up_copy_form
     @date_errors = convert_multiparameter_attributes_to_dates(
-      :copy_vacancy_form, [:publish_on, :expires_on, :starts_on]
+      :copy_vacancy_form, %i[publish_on expires_on starts_on]
     )
     @copy_form = CopyVacancyForm.new(copy_form_params)
   end

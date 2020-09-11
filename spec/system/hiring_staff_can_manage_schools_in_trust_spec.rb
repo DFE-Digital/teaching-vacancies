@@ -33,8 +33,8 @@ RSpec.describe 'Schools in your trust' do
 
     expect(page).to have_content(I18n.t('hiring_staff.organisations.schools.index.title'))
     expect(page).to have_content(school_group.name)
-    expect(page).
-      to have_content(I18n.t('hiring_staff.organisations.schools.index.schools', count: school_group.schools.count))
+    expect(page)
+      .to have_content(I18n.t('hiring_staff.organisations.schools.index.schools', count: school_group.schools.count))
 
     visit edit_organisation_school_path(school_group, school_group: true)
 

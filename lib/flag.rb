@@ -8,7 +8,7 @@ class Flag
     self.class.const_get(key) == 'true'
   end
 
-  private
+private
 
   attr_accessor :is_feature
 

@@ -18,29 +18,33 @@ class CopyVacancy
     @new_vacancy
   end
 
-  private
+private
 
   def copy_documents
     @vacancy.documents.each do |document|
       document_copy = DocumentCopy.new(document.google_drive_id)
       document_copy.copy
+      next if document_copy.google_error
+
       @new_vacancy.documents.create({
         name: document.name,
         size: document.size,
         content_type: document.content_type,
         download_url: document_copy.copied.web_content_link,
         google_drive_id: document_copy.copied.id
-      }) unless document_copy.google_error
+      })
     end
   end
 
   def copy_legacy_subjects
     @new_vacancy.subjects ||= []
-    @new_vacancy.subjects += [
-      get_subject_name(@vacancy.subject),
-      get_subject_name(@vacancy.first_supporting_subject),
-      get_subject_name(@vacancy.second_supporting_subject)
-    ].uniq.reject(&:blank?) unless @new_vacancy.subjects.any?
+    unless @new_vacancy.subjects.any?
+      @new_vacancy.subjects += [
+        get_subject_name(@vacancy.subject),
+        get_subject_name(@vacancy.first_supporting_subject),
+        get_subject_name(@vacancy.second_supporting_subject),
+      ].uniq.reject(&:blank?)
+    end
     @new_vacancy.subject = nil
     @new_vacancy.first_supporting_subject = nil
     @new_vacancy.second_supporting_subject = nil

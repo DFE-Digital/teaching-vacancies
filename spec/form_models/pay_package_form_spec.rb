@@ -11,7 +11,7 @@ RSpec.describe PayPackageForm, type: :model do
         it 'requests an entry in the field' do
           expect(pay_package.valid?).to be false
           expect(pay_package.errors.messages[:salary]).to include(
-            I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.blank')
+            I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.blank'),
           )
         end
       end
@@ -22,7 +22,7 @@ RSpec.describe PayPackageForm, type: :model do
         it 'validates max length' do
           expect(pay_package.valid?).to be false
           expect(pay_package.errors.messages[:salary]).to include(
-            I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.too_long', count: 256)
+            I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.too_long', count: 256),
           )
         end
       end
@@ -33,7 +33,7 @@ RSpec.describe PayPackageForm, type: :model do
         it 'validates presence of HTML tags' do
           expect(pay_package.valid?).to be false
           expect(pay_package.errors.messages[:salary]).to include(
-            I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters')
+            I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters'),
           )
         end
       end
@@ -44,7 +44,7 @@ RSpec.describe PayPackageForm, type: :model do
 
           it 'does not validate presence of HTML tags' do
             expect(pay_package.errors.messages[:salary]).to_not include(
-              I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters')
+              I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters'),
             )
           end
         end

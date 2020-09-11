@@ -20,7 +20,7 @@ json.jobLocation do
   json.address do
     json.set! '@type', 'PostalAddress'
     json.addressLocality vacancy.parent_organisation&.town
-    json.addressRegion (vacancy.parent_organisation&.region&.name if vacancy.parent_organisation.is_a?(School))
+    json.addressRegion vacancy.parent_organisation&.try(:region).try(:name)
     json.streetAddress vacancy.parent_organisation&.address
     json.postalCode vacancy.parent_organisation&.postcode
   end
@@ -31,7 +31,7 @@ json.url job_url(vacancy)
 json.hiringOrganization do
   json.set! '@type', 'School'
   json.name vacancy.parent_organisation&.name
-  json.identifier (vacancy.parent_organisation&.urn || vacancy.parent_organisation&.uid)
+  json.identifier vacancy.parent_organisation&.urn || vacancy.parent_organisation&.uid
   json.description vacancy.about_school
 end
 

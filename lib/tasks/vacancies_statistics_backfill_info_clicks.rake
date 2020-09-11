@@ -6,7 +6,7 @@ namespace :vacancies do
         Vacancy.where(total_get_more_info_clicks: nil).each do |vacancy|
           click_count = PublicActivity::Activity.where(
             trackable: vacancy,
-            key: 'vacancy.get_more_information'
+            key: 'vacancy.get_more_information',
           ).count
 
           vacancy.total_get_more_info_clicks = click_count

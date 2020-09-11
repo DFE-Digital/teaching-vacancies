@@ -5,9 +5,9 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   skip_before_action :check_terms_and_conditions
 
   before_action :redirect_signed_in_users,
-    only: %i[new create check_your_email choose_organisation]
+                only: %i[new create check_your_email choose_organisation]
   before_action :redirect_for_dsi_authentication,
-    only: %i[new create check_your_email change_organisation choose_organisation]
+                only: %i[new create check_your_email change_organisation choose_organisation]
   before_action :redirect_unauthorised_users, only: %i[create]
 
   def new; end
@@ -44,13 +44,14 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
       only_one_organisation?
   end
 
-  private
+private
 
   def update_session_without_urn_or_uid(options)
     return unless options[:oid]
+
     session.update(
       session_id: options[:oid],
-      multiple_organisations: options[:has_multiple_organisations]
+      multiple_organisations: options[:has_multiple_organisations],
     )
     Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
   end
@@ -65,13 +66,17 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
 
   def get_key
     params_login_key = params.dig(:login_key)
-    EmergencyLoginKey.find(params_login_key) rescue nil
+    begin
+      EmergencyLoginKey.find(params_login_key)
+    rescue StandardError
+      nil
+    end
   end
 
   def send_login_key(user:)
     AuthenticationFallbackMailer.sign_in_fallback(
       login_key: generate_login_key(user: user),
-      email: user.email
+      email: user.email,
     ).deliver_later
   end
 
@@ -88,7 +93,11 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   end
 
   def user_authorised?
-    user = User.find_by(oid: session.to_h['session_id']) rescue nil
+    user = begin
+             User.find_by(oid: session.to_h['session_id'])
+           rescue StandardError
+             nil
+           end
     user&.dsi_data&.dig('school_group_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
   end
 

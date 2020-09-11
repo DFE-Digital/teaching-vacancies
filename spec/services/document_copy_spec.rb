@@ -14,7 +14,7 @@ RSpec.describe DocumentCopy do
     it 'calls copy_file on drive_service with document id' do
       expect(subject.drive_service).to receive(:copy_file).with(
         document_id,
-        anything()
+        anything,
       )
       subject.copy_hiring_staff_document
     end
@@ -28,8 +28,8 @@ RSpec.describe DocumentCopy do
     it 'calls create_permission on drive_service' do
       allow(copy_file).to receive(:id)
       expect(subject.drive_service).to receive(:create_permission).with(
-        anything(),
-        anything()
+        anything,
+        anything,
       )
       subject.set_public_permission_on_document
     end
@@ -44,7 +44,7 @@ RSpec.describe DocumentCopy do
       allow(copy_file).to receive(:id)
       allow(subject.drive_service).to receive(:create_permission)
       expect(Google::Apis::DriveV3::Permission).to receive(:new).with(
-        type: 'anyone', role: 'reader'
+        type: 'anyone', role: 'reader',
       )
       subject.set_public_permission_on_document
     end

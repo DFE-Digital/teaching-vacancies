@@ -14,7 +14,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
     context 'when carrying out a location category search' do
       scenario 'can view the search criteria' do
         visit new_subscription_path(
-          search_criteria: { keyword: 'physics', location: 'London', location_category: 'London' }
+          search_criteria: { keyword: 'physics', location: 'London', location_category: 'London' },
         )
 
         expect(page).to have_content('Keyword: physics')

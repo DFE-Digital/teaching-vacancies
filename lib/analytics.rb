@@ -26,7 +26,7 @@ class Analytics
     ga_data.totals_for_all_results[METRICS]
   end
 
-  private
+private
 
   def ga_data
     @ga_data ||= service.get_ga_data(GOOGLE_ANALYTICS_PROFILE_ID, start_date, end_date,

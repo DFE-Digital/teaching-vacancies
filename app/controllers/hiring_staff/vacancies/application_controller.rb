@@ -59,11 +59,11 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def save_vacancy_as_draft_if_save_and_return_later(attributes, vacancy)
     if params[:commit] == I18n.t('buttons.save_and_return_later')
       vacancy = update_vacancy(attributes, vacancy)
-      redirect_to_draft(vacancy.id, vacancy.job_title)
+      redirect_to_draft(vacancy.job_title)
     end
   end
 
-  def redirect_to_draft(vacancy_id, job_title)
+  def redirect_to_draft(job_title)
     redirect_to jobs_with_type_organisation_path('draft'),
                 success: I18n.t('messages.jobs.draft_saved_html', job_title: job_title)
   end
@@ -72,8 +72,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     if params[:commit] == I18n.t('buttons.continue')
       redirect_to_next_step(vacancy_id)
     elsif params[:commit] == I18n.t('buttons.update_job')
-      updated_job_path = @vacancy.published? ?
-        edit_organisation_job_path(vacancy_id) : organisation_job_review_path(vacancy_id)
+      updated_job_path = @vacancy.published? ? edit_organisation_job_path(vacancy_id) : organisation_job_review_path(vacancy_id)
       redirect_to updated_job_path, success: {
         title: I18n.t('messages.jobs.listing_updated', job_title: job_title),
         body: I18n.t('messages.jobs.manage_jobs_html', link: helpers.back_to_manage_jobs_link(@vacancy))
@@ -126,7 +125,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def flatten_date_hash(hash, field)
-    %w(1 2 3).map { |i| hash[:"#{field}(#{i}i)"].to_i }
+    %w[1 2 3].map { |i| hash[:"#{field}(#{i}i)"].to_i }
   end
 
   def convert_multiparameter_attributes_to_dates(form_key, fields)
@@ -136,11 +135,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
         params[form_key].extract!(:"#{field}(1i)", :"#{field}(2i)", :"#{field}(3i)"), field
       )
       begin
-        if date_params.all?(0)
-          params[form_key][field] = nil
-        else
-          params[form_key][field] = Date.new(*date_params)
-        end
+        params[form_key][field] = date_params.all?(0) ? nil : Date.new(*date_params)
       rescue ArgumentError
         date_errors[field] = I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.invalid")
       end

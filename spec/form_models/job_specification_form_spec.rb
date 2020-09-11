@@ -63,7 +63,7 @@ RSpec.describe JobSpecificationForm, type: :model do
         it 'validates presence of HTML tags' do
           expect(job_specification.valid?).to be false
           expect(job_specification.errors.messages[:job_title]).to include(
-            I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+            I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters'),
           )
         end
       end
@@ -74,7 +74,7 @@ RSpec.describe JobSpecificationForm, type: :model do
 
           it 'does not validate presence of HTML tags' do
             expect(job_specification.errors.messages[:job_title]).to_not include(
-              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+              I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters'),
             )
           end
         end
@@ -87,14 +87,14 @@ RSpec.describe JobSpecificationForm, type: :model do
       job_specification_form = JobSpecificationForm.new(state: 'create', job_title: 'English Teacher',
                                                         job_roles: [:teacher],
                                                         suitable_for_nqt: 'no',
-                                                        working_patterns: ['full_time'],
-                                                        subjects: ['Maths'])
+                                                        working_patterns: %w[full_time],
+                                                        subjects: %w[Maths])
 
       expect(job_specification_form.valid?).to be true
       expect(job_specification_form.vacancy.job_title).to eq('English Teacher')
-      expect(job_specification_form.vacancy.job_roles).to eq(['teacher'])
+      expect(job_specification_form.vacancy.job_roles).to eq(%w[teacher])
       expect(job_specification_form.vacancy.suitable_for_nqt).to eq('no')
-      expect(job_specification_form.vacancy.working_patterns).to eq(['full_time'])
+      expect(job_specification_form.vacancy.working_patterns).to eq(%w[full_time])
       expect(job_specification_form.vacancy.subjects).to include('Maths')
     end
   end

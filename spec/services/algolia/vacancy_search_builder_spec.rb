@@ -26,7 +26,8 @@ RSpec.describe Algolia::VacancySearchBuilder do
     LocationPolygon.create(
       name: polygonable_location.downcase,
       location_type: 'cities',
-      boundary: polygon_coordinates)
+      boundary: polygon_coordinates,
+    )
   end
 
   describe '#initialize' do
@@ -132,8 +133,8 @@ RSpec.describe Algolia::VacancySearchBuilder do
     let(:default_hits_per_page) { 10 }
     let(:search_filter) do
       '(listing_status:published AND '\
-       "publication_date_timestamp <= #{Time.zone.today.to_datetime.to_i} AND "\
-       "expires_at_timestamp > #{expired_now.to_datetime.to_i})"
+       "publication_date_timestamp <= #{Time.zone.today.to_time.to_i} AND "\
+       "expires_at_timestamp > #{expired_now.to_time.to_i})"
     end
     let(:page) { 1 }
 
@@ -198,7 +199,7 @@ RSpec.describe Algolia::VacancySearchBuilder do
 
     it 'returns the correct array' do
       expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql(
-        [1, 10, total_results]
+        [1, 10, total_results],
       )
     end
 
@@ -207,7 +208,7 @@ RSpec.describe Algolia::VacancySearchBuilder do
 
       it 'returns the correct array' do
         expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql(
-          [0, 0, total_results]
+          [0, 0, total_results],
         )
       end
     end
@@ -217,7 +218,7 @@ RSpec.describe Algolia::VacancySearchBuilder do
 
       it 'returns the correct array' do
         expect(subject.send(:build_stats, page, pages, results_per_page, total_results)).to eql(
-          [51, total_results, total_results]
+          [51, total_results, total_results],
         )
       end
     end

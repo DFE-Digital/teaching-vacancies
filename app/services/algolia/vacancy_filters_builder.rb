@@ -31,7 +31,7 @@ class Algolia::VacancyFiltersBuilder
     filter_array.reject(&:blank?).join(' AND ')
   end
 
-  private
+private
 
   def build_filters
     @dates_filter = build_date_filters
@@ -44,8 +44,9 @@ class Algolia::VacancyFiltersBuilder
 
   def build_date_filters
     return if @from_date.blank? && @to_date.blank?
-    from_date_filter = "publication_date_timestamp >= #{@from_date.to_datetime.to_i}" if @from_date.present?
-    to_date_filter = "publication_date_timestamp <= #{@to_date.to_datetime.to_i}" if @to_date.present?
+
+    from_date_filter = "publication_date_timestamp >= #{@from_date.to_time.to_i}" if @from_date.present?
+    to_date_filter = "publication_date_timestamp <= #{@to_date.to_time.to_i}" if @to_date.present?
     [from_date_filter, to_date_filter].reject(&:blank?).join(' AND ')
   end
 
@@ -54,10 +55,10 @@ class Algolia::VacancyFiltersBuilder
   end
 
   def published_today_filter
-    Time.zone.today.to_datetime.to_i
+    Time.zone.today.to_time.to_i
   end
 
   def expired_now_filter
-    Time.zone.now.to_datetime.to_i
+    Time.zone.now.to_time.to_i
   end
 end
