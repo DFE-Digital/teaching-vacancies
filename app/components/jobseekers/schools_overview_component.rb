@@ -10,16 +10,9 @@ class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
     @vacancy.at_multiple_schools?
   end
 
-  def any_school_has_a_geolocation?
-    @vacancy.schools.each do |school|
-      return true if school.geolocation
-    end
-    false
-  end
-
   def schools_map_data
     schools = []
-    schools_with_a_geolocation.each do |school|
+    @vacancy.schools.select(&:geolocation).each do |school|
       schools.push({ name: school.name,
                      name_link: link_to(school.name, school.url),
                      address: full_address(school),
@@ -28,11 +21,5 @@ class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
                      lng: school.geolocation.y })
     end
     schools.to_json
-  end
-
-private
-
-  def schools_with_a_geolocation
-    @vacancy.schools.select(&:geolocation)
   end
 end
