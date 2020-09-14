@@ -19,7 +19,7 @@ en:
     govuk: 'GOV.UK'
   hiring_staff:
     managed_organisations:
-      page_title: Update your preferences
+      page_title: Manage your view
       panel:
         title: Manage your view for %{organisation}
         body: You can now see job listings from all schools in your trust, or choose to see specific schools' listings
@@ -29,9 +29,9 @@ en:
       labels:
         select_organisations: Select which schools' job listings you would like to see
         select_organisations_html: >-
-          Select which schools' job listings you would like to see (<span class='text-red'>Required</span>)
+          Select which schools' job listings you would like to view (<span class='text-red'>Required</span>)
       hints:
-        select_organisations: You can change this at any time
+        select_organisations: You can change this later from your dashboard using the filters
     identifications:
       new:
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
