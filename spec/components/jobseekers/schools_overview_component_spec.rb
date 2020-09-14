@@ -124,7 +124,7 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   context 'when at least one school has a geolocation' do
     it 'shows the map' do
       expect(rendered_component).to include('School locations')
-      expect(rendered_component).to include('map_zoom')
+      expect(rendered_component).to include('map')
     end
   end
 
@@ -133,7 +133,7 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
 
     it 'does not show the map' do
       expect(rendered_component).not_to include('School locations')
-      expect(rendered_component).not_to include('map_zoom')
+      expect(rendered_component).not_to include('map')
     end
   end
 

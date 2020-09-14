@@ -1,9 +1,9 @@
 :javascript
   const getSchools = () => {
-    if (document.getElementById('map_zoom').dataset.schools) {
-      return JSON.parse(document.getElementById('map_zoom').dataset.schools);
+    if (document.getElementById('map').dataset.schools) {
+      return JSON.parse(document.getElementById('map').dataset.schools);
     }
-      return false;
+    return false;
     };
 
   // Stops working if I change to const initMap() => {}
@@ -12,18 +12,16 @@
 
     const bounds = new google.maps.LatLngBounds();
 
-    const map = new google.maps.Map(document.getElementById('map_zoom'));
+    const map = new google.maps.Map(document.getElementById('map'))
 
     // Use one infoWindow for all markers.
     // This means that only one infoWindow can be open at a time.
     const infoWindow = new google.maps.InfoWindow;
     
     schools.forEach((school) => {
-      const contentString = `<div>` +
-                              `<p>${school.name_link}</p>` +
-                              `<p>${school.address}</p>` +
-                              `<p>${school.school_type}</p>` +
-                            `</div>`
+      const contentString = `<p>${school.name_link}</p>` +
+                            `<p>${school.address}</p>` +
+                            `<p>${school.school_type}</p>`
 
       const latLng = { lat: school.lat, lng: school.lng };
 
@@ -34,13 +32,15 @@
       });
 
       marker.addListener('click', function() {
-        map.setCenter(latLng)
-        infoWindow.setContent(contentString)
+        infoWindow.setContent(contentString);
         infoWindow.open(map, marker);
+        map.setCenter(latLng);
       });
 
       bounds.extend(latLng);
     })
+
+    map.setZoom(20) // Set maximum zoom before fitBounds zooms out
 
     map.fitBounds(bounds);
 
