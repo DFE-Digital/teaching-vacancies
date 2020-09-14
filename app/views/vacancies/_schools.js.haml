@@ -3,16 +3,24 @@
     if (document.getElementById('map').dataset.schools) {
       return JSON.parse(document.getElementById('map').dataset.schools);
     }
-    return false;
-    };
+  };
 
-  // Stops working if I change to const initMap() => {}
+  // Stops working if I change to const initMap = () => {}
   function initMap() {
     const schools = getSchools();
 
     const bounds = new google.maps.LatLngBounds();
 
-    const map = new google.maps.Map(document.getElementById('map'))
+    // Create map with default position and zoom as fitBounds sometimes
+    // does nothing
+    
+    const school1 = schools[0]
+    const firstLatLng = { lat: school1.lat, lng: school1.lng }
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 16,
+      center: firstLatLng
+    })
 
     // Use one infoWindow for all markers.
     // This means that only one infoWindow can be open at a time.
@@ -39,8 +47,6 @@
 
       bounds.extend(latLng);
     })
-
-    map.setZoom(20) // Set maximum zoom before fitBounds zooms out
 
     map.fitBounds(bounds);
 

@@ -265,10 +265,6 @@ class Vacancy < ApplicationRecord
     organisation_vacancies.first&.organisation
   end
 
-  def schools
-    organisations.reload.select { |org| org.class == School }
-  end
-
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end

@@ -12,9 +12,9 @@ class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
 
   def schools_map_data
     schools = []
-    @vacancy.schools.select(&:geolocation).each do |school|
+    @vacancy.organisations.select(&:geolocation).each do |school|
       schools.push({ name: school.name,
-                     name_link: link_to(school.name, school.url),
+                     name_link: link_to(school.name, (school.website || school.url)),
                      address: full_address(school),
                      school_type: organisation_type(organisation: school, with_age_range: false),
                      lat: school.geolocation.x,
