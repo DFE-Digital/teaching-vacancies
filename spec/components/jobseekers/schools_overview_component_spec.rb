@@ -110,11 +110,12 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   context 'when GIAS-obtained website has been overwritten' do
     it 'renders a link to the school website' do
       expect(rendered_component).to include(school_1.website)
+      expect(rendered_component).not_to include(school_1.url)
     end
   end
 
-  it 'renders all the school links to the school website' do
-    [school_1, school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
+  it 'renders all the GIAS-provided links to the school website' do
+    [school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
   end
 
   it 'renders the school visits' do
@@ -142,16 +143,29 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   end
 
   describe '#schools_map_data' do
-    context 'when the school has a url' do
-      let(:school_1_data) do
+    let(:school_1_data) do
+      JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data).each do |school|
+        @school_1_data = school if school['name'] == school_1.name
+      end
+      @school_1_data
+    end
+
+    context 'when the user has provided a website' do
+      it 'links to the user-provided website' do
+        expect(school_1_data['name_link']).to eq "<a href=\"#{school_1.website}\">#{school_1.name}</a>"
+      end
+    end
+
+    context 'when the user has NOT provided a website' do
+      let(:school_2_data) do
         JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data).each do |school|
-          @school_1_data = school if school['name'] == school_1.name
+          @school_2_data = school if school['name'] == school_2.name
         end
-        @school_1_data
+        @school_2_data
       end
 
-      it 'includes the school name link' do
-        expect(school_1_data['name_link']).to eq "<a href=\"#{school_1.url}\">#{school_1.name}</a>"
+      it 'links to the GIAS-provided url' do
+        expect(school_2_data['name_link']).to eq "<a href=\"#{school_2.url}\">#{school_2.name}</a>"
       end
     end
   end

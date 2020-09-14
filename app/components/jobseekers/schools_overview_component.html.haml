@@ -92,7 +92,7 @@
       = t('schools.schools_visits')
     = @vacancy.school_visits
 
-  - if @vacancy.schools.any?(&:geolocation)
+  - if @vacancy.organisations.any?(&:geolocation)
     %h4.govuk-heading-s
       = t('schools.school_location.many')
     %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') }, data: { schools: schools_map_data } }
