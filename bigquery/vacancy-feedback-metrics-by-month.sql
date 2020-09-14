@@ -5,7 +5,7 @@ SELECT
   #that they can be modelled as binomial distributions
   #and that the normal distribution approximation can be applied.
   1.96*SAFE.SQRT(SAFE_DIVIDE(exclusivity_rate_this_month*(1-exclusivity_rate_this_month),
-      sample_size_this_AY_so_far)) AS exclusivity_rate_confidence_interval,
+      sample_size_this_month)) AS exclusivity_rate_confidence_interval,
   1.96*SAFE.SQRT(SAFE_DIVIDE(exclusivity_rate_this_AY_so_far*(1-exclusivity_rate_this_AY_so_far),
       sample_size_this_AY_so_far)) AS exclusivity_rate_confidence_interval_this_AY_so_far,
   1.96*SAFE.SQRT(SAFE_DIVIDE(exclusivity_rate_in_the_last_year*(1-exclusivity_rate_in_the_last_year),
