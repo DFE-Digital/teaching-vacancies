@@ -16,28 +16,6 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
       @awaiting_feedback_count.positive?
   end
 
-  def edit
-    @organisation = current_organisation
-    return if params[:description].nil?
-
-    @organisation.description = params[:description].presence
-    @organisation.valid?
-  end
-
-  def update
-    @organisation = current_organisation
-    @organisation.description = params[:school][:description]
-
-    if @organisation.valid?
-      Auditor::Audit.new(@organisation, 'school.update', current_session_id).log do
-        @organisation.save
-      end
-      return redirect_to organisation_path
-    end
-
-    render :edit
-  end
-
   private
 
   def redirect_to_user_preferences

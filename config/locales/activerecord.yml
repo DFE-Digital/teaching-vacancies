@@ -59,6 +59,9 @@ en:
       blank: Enter a job summary
     about_school:
       blank: Enter a description of the %{organisation}
+  organisation_errors: &organisation_errors
+    website:
+      url: Enter a link in the correct format, like http://www.school.ac.uk
   hiring_staff_user_preference_errors:
     managed_organisations:
       blank: Please select an option
@@ -101,6 +104,9 @@ en:
           attributes:
             <<: *job_specification_errors
             <<: *important_dates_errors
+        organisation_form:
+          attributes:
+            <<: *organisation_errors
         nqt_job_alerts_form:
           attributes:
             keywords:

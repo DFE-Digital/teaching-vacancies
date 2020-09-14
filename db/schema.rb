@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_03_155529) do
+ActiveRecord::Schema.define(version: 2020_09_10_221222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 2020_09_03_155529) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "readable_phases", array: true
+    t.string "website"
     t.index ["detailed_school_type_id"], name: "index_organisations_on_detailed_school_type_id"
     t.index ["region_id"], name: "index_organisations_on_region_id"
     t.index ["school_type_id"], name: "index_organisations_on_school_type_id"

@@ -6,5 +6,6 @@ FactoryBot.define do
       "Group Name": 'Trust name',
       "Group Type": 'Trust type'
     } }
+    website { Faker::Internet.url }
   end
 end

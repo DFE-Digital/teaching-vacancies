@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }
-  let(:school_1) { create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
+  let(:school_1) { create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) },
+                          website: 'https://this-is-a-test-url.tvs') }
   let(:school_2) { create(:school, name: 'Cambridge Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
   let(:school_3) { create(:school, name: 'London LSE', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
   let(:vacancy) do
@@ -93,8 +94,14 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     [school_1, school_2, school_3].each { |school| expect(rendered_component).to include(full_address(school)) }
   end
 
+  context 'when GIAS-obtained website has been overwritten' do
+    it 'renders a link to the school website' do
+      expect(rendered_component).to include(school_1.website)
+    end
+  end
+
   it 'renders all the school links to the school website' do
-    [school_1, school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
+    [school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
   end
 
   it 'renders the school visits' do

@@ -53,7 +53,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
 
   context 'when the number of pupils is not present' do
     context 'when the school capacity is present' do
-      let(:school) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => 1000 }) }
+      let(:organisation) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => 1000 }) }
 
       it 'renders the school capacity as the school size' do
         expect(rendered_component).to include(school_size(vacancy.parent_organisation))
@@ -61,7 +61,7 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
     end
 
     context 'when the school capacity is not present' do
-      let(:school) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => nil }) }
+      let(:organisation) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => nil }) }
 
       it 'renders the school no information translation' do
         expect(rendered_component).to include(school_size(vacancy.parent_organisation))
@@ -80,6 +80,14 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
   context 'when an ofsted report is not present' do
     it 'does not render the osted report' do
       expect(rendered_component).to include(I18n.t('schools.no_information'))
+    end
+  end
+
+  context 'when GIAS-obtained website has been overwritten' do
+    let(:organisation) { create(:school, website: 'https://this-is-a-test-url.tvs') }
+
+    it 'renders a link to the school website' do
+      expect(rendered_component).to include(vacancy.parent_organisation.website)
     end
   end
 
