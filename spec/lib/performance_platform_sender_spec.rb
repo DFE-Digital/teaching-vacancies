@@ -28,7 +28,7 @@ RSpec.describe PerformancePlatformSender::Base do
 
         jobs_published_yesterday = [
           build(:vacancy, :past_publish, publish_on: date_to_upload).save(validate: false),
-          build(:vacancy, :past_publish, publish_on: date_to_upload).save(validate: false)
+          build(:vacancy, :past_publish, publish_on: date_to_upload).save(validate: false),
         ]
 
         transaction_by_channel = instance_double(PerformancePlatform::TransactionsByChannel)

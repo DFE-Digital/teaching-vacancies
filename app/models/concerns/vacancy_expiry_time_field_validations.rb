@@ -7,7 +7,7 @@ module VacancyExpiryTimeFieldValidations
     validate :expiry_time_meridiem_must_not_be_blank, unless: proc { |v| validate_expiry_time?(v) }
   end
 
-  private
+private
 
   def expiry_time_must_not_be_blank
     errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')) if
@@ -34,6 +34,6 @@ module VacancyExpiryTimeFieldValidations
 
   def validate_expiry_time?(vacancy)
     vacancy.expiry_time.present? &&
-    vacancy.expiry_time_hh.blank? && vacancy.expiry_time_mm.blank? && vacancy.expiry_time_meridiem.blank?
+      vacancy.expiry_time_hh.blank? && vacancy.expiry_time_mm.blank? && vacancy.expiry_time_meridiem.blank?
   end
 end

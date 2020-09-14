@@ -12,7 +12,7 @@ RSpec.describe JobSummaryForm, type: :model do
           expect(job_summary_form.valid?).to be false
           expect(job_summary_form.errors.messages[:job_summary])
             .to include(
-              I18n.t('activemodel.errors.models.job_summary_form.attributes.job_summary.blank')
+              I18n.t('activemodel.errors.models.job_summary_form.attributes.job_summary.blank'),
             )
         end
       end

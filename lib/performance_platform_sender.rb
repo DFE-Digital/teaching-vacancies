@@ -21,7 +21,7 @@ module PerformancePlatformSender
       raise
     end
 
-    private
+  private
 
     attr_reader :date
 
@@ -31,7 +31,7 @@ module PerformancePlatformSender
   end
 
   class Transactions < Base
-    private
+  private
 
     def log_source
       'performance_platform:submit_transactions'

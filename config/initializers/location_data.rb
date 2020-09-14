@@ -29,4 +29,4 @@ LOCATION_POLYGON_SETTINGS = {
     api: 'https://ons-inspire.esriuk.com/arcgis/rest/services/Other_Boundaries/Major_Towns_and_Cities_December_2015_Boundaries_V2/MapServer/0/query?where=1%3D1&outFields=tcity15nm,shape&outSR=4326&f=json',
     name_key: 'tcity15nm'
   }
-}
+}.freeze

@@ -11,10 +11,10 @@ class SubscriptionPresenter < BasePresenter
                                   newly_qualified_teacher].freeze
 
   def filtered_search_criteria
-    @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) do |(field, value), criteria|
+    @filtered_search_criteria ||= sorted_search_criteria.each_with_object({}) { |(field, value), criteria|
       search_field = search_criteria_field(field, value)
       criteria.merge!(search_field) if search_field.present?
-    end.stringify_keys
+    }.stringify_keys
   end
 
   def to_row
@@ -24,12 +24,12 @@ class SubscriptionPresenter < BasePresenter
     end
   end
 
-  private
+private
 
   def sorted_search_criteria
-    search_criteria_to_h.sort_by do |(key, _)|
+    search_criteria_to_h.sort_by { |(key, _)|
       SEARCH_CRITERIA_SORT_ORDER.find_index(key) || SEARCH_CRITERIA_SORT_ORDER.count
-    end.to_h
+    }.to_h
   end
 
   def full_search_criteria
@@ -37,18 +37,19 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def available_filter_hash
-    SEARCH_CRITERIA_SORT_ORDER.index_with { |el| nil }
+    SEARCH_CRITERIA_SORT_ORDER.index_with { |_el| nil }
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def search_criteria_field(field, value)
     return if field.eql?('radius')
     return if field.eql?('location_category')
     return if field.eql?('jobs_sort')
 
-    return render_location_filter(
-      search_criteria_to_h['location_category'], value, search_criteria_to_h['radius']
-    ) if field.eql?('location')
+    if field.eql?('location')
+      return render_location_filter(
+        search_criteria_to_h['location_category'], value, search_criteria_to_h['radius']
+      )
+    end
     return render_job_roles_filter(value) if field.eql?('job_roles')
     return render_working_patterns_filter(value) if field.eql?('working_patterns')
     return render_phases_filter(value) if field.eql?('phases')
@@ -56,7 +57,6 @@ class SubscriptionPresenter < BasePresenter
 
     { "#{field}": value }
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   def render_location_filter(location_category, location, radius)
     return if location.empty?

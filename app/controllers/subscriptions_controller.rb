@@ -35,11 +35,11 @@ class SubscriptionsController < ApplicationController
     Auditor::Audit.new(@subscription, 'subscription.daily_alert.delete', current_session_id).log
   end
 
-  private
+private
 
   def subscription_params
     ParameterSanitiser.call(
-      params.require(:subscription)
+      params.require(:subscription),
     ).permit(:email, :reference, :search_criteria)
   end
 

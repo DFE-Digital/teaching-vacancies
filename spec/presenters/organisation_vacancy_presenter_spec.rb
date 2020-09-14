@@ -59,7 +59,7 @@ RSpec.describe OrganisationVacancyPresenter do
 
     context 'when the deadline is tomorrow' do
       context 'and less than 24 hours away' do
-        let(:time_to_apply) { (Time.zone.tomorrow) }
+        let(:time_to_apply) { Time.zone.tomorrow }
 
         it 'displays that the deadline is tomorrow' do
           expect(presenter.days_to_apply).to eq('Deadline is tomorrow')

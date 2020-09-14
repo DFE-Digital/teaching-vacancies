@@ -22,7 +22,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
     end_session_and_redirect
   end
 
-  private
+private
 
   def not_authorised
     audit_failed_authorisation
@@ -38,7 +38,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
       urn: school_urn,
       uid: school_group_uid,
       multiple_organisations: authorisation_permissions.many_organisations?,
-      id_token: id_token
+      id_token: id_token,
     )
     Rails.logger.info("Updated session with URN #{session[:urn]} or UID #{session[:uid]}")
     audit_successful_authorisation

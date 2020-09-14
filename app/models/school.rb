@@ -27,13 +27,13 @@ class School < Organisation
 
   READABLE_PHASE_MAPPINGS = {
     not_applicable: [],
-    nursery: ['primary'],
-    primary: ['primary'],
-    middle_deemed_primary: ['middle'],
-    middle_deemed_secondary: ['middle'],
-    secondary: ['secondary'],
-    sixteen_plus: ['16-19'],
-    all_through: ['primary', 'secondary', '16-19']
+    nursery: %w[primary],
+    primary: %w[primary],
+    middle_deemed_primary: %w[middle],
+    middle_deemed_secondary: %w[middle],
+    secondary: %w[secondary],
+    sixteen_plus: %w[16-19],
+    all_through: %w[primary secondary 16-19]
   }.freeze
 
   def easting=(easting)
@@ -47,19 +47,20 @@ class School < Organisation
   end
 
   def religious_character
-    return if !self.respond_to?(:gias_data) || self.gias_data == nil
-    return if ['None', 'Does not apply'].include?(self.gias_data['ReligiousCharacter (name)'])
-    self.gias_data['ReligiousCharacter (name)']
+    return if !respond_to?(:gias_data) || gias_data.nil?
+    return if ['None', 'Does not apply'].include?(gias_data['ReligiousCharacter (name)'])
+
+    gias_data['ReligiousCharacter (name)']
   end
 
-  private
+private
 
   def set_geolocation_from_easting_and_northing
     if easting && northing
       wgs84 = Breasal::EastingNorthing.new(
         easting: easting.to_i,
         northing: northing.to_i,
-        type: :gb
+        type: :gb,
       ).to_wgs84
 
       geolocation = [wgs84[:latitude], wgs84[:longitude]]

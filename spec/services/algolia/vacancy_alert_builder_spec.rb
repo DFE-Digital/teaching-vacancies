@@ -8,7 +8,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
   let(:keyword) { 'maths teacher' }
   let(:location) { 'SW1A 1AA' }
   let(:default_radius) { 10 }
-  let(:date_today) { Time.zone.today.to_datetime }
+  let(:date_today) { Time.zone.today.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
   let(:location_radius) { (default_radius * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i }
   let(:location_polygon_boundary) { nil }
@@ -31,7 +31,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
     travel_to(expired_now)
     allow_any_instance_of(Algolia::VacancyFiltersBuilder)
       .to receive(:expired_now_filter)
-      .and_return(expired_now.to_datetime.to_i)
+      .and_return(expired_now.to_time.to_i)
   end
 
   after(:all) do
@@ -47,9 +47,9 @@ RSpec.describe Algolia::VacancyAlertBuilder do
         location: location,
         subject: search_subject,
         job_title: job_title,
-        working_patterns: ['full_time', 'part_time'],
+        working_patterns: %w[full_time part_time],
         newly_qualified_teacher: 'true',
-        phases: ['secondary', 'primary'],
+        phases: %w[secondary primary],
         from_date: date_today,
         to_date: date_today
       }
@@ -65,25 +65,25 @@ RSpec.describe Algolia::VacancyAlertBuilder do
       context '#build_subscription_filters' do
         it 'adds date filter' do
           expect(subject.search_filters).to include(
-            "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
+            "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})",
           )
         end
 
         it 'adds working patterns filter' do
           expect(subject.search_filters).to include(
-            '(working_patterns:full_time OR working_patterns:part_time)'
+            '(working_patterns:full_time OR working_patterns:part_time)',
           )
         end
 
         it 'adds NQT filter' do
           expect(subject.search_filters).to include(
-            '(job_roles:nqt_suitable)'
+            '(job_roles:nqt_suitable)',
           )
         end
 
         it 'adds school phase filter' do
           expect(subject.search_filters).to include(
-            '(organisation.readable_phases:secondary OR organisation.readable_phases:primary)'
+            '(organisation.readable_phases:secondary OR organisation.readable_phases:primary)',
           )
         end
       end
@@ -93,7 +93,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
       let(:vacancies) { double('vacancies') }
       let(:search_filter) do
         '(listing_status:published AND '\
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_datetime.to_i})"\
+        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_time.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
         " #{date_today.to_i}) AND "\
         '(organisation.readable_phases:secondary OR organisation.readable_phases:primary) AND '\
@@ -128,7 +128,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
       let(:search_filter) do
         '(listing_status:published AND '\
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
-        "#{expired_now.to_datetime.to_i}) AND (publication_date_timestamp >= "\
+        "#{expired_now.to_time.to_i}) AND (publication_date_timestamp >= "\
         "#{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
       end
 

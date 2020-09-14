@@ -36,15 +36,15 @@ class Algolia::VacancySearchBuilder
     filters.any?
   end
 
-  private
+private
 
   def initialize_sort_by(jobs_sort_param)
     # A blank `sort_by` results in a search on the main index, Vacancy.
-    if jobs_sort_param.blank? || !valid_sort?(jobs_sort_param)
-      @sort_by = @keyword.blank? ? 'publish_on_desc' : ''
-    else
-      @sort_by = jobs_sort_param
-    end
+    @sort_by = if jobs_sort_param.blank? || !valid_sort?(jobs_sort_param)
+      @keyword.blank? ? 'publish_on_desc' : ''
+               else
+      jobs_sort_param
+               end
   end
 
   def initialize_search
@@ -73,13 +73,10 @@ class Algolia::VacancySearchBuilder
   end
 
   def build_stats(page, pages, results_per_page, total_results)
-    return [0, 0, 0] unless total_results > 0
+    return [0, 0, 0] unless total_results.positive?
+
     first_number = page * results_per_page + 1
-    if page + 1 === pages
-      last_number = total_results
-    else
-      last_number = (page + 1) * results_per_page
-    end
+    last_number = page + 1 == pages ? total_results : (page + 1) * results_per_page
     [first_number, last_number, total_results]
   end
 
@@ -92,11 +89,11 @@ class Algolia::VacancySearchBuilder
       filters: @search_filters,
       replica: @search_replica,
       hitsPerPage: @hits_per_page,
-      page: @page
+      page: @page,
     )
   end
 
   def valid_sort?(job_sort_param)
-    Vacancy::JOB_SORTING_OPTIONS.map { |sort_option| sort_option.last }.include?(job_sort_param)
+    Vacancy::JOB_SORTING_OPTIONS.map(&:last).include?(job_sort_param)
   end
 end

@@ -11,7 +11,7 @@ class MessageEncryptor
     data.is_a?(Array) ? decrypt_array : crypt.decrypt_and_verify(data)
   end
 
-  private
+private
 
   attr_reader :data
 

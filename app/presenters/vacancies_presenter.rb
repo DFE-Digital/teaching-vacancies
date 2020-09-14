@@ -39,7 +39,7 @@ class VacanciesPresenter < BasePresenter
     api_jobs_url(json_api_params.merge(page: model.next_page)) if model.next_page
   end
 
-  private
+private
 
   def json_api_params
     {

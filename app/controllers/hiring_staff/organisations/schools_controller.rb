@@ -6,7 +6,7 @@ class HiringStaff::Organisations::SchoolsController < HiringStaff::BaseControlle
 
   def edit
     @organisation_form = OrganisationForm.new(
-      { description: @organisation.description, website: @organisation.website }
+      { description: @organisation.description, website: @organisation.website },
     )
   end
 
@@ -21,7 +21,7 @@ class HiringStaff::Organisations::SchoolsController < HiringStaff::BaseControlle
     end
   end
 
-  private
+private
 
   def set_organisation
     @organisation = Organisation.find(params[:id])

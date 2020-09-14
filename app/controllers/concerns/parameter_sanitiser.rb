@@ -5,8 +5,6 @@ module ParameterSanitiser
     sanitize_nested_params(params)
   end
 
-  private
-
   def self.sanitize_params_value(value)
     if value.is_a?(ActionController::Parameters)
       sanitize_nested_params(value)

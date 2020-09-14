@@ -1,6 +1,10 @@
 inherit_gem:
-  rubocop-rails_config:
-    - config/rails.yml
+  rubocop-govuk:
+    - config/default.yml
+
+inherit_mode:
+  merge:
+    - Exclude
 
 AllCops:
   TargetRubyVersion: 2.7
@@ -14,14 +18,8 @@ AllCops:
 Layout/TrailingEmptyLines:
   Enabled: false
 
-Layout/EmptyLinesAroundAccessModifier:
-  Enabled: false
-
 Layout/IndentationWidth:
   Enabled: false
-
-Layout/LineLength:
-  Max: 120
 
 Metrics/AbcSize:
   Max: 25
@@ -42,19 +40,16 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 50
 
-Rails:
-  Enabled: true
-
-Rails/HasManyOrHasOneDependent:
-  Enabled: false
-
-Rails/UniqueValidationWithoutIndex:
+Rake/Desc:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MixinUsage:
   Enabled: false
 
 Style/StringLiterals:

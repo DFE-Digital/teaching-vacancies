@@ -31,7 +31,7 @@ module TeacherVacancyService
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    config.action_view.sanitized_allowed_tags = ['p', 'br', 'strong', 'em', 'ul', 'li', 'h1', 'h2', 'h3', 'h4', 'h5']
+    config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5]
     config.action_view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
 
     # Settings in config/environments/* take precedence over those

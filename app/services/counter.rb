@@ -17,7 +17,7 @@ class Counter
     reset_counter if model.save
   end
 
-  private
+private
 
   def increment_persisted_counter
     model.send(self.class.persisted_column).to_i + redis_counter.to_i

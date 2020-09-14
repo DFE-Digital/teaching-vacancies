@@ -22,7 +22,8 @@ RSpec.describe Algolia::VacancyLocationBuilder do
     LocationPolygon.create(
       name: polygonable_location.downcase,
       location_type: 'cities',
-      boundary: polygon_coordinates)
+      boundary: polygon_coordinates,
+    )
   end
 
   describe '#initialize' do

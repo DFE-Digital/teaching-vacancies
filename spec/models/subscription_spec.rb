@@ -18,7 +18,7 @@ RSpec.describe Subscription, type: :model do
 
         expect(subscription.valid?).to eq(false)
         expect(subscription.errors.messages[:email]).to eq(
-          ['Enter an email address in the correct format, like name@example.com']
+          ['Enter an email address in the correct format, like name@example.com'],
         )
       end
     end
@@ -131,8 +131,8 @@ RSpec.describe Subscription, type: :model do
 
   context 'vacancies_for_range' do
     let!(:expired_now) { Time.zone.now }
-    let(:date_yesterday) { Time.zone.yesterday.to_datetime }
-    let(:date_today) { Time.zone.today.to_datetime }
+    let(:date_yesterday) { Time.zone.yesterday.to_time }
+    let(:date_today) { Time.zone.today.to_time }
     let(:subscription) do
       create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
     end
@@ -140,7 +140,7 @@ RSpec.describe Subscription, type: :model do
     let(:search_filter) do
       '(listing_status:published AND '\
       "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
-      "#{expired_now.to_datetime.to_i}) AND (publication_date_timestamp >= #{date_yesterday.to_i}"\
+      "#{expired_now.to_time.to_i}) AND (publication_date_timestamp >= #{date_yesterday.to_i}"\
       " AND publication_date_timestamp <= #{date_today.to_i})"
     end
 
@@ -156,7 +156,7 @@ RSpec.describe Subscription, type: :model do
       travel_to expired_now
       allow_any_instance_of(Algolia::VacancyFiltersBuilder)
         .to receive(:expired_now_filter)
-        .and_return(expired_now.to_datetime.to_i)
+        .and_return(expired_now.to_time.to_i)
       allow(vacancies).to receive(:count).and_return(10)
       mock_algolia_search_for_job_alert(vacancies, algolia_search_query, algolia_search_args)
     end

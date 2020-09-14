@@ -20,7 +20,7 @@ RSpec.shared_examples 'a DFE Sign In endpoint' do
   context 'when the response status is unknown' do
     before do
       stub_request(:get,
-        "#{DFE_SIGN_IN_URL}#{api_path}?page=1&pageSize=#{page_size}")
+                   "#{DFE_SIGN_IN_URL}#{api_path}?page=1&pageSize=#{page_size}")
         .to_return(body: '', status: 499)
     end
     it 'raises an unknown response error' do
@@ -63,7 +63,7 @@ RSpec.shared_examples 'a DFE Sign In endpoint' do
     File.read(Rails.root.join(
                 'spec',
                 'fixtures',
-                "dfe_sign_in_service_#{fixture_filename}_response_page_#{page}.json"
+                "dfe_sign_in_service_#{fixture_filename}_response_page_#{page}.json",
               ))
   end
 

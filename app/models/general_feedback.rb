@@ -20,7 +20,7 @@ class GeneralFeedback < ApplicationRecord
       comment,
       created_at.to_s,
       user_participation_response,
-      email
+      email,
     ]
   end
 end

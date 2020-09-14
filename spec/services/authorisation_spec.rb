@@ -3,7 +3,7 @@ RSpec.describe Authorisation do
   describe '.new' do
     it 'requires an organisation_id and user_id' do
       result = described_class.new(
-        organisation_id: '123', user_id: '456'
+        organisation_id: '123', user_id: '456',
       )
 
       expect(result).to be_kind_of(described_class)
@@ -15,7 +15,7 @@ RSpec.describe Authorisation do
     subject do
       described_class.new(
         organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
-        user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7'
+        user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
       )
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Authorisation do
 
     it 'stores the role_ids' do
       result = subject.call
-      expect(result.role_ids).to eq(['test-role-id'])
+      expect(result.role_ids).to eq(%w[test-role-id])
     end
 
     it 'configure SSL to be used for this request' do
@@ -50,7 +50,7 @@ RSpec.describe Authorisation do
           aud: 'signin.education.gov.uk'
         },
         'test-password',
-        'HS256'
+        'HS256',
       ).and_return(jwt_token)
 
       request_double = double(Net::HTTP::Get)
@@ -97,14 +97,14 @@ RSpec.describe Authorisation do
 
     context 'when roles include a known role_id' do
       it 'returns true' do
-        subject.role_ids = ['test-role-id']
+        subject.role_ids = %w[test-role-id]
         expect(subject.authorised?).to be true
       end
     end
 
     context 'when roles do not include a known role_id' do
       it 'returns true' do
-        subject.role_ids = ['unknown-role-id']
+        subject.role_ids = %w[unknown-role-id]
         expect(subject.authorised?).to be false
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe Authorisation do
     subject do
       described_class.new(
         organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
-        user_id: user_id
+        user_id: user_id,
       )
     end
     let(:user_id) { 'default_id' }
@@ -155,7 +155,7 @@ RSpec.describe Authorisation do
       it 'is nil' do
         stub_request(
           :get,
-          "https://test-url.local/users/#{user_id}/organisations"
+          "https://test-url.local/users/#{user_id}/organisations",
         ).to_return(status: 500)
         expect(subject.many_organisations?).to be(nil)
       end

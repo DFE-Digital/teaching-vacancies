@@ -1,11 +1,6 @@
 module OmniAuth
   module Strategies
     class OpenIDConnect
-      # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/CyclomaticComplexity
-      # rubocop:disable Metrics/PerceivedComplexity
-      # rubocop:disable Layout/LineLength
-      # rubocop:disable Style/GuardClause
       # Please refer to this commit to read why this has been copied from: https://github.com/m0n9oose/omniauth_openid_connect/blob/master/lib/omniauth/strategies/openid_connect.rb
       def callback_phase
         Rollbar.log(:info, 'A sign-in callback was started',
@@ -23,7 +18,7 @@ module OmniAuth
           Rollbar.log(:error,
                       'A sign-in callback was unauthorised',
                       session_id: session.id,
-                      received_state: request.params['state'],)
+                      received_state: request.params['state'])
           redirect('/401')
         elsif !request.params['code']
           fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
@@ -42,11 +37,6 @@ module OmniAuth
       rescue ::SocketError => e
         fail!(:failed_to_connect, e)
       end
-      # rubocop:enable Metrics/AbcSize
-      # rubocop:enable Metrics/CyclomaticComplexity
-      # rubocop:enable Metrics/PerceivedComplexity
-      # rubocop:enable Layout/LineLength
-      # rubocop:enable Style/GuardClause
     end
   end
 end

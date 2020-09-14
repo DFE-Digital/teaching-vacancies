@@ -4,15 +4,21 @@ RSpec.describe ImportantDatesForm, type: :model do
   subject { ImportantDatesForm.new({}) }
 
   context 'validations' do
-    it { should validate_presence_of(:publish_on).with_message(
-      I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank')
-    ) }
-    it { should validate_presence_of(:expires_on).with_message(
-      I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank')
-    ) }
-    it { should validate_presence_of(:expiry_time).with_message(
-      I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')
-    ) }
+    it {
+      should validate_presence_of(:publish_on).with_message(
+        I18n.t('activerecord.errors.models.vacancy.attributes.publish_on.blank'),
+      )
+    }
+    it {
+      should validate_presence_of(:expires_on).with_message(
+        I18n.t('activerecord.errors.models.vacancy.attributes.expires_on.blank'),
+      )
+    }
+    it {
+      should validate_presence_of(:expiry_time).with_message(
+        I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'),
+      )
+    }
 
     describe '#publish_on' do
       let(:important_dates) { ImportantDatesForm.new(publish_on: Time.zone.yesterday) }
@@ -91,7 +97,7 @@ RSpec.describe ImportantDatesForm, type: :model do
         subject.expiry_time_meridiem = nil
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to include(
-          I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')
+          I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank'),
         )
       end
 
@@ -131,7 +137,7 @@ RSpec.describe ImportantDatesForm, type: :model do
         subject.expiry_time_meridiem = ''
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to eq(
-          [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm')]
+          [I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm')],
         )
       end
 
@@ -140,7 +146,7 @@ RSpec.describe ImportantDatesForm, type: :model do
         subject.expiry_time_meridiem = nil
         subject.valid?
         expect(subject.errors.messages[:expiry_time]).to include(
-          I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')
+          I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format'),
         )
       end
 
@@ -195,7 +201,7 @@ RSpec.describe ImportantDatesForm, type: :model do
                                                expires_on: Time.zone.today + 1.week,
                                                publish_on: Time.zone.today,
                                                starts_on: Time.zone.today + 1.month,
-                                               expiry_time_hh: '9', expiry_time_mm: '1', expiry_time_meridiem: 'am',)
+                                               expiry_time_hh: '9', expiry_time_mm: '1', expiry_time_meridiem: 'am')
 
       expect(important_dates.valid?).to be true
       expect(important_dates.vacancy.expires_on).to eq(Time.zone.today + 1.week)

@@ -16,7 +16,7 @@ RSpec.describe HiringStaff::SchoolOverviewComponent, type: :component do
 
     it 'renders the school info heading' do
       expect(inline_component.css('h2.govuk-heading-m').to_html).to include(
-        I18n.t('schools.info', organisation: organisation.name)
+        I18n.t('schools.info', organisation: organisation.name),
       )
     end
 

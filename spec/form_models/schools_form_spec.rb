@@ -41,7 +41,7 @@ RSpec.describe SchoolsForm, type: :model do
       end
 
       context 'when less than 2 organisations are selected' do
-        let(:organisation_ids) { ['school_1_id'] }
+        let(:organisation_ids) { %w[school_1_id] }
 
         it 'requires at least 2 schools to be selected' do
           expect(subject.valid?).to be false
@@ -50,11 +50,11 @@ RSpec.describe SchoolsForm, type: :model do
       end
 
       context 'when 2 or more organisations are selected' do
-        let(:organisation_ids) { ['school_1_id', 'school_2_id'] }
+        let(:organisation_ids) { %w[school_1_id school_2_id] }
 
         it 'is valid' do
           expect(subject.valid?).to be true
-          expect(subject.organisation_ids).to eql(['school_1_id', 'school_2_id'])
+          expect(subject.organisation_ids).to eql(%w[school_1_id school_2_id])
         end
       end
     end

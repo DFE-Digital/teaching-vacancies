@@ -31,7 +31,7 @@ RSpec.describe 'Hiring staff can set managed organisations user preferences' do
     visit organisation_managed_organisations_path
 
     expect(page).to have_content(
-      I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name)
+      I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name),
     )
 
     check I18n.t('hiring_staff.managed_organisations.options.school_group'),
@@ -48,7 +48,7 @@ RSpec.describe 'Hiring staff can set managed organisations user preferences' do
     visit organisation_managed_organisations_path
 
     expect(page).to have_content(
-      I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name)
+      I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name),
     )
 
     check I18n.t('hiring_staff.managed_organisations.options.all'),

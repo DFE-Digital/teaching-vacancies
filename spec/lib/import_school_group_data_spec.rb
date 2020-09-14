@@ -13,7 +13,8 @@ RSpec.describe ImportSchoolGroupData do
 
     before do
       allow(SchoolGroup).to receive(:find_or_initialize_by).with(
-        hash_including(uid: row['Group UID'])).and_return(school_group)
+        hash_including(uid: row['Group UID']),
+      ).and_return(school_group)
       allow(subject).to receive(:set_gias_data_as_json).with(school_group, row)
     end
 

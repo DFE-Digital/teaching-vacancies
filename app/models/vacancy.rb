@@ -21,8 +21,8 @@ class Vacancy < ApplicationRecord
     [I18n.t('jobs.sort_by.most_relevant'), ''],
     [I18n.t('jobs.sort_by.publish_on.descending'), 'publish_on_desc'],
     [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
-    [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
-  ]
+    [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc'],
+  ].freeze
 
   JOB_LOCATION_OPTIONS = {
     at_one_school: 0,
@@ -79,9 +79,7 @@ class Vacancy < ApplicationRecord
   # adding records that have become `live` since the last time it was run.
   def self.update_index!
     unindexed.algolia_reindex!
-    # rubocop:disable Rails/SkipsModelValidations
     unindexed.update_all(initially_indexed: true)
-    # rubocop:enable Rails/SkipsModelValidations
   end
 
   # I'm excluding expires_on from the where clause as expiry_time seems to be exactly tracking it-as expected.
@@ -90,16 +88,13 @@ class Vacancy < ApplicationRecord
     expired_records = where('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
     index.delete_objects(expired_records.map(&:id)) if expired_records.present?
   end
-
-  # rubocop:disable Metrics/BlockLength
-  # rubocop:disable Layout/LineLength
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
     attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
 
     attribute :expires_at do
-      expires_at = format_date(self.expires_on)
-      unless self.expiry_time.nil?
-        expires_at + ' at ' + self.expiry_time.strftime('%-l:%M %P')
+      expires_at = format_date(expires_on)
+      unless expiry_time.nil?
+        expires_at + ' at ' + expiry_time.strftime('%-l:%M %P')
       end
     end
 
@@ -109,54 +104,56 @@ class Vacancy < ApplicationRecord
 
     JOB_ROLE_OPTIONS.size.times do |index|
       attribute "job_role_#{index}".to_sym do
-        self.job_roles[index] if self.job_roles.present?
+        job_roles[index] if job_roles.present?
       end
     end
 
     attribute :job_summary do
-      self.job_summary&.truncate(256)
+      job_summary&.truncate(256)
     end
 
     attribute :last_updated_at do
       # Convert from ActiveSupport::TimeWithZone object to Unix time
-      self.updated_at.to_i
+      updated_at.to_i
     end
 
     attribute :listing_status do
-      self.status
+      status
     end
 
     attribute :permalink do
-      self.slug
+      slug
     end
 
     attribute :publication_date do
-      self.publish_on&.to_s
+      publish_on&.to_s
     end
 
     attribute :publication_date_timestamp do
-      self.publish_on&.to_datetime&.to_i
+      publish_on&.to_time&.to_i
     end
 
     attribute :organisation do
-      { name: organisation.name,
-        county: organisation.county,
-        detailed_school_type: (organisation.detailed_school_type&.label if organisation.is_a?(School)),
-        local_authority: organisation.local_authority,
-        phase: organisation.phase,
-        readable_phases: organisation.readable_phases,
-        religious_character: (organisation.religious_character if organisation.is_a?(School)),
-        region: (organisation.region&.name if organisation.is_a?(School)),
-        school_type: (organisation.school_type&.label&.singularize if organisation.is_a?(School)),
-        town: organisation.town } if organisation.present?
+      if organisation.present?
+        { name: organisation.name,
+          county: organisation.county,
+          detailed_school_type: (organisation.detailed_school_type&.label if organisation.is_a?(School)),
+          local_authority: organisation.local_authority,
+          phase: organisation.phase,
+          readable_phases: organisation.readable_phases,
+          religious_character: (organisation.religious_character if organisation.is_a?(School)),
+          region: (organisation.region&.name if organisation.is_a?(School)),
+          school_type: (organisation.school_type&.label&.singularize if organisation.is_a?(School)),
+          town: organisation.town }
+      end
     end
 
     attribute :start_date do
-      self.starts_on&.to_s
+      starts_on&.to_s
     end
 
     attribute :start_date_timestamp do
-      self.starts_on&.to_datetime&.to_i
+      starts_on&.to_time&.to_i
     end
 
     attribute :working_patterns_for_display do
@@ -177,11 +174,9 @@ class Vacancy < ApplicationRecord
       ranking ['asc(expires_at_timestamp)']
     end
   end
-  # rubocop:enable Layout/LineLength
-  # rubocop:enable Metrics/BlockLength
 
   def _geoloc
-    self.organisations.map do |organisation|
+    organisations.map do |organisation|
       { lat: organisation.geolocation&.x&.to_f, lng: organisation.geolocation&.y&.to_f }
     end
   end
@@ -229,7 +224,7 @@ class Vacancy < ApplicationRecord
   delegate :name, to: :parent_organisation, prefix: true, allow_nil: true
 
   acts_as_gov_uk_date :starts_on, :publish_on,
-    :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
+                      :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
@@ -253,9 +248,9 @@ class Vacancy < ApplicationRecord
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :unindexed, (-> { live.where(initially_indexed: false) })
   scope :in_central_office, (-> { where(job_location: 'central_office') })
-  scope :in_organisation_ids, -> (ids) do
+  scope :in_organisation_ids, lambda { |ids|
     joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct
-  end
+  }
 
   paginates_per 10
 
@@ -299,7 +294,7 @@ class Vacancy < ApplicationRecord
         subject: { only: %i[name] },
         first_supporting_subject: { only: %i[name] },
         second_supporting_subject: { only: %i[name] }
-      }
+      },
     )
   end
 
@@ -341,27 +336,26 @@ class Vacancy < ApplicationRecord
   end
 
   def delete_documents
-    self.documents.each { |document| DocumentDelete.new(document).delete }
+    documents.each { |document| DocumentDelete.new(document).delete }
   end
 
   def parent_organisation
-    self.organisations.many? ? self.organisations.first.school_groups.first : self.organisation
+    organisations.many? ? organisations.first.school_groups.first : organisation
   end
 
-  private
+private
 
   def expires_at
-    return nil if self.expires_on.blank? && self.expiry_time.blank?
-    # rubocop:disable Rails/Date
-    self.expiry_time.presence || Time.zone.at(self.expires_on.to_time).to_datetime.end_of_day
-    # rubocop:enable Rails/Date
+    return nil if expires_on.blank? && expiry_time.blank?
+
+    expiry_time.presence || Time.zone.at(expires_on.to_time).to_time.end_of_day
   end
 
   def slug_candidates
     [
       :job_title,
       %i[job_title parent_organisation_name],
-      %i[job_title location]
+      %i[job_title location],
     ]
   end
 

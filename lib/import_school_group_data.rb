@@ -1,11 +1,11 @@
 require 'csv'
 require 'httparty'
 
-SCHOOL_GROUP_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata.csv'
-SCHOOL_GROUP_TEMP_LOCATION = './tmp/school-group-data.csv'
+SCHOOL_GROUP_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata.csv'.freeze
+SCHOOL_GROUP_TEMP_LOCATION = './tmp/school-group-data.csv'.freeze
 
-SCHOOL_GROUP_MEMBERSHIP_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata.csv'
-SCHOOL_GROUP_MEMBERSHIP_TEMP_LOCATION = './tmp/school-group-membership-data.csv'
+SCHOOL_GROUP_MEMBERSHIP_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata.csv'.freeze
+SCHOOL_GROUP_MEMBERSHIP_TEMP_LOCATION = './tmp/school-group-membership-data.csv'.freeze
 
 class ImportSchoolGroupData
   def run!
@@ -13,7 +13,7 @@ class ImportSchoolGroupData
     import_data(SCHOOL_GROUP_MEMBERSHIP_URL, SCHOOL_GROUP_MEMBERSHIP_TEMP_LOCATION, :create_school_group_memberships)
   end
 
-  private
+private
 
   def import_data(url, location, method)
     save_csv_file(url, location)

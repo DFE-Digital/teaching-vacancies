@@ -15,17 +15,17 @@ RSpec.describe DocumentUpload do
   context 'upload_hiring_staff_document' do
     it 'calls create_file on drive_service' do
       expect(subject.drive_service).to receive(:create_file).with(
-        { alt: 'media', name:  name },
+        { alt: 'media', name: name },
         fields: 'id, web_view_link, web_content_link, mime_type',
-        upload_source: anything()
+        upload_source: anything,
       )
       subject.upload_hiring_staff_document
     end
 
     it 'explicity expects the temporary file path' do
       expect(subject.drive_service).to receive(:create_file).with(
-        anything(),
-        hash_including(upload_source: upload_path)
+        anything,
+        hash_including(upload_source: upload_path),
       )
       subject.upload_hiring_staff_document
     end
@@ -39,8 +39,8 @@ RSpec.describe DocumentUpload do
     it 'calls create_permission on drive_service' do
       allow(create_file).to receive(:id)
       expect(subject.drive_service).to receive(:create_permission).with(
-        anything(),
-        anything()
+        anything,
+        anything,
       )
       subject.set_public_permission_on_document
     end
@@ -55,7 +55,7 @@ RSpec.describe DocumentUpload do
       allow(create_file).to receive(:id)
       allow(subject.drive_service).to receive(:create_permission)
       expect(Google::Apis::DriveV3::Permission).to receive(:new).with(
-        type: 'anyone', role: 'reader'
+        type: 'anyone', role: 'reader',
       )
       subject.set_public_permission_on_document
     end
@@ -71,8 +71,8 @@ RSpec.describe DocumentUpload do
     it 'calls get_file on drive_service' do
       allow(create_file).to receive(:id)
       expect(subject.drive_service).to receive(:get_file).with(
-        anything(),
-        anything()
+        anything,
+        anything,
       )
       subject.google_drive_virus_check
     end
@@ -87,7 +87,7 @@ RSpec.describe DocumentUpload do
       allow(create_file).to receive(:id)
       # This error needs to initialised with an argument in order to be raised.
       allow(subject.drive_service).to receive(:get_file).and_raise(
-        Google::Apis::ClientError.new(true, status_code: 403)
+        Google::Apis::ClientError.new(true, status_code: 403),
       )
       expect(subject.drive_service).to receive(:delete_file)
       subject.google_drive_virus_check
@@ -97,7 +97,7 @@ RSpec.describe DocumentUpload do
       expect(create_file).to receive(:id).exactly(3).times
       # This error needs to initialised with an argument in order to be raised.
       allow(subject.drive_service).to receive(:get_file).and_raise(
-        Google::Apis::ClientError.new(true, status_code: 403)
+        Google::Apis::ClientError.new(true, status_code: 403),
       )
       allow(subject.drive_service).to receive(:delete_file)
       subject.google_drive_virus_check

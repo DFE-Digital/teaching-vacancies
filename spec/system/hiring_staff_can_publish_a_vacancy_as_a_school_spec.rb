@@ -25,9 +25,9 @@ RSpec.describe 'Creating a vacancy' do
     let(:suitable_for_nqt) { 'no' }
     let(:vacancy) do
       VacancyPresenter.new(build(:vacancy, :complete,
-                                 job_roles: [:teacher, :sen_specialist],
+                                 job_roles: %i[teacher sen_specialist],
                                  suitable_for_nqt: suitable_for_nqt,
-                                 working_patterns: ['full_time', 'part_time'],
+                                 working_patterns: %w[full_time part_time],
                                  publish_on: Time.zone.today))
     end
 
@@ -53,7 +53,7 @@ RSpec.describe 'Creating a vacancy' do
 
         mandatory_fields.each do |field|
           within_row_for(element: field == 'job_title' ? 'label' : 'legend', text: I18n.t("jobs.#{field}")) do
-            expect(page).to have_content((I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.blank")))
+            expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.#{field}.blank"))
           end
         end
       end
@@ -119,7 +119,7 @@ RSpec.describe 'Creating a vacancy' do
         end
 
         within_row_for(text: I18n.t('jobs.salary')) do
-          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.salary.blank')))
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.salary.blank'))
         end
       end
 
@@ -158,14 +158,14 @@ RSpec.describe 'Creating a vacancy' do
         within_row_for(element: 'legend',
                        text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.publish_on_html'))) do
           expect(page).to have_content(
-            I18n.t('activemodel.errors.models.important_dates_form.attributes.publish_on.blank')
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.publish_on.blank'),
           )
         end
 
         within_row_for(element: 'legend',
                        text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
           expect(page).to have_content(
-            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.blank')
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.blank'),
           )
         end
 
@@ -287,7 +287,7 @@ RSpec.describe 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            "spec/fixtures/files/#{filename}"
+            "spec/fixtures/files/#{filename}",
           )
 
           expect(page).to have_content(filename)
@@ -302,7 +302,7 @@ RSpec.describe 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            "spec/fixtures/files/#{filename}"
+            "spec/fixtures/files/#{filename}",
           )
 
           expect(page).to have_content(I18n.t('jobs.file_type_error_message', filename: filename))
@@ -315,11 +315,11 @@ RSpec.describe 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            "spec/fixtures/files/#{filename}"
+            "spec/fixtures/files/#{filename}",
           )
 
           expect(page).to have_content(
-            I18n.t('jobs.file_size_error_message', filename: filename, size_limit: '1 KB')
+            I18n.t('jobs.file_size_error_message', filename: filename, size_limit: '1 KB'),
           )
         end
 
@@ -331,7 +331,7 @@ RSpec.describe 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            "spec/fixtures/files/#{filename}"
+            "spec/fixtures/files/#{filename}",
           )
 
           expect(page).to have_content(I18n.t('jobs.file_virus_error_message', filename: filename))
@@ -345,7 +345,7 @@ RSpec.describe 'Creating a vacancy' do
           upload_document(
             'new_documents_form',
             'documents-form-documents-field',
-            "spec/fixtures/files/#{filename}"
+            "spec/fixtures/files/#{filename}",
           )
 
           expect(page).to have_content(I18n.t('jobs.file_google_error_message', filename: filename))
@@ -412,7 +412,8 @@ RSpec.describe 'Creating a vacancy' do
 
         within_row_for(text: strip_tags(I18n.t('helpers.fieldset.application_details_form.contact_email_html'))) do
           expect(page).to have_content(
-            I18n.t('activemodel.errors.models.application_details_form.attributes.contact_email.blank'))
+            I18n.t('activemodel.errors.models.application_details_form.attributes.contact_email.blank'),
+          )
         end
       end
 
@@ -467,7 +468,7 @@ RSpec.describe 'Creating a vacancy' do
         end
 
         within_row_for(text: I18n.t('jobs.job_summary')) do
-          expect(page).to have_content((I18n.t('activerecord.errors.models.vacancy.attributes.job_summary.blank')))
+          expect(page).to have_content(I18n.t('activerecord.errors.models.vacancy.attributes.job_summary.blank'))
         end
 
         within_row_for(text: I18n.t('jobs.about_school', school: school.name)) do
@@ -669,7 +670,7 @@ RSpec.describe 'Creating a vacancy' do
 
       context 'when the listing is full-time' do
         scenario 'lists all the full-time vacancy details correctly' do
-          vacancy = create(:vacancy, :complete, :draft, working_patterns: ['full_time'])
+          vacancy = create(:vacancy, :complete, :draft, working_patterns: %w[full_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -684,7 +685,7 @@ RSpec.describe 'Creating a vacancy' do
 
       context 'when the listing is part-time' do
         scenario 'lists all the part-time vacancy details correctly' do
-          vacancy = create(:vacancy, :complete, :draft, working_patterns: ['part_time'])
+          vacancy = create(:vacancy, :complete, :draft, working_patterns: %w[part_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -699,7 +700,7 @@ RSpec.describe 'Creating a vacancy' do
 
       context 'when the listing is both full- and part-time' do
         scenario 'lists all the working pattern vacancy details correctly' do
-          vacancy = create(:vacancy, :complete, :draft, working_patterns: ['full_time', 'part_time'])
+          vacancy = create(:vacancy, :complete, :draft, working_patterns: %w[full_time part_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           vacancy = VacancyPresenter.new(vacancy)
@@ -911,7 +912,7 @@ RSpec.describe 'Creating a vacancy' do
 
       context 'when the listing is full-time' do
         scenario 'view the full-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, working_patterns: ['full_time'])
+          vacancy = create(:vacancy, :draft, working_patterns: %w[full_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           visit organisation_job_review_path(vacancy.id)
@@ -927,7 +928,7 @@ RSpec.describe 'Creating a vacancy' do
 
       context 'when the listing is part-time' do
         scenario 'view the part-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, working_patterns: ['part_time'])
+          vacancy = create(:vacancy, :draft, working_patterns: %w[part_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           visit organisation_job_review_path(vacancy.id)
@@ -943,7 +944,7 @@ RSpec.describe 'Creating a vacancy' do
 
       context 'when the listing is both full- and part-time' do
         scenario 'view the full- and part-time published listing as a job seeker' do
-          vacancy = create(:vacancy, :draft, working_patterns: ['full_time', 'part_time'])
+          vacancy = create(:vacancy, :draft, working_patterns: %w[full_time part_time])
           vacancy.organisation_vacancies.create(organisation: school)
 
           visit organisation_job_review_path(vacancy.id)
@@ -984,7 +985,7 @@ RSpec.describe 'Creating a vacancy' do
         within_row_for(element: 'legend',
                        text: strip_tags(I18n.t('helpers.fieldset.important_dates_form.expires_on_html'))) do
           expect(page).to have_content(
-            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.before_today')
+            I18n.t('activemodel.errors.models.important_dates_form.attributes.expires_on.before_today'),
           )
         end
 
@@ -1009,7 +1010,7 @@ RSpec.describe 'Creating a vacancy' do
         expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
         visit organisation_job_path(vacancy.id)
         expect(page).to have_content('Date listed')
-        expect(page).to have_content("#{format_date(vacancy.publish_on)}")
+        expect(page).to have_content(format_date(vacancy.publish_on).to_s)
       end
 
       scenario 'displays the expiration date and time on the confirmation page' do
@@ -1021,7 +1022,7 @@ RSpec.describe 'Creating a vacancy' do
         expect(page).to have_content(
           'The listing will appear on the service until ' \
           "#{format_date(vacancy.expires_on)} at #{format_time(vacancy.expiry_time)}, " \
-          'after which it will no longer be visible to jobseekers.'
+          'after which it will no longer be visible to jobseekers.',
         )
       end
 

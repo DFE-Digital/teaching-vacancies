@@ -13,12 +13,13 @@ class HiringStaff::Vacancies::SchoolsController < HiringStaff::Vacancies::Applic
   def show
     attributes = @vacancy.present? ? @vacancy.attributes : session[:vacancy_attributes]
     return redirect_to next_step if job_location == 'central_office'
+
     @form = SchoolsForm.new(attributes.symbolize_keys)
   end
 
   def create
     @form.vacancy.readable_job_location = readable_job_location(job_location, school_name: school&.name,
-                                                                schools_count: @form.organisation_ids&.count)
+                                                                              schools_count: @form.organisation_ids&.count)
     store_vacancy_attributes(@form.vacancy.attributes)
     session[:vacancy_attributes]['organisation_id'] = @form.organisation_id
     session[:vacancy_attributes]['organisation_ids'] = @form.organisation_ids
@@ -32,7 +33,7 @@ class HiringStaff::Vacancies::SchoolsController < HiringStaff::Vacancies::Applic
   def update
     if @form.valid?
       @vacancy.update(readable_job_location: readable_job_location(job_location, school_name: school&.name,
-                                                                   schools_count: @form.organisation_ids&.count))
+                                                                                 schools_count: @form.organisation_ids&.count))
       organisation_ids = [@form.organisation_ids, [@form.organisation_id]].compact.reduce([], :concat)
       set_organisations(@vacancy, organisation_ids)
       update_google_index(@vacancy) if @vacancy.listed?
@@ -42,7 +43,7 @@ class HiringStaff::Vacancies::SchoolsController < HiringStaff::Vacancies::Applic
     end
   end
 
-  private
+private
 
   def form_submission_path(vacancy_id = nil)
     vacancy_id.present? ? organisation_job_schools_path(vacancy_id) : schools_organisation_job_path
@@ -71,8 +72,7 @@ class HiringStaff::Vacancies::SchoolsController < HiringStaff::Vacancies::Applic
   end
 
   def set_up_previous_step_path
-    @previous_step_path = @vacancy.present? ?
-      organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path
+    @previous_step_path = @vacancy.present? ? organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path
   end
 
   def school

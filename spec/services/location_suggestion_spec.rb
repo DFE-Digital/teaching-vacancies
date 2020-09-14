@@ -58,15 +58,17 @@ RSpec.describe LocationSuggestion do
 
   context '#suggestion_locations' do
     let(:parsed_response) { { 'predictions': predictions }.deep_stringify_keys }
-    let(:predictions) { [
-      { 'description': 'place, region, UK',
-        'terms': [{ 'offset': 0, 'value': 'place' }, { 'offset': 5, 'value': 'UK' }] },
-      { 'description': 'different_place, region, UK',
-        'terms': [{ 'offset': 0, 'value': 'different_place' }, { 'offset': 5, 'value': 'UK' }] }
-    ] }
+    let(:predictions) do
+      [
+        { 'description': 'place, region, UK',
+          'terms': [{ 'offset': 0, 'value': 'place' }, { 'offset': 5, 'value': 'UK' }] },
+        { 'description': 'different_place, region, UK',
+          'terms': [{ 'offset': 0, 'value': 'different_place' }, { 'offset': 5, 'value': 'UK' }] },
+      ]
+    end
 
     let(:suggestions) { ['place, region, UK', 'different_place, region, UK'] }
-    let(:matched_terms) { [['place'], ['different_place']] }
+    let(:matched_terms) { [%w[place], %w[different_place]] }
 
     before do
       allow(subject).to receive(:get_suggestions_from_google).and_return(parsed_response)

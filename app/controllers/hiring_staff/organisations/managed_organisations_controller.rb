@@ -22,10 +22,10 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
     end
   end
 
-  private
+private
 
   def managed_organisations_params
-    strip_empty_checkboxes(:managed_organisations_form, [:managed_organisations, :managed_school_ids])
+    strip_empty_checkboxes(:managed_organisations_form, %i[managed_organisations managed_school_ids])
     params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_ids: [])
   end
 
@@ -40,7 +40,7 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
     @organisation_options.unshift(
       OpenStruct.new({ id: current_organisation.id,
                        name: I18n.t('hiring_staff.managed_organisations.options.school_group'),
-                       address: full_address(current_organisation) })
+                       address: full_address(current_organisation) }),
     )
   end
 end

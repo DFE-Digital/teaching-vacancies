@@ -7,7 +7,7 @@ RSpec.describe TeachingVacancies::API do
     let(:job_postings) do
       [
         { '@context' => 'http://schema.org', '@type' => 'JobPosting', 'title' => 'Teacher of Maths' },
-        { '@context' => 'http://schema.org', '@type' => 'JobPosting', 'title' => 'Second in Science' }
+        { '@context' => 'http://schema.org', '@type' => 'JobPosting', 'title' => 'Second in Science' },
       ]
     end
     let(:api_response) { double(body: "{\"data\": #{job_postings.to_json}}") }

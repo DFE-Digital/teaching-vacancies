@@ -14,7 +14,7 @@ RSpec.describe GetSubjectName do
 
     it 'returns the synonym name for a subject with a valid synonym' do
       expect(described_class.get_subject_name(synonym_subject)).to eql(
-        described_class::SUBJECT_SYNONYMS[synonym_subject.name]
+        described_class::SUBJECT_SYNONYMS[synonym_subject.name],
       )
     end
 

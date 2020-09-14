@@ -11,7 +11,7 @@ class SitemapController < ApplicationController
     render xml: map.render
   end
 
-  private
+private
 
   def add_vacancies(map)
     Vacancy.listed.applicable.find_each do |vacancy|

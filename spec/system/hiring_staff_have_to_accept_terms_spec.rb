@@ -56,8 +56,6 @@ RSpec.describe 'Hiring staff accepts terms and conditions' do
       expect(current_user).not_to be_accepted_terms_and_conditions
     end
 
-
-
     context 'signing out' do
       scenario 'with authentication fallback' do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(true)

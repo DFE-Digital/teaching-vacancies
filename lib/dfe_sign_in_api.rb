@@ -15,13 +15,13 @@ module DFESignIn
       perform_request('/users/approvers', page, APPROVERS_PAGE_SIZE)
     end
 
-    private
+  private
 
     def perform_request(endpoint, page, page_size)
       token = generate_jwt_token
       response = HTTParty.get(
         "#{DFE_SIGN_IN_URL}#{endpoint}?page=#{page}&pageSize=#{page_size}",
-        headers: { 'Authorization' => "Bearer #{token}" }
+        headers: { 'Authorization' => "Bearer #{token}" },
       )
 
       raise ExternalServerError if response.code.eql?(500)
@@ -42,7 +42,7 @@ module DFESignIn
     end
   end
 
-  private
+private
 
   def error_message_for(response)
     response['message'] || 'failed request'
@@ -50,7 +50,7 @@ module DFESignIn
 
   def number_of_pages
     response = api_response
-    raise (response['message'] || 'failed request') if response['numberOfPages'].nil?
+    raise(response['message'] || 'failed request') if response['numberOfPages'].nil?
 
     response['numberOfPages']
   end
@@ -65,7 +65,7 @@ module DFESignIn
       response = api_response(page: page)
       if users_nil_or_empty?(response)
         Rollbar.log(:error,
-          'DfE Sign In API responded with nil users')
+                    'DfE Sign In API responded with nil users')
         raise error_message_for(response)
       end
       response_pages.push(response['users'])

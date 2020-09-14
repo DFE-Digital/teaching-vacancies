@@ -8,6 +8,7 @@ class DocumentUpload
 
   def initialize(opts = {})
     raise MissingUploadPath if opts[:upload_path].nil?
+
     self.upload_path = opts[:upload_path]
     self.name = opts[:name]
     self.drive_service = Google::Apis::DriveV3::DriveService.new
@@ -28,14 +29,14 @@ class DocumentUpload
     self.uploaded = drive_service.create_file(
       { alt: 'media', name: name },
       fields: 'id, web_view_link, web_content_link, mime_type',
-      upload_source: upload_path
+      upload_source: upload_path,
     )
   end
 
   def set_public_permission_on_document
     drive_service.create_permission(
       uploaded.id,
-      Google::Apis::DriveV3::Permission.new(type: 'anyone', role: 'reader')
+      Google::Apis::DriveV3::Permission.new(type: 'anyone', role: 'reader'),
     )
   end
 
@@ -44,7 +45,7 @@ class DocumentUpload
     drive_service.get_file(
       uploaded.id,
       acknowledge_abuse: false,
-      download_dest: download_path
+      download_dest: download_path,
     )
   rescue Google::Apis::ClientError => e
     if e.status_code == FILE_VIRUS_STATUS_CODE

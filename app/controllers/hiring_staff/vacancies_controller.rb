@@ -4,8 +4,10 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   before_action :redirect_unless_permitted, only: %i[preview summary]
 
   def show
-    return redirect_to organisation_job_review_path(@vacancy.id),
-                       notice: I18n.t('messages.jobs.view.only_published') unless @vacancy.published?
+    unless @vacancy.published?
+      return redirect_to organisation_job_review_path(@vacancy.id),
+                         notice: I18n.t('messages.jobs.view.only_published')
+    end
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
@@ -20,6 +22,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
   def edit
     return redirect_to organisation_job_review_path(@vacancy.id) unless @vacancy.published?
+
     @vacancy.update(state: 'edit_published')
     @vacancy = VacancyPresenter.new(@vacancy)
   end
@@ -28,7 +31,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     reset_session_vacancy!
     store_vacancy_attributes(@vacancy.attributes)
 
-    if @vacancy.valid? || %w(copy edit_published).include?(@vacancy.state)
+    if @vacancy.valid? || %w[copy edit_published].include?(@vacancy.state)
       update_vacancy_state
       set_completed_step
     else
@@ -56,16 +59,18 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
-  private
+private
 
   def step_valid?(step_form)
     validation = step_form.new(@vacancy.attributes)
-    (validation&.valid?).tap { |valid| clear_cache_and_step unless valid }
+    validation&.valid?.tap { |valid| clear_cache_and_step unless valid }
   end
 
   def redirect_if_published
-    return redirect_to organisation_job_path(@vacancy.id),
-                       notice: I18n.t('messages.jobs.already_published') if @vacancy.published?
+    if @vacancy.published?
+      redirect_to organisation_job_path(@vacancy.id),
+                  notice: I18n.t('messages.jobs.already_published')
+    end
   end
 
   def redirect_unless_permitted
@@ -98,13 +103,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   end
 
   def update_vacancy_state
-    if params[:edit_draft] == 'true' || @vacancy&.state == 'edit'
-      state = 'edit'
-    elsif @vacancy&.state == 'copy'
-      state = 'copy'
-    else
-      state = 'review'
-    end
+    state = if params[:edit_draft] == 'true' || @vacancy&.state == 'edit'
+      'edit'
+            elsif @vacancy&.state == 'copy'
+      'copy'
+            else
+      'review'
+            end
     @vacancy.update(state: state)
   end
 end

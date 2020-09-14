@@ -33,7 +33,7 @@ class ImportPolygons
     end
   end
 
-  private
+private
 
   def location_categories_include?(region_name)
     location_type == :regions && DOWNCASE_REGIONS.include?(region_name) ||

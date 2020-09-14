@@ -58,7 +58,7 @@ class ExportTablesToBigQuery
 
   def initialize(bigquery: Bigquery.new)
     @dataset = bigquery.dataset(BIGQUERY_DATASET)
-    @runtime = DateTime.now.to_s(:db).parameterize
+    @runtime = Time.now.to_s(:db).parameterize
     # This ensures that new tables are automatically added to the BigQuery dataset.
     #
     # `#singularize` must come *after* `#camelize` in `#map` for the AuditData inflection rule to work correctly. The
@@ -83,13 +83,14 @@ class ExportTablesToBigQuery
     Rails.logger.info({ bigquery_export: 'finished' }.to_json)
   end
 
-  private
+private
 
   def bigquery_data(record, table)
     @bigquery_data = {}
 
     table.columns.map do |c|
       next if DROP_THESE_ATTRIBUTES.include?(c.name)
+
       data = record.send(c.name)
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
@@ -122,7 +123,7 @@ class ExportTablesToBigQuery
   end
 
   def bigquery_load(db_table)
-    started_at = DateTime.now.to_s(:db)
+    started_at = Time.now.to_s(:db)
     table_name = [BIGQUERY_TABLE_PREFIX, db_table.to_s.downcase].join('_')
     dataset.table(table_name)&.delete
     bq_table = dataset.table(table_name) || dataset.create_table(table_name) do |schema|
@@ -148,7 +149,7 @@ class ExportTablesToBigQuery
           error_count: result.error_count
         }.to_json)
 
-        if result.error_count > 0
+        if result.error_count.positive?
           Rollbar.warning(result.insert_errors)
           Rails.logger.error(result.insert_errors)
           error_count += result.error_count
@@ -160,12 +161,12 @@ class ExportTablesToBigQuery
     end
 
     db_table.find_in_batches(batch_size: inserter.max_rows) do |batch|
-      inserter.insert batch.map { |record| bigquery_data(record, db_table) }
+      inserter.insert(batch.map { |record| bigquery_data(record, db_table) })
     end
 
     monitoring({
       error_count: error_count,
-      finished_at: DateTime.now.to_s(:db),
+      finished_at: Time.now.to_s(:db),
       records_processed: record_count,
       started_at: started_at,
       table: table_name
@@ -177,10 +178,11 @@ class ExportTablesToBigQuery
   def bigquery_schema(table)
     @bigquery_schema = {}
 
-    table.columns.map do |c|
+    table.columns.map { |c|
       next if DROP_THESE_ATTRIBUTES.include?(c.name)
+
       @bigquery_schema[c.name] = ENUM_ATTRIBUTES[c.name] || CONVERT_THESE_TYPES[c.type] || c.type
-    end.compact
+    }.compact
 
     if table.column_names.include?('geolocation')
       @bigquery_schema['geolocation_x'] = :float

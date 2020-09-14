@@ -17,7 +17,7 @@ class DocumentDelete
     document.destroy
   end
 
-  private
+private
 
   attr_accessor :document, :drive_service
 

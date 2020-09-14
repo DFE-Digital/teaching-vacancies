@@ -19,7 +19,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     context 'when there is more than one job' do
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.keyword_location_html', keyword: keyword, location: location, count: count)
+          I18n.t('jobs.search_result_heading.keyword_location_html', keyword: keyword, location: location, count: count),
         )
       end
     end
@@ -29,7 +29,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.keyword_location_html', keyword: keyword, location: location, count: count)
+          I18n.t('jobs.search_result_heading.keyword_location_html', keyword: keyword, location: location, count: count),
         )
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     context 'when there is more than one job' do
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.keyword_html', keyword: keyword, count: count)
+          I18n.t('jobs.search_result_heading.keyword_html', keyword: keyword, count: count),
         )
       end
     end
@@ -51,19 +51,20 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.keyword_html', keyword: keyword, count: count)
+          I18n.t('jobs.search_result_heading.keyword_html', keyword: keyword, count: count),
         )
       end
     end
   end
 
   context 'when only location is present' do
-    let(:keyword) { nil
-  }
+    let(:keyword) do
+      nil
+    end
     context 'when there is more than one job' do
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.location_html', location: location, count: count)
+          I18n.t('jobs.search_result_heading.location_html', location: location, count: count),
         )
       end
     end
@@ -73,7 +74,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.location_html', location: location, count: count)
+          I18n.t('jobs.search_result_heading.location_html', location: location, count: count),
         )
       end
     end
@@ -86,7 +87,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
     context 'when there is more than one job' do
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.without_search_html', count: count)
+          I18n.t('jobs.search_result_heading.without_search_html', count: count),
         )
       end
     end
@@ -96,7 +97,7 @@ RSpec.describe Jobseekers::SearchResults::HeadingComponent, type: :component do
 
       it 'renders correct heading' do
         expect(rendered_component).to include(
-          I18n.t('jobs.search_result_heading.without_search_html', count: count)
+          I18n.t('jobs.search_result_heading.without_search_html', count: count),
         )
       end
     end

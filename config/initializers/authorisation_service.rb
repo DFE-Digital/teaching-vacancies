@@ -1,4 +1,3 @@
-
 if Rails.env.test?
   DFE_SIGN_IN_URL = 'https://test-url.local'.freeze
   DFE_SIGN_IN_PASSWORD = 'test-password'.freeze

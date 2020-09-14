@@ -6,6 +6,7 @@ class GeneralFeedbackController < ApplicationController
   def create
     @feedback = GeneralFeedback.new(general_feedback_params)
     return render 'new' unless @feedback.valid?
+
     recaptcha_valid = verify_recaptcha(model: @feedback, action: 'feedback')
 
     # v3_recaptcha does not interact with the user in any way. All it does is give them a score based on a number of
@@ -19,7 +20,7 @@ class GeneralFeedbackController < ApplicationController
     redirect_to root_path, success: I18n.t('messages.feedback.submitted')
   end
 
-  private
+private
 
   def general_feedback_params
     params.require(:general_feedback)

@@ -9,7 +9,7 @@ module AuthenticationConcerns
   end
 
   def authenticated?
-    session.has_key?(:session_id)
+    session.key?(:session_id)
   end
 
   def current_organisation

@@ -15,7 +15,7 @@ RSpec.describe AutoExpireCacheRedis do
 
   it 'can fetch all stored keys' do
     subject['another_url'] = 'another_value'
-    expect(subject.keys).to eq(['a_url', 'another_url'])
+    expect(subject.keys).to eq(%w[a_url another_url])
   end
 
   it 'can delete a stored key' do

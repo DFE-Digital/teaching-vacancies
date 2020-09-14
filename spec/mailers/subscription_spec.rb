@@ -5,7 +5,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
   before(:each) do
     stub_const('NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE', 'not-nil')
-    travel_to Time.zone.local(2019, 01, 01, 01, 01, 01)
+    travel_to Time.zone.parse('2019-01-01 01:01:01')
   end
 
   after(:each) { travel_back }
@@ -33,7 +33,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     expect(mail.to).to eq([subscription.email])
     expect(body_lines[0]).to match(/# #{I18n.t('app.title')}/)
     expect(body_lines[1]).to match(
-      /#{html_escape(I18n.t('subscriptions.email.confirmation.heading', reference: subscription.reference))}/
+      /#{html_escape(I18n.t('subscriptions.email.confirmation.heading', reference: subscription.reference))}/,
     )
     expect(body_lines[3]).to match(/#{I18n.t('subscriptions.email.confirmation.subheading', email: email)}/)
     expect(body_lines[5]).to match(/\* Subject: English/)
@@ -44,7 +44,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   it 'has an unsubscribe link' do
     expect(body_lines[10]).to match(/#{I18n.t('subscriptions.email.unsubscribe_text_html')}/)
     expect(body_lines.last).to include(
-      subscription_unsubscribe_url(subscription_id: subscription.token, protocol: 'http')
+      subscription_unsubscribe_url(subscription_id: subscription.token, protocol: 'http'),
     )
   end
 end

@@ -14,12 +14,12 @@ module ApplicationHelper
 
   def meta_description
     view = params[:id].presence || params[:action].presence
-    controller_I18n_path = controller_path.gsub('/', '.')
+    controller_i18n_path = controller_path.gsub('/', '.')
 
     if content_for :page_description
       content_for(:page_description).strip
-    elsif I18n.exists?("#{controller_I18n_path}.#{view}.page_description")
-      t("#{controller_I18n_path}.#{view}.page_description")
+    elsif I18n.exists?("#{controller_i18n_path}.#{view}.page_description")
+      t("#{controller_i18n_path}.#{view}.page_description")
     else
       t('app.description')
     end

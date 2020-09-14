@@ -23,7 +23,7 @@ class NqtJobAlertsController < ApplicationController
     end
   end
 
-  private
+private
 
   def nqt_job_alerts_params
     ParameterSanitiser.call(params[:nqt_job_alerts_form] || params).permit(:keywords, :location, :email)

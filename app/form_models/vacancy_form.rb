@@ -13,7 +13,7 @@ class VacancyForm
       params.except(
         :organisation_id, :organisation_ids, :documents_attributes,
         :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
-      )
+      ),
     )
   end
 

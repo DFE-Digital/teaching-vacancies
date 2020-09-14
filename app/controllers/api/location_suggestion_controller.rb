@@ -16,7 +16,7 @@ class Api::LocationSuggestionController < Api::ApplicationController
     }
   end
 
-  private
+private
 
   def location
     params[:location]

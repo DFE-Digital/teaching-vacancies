@@ -6,21 +6,21 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
       allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(:multi_school_jobs_enabled?)
     end
     context 'when MultiSchoolJobsFeature is enabled' do
-      let (:multi_school_jobs_enabled?) { true }
+      let(:multi_school_jobs_enabled?) { true }
 
       it 'returns an array including the multi-school option' do
         expect(helper.job_location_options).to eq(
           [
             ['At one school in the trust', :at_one_school],
             ['At more than one school in the trust', :at_multiple_schools],
-            ['At the trust\'s head office', :central_office]
-          ]
+            ['At the trust\'s head office', :central_office],
+          ],
         )
       end
     end
 
     context 'when MultiSchoolJobsFeature is not enabled' do
-      let (:multi_school_jobs_enabled?) { false }
+      let(:multi_school_jobs_enabled?) { false }
 
       it 'returns an array without the multi-school option' do
         allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
@@ -28,8 +28,8 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
         expect(helper.job_location_options).to eq(
           [
             ['At one school in the trust', :at_one_school],
-            ['At the trust\'s head office', :central_office]
-          ]
+            ['At the trust\'s head office', :central_office],
+          ],
         )
       end
     end
@@ -39,10 +39,10 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
     it 'returns an array of vacancy job role options' do
       expect(helper.job_role_options).to eq(
         [
-          ['Teacher', 'teacher'],
-          ['Leadership', 'leadership'],
-          ['SEN specialist', 'sen_specialist']
-        ]
+          %w[Teacher teacher],
+          %w[Leadership leadership],
+          ['SEN specialist', 'sen_specialist'],
+        ],
       )
     end
   end
@@ -54,8 +54,8 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
           [I18n.t('jobs.sort_by.most_relevant'), ''],
           [I18n.t('jobs.sort_by.publish_on.descending'), 'publish_on_desc'],
           [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
-          [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc']
-        ]
+          [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc'],
+        ],
       )
     end
   end
@@ -64,10 +64,10 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
     it 'returns an array of vacancy working patterns' do
       expect(helper.working_pattern_options).to eq(
         [
-          ['Full-time', 'full_time'],
-          ['Part-time', 'part_time'],
-          ['Job share', 'job_share']
-        ]
+          %w[Full-time full_time],
+          %w[Part-time part_time],
+          ['Job share', 'job_share'],
+        ],
       )
     end
   end

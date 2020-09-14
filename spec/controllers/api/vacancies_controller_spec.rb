@@ -94,7 +94,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
           first: 'https://localhost:3000/api/v1/jobs.json?page=1',
           last: 'https://localhost:3000/api/v1/jobs.json?page=4',
           next: 'https://localhost:3000/api/v1/jobs.json?page=3',
-          prev: 'https://localhost:3000/api/v1/jobs.json?page=1'
+          prev: 'https://localhost:3000/api/v1/jobs.json?page=1',
         )
       end
 
@@ -160,7 +160,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       context '#employment_type' do
         it 'maps full_time working pattern to FULL_TIME' do
-          vacancy = create(:vacancy, working_patterns: ['full_time'])
+          vacancy = create(:vacancy, working_patterns: %w[full_time])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
@@ -168,7 +168,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         end
 
         it 'maps part_time working pattern to PART_TIME' do
-          vacancy = create(:vacancy, working_patterns: ['part_time'])
+          vacancy = create(:vacancy, working_patterns: %w[part_time])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
@@ -176,7 +176,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         end
 
         it 'maps job_share working pattern to JOB_SHARE' do
-          vacancy = create(:vacancy, working_patterns: ['job_share'])
+          vacancy = create(:vacancy, working_patterns: %w[job_share])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 
@@ -184,7 +184,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         end
 
         it 'maps multiple values to an array' do
-          vacancy = create(:vacancy, working_patterns: ['part_time', 'job_share'])
+          vacancy = create(:vacancy, working_patterns: %w[part_time job_share])
 
           get :show, params: { id: vacancy.id, api_version: 1 }
 

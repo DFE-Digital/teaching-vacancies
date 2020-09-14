@@ -32,7 +32,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def update
     if @form.valid?
-      remove_subject_fields(@vacancy) unless @vacancy.subjects.nil?
+      remove_subject_fields unless @vacancy.subjects.nil?
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
@@ -41,14 +41,14 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     end
   end
 
-  private
+private
 
   def form_submission_path(vacancy_id)
     vacancy_id.present? ? organisation_job_job_specification_path(vacancy_id) : job_specification_organisation_job_path
   end
 
   def form_params
-    strip_empty_checkboxes(:job_specification_form, [:working_patterns, :job_roles, :subjects])
+    strip_empty_checkboxes(:job_specification_form, %i[working_patterns job_roles subjects])
     append_suitable_for_nqts_to_job_roles
     params.require(:job_specification_form)
           .permit(:state, :job_title, :suitable_for_nqt,
@@ -62,7 +62,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     end
   end
 
-  def remove_subject_fields(vacancy)
+  def remove_subject_fields
     @vacancy.subject = nil
     @vacancy.first_supporting_subject = nil
     @vacancy.second_supporting_subject = nil
@@ -71,7 +71,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def save_vacancy_as_draft
     if @form.vacancy.job_title.present?
       save_vacancy_without_validation
-      redirect_to_draft(@form.vacancy.id, @form.vacancy.job_title)
+      redirect_to_draft(@form.vacancy.job_title)
     else
       redirect_to jobs_with_type_organisation_path('draft')
     end
@@ -105,8 +105,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def set_job_location_fields
     if current_organisation.is_a?(School)
       @form.vacancy.job_location = 'at_one_school'
-      @form.vacancy.readable_job_location = readable_job_location('at_one_school',
-                                                                  school_name: current_organisation.name)
+      @form.vacancy.readable_job_location = readable_job_location('at_one_school', school_name: current_organisation.name)
     end
   end
 
@@ -118,12 +117,10 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
     job_location = @vacancy&.job_location.presence || session[:vacancy_attributes]&.[]('job_location')
     if current_organisation.is_a?(School)
       @previous_step_path = organisation_path
-    elsif %w(at_one_school at_multiple_schools).include?(job_location)
-      @previous_step_path = @vacancy.present? ?
-        organisation_job_schools_path(@vacancy.id) : schools_organisation_job_path
+    elsif %w[at_one_school at_multiple_schools].include?(job_location)
+      @previous_step_path = @vacancy.present? ? organisation_job_schools_path(@vacancy.id) : schools_organisation_job_path
     elsif job_location == 'central_office'
-      @previous_step_path = @vacancy.present? ?
-        organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path
+      @previous_step_path = @vacancy.present? ? organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path
     end
   end
 end

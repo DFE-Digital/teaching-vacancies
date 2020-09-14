@@ -8,6 +8,6 @@ class HiringStaff::SidebarComponent < ViewComponent::Base
   end
 
   def render?
-    @vacancy.blank? || %w(create review).include?(@vacancy.state)
+    @vacancy.blank? || %w[create review].include?(@vacancy.state)
   end
 end

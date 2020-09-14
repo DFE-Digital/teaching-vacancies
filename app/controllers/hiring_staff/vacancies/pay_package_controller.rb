@@ -20,7 +20,7 @@ class HiringStaff::Vacancies::PayPackageController < HiringStaff::Vacancies::App
     render :show
   end
 
-  private
+private
 
   def pay_package_form_params
     params.require(:pay_package_form).permit(:state, :salary, :benefits).merge(completed_step: current_step)

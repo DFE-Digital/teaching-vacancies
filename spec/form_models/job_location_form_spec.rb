@@ -11,7 +11,7 @@ RSpec.describe JobLocationForm, type: :model do
         it 'requests an entry in the field' do
           expect(job_location_form.valid?).to be false
           expect(job_location_form.errors.messages[:job_location]).to include(
-            I18n.t('activemodel.errors.models.job_location_form.attributes.job_location.blank')
+            I18n.t('activemodel.errors.models.job_location_form.attributes.job_location.blank'),
           )
         end
       end

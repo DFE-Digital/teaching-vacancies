@@ -4,7 +4,7 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
   let!(:vacancy) do
     VacancyPresenter.new(build(:vacancy, :complete,
                                job_title: 'Draft vacancy',
-                               working_patterns: ['full_time', 'part_time']))
+                               working_patterns: %w[full_time part_time]))
   end
   let(:draft_vacancy) { Vacancy.find_by(job_title: vacancy.job_title) }
 
@@ -51,10 +51,10 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
 
-        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
+        draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
@@ -74,10 +74,10 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
 
-        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
+        draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
@@ -100,10 +100,10 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
 
-        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
+        draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
@@ -126,10 +126,10 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
 
-        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
+        draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
@@ -154,10 +154,10 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
 
-        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
+        draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
@@ -191,10 +191,10 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         fill_in_pay_package_form_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
 
-        draft_vacancy.starts_on = DateTime.now + 1.year
+        draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
         draft_vacancy.expiry_time = Time.zone.now
-        draft_vacancy.publish_on = DateTime.now + 1.day
+        draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
         click_on I18n.t('buttons.continue')
@@ -220,7 +220,7 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
         click_on I18n.t('buttons.update_job')
 
         expect(page.body).to include(
-          I18n.t('messages.jobs.listing_updated', job_title: published_vacancy.job_title)
+          I18n.t('messages.jobs.listing_updated', job_title: published_vacancy.job_title),
         )
       end
     end

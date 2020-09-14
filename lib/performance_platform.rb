@@ -20,7 +20,7 @@ module PerformancePlatform
   end
 
   class TransactionsByChannel < Base
-    private
+  private
 
     def transaction_endpoint
       '/data/teaching-jobs-job-listings/transactions-by-channel'

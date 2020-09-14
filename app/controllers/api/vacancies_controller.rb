@@ -1,5 +1,5 @@
 class Api::VacanciesController < Api::ApplicationController
-  before_action :verify_json_request, only: %w[show index]
+  before_action :verify_json_request, only: %i[show index]
 
   MAX_API_RESULTS_PER_PAGE = 50
 
@@ -22,7 +22,7 @@ class Api::VacanciesController < Api::ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
-  private
+private
 
   def id
     params[:id]

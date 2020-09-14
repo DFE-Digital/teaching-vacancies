@@ -20,17 +20,17 @@ class Algolia::VacancyAlertBuilder < Algolia::VacancySearchBuilder
       filters: @search_filters,
       replica: @search_replica,
       hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
-      typoTolerance: false
+      typoTolerance: false,
     )
     Rails.logger.info(
       "#{vacancies.count} vacancies found for job alert with criteria: #{@params_hash}, "\
       "search_query: #{@keyword}, replica: #{@search_replica}, location_filter: #{@location_filter} "\
-      "and filters: #{@search_filter}"
+      "and filters: #{@search_filter}",
     )
     @vacancies
   end
 
-  private
+private
 
   def build_subscription_keyword(subscription_hash)
     [subscription_hash[:subject], subscription_hash[:job_title]].reject(&:blank?).join(' ')

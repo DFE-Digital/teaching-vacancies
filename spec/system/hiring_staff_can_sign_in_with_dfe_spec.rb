@@ -111,7 +111,7 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
         # Mock switching organisations from within DfE Sign In
         stub_authentication_step(
           organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
-          school_urn: '101010'
+          school_urn: '101010',
         )
         stub_authorisation_step(organisation_id: 'E8C509A2-3AD8-485C-957F-BEE7047FDA8D',
                                 fixture_file: 'dfe_sign_in_authorisation_for_different_org_response.json')

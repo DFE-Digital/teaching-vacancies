@@ -8,7 +8,7 @@ class EmailAddressValidator < ActiveModel::EachValidator
     error_message(record, attribute, invalid_error_message) if value[EMAIL_FORMAT].nil?
   end
 
-  private
+private
 
   def blank_email_message
     I18n.t('activerecord.errors.models.general_feedback.attributes.email.blank')

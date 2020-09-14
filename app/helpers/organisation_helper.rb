@@ -1,9 +1,10 @@
 module OrganisationHelper
-  OFSTED_REPORT_ENDPOINT = 'https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/'
+  OFSTED_REPORT_ENDPOINT = 'https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/'.freeze
 
   def location(organisation, job_location: nil)
     return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
       job_location.presence == 'at_multiple_schools'
+
     [organisation.name, organisation.town, organisation.county].reject(&:blank?).join(', ')
   end
 
@@ -13,6 +14,7 @@ module OrganisationHelper
 
   def organisation_type(organisation:, with_age_range: false)
     return organisation.group_type unless organisation.is_a?(School)
+
     school_type_details = [organisation.school_type.label.singularize, organisation.religious_character]
     school_type_details.push age_range(organisation) if with_age_range
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t('schools.not_given') }.join(', ')
@@ -47,6 +49,7 @@ module OrganisationHelper
 
   def age_range(school)
     return I18n.t('schools.not_given') unless school.minimum_age? && school.maximum_age?
+
     "#{school.minimum_age} to #{school.maximum_age}"
   end
 
@@ -64,7 +67,7 @@ module OrganisationHelper
     "#{section_number}."
   end
 
-  private
+private
 
   def number_of_pupils(school)
     I18n.t('schools.size.enrolled', pupils: pupils, number: school.gias_data['NumberOfPupils'])

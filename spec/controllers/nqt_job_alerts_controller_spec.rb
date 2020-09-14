@@ -56,7 +56,7 @@ RSpec.describe NqtJobAlertsController, type: :controller do
       it 'sanitizes form inputs' do
         subject
         expect(controller.send(:nqt_job_alerts_params)).to eq(
-          ActionController::Parameters.new(expected_safe_values).permit(:keywords, :location, :email)
+          ActionController::Parameters.new(expected_safe_values).permit(:keywords, :location, :email),
         )
       end
     end

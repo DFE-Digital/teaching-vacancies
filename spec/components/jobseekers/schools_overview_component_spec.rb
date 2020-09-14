@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }
-  let(:school_1) { create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) },
-                          website: 'https://this-is-a-test-url.tvs') }
+  let(:school_1) do
+    create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) },
+                    website: 'https://this-is-a-test-url.tvs')
+  end
   let(:school_2) { create(:school, name: 'Cambridge Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
   let(:school_3) { create(:school, name: 'London LSE', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
   let(:vacancy) do

@@ -22,18 +22,18 @@ RSpec.describe ExportDsiUsersToBigQuery do
   let(:successful_api_response) do
     json_response(
       "users": [user],
-      "numberOfPages": number_of_pages
+      "numberOfPages": number_of_pages,
     )
   end
 
   let(:unsuccessful_api_response) do
     json_response(
       "success": false,
-      "message": 'jwt expired'
+      "message": 'jwt expired',
     )
   end
 
-  let(:user) {
+  let(:user) do
     {
       'userId' => SecureRandom.uuid,
       'role' => ['End user', 'Approver'].sample,
@@ -42,9 +42,9 @@ RSpec.describe ExportDsiUsersToBigQuery do
       'given_name' => Faker::Name.first_name,
       'family_name' => Faker::Name.last_name,
       'email' => Faker::Internet.email,
-      'organisation' => { 'URN' => 100000 }
+      'organisation' => { 'URN' => 100_000 }
     }
-  }
+  end
 
   let(:expected_table_data) do
     [
@@ -57,7 +57,7 @@ RSpec.describe ExportDsiUsersToBigQuery do
         family_name: user['familyName'],
         email: user['email'],
         school_urn: user['organisation']['URN']
-      }
+      },
     ]
   end
 

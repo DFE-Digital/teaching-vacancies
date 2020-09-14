@@ -21,7 +21,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
     render :show
   end
 
-  private
+private
 
   def supporting_documents_form_params
     (params[:supporting_documents_form] || params)
@@ -30,8 +30,7 @@ class HiringStaff::Vacancies::SupportingDocumentsController < HiringStaff::Vacan
   end
 
   def next_step
-    @supporting_documents_form.supporting_documents == 'yes' ?
-      organisation_job_documents_path(@vacancy.id) : organisation_job_application_details_path(@vacancy.id)
+    @supporting_documents_form.supporting_documents == 'yes' ? organisation_job_documents_path(@vacancy.id) : organisation_job_application_details_path(@vacancy.id)
   end
 
   def redirect_to_documents_or_next_step

@@ -1,7 +1,7 @@
 module VacanciesHelper
   include VacanciesOptionsHelper
 
-  WORD_EXCEPTIONS = ['and', 'the', 'of', 'upon'].freeze
+  WORD_EXCEPTIONS = %w[and the of upon].freeze
 
   def format_location_name(location)
     uncapitalize_words(location.titleize)
@@ -21,12 +21,10 @@ module VacanciesHelper
   end
 
   def page_title_prefix(vacancy, form_object, page_heading)
-    if %w(create review).include?(vacancy.state)
-      "#{form_object.errors.present? ?
-        'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
+    if %w[create review].include?(vacancy.state)
+      "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
     else
-      "#{form_object.errors.present? ?
-        'Error: ' : ''}Edit the #{page_heading}"
+      "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading}"
     end
   end
 
@@ -37,13 +35,15 @@ module VacanciesHelper
 
   def review_heading(vacancy)
     return I18n.t('jobs.copy_review_heading') if vacancy.state == 'copy'
+
     I18n.t('jobs.review_heading')
   end
 
   def page_title(vacancy)
     return I18n.t('jobs.copy_job_title', job_title: vacancy.job_title) if vacancy.state == 'copy'
     return I18n.t('jobs.create_a_job_title', organisation: organisation_from_job_location(vacancy)) if
-      %w(create review).include?(vacancy.state)
+      %w[create review].include?(vacancy.state)
+
     I18n.t('jobs.edit_job_title', job_title: vacancy.job_title)
   end
 
@@ -61,8 +61,7 @@ module VacanciesHelper
         current_organisation.name
       end
 
-    organisation_for_title ?
-      I18n.t('jobs.create_a_job_title', organisation: organisation_for_title) : I18n.t('jobs.create_a_job_title_no_org')
+    organisation_for_title ? I18n.t('jobs.create_a_job_title', organisation: organisation_for_title) : I18n.t('jobs.create_a_job_title_no_org')
   end
 
   def missing_subjects?(vacancy)
@@ -75,20 +74,21 @@ module VacanciesHelper
   def hidden_state_field_value(vacancy, copy = false)
     return 'copy' if copy
     return 'edit_published' if vacancy&.published?
-    return vacancy&.state if %w(copy review edit).include?(vacancy&.state)
+    return vacancy&.state if %w[copy review edit].include?(vacancy&.state)
+
     'create'
   end
 
   def back_to_manage_jobs_link(vacancy)
-    if vacancy.listed?
-      state = 'published'
-    elsif vacancy.published? && vacancy.expiry_time.future?
-      state = 'pending'
-    elsif vacancy.published? && vacancy.expiry_time.past?
-      state = 'expired'
-    else
-      state = 'draft'
-    end
+    state = if vacancy.listed?
+      'published'
+            elsif vacancy.published? && vacancy.expiry_time.future?
+      'pending'
+            elsif vacancy.published? && vacancy.expiry_time.past?
+      'expired'
+            else
+      'draft'
+            end
     jobs_with_type_organisation_path(state)
   end
 
@@ -106,14 +106,16 @@ module VacanciesHelper
 
   def vacancy_about_school_hint_text(vacancy)
     return I18n.t('helpers.hint.job_summary_form.about_schools') if vacancy.organisations.many?
+
     I18n.t(
       'helpers.hint.job_summary_form.about_organisation',
-      organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize
+      organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize,
     )
   end
 
   def vacancy_about_school_value(vacancy)
     return '' if vacancy.organisations.many?
+
     vacancy_or_organisation_description(vacancy)
   end
 
@@ -121,6 +123,7 @@ module VacanciesHelper
     organisation = vacancy.parent_organisation
     return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
       vacancy&.job_location == 'at_multiple_schools'
+
     [organisation.name, organisation.town, organisation.county].compact.join(', ')
   end
 end

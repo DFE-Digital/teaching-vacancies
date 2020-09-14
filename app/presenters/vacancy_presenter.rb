@@ -68,9 +68,9 @@ class VacancyPresenter < BasePresenter
   def working_patterns
     return unless working_patterns?
 
-    patterns = model_working_patterns.map do |working_pattern|
+    patterns = model_working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    end.join(', ')
+    }.join(', ')
 
     I18n.t("jobs.working_patterns_info_#{model_working_patterns.count > 1 ? 'many' : 'one'}", patterns: patterns)
         .capitalize
@@ -101,7 +101,9 @@ class VacancyPresenter < BasePresenter
   end
 
   def show_job_roles
-    model.job_roles&.map { |job_role| I18n.t("jobs.job_role_options.#{job_role}") }.join(', ')
+    return unless model.job_roles
+
+    model.job_roles.map { |job_role| I18n.t("jobs.job_role_options.#{job_role}") }.join(', ')
   end
 
   def show_subjects

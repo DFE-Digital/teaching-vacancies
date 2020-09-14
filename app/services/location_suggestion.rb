@@ -11,19 +11,20 @@ class LocationSuggestion
   def initialize(location_input)
     raise MissingLocationInput if location_input.nil?
     raise InsufficientLocationInput if location_input.length < MINIMUM_LOCATION_INPUT_LENGTH
+
     self.location_input = location_input
   end
 
   def suggest_locations
     predictions = get_suggestions_from_google['predictions'].take(NUMBER_OF_SUGGESTIONS)
     suggestions = predictions.map { |prediction| prediction['description'] }
-    matched_terms = predictions.map do
-      |prediction| prediction['terms'].select { |term| term['offset'] == 0 }.map { |hit| hit['value'] }
+    matched_terms = predictions.map do |prediction|
+                      prediction['terms'].select { |term| term['offset'].zero? }.map { |hit| hit['value'] }
     end
     [suggestions, matched_terms]
   end
 
-  private
+private
 
   def request_url
     "https://maps.googleapis.com/maps/api/place/autocomplete/json?#{build_google_query.to_query}"
@@ -32,9 +33,11 @@ class LocationSuggestion
   def get_suggestions_from_google
     response = HTTParty.get(request_url)
     raise HTTParty::ResponseError, 'Something went wrong' unless response.success?
+
     parsed_response = JSON.parse(response.body)
     raise GooglePlacesAutocompleteError, parsed_response['error_message'] if
       parsed_response.keys.include?('error_message')
+
     parsed_response
   end
 
