@@ -96,7 +96,7 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
           "(publication_date_timestamp >= #{from_date.to_time.to_i} AND" \
           " publication_date_timestamp <= #{to_date.to_time.to_i}) AND " \
           '(job_roles:teacher OR job_roles:sen_specialist) AND ' \
-          '(organisation.readable_phases:secondary OR organisation.readable_phases:primary) AND ' \
+          '(education_phases:secondary OR education_phases:primary) AND ' \
           '(working_patterns:full_time OR working_patterns:part_time)',
         )
       end
