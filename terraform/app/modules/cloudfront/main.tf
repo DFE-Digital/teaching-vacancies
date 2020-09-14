@@ -149,9 +149,14 @@ resource aws_cloudfront_distribution default {
     ssl_support_method  = "sni-only"
   }
 
+  logging_config {
+    include_cookies = false
+    bucket          = "530003481352-tv-cloudfront-logs.s3.amazonaws.com"
+    prefix          = "review-pr-2011"
+  }
+
   tags = {
     Name        = "${var.project_name}-${var.environment}"
     Environment = var.environment
   }
 }
-
