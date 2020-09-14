@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 
 RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }

@@ -91,51 +91,7 @@
       = t('schools.school_location.many')
     %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') }, data: { schools: schools_map_data } }
     
-    %script{:type=>"text/javascript"}
-      :plain
-        const getSchools = () => {
-          if (document.getElementById('map_zoom').dataset.schools) {
-            return JSON.parse(document.getElementById('map_zoom').dataset.schools);
-          }
-          return false;
-        };
+    = render partial: '/vacancies/schools', formats: [:js]
 
-        // Stops working if I change to const initMap() => {}
-        function initMap() {
-          const schools = getSchools();
-
-          const bounds = new google.maps.LatLngBounds();
-
-          const map = new google.maps.Map(document.getElementById('map_zoom'));
-          
-          schools.forEach((school) => {
-            const contentString = `<div>` +
-                                    `<p>${school.name_link}</p>` +
-                                    `<p>${school.address}</p>` +
-                                    `<p>${school.school_type}</p>` +
-                                  `</div>`
-
-            const infoWindow = new google.maps.InfoWindow({
-              content: contentString
-            });
-
-            const latLng = { lat: school.lat, lng: school.lng };
-
-            const marker = new google.maps.Marker({
-              position: latLng,
-              map: map,
-              title: school.name
-            });
-
-            bounds.extend(latLng);
-
-            marker.addListener('click', function() {
-              infoWindow.open(map, marker);
-            });
-          })
-
-          map.fitBounds(bounds);
-        };
-    
     %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
     
