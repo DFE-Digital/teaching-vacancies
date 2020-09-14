@@ -151,7 +151,7 @@ resource aws_cloudfront_distribution default {
 
   logging_config {
     include_cookies = false
-    bucket          = "530003481352-tv-cloudfront-logs.s3.amazonaws.com"
+    bucket          = "530003481352-tv-cloudfront-logs-spike.s3.amazonaws.com"
     prefix          = "review-pr-2011"
   }
 
