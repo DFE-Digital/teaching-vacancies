@@ -38,19 +38,6 @@ WITH
     vacancy.id,
     job_roles,
     category),
-  scraped_vacancies_in_scope AS (
-  SELECT
-    scraped_vacancy.scraped_url AS url,
-    MIN(scraped_vacancy.publish_on) AS publish_on,
-    MIN(scraped_vacancy.expires_on) AS expires_on,
-    scraped_vacancy.vacancy_category AS category,
-    scraped_vacancy.source AS source
-  FROM
-    `teacher-vacancy-service.production_dataset.scraped_vacancies_in_scope` AS scraped_vacancy
-  GROUP BY
-    url,
-    category,
-    source ),
   all_vacancy_metrics AS (
   SELECT
     dates.date AS date,
@@ -84,7 +71,7 @@ WITH
   FROM
     dates
   CROSS JOIN
-    scraped_vacancies_in_scope
+     `teacher-vacancy-service.production_dataset.scraped_vacancies_in_scope` AS scraped_vacancies_in_scope
   WHERE
     scraped_vacancies_in_scope.source="TES"
   GROUP BY
