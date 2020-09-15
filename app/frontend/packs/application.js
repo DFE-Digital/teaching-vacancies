@@ -22,6 +22,7 @@ import 'src/shareUrl';
 import 'src/submitFeedback';
 import 'src/uploadDocuments';
 import 'src/vacancyShow';
+import 'src/map';
 
 import { initAll } from 'govuk-frontend';
 
