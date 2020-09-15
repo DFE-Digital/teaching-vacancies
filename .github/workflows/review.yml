@@ -52,7 +52,6 @@ jobs:
       with:
         build-args: BUILDKIT_INLINE_CACHE=1
         cache-from: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
-        push: true
         tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
         target: dev-build
 
