@@ -73,6 +73,7 @@ build-local-image:
 			--target production \
 			.
 
+		docker push $(repository):latest-production-cache
 		docker push $(repository):$(tag)
 
 .PHONY: deploy-local-image
