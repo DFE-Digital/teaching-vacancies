@@ -261,9 +261,12 @@ en:
         zero: Showing all jobs
         one: 1 filter applied
         other: '%{count} filters applied'
-    notification_labels:
-      new: new
-      action_required: action required
+    notifications:
+      content:
+        multi_school_job_notification_html: This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the trust</span>. You can find out more in Schools overview.
+      labels:
+        action_required: action required
+        new: new
     heading: 'Find a job in teaching'
     location_description: >-
       Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
