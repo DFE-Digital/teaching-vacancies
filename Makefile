@@ -51,22 +51,28 @@ production:
 
 .PHONY: build-builder-image
 build-builder-image:
-		$(eval tag=builder)
-		docker pull $(repository):$(tag)
-		docker build -t $(repository):$(tag) --file Dockerfile.$(tag) .
-		docker push $(repository):$(tag)
-
-.PHONY: build-final-image
-build-final-image:
-		$(eval tag=final)
-		docker pull $(repository):$(tag)
-		docker build -t $(repository):$(tag) --file Dockerfile.$(tag) .
-		docker push $(repository):$(tag)		
+		$(eval export DOCKER_BUILDKIT=1)
+		docker build \
+			--build-arg BUILDKIT_INLINE_CACHE=1 \
+			--cache-from $(repository):latest-build-cache \
+			--tag $(repository):latest-build-cache \
+			--target dev-build \
+			.
+		docker push $(repository):latest-build-cache
 
 .PHONY: build-local-image
 build-local-image:
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
-		docker build -t $(repository):$(tag) .
+		$(eval export DOCKER_BUILDKIT=1)
+		docker build \
+			--build-arg BUILDKIT_INLINE_CACHE=1 \
+			--cache-from $(repository):latest-build-cache \
+			--cache-from $(repository):latest-production-cache \
+			--tag $(repository):latest-production-cache \
+			--tag $(repository):$(tag) \
+			--target production \
+			.
+
 		docker push $(repository):$(tag)
 
 .PHONY: deploy-local-image
