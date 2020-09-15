@@ -1,0 +1,38 @@
+FROM ruby:2.7.1-alpine
+WORKDIR /app
+
+RUN set -eux; \
+	\
+        apk update && \
+        apk add --no-cache \
+                libpq \
+                libxml2 \
+                libxslt \
+                nodejs \
+                tzdata               
+RUN echo "Europe/London" > /etc/timezone && \
+        cp /usr/share/zoneinfo/Europe/London /etc/localtime
+
+# skip installing gem documentation
+RUN set -eux; \
+	mkdir -p /usr/local/etc; \
+	{ \
+		echo 'install: --no-document'; \
+		echo 'update: --no-document'; \
+	} >> /usr/local/etc/gemrc
+
+# Install the version of bundler which generated Gemfile.lock
+RUN gem install bundler:2.1.4
+
+# This image is for production env only
+ENV RAILS_ENV staging
+
+# Add user
+ONBUILD RUN addgroup -g 1000 -S app && \
+            adduser -u 1000 -S app -G app
+
+# Copy app with gems from former build stage
+ONBUILD COPY --from=builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
+ONBUILD COPY --from=builder --chown=app:app /app /app
+
+EXPOSE 3000

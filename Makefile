@@ -49,6 +49,20 @@ production:
 		$(eval env=production)
 		$(eval var_file=production)
 
+.PHONY: build-builder-image
+build-builder-image:
+		$(eval tag=builder)
+		docker pull $(repository):$(tag)
+		docker build -t $(repository):$(tag) --file Dockerfile.$(tag) .
+		docker push $(repository):$(tag)
+
+.PHONY: build-final-image
+build-final-image:
+		$(eval tag=final)
+		docker pull $(repository):$(tag)
+		docker build -t $(repository):$(tag) --file Dockerfile.$(tag) .
+		docker push $(repository):$(tag)		
+
 .PHONY: build-local-image
 build-local-image:
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
