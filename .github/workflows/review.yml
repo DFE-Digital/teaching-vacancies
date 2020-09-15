@@ -58,16 +58,13 @@ jobs:
     - name: Build and push docker production image
       uses: docker/build-push-action@v2
       with:
-        add_git_labels: true
         build-args: BUILDKIT_INLINE_CACHE=1
         cache-from: |
           ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
           ${{ env.DOCKERHUB_REPOSITORY }}:latest-production-cache
         tags: |
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
-          ${{ env.DOCKERHUB_REPOSITORY }}:latest-production-cache
-        tag_with_ref: true
-        tag_with_sha: true        
+          ${{ env.DOCKERHUB_REPOSITORY }}:latest-production-cache    
         target: production        
 
     - name: Terraform deploy
