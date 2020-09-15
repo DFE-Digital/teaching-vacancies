@@ -48,6 +48,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
         build-args: BUILDKIT_INLINE_CACHE=1
+        cache-from: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
         tags: latest-build-cache
         target: dev-build
 
