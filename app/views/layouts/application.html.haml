@@ -33,6 +33,7 @@
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     = render 'shared/skip_links'
+    = render 'layouts/cookies_banner' if CookiesBannerFeature.enabled? && !current_page?(page_path('cookies'))
     %header.govuk-header{ "data-module": "govuk-header", role: "banner" }
       .govuk-header__container.govuk-width-container
         .govuk-header__logo

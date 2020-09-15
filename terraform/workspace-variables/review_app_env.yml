@@ -4,6 +4,7 @@ BIG_QUERY_DATASET: staging_dataset
 CLOUD_STORAGE_BUCKET: tvs_staging
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: teaching-vacancies-dev.london.cloudapps.digital
+FEATURE_COOKIES_BANNER: true
 FEATURE_EMAIL_ALERTS: true
 FEATURE_MULTI_SCHOOL_JOBS: true
 FEATURE_READ_ONLY: false

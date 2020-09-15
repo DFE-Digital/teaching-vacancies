@@ -17,6 +17,15 @@ en:
     menu: 'Menu'
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
+  cookies_banner:
+    aria_label: Cookies banner
+    body: >-
+      We use cookies to collect information about how you use Teaching Vacancies. This helps us to make our service work
+      as well as possible and helps us to improve it in the future.
+    buttons:
+      accept_all: Accept all cookies
+      set_preferences: Set your preferences
+    heading: Cookies on Teaching Vacancies
   hiring_staff:
     managed_organisations:
       page_title: Manage your view
