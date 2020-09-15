@@ -247,7 +247,7 @@ WITH
           scraped_words=TV_words))<0.2 #allow only 1 in 5 words to be in one title but not in the other
       AND vacancies_joined_to_schools_and_groups.publish_on > DATE_SUB(TV_vacancy.publish_on, INTERVAL 14 DAY) #only match vacancies which were published within a fortnight of a vacancy in our database
       AND vacancies_joined_to_schools_and_groups.publish_on < DATE_ADD(TV_vacancy.publish_on, INTERVAL 14 DAY) )
-  SELECT
+  SELECT DISTINCT
     vacancies_joined_to_schools_and_groups.*,
   IF
     (LOWER(vacancies_joined_to_schools_and_groups.title) LIKE '%head%'
