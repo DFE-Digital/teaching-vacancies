@@ -17,15 +17,94 @@ en:
     menu: 'Menu'
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
-  cookies_banner:
-    aria_label: Cookies banner
-    body: >-
-      We use cookies to collect information about how you use Teaching Vacancies. This helps us to make our service work
-      as well as possible and helps us to improve it in the future.
-    buttons:
-      accept_all: Accept all cookies
-      set_preferences: Set your preferences
-    heading: Cookies on Teaching Vacancies
+
+  cookies:
+    banner:
+      aria:
+        label: Cookies banner
+      body: >-
+        We use cookies to collect information about how you use Teaching Vacancies. This helps us to make our service work
+        as well as possible and helps us to improve it in the future.
+      buttons:
+        accept_all: Accept all cookies
+        set_preferences: Set your preferences
+      heading: Cookies on Teaching Vacancies
+    form:
+      buttons:
+        save_changes: Save changes
+      legend: Do you want to accept Google Analytics cookies?
+      options:
+        consent: Yes, opt-in to Google Analytics cookies
+        no_consent: No, do not use cookies to track my website usage
+    page:
+      body:
+        anonymity: >-
+          We don't allow Google to use or share our analytics data. We anonymise any personally identifiable data,
+          like your IP address or your postcode before we share it with Google.
+        details:
+          intro: 'Google Analytics stores information about:'
+          list:
+            - the pages you visit on Teaching Vacancies
+            - how long you spend on each page
+            - how you got to the site
+            - what you click on while you're visiting the site
+        explanation: >-
+          We use Google Analytics software to collection information about how you use Teaching Vacancies.
+          We do this to make sure the site is meeting the needs of our users and to help us make improvements
+          based on those needs.
+        usage:
+          heading: How we use cookies
+          essential:
+            heading: Essential cookies
+            intro: 'Essential Teaching Vacancies cookies include:'
+            table:
+              header:
+                expires: Expires
+                name: Name
+                purpose: Purpose
+              consent:
+                expires: 6 months
+                name: consented-to-cookies
+                purpose: Saves your cookie consent settings
+              teaching_vacancies:
+                expires: When you close your browser
+                name: _teachingvacancies_session
+                purpose: Stores encrypted information about your time on the website
+          google_analytics:
+            heading: Measuring website usage (Google Analytics)
+            intro: 'Google Analytics sets the following cookies:'
+            table:
+              header:
+                expires: Expires
+                name: Name
+                purpose: Purpose
+              first:
+                expires: 2 years
+                name: _ga
+                purpose: Used to distinguish anonymous users
+              second:
+                expires: 24 hours
+                name: _gid
+                purpose: Used to distinguish anonymous users
+              third:
+                expires: 10 minutes
+                name: _gat_UA_11508887-2
+                purpose: Used to regulate how quickly data is passed to Google Analytics
+              fourth:
+                expires: 10 minutes
+                name: _gat_UA_145652997-2
+                purpose: Used to regulate how quickly data is passed to Google Analytics
+        service:
+          feedback: Your feedback
+          heading: Our service
+          intro_html: >-
+            Teaching Vacancies is a free job-listing service from the Department for Education.
+            It helps schools to save money on recruitment and you to take the next step in your career.
+            %{feedback_link} will help us improve the service
+      heading: Cookies
+      subheading: Cookies that measure website use
+      title: Cookies
+
   hiring_staff:
     managed_organisations:
       page_title: Manage your view
