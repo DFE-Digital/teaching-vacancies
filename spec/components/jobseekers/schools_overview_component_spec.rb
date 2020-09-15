@@ -107,14 +107,17 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     [school_1, school_2, school_3].each { |school| expect(rendered_component).to include(full_address(school)) }
   end
 
-  context 'when GIAS-obtained website has been overwritten' do
+  context 'when GIAS-provided website has been overwritten' do
     it 'renders a link to the school website' do
       expect(rendered_component).to include(school_1.website)
+    end
+
+    it 'does not render the GIAS-provided website' do
       expect(rendered_component).not_to include(school_1.url)
     end
   end
 
-  it 'renders all the GIAS-provided links to the school website' do
+  it 'renders all the GIAS-provided links to the school website section' do
     [school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
   end
 
@@ -122,13 +125,12 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     expect(rendered_component).to include(vacancy.school_visits)
   end
 
-  it 'renders the location heading for multiple schools' do
-    expect(rendered_component).to include('School locations')
-  end
-
   context 'when at least one school has a geolocation' do
-    it 'shows the map' do
+    it 'renders the location heading for multiple schools' do
       expect(rendered_component).to include('School locations')
+    end
+
+    it 'shows the map' do
       expect(rendered_component).to include('map')
     end
   end
@@ -136,8 +138,11 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   context 'when no school has a geolocation' do
     let(:geolocation_trait) { :no_geolocation }
 
-    it 'does not show the map' do
+    it 'does not render the location heading for multiple schools' do
       expect(rendered_component).not_to include('School locations')
+    end
+
+    it 'does not show the map' do
       expect(rendered_component).not_to include('map')
     end
   end
