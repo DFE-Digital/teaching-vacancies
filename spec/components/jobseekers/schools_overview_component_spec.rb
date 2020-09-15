@@ -148,29 +148,19 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   end
 
   describe '#schools_map_data' do
-    let(:school_1_data) do
-      JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data).each do |school|
-        @school_1_data = school if school['name'] == school_1.name
-      end
-      @school_1_data
+    let(:data) do
+      JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data)
     end
 
     context 'when the user has provided a website' do
       it 'links to the user-provided website' do
-        expect(school_1_data['name_link']).to eq "<a href=\"#{school_1.website}\">#{school_1.name}</a>"
+        expect(data.first['name_link']).to eq "<a href=\"#{school_1.website}\">#{school_1.name}</a>"
       end
     end
 
     context 'when the user has NOT provided a website' do
-      let(:school_2_data) do
-        JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data).each do |school|
-          @school_2_data = school if school['name'] == school_2.name
-        end
-        @school_2_data
-      end
-
       it 'links to the GIAS-provided url' do
-        expect(school_2_data['name_link']).to eq "<a href=\"#{school_2.url}\">#{school_2.name}</a>"
+        expect(data.second['name_link']).to eq "<a href=\"#{school_2.url}\">#{school_2.name}</a>"
       end
     end
   end

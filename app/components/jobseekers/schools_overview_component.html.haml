@@ -92,6 +92,7 @@
       = t('schools.schools_visits')
     = @vacancy.school_visits
 
+
   - if @vacancy.organisations.any?(&:geolocation)
     %h4.govuk-heading-s
       = t('schools.school_location.many')
