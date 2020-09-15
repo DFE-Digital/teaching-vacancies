@@ -47,8 +47,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
-        build-args: BUILDKIT_INLINE_CACHE=1
-        cache-from: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
+        build_args: BUILDKIT_INLINE_CACHE=1
+        cache_froms: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
         tags: latest-build-cache
         target: dev-build
 
@@ -58,8 +58,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ env.DOCKERHUB_REPOSITORY }}
-        build-args: BUILDKIT_INLINE_CACHE=1
-        cache-from: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
+        build_args: BUILDKIT_INLINE_CACHE=1
+        cache_froms: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
         tags: ${{ env.TAG }}
         target: dev-build        
 
