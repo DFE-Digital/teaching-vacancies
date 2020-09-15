@@ -42,10 +42,6 @@
   border-color: govuk-colour('blue');
 }
 
-.govuk-notification--notice__background {
-  background-color: rgba($color: govuk-colour('blue'), $alpha: 0.1);
-}
-
 .govuk-notification--success {
   background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%2300703c" width="25" height="25" viewBox="0 0 25 25"><path d="M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z" ></path></svg>');
   background-position: top 20px left 15px;
@@ -66,6 +62,18 @@
   .govuk-notification__list a {
     color: govuk-colour('red');
   }
+}
+
+.govuk-notification--notice.govuk-notification__background {
+  background-color: rgba($color: govuk-colour('blue'), $alpha: 0.1);
+}
+
+.govuk-notification--success.govuk-notification__background {
+  background-color: rgba($color: govuk-colour('green'), $alpha: 0.1);
+}
+
+.govuk-notification--danger.govuk-notification__background {
+  background-color: rgba($color: govuk-colour('red'), $alpha: 0.1);
 }
 
 .alert {
