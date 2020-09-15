@@ -4,7 +4,7 @@
 %html.govuk-template.app-html-class{ lang: "en" }
   /<![endif]
   %head
-    = render partial: 'shared/google_tag_manager_head'
+    = render partial: 'shared/google_tag_manager_head' if !CookiesBannerFeature.enabled? || cookies['consented-to-cookies'] == 'yes'
     = render partial: 'shared/open_graph'
     = render partial: 'shared/meta'
     %meta{ charset: "utf-8" }/
@@ -29,7 +29,7 @@
     %meta{ content: asset_pack_path('media/images/govuk-opengraph-image.png'), property: "og:image" }/
     = csrf_meta_tags
   %body{ class: body_class, data: { vacancy_state: @vacancy.present? ? @vacancy.state : 'create' } }
-    = render partial: 'shared/google_tag_manager_body'
+    = render partial: 'shared/google_tag_manager_body' if !CookiesBannerFeature.enabled? || cookies['consented-to-cookies'] == 'yes'
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     = render 'shared/skip_links'
