@@ -14,6 +14,13 @@ RSpec.describe 'Cookies banner' do
         expect(page).to have_content(I18n.t('cookies_banner.heading'))
       end
     end
+
+    context 'when visiting cookies page' do
+      scenario 'does not display cookies banner' do
+        visit page_path('cookies')
+        expect(page).to_not have_content(I18n.t('cookies_banner.heading'))
+      end
+    end
   end
 
   context 'when CookiesBannerFeature is disabled' do
