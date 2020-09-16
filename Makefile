@@ -49,31 +49,34 @@ production:
 		$(eval env=production)
 		$(eval var_file=production)
 
-.PHONY: build-builder-image
-build-builder-image:
+.PHONY: build-cache-image
+build-cache-image:
 		$(eval export DOCKER_BUILDKIT=1)
+		$(eval branch=$(shell git rev-parse --abbrev-ref HEAD))
 		docker build \
 			--build-arg BUILDKIT_INLINE_CACHE=1 \
-			--cache-from $(repository):latest-build-cache \
-			--tag $(repository):latest-build-cache \
+			--cache-from $(repository):build-cache-master \
+			--cache-from $(repository):build-cache-$(branch) \
+			--tag $(repository):build-cache-$(branch) \
 			--target dev-build \
 			.
-		docker push $(repository):latest-build-cache
+		docker push $(repository):build-cache-$(branch)
 
 .PHONY: build-local-image
 build-local-image:
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
+		$(eval branch=$(shell git rev-parse --abbrev-ref HEAD))
 		$(eval export DOCKER_BUILDKIT=1)
 		docker build \
 			--build-arg BUILDKIT_INLINE_CACHE=1 \
-			--cache-from $(repository):latest-build-cache \
-			--cache-from $(repository):latest-production-cache \
-			--tag $(repository):latest-production-cache \
+			--cache-from $(repository):build-cache-$(branch) \
+			--cache-from $(repository):$(branch) \
+			--tag $(repository):$(branch) \
 			--tag $(repository):$(tag) \
 			--target production \
 			.
 
-		docker push $(repository):latest-production-cache
+		docker push $(repository):$(branch)
 		docker push $(repository):$(tag)
 
 .PHONY: deploy-local-image

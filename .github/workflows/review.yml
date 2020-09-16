@@ -37,8 +37,12 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
+        BRANCH=${{ github.head_ref }}
         TAG=review-${PR_NAME}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
+        echo ::set-env name=BRANCH::${BRANCH}
         echo ::set-env name=TAG::${TAG}
+        echo ::set-output name=BRANCH::${BRANCH}
+        echo ::set-output name=TAG::${TAG}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -53,9 +57,11 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         build-args: BUILDKIT_INLINE_CACHE=1
-        cache-from: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
+        cache-from: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:build-cache-master 
+          ${{ env.DOCKERHUB_REPOSITORY }}:build-cache-${{ env.BRANCH }}
         push: true
-        tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:build-cache-${{ env.BRANCH }}
         target: dev-build
 
     - name: Build and push docker production image
@@ -63,13 +69,13 @@ jobs:
       with:
         build-args: BUILDKIT_INLINE_CACHE=1
         cache-from: |
-          ${{ env.DOCKERHUB_REPOSITORY }}:latest-build-cache
-          ${{ env.DOCKERHUB_REPOSITORY }}:latest-production-cache
+          ${{ env.DOCKERHUB_REPOSITORY }}:build-cache-${{ env.BRANCH }}
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
         push: true
         tags: |
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
-          ${{ env.DOCKERHUB_REPOSITORY }}:latest-production-cache    
-        target: production        
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
+        target: production
 
     - name: Terraform deploy
       env:
