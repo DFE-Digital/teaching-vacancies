@@ -22,6 +22,12 @@ SELECT
       sample_size_this_AY_so_far)) AS hires_rate_through_TV_confidence_interval_this_AY_so_far,
   1.96*SAFE.SQRT(SAFE_DIVIDE(hires_rate_through_TV_this_AY_so_far*(1-hires_rate_through_TV_in_the_last_year),
       sample_size_in_the_last_year)) AS hires_rate_through_TV_confidence_interval_in_the_last_year,
+  (SAFE_DIVIDE(1.96*SAFE.SQRT(SAFE_DIVIDE(in_scope_exclusive_hires_rate_this_AY_so_far*(1-in_scope_exclusive_hires_rate_this_AY_so_far),
+          in_scope_sample_size_this_AY_so_far)),
+      in_scope_exclusive_hires_rate_this_AY_so_far))*savings_this_AY_so_far AS savings_confidence_interval_this_AY_so_far,
+  (SAFE_DIVIDE(1.96*SAFE.SQRT(SAFE_DIVIDE(in_scope_exclusive_hires_rate_in_the_last_year*(1-in_scope_exclusive_hires_rate_in_the_last_year),
+          in_scope_sample_size_in_the_last_year)),
+      in_scope_exclusive_hires_rate_in_the_last_year))*savings_in_the_last_year AS savings_confidence_interval_in_the_last_year,
 FROM (
   SELECT
     *,
@@ -29,6 +35,8 @@ FROM (
     #from the preceding 1st September and the month on each row
     SUM(vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS vacancies_published_this_AY_so_far,
     SUM(sample_size_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS sample_size_this_AY_so_far,
+    SUM(in_scope_sample_size_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS in_scope_sample_size_this_AY_so_far,
+    SUM(in_scope_sample_size_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)/SUM(in_scope_vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS in_scope_response_rate_this_AY_so_far,
     SUM(sample_size_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS response_rate_this_AY_so_far,
     CAST(SUM(hires_rate_through_tv_this_month*vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS INT64) AS hires_through_tv_this_AY_so_far,
     CAST(SUM(exclusive_hires_rate_this_month*vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS INT64) AS exclusive_hires_this_AY_so_far,
@@ -40,6 +48,7 @@ FROM (
     SUM(exclusive_listings_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS exclusive_listings_feedback_this_AY_so_far,
     SUM(hires_rate_through_tv_this_month*vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS hires_rate_through_tv_this_AY_so_far,
     SUM(exclusive_hires_rate_this_month*vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS exclusive_hires_rate_this_AY_so_far,
+    SUM(in_scope_exclusive_hires_rate_this_month*in_scope_vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)/SUM(in_scope_vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS in_scope_exclusive_hires_rate_this_AY_so_far,
     SUM(exclusivity_rate_this_month*vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS exclusivity_rate_this_AY_so_far,
     SAFE_DIVIDE(SUM(hires_through_tv_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),
       SUM(sample_size_this_month) OVER (PARTITION BY AY_beginning ORDER BY month ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) AS raw_hires_rate_through_tv_this_AY_so_far,
@@ -50,7 +59,10 @@ FROM (
     #calculate the values of each metric over the previous 11 months and the month on this row
     SUM(vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS vacancies_published_in_the_last_year,
     SUM(sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS sample_size_in_the_last_year,
+    SUM(in_scope_vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS in_scope_vacancies_published_in_the_last_year,
+    SUM(in_scope_sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS in_scope_sample_size_in_the_last_year,
     SUM(sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS response_rate_in_the_last_year,
+    SUM(in_scope_sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)/SUM(in_scope_vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS in_scope_response_rate_in_the_last_year,
     CAST(SUM(hires_rate_through_tv_this_month*vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS INT64) AS hires_through_tv_in_the_last_year,
     CAST(SUM(exclusive_hires_rate_this_month*vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS INT64) AS exclusive_hires_in_the_last_year,
     CAST(SUM(exclusivity_rate_this_month*vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS INT64) AS exclusive_listings_in_the_last_year,
@@ -61,6 +73,7 @@ FROM (
     SUM(exclusive_listings_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS exclusive_listings_feedback_in_the_last_year,
     SUM(hires_rate_through_tv_this_month*vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS hires_rate_through_tv_in_the_last_year,
     SUM(exclusive_hires_rate_this_month*vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS exclusive_hires_rate_in_the_last_year,
+    SUM(in_scope_exclusive_hires_rate_this_month*in_scope_vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)/SUM(in_scope_vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS in_scope_exclusive_hires_rate_in_the_last_year,
     SUM(exclusivity_rate_this_month*vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)/SUM(vacancies_published_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS exclusivity_rate_in_the_last_year,
     SAFE_DIVIDE(SUM(hires_through_tv_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW),
       SUM(sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)) AS raw_hires_rate_through_tv_in_the_last_year,
@@ -68,12 +81,27 @@ FROM (
       SUM(sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)) AS raw_exclusive_hires_rate_in_the_last_year,
     SAFE_DIVIDE(SUM(exclusive_listings_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW),
       SUM(sample_size_this_month) OVER (ORDER BY month ASC ROWS BETWEEN 11 PRECEDING AND CURRENT ROW)) AS raw_exclusivity_rate_in_the_last_year,
+    1200*in_scope_exclusive_hires_this_month*1.96*SAFE_DIVIDE(SAFE.SQRT(SAFE_DIVIDE(in_scope_exclusive_hires_rate_this_month*(1-in_scope_exclusive_hires_rate_this_month),
+          in_scope_sample_size_this_month)),
+      in_scope_exclusive_hires_rate_this_month) AS savings_confidence_interval_this_month,
   FROM (
     SELECT
       month,
       AY_beginning,
       SUM(vacancies_published) AS vacancies_published_this_month,
       SUM(sample_size) AS sample_size_this_month,
+      SUM(
+      IF
+        (category IN ("teacher",
+            "leadership"),
+          vacancies_published,
+          0)) AS in_scope_vacancies_published_this_month,
+      SUM(
+      IF
+        (category IN ("teacher",
+            "leadership"),
+          sample_size,
+          0)) AS in_scope_sample_size_this_month,
       SAFE_DIVIDE(SUM(sample_size),
         SUM(vacancies_published)) AS response_rate_this_month,
       #Extrapolations from hiring staff feedback to estimates of total numbers of
@@ -81,6 +109,12 @@ FROM (
       #normalised by category (teacher,leadership,teaching_assistant or NULL)
       CAST(SUM(hires_rate_through_tv*vacancies_published) AS INT64) AS hires_through_tv_this_month,
       CAST(SUM(exclusive_hires_rate*vacancies_published) AS INT64) AS exclusive_hires_this_month,
+      SUM(
+      IF
+        (category IN ("teacher",
+            "leadership"),
+          exclusive_hires_rate*vacancies_published,
+          0)) AS in_scope_exclusive_hires_this_month,
       CAST(SUM(exclusivity_rate*vacancies_published) AS INT64) AS exclusive_listings_this_month,
       #assume that only teachers and leadership exclusive hires save schools
       #£1200/vacancy, and that other vacancies do not
@@ -104,6 +138,18 @@ FROM (
       #the overall proportion of vacancies which were hires, exclusive etc,
       #normalised by category
       SUM(hires_rate_through_tv*vacancies_published)/SUM(vacancies_published) AS hires_rate_through_tv_this_month,
+      SAFE_DIVIDE(SUM(
+        IF
+          (category IN ("teacher",
+              "leadership"),
+            exclusive_hires_rate*vacancies_published,
+            0)),
+        SUM(
+        IF
+          (category IN ("teacher",
+              "leadership"),
+            vacancies_published,
+            0))) AS in_scope_exclusive_hires_rate_this_month,
       SUM(exclusive_hires_rate*vacancies_published)/SUM(vacancies_published) AS exclusive_hires_rate_this_month,
       SUM(exclusivity_rate*vacancies_published)/SUM(vacancies_published) AS exclusivity_rate_this_month,
       #Extrapolations from hiring staff feedback to estimates of
