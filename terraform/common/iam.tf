@@ -122,3 +122,22 @@ resource aws_iam_user_policy_attachment upload_db_backups_to_s3 {
   user       = aws_iam_user.deploy.name
   policy_arn = aws_iam_policy.upload_db_backups_to_s3.arn
 }
+
+# Cloudfront logs to S3
+
+data aws_iam_policy_document cloudfront_logs_to_s3 {
+  statement {
+    actions   = ["s3:GetBucketAcl", "s3:PutBucketAcl"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.bucket}"]
+  }
+}
+
+resource aws_iam_policy cloudfront_logs_to_s3 {
+  name   = "cloudfront_logs_to_s3"
+  policy = data.aws_iam_policy_document.cloudfront_logs_to_s3.json
+}
+
+resource aws_iam_user_policy_attachment cloudfront_logs_to_s3 {
+  user       = aws_iam_user.deploy.name
+  policy_arn = aws_iam_policy.cloudfront_logs_to_s3.arn
+}
