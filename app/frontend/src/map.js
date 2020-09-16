@@ -29,6 +29,7 @@ window.initMap = () => {
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
       center: myLatLng,
+      mapTypeControlOptions: { mapTypeIds: [] }, // Removes terrain options section ('map' or 'satellite')
     });
 
     const marker = new google.maps.Marker({
@@ -50,6 +51,7 @@ window.initMap = () => {
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
       center: firstLatLng,
+      mapTypeControlOptions: { mapTypeIds: [] }, // Removes terrain options section ('map' or 'satellite')
     });
 
     // Use one infoWindow for all markers.
@@ -59,7 +61,7 @@ window.initMap = () => {
     schools.forEach((sch) => {
       const contentString = `<p>${sch.name_link}</p>
                             <p>${sch.address}</p>
-                            <p>${sch.school_type}</p>`;
+                            <p>School type: ${sch.school_type}</p>`;
 
       const latLng = { lat: sch.lat, lng: sch.lng };
 
