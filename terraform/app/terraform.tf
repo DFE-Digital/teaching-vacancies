@@ -53,6 +53,7 @@ module cloudfront {
   offline_bucket_domain_name    = each.value.offline_bucket_domain_name
   offline_bucket_origin_path    = each.value.offline_bucket_origin_path
   domain                        = each.value.domain
+  route53_zones                 = var.route53_zones
 }
 
 module cloudwatch {

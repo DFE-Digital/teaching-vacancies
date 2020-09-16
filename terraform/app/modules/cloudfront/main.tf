@@ -160,3 +160,25 @@ resource aws_cloudfront_distribution default {
     Environment = var.environment
   }
 }
+
+resource aws_route53_record cloudfront-a-records {
+  for_each = local.route53_zones_with_a_records
+  zone_id  = data.aws_route53_zone.zones[each.value].zone_id
+  name     = each.value
+  type     = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.default.domain_name
+    zone_id                = aws_cloudfront_distribution.default.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource aws_route53_record cloudfront-cnames {
+  for_each = local.route53_zones_with_cnames
+  zone_id  = data.aws_route53_zone.zones[each.value].zone_id
+  name     = "${local.route53_prefix}.${each.value}"
+  type     = "CNAME"
+  ttl      = "300"
+  records  = ["${aws_cloudfront_distribution.default.domain_name}."]
+}

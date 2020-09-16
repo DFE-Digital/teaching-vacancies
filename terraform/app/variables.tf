@@ -24,6 +24,11 @@ variable distribution_list {
   default = {}
 }
 
+variable route53_zones {
+  type    = list
+  default = ["teaching-jobs.service.gov.uk", "teaching-vacancies.service.gov.uk"]
+}
+
 # CloudWatch
 variable channel_list {
   description = "Define slack channels CloudWatch should send alerts to"
