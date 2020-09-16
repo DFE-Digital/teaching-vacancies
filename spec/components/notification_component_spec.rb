@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe NotificationComponent, type: :component do
   let(:content) { 'This is content' }
   let(:style) { 'notice' }
+  let(:links) { nil }
   let(:dismiss) { true }
   let(:background) { false }
   let(:alert) { false }
@@ -10,6 +11,7 @@ RSpec.describe NotificationComponent, type: :component do
     render_inline(NotificationComponent.new(
                     content: content,
                     style: style,
+                    links: links,
                     dismiss: dismiss,
                     background: background,
                     alert: alert,
@@ -116,6 +118,28 @@ RSpec.describe NotificationComponent, type: :component do
     context 'when background is false' do
       it 'does not apply the background class' do
         expect(inline_component.css('.govuk-notification__background')).to be_blank
+      end
+    end
+  end
+
+  describe '#links' do
+    context 'when links are supplied' do
+      let(:links) { { first: 'This is a test link', second: 'This is another link' } }
+
+      it 'renders the links list' do
+        expect(inline_component.css('.govuk-notification__list')).to_not be_blank
+      end
+
+      it 'renders the first link' do
+        expect(inline_component.css('.govuk-notification__list').to_html).to include(
+          '<a class="govuk-link govuk-link--no-visited-state" href="#first">This is a test link</a>',
+        )
+      end
+
+      it 'renders the second link' do
+        expect(inline_component.css('.govuk-notification__list').to_html).to include(
+          '<a class="govuk-link govuk-link--no-visited-state" href="#second">This is another link</a>',
+        )
       end
     end
   end

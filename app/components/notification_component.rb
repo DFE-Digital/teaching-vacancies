@@ -1,7 +1,8 @@
 class NotificationComponent < ViewComponent::Base
-  def initialize(content:, style:, dismiss: true, background: false, alert: false)
+  def initialize(content:, style:, links: nil, dismiss: true, background: false, alert: false)
     @content = content
     @style = style
+    @links = links
     @dismiss = style == 'danger' ? false : dismiss
     @background = background
     @alert = %w[danger success].include?(style) ? false : alert
