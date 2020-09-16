@@ -268,11 +268,12 @@ en:
         supporting_documents_html:
           "Would you like to attach supporting documents? (<span class='text-red'>Required</span>)"
       application_details_form:
-        contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
-        school_visits: School visits
-        how_to_apply: How to apply
-        trust_visits: Trust visits
         application_link: Link to online application
+        contact_email_html: "Contact email (<span class='text-red'>Required</span>)"
+        contact_number: Contact phone number
+        how_to_apply: How to apply
+        school_visits: School visits
+        trust_visits: Trust visits
       job_summary_form:
         job_summary_html: "Job summary (<span class='text-red'>Required</span>)"
         about_organisation_html: "About %{organisation} (<span class='text-red'>Required</span>)"
@@ -310,12 +311,12 @@ en:
         supporting_documents:
           'These could include, for example, a job description, person specification or application pack'
       application_details_form:
+        application_link: Leave this blank unless candidates can apply directly on the school or council website
         contact_email: This email address will be shown publicly as a point of contact
-        school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
+        contact_number: This phone number will be for any questions applicants may have about the role
         how_to_apply: Explain how to apply for the job, referring to any relevant documents
+        school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
-        application_link: >-
-          Leave this blank unless candidates can apply directly on the school or council website
       job_summary_form:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
@@ -499,6 +500,7 @@ en:
     contact_email: 'Contact email'
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: 'Regarding the job at %{url}'
+    contact_number: Contact phone number
     school_visits: 'School visit instructions'
     school_visits_heading: 'Arranging a visit to %{school}'
     trust_visits: 'Trust visit instructions'
@@ -759,7 +761,6 @@ en:
   school_groups:
     address: Trust address
     description: Description
-    email: 'Trust email'
     group_type: Group type
     info: 'About %{school_group}'
     school_group_location: 'Head office location'

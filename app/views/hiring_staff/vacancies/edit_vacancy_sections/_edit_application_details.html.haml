@@ -1,5 +1,5 @@
 = render 'hiring_staff/vacancies/section_tag', section: 'application_details'
-= render 'hiring_staff/vacancies/error_tag', attributes: [:contact_email, :school_visits, :how_to_apply, :application_link], section: 'application_details'
+= render 'hiring_staff/vacancies/error_tag', attributes: [:contact_email, :contact_number, :school_visits, :how_to_apply, :application_link], section: 'application_details'
 
 %h2.govuk-heading-m.app-task-list__section#application_details_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:application_details, current_organisation)
@@ -14,7 +14,11 @@
     %dd.app-check-your-answers__answer.first-question
       =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
 
-  - organisation = @vacancy.parent_organisation.is_a?(SchoolGroup) ? 'trust_visits' : 'school_visits'
+  .app-check-your-answers__contents
+    %dt.app-check-your-answers__question#contact_number
+      %h4.govuk-heading-s= t('jobs.contact_number')
+    %dd.app-check-your-answers__answer
+      = @vacancy.contact_number.present? ? link_to(@vacancy.contact_number, "tel:#{@vacancy.contact_number}", class: 'govuk-link') : t('jobs.not_defined')
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#school_visits

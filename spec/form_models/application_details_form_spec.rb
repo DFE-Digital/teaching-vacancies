@@ -1,28 +1,72 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationDetailsForm, type: :model do
-  subject { ApplicationDetailsForm.new({}) }
+  let(:subject) { described_class.new(params) }
 
-  context 'validations' do
-    it { should validate_presence_of(:contact_email).with_message('Enter a contact email') }
-
+  describe '#validations' do
     describe '#application_link' do
-      let(:application_details) { ApplicationDetailsForm.new(application_link: 'not a url') }
+      context 'when application_link is invalid' do
+        let(:params) { { application_link: 'invalid_link' } }
 
-      it 'checks for a valid url' do
-        expect(application_details.valid?).to be false
-        expect(application_details.errors.messages[:application_link][0])
-          .to eq(I18n.t('application_details_errors.application_link.url'))
+        it 'is invalid' do
+          expect(subject.valid?).to be false
+        end
+
+        it 'raises correct error message' do
+          subject.valid?
+          expect(subject.errors.messages[:application_link].first).to eql(
+            I18n.t('application_details_errors.application_link.url'),
+          )
+        end
       end
     end
 
     describe '#contact_email' do
-      let(:application_details) { ApplicationDetailsForm.new(contact_email: 'Some string') }
+      context 'when contact_email is blank' do
+        let(:params) { {} }
 
-      it 'checks for a valid email format' do
-        expect(application_details.valid?).to be false
-        expect(application_details.errors.messages[:contact_email][0])
-          .to eq(I18n.t('application_details_errors.contact_email.invalid'))
+        it 'is invalid' do
+          expect(subject.valid?).to be false
+        end
+
+        it 'raises correct error message' do
+          subject.valid?
+          expect(subject.errors.messages[:contact_email].first).to eql(
+            I18n.t('application_details_errors.contact_email.blank'),
+          )
+        end
+      end
+
+      context 'when contact_email is invalid' do
+        let(:params) { { contact_email: 'invalid-email' } }
+
+        it 'is invalid' do
+          expect(subject.valid?).to be false
+        end
+
+        it 'raises correct error message' do
+          subject.valid?
+          expect(subject.errors.messages[:contact_email].first).to eql(
+            I18n.t('application_details_errors.contact_email.invalid'),
+          )
+        end
+      end
+    end
+
+    describe '#contact_number' do
+      context 'when contact_number is invalid' do
+        let(:params) { { contact_number: 'invalid-01234' } }
+
+        it 'is invalid' do
+          expect(subject.valid?).to be false
+        end
+
+        it 'raises correct error message' do
+          subject.valid?
+          expect(subject.errors.messages[:contact_number].first).to eql(
+            I18n.t('application_details_errors.contact_number.invalid'),
+          )
+        end
       end
     end
   end
@@ -32,14 +76,16 @@ RSpec.describe ApplicationDetailsForm, type: :model do
       application_details = ApplicationDetailsForm.new(state: 'create',
                                                        application_link: 'http://an.application.link',
                                                        contact_email: 'some@email.com',
-                                                       school_visits: 'How you can visit the school',
-                                                       how_to_apply: 'How you can apply for the job')
+                                                       contact_number: '01234 123456',
+                                                       how_to_apply: 'How you can apply for the job',
+                                                       school_visits: 'How you can visit the school')
 
       expect(application_details.valid?).to be true
-      expect(application_details.vacancy.contact_email).to eql('some@email.com')
       expect(application_details.vacancy.application_link).to eql('http://an.application.link')
-      expect(application_details.vacancy.school_visits).to eql('How you can visit the school')
+      expect(application_details.vacancy.contact_email).to eql('some@email.com')
+      expect(application_details.vacancy.contact_number).to eql('01234 123456')
       expect(application_details.vacancy.how_to_apply).to eql('How you can apply for the job')
+      expect(application_details.vacancy.school_visits).to eql('How you can visit the school')
     end
   end
 end

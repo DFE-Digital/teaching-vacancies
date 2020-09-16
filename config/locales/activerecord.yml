@@ -49,11 +49,13 @@ en:
     supporting_documents:
       inclusion: "Please indicate if you'd like to attach supporting documents"
   application_details_errors: &application_details_errors
+    application_link:
+      url: Enter a link in the correct format, like http://www.school.ac.uk
     contact_email:
       blank: Enter a contact email
       invalid: Enter an email address in the correct format, like name@example.com
-    application_link:
-      url: Enter a link in the correct format, like http://www.school.ac.uk
+    contact_number:
+      invalid: Contact number must be a valid phone number
   job_summary_errors: &job_summary_errors
     job_summary:
       blank: Enter a job summary

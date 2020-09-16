@@ -24,7 +24,7 @@ private
 
   def application_details_form_params
     params.require(:application_details_form)
-          .permit(:state, :application_link, :contact_email, :school_visits, :how_to_apply)
+          .permit(:state, :application_link, :contact_email, :contact_number, :school_visits, :how_to_apply)
           .merge(completed_step: current_step)
   end
 
