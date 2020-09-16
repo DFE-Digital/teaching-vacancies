@@ -185,9 +185,11 @@ class Vacancy < ApplicationRecord
   end
 
   def _geoloc
-    organisations.map do |organisation|
-      { lat: organisation.geolocation&.x&.to_f, lng: organisation.geolocation&.y&.to_f }
-    end
+    organisations.map { |organisation|
+      if organisation.geolocation.present?
+        { lat: organisation.geolocation.x.to_f, lng: organisation.geolocation.y.to_f }
+      end
+    }.reject(&:blank?).presence
   end
 
   extend FriendlyId
