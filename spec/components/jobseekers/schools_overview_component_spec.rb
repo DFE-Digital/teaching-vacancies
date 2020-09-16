@@ -130,8 +130,8 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
       expect(rendered_component).to include('School locations')
     end
 
-    it 'shows the map' do
-      expect(rendered_component).to include('map')
+    it 'shows the map element for Google Maps API to populate' do
+      expect(rendered_component).not_to include('map')
     end
   end
 
