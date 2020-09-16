@@ -14,7 +14,7 @@
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('school_groups.website')
           %td.govuk-table__cell
-            = link_to(t('jobs.website_link_text', organisation_name: @vacancy.parent_organisation.name), @vacancy.parent_organisation.website.presence || @vacancy.parent_organisation.url, class: 'govuk-link wordwrap', target: '_blank')
+            = link_to(t('schools.website_link_text', organisation_name: @vacancy.parent_organisation.name), @vacancy.parent_organisation.website.presence || @vacancy.parent_organisation.url, class: 'govuk-link wordwrap', target: '_blank')
       - if @vacancy.contact_email.present?
         %tr.govuk-table__row
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
@@ -79,7 +79,7 @@
                   %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
                     = t('schools.website')
                   %td.govuk-table__cell
-                    = link_to(t('jobs.website_link_text', organisation_name: organisation.name), organisation.website.presence || organisation.url, class: 'govuk-link link-wrap', target: '_blank')
+                    = link_to(t('schools.website_link_text', organisation_name: organisation.name), organisation.website.presence || organisation.url, class: 'govuk-link link-wrap', target: '_blank')
 
   - if @vacancy.school_visits.present?
     %h4.govuk-heading-s
