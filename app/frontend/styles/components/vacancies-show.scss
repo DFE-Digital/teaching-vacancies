@@ -18,3 +18,12 @@ a.govuk-tabs__tab.tab-links-override:focus,
 a.js-enabled .govuk-tabs__tab.tab-links-override:focus {
   color: $govuk-link-active-colour;
 }
+
+body {
+  &.vacancies_show,
+  &.vacancies_preview {
+    .govuk-main-wrapper {
+      padding-top: 0;
+    }
+  }
+}
