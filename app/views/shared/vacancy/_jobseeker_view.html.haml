@@ -22,29 +22,34 @@
     - if @vacancy.organisations.many?
       = render(NotificationComponent.new(content: t('jobs.notifications.content.multi_school_job_notification_html'), style: 'notice', background: true, dismiss: false, alert: true))
 
-    .govuk-tabs{"data-module": "govuk-tabs"}
-      %h2.govuk-tabs__title
-        = t('jobs.key_info')
-      %ul.govuk-tabs__list
-        %li.govuk-tabs__list-item.govuk-tabs__list-item--selected
-          %a.govuk-tabs__tab.tab-links-override{ href: "#job-details" }
-            = t('jobs.job_details')
-        %li.govuk-tabs__list-item
-          %a.govuk-tabs__tab.tab-links-override{ href: "#school-overview" }
-            - if @vacancy.at_one_school?
-              = t('schools.school_overview')
-            - elsif @vacancy.at_multiple_schools?
-              = t('schools.schools_overview')
-            - elsif @vacancy.central_office?
-              = t('school_groups.trust_overview')
+    .content-pills{ class: 'govuk-!-margin-bottom-5' }
+      %h3.govuk-heading-s{ class: 'govuk-!-margin-bottom-3' } Contents
+      .govuk-grid-row
+        .govuk-grid-column-one-half
+          = render(Jobseekers::PillLinkComponent.new(link_path: '#job-details', link_text: 'Job details'))
+        - if @vacancy.documents.any?
+          .govuk-grid-column-one-half
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#supporting-documents', link_text: 'Supporting documents'))
+        .govuk-grid-column-one-half
+          - if @vacancy.at_one_school?
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.school_overview')))
+          - elsif @vacancy.at_multiple_schools?
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.schools_overview')))
+          - elsif @vacancy.central_office?
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.trust_overview')))
+        .govuk-grid-column-one-half
+          - if @vacancy.at_one_school?
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-location', link_text: t('schools.school_location.one')))
+          - elsif @vacancy.at_multiple_schools?
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.school_location.many')))
+          - elsif @vacancy.central_office?
+            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.school_group_location')))
 
-      = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
-      = render(Jobseekers::SchoolGroupOverviewComponent.new(vacancy: @vacancy))
-      = render(Jobseekers::SchoolOverviewComponent.new(vacancy: @vacancy))
-      = render(Jobseekers::SchoolsOverviewComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::SchoolGroupOverviewComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::SchoolOverviewComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::SchoolsOverviewComponent.new(vacancy: @vacancy))
 
-    %section
-      %h4.govuk-heading-s.share-this-job
-        = t('jobs.share_this_job')
-
+    %section{ class: 'govuk-!-margin-top-3' }
+      %h4.govuk-heading-s.share-this-job= t('jobs.share_this_job')
       = render '/shared/vacancy/share_buttons'

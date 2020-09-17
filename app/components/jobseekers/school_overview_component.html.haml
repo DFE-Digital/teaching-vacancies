@@ -1,6 +1,6 @@
-%section#school-overview.govuk-tabs__panel.no-border-override
-  %h3.govuk-heading-l
-    = t('schools.school_overview')
+%section#school-overview
+  %h3.govuk-heading-l.section-heading= t('schools.school_overview')
+
   %table.govuk-table
     %tbody.govuk-table__body
       %tr.govuk-table__row
@@ -62,11 +62,11 @@
       = t('jobs.school_visits_heading', school: @school.name)
     %p= @vacancy.school_visits
 
-  %h4.govuk-heading-s
-    = t('schools.school_location.one')
-  %p= full_address(@school)
+  %section#school-location
+    %h3.govuk-heading-l.section-heading= t('schools.school_location.one')
+    %p= full_address(@school)
 
-  - if @school.geolocation
-    %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') }, data: { school: school_map_data } }
+    - if @school.geolocation
+      %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') }, data: { school: school_map_data } }
 
-    %script{ defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+      %script{ defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}

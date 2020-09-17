@@ -1,6 +1,6 @@
-%section#school-overview.govuk-tabs__panel.no-border-override
-  %h3.govuk-heading-l
-    = t('school_groups.trust_overview')
+%section#school-overview
+  %h3.govuk-heading-l.section-heading= t('school_groups.trust_overview')
+
   %table.govuk-table
     %tbody.govuk-table__body
       %tr.govuk-table__row
@@ -35,16 +35,17 @@
     = t('school_groups.trust_visits', school_group: @vacancy.parent_organisation.name)
   %p= @vacancy.school_visits
 
-  %h4.govuk-heading-s
-    = t('school_groups.school_group_location')
-  %p= full_address(@vacancy.parent_organisation)
 
-  -# This map will not be visible as we do not yet have geolocation data for school groups
+  %section#school-location
+    %h3.govuk-heading-l.section-heading= t('school_groups.school_group_location')
+    %p= full_address(@vacancy.parent_organisation)
 
-  - if @vacancy.parent_organisation.geolocation
-    %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
-    = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
-                                                          lat: @vacancy.parent_organisation.geolocation.x,
-                                                          lng: @vacancy.parent_organisation.geolocation.y }
+    -# This map will not be visible as we do not yet have geolocation data for school groups
 
-    %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+    - if @vacancy.parent_organisation.geolocation
+      %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
+      = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
+                                                            lat: @vacancy.parent_organisation.geolocation.x,
+                                                            lng: @vacancy.parent_organisation.geolocation.y }
+
+      %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
