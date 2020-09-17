@@ -9,7 +9,9 @@ module OrganisationHelper
   end
 
   def full_address(organisation)
-    [organisation.address, organisation.town, organisation.county, organisation.postcode].reject(&:blank?).join(', ')
+    # For SchoolGroup address data points, GIAS sometimes lists 'Not recorded' in their spreadsheet.
+    [organisation.address, organisation.town, organisation.county, organisation.postcode]
+      .reject { |address_line| address_line.blank? || address_line == 'Not recorded' }.join(', ')
   end
 
   def organisation_type(organisation:, with_age_range: false)

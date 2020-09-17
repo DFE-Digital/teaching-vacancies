@@ -2,12 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   let(:school_group) { create(:school_group) }
+  let(:geolocation_trait) { nil }
   let(:school_1) do
-    create(:school, name: 'Oxford Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) },
-                    website: 'https://this-is-a-test-url.tvs')
+    create(:school, geolocation_trait, name: 'Oxford Uni',
+                                       gias_data: { 'URN' => Faker::Number.number(digits: 6) },
+                                       website: 'https://this-is-a-test-url.tvs')
   end
-  let(:school_2) { create(:school, name: 'Cambridge Uni', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
-  let(:school_3) { create(:school, name: 'London LSE', gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
+  let(:school_2) do
+    create(:school, geolocation_trait, name: 'Cambridge Uni',
+                                       gias_data: { 'URN' => Faker::Number.number(digits: 6) })
+  end
+  let(:school_3) do
+    create(:school, geolocation_trait, name: 'London LSE',
+                                       gias_data: { 'URN' => Faker::Number.number(digits: 6) })
+  end
+
   let(:vacancy) do
     create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
       { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }
@@ -24,7 +33,6 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
 
   describe '#render?' do
     context 'when vacancy job_location is central_office' do
-      let(:organisation) { create(:school_group) }
       let(:vacancy) { create(:vacancy, :central_office) }
 
       it 'does not render the component' do
@@ -33,7 +41,6 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     end
 
     context 'when vacancy job_location is at at_one_school' do
-      let(:organisation) { create(:school_group) }
       let(:vacancy) { create(:vacancy, :at_one_school) }
 
       it 'does not render the component' do
@@ -100,17 +107,69 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     [school_1, school_2, school_3].each { |school| expect(rendered_component).to include(full_address(school)) }
   end
 
-  context 'when GIAS-obtained website has been overwritten' do
+  context 'when GIAS-provided website has been overwritten' do
     it 'renders a link to the school website' do
       expect(rendered_component).to include(school_1.website)
     end
+
+    it 'does not render the GIAS-provided website' do
+      expect(rendered_component).not_to include(school_1.url)
+    end
   end
 
-  it 'renders all the school links to the school website' do
+  it 'renders all the GIAS-provided links to the school website section' do
     [school_2, school_3].each { |school| expect(rendered_component).to include(school.url) }
   end
 
   it 'renders the school visits' do
     expect(rendered_component).to include(vacancy.school_visits)
+  end
+
+  context 'when at least one school has a geolocation' do
+    it 'renders the location heading for multiple schools' do
+      expect(rendered_component).to include('School locations')
+    end
+
+    it 'shows the map element for Google Maps API to populate' do
+      expect(rendered_component).to include('map')
+    end
+  end
+
+  context 'when no school has a geolocation' do
+    let(:geolocation_trait) { :no_geolocation }
+
+    it 'does not render the location heading for multiple schools' do
+      expect(rendered_component).not_to include('School locations')
+    end
+
+    it 'does not show the map' do
+      expect(rendered_component).not_to include('map')
+    end
+  end
+
+  describe '#schools_map_data' do
+    let(:schools_map_data) do
+       JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data)
+    end
+
+    let(:school_1_data) do
+      schools_map_data.select { |s| s['name'] == school_1.name }.first
+    end
+
+    let(:school_2_data) do
+      schools_map_data.select { |s| s['name'] == school_2.name }.first
+    end
+
+    context 'when the user has provided a website' do
+      it 'links to the user-provided website' do
+        expect(school_1_data['name_link']).to eq "<a href=\"#{school_1.website}\">#{school_1.name}</a>"
+      end
+    end
+
+    context 'when the user has NOT provided a website' do
+      it 'links to the GIAS-provided url' do
+        expect(school_2_data['name_link']).to eq "<a href=\"#{school_2.url}\">#{school_2.name}</a>"
+      end
+    end
   end
 end

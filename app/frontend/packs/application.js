@@ -17,6 +17,7 @@ import 'src/details';
 import 'src/dismissableElement';
 import 'src/googleOptimise';
 import 'src/googleTagManagerUrlSnippet';
+import 'src/map';
 import 'src/removeCommaFromNumber';
 import 'src/shareUrl';
 import 'src/submitFeedback';

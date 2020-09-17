@@ -7,37 +7,37 @@
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.type')
         %td.govuk-table__cell
-          = organisation_type(organisation: @vacancy.parent_organisation, with_age_range: false)
+          = organisation_type(organisation: @school, with_age_range: false)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.phase')
         %td.govuk-table__cell
-          = school_phase(@vacancy.parent_organisation)
+          = school_phase(@school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.school_size')
         %td.govuk-table__cell
-          = school_size(@vacancy.parent_organisation)
+          = school_size(@school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.age_range')
         %td.govuk-table__cell
-          = age_range(@vacancy.parent_organisation)
+          = age_range(@school)
       %tr.govuk-table__row
         %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
           = t('schools.ofsted_report')
-        - if ofsted_report(@vacancy.parent_organisation).present?
+        - if ofsted_report(@school).present?
           %td.govuk-table__cell
-            = link_to(t('schools.view_ofsted_report'), ofsted_report(@vacancy.parent_organisation), class: 'govuk-link wordwrap', target: '_blank')
+            = link_to(t('schools.view_ofsted_report'), ofsted_report(@school), class: 'govuk-link wordwrap', target: '_blank')
         - else
           %td.govuk-table__cell
             = t('schools.no_information')
-      - if @vacancy.parent_organisation.website.present? || @vacancy.parent_organisation.url.present?
+      - if @school.website.present? || @school.url.present?
         %tr.govuk-table__row
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
             = t('schools.website')
           %td.govuk-table__cell
-            = link_to(t('schools.website_link_text', organisation_name: @vacancy.parent_organisation.name), @vacancy.parent_organisation.website.presence || @vacancy.parent_organisation.url, class: 'govuk-link link-wrap', target: '_blank')
+            = link_to(t('schools.website_link_text', organisation_name: @school.name), @school.website.presence || @school.url, class: 'govuk-link link-wrap', target: '_blank')
       - if @vacancy.contact_email.present?
         %tr.govuk-table__row
           %td.govuk-table__cell{ class: "govuk-!-font-weight-bold" }
@@ -54,22 +54,19 @@
 
   - if @vacancy.about_school.present?
     %h4.govuk-heading-s
-      = t('schools.info', organisation: @vacancy.parent_organisation.name)
+      = t('schools.info', organisation: @school.name)
     %p= vacancy_or_organisation_description(@vacancy)
 
   - if @vacancy.school_visits.present?
     %h4.govuk-heading-s
-      = t('jobs.school_visits_heading', school: @vacancy.parent_organisation.name)
+      = t('jobs.school_visits_heading', school: @school.name)
     %p= @vacancy.school_visits
 
   %h4.govuk-heading-s
-    = t('schools.school_location')
-  %p= full_address(@vacancy.parent_organisation)
+    = t('schools.school_location.one')
+  %p= full_address(@school)
 
-  - if @vacancy.parent_organisation.geolocation
-    %div{ id: 'map_zoom', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') },  }
-    = render partial: '/vacancies/school', formats: [:js], locals: { name: @vacancy.parent_organisation.name,
-                                                          lat: @vacancy.parent_organisation.geolocation.x,
-                                                          lng: @vacancy.parent_organisation.geolocation.y }
+  - if @school.geolocation
+    %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: t('schools.map_aria_label') }, data: { school: school_map_data } }
 
-    %script{async: true, defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
+    %script{ defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}

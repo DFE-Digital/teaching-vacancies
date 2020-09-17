@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
-  let(:organisation) { create(:school) }
+  let(:geolocation_trait) { nil }
+  let(:organisation) { create(:school, geolocation_trait) }
   let(:vacancy) { create(:vacancy, :at_one_school) }
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
@@ -113,5 +114,45 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
 
   it 'renders the head office location' do
     expect(rendered_component).to include(full_address(vacancy.parent_organisation))
+  end
+
+  context 'when the school has a geolocation' do
+    it 'renders the location heading for a singular school' do
+      expect(rendered_component).to include('School location')
+    end
+
+    it 'shows the map element for Google Maps API to populate' do
+      expect(rendered_component).to include('map')
+    end
+  end
+
+  context 'when school has no geolocation' do
+    let(:geolocation_trait) { :no_geolocation }
+
+    it 'does not render the location heading for a singular school' do
+      expect(rendered_component).not_to include('School locations')
+    end
+
+    it 'does not show the map' do
+      expect(rendered_component).not_to include('map')
+    end
+  end
+
+  describe '#school_map_data' do
+    let(:data) do
+      JSON.parse(described_class.new(vacancy: vacancy_presenter).school_map_data)
+    end
+
+    it 'contains the school name' do
+      expect(data['name']).to eq organisation.name
+    end
+
+    it 'contains the school latitude' do
+      expect(data['lat']).to eq organisation.geolocation.x
+    end
+
+    it 'contains the school longitude' do
+      expect(data['lng']).to eq organisation.geolocation.y
+    end
   end
 end
