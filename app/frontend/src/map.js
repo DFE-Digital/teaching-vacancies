@@ -27,12 +27,12 @@ window.initMap = () => {
     const myLatLng = { lat: school.lat, lng: school.lng };
 
     const map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 16,
+      zoom: 14,
       center: myLatLng,
       mapTypeControlOptions: { mapTypeIds: [] }, // Removes terrain options section ('map' or 'satellite')
     });
 
-    const marker = new google.maps.Marker({
+    new google.maps.Marker({
       position: myLatLng,
       map,
       title: '#{name}',
@@ -43,7 +43,7 @@ window.initMap = () => {
     const bounds = new google.maps.LatLngBounds();
 
     // Create map with default position and zoom as fitBounds sometimes
-    // does nothing
+    // does nothing until page refresh
 
     const firstSchool = schools[0];
     const firstLatLng = { lat: firstSchool.lat, lng: firstSchool.lng };
