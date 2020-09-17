@@ -131,7 +131,7 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
     end
 
     it 'shows the map element for Google Maps API to populate' do
-      expect(rendered_component).not_to include('map')
+      expect(rendered_component).to include('map')
     end
   end
 
@@ -148,19 +148,27 @@ RSpec.describe Jobseekers::SchoolsOverviewComponent, type: :component do
   end
 
   describe '#schools_map_data' do
-    let(:data) do
-      JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data)
+    let(:schools_map_data) do
+       JSON.parse(described_class.new(vacancy: vacancy_presenter).schools_map_data)
+    end
+
+    let(:school_1_data) do
+      schools_map_data.select { |s| s['name'] == school_1.name }.first
+    end
+
+    let(:school_2_data) do
+      schools_map_data.select { |s| s['name'] == school_2.name }.first
     end
 
     context 'when the user has provided a website' do
       it 'links to the user-provided website' do
-        expect(data.first['name_link']).to eq "<a href=\"#{school_1.website}\">#{school_1.name}</a>"
+        expect(school_1_data['name_link']).to eq "<a href=\"#{school_1.website}\">#{school_1.name}</a>"
       end
     end
 
     context 'when the user has NOT provided a website' do
       it 'links to the GIAS-provided url' do
-        expect(data.second['name_link']).to eq "<a href=\"#{school_2.url}\">#{school_2.name}</a>"
+        expect(school_2_data['name_link']).to eq "<a href=\"#{school_2.url}\">#{school_2.name}</a>"
       end
     end
   end
