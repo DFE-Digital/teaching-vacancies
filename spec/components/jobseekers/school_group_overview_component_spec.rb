@@ -43,8 +43,12 @@ RSpec.describe Jobseekers::SchoolGroupOverviewComponent, type: :component do
     expect(rendered_component).to include(vacancy.parent_organisation.website)
   end
 
-  it 'renders the trust email' do
+  it 'renders the contact email' do
     expect(rendered_component).to include(vacancy.contact_email)
+  end
+
+  it 'renders the contact number' do
+    expect(rendered_component).to include(vacancy.contact_number)
   end
 
   it 'renders about school or organisation description' do

@@ -11,6 +11,7 @@ FactoryBot.define do
     application_link { Faker::Internet.url }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
+    contact_number { '01234 123456' }
     education { Faker::Lorem.paragraph(sentence_count: 4) }
     experience { Faker::Lorem.paragraph(sentence_count: 4) }
     expires_on { Faker::Time.forward(days: 14) }

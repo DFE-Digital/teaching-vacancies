@@ -19,7 +19,13 @@
       = f.govuk_email_field :contact_email,
         label: { text: t('helpers.fieldset.application_details_form.contact_email_html'), size: 's' },
         hint_text: t('helpers.hint.application_details_form.contact_email'),
-        required: true
+        required: true,
+        width: 'two-thirds'
+
+      = f.govuk_phone_field :contact_number,
+        label: { text: t('helpers.fieldset.application_details_form.contact_number'), size: 's' },
+        hint_text: t('helpers.hint.application_details_form.contact_number'),
+        width: 'one-third'
 
       = f.govuk_text_area :school_visits,
         label: { text: t("helpers.fieldset.application_details_form.#{organisation_type_basic(@vacancy.parent_organisation)}_visits"), size: 's' },
