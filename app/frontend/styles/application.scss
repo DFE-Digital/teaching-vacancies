@@ -111,3 +111,11 @@ p {
 .govuk-header__container {
   border-bottom: 10px solid govuk-colour('orange');
 }
+
+body {
+  .govuk-width-container {
+    @include govuk-media-query($from: desktop) {
+      max-width: 1020px;
+    }
+  }
+}
