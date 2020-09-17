@@ -65,6 +65,9 @@ en:
   hiring_staff_user_preference_errors:
     managed_organisations:
       blank: Select which schools' job listings you would like to view
+  cookies_preferences_errors: &cookies_preferences_errors
+    cookies_consent:
+      inclusion: Please select an option
   errors:
     format: "%{message}"
     title:
@@ -107,6 +110,9 @@ en:
         organisation_form:
           attributes:
             <<: *organisation_errors
+        cookies_preferences_form:
+          attributes:
+            <<: *cookies_preferences_errors
         nqt_job_alerts_form:
           attributes:
             keywords:

@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   before_action :detect_device_format
   before_action :set_root_headers
 
+  helper_method :cookies_preference_set?
+
   include AuthenticationConcerns
   include Ip
 
@@ -51,6 +53,10 @@ class ApplicationController < ActionController::Base
         params[form_key][field] = params[form_key][field]&.reject(&:blank?) unless params[form_key][field].is_a?(String)
       end
     end
+  end
+
+  def cookies_preference_set?
+    cookies['consented-to-cookies'].present?
   end
 
 private

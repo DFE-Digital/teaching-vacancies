@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   get '/pages/*id' => 'pages#show', as: :page, format: false
 
+  get '/cookies-preferences', to: 'cookies_preferences#new', as: 'cookies_preferences'
+  post '/cookies-preferences', to: 'cookies_preferences#create', as: 'create_cookies_preferences'
+
   resources :updates, only: %i[index]
 
   resources :jobs, only: %i[index show], controller: 'vacancies' do
