@@ -1,0 +1,26 @@
+a.pill-link {
+  background-color: $govuk-link-colour;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23FFFFFF" width="17.5" height="19" viewBox="0 0 33 40"><path d="M0 0h13l20 20-20 20H0l20-20z"></path></svg>');
+  background-position: top 10px right 10px;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  border-radius: 7px;
+  color: govuk-colour('white');
+  display: block;
+  font-weight: $bold-font-weight;
+  margin-bottom: govuk-spacing(2);
+  padding: govuk-spacing(2);
+  text-decoration: none;
+}
+
+a.pill-link:hover {
+  background-color: $govuk-link-hover-colour;
+  outline: none;
+}
+
+a.pill-link:focus {
+  background-color: $govuk-focus-colour;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%230b0c0c" width="17.5" height="19" viewBox="0 0 33 40"><path d="M0 0h13l20 20-20 20H0l20-20z"></path></svg>');
+  color: $govuk-focus-text-colour;
+  outline: none;
+}
