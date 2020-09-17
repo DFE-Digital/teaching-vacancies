@@ -88,8 +88,13 @@ class Vacancy < ApplicationRecord
     expired_records = where('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
     index.delete_objects(expired_records.map(&:id)) if expired_records.present?
   end
+
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
-    attributes :location, :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
+    attributes :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
+
+    attribute :education_phases do
+      organisations.map(&:readable_phases).flatten.uniq
+    end
 
     attribute :expires_at do
       expires_at = format_date(expires_on)
@@ -102,10 +107,8 @@ class Vacancy < ApplicationRecord
       expires_at.to_i
     end
 
-    JOB_ROLE_OPTIONS.size.times do |index|
-      attribute "job_role_#{index}".to_sym do
-        job_roles[index] if job_roles.present?
-      end
+    attribute :job_roles_for_display do
+      VacancyPresenter.new(self).show_job_roles
     end
 
     attribute :job_summary do
@@ -121,6 +124,23 @@ class Vacancy < ApplicationRecord
       status
     end
 
+    attribute :organisations do
+      { names: organisations.map(&:name),
+        counties: organisations.map(&:county).uniq,
+        detailed_school_types: organisations.map { |org|
+                                org.detailed_school_type&.label if org.is_a?(School)
+                               } .reject(&:blank?).uniq,
+        group_type: organisations.map { |org| org.group_type if org.is_a?(SchoolGroup) }.reject(&:blank?).uniq,
+        local_authority: organisations.map(&:local_authority).uniq,
+        religious_characters: organisations.map { |org| org.religious_character if org.is_a?(School) }.reject(&:blank?)
+                                           .uniq,
+        regions: organisations.map { |org| org.region if org.is_a?(School) }.reject(&:blank?).uniq,
+        school_types: organisations.map { |org|
+                        org.school_type&.label&.singularize if org.is_a?(School)
+                      } .reject(&:blank?).uniq,
+        towns: organisations.map(&:town).uniq }
+    end
+
     attribute :permalink do
       slug
     end
@@ -133,21 +153,6 @@ class Vacancy < ApplicationRecord
       publish_on&.to_time&.to_i
     end
 
-    attribute :organisation do
-      if organisation.present?
-        { name: organisation.name,
-          county: organisation.county,
-          detailed_school_type: (organisation.detailed_school_type&.label if organisation.is_a?(School)),
-          local_authority: organisation.local_authority,
-          phase: organisation.phase,
-          readable_phases: organisation.readable_phases,
-          religious_character: (organisation.religious_character if organisation.is_a?(School)),
-          region: (organisation.region&.name if organisation.is_a?(School)),
-          school_type: (organisation.school_type&.label&.singularize if organisation.is_a?(School)),
-          town: organisation.town }
-      end
-    end
-
     attribute :start_date do
       starts_on&.to_s
     end
@@ -156,11 +161,15 @@ class Vacancy < ApplicationRecord
       starts_on&.to_time&.to_i
     end
 
+    attribute :subjects_for_display do
+      VacancyPresenter.new(self).show_subjects
+    end
+
     attribute :working_patterns_for_display do
       VacancyPresenter.new(self).working_patterns
     end
 
-    attributesForFaceting [:job_roles, :working_patterns, 'organisation.readable_phases', :listing_status]
+    attributesForFaceting %i[job_roles working_patterns education_phases listing_status]
 
     add_replica 'Vacancy_publish_on_desc', inherit: true do
       ranking ['desc(publication_date_timestamp)']
@@ -176,9 +185,11 @@ class Vacancy < ApplicationRecord
   end
 
   def _geoloc
-    organisations.map do |organisation|
-      { lat: organisation.geolocation&.x&.to_f, lng: organisation.geolocation&.y&.to_f }
-    end
+    organisations.map { |organisation|
+      if organisation.geolocation.present?
+        { lat: organisation.geolocation.x.to_f, lng: organisation.geolocation.y.to_f }
+      end
+    }.reject(&:blank?).presence
   end
 
   extend FriendlyId
