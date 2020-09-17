@@ -343,7 +343,7 @@ en:
         other: '%{count} filters applied'
     notifications:
       content:
-        multi_school_job_notification_html: This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the trust</span>. You can find out more in Schools overview.
+        multi_school_job_notification_html: This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the trust</span>. You can find out more in <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
       labels:
         action_required: action required
         new: new
