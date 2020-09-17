@@ -13,7 +13,7 @@
     background-repeat: no-repeat;
     background-size: 20px 25px;
     border-bottom: 3px solid govuk-colour('orange');
-    color: govuk-colour('blue');
+    color: $govuk-link-colour;
     display: block;
     font-weight: $bold-font-weight;
     height: 100%;
@@ -35,7 +35,7 @@
   }
 
   a.banner-link:hover {
-    color: govuk-colour('dark-blue');
+    color: $govuk-link-hover-colour;
   }
 
   .banner-link--alert {
