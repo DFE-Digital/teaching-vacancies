@@ -1,5 +1,5 @@
-= render 'hiring_staff/vacancies/section_tag', section: 'important_dates'
-= render 'hiring_staff/vacancies/error_tag', attributes: [:publish_on, :expires_on, :starts_on], section: 'important_dates'
+= render 'hiring_staff/vacancies/new_attributes_tag', attributes: %i[publish_on expires_on starts_on], section: 'important_dates'
+= render 'hiring_staff/vacancies/error_tag', attributes: %i[publish_on expires_on starts_on], section: 'important_dates'
 
 %h2.govuk-heading-m.app-task-list__section#important_dates_heading
   %span.app-task-list__section-number= edit_vacancy_section_number(:important_dates, current_organisation)

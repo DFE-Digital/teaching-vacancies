@@ -1,8 +1,2 @@
 - if errors.any?
-  #errors.govuk-notification.govuk-notification--danger{ role: 'alert', tabindex: '-1' }
-    .govuk-notification__title= t('messages.jobs.action_required.heading')
-    .govuk-notification__body= t('messages.jobs.action_required.message')
-    %ul.govuk-list.govuk-notification__list
-      - errors.each do |attribute, error|
-        %li
-          %a.govuk-link.govuk-link--no-visited-state{ href: "##{attribute}" }= error
+  = render(NotificationComponent.new(content: { title: t('messages.jobs.action_required.heading'), body: t('messages.jobs.action_required.message') }, style: 'danger', links: errors))

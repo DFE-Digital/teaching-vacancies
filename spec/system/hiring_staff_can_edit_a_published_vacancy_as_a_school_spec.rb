@@ -37,12 +37,10 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
       scenario 'shows action required error message' do
         visit edit_organisation_job_path(vacancy.id)
 
-        within '#errors.govuk-notification--danger' do
-          expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
-          expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
-          expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
-          expect(page).to have_content(I18n.t('job_specification_errors.suitable_for_nqt.inclusion'))
-        end
+        expect(page).to have_content(I18n.t('messages.jobs.action_required.heading'))
+        expect(page).to have_content(I18n.t('messages.jobs.action_required.message'))
+        expect(page).to have_content(I18n.t('job_summary_errors.about_school.blank', organisation: 'school'))
+        expect(page).to have_content(I18n.t('job_specification_errors.suitable_for_nqt.inclusion'))
       end
     end
 
@@ -348,7 +346,7 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
         visit edit_organisation_job_path(vacancy.id)
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
-        expect(page).to have_content(I18n.t('messages.jobs.new_sections.message'))
+        expect(page).to have_content(I18n.t('messages.jobs.new_attributes.message'))
         expect(page).to have_selector('.new--supporting_documents')
 
         click_header_link(I18n.t('jobs.supporting_documents'))
@@ -359,7 +357,7 @@ RSpec.describe 'Hiring staff can edit a vacancy' do
 
         expect(page).to have_content(I18n.t('jobs.supporting_documents'))
         expect(page).to_not have_selector('.new--supporting_documents')
-        expect(page).to_not have_content(I18n.t('messages.jobs.new_sections.message'))
+        expect(page).to_not have_content(I18n.t('messages.jobs.new_attributes.message'))
       end
     end
 

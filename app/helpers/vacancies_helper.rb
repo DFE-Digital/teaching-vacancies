@@ -13,11 +13,12 @@ module VacanciesHelper
     array.join(' ')
   end
 
-  def new_sections(vacancy)
-    sections = []
-    sections << 'job_details' if missing_subjects?(vacancy)
-    sections << 'supporting_documents' unless vacancy.supporting_documents
-    sections
+  def new_attributes(vacancy)
+    attributes = {}
+    attributes[:subjects] = I18n.t('jobs.subjects') if missing_subjects?(vacancy)
+    attributes[:supporting_documents] = I18n.t('jobs.supporting_documents') unless vacancy.supporting_documents
+    attributes[:contact_number] = I18n.t('jobs.contact_number') unless vacancy.contact_number
+    attributes
   end
 
   def page_title_prefix(vacancy, form_object, page_heading)

@@ -932,8 +932,8 @@ en:
   messages:
     jobs:
       already_published: This job has already been published
-      new_sections:
-        heading: New section
+      new_attributes:
+        heading: New sections
         message: Improve your job listing using the new sections and features below
       action_required:
         heading: Action required

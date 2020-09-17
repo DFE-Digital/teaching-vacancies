@@ -49,6 +49,10 @@
   background-size: 25px 25px;
   border-color: govuk-colour('green');
   padding-left: govuk-spacing(8);
+
+  .govuk-notification__list a {
+    color: govuk-colour('green');
+  }
 }
 
 .govuk-notification--danger {

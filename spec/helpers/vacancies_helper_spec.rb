@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe VacanciesHelper, type: :helper do
-  describe '#new_sections' do
+  describe '#new_attributes' do
     let(:vacancy) { double('vacancy').as_null_object }
 
     it 'includes supporting_documents for legacy listings' do
       allow(vacancy).to receive(:supporting_documents).and_return(nil)
-      expect(helper.new_sections(vacancy)).to include('supporting_documents')
+      expect(helper.new_attributes(vacancy)[:supporting_documents]).to eql(I18n.t('jobs.supporting_documents'))
     end
 
     it 'includes job_details for legacy listings with missing subjects' do
       allow(helper).to receive(:missing_subjects?).with(vacancy).and_return(true)
-      expect(helper.new_sections(vacancy)).to include('job_details')
+      expect(helper.new_attributes(vacancy)[:subjects]).to eql(I18n.t('jobs.subjects'))
     end
   end
 

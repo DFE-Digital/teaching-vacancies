@@ -7,3 +7,9 @@
     .govuk-notification__body= raw content[:body]
   - else
     .govuk-notification__body= raw content
+
+  - if @links.present?
+    %ul.govuk-list.govuk-notification__list
+      - @links.each do |link, message|
+        %li
+          %a.govuk-link.govuk-link--no-visited-state{ href: "##{link}"}= message
