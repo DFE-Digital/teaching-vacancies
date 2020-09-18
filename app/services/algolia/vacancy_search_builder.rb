@@ -17,12 +17,12 @@ class Algolia::VacancySearchBuilder
 
   def call
     @vacancies = search
-    get_suggestions_for_zero_results_scenario if @vacancies.empty?
+    @point_coordinates = @location_search.location_filter[:point_coordinates]
+    get_search_suggestions_for_zero_results_scenario if @vacancies.empty?
     @stats = build_stats(
       @vacancies.raw_answer['page'], @vacancies.raw_answer['nbPages'],
       @vacancies.raw_answer['hitsPerPage'], @vacancies.raw_answer['nbHits']
     )
-    @point_coordinates = @location_search.location_filter[:point_coordinates]
   end
 
   def only_active_to_hash
@@ -98,20 +98,33 @@ private
     Vacancy::JOB_SORTING_OPTIONS.map(&:last).include?(job_sort_param)
   end
 
-  def get_suggestions_for_zero_results_scenario
-    wider_radiuses_with_hit_count = try_wider_radiuses(previous_radius: location_search.radius, wider_radiuses_with_hit_count: {})
-    binding.pry
+  def get_search_suggestions_for_zero_results_scenario
+    wider_radiuses_with_hit_count = try_wider_radiuses if point_coordinates.present?
+    # Only include wider radius options which will return a greater number of results than the previous
+    wider_radiuses_with_hit_count = wider_radiuses_with_hit_count
+      .select.with_index do |radius_with_hit_count, index|
+        # When index is 0, enumerable[index - 1] gets the last element.
+        hit_count = radius_with_hit_count.second
+        if index.zero?
+  hit_count.positive?
+        else
+  hit_count.second > wider_radiuses_with_hit_count.values[index - 1]
+        end
+      end
   end
 
-  def try_wider_radiuses(previous_radius:, wider_radiuses_with_hit_count:)
+  def try_wider_radiuses(
+    previous_radius = location_search.radius,
+    wider_radiuses_with_hit_count = {},
+    _previous_hit_count = 0
+  )
     options = Vacancy::SEARCH_RADIUS_OPTIONS
     return wider_radiuses_with_hit_count if wider_radiuses_with_hit_count.length >= 5 || previous_radius == options.last
 
-    next_radius = options[options.find_index(previous_radius) + 1]
-    # Get some results somehow
-    # build_location_search(next_radius)
-    number_of_results = 1
-    wider_radiuses_with_hit_count[next_radius.to_s] = number_of_results
-    try_wider_radiuses(previous_radius: next_radius, wider_radiuses_with_hit_count: wider_radiuses_with_hit_count)
+    new_radius = options[options.find_index(previous_radius) + 1]
+    build_location_search(new_radius)
+    hit_count = search.raw_answer['nbHits']
+    wider_radiuses_with_hit_count[new_radius.to_s] = hit_count
+    try_wider_radiuses(new_radius, wider_radiuses_with_hit_count)
   end
 end
