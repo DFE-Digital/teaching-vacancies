@@ -2,7 +2,7 @@ require 'geocoding'
 
 class Algolia::VacancySearchBuilder
   attr_reader :keyword, :location_search,
-              :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies
+              :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies, :wider_radiuses
 
   DEFAULT_HITS_PER_PAGE = 10
 
@@ -99,18 +99,22 @@ private
   end
 
   def get_search_suggestions_for_zero_results_scenario
-    wider_radiuses_with_hit_count = try_wider_radiuses if point_coordinates.present?
+    if point_coordinates.present?
+      @wider_radiuses = get_wider_radiuses_with_hit_count
+    end
+  end
+
+  def get_wider_radiuses_with_hit_count
     # Only include wider radius options which will return a greater number of results than the previous
-    wider_radiuses_with_hit_count = wider_radiuses_with_hit_count
-      .select.with_index do |radius_with_hit_count, index|
-        # When index is 0, enumerable[index - 1] gets the last element.
-        hit_count = radius_with_hit_count.second
-        if index.zero?
-  hit_count.positive?
-        else
-  hit_count.second > wider_radiuses_with_hit_count.values[index - 1]
-        end
+    radiuses = try_wider_radiuses
+    radiuses.select.with_index do |radius_with_hit_count, index|
+      # When index is 0, enumerable[index - 1] gets the last element.
+      if index.zero?
+        radius_with_hit_count.second.positive?
+      else
+        radius_with_hit_count.second.second > radiuses.values[index - 1]
       end
+    end
   end
 
   def try_wider_radiuses(

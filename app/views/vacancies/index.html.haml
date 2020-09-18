@@ -28,6 +28,10 @@
             %ul.govuk-list.govuk-list--bullet
               - t('jobs.no_jobs.suggestions').each do |list_item|
                 %li= list_item
+              - if @vacancies_search.wider_radiuses.any?
+                %ul.govuk-list.govuk-list--bullet
+                  - @vacancies_search.wider_radiuses.each do |radius|
+                    %li= radius.first + " miles (" + radius.second.to_s + " result(s))"
         %span.govuk-heading-m
           = t('subscriptions.link.no_search_results_html', link_href: new_subscription_path(search_criteria: @vacancies_search.only_active_to_hash), class: 'govuk-link', id: 'job-alert-link-search')
         %p{ class: 'govuk-!-margin-1' }
