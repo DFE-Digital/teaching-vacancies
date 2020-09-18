@@ -3,7 +3,7 @@ class Algolia::VacancyLocationBuilder
   MILES_TO_METRES = 1.60934 * 1000
 
   attr_reader :location, :location_category, :location_filter,
-              :location_polygon, :location_polygon_boundary, :missing_polygon
+              :location_polygon, :location_polygon_boundary, :missing_polygon, :radius
 
   def initialize(location, radius, location_category)
     @location = location || location_category

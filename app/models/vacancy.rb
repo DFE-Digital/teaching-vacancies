@@ -30,6 +30,8 @@ class Vacancy < ApplicationRecord
     central_office: 2,
   }.freeze
 
+  SEARCH_RADIUS_OPTIONS = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 200].sort.freeze
+
   include ApplicationHelper
   include Auditor::Model
   include DatesHelper

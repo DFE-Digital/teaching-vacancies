@@ -25,7 +25,7 @@ module VacanciesOptionsHelper
   end
 
   def radius_filter_options
-    [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100, 200].inject([]) do |radii, radius|
+    Vacancy::SEARCH_RADIUS_OPTIONS.inject([]) do |radii, radius|
       radii << [I18n.t('jobs.filters.number_of_miles', count: radius), radius]
     end
   end
