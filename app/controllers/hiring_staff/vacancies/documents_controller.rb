@@ -26,7 +26,7 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
   def show; end
 
   def create
-    process_documents.each do |document|
+    process_documents&.each do |document|
       @documents.create(document)
     end
 
@@ -76,7 +76,7 @@ private
   end
 
   def process_documents
-    documents_form_params[:documents].each_with_object([]) do |document_params, documents_array|
+    documents_form_params[:documents]&.each_with_object([]) do |document_params, documents_array|
       document_hash = upload_document(document_params)
       next if errors_on_file?(document_params.original_filename)
 
