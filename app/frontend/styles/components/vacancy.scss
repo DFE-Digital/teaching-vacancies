@@ -96,5 +96,9 @@
   .vacancy-apply-link {
     margin-bottom: 0;
     width: auto;
+
+    @media only screen and (max-width: 640px) {
+      padding: 12px;
+    }
   }
 }
