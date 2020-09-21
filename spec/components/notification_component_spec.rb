@@ -8,7 +8,7 @@ RSpec.describe NotificationComponent, type: :component do
   let(:background) { false }
   let(:alert) { false }
   let!(:inline_component) do
-    render_inline(NotificationComponent.new(
+    render_inline(described_class.new(
                     content: content,
                     style: style,
                     links: links,
