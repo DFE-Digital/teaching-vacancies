@@ -13,8 +13,9 @@ $govuk-image-url-function: frontend-image-url;
 @import '~@ministryofjustice/frontend/moj/all';
 
 @import '../src/lib/ui/patterns/autocomplete';
-@import '../src/lib/ui/components/filterGroup';
 @import '../src/lib/ui/components/loader';
+
+@import 'shared/filters_component/filters_component';
 
 @import 'global/variables';
 @import 'base/mixins';

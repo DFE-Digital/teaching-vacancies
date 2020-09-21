@@ -1,5 +1,5 @@
 require.context('govuk-frontend/govuk/assets');
-require.context('../images', true)
+require.context('../images', true);
 
 import 'styles/application.scss';
 
@@ -7,7 +7,6 @@ import Rails from 'rails-ujs';
 
 import 'src/search/init';
 import 'src/lib/ui/patterns/currentLocation';
-import 'src/lib/ui/components/filterGroup';
 import 'src/lib/ui/components/searchCheckbox';
 import 'src/addTitleToGoogleMapsIframe';
 import 'src/addVacancyStateToDataLayer';
@@ -23,6 +22,8 @@ import 'src/shareUrl';
 import 'src/submitFeedback';
 import 'src/uploadDocuments';
 import 'src/vacancyShow';
+
+import 'shared/filters_component/filters_component';
 
 import { initAll } from 'govuk-frontend';
 
