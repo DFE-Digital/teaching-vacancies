@@ -13,6 +13,7 @@ distribution_list = {
   #   offline_bucket_origin_path    = "/school-jobs-offline"
   #   cloudfront_origin_domain_name = "teaching-vacancies-review-pr-2012.london.cloudapps.digital"
   #   domain                        = "review-pr-2012.teaching-vacancies.service.gov.uk"
+  #   cloudfront_enable_standard_logs = false
   # }
 }
 

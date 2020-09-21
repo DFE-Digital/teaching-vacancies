@@ -4,6 +4,9 @@ variable environment {
 variable project_name {
 }
 
+variable cloudfront_enable_standard_logs {
+}
+
 variable cloudfront_origin_domain_name {
 }
 

@@ -43,17 +43,18 @@ terraform {
 
 
 module cloudfront {
-  source                        = "./modules/cloudfront"
-  for_each                      = var.distribution_list
-  environment                   = var.environment
-  project_name                  = var.project_name
-  cloudfront_origin_domain_name = each.value.cloudfront_origin_domain_name
-  cloudfront_aliases            = each.value.cloudfront_aliases
-  cloudfront_certificate_arn    = local.infra_secrets.cloudfront_certificate_arn
-  offline_bucket_domain_name    = each.value.offline_bucket_domain_name
-  offline_bucket_origin_path    = each.value.offline_bucket_origin_path
-  domain                        = each.value.domain
-  route53_zones                 = var.route53_zones
+  source                          = "./modules/cloudfront"
+  for_each                        = var.distribution_list
+  environment                     = var.environment
+  project_name                    = var.project_name
+  cloudfront_origin_domain_name   = each.value.cloudfront_origin_domain_name
+  cloudfront_aliases              = each.value.cloudfront_aliases
+  cloudfront_certificate_arn      = local.infra_secrets.cloudfront_certificate_arn
+  offline_bucket_domain_name      = each.value.offline_bucket_domain_name
+  offline_bucket_origin_path      = each.value.offline_bucket_origin_path
+  domain                          = each.value.domain
+  cloudfront_enable_standard_logs = each.value.cloudfront_enable_standard_logs
+  route53_zones                   = var.route53_zones
 }
 
 module cloudwatch {
