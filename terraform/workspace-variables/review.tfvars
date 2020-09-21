@@ -7,13 +7,14 @@ app_environment             = "review"
 
 # CloudFront
 distribution_list = {
-  #  "tvsreview" = {
-  #    cloudfront_aliases            = ["review.teaching-vacancies.service.gov.uk"]
-  #    offline_bucket_domain_name    = "tvs-offline.s3.amazonaws.com"
-  #    offline_bucket_origin_path    = "/school-jobs-offline"
-  #    cloudfront_origin_domain_name = "teaching-vacancies-review.london.cloudapps.digital"
-  #    domain                        = "review.teaching-vacancies.service.gov.uk"
-  #  }
+  # "tvsreviewpr2012" = {
+  #   cloudfront_aliases            = ["review-pr-2012.teaching-jobs.service.gov.uk","review-pr-2012.teaching-vacancies.service.gov.uk"]
+  #   offline_bucket_domain_name    = "tvs-offline.s3.amazonaws.com"
+  #   offline_bucket_origin_path    = "/school-jobs-offline"
+  #   cloudfront_origin_domain_name = "teaching-vacancies-review-pr-2012.london.cloudapps.digital"
+  #   domain                        = "review-pr-2012.teaching-vacancies.service.gov.uk"
+  #   cloudfront_enable_standard_logs = false
+  # }
 }
 
 # CloudWatch

@@ -15,13 +15,19 @@ variable environment {
 variable distribution_list {
   description = "Define Cloudfront distributions with the attributes below"
   type = map(object({
-    cloudfront_aliases            = list(string)
-    offline_bucket_domain_name    = string
-    offline_bucket_origin_path    = string
-    cloudfront_origin_domain_name = string
-    domain                        = string
+    cloudfront_aliases              = list(string)
+    offline_bucket_domain_name      = string
+    offline_bucket_origin_path      = string
+    cloudfront_origin_domain_name   = string
+    domain                          = string
+    cloudfront_enable_standard_logs = bool
   }))
   default = {}
+}
+
+variable route53_zones {
+  type    = list
+  default = ["teaching-jobs.service.gov.uk", "teaching-vacancies.service.gov.uk"]
 }
 
 # CloudWatch

@@ -149,9 +149,39 @@ resource aws_cloudfront_distribution default {
     ssl_support_method  = "sni-only"
   }
 
+  dynamic "logging_config" {
+    for_each = var.cloudfront_enable_standard_logs ? [1] : []
+    content {
+      include_cookies = false
+      bucket          = data.aws_s3_bucket.cloudfront_logs.bucket_domain_name
+      prefix          = var.environment
+    }
+  }
+
   tags = {
     Name        = "${var.project_name}-${var.environment}"
     Environment = var.environment
   }
 }
 
+resource aws_route53_record cloudfront-a-records {
+  for_each = local.route53_zones_with_a_records
+  zone_id  = data.aws_route53_zone.zones[each.value].zone_id
+  name     = each.value
+  type     = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.default.domain_name
+    zone_id                = aws_cloudfront_distribution.default.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource aws_route53_record cloudfront-cnames {
+  for_each = local.route53_zones_with_cnames
+  zone_id  = data.aws_route53_zone.zones[each.value].zone_id
+  name     = "${local.route53_prefix}.${each.value}"
+  type     = "CNAME"
+  ttl      = "300"
+  records  = ["${aws_cloudfront_distribution.default.domain_name}."]
+}
