@@ -127,8 +127,16 @@ resource aws_iam_user_policy_attachment upload_db_backups_to_s3 {
 
 data aws_iam_policy_document cloudfront_logs_to_s3 {
   statement {
-    actions   = ["s3:GetBucketAcl", "s3:PutBucketAcl"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.bucket}"]
+    actions = [
+      "s3:GetBucketAcl",
+      "s3:ListBucket",
+      "s3:PutBucketAcl",
+      "s3:PutObject"
+    ]
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.bucket}",
+      "arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.bucket}/*"
+    ]
   }
 }
 
@@ -140,4 +148,60 @@ resource aws_iam_policy cloudfront_logs_to_s3 {
 resource aws_iam_user_policy_attachment cloudfront_logs_to_s3 {
   user       = aws_iam_user.deploy.name
   policy_arn = aws_iam_policy.cloudfront_logs_to_s3.arn
+}
+
+# Route53 all zones
+
+data aws_iam_policy_document route53_all {
+  statement {
+    actions   = ["route53:ListHostedZones"]
+    resources = ["*"]
+  }
+
+  statement {
+    actions   = ["route53:GetChange"]
+    resources = ["arn:aws:route53:::change/*"]
+  }
+}
+
+resource aws_iam_policy route53_all {
+  name   = "route53_all"
+  policy = data.aws_iam_policy_document.route53_all.json
+}
+
+resource aws_iam_user_policy_attachment route53_all {
+  user       = aws_iam_user.deploy.name
+  policy_arn = aws_iam_policy.route53_all.arn
+}
+
+# Route53 specific hosted zones
+
+data aws_iam_policy_document route53_hosted_zones {
+
+  statement {
+    actions = [
+      "route53:GetChange",
+      "route53:GetHostedZone",
+      "route53:ListResourceRecordSets",
+      "route53:ListTagsForResource",
+      "route53:ChangeResourceRecordSets",
+      "route53:ListResourceRecordSets",
+      "route53:GetHostedZoneCount",
+      "route53:ListHostedZonesByName"
+    ]
+    resources = [
+      for zone in var.route53_zones :
+      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.zones[zone].zone_id}"
+    ]
+  }
+}
+
+resource aws_iam_policy route53_hosted_zones {
+  name   = "route53_hosted_zones"
+  policy = data.aws_iam_policy_document.route53_hosted_zones.json
+}
+
+resource aws_iam_user_policy_attachment route53_hosted_zones {
+  user       = aws_iam_user.deploy.name
+  policy_arn = aws_iam_policy.route53_hosted_zones.arn
 }
