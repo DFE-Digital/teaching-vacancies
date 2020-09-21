@@ -25,6 +25,7 @@
     .content-pills{ class: 'govuk-!-margin-bottom-6' }
       %h3.govuk-heading-s{ class: 'govuk-!-margin-bottom-3' } Contents
       .govuk-grid-row
+        -# Up to four half columns in one row so that they automatically wrap depending on how many are present
         .govuk-grid-column-one-half
           = render(Jobseekers::PillLinkComponent.new(link_path: '#job-details', link_text: 'Job details'))
         - if @vacancy.documents.any?
