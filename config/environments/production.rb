@@ -103,6 +103,6 @@ Rails.application.configure do
 
   config.action_dispatch.trusted_proxies = AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) }
 
-  # Browsers must check to see if resource has changed before using browser cache
-  config.action_dispatch.default_headers.merge!('Cache-Control' => 'no-cache')
+  # Ensure browsers don't cache
+  config.action_dispatch.default_headers.merge!('Cache-Control' => 'no-cache, no-store')
 end
