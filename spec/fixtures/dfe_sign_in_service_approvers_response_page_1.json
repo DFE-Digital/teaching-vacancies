@@ -5,27 +5,37 @@
         "id": "13F20E54-79EA-4146-8E39-18197576F023",
         "name": "Department for Education",
         "category": {
+          "id": "001",
           "name": "Establishment"
         },
         "type": {
+          "id": "03",
           "name": "Voluntary Aided School"
         },
         "urn": "000012",
+        "uid": "120000",
+        "ukprn": null,
         "status": {
+          "id": 1,
           "name": "Open"
         },
-        "closedOn": null, 
+        "closedOn": null,
         "address": "Some Address, Some Address, Some Address, Some Address, AAA BBY",
         "telephone": "00000000000",
         "region": {
-          "name": "West Midlands"
+          "id" : "K",
+          "name": "South West"
         },
         "phaseOfEducation": {
+          "id": 1,
           "name": "Primary"
         },
         "statutoryLowAge": 3,
-        "statutoryHighAge": 11
+        "statutoryHighAge": 11,
+        "legacyId": "1000000",
+        "companyRegistrationNumber": null
       },
+      "roleID": 10000,
       "roleName": "Approver",
       "userId": "AAAA-BBB",
       "email": "foo@example.com",
