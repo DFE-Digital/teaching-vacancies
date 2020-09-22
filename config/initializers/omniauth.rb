@@ -8,8 +8,13 @@ module OmniAuth
                     accept_header: request.has_header?('Accept') ? request.get_header('Accept') : request.get_header('HTTP_ACCEPT'),
                     time: Time.zone.now.strftime('%Y-%m-%d %H:%M:%S:%L'))
         error = request.params['error_reason'] || request.params['error']
-        if error
-          raise CallbackError.new(request.params['error'], request.params['error_description'] || request.params['error_reason'], request.params['error_uri'])
+        if error && request.path == '/auth/dfe/callback'
+          Rollbar.log(:error, 'A sign-in callback raised an error',
+                      session_id: session.id,
+                      error_message: request.params['error'],
+                      error_reason: request.params['error_description'] || request.params['error_reason'],
+                      error_uri: request.params['error_uri'])
+          redirect('/dfe/sessions/new')
         elsif request.params.blank? && request.path == '/auth/dfe/callback'
           response = Rack::Response.new
           response.redirect('/dfe/sessions/new')
@@ -19,7 +24,7 @@ module OmniAuth
                       'A sign-in callback was unauthorised',
                       session_id: session.id,
                       received_state: request.params['state'])
-          redirect('/401')
+          redirect('/dfe/sessions/new')
         elsif !request.params['code']
           fail!(:missing_code, OmniAuth::OpenIDConnect::MissingCodeError.new(request.params['error']))
         else
