@@ -1,5 +1,6 @@
 module VacanciesHelper
   include VacanciesOptionsHelper
+  include AddressHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
@@ -125,6 +126,6 @@ module VacanciesHelper
     return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
       vacancy&.job_location == 'at_multiple_schools'
 
-    [organisation.name, organisation.town, organisation.county].compact.join(', ')
+    address_join([organisation.name, organisation.town, organisation.county])
   end
 end
