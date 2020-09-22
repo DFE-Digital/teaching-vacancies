@@ -74,17 +74,24 @@ jobs:
         terraform workspace select production terraform/app || terraform workspace new production terraform/app
         terraform apply -var-file terraform/workspace-variables/production.tfvars -auto-approve -input=false terraform/app
 
-  notify:
-    needs: deploy
-    name: Slack notification
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send slack message to twd_tv_dev channel
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-          SLACK_CHANNEL: twd_tv_dev
-          SLACK_USERNAME: CI Deployment
-          SLACK_ICON_EMOJI: ':tada:'
-          SLACK_TITLE: Successful deployment
-          SLACK_MESSAGE: 'Deployment to production on GOV.UK PaaS successful :rocket:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    - name: Send success message to twd_tv_dev channel
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_ICON_EMOJI: ':tada:'
+        SLACK_TITLE: Deployment success
+        SLACK_MESSAGE: 'Deployment to production on GOV.UK PaaS successful :rocket:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Send failure message to twd_tv_dev channel
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_CHANNEL: twd_tv_dev
+        SLACK_USERNAME: CI Deployment
+        SLACK_ICON_EMOJI: ':cry:'
+        SLACK_TITLE: Deployment failure
+        SLACK_MESSAGE: 'Deployment to production failed'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
