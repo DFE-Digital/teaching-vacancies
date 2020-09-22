@@ -17,7 +17,7 @@ FROM (
     COUNT(school.id) AS trust_size,
     (
     SELECT
-      COUNT(DISTINCT vacancy.id)
+      COUNTIF(schoolgroup_level)
     FROM
       `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
     LEFT JOIN
