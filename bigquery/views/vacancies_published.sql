@@ -34,7 +34,7 @@ IF
   #whether the vacancy was published by a schoolgroup e.g. a MAT
   (
   SELECT
-    COUNT(*)
+    COUNT(organisationvacancy.id)
   FROM
     `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS organisationvacancy
   LEFT JOIN
@@ -43,7 +43,16 @@ IF
     organisation.id=organisationvacancy.organisation_id
   WHERE
     organisation.type="SchoolGroup"
-    AND organisationvacancy.vacancy_id=vacancy.id) > 0 AS schoolgroup_level
+    AND organisationvacancy.vacancy_id=vacancy.id) > 0 AS schoolgroup_level,
+  (
+  SELECT
+    COUNT(document.id)
+  FROM
+    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
+  LEFT JOIN
+    `teacher-vacancy-service.production_dataset.feb20_document` AS document
+  ON
+    document.vacancy_id=vacancy.id) AS number_of_documents
 FROM
   `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
 WHERE
