@@ -1,0 +1,5 @@
+.govuk-breadcrumbs{ class: breadcrumbs_class }
+  %ol.govuk-breadcrumbs__list
+    - crumbs.each_with_index do |crumb, idx|
+      %li.govuk-breadcrumbs__list-item
+        = crumb_link(crumb, idx)
