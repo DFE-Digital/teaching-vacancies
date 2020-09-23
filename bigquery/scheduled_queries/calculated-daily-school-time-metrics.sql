@@ -20,26 +20,7 @@ WITH
       OR (status = "Closed"
         AND date_closed > '2018-05-03'))
     AND detailed_school_type_in_scope),
-  vacancy_metrics AS (
-  SELECT
-    dates.date AS date,
-  IF
-    (date > CURRENT_DATE(),
-      NULL,
-      COUNT(vacancies.id)) AS vacancies_published,
-  IF
-    (date > CURRENT_DATE(),
-      NULL,
-      COUNTIF(number_of_documents>0)) AS vacancies_with_documents_published
-  FROM
-    dates
-  LEFT JOIN
-    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
-  ON
-    dates.date=vacancies.publish_on
-  GROUP BY
-    dates.date ),
-  metrics AS (
+  school_metrics AS (
   SELECT
     date,
   IF
@@ -177,42 +158,36 @@ WITH
     date )
 SELECT
   dates.date,
-  metrics.schools_signed_up,
+  school_metrics.schools_signed_up,
   goals.Expected_number_of_schools_with_a_user_account_by_this_date AS target_schools_signed_up,
-  metrics.schools_in_scope,
-  SAFE_DIVIDE(metrics.schools_signed_up,
-    metrics.schools_in_scope) AS proportion_of_schools_signed_up,
+  school_metrics.schools_in_scope,
+  SAFE_DIVIDE(school_metrics.schools_signed_up,
+    school_metrics.schools_in_scope) AS proportion_of_schools_signed_up,
   goals.Expected___schools_with_a_user_account_by_this_date AS target_proportion_of_schools_signed_up,
-  metrics.schools_which_published_in_the_last_year AS schools_which_published_vacancies_in_the_last_year,
-  metrics.schools_which_published_in_the_last_quarter AS schools_which_published_vacancies_in_the_last_quarter,
-  metrics.schools_which_published_so_far AS schools_which_published_vacancies_so_far,
-  metrics.schools_which_had_vacancies_live AS schools_which_had_vacancies_live,
-  SAFE_DIVIDE(metrics.schools_which_published_in_the_last_year,
-    metrics.schools_in_scope) AS proportion_of_schools_which_published_in_the_last_year,
-  SAFE_DIVIDE(metrics.schools_which_published_in_the_last_quarter,
-    metrics.schools_in_scope) AS proportion_of_schools_which_published_in_the_last_quarter,
-  SAFE_DIVIDE(metrics.schools_which_published_so_far,
-    metrics.schools_in_scope) AS proportion_of_schools_which_published_so_far,
-  SAFE_DIVIDE(metrics.schools_which_had_vacancies_live,
-    metrics.schools_in_scope) AS proportion_of_schools_which_had_vacancies_live,
-  SAFE_DIVIDE(metrics.schools_which_published_in_the_last_year,
-    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_in_the_last_year,
-  SAFE_DIVIDE(metrics.schools_which_published_in_the_last_quarter,
-    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_in_the_last_quarter,
-  SAFE_DIVIDE(metrics.schools_which_published_so_far,
-    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_so_far,
-  SAFE_DIVIDE(metrics.schools_which_had_vacancies_live,
-    metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live,
-  vacancy_metrics.vacancies_published AS vacancies_published,
-  vacancy_metrics.vacancies_with_documents_published AS vacancies_with_documents_published
+  school_metrics.schools_which_published_in_the_last_year AS schools_which_published_vacancies_in_the_last_year,
+  school_metrics.schools_which_published_in_the_last_quarter AS schools_which_published_vacancies_in_the_last_quarter,
+  school_metrics.schools_which_published_so_far AS schools_which_published_vacancies_so_far,
+  school_metrics.schools_which_had_vacancies_live AS schools_which_had_vacancies_live,
+  SAFE_DIVIDE(school_metrics.schools_which_published_in_the_last_year,
+    school_metrics.schools_in_scope) AS proportion_of_schools_which_published_in_the_last_year,
+  SAFE_DIVIDE(school_metrics.schools_which_published_in_the_last_quarter,
+    school_metrics.schools_in_scope) AS proportion_of_schools_which_published_in_the_last_quarter,
+  SAFE_DIVIDE(school_metrics.schools_which_published_so_far,
+    school_metrics.schools_in_scope) AS proportion_of_schools_which_published_so_far,
+  SAFE_DIVIDE(school_metrics.schools_which_had_vacancies_live,
+    school_metrics.schools_in_scope) AS proportion_of_schools_which_had_vacancies_live,
+  SAFE_DIVIDE(school_metrics.schools_which_published_in_the_last_year,
+    school_metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_in_the_last_year,
+  SAFE_DIVIDE(school_metrics.schools_which_published_in_the_last_quarter,
+    school_metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_in_the_last_quarter,
+  SAFE_DIVIDE(school_metrics.schools_which_published_so_far,
+    school_metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_so_far,
+  SAFE_DIVIDE(school_metrics.schools_which_had_vacancies_live,
+    school_metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live,
 FROM
   dates
 LEFT JOIN
-  metrics
-USING
-  (date)
-LEFT JOIN
-  vacancy_metrics
+  school_metrics
 USING
   (date)
 LEFT JOIN
