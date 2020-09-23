@@ -17,7 +17,7 @@ private
 
   def import_data(url, location, method)
     save_csv_file(url, location)
-    CSV.foreach(location, headers: true, encoding: 'windows-1251:utf-8').each do |row|
+    CSV.foreach(location, headers: true, encoding: 'windows-1252:utf-8').each do |row|
       send(method, row)
     end
     File.delete(location)
