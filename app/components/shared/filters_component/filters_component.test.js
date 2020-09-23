@@ -23,7 +23,7 @@ import filterGroup, {
   ACCORDION_SECTION_CLASS_SELECTOR,
   ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR,
   addUpdateOpenOrCloseEvent,
-} from './filterGroup';
+} from './filters_component';
 
 describe('filterGroup', () => {
   let onRemove = null;

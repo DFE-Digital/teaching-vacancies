@@ -1352,6 +1352,7 @@ en:
       current_selected_filters: 'Selected filters'
       clear_all_filters: 'Clear filters'
       remove_filter_hidden: 'Remove this filter'
+      return_to_results: Return to results
   updates:
     heading: Updates
     updates_description_html: >-
