@@ -206,8 +206,8 @@ en:
       signin:
         title: List a teaching job
         description: You must sign in to your Teaching Vacancies account to list a job at your school.
-        signin_link: how to get one
-        signin_guidance_html: Don't have an account? Find out %{link} if your school is eligible.
+        signin_link: Find out how
+        signin_guidance_html: Don't have an account? %{link} to get one if your school is eligible.
       signed_in:
         manage_link: Manage jobs
         description: You're signed in as
@@ -347,7 +347,10 @@ en:
       labels:
         action_required: action required
         new: new
-    heading: 'Find a job in teaching'
+    heading: Welcome to Teaching Vacancies
+    intro: >-
+      Find teaching jobs on Teaching Vacancies, the free national job site for teachers,
+      with no recruitment fees for schools.
     location_description: >-
       Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
       with no recruitment fees for schools.
