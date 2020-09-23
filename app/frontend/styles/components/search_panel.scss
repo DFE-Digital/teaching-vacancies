@@ -1,10 +1,25 @@
-.search_panel {
-  @include govuk-responsive-padding(4);
-
+.search-panel-banner {
   background-color: $govuk-brand-colour;
+  left: 50%;
+  margin-bottom: govuk-spacing(6);
+  margin-left: -50vw;
+  padding-bottom: govuk-spacing(3);
+  padding-top: govuk-spacing(1);
+  position: relative;
+  width: 100vw;
+}
+
+.search_panel {
+  margin-bottom: govuk-spacing(5);
+  margin-top: govuk-spacing(3);
+
+  h1 {
+    margin-bottom: govuk-spacing(3);
+  }
 
   h1,
   label,
+  p,
   .govuk-link,
   .govuk-label.govuk-label--s,
   .js-location-finder__link {
@@ -13,10 +28,6 @@
 
   .govuk-form-group {
     @include govuk-responsive-margin(2, 'bottom');
-
-    .govuk-button {
-      @include govuk-responsive-margin(2, 'bottom');
-    }
   }
 
   .govuk-button--start {
@@ -29,6 +40,10 @@
     @media only screen and (max-width: 640px) {
       background-position: top 0.45rem right 10px;
     }
+  }
+
+  .govuk-button--start:focus {
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%230b0c0c" width="17.5" height="19" viewBox="0 0 33 40"><path d="M0 0h13l20 20-20 20H0l20-20z"></path></svg>');
   }
 
   .location-search {
@@ -52,6 +67,10 @@
     }
   }
 
+  a:focus {
+    color: govuk-colour('black');
+  }
+
   .govuk-details__summary:not(:focus) {
     color: govuk-colour('white');
   }
@@ -64,8 +83,8 @@
 
   .tv-checkbox__group {
     background-color: govuk-colour('white');
-    padding-top: 0;
     padding-bottom: 0;
+    padding-top: 0;
 
     .govuk-form-group {
       margin-bottom: 0;

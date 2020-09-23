@@ -205,9 +205,9 @@ en:
         description_html: <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p><p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
       signin:
         title: List a teaching job
-        description: You must sign in to your Teaching Vacancies account to list a job at your school.
-        signin_link: how to get one
-        signin_guidance_html: Don't have an account? Find out %{link} if your school is eligible.
+        description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
+        signin_link: how you can register
+        signin_guidance_html: If you don't have an account yet, you can find out %{link} if you are eligible.
       signed_in:
         manage_link: Manage jobs
         description: You're signed in as
@@ -347,7 +347,10 @@ en:
       labels:
         action_required: action required
         new: new
-    heading: 'Find a job in teaching'
+    heading: Welcome to Teaching Vacancies
+    intro: >-
+      Teaching Vacancies is a free job-listing service from the Department for Education.
+      You can search for a job at a school or Trust in England and set up job alerts.
     location_description: >-
       Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
       with no recruitment fees for schools.

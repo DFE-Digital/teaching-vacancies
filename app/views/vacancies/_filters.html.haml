@@ -2,7 +2,7 @@
   %aside.filter-vacancies{ class: "govuk-!-margin-bottom-3" }
     %h2.govuk-heading-m= t('jobs.filters.title')
 
-    = render 'shared/search/keyword', f: f
+    = render 'shared/search/keyword', f: f, filters: true
     = render 'shared/search/location', f: f
     = render 'shared/search/current_location'
     = render 'shared/search/radius', f: f, filters: true

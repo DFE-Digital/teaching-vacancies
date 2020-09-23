@@ -1,11 +1,12 @@
-%h1.govuk-heading-m= t('jobs.heading')
+%h1.govuk-heading-l= t('jobs.heading')
+%p.govuk-caption-m= t('jobs.intro')
 
 = form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path(anchor: 'vacancy-results'), html: { method: 'get' } do |f|
 
-  = render 'shared/search/keyword', f: f
+  = render 'shared/search/keyword', f: f, filters: false
   = render 'shared/search/location', f: f
   = render 'shared/search/radius', f: f, filters: false
   = render 'shared/search/current_location'
   = render 'pages/home/filters', f: f
 
-  = f.govuk_submit t('buttons.search'), classes: "govuk-button govuk-button--start govuk-!-margin-0"
+  = f.govuk_submit t('buttons.search'), classes: "govuk-button--start govuk-!-margin-0"
