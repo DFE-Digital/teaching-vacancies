@@ -14,6 +14,17 @@ FROM (
   SELECT
     trust_name,
     trust.id AS id,
+    trust.uid AS uid,
+    trust.data_ukprn AS ukprn,
+    trust.address AS address,
+    trust.town AS town,
+    trust.county AS county,
+    trust.postcode AS postcode,
+    CAST(trust.created_at AS date) AS date_created,
+    CAST(trust.updated_at AS date) AS date_updated,
+    data_incorporated_on_open_date AS date_opened,
+    data_companies_house_number AS companies_house_number,
+    data_group_status AS status,
     COUNT(school.id) AS trust_size,
     #count trust-level vacancies published by this trust
     (
@@ -66,7 +77,18 @@ FROM (
     data_group_type = "Multi-academy trust"
   GROUP BY
     trust_name,
-    id
+    id,
+    uid,
+    ukprn,
+    address,
+    town,
+    county,
+    postcode,
+    date_created,
+    date_updated,
+    date_opened,
+    companies_house_number,
+    status
   HAVING
     trust_size > 1 #exclude schools which aren't in trusts, and single academy trusts
     )
