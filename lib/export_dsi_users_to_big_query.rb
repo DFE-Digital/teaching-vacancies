@@ -23,7 +23,8 @@ private
         given_name: user['givenName'],
         family_name: user['familyName'],
         email: user['email'],
-        school_urn: user.dig('organisation', 'URN')
+        school_urn: user.dig('organisation', 'URN'),
+        organisation_uid: user.dig('organisation', 'UID')
       }
     end
   end
@@ -38,6 +39,7 @@ private
       schema.string 'family_name', mode: :nullable
       schema.string 'email', mode: :nullable
       schema.integer 'school_urn', mode: :nullable
+      schema.integer 'organisation_uid', mode: :nullable
     end
   end
 
