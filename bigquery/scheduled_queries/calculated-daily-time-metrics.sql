@@ -20,22 +20,6 @@ WITH
       OR (status = "Closed"
         AND date_closed > '2018-05-03'))
     AND detailed_school_type_in_scope),
-  vacancies AS (
-  SELECT
-    vacancy.id,
-    vacancy.publish_on,
-    vacancy.expires_on,
-    COUNT(document.id) AS number_of_documents
-  FROM
-    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
-  LEFT JOIN
-    `teacher-vacancy-service.production_dataset.feb20_document` AS document
-  ON
-    document.vacancy_id=vacancy.id
-  GROUP BY
-    vacancy.id,
-    publish_on,
-    expires_on),
   vacancy_metrics AS (
   SELECT
     dates.date AS date,
@@ -50,7 +34,7 @@ WITH
   FROM
     dates
   LEFT JOIN
-    vacancies
+    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
   ON
     dates.date=vacancies.publish_on
   GROUP BY
@@ -177,7 +161,7 @@ WITH
     ON
       schools.id=organisationvacancy.organisation_id
     LEFT JOIN
-      vacancies
+      `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
     ON
       vacancies.id=organisationvacancy.vacancy_id
     GROUP BY
