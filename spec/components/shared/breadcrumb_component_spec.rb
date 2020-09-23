@@ -23,11 +23,11 @@ RSpec.describe Shared::BreadcrumbComponent, type: :component do
     end
   end
 
-  it 'renders the breadcrumb link' do
+  it 'renders the crumb link' do
     expect(rendered_component).to include('<a class="govuk-breadcrumbs__link" href="/crumb-path">crumb</a>')
   end
 
-  it 'renders the current page' do
+  it 'renders the crumb for the current page without a link' do
     expect(rendered_component).to include('<span>you are here</span>')
   end
 end
