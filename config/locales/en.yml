@@ -18,6 +18,10 @@ en:
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
 
+  breadcrumbs:
+    home: Home
+    jobs: Search results
+
   cookies:
     banner:
       aria:
