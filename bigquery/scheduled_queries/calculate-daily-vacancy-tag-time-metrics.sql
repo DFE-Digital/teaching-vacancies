@@ -4,40 +4,6 @@ WITH
     date
   FROM
     UNNEST(GENERATE_DATE_ARRAY('2018-04-25', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY), INTERVAL 1 DAY)) AS date ),
-  vacancies AS (
-  SELECT
-    vacancy.id,
-    MIN(vacancy.publish_on) AS publish_on,
-    MIN(vacancy.expires_on) AS expires_on,
-    vacancy.job_roles AS job_roles,
-    COUNT(document.id) AS number_of_documents
-  FROM
-    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
-  LEFT JOIN
-    `teacher-vacancy-service.production_dataset.feb20_document` AS document
-  ON
-    document.vacancy_id=vacancy.id
-  GROUP BY
-    vacancy.id,
-    job_roles ),
-  vacancies_in_scope AS (
-  SELECT
-    vacancy.id,
-    MIN(vacancy.publish_on) AS publish_on,
-    MIN(vacancy.expires_on) AS expires_on,
-    vacancy.job_roles AS job_roles,
-    vacancy.category AS category,
-    COUNT(document.id) AS number_of_documents
-  FROM
-    `teacher-vacancy-service.production_dataset.vacancies_in_scope` AS vacancy
-  LEFT JOIN
-    `teacher-vacancy-service.production_dataset.feb20_document` AS document
-  ON
-    document.vacancy_id=vacancy.id
-  GROUP BY
-    vacancy.id,
-    job_roles,
-    category),
   all_vacancy_metrics AS (
   SELECT
     dates.date AS date,
@@ -47,7 +13,7 @@ WITH
   FROM
     dates
   CROSS JOIN
-    vacancies
+    `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
   GROUP BY
     date ),
   all_vacancy_in_scope_metrics AS (
@@ -59,7 +25,7 @@ WITH
   FROM
     dates
   CROSS JOIN
-    vacancies_in_scope
+    `teacher-vacancy-service.production_dataset.vacancies_in_scope` AS vacancies_in_scope
   GROUP BY
     date ),
   all_benchmarks AS (
@@ -71,7 +37,7 @@ WITH
   FROM
     dates
   CROSS JOIN
-     `teacher-vacancy-service.production_dataset.scraped_vacancies_in_scope` AS scraped_vacancies_in_scope
+    `teacher-vacancy-service.production_dataset.scraped_vacancies_in_scope` AS scraped_vacancies_in_scope
   WHERE
     scraped_vacancies_in_scope.source="TES"
   GROUP BY
@@ -79,43 +45,39 @@ WITH
   vacancy_metrics AS ( (
     SELECT
       dates.date AS date,
-      "all" AS tag,
-      COUNTIF(publish_on=date) AS vacancies_published,
-      COUNTIF(expires_on=date) AS vacancies_expired,
+      tags.tag AS tag,
+      CASE tags.tag
+        WHEN "all" THEN COUNTIF(publish_on=date)
+        WHEN "has_documents" THEN COUNTIF(publish_on=date
+        AND number_of_documents>0)
+        WHEN "suitable_for_nqts" THEN COUNTIF(publish_on=date AND job_roles LIKE '%nqt%')
+        WHEN "mat_level" THEN COUNTIF(publish_on=date
+        AND schoolgroup_level)
+        WHEN "multi_school" THEN COUNTIF(publish_on=date AND number_of_organisations > 1)
+    END
+      AS vacancies_published,
+      CASE tags.tag
+        WHEN "all" THEN COUNTIF(expires_on=date)
+        WHEN "has_documents" THEN COUNTIF(expires_on=date
+        AND number_of_documents>0)
+        WHEN "suitable_for_nqts" THEN COUNTIF(expires_on=date AND job_roles LIKE '%nqt%')
+        WHEN "mat_level" THEN COUNTIF(expires_on=date
+        AND schoolgroup_level)
+        WHEN "multi_school" THEN COUNTIF(expires_on=date AND number_of_organisations > 1)
+    END
+      AS vacancies_expired,
     FROM
       dates
+    CROSS JOIN (
+      SELECT
+        *
+      FROM
+        UNNEST(["all","has_documents","suitable_for_nqts","mat_level","multi_school"]) AS tag) AS tags
     CROSS JOIN
-      vacancies
+      `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
     GROUP BY
-      date )
-  UNION ALL (
-    SELECT
-      dates.date AS date,
-      "has_documents" AS tag,
-      COUNTIF(publish_on=date
-        AND number_of_documents>0) AS vacancies_published,
-      COUNTIF(expires_on=date
-        AND number_of_documents>0) AS vacancies_expired,
-    FROM
-      dates
-    CROSS JOIN
-      vacancies
-    GROUP BY
-      date )
-  UNION ALL (
-    SELECT
-      dates.date AS date,
-      "suitable_for_nqts" AS tag,
-      COUNTIF(publish_on=date
-        AND job_roles LIKE '%nqt%') AS vacancies_published,
-      COUNTIF(expires_on=date
-        AND job_roles LIKE '%nqt%') AS vacancies_expired,
-    FROM
-      dates
-    CROSS JOIN
-      vacancies
-    GROUP BY
-      date ) )
+      date,
+      tag ) )
 SELECT
   dates.date AS date,
   vacancy_metrics.tag AS tag,
