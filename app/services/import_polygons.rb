@@ -28,8 +28,14 @@ class ImportPolygons
         points.push(*point.reverse.map { |coord| coord.round(13) })
       end
 
-      LocationPolygon.find_or_create_by(name: region_name, location_type: location_type.to_s)
-                     .update(boundary: points)
+      location_polygon = LocationPolygon
+                          .find_or_create_by(name: region_name,
+                                             location_type: location_type.to_s)
+
+      location_polygon.update(boundary: points)
+
+      centroid = PolygonCentroidFinder.new(location_polygon).centroid
+      location_polygon.update(centroid: [centroid.lat, centroid.lng])
     end
   end
 
