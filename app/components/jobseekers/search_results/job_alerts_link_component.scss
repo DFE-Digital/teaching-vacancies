@@ -1,0 +1,36 @@
+.job-alert-cta {
+
+  @include govuk-media-query($until: desktop) {
+    margin: 0 -15px !important
+  }
+
+  position: sticky;
+  display: block;
+  box-sizing: border-box;
+  bottom: 0;
+  margin-bottom: -40px;
+
+  .job-alert-cta__fade {
+    height: 6px;
+    background: linear-gradient(transparent, $govuk-border-colour);
+  }
+
+  .job-alert-cta__content {
+
+    background-color: $govuk-brand-colour;
+    padding: govuk-spacing(2);
+    color: govuk-colour('white');
+
+    a {
+      color: govuk-colour('white');
+    }
+
+    .alert-icon {
+      display: inline;
+      left: 2px;
+      position: relative;
+      top: 2px;
+      margin-right: govuk-spacing(1);
+    }
+  }
+}
