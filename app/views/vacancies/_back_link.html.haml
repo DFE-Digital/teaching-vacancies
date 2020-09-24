@@ -1,6 +1,0 @@
-.govuk-grid-row
-  .govuk-grid-column-full
-    -if request.referrer
-      = link_to t('nav.back'), request.referrer, class: 'govuk-back-link with-referrer', role: 'button'
-    -else
-      = link_to t('nav.back'), root_path, class: 'govuk-back-link'
