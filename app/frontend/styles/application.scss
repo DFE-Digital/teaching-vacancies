@@ -16,6 +16,7 @@ $govuk-image-url-function: frontend-image-url;
 @import '../src/lib/ui/components/loader';
 
 @import 'shared/filters_component/filters_component';
+@import 'shared/table_component/table_component';
 
 @import 'global/variables';
 @import 'base/mixins';

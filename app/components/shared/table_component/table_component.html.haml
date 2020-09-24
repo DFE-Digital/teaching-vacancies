@@ -1,0 +1,11 @@
+%table.govuk-table
+  %tbody.govuk-table__body
+    - rows.each do |row|
+      - if row[:present]
+        %tr.govuk-table__row
+          %th.govuk-table__cell= row[:th]
+          %td.govuk-table__cell= row[:td]
+      - elsif row[:blank].present?
+        %tr.govuk-table__row
+          %th.govuk-table__cell= row[:th]
+          %td.govuk-table__cell= row[:blank]
