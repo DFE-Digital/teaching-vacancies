@@ -17,6 +17,7 @@ $govuk-image-url-function: frontend-image-url;
 
 @import 'shared/filters_component/filters_component';
 @import 'shared/table_component/table_component';
+@import 'jobseekers/search_results/job_alerts_link_component';
 
 @import 'global/variables';
 @import 'base/controllers';

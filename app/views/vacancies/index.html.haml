@@ -7,7 +7,6 @@
 = render(Shared::BreadcrumbComponent.new(collapse_on_mobile: false, crumbs: [{ link_path: root_path, link_text: t('breadcrumbs.home') }, { link_path: '#', link_text: t('breadcrumbs.jobs') }]))
 
 = render(Jobseekers::SearchResults::HeadingComponent.new(vacancies_search: @vacancies_search))
-= render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search))
 
 .govuk-grid-row{ class: 'govuk-!-margin-top-9' }
   .govuk-grid-column-one-third
@@ -46,3 +45,5 @@
       .pagination-results
         = paginate @vacancies_search.vacancies
       %p.govuk-body#vacancies-stats-bottom{ 'aria-label': 'Number of results' }
+
+    = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search))
