@@ -9,7 +9,8 @@ SELECT
   SAFE_DIVIDE(schools_that_published_vacancies,
     trust_size) AS proportion_of_schools_that_published_vacancies,
   SAFE_DIVIDE(schools_with_live_vacancies,
-    trust_size) AS proportion_of_schools_with_live_vacancies
+    trust_size) AS proportion_of_schools_with_live_vacancies,
+  number_of_users > 0 AS signed_up
 FROM (
   SELECT
     trust_name,
@@ -26,6 +27,20 @@ FROM (
     data_companies_house_number AS companies_house_number,
     data_group_status AS status,
     COUNT(school.id) AS trust_size,
+    (
+    SELECT
+      COUNT(user_id)
+    FROM
+      `teacher-vacancy-service.production_dataset.dsi_users` AS user
+    WHERE
+      CAST(user.organisation_uid AS STRING)=trust.uid ) AS number_of_users,
+    (
+    SELECT
+      COUNT(user_id)
+    FROM
+      `teacher-vacancy-service.production_dataset.dsi_approvers` AS approver
+    WHERE
+      CAST(approver.organisation_uid AS STRING)=trust.uid ) AS number_of_approvers,
     #count trust-level vacancies published by this trust
     (
     SELECT
