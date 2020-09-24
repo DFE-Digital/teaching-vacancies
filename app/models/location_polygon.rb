@@ -7,6 +7,6 @@ class LocationPolygon < ApplicationRecord
   def points
     # Converts the 1-dimensional boundary attribute to a list of
     # 2-element lists (coordinates)
-    self.boundary.each_slice(2).to_a
+    boundary.each_slice(2).to_a
   end
 end
