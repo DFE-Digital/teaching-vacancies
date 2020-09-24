@@ -180,18 +180,21 @@ data aws_iam_policy_document route53_hosted_zones {
 
   statement {
     actions = [
-      "route53:GetChange",
+      "route53:CreateHostedZone",
       "route53:GetHostedZone",
+      "route53:GetHostedZoneCount",
+      "route53:ListHostedZones",
+      "route53:ListHostedZonesByName",
+      "route53:UpdateHostedZoneComment",
+      "route53:GetChange",
       "route53:ListResourceRecordSets",
       "route53:ListTagsForResource",
       "route53:ChangeResourceRecordSets",
       "route53:ListResourceRecordSets",
-      "route53:GetHostedZoneCount",
-      "route53:ListHostedZonesByName"
     ]
     resources = [
       for zone in var.route53_zones :
-      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.zones[zone].zone_id}"
+      "arn:aws:route53:::hostedzone/${aws_route53_zone.zones[zone].zone_id}"
     ]
   }
 }
