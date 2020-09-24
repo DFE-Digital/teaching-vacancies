@@ -2,7 +2,7 @@
   %h3.govuk-heading-l.section-heading
     = t('schools.school_overview')
 
-  = render(Shared::TableComponent.new(rows: rows))
+  = render(Shared::TableComponent.new(rows: school_rows(organisation) + vacancy_rows))
 
   - if vacancy.about_school.present?
     %h4.govuk-heading-s
