@@ -5,7 +5,10 @@
 
 .jobs-banner
   .govuk-width-container
-    = render 'vacancies/back_link'
+    = render(Shared::BreadcrumbComponent.new(collapse_on_mobile: false,
+                                             crumbs: [{ link_path: root_path, link_text: t('breadcrumbs.home') },
+                                                      { link_path: referred_from_host? ? request.referrer : jobs_path, link_text: t('breadcrumbs.jobs') },
+                                                      { link_path: '#', link_text: @vacancy.job_title }]))
     .govuk-grid-row
       .govuk-grid-column-full
         %h1.govuk-heading-xl{ class: 'govuk-!-margin-bottom-2 govuk-!-margin-top-5' }
