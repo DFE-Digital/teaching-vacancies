@@ -47,9 +47,9 @@
             = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.school_group_location')))
 
     = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
-    = render(Jobseekers::SchoolGroupOverviewComponent.new(vacancy: @vacancy))
-    = render(Jobseekers::SchoolOverviewComponent.new(vacancy: @vacancy))
-    = render(Jobseekers::SchoolsOverviewComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::OrganisationOverviews::SchoolGroupComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::OrganisationOverviews::SchoolComponent.new(vacancy: @vacancy))
+    = render(Jobseekers::OrganisationOverviews::SchoolsComponent.new(vacancy: @vacancy))
 
     %section{ class: 'govuk-!-margin-top-3' }
       %h4.govuk-heading-s.share-this-job= t('jobs.share_this_job')

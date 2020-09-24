@@ -44,9 +44,7 @@ module OrganisationHelper
   end
 
   def ofsted_report(school)
-    if school.gias_data.present? && school.gias_data['URN'].present?
-      OFSTED_REPORT_ENDPOINT + school.gias_data['URN'].to_s
-    end
+    OFSTED_REPORT_ENDPOINT + school.urn
   end
 
   def age_range(school)
