@@ -1,13 +1,14 @@
 class PolygonGeometry
   def get_buffer_polygon(location_polygon:, buffer_in_metres: 30_000)
     start_time = Time.zone.now
+    @location_polygon = location_polygon
     @buffer_in_metres = buffer_in_metres
 
     # convert 1D array of lat, lng to 2D array of coordinates
-    coords = location_polygon.boundary.each_slice(2).to_a
+    points = @location_polygon.points
 
     # JSON of polygon for ArcGIS to consume
-    buffer_polygon = HTTParty.get(construct_buffer_api(coords))
+    buffer_polygon = HTTParty.get(construct_buffer_api(points))
 
     # 1D array of polygon for Algolia to consume
     buffer_boundary = buffer_polygon['geometries'].first['rings'].flatten
@@ -33,10 +34,10 @@ class PolygonGeometry
 
 private
 
-  def construct_buffer_api(coords)
+  def construct_buffer_api(points)
     geometries_param = {
       'geometryType' => 'esriGeometryPolygon',
-      'geometries' => [{ 'rings' => [coords] }]
+      'geometries' => [{ 'rings' => [points] }]
     }
 
     params = { 'geometries' => geometries_param.to_s,
@@ -55,10 +56,10 @@ private
 
     if api.length > 2000
       # Reduce number of coordinates in order to have fewer than 2000 characters in request url
-      coords = coords.each_with_index
+      points = points.each_with_index
       .map { |item, index| item if (index % 5).zero? }
       .compact
-      api = construct_buffer_api(coords)
+      api = construct_buffer_api(points)
     end
 
     api
