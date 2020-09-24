@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :detect_device_format
   before_action :set_root_headers
 
-  helper_method :cookies_preference_set?
+  helper_method :cookies_preference_set?, :referred_from_host?
 
   include AuthenticationConcerns
   include Ip
@@ -57,6 +57,10 @@ class ApplicationController < ActionController::Base
 
   def cookies_preference_set?
     cookies['consented-to-cookies'].present?
+  end
+
+  def referred_from_host?
+    request.host == URI(request.referrer || '').host
   end
 
 private
