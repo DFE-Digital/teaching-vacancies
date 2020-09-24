@@ -1,5 +1,5 @@
 ---
-AUTHENTICATION_FALLBACK: false
+AUTHENTICATION_FALLBACK: true
 BIG_QUERY_DATASET: production_dataset
 CLOUD_STORAGE_BUCKET: tvs_production
 DFE_SIGN_IN_ISSUER: https://oidc.signin.education.gov.uk
