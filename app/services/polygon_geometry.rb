@@ -1,4 +1,16 @@
+require 'geokit'
+
 class PolygonGeometry
+  include Geokit
+
+  attr_reader :centroid
+
+  def initialize(location_polygon)
+    @location_polygon = location_polygon
+    @geokit_polygon = Polygon.new(get_latlngs)
+    @centroid = @geokit_polygon.centroid
+  end
+
   def get_buffer_polygon(location_polygon:, buffer_in_metres: 30_000)
     start_time = Time.zone.now
     @location_polygon = location_polygon
@@ -63,5 +75,13 @@ private
     end
 
     api
+  end
+
+  def get_latlngs
+    latlngs = []
+    @location_polygon.points.each do |point|
+      latlngs.push LatLng.new(point.first, point.second)
+    end
+    latlngs
   end
 end

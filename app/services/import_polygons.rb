@@ -34,7 +34,7 @@ class ImportPolygons
 
       location_polygon.update(boundary: points)
 
-      centroid = PolygonCentroidFinder.new(location_polygon).centroid
+      centroid = PolygonGeometry.new(location_polygon).centroid
       location_polygon.update(centroid: [centroid.lat, centroid.lng])
     end
   end
