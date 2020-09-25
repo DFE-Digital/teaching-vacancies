@@ -816,7 +816,7 @@ en:
       next_step: 'What happens next'
       reference: 'Your reference: %{reference}'
       unsubscribe: "You can unsubscribe by following the link at the bottom of these emails."
-      next_step_details: 'We’ll email you details of any new jobs that match the following search criteria:'
+      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
