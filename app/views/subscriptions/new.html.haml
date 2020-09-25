@@ -1,5 +1,7 @@
 - content_for :page_title_prefix, t('subscriptions.new.page_description')
 
+= link_to t('buttons.back'), @previous_step_path, class: 'govuk-back-link govuk-!-margin-top-0'
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @subscription, url: subscriptions_path do |f|
@@ -27,18 +29,16 @@
         hint_text: t('subscriptions.hints.email'),
         required: true
 
-      = f.govuk_text_field :reference,
-        label: { text: t('subscriptions.labels.reference_html'), size: 's' },
-        hint_text: t('subscriptions.hints.reference'),
-        required: true
-
       = recaptcha_v3(action: 'subscription')
 
-      .govuk-warning-text
-        %span.govuk-warning-text__icon{'aria-hidden': "true"}
-          = '!'
-        %strong.govuk-warning-text__text
-          %span.govuk-warning-text__assistive Warning
-          = t('subscriptions.info')
+      = render(NotificationComponent.new(content: { body: t('subscriptions.info') }, style: 'notice', background: true, dismiss: false, alert: 'info'))
 
       = f.govuk_submit t('buttons.subscribe')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = link_to t('buttons.cancel'), @previous_step_path, class: 'govuk-link'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds.govuk-body{ class: 'govuk-!-margin-top-4' }
+    = raw t('terms_and_conditions.read')

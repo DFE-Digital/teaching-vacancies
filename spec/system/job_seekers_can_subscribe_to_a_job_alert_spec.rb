@@ -60,24 +60,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
-      scenario 'when no reference is set' do
-        visit new_subscription_path(search_criteria: { keyword: 'test' })
-        fill_in 'subscription[email]', with: 'jane.doe@example.com'
-        click_on 'Subscribe'
-
-        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
-      end
-
       context 'and is redirected to the confirmation page' do
-        scenario 'when setting a reference number' do
-          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
-          fill_in 'subscription[email]', with: 'jane.doe@example.com'
-          fill_in 'subscription[reference]', with: 'Daily alert reference'
-          click_on 'Subscribe'
-
-          expect(page).to have_content(/Daily alert reference/)
-        end
-
         scenario 'where they can go back to the filtered search' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
@@ -137,7 +120,6 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content('Working patterns: Full-time')
 
         fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
-        fill_in 'subscription[reference]', with: 'Daily alerts for: English'
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
         expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
@@ -180,7 +162,6 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content('Working patterns: Full-time')
 
         fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
-        fill_in 'subscription[reference]', with: 'Daily alerts for: English'
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
         expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }

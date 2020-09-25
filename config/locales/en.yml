@@ -796,12 +796,12 @@ en:
         - receive no more than 1 email a day
     link:
       text: 'Receive a job alert'
-      help_text: 'whenever a job matching this search is published'
+      help_text: 'whenever a job matching this search is listed'
       no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed'
-    intro: 'We’ll email you details of any new jobs that match the following search criteria:'
+    intro: 'We’ll send you an alert for any new jobs that match the following criteria:'
     new:
-      page_description: Sign up for a job alert
-    info: You can unsubscribe at any time using the link at the bottom of any email you receive for this job alert.
+      page_description: Subscribe to job alerts
+    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     location_radius_text: Within %{radius} miles of %{location}
     location_category_text: In %{location}
     reference: 'for'
@@ -908,6 +908,7 @@ en:
       - 'Access to the Service'
       - 'Listing data'
     please_accept: 'Please accept the terms and conditions'
+    read: "Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>"
     label: 'I agree to all of the Terms and Conditions of the Teaching Vacancies service.'
   stats:
     title: Statistics
@@ -920,6 +921,7 @@ en:
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
+    cancel: Cancel
     cancel_copy: Cancel copy
     cancel_and_return: Cancel and return
     change: Change
