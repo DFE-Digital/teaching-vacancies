@@ -32,6 +32,6 @@
 
       = recaptcha_v3(action: 'subscription')
 
-      = render(NotificationComponent.new(content: t('nqt_job_alerts.intro.unsubscribe'), style: 'notice', background: true, alert: true))
+      = render(NotificationComponent.new(content: t('nqt_job_alerts.intro.unsubscribe'), style: 'notice', background: true, alert: true, dismiss: false))
 
       = f.govuk_submit t('buttons.subscribe'), classes: 'nqt-job-alert-subscribe-gtm'
