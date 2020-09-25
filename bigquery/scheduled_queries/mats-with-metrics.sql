@@ -104,8 +104,6 @@ FROM (
     date_opened,
     companies_house_number,
     status
-  HAVING
-    trust_size > 1 #exclude schools which aren't in trusts, and single academy trusts
     )
 ORDER BY
   trust_size DESC
