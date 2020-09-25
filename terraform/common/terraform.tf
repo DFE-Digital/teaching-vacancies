@@ -11,3 +11,12 @@ terraform {
     encrypt = "true"
   }
 }
+
+
+module domains {
+  source = "./modules/domains"
+
+  primary_zone_name   = local.primary_zone_name
+  secondary_zone_name = local.secondary_zone_name
+
+}
