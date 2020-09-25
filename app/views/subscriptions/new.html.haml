@@ -29,6 +29,12 @@
         hint_text: t('subscriptions.hints.email'),
         required: true
 
+      = f.govuk_collection_radio_buttons :frequency,
+        [['daily', t('subscriptions.frequency.daily')], ['weekly', t('subscriptions.frequency.weekly')]],
+        :first,
+        :last,
+        legend: { text: t('subscriptions.labels.frequency_html') }
+
       = recaptcha_v3(action: 'subscription')
 
       = render(NotificationComponent.new(content: { body: t('subscriptions.info') }, style: 'notice', background: true, dismiss: false, alert: 'info'))

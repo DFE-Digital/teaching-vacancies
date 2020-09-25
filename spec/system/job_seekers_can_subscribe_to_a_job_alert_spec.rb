@@ -61,6 +61,22 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
       end
 
       context 'and is redirected to the confirmation page' do
+        scenario 'when setting an alert frequency of daily' do
+          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+          page.choose('Daily')
+          click_on 'Subscribe'
+
+          expect(page).to have_content(I18n.t('subscriptions.frequency.daily'))
+        end
+
+        scenario 'when setting an alert frequency of weekly' do
+          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+          page.choose('Weekly')
+          click_on 'Subscribe'
+
+          expect(page).to have_content(I18n.t('subscriptions.frequency.weekly'))
+        end
+
         scenario 'where they can go back to the filtered search' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
