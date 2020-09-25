@@ -794,6 +794,9 @@ en:
         - get an email when new jobs match their search
         - can unsubscribe at any time
         - receive no more than 1 email a day
+    frequency:
+      daily: Daily, at approx 3 pm
+      weekly: Weekly (Friday evening at approx 6 pm)
     link:
       text: 'Receive a job alert'
       help_text: 'whenever a job matching this search is listed'
@@ -839,7 +842,7 @@ en:
     unsubscribe: Unsubscribe
     labels:
       email_html: Email address (<span class="text-red">Required</span>)
-      reference_html: Your reference (<span class="text-red">Required</span>)
+      frequency_html: When do you want to receive alerts? (<span class="text-red">Required</span>)
     hints:
       email: Enter your email address. We'll only use it to send you job alerts.
       reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
