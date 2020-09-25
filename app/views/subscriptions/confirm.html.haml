@@ -12,7 +12,7 @@
 
     %h2.govuk-heading-m=t('subscriptions.confirmation.next_step')
     %p.govuk-body=t('subscriptions.confirmation.next_step_details')
-    %div.govuk-inset-text
+    .grouped-text-block
       %ul.govuk-list
         - @subscription.filtered_search_criteria.each_pair do |filter, value|
           %li

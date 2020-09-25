@@ -124,3 +124,9 @@ body {
     }
   }
 }
+
+.grouped-text-block {
+  border: govuk-spacing(1) solid $govuk-border-colour;
+  margin-bottom: govuk-spacing(3);
+  padding: govuk-spacing(2) govuk-spacing(3) 0;
+}
