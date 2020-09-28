@@ -1,6 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
+  describe '#redirect_to_domain' do
+    before do
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
+      stub_const('DOMAIN', 'localhost')
+      @request.host = fake_domain
+    end
+
+    context 'when request.host_with_port is different to DOMAIN' do
+      let(:fake_domain) { 'DIFFERENT_DOMAIN' }
+
+      it 'redirects to DOMAIN' do
+        get :check
+        expect(response.location).to eql("http://#{DOMAIN}/check")
+        expect(response.status).to eql(301)
+      end
+    end
+
+    context 'when request.host_with_port is DOMAIN' do
+      let(:fake_domain) { DOMAIN }
+
+      it 'does not redirect to DOMAIN' do
+        get :check
+        expect(response.status).to eql(200)
+      end
+    end
+  end
+
   describe 'routing' do
     it 'check endpoint is publically accessible' do
       expect(get: '/check').to route_to(controller: 'application', action: 'check')

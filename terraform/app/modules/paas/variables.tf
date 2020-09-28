@@ -66,10 +66,12 @@ locals {
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
   )
   app_env_secrets = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)
+  app_env_domain  = { "DOMAIN" = "teaching-vacancies-${var.environment}.london.cloudapps.digital" }
   app_environment = merge(
     local.app_env_api_keys,
     local.app_env_secrets,
-    var.app_env_values
+    local.app_env_domain,
+    var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars will overwrite app_env_domain
   )
   app_cloudfoundry_service_instances = [
     cloudfoundry_service_instance.postgres_instance.id,

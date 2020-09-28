@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_action :redirect_to_domain
+
   add_flash_types :success, :danger
 
   protect_from_forgery with: :exception, except: :not_found
@@ -87,6 +89,20 @@ private
     super
     payload[:remote_ip] = request_ip
     payload[:session_id] = "#{session.id.to_s[0..7]}…" if session.id
+  end
+
+  def redirect_to_domain
+    if request_host_is_invalid?
+      redirect_to status: 301, host: DOMAIN
+    end
+  end
+
+  def request_host_is_invalid?
+    !Rails.env.test? && request_is_not_paas_healthcheck? && request.host_with_port != DOMAIN
+  end
+
+  def request_is_not_paas_healthcheck?
+    request.headers.env['HTTP_USER_AGENT'] != 'diego-healthcheck'
   end
 
   def set_root_headers
