@@ -771,6 +771,7 @@ en:
     description: Description
     group_type: Group type
     info: 'About %{school_group}'
+    map_aria_label: Interactive map showing trust location
     school_group_location: 'Head office location'
     trust_overview: Trust overview
     trust_visits: 'Arrange a visit to %{school_group}'

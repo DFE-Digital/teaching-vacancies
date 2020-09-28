@@ -1,4 +1,5 @@
 require 'csv'
+require 'geocoding'
 require 'httparty'
 
 SCHOOL_GROUP_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata.csv'.freeze
@@ -57,7 +58,15 @@ private
   def convert_to_school_group(row)
     school_group = SchoolGroup.find_or_initialize_by(uid: row['Group UID'])
     set_gias_data_as_json(school_group, row)
+    set_geolocation(school_group, row)
     school_group
+  end
+
+  def set_geolocation(school_group, row)
+    if row['Group Postcode']&.present? && (school_group.geolocation.blank? || school_group.postcode != row['Group Postcode'])
+      coordinates = Geocoding.new(row['Group Postcode']).coordinates
+      school_group.geolocation = coordinates unless coordinates == [0, 0]
+    end
   end
 
   def set_gias_data_as_json(school_group, row)

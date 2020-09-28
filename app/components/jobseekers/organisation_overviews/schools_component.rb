@@ -1,18 +1,11 @@
-class Jobseekers::SchoolsOverviewComponent < ViewComponent::Base
-  include OrganisationHelper
-  include VacanciesHelper
-
-  def initialize(vacancy:)
-    @vacancy = vacancy
-  end
-
+class Jobseekers::OrganisationOverviews::SchoolsComponent < Jobseekers::OrganisationOverviews::BaseComponent
   def render?
-    @vacancy.at_multiple_schools?
+    vacancy.at_multiple_schools?
   end
 
-  def schools_map_data
+  def organisation_map_data
     schools = []
-    @vacancy.organisations.select(&:geolocation).each do |school|
+    vacancy.organisations.select(&:geolocation).each do |school|
       schools.push({ name: school.name,
                      name_link: link_to(school.name, (school.website || school.url)),
                      address: full_address(school),

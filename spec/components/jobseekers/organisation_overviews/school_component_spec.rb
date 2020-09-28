@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
+RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :component do
   let(:geolocation_trait) { nil }
   let(:organisation) { create(:school, geolocation_trait) }
   let(:vacancy) { create(:vacancy, :at_one_school) }
@@ -70,18 +70,8 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
     end
   end
 
-  context 'when an ofsted report is present' do
-    let(:organisation) { create(:school, gias_data: { 'URN' => Faker::Number.number(digits: 6) }) }
-
-    it 'renders the osted report' do
-      expect(rendered_component).to include(ofsted_report(vacancy.parent_organisation))
-    end
-  end
-
-  context 'when an ofsted report is not present' do
-    it 'does not render the osted report' do
-      expect(rendered_component).to include(I18n.t('schools.no_information'))
-    end
+  it 'renders the osted report' do
+    expect(rendered_component).to include(ofsted_report(vacancy.parent_organisation))
   end
 
   context 'when GIAS-obtained website has been overwritten' do
@@ -138,9 +128,9 @@ RSpec.describe Jobseekers::SchoolOverviewComponent, type: :component do
     end
   end
 
-  describe '#school_map_data' do
+  describe '#organisation_map_data' do
     let(:data) do
-      JSON.parse(described_class.new(vacancy: vacancy_presenter).school_map_data)
+      JSON.parse(described_class.new(vacancy: vacancy_presenter).organisation_map_data)
     end
 
     it 'contains the school name' do
