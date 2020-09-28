@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'A job seeker can subscribe to a job alert' do
-  before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
-
   context 'A job seeker' do
     scenario 'can access the new subscription page when search criteria have been specified' do
       expect { visit(new_subscription_path) }.to raise_error(ActionController::ParameterMissing)

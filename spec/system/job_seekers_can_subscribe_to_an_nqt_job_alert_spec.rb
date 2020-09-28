@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'A job seeker can subscribe to an NQT job alert' do
-  before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
-
   describe 'A job seeker' do
     scenario 'can successfully subscribe to a job alert' do
       visit nqt_job_alerts_path
