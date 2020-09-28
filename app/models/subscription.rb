@@ -1,4 +1,6 @@
 class Subscription < ApplicationRecord
+  FREQUENCY_OPTIONS = %W[daily weekly]
+
   include Auditor::Model
 
   enum frequency: { daily: 0 }

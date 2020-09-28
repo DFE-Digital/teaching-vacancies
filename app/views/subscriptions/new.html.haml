@@ -28,7 +28,7 @@
         required: true
 
       = f.govuk_collection_radio_buttons :frequency,
-        [['daily', t('subscriptions.frequency.daily')], ['weekly', t('subscriptions.frequency.weekly')]],
+        frequency_options
         :first,
         :last,
         legend: { text: t('subscriptions.labels.frequency_html') }
