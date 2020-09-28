@@ -22,7 +22,7 @@ END
   AS size_bracket,
 FROM (
   SELECT
-    trust_name,
+    trust.name AS trust_name,
     trust.id AS id,
     trust.uid AS uid,
     trust.data_ukprn AS ukprn,
