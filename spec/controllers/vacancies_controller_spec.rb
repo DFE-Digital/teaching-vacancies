@@ -114,15 +114,6 @@ RSpec.describe VacanciesController, type: :controller do
     context 'feature flagging' do
       render_views
 
-      context 'when the email alerts feature flag is set to true' do
-        before { allow(EmailAlertsFeature).to receive(:enabled?) { true } }
-
-        it 'shows the subscribe link' do
-          get :index, params: { keyword: 'English' }
-          expect(response.body).to match(I18n.t('subscriptions.link.text'))
-        end
-      end
-
       context 'when the email alerts feature flag is set to false' do
         before { allow(EmailAlertsFeature).to receive(:enabled?) { false } }
 

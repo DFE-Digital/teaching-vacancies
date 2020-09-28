@@ -60,8 +60,8 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
       end
 
-      context 'and is redirected to the confirmation page' do
-        scenario 'when setting an alert frequency of daily' do
+      context 'when alert frequency is daily' do
+        scenario 'redirects to the confirmation page' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           page.choose('Daily')
           click_on 'Subscribe'
@@ -69,7 +69,19 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
           expect(page).to have_content(I18n.t('subscriptions.frequency.daily'))
         end
 
-        scenario 'when setting an alert frequency of weekly' do
+        scenario 'where they can go back to the filtered search' do
+          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
+          fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          click_on 'Subscribe'
+
+          click_on 'Return to your search results'
+
+          expect(page.find_field('jobs_search_form[keyword]').value).to eq('teacher')
+        end
+      end
+
+      context 'when alert frequency is weekly' do
+        scenario 'redirects to the confirmation page' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           page.choose('Weekly')
           click_on 'Subscribe'
@@ -127,7 +139,11 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
           click_on I18n.t('buttons.search')
         end
 
-        click_on I18n.t('subscriptions.link.text')
+        if page.has_css?('#job-alert-link')
+          click_on('Receive a job alert')
+        else
+          click_on('get notified')
+        end
 
         expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
         expect(page).to have_content('Keyword: English')
@@ -169,7 +185,11 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
           click_on I18n.t('buttons.search')
         end
 
-        click_on I18n.t('subscriptions.link.text')
+        if page.has_css?('#job-alert-link')
+          click_on('Receive a job alert')
+        else
+          click_on('get notified')
+        end
 
         expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
         expect(page).to have_content('Keyword: English')

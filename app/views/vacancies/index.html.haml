@@ -46,4 +46,4 @@
         = paginate @vacancies_search.vacancies
       %p.govuk-body#vacancies-stats-bottom{ 'aria-label': 'Number of results' }
 
-    = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search))
+    = render(Jobseekers::SearchResults::JobAlertsLinkComponent.new(vacancies_search: @vacancies_search, count: @vacancies.count))
