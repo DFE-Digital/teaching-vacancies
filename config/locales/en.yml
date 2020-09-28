@@ -817,6 +817,7 @@ en:
       reference: 'Your reference: %{reference}'
       unsubscribe: "You can unsubscribe by following the link at the bottom of these emails."
       next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
+      frequency_label: 'You will receive alerts:'
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
@@ -911,7 +912,7 @@ en:
       - 'Access to the Service'
       - 'Listing data'
     please_accept: 'Please accept the terms and conditions'
-    read: "Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>"
+    read_html: "Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>"
     label: 'I agree to all of the Terms and Conditions of the Teaching Vacancies service.'
   stats:
     title: Statistics
