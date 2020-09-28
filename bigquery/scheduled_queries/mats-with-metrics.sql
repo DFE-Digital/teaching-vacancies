@@ -10,7 +10,16 @@ SELECT
     trust_size) AS proportion_of_schools_that_published_vacancies,
   SAFE_DIVIDE(schools_with_live_vacancies,
     trust_size) AS proportion_of_schools_with_live_vacancies,
-  number_of_users > 0 AS signed_up
+  number_of_users > 0 AS signed_up,
+  CASE
+    WHEN trust_size < 2 THEN "0-1"
+    WHEN trust_size < 6 THEN "2-5"
+    WHEN trust_size < 11 THEN "6-10"
+    WHEN trust_size < 21 THEN "11-20"
+  ELSE
+  "21+"
+END
+  AS size_bracket,
 FROM (
   SELECT
     trust_name,
@@ -23,6 +32,7 @@ FROM (
     trust.postcode AS postcode,
     CAST(trust.created_at AS date) AS date_created,
     CAST(trust.updated_at AS date) AS date_updated,
+    trust.data_closed_date AS date_closed,
     data_incorporated_on_open_date AS date_opened,
     data_companies_house_number AS companies_house_number,
     data_group_status AS status,
@@ -102,8 +112,8 @@ FROM (
     date_created,
     date_updated,
     date_opened,
+    date_closed,
     companies_house_number,
-    status
-    )
+    status )
 ORDER BY
   trust_size DESC
