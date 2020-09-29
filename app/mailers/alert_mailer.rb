@@ -8,17 +8,10 @@ class AlertMailer < ApplicationMailer
 
     @vacancies = VacanciesPresenter.new(vacancies)
 
-    subject_key =
-      if @vacancies.many?
-        'job_alerts.alert.email.daily.subject.many'
-      else
-        'job_alerts.alert.email.daily.subject.one'
-      end
-
     view_mail(
       NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE,
       to: @subscription.email,
-      subject: I18n.t(subject_key, reference: @subscription.reference),
+      subject: I18n.t('job_alerts.alert.email.subject'),
     )
   end
 end
