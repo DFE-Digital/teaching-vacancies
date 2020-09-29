@@ -65,7 +65,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'faker'
