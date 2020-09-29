@@ -7,4 +7,4 @@
     %td.govuk-table__cell= vacancy.expires_on
     %td.govuk-table__cell{ class: 'govuk-!-width-one-quarter' }= select_tag 'vacancy[hired_status]', options_for_select(hired_status_options, nil), form: vacancy.id, include_blank: '--', class: 'govuk-select form-control form-control-block govuk-!-width-full'
     %td.govuk-table__cell{ class: 'govuk-!-width-one-quarter' }= select_tag 'vacancy[listed_elsewhere]', options_for_select(listed_elsewhere_options, nil), form: vacancy.id, include_blank: '--', class: 'govuk-select form-control form-control-block govuk-!-width-full'
-    %td.govuk-table__cell= submit_tag t('buttons.submit'), form: vacancy.id, class: 'govuk-button mb0'
+    %td.govuk-table__cell= submit_tag t('buttons.submit'), form: vacancy.id, class: 'govuk-button govuk-!-margin-bottom-0'

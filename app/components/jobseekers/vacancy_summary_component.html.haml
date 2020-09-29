@@ -1,5 +1,5 @@
 %li.vacancy{ 'role': 'listitem', 'tab-index': '0'}
-  %h2.govuk-heading-m.mb0= link_to @vacancy.job_title, job_path(@vacancy), class: 'govuk-link view-vacancy-link'
+  %h2.govuk-heading-m{ class: 'govuk-!-margin-bottom-0' }= link_to @vacancy.job_title, job_path(@vacancy), class: 'govuk-link view-vacancy-link'
   %p.govuk-body= location(@vacancy.parent_organisation, job_location: @vacancy.job_location)
   %dl
     %dt= t('jobs.salary')

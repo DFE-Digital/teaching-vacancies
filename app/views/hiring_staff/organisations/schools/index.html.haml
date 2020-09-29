@@ -3,14 +3,14 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
 
-    %h1.govuk-heading-xl.mb0
+    %h1.govuk-heading-xl{ class: 'govuk-!-margin-bottom-0' }
       = t('.title')
     %p
       = t('.description')
 
     = render 'school_group'
 
-    %h2.govuk-heading-l.mb0
+    %h2.govuk-heading-l{ class: 'govuk-!-margin-bottom-0' }
       = t('.schools', count: current_organisation.schools.count)
 
     .schools
