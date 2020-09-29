@@ -16,7 +16,7 @@
         - else
           %p= link_to t('jobs.confirmation_page.view_posted_job'), organisation_job_path(@vacancy.id), class: 'reversed-link'
 
-        %p.mb0= t('jobs.confirmation_page.dashboard_link', link: link_to('your dashboard', organisation_path, class: 'reversed-link')).html_safe
+        %p{ class: 'govuk-!-margin-bottom-0' }= t('jobs.confirmation_page.dashboard_link', link: link_to('your dashboard', organisation_path, class: 'reversed-link')).html_safe
 
   .govuk-grid-column-two-thirds
     %h3.govuk-heading-m= t('jobs.confirmation_page.next_step')

@@ -2,5 +2,5 @@
   %h2.govuk-info-summary__title#info-summary-title= t('jobs.preview_listing.summary.heading_html', title: @vacancy.job_title)
   .govuk-info-summary__body
     %p= t('jobs.preview_listing.summary.body_html', count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
-    = link_to t('jobs.preview_listing.summary.buttons.submit'), organisation_job_publish_path(@vacancy.id), method: :post, class: 'govuk-button mb0 submit-listing-with-preview-gtm'
-    = link_to t('jobs.preview_listing.summary.buttons.make_changes'), organisation_job_review_path(@vacancy.id), class: 'govuk-button govuk-button--secondary mb0'
+    = link_to t('jobs.preview_listing.summary.buttons.submit'), organisation_job_publish_path(@vacancy.id), method: :post, class: 'govuk-button govuk-!-margin-bottom-0 submit-listing-with-preview-gtm'
+    = link_to t('jobs.preview_listing.summary.buttons.make_changes'), organisation_job_review_path(@vacancy.id), class: 'govuk-button govuk-button--secondary govuk-!-margin-bottom-0'
