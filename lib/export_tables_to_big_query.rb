@@ -95,8 +95,7 @@ private
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
       data = '' if c.name == 'hired_status' && data.nil?
-      # This prevents an error whereby BigQuery rejects arrays of exactly one element.
-      data = data.to_s if data.is_a?(Array) && data.one?
+      data = data.to_s if data.is_a?(Array)
       data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
       data = data.to_s if c.type == :json
       @bigquery_data[c.name] = data
