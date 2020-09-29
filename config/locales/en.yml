@@ -794,14 +794,17 @@ en:
         - get an email when new jobs match their search
         - can unsubscribe at any time
         - receive no more than 1 email a day
+    frequency:
+      daily: Daily, at approx 3 pm
+      weekly: Weekly (Friday evening at approx 6 pm)
     link:
       text: 'Receive a job alert'
-      help_text: 'whenever a job matching this search is published'
+      help_text: 'whenever a job matching this search is listed'
       no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed'
-    intro: 'We’ll email you details of any new jobs that match the following search criteria:'
+    intro: 'We’ll send you an alert for any new jobs that match the following criteria:'
     new:
-      page_description: Sign up for a job alert
-    info: You can unsubscribe at any time using the link at the bottom of any email you receive for this job alert.
+      page_description: Subscribe to job alerts
+    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     location_radius_text: Within %{radius} miles of %{location}
     location_category_text: In %{location}
     reference: 'for'
@@ -813,7 +816,8 @@ en:
       next_step: 'What happens next'
       reference: 'Your reference: %{reference}'
       unsubscribe: "You can unsubscribe by following the link at the bottom of these emails."
-      next_step_details: 'We’ll email you details of any new jobs that match the following search criteria:'
+      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
+      frequency_label: 'You will receive alerts:'
     deletion:
       title: Subscription deleted
       header: Your email subscription has been deleted
@@ -839,7 +843,7 @@ en:
     unsubscribe: Unsubscribe
     labels:
       email_html: Email address (<span class="text-red">Required</span>)
-      reference_html: Your reference (<span class="text-red">Required</span>)
+      frequency_html: When do you want to receive alerts? (<span class="text-red">Required</span>)
     hints:
       email: Enter your email address. We'll only use it to send you job alerts.
       reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
@@ -908,6 +912,7 @@ en:
       - 'Access to the Service'
       - 'Listing data'
     please_accept: 'Please accept the terms and conditions'
+    read_html: "Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>"
     label: 'I agree to all of the Terms and Conditions of the Teaching Vacancies service.'
   stats:
     title: Statistics
@@ -920,6 +925,7 @@ en:
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
+    cancel: Cancel
     cancel_copy: Cancel copy
     cancel_and_return: Cancel and return
     change: Change

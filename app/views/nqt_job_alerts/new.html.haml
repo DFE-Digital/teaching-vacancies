@@ -32,6 +32,10 @@
 
       = recaptcha_v3(action: 'subscription')
 
-      = render(NotificationComponent.new(content: t('nqt_job_alerts.intro.unsubscribe'), style: 'notice', background: true, alert: true, dismiss: false))
+      = render(NotificationComponent.new(content: t('nqt_job_alerts.intro.unsubscribe'), style: 'notice', background: true, alert: 'info', dismiss: false))
 
-      = f.govuk_submit t('buttons.subscribe'), classes: 'nqt-job-alert-subscribe-gtm'
+      = f.govuk_submit t('buttons.subscribe'), classes: 'nqt-job-alert-subscribe-gtm govuk-!-padding-left-8 govuk-!-padding-right-8'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds.govuk-body{ class: 'govuk-!-margin-top-4' }
+    = t('terms_and_conditions.read_html')

@@ -7,7 +7,7 @@
         %svg{ xmlns: "http://www.w3.org/2000/svg", role: "presentation", focusable: "false", viewBox: "0 0 25 25", height: "40", width: "40" }
           %path{ fill: "currentColor", d: "M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z" }
 
-      %h1.govuk-panel__title= t('nqt_job_alerts.confirm.splash.heading')
+      %h1.govuk-panel__title{ class: 'govuk-!-font-size-24' }= t('nqt_job_alerts.confirm.splash.heading')
 
       .govuk-panel__body
         %p= t('nqt_job_alerts.confirm.splash.message', email: @nqt_job_alerts_form.email)
@@ -15,7 +15,7 @@
     %h2.govuk-heading-l= t('nqt_job_alerts.confirm.heading')
     %p.govuk-body= t('nqt_job_alerts.confirm.intro')
 
-    .govuk-inset-text
+    .grouped-text-block
       %ul.govuk-list
         %li
           %span{ class: 'govuk-!-font-weight-bold'}= t('nqt_job_alerts.confirm.keywords')

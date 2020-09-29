@@ -3,8 +3,10 @@
     %a.govuk-link.govuk-link--no-visited-state.dismiss-link.js-dismissable__link{ href: '#' }
       = t('buttons.dismiss')
   - if render_title_and_body?
-    .govuk-notification__title= content[:title]
-    .govuk-notification__body= raw content[:body]
+    - if content[:title].present?
+      .govuk-notification__title= content[:title]
+    - if content[:body].present?
+      .govuk-notification__body= raw content[:body]
   - else
     .govuk-notification__body= raw content
 

@@ -1,7 +1,12 @@
 class Subscription < ApplicationRecord
+  FREQUENCY_OPTIONS = {
+    daily: 0,
+    weekly: 1
+  }.freeze
+
   include Auditor::Model
 
-  enum frequency: { daily: 0 }
+  enum frequency: FREQUENCY_OPTIONS
 
   has_many :alert_runs
 

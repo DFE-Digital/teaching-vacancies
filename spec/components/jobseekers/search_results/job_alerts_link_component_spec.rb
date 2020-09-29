@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :component do
-  subject { described_class.new(vacancies_search: vacancies_search) }
+  subject { described_class.new(vacancies_search: vacancies_search, count: 1) }
 
   let(:vacancies_search) { instance_double(Algolia::VacancySearchBuilder) }
   let(:active_hash) { { keyword: 'maths' } }
@@ -26,7 +26,7 @@ RSpec.describe Jobseekers::SearchResults::JobAlertsLinkComponent, type: :compone
 
         it 'renders the job alerts link' do
           expect(inline_component.css(
-            'a.govuk-link#job-alert-link[href='\
+            'a#job-alert-link[href='\
             "'#{Rails.application.routes.url_helpers.new_subscription_path(search_criteria: active_hash)}']",
           ).to_html).to include(I18n.t('subscriptions.link.text'))
         end
