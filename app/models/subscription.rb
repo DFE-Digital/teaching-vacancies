@@ -1,17 +1,16 @@
 class Subscription < ApplicationRecord
+  include Auditor::Model
+
   FREQUENCY_OPTIONS = {
     daily: 0,
-    weekly: 1
+    weekly: 1,
   }.freeze
-
-  include Auditor::Model
 
   enum frequency: FREQUENCY_OPTIONS
 
   has_many :alert_runs
 
   validates :email, email_address: { presence: true }
-  validates :reference, presence: true
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email frequency] }
 
@@ -67,10 +66,6 @@ class Subscription < ApplicationRecord
 private
 
   def default_reference
-    return unless new_record? && reference.blank?
-
-    generator = SubscriptionReferenceGenerator.new(search_criteria: search_criteria_to_h)
-
-    self.reference = generator.generate
+    self.reference = SubscriptionReferenceGenerator.new(search_criteria: search_criteria_to_h).generate
   end
 end

@@ -1,9 +1,10 @@
 :max_retries: 5
 
 :queues:
-  - [email_daily_alerts, 4]
+  - [email_alerts, 4]
   - [mailers, 3]
   - [queue_daily_alerts, 3]
+  - [queue_weekly_alerts, 3]
   - [google_indexing, 2]
   - [performance_platform, 2]
   - [vacancy_statistics, 2]

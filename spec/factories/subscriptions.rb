@@ -7,5 +7,9 @@ FactoryBot.define do
     factory :daily_subscription do
       frequency { :daily }
     end
+
+    factory :weekly_subscription do
+      frequency { :weekly }
+    end
   end
 end

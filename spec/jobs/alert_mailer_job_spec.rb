@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe DailyAlertMailerJob, type: :job do
+RSpec.describe AlertMailerJob, type: :job do
   include ActiveJob::TestHelper
 
   let(:school) { create(:school) }
   let(:vacancies) { create_list(:vacancy, 5) }
   let(:subscription) { create(:daily_subscription) }
   let(:alert_run) { create(:alert_run, subscription: subscription) }
-  let(:job) { AlertMailer.daily_alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
+  let(:job) { AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
 
   before do
     stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil')
@@ -16,7 +16,7 @@ RSpec.describe DailyAlertMailerJob, type: :job do
 
   it 'creates a run' do
     job_id = 'ABC1234'
-    allow_any_instance_of(DailyAlertMailerJob).to receive(:provider_job_id) { job_id }
+    allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
     job
     expect(subscription.alert_runs.count).to eq(1)
     expect(subscription.alert_runs.first.job_id).to eq(job_id)
@@ -25,7 +25,7 @@ RSpec.describe DailyAlertMailerJob, type: :job do
 
   it 'only creates one run' do
     job_id = 'ABC1234'
-    allow_any_instance_of(DailyAlertMailerJob).to receive(:provider_job_id) { job_id }
+    allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
     4.times { job }
     expect(subscription.alert_runs.count).to eq(1)
   end
@@ -33,20 +33,20 @@ RSpec.describe DailyAlertMailerJob, type: :job do
   it 'creates the run before enqueing' do
     # This is important as we have encountered a race condition where sometimes
     # the run does not exist when the job has started running
-    allow_any_instance_of(DailyAlertMailerJob).to receive(:subscription) { subscription }
-    allow_any_instance_of(DailyAlertMailerJob).to receive(:alert_run) { alert_run }
+    allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
+    allow_any_instance_of(AlertMailerJob).to receive(:alert_run) { alert_run }
 
     expect(subscription).to receive(:create_alert_run).ordered
-    expect(DailyAlertMailerJob.queue_adapter).to receive(:enqueue).ordered
+    expect(AlertMailerJob.queue_adapter).to receive(:enqueue).ordered
     job
   end
 
   it 'adds the job ID after enqueuing' do
     job_id = 'ABC1234'
-    allow_any_instance_of(DailyAlertMailerJob).to receive(:provider_job_id) { job_id }
+    allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
 
-    allow_any_instance_of(DailyAlertMailerJob).to receive(:subscription) { subscription }
-    expect(DailyAlertMailerJob.queue_adapter).to receive(:enqueue).ordered
+    allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
+    expect(AlertMailerJob.queue_adapter).to receive(:enqueue).ordered
     expect(subscription).to receive(:alert_run_today) { alert_run }
     expect(alert_run).to receive(:update).with(job_id: job_id).ordered
     job

@@ -858,11 +858,19 @@ en:
       email:
         daily:
           subject:
-            one: "Teaching Vacancies job alert for '%{reference}'"
-            many: "Teaching Vacancies job alerts for '%{reference}'"
+            one: Teaching Vacancies job alert for '%{reference}'
+            other: Teaching Vacancies job alerts for '%{reference}'
           summary:
             one: "A new job matching your search criteria '%{reference}' was posted yesterday."
             other: "%{count} new jobs matching your search criteria '%{reference}' were posted yesterday."
+          unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+        weekly:
+          subject:
+            one: Teaching Vacancies job alert for '%{reference}'
+            other: Teaching Vacancies job alerts for '%{reference}'
+          summary:
+            one: "A new job matching your search criteria '%{reference}' was posted in the last week."
+            other: "%{count} new jobs matching your search criteria '%{reference}' were posted in the last week."
           unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
   nqt_job_alerts:
     page_title: Sign up for NQT job alerts

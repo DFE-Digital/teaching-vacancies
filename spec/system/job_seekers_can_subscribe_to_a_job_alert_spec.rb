@@ -32,6 +32,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
     scenario 'subscribing to a search creates a new daily subscription audit' do
       visit new_subscription_path(search_criteria: { keyword: 'test' })
       fill_in 'subscription[email]', with: 'jane.doe@example.com'
+      page.choose('Daily')
       click_on 'Subscribe'
 
       activity = PublicActivity::Activity.last
@@ -42,6 +43,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
       scenario 'when the email address is valid' do
         visit new_subscription_path(search_criteria: { keyword: 'test' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        page.choose('Daily')
         click_on 'Subscribe'
 
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
@@ -53,6 +55,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
         visit new_subscription_path(search_criteria: { keyword: 'math teacher' })
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        page.choose('Daily')
         click_on 'Subscribe'
 
         expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
@@ -66,16 +69,6 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
           expect(page).to have_content(I18n.t('subscriptions.frequency.daily'))
         end
-
-        scenario 'where they can go back to the filtered search' do
-          visit new_subscription_path(search_criteria: { keyword: 'teacher' })
-          fill_in 'subscription[email]', with: 'jane.doe@example.com'
-          click_on 'Subscribe'
-
-          click_on 'Return to your search results'
-
-          expect(page.find_field('jobs_search_form[keyword]').value).to eq('teacher')
-        end
       end
 
       context 'when alert frequency is weekly' do
@@ -86,10 +79,13 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
           expect(page).to have_content(I18n.t('subscriptions.frequency.weekly'))
         end
+      end
 
+      context 'and is redirected to the confirmation page' do
         scenario 'where they can go back to the filtered search' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
           fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          page.choose('Daily')
           click_on 'Subscribe'
 
           click_on 'Return to your search results'
@@ -117,6 +113,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
         visit new_subscription_path(search_criteria: search_criteria)
         fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        page.choose('Daily')
         click_on 'Subscribe'
 
         expect(page).to have_content("You're already subscribed to an alert for these search criteria")
@@ -150,6 +147,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content('Working patterns: Full-time')
 
         fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+        page.choose('Daily')
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
         expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
@@ -163,7 +161,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
         activities = PublicActivity::Activity.all
         keys = activities.pluck(:key)
-        expect(keys).to include('subscription.daily_alert.new')
+        expect(keys).to include('subscription.alert.new')
         expect(keys).to include('subscription.daily_alert.create')
       end
     end
@@ -196,6 +194,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(page).to have_content('Working patterns: Full-time')
 
         fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+        page.choose('Daily')
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
         expect(SubscriptionMailer).to receive(:confirmation) { message_delivery }
@@ -209,7 +208,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
         activities = PublicActivity::Activity.all
         keys = activities.pluck(:key)
-        expect(keys).to include('subscription.daily_alert.new')
+        expect(keys).to include('subscription.alert.new')
         expect(keys).to include('subscription.daily_alert.create')
       end
     end

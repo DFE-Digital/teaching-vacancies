@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SubscriptionPresenter do
   let(:presenter) { described_class.new(subscription) }
-  let(:subscription) { Subscription.new(search_criteria: search_criteria.to_json, reference: reference) }
+  let(:subscription) { Subscription.new(search_criteria: search_criteria.to_json) }
   let(:search_criteria) { { keyword: 'english' } }
-  let(:reference) { 'Maths Teacher' }
 
   describe '#formatted_search_criteria' do
     context 'with the location filter' do
@@ -122,16 +121,6 @@ RSpec.describe SubscriptionPresenter do
 
     it 'returns the right number of keys' do
       expect(to_row.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count + 1)
-    end
-
-    it 'returns the reference' do
-      expect(to_row[:reference]).to eq(reference)
-      expect(to_row[:keyword]).to eq(search_criteria[:keyword])
-    end
-
-    it 'returns the search criteria' do
-      expect(to_row[:working_pattern]).to eq(nil)
-      expect(to_row.keys.last).to eq(:reference)
     end
 
     context 'when array values in search criteria' do

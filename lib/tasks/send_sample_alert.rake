@@ -4,6 +4,6 @@ namespace :daily_emails do
     subscription.search_criteria = { subject: 'English' }.to_json if subscription.search_criteria.blank?
     subscription.save
     vacancies = Vacancy.all.count.zero? ? FactoryBot.create_list(:vacancy, 5) : Vacancy.all.sample(5)
-    AlertMailer.daily_alert(subscription.id, vacancies.pluck(:id)).deliver_now!
+    AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_now!
   end
 end

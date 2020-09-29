@@ -1,10 +1,10 @@
 \# #{t('app.title')}
-\## #{t('job_alerts.alert.email.daily.summary', count: @vacancies.count, reference: @subscription.reference)}
+\## #{t("job_alerts.alert.email.#{@subscription.frequency}.summary", count: @vacancies.count, reference: @subscription.reference)}
 \
 \---
 \
 - @vacancies.each do |vacancy|
-  = notify_link(vacancy.share_url(source: 'subscription', medium: 'email', campaign: 'daily_alert'), vacancy.job_title).html_safe
+  = notify_link(vacancy.share_url(source: 'subscription', medium: 'email', campaign: "#{@subscription.frequency}_alert"), vacancy.job_title).html_safe
   = location(vacancy.parent_organisation, job_location: vacancy.job_location)
   \
   = "Salary: #{vacancy.salary}"

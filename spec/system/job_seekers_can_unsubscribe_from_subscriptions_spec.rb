@@ -61,17 +61,8 @@ RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
       end
     end
 
-    context 'with a generated reference' do
-      let(:reference) { SecureRandom.hex(8) }
-
-      it 'does not show the reference' do
-        expect(page).to_not have_content(reference)
-        expect(page).to have_content(I18n.t('subscriptions.deletion.confirmation'))
-      end
-    end
-
     context 'with a custom reference' do
-      let(:reference) { 'English teacher jobs' }
+      let(:reference) { 'English jobs within 20 miles of SW1A1AA' }
 
       it 'shows my reference' do
         expect(page).to have_content(reference)

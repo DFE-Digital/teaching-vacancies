@@ -6,7 +6,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#new' do
-    subject { get :new, params: { search_criteria: { subject: 'english' } } }
+    subject { get :new, params: { search_criteria: { keyword: 'english' } } }
 
     it 'returns 200' do
       subject
@@ -19,6 +19,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         subscription: {
           email: 'foo@email.com',
+          frequency: 'daily',
           search_criteria: { keyword: 'english' }.to_json
         }
       }
@@ -47,7 +48,6 @@ RSpec.describe SubscriptionsController, type: :controller do
           subscription: {
             email: '<script>foo@email.com</script>',
             search_criteria: "<body onload=alert('test1')>Text</body>",
-            frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
           }
         }
       end
