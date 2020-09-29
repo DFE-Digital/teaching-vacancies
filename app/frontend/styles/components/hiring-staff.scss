@@ -52,32 +52,3 @@ body.hiring-staff {
   color: $govuk-link-hover-colour;
   text-decoration: underline;
 }
-
-.hod-checkmark {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: block;
-  font-size: 35px;
-  height: 70px;
-  margin: 15px auto;
-  position: relative;
-  width: 70px;
-
-  &::before {
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  svg {
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  + .govuk-heading-l {
-    margin-top: 0;
-  }
-}

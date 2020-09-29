@@ -2,10 +2,8 @@
 
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-panel.govuk-panel--confirmation.submit-listing-success-gtm
-      %span.hod-checkmark
-        %svg{ xmlns: "http://www.w3.org/2000/svg", role: "presentation", focusable: "false", viewBox: "0 0 25 25", height: "40", width: "40" }
-          %path{ fill: "currentColor", d: "M25,6.2L8.7,23.2L0,14.1l4-4.2l4.7,4.9L21,2L25,6.2z" }
+    .govuk-panel.tvs-panel.govuk-panel--confirmation.submit-listing-success-gtm
+      = render partial: 'shared/checkmark'
 
       %h1.govuk-panel__title
         = t('jobs.confirmation_page.submitted')
