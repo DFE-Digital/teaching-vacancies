@@ -97,15 +97,14 @@ RSpec.describe AlertMailer, type: :mailer do
 
       it 'shows a vacancy' do
         expect(mail.subject).to eq(
-          I18n.t(
-            'job_alerts.alert.email.daily.subject.one',
-            reference: subscription.reference,
-          ),
+          I18n.t('job_alerts.alert.email.subject'),
         )
         expect(mail.to).to eq([subscription.email])
 
-        expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted in the last week/)
+        expect(body).to match(/# #{I18n.t('job_alerts.alert.email.daily.summary', count: 1)}/)
+        expect(body).to match(
+          /A new job matching your search criteria were listed in the last day./,
+        )
         expect(body).to match(/---/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
@@ -124,10 +123,7 @@ RSpec.describe AlertMailer, type: :mailer do
 
       it 'shows vacancies' do
         expect(mail.subject).to eq(
-          I18n.t(
-            'job_alerts.alert.email.daily.subject.other',
-            reference: subscription.reference,
-          ),
+          I18n.t('job_alerts.alert.email.subject'),
         )
         expect(mail.to).to eq([subscription.email])
 

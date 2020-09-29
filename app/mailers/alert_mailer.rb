@@ -12,8 +12,7 @@ class AlertMailer < ApplicationMailer
     view_mail(
       template,
       to: @subscription.email,
-      subject: I18n.t("job_alerts.alert.email.#{@subscription.frequency}.subject",
-                      count: @vacancies.count, reference: @subscription.reference),
+      subject: I18n.t('job_alerts.alert.email.subject'),
     )
   end
 end

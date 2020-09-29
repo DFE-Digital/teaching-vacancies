@@ -1,5 +1,4 @@
-\# #{t('app.title')}
-\## #{t("job_alerts.alert.email.#{@subscription.frequency}.summary", count: @vacancies.count, reference: @subscription.reference)}
+\# #{t("job_alerts.alert.email.#{@subscription.frequency}.summary", count: @vacancies.count)}
 \
 \---
 \
@@ -15,7 +14,7 @@
   \---
   \
 \
-Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} - the free service for schools in England to list teaching roles and for jobseekers to find them.
+Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} - Teaching Vacancies is a free job-listing service from the Department for Education. It helps schools to save money on recruitment and you to take the next step in your career.
 
 \---
 
