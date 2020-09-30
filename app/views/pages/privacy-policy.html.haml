@@ -1,61 +1,54 @@
 - content_for :page_title_prefix  do
-  =t('static_pages.privacy_policy.page_title')
+  = t('static_pages.privacy_policy.page_title')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-l=t('static_pages.privacy_policy.title')
+    %h1.govuk-heading-l= t('static_pages.privacy_policy.title')
 
-    %h2.govuk-heading-m=t('static_pages.privacy_policy.who_we_are.title')
-    %p=t('static_pages.privacy_policy.who_we_are.about')
+    %h2.govuk-heading-m= t('static_pages.privacy_policy.who_we_are.title')
+    %p= t('static_pages.privacy_policy.who_we_are.about')
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.when_we_collect.title')
     %p
-      =t('static_pages.privacy_policy.when_we_collect.about')
+      = t('static_pages.privacy_policy.when_we_collect.about')
       %ul.govuk-list.govuk-list--bullet
-        -t('static_pages.privacy_policy.when_we_collect.list').each do |li|
+        - t('static_pages.privacy_policy.when_we_collect.list').each do |li|
           %li=li.html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.what_we_collect.title')
     %p
-      =t('static_pages.privacy_policy.what_we_collect.about')
+      = t('static_pages.privacy_policy.what_we_collect.about')
       %ul.govuk-list.govuk-list--bullet
-        -t('static_pages.privacy_policy.what_we_collect.list').each do |li|
+        - t('static_pages.privacy_policy.what_we_collect.list').each do |li|
           %li=li.html_safe
+    %p= t('static_pages.privacy_policy.what_we_collect.cookies_html')
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.how_we_use.title')
-    -t('static_pages.privacy_policy.how_we_use.text').each do |p|
-      %p=p.html_safe
+    - t('static_pages.privacy_policy.how_we_use.text').each do |p|
+      %p= p.html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.why_its_lawful.title')
-    %p=t('static_pages.privacy_policy.why_its_lawful.about')
-
-    %h2.govuk-heading-m=t('static_pages.privacy_policy.who_we_make_available_to.title')
-    %p=t('static_pages.privacy_policy.who_we_make_available_to.line_1')
-    %p=t('static_pages.privacy_policy.who_we_make_available_to.line_2')
-    %p
-      =t('static_pages.privacy_policy.who_we_make_available_to.line_3')
-      %ul.govuk-list.govuk-list--bullet
-        -t('static_pages.privacy_policy.who_we_make_available_to.list').each do |li|
-          %li=li.html_safe
+    - t('static_pages.privacy_policy.why_its_lawful.about').each do |p|
+      %p= p.html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.how_long.title')
-    -t('static_pages.privacy_policy.how_long.text').each do |p|
-      %p=p.html_safe
+    - t('static_pages.privacy_policy.how_long.text').each do |p|
+      %p= p.html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.your_rights.title')
     %p
-      =t('static_pages.privacy_policy.your_rights.line_1')
+      = t('static_pages.privacy_policy.your_rights.line_1')
       %ul.govuk-list.govuk-list--bullet
-        -t('static_pages.privacy_policy.your_rights.list').each do |li|
-          %li=li.html_safe
+        - t('static_pages.privacy_policy.your_rights.list').each do |li|
+          %li= li.html_safe
 
-    %p=t('static_pages.privacy_policy.your_rights.line_2', contact_the_dfe_url: link_to(t('static_pages.privacy_policy.your_rights.contact_the_dfe'), 'https://www.gov.uk/contact-dfe', target: '_blank', class: 'govuk-link')).html_safe
-    %p=t('static_pages.privacy_policy.your_rights.line_3', gdpr_url: link_to(t('static_pages.privacy_policy.your_rights.gdpr'), 'https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/', target: '_blank', class: 'govuk-link')).html_safe
+    %p= t('static_pages.privacy_policy.your_rights.line_2', contact_the_dfe_url: link_to(t('static_pages.privacy_policy.your_rights.contact_the_dfe'), 'https://www.gov.uk/contact-dfe', target: '_blank', class: 'govuk-link')).html_safe
+    %p= t('static_pages.privacy_policy.your_rights.line_3', gdpr_url: link_to(t('static_pages.privacy_policy.your_rights.gdpr'), 'https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/', target: '_blank', class: 'govuk-link')).html_safe
 
-    %h2.govuk-heading-m=t('static_pages.privacy_policy.withdrawal_of_consent.title')
-    %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_1', mailto: mail_to(t('help.email'), t('help.email'), class: 'govuk-link')).html_safe
-    %p=t('static_pages.privacy_policy.withdrawal_of_consent.line_2', ico_url: link_to(t('static_pages.privacy_policy.withdrawal_of_consent.ico'), 'https://ico.org.uk/concerns/', target: '_blank', class: 'govuk-link')).html_safe
+    %h2.govuk-heading-m= t('static_pages.privacy_policy.withdrawal_of_consent.title')
+    %p= t('static_pages.privacy_policy.withdrawal_of_consent.line_1', mailto: mail_to(t('help.email'), t('help.email'), class: 'govuk-link')).html_safe
+    %p= t('static_pages.privacy_policy.withdrawal_of_consent.line_2', ico_url: link_to(t('static_pages.privacy_policy.withdrawal_of_consent.ico'), 'https://ico.org.uk/concerns/', target: '_blank', class: 'govuk-link')).html_safe
 
     %h2.govuk-heading-m=t('static_pages.privacy_policy.last_updated.title')
 
-    %p=t('static_pages.privacy_policy.last_updated.line_1')
+    %p= t('static_pages.privacy_policy.last_updated.line_1')
