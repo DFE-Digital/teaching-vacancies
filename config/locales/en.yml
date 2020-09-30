@@ -353,6 +353,12 @@ en:
     view_more_or_change: View more or change
     add_website_address: Add website address
   jobs:
+    alert:
+      similar:
+        terse: Get a job alert for similar jobs
+        verbose:
+          link_text: Get a job alert
+          remainder: for when similar jobs are listed
     current_step: "Step %{step} of %{total}"
     dashboard_filters:
       apply_filters: Apply filters

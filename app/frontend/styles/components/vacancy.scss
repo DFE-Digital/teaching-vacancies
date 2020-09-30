@@ -1,6 +1,34 @@
 .vacancy {
   @include govuk-font(19);
 
+  ul.actions {
+    li {
+      &:first-of-type {
+        margin-left: 0
+      }
+
+      &:nth-of-type(3) {
+        margin-right: 0;
+      }
+
+      margin-right: govuk-spacing(2);
+      margin-left: govuk-spacing(2);
+      list-style: none;
+      border-bottom: 3px solid govuk-colour('orange');
+      padding-bottom: govuk-spacing(2);
+
+      svg {
+        float: left;
+        padding-right: govuk-spacing(2)
+      }
+
+      a {
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+  }
+
   p {
     margin-top: 5px;
     overflow-wrap: break-word;
@@ -100,6 +128,13 @@
 
     @media only screen and (max-width: 640px) {
       padding: 12px;
+    }
+  }
+
+  #similar-jobs-alert-page-end-gtm {
+    svg {
+      float: left;
+      padding-right: govuk-spacing(2)
     }
   }
 }
