@@ -22,8 +22,8 @@ RSpec.describe ImportSchoolGroupData do
       subject.send(:convert_to_school_group, row)
     end
 
-    it 'calls set_geolocation' do
-      expect(subject).to receive(:set_geolocation).with(school_group, row)
+    it 'calls set_geolocation_and_postcode' do
+      expect(subject).to receive(:set_geolocation_and_postcode).with(school_group, row)
       subject.send(:convert_to_school_group, row)
     end
   end
@@ -67,8 +67,13 @@ RSpec.describe ImportSchoolGroupData do
     end
   end
 
-  describe '#set_geolocation' do
+  describe '#set_geolocation_and_postcode' do
     let(:school_group) { create(:school_group, gias_data: { 'Group Postcode' => 'some postcode' }) }
+
+    it 'sets the postcode' do
+      subject.send(:set_geolocation_and_postcode, school_group, school_group.gias_data)
+      expect(school_group.postcode).to eq(school_group.gias_data['Group Postcode'])
+    end
 
     context 'when coordinates are not found' do
       before do
@@ -76,14 +81,14 @@ RSpec.describe ImportSchoolGroupData do
       end
 
       it 'does not set the coordinates' do
-        subject.send(:set_geolocation, school_group, school_group.gias_data)
+        subject.send(:set_geolocation_and_postcode, school_group, school_group.gias_data)
         expect(school_group.geolocation).to be_blank
       end
     end
 
     context 'when coordinates are found' do
       it 'sets the coordinates' do
-        subject.send(:set_geolocation, school_group, school_group.gias_data)
+        subject.send(:set_geolocation_and_postcode, school_group, school_group.gias_data)
         expect(school_group.geolocation.x).to eql(Geocoder::DEFAULT_STUB_COORDINATES[0])
         expect(school_group.geolocation.y).to eql(Geocoder::DEFAULT_STUB_COORDINATES[1])
       end
