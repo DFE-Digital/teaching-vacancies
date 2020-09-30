@@ -798,10 +798,13 @@ en:
     frequency:
       daily: Daily, at approx 3 pm
       weekly: Weekly (Friday evening at approx 6 pm)
+      downcase:
+        daily: daily, at approx 3 pm
+        weekly: weekly (Friday evening at approx 6 pm)
     confirmation:
       header: 'Your email subscription has started'
       body: We sent an email confirmation to %{email}.
-      frequency_label: 'You will receive alerts:'
+      frequency_label: 'You will receive alerts '
       next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
       next_step: 'What happens next'
       unsubscribe: "You can unsubscribe by following the link at the bottom of these emails."

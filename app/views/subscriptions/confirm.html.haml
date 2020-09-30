@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, 'Subscription confirmation'
 
 .govuk-grid-row
-  .govuk-grid-column-three-quarters
+  .govuk-grid-column-two-thirds
     .govuk-panel.tvs-panel.govuk-panel--confirmation
       = render partial: 'shared/checkmark'
 
@@ -22,7 +22,7 @@
         %li{ class: 'govuk-!-margin-top-2 govuk-!-margin-bottom-0' }
           %span
             = t('subscriptions.confirmation.frequency_label')
-          = t("subscriptions.frequency.#{@subscription.frequency}")
+          = t("subscriptions.frequency.downcase.#{@subscription.frequency}")
 
     %p.govuk-body= t('subscriptions.confirmation.unsubscribe')
     %p.govuk-body
