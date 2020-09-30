@@ -43,9 +43,11 @@ RSpec.describe AlertMailer, type: :mailer do
 
         expect(body).to match(/# #{I18n.t('job_alerts.alert.email.daily.summary', count: 1)}/)
         expect(body).to match(
-          /A new job matching your search criteria were listed in the last day./,
+          /A new job matching your search criteria was listed in the last day./,
         )
         expect(body).to match(/---/)
+        expect(body).to match(/Subject: English/)
+        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'daily')}/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
 
@@ -68,6 +70,11 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
+        expect(body).to match(
+          /2 new jobs matching your search criteria were listed in the last day./,
+        )
+        expect(body).to match(/Subject: English/)
+        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'daily')}/)
         expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)

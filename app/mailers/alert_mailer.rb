@@ -3,7 +3,8 @@ class AlertMailer < ApplicationMailer
   add_template_helper(DatesHelper)
 
   def daily_alert(subscription_id, vacancy_ids)
-    @subscription = Subscription.find(subscription_id)
+    subscription = Subscription.find(subscription_id)
+    @subscription = SubscriptionPresenter.new(subscription)
     vacancies = Vacancy.where(id: vacancy_ids).order(:expires_on).order(:expiry_time)
 
     @vacancies = VacanciesPresenter.new(vacancies)
