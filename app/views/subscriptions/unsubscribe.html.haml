@@ -2,7 +2,9 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-panel.govuk-panel--confirmation
+    .govuk-panel.tvs-panel.govuk-panel--confirmation
+      = render partial: 'shared/checkmark'
+      
       %h1.govuk-panel__title= t('subscriptions.deletion.header')
       .govuk-panel__body
         - if hex?(@subscription.reference)
