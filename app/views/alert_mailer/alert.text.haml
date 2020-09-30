@@ -14,7 +14,13 @@
   \---
   \
 \
-Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} - Teaching Vacancies is a free job-listing service from the Department for Education. It helps schools to save money on recruitment and you to take the next step in your career.
+\# #{t('subscriptions.title')}
+= t('subscriptions.intro')
+- @subscription.filtered_search_criteria.each_pair do |filter, value|
+  = "#{filter.humanize}: #{value}"
+= t('subscriptions.frequency.alert_text', frequency: @subscription.frequency)
+= t('subscriptions.link.home_page', home_page_link: notify_link('https://teaching-vacancies.service.gov.uk', t('app.title')))
+= - t('subscriptions.footer')
 
 \---
 
