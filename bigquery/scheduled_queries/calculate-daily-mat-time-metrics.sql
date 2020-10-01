@@ -39,24 +39,24 @@ WITH
       using_mat_access_workaround,
       COUNTIF(CAST(user.approval_datetime AS DATE) <= date) >= 1 AS signed_up,
       #Count the number of users who had access, see if it is 1 or more, and if so count the school as signed up
-      COUNTIF(vacancy.id IS NOT NULL) > 1 AS has_published_so_far,
-      COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 1 YEAR)) > 1 AS has_published_in_the_last_year,
-      COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 3 MONTH)) > 1 AS has_published_in_the_last_quarter,
-      COUNTIF(vacancy.expires_on > date) > 1 AS had_live_vacancies,
-      COUNTIF(number_of_organisations > 1) > 1 AS has_published_multischool_vacancies_so_far,
+      COUNTIF(vacancy.id IS NOT NULL) >= 1 AS has_published_so_far,
+      COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 1 YEAR)) >= 1 AS has_published_in_the_last_year,
+      COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 3 MONTH)) >= 1 AS has_published_in_the_last_quarter,
+      COUNTIF(vacancy.expires_on > date) >= 1 AS had_live_vacancies,
+      COUNTIF(number_of_organisations > 1) >= 1 AS has_published_multischool_vacancies_so_far,
       COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 1 YEAR)
-        AND number_of_organisations > 1) > 1 AS has_published_multischool_vacancies_in_the_last_year,
+        AND number_of_organisations > 1) >= 1 AS has_published_multischool_vacancies_in_the_last_year,
       COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 3 MONTH)
-        AND number_of_organisations > 1) > 1 AS has_published_multischool_vacancies_in_the_last_quarter,
+        AND number_of_organisations > 1) >= 1 AS has_published_multischool_vacancies_in_the_last_quarter,
       COUNTIF(vacancy.expires_on > date
-        AND number_of_organisations > 1) > 1 AS had_live_multischool_vacancies,
-      COUNTIF(schoolgroup_level) > 1 AS has_published_trust_level_vacancies_so_far,
+        AND number_of_organisations > 1) >= 1 AS had_live_multischool_vacancies,
+      COUNTIF(schoolgroup_level) >= 1 AS has_published_trust_level_vacancies_so_far,
       COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 1 YEAR)
-        AND schoolgroup_level) > 1 AS has_published_trust_level_vacancies_in_the_last_year,
+        AND schoolgroup_level) >= 1 AS has_published_trust_level_vacancies_in_the_last_year,
       COUNTIF(vacancy.publish_on >= DATE_SUB(date,INTERVAL 3 MONTH)
-        AND schoolgroup_level) > 1 AS has_published_trust_level_vacancies_in_the_last_quarter,
+        AND schoolgroup_level) >= 1 AS has_published_trust_level_vacancies_in_the_last_quarter,
       COUNTIF(vacancy.expires_on > date
-        AND schoolgroup_level) > 1 AS had_live_trust_level_vacancies
+        AND schoolgroup_level) >= 1 AS had_live_trust_level_vacancies
     FROM
       `teacher-vacancy-service.production_dataset.CALCULATED_MATs_with_metrics` AS trust
     CROSS JOIN
