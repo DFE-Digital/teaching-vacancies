@@ -354,62 +354,6 @@ class Vacancy < ApplicationRecord
     organisations.map(&:readable_phases).flatten.uniq
   end
 
-  # Based on a vacancy, concoct a plausible set of search criteria for a job alert subscription
-  def concoct_search_criteria
-    criteria = {}
-    criteria[:location] = parent_organisation.postcode
-    criteria[:radius] = '10' if parent_organisation.postcode.present?
-    criteria[:working_patterns] = working_patterns
-    criteria[:phases] = education_phases
-    criteria[:job_roles] = job_roles
-    criteria[:keyword] = concoct_search_criteria_keyword
-    criteria.delete_if { |_k, v| v.blank? }
-    # TODO: check that it doesn't matter that this hash uses symbols not strings
-  end
-
-  def concoct_search_criteria_keyword
-    if subject.present?
-      subject
-    elsif job_roles.any?
-      # Avoid using a hash table here in order to control the order of words.
-      # For example, programmatically mapping the job_roles might generate a keyword like
-      # 'leader SEN', which is a less appealing search suggestion than the grammatically
-      # correct 'SEN leader'.
-      keyword = ''
-      keyword += 'NQT' if job_roles.include? 'nqt_suitable'
-      keyword += 'SEN' if job_roles.include? 'sen_specialist'
-      # The word 'leadership' is not in our synonym configuration.
-      keyword += 'leader' if job_roles.include? 'leadership'
-      # The word 'teacher' is arguably redundant as a keyword if another job role is present.
-      keyword += 'teacher' if job_roles.include? 'teacher' && job_roles.one?
-      keyword
-    elsif get_subjects_from_job_title.present?
-      get_subjects_from_job_title
-    elsif get_keywords_from_job_title.present?
-      get_keywords_from_job_title
-    end
-  end
-
-  def get_subjects_from_job_title
-    subjects = []
-    SUBJECT_OPTIONS.map(&:first).each do |subject|
-      subjects << normalize(subject) if normalize(job_title).include?(normalize(subject))
-    end
-    subjects.join(' ')
-  end
-
-  def get_keywords_from_job_title
-    keywords = []
-    ['teacher', 'head', 'principal', 'sen', 'teaching assistant'].each do |word|
-      keywords << normalize(word) if normalize(job_title).include?(normalize(word))
-    end
-    subjects.join(' ')
-  end
-
-  def normalize(string)
-    string.downcase.gsub('&', 'and')
-  end
-
 private
 
   def expires_at
