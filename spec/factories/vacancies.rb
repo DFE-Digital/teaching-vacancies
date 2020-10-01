@@ -136,5 +136,15 @@ FactoryBot.define do
       expires_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 20.days) }
       expiry_time { nil }
     end
+
+    trait :suitable_for_nqt do
+      suitable_for_nqt { 'yes' }
+      job_roles { %w[nqt_suitable] }
+    end
+
+    trait :not_suitable_for_nqt do
+      suitable_for_nqt { 'no' }
+      job_roles { %w[] }
+    end
   end
 end

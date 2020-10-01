@@ -10,53 +10,57 @@ class Search::CriteriaConcocter
 private
 
   def concoct_search_criteria
-    criteria = {
+    {
       location: @vacancy.parent_organisation.postcode,
+      radius: (@vacancy.parent_organisation.postcode.present? ? '10' : nil),
       working_patterns: @vacancy.working_patterns,
       phases: @vacancy.education_phases,
       job_roles: @vacancy.job_roles,
       keyword: keyword
-    }
-    criteria[:radius] = '10' if @vacancy.parent_organisation.postcode.present?
-    criteria.delete_if { |k, v| v.blank? }
+    }.delete_if { |_k, v| v.blank? }
   end
 
   def keyword
-    if @vacancy.subject.present?
-      subject
+    if @vacancy.subjects.present?
+      @vacancy.subjects.join(' ')
     elsif @vacancy.job_roles.any?
-      # Avoid using a hash table here in order to control the order of words.
-      # For example, programmatically mapping the job_roles might generate a keyword like
-      # 'leader SEN', which is a less appealing search suggestion than the grammatically
-      # correct 'SEN leader'.
-      keyword = ''
-      keyword += 'NQT' if @vacancy.job_roles.include? 'nqt_suitable'
-      keyword += 'SEN' if @vacancy.job_roles.include? 'sen_specialist'
-      # The word 'leadership' is not in our synonym configuration.
-      keyword += 'leader' if @vacancy.job_roles.include? 'leadership'
-      keyword += 'teacher' if @vacancy.job_roles.include? 'teacher'
-      keyword
-    elsif get_subjects_from_job_title.present?
-      get_subjects_from_job_title
-    elsif get_keywords_from_job_title.present?
-      get_keywords_from_job_title
+      # This hash is ordered so that the suggested search query will make more sense in English:
+      # preferring 'SEN Leader' over 'Leader SEN', for example, or 'NQT Teacher' over 'Teacher NQT'.
+      {
+        nqt_suitable: 'NQT',
+        sen_specialist: 'SEN',
+        leadership: 'Leader',
+        teacher: 'Teacher'
+      }.map { |k, v| v if @vacancy.job_roles.include? k.to_s }.compact.join(' ')
+    else
+      get_subjects_from_job_title.presence || get_keywords_from_job_title.presence
     end
   end
 
   def get_subjects_from_job_title
-    subjects = []
-    SUBJECT_OPTIONS.map(&:first).each do |subject|
-      subjects << normalize(subject) if normalize(job_title).include?(normalize(subject))
-    end
-    subjects.join(' ')
+    subject_options = SUBJECT_OPTIONS.map(&:first)
+    single_word_subjects = subject_options.select { |subject| subject.split(' ').one? }
+    multi_word_subjects = subject_options.select { |subject| subject.split(' ').many? }
+    get_strings_from_job_title(single_word_subjects, multi_word_subjects)
   end
 
   def get_keywords_from_job_title
-    keywords = []
-    ['teacher', 'head', 'principal', 'sen', 'teaching assistant'].each do |word|
-      keywords << normalize(word) if normalize(job_title).include?(normalize(word))
+    get_strings_from_job_title(%w[Teacher Head Principal SEN], ['Teaching Assistant'])
+  end
+
+  def get_strings_from_job_title(words, phrases)
+    words_and_phrases = []
+    words.each do |word|
+      if normalize(@vacancy.job_title).split(' ').include?(normalize(word))
+        words_and_phrases << word
+      end
     end
-    subjects.join(' ')
+    phrases.each do |phrase|
+      if normalize(@vacancy.job_title).include?(normalize(phrase))
+        words_and_phrases << phrase
+      end
+    end
+    words_and_phrases.join(' ')
   end
 
   def normalize(string)
