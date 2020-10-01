@@ -15,7 +15,7 @@ end
 
 RSpec.describe TransactionAuditor::Logger, type: :model do
   let(:date) { Time.zone.today }
-  context '#performed?' do
+  describe '#performed?' do
     context 'checks if a task has already been performed successfuly' do
       it 'returns true if the task has already been executed' do
         TransactionAuditor::Logger.new('a-task', date).log_success
@@ -29,7 +29,7 @@ RSpec.describe TransactionAuditor::Logger, type: :model do
     end
   end
 
-  context '#log_success' do
+  describe '#log_success' do
     it 'logs the successful execution of a task' do
       TransactionAuditor::Logger.new('a-task', date).log_success
       expect(TransactionAuditor.find_by(task: 'a-task').success).to be true
@@ -52,7 +52,7 @@ RSpec.describe TransactionAuditor::Logger, type: :model do
     end
   end
 
-  context '#log_failure' do
+  describe '#log_failure' do
     it 'logs the failed execution of a task' do
       TransactionAuditor::Logger.new('a-task', date).log_failure
       expect(TransactionAuditor.find_by(task: 'a-task').success).to be false

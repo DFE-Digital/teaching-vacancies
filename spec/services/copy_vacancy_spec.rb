@@ -35,7 +35,7 @@ RSpec.describe CopyVacancy do
       end
     end
 
-    context '#documents' do
+    describe '#documents' do
       it 'copies documents when copying a vacancy' do
         document = create(:document,
                           name: 'Test.png',
@@ -61,7 +61,7 @@ RSpec.describe CopyVacancy do
       end
     end
 
-    context '#subjects' do
+    describe '#subjects' do
       let(:subject) { create(:subject, name: SUBJECT_OPTIONS.sample.first) }
       let(:first_supporting_subject) { create(:subject, name: GetSubjectName::SUBJECT_SYNONYMS.keys.sample) }
       let(:second_supporting_subject) { create(:subject, name: 'An invalid subject') }

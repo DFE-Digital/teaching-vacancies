@@ -158,7 +158,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
       end
 
-      context '#employment_type' do
+      describe '#employment_type' do
         it 'maps full_time working pattern to FULL_TIME' do
           vacancy = create(:vacancy, working_patterns: %w[full_time])
 
@@ -192,7 +192,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
         end
       end
 
-      context '#hiringOrganization' do
+      describe '#hiringOrganization' do
         it 'sets the school\'s details' do
           get :show, params: { id: vacancy.id, api_version: 1 }
 

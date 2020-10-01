@@ -11,7 +11,7 @@ RSpec.describe AuditData, type: :model do
     expect(audit_data.data).to eq(data)
   end
 
-  context '#to_row' do
+  describe '#to_row' do
     let(:row) { audit_data.to_row }
 
     it 'returns a row' do

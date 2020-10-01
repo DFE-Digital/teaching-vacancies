@@ -123,7 +123,7 @@ RSpec.describe Vacancy, type: :model do
   end
 
   describe 'friendly_id generated slug' do
-    context '#slug' do
+    describe '#slug' do
       it 'the slug cannot be duplicate' do
         green_school = create(:school, name: 'Green school', town: 'Greenway', county: 'Mars')
         blue_school = create(:school, name: 'Blue school')
@@ -148,7 +148,7 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    context '#refresh_slug' do
+    describe '#refresh_slug' do
       it 'resets the current slug by accessing a friendly_id private method' do
         job = create(:vacancy, slug: 'the-wrong-slug')
         job.job_title = 'CS Teacher'
@@ -158,7 +158,7 @@ RSpec.describe Vacancy, type: :model do
       end
     end
 
-    context '#listed?' do
+    describe '#listed?' do
       let(:datetime) do
         instance_double(DateTime)
       end
@@ -188,7 +188,7 @@ RSpec.describe Vacancy, type: :model do
         expect(subject.listed?).to be_falsey
       end
 
-      context '#publish_on' do
+      describe '#publish_on' do
         before do
           allow(subject).to receive(:publish_on).and_return(datetime)
           allow(datetime).to receive(:past?)

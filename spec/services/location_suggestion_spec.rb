@@ -5,7 +5,7 @@ RSpec.describe LocationSuggestion do
 
   let(:location_input) { 'plac' }
 
-  context '#initialize' do
+  describe '#initialize' do
     it 'raises MissingLocationInput error when called with nil location_input' do
       expect { described_class.new(nil) }.to raise_error(described_class::MissingLocationInput)
     end
@@ -15,7 +15,7 @@ RSpec.describe LocationSuggestion do
     end
   end
 
-  context '#get_suggestions_from_google' do
+  describe '#get_suggestions_from_google' do
     let(:predictions) { [] }
     let(:request_body) { { 'predictions': predictions }.to_json }
     let(:request_status) { 200 }
@@ -56,7 +56,7 @@ RSpec.describe LocationSuggestion do
     end
   end
 
-  context '#suggestion_locations' do
+  describe '#suggestion_locations' do
     let(:parsed_response) { { 'predictions': predictions }.deep_stringify_keys }
     let(:predictions) do
       [
