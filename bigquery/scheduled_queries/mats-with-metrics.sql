@@ -11,6 +11,7 @@ SELECT
   SAFE_DIVIDE(schools_with_live_vacancies,
     trust_size) AS proportion_of_schools_with_live_vacancies,
   number_of_users > 0 AS signed_up,
+  number_of_mat_access_workaround_users > 0 AS using_mat_access_workaround,
   CASE
     WHEN trust_size < 2 THEN "0-1"
     WHEN trust_size < 6 THEN "2-5"
@@ -22,17 +23,17 @@ END
   AS size_bracket,
 FROM (
   SELECT
-    trust.name AS trust_name,
-    trust.id AS id,
-    trust.uid AS uid,
-    trust.data_ukprn AS ukprn,
-    trust.address AS address,
-    trust.town AS town,
-    trust.county AS county,
-    trust.postcode AS postcode,
-    CAST(trust.created_at AS date) AS date_created,
-    CAST(trust.updated_at AS date) AS date_updated,
-    trust.data_closed_date AS date_closed,
+    MAT.name AS trust_name,
+    MAT.id AS id,
+    MAT.uid AS uid,
+    MAT.data_ukprn AS ukprn,
+    MAT.address AS address,
+    MAT.town AS town,
+    MAT.county AS county,
+    MAT.postcode AS postcode,
+    CAST(MAT.created_at AS date) AS date_created,
+    CAST(MAT.updated_at AS date) AS date_updated,
+    MAT.data_closed_date AS date_closed,
     data_incorporated_on_open_date AS date_opened,
     data_companies_house_number AS companies_house_number,
     data_group_status AS status,
@@ -43,14 +44,39 @@ FROM (
     FROM
       `teacher-vacancy-service.production_dataset.dsi_users` AS user
     WHERE
-      CAST(user.organisation_uid AS STRING)=trust.uid ) AS number_of_users,
+      CAST(user.organisation_uid AS STRING)=MAT.uid ) AS number_of_users,
     (
     SELECT
       COUNT(user_id)
     FROM
       `teacher-vacancy-service.production_dataset.dsi_approvers` AS approver
     WHERE
-      CAST(approver.organisation_uid AS STRING)=trust.uid ) AS number_of_approvers,
+      CAST(approver.organisation_uid AS STRING)=MAT.uid ) AS number_of_approvers,
+    (
+    SELECT
+      COUNT(
+      IF
+        (number_of_schools_user_has_access_to > 1,
+          email,
+          NULL))
+    FROM (
+      SELECT
+        email,
+        COUNT(school_urn) AS number_of_schools_user_has_access_to
+      FROM
+        `teacher-vacancy-service.production_dataset.dsi_users` AS user
+      LEFT JOIN
+        `teacher-vacancy-service.production_dataset.school` AS school
+      ON
+        CAST(user.school_urn AS STRING)=school.urn
+      LEFT JOIN
+        `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
+      ON
+        school.id=schoolgroupmembership.school_id
+      WHERE
+        schoolgroupmembership.school_group_id=MAT.id
+      GROUP BY
+        user.email )) AS number_of_mat_access_workaround_users,
     #count trust-level vacancies published by this trust
     (
     SELECT
@@ -62,7 +88,7 @@ FROM (
     ON
       vacancy.id=organisationvacancy.vacancy_id
     WHERE
-      trust.id=organisationvacancy.organisation_id) AS trust_level_vacancies_published,
+      MAT.id=organisationvacancy.organisation_id) AS trust_level_vacancies_published,
     #count multi-school vacancies where at least 1 of the schools is part of this trust
     (
     SELECT
@@ -82,18 +108,18 @@ FROM (
     ON
       organisation.id=schoolgroupmembership.school_id
     WHERE
-      trust.id=schoolgroupmembership.school_group_id) AS multischool_vacancies_published,
+      MAT.id=schoolgroupmembership.school_group_id) AS multischool_vacancies_published,
     COUNTIF(signed_up IS TRUE) AS schools_signed_up,
     COUNTIF(vacancies_published_in_the_last_year>0) AS schools_that_published_vacancies_in_the_last_year,
     COUNTIF(vacancies_published_in_the_last_quarter>0) AS schools_that_published_vacancies_in_the_last_quarter,
     COUNTIF(vacancies_published>0) AS schools_that_published_vacancies,
     COUNTIF(vacancies_currently_live>0) AS schools_with_live_vacancies
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_organisation` AS trust
+    `teacher-vacancy-service.production_dataset.feb20_organisation` AS MAT
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
   ON
-    trust.id=schoolgroupmembership.school_group_id
+    MAT.id=schoolgroupmembership.school_group_id
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.CALCULATED_schools_joined_with_metrics` AS school
   ON
