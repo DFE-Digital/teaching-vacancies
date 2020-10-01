@@ -72,7 +72,8 @@ WITH
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
     ON
-      vacancy.publisher_user_id=tv_user_logged_in.user_id
+      (vacancy.publisher_user_id=tv_user_logged_in.user_id
+        AND publish_on<date)
     WHERE
       #only include trusts that were open on each date we're calculating for in the counts above
       (trust.status != "Closed"
@@ -81,9 +82,6 @@ WITH
         OR trust.date_opened <= dates.date #or if the trust opened before the date we're calculating for
         )
       AND trust.date_created <= dates.date
-      #only include vacancies which were published before the date we're calculating for in the counts above - or blank vacancies (so that we keep rows for the trusts, dates and users where there are no published vacancies)
-      AND (vacancy.publish_on<date
-        OR vacancy.publish_on IS NULL)
     GROUP BY
       uid,
       date,
