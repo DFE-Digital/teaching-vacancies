@@ -39,7 +39,7 @@ RSpec.describe 'Creating a vacancy' do
       expect(page).to have_content(I18n.t('jobs.current_step', step: 1, total: 7))
     end
 
-    context '#job_specification' do
+    describe '#job_specification' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_organisation_job_path
 
@@ -105,7 +105,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#pay_package' do
+    describe '#pay_package' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_organisation_job_path
 
@@ -139,7 +139,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#important_dates' do
+    describe '#important_dates' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_organisation_job_path
 
@@ -194,7 +194,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#supporting_documents' do
+    describe '#supporting_documents' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_organisation_job_path
 
@@ -257,7 +257,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#documents' do
+    describe '#documents' do
       let(:documents_vacancy) { create(:vacancy) }
 
       before { documents_vacancy.organisation_vacancies.create(organisation: school) }
@@ -388,7 +388,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#application_details' do
+    describe '#application_details' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_organisation_job_path
 
@@ -442,7 +442,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#job_summary' do
+    describe '#job_summary' do
       scenario 'is invalid unless all mandatory fields are submitted' do
         visit new_organisation_job_path
 
@@ -505,7 +505,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#review' do
+    describe '#review' do
       context 'redirects the user back to the last incomplete step' do
         scenario 'redirects to step 2, pay package, when that step has not been completed' do
           visit new_organisation_job_path
@@ -884,7 +884,7 @@ RSpec.describe 'Creating a vacancy' do
       end
     end
 
-    context '#publish' do
+    describe '#publish' do
       scenario 'adds the current user as a contact for feedback on the published vacancy' do
         current_user = User.find_by(oid: session_id)
         vacancy = create(:vacancy, :draft)

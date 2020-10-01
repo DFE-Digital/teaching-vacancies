@@ -60,7 +60,7 @@ RSpec.describe NqtJobAlertsForm, type: :model do
       end
     end
 
-    context '#email' do
+    describe '#email' do
       context 'when email is blank' do
         let(:email) { '' }
 

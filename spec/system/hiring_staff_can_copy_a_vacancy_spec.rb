@@ -17,7 +17,7 @@ RSpec.describe 'Copying a vacancy' do
     stub_hiring_staff_auth(urn: school.urn)
   end
 
-  context '#cancel_copy' do
+  describe '#cancel_copy' do
     scenario 'a copy can be cancelled using the cancel copy back link' do
       original_vacancy = build(:vacancy, :past_publish)
       original_vacancy.save(validate: false) # Validation prevents publishing on a past date

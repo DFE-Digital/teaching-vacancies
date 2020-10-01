@@ -10,7 +10,7 @@ RSpec.describe 'Hiring staff can save and return later' do
   end
 
   context 'Create a job journey' do
-    context '#job_details' do
+    describe '#job_details' do
       scenario 'can save and return later' do
         visit organisation_path
         click_on I18n.t('buttons.create_job')
@@ -36,7 +36,7 @@ RSpec.describe 'Hiring staff can save and return later' do
       end
     end
 
-    context '#pay_package' do
+    describe '#pay_package' do
       scenario 'can save and return later' do
         visit organisation_path
         click_on I18n.t('buttons.create_job')
@@ -60,7 +60,7 @@ RSpec.describe 'Hiring staff can save and return later' do
       end
     end
 
-    context '#important_dates' do
+    describe '#important_dates' do
       scenario 'can save and return later' do
         visit organisation_path
         click_on I18n.t('buttons.create_job')
@@ -121,7 +121,7 @@ RSpec.describe 'Hiring staff can save and return later' do
       end
     end
 
-    context '#supporting_documents' do
+    describe '#supporting_documents' do
       scenario 'can save and return later' do
         visit organisation_path
         click_on I18n.t('buttons.create_job')
@@ -151,7 +151,7 @@ RSpec.describe 'Hiring staff can save and return later' do
       end
     end
 
-    context '#application_details' do
+    describe '#application_details' do
       scenario 'can save and return later' do
         visit organisation_path
         click_on I18n.t('buttons.create_job')
@@ -184,7 +184,7 @@ RSpec.describe 'Hiring staff can save and return later' do
       end
     end
 
-    context '#job_summary' do
+    describe '#job_summary' do
       scenario 'can save and return later' do
         visit organisation_path
         click_on I18n.t('buttons.create_job')

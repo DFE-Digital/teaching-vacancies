@@ -17,7 +17,7 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
       click_on I18n.t('buttons.continue')
     end
 
-    context '#redirects_to' do
+    describe '#redirects_to' do
       scenario 'incomplete pay package step' do
         visit edit_organisation_job_path(id: draft_vacancy.id)
 
@@ -240,7 +240,7 @@ RSpec.describe 'Hiring staff can edit a draft vacancy' do
       end
     end
 
-    context '#cancel_and_return_later' do
+    describe '#cancel_and_return_later' do
       scenario 'can cancel and return from job details page' do
         visit organisation_job_review_path(vacancy.id)
 

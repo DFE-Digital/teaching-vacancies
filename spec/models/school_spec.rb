@@ -37,7 +37,7 @@ RSpec.describe School, type: :model do
   context 'when there is no previous geolocation' do
     let(:school) { create(:school, easting: nil, northing: nil) }
 
-    context '#urn' do
+    describe '#urn' do
       it 'must be unique' do
         create(:school, urn: '12345')
         school = build(:school, urn: '12345')
@@ -56,7 +56,7 @@ RSpec.describe School, type: :model do
       end
     end
 
-    context '#geolocation' do
+    describe '#geolocation' do
       context 'when setting a GB easting and northing' do
         it 'should set the WGS84 geolocation' do
           school.easting = 533_498
