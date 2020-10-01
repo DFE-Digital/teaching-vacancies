@@ -21,8 +21,8 @@ RSpec.describe VacanciesController, type: :controller do
           }
         end
 
-        it 'passes only safe values to Algolia::VacancySearchBuilder' do
-          expect(Algolia::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
+        it 'passes only safe values to Search::VacancySearchBuilder' do
+          expect(Search::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
           subject
         end
       end
@@ -31,8 +31,8 @@ RSpec.describe VacanciesController, type: :controller do
         let(:expected_safe_values) { { jobs_sort: 'Text' } }
         let(:params) { { jobs_sort: "<body onload=alert('test1')>Text</script>" } }
 
-        it 'passes sanitised params to Algolia::VacancySearchBuilder' do
-          expect(Algolia::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
+        it 'passes sanitised params to Search::VacancySearchBuilder' do
+          expect(Search::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
           subject
         end
       end
@@ -71,7 +71,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'when parameters include the sort by newest listing option' do
         let(:sort) { 'publish_on_desc' }
 
-        it 'sets the search replica on Algolia::VacancySearchBuilder' do
+        it 'sets the search replica on Search::VacancySearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
@@ -80,7 +80,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'when parameters include the sort by most time to apply option' do
         let(:sort) { 'expiry_time_desc' }
 
-        it 'sets the search replica on Algolia::VacancySearchBuilder' do
+        it 'sets the search replica on Search::VacancySearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
@@ -89,7 +89,7 @@ RSpec.describe VacanciesController, type: :controller do
       context 'when parameters include the sort by least time to apply option' do
         let(:sort) { 'expiry_time_asc' }
 
-        it 'sets the search replica on Algolia::VacancySearchBuilder' do
+        it 'sets the search replica on Search::VacancySearchBuilder' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("Vacancy_#{sort}")
         end
@@ -104,7 +104,7 @@ RSpec.describe VacanciesController, type: :controller do
           }
         end
 
-        it 'sets the search replica on Algolia::VacancySearchBuilder to the default sort strategy: newest listing' do
+        it 'sets the search replica on Search::VacancySearchBuilder to the default sort strategy: newest listing' do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql('Vacancy_publish_on_desc')
         end

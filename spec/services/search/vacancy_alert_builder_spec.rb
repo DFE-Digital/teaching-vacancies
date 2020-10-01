@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Algolia::VacancyAlertBuilder do
+RSpec.describe Search::VacancyAlertBuilder do
   subject { described_class.new(subscription_hash) }
 
   let!(:expired_now) { Time.zone.now }
@@ -10,7 +10,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
   let(:default_radius) { 10 }
   let(:date_today) { Time.zone.today.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-  let(:location_radius) { (default_radius * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i }
+  let(:location_radius) { (default_radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i }
   let(:location_polygon_boundary) { nil }
   let(:search_replica) { nil }
   let(:max_subscription_results) { 500 }
@@ -29,7 +29,7 @@ RSpec.describe Algolia::VacancyAlertBuilder do
 
   before do
     travel_to(expired_now)
-    allow_any_instance_of(Algolia::VacancyFiltersBuilder)
+    allow_any_instance_of(Search::VacancyFiltersBuilder)
       .to receive(:expired_now_filter)
       .and_return(expired_now.to_time.to_i)
   end

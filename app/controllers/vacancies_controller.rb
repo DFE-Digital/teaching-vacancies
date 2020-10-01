@@ -3,7 +3,7 @@ class VacanciesController < ApplicationController
 
   def index
     @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
-    @vacancies_search = Algolia::VacancySearchBuilder.new(@jobs_search_form.to_hash)
+    @vacancies_search = Search::VacancySearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies_search.call
     @vacancies = VacanciesPresenter.new(
       @vacancies_search.vacancies,

@@ -12,7 +12,7 @@ RSpec.shared_examples 'a search in the default search replica' do
   end
 end
 
-RSpec.describe Algolia::VacancySearchBuilder do
+RSpec.describe Search::VacancySearchBuilder do
   subject { described_class.new(params) }
 
   let(:keyword) { 'maths teacher' }
@@ -43,7 +43,7 @@ RSpec.describe Algolia::VacancySearchBuilder do
       let(:params) { { keyword: keyword, location: polygonable_location } }
 
       before do
-        allow_any_instance_of(Algolia::VacancyLocationBuilder).to receive(:missing_polygon).and_return(true)
+        allow_any_instance_of(Search::VacancyLocationBuilder).to receive(:missing_polygon).and_return(true)
       end
 
       it 'appends location to the keyword' do
@@ -59,7 +59,7 @@ RSpec.describe Algolia::VacancySearchBuilder do
       let(:params) { { keyword: keyword, location: polygonable_location } }
 
       before do
-        allow_any_instance_of(Algolia::VacancyLocationBuilder).to receive(:location_category_search?)
+        allow_any_instance_of(Search::VacancyLocationBuilder).to receive(:location_category_search?)
                                                               .and_return(true)
       end
 
@@ -180,7 +180,7 @@ RSpec.describe Algolia::VacancySearchBuilder do
     context 'a geographical radius location search' do
       let(:location) { point_location }
       let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
-      let(:location_radius) { (default_radius * Algolia::VacancyLocationBuilder::MILES_TO_METRES).to_i }
+      let(:location_radius) { (default_radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i }
       let(:location_polygon_boundary) { nil }
 
       it 'carries out search with correct criteria' do
