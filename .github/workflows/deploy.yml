@@ -28,7 +28,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
-      
+
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v1
       with:
@@ -40,6 +40,22 @@ jobs:
         TAG=${GITHUB_SHA}
         echo ::set-env name=TAG::${TAG}
         echo ::set-env name=DOCKER_BUILDKIT::1
+
+    - name: Set up Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+
+    - name: Validate secrets
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        gem install aws-sdk-ssm --no-document
+        bin/run-in-env -t /tvs/staging -o quiet \
+          && echo Data in /tvs/staging looks valid
+        bin/run-in-env -t /tvs/production -o quiet \
+          && echo Data in /tvs/production looks valid
 
     - name: build and push docker image
       uses: docker/build-push-action@v1.1.0
