@@ -188,7 +188,7 @@ else
 end
 
 if should_run_command_in_subshell(output)
-  command = ARGV[0..].join(' ')
+  command = ARGV.join(' ')
   usage unless command != ''
 end
 
