@@ -51,7 +51,12 @@ def pull_ssm_parameters(parameters)
       with_decryption: true,
     })
     parameter_map = YAML.load(response.parameter.value)
-    config_map.update parameter_map
+    begin
+      config_map.update parameter_map
+    rescue TypeError => e
+      puts "Error: Syntax error in parameter " + parameter_path
+      raise e
+    end
   }
 
   config_map
@@ -69,8 +74,13 @@ def pull_ssm_parameter_paths(parameter_paths)
       with_decryption: true
     })
     response.parameters.each { |parameter|
-      parameter_map = YAML.load(parameter.value)
-      config_map.update parameter_map
+      begin
+        parameter_map = YAML.load(parameter.value)
+        config_map.update parameter_map
+      rescue TypeError => e
+        puts "Error: Syntax error in parameter " + parameter.name
+        raise e
+      end
     }
   }
 
@@ -82,7 +92,12 @@ def read_from_yaml_files(yaml_files)
   config_map = {}
 
   yaml_files.each{ |yaml_file|
-    parameter_map = YAML.load_file(yaml_file)
+    begin
+      parameter_map = YAML.load_file(yaml_file)
+    rescue Psych::SyntaxError => e
+      puts "Error: Syntax error in file " + yaml_file
+      raise e
+    end
     config_map.update parameter_map
   }
 
