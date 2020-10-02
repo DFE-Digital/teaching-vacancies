@@ -158,6 +158,35 @@ Tests run every time is pushed on a branch.
 
 When a PR is approved and merged into `master` branch an automatic deploy is triggered to `production` environment.
 
+## Maintenance windows for GOV.UK PaaS Postgres and Redis services
+
+From [Redis maintenance times](https://docs.cloud.service.gov.uk/deploying_services/redis/#redis-maintenance-times)
+
+> Every Redis service has a maintenance window of Sunday 11pm to Monday 1:30am UTC every week. 
+
+From [PostgreSQL maintenance times](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#postgresql-maintenance-times):
+
+> Each PostgreSQL service you create will have a randomly-assigned weekly 30 minute maintenance window, during which there may be brief downtime. Select a high availability (HA) plan to minimise this downtime. Minor version upgrades (for example from 9.4.1 to 9.4.2) are applied during this maintenance window.
+>
+> Window start times will vary from 22:00 to 06:00 UTC.
+
+Discussed with Product Owner
+
+- Redis - leave as Sunday 23:00 to Monday 01:30
+- Postgres staging - set as Tuesday 23:16 to Tuesday 23:46
+- Postgres production - set as Wednesday 23:16 to Wednesday 23:46
+
+With the intention being:
+- maintenance overnight on Sunday, Tuesday, Wednesday mean any issues can be remediated on working days (Monday, Wednesday, Thursday)
+- this avoid Tuesday as sprint ceremonies day, and Friday when fewer people are working
+- staging happens a day before production, so that we can detect failures in the lower environment first
+
+We set these with the CloudFoundry CLI commands, opting for the safer option of applying this configuration change during a maintenance window:
+```
+cf update-service teaching-vacancies-postgres-staging -p small-11 -c '{"apply_at_maintenance_window": true, "preferred_maintenance_window": "tue:23:16-tue:23:46"}'
+cf update-service teaching-vacancies-postgres-production -p medium-ha-11 -c '{"apply_at_maintenance_window": true, "preferred_maintenance_window": "wed:23:16-wed:23:46"}'
+```
+
 ## Backup/Restore GOV.UK PaaS Postgres service database
 Install Conduit plugin
 ```bash
