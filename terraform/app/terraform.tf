@@ -41,7 +41,6 @@ terraform {
   }
 }
 
-
 module cloudfront {
   source                          = "./modules/cloudfront"
   for_each                        = var.distribution_list
