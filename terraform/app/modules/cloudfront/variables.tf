@@ -14,9 +14,6 @@ variable cloudfront_aliases {
   type = list(string)
 }
 
-variable cloudfront_certificate_arn {
-}
-
 variable offline_bucket_domain_name {
 }
 
@@ -51,4 +48,5 @@ locals {
   route53_zones                = toset(var.route53_zones)
   route53_zones_with_a_records = local.is_production ? local.route53_zones : toset([])
   route53_zones_with_cnames    = local.route53_zones
+  cloudfront_cert_cn           = "${var.project_name}.service.gov.uk"
 }
