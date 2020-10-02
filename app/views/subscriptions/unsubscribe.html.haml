@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     .govuk-panel.tvs-panel.govuk-panel--confirmation
       = render partial: 'shared/checkmark'
-      
+
       %h1.govuk-panel__title= t('subscriptions.deletion.header')
       .govuk-panel__body
         - if hex?(@subscription.reference)
@@ -13,5 +13,4 @@
           %p= t('subscriptions.deletion.confirmation_with_reference', reference: @subscription.reference)
 
   .govuk-grid-column-two-thirds
-    - if EmailAlertsFeature.enabled?
-      %p.govuk-body=t('subscriptions.deletion.resubscribe_html', link: link_to(t('subscriptions.deletion.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link'))
+    %p.govuk-body=t('subscriptions.deletion.resubscribe_html', link: link_to(t('subscriptions.deletion.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link'))

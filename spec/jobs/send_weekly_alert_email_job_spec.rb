@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SendDailyAlertEmailJob, type: :job do
+RSpec.describe SendWeeklyAlertEmailJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later }
@@ -13,7 +13,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
     }.to_json
   end
 
-  let!(:subscription) { create(:subscription, search_criteria: search_criteria, frequency: :daily) }
+  let!(:subscription) { create(:subscription, search_criteria: search_criteria, frequency: :weekly) }
   let!(:vacancies) { create_list(:vacancy, 5, :published_slugged) }
 
   let(:mail) { double(:mail) }
@@ -23,7 +23,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
   end
 
   it 'is in the queue_daily_alerts queue' do
-    expect(job.queue_name).to eq('queue_daily_alerts')
+    expect(job.queue_name).to eq('queue_weekly_alerts')
   end
 
   context 'with vacancies' do
@@ -67,8 +67,8 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
   describe '#subscriptions' do
     let(:job) { described_class.new }
 
-    it 'gets daily subscriptions' do
-      expect(Subscription).to receive(:daily) { Subscription.where(frequency: :daily) }
+    it 'gets weekly subscriptions' do
+      expect(Subscription).to receive(:weekly) { Subscription.where(frequency: :weekly) }
       job.subscriptions
     end
   end
@@ -76,8 +76,8 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
   describe '#vacancies_for_subscription' do
     let(:job) { described_class.new }
 
-    it 'gets vacancies in the last day' do
-      expect(subscription).to receive(:vacancies_for_range).with(Time.zone.yesterday, Time.zone.today) { Vacancy.none }
+    it 'gets vacancies in the last week' do
+      expect(subscription).to receive(:vacancies_for_range).with(1.week.ago.to_date, Time.zone.today) { Vacancy.none }
       job.vacancies_for_subscription(subscription)
     end
 

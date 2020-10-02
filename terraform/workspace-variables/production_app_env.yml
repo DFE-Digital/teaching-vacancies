@@ -8,7 +8,6 @@ DFE_SIGN_IN_URL: https://api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: false
 DOMAIN: teaching-vacancies.service.gov.uk
 FEATURE_COOKIES_BANNER: true
-FEATURE_EMAIL_ALERTS: true
 FEATURE_MULTI_SCHOOL_JOBS: false
 FEATURE_READ_ONLY: false
 FEATURE_SCHOOL_GROUP_JOBS: true

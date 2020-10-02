@@ -5,6 +5,6 @@ class Jobseekers::SearchResults::JobAlertsLinkComponent < ViewComponent::Base
   end
 
   def render?
-    @vacancies_search.any? && EmailAlertsFeature.enabled? && !ReadOnlyFeature.enabled? && @count.positive?
+    @vacancies_search.any? && !ReadOnlyFeature.enabled? && @count.positive?
   end
 end

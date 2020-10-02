@@ -1,8 +1,8 @@
 class SubscriptionFinder
+  include ParameterSanitiser
+
   def initialize(params = {})
-    @sanitised_params = params.each_pair do |key, value|
-      params[key] = Sanitize.fragment(value)
-    end
+    @sanitised_params = ParameterSanitiser.call(params)
   end
 
   def exists?

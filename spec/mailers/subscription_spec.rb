@@ -12,12 +12,9 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
   let(:email) { 'an@email.com' }
   let(:subscription) do
-    subscription = create(:daily_subscription, email: email,
-                                               reference: 'a-reference',
-                                               search_criteria: {
-                                                 subject: 'English',
-                                                 newly_qualified_teacher: 'true'
-                                               }.to_json)
+    subscription = Subscription.create(
+      email: email, frequency: 'daily', search_criteria: { keyword: 'English', newly_qualified_teacher: 'true' }.to_json,
+    )
     # The hashing algorithm uses a random initialization vector to encrypt the token,
     # so is different every time, so we stub the token to be the same every time, so
     # it's clearer what we're testing when we test the unsubscribe link
@@ -36,7 +33,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       /#{html_escape(I18n.t('subscriptions.email.confirmation.heading', reference: subscription.reference))}/,
     )
     expect(body_lines[3]).to match(/#{I18n.t('subscriptions.email.confirmation.subheading', email: email)}/)
-    expect(body_lines[5]).to match(/\* Subject: English/)
+    expect(body_lines[5]).to match(/\* Keyword: English/)
     expect(body_lines[6]).to match(/\Suitable for NQTs/)
     expect(body_lines[8]).to match(/#{I18n.t('subscriptions.next_steps')}/)
   end

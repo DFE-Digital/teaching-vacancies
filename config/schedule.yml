@@ -1,5 +1,5 @@
 daily_alerts:
-  cron: '0 08 * * *'
+  cron: '0 15 * * *'
   class: 'SendDailyAlertEmailJob'
   queue: queue_daily_alerts
 
@@ -57,3 +57,8 @@ update_dsi_users:
   cron: '0 0 * * *'
   class: 'UpdateDfeSignInUsersJob'
   queue: update_dsi_users_in_db
+
+weekly_alerts:
+  cron: '0 18 * * 5'
+  class: 'SendWeeklyAlertEmailJob'
+  queue: queue_weekly_alerts
