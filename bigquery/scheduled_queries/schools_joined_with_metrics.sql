@@ -92,8 +92,7 @@ IF
   religious_character,
   religious_ethos,
   number_of_pupils,
-  trust AS trust_name,
-  trust_size AS academies_in_trust,
+  ARRAY_TO_STRING(ARRAY(SELECT DISTINCT name FROM `teacher-vacancy-service.production_dataset.schoolgroup` AS trust LEFT JOIN `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership ON trust.id=schoolgroupmembership.school_group_id WHERE trust.type = "Multi-academy trust" AND schoolgroupmembership.school_id=school.id AND trust.status != "Closed"),", ") AS trust_name,
   telephone_number,
   head_title,
   head_first_name,
@@ -111,8 +110,7 @@ IF
   status,
   diocese,
   date_opened,
-  website AS school_website,
-  tag
+  website AS school_website
 FROM
   `teacher-vacancy-service.production_dataset.school` AS school
 LEFT JOIN
