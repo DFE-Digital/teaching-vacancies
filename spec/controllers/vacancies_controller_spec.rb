@@ -143,9 +143,14 @@ RSpec.describe VacanciesController, type: :controller do
     end
 
     context 'when using cookies' do
+      let(:school) { create(:school) }
       let(:vacancy) { create(:vacancy) }
       let(:params) { { id: vacancy.slug } }
       let(:vacancy_page_view) { instance_double(VacancyPageView) }
+
+      before do
+        vacancy.organisation_vacancies.create(organisation: school)
+      end
 
       it 'should call the track method if cookies not set' do
         expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
