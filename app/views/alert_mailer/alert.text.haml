@@ -1,5 +1,4 @@
-\# #{t('app.title')}
-\## #{t("job_alerts.alert.email.#{@subscription.frequency}.summary", count: @vacancies.count, reference: @subscription.reference)}
+\# #{t("job_alerts.alert.email.#{@subscription.frequency}.summary", count: @vacancies.count)}
 \
 \---
 \
@@ -15,7 +14,13 @@
   \---
   \
 \
-Visit #{notify_link('https://teaching-vacancies.service.gov.uk', t('app.title'))} - the free service for schools in England to list teaching roles and for jobseekers to find them.
+\# #{t('subscriptions.title')}
+= t('subscriptions.intro')
+- @subscription.filtered_search_criteria.each_pair do |filter, value|
+  = "#{filter.humanize}: #{value}"
+= t('subscriptions.frequency.alert_text', frequency: @subscription.frequency)
+= t('subscriptions.link.home_page', home_page_link: notify_link('https://teaching-vacancies.service.gov.uk', t('app.title')))
+= - t('subscriptions.footer')
 
 \---
 

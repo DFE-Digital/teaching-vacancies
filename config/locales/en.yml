@@ -795,12 +795,24 @@ en:
         - get an email when new jobs match their search
         - can unsubscribe at any time
         - receive no more than 1 email a day
+    footer: Teaching Vacancies is a free job-listing service from the Department for Education. It helps schools to save money on recruitment and you to take the next step in your career.
     frequency:
+      alert_text: You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed
       daily: Daily, at approx 3 pm
       weekly: Weekly (Friday evening at approx 6 pm)
       downcase:
         daily: daily, at approx 3 pm
         weekly: weekly (Friday evening at approx 6 pm)
+    intro: 'We’ll email you details of any new jobs that match the following criteria:'
+    new:
+      page_description: Subscribe to job alerts
+    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
+    location_radius_text: Within %{radius} miles of %{location}
+    location_category_text: In %{location}
+    reference: 'for'
+    title: This job alert
+    next_steps: >-
+      You’ll receive an email every morning with any new job that’s been listed that matches your search criteria.
     confirmation:
       header: 'Your email subscription has started'
       body: We sent an email confirmation to %{email}.
@@ -839,7 +851,8 @@ en:
       email_html: Email address (<span class="text-red">Required</span>)
       frequency_html: When do you want to receive alerts? (<span class="text-red">Required</span>)
     link:
-      help_text: 'whenever a job matching this search is published'
+      help_text: 'whenever a job matching this search is listed'
+      home_page: Visit %{home_page_link}
       no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed'
       text: 'Receive a job alert'
     location_radius_text: Within %{radius} miles of %{location}
@@ -853,25 +866,20 @@ en:
   job_alerts:
     confirmation:
       email:
-        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
+        subject: Teaching Vacancies job alert confirmation
     alert:
       email:
         daily:
-          subject:
-            one: Teaching Vacancies job alert for '%{reference}'
-            other: Teaching Vacancies job alerts for '%{reference}'
           summary:
-            one: "A new job matching your search criteria '%{reference}' was posted yesterday."
-            other: "%{count} new jobs matching your search criteria '%{reference}' were posted yesterday."
+            one: "A new job matching your search criteria was listed in the last day."
+            other: "%{count} new jobs matching your search criteria were listed in the last day."
           unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         weekly:
-          subject:
-            one: Teaching Vacancies job alert for '%{reference}'
-            other: Teaching Vacancies job alerts for '%{reference}'
           summary:
-            one: "A new job matching your search criteria '%{reference}' was posted in the last week."
-            other: "%{count} new jobs matching your search criteria '%{reference}' were posted in the last week."
+            one: "A new job matching your search criteria was listed in the last week."
+            other: "%{count} new jobs matching your search criteria were listed in the last week."
           unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+        subject: Your job alert from Teaching Vacancies
   nqt_job_alerts:
     page_title: Sign up for NQT job alerts
     heading: Sign up for NQT job alerts

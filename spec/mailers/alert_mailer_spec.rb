@@ -35,15 +35,15 @@ RSpec.describe AlertMailer, type: :mailer do
       it 'shows a vacancy' do
         expect(mail.subject).to eq(
           I18n.t(
-            'job_alerts.alert.email.daily.subject.one',
-            reference: subscription.reference,
+            'job_alerts.alert.email.subject',
           ),
         )
         expect(mail.to).to eq([subscription.email])
 
-        expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted yesterday/)
+        expect(body).to match(I18n.t('job_alerts.alert.email.daily.summary', count: 1))
         expect(body).to match(/---/)
+        expect(body).to match(/Keyword: English/)
+        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'daily')}/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
 
@@ -62,8 +62,7 @@ RSpec.describe AlertMailer, type: :mailer do
       it 'shows vacancies' do
         expect(mail.subject).to eq(
           I18n.t(
-            'job_alerts.alert.email.daily.subject.other',
-            reference: subscription.reference,
+            'job_alerts.alert.email.subject',
           ),
         )
         expect(mail.to).to eq([subscription.email])
@@ -73,6 +72,8 @@ RSpec.describe AlertMailer, type: :mailer do
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
         expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
+        expect(body).to match(/Keyword: English/)
+        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'daily')}/)
 
         expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
         expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(**campaign_params))}/)
@@ -97,16 +98,14 @@ RSpec.describe AlertMailer, type: :mailer do
 
       it 'shows a vacancy' do
         expect(mail.subject).to eq(
-          I18n.t(
-            'job_alerts.alert.email.daily.subject.one',
-            reference: subscription.reference,
-          ),
+          I18n.t('job_alerts.alert.email.subject'),
         )
         expect(mail.to).to eq([subscription.email])
 
-        expect(body).to match(/# #{I18n.t('app.title')}/)
-        expect(body).to match(/A new job matching your search criteria &#39;#{subscription.reference}&#39; was posted in the last week/)
+        expect(body).to match(I18n.t('job_alerts.alert.email.weekly.summary', count: 1))
         expect(body).to match(/---/)
+        expect(body).to match(/Keyword: English/)
+        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'weekly')}/)
         expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
 
@@ -124,14 +123,14 @@ RSpec.describe AlertMailer, type: :mailer do
 
       it 'shows vacancies' do
         expect(mail.subject).to eq(
-          I18n.t(
-            'job_alerts.alert.email.daily.subject.other',
-            reference: subscription.reference,
-          ),
+          I18n.t('job_alerts.alert.email.subject'),
         )
         expect(mail.to).to eq([subscription.email])
 
         expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
+        expect(body).to match(I18n.t('job_alerts.alert.email.weekly.summary', count: 2))
+        expect(body).to match(/Keyword: English/)
+        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'weekly')}/)
         expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(**campaign_params))}/)
         expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
         expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
