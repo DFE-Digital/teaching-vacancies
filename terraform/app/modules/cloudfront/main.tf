@@ -12,7 +12,7 @@ resource aws_cloudfront_distribution default {
 
     custom_header {
       name  = "X-Forwarded-Host"
-      value = var.domain
+      value = local.domain
     }
   }
 
@@ -46,7 +46,7 @@ resource aws_cloudfront_distribution default {
   }
 
   enabled = true
-  aliases = var.cloudfront_aliases
+  aliases = local.cloudfront_aliases
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
