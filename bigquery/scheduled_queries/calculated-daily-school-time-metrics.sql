@@ -87,12 +87,6 @@ WITH
       `teacher-vacancy-service.production_dataset.schoolgroup` AS trust
     ON
       trust.id = schools.trust_id
-      #    LEFT JOIN
-      #      `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
-      #    ON
-      #IF(users.school_urn IS NOT NULL,users.school_urn = CAST(schools.urn AS INT64),users.organisation_uid=trust.uid)
-      #COALESCE(users.school_urn,users.organisation_uid) = COALESCE(CAST(schools.urn AS INT64),trust.uid)
-      #      users.school_urn = CAST(schools.urn AS INT64)
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS organisationvacancy
     ON
