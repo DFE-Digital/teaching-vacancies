@@ -37,21 +37,21 @@ resource aws_iam_user_policy_attachment edit_terraform_state {
 
 # SSM
 
-data aws_iam_policy_document read_ssm_parameter {
+data aws_iam_policy_document read_ssm_parameters {
   statement {
-    actions   = ["ssm:GetParameter"]
+    actions   = ["ssm:GetParameter", "ssm:GetParametersByPath"]
     resources = ["*"]
   }
 }
 
-resource aws_iam_policy read_ssm_parameter {
+resource aws_iam_policy read_ssm_parameters {
   name   = "read-ssm-parameter"
-  policy = data.aws_iam_policy_document.read_ssm_parameter.json
+  policy = data.aws_iam_policy_document.read_ssm_parameters.json
 }
 
-resource aws_iam_user_policy_attachment read_ssm_parameter {
+resource aws_iam_user_policy_attachment read_ssm_parameters {
   user       = aws_iam_user.deploy.name
-  policy_arn = aws_iam_policy.read_ssm_parameter.arn
+  policy_arn = aws_iam_policy.read_ssm_parameters.arn
 }
 
 # Cloudwatch

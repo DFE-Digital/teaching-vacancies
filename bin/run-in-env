@@ -6,7 +6,7 @@ require 'yaml'
 require 'aws-sdk-ssm'
 require 'erb'
 
-OUTPUT_LIST = ['stdout', 'env_stdout', 'env_file', 'subshell', 'tf_subshell']
+OUTPUT_LIST = ['stdout', 'env_stdout', 'env_file', 'subshell', 'tf_subshell', 'quiet']
 
 @log = Logger.new(STDOUT)
 @log.level = Logger::INFO
@@ -24,6 +24,7 @@ def usage
       env_file: Write to a .env file to set up shell environment. Must provide -f
       subshell: Run command in a subshell with env. variables. Must provide command
       tf_subshell: Run command in a subshell with terraform env. variables. Must provide command
+      quiet: No output (Validates input)
     -f (--output_file): path to output file
     -v (--verbose): verbose output
   EOF
@@ -51,7 +52,12 @@ def pull_ssm_parameters(parameters)
       with_decryption: true,
     })
     parameter_map = YAML.load(response.parameter.value)
-    config_map.update parameter_map
+    begin
+      config_map.update parameter_map
+    rescue TypeError => e
+      puts "Error: Syntax error in parameter " + parameter_path
+      raise e
+    end
   }
 
   config_map
@@ -69,8 +75,13 @@ def pull_ssm_parameter_paths(parameter_paths)
       with_decryption: true
     })
     response.parameters.each { |parameter|
-      parameter_map = YAML.load(parameter.value)
-      config_map.update parameter_map
+      begin
+        parameter_map = YAML.load(parameter.value)
+        config_map.update parameter_map
+      rescue TypeError => e
+        puts "Error: Syntax error in parameter " + parameter.name
+        raise e
+      end
     }
   }
 
@@ -82,7 +93,12 @@ def read_from_yaml_files(yaml_files)
   config_map = {}
 
   yaml_files.each{ |yaml_file|
-    parameter_map = YAML.load_file(yaml_file)
+    begin
+      parameter_map = YAML.load_file(yaml_file)
+    rescue Psych::SyntaxError => e
+      puts "Error: Syntax error in file " + yaml_file
+      raise e
+    end
     config_map.update parameter_map
   }
 
@@ -172,7 +188,7 @@ else
 end
 
 if should_run_command_in_subshell(output)
-  command = ARGV[0..].join(' ')
+  command = ARGV.join(' ')
   usage unless command != ''
 end
 
