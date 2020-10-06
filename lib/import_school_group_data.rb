@@ -58,15 +58,18 @@ private
   def convert_to_school_group(row)
     school_group = SchoolGroup.find_or_initialize_by(uid: row['Group UID'])
     set_gias_data_as_json(school_group, row)
-    set_geolocation(school_group, row)
+    school_group.postcode = row['Group Postcode']
+    school_group.name = row['Group Name']&.titlecase
+    school_group.address = row['Group Locality']
+    school_group.town = row['Group Town']
+    school_group.county = row['Group County']
+    set_geolocation(school_group)
     school_group
   end
 
-  def set_geolocation(school_group, row)
-    if row['Group Postcode']&.present? && (school_group.geolocation.blank? || school_group.postcode != row['Group Postcode'])
-      coordinates = Geocoding.new(row['Group Postcode']).coordinates
-      school_group.geolocation = coordinates unless coordinates == [0, 0]
-    end
+  def set_geolocation(school_group)
+    coordinates = Geocoding.new(school_group.postcode).coordinates
+    school_group.geolocation = coordinates unless coordinates == [0, 0]
   end
 
   def set_gias_data_as_json(school_group, row)

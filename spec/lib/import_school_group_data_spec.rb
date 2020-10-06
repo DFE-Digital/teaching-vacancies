@@ -6,15 +6,23 @@ RSpec.describe ImportSchoolGroupData do
   let(:csv_url) { 'https://csv_endpoint.csv/magic_endpoint/test.csv' }
   let(:temp_file_location) { '/some_temporary_location/test.csv' }
 
-  describe '#convert_to_school_group' do
-    let(:row) { { 'Group UID': uid } }
-    let(:school_group) { double('school_group') }
-    let(:uid) { 'test_uid' }
+  describe '#create_school_groups' do
+    let(:school_group) { create(:school_group) }
+    let(:row) do
+      { 'Group UID' => 'test_uid',
+        'Group Postcode' => 'WA1 234',
+        'Group Type (code)' => '06',
+        'Group Name' => 'test trust',
+        'Group Locality' => '3 Trust Street',
+        'Group Town' => 'Trust Town',
+        'Group County' => 'Trustshire' }
+    end
 
     before do
       allow(SchoolGroup)
         .to receive(:find_or_initialize_by).with(hash_including(uid: row['Group UID'])).and_return(school_group)
       allow(subject).to receive(:set_gias_data_as_json).with(school_group, row)
+      subject.send(:create_school_groups, row)
     end
 
     it 'calls set_gias_data_as_json' do
@@ -23,8 +31,28 @@ RSpec.describe ImportSchoolGroupData do
     end
 
     it 'calls set_geolocation' do
-      expect(subject).to receive(:set_geolocation).with(school_group, row)
+      expect(subject).to receive(:set_geolocation).with(school_group)
       subject.send(:convert_to_school_group, row)
+    end
+
+    it 'updates the postcode' do
+      expect(school_group.postcode).to eq('WA1 234')
+    end
+
+    it 'updates the name (with title case)' do
+      expect(school_group.name).to eq('Test Trust')
+    end
+
+    it 'updates the address' do
+      expect(school_group.address).to eq('3 Trust Street')
+    end
+
+    it 'updates the town' do
+      expect(school_group.town).to eq('Trust Town')
+    end
+
+    it 'updates the county' do
+      expect(school_group.county).to eq('Trustshire')
     end
   end
 
@@ -68,7 +96,7 @@ RSpec.describe ImportSchoolGroupData do
   end
 
   describe '#set_geolocation' do
-    let(:school_group) { create(:school_group, gias_data: { 'Group Postcode' => 'some postcode' }) }
+    let(:school_group) { create(:school_group, postcode: 'some postcode') }
 
     context 'when coordinates are not found' do
       before do
@@ -76,14 +104,14 @@ RSpec.describe ImportSchoolGroupData do
       end
 
       it 'does not set the coordinates' do
-        subject.send(:set_geolocation, school_group, school_group.gias_data)
+        subject.send(:set_geolocation, school_group)
         expect(school_group.geolocation).to be_blank
       end
     end
 
     context 'when coordinates are found' do
       it 'sets the coordinates' do
-        subject.send(:set_geolocation, school_group, school_group.gias_data)
+        subject.send(:set_geolocation, school_group)
         expect(school_group.geolocation.x).to eql(Geocoder::DEFAULT_STUB_COORDINATES[0])
         expect(school_group.geolocation.y).to eql(Geocoder::DEFAULT_STUB_COORDINATES[1])
       end

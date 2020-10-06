@@ -20,7 +20,7 @@ RSpec.describe 'Editing a published vacancy' do
       visit edit_organisation_job_path(vacancy.id)
 
       expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.central_office'))
-      expect(page).to have_content(location(school_group))
+      expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
         I18n.t('hiring_staff.organisations.readable_job_location.central_office'),
       )
@@ -62,7 +62,7 @@ RSpec.describe 'Editing a published vacancy' do
 
       expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t('school_groups.job_location_heading.review.central_office'))
-      expect(page).to have_content(location(school_group))
+      expect(page).to have_content(full_address(school_group))
       expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
         I18n.t('hiring_staff.organisations.readable_job_location.central_office'),
       )
