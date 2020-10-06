@@ -863,7 +863,7 @@ en:
     link:
       help_text: 'whenever a job matching this search is listed'
       home_page: Visit %{home_page_link}
-      no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-search" class="govuk-link">get notified</a> when a job like this gets listed'
+      no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-no-search-results-gtm" class="govuk-link">get notified</a> when a job like this gets listed'
       text: 'Receive a job alert'
     location_radius_text: Within %{radius} miles of %{location}
     location_category_text: In %{location}
