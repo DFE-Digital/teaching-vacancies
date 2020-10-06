@@ -1,0 +1,30 @@
+- content_for :page_title_prefix, t('.title')
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @subscription, url: subscription_path(@subscription.token) do |f|
+      = f.govuk_error_summary
+
+      %h1.govuk-heading-xl
+        = t('.title')
+
+      %p.govuk-body-l=t('.intro')
+
+      = f.govuk_email_field :email,
+        label: { text: t('subscriptions.labels.email_html'), size: 's' },
+        hint_text: t('subscriptions.hints.email'),
+        required: true
+
+      = f.govuk_collection_radio_buttons :frequency,
+        frequency_options,
+        :first,
+        :last,
+        legend: { text: t('subscriptions.labels.frequency_html') }
+
+      = render(NotificationComponent.new(content: { body: t('subscriptions.info') }, style: 'notice', background: true, dismiss: false, alert: 'info'))
+
+      = f.govuk_submit t('buttons.update_alert'), classes: 'govuk-!-padding-left-8 govuk-!-padding-right-8'
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds.govuk-body{ class: 'govuk-!-margin-top-4' }
+    = t('terms_and_conditions.read_html')

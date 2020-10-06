@@ -12,16 +12,34 @@ en:
         unit: "£"
         precision: 0
         delimiter: ','
+  alert_mailer:
+    alert:
+      alert_frequency: You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed.
+      closing_date: "Closing date: %{closing_date}"
+      edit_alert: "You can %{edit_link} here."
+      edit_link_text: manage your alert
+      footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money on recruitment and you to take the next step in your career."
+      salary: "Salary: %{salary}"
+      subject: Your job alert from Teaching Vacancies
+      summary:
+        daily:
+          one: "A new job matching your search criteria was listed in the last day."
+          other: "%{count} new jobs matching your search criteria were listed in the last day."
+        weekly:
+          one: "A new job matching your search criteria was listed in the last week."
+          other: "%{count} new jobs matching your search criteria were listed in the last week."
+      title: This job alert
+      unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
+      unsubscribe_link_text: Unsubscribe here
+      working_pattern: "Working pattern: %{working_pattern}"
   app:
     title: 'Teaching Vacancies'
     menu: 'Menu'
     description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
     govuk: 'GOV.UK'
-
   breadcrumbs:
     home: Home
     jobs: Search results
-
   cookies:
     banner:
       aria:
@@ -788,63 +806,49 @@ en:
     website: 'Trust website'
     school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:
-    back_to_search_results: 'Return to your search results'
     benefits:
       title: Subscribers
       list:
         - get an email when new jobs match their search
         - can unsubscribe at any time
         - receive no more than 1 email a day
-    footer: Teaching Vacancies is a free job-listing service from the Department for Education. It helps schools to save money on recruitment and you to take the next step in your career.
+    confirm:
+      back_to_search_results: 'Return to your search results'
+      body: We sent an email confirmation to %{email}.
+      frequency_label: 'You will receive alerts '
+      header: Your email subscription has started
+      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
+      next_step: What happens next
+      title: Subscription confirmation
+      unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
+    confirm_update:
+      back_to_search_results: 'Return to your search results'
+      body: We sent an email confirmation to %{email}.
+      frequency_label: 'You will receive alerts '
+      header: Your job alert has been updated
+      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
+      next_step: What happens next
+      title: Subscription update
+      unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
+    edit:
+      edit_link: Edit alert criteria
+      intro: 'You currently receive an alert for any new jobs that match the following criteria:'
+      title: Manage your job alert
+    edit_search_criteria:
+      title: Edit alert criteria
     frequency:
-      alert_text: You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed
       daily: Daily, at approx 3 pm
       weekly: Weekly (Friday evening at approx 6 pm)
       downcase:
         daily: daily, at approx 3 pm
         weekly: weekly (Friday evening at approx 6 pm)
-    intro: 'We’ll email you details of any new jobs that match the following criteria:'
-    new:
-      page_description: Subscribe to job alerts
-    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
-    location_radius_text: Within %{radius} miles of %{location}
-    location_category_text: In %{location}
-    reference: 'for'
-    title: This job alert
-    next_steps: >-
-      You’ll receive an email every morning with any new job that’s been listed that matches your search criteria.
-    confirmation:
-      header: 'Your email subscription has started'
-      body: We sent an email confirmation to %{email}.
-      frequency_label: 'You will receive alerts '
-      next_step_details: 'We’ll email you details of any new teaching jobs that match the following criteria:'
-      next_step: 'What happens next'
-      unsubscribe: "You can unsubscribe by following the link at the bottom of these emails."
-    deletion:
-      confirmation_with_reference: You will no longer receive updates for your '%{reference}' alert.
-      confirmation: You will no longer receive updates for this alert.
-      header: Your email subscription has been deleted
-      resubscribe_html: If you unsubscribed accidentally, you can %{link}.
-      resubscribe_link_text: resubscribe here
-      title: Subscription deleted
-    email:
-      confirmation:
-        expiry_text_html: "Your job alert subscription will end on %{date}."
-        heading: "You have subscribed to a job alert for '%{reference}'."
-        subheading: 'We’ll email you details of any new jobs that match the following search criteria:'
-        subject: "Teaching Vacancies job alert confirmation for '%{reference}'"
-      unsubscribe_text_html: "You can unsubscribe by following the link at the bottom of these emails."
-      unsubscribe_link_text: "Unsubscribe here"
-      your_feedback: >-
-        Teaching Vacancies is a free job-listing service from the Department for Education. It helps
-        schools to save money on recruitment and you to take the next step in your career.
-        [Your feedback](https://teaching-vacancies.service.gov.uk/feedback/new) will help
-        us improve the service.
-    labels:
-      email_html: Email address (<span class="text-red">Required</span>)
     hints:
       email: Enter your email address. We'll only use it to send you job alerts.
       reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
+    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
+    intro: 'We’ll email you details of any new jobs that match the following criteria:'
+    location_radius_text: Within %{radius} miles of %{location}
+    location_category_text: In %{location}
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     labels:
@@ -860,26 +864,16 @@ en:
     manage: Manage your subscription
     new:
       page_description: Subscribe to job alerts
-    next_steps: >-
-      You’ll receive an email every morning with any new job that’s been listed that matches your search criteria.  
-    unsubscribe: Unsubscribe
+    unsubscribe:
+      confirmation: You will no longer receive updates for this alert.
+      header: You have been unsubscribed from this email
+      resubscribe_html: If you unsubscribed accidentally, you can %{link}.
+      resubscribe_link_text: resubscribe here
+      title: Subscription deleted
   job_alerts:
     confirmation:
       email:
         subject: Teaching Vacancies job alert confirmation
-    alert:
-      email:
-        daily:
-          summary:
-            one: "A new job matching your search criteria was listed in the last day."
-            other: "%{count} new jobs matching your search criteria were listed in the last day."
-          unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
-        weekly:
-          summary:
-            one: "A new job matching your search criteria was listed in the last week."
-            other: "%{count} new jobs matching your search criteria were listed in the last week."
-          unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
-        subject: Your job alert from Teaching Vacancies
   nqt_job_alerts:
     page_title: Sign up for NQT job alerts
     heading: Sign up for NQT job alerts
@@ -962,6 +956,7 @@ en:
     submit: Submit
     subscribe: Subscribe
     update_job: Update listing
+    update_alert: Update alert
 
   messages:
     jobs:
@@ -1351,6 +1346,27 @@ en:
       clear_all_filters: 'Clear filters'
       remove_filter_hidden: 'Remove this filter'
       return_to_results: Return to results
+  subscription_mailer:
+    confirmation:
+      frequency:
+        daily: at the end of the day (at approx 3 pm)
+        weekly: weekly (at approx 6 pm on Friday evening)
+      next_steps: >-
+        You’ll receive a job alert %{frequency} when a job alert matching your criteria is listed.
+      subject: Teaching Vacancies job alert confirmation
+      title: You have subscribed to a job alert from Teaching Vacancies
+      unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
+      unsubscribe_link_text: Unsubscribe here
+    update:
+      frequency:
+        daily: at the end of the day (at approx 3 pm)
+        weekly: weekly (at approx 6 pm on Friday evening)
+      next_steps: >-
+        You’ll receive a job alert %{frequency} when a job alert matching your criteria is listed.
+      subject: Teaching Vacancies job alert update
+      title: You have updated a job alert from Teaching Vacancies
+      unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
+      unsubscribe_link_text: Unsubscribe here
   updates:
     heading: Updates
     updates_description_html: >-

@@ -120,7 +120,7 @@ RSpec.describe SubscriptionPresenter do
     let(:to_row) { presenter.to_row }
 
     it 'returns the right number of keys' do
-      expect(to_row.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count + 1)
+      expect(to_row.count).to eq(described_class::SEARCH_CRITERIA_SORT_ORDER.count)
     end
 
     context 'when array values in search criteria' do

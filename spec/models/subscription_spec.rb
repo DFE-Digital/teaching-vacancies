@@ -25,12 +25,8 @@ RSpec.describe Subscription, type: :model do
 
     context 'unique index' do
       it 'validates uniqueness of email, frequency and search_criteria' do
-        create(:subscription, email: 'jane@doe.com',
-                              reference: 'A reference',
-                              frequency: :daily)
-        subscription = build(:subscription, email: 'jane@doe.com',
-                                            reference: 'B reference',
-                                            frequency: :daily)
+        create(:subscription, email: 'jane@doe.com', frequency: :daily)
+        subscription = build(:subscription, email: 'jane@doe.com', frequency: :daily)
 
         expect(subscription.valid?).to eq(false)
         expect(subscription.errors.messages[:search_criteria]).to eq(['has already been taken'])
@@ -48,32 +44,6 @@ RSpec.describe Subscription, type: :model do
       it 'retrieves all subscriptions with frequency set to :daily' do
         expect(Subscription.daily.count).to eq(8)
       end
-    end
-  end
-
-  context 'reference' do
-    context 'when common search criteria is provided' do
-      it 'generates a reference on initialization' do
-        subscription = Subscription.new(search_criteria: {
-          location: 'Somewhere', radius: 30, keyword: 'english maths science'
-        }.to_json)
-
-        expect(subscription.reference).to eq('English maths science jobs within 30 miles of Somewhere')
-      end
-    end
-
-    context 'when no common search criteria is provided' do
-      it 'does not set a default reference' do
-        subscription = Subscription.new(search_criteria: { radius: 20 }.to_json)
-
-        expect(subscription.reference).to be_nil
-      end
-    end
-
-    it 'uses a reference passed to it' do
-      subscription = create(:subscription, reference: 'A specific reference')
-
-      expect(subscription.reference).to eq('A specific reference')
     end
   end
 
@@ -133,9 +103,7 @@ RSpec.describe Subscription, type: :model do
     let!(:expired_now) { Time.zone.now }
     let(:date_yesterday) { Time.zone.yesterday.to_time }
     let(:date_today) { Time.zone.today.to_time }
-    let(:subscription) do
-      create(:subscription, frequency: :daily, search_criteria: { subject: 'english' }.to_json)
-    end
+    let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: 'english' }.to_json) }
     let(:vacancies) { double('vacancies') }
     let(:search_filter) do
       '(listing_status:published AND '\

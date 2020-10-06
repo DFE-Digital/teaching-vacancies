@@ -46,7 +46,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         page.choose('Daily')
         click_on 'Subscribe'
 
-        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirm.header'))
       end
 
       scenario 'when the email address is associated with other active subscriptions' do
@@ -58,7 +58,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         page.choose('Daily')
         click_on 'Subscribe'
 
-        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirm.header'))
       end
 
       context 'when alert frequency is daily' do
@@ -154,7 +154,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(message_delivery).to receive(:deliver_later)
         click_on 'Subscribe'
 
-        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirm.header'))
         click_on 'Return to your search results'
 
         expect(page.current_path).to eql(jobs_path)
@@ -201,7 +201,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         expect(message_delivery).to receive(:deliver_later)
         click_on 'Subscribe'
 
-        expect(page).to have_content(I18n.t('subscriptions.confirmation.header'))
+        expect(page).to have_content(I18n.t('subscriptions.confirm.header'))
         click_on 'Return to your search results'
 
         expect(page.current_path).to eql(jobs_path)

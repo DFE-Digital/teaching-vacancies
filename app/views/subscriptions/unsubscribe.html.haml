@@ -1,16 +1,13 @@
-- content_for :page_title_prefix, t('subscriptions.deletion.title')
+- content_for :page_title_prefix, t('.title')
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     .govuk-panel.tvs-panel.govuk-panel--confirmation
       = render partial: 'shared/checkmark'
 
-      %h1.govuk-panel__title= t('subscriptions.deletion.header')
+      %h1.govuk-panel__title= t('.header')
       .govuk-panel__body
-        - if hex?(@subscription.reference)
-          %p= t('subscriptions.deletion.confirmation')
-        - else
-          %p= t('subscriptions.deletion.confirmation_with_reference', reference: @subscription.reference)
+        %p= t('.confirmation')
 
   .govuk-grid-column-two-thirds
-    %p.govuk-body=t('subscriptions.deletion.resubscribe_html', link: link_to(t('subscriptions.deletion.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link'))
+    %p.govuk-body=t('.resubscribe_html', link: link_to(t('.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link'))

@@ -6,142 +6,71 @@ RSpec.describe AlertMailer, type: :mailer do
   include ERB::Util
 
   let(:body) { mail.body.raw_source }
+  let(:email) { 'an@email.com' }
+  let(:search_criteria) { { keyword: 'English' }.to_json }
   let(:subscription) do
-    subscription = Subscription.create(
-      email: 'an@email.com',
-      frequency: frequency,
-      search_criteria: { keyword: 'English', newly_qualified_teacher: 'true' }.to_json,
-    )
+    subscription = Subscription.create(email: email, frequency: frequency, search_criteria: search_criteria)
+    # The hashing algorithm uses a random initialization vector to encrypt the token,
+    # so is different every time, so we stub the token to be the same every time, so
+    # it's clearer what we're testing when we test the unsubscribe link
     token = subscription.token
     allow_any_instance_of(Subscription).to receive(:token) { token }
     subscription
   end
   let(:school) { create(:school) }
   let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
-  let(:vacancies) { create_list(:vacancy, 1, :published) }
+  let(:vacancies) { VacanciesPresenter.new(create_list(:vacancy, 2, :published)).decorated_collection }
+  let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: "#{frequency}_alert" } }
 
-  describe 'daily_alert' do
+  before { vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) } }
+
+  context 'when frequency is daily' do
     let(:frequency) { :daily }
-    let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: 'daily_alert' } }
 
-    before do
-      stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil')
-      vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
-    end
+    before { stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil') }
 
-    context 'with a single vacancy' do
-      let(:vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
-
-      it 'shows a vacancy' do
-        expect(mail.subject).to eq(
-          I18n.t(
-            'job_alerts.alert.email.subject',
-          ),
-        )
-        expect(mail.to).to eq([subscription.email])
-
-        expect(body).to match(I18n.t('job_alerts.alert.email.daily.summary', count: 1))
-        expect(body).to match(/---/)
-        expect(body).to match(/Keyword: English/)
-        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'daily')}/)
-        expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
-
-        expect(body).to match(/#{vacancy_presenter.working_patterns}/)
-
-        expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
-        expect(body).to include(subscription_unsubscribe_url(subscription_id: subscription.token, protocol: 'http'))
-      end
-    end
-
-    context 'with multiple vacancies' do
-      let(:vacancies) { create_list(:vacancy, 2, :published) }
-      let(:first_vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
-      let(:second_vacancy_presenter) { VacancyPresenter.new(vacancies.last) }
-
-      it 'shows vacancies' do
-        expect(mail.subject).to eq(
-          I18n.t(
-            'job_alerts.alert.email.subject',
-          ),
-        )
-        expect(mail.to).to eq([subscription.email])
-
-        expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
-        expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(**campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
-        expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
-        expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
-        expect(body).to match(/Keyword: English/)
-        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'daily')}/)
-
-        expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
-        expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(**campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.last.organisation))}/)
-        expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
-        expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
-      end
+    it 'sends a job alert email' do
+      expect(mail.subject).to eq(I18n.t('alert_mailer.alert.subject'))
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.summary.daily', count: 2))
+      expect(mail.body).to include(vacancies.first.job_title)
+      expect(mail.body).to include(vacancies.first.job_title)
+      expect(mail.body).to include(vacancies.first.share_url(**campaign_params))
+      expect(mail.body).to include(location(vacancies.first.organisation))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.salary', salary: vacancies.first.salary))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.working_pattern', working_pattern: vacancies.first.working_patterns))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.closing_date', closing_date: format_date(vacancies.first.expires_on)))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.title'))
+      expect(mail.body).to include(I18n.t('subscriptions.intro'))
+      expect(mail.body).to include('Keyword: English')
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.alert_frequency', frequency: subscription.frequency))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.edit_link_text'))
+      expect(mail.body).to include(edit_subscription_url(subscription.token, protocol: 'https'))
     end
   end
 
-  describe 'weekly_alert' do
+  context 'when frequency is weekly' do
     let(:frequency) { :weekly }
-    let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: 'weekly_alert' } }
 
-    before do
-      stub_const('NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE', 'not-nil')
-      vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
-    end
+    before { stub_const('NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE', 'not-nil') }
 
-    context 'with a single vacancy' do
-      let(:vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
-
-      it 'shows a vacancy' do
-        expect(mail.subject).to eq(
-          I18n.t('job_alerts.alert.email.subject'),
-        )
-        expect(mail.to).to eq([subscription.email])
-
-        expect(body).to match(I18n.t('job_alerts.alert.email.weekly.summary', count: 1))
-        expect(body).to match(/---/)
-        expect(body).to match(/Keyword: English/)
-        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'weekly')}/)
-        expect(body).to match(/#{Regexp.escape(vacancy_presenter.share_url(**campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
-
-        expect(body).to match(/#{vacancy_presenter.working_patterns}/)
-
-        expect(body).to match(/#{format_date(vacancy_presenter.expires_on)}/)
-        expect(body).to include(subscription_unsubscribe_url(subscription_id: subscription.token, protocol: 'http'))
-      end
-    end
-
-    context 'with multiple vacancies' do
-      let(:vacancies) { create_list(:vacancy, 2, :published) }
-      let(:first_vacancy_presenter) { VacancyPresenter.new(vacancies.first) }
-      let(:second_vacancy_presenter) { VacancyPresenter.new(vacancies.last) }
-
-      it 'shows vacancies' do
-        expect(mail.subject).to eq(
-          I18n.t('job_alerts.alert.email.subject'),
-        )
-        expect(mail.to).to eq([subscription.email])
-
-        expect(body).to match(/\[#{first_vacancy_presenter.job_title}\]/)
-        expect(body).to match(I18n.t('job_alerts.alert.email.weekly.summary', count: 2))
-        expect(body).to match(/Keyword: English/)
-        expect(body).to match(/#{I18n.t('subscriptions.frequency.alert_text', frequency: 'weekly')}/)
-        expect(body).to match(/#{Regexp.escape(first_vacancy_presenter.share_url(**campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.first.organisation))}/)
-        expect(body).to match(/#{first_vacancy_presenter.working_patterns}/)
-        expect(body).to match(/#{format_date(first_vacancy_presenter.expires_on)}/)
-
-        expect(body).to match(/\[#{second_vacancy_presenter.job_title}\]/)
-        expect(body).to match(/#{Regexp.escape(second_vacancy_presenter.share_url(**campaign_params))}/)
-        expect(body).to match(/#{html_escape(location(vacancies.last.organisation))}/)
-        expect(body).to match(/#{second_vacancy_presenter.working_patterns}/)
-        expect(body).to match(/#{format_date(second_vacancy_presenter.expires_on)}/)
-      end
+    it 'sends a job alert email' do
+      expect(mail.subject).to eq(I18n.t('alert_mailer.alert.subject'))
+      expect(mail.to).to eq([subscription.email])
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.summary.weekly', count: 2))
+      expect(mail.body).to include(vacancies.first.job_title)
+      expect(mail.body).to include(vacancies.first.job_title)
+      expect(mail.body).to include(vacancies.first.share_url(**campaign_params))
+      expect(mail.body).to include(location(vacancies.first.organisation))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.salary', salary: vacancies.first.salary))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.working_pattern', working_pattern: vacancies.first.working_patterns))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.closing_date', closing_date: format_date(vacancies.first.expires_on)))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.title'))
+      expect(mail.body).to include(I18n.t('subscriptions.intro'))
+      expect(mail.body).to include('Keyword: English')
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.alert_frequency', frequency: subscription.frequency))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.edit_link_text'))
+      expect(mail.body).to include(edit_subscription_url(subscription.token, protocol: 'https'))
     end
   end
 end

@@ -26,14 +26,39 @@ class SubscriptionsController < ApplicationController
     render :new
   end
 
+  def edit
+    subscription = Subscription.find_and_verify_by_token(token)
+    @subscription = SubscriptionPresenter.new(subscription)
+
+    Auditor::Audit.new(subscription, 'subscription.alert.edit', current_session_id).log_without_association
+  end
+
+  def update
+    subscription = Subscription.find_and_verify_by_token(token)
+    @subscription = SubscriptionPresenter.new(subscription)
+
+    if @subscription.update(subscription_params)
+      Auditor::Audit.new(subscription, 'subscription.update', current_session_id).log
+      SubscriptionMailer.update(subscription.id).deliver_later
+      render :confirm_update
+    else
+      render :edit
+    end
+  end
+
   def unsubscribe
-    token = ParameterSanitiser.call(params).require(:subscription_id)
-    @subscription = Subscription.find_and_verify_by_token(token)
-    Auditor::Audit.new(@subscription, "subscription.#{@subscription.frequency}_alert.delete", current_session_id).log
-    @subscription.delete
+    subscription = Subscription.find_and_verify_by_token(token)
+    @subscription = SubscriptionPresenter.new(subscription)
+
+    Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.delete", current_session_id).log
+    subscription.delete
   end
 
 private
+
+  def token
+    ParameterSanitiser.call(params).require(:id)
+  end
 
   def subscription_params
     ParameterSanitiser.call(params.require(:subscription)).permit(:email, :frequency, :search_criteria)

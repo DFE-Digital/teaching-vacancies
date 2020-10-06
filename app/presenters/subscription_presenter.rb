@@ -18,10 +18,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def to_row
-    full_search_criteria.merge!(reference: reference)
-                        .transform_values! do |value|
-      value.is_a?(Array) ? value.join(', ') : value
-    end
+    full_search_criteria.transform_values! { |value| value.is_a?(Array) ? value.join(', ') : value }
   end
 
 private
