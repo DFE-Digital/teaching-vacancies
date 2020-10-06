@@ -28,18 +28,27 @@ IF
   COALESCE(dsi_users_now.email,
     latest_timestamped_dsi_users.email) AS email,
   COALESCE(dsi_users_now.school_urn,
-    latest_timestamped_dsi_users.school_urn) AS school_urn
+    latest_timestamped_dsi_users.school_urn) AS school_urn,
+  COALESCE( dsi_users_now.organisation_uid,
+    latest_timestamped_dsi_users.organisation_uid) AS organisation_uid
 FROM
   `teacher-vacancy-service.production_dataset.dsi_users` AS dsi_users_now
 FULL JOIN
   `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS latest_timestamped_dsi_users
 ON
   dsi_users_now.user_id=latest_timestamped_dsi_users.user_id
-  AND dsi_users_now.school_urn=latest_timestamped_dsi_users.school_urn
+  AND (dsi_users_now.school_urn=latest_timestamped_dsi_users.school_urn
+    OR COALESCE(dsi_users_now.school_urn,
+      latest_timestamped_dsi_users.school_urn) IS NULL)
+  AND (dsi_users_now.organisation_uid=latest_timestamped_dsi_users.organisation_uid
+    OR COALESCE(dsi_users_now.organisation_uid,
+      latest_timestamped_dsi_users.organisation_uid) IS NULL)
   AND CAST(dsi_users_now.approval_datetime AS DATE)=latest_timestamped_dsi_users.from_date
 WHERE
   COALESCE(dsi_users_now.school_urn,
-    latest_timestamped_dsi_users.school_urn) IS NOT NULL
+    latest_timestamped_dsi_users.school_urn,
+    dsi_users_now.organisation_uid,
+    latest_timestamped_dsi_users.organisation_uid ) IS NOT NULL
   AND
 IF
   ((

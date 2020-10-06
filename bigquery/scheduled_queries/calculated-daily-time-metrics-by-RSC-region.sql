@@ -12,9 +12,22 @@ WITH
     date_closed,
     date_opened,
     CAST(date_created AS DATE) AS date_created,
-    status
+    status,
+    ARRAY_TO_STRING(ARRAY(
+      SELECT
+        DISTINCT trust.id
+      FROM
+        `teacher-vacancy-service.production_dataset.schoolgroup` AS trust
+      LEFT JOIN
+        `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
+      ON
+        trust.id=schoolgroupmembership.school_group_id
+      WHERE
+        trust.type = "Multi-academy trust"
+        AND schoolgroupmembership.school_id=school.id
+        AND trust.status != "Closed"),", ") AS trust_id,
   FROM
-    `teacher-vacancy-service.production_dataset.school`
+    `teacher-vacancy-service.production_dataset.school` AS school
   WHERE
     ((date_closed IS NULL
         AND status != "Closed")
@@ -37,15 +50,30 @@ WITH
       dates.date AS date,
       RSC_region,
     IF
+      #up until 20th November 2019, take signup data from the static table of historic signup data for each school
       ( historic_signups.School_been_added
         AND dates.date<='2019-11-20',
         historic_signups.Date_first_signed_up<dates.date,
-        #up until 20th November 2019, take signup data from the static table of historic signup data for each school
-        COUNTIF(users.from_date <= dates.date
-          AND (users.to_date IS NULL
-            OR users.to_date > dates.date)) >= 1
         #after 20th November 2019, count the number of users who had access, see if it is 1 or more, and if so count the school as signed up
-        ) AS signed_up,
+        (
+        SELECT
+          COUNT(users.user_id)
+        FROM
+          `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
+        WHERE
+          users.school_urn = CAST(schools.urn AS INT64)
+          AND users.from_date <= dates.date
+          AND (users.to_date IS NULL
+            OR users.to_date > dates.date)) + (
+        SELECT
+          COUNT(users.user_id)
+        FROM
+          `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
+        WHERE
+          users.organisation_uid=trust.uid
+          AND users.from_date <= dates.date
+          AND (users.to_date IS NULL
+            OR users.to_date > dates.date)) >= 1 ) AS signed_up,
       COUNTIF(vacancies.id IS NOT NULL) >= 1 AS has_published_so_far,
       COUNTIF(vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 1 YEAR)) >= 1 AS has_published_in_the_last_year,
       COUNTIF(vacancies.publish_on >= DATE_SUB(dates.date,INTERVAL 3 MONTH)) >= 1 AS has_published_in_the_last_quarter,
@@ -59,9 +87,9 @@ WITH
     ON
       CAST(historic_signups.URN AS STRING) = schools.urn
     LEFT JOIN
-      `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
+      `teacher-vacancy-service.production_dataset.schoolgroup` AS trust
     ON
-      CAST(users.school_urn AS STRING) = schools.urn
+      trust.id = schools.trust_id
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS organisationvacancy
     ON
@@ -83,12 +111,13 @@ WITH
       urn,
       date,
       RSC_region,
-      date_closed,
-      date_opened,
-      date_created,
+      schools.date_closed,
+      schools.date_opened,
+      schools.date_created,
       schools.status,
       historic_signups.School_been_added,
-      historic_signups.Date_first_signed_up)
+      historic_signups.Date_first_signed_up,
+      trust.uid)
     # don't calculate metrics for dates that are in the future - they'll just show up as null in the final table
   WHERE
     date <= CURRENT_DATE()
