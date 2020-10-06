@@ -73,6 +73,29 @@ RSpec.describe 'Viewing a single published vacancy' do
   end
 
   context 'A user viewing a vacancy' do
+    context 'when creating a job alert' do
+      let(:vacancy) { create(:vacancy, subjects: %w[Physics]) }
+
+      before do
+        vacancy.organisation_vacancies.create(organisation: school)
+        visit job_path(vacancy)
+      end
+
+      scenario 'can click on the first link to create a job alert' do
+        click_on I18n.t('jobs.alert.similar.terse')
+        expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
+        expect(page).to have_content('Keyword: Physics')
+        expect(page).to have_content("Location: Within 10 miles of #{school.postcode}")
+      end
+
+      scenario 'can click on the second link to create a job alert' do
+        click_on I18n.t('jobs.alert.similar.verbose.link_text')
+        expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
+        expect(page).to have_content('Keyword: Physics')
+        expect(page).to have_content("Location: Within 10 miles of #{school.postcode}")
+      end
+    end
+
     scenario 'can click on the application link when there is one set' do
       vacancy = create(:vacancy, :job_schema)
       vacancy.organisation_vacancies.create(organisation: school)
