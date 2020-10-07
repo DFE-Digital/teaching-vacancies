@@ -8,6 +8,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
       return redirect_to organisation_job_review_path(@vacancy.id),
                          notice: I18n.t('messages.jobs.view.only_published')
     end
+    @concocted_job_alert_search_criteria = Search::CriteriaConcocter.new(@vacancy).criteria
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
