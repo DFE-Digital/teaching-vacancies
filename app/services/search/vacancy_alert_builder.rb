@@ -1,4 +1,4 @@
-class Algolia::VacancyAlertBuilder < Algolia::VacancySearchBuilder
+class Search::VacancyAlertBuilder < Search::VacancySearchBuilder
   attr_reader :vacancies
 
   MAXIMUM_SUBSCRIPTION_RESULTS = 500

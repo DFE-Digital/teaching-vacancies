@@ -14,6 +14,6 @@ class AlertEmail::Base < ApplicationJob
 
   def vacancies_for_subscription(subscription)
     subscription.vacancies_for_range(from_date, Time.zone.today)
-                .limit(Algolia::VacancyAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS)
+                .limit(Search::VacancyAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS)
   end
 end

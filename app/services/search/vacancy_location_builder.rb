@@ -1,4 +1,4 @@
-class Algolia::VacancyLocationBuilder
+class Search::VacancyLocationBuilder
   DEFAULT_RADIUS = 10
   MILES_TO_METRES = 1.60934 * 1000
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Algolia::VacancyFiltersBuilder do
+RSpec.describe Search::VacancyFiltersBuilder do
   subject { described_class.new(filters_hash) }
 
   let(:filters_hash) do
@@ -81,7 +81,7 @@ RSpec.describe Algolia::VacancyFiltersBuilder do
 
       before do
         travel_to(expired_now)
-        allow_any_instance_of(Algolia::VacancyFiltersBuilder)
+        allow_any_instance_of(Search::VacancyFiltersBuilder)
           .to receive(:expired_now_filter)
           .and_return(expired_now.to_time.to_i)
       end

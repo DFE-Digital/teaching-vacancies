@@ -1,6 +1,6 @@
 require 'geocoding'
 
-class Algolia::VacancySearchBuilder
+class Search::VacancySearchBuilder
   attr_reader :keyword, :location_search,
               :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies
 
@@ -54,7 +54,7 @@ private
   end
 
   def build_location_search
-    @location_search = Algolia::VacancyLocationBuilder.new(
+    @location_search = Search::VacancyLocationBuilder.new(
       @params_hash[:location], @params_hash[:radius], @params_hash[:location_category]
     )
     @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
@@ -65,7 +65,7 @@ private
   end
 
   def build_search_filters
-    @search_filters = Algolia::VacancyFiltersBuilder.new(@params_hash).filter_query
+    @search_filters = Search::VacancyFiltersBuilder.new(@params_hash).filter_query
   end
 
   def build_search_replica
