@@ -2,13 +2,13 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   before_action :set_vacancy, only: %i[destroy edit preview review show summary]
   before_action :redirect_if_published, only: %i[preview review]
   before_action :redirect_unless_permitted, only: %i[preview summary]
+  before_action :concoct_job_alert_search_criteria, only: %i[show preview]
 
   def show
     unless @vacancy.published?
       return redirect_to organisation_job_review_path(@vacancy.id),
                          notice: I18n.t('messages.jobs.view.only_published')
     end
-    @concocted_job_alert_search_criteria = Search::CriteriaConcocter.new(@vacancy).criteria
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
@@ -112,5 +112,9 @@ private
       'review'
             end
     @vacancy.update(state: state)
+  end
+
+  def concoct_job_alert_search_criteria
+    @concocted_job_alert_search_criteria = Search::CriteriaConcocter.new(@vacancy).criteria
   end
 end

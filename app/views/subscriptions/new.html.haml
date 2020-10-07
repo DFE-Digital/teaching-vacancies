@@ -1,9 +1,6 @@
 - content_for :page_title_prefix, t('subscriptions.new.page_description')
 
-- if @origin
-  = link_to t('buttons.back'), job_path(@origin), class: 'govuk-back-link govuk-!-margin-top-0'
-- else
-  = link_to t('buttons.back'), jobs_path(@subscription.search_criteria_to_h), class: 'govuk-back-link govuk-!-margin-top-0'
+= link_to t('buttons.back'), @origin.present? ? @origin : jobs_path(@subscription.search_criteria_to_h), class: 'govuk-back-link govuk-!-margin-top-0'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
