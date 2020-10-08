@@ -9,6 +9,7 @@ class Subscription < ApplicationRecord
   enum frequency: FREQUENCY_OPTIONS
 
   has_many :alert_runs
+  has_many :job_alert_feedbacks
 
   validates :email, email_address: { presence: true }
   validates :frequency, presence: true
