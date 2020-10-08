@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_175809) do
+ActiveRecord::Schema.define(version: 2020_10_08_121930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -101,6 +101,15 @@ ActiveRecord::Schema.define(version: 2020_10_06_175809) do
     t.string "email"
     t.integer "user_participation_response"
     t.float "recaptcha_score"
+  end
+
+  create_table "job_alert_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "relevant_to_user"
+    t.text "comment"
+    t.jsonb "search_criteria"
+    t.uuid "vacancy_ids", array: true
+    t.uuid "subscription_id", null: false
+    t.index ["subscription_id"], name: "index_job_alert_feedbacks_on_subscription_id"
   end
 
   create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -303,6 +312,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_175809) do
 
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "users"
+  add_foreign_key "job_alert_feedbacks", "subscriptions"
   add_foreign_key "user_preferences", "users"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end
