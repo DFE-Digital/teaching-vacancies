@@ -8,11 +8,9 @@ parameter_store_environment = "dev"
 # CloudFront
 distribution_list = {
   "tvsdev" = {
-    cloudfront_aliases              = ["dev.teaching-vacancies.service.gov.uk"]
     offline_bucket_domain_name      = "tvs-offline.s3.amazonaws.com"
     offline_bucket_origin_path      = "/school-jobs-offline"
     cloudfront_origin_domain_name   = "teaching-vacancies-dev.london.cloudapps.digital"
-    domain                          = "dev.teaching-vacancies.service.gov.uk"
     cloudfront_enable_standard_logs = false
   }
 }

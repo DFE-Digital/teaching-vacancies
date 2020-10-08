@@ -43,10 +43,8 @@ module cloudfront {
   environment                     = var.environment
   project_name                    = var.project_name
   cloudfront_origin_domain_name   = each.value.cloudfront_origin_domain_name
-  cloudfront_aliases              = each.value.cloudfront_aliases
   offline_bucket_domain_name      = each.value.offline_bucket_domain_name
   offline_bucket_origin_path      = each.value.offline_bucket_origin_path
-  domain                          = each.value.domain
   cloudfront_enable_standard_logs = each.value.cloudfront_enable_standard_logs
   route53_zones                   = var.route53_zones
   providers = {
