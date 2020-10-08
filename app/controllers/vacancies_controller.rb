@@ -25,6 +25,7 @@ class VacanciesController < ApplicationController
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
 
     @vacancy = VacancyPresenter.new(vacancy)
+    @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(@vacancy).criteria
 
     VacancyPageView.new(vacancy).track unless authenticated? || smoke_test?
 

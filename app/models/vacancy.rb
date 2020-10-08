@@ -90,11 +90,7 @@ class Vacancy < ApplicationRecord
   end
 
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
-    attributes :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
-
-    attribute :education_phases do
-      organisations.map(&:readable_phases).flatten.uniq
-    end
+    attributes :education_phases, :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
 
     attribute :expires_at do
       expires_at = format_date(expires_on)
@@ -352,6 +348,10 @@ class Vacancy < ApplicationRecord
 
   def parent_organisation
     organisations.many? ? organisations.first.school_groups.first : organisation
+  end
+
+  def education_phases
+    organisations.map(&:readable_phases).flatten.uniq
   end
 
 private

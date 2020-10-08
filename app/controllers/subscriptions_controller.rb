@@ -3,6 +3,7 @@ class SubscriptionsController < ApplicationController
 
   def new
     subscription = Subscription.new(search_criteria: search_criteria_params.to_json)
+    @origin = origin_param[:origin]
     @subscription = SubscriptionPresenter.new(subscription)
     Auditor::Audit.new(nil, 'subscription.alert.new', current_session_id).log_without_association
   end
@@ -62,6 +63,10 @@ private
 
   def subscription_params
     ParameterSanitiser.call(params.require(:subscription)).permit(:email, :frequency, :search_criteria)
+  end
+
+  def origin_param
+    params.permit(:origin)
   end
 
   def search_criteria_params

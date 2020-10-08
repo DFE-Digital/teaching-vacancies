@@ -2,6 +2,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   before_action :set_vacancy, only: %i[destroy edit preview review show summary]
   before_action :redirect_if_published, only: %i[preview review]
   before_action :redirect_unless_permitted, only: %i[preview summary]
+  before_action :devise_job_alert_search_criteria, only: %i[show preview]
 
   def show
     unless @vacancy.published?
@@ -111,5 +112,9 @@ private
       'review'
             end
     @vacancy.update(state: state)
+  end
+
+  def devise_job_alert_search_criteria
+    @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(@vacancy).criteria
   end
 end
