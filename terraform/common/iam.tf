@@ -89,6 +89,29 @@ resource aws_iam_user_policy_attachment cloudwatch {
   policy_arn = aws_iam_policy.cloudwatch.arn
 }
 
+# ACM
+
+data aws_iam_policy_document acm {
+  statement {
+    actions = [
+      "acm:DescribeCertificate",
+      "acm:ListCertificates",
+      "acm:ListTagsForCertificate"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource aws_iam_policy acm {
+  name   = "acm"
+  policy = data.aws_iam_policy_document.acm.json
+}
+
+resource aws_iam_user_policy_attachment acm {
+  user       = aws_iam_user.deploy.name
+  policy_arn = aws_iam_policy.acm.arn
+}
+
 # Cloudfront
 
 data aws_iam_policy_document cloudfront {
@@ -96,7 +119,6 @@ data aws_iam_policy_document cloudfront {
     actions   = ["cloudfront:*"]
     resources = ["*"]
   }
-
 }
 
 resource aws_iam_policy cloudfront {
