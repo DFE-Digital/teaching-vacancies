@@ -1,5 +1,4 @@
 class GeneralFeedback < ApplicationRecord
-  include Auditor::Model
   include FeedbackValidations
 
   enum visit_purpose: { other_purpose: 0, find_teaching_job: 1, list_teaching_job: 2 }
