@@ -54,34 +54,4 @@ RSpec.describe GeneralFeedback, type: :model do
       expect(GeneralFeedback.published_on(1.month.ago)).to match_array(feedback_some_other_day)
     end
   end
-
-  describe '#to_row' do
-    let(:created_at) { '2019-01-01T00:00:00+00:00' }
-    let(:visit_purpose) { :other_purpose }
-    let(:visit_purpose_comment) { 'For reasons...' }
-    let(:comment) { 'Great!' }
-    let(:user_participation_response) { :interested }
-    let(:email) { 'hello@research.com' }
-
-    let(:feedback) do
-      travel_to created_at do
-        create(:general_feedback, visit_purpose: visit_purpose,
-                                  visit_purpose_comment: visit_purpose_comment,
-                                  comment: comment,
-                                  user_participation_response: user_participation_response,
-                                  email: email)
-      end
-    end
-
-    it 'returns an array of data' do
-      expect(feedback.to_row[0]).to eq(Time.zone.now.to_s)
-      expect(feedback.to_row[1]).to eq(visit_purpose.to_s)
-      expect(feedback.to_row[2]).to eq(visit_purpose_comment)
-      expect(feedback.to_row[3]).to eq(nil) # Rating column: we no longer take these as feedback
-      expect(feedback.to_row[4]).to eq(comment)
-      expect(feedback.to_row[5]).to eq(feedback.created_at.to_s)
-      expect(feedback.to_row[6]).to eq(user_participation_response.to_s)
-      expect(feedback.to_row[7]).to eq(email)
-    end
-  end
 end
