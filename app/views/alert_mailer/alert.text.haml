@@ -1,27 +1,30 @@
-\# #{t("job_alerts.alert.email.#{@subscription.frequency}.summary", count: @vacancies.count)}
+\# #{t(".summary.#{@subscription.frequency}", count: @vacancies.count)}
 \
 \---
 \
 - @vacancies.each do |vacancy|
-  = notify_link(vacancy.share_url(source: 'subscription', medium: 'email', campaign: "#{@subscription.frequency}_alert"), vacancy.job_title).html_safe
+  = show_link(vacancy, @subscription).html_safe
   = location(vacancy.parent_organisation, job_location: vacancy.job_location)
   \
-  = "Salary: #{vacancy.salary}"
+  = t('.salary', salary: vacancy.salary)
   - if vacancy.working_patterns?
-    = "Working pattern: #{vacancy.working_patterns}"
-  = "Closing date: #{format_date(vacancy.expires_on)}"
+    = t('.working_pattern', working_pattern: vacancy.working_patterns)
+  = t('.closing_date', closing_date: format_date(vacancy.expires_on))
   \
   \---
   \
 \
-\# #{t('subscriptions.title')}
+\# #{t('.title')}
 = t('subscriptions.intro')
+\
 - @subscription.filtered_search_criteria.each_pair do |filter, value|
-  = "#{filter.humanize}: #{value}"
-= t('subscriptions.frequency.alert_text', frequency: @subscription.frequency)
-= t('subscriptions.link.home_page', home_page_link: notify_link('https://teaching-vacancies.service.gov.uk', t('app.title')))
-= - t('subscriptions.footer')
-
+  = "- #{filter.humanize}: #{value}"
+  \
+= t('.alert_frequency', frequency: @subscription.frequency)
+= t('.edit_alert', edit_link: edit_link(@subscription.token))
+\
 \---
-
-= t('job_alerts.alert.email.daily.unsubscribe', unsubscribe_link: unsubscribe_link(@subscription.token))
+\
+= t('.footer', home_page_link: home_page_link)
+\
+= t('.unsubscribe', unsubscribe_link: unsubscribe_link(@subscription.token))

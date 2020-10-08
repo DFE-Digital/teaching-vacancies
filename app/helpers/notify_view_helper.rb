@@ -3,8 +3,27 @@ module NotifyViewHelper
     "[#{text}](#{url})"
   end
 
+  def home_page_link
+    url = root_url(protocol: 'https')
+    text = t('app.title')
+    notify_link(url, text)
+  end
+
   def unsubscribe_link(token)
-    link_text = t('subscriptions.email.unsubscribe_link_text')
-    notify_link(subscription_unsubscribe_url(subscription_id: token), link_text)
+    url = unsubscribe_subscription_url(token, protocol: 'https')
+    text = t('.unsubscribe_link_text')
+    notify_link(url, text)
+  end
+
+  def edit_link(token)
+    url = edit_subscription_url(token, protocol: 'https')
+    text = t('.edit_link_text')
+    notify_link(url, text)
+  end
+
+  def show_link(vacancy, subscription)
+    url = vacancy.share_url(source: 'subscription', medium: 'email', campaign: "#{subscription.frequency}_alert")
+    text = vacancy.job_title
+    notify_link(url, text)
   end
 end

@@ -14,8 +14,6 @@ class Subscription < ApplicationRecord
   validates :frequency, presence: true
   validates :search_criteria, uniqueness: { scope: %i[email frequency] }
 
-  after_initialize :default_reference
-
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
@@ -61,11 +59,5 @@ class Subscription < ApplicationRecord
 
   def create_alert_run
     alert_runs.find_or_create_by(run_on: Time.zone.today)
-  end
-
-private
-
-  def default_reference
-    self.reference = SubscriptionReferenceGenerator.new(search_criteria: search_criteria_to_h).generate
   end
 end

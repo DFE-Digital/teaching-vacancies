@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_115840) do
+ActiveRecord::Schema.define(version: 2020_10_06_175809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -195,7 +195,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_115840) do
     t.integer "frequency"
     t.date "expires_on"
     t.jsonb "search_criteria"
-    t.string "reference", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "recaptcha_score"

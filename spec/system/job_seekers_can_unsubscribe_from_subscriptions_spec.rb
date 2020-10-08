@@ -2,23 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
   let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
-  let(:reference) { 'A reference' }
-  let(:subscription) do
-    create(:subscription,
-           reference: reference,
-           frequency: :daily,
-           search_criteria: search_criteria.to_json)
-  end
+  let(:subscription) { create(:subscription, frequency: :daily, search_criteria: search_criteria.to_json) }
 
   before do
-    visit subscription_unsubscribe_path(subscription_id: token)
+    visit unsubscribe_subscription_path(token)
   end
 
   context 'with the correct token' do
     let(:token) { subscription.token }
 
     it 'unsubscribes successfully' do
-      expect(page).to have_content(I18n.t('subscriptions.deletion.header'))
+      expect(page).to have_content(I18n.t('subscriptions.unsubscribe.header'))
     end
 
     it 'deletes the subscription' do
@@ -31,7 +25,7 @@ RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
     end
 
     it 'allows me to resubscribe' do
-      click_on I18n.t('subscriptions.deletion.resubscribe_link_text')
+      click_on I18n.t('subscriptions.unsubscribe.resubscribe_link_text')
 
       expect(page).to have_content('Keyword: English')
       expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
@@ -41,7 +35,7 @@ RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
       let(:search_criteria) { { keyword: 'English', location: 'SW1A1AA', radius: 20 } }
 
       it 'unsubscribes successfully' do
-        expect(page).to have_content(I18n.t('subscriptions.deletion.header'))
+        expect(page).to have_content(I18n.t('subscriptions.unsubscribe.header'))
       end
 
       it 'deletes the subscription' do
@@ -54,20 +48,10 @@ RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
       end
 
       it 'allows me to resubscribe' do
-        click_on I18n.t('subscriptions.deletion.resubscribe_link_text')
+        click_on I18n.t('subscriptions.unsubscribe.resubscribe_link_text')
 
         expect(page).to have_content('Keyword: English')
         expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
-      end
-    end
-
-    context 'with a custom reference' do
-      let(:reference) { 'English jobs within 20 miles of SW1A1AA' }
-
-      it 'shows my reference' do
-        expect(page).to have_content(reference)
-        expect(page).to have_content(I18n.t('subscriptions.deletion.confirmation_with_reference',
-                                            reference: reference))
       end
     end
   end
