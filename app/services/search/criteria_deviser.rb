@@ -1,15 +1,15 @@
-# Based on a vacancy, concoct a plausible set of search criteria for a job alert subscription
-class Search::CriteriaConcocter
+# Based on a vacancy, devise a plausible set of search criteria for a job alert subscription
+class Search::CriteriaDeviser
   attr_reader :criteria
 
   def initialize(vacancy)
     @vacancy = vacancy
-    @criteria = concoct_search_criteria
+    @criteria = devise_search_criteria
   end
 
 private
 
-  def concoct_search_criteria
+  def devise_search_criteria
     {
       location: @vacancy.parent_organisation.postcode,
       radius: (@vacancy.parent_organisation.postcode.present? ? '10' : nil),

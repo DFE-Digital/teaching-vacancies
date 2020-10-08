@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Search::CriteriaConcocter do
+RSpec.describe Search::CriteriaDeviser do
   subject { described_class.new(vacancy) }
 
   let(:postcode) { 'ab12 3cd' }
@@ -27,7 +27,7 @@ RSpec.describe Search::CriteriaConcocter do
     vacancy.reload
   end
 
-  describe '#concoct_search_criteria' do
+  describe '#devise_search_criteria' do
     context 'when the parent organisation has no postcode' do
       let(:postcode) { nil }
 
