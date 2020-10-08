@@ -44,7 +44,6 @@ jobs:
       run: |
         TAG=${GITHUB_SHA}
         echo ::set-env name=TAG::${TAG}
-        echo ::set-env name=DOCKER_BUILDKIT::1
 
     - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
@@ -62,13 +61,27 @@ jobs:
         bin/run-in-env -t /tvs/production -o quiet \
           && echo Data in /tvs/production looks valid
 
-    - name: build and push docker image
-      uses: docker/build-push-action@v1.1.0
+    - name: Build and push docker image from builder target
+      uses: docker/build-push-action@v2
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: ${{ env.DOCKERHUB_REPOSITORY }}
-        tags: ${{ env.TAG }}
+        build-args: BUILDKIT_INLINE_CACHE=1
+        cache-from: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:builder-master
+        push: true
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:builder-master
+        target: builder
+
+    - name: Build and push docker image from production target
+      uses: docker/build-push-action@v2
+      with:
+        build-args: BUILDKIT_INLINE_CACHE=1
+        cache-from: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:builder-master
+          ${{ env.DOCKERHUB_REPOSITORY }}:master
+        push: true
+        tags: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:master
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
         target: production
 
     - name: Deploy to staging

@@ -1,4 +1,4 @@
-FROM ruby:2.7.1-alpine AS dev-build
+FROM ruby:2.7.1-alpine AS builder
 
 ARG DEV_PACKAGES="gcc libc-dev make yarn postgresql-dev build-base libxml2-dev libxslt-dev"
 
@@ -37,8 +37,8 @@ RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN gem install bundler:2.1.4 --no-document
 
-COPY --from=dev-build /teacher-vacancy /teacher-vacancy
-COPY --from=dev-build /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder /teacher-vacancy /teacher-vacancy
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
 EXPOSE 3000
 CMD bundle exec rails db:migrate && bundle exec rails s

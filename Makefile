@@ -51,8 +51,22 @@ production:
 
 .PHONY: build-local-image
 build-local-image:
+		$(eval export DOCKER_BUILDKIT=1)
+		$(eval branch=$(shell git rev-parse --abbrev-ref HEAD))
 		$(eval tag=dev-$(shell git rev-parse HEAD)-$(shell date '+%Y%m%d%H%M%S'))
-		docker build -t $(repository):$(tag) .
+		docker build \
+			--build-arg BUILDKIT_INLINE_CACHE=1 \
+			--cache-from $(repository):builder-master \
+			--cache-from $(repository):builder-$(branch) \
+			--cache-from $(repository):master \
+			--cache-from $(repository):$(branch) \
+			--cache-from $(repository):$(tag) \
+			--tag $(repository):$(branch) \
+			--tag $(repository):$(tag) \
+			--target production \
+			.
+
+		docker push $(repository):$(branch)
 		docker push $(repository):$(tag)
 
 .PHONY: deploy-local-image

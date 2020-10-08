@@ -52,7 +52,6 @@ jobs:
         echo ::set-env name=TAG::${TAG}
         echo ::set-output name=BRANCH::${BRANCH}
         echo ::set-output name=TAG::${TAG}
-        echo ::set-env name=DOCKER_BUILDKIT::1
 
     - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
@@ -68,13 +67,29 @@ jobs:
         bin/run-in-env -t "/tvs/${BRANCH}" -o quiet \
           && echo Data in "/tvs/${BRANCH}" looks valid
 
-    - name: build and push docker image
-      uses: docker/build-push-action@v1.1.0
+    - name: Build and push docker image from builder target
+      uses: docker/build-push-action@v2
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: ${{ env.DOCKERHUB_REPOSITORY }}
-        tags: ${{ env.TAG }}
+        build-args: BUILDKIT_INLINE_CACHE=1
+        cache-from: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:builder-master
+          ${{ env.DOCKERHUB_REPOSITORY }}:builder-${{ env.BRANCH }}
+        push: true
+        tags: ${{ env.DOCKERHUB_REPOSITORY }}:builder-${{ env.BRANCH }}
+        target: builder
+
+    - name: Build and push docker image from production target
+      uses: docker/build-push-action@v2
+      with:
+        build-args: BUILDKIT_INLINE_CACHE=1
+        cache-from: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:builder-master
+          ${{ env.DOCKERHUB_REPOSITORY }}:builder-${{ env.BRANCH }}
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
+        push: true
+        tags: |
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
+          ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
         target: production
 
     - name: Deploy
