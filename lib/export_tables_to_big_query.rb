@@ -15,7 +15,6 @@ class ExportTablesToBigQuery
   # gias_data removes duplication of data.
   DROP_THESE_ATTRIBUTES = %w[
     benefits
-    data
     description
     education
     experience
@@ -31,6 +30,7 @@ class ExportTablesToBigQuery
 
   # This is to deal with a gem that automatically maps an interger column to a look up table of strings.
   ENUM_ATTRIBUTES = {
+    'category' => :string,
     'frequency' => :string,
     'hired_status' => :string,
     'job_roles' => :string,
@@ -47,7 +47,6 @@ class ExportTablesToBigQuery
   EXCLUDE_TABLES = %w[
     activities
     ar_internal_metadata
-    audit_data
     friendly_id_slugs
     location_polygons
     schema_migrations
@@ -128,6 +127,8 @@ private
         schema.send(column_type, column_name)
       end
     end
+
+    db_table = db_table.where('created_at > ?', 1.month.ago) if db_table == AuditData
 
     record_count = total = db_table.count
     error_count = 0
