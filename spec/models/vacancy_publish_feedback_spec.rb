@@ -54,35 +54,4 @@ RSpec.describe VacancyPublishFeedback, type: :model do
       expect(VacancyPublishFeedback.published_on(1.month.ago)).to match_array(feedback_some_other_day)
     end
   end
-
-  describe '#to_row' do
-    let(:school) { create(:school) }
-    let(:created_at) { '2019-01-01T00:00:00+00:00' }
-    let(:user) { create(:user) }
-    let(:vacancy) { create(:vacancy) }
-    let!(:vacancy_organisation) { vacancy.organisation_vacancies.create(organisation: school) }
-    let(:rating) { 5 }
-    let(:comment) { 'Great!' }
-    let(:user_participation_response) { :interested }
-    let(:email) { 'user@email.com' }
-
-    let(:feedback) do
-      travel_to created_at do
-        create(:vacancy_publish_feedback, user: user, vacancy: vacancy, rating: rating, comment: comment,
-                                          user_participation_response: user_participation_response, email: email)
-      end
-    end
-
-    it 'returns an array of data' do
-      expect(feedback.to_row[0]).to eq(Time.zone.now.to_s)
-      expect(feedback.to_row[1]).to eq(user.oid)
-      expect(feedback.to_row[2]).to eq(vacancy.id)
-      expect(feedback.to_row[3]).to eq(school.urn)
-      expect(feedback.to_row[4]).to eq(rating)
-      expect(feedback.to_row[5]).to eq(comment)
-      expect(feedback.to_row[6]).to eq(feedback.created_at.to_s)
-      expect(feedback.to_row[7]).to eq(user_participation_response.to_s)
-      expect(feedback.to_row[8]).to eq(email)
-    end
-  end
 end
