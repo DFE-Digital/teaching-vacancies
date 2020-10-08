@@ -3,7 +3,11 @@ SELECT
   CAST(updated_at AS date) AS updated_date,
   expires_on AS expires_date,
   recaptcha_score,
-  IF(recaptcha_score IS NULL,NULL,recaptcha_score > 0.5) AS human,
+IF
+  (recaptcha_score IS NOT NULL
+    OR recaptcha_score > 0.5,
+    TRUE,
+    FALSE) AS human,
   ARRAY_TO_STRING(ARRAY(   #extract all search criteria from the JSON, except radius (because this is meaningless without location)
     SELECT
       *
@@ -19,7 +23,7 @@ IF
     #anonymise postcodes
     "postcode",
     TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
-        '$.location'))," ")) AS location,
+          '$.location'))," ")) AS location,
   JSON_EXTRACT_SCALAR(search_criteria,
     '$.radius') AS radius,
   ARRAY_TO_STRING( (
@@ -47,8 +51,12 @@ IF
       ORDER BY
         phase ASC ))," or ") AS education_phases,
   TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
-    '$.subject'))," ") AS subject,
+        '$.subject'))," ") AS subject,
   TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
-    '$.job_title'))," ") AS job_title
+        '$.job_title'))," ") AS job_title,
+  TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
+        '$.keyword'))," ") AS keyword
 FROM
   `teacher-vacancy-service.production_dataset.feb20_subscription`
+ORDER BY
+  created_date DESC
