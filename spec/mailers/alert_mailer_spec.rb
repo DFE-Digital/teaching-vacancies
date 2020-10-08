@@ -19,8 +19,27 @@ RSpec.describe AlertMailer, type: :mailer do
   end
   let(:school) { create(:school) }
   let(:mail) { described_class.alert(subscription.id, vacancies.pluck(:id)) }
-  let(:vacancies) { VacanciesPresenter.new(create_list(:vacancy, 2, :published)).decorated_collection }
+  # The array of vacancies is set to length 1 because the order varies, making it hard to test url parameters.
+  let(:vacancies) { VacanciesPresenter.new(create_list(:vacancy, 1, :published)).decorated_collection }
   let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: "#{frequency}_alert" } }
+  let(:relevant_job_alert_feedback_url) do
+    new_subscription_feedback_url(
+      subscription.token,
+      protocol: 'https',
+      params: { job_alert_feedback: { relevant_to_user: true,
+                                      vacancy_ids: vacancies.pluck(:id),
+                                      search_criteria: JSON.parse(subscription.search_criteria) } },
+    ).gsub('&', '&amp;')
+  end
+  let(:irrelevant_job_alert_feedback_url) do
+    new_subscription_feedback_url(
+      subscription.token,
+      protocol: 'https',
+      params: { job_alert_feedback: { relevant_to_user: false,
+                                      vacancy_ids: vacancies.pluck(:id),
+                                      search_criteria: JSON.parse(subscription.search_criteria) } },
+    ).gsub('&', '&amp;')
+  end
 
   before { vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) } }
 
@@ -30,7 +49,7 @@ RSpec.describe AlertMailer, type: :mailer do
     it 'sends a job alert email' do
       expect(mail.subject).to eq(I18n.t('alert_mailer.alert.subject'))
       expect(mail.to).to eq([subscription.email])
-      expect(mail.body).to include(I18n.t('alert_mailer.alert.summary.daily', count: 2))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.summary.daily', count: 1))
       expect(mail.body).to include(vacancies.first.job_title)
       expect(mail.body).to include(vacancies.first.job_title)
       expect(mail.body).to include(vacancies.first.share_url(**campaign_params))
@@ -44,6 +63,12 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(mail.body).to include(I18n.t('alert_mailer.alert.alert_frequency', frequency: subscription.frequency))
       expect(mail.body).to include(I18n.t('alert_mailer.alert.edit_link_text'))
       expect(mail.body).to include(edit_subscription_url(subscription.token, protocol: 'https'))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.feedback.heading'))
+      expect(mail.body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
+      expect(mail.body).to include(relevant_job_alert_feedback_url)
+      expect(mail.body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
+      expect(mail.body).to include(irrelevant_job_alert_feedback_url)
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.feedback.reason'))
     end
   end
 
@@ -53,7 +78,7 @@ RSpec.describe AlertMailer, type: :mailer do
     it 'sends a job alert email' do
       expect(mail.subject).to eq(I18n.t('alert_mailer.alert.subject'))
       expect(mail.to).to eq([subscription.email])
-      expect(mail.body).to include(I18n.t('alert_mailer.alert.summary.weekly', count: 2))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.summary.weekly', count: 1))
       expect(mail.body).to include(vacancies.first.job_title)
       expect(mail.body).to include(vacancies.first.job_title)
       expect(mail.body).to include(vacancies.first.share_url(**campaign_params))
@@ -67,6 +92,12 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(mail.body).to include(I18n.t('alert_mailer.alert.alert_frequency', frequency: subscription.frequency))
       expect(mail.body).to include(I18n.t('alert_mailer.alert.edit_link_text'))
       expect(mail.body).to include(edit_subscription_url(subscription.token, protocol: 'https'))
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.feedback.heading'))
+      expect(mail.body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
+      expect(mail.body).to include(relevant_job_alert_feedback_url)
+      expect(mail.body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
+      expect(mail.body).to include(irrelevant_job_alert_feedback_url)
+      expect(mail.body).to include(I18n.t('alert_mailer.alert.feedback.reason'))
     end
   end
 end

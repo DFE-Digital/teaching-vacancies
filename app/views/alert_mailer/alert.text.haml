@@ -25,6 +25,13 @@
 \
 \---
 \
+\# #{t('.feedback.heading')}
+= notify_link(job_alert_feedback_url(true, @subscription, @vacancies), t('.feedback.relevant_link_text'))
+= notify_link(job_alert_feedback_url(false, @subscription, @vacancies), t('.feedback.irrelevant_link_text'))
+= t('.feedback.reason')
+\
+\---
+\
 = t('.footer', home_page_link: home_page_link)
 \
 = t('.unsubscribe', unsubscribe_link: unsubscribe_link(@subscription.token))

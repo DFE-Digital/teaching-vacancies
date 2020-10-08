@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   resources :subscriptions, only: %i[new create edit update] do
     get :unsubscribe, on: :member
+    resources :feedback, only: %i[new update], controller: 'job_alert_feedback'
+    get 'feedback(/:id)/edit', to: 'job_alert_feedback#edit', as: 'edit_feedback'
   end
 
   get 'sign-up-for-NQT-job-alerts', to: 'nqt_job_alerts#new', as: 'nqt_job_alerts'
