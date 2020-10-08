@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+    paths:
+    - '!bigquery/**'
+    - '!documentation/**'    
+    - '!terraform/common/**'
+    - '!terraform/monitoring/**'
 
 env:
  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
