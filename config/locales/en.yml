@@ -1358,7 +1358,7 @@ en:
         daily: at the end of the day (at approx 3 pm)
         weekly: weekly (at approx 6 pm on Friday evening)
       next_steps: >-
-        You’ll receive a job alert %{frequency} when a job alert matching your criteria is listed.
+        You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
       subject: Teaching Vacancies job alert confirmation
       title: You have subscribed to a job alert from Teaching Vacancies
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
@@ -1368,7 +1368,7 @@ en:
         daily: at the end of the day (at approx 3 pm)
         weekly: weekly (at approx 6 pm on Friday evening)
       next_steps: >-
-        You’ll receive a job alert %{frequency} when a job alert matching your criteria is listed.
+        You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
       subject: Teaching Vacancies job alert update
       title: You have updated a job alert from Teaching Vacancies
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
