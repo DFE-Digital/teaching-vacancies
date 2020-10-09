@@ -5,11 +5,11 @@ on:
     branches:
       - dev
       - staging
-    paths:
-    - '!bigquery/**'
-    - '!documentation/**'    
-    - '!terraform/common/**'
-    - '!terraform/monitoring/**'
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'    
+    - 'terraform/common/**'
+    - 'terraform/monitoring/**'
 
 env:
  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
