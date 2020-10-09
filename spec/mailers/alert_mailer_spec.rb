@@ -27,8 +27,6 @@ RSpec.describe AlertMailer, type: :mailer do
   context 'when frequency is daily' do
     let(:frequency) { :daily }
 
-    before { stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil') }
-
     it 'sends a job alert email' do
       expect(mail.subject).to eq(I18n.t('alert_mailer.alert.subject'))
       expect(mail.to).to eq([subscription.email])
@@ -51,8 +49,6 @@ RSpec.describe AlertMailer, type: :mailer do
 
   context 'when frequency is weekly' do
     let(:frequency) { :weekly }
-
-    before { stub_const('NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE', 'not-nil') }
 
     it 'sends a job alert email' do
       expect(mail.subject).to eq(I18n.t('alert_mailer.alert.subject'))
