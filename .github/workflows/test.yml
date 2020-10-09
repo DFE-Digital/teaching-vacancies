@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - '**'
-    paths:
-    - '!bigquery/**'
-    - '!documentation/**'    
-    - '!terraform/common/**'
-    - '!terraform/monitoring/**'
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'    
+    - 'terraform/common/**'
+    - 'terraform/monitoring/**'
 
 jobs:
   backend-tests:
