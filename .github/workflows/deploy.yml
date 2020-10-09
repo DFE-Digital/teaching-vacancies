@@ -12,7 +12,7 @@ on:
 
 env:
  DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
- CF_PROVIDER_VERSION: 0.12.4
+ CF_PROVIDER_VERSION: 0.12.6
 
 jobs:
   turnstyle:
