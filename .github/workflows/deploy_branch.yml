@@ -48,8 +48,8 @@ jobs:
       run: |
         BRANCH=$(echo ${GITHUB_REF} | cut -d/ -f3)
         TAG=${BRANCH}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
-        echo ::set-env name=BRANCH::${BRANCH}
-        echo ::set-env name=TAG::${TAG}
+        echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
+        echo "TAG=${TAG}" >> $GITHUB_ENV
         echo ::set-output name=BRANCH::${BRANCH}
         echo ::set-output name=TAG::${TAG}
 

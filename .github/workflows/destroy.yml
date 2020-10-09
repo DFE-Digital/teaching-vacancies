@@ -53,7 +53,7 @@ jobs:
       id: set_env_vars
       run: |
         TAG=review-${PR_NAME}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
-        echo ::set-env name=TAG::${TAG}
+        echo "TAG=${TAG}" >> $GITHUB_ENV
 
     - name: Terraform destroy (on PR closed)
       env:
