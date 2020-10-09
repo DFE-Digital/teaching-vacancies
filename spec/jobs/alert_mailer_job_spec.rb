@@ -9,10 +9,7 @@ RSpec.describe AlertMailerJob, type: :job do
   let(:alert_run) { create(:alert_run, subscription: subscription) }
   let(:job) { AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later! }
 
-  before do
-    stub_const('NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE', 'not-nil')
-    vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
-  end
+  before { vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) } }
 
   it 'creates a run' do
     job_id = 'ABC1234'

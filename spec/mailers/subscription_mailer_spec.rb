@@ -18,8 +18,6 @@ RSpec.describe SubscriptionMailer, type: :mailer do
   describe '#confirmation' do
     let(:mail) { described_class.confirmation(subscription.id) }
 
-    before { stub_const('NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE', 'not-nil') }
-
     it 'sends a confirmation email' do
       expect(mail.subject).to eq(I18n.t('subscription_mailer.confirmation.subject'))
       expect(mail.to).to eq([subscription.email])
@@ -34,8 +32,6 @@ RSpec.describe SubscriptionMailer, type: :mailer do
 
   describe '#update' do
     let(:mail) { described_class.update(subscription.id) }
-
-    before { stub_const('NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE', 'not-nil') }
 
     it 'sends a confirmation email' do
       expect(mail.subject).to eq(I18n.t('subscription_mailer.update.subject'))
