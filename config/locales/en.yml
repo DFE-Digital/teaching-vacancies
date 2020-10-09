@@ -843,11 +843,11 @@ en:
     edit_search_criteria:
       title: Edit alert criteria
     frequency:
-      daily: Daily, at approx 3 pm
-      weekly: Weekly (Friday evening at approx 6 pm)
+      daily: Daily, at around 3 pm
+      weekly: Weekly (Friday evening at around 6 pm)
       downcase:
-        daily: daily, at approx 3 pm
-        weekly: weekly (Friday evening at approx 6 pm)
+        daily: daily, at around 3 pm
+        weekly: weekly (Friday evening at around 6 pm)
     hints:
       email: Enter your email address. We'll only use it to send you job alerts.
       reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
@@ -1355,8 +1355,8 @@ en:
   subscription_mailer:
     confirmation:
       frequency:
-        daily: at the end of the day (at approx 3 pm)
-        weekly: weekly (at approx 6 pm on Friday evening)
+        daily: at the end of the day (at around 3 pm)
+        weekly: weekly (at around 6 pm on Friday evening)
       next_steps: >-
         You’ll receive a job alert %{frequency} when a job alert matching your criteria is listed.
       subject: Teaching Vacancies job alert confirmation
@@ -1365,8 +1365,8 @@ en:
       unsubscribe_link_text: Unsubscribe here
     update:
       frequency:
-        daily: at the end of the day (at approx 3 pm)
-        weekly: weekly (at approx 6 pm on Friday evening)
+        daily: at the end of the day (at around 3 pm)
+        weekly: weekly (at around 6 pm on Friday evening)
       next_steps: >-
         You’ll receive a job alert %{frequency} when a job alert matching your criteria is listed.
       subject: Teaching Vacancies job alert update
