@@ -43,7 +43,7 @@ jobs:
       id: set_env_vars
       run: |
         TAG=${GITHUB_SHA}
-        echo ::set-env name=TAG::${TAG}
+        echo "TAG=${TAG}" >> $GITHUB_ENV
 
     - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
