@@ -6,7 +6,7 @@ on:
     types: [closed]
 
 env:
-  CF_PROVIDER_VERSION: 0.12.4
+  CF_PROVIDER_VERSION: 0.12.6
   DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
   PR_NAME: ${{ format('pr-{0}', github.event.number) }}
 
