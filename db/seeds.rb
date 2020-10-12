@@ -25,7 +25,7 @@ academy = FactoryBot.create(:school,
                             phase: :secondary,
                             postcode: 'TS5 4AG',
                             region: 'London',
-                            school_type_name: 'Academy',
+                            school_type: 'Academy',
                             town: 'Middlesbrough',
                             url: 'http://www.macmillan-academy.org.uk',
                             urn: 137138)
@@ -39,7 +39,7 @@ community_school = FactoryBot.create(:school,
                                      phase: :primary,
                                      postcode: 'PE16 6ET',
                                      region: 'South East England',
-                                     school_type_name: 'Community School',
+                                     school_type: 'Community School',
                                      town: 'Chatteris',
                                      urn: 110628)
 

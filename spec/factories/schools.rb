@@ -31,7 +31,7 @@ FactoryBot.define do
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { 'South-East England' }
-    school_type_name { 'LA maintained school' }
+    school_type { 'LA maintained school' }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.gsub("'", '') }
     urn { Faker::Number.number(digits: 6) }
@@ -86,6 +86,6 @@ FactoryBot.define do
   end
 
   factory :academy, parent: :school do
-    school_type_name { 'Academy' }
+    school_type { 'Academy' }
   end
 end

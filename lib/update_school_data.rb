@@ -18,7 +18,7 @@ class UpdateSchoolData
 
   SIMPLE_MAPPINGS = {
     address: 'Street',
-    detailed_school_type_name: 'TypeOfEstablishment (name)',
+    detailed_school_type: 'TypeOfEstablishment (name)',
     easting: 'Easting',
     local_authority: 'LA (name)',
     maximum_age: 'StatutoryHighAge',
@@ -27,7 +27,7 @@ class UpdateSchoolData
     northing: 'Northing',
     postcode: 'Postcode',
     region: 'GOR (name)',
-    school_type_name: 'EstablishmentTypeGroup (name)',
+    school_type: 'EstablishmentTypeGroup (name)',
     town: 'Town',
   }.freeze
 

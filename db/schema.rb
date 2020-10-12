@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_112152) do
+ActiveRecord::Schema.define(version: 2020_10_12_142535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -51,12 +51,6 @@ ActiveRecord::Schema.define(version: 2020_10_12_112152) do
     t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "detailed_school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "code"
-    t.text "label"
-    t.index ["code"], name: "index_detailed_school_types_on_code", unique: true
   end
 
   create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -152,17 +146,13 @@ ActiveRecord::Schema.define(version: 2020_10_12_112152) do
     t.text "northing"
     t.point "geolocation"
     t.json "gias_data"
-    t.uuid "school_type_id"
-    t.uuid "detailed_school_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "readable_phases", array: true
     t.string "website"
     t.string "region"
-    t.string "detailed_school_type_name"
-    t.string "school_type_name"
-    t.index ["detailed_school_type_id"], name: "index_organisations_on_detailed_school_type_id"
-    t.index ["school_type_id"], name: "index_organisations_on_school_type_id"
+    t.string "detailed_school_type"
+    t.string "school_type"
     t.index ["uid"], name: "index_organisations_on_uid"
     t.index ["urn"], name: "index_organisations_on_urn"
   end
@@ -170,13 +160,6 @@ ActiveRecord::Schema.define(version: 2020_10_12_112152) do
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id"
     t.uuid "school_group_id"
-  end
-
-  create_table "school_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "label", null: false
-    t.text "code"
-    t.index ["code"], name: "index_school_types_on_code", unique: true
-    t.index ["label"], name: "index_school_types_on_label", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|

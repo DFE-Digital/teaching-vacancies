@@ -33,7 +33,7 @@ RSpec.describe HiringStaff::SchoolOverviewComponent, type: :component do
     end
 
     it 'renders the school type' do
-      expect(rendered_component).to include(organisation.school_type_name)
+      expect(rendered_component).to include(organisation.school_type)
     end
 
     it 'renders the school website link' do

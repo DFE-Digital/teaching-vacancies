@@ -17,7 +17,7 @@ module OrganisationHelper
   def organisation_type(organisation:, with_age_range: false)
     return organisation.group_type unless organisation.is_a?(School)
 
-    school_type_details = [organisation.school_type_name.singularize, organisation.religious_character]
+    school_type_details = [organisation.school_type.singularize, organisation.religious_character]
     school_type_details.push age_range(organisation) if with_age_range
     school_type_details.reject(&:blank?).reject { |str| str == I18n.t('schools.not_given') }.join(', ')
   end
