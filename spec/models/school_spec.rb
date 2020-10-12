@@ -47,15 +47,6 @@ RSpec.describe School, type: :model do
       end
     end
 
-    describe 'delegate region_name' do
-      it 'should return the region name for the school' do
-        region = create(:region, name: 'London')
-        school = create(:school, region: region)
-
-        expect(school.region_name).to eq('London')
-      end
-    end
-
     describe '#geolocation' do
       context 'when setting a GB easting and northing' do
         it 'should set the WGS84 geolocation' do

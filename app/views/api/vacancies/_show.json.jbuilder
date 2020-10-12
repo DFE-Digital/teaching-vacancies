@@ -20,7 +20,7 @@ json.jobLocation do
   json.address do
     json.set! '@type', 'PostalAddress'
     json.addressLocality vacancy.parent_organisation&.town
-    json.addressRegion vacancy.parent_organisation&.try(:region).try(:name)
+    json.addressRegion vacancy.parent_organisation&.region_name
     json.streetAddress vacancy.parent_organisation&.address
     json.postalCode vacancy.parent_organisation&.postcode
   end

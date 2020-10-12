@@ -4,7 +4,6 @@ FactoryBot.define do
 
   factory :school do
     association :school_type
-    association :region
 
     address { Faker::Address.street_name.gsub("'", '') }
     county { Faker::Address.state_abbr }
@@ -33,6 +32,7 @@ FactoryBot.define do
     northing { '1' }
     phase { :secondary }
     readable_phases { %w[secondary] }
+    region_name { 'South-East England' }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.gsub("'", '') }
     urn { Faker::Number.number(digits: 6) }
