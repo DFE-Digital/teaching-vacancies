@@ -12,6 +12,15 @@ resource aws_iam_access_key deploy {
   user = aws_iam_user.deploy.name
 }
 
+resource aws_iam_user bigquery {
+  name = "bigquery"
+  path = "/tvs/"
+}
+
+resource aws_iam_access_key bigquery {
+  user = aws_iam_user.bigquery.name
+}
+
 # Terraform state
 
 data aws_iam_policy_document edit_terraform_state {
@@ -175,4 +184,32 @@ resource aws_iam_policy cloudfront_logs_to_s3 {
 resource aws_iam_user_policy_attachment cloudfront_logs_to_s3 {
   user       = aws_iam_user.deploy.name
   policy_arn = aws_iam_policy.cloudfront_logs_to_s3.arn
+}
+
+# Allow BigQuery to collect Cloudfront logs from S3 bucket
+
+data aws_iam_policy_document cloudfront_logs_bigquery_access {
+  statement {
+    actions = [
+      "s3:GetBucketAcl",
+      "s3:GetBucketLocation",
+      "s3:ListBucket",
+      "s3:GetObject",
+      "s3:GetObjectAcl"
+    ]
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.bucket}",
+      "arn:aws:s3:::${aws_s3_bucket.cloudfront_logs.bucket}/*"
+    ]
+  }
+}
+
+resource aws_iam_policy cloudfront_logs_bigquery_access {
+  name   = "cloudfront_logs_bigquery_access"
+  policy = data.aws_iam_policy_document.cloudfront_logs_bigquery_access.json
+}
+
+resource aws_iam_user_policy_attachment cloudfront_logs_bigquery_access {
+  user       = aws_iam_user.bigquery.name
+  policy_arn = aws_iam_policy.cloudfront_logs_bigquery_access.arn
 }
