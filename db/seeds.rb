@@ -17,13 +17,6 @@ raise if Rails.env.production?
 require 'faker'
 require 'factory_bot_rails'
 
-academy_type = SchoolType.create(label: 'Academy', code: '10')
-community_school_type = SchoolType.create(label: 'Community School', code: '1')
-SchoolType.create(label: 'Independent School', code: '3')
-SchoolType.create(label: 'Free School', code: '11')
-SchoolType.create(label: 'LA Maintained School', code: '4')
-SchoolType.create(label: 'Special School', code: '5')
-
 academy = FactoryBot.create(:school,
                             address: 'Stockton Road',
                             geolocation: '(54.565770,-1.264489)',
@@ -32,7 +25,7 @@ academy = FactoryBot.create(:school,
                             phase: :secondary,
                             postcode: 'TS5 4AG',
                             region: 'London',
-                            school_type: academy_type,
+                            school_type_name: 'Academy',
                             town: 'Middlesbrough',
                             url: 'http://www.macmillan-academy.org.uk',
                             urn: 137138)
@@ -46,7 +39,7 @@ community_school = FactoryBot.create(:school,
                                      phase: :primary,
                                      postcode: 'PE16 6ET',
                                      region: 'South East England',
-                                     school_type: community_school_type,
+                                     school_type_name: 'Community School',
                                      town: 'Chatteris',
                                      urn: 110628)
 

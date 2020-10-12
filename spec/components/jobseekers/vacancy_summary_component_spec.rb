@@ -70,11 +70,10 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   end
 
   context 'when vacancy job_location is at_multiple_schools' do
-    let(:school_type) { create(:school_type, label: 'Academy') }
     let(:school_group) { create(:school_group) }
-    let(:school_1) { create(:school, :catholic, school_type: school_type) }
-    let(:school_2) { create(:school, :catholic, school_type: school_type) }
-    let(:school_3) { create(:school, :catholic, school_type: school_type, minimum_age: 16) }
+    let(:school_1) { create(:school, :catholic, school_type_name: 'Academy') }
+    let(:school_2) { create(:school, :catholic, school_type_name: 'Academy') }
+    let(:school_3) { create(:school, :catholic, school_type_name: 'Academy', minimum_age: 16) }
     let(:vacancy) do
       create(:vacancy, :at_multiple_schools, organisation_vacancies_attributes: [
         { organisation: school_1 }, { organisation: school_2 }, { organisation: school_3 }

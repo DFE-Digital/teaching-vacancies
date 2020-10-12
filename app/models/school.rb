@@ -3,7 +3,7 @@ require 'breasal'
 class School < Organisation
   include Auditor::Model
 
-  belongs_to :school_type, optional: false
+  belongs_to :school_type, optional: true
   belongs_to :detailed_school_type, optional: true
 
   has_many :school_group_memberships

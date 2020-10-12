@@ -18,6 +18,7 @@ class UpdateSchoolData
 
   SIMPLE_MAPPINGS = {
     address: 'Street',
+    detailed_school_type_name: 'TypeOfEstablishment (name)',
     easting: 'Easting',
     local_authority: 'LA (name)',
     maximum_age: 'StatutoryHighAge',
@@ -26,6 +27,7 @@ class UpdateSchoolData
     northing: 'Northing',
     postcode: 'Postcode',
     region: 'GOR (name)',
+    school_type_name: 'EstablishmentTypeGroup (name)',
     town: 'Town',
   }.freeze
 
@@ -50,7 +52,6 @@ private
 
     set_complex_properties(school, row)
     set_simple_properties(school, row)
-    set_school_type(school, row)
     set_gias_data_as_json(school, row)
     set_readable_phases(school)
 
@@ -87,15 +88,6 @@ private
     row.each { |element| scratch[element.first] = element.last }
     # The gias_data column is type `json`. It automatically converts the ruby hash to json.
     school.gias_data = scratch
-  end
-
-  def set_school_type(school, row)
-    school_type = SchoolType.find_or_initialize_by(code: row['EstablishmentTypeGroup (code)'])
-    school_type.label = row['EstablishmentTypeGroup (name)']
-    detailed_school_type = DetailedSchoolType.find_or_initialize_by(code: row['TypeOfEstablishment (code)'])
-    detailed_school_type.label = row['TypeOfEstablishment (name)']
-    school.school_type = school_type
-    school.detailed_school_type = detailed_school_type
   end
 
   def datestring
