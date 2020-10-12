@@ -5,14 +5,12 @@ class School < Organisation
 
   belongs_to :school_type, optional: false
   belongs_to :detailed_school_type, optional: true
-  belongs_to :region
+  belongs_to :region, optional: true
 
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 
   validates :urn, uniqueness: true
-
-  delegate :name, to: :region, prefix: true
 
   enum phase: {
     not_applicable: 0,

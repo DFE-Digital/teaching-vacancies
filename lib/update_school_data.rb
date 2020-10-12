@@ -25,6 +25,7 @@ class UpdateSchoolData
     name: 'EstablishmentName',
     northing: 'Northing',
     postcode: 'Postcode',
+    region_name: 'GOR (name)',
     town: 'Town',
   }.freeze
 
@@ -49,7 +50,6 @@ private
 
     set_complex_properties(school, row)
     set_simple_properties(school, row)
-    set_region(school, row)
     set_school_type(school, row)
     set_gias_data_as_json(school, row)
     set_readable_phases(school)
@@ -87,12 +87,6 @@ private
     row.each { |element| scratch[element.first] = element.last }
     # The gias_data column is type `json`. It automatically converts the ruby hash to json.
     school.gias_data = scratch
-  end
-
-  def set_region(school, row)
-    region = Region.find_or_initialize_by(code: row['GOR (code)'])
-    region.name = row['GOR (name)']
-    school.region = region
   end
 
   def set_school_type(school, row)

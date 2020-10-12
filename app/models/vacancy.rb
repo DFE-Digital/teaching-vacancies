@@ -130,7 +130,7 @@ class Vacancy < ApplicationRecord
         local_authority: organisations.map(&:local_authority).uniq,
         religious_characters: organisations.map { |org| org.religious_character if org.is_a?(School) }.reject(&:blank?)
                                            .uniq,
-        regions: organisations.map { |org| org.region if org.is_a?(School) }.reject(&:blank?).uniq,
+        regions: organisations.map { |org| org.region_name if org.is_a?(School) }.reject(&:blank?).uniq,
         school_types: organisations.map { |org|
                         org.school_type&.label&.singularize if org.is_a?(School)
                       } .reject(&:blank?).uniq,
