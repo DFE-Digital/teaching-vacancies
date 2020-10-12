@@ -196,7 +196,7 @@ module VacancyHelpers
         'address': {
           '@type': 'PostalAddress',
           'addressLocality': vacancy.parent_organisation.town,
-          'addressRegion': vacancy.parent_organisation.region_name,
+          'addressRegion': vacancy.parent_organisation.region,
           'streetAddress': vacancy.parent_organisation.address,
           'postalCode': vacancy.parent_organisation.postcode,
         },

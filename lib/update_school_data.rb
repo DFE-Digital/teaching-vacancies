@@ -25,7 +25,7 @@ class UpdateSchoolData
     name: 'EstablishmentName',
     northing: 'Northing',
     postcode: 'Postcode',
-    region_name: 'GOR (name)',
+    region: 'GOR (name)',
     town: 'Town',
   }.freeze
 

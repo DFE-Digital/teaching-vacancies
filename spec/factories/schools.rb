@@ -32,7 +32,7 @@ FactoryBot.define do
     northing { '1' }
     phase { :secondary }
     readable_phases { %w[secondary] }
-    region_name { 'South-East England' }
+    region { 'South-East England' }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.gsub("'", '') }
     urn { Faker::Number.number(digits: 6) }
