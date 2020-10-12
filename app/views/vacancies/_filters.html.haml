@@ -4,7 +4,7 @@
 
     = render 'shared/search/keyword', f: f, filters: true
     = render 'shared/search/location', f: f
-    = render 'shared/search/current_location'
+    = render 'shared/search/current_location', loaderElement: 'jobs-search-form-location-field'
     = render 'shared/search/radius', f: f, filters: true
 
     = f.hidden_field :jobs_sort, value: @vacancies_search&.sort_by

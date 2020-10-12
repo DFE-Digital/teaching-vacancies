@@ -30,6 +30,7 @@ class SubscriptionsController < ApplicationController
   def edit
     subscription = Subscription.find_and_verify_by_token(token)
     @subscription = SubscriptionPresenter.new(subscription)
+    @subscription_update_form = SubscriptionForm.new(subscription)
 
     Auditor::Audit.new(subscription, 'subscription.alert.edit', current_session_id).log_without_association
   end
@@ -37,8 +38,10 @@ class SubscriptionsController < ApplicationController
   def update
     subscription = Subscription.find_and_verify_by_token(token)
     @subscription = SubscriptionPresenter.new(subscription)
+    @subscription_update_form = SubscriptionForm.new(subscription)
 
-    if @subscription.update(subscription_params)
+    if @subscription_update_form.valid?
+      @subscription.update(@subscription_update_form.to_hash)
       Auditor::Audit.new(subscription, 'subscription.update', current_session_id).log
       SubscriptionMailer.update(subscription.id).deliver_later
       render :confirm_update
@@ -56,6 +59,10 @@ class SubscriptionsController < ApplicationController
   end
 
 private
+
+  def set_subscription
+    @subscription = Subscription.find_and_verify_by_token(token)
+  end
 
   def token
     ParameterSanitiser.call(params).require(:id)

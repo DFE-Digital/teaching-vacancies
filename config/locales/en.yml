@@ -838,6 +838,7 @@ en:
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
     edit:
       edit_link: Edit alert criteria
+      filters: Add more filters
       intro: 'You currently receive an alert for any new jobs that match the following criteria:'
       title: Manage your job alert
     edit_search_criteria:

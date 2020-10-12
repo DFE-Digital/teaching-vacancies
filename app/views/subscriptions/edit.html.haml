@@ -2,13 +2,33 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @subscription, url: subscription_path(@subscription.token) do |f|
+    = form_for @subscription_update_form, url: subscription_path(@subscription.token), method: "patch" do |f|
       = f.govuk_error_summary
 
       %h1.govuk-heading-xl
         = t('.title')
 
       %p.govuk-body-l=t('.intro')
+
+      = f.govuk_text_field :keyword,
+        label: { text: 'Keywords', size: 's' }
+
+      = f.govuk_text_field :location,
+        label: { text: 'Location', size: 's' },
+        class: 'govuk-input js-location-finder__input',
+        form_group_classes: 'js-location-finder location-search govuk-!-margin-bottom-0',
+        'autocomplete': 'off',
+        'aria-expanded': 'false',
+        'aria-owns': 'location_listbox',
+        'aria-autocomplete': 'list',
+        'role': 'combobox'
+
+      = render 'shared/search/current_location', loaderElement: 'subscription-form-location-field'
+
+      %div{ class: 'govuk-!-margin-bottom-7' }
+        = render 'components/shared/filters_component', form: f, options: { remove_buttons: true, mobile_variant: false, close_all: false }, filters: { total_count: @subscription_update_form.total_filters, title: t('subscriptions.edit.filters') }, items: [{ title: 'Job role', key: 'job_roles', search: false, scroll: false, attribute: :job_roles, selected: @subscription_update_form.job_roles, options: @subscription_update_form.job_role_options, value_method: :first, text_method: :last, selected_method: :last, small: true }, { title: 'Education phase', key: 'education_phase', search: false, scroll: false, attribute: :phases, selected: @subscription_update_form.phases, options: @subscription_update_form.phase_options, value_method: :first, text_method: :last, selected_method: :last, small: true }, { title: 'Working pattern', key: 'working_patterns', search: false, scroll: false, attribute: :working_patterns, selected: @subscription_update_form.working_patterns, options: @subscription_update_form.working_pattern_options, value_method: :first, text_method: :last, selected_method: :last, small: true }]
+
+      = f.hidden_field :token, value: @subscription.token
 
       = f.govuk_email_field :email,
         label: { text: t('subscriptions.labels.email_html'), size: 's' },

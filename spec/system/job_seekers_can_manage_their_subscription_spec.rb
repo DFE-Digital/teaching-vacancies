@@ -21,7 +21,7 @@ RSpec.describe 'A job seeker can manage a subscription' do
         expect(SubscriptionMailer).to receive(:update) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
 
-        fill_in 'subscription[email]', with: 'jimi@hendrix.com'
+        fill_in 'subscription-form-email-field', with: 'jimi@hendrix.com'
         page.choose('Weekly')
 
         click_on I18n.t('buttons.update_alert')

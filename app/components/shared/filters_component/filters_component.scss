@@ -8,35 +8,44 @@
     position: relative;
   }
 
-  &.filters--show-mobile {
-    @media only screen and (max-width: 640px) {
-      display: block;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      background-color: govuk-colour("white");
-      width: 100%;
-      height: 100%;
-      padding: govuk-spacing(2) govuk-spacing(3) 65px;
-      box-sizing: border-box;
-      overflow: auto;
+  &.filters--mobile {
 
-      .filters--show-mobile-open {
+    .filters__groups {
+      @media only screen and (max-width: 640px) {
+        display: none;
+      }
+    }
+
+    &.filters--show-mobile {
+      @media only screen and (max-width: 640px) {
         display: block;
-      }
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        background-color: govuk-colour("white");
+        width: 100%;
+        height: 100%;
+        padding: govuk-spacing(2) govuk-spacing(3) 65px;
+        box-sizing: border-box;
+        overflow: auto;
 
-      .filters__groups {
-        display: block;
-      }
+        .filters--show-mobile-open {
+          display: block;
+        }
 
-      .filters__submit {
-        display: flex;
-      }
+        .filters__groups {
+          display: block;
+        }
 
-      .filters__heading {
-        .filters__heading-applied  {
-          display: none;
+        .filters__submit {
+          display: flex;
+        }
+
+        .filters__heading {
+          .filters__heading-applied  {
+            display: none;
+          }
         }
       }
     }
@@ -82,6 +91,10 @@
 
     .moj-filter__heading-title {
       display: flex;
+
+      .filters__heading-title {
+        margin-bottom: govuk-spacing(2);
+      }
     }
 
     .filters__heading-applied {
@@ -171,10 +184,6 @@
   }
 
   .filters__groups {
-    @media only screen and (max-width: 640px) {
-      display: none;
-    }
-
     .filters__groups-container {
       border-bottom: 1px solid $govuk-border-colour;
     }

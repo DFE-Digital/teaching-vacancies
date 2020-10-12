@@ -1,6 +1,7 @@
-.filters
+.filters{ class: options[:mobile_variant] ? 'filters--mobile' : '' }
   .filters__heading.moj-filter
-    %div{ class: "#{options[:close_all] ? 'filters__heading-container' : 'moj-filter__header'}" }
+
+    %div{ class: "#{options[:close_all] ? 'filters__heading-container' : ''}" }
       .filters__section-heading{ class: mobile_modifier('filters__heading') }
         .moj-filter__heading-title
           %h2.govuk-heading-s{ class: mobile_modifier('filters__heading-title'), id: "#{options[:mobile_variant] ? 'mobile-filters-button' : ''}" }
