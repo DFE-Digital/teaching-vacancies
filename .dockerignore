@@ -1,6 +1,12 @@
+# .dockerignore applies to the builder target too
+# therefore we can't exclude files such as `package.json` required in the build stage
+
 # Ignore git folders
+.dependabot/*
 .git/
 .github/
+.gitignore
+PULL_REQUEST_TEMPLATE
 
 # Ignore package folders
 /node_modules/*
@@ -10,9 +16,12 @@
 package-lock.json
 
 # Ignore terraform files
-/terraform/*
+terraform/*
 *.tf
 *.tfvars
+
+# Ignore Makefile
+Makefile
 
 #.env files
 dotenv*
@@ -32,10 +41,32 @@ config/localhost/https/*.crt
 /.config
 /InstalledFiles
 /pkg/
-/spec/reports/
-/spec/examples.txt
+/spec/*
 /test/tmp/
 /test/version_tmp/
 /tmp/
-/documentation/
+
+# Ignore development settings
+.browserslistrc
+.cfignore
+.editorconfig
+.rubocop.yml
+.stylelintrc.json
 .tool-versions
+
+# Ignore Sonar
+sonar-project.properties
+
+# Ignore BigQuery
+bigquery/*
+
+# Ignore documentation
+documentation/*
+LICENSE
+README.md
+
+# Ignore Docker files
+.dockerignore
+Dockerfile
+docker-compose*
+testspec.yml
