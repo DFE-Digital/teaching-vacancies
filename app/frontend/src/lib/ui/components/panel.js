@@ -1,9 +1,11 @@
 import 'classlist-polyfill';
+import { storageAvailable } from '../../utils';
 
 const LOCALSTORAGE_COMPONENT_KEY = 'panel';
+const ERROR_LOGGING_MESSAGE = '[Module: dashboard panel]: local storage not available';
 
 export const togglePanel = (options) => {
-  if (!localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
+  if (storageAvailable('localStorage', ERROR_LOGGING_MESSAGE) && !localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
     localStorage.setItem(LOCALSTORAGE_COMPONENT_KEY, '{}');
     localStorage.setItem(
       LOCALSTORAGE_COMPONENT_KEY,
