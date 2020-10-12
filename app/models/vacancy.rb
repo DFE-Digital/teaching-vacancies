@@ -130,7 +130,7 @@ class Vacancy < ApplicationRecord
         local_authority: organisations.map(&:local_authority).uniq,
         religious_characters: organisations.map { |org| org.religious_character if org.is_a?(School) }.reject(&:blank?)
                                            .uniq,
-        regions: organisations.map { |org| org.region_name if org.is_a?(School) }.reject(&:blank?).uniq,
+        regions: organisations.map { |org| org.region if org.is_a?(School) }.reject(&:blank?).uniq,
         school_types: organisations.map { |org|
                         org.school_type&.label&.singularize if org.is_a?(School)
                       } .reject(&:blank?).uniq,
@@ -297,7 +297,7 @@ class Vacancy < ApplicationRecord
     as_json(
       methods: %i[coordinates],
       include: {
-        organisation: { methods: %i[region_name], only: %i[phase name postcode address town county local_authority] },
+        organisation: { only: %i[region phase name postcode address town county local_authority] },
         subject: { only: %i[name] },
         first_supporting_subject: { only: %i[name] },
         second_supporting_subject: { only: %i[name] }

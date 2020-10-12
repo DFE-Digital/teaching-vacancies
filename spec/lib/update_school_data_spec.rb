@@ -26,7 +26,7 @@ RSpec.describe UpdateSchoolData do
                    url: nil,
                    school_type: SchoolType.new(label: 'Previous school type', code: '999'),
                    detailed_school_type: DetailedSchoolType.new(label: 'Previous detailed school type', code: '999'),
-                   region_name: 'Previous region',
+                   region: 'Previous region',
                    phase: 'all_through')
   end
 
@@ -115,7 +115,7 @@ RSpec.describe UpdateSchoolData do
         it { expect(example_school.locality).to eql("Duke's Place") }
         it { expect(example_school.name).to eql("Sir John Cass's Foundation Primary School") }
         it { expect(example_school.phase).to eql('primary') }
-        it { expect(example_school.region_name).to eql('London') }
+        it { expect(example_school.region).to eql('London') }
         it { expect(example_school.school_type).to eql(la_maintained_school_type) }
         it { expect(example_school.url).to eql('http://www.sirjohncassprimary.org') }
       end
