@@ -1,19 +1,16 @@
 import 'classlist-polyfill';
 import { storageAvailable } from '../../utils';
-import Rollbar from '../../logging';
 
 const LOCALSTORAGE_COMPONENT_KEY = 'panel';
-const LOGGING_MESSAGE = '[Module: dashboard panel]: local storage not available';
+const ERROR_LOGGING_MESSAGE = '[Module: dashboard panel]: local storage not available';
 
 export const togglePanel = (options) => {
-  if (storageAvailable('localStorage') && !localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
+  if (storageAvailable('localStorage', ERROR_LOGGING_MESSAGE) && !localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
     localStorage.setItem(LOCALSTORAGE_COMPONENT_KEY, '{}');
     localStorage.setItem(
       LOCALSTORAGE_COMPONENT_KEY,
       JSON.stringify({ [options.componentKey]: options.defaultState }),
     );
-  } else {
-    Rollbar.log(LOGGING_MESSAGE);
   }
 
   if (options.toggleButton) {

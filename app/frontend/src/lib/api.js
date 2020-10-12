@@ -5,7 +5,10 @@ export const getGeolocatedCoordinates = (query) => axios.get(`/api/v1/coordinate
 
 export const getPostcodeFromCoordinates = (latitude, longitude) => axios.get('https://api.postcodes.io/postcodes', {
   params: { latitude, longitude },
-}).then((response) => response.data);
+}).then((response) => response.data)
+  .catch((error) => {
+    Rollbar.log(`${error} Postcodes API`);
+  });
 
 export const getLocationSuggestions = (query) => axios.get(`/api/v1/location_suggestion/${query}?format=json`)
   .then((response) => response.data)

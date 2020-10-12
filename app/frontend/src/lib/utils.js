@@ -1,3 +1,5 @@
+import Rollbar from './logging';
+
 export const stringMatchesPostcode = (postcode) => {
   const noSpacePostcode = postcode.replace(/\s/g, '');
   const regex = /^[A-Za-z]{1,2}[0-9]{1,2}[A-Za-z]? ?[0-9][A-Z]{2}$/i;
@@ -32,7 +34,7 @@ export const getNewState = (state, add) => {
   return updatedState;
 };
 
-export const storageAvailable = (type) => {
+export const storageAvailable = (type, logMessage = false) => {
   let storage = null;
   try {
     storage = window[type];
@@ -41,6 +43,10 @@ export const storageAvailable = (type) => {
     storage.removeItem(x);
     return true;
   } catch (e) {
+    if (logMessage) {
+      Rollbar.log(logMessage);
+    }
+
     return e instanceof DOMException && (
     // everything except Firefox
       e.code === 22
