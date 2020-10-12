@@ -24,14 +24,11 @@ RSpec.describe UpdateSchoolData do
                    minimum_age: 0,
                    maximum_age: 99,
                    url: nil,
-                   school_type: SchoolType.new(label: 'Previous school type', code: '999'),
-                   detailed_school_type: DetailedSchoolType.new(label: 'Previous detailed school type', code: '999'),
+                   school_type_name: 'Previous school type',
+                   detailed_school_type_name: 'Previous detailed school type',
                    region: 'Previous region',
                    phase: 'all_through')
   end
-
-  let!(:la_maintained_school_type) { SchoolType.create!(label: 'LA maintained school', code: '4') }
-  let!(:voluntary_aided_school) { DetailedSchoolType.create!(label: 'Voluntary aided school', code: '02') }
 
   context 'When the CSV is unavailable' do
     before do
@@ -111,12 +108,12 @@ RSpec.describe UpdateSchoolData do
         # All of the attributes tested here have transformations applied by the lib before being saved.
         it { expect(example_school.address3).to be_nil }
         it { expect(example_school.county).to be_nil }
-        it { expect(example_school.detailed_school_type).to eql(voluntary_aided_school) }
+        it { expect(example_school.detailed_school_type_name).to eql('Voluntary aided school') }
         it { expect(example_school.locality).to eql("Duke's Place") }
         it { expect(example_school.name).to eql("Sir John Cass's Foundation Primary School") }
         it { expect(example_school.phase).to eql('primary') }
         it { expect(example_school.region).to eql('London') }
-        it { expect(example_school.school_type).to eql(la_maintained_school_type) }
+        it { expect(example_school.school_type_name).to eql('LA maintained schools') }
         it { expect(example_school.url).to eql('http://www.sirjohncassprimary.org') }
       end
     end

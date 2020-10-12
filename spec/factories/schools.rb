@@ -3,8 +3,6 @@ FactoryBot.define do
   RELIGIOUS_CHARACTERS = ['Church of England', 'Roman Catholic', 'None', 'Does not apply'].freeze
 
   factory :school do
-    association :school_type
-
     address { Faker::Address.street_name.gsub("'", '') }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
@@ -33,6 +31,7 @@ FactoryBot.define do
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { 'South-East England' }
+    school_type_name { 'LA maintained school' }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.gsub("'", '') }
     urn { Faker::Number.number(digits: 6) }
@@ -87,6 +86,6 @@ FactoryBot.define do
   end
 
   factory :academy, parent: :school do
-     association :school_type, label: 'Academies'
+    school_type_name { 'Academy' }
   end
 end
