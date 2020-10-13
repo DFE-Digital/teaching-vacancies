@@ -130,7 +130,21 @@ variable statuscake_alerts {
   default = {}
 }
 
+variable cloudfront_forward_host {
+  default = false
+}
+
 locals {
-  paas_app_env_values = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
-  infra_secrets       = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
+  paas_app_env_values  = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
+  infra_secrets        = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
+  is_production        = var.environment == "production"
+  route53_a_records    = local.is_production ? var.route53_zones : []
+  route53_cname_record = local.is_production ? "www" : var.environment
+  hostname_domain_map = {
+    for zone in var.route53_zones :
+    "${local.route53_cname_record}.${zone}" => {
+      hostname = local.route53_cname_record
+      domain   = zone
+    }
+  }
 }

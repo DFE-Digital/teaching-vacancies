@@ -47,6 +47,19 @@ resource cloudfoundry_route web_app_route {
   hostname = local.web_app_name
 }
 
+resource cloudfoundry_route web_app_route_cloudfront_apex {
+  for_each = toset(var.route53_a_records)
+  domain   = data.cloudfoundry_domain.cloudfront[each.key].id
+  space    = data.cloudfoundry_space.space.id
+}
+
+resource cloudfoundry_route web_app_route_cloudfront_subdomain {
+  for_each = var.hostname_domain_map
+  domain   = data.cloudfoundry_domain.cloudfront[each.value["domain"]].id
+  space    = data.cloudfoundry_space.space.id
+  hostname = each.value["hostname"]
+}
+
 resource cloudfoundry_app worker_app {
   name              = local.worker_app_name
   command           = local.worker_app_start_command

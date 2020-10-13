@@ -47,6 +47,10 @@ module cloudfront {
   offline_bucket_origin_path      = each.value.offline_bucket_origin_path
   cloudfront_enable_standard_logs = each.value.cloudfront_enable_standard_logs
   route53_zones                   = var.route53_zones
+  cloudfront_forward_host         = var.cloudfront_forward_host
+  is_production                   = local.is_production
+  route53_a_records               = local.route53_a_records
+  route53_cname_record            = local.route53_cname_record
   providers = {
     aws.default       = aws.default
     aws.aws_us_east_1 = aws.aws_us_east_1
@@ -84,7 +88,9 @@ module paas {
   worker_app_deployment_strategy    = var.paas_worker_app_deployment_strategy
   worker_app_instances              = var.paas_worker_app_instances
   worker_app_memory                 = var.paas_worker_app_memory
-
+  route53_zones                     = var.route53_zones
+  route53_a_records                 = local.route53_a_records
+  hostname_domain_map               = local.hostname_domain_map
 }
 
 module statuscake {
