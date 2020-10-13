@@ -23,20 +23,13 @@ SELECT
       "")) AS full_address,
   school.easting AS easting,
   school.northing,
-  #flatten out these three reference data ID fields so we can also access their labels and codes
-  school.school_type_id,
-  schooltype.label AS school_type,
-  schooltype.code AS school_type_code,
-  school.region_id,
-  region.name AS region,
-  region.code AS region_code,
-  school.detailed_school_type_id,
-  detailedschooltype.code AS detailed_school_type_code,
-  detailedschooltype.label AS detailed_school_type,
+  school.school_type AS school_type,
+  school.region AS region,
+  school.detailed_school_type AS detailed_school_type,
   #work out whether each school has an in scope type and record this so we only have to do this in one place
-  CAST(detailedschooltype.code AS NUMERIC) IN (
+  detailed_school_type IN (
   SELECT
-    code
+    Establishment_type
   FROM
     `teacher-vacancy-service.production_dataset.STATIC_establishment_types_in_scope`) AS detailed_school_type_in_scope,
   CAST(school.created_at AS DATE) AS date_created,
@@ -122,18 +115,6 @@ SELECT
   school.data_urbanrural_name AS urban_rural
 FROM
   `teacher-vacancy-service.production_dataset.feb20_organisation` AS school
-LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_schooltype` AS schooltype
-ON
-  school.school_type_id=schooltype.id
-LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_region` AS region
-ON
-  school.region_id=region.id
-LEFT JOIN
-  `teacher-vacancy-service.production_dataset.feb20_detailedschooltype` AS detailedschooltype
-ON
-  school.detailed_school_type_id=detailedschooltype.id
 LEFT JOIN
   `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
 ON
