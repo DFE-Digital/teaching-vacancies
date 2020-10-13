@@ -1,5 +1,7 @@
 import '../../polyfill/after.polyfill';
 
+import { onChange as locationChange } from '../../../search/ui/input/location';
+
 export const create = (container, input, key) => {
   if (!getRenderedList(container)) {
     const ul = document.createElement('ul');
@@ -19,7 +21,7 @@ export const create = (container, input, key) => {
 
     ul.addEventListener('click', (e) => {
       setInputValue(input, e.target.dataset[key]);
-      input.dispatchEvent(new Event('change', { bubbles: true }));
+      locationChange(e.target.dataset[key]);
     });
 
     input.addEventListener('keyup', (e) => {
