@@ -66,6 +66,18 @@ RSpec.describe Search::CriteriaDeviser do
       end
     end
 
+    context 'when the job listing has no subject but does have job roles' do
+      let(:subjects) { [] }
+
+      it 'sets the job roles' do
+        expect(subject.criteria[:job_roles]).to eq(%w[teacher sen_specialist leadership])
+      end
+
+      it 'does not set the keyword' do
+        expect(subject.criteria[:keyword]).to be_nil
+      end
+    end
+
     describe '#keyword' do
       context 'when the job listing has a subject' do
         it 'uses the subjects as the keyword' do
@@ -73,43 +85,32 @@ RSpec.describe Search::CriteriaDeviser do
         end
       end
 
-      context 'when the job listing has no subject' do
+      context 'when the job listing has no subject or job roles' do
         let(:subjects) { [] }
+        let(:job_roles) { [] }
 
-        context 'when the job listing has a job role' do
-          let(:job_roles) { %w[teacher sen_specialist leadership] }
+        context 'when the job title contains a subject' do
+          let(:job_title) { 'Teacher of Geography' }
 
-          it 'uses the job roles as the keyword' do
-            expect(subject.criteria[:keyword]).to eq('SEN Leader Teacher')
+          it 'uses the subject as the keyword' do
+            expect(subject.criteria[:keyword]).to eq('Geography')
           end
         end
 
-        context 'when the job listing has no job role' do
-          let(:job_roles) { [] }
+        context 'when the job title does not contain a subject' do
+          context 'when the job title contains pre-defined key words separated by spaces' do
+            let(:job_title) { 'Teacher of non-SEN-se, Principal-ity, getting a-Head, and of being a Teaching Assistant' }
 
-          context 'when the job title contains a subject' do
-            let(:job_title) { 'Teacher of Geography' }
-
-            it 'uses the subject as the keyword' do
-              expect(subject.criteria[:keyword]).to eq('Geography')
+            it 'uses the pre-defined key words as the keyword' do
+              expect(subject.criteria[:keyword]).to eq('Teacher Teaching Assistant')
             end
           end
 
-          context 'when the job title does not contain a subject' do
-            context 'when the job title contains pre-defined key words separated by spaces' do
-              let(:job_title) { 'Teacher of non-SEN-se, Principal-ity, getting a-Head, and of being a Teaching Assistant' }
+          context 'when the job title does not contain a pre-defined key word' do
+            let(:job_title) { 'Chief Joy Officer' }
 
-              it 'uses the pre-defined key words as the keyword' do
-                expect(subject.criteria[:keyword]).to eq('Teacher Teaching Assistant')
-              end
-            end
-
-            context 'when the job title does not contain a pre-defined key word' do
-              let(:job_title) { 'Chief Joy Officer' }
-
-              it 'has no keyword in the criteria' do
-                expect(subject.criteria[:keyword]).to be_nil
-              end
+            it 'has no keyword in the criteria' do
+              expect(subject.criteria[:keyword]).to be_nil
             end
           end
         end

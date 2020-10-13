@@ -23,15 +23,6 @@ private
   def keyword
     if @vacancy.subjects.present?
       @vacancy.subjects.join(' ')
-    elsif @vacancy.job_roles.any?
-      # This hash is ordered so that the suggested search query will make more sense in English:
-      # preferring 'SEN Leader' over 'Leader SEN', for example, or 'NQT Teacher' over 'Teacher NQT'.
-      {
-        nqt_suitable: 'NQT',
-        sen_specialist: 'SEN',
-        leadership: 'Leader',
-        teacher: 'Teacher'
-      }.map { |k, v| v if @vacancy.job_roles.include? k.to_s }.compact.join(' ')
     else
       get_subjects_from_job_title.presence || get_keywords_from_job_title.presence
     end
