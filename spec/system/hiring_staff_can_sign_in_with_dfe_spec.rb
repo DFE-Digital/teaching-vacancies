@@ -126,47 +126,33 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
     let(:organisation) { create(:school_group) }
     let(:user_preference) { instance_double(UserPreference) }
 
-    context 'SchoolGroupJobsFeature enabled' do
-      before do
-        allow(UserPreference).to receive(:find_by).and_return(user_preference)
+    before do
+      allow(UserPreference).to receive(:find_by).and_return(user_preference)
 
-        stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: dsi_email_address)
-        stub_authorisation_step
-        stub_sign_in_with_multiple_organisations
+      stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: dsi_email_address)
+      stub_authorisation_step
+      stub_sign_in_with_multiple_organisations
 
-        visit root_path
-        sign_in_user
-      end
+      visit root_path
+      sign_in_user
+    end
 
-      context 'when user preferences have been set' do
-        it_behaves_like 'a successful sign in'
+    context 'when user preferences have been set' do
+      it_behaves_like 'a successful sign in'
 
-        scenario 'it redirects the sign in page to the SchoolGroup page' do
-          visit new_identifications_path
-          expect(page).to have_content("Jobs at #{organisation.name}")
-          expect(current_path).to eql(organisation_path)
-        end
-      end
-
-      context 'when user preferences have not been set' do
-        let(:user_preference) { nil }
-
-        scenario 'it redirects the sign in page to the managed organisations user preference page' do
-          expect(current_path).to eql(organisation_managed_organisations_path)
-        end
+      scenario 'it redirects the sign in page to the SchoolGroup page' do
+        visit new_identifications_path
+        expect(page).to have_content("Jobs at #{organisation.name}")
+        expect(current_path).to eql(organisation_path)
       end
     end
 
-    context 'SchoolGroupJobsFeature disabled' do
-      before do
-        allow(SchoolGroupJobsFeature).to receive(:enabled?).and_return(false)
-        stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: 'test@email.com')
-        stub_authorisation_step
-      end
+    context 'when user preferences have not been set' do
+      let(:user_preference) { nil }
 
-      it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
-                                          school_group_uid: '4505',
-                                          email: 'test@email.com'
+      scenario 'it redirects the sign in page to the managed organisations user preference page' do
+        expect(current_path).to eql(organisation_managed_organisations_path)
+      end
     end
   end
 

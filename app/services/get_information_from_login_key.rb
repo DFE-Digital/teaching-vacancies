@@ -24,7 +24,7 @@ private
   def process_key
     @user = get_user
     @schools = get_schools
-    @school_groups = SchoolGroupJobsFeature.enabled? ? get_school_groups : []
+    @school_groups = get_school_groups
     @key.destroy
     @reason_for_failing_sign_in = 'no_orgs' if @schools.empty? && @school_groups.empty?
   end
