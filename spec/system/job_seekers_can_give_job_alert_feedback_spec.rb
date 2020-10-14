@@ -80,14 +80,6 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
         expect(activity.key).to eq('job_alert_feedback.update')
       end
     end
-
-    context 'when the user submits an empty form' do
-      before { click_on 'Submit' }
-
-      it 'displays the error message' do
-        expect(page).to have_content('You have not submitted any further feedback.')
-      end
-    end
   end
 
   context 'with the incorrect token' do
