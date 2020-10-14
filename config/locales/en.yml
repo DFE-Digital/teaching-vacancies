@@ -208,7 +208,7 @@ en:
         please_select: >-
           You are associated with more than one organisation. Please select the one you wish to sign in with.
 
-  job_alert_feedback:
+  job_alert_feedbacks:
     edit:
       form:
         labels:

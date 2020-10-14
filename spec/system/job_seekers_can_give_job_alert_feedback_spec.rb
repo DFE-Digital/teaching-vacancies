@@ -36,8 +36,8 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
       end
 
       it 'renders the page title and notification' do
-        expect(page.title).to have_content(I18n.t('job_alert_feedback.edit.title'))
-        expect(page).to have_content(I18n.t('job_alert_feedback.submitted.relevance'))
+        expect(page.title).to have_content(I18n.t('job_alert_feedbacks.edit.title'))
+        expect(page).to have_content(I18n.t('job_alert_feedbacks.submitted.relevance'))
       end
     end
 
@@ -57,8 +57,8 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
       end
 
       it 'renders the page title and notification' do
-        expect(page.title).to have_content(I18n.t('job_alert_feedback.edit.title'))
-        expect(page).to have_content(I18n.t('job_alert_feedback.submitted.relevance'))
+        expect(page.title).to have_content(I18n.t('job_alert_feedbacks.edit.title'))
+        expect(page).to have_content(I18n.t('job_alert_feedbacks.submitted.relevance'))
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
 
       it 'allows the user to submit further feedback' do
         expect(current_path).to eq root_path
-        expect(page).to have_content(I18n.t('job_alert_feedback.submitted.comment'))
+        expect(page).to have_content(I18n.t('job_alert_feedbacks.submitted.comment'))
         expect(feedback.comment).to eq comment
       end
 

@@ -1,4 +1,4 @@
-class JobAlertFeedbackController < ApplicationController
+class JobAlertFeedbacksController < ApplicationController
   def new
     # This action creates the JobAlertFeedback record.
     # This is because it is called from a link in the alert email. Such links can only perform
@@ -10,7 +10,7 @@ class JobAlertFeedbackController < ApplicationController
     )
     if @feedback.save
       Auditor::Audit.new(@feedback, 'job_alert_feedback.create', current_session_id).log
-      redirect_to subscription_edit_feedback_path(id: @feedback.id), success: I18n.t('job_alert_feedback.submitted.relevance')
+      redirect_to edit_subscription_feedback_path(id: @feedback.id), success: I18n.t('job_alert_feedbacks.submitted.relevance')
     end
   end
 
@@ -29,7 +29,7 @@ class JobAlertFeedbackController < ApplicationController
     if @feedback_form.valid?
       @feedback.update(form_params)
       Auditor::Audit.new(@feedback, 'job_alert_feedback.update', current_session_id).log
-      redirect_to root_path, success: I18n.t('job_alert_feedback.submitted.comment')
+      redirect_to root_path, success: I18n.t('job_alert_feedbacks.submitted.comment')
     else
       render :edit
     end
