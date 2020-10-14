@@ -93,6 +93,13 @@ jobs:
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
         target: production
 
+    - name: Run Smoke Test
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: Smoke Test Dispatch
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{ "environment": "staging" }'
+
     - name: Terraform deploy
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
