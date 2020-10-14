@@ -18,6 +18,7 @@ FactoryBot.define do
         "Group County": county
       }
     end
+    group_type { 'Multi-academy trust' }
     name { Faker::Company.name.gsub("'", '') + ' Trust' }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.gsub("'", '') }
@@ -27,6 +28,7 @@ FactoryBot.define do
 
   factory :local_authority, parent: :school_group do
     name { Faker::Address.state_abbr + ' LA' }
+    group_type { 'local_authority' }
     local_authority_code { Faker::Number.number(digits: 3).to_s }
   end
 end

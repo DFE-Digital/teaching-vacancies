@@ -59,7 +59,8 @@ private
     {
       address: 'Group Locality',
       county: 'Group County',
-      town: 'Group Town'
+      group_type: 'Group Type',
+      town: 'Group Town',
     }.freeze
   end
 end

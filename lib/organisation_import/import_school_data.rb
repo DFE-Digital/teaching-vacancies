@@ -15,7 +15,9 @@ class ImportSchoolData < ImportOrganisationData
         # Only import LA data
         next unless row['EstablishmentTypeGroup (code)'].to_i == 4
 
-        local_authority = SchoolGroup.find_or_create_by(local_authority_code: row['LA (code)'], name: row['LA (name)'])
+        local_authority = SchoolGroup.find_or_create_by(local_authority_code: row['LA (code)'],
+                                                        name: row['LA (name)'],
+                                                        group_type: 'local_authority')
         SchoolGroupMembership.find_or_create_by(school_id: school.id, school_group_id: local_authority.id)
       end
     end

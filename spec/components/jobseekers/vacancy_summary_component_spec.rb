@@ -98,11 +98,12 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   end
 
   context 'when vacancy job_location is central_office' do
-    let(:vacancy) { create(:vacancy, :at_central_office) }
     let(:organisation) { create(:trust) }
+    let(:vacancy) do
+      create(:vacancy, :at_central_office, organisation_vacancies_attributes: [{ organisation: organisation }])
+    end
 
     before do
-      vacancy.organisation_vacancies.create(organisation: organisation)
       render_inline(described_class.new(vacancy: vacancy_presenter))
     end
 
