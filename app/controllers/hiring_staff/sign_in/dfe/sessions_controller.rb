@@ -61,9 +61,7 @@ private
   end
 
   def school_group_uid
-    if SchoolGroupJobsFeature.enabled?
-      auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
-    end
+    auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
   end
 
   def organisation_id

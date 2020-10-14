@@ -21,8 +21,6 @@ module AuthenticationConcerns
   end
 
   def current_school_group
-    if SchoolGroupJobsFeature.enabled?
-      @current_school_group ||= SchoolGroup.find_by!(uid: session[:uid]) if session[:uid].present?
-    end
+    @current_school_group ||= SchoolGroup.find_by!(uid: session[:uid]) if session[:uid].present?
   end
 end
