@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Hiring staff can filter vacancies in their dashboard' do
-  let(:school_group) { create(:school_group) }
+  let(:school_group) { create(:trust) }
   let(:school_1) { create(:school, name: 'Happy Rainbows School') }
   let(:school_2) { create(:school, name: 'Dreary Grey School') }
   let!(:school_group_vacancy) { create(:vacancy, :published, :at_central_office) }

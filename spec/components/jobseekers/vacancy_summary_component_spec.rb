@@ -59,8 +59,8 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
       end
     end
 
-    context 'when vacancy parent_organisation is a SchoolGroup' do
-      let(:organisation) { create(:school_group) }
+    context 'when vacancy parent_organisation is a Trust' do
+      let(:organisation) { create(:trust) }
 
       it 'renders the trust type' do
         expect(rendered_component)
@@ -70,7 +70,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
   end
 
   context 'when vacancy job_location is at_multiple_schools' do
-    let(:school_group) { create(:school_group) }
+    let(:organisation) { create(:trust) }
     let(:school_1) { create(:school, :catholic, school_type: 'Academy') }
     let(:school_2) { create(:school, :catholic, school_type: 'Academy') }
     let(:school_3) { create(:school, :catholic, school_type: 'Academy', minimum_age: 16) }
@@ -81,9 +81,9 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
     end
 
     before do
-      SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
-      SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
-      SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
+      SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: organisation.id)
+      SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: organisation.id)
+      SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: organisation.id)
       render_inline(described_class.new(vacancy: vacancy_presenter))
     end
 
@@ -99,7 +99,7 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
 
   context 'when vacancy job_location is central_office' do
     let(:vacancy) { create(:vacancy, :at_central_office) }
-    let(:organisation) { create(:school_group) }
+    let(:organisation) { create(:trust) }
 
     before do
       vacancy.organisation_vacancies.create(organisation: organisation)

@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe HiringStaff::VacancyFilter do
   let(:user) { create :user }
-  let(:school_group) { create :school_group }
+  let(:organisation) { create :trust }
   let(:managed_organisations) { 'school_group' }
   let(:managed_school_ids) { %w[1234 5678] }
   let!(:user_preference) do
-    create :user_preference, user: user, school_group: school_group,
+    create :user_preference, user: user, school_group: organisation,
                              managed_organisations: managed_organisations, managed_school_ids: managed_school_ids
   end
 
-  subject { described_class.new(user, school_group) }
+  subject { described_class.new(user, organisation) }
 
   describe '.initialize' do
     it 'sets the managed_organisations from user_preference' do
