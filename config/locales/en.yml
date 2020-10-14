@@ -236,11 +236,7 @@ en:
     cookies:
       page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
     home:
-      location_categories:
-        boroughs: London boroughs
-        cities: Popular cities and towns
-        counties: English counties
-        location_links_heading: Explore teaching jobs by location
+      browse_all: Browse all teaching jobs in England
       read_only:
         title: Sorry, listing a job is unavailable
         description_html: <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p><p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
@@ -252,6 +248,11 @@ en:
       signed_in:
         manage_link: Manage jobs
         description: You're signed in as
+      vacancy_facets:
+        cities: Cities and towns with teaching jobs
+        counties: Counties with teaching jobs
+        job_roles: Current teaching jobs by role
+        subjects: Current teaching jobs by subject
     privacy_policy:
       page_description: >-
         Find out what personal information Teaching Vacancies collects,

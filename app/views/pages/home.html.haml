@@ -13,4 +13,9 @@
             = render 'pages/home/signin'
 
 .govuk-grid-row
-  .govuk-grid-column-full= render 'pages/home/location_categories'
+  .govuk-grid-column-full
+    = render 'pages/home/vacancy_facets'
+
+.govuk-grid-row{ class: 'govuk-!-margin-top-2'}
+  .govuk-grid-column-full
+    = link_to t('.browse_all'), jobs_path, class: 'govuk-link govuk-!-font-size-19'
