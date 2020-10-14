@@ -62,7 +62,7 @@ FROM (
     #remove duplicates
     number_of_results_pages_viewed,
     #extract the value of each of these parameters from the query in the logs - unfortunately in SQL there is no easy more abstract way to pull out key-value pairs
-    REGEXP_EXTRACT(search_parameters,"[?&]keyword=([^&]+)") AS keyword,
+    LOWER(REGEXP_EXTRACT(search_parameters,"[?&]keyword=([^&]+)")) AS keyword,
     REGEXP_EXTRACT(search_parameters,"[?&]location=([^&]+)") AS location,
     REGEXP_EXTRACT(search_parameters,"[?&]radius=([^&]+)") AS radius,
     REGEXP_EXTRACT(search_parameters,"[?&]job_roles=([^&]+)") AS job_roles,
