@@ -1010,11 +1010,19 @@ en:
       already_exists: "You're already subscribed to an alert for these search criteria"
 
   error_pages:
-    unauthorised: We were unable to authorise your request.
-    unprocessable_entity: We're unable to process your request.
     not_found: Page not found.
-    trashed_vacancy_found: Page not found.
     server_error: Sorry, there’s a technical issue at our end
+    trashed_vacancy_found: Page not found.
+    unauthorised:
+      footer: If you still can’t access this page, or you haven’t yet been authorised, please email teaching.vacancies@education.gov.uk
+      options:
+        - checking the URL is correct
+        - logging out of Teaching Vacancies and signing in again
+        - reloading or refreshing the page
+        - <a href="https://support.google.com/accounts/answer/32050" class="govuk-link">deleting your browser’s cache</a>
+      text_html: "<p>You need authorisation to be able to see this page.</p><p>If you have already been given access, you can try fixing this problem by:</p>"
+      title: We were unable to authorise your request.
+    unprocessable_entity: We're unable to process your request.
 
   help:
     email: teaching.vacancies@education.gov.uk
