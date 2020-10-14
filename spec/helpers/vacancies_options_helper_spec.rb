@@ -2,12 +2,7 @@ require 'rails_helper'
 
 RSpec.describe VacanciesOptionsHelper, type: :helper do
   describe '#job_location_options' do
-    before do
-      allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(:multi_school_jobs_enabled?)
-    end
     context 'when MultiSchoolJobsFeature is enabled' do
-      let(:multi_school_jobs_enabled?) { true }
-
       it 'returns an array including the multi-school option' do
         expect(helper.job_location_options).to eq(
           [
@@ -20,11 +15,11 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
     end
 
     context 'when MultiSchoolJobsFeature is not enabled' do
-      let(:multi_school_jobs_enabled?) { false }
+      before do
+        allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
+      end
 
       it 'returns an array without the multi-school option' do
-        allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
-
         expect(helper.job_location_options).to eq(
           [
             ['At one school in the trust', :at_one_school],
