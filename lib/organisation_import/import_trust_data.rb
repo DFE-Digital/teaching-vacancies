@@ -37,7 +37,7 @@ private
   def import_data(url, location, method)
     save_csv_file(url, location)
     CSV.foreach(location, headers: true, encoding: 'windows-1252:utf-8').each do |row|
-      # Only import MAT data
+      # Only import data for Multi-academy trusts
       next unless row['Group Type (code)'].to_i == 6
 
       Organisation.transaction do
@@ -48,6 +48,7 @@ private
   end
 
   def set_geolocation(trust, postcode)
+    # We don't need to make an API request if the postcode hasn't changed
     if postcode.present? && (trust.geolocation.blank? || trust.postcode != postcode)
       trust.postcode = postcode
       coordinates = Geocoding.new(trust.postcode).coordinates

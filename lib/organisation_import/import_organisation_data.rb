@@ -4,6 +4,13 @@ require 'httparty'
 require 'open-uri'
 
 class ImportOrganisationData
+# NB: To me it doesn't seem too unreasonable to have the transformation logic here, but in the interest of not
+#     deleting comments I didn't write, see the TODO below.
+# TODO: Refactor the transformation logic into the model.
+# These are the attributes that require additional transformation before being added to the model. The first value of
+# the array is the row key name, the second is the method used for the transformation.  URL is the exception, as it
+# requires an external function call-this is handled in the method.
+
 private
 
   def create_organisation(row)

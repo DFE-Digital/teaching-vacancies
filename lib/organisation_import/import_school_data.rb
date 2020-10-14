@@ -1,9 +1,4 @@
 class ImportSchoolData < ImportOrganisationData
-  # TODO: Refactor the transformation logic into the model.
-  # These are the attributes that require additional transformation before being added to the model. The first value of
-  # the array is the row key name, the second is the method used for the transformation.  URL is the exception, as it
-  # requires an external function call-this is handled in the method.
-
   READABLE_PHASE_MAPPINGS = School::READABLE_PHASE_MAPPINGS
 
   def run!
@@ -12,7 +7,7 @@ class ImportSchoolData < ImportOrganisationData
       Organisation.transaction do
         school = create_organisation(row)
 
-        # Only import LA data
+        # Only create SchoolGroupMembership relationships if a school is local-authority maintained
         next unless row['EstablishmentTypeGroup (code)'].to_i == 4
 
         local_authority = SchoolGroup.find_or_create_by(local_authority_code: row['LA (code)'],
