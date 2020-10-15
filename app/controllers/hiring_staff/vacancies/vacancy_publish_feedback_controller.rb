@@ -1,6 +1,7 @@
 class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Vacancies::ApplicationController
+  before_action :set_vacancy, only: %i[new create]
+
   def new
-    vacancy = Vacancy.published.find(params[:job_id])
     if vacancy.publish_feedback.present?
       return redirect_to organisation_path,
                          notice: I18n.t('errors.vacancy_publish_feedback.already_submitted')
@@ -10,7 +11,6 @@ class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Va
   end
 
   def create
-    vacancy = Vacancy.published.find(params[:job_id])
     @feedback = VacancyPublishFeedback.create(
       vacancy_publish_feedback_params.merge(vacancy: vacancy, user: current_user),
     )
@@ -27,5 +27,9 @@ private
 
   def vacancy_publish_feedback_params
     params.require(:vacancy_publish_feedback).permit(:comment, :user_participation_response, :email)
+  end
+
+  def set_vacancy
+    vacancy = Vacancy.published.find(params[:job_id])
   end
 end
