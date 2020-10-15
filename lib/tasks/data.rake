@@ -11,7 +11,7 @@ namespace :data do
   namespace :school_groups do
     task import: :environment do
       Rails.logger.debug("Running school group import task in #{Rails.env}")
-      ImportSchoolGroupDataJob.perform_later
+      ImportTrustDataJob.perform_later
     end
   end
 

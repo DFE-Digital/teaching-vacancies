@@ -15,13 +15,13 @@ export_tables:
 
 import_school_data:
   cron: '0 07 * * *'
-  class: 'UpdateSchoolsDataFromSourceJob'
+  class: 'ImportSchoolDataJob'
   queue: import_school_data
 
-import_school_group_data:
+import_trust_data:
   cron: '0 22 * * *'
-  class: 'ImportSchoolGroupDataJob'
-  queue: import_school_group_data
+  class: 'ImportTrustDataJob'
+  queue: import_trust_data
 
 refresh_cached_vacancy_statistics:
   cron: '*/15 * * * *'

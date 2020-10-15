@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Schools in your trust' do
-  let(:school_group) { create(:school_group) }
+  let(:school_group) { create(:trust) }
   let(:school_1) { create(:school) }
   let(:school_2) { create(:school) }
   let(:school_3) { create(:school) }

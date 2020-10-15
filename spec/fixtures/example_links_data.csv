@@ -1,0 +1,4 @@
+URN,Group UID,Group ID,Group Name,Companies House Number,Group Type (code),Group Type,Closed Date,Open date,Incorporated on (open date),Group Status (code),Group Status,Joined date,EstablishmentName,TypeOfEstablishment (code),TypeOfEstablishment (name),PhaseOfEducation (code),PhaseOfEducation (name),LA (code),LA (name)
+100000,2044,TR00261,ABBEY ACADEMIES TRUST,7318714,"06",Multi-academy trust,,,19/07/2010,OPEN,Open,01/12/2010,Bourne Abbey Church of England Primary Academy,34,Academy converter,2,Primary,925,Lincolnshire
+100001,2044,TR00261,ABBEY ACADEMIES TRUST,7318714,6,Multi-academy trust,,,19/07/2010,OPEN,Open,01/12/2010,Bourne Abbey Church of England Primary Academy,34,Academy converter,2,Primary,925,Lincolnshire
+100002,2070,TR01229,ACORN EDUCATION TRUST,7654902,6,Multi-academy trust,,,01/06/2011,OPEN,Open,01/08/2011,Kingdown School,34,Academy converter,4,Secondary,865,Wiltshire

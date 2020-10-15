@@ -90,7 +90,7 @@ class Vacancy < ApplicationRecord
   end
 
   algoliasearch auto_index: true, auto_remove: true, if: :listed? do
-    attributes :education_phases, :job_roles, :job_title, :salary, :subjects, :working_patterns, :_geoloc
+    attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
     attribute :expires_at do
       expires_at = format_date(expires_on)
@@ -127,7 +127,6 @@ class Vacancy < ApplicationRecord
                                 org.detailed_school_type if org.is_a?(School)
                                } .reject(&:blank?).uniq,
         group_type: organisations.map { |org| org.group_type if org.is_a?(SchoolGroup) }.reject(&:blank?).uniq,
-        local_authority: organisations.map(&:local_authority).uniq,
         religious_characters: organisations.map { |org| org.religious_character if org.is_a?(School) }.reject(&:blank?)
                                            .uniq,
         regions: organisations.map { |org| org.region if org.is_a?(School) }.reject(&:blank?).uniq,
