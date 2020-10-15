@@ -1257,7 +1257,7 @@ en:
           - "This website is at present partially compliant with the
             <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>WCAG 2.1</a> AA standard,
             due to those non-compliance issues listed below that are marked with (A) or (AA)."
-      non_accesssible:
+      non_accessible:
         title: Non-accessible content
         text: >-
           A number of issues related to the accessibility of Teaching Vacancies were raised in an accessibility audit
