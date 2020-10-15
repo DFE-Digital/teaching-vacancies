@@ -20,7 +20,7 @@ RSpec.describe JobAlertFeedbackForm, type: :model do
       context 'when comment is too long' do
         let(:comment) { (1..1000).to_a.join('') }
 
-        it 'requests an entry in the field' do
+        it 'returns the correct error' do
           expect(subject).not_to be_valid
           expect(subject.errors.messages[:comment]).to include(
             I18n.t('activemodel.errors.models.job_alert_feedback_form.attributes.comment.too_long'),

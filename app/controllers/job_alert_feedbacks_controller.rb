@@ -10,7 +10,7 @@ class JobAlertFeedbacksController < ApplicationController
     )
     if @feedback.save
       Auditor::Audit.new(@feedback, 'job_alert_feedback.create', current_session_id).log
-      redirect_to edit_subscription_feedback_path(id: @feedback.id), success: I18n.t('job_alert_feedbacks.submitted.relevance')
+      redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: I18n.t('job_alert_feedbacks.submitted.relevance')
     end
   end
 

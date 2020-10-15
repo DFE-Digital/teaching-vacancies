@@ -23,7 +23,7 @@ RSpec.describe AlertMailer, type: :mailer do
   let(:vacancies) { VacanciesPresenter.new(create_list(:vacancy, 1, :published)).decorated_collection }
   let(:campaign_params) { { source: 'subscription', medium: 'email', campaign: "#{frequency}_alert" } }
   let(:relevant_job_alert_feedback_url) do
-    new_subscription_feedback_url(
+    new_subscription_job_alert_feedback_url(
       subscription.token,
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: true,
@@ -32,7 +32,7 @@ RSpec.describe AlertMailer, type: :mailer do
     ).gsub('&', '&amp;')
   end
   let(:irrelevant_job_alert_feedback_url) do
-    new_subscription_feedback_url(
+    new_subscription_job_alert_feedback_url(
       subscription.token,
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: false,

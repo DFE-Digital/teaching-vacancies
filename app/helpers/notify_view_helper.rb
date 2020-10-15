@@ -28,7 +28,7 @@ module NotifyViewHelper
   end
 
   def job_alert_feedback_url(relevant, subscription, vacancies)
-    new_subscription_feedback_url(
+    new_subscription_job_alert_feedback_url(
       subscription.token,
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: relevant,

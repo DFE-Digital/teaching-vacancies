@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'job_alert_feedbacks/edit.html.haml' do
   before do
     assign(:feedback_form, JobAlertFeedbackForm.new)
-    allow(view).to receive(:subscription_feedback_path).and_return('/stubbed-path')
+    allow(view).to receive(:subscription_job_alert_feedback_path).and_return('/stubbed-path')
   end
 
   context 'recaptcha' do

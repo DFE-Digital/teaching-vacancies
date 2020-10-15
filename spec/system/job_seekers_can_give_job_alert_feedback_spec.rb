@@ -8,7 +8,7 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
 
   before do
     # Follow the link in the job alert email
-    visit new_subscription_feedback_url(
+    visit new_subscription_job_alert_feedback_url(
       token,
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
