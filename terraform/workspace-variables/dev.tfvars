@@ -35,3 +35,5 @@ paas_web_app_instances                 = 2
 paas_worker_app_deployment_strategy    = "blue-green-v2"
 paas_worker_app_instances              = 2
 paas_worker_app_memory                 = 512
+
+cloudfront_forward_host = true
