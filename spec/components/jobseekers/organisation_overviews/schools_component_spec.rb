@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :component do
-  let(:school_group) { create(:school_group) }
+  let(:organisation) { create(:trust) }
   let(:geolocation_trait) { nil }
   let(:school_1) { create(:school, geolocation_trait, name: 'Oxford Uni', website: 'https://this-is-a-test-url.tvs') }
   let(:school_2) { create(:school, geolocation_trait, name: 'Cambridge Uni') }
@@ -15,9 +15,9 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
   let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
 
   before do
-    school_group.school_group_memberships.create(school: school_1)
-    school_group.school_group_memberships.create(school: school_2)
-    school_group.school_group_memberships.create(school: school_3)
+    organisation.school_group_memberships.create(school: school_1)
+    organisation.school_group_memberships.create(school: school_2)
+    organisation.school_group_memberships.create(school: school_3)
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end
 

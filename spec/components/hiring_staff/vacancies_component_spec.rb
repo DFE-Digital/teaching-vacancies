@@ -56,8 +56,8 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
       end
     end
 
-    context 'when the organisation is a school group' do
-      let(:organisation) { create(:school_group) }
+    context 'when the organisation is a Trust' do
+      let(:organisation) { create(:trust) }
       let!(:vacancy) { create(:vacancy, :published, :at_central_office) }
       let(:filters) { { managed_school_ids: [], managed_organisations: organisation.id } }
 
@@ -76,7 +76,7 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
   end
 
   context 'when filtering results' do
-    let(:organisation) { create(:school_group) }
+    let(:organisation) { create(:trust) }
     let(:school_oxford) { create(:school, name: 'Oxford') }
     let(:school_cambridge) { create(:school, name: 'Cambridge') }
     let(:vacancy_oxford) do

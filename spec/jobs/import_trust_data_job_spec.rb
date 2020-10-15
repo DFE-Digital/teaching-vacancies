@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
+RSpec.describe ImportTrustDataJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later }
@@ -14,14 +14,14 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
       expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
     end
 
-    it 'is in the import_school_data queue' do
-      expect(job.queue_name).to eq('import_school_data')
+    it 'is in the import_trust_data queue' do
+      expect(job.queue_name).to eq('import_trust_data')
     end
 
     it 'executes perform' do
-      update_school_data = double(:mock)
-      expect(UpdateSchoolData).to receive(:new).and_return(update_school_data)
-      expect(update_school_data).to receive(:run!)
+      import_trust_data = double(:mock)
+      expect(ImportTrustData).to receive(:new).and_return(import_trust_data)
+      expect(import_trust_data).to receive(:run!)
 
       perform_enqueued_jobs { job }
     end
@@ -31,7 +31,7 @@ RSpec.describe UpdateSchoolsDataFromSourceJob, type: :job do
     let(:disable_expensive_jobs_enabled?) { true }
 
     it 'does not perform the job' do
-      expect(UpdateSchoolData).not_to receive(:new)
+      expect(ImportTrustData).not_to receive(:new)
 
       perform_enqueued_jobs { job }
     end

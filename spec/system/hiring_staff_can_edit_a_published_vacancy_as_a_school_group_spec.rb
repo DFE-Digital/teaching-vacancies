@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Editing a published vacancy' do
-  let(:school_group) { create(:school_group) }
+  let(:school_group) { create(:trust) }
   let(:school_1) { create(:school, name: 'First school') }
   let(:school_2) { create(:school, name: 'Second school') }
   let(:session_id) { SecureRandom.uuid }

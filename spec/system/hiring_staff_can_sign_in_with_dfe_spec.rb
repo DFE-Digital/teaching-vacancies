@@ -122,8 +122,8 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
     end
   end
 
-  context 'with valid credentials that match a SchoolGroup' do
-    let(:organisation) { create(:school_group) }
+  context 'with valid credentials that match a Trust' do
+    let(:organisation) { create(:trust) }
     let(:user_preference) { instance_double(UserPreference) }
 
     before do

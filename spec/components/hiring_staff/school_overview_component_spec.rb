@@ -3,8 +3,16 @@ require 'rails_helper'
 RSpec.describe HiringStaff::SchoolOverviewComponent, type: :component do
   let!(:inline_component) { render_inline(described_class.new(organisation: organisation)) }
 
-  context 'when organisation is a SchoolGroup' do
-    let(:organisation) { build(:school_group) }
+  context 'when organisation is a Trust' do
+    let(:organisation) { build(:trust) }
+
+    it 'does not render the school overview component' do
+      expect(rendered_component).to be_blank
+    end
+  end
+
+  context 'when organisation is a LA' do
+    let(:organisation) { build(:local_authority) }
 
     it 'does not render the school overview component' do
       expect(rendered_component).to be_blank

@@ -19,7 +19,7 @@
   - [export_tables, 1]
   - [export_users, 1]
   - [import_school_data, 1]
-  - [import_school_group_data, 1]
+  - [import_trust_data, 1]
   - [refresh_cached_vacancy_statistics, 1]
   - [remove_vacancies_that_expired_yesterday, 1]
   - [reset_sessions, 1]
