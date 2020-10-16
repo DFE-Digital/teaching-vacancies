@@ -96,7 +96,7 @@ jobs:
     - name: Run Smoke Test
       uses: benc-uk/workflow-dispatch@v1
       with:
-        workflow: Smoke Test Dispatch # Workflow name
+        workflow: Smoke Test Manual # Workflow name
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "environment": "staging" }'
 
@@ -105,8 +105,8 @@ jobs:
     - name: Wait on Smoke Test result
       uses: lewagon/wait-on-check-action@v0.1
       with:
-        ref: ${{ github.sha }} # can be commit SHA or tag too
-        check-name: Smoke Test Dispatch Job # Job name within workflow
+        ref: ${{ github.event.pull_request.head.ref }} # can be commit SHA or tag too
+        check-name: Smoke Test Manual Job # Job name within workflow
         repo-token: ${{ secrets.PERSONAL_TOKEN }}
         wait-interval: 120 # seconds
 

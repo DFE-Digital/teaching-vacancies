@@ -1,4 +1,4 @@
-name: Smoke Test Dispatch
+name: Smoke Test Manual
 
 on: 
   workflow_dispatch:
@@ -9,8 +9,8 @@ on:
         default: 'staging'
 
 jobs:
-  smoke-test-dispatch-job:
-    name: Smoke Test Dispatch Job
+  smoke-test-manual-job:
+    name: Smoke Test Manual Job
 
     runs-on: ubuntu-latest
 
