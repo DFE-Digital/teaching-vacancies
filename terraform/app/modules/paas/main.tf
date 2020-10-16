@@ -28,6 +28,18 @@ resource cloudfoundry_app web_app {
   routes {
     route = cloudfoundry_route.web_app_route.id
   }
+  dynamic "routes" {
+    for_each = cloudfoundry_route.web_app_route_cloudfront_apex
+    content {
+      route = routes.value["id"]
+    }
+  }
+  dynamic "routes" {
+    for_each = cloudfoundry_route.web_app_route_cloudfront_subdomain
+    content {
+      route = routes.value["id"]
+    }
+  }
   space    = data.cloudfoundry_space.space.id
   stopped  = var.app_stopped
   strategy = var.web_app_deployment_strategy
