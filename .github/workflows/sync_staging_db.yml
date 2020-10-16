@@ -17,7 +17,7 @@ jobs:
 
     - name: Install cf client
       env:
-        CF_CLI_VERSION: 7.0.0-beta.30
+        CF_CLI_VERSION: 7.1.0
         CF_CLI_URL: https://packages.cloudfoundry.org/stable?release=linux64-binary&version=
       run: |
         curl -sL "${CF_CLI_URL}${CF_CLI_VERSION}" | sudo tar -zx -C /usr/local/bin
