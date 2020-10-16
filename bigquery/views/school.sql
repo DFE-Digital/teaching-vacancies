@@ -10,7 +10,7 @@ SELECT
   school.town,
   school.county,
   school.postcode,
-  school.local_authority AS local_authority,
+  school.local_authority_within AS local_authority,
   school.locality AS locality,
   school.address3 AS address3,
   #put a full address together from its components so we only have to do this in one place
