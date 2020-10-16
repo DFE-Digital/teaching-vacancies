@@ -48,10 +48,8 @@ IF
   SELECT
     COUNT(document.id)
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
-  LEFT JOIN
     `teacher-vacancy-service.production_dataset.feb20_document` AS document
-  ON
+  WHERE
     document.vacancy_id=vacancy.id) AS number_of_documents
 FROM
   `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
