@@ -152,6 +152,7 @@ RSpec.describe HiringStaff::JobCreationHelper do
 
         it 'counts the correct number of unique steps' do
           allow(session).to receive(:[]).with(:uid).and_return('')
+          allow(session).to receive(:[]).with(:la_code).and_return('')
           expect(helper.total_steps).to eql(1)
         end
       end

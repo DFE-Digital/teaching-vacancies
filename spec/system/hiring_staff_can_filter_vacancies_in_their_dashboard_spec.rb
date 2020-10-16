@@ -21,7 +21,7 @@ RSpec.describe 'Hiring staff can filter vacancies in their dashboard' do
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
 
-    stub_authentication_step(school_urn: nil, school_group_uid: school_group.uid)
+    stub_authentication_step(school_urn: nil, trust_uid: school_group.uid)
     stub_authorisation_step
     stub_sign_in_with_multiple_organisations
 

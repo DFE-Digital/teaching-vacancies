@@ -14,7 +14,6 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
   def create
     Rails.logger.warn("Hiring staff signed in: #{user_id}")
     audit_successful_authentication
-
     perform_dfe_sign_in_authorisation
   end
 
@@ -25,22 +24,34 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
 private
 
   def not_authorised
+    Rails.logger.warn(not_authorised_details)
     audit_failed_authorisation
-    Rails.logger.warn("Hiring staff not authorised: #{user_id} for school: #{school_urn}")
-
     @identifier = identifier
     render 'user-not-authorised'
+  end
+
+  def not_authorised_details
+    if school_urn.present?
+      "Hiring staff not authorised: #{user_id} for school: #{school_urn}"
+    elsif trust_uid.present?
+      "Hiring staff not authorised: #{user_id} for trust: #{trust_uid}"
+    elsif local_authority_code.present?
+      "Hiring staff not authorised: #{user_id} for local authority: #{local_authority_code}"
+    else
+      "Hiring staff not authorised: #{user_id}"
+    end
   end
 
   def update_session(authorisation_permissions)
     session.update(
       session_id: user_id,
       urn: school_urn,
-      uid: school_group_uid,
+      uid: trust_uid,
+      la_code: local_authority_code,
       multiple_organisations: authorisation_permissions.many_organisations?,
       id_token: id_token,
     )
-    Rails.logger.info("Updated session with URN #{session[:urn]} or UID #{session[:uid]}")
+    Rails.logger.info(updated_session_details)
     audit_successful_authorisation
   end
 
@@ -60,8 +71,14 @@ private
     auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
   end
 
-  def school_group_uid
+  def trust_uid
     auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
+  end
+
+  def local_authority_code
+    if LocalAuthorityAccessFeature.enabled?
+      auth_hash.dig('extra', 'raw_info', 'organisation', 'establishmentNumber') || ''
+    end
   end
 
   def organisation_id
@@ -93,6 +110,6 @@ private
   end
 
   def organisation_id_present
-    school_urn.present? || school_group_uid.present?
+    school_urn.present? || trust_uid.present? || local_authority_code.present?
   end
 end

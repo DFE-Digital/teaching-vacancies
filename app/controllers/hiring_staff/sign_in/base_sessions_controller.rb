@@ -10,4 +10,16 @@ class HiringStaff::SignIn::BaseSessionsController < HiringStaff::BaseController
     session.destroy
     redirect_to new_identifications_path, flash_message
   end
+
+private
+
+  def updated_session_details
+    if session[:urn].present?
+      "Updated session with URN #{session[:urn]}"
+    elsif session[:uid].present?
+      "Updated session with UID #{session[:uid]}"
+    elsif session[:la_code].present?
+      "Updated session with LA_CODE #{session[:la_code]}"
+    end
+  end
 end

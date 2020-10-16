@@ -15,7 +15,8 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def check_session
-    redirect_to new_identifications_path unless session[:urn].present? || session[:uid].present?
+    redirect_to new_identifications_path unless
+      session[:urn].present? || session[:uid].present? || session[:la_code].present?
   end
 
   def check_terms_and_conditions

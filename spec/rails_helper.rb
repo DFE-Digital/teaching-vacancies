@@ -53,6 +53,7 @@ RSpec.configure do |config|
   end
 
   config.before do
+    allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(false)
     allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(true)
     Algolia::WebMock.mock!
   end

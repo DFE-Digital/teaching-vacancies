@@ -8,7 +8,7 @@ RSpec.describe HiringStaff::SidebarComponent, type: :component do
 
   before do
     allow_any_instance_of(HiringStaff::JobCreationHelper).to receive(:current_step).and_return(current_step)
-    allow_any_instance_of(HiringStaff::JobCreationHelper).to receive(:school_group_user?).and_return(school_group_user?)
+    allow_any_instance_of(AuthenticationConcerns).to receive(:school_group_user?).and_return(school_group_user?)
   end
 
   let!(:inline_component) { render_inline(described_class.new(vacancy: vacancy)) }

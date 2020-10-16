@@ -14,7 +14,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
 
   def create
     session.update(urn: get_urn, uid: get_uid)
-    Rails.logger.info("Updated session with URN #{session[:urn]} or UID #{session[:uid]}")
+    Rails.logger.info(updated_session_details)
     redirect_to organisation_path
   end
 
