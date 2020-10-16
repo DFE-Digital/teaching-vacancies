@@ -3,7 +3,7 @@ region                      = "eu-west-2"
 project_name                = "teaching-vacancies"
 parameter_store_environment = "dev"
 app_environment             = "review"
-#environment                 = "review"  # For review, pass in TV_VAR_environment for the PR number
+#environment                 = "review"  # For review, pass in TF_VAR_environment=review-pr-[PR number]
 
 # CloudFront
 distribution_list = {
