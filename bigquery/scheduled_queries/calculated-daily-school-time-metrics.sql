@@ -116,9 +116,58 @@ WITH
       trust.uid)
     # don't calculate metrics for dates that are in the future - they'll just show up as null in the final table
   WHERE
-    date <= CURRENT_DATE()
+    date < CURRENT_DATE()
   GROUP BY
-    date )
+    date ),
+  cloudfront_user_metrics AS (
+  SELECT
+    date,
+    COUNTIF(type IS NOT NULL) AS number_of_users,
+    COUNTIF(type="jobseeker") AS number_of_jobseekers,
+    COUNTIF(type="hiring staff") AS number_of_hiring_staff,
+    COUNTIF(device_category="mobile") AS number_of_mobile_users,
+    COUNTIF(device_category="desktop") AS number_of_desktop_users,
+    COUNTIF(type="jobseeker"
+      AND viewed_a_vacancy) AS number_of_jobseekers_viewing_a_vacancy,
+    COUNTIF(type="jobseeker"
+      AND clicked_get_more_information) AS number_of_jobseekers_clicking_gmi,
+    COUNTIF(type="jobseeker"
+      AND from_job_alert
+      AND "vacancy" IN UNNEST(job_alert_destinations)) AS number_of_jobseekers_referred_from_job_alert_to_vacancy,
+    COUNTIF(type="jobseeker"
+      AND from_job_alert
+      AND "edit" IN UNNEST(job_alert_destinations)) AS number_of_jobseekers_referred_from_job_alert_to_edit_alert,
+    COUNTIF(type="jobseeker"
+      AND from_job_alert
+      AND "unsubscribe" IN UNNEST(job_alert_destinations)) AS number_of_jobseekers_referred_from_job_alert_to_unsubscribe_from_alert,
+    SUM(
+    IF
+      (type="jobseeker",
+        unique_searches,
+        0)) AS number_of_jobseeker_searches,
+    SUM(
+    IF
+      (type="jobseeker",
+        vacancies_viewed,
+        0)) AS number_of_jobseeker_vacancy_views,
+    SUM(
+    IF
+      (type="jobseeker",
+        vacancies_with_gmi_clicks,
+        0)) AS number_of_jobseeker_gmi_clicks,
+  FROM
+    dates
+  LEFT JOIN
+    `teacher-vacancy-service.production_dataset.CALCULATED_daily_users_from_cloudfront_logs` AS user
+  USING
+    (date)
+    # don't calculate metrics for dates that are in the future - they'll just show up as null in the final table
+  WHERE
+    date < CURRENT_DATE()
+  GROUP BY
+    date
+  HAVING
+    number_of_users > 0)
 SELECT
   dates.date,
   school_metrics.schools_signed_up,
@@ -147,10 +196,31 @@ SELECT
     school_metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_published_so_far,
   SAFE_DIVIDE(school_metrics.schools_which_had_vacancies_live,
     school_metrics.schools_signed_up) AS proportion_of_signed_up_schools_which_had_vacancies_live,
+  cloudfront_user_metrics.number_of_users,
+  cloudfront_user_metrics.number_of_jobseekers,
+  cloudfront_user_metrics.number_of_hiring_staff,
+  cloudfront_user_metrics.number_of_mobile_users,
+  cloudfront_user_metrics.number_of_desktop_users,
+  cloudfront_user_metrics.number_of_jobseekers_viewing_a_vacancy,
+  cloudfront_user_metrics.number_of_jobseekers_clicking_gmi,
+  cloudfront_user_metrics.number_of_jobseekers_referred_from_job_alert_to_vacancy,
+  cloudfront_user_metrics.number_of_jobseekers_referred_from_job_alert_to_edit_alert,
+  cloudfront_user_metrics.number_of_jobseekers_referred_from_job_alert_to_unsubscribe_from_alert,
+  cloudfront_user_metrics.number_of_jobseeker_searches,
+  cloudfront_user_metrics.number_of_jobseeker_vacancy_views,
+  cloudfront_user_metrics.number_of_jobseeker_gmi_clicks,
+  SAFE_DIVIDE(cloudfront_user_metrics.number_of_jobseekers_viewing_a_vacancy,
+    cloudfront_user_metrics.number_of_jobseekers) AS conversion_rate_jobseeker_viewing_a_vacancy,
+  SAFE_DIVIDE(cloudfront_user_metrics.number_of_jobseekers_clicking_gmi,
+    cloudfront_user_metrics.number_of_jobseekers) AS conversion_rate_jobseeker_clicking_gmi,
 FROM
   dates
 LEFT JOIN
   school_metrics
+USING
+  (date)
+LEFT JOIN
+  cloudfront_user_metrics
 USING
   (date)
 LEFT JOIN
