@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_153338) do
+ActiveRecord::Schema.define(version: 2020_10_16_103801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -266,11 +266,13 @@ ActiveRecord::Schema.define(version: 2020_10_14_153338) do
     t.string "suitable_for_nqt"
     t.integer "job_roles", array: true
     t.string "contact_number"
+    t.uuid "publisher_organisation_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
+    t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
     t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
     t.index ["subject_id"], name: "index_vacancies_on_subject_id"
@@ -293,5 +295,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_153338) do
   add_foreign_key "emergency_login_keys", "users"
   add_foreign_key "job_alert_feedbacks", "subscriptions"
   add_foreign_key "user_preferences", "users"
+  add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"
 end
