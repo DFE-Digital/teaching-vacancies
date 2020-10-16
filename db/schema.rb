@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_153338) do
     t.jsonb "search_criteria"
     t.uuid "vacancy_ids", array: true
     t.uuid "subscription_id", null: false
+    t.float "recaptcha_score"
     t.index ["subscription_id"], name: "index_job_alert_feedbacks_on_subscription_id"
   end
 

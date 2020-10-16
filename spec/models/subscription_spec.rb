@@ -26,8 +26,8 @@ RSpec.describe Subscription, type: :model do
 
     context 'unique index' do
       it 'validates uniqueness of email, frequency and search_criteria' do
-        create(:subscription, email: 'jane@doe.com', frequency: :daily)
-        subscription = build(:subscription, email: 'jane@doe.com', frequency: :daily)
+        create(:subscription, email: 'jane@doe.com', frequency: :daily, search_criteria: { keyword: 'martial arts' })
+        subscription = build(:subscription, email: 'jane@doe.com', frequency: :daily, search_criteria: { keyword: 'martial arts' })
 
         expect(subscription.valid?).to eq(false)
         expect(subscription.errors.messages[:search_criteria]).to eq(['has already been taken'])

@@ -1,4 +1,18 @@
 en:
+  cookies_preferences_errors: &cookies_preferences_errors
+    cookies_consent:
+      inclusion: Please select an option
+  hiring_staff_user_preference_errors:
+    managed_organisations:
+      blank: Select which schools' job listings you would like to view
+  job_alert_feedback: &job_alert_feedback_errors
+    comment:
+      blank: You have not submitted any further feedback.
+      too_long: Feedback must not be more than 1,200 characters
+  organisation_errors: &organisation_errors
+    website:
+      url: Enter a link in the correct format, like http://www.school.ac.uk
+  # Hiring staff journey
   job_location_errors: &job_location_errors
     job_location:
       inclusion: Select the location where the job will be based
@@ -61,15 +75,6 @@ en:
       blank: Enter a job summary
     about_school:
       blank: Enter a description of the %{organisation}
-  organisation_errors: &organisation_errors
-    website:
-      url: Enter a link in the correct format, like http://www.school.ac.uk
-  hiring_staff_user_preference_errors:
-    managed_organisations:
-      blank: Select which schools' job listings you would like to view
-  cookies_preferences_errors: &cookies_preferences_errors
-    cookies_consent:
-      inclusion: Please select an option
   errors:
     format: "%{message}"
     title:
@@ -81,12 +86,31 @@ en:
   activemodel:
     errors:
       models:
-        schools_form:
+        cookies_preferences_form:
           attributes:
-            <<: *schools_errors
+            <<: *cookies_preferences_errors
+        job_alert_feedback_form:
+          attributes:
+            <<: *job_alert_feedback_errors
+        nqt_job_alerts_form:
+          attributes:
+            keywords:
+              blank: Enter keyword(s)
+            location:
+              blank: Enter a location
+            email:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+        organisation_form:
+          attributes:
+            <<: *organisation_errors
+        # Hiring staff journey
         job_location_form:
           attributes:
             <<: *job_location_errors
+        schools_form:
+          attributes:
+            <<: *schools_errors
         job_specification_form:
           attributes:
             <<: *job_specification_errors
@@ -109,21 +133,6 @@ en:
           attributes:
             <<: *job_specification_errors
             <<: *important_dates_errors
-        organisation_form:
-          attributes:
-            <<: *organisation_errors
-        cookies_preferences_form:
-          attributes:
-            <<: *cookies_preferences_errors
-        nqt_job_alerts_form:
-          attributes:
-            keywords:
-              blank: Enter keyword(s)
-            location:
-              blank: Enter a location
-            email:
-              blank: Enter your email address
-              invalid: Enter an email address in the correct format, like name@example.com
   activerecord:
     attributes:
       vacancy/expiry_time: Application deadline (time)

@@ -18,16 +18,21 @@ en:
       closing_date: "Closing date: %{closing_date}"
       edit_alert: "You can %{edit_link} here."
       edit_link_text: manage your alert
+      feedback:
+        heading: Are these job listings relevant to your search?
+        irrelevant_link_text: No, they are not relevant
+        relevant_link_text: Yes, they are relevant
+        reason: This feedback helps us improve our service.
       footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money on recruitment and you to take the next step in your career."
       salary: "Salary: %{salary}"
       subject: Your job alert from Teaching Vacancies
       summary:
         daily:
-          one: "A new job matching your search criteria was listed in the last day."
-          other: "%{count} new jobs matching your search criteria were listed in the last day."
+          one: "A new job matching your search criteria was listed in the last day"
+          other: "%{count} new jobs matching your search criteria were listed in the last day"
         weekly:
-          one: "A new job matching your search criteria was listed in the last week."
-          other: "%{count} new jobs matching your search criteria were listed in the last week."
+          one: "A new job matching your search criteria was listed in the last week"
+          other: "%{count} new jobs matching your search criteria were listed in the last week"
       title: This job alert
       unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
       unsubscribe_link_text: Unsubscribe here
@@ -202,6 +207,21 @@ en:
             organisation until DfE Sign In is working as normal. Please %{try_again} later.
         please_select: >-
           You are associated with more than one organisation. Please select the one you wish to sign in with.
+
+  job_alert_feedbacks:
+    edit:
+      form:
+        labels:
+          comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
+        hints:
+          comment: This is optional, but the information will help us to make improvements.
+      heading: Further feedback
+      title: Job alert feedback
+    submitted:
+      relevance:
+        Thank you for your feedback on your job alert
+      comment:
+        Your further feedback on job alerts has been sent to the team
   nav:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
