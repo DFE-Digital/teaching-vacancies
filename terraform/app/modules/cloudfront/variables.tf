@@ -36,15 +36,22 @@ variable route53_zones {
   type = list
 }
 
+variable cloudfront_forward_host {}
+variable is_production {}
+variable route53_cname_record {}
+variable route53_a_records {}
+
 locals {
-  is_production                = var.environment == "production"
-  route53_prefix               = local.is_production ? "www" : var.environment
   route53_zones                = toset(var.route53_zones)
-  route53_zones_with_a_records = local.is_production ? local.route53_zones : toset([])
+  route53_zones_with_a_records = var.is_production ? local.route53_zones : toset([])
   route53_zones_with_cnames    = local.route53_zones
   cloudfront_cert_cn           = "${var.project_name}.service.gov.uk"
-  domain                       = local.is_production ? local.cloudfront_cert_cn : "${var.environment}.${local.cloudfront_cert_cn}"
-  cloudfront_aliases_a_records = local.is_production ? [for zone in var.route53_zones : zone] : []
-  cloudfront_aliases_cnames    = [for zone in var.route53_zones : "${local.route53_prefix}.${zone}"]
-  cloudfront_aliases           = concat(local.cloudfront_aliases_a_records, local.cloudfront_aliases_cnames)
+  domain                       = var.is_production ? local.cloudfront_cert_cn : "${var.environment}.${local.cloudfront_cert_cn}"
+  cloudfront_aliases_cnames    = [for zone in var.route53_zones : "${var.route53_cname_record}.${zone}"]
+  cloudfront_aliases           = concat(var.route53_a_records, local.cloudfront_aliases_cnames)
+  additional_headers           = var.cloudfront_forward_host ? ["Host"] : []
+  header_list                  = concat(var.default_header_list, local.additional_headers)
+  custom_headers = var.cloudfront_forward_host ? {} : {
+    "X-Forwarded-Host" : local.domain
+  }
 }

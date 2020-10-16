@@ -10,9 +10,12 @@ resource aws_cloudfront_distribution default {
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
 
-    custom_header {
-      name  = "X-Forwarded-Host"
-      value = local.domain
+    dynamic "custom_header" {
+      for_each = local.custom_headers
+      content {
+        name  = custom_header.key
+        value = custom_header.value
+      }
     }
   }
 
@@ -55,7 +58,7 @@ resource aws_cloudfront_distribution default {
 
     forwarded_values {
       query_string = true
-      headers      = var.default_header_list
+      headers      = local.header_list
 
       cookies {
         forward = "all"
@@ -180,7 +183,7 @@ resource aws_route53_record cloudfront-a-records {
 resource aws_route53_record cloudfront-cnames {
   for_each = local.route53_zones_with_cnames
   zone_id  = data.aws_route53_zone.zones[each.value].zone_id
-  name     = "${local.route53_prefix}.${each.value}"
+  name     = "${var.route53_cname_record}.${each.value}"
   type     = "CNAME"
   ttl      = "300"
   records  = ["${aws_cloudfront_distribution.default.domain_name}."]

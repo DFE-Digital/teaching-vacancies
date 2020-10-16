@@ -59,6 +59,18 @@ variable worker_app_memory {
   default = 512
 }
 
+variable route53_zones {
+  type = list
+}
+
+variable route53_a_records {
+  type = list
+}
+
+variable hostname_domain_map {
+  type = map
+}
+
 locals {
   app_env_api_keys = merge(
     yamldecode(data.aws_ssm_parameter.app_env_api_key_big_query.value),

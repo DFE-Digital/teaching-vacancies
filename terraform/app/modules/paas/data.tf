@@ -27,6 +27,11 @@ data cloudfoundry_domain cloudapps_digital {
   name = "london.cloudapps.digital"
 }
 
+data cloudfoundry_domain cloudfront {
+  for_each = toset(var.route53_zones)
+  name     = each.key
+}
+
 data cloudfoundry_service postgres {
   name = "postgres"
 }
