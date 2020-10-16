@@ -9,8 +9,8 @@ on:
         default: 'staging'
 
 jobs:
-  smoke-test-dispatch:
-    name: Smoke Test Dispatch
+  smoke-test-dispatch-job:
+    name: Smoke Test Dispatch Job
 
     runs-on: ubuntu-latest
 
