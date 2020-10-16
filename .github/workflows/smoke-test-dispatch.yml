@@ -9,8 +9,8 @@ on:
         default: 'staging'
 
 jobs:
-  smoke-test:
-    name: Run ${{ github.event.inputs.environment }} website smoke test
+  smoke-test-dispatch:
+    name: Smoke Test Dispatch
 
     runs-on: ubuntu-latest
 
