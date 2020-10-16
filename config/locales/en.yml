@@ -28,11 +28,11 @@ en:
       subject: Your job alert from Teaching Vacancies
       summary:
         daily:
-          one: "A new job matching your search criteria was listed in the last day."
-          other: "%{count} new jobs matching your search criteria were listed in the last day."
+          one: "A new job matching your search criteria was listed in the last day"
+          other: "%{count} new jobs matching your search criteria were listed in the last day"
         weekly:
-          one: "A new job matching your search criteria was listed in the last week."
-          other: "%{count} new jobs matching your search criteria were listed in the last week."
+          one: "A new job matching your search criteria was listed in the last week"
+          other: "%{count} new jobs matching your search criteria were listed in the last week"
       title: This job alert
       unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
       unsubscribe_link_text: Unsubscribe here
