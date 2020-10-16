@@ -1,10 +1,6 @@
 module HiringStaff::JobCreationHelper
   NUMBER_OF_ADDITIONAL_STEPS_FOR_SCHOOL_GROUP_USERS = 1
 
-  def school_group_user?
-    session[:uid].present?
-  end
-
   def current_step
     step = params[:create_step]
     if school_group_user?

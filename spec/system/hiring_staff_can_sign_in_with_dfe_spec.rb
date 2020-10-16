@@ -57,7 +57,7 @@ RSpec.shared_examples 'a failed sign in' do |options|
 
     expect(Rails.logger)
       .to receive(:warn)
-      .with("Hiring staff not authorised: #{options[:user_id]} for school: #{options[:school_urn]}")
+      .with(options[:not_authorised_message])
 
     visit root_path
 
@@ -129,7 +129,7 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
     before do
       allow(UserPreference).to receive(:find_by).and_return(user_preference)
 
-      stub_authentication_step(school_urn: nil, school_group_uid: organisation.uid, email: dsi_email_address)
+      stub_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
       stub_authorisation_step
       stub_sign_in_with_multiple_organisations
 
@@ -156,6 +156,56 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
     end
   end
 
+  context 'with valid credentials that match a Local Authority' do
+    let(:organisation) { create(:local_authority, local_authority_code: '100') }
+    let(:user_preference) { instance_double(UserPreference) }
+
+    context 'LocalAuthorityAccessFeature enabled' do
+      before do
+        allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
+        allow(UserPreference).to receive(:find_by).and_return(user_preference)
+
+        stub_authentication_step(school_urn: nil, la_code: organisation.local_authority_code, email: dsi_email_address)
+        stub_authorisation_step
+        stub_sign_in_with_multiple_organisations
+
+        visit root_path
+        sign_in_user
+      end
+
+      context 'when user preferences have been set' do
+        it_behaves_like 'a successful sign in'
+
+        scenario 'it redirects the sign in page to the SchoolGroup page' do
+          visit new_identifications_path
+          expect(page).to have_content("Jobs at #{organisation.name}")
+          expect(current_path).to eql(organisation_path)
+        end
+      end
+
+      context 'when user preferences have not been set' do
+        let(:user_preference) { nil }
+
+        scenario 'it redirects the sign in page to the managed organisations user preference page' do
+          expect(current_path).to eql(organisation_managed_organisations_path)
+        end
+      end
+    end
+
+    context 'LocalAuthorityAccessFeature disabled' do
+      before do
+        stub_authentication_step(school_urn: nil, trust_uid: nil, la_code: organisation.local_authority_code,
+                                 email: 'test@email.com')
+        stub_authorisation_step
+      end
+
+      it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
+                                          la_code: '100',
+                                          email: 'test@email.com',
+                                          not_authorised_message: 'Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7'
+    end
+  end
+
   context 'with valid credentials but no authorisation' do
     before(:each) do
       stub_authentication_step(email: 'another_email@example.com')
@@ -164,7 +214,8 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
 
     it_behaves_like 'a failed sign in', user_id: '161d1f6a-44f1-4a1a-940d-d1088c439da7',
                                         school_urn: '110627',
-                                        email: 'another_email@example.com'
+                                        email: 'another_email@example.com',
+                                        not_authorised_message: 'Hiring staff not authorised: 161d1f6a-44f1-4a1a-940d-d1088c439da7 for school: 110627'
   end
 
   context 'when there is was an error with DfE Sign-in' do
