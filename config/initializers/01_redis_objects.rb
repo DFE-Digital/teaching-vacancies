@@ -5,6 +5,6 @@ Redis::Objects.redis =
     MockRedis.new
   else
     ConnectionPool.new(size: 5, timeout: 5) do
-      Redis.new(url: "#{ENV['REDIS_CACHE_URL']}/1")
+      Redis.new(url: "#{REDIS_URL}/1")
     end
   end
