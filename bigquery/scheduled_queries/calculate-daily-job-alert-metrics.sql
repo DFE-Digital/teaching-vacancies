@@ -23,7 +23,21 @@ WITH
       NULL,
       recaptcha_score>0.5) AS human #the job alert was likely to be created by a human if the Recaptcha score was over 50%
   FROM
-    `teacher-vacancy-service.production_dataset.feb20_subscription` ) (
+    `teacher-vacancy-service.production_dataset.feb20_subscription` ),
+  job_alert_emails_sent AS (
+  SELECT
+    run_on AS date,
+    COUNT(*) AS number_of_alert_emails_sent
+  FROM
+    `teacher-vacancy-service.production_dataset.feb20_alertrun` AS alertrun
+  LEFT JOIN
+    `teacher-vacancy-service.production_dataset.job_alert` AS job_alert
+  ON
+    alertrun.subscription_id = job_alert.id
+  WHERE
+    human
+  GROUP BY
+    date ) (
   SELECT
     date,
     (
@@ -57,9 +71,15 @@ WITH
     FROM
       job_alert
     WHERE
-      human IS NOT FALSE ) AS emails_subscribed_to_job_alerts #the number of unique emails that were subscribed to job alerts on this date
+      human IS NOT FALSE ) AS emails_subscribed_to_job_alerts,
+    #the number of unique emails that were subscribed to job alerts on this date
+    job_alert_emails_sent.number_of_alert_emails_sent
   FROM
-    dates)
+    dates
+  LEFT JOIN
+    job_alert_emails_sent
+  USING
+    (date))
 UNION ALL (
   SELECT
     *
