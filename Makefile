@@ -17,6 +17,7 @@ dev:
 review:
 		$(if $(pr), , $(error Missing environment variable "pr"))
 		$(eval env=review-pr-$(pr))
+		$(eval export TF_VAR_environment=review-pr-$(pr))
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="workspace_key_prefix=review:")
 
