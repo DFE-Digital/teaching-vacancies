@@ -104,6 +104,24 @@ jobs:
         terraform workspace select staging terraform/app || terraform workspace new staging terraform/app
         terraform apply -var-file terraform/workspace-variables/staging.tfvars -auto-approve -input=false terraform/app
 
+    - name: Run Smoke Test
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: Smoke Test Manual # Workflow name
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{ "environment": "staging" }'
+        ref: ${{ github.sha }}
+
+    # This step will retry until required check passes
+    # and will fail the whole workflow if the check conclusion is not a success
+    - name: Wait on Smoke Test result
+      uses: lewagon/wait-on-check-action@v0.1
+      with:
+        ref: ${{ github.sha }} # branch, commit SHA or tag
+        check-name: Smoke Test Manual Job # Job name within workflow
+        repo-token: ${{ secrets.PERSONAL_TOKEN }}
+        wait-interval: 120 # seconds
+
     - name: Deploy to production
       if: github.ref == 'refs/heads/master'
       env:
