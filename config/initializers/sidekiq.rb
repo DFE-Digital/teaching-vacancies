@@ -1,6 +1,6 @@
 return if Rails.env.test?
 
-redis_url = "#{ENV['REDIS_QUEUE_URL']}/0"
+redis_url = "#{REDIS_URL}/0"
 
 options = {
   concurrency: Integer(ENV.fetch('RAILS_MAX_THREADS') { 5 })
