@@ -59,7 +59,7 @@ export const hide = (container, input) => {
   input.setAttribute('aria-expanded', false);
 };
 
-export const render = (options, container, input, key) => {
+export const render = (options = [], container, input, key) => {
   container.querySelector('ul').innerHTML = options.map(getOptionHtml(input.value, key)).join('');
 };
 

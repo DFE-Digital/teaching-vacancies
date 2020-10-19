@@ -1,0 +1,18 @@
+= render 'shared/search/keyword', f: f, filters: false
+= render 'shared/search/location', f: f
+= render 'shared/search/radius', f: f, filters: false
+= render 'shared/search/current_location', loaderElement: 'subscription-form-location-field'
+
+%div{ class: 'govuk-!-margin-bottom-7' }
+  = render 'components/shared/filters_component', form: f, options: { remove_buttons: false, mobile_variant: false, close_all: false }, filters: { total_count: 0, title: t('subscriptions.edit.filters') }, items: [{ title: 'Job role', key: 'job_roles', search: false, scroll: false, attribute: :job_roles, selected: @subscription_form.job_roles, options: @subscription_form.job_role_options, value_method: :first, text_method: :last, selected_method: :last, small: true }, { title: 'Education phase', key: 'education_phase', search: false, scroll: false, attribute: :phases, selected: @subscription_form.phases, options: @subscription_form.phase_options, value_method: :first, text_method: :last, selected_method: :last, small: true }, { title: 'Working pattern', key: 'working_patterns', search: false, scroll: false, attribute: :working_patterns, selected: @subscription_form.working_patterns, options: @subscription_form.working_pattern_options, value_method: :first, text_method: :last, selected_method: :last, small: true }]
+
+= f.govuk_email_field :email,
+  label: { text: t('subscriptions.labels.email_html'), size: 's' },
+  hint_text: t('subscriptions.hints.email'),
+  required: true
+
+= f.govuk_collection_radio_buttons :frequency,
+  frequency_options,
+  :first,
+  :last,
+  legend: { text: t('subscriptions.labels.frequency_html') }

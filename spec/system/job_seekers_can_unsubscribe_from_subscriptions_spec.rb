@@ -27,8 +27,9 @@ RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
     it 'allows me to resubscribe' do
       click_on I18n.t('subscriptions.unsubscribe.resubscribe_link_text')
 
-      expect(page).to have_content('Keyword: English')
-      expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
+      expect(page.find_field('subscription-form-keyword-field').value).to eql('English')
+      expect(page.find_field('subscription-form-location-field').value).to eql('SW1A1AA')
+      expect(page.find_field('subscription-form-radius-field').value).to eql('20')
     end
 
     context 'with deprecated search criteria' do
@@ -50,8 +51,9 @@ RSpec.describe 'A job seeker can unsubscribe from subscriptions' do
       it 'allows me to resubscribe' do
         click_on I18n.t('subscriptions.unsubscribe.resubscribe_link_text')
 
-        expect(page).to have_content('Keyword: English')
-        expect(page).to have_content('Location: Within 20 miles of SW1A1AA')
+        expect(page.find_field('subscription-form-keyword-field').value).to eql('English')
+        expect(page.find_field('subscription-form-location-field').value).to eql('SW1A1AA')
+        expect(page.find_field('subscription-form-radius-field').value).to eql('20')
       end
     end
   end

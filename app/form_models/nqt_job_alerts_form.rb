@@ -49,7 +49,7 @@ private
   end
 
   def unique_job_alert
-    errors.add(:base, I18n.t('nqt_job_alerts.form.errors.duplicate_alert')) if
+    errors.add(:base, I18n.t('subscriptions.errors.duplicate_alert')) if
       SubscriptionFinder.new(job_alert_params).exists?
   end
 end

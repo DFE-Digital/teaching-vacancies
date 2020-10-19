@@ -15,13 +15,14 @@ RSpec.describe 'A job seeker can manage a subscription' do
       expect(page).to have_content(I18n.t('subscriptions.edit.title'))
     end
 
-    context 'when updating the email and frequency' do
+    context 'when updating the subscription' do
       before do
         message_delivery = instance_double(ActionMailer::MessageDelivery)
         expect(SubscriptionMailer).to receive(:update) { message_delivery }
         expect(message_delivery).to receive(:deliver_later)
 
-        fill_in 'subscription[email]', with: 'jimi@hendrix.com'
+        fill_in 'subscription-form-keyword-field', with: 'English'
+        fill_in 'subscription-form-email-field', with: 'jimi@hendrix.com'
         page.choose('Weekly')
 
         click_on I18n.t('buttons.update_alert')
@@ -40,6 +41,26 @@ RSpec.describe 'A job seeker can manage a subscription' do
         subscription.reload
         expect(subscription.email).to eq('jimi@hendrix.com')
         expect(subscription.frequency).to eq('weekly')
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eql('English')
+      end
+    end
+
+    context 'when updating with no criteria' do
+      before do
+        fill_in 'subscription-form-keyword-field', with: ''
+        fill_in 'subscription-form-location-field', with: ''
+        fill_in 'subscription-form-email-field', with: 'jimi@hendrix.com'
+        page.choose('Weekly')
+
+        click_on I18n.t('buttons.update_alert')
+      end
+
+      it 'does not create the subscription' do
+        subscription.reload
+        expect(subscription.email).to eq('bob@dylan.com')
+        expect(subscription.frequency).to eq('daily')
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:keyword]).to eql('Math')
+        expect(JSON.parse(subscription.search_criteria).symbolize_keys[:location]).to eql('London')
       end
     end
   end
