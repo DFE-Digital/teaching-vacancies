@@ -30,10 +30,10 @@ describe('current location', () => {
     removeLoaderMock = jest.spyOn(loader, 'remove');
 
     document.body.innerHTML = `<div class="js-location-finder" id="test-container">
-<input type="text" id="jobs-search-form-location-field" class="js-location-finder__input" />
+<input type="text" id="form-location-field" class="js-location-finder__input" />
 </div>`;
 
-    input = document.getElementById('jobs-search-form-location-field');
+    input = document.getElementById('form-location-field');
     container = document.getElementById('test-container');
   });
 
@@ -56,7 +56,7 @@ describe('current location', () => {
   describe('onFaliure', () => {
     test('updates the UI correctly and adds error message', () => {
       onFailure();
-      expect(document.getElementById('jobs-search-form-location-field').value).toBe('');
+      expect(input.value).toBe('');
       expect(disableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
       expect(showErrorMessageMock).toHaveBeenCalled();
@@ -65,8 +65,8 @@ describe('current location', () => {
 
   describe('onSuccess', () => {
     test('updates the UI correctly and enables radius control', () => {
-      onSuccess('W12 8QT', document.getElementById('jobs-search-form-location-field'));
-      expect(document.getElementById('jobs-search-form-location-field').value).toBe('W12 8QT');
+      onSuccess('W12 8QT', input);
+      expect(input.value).toBe('W12 8QT');
       expect(enableRadiusMock).toHaveBeenCalled();
       expect(stopLoadingMock).toHaveBeenCalled();
       expect(showErrorMessageMock).not.toHaveBeenCalled();
@@ -76,7 +76,7 @@ describe('current location', () => {
   describe('showErrorMessage', () => {
     beforeEach(() => {
       jest.resetAllMocks();
-      document.body.innerHTML = '<div class="js-location-finder"><a href="" id="current-location">link</a></div>';
+      document.body.innerHTML = '<div class="js-location-finder"><a href="/" id="current-location" data-loader="form-location-field">link</a></div>';
     });
 
     test('displays correct message in error displayed', () => {
