@@ -1,4 +1,5 @@
 SELECT
+  id,
   CAST(created_at AS date) AS created_date,
   CAST(updated_at AS date) AS updated_date,
   expires_on AS expires_date,
@@ -8,13 +9,15 @@ IF
     OR recaptcha_score > 0.5,
     TRUE,
     FALSE) AS human,
-  ARRAY_TO_STRING(ARRAY(   #extract all search criteria from the JSON, except radius (because this is meaningless without location)
+  ARRAY_TO_STRING(ARRAY(   #extract all search criteria from the JSON, except radius and location_category (because they are just location searches) and jobs_sort (because this isn't a search criterion)
     SELECT
       *
     FROM
       UNNEST(REGEXP_EXTRACT_ALL(search_criteria, r'\"([a-z_]+)\":')) AS criteria #we have to use REGEXP_EXTRACT_ALL here rather than JSON_EXTRACT... because the latter only supports value rather than key extraction
     WHERE
-      criteria NOT IN ("radius")
+      criteria NOT IN ("radius",
+        "jobs_sort",
+        "location_category")
     ORDER BY
       criteria ASC )," and ") AS search_criteria,
 IF
