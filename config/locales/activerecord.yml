@@ -12,6 +12,12 @@ en:
   organisation_errors: &organisation_errors
     website:
       url: Enter a link in the correct format, like http://www.school.ac.uk
+  subscription_errors: &subscription_errors
+    email:
+      blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
+    frequency:
+      blank: Select when you want to receive job alert emails
   # Hiring staff journey
   job_location_errors: &job_location_errors
     job_location:
@@ -104,6 +110,9 @@ en:
         organisation_form:
           attributes:
             <<: *organisation_errors
+        subscription_form:
+          attributes:
+            <<: *subscription_errors
         # Hiring staff journey
         job_location_form:
           attributes:

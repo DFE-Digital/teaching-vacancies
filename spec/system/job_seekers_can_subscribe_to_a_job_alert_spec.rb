@@ -6,7 +6,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
       expect { visit(new_subscription_path) }.to raise_error(ActionController::ParameterMissing)
 
       visit new_subscription_path(search_criteria: { some_parameters: 'none' })
-      expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
+      expect(page).to have_content(I18n.t('subscriptions.new.title'))
     end
 
     context 'when carrying out a location category search' do
@@ -15,8 +15,8 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
           search_criteria: { keyword: 'physics', location: 'London', location_category: 'London' },
         )
 
-        expect(page).to have_content('Keyword: physics')
-        expect(page).to have_content('Location: In London')
+        expect(page.find_field('subscription-form-keyword-field').value).to eql('physics')
+        expect(page.find_field('subscription-form-location-field').value).to eql('London')
       end
     end
 
@@ -24,14 +24,15 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
       scenario 'can view the search criteria' do
         visit new_subscription_path(search_criteria: { keyword: 'physics', location: 'EC2 9AN', radius: '10' })
 
-        expect(page).to have_content('Keyword: physics')
-        expect(page).to have_content('Location: Within 10 miles of EC2 9AN')
+        expect(page.find_field('subscription-form-keyword-field').value).to eql('physics')
+        expect(page.find_field('subscription-form-location-field').value).to eql('EC2 9AN')
+        expect(page.find_field('subscription-form-radius-field').value).to eql('10')
       end
     end
 
     scenario 'subscribing to a search creates a new daily subscription audit' do
       visit new_subscription_path(search_criteria: { keyword: 'test' })
-      fill_in 'subscription[email]', with: 'jane.doe@example.com'
+      fill_in 'subscription_form[email]', with: 'jane.doe@example.com'
       page.choose('Daily')
       click_on 'Subscribe'
 
@@ -42,7 +43,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
     context 'can create a new subscription' do
       scenario 'when the email address is valid' do
         visit new_subscription_path(search_criteria: { keyword: 'test' })
-        fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription_form[email]', with: 'jane.doe@example.com'
         page.choose('Daily')
         click_on 'Subscribe'
 
@@ -54,7 +55,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
                                     search_criteria: { keyword: 'teacher' }.to_json)
 
         visit new_subscription_path(search_criteria: { keyword: 'math teacher' })
-        fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription_form[email]', with: 'jane.doe@example.com'
         page.choose('Daily')
         click_on 'Subscribe'
 
@@ -84,7 +85,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
       context 'and is redirected to the confirmation page' do
         scenario 'where they can go back to the filtered search' do
           visit new_subscription_path(search_criteria: { keyword: 'teacher' })
-          fill_in 'subscription[email]', with: 'jane.doe@example.com'
+          fill_in 'subscription_form[email]', with: 'jane.doe@example.com'
           page.choose('Daily')
           click_on 'Subscribe'
 
@@ -98,7 +99,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
     context 'is not able to create a new subscription' do
       scenario 'when the email address is invalid' do
         visit new_subscription_path(search_criteria: { keyword: 'test' })
-        fill_in 'subscription[email]', with: 'jane.doe@example'
+        fill_in 'subscription_form[email]', with: 'jane.doe@example'
         click_on 'Subscribe'
 
         expect(page).to have_content('There is a problem')
@@ -108,19 +109,23 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
       scenario 'when an active subscription with the same search_criteria exists' do
         search_criteria = { location: 'EC2 9AN', radius: '10' }
 
-        create(:daily_subscription, email: 'jane.doe@example.com',
+        create(:daily_subscription, email: 'jane.doe@example.com', frequency: 'daily',
                                     search_criteria: search_criteria.to_json)
 
         visit new_subscription_path(search_criteria: search_criteria)
-        fill_in 'subscription[email]', with: 'jane.doe@example.com'
+        fill_in 'subscription_form[email]', with: 'jane.doe@example.com'
         page.choose('Daily')
         click_on 'Subscribe'
 
-        expect(page).to have_content("You're already subscribed to an alert for these search criteria")
+        expect(page).to have_content('A job alert matching this criteria already exists')
       end
     end
 
     context 'when a location category search is carried out' do
+      before do
+        LocationPolygon.create(name: 'london')
+      end
+
       scenario 'can successfuly subscribe to a new alert' do
         visit jobs_path
 
@@ -140,13 +145,14 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
           click_on('get notified')
         end
 
-        expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
-        expect(page).to have_content('Keyword: English')
-        expect(page).to have_content('Location: In London')
-        expect(page).to have_content('Job roles: Teacher, Suitable for NQTs')
-        expect(page).to have_content('Working patterns: Full-time')
+        expect(page).to have_content(I18n.t('subscriptions.new.title'))
+        expect(page.find_field('subscription-form-keyword-field').value).to eql('English')
+        expect(page.find_field('subscription-form-location-field').value).to eql('London')
+        expect(page.find_field('subscription-form-job-roles-teacher-field').checked?).to be true
+        expect(page.find_field('subscription-form-job-roles-nqt-suitable-field').checked?).to be true
+        expect(page.find_field('subscription-form-working-patterns-full-time-field').checked?).to be true
 
-        fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+        fill_in 'subscription_form[email]', with: 'john.doe@sample-email.com'
         page.choose('Daily')
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)
@@ -187,13 +193,15 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
           click_on('get notified')
         end
 
-        expect(page).to have_content(I18n.t('subscriptions.new.page_description'))
-        expect(page).to have_content('Keyword: English')
-        expect(page).to have_content('Location: Within 40 miles of SW1A 1AA')
-        expect(page).to have_content('Job roles: Teacher, Suitable for NQTs')
-        expect(page).to have_content('Working patterns: Full-time')
+        expect(page).to have_content(I18n.t('subscriptions.new.title'))
+        expect(page.find_field('subscription-form-keyword-field').value).to eql('English')
+        expect(page.find_field('subscription-form-location-field').value).to eql('SW1A 1AA')
+        expect(page.find_field('subscription-form-radius-field').value).to eql('40')
+        expect(page.find_field('subscription-form-job-roles-teacher-field').checked?).to be true
+        expect(page.find_field('subscription-form-job-roles-nqt-suitable-field').checked?).to be true
+        expect(page.find_field('subscription-form-working-patterns-full-time-field').checked?).to be true
 
-        fill_in 'subscription[email]', with: 'john.doe@sample-email.com'
+        fill_in 'subscription_form[email]', with: 'john.doe@sample-email.com'
         page.choose('Daily')
 
         message_delivery = instance_double(ActionMailer::MessageDelivery)

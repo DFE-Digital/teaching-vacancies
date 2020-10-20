@@ -6,7 +6,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#new' do
-    subject { get :new, params: { search_criteria: { keyword: 'english' } } }
+    subject { get :new, params: { search_criteria: { keyword: 'english' } }.symbolize_keys }
 
     it 'returns 200' do
       subject
@@ -17,11 +17,11 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe '#create' do
     let(:params) do
       {
-        subscription: {
+        subscription_form: {
           email: 'foo@email.com',
           frequency: 'daily',
-          search_criteria: { keyword: 'english' }.to_json
-        }
+          keyword: 'english'
+        }.symbolize_keys
       }
     end
     let(:subject) { post :create, params: params }
@@ -38,15 +38,16 @@ RSpec.describe SubscriptionsController, type: :controller do
 
     it 'creates a subscription' do
       expect { subject }.to change { Subscription.count }.by(1)
-      expect(subscription.email).to eq(params[:subscription][:email])
-      expect(subscription.search_criteria).to eq(params[:subscription][:search_criteria])
+      expect(subscription.email).to eq('foo@email.com')
+      expect(subscription.search_criteria).to eq({ keyword: 'english' }.to_json)
     end
 
     context 'with unsafe params' do
       let(:params) do
         {
-          subscription: {
+          subscription_form: {
             email: '<script>foo@email.com</script>',
+            frequency: 'daily',
             search_criteria: "<body onload=alert('test1')>Text</body>",
           }
         }
@@ -76,10 +77,10 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         email: 'jimi@hendrix.com',
         frequency: 'weekly',
-        search_criteria: { keyword: 'english' }.to_json
+        keyword: 'english'
       }
     end
-    let!(:subject) { put :update, params: { id: subscription.token, subscription: params } }
+    let!(:subject) { put :update, params: { id: subscription.token, subscription_form: params } }
 
     it 'returns 200' do
       expect(response.code).to eq('200')
@@ -87,13 +88,14 @@ RSpec.describe SubscriptionsController, type: :controller do
 
     it 'updates a subscription' do
       expect(subscription.reload.email).to eq('jimi@hendrix.com')
-      expect(subscription.reload.search_criteria).to eq(params[:search_criteria])
+      expect(subscription.reload.search_criteria).to eq({ keyword: 'english' }.to_json)
     end
 
     context 'with unsafe params' do
       let(:params) do
         {
           email: '<script>foo@email.com</script>',
+          frequency: 'daily',
           search_criteria: "<body onload=alert('test1')>Text</body>",
         }
       end

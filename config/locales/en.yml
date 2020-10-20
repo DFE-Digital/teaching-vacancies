@@ -859,10 +859,11 @@ en:
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
     edit:
       edit_link: Edit alert criteria
-      intro: 'You currently receive an alert for any new jobs that match the following criteria:'
+      filters: Add more filters
       title: Manage your job alert
-    edit_search_criteria:
-      title: Edit alert criteria
+    errors:
+      duplicate_alert: A job alert matching this criteria already exists
+      no_criteria_selected: Please choose at least one criteria
     frequency:
       daily: Daily, at around 3 pm
       weekly: Weekly (Friday evening at around 6 pm)
@@ -876,8 +877,6 @@ en:
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
     location_radius_text: Within %{radius} miles of %{location}
     location_category_text: In %{location}
-    info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
-    intro: 'We’ll email you details of any new jobs that match the following search criteria:'
     labels:
       email_html: Email address (<span class="text-red">Required</span>)
       frequency_html: When do you want to receive alerts? (<span class="text-red">Required</span>)
@@ -890,7 +889,7 @@ en:
     location_category_text: In %{location}
     manage: Manage your subscription
     new:
-      page_description: Subscribe to job alerts
+      title: Create your job alert
     unsubscribe:
       confirmation: You will no longer receive updates for this alert.
       header: You have been unsubscribed from this email
@@ -931,6 +930,7 @@ en:
         location: City, town or postcode, for example
       errors:
         duplicate_alert: A job alert matching this criteria already exists
+        no_filters_selected: At least one search criteria must be defined
     confirm:
       heading: What happens next
       splash:
