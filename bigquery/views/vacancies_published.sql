@@ -32,18 +32,12 @@ IF
   WHERE
     organisationvacancy.vacancy_id=vacancy.id) AS number_of_organisations,
   #whether the vacancy was published by a schoolgroup e.g. a MAT
-  (
-  SELECT
-    COUNT(organisationvacancy.id)
-  FROM
-    `teacher-vacancy-service.production_dataset.feb20_organisationvacancy` AS organisationvacancy
-  LEFT JOIN
-    `teacher-vacancy-service.production_dataset.feb20_organisation` AS organisation
-  ON
-    organisation.id=organisationvacancy.organisation_id
-  WHERE
-    organisation.type="SchoolGroup"
-    AND organisationvacancy.vacancy_id=vacancy.id) > 0 AS schoolgroup_level,
+IF
+  (job_location != "at_one_school"
+    OR publisher_organisation.type="SchoolGroup",
+    TRUE,
+    FALSE) AS schoolgroup_level,
+  publisher_organisation.group_type AS schoolgroup_type,
   (
   SELECT
     COUNT(document.id)
@@ -53,7 +47,13 @@ IF
     document.vacancy_id=vacancy.id) AS number_of_documents
 FROM
   `teacher-vacancy-service.production_dataset.feb20_vacancy` AS vacancy
+LEFT JOIN
+  `teacher-vacancy-service.production_dataset.feb20_organisation` AS publisher_organisation
+ON
+  vacancy.publisher_organisation_id = publisher_organisation.id
 WHERE
   vacancy.status NOT IN ("trashed",
     "draft",
     "deleted")
+ORDER BY
+  publish_on DESC

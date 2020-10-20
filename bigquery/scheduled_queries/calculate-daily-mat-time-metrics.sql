@@ -66,13 +66,9 @@ WITH
     ON
       CAST(user.organisation_uid AS STRING) = trust.uid
     LEFT JOIN
-      `teacher-vacancy-service.production_dataset.feb20_userpreference` AS tv_user_logged_in
-    ON
-      tv_user_logged_in.school_group_id=trust.id
-    LEFT JOIN
       `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
     ON
-      (vacancy.publisher_user_id=tv_user_logged_in.user_id
+      (vacancy.publisher_organisation_id=trust.id
         AND publish_on<date)
     WHERE
       #only include trusts that were open on each date we're calculating for in the counts above
