@@ -54,6 +54,8 @@ WITH
         WHEN "mat_level" THEN COUNTIF(publish_on=date
         AND schoolgroup_level)
         WHEN "multi_school" THEN COUNTIF(publish_on=date AND number_of_organisations > 1)
+        WHEN "published_by_mat" THEN COUNTIF(publish_on=date
+        AND schoolgroup_type="Multi-academy trust")
     END
       AS vacancies_published,
       CASE tags.tag
@@ -64,6 +66,8 @@ WITH
         WHEN "mat_level" THEN COUNTIF(expires_on=date
         AND schoolgroup_level)
         WHEN "multi_school" THEN COUNTIF(expires_on=date AND number_of_organisations > 1)
+        WHEN "published_by_mat" THEN COUNTIF(expires_on=date
+        AND schoolgroup_type="Multi-academy trust")
     END
       AS vacancies_expired,
     FROM
@@ -72,7 +76,7 @@ WITH
       SELECT
         *
       FROM
-        UNNEST(["all","has_documents","suitable_for_nqts","mat_level","multi_school"]) AS tag) AS tags
+        UNNEST(["all","has_documents","suitable_for_nqts","mat_level","multi_school","published_by_mat"]) AS tag) AS tags
     CROSS JOIN
       `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancies
     GROUP BY
