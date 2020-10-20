@@ -77,6 +77,14 @@ FROM (
         schoolgroupmembership.school_group_id=MAT.id
       GROUP BY
         user.email )) AS number_of_mat_access_workaround_users,
+    #count vacancies published by this trust using MAT level access
+    (
+    SELECT
+      COUNT(vacancy.id)
+    FROM
+      `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
+    WHERE
+      MAT.id=vacancy.publisher_organisation_id) AS vacancies_published_using_MAT_access,
     #count trust-level vacancies published by this trust
     (
     SELECT
