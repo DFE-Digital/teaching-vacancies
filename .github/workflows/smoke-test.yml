@@ -45,7 +45,7 @@ jobs:
 
       - name: Slack notification
         if: ${{ failure() }}
-        uses: rtCamp/action-slack-notify@v2.0.2
+        uses: rtCamp/action-slack-notify@v2.1.0
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: Smoke Test
