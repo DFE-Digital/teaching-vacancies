@@ -23,6 +23,11 @@ import_trust_data:
   class: 'ImportTrustDataJob'
   queue: import_trust_data
 
+refresh_vacancy_facets:
+  cron: '0 06 * * *'
+  class: 'RefreshVacancyFacetsJob'
+  queue: refresh_vacancy_facets
+
 refresh_cached_vacancy_statistics:
   cron: '*/15 * * * *'
   class: 'RefreshCachedVacancyStatisticsJob'
