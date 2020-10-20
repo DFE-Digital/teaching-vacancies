@@ -22,6 +22,7 @@ class Search::VacancySearchBuilder
       @vacancies.raw_answer['hitsPerPage'], @vacancies.raw_answer['nbHits']
     )
     @point_coordinates = @location_search.location_filter[:point_coordinates]
+    self
   end
 
   def only_active_to_hash

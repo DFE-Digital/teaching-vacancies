@@ -370,6 +370,13 @@ This will re-bundle assets when files are saved for faster development.
 
 ## Misc
 
+### Calculating and storing vacancy facets for local development
+
+```ruby
+# Inside the rails console
+VacancyFacets.new.refresh
+```
+
 ### Getting production-like data for local development
 
 You can use conduit to create a dump of production data. See [this section](https://github.com/DFE-Digital/teacher-vacancy-service/blob/master/documentation/govuk-paas.md#backuprestore-govuk-paas-postgres-service-database) of the GovUK PaaS docs. Then you can load this into your local database:
