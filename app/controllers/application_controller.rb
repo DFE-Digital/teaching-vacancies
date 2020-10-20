@@ -17,6 +17,13 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcerns
   include Ip
 
+  # TODO: remove this after Steven has verified his account
+  def google_search_console_verification
+    respond_to do |format|
+      format.html { render 'google_search_console_verification/googlef126f8525cc1ddc1.html', layout: false }
+    end
+  end
+
   def check
     render json: { status: 'OK' }, status: :ok
   end

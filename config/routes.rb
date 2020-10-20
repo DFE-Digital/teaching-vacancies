@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root 'pages#home'
 
+  # TODO: remove this after Steven has verified his account
+  # Temporary path to verify Steven's Google Search Console account
+  get 'googlef126f8525cc1ddc1' => 'application#google_search_console_verification'
+
   get 'check' => 'application#check'
   get 'sitemap' => 'sitemap#show', format: 'xml'
 
