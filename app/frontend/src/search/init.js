@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     renderAutocomplete({
-      container: document.getElementsByClassName('location-search')[0],
+      container: document.getElementsByClassName('location-text')[0],
       input: document.getElementById('jobs-search-form-location-field'),
       threshold: SEARCH_THRESHOLD,
       getOptions: getLocationSuggestions,
@@ -26,15 +26,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (document.getElementById('subscription-form-location-field')) {
     renderAutocomplete({
-      container: document.getElementsByClassName('location-search')[0],
+      container: document.getElementsByClassName('location-text')[0],
       input: document.getElementById('subscription-form-location-field'),
       threshold: SEARCH_THRESHOLD,
       getOptions: getLocationSuggestions,
       key: 'location',
-    });
-
-    document.getElementById('subscription-form-location-field').addEventListener('input', (e) => {
-      locationChange(e.target.value);
     });
   }
 });
