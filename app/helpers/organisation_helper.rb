@@ -3,50 +3,6 @@ module OrganisationHelper
 
   OFSTED_REPORT_ENDPOINT = 'https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/'.freeze
 
-  def location(organisation, job_location: nil)
-    return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
-      job_location.presence == 'at_multiple_schools'
-
-    address_join([organisation.name, organisation.town, organisation.county])
-  end
-
-  def full_address(organisation)
-    address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
-  end
-
-  def organisation_type(organisation:, with_age_range: false)
-    return organisation.group_type unless organisation.is_a?(School)
-
-    school_type_details = [organisation.school_type.singularize, organisation.religious_character]
-    school_type_details.push age_range(organisation) if with_age_range
-    school_type_details.reject(&:blank?).reject { |str| str == I18n.t('schools.not_given') }.join(', ')
-  end
-
-  def organisation_types(organisations)
-    organisations.map { |organisation| organisation_type(organisation: organisation, with_age_range: true) }
-                 .uniq.join(', ')
-  end
-
-  def organisation_type_basic(organisation)
-    organisation.is_a?(School) ? 'school' : 'trust'
-  end
-
-  def school_phase(school)
-    school.readable_phases&.map(&:capitalize)&.reject(&:blank?)&.join(', ')
-  end
-
-  def school_size(school)
-    if school.gias_data.present?
-      return number_of_pupils(school) if school.gias_data['NumberOfPupils'].present?
-      return school_capacity(school) if school.gias_data['SchoolCapacity'].present?
-    end
-    I18n.t('schools.no_information')
-  end
-
-  def ofsted_report(school)
-    OFSTED_REPORT_ENDPOINT + school.urn
-  end
-
   def age_range(school)
     return I18n.t('schools.not_given') unless school.minimum_age? && school.maximum_age?
 
@@ -65,6 +21,64 @@ module OrganisationHelper
     }
     section_number = organisation.is_a?(SchoolGroup) ? sections[section] : sections[section] - 1
     "#{section_number}."
+  end
+
+  def full_address(organisation)
+    address_join([organisation.address, organisation.town, organisation.county, organisation.postcode])
+  end
+
+  def location(organisation, job_location: nil)
+    return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
+      job_location.presence == 'at_multiple_schools'
+
+    address_join([organisation.name, organisation.town, organisation.county])
+  end
+
+  def managed_organisations_all_label(organisation)
+    if organisation.group_type == 'local_authority'
+      I18n.t('hiring_staff.managed_organisations.options.all_schools')
+    else
+      I18n.t('hiring_staff.managed_organisations.options.all')
+    end
+  end
+
+  def ofsted_report(school)
+    OFSTED_REPORT_ENDPOINT + school.urn
+  end
+
+  def organisation_type(organisation:, with_age_range: false)
+    return organisation.group_type unless organisation.is_a?(School)
+
+    school_type_details = [organisation.school_type.singularize, organisation.religious_character]
+    school_type_details.push age_range(organisation) if with_age_range
+    school_type_details.reject(&:blank?).reject { |str| str == I18n.t('schools.not_given') }.join(', ')
+  end
+
+  def organisation_types(organisations)
+    organisations.map { |organisation| organisation_type(organisation: organisation, with_age_range: true) }
+                 .uniq.join(', ')
+  end
+
+  def organisation_type_basic(organisation)
+    if organisation.is_a?(School)
+      'school'
+    elsif organisation.group_type == 'local_authority'
+      'local authority'
+    else
+      'trust'
+    end
+  end
+
+  def school_phase(school)
+    school.readable_phases&.map(&:capitalize)&.reject(&:blank?)&.join(', ')
+  end
+
+  def school_size(school)
+    if school.gias_data.present?
+      return number_of_pupils(school) if school.gias_data['NumberOfPupils'].present?
+      return school_capacity(school) if school.gias_data['SchoolCapacity'].present?
+    end
+    I18n.t('schools.no_information')
   end
 
 private

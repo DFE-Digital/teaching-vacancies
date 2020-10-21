@@ -137,9 +137,10 @@ en:
       page_title: Manage your view
       panel:
         title: Manage your view for %{organisation}
-        body: You can now see job listings from all schools in your trust, or choose to see specific schools' listings
+        body: You can now see job listings from all schools in your %{organisation_type}, or choose to see specific schools' listings
       options:
         all: All schools and trust head office
+        all_schools: All schools
         school_group: Trust head office
       labels:
         select_organisations: Select which schools' job listings you would like to see
@@ -166,12 +167,12 @@ en:
       schools:
         index:
           contact_support: contact our support team
-          title: Schools in your trust
-          description: Jobseekers will see this information in job listings about the schools and job locations within the trust
+          title: Schools in your %{organisation_type}
+          description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
           schools: Schools (%{count})
           missing_information_title: Is information missing or incorrect?
           missing_information_description_html: >-
-            If a school in your trust is missing from this list,
+            If a school in your %{organisation_type} is missing from this list,
             or the information isn't correct, please %{mail_to}.
         edit:
           title: Change %{organisation_type} details
@@ -226,7 +227,7 @@ en:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
-    trusts_index_link: 'Schools in your trust'
+    school_group_index_link: Schools in your %{organisation_type}
     jobseekers_index_link: 'View public jobs'
     find_job: 'Find a teaching job'
   pages:
@@ -761,7 +762,8 @@ en:
     description: Description
     info: 'About %{organisation}'
     jobs:
-      index: 'Jobs at %{organisation}'
+      index: Jobs at %{organisation}
+      local_authority_index: Jobs in %{organisation}
     map_aria_label: Interactive map showing school location
     no_information: 'No information available'
     no_jobs:
@@ -830,7 +832,7 @@ en:
         central_office: Trust head office
         at_one_school: Single school
         at_multiple_schools: At more than one school in the trust
-    website: 'Trust website'
+    website: '%{organisation_type} website'
     school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:
     benefits:

@@ -3,7 +3,10 @@
 .school.govuk-grid-row
   .govuk-grid-column-full
     %h1.govuk-heading-l.inline-block{ class: 'govuk-!-margin-bottom-1' }
-      = t('schools.jobs.index', organisation: @organisation.name)
+      - if @organisation.group_type == 'local_authority'
+        = t('schools.jobs.local_authority_index', organisation: @organisation.name)
+      - else
+        = t('schools.jobs.index', organisation: @organisation.name)
     - if @organisation.is_a?(School) && @organisation.all_vacancies.active.any?
       = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 inline-block float-right"
   - if @multiple_organisations && @organisation.is_a?(School)
