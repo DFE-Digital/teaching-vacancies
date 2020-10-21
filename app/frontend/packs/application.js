@@ -6,8 +6,8 @@ import 'styles/application.scss';
 import Rails from 'rails-ujs';
 
 import 'src/search/init';
-import 'src/lib/ui/patterns/currentLocation';
-import 'src/lib/ui/components/searchCheckbox';
+import 'src/patterns/currentLocation';
+import 'src/components/searchCheckbox';
 import 'src/addTitleToGoogleMapsIframe';
 import 'src/addVacancyStateToDataLayer';
 import 'src/deleteAccordionControl';

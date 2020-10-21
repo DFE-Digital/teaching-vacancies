@@ -17,15 +17,15 @@
     utils.js
     logging.js
     testSetup.js
-/styles
-  /base
-    utilities.scss
-  /global
-    variables.scss
-    mixins.scss
-    frontend.scss
-  application.scss
-  ie.scss
+  /styles
+    /base
+      utilities.scss
+    /global
+      variables.scss
+      mixins.scss
+      frontend.scss
+    application.scss
+    ie.scss
 ```
 
 ## Notes

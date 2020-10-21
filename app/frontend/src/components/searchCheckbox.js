@@ -1,5 +1,5 @@
-import '../../polyfill/closest.polyfill';
-import '../../polyfill/from.polyfill';
+import '../lib/polyfill/closest.polyfill';
+import '../lib/polyfill/from.polyfill';
 
 export const init = (container) => {
   const checkboxes = container.getElementsByClassName('govuk-checkboxes__input');

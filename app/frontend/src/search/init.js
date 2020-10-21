@@ -1,6 +1,6 @@
 import { onChange as locationChange, getCoords } from './ui/input/location';
 import { disableRadiusSelect } from './ui/input/radius';
-import { renderAutocomplete } from '../lib/ui/patterns/autocomplete';
+import { renderAutocomplete } from '../patterns/autocomplete';
 import { getLocationSuggestions } from '../lib/api';
 
 const SEARCH_THRESHOLD = 3;
