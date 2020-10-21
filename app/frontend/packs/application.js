@@ -5,7 +5,7 @@ import 'styles/application.scss';
 
 import Rails from 'rails-ujs';
 
-import 'src/search/init';
+import 'src/modules/search/init';
 import 'src/patterns/currentLocation';
 import 'src/components/searchCheckbox';
 import 'src/addTitleToGoogleMapsIframe';
