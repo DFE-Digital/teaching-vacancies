@@ -69,7 +69,6 @@ jobs:
         workflow: Smoke Test Manual # Workflow name
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "environment": "staging" }'
-        ref: ${{ github.sha }}
 
     # This step will retry until required check passes
     # and will fail the whole workflow if the check conclusion is not a success
