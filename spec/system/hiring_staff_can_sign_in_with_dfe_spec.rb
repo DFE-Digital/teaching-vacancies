@@ -3,7 +3,6 @@ require 'message_encryptor'
 
 RSpec.shared_examples 'a successful sign in' do
   scenario 'it signs in the user successfully' do
-    expect(page).to have_content("Jobs at #{organisation.name}")
     within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_out')) }
     within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.school_page_link')) }
   end
@@ -178,7 +177,7 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
 
         scenario 'it redirects the sign in page to the SchoolGroup page' do
           visit new_identifications_path
-          expect(page).to have_content("Jobs at #{organisation.name}")
+          expect(page).to have_content("Jobs in #{organisation.name}")
           expect(current_path).to eql(organisation_path)
         end
       end

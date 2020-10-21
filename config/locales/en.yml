@@ -762,7 +762,8 @@ en:
     description: Description
     info: 'About %{organisation}'
     jobs:
-      index: 'Jobs at %{organisation}'
+      index: Jobs at %{organisation}
+      local_authority_index: Jobs in %{organisation}
     map_aria_label: Interactive map showing school location
     no_information: 'No information available'
     no_jobs:
