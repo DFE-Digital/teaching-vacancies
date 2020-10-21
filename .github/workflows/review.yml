@@ -63,19 +63,26 @@ jobs:
         echo ::set-output name=BRANCH::${BRANCH}
         echo ::set-output name=TAG::${TAG}
 
+    # Ref
+    # When empty, defaults to `github.context.ref`. If a PR, `Error: No ref found for: refs/pull/2166/merge`
+    # When `${{ github.event.pull_request.head.ref }}`, `teva-1329-workflow-dispatch-smoke-test` and works.6
+    # When `${{ github.sha }}`, `Error: No ref found for: e143d9a8544da6d1b39fe16433e29450b4951544`
+    # When `${{ github.event.pull_request.head.sha }}`
     - name: Run Smoke Test
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: Smoke Test Manual # Workflow name
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "environment": "staging" }'
+        ref: ${{ github.event.pull_request.head.sha }}
+
 
     # This step will retry until required check passes
     # and will fail the whole workflow if the check conclusion is not a success
     - name: Wait on Smoke Test result
       uses: lewagon/wait-on-check-action@v0.1
       with:
-        ref: ${{ github.sha }} # branch, commit SHA or tag
+        ref: ${{ github.event.pull_request.head.sha }} # branch, commit SHA or tag
         check-name: Smoke Test Manual Job # Job name within workflow
         repo-token: ${{ secrets.PERSONAL_TOKEN }}
         wait-interval: 120 # seconds
