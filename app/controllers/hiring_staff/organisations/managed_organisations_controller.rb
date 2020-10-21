@@ -37,10 +37,12 @@ private
     @organisation_options = current_organisation.schools.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
-    @organisation_options.unshift(
-      OpenStruct.new({ id: current_organisation.id,
-                       name: I18n.t('hiring_staff.managed_organisations.options.school_group'),
-                       address: full_address(current_organisation) }),
-    )
+    unless current_organisation.group_type == 'local_authority'
+      @organisation_options.unshift(
+        OpenStruct.new({ id: current_organisation.id,
+                         name: I18n.t('hiring_staff.managed_organisations.options.school_group'),
+                         address: full_address(current_organisation) }),
+      )
+    end
   end
 end
