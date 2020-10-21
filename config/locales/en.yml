@@ -167,12 +167,12 @@ en:
       schools:
         index:
           contact_support: contact our support team
-          title: Schools in your trust
-          description: Jobseekers will see this information in job listings about the schools and job locations within the trust
+          title: Schools in your %{organisation_type}
+          description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
           schools: Schools (%{count})
           missing_information_title: Is information missing or incorrect?
           missing_information_description_html: >-
-            If a school in your trust is missing from this list,
+            If a school in your %{organisation_type} is missing from this list,
             or the information isn't correct, please %{mail_to}.
         edit:
           title: Change %{organisation_type} details

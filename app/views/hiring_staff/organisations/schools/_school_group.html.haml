@@ -15,12 +15,13 @@
           %br
         = link_to t('organisation.view_more_or_change'), edit_organisation_school_path(current_organisation), class: 'govuk-link govuk-link--no-visited-state'
       %td.govuk-table__cell
-    %tr.govuk-table__row
-      %td.govuk-table__cell
-        %strong.strong= t('school_groups.address')
-      %td.govuk-table__cell
-        = full_address(current_organisation)
-      %td.govuk-table__cell
+    - unless current_organisation.group_type == 'local_authority'
+      %tr.govuk-table__row
+        %td.govuk-table__cell
+          %strong.strong= t('school_groups.address')
+        %td.govuk-table__cell
+          = full_address(current_organisation)
+        %td.govuk-table__cell
     %tr.govuk-table__row
       %td.govuk-table__cell
         %strong.strong= t('school_groups.website')
@@ -36,15 +37,16 @@
           = t('buttons.change')
           %span.govuk-visually-hidden
             = t('hiring_staff.organisations.aria_change_website', organisation_type: organisation_type_basic(current_organisation))
-    %tr.govuk-table__row
-      %td.govuk-table__cell
-        %strong.strong= t('school_groups.group_type')
-      %td.govuk-table__cell
-        = current_organisation.group_type
-      %td.govuk-table__cell
-    %tr.govuk-table__row
-      %td.govuk-table__cell
-        %strong.strong= t('school_groups.uid')
-      %td.govuk-table__cell
-        = current_organisation.uid
-      %td.govuk-table__cell
+    - unless current_organisation.group_type == 'local_authority'
+      %tr.govuk-table__row
+        %td.govuk-table__cell
+          %strong.strong= t('school_groups.group_type')
+        %td.govuk-table__cell
+          = current_organisation.group_type
+        %td.govuk-table__cell
+      %tr.govuk-table__row
+        %td.govuk-table__cell
+          %strong.strong= t('school_groups.uid')
+        %td.govuk-table__cell
+          = current_organisation.uid
+        %td.govuk-table__cell
