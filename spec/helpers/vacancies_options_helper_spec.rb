@@ -2,30 +2,63 @@ require 'rails_helper'
 
 RSpec.describe VacanciesOptionsHelper, type: :helper do
   describe '#job_location_options' do
-    context 'when MultiSchoolJobsFeature is enabled' do
-      it 'returns an array including the multi-school option' do
-        expect(helper.job_location_options).to eq(
-          [
-            ['At one school in the trust', :at_one_school],
-            ['At more than one school in the trust', :at_multiple_schools],
-            ['At the trust\'s head office', :central_office],
-          ],
-        )
+    context 'when the organisation is a local authority' do
+      let(:organisation) { create(:local_authority) }
+
+      context 'when MultiSchoolJobsFeature is enabled' do
+        it 'returns an array including the multi-school option' do
+          expect(helper.job_location_options(organisation)).to eq(
+            [
+              ['At one school in the local authority', :at_one_school],
+              ['At more than one school in the local authority', :at_multiple_schools],
+            ],
+          )
+        end
+      end
+
+      context 'when MultiSchoolJobsFeature is not enabled' do
+        before do
+          allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
+        end
+
+        it 'returns an array without the multi-school option' do
+          expect(helper.job_location_options(organisation)).to eq(
+            [
+              ['At one school in the local authority', :at_one_school],
+            ],
+          )
+        end
       end
     end
 
-    context 'when MultiSchoolJobsFeature is not enabled' do
-      before do
-        allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
+    context 'when the organisation is a trust' do
+      let(:organisation) { create(:trust) }
+
+      context 'when MultiSchoolJobsFeature is enabled' do
+        it 'returns an array including the multi-school option' do
+          expect(helper.job_location_options(organisation)).to eq(
+            [
+              ['At one school in the trust', :at_one_school],
+              ['At more than one school in the trust', :at_multiple_schools],
+              ['At the trust\'s head office', :central_office],
+            ],
+          )
+        end
       end
 
-      it 'returns an array without the multi-school option' do
-        expect(helper.job_location_options).to eq(
-          [
-            ['At one school in the trust', :at_one_school],
-            ['At the trust\'s head office', :central_office],
-          ],
-        )
+      context 'when MultiSchoolJobsFeature is not enabled' do
+        before do
+          allow(MultiSchoolJobsFeature).to receive(:enabled?).and_return(false)
+        end
+
+        it 'returns an array without the multi-school option' do
+          expect(helper.job_location_options(organisation)).to eq(
+            [
+              ['At one school in the trust', :at_one_school],
+              ['At the trust\'s head office', :central_office],
+            ],
+          )
+        end
       end
     end
   end

@@ -12,7 +12,7 @@ RSpec.describe 'Creating a vacancy' do
     stub_hiring_staff_auth(uid: school_group.uid, session_id: session_id)
   end
 
-  context 'when job is located at school group central office' do
+  context 'when job is located at trust central office' do
     let(:vacancy) { build(:vacancy, :at_central_office, :complete) }
 
     describe '#job_location' do
@@ -58,10 +58,8 @@ RSpec.describe 'Creating a vacancy' do
     end
   end
 
-  context 'when job is located at a single school in the school group' do
-    let(:vacancy) do
-      build(:vacancy, :at_one_school, :complete)
-    end
+  context 'when job is located at a single school in the trust' do
+    let(:vacancy) { build(:vacancy, :at_one_school, :complete) }
 
     describe '#job_location' do
       context 'when no school is selected' do
@@ -153,10 +151,8 @@ RSpec.describe 'Creating a vacancy' do
     end
   end
 
-  context 'when job is located at multiple schools in the school group' do
-    let(:vacancy) do
-      build(:vacancy, :at_multiple_schools, :complete)
-    end
+  context 'when job is located at multiple schools in the trust' do
+    let(:vacancy) { build(:vacancy, :at_multiple_schools, :complete) }
 
     describe '#job_location' do
       context 'when only 1 school is selected' do

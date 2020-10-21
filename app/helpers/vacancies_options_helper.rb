@@ -3,11 +3,10 @@ module VacanciesOptionsHelper
     Vacancy.hired_statuses.keys.map { |k| [t("jobs.feedback.hired_status.#{k}"), k] }
   end
 
-  def job_location_options
-    Vacancy::JOB_LOCATION_OPTIONS.map { |key, _value|
-      [I18n.t("helpers.fieldset.job_location_form.job_location_options.#{key}"), key] if
-        MultiSchoolJobsFeature.enabled? || key != :at_multiple_schools
-    }.reject(&:blank?)
+  def job_location_options(organisation)
+    mapped_job_location_options(organisation)
+      .delete_if { |_k, v| organisation.group_type == 'local_authority' && v == :central_office }
+      .reject(&:blank?)
   end
 
   def job_role_options
@@ -22,6 +21,16 @@ module VacanciesOptionsHelper
 
   def listed_elsewhere_options
     Vacancy.listed_elsewheres.keys.map { |k| [t("jobs.feedback.listed_elsewhere.#{k}"), k] }
+  end
+
+  def mapped_job_location_options(organisation)
+    Vacancy::JOB_LOCATION_OPTIONS.map do |k, _v|
+      next unless MultiSchoolJobsFeature.enabled? || k != :at_multiple_schools
+
+      [I18n.t("helpers.fieldset.job_location_form.job_location_options.#{k}",
+              organisation_type: organisation_type_basic(organisation)),
+       k]
+    end
   end
 
   def radius_filter_options

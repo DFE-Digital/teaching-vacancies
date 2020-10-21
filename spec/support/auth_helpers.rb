@@ -15,11 +15,13 @@ module AuthHelpers
     allow(fake_env).to receive(env_field_for_password.to_sym).and_return(env_value_for_password)
   end
 
-  def stub_hiring_staff_auth(urn: nil, uid: nil, session_id: 'session_id', email: nil)
+  def stub_hiring_staff_auth(urn: nil, uid: nil, la_code: '123', session_id: 'session_id', email: nil)
     if urn.present?
-      page.set_rack_session(urn: urn, uid: '')
+      page.set_rack_session(urn: urn, uid: '', la_code: '')
     elsif uid.present?
-      page.set_rack_session(urn: '', uid: uid)
+      page.set_rack_session(urn: '', uid: uid, la_code: '')
+    else
+      page.set_rack_session(urn: '', uid: '', la_code: la_code)
     end
     page.set_rack_session(session_id: session_id)
     create(:user, oid: session_id, email: email, last_activity_at: Time.zone.now)
