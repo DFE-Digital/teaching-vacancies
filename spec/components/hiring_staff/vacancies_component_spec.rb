@@ -56,10 +56,10 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
       end
     end
 
-    context 'when the organisation is a Trust' do
+    context 'when the organisation is a trust' do
       let(:organisation) { create(:trust) }
       let!(:vacancy) { create(:vacancy, :published, :at_central_office) }
-      let(:filters) { { managed_school_ids: [], managed_organisations: organisation.id } }
+      let(:filters) { { managed_school_ids: [], managed_organisations: 'all' } }
 
       it 'renders the vacancy readable job location in the table' do
         expect(
@@ -71,6 +71,32 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
         expect(
           inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute('value').value,
         ).to eql(I18n.t('buttons.apply_filters'))
+      end
+
+      it 'renders the trust head office as a filter option' do
+        expect(inline_component.css('.new_managed_organisations_form').to_html).to include('Trust head office')
+      end
+    end
+
+    context 'when the organisation is a local authority' do
+      let(:organisation) { create(:local_authority) }
+      let!(:vacancy) { create(:vacancy, :published, :at_one_school) }
+      let(:filters) { { managed_school_ids: [], managed_organisations: 'all' } }
+
+      it 'renders the vacancy readable job location in the table' do
+        expect(
+          inline_component.css('.govuk-table.vacancies > tbody > tr > td#vacancy_location').to_html,
+        ).to include(vacancy.readable_job_location)
+      end
+
+      it 'renders the filters sidebar' do
+        expect(
+          inline_component.css('.new_managed_organisations_form input[type="submit"]').attribute('value').value,
+        ).to eql(I18n.t('buttons.apply_filters'))
+      end
+
+      it 'does not render the trust head office as a filter option' do
+        expect(inline_component.css('.new_managed_organisations_form').to_html).not_to include('Trust head office')
       end
     end
   end
