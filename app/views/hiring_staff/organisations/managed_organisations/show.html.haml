@@ -4,7 +4,7 @@
   .govuk-grid-column-full
     .interruption-card
       %h1.interruption-card__title= t('hiring_staff.managed_organisations.panel.title', organisation: current_organisation.name)
-      .interruption-card__body= t('hiring_staff.managed_organisations.panel.body')
+      .interruption-card__body= t('hiring_staff.managed_organisations.panel.body', organisation_type: organisation_type_basic(current_organisation))
   .govuk-grid-column-two-thirds
     = form_for @managed_organisations_form, url: organisation_managed_organisations_path, html: { method: "patch" } do |f|
       = f.govuk_error_summary
@@ -16,7 +16,7 @@
 
         = f.govuk_check_box :managed_organisations,
           'all',
-          label: { text: t('hiring_staff.managed_organisations.options.all') },
+          label: { text: managed_organisations_all_label(current_organisation) },
           link_errors: true
 
         .govuk-body{ class: 'govuk-!-margin-left-2 govuk-!-margin-bottom-2' } Or
