@@ -7,7 +7,7 @@
 
       %h1.govuk-heading-xl= t('.title')
 
-      = render 'fields', f: f
+      .location-search= render 'fields', f: f
 
       = render(NotificationComponent.new(content: { body: t('subscriptions.info') }, style: 'notice', background: true, dismiss: false, alert: 'info'))
 

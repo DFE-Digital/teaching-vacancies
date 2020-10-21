@@ -1,0 +1,26 @@
+.location-search {
+  .location-radius-select {
+    @include govuk-responsive-margin(2, 'bottom');
+
+    display: inline-block;
+    float: right;
+    width: 48%;
+
+    @media (max-width: 850px) {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .location-text {
+    @include govuk-responsive-margin(2, 'bottom');
+
+    display: inline-block;
+    width: 48%;
+
+    @media (max-width: 850px) {
+      display: block;
+      width: 100%;
+    }
+  }
+}

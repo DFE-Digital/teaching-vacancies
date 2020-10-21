@@ -38,7 +38,7 @@ const getTargetElementId = () => {
 
 export const showLocationLink = (container) => {
   container.classList.add('js-geolocation-supported');
-  container.id = 'location-search';
+  container.id = 'location-text';
 };
 
 export const showErrorMessage = (link) => {
