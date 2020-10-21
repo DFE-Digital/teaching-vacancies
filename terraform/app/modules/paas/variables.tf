@@ -48,6 +48,9 @@ variable web_app_memory {
   default = 512
 }
 
+variable web_app_start_command {
+}
+
 variable worker_app_deployment_strategy {
 }
 
@@ -98,7 +101,6 @@ locals {
   postgres_service_name    = "${var.project_name}-postgres-${var.environment}"
   redis_service_name       = "${var.project_name}-redis-${var.environment}"
   web_app_name             = "${var.project_name}-${var.environment}"
-  web_app_start_command    = "bundle exec rake cf:on_first_instance db:migrate && rails s"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name          = "${var.project_name}-worker-${var.environment}"
 }
