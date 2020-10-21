@@ -137,9 +137,10 @@ en:
       page_title: Manage your view
       panel:
         title: Manage your view for %{organisation}
-        body: You can now see job listings from all schools in your trust, or choose to see specific schools' listings
+        body: You can now see job listings from all schools in your %{organisation_type}, or choose to see specific schools' listings
       options:
         all: All schools and trust head office
+        all_schools: All schools
         school_group: Trust head office
       labels:
         select_organisations: Select which schools' job listings you would like to see
@@ -226,7 +227,7 @@ en:
     sign_in: 'List a teaching job'
     sign_out: 'Sign out'
     school_page_link: 'Manage jobs'
-    trusts_index_link: 'Schools in your trust'
+    school_group_index_link: Schools in your %{organisation_type}
     jobseekers_index_link: 'View public jobs'
     find_job: 'Find a teaching job'
   pages:

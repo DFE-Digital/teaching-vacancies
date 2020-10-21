@@ -28,7 +28,13 @@ module OrganisationHelper
   end
 
   def organisation_type_basic(organisation)
-    organisation.is_a?(School) ? 'school' : 'trust'
+    if organisation.is_a?(School)
+      'school'
+    elsif organisation.group_type == 'local_authority'
+      'local authority'
+    else
+      'trust'
+    end
   end
 
   def school_phase(school)
