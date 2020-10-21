@@ -11,10 +11,10 @@ FactoryBot.define do
           end
           set
                      }.call,
-        school_group_uids: proc {
+        trust_uids: proc {
         number = Faker::Number.number(digits: [4, 5].sample)
         [[number.to_s, nil].sample]
-                           }.call
+                    }.call
       }
     end
     email { Faker::Internet.email }
