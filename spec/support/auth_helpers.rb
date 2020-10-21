@@ -26,7 +26,7 @@ module AuthHelpers
   end
 
   def stub_authentication_step(organisation_id: '939eac36-0777-48c2-9c2c-b87c948a9ee0',
-                               school_urn: '110627', trust_uid: nil, la_code: nil,
+                               school_urn: '110627', trust_uid: nil, la_code: '123',
                                email: 'an-email@example.com')
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: 'dfe',
