@@ -16,7 +16,7 @@ class Jobseekers::OrganisationOverviews::BaseComponent < ViewComponent::Base
   def organisation_rows
     [{ present: true, th: I18n.t('school_groups.type'), td: organisation.group_type },
      { present: organisation.website.present? || organisation.url.present?,
-       th: I18n.t('school_groups.website'),
+       th: I18n.t('school_groups.website', organisation_type: organisation_type_basic(organisation).humanize),
        td: link_to(I18n.t('schools.website_link_text', organisation_name: organisation.name),
                    organisation.website.presence || organisation.url,
                    class: 'govuk-link link-wrap', target: '_blank') }]

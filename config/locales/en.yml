@@ -832,7 +832,7 @@ en:
         central_office: Trust head office
         at_one_school: Single school
         at_multiple_schools: At more than one school in the trust
-    website: 'Trust website'
+    website: '%{organisation_type} website'
     school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:
     benefits:

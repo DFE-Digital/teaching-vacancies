@@ -24,7 +24,7 @@
         %td.govuk-table__cell
     %tr.govuk-table__row
       %td.govuk-table__cell
-        %strong.strong= t('school_groups.website')
+        %strong.strong= t('school_groups.website', organisation_type: organisation_type_basic(current_organisation).humanize)
       %td.govuk-table__cell.change_answer
         - if current_organisation.website.present?
           = link_to current_organisation.website, current_organisation.website, class: 'govuk-link wordwrap', target: '_blank'
