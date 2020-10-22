@@ -47,7 +47,6 @@ module cloudfront {
   offline_bucket_origin_path      = each.value.offline_bucket_origin_path
   cloudfront_enable_standard_logs = each.value.cloudfront_enable_standard_logs
   route53_zones                   = var.route53_zones
-  cloudfront_forward_host         = var.cloudfront_forward_host
   is_production                   = local.is_production
   route53_a_records               = local.route53_a_records
   route53_cname_record            = local.route53_cname_record

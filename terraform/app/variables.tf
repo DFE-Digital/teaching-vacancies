@@ -128,10 +128,6 @@ variable statuscake_alerts {
   default = {}
 }
 
-variable cloudfront_forward_host {
-  default = false
-}
-
 locals {
   paas_app_env_values  = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets        = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
