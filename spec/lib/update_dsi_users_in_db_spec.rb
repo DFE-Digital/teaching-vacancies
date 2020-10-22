@@ -26,21 +26,21 @@ RSpec.describe UpdateDfeSignInUsers do
       user_with_one_school = User.find_by(email: 'foo@example.com')
       expect(user_with_one_school.dsi_data['school_urns']).to eq(%w[111111])
       expect(user_with_one_school.dsi_data['trust_uids']).to eq([])
-      expect(user_with_one_school.dsi_data['la_code']).to be_nil
+      expect(user_with_one_school.dsi_data['la_codes']).to eq([])
       expect(user_with_one_school.given_name).to eq('Roger')
       expect(user_with_one_school.family_name).to eq('Johnson')
 
       user_with_multiple_orgs = User.find_by(email: 'bar@example.com')
       expect(user_with_multiple_orgs.dsi_data['school_urns']).to eq(%w[333333 555555])
       expect(user_with_multiple_orgs.dsi_data['trust_uids']).to eq(%w[222222 444444])
-      expect(user_with_one_school.dsi_data['la_code']).to be_nil
+      expect(user_with_one_school.dsi_data['la_codes']).to eq([])
       expect(user_with_multiple_orgs.given_name).to eq('Alice')
       expect(user_with_multiple_orgs.family_name).to eq('Robertson')
 
       local_authority_user = User.find_by(email: 'baz@example.com')
       expect(local_authority_user.dsi_data['school_urns']).to eq([])
       expect(local_authority_user.dsi_data['trust_uids']).to eq([])
-      expect(local_authority_user.dsi_data['la_code']).to eq('813')
+      expect(local_authority_user.dsi_data['la_codes']).to eq(%w[813])
       expect(local_authority_user.given_name).to eq('Barry')
       expect(local_authority_user.family_name).to eq('Scott')
     end

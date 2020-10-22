@@ -39,13 +39,13 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     @reason_for_failing_sign_in = information.reason_for_failing_sign_in
     @schools = information.schools
     @trusts = information.trusts
-    @local_authority = information.local_authority
+    @local_authorities = information.local_authorities
     update_session_except_org_id(information.details_to_update_in_session)
-    unless information.multiple_organisations?
+    unless information.multiple_organisations? || @reason_for_failing_sign_in.present?
       redirect_to auth_email_create_session_path(
         urn: @schools&.first&.urn,
         uid: @trusts&.first&.uid,
-        la_code: @local_authority&.local_authority_code,
+        la_code: @local_authorities&.first&.local_authority_code,
       )
     end
   end
@@ -109,6 +109,6 @@ private
              nil
            end
 
-    user&.dsi_data&.dig('la_code') == get_la_code || user&.dsi_data&.dig('trust_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
+    user&.dsi_data&.dig('la_codes')&.include?(get_la_code) || user&.dsi_data&.dig('trust_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
   end
 end

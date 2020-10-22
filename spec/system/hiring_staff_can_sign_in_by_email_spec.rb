@@ -48,7 +48,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
     context 'when a user has multiple organisations' do
       let(:dsi_data) do
-        { 'school_urns' => [school.urn, other_school.urn], 'trust_uids' => [trust.uid, '1623'], 'la_code' => local_authority.local_authority_code }
+        { 'school_urns' => [school.urn, other_school.urn], 'trust_uids' => [trust.uid, '1623'], 'la_codes' => [local_authority.local_authority_code] }
       end
 
       context 'with LocalAuthorityAccessFeature enabled' do
@@ -136,7 +136,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
     context 'when a user has only one organisation' do
       context 'organisation is a School' do
         let(:dsi_data) do
-          { 'school_urns' => [school.urn], 'trust_uids' => [] }
+          { 'school_urns' => [school.urn], 'trust_uids' => [], 'la_codes' => [] }
         end
 
         scenario 'can sign in and bypass choice of org' do
@@ -163,7 +163,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
       context 'when the organisation is a Trust' do
         let(:dsi_data) do
-          { 'school_urns' => [], 'trust_uids' => [trust.uid] }
+          { 'school_urns' => [], 'trust_uids' => [trust.uid], 'la_codes' => [] }
         end
 
         before do
@@ -194,7 +194,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 
       context 'when the organisation is a Local Authority' do
         let(:dsi_data) do
-          { 'school_urns' => [], 'trust_uids' => [], 'la_code' => local_authority.local_authority_code }
+          { 'school_urns' => [], 'trust_uids' => [], 'la_codes' => [local_authority.local_authority_code] }
         end
 
         context 'with LocalAuthorityAccessFeature enabled' do

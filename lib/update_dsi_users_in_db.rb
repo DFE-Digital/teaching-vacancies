@@ -30,11 +30,12 @@ private
 
         school_urns = user.dsi_data&.[]('school_urns') || []
         trust_uids = user.dsi_data&.[]('trust_uids') || []
+        la_codes = user.dsi_data&.[]('la_codes') || []
 
         user.dsi_data = {
           school_urns: (school_urns | [urn]).compact,
           trust_uids: (trust_uids | [uid]).compact,
-          la_code: la_code,
+          la_codes: (la_codes | [la_code]).compact,
         }
         user.save
       end
