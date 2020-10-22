@@ -25,8 +25,6 @@ module VacanciesOptionsHelper
 
   def mapped_job_location_options(organisation)
     Vacancy::JOB_LOCATION_OPTIONS.map do |k, _v|
-      next unless MultiSchoolJobsFeature.enabled? || k != :at_multiple_schools
-
       [I18n.t("helpers.fieldset.job_location_form.job_location_options.#{k}",
               organisation_type: organisation_type_basic(organisation)),
        k]
