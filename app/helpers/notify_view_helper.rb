@@ -22,7 +22,7 @@ module NotifyViewHelper
   end
 
   def show_link(vacancy, subscription)
-    url = vacancy.share_url(source: 'subscription', medium: 'email', campaign: "#{subscription.frequency}_alert")
+    url = vacancy.share_url(source: subscription.alert_run_today.id, medium: 'email', campaign: "#{subscription.frequency}_alert")
     text = vacancy.job_title
     notify_link(url, text)
   end

@@ -121,8 +121,8 @@ RSpec.describe VacancyPresenter do
     context 'when campaign parameters are passed' do
       it 'builds the campaign URL' do
         vacancy = VacancyPresenter.new(create(:vacancy, job_title: 'PE Teacher'))
-        expected_campaign_url = URI('https://localhost:3000/jobs/pe-teacher?utm_medium=dance&utm_source=subscription')
-        expect(vacancy.share_url(source: 'subscription', medium: 'dance')).to match(expected_campaign_url.to_s)
+        expected_campaign_url = URI('https://localhost:3000/jobs/pe-teacher?utm_medium=dance&utm_source=alert_run_id')
+        expect(vacancy.share_url(source: 'alert_run_id', medium: 'dance')).to match(expected_campaign_url.to_s)
       end
     end
   end
