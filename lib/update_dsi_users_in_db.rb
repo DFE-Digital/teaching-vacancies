@@ -19,13 +19,23 @@ private
         # When a user is associated with multiple organisations,
         # DfE Sign In returns 1 user object per organisation.
         # Each of these user objects has the same userId.
-        urn = dsi_user['organisation']['URN']
-        uid = dsi_user['organisation']['UID']
+        organisation = dsi_user['organisation']
+        urn = organisation['URN']
+        uid = organisation['UID']
+
+        # All organisations have an EstablishmentNumber, but we only want this for identifying LAs by.
+        # If a User has a dsi_data local_authority_code, they can sign in as that LA.
+        # Assume that if and only if an organisation has no URN or UID, it is a Local Authority.
+        la_code = urn.present? || uid.present? ? nil : organisation['EstablishmentNumber']
+
         school_urns = user.dsi_data&.[]('school_urns') || []
-        school_group_uids = user.dsi_data&.[]('school_group_uids') || []
+        trust_uids = user.dsi_data&.[]('trust_uids') || []
+        la_codes = user.dsi_data&.[]('la_codes') || []
+
         user.dsi_data = {
           school_urns: (school_urns | [urn]).compact,
-          school_group_uids: (school_group_uids | [uid]).compact,
+          trust_uids: (trust_uids | [uid]).compact,
+          la_codes: (la_codes | [la_code]).compact,
         }
         user.save
       end

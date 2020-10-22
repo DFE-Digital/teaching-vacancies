@@ -9,10 +9,16 @@
 
       %p= t('hiring_staff.temp_login.choose_organisation.please_select')
 
+      - @local_authorities.each do |la|
+        = link_to(la.name, auth_email_create_session_path(la_code: la.local_authority_code), class: 'govuk-link')
+        %br
+      %br
+
+      - @trusts.each do |trust|
+        = link_to(trust.name, auth_email_create_session_path(uid: trust.uid), class: 'govuk-link')
+        %br
+      %br
+
       - @schools.each do |school|
         = link_to(location(school), auth_email_create_session_path(urn: school.urn), class: 'govuk-link')
-        %br
-
-      - @school_groups.each do |school_group|
-        = link_to(school_group.name, auth_email_create_session_path(uid: school_group.uid), class: 'govuk-link')
         %br
