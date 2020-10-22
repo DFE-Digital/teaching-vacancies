@@ -22,7 +22,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
 
   context 'for one hiring staff' do
     let(:user) { create(:user, email: email_of_hiring_staff) }
-    let(:email_of_hiring_staff) { 'email@exmaple.com' }
+    let(:email_of_hiring_staff) { 'email@example.com' }
 
     context 'with one expired vacancy needing feedback' do
       let!(:expired_vacancy) { create(:vacancy, :expired, publisher_user: user, expires_on: Time.zone.today) }
