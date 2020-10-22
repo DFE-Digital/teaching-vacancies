@@ -9,7 +9,7 @@
 
       .location-search= render 'fields', f: f
 
-      = render(NotificationComponent.new(content: { body: t('subscriptions.info') }, style: 'notice', background: true, dismiss: false, alert: 'info'))
+      = render(Shared::NotificationComponent.new(content: { body: t('subscriptions.info') }, style: 'notice', background: true, dismiss: false, alert: 'info'))
 
       = f.hidden_field :token, value: @subscription.token
 
