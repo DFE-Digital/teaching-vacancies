@@ -9,20 +9,21 @@ module NotifyViewHelper
     notify_link(url, text)
   end
 
+  # TODO: This one next
   def unsubscribe_link(token)
     url = unsubscribe_subscription_url(token, protocol: 'https')
     text = t('.unsubscribe_link_text')
     notify_link(url, text)
   end
 
-  def edit_link(token)
-    url = edit_subscription_url(token, protocol: 'https')
+  def edit_link(subscription)
+    url = subscription.edit_url(**utm_params(subscription))
     text = t('.edit_link_text')
     notify_link(url, text)
   end
 
   def show_link(vacancy, subscription)
-    url = vacancy.share_url(source: subscription.alert_run_today.id, medium: 'email', campaign: "#{subscription.frequency}_alert")
+    url = vacancy.share_url(**utm_params(subscription))
     text = vacancy.job_title
     notify_link(url, text)
   end
@@ -35,5 +36,11 @@ module NotifyViewHelper
                                       vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: JSON.parse(subscription.search_criteria) } },
     )
+  end
+
+private
+
+  def utm_params(subscription)
+    { source: subscription.alert_run_today.id, medium: 'email', campaign: "#{subscription.frequency}_alert" }
   end
 end

@@ -20,7 +20,7 @@
 - @subscription.filtered_search_criteria.each_pair do |filter, value|
   = "- #{filter.humanize}: #{value}"
   \
-= [t('.alert_frequency', frequency: @subscription.frequency), t('.edit_alert', edit_link: edit_link(@subscription.token))].join(' ')
+= [t('.alert_frequency', frequency: @subscription.frequency), t('.edit_alert', edit_link: edit_link(@subscription))].join(' ')
 \
 \---
 \

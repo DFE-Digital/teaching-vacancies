@@ -149,4 +149,20 @@ RSpec.describe SubscriptionPresenter do
       expect(presenter.send(:search_criteria_field, 'random_field', 'value')).to eql({ 'random_field': 'value' })
     end
   end
+
+  describe '#edit_url' do
+    before { allow(subscription).to receive(:token).and_return('secure_token') }
+
+    it 'returns the absolute url for editing the subscription' do
+      expected_url = URI('localhost:3000/subscriptions/secure_token/edit')
+      expect(presenter.edit_url).to match(expected_url.to_s)
+    end
+
+    context 'when campaign parameters are passed' do
+      it 'builds the campaign URL' do
+        expected_campaign_url = URI('https://localhost:3000/subscriptions/secure_token/edit?utm_medium=interpretative_dance&utm_source=alert_run_id')
+        expect(presenter.edit_url(source: 'alert_run_id', medium: 'interpretative_dance')).to match(expected_campaign_url.to_s)
+      end
+    end
+  end
 end
