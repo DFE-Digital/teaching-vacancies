@@ -100,6 +100,10 @@ variable paas_web_app_memory {
   default = 512
 }
 
+variable paas_web_app_start_command {
+  default = "bundle exec rake cf:on_first_instance db:migrate && rails s"
+}
+
 variable paas_worker_app_deployment_strategy {
   default = "blue-green-v2"
 }
