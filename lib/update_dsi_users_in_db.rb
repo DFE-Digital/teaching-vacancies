@@ -26,7 +26,7 @@ private
         # All organisations have an EstablishmentNumber, but we only want this for identifying LAs by.
         # If a User has a dsi_data local_authority_code, they can sign in as that LA.
         # Assume that if and only if an organisation has no URN or UID, it is a Local Authority.
-        la_code = urn.present? || uid.present? ? nil : la_code = organisation['EstablishmentNumber']
+        la_code = urn.present? || uid.present? ? nil : organisation['EstablishmentNumber']
 
         school_urns = user.dsi_data&.[]('school_urns') || []
         trust_uids = user.dsi_data&.[]('trust_uids') || []

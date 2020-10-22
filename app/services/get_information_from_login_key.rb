@@ -1,5 +1,5 @@
 class GetInformationFromLoginKey
-  attr_reader :reason_for_failing_sign_in, :schools, :school_groups
+  attr_reader :reason_for_failing_sign_in, :schools, :trusts, :local_authority
 
   def initialize(key)
     @key = key
@@ -7,26 +7,36 @@ class GetInformationFromLoginKey
   end
 
   def details_to_update_in_session
-    { has_multiple_organisations: has_multiple_organisations,
+    { multiple_organisations: multiple_organisations?,
       oid: @user&.oid }
+  end
+
+  def multiple_organisations?
+    # .to_i used to convert nil to 0
+    @schools&.count.to_i + @trusts&.count.to_i + [@local_authority].compact.count > 1
   end
 
 private
 
   def deny_sign_in
     @reason_for_failing_sign_in = if @key&.expired?
-      'expired'
+                                    'expired'
                                   else
-      'no_key'
+                                    'no_key'
                                   end
   end
 
   def process_key
     @user = get_user
     @schools = get_schools
-    @school_groups = get_school_groups
+    @trusts = get_trusts
+    @local_authority = get_local_authority
     @key.destroy
-    @reason_for_failing_sign_in = 'no_orgs' if @schools.empty? && @school_groups.empty?
+    @reason_for_failing_sign_in = 'no_orgs' if @schools.empty? && @trusts.empty? && @local_authority.nil?
+  end
+
+  def get_user
+    @key.user_id ? User.find(@key.user_id) : nil
   end
 
   def get_schools
@@ -38,20 +48,19 @@ private
     scratch.sort_by(&:name)
   end
 
-  def get_school_groups
+  def get_trusts
     scratch = []
-    @user&.dsi_data&.dig('school_group_uids')&.each do |uid|
+    @user&.dsi_data&.dig('trust_uids')&.each do |uid|
       school_group_query = SchoolGroup.where(uid: uid)
       scratch.push(school_group_query.first) unless school_group_query.empty?
     end
     scratch.sort_by(&:name)
   end
 
-  def get_user
-    @key.user_id ? User.find(@key.user_id) : nil
-  end
+  def get_local_authority
+    return unless LocalAuthorityAccessFeature.enabled?
 
-  def has_multiple_organisations
-    @schools ? @schools.size > 1 : nil
+    la_code = @user&.dsi_data&.dig('la_code')
+    SchoolGroup.where(local_authority_code: la_code, group_type: 'local_authority')&.first
   end
 end

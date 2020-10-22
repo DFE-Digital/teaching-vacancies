@@ -13,7 +13,7 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
   def new; end
 
   def create
-    session.update(urn: get_urn, uid: get_uid)
+    session.update(urn: get_urn, uid: get_uid, la_code: get_la_code)
     Rails.logger.info(updated_session_details)
     redirect_to organisation_path
   end
@@ -38,20 +38,26 @@ class HiringStaff::SignIn::Email::SessionsController < HiringStaff::SignIn::Base
     information = GetInformationFromLoginKey.new(get_key)
     @reason_for_failing_sign_in = information.reason_for_failing_sign_in
     @schools = information.schools
-    @school_groups = information.school_groups
-    update_session_without_urn_or_uid(information.details_to_update_in_session)
-    redirect_to auth_email_create_session_path(urn: @schools&.first&.urn, uid: @school_groups&.first&.uid) if
-      only_one_organisation?
+    @trusts = information.trusts
+    @local_authority = information.local_authority
+    update_session_except_org_id(information.details_to_update_in_session)
+    unless information.multiple_organisations?
+      redirect_to auth_email_create_session_path(
+        urn: @schools&.first&.urn,
+        uid: @trusts&.first&.uid,
+        la_code: @local_authority&.local_authority_code,
+      )
+    end
   end
 
 private
 
-  def update_session_without_urn_or_uid(options)
+  def update_session_except_org_id(options)
     return unless options[:oid]
 
     session.update(
       session_id: options[:oid],
-      multiple_organisations: options[:has_multiple_organisations],
+      multiple_organisations: options[:multiple_organisations],
     )
     Rails.logger.warn("Hiring staff signed in via fallback authentication: #{options[:oid]}")
   end
@@ -62,6 +68,10 @@ private
 
   def get_urn
     params.dig(:urn)
+  end
+
+  def get_la_code
+    params.dig(:la_code)
   end
 
   def get_key
@@ -98,11 +108,7 @@ private
            rescue StandardError
              nil
            end
-    user&.dsi_data&.dig('school_group_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
-  end
 
-  def only_one_organisation?
-    # .to_i used to convert nil to 0
-    @schools&.count.to_i + @school_groups&.count.to_i == 1
+    user&.dsi_data&.dig('la_code') == get_la_code || user&.dsi_data&.dig('trust_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
   end
 end
