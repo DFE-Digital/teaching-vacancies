@@ -76,7 +76,9 @@ private
   end
 
   def local_authority_code
-    if LocalAuthorityAccessFeature.enabled?
+    # All organisations have an establishmentNumber, but we only want this for identifying LAs by.
+    # Assume that if and only if the organisation has no URN or UID, it is a Local Authority.
+    if LocalAuthorityAccessFeature.enabled? && school_urn.blank? && trust_uid.blank?
       auth_hash.dig('extra', 'raw_info', 'organisation', 'establishmentNumber') || ''
     end
   end
@@ -96,7 +98,7 @@ private
   end
 
   def check_authorisation(authorisation_permissions)
-    if authorisation_permissions.authorised? && organisation_id_present
+    if authorisation_permissions.authorised? && organisation_id_present?
       update_session(authorisation_permissions)
       update_user_last_activity_at
       redirect_to organisation_path
@@ -109,7 +111,7 @@ private
     redirect_to new_auth_email_path if AuthenticationFallback.enabled?
   end
 
-  def organisation_id_present
+  def organisation_id_present?
     school_urn.present? || trust_uid.present? || local_authority_code.present?
   end
 end

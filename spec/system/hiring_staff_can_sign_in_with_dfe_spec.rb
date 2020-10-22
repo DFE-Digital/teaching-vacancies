@@ -95,6 +95,11 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
 
     it_behaves_like 'a successful sign in'
 
+    context 'when LocalAuthorityAccessFeature enabled' do
+      before { allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true) }
+      it_behaves_like 'a successful sign in'
+    end
+
     scenario 'it redirects the sign in page to the school page' do
       visit new_identifications_path
       expect(page).to have_content("Jobs at #{organisation.name}")
@@ -152,6 +157,11 @@ RSpec.describe 'Hiring staff signing-in with DfE Sign In' do
       scenario 'it redirects the sign in page to the managed organisations user preference page' do
         expect(current_path).to eql(organisation_managed_organisations_path)
       end
+    end
+
+    context 'when LocalAuthorityAccessFeature enabled' do
+      before { allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true) }
+      it_behaves_like 'a successful sign in'
     end
   end
 
