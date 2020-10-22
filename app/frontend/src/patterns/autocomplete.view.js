@@ -1,6 +1,6 @@
-import '../../polyfill/after.polyfill';
+import '../lib/polyfill/after.polyfill';
 
-import { onChange as locationChange } from '../../../search/ui/input/location';
+import { onChange as locationChange } from '../modules/search/location';
 
 export const create = (container, input, key) => {
   if (!getRenderedList(container)) {

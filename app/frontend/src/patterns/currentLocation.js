@@ -1,11 +1,11 @@
 import 'es6-promise/auto';
 
-import '../../polyfill/after.polyfill';
-import '../../polyfill/remove.polyfill';
+import '../lib/polyfill/after.polyfill';
+import '../lib/polyfill/remove.polyfill';
 import loader from '../components/loader';
-import { getPostcodeFromCoordinates } from '../../api';
-import { enableRadiusSelect, disableRadiusSelect } from '../../../search/ui/input/radius';
-import Rollbar from '../../logging';
+import { getPostcodeFromCoordinates } from '../lib/api';
+import { enableRadiusSelect, disableRadiusSelect } from '../modules/search/radius';
+import Rollbar from '../lib/logging';
 
 const containerEl = document.getElementsByClassName('js-location-finder')[0];
 const inputEl = document.getElementsByClassName('js-location-finder__input')[0];

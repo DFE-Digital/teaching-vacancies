@@ -4,7 +4,7 @@ import {
 
 import { enableRadiusSelect, disableRadiusSelect } from './radius';
 
-jest.mock('../../../lib/api');
+jest.mock('../../lib/api');
 jest.mock('./radius');
 
 describe('location search box', () => {
