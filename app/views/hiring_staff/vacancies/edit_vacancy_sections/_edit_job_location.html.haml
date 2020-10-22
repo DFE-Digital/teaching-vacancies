@@ -10,7 +10,7 @@
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question.first-question#job_location
-      %h4.govuk-heading-s= t("school_groups.job_location_heading.review.#{@vacancy.job_location}")
+      %h4.govuk-heading-s= vacancy_job_location_heading(@vacancy)
 
     %dd.app-check-your-answers__answer.first-question.schools-review-list
       - @vacancy.organisations.each do |organisation|

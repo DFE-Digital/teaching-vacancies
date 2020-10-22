@@ -31,7 +31,7 @@
   .govuk-grid-column-two-thirds
 
     - if @vacancy.organisations.many?
-      = render(NotificationComponent.new(content: t('jobs.notifications.content.multi_school_job_notification_html'), style: 'notice', background: true, dismiss: false, alert: true))
+      = render(NotificationComponent.new(content: t('jobs.notifications.content.multi_school_job_notification_html', organisation_type: organisation_type_basic(@vacancy.parent_organisation)), style: 'notice', background: true, dismiss: false, alert: true))
 
     .content-pills{ class: 'govuk-!-margin-bottom-6' }
       %h3.govuk-heading-s{ class: 'govuk-!-margin-bottom-3' } Contents

@@ -107,12 +107,13 @@ module VacanciesHelper
   end
 
   def vacancy_about_school_hint_text(vacancy)
-    return I18n.t('helpers.hint.job_summary_form.about_schools') if vacancy.organisations.many?
+    if vacancy.organisations.many?
+      return I18n.t('helpers.hint.job_summary_form.about_schools',
+                    organisation_type: organisation_type_basic(vacancy.parent_organisation))
+    end
 
-    I18n.t(
-      'helpers.hint.job_summary_form.about_organisation',
-      organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize,
-    )
+    I18n.t('helpers.hint.job_summary_form.about_organisation',
+           organisation_type: organisation_type_basic(vacancy.parent_organisation).capitalize)
   end
 
   def vacancy_about_school_value(vacancy)
@@ -127,5 +128,18 @@ module VacanciesHelper
       vacancy&.job_location == 'at_multiple_schools'
 
     address_join([organisation.name, organisation.town, organisation.county])
+  end
+
+  def vacancy_job_location_heading(vacancy)
+    return I18n.t("school_groups.job_location_heading.#{vacancy.job_location}") unless
+      vacancy.job_location == 'at_multiple_schools'
+
+    I18n.t('school_groups.job_location_heading.at_multiple_schools',
+           organisation_type: organisation_type_basic(vacancy.parent_organisation))
+  end
+
+  def vacancy_school_visits_hint(vacancy)
+    organisation = organisation_type_basic(vacancy.parent_organisation).gsub(' ', '_')
+    I18n.t("helpers.hint.application_details_form.#{organisation}_visits")
   end
 end

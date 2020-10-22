@@ -283,9 +283,9 @@ en:
         starts_on: "Date job starts"
       job_location_form:
         job_location_options:
-          at_one_school: At one school in the trust
-          central_office: At the trust's head office
-          at_multiple_schools: At more than one school in the trust
+          at_one_school: At one school in the %{organisation_type}
+          central_office: At the %{organisation_type}'s head office
+          at_multiple_schools: At more than one school in the %{organisation_type}
         job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
       school_form:
         job_location_html: In which school will the job be based? (<span class='text-red'>Required</span>)
@@ -358,6 +358,7 @@ en:
         contact_email: This email address will be shown publicly as a point of contact
         contact_number: This phone number will be for any questions applicants may have about the role
         how_to_apply: Explain how to apply for the job, referring to any relevant documents
+        local_authority_visits: Explain how a candidate can arrange visits within the local authority (give a phone number if possible)
         school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
       job_summary_form:
@@ -368,7 +369,7 @@ en:
           This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
         about_schools: >-
           Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
-          the trust
+          the %{organisation_type}
       organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
   organisation:
@@ -392,7 +393,7 @@ en:
         other: '%{count} filters applied'
     notifications:
       content:
-        multi_school_job_notification_html: This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the trust</span>. You can find out more in <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
+        multi_school_job_notification_html: This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the %{organisation_type}</span>. You can find out more in <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
       labels:
         action_required: action required
         new: new
@@ -825,13 +826,9 @@ en:
     type: 'Trust type'
     uid: Unique identifier (UID)
     job_location_heading:
-      central_office: At head office
+      central_office: Trust head office
       at_one_school: Single school
-      at_multiple_schools: At more than one school in the trust
-      review:
-        central_office: Trust head office
-        at_one_school: Single school
-        at_multiple_schools: At more than one school in the trust
+      at_multiple_schools: At more than one school in the %{organisation_type}
     website: '%{organisation_type} website'
     school_visits_heading: 'Arranging a visit to %{school}'
   subscriptions:

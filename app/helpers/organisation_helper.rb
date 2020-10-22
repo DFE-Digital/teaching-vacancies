@@ -69,6 +69,14 @@ module OrganisationHelper
     end
   end
 
+  def school_or_trust_visits(organisation)
+    if organisation.group_type == 'local_authority' || organisation.is_a?(School)
+      'school_visits'
+    else
+      'trust_visits'
+    end
+  end
+
   def school_phase(school)
     school.readable_phases&.map(&:capitalize)&.reject(&:blank?)&.join(', ')
   end
