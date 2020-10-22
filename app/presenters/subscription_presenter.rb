@@ -34,6 +34,19 @@ class SubscriptionPresenter < BasePresenter
     Rails.application.routes.url_helpers.edit_subscription_url(model.token, params)
   end
 
+  def unsubscribe_url(source: nil, medium: nil, campaign: nil, content: nil)
+    params = { protocol: 'https' }
+    if source.present?
+      params.merge!(
+        utm_source: source,
+        utm_medium: medium,
+        utm_campaign: campaign,
+        utm_content: content,
+      )
+    end
+    Rails.application.routes.url_helpers.unsubscribe_subscription_url(model.token, params)
+  end
+
 private
 
   def sorted_search_criteria

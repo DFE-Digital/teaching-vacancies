@@ -9,9 +9,8 @@ module NotifyViewHelper
     notify_link(url, text)
   end
 
-  # TODO: This one next
-  def unsubscribe_link(token)
-    url = unsubscribe_subscription_url(token, protocol: 'https')
+  def unsubscribe_link(subscription)
+    url = subscription.unsubscribe_url(**utm_params(subscription))
     text = t('.unsubscribe_link_text')
     notify_link(url, text)
   end

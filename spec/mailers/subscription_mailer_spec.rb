@@ -14,6 +14,9 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     allow_any_instance_of(Subscription).to receive(:token) { token }
     subscription
   end
+  let(:body) { mail.body }
+
+  before { subscription.create_alert_run }
 
   describe '#confirmation' do
     let(:mail) { described_class.confirmation(subscription.id) }
@@ -21,12 +24,12 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     it 'sends a confirmation email' do
       expect(mail.subject).to eq(I18n.t('subscription_mailer.confirmation.subject'))
       expect(mail.to).to eq([subscription.email])
-      expect(mail.body).to include(I18n.t('subscription_mailer.confirmation.title'))
-      expect(mail.body).to include(I18n.t('subscriptions.intro'))
-      expect(mail.body).to include('Keyword: English')
-      expect(mail.body).to include(I18n.t('subscription_mailer.confirmation.next_steps', frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
-      expect(mail.body).to include(I18n.t('subscription_mailer.confirmation.unsubscribe_link_text'))
-      expect(mail.body).to include(unsubscribe_subscription_url(subscription.token, protocol: 'https'))
+      expect(body).to include(I18n.t('subscription_mailer.confirmation.title'))
+      expect(body).to include(I18n.t('subscriptions.intro'))
+      expect(body).to include('Keyword: English')
+      expect(body).to include(I18n.t('subscription_mailer.confirmation.next_steps', frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
+      expect(body).to include(I18n.t('subscription_mailer.confirmation.unsubscribe_link_text'))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, protocol: 'https'))
     end
   end
 
@@ -36,12 +39,12 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     it 'sends a confirmation email' do
       expect(mail.subject).to eq(I18n.t('subscription_mailer.update.subject'))
       expect(mail.to).to eq([subscription.email])
-      expect(mail.body).to include(I18n.t('subscription_mailer.update.title'))
-      expect(mail.body).to include(I18n.t('subscriptions.intro'))
-      expect(mail.body).to include('Keyword: English')
-      expect(mail.body).to include(I18n.t('subscription_mailer.update.next_steps', frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
-      expect(mail.body).to include(I18n.t('subscription_mailer.update.unsubscribe_link_text'))
-      expect(mail.body).to include(unsubscribe_subscription_url(subscription.token, protocol: 'https'))
+      expect(body).to include(I18n.t('subscription_mailer.update.title'))
+      expect(body).to include(I18n.t('subscriptions.intro'))
+      expect(body).to include('Keyword: English')
+      expect(body).to include(I18n.t('subscription_mailer.update.next_steps', frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
+      expect(body).to include(I18n.t('subscription_mailer.update.unsubscribe_link_text'))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, protocol: 'https'))
     end
   end
 end

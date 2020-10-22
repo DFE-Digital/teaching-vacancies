@@ -165,4 +165,20 @@ RSpec.describe SubscriptionPresenter do
       end
     end
   end
+
+  describe '#unsubscribe_url' do
+    before { allow(subscription).to receive(:token).and_return('secure_token') }
+
+    it 'returns the absolute url for ending the subscription' do
+      expected_url = URI('localhost:3000/subscriptions/secure_token/unsubscribe')
+      expect(presenter.unsubscribe_url).to match(expected_url.to_s)
+    end
+
+    context 'when campaign parameters are passed' do
+      it 'builds the campaign URL' do
+        expected_campaign_url = URI('https://localhost:3000/subscriptions/secure_token/unsubscribe?utm_medium=interpretative_dance&utm_source=alert_run_id')
+        expect(presenter.unsubscribe_url(source: 'alert_run_id', medium: 'interpretative_dance')).to match(expected_campaign_url.to_s)
+      end
+    end
+  end
 end

@@ -74,6 +74,7 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(mail.body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
       expect(mail.body).to include(irrelevant_job_alert_feedback_url)
       expect(mail.body).to include(I18n.t('alert_mailer.alert.feedback.reason'))
+      expect(mail.body).to include(subscription_presenter.unsubscribe_url(**campaign_params).gsub('&', '&amp;'))
     end
   end
 
@@ -103,6 +104,7 @@ RSpec.describe AlertMailer, type: :mailer do
       expect(mail.body).to match(/(\[#{I18n.t('alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
       expect(mail.body).to include(irrelevant_job_alert_feedback_url)
       expect(mail.body).to include(I18n.t('alert_mailer.alert.feedback.reason'))
+      expect(mail.body).to include(subscription_presenter.unsubscribe_url(**campaign_params).gsub('&', '&amp;'))
     end
   end
 end
