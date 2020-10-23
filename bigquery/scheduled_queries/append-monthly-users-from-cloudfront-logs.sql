@@ -21,7 +21,7 @@ WITH
   SELECT
     *,
     CASE
-      WHEN utm_source="subscription" THEN "Job alert"
+      WHEN utm_campaign LIKE "%alert%" THEN "Job alert"
       WHEN LOWER(utm_medium) LIKE "%email%" THEN "Email"
       WHEN referrer LIKE "%facebook%" OR referrer LIKE "%twitter%" OR referrer LIKE "%t.co%" OR referrer LIKE "%linkedin%" OR referrer LIKE "%youtube%" THEN "Social"
       WHEN (referrer NOT LIKE "%teaching-jobs.service.gov.uk%"
@@ -65,7 +65,7 @@ WITH
       job_alert_destinations,
       vacancies_viewed_slugs IS NOT NULL AS viewed_a_vacancy,
       vacancies_with_gmi_clicks_ids IS NOT NULL AS clicked_get_more_information,
-      first_page.query LIKE "%utm_source=subscription%" AS from_job_alert,
+      first_page.query LIKE "%utm_campaign=%alert%" AS from_job_alert,
       ARRAY_LENGTH(search_parameters) AS unique_searches,
       ARRAY_LENGTH(vacancies_viewed_slugs) AS vacancies_viewed,
       ARRAY_LENGTH(vacancies_with_gmi_clicks_ids) AS vacancies_with_gmi_clicks,
@@ -98,16 +98,16 @@ WITH
         ARRAY_AGG(DISTINCT REGEXP_EXTRACT(cs_uri_stem,"^/jobs/(.+)/interests/new") IGNORE NULLS) AS vacancies_with_gmi_clicks_ids,
         ARRAY_AGG(DISTINCT
         IF
-          (cs_uri_query LIKE "%utm_source=subscription%",
+          (cs_uri_query LIKE "%utm_campaign=%alert%",
             cs_uri_stem,
             NULL) IGNORE NULLS) AS job_alert_destination_links,
         ARRAY_AGG(DISTINCT
         IF
-          (cs_uri_query LIKE "%utm_source=subscription%",
+          (cs_uri_query LIKE "%utm_campaign=%alert%",
             CASE
               WHEN cs_uri_stem LIKE "/jobs/%" THEN "vacancy"
-              WHEN cs_uri_stem LIKE "/subscriptions/%/edit" THEN "edit"
-              WHEN cs_uri_stem LIKE "/subscriptions/%/unsubscribe" THEN "unsubscribe"
+              WHEN cs_uri_stem LIKE "/subscriptions/%/edit%" THEN "edit"
+              WHEN cs_uri_stem LIKE "/subscriptions/%/unsubscribe%" THEN "unsubscribe"
             ELSE
             "unknown"
           END
