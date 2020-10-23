@@ -9,14 +9,6 @@ resource aws_cloudfront_distribution default {
       https_port             = "443"
       origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
-
-    dynamic "custom_header" {
-      for_each = local.custom_headers
-      content {
-        name  = custom_header.key
-        value = custom_header.value
-      }
-    }
   }
 
   origin {
@@ -58,7 +50,7 @@ resource aws_cloudfront_distribution default {
 
     forwarded_values {
       query_string = true
-      headers      = local.header_list
+      headers      = var.default_header_list
 
       cookies {
         forward = "all"

@@ -29,6 +29,7 @@ variable default_header_list {
     "Accept-Language",
     "CloudFront-Forwarded-Proto",
     "User-Agent",
+    "Host"
   ]
 }
 
@@ -36,7 +37,6 @@ variable route53_zones {
   type = list
 }
 
-variable cloudfront_forward_host {}
 variable is_production {}
 variable route53_cname_record {}
 variable route53_a_records {}
@@ -49,9 +49,4 @@ locals {
   domain                       = var.is_production ? local.cloudfront_cert_cn : "${var.environment}.${local.cloudfront_cert_cn}"
   cloudfront_aliases_cnames    = [for zone in var.route53_zones : "${var.route53_cname_record}.${zone}"]
   cloudfront_aliases           = concat(var.route53_a_records, local.cloudfront_aliases_cnames)
-  additional_headers           = var.cloudfront_forward_host ? ["Host"] : []
-  header_list                  = concat(var.default_header_list, local.additional_headers)
-  custom_headers = var.cloudfront_forward_host ? {} : {
-    "X-Forwarded-Host" : local.domain
-  }
 }
