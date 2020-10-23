@@ -1,0 +1,71 @@
+# Search
+
+We use [Algolia's](https://algolia.com) search-as-a-service offering to provide an advanced search experience for our jobseekers.
+
+To log in to the Algolia dashboard, you will need access to the teachingjobs@digital.education.gov.uk shared user, as the team size is limited by our payment tier.
+
+## Environment Variables
+
+If you managed to [fetch the dev variables and output to a shell environment file](https://github.com/DFE-Digital/teacher-vacancy-service#environment-variables)
+
+```
+make -s dev print-env > .env
+```
+
+The following environment variables should be set in your `.env` file:
+
+```bash
+ALGOLIA_APP_ID=
+ALGOLIA_SEARCH_API_KEY=
+ALGOLIA_WRITE_API_KEY=
+```
+
+You need to add the following environment variable in your `.env` file:
+
+```bash
+ALGOLIA_INDEX_PREFIX=<Your GitHub username>
+```
+
+This is required so that we can scope indexes per user and domain inside a shared Algolia application.
+
+## Quickstart
+
+```ruby
+  # To manually load an index with live records for the first time:
+  Vacancy.reindex!
+  # This now only loads records that are scoped `.live`
+
+  # To update a live index with newly published records using minimal operations:
+  Vacancy.update_index!
+
+  # To remove records that expired yesterday:
+  Vacancy.remove_vacancies_that_expired_yesterday!
+
+  # To remove all expired vacancies.
+  Vacancy.index.delete_objects(Vacancy.expired.map(&:id))
+  # You should generally avoid doing this as it will create a large number of unnecessary operations
+  # once these are being filtered out of the regular indexing operations.
+```
+
+Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
+
+## Timed jobs
+
+There are two timed jobs that run in sidekiq cron:
+
+### `UpdateAlgoliaIndex`
+
+This runs every five minutes and add vacancies with matured `publish_on` times to the index.
+
+### `RemoveVacanciesThatExpiredYesterday`
+
+This runs at 03:00 every day and does exactly what the name says it does. Daily removal is not a problem because expired vacancies that have not yet been removed will be filtered out by the search client and do not show to jobseekers.
+
+## Indexing live records
+
+We originally started by indexing all records. It became apparent that this had unnecessary cost implications, so the
+codebase was refactored to index only live (or `listed`) records. The [Algolia](https://algoliac.om) Rails plugin is
+now set so it automatically updates existing live records if they change.
+
+NOTE: The default `#reindex!` method, added by the Algolia gem, has been overridden so it only indexes Vacancies records
+that fall under the scope `#live`. This is to ensure that expired and unpublished records do not get accidentally added.
