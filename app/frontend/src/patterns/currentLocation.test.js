@@ -1,10 +1,10 @@
 import currentLocation, {
   startLoading, stopLoading, onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER, postcodeFromPosition,
 } from './currentLocation';
-import radius from '../modules/search/radius';
+import radius from '../application/search/radius';
 import loader from '../components/loader';
 
-jest.mock('../modules/search/radius');
+jest.mock('../application/search/radius');
 
 describe('current location', () => {
   let showErrorMessageMock = null; let stopLoadingMock = null; let enableRadiusMock = null; let

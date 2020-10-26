@@ -50,8 +50,7 @@
       "<rootDir>/app/frontend/src/lib/testSetup.js"
     ],
     "coveragePathIgnorePatterns": [
-      "<rootDir>/app/frontend/src/lib/polyfill/*",
-      "<rootDir>/app/frontend/src/loader.js"
+      "<rootDir>/app/frontend/src/lib/polyfill/*"
     ]
   },
   "resolutions": {
