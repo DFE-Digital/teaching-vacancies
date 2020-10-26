@@ -127,6 +127,7 @@ RSpec.describe ImportTrustData do
   end
 
   describe '#run!' do
+    let(:todays_date) { Time.zone.now.strftime('%Y%m%d') }
     let(:groups_csv) { File.read(groups_file_path) }
     let(:groups_file_path) { Rails.root.join('spec/fixtures/example_groups_data.csv') }
     let(:links_csv) { File.read(links_file_path) }
@@ -142,11 +143,11 @@ RSpec.describe ImportTrustData do
     before do
       stub_request(
         :get,
-        'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata.csv',
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata#{todays_date}.csv",
       ).to_return(body: groups_csv)
       stub_request(
         :get,
-        'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata.csv',
+        "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata#{todays_date}.csv",
       ).to_return(body: links_csv)
     end
 
