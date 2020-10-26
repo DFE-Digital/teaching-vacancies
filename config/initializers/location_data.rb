@@ -30,3 +30,5 @@ LOCATION_POLYGON_SETTINGS = {
     name_key: 'tcity15nm'
   }
 }.freeze
+
+MAPPED_LOCATIONS = YAML.load_file(base_path.join('mapped_locations.yml')).to_h
