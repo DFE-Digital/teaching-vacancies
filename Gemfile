@@ -16,6 +16,8 @@ gem 'array_enum'
 gem 'breasal'
 gem 'browser'
 gem 'colorize'
+gem 'factory_bot_rails'
+gem 'faker'
 gem 'figaro'
 gem 'friendly_id'
 gem 'geocoder'
@@ -67,8 +69,6 @@ end
 group :development, :test do
   gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
-  gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
