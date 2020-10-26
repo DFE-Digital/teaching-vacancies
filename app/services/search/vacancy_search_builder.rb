@@ -1,7 +1,7 @@
 require 'geocoding'
 
 class Search::VacancySearchBuilder
-  attr_reader :keyword, :location_search,
+  attr_reader :hits_per_page, :keyword, :location_search,
               :point_coordinates, :search_filters, :search_replica, :sort_by, :stats, :vacancies
 
   DEFAULT_HITS_PER_PAGE = 10

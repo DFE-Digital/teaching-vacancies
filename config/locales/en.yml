@@ -404,19 +404,15 @@ en:
       Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
       with no recruitment fees for schools.
     location_search_heading: 'Teaching jobs in %{location}'
-    number_of_results_html:
-      zero:
-        ''
-      one: >-
-        Showing
-        <span class="govuk-!-font-weight-bold">%{first}</span> to
-        <span class="govuk-!-font-weight-bold">%{last}</span> of
-        <span class="govuk-!-font-weight-bold">%{count}</span> result
-      other: >-
-        Showing
-        <span class="govuk-!-font-weight-bold">%{first}</span> to
-        <span class="govuk-!-font-weight-bold">%{last}</span> of
-        <span class="govuk-!-font-weight-bold">%{count}</span> results
+    number_of_results_one_page_html:
+      zero: ''
+      one: Showing <span class="govuk-!-font-weight-bold">%{count}</span> result
+      other: Showing <span class="govuk-!-font-weight-bold">%{count}</span> results
+    number_of_results_html: >-
+      Showing
+      <span class="govuk-!-font-weight-bold">%{first}</span> to
+      <span class="govuk-!-font-weight-bold">%{last}</span> of
+      <span class="govuk-!-font-weight-bold">%{count}</span> results
     sort_by:
       label: 'Sort by'
       most_relevant: 'most relevant first'
