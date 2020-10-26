@@ -99,7 +99,7 @@ private
   end
 
   def redirect_unauthorised_users
-    redirect_to new_auth_email_path unless user_authorised?
+    redirect_to new_auth_email_path, notice: I18n.t('hiring_staff.temp_login.not_authorised') unless user_authorised?
   end
 
   def user_authorised?
@@ -109,6 +109,13 @@ private
              nil
            end
 
-    user&.dsi_data&.dig('la_codes')&.include?(get_la_code) || user&.dsi_data&.dig('trust_uids')&.include?(get_uid) || user&.dsi_data&.dig('school_urns')&.include?(get_urn)
+    allowed_user? &&
+      (user&.dsi_data&.dig('la_codes')&.include?(get_la_code) ||
+       user&.dsi_data&.dig('trust_uids')&.include?(get_uid) ||
+       user&.dsi_data&.dig('school_urns')&.include?(get_urn))
+  end
+
+  def allowed_user?
+    get_urn.present? || get_uid.present? || (get_la_code.present? && ALLOWED_LOCAL_AUTHORITIES.include?(get_la_code))
   end
 end
