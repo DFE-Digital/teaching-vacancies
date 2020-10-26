@@ -104,6 +104,23 @@ jobs:
         terraform workspace select staging terraform/app || terraform workspace new staging terraform/app
         terraform apply -var-file terraform/workspace-variables/staging.tfvars -auto-approve -input=false terraform/app
 
+    - name: Trigger Smoke Test
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: Smoke Test Manual # Workflow name
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{"environment": "staging"}'
+
+    - name: Wait for smoke test
+      id: wait_for_smoke_test
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Smoke Test Manual Job # Job name within workflow
+        ref: ${{ github.ref }}
+        timeoutSeconds: 300
+        intervalSeconds: 15
+
     - name: Deploy to production
       if: github.ref == 'refs/heads/master'
       env:
