@@ -239,6 +239,7 @@ en:
       page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
     home:
       browse_all: Browse all teaching jobs in England
+      title: Find a job in teaching
       read_only:
         title: Sorry, listing a job is unavailable
         description_html: <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p><p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
