@@ -31,7 +31,7 @@ class Search::VacancyLocationBuilder
 private
 
   def initialize_location_polygon
-    @location_polygon = LocationPolygon.find_by(name: @location_category.downcase)
+    @location_polygon = LocationPolygon.with_name(@location_category)
     @location_polygon_boundary = [@location_polygon.boundary] if @location_polygon.present?
     if location_polygon.nil? && (DOWNCASE_REGIONS + DOWNCASE_COUNTIES).include?(@location_category.downcase)
       # If a location category that we expect to have a polygon actually does not,
@@ -42,7 +42,7 @@ private
       Rollbar.log(
         :error,
         "A location category search was performed as a text search as no LocationPolygon could
-        be found with the name '#{@location_category.downcase}'.",
+        be found with the name '#{@location_category}'.",
       )
       @missing_polygon = true
     end
