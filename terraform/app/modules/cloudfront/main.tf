@@ -117,7 +117,7 @@ resource aws_cloudfront_distribution default {
 
     forwarded_values {
       query_string = true
-      headers      = ["Authorization"]
+      headers      = ["Authorization", "Host"]
 
       cookies {
         forward = "none"
