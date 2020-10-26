@@ -1,15 +1,13 @@
 require 'organisation_import/import_organisation_data'
 
 class ImportTrustData < ImportOrganisationData
-  TRUST_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata.csv'.freeze
   TRUST_TEMP_LOCATION = './tmp/school-group-data.csv'.freeze
 
-  MEMBERSHIP_URL = 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata.csv'.freeze
   MEMBERSHIP_TEMP_LOCATION = './tmp/school-group-membership-data.csv'.freeze
 
   def run!
-    import_data(TRUST_URL, TRUST_TEMP_LOCATION, :create_organisation)
-    import_data(MEMBERSHIP_URL, MEMBERSHIP_TEMP_LOCATION, :create_school_group_membership)
+    import_data(trust_csv_url, TRUST_TEMP_LOCATION, :create_organisation)
+    import_data(membership_csv_url, MEMBERSHIP_TEMP_LOCATION, :create_school_group_membership)
   end
 
 private
@@ -36,6 +34,10 @@ private
       trust.present? && school.present?
   end
 
+  def datestring
+    Time.zone.now.strftime('%Y%m%d')
+  end
+
   def import_data(url, location, method)
     save_csv_file(url, location)
     CSV.foreach(location, headers: true, encoding: 'windows-1252:utf-8').each do |row|
@@ -47,6 +49,10 @@ private
       end
     end
     File.delete(location)
+  end
+
+  def membership_csv_url
+    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/alllinksdata#{datestring}.csv"
   end
 
   def set_geolocation(trust, postcode)
@@ -65,5 +71,9 @@ private
       group_type: 'Group Type',
       town: 'Group Town',
     }.freeze
+  end
+
+  def trust_csv_url
+    "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/allgroupsdata#{datestring}.csv"
   end
 end
