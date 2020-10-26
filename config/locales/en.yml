@@ -40,7 +40,9 @@ en:
   app:
     title: 'Teaching Vacancies'
     menu: 'Menu'
-    description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
+    description: >-
+      On Teaching Vacancies, NQTs, experienced teachers and leaders can search for a job at a school or Trust in England
+      and set up job alerts.
     govuk: 'GOV.UK'
   breadcrumbs:
     home: Home
