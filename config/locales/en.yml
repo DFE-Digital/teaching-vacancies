@@ -40,7 +40,9 @@ en:
   app:
     title: 'Teaching Vacancies'
     menu: 'Menu'
-    description: 'The free service for schools in England to list teaching roles and for jobseekers to find them.'
+    description: >-
+      On Teaching Vacancies, NQTs, experienced teachers and leaders can search for a job at a school or Trust in England
+      and set up job alerts.
     govuk: 'GOV.UK'
   breadcrumbs:
     home: Home
@@ -237,6 +239,7 @@ en:
       page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
     home:
       browse_all: Browse all teaching jobs in England
+      title: Find a job in teaching
       read_only:
         title: Sorry, listing a job is unavailable
         description_html: <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p><p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
