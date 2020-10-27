@@ -1,4 +1,4 @@
-class Jobseekers::BannerLinkComponent < ViewComponent::Base
+class Shared::BannerLinkComponent < ViewComponent::Base
   attr_accessor :icon_class, :link_method, :link_path, :link_text
 
   def initialize(icon_class:, link_method:, link_path:, link_text:)

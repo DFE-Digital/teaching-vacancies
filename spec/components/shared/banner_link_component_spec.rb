@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Jobseekers::BannerLinkComponent, type: :component do
+RSpec.describe Shared::BannerLinkComponent, type: :component do
   let(:icon_class) { 'icon-class' }
   let(:link_path) { '/link-to-nowhere' }
   let(:link_text) { 'Click this link!' }

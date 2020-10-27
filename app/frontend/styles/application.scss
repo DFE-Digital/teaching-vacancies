@@ -15,6 +15,7 @@ $govuk-image-url-function: frontend-image-url;
 @import '../src/patterns/autocomplete';
 @import '../src/components/loader';
 
+@import 'shared/banner_link_component/banner_link_component';
 @import 'shared/filters_component/filters_component';
 @import 'shared/table_component/table_component';
 @import 'shared/pill_link_component/pill_link_component';
