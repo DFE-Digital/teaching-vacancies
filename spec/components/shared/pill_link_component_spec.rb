@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Jobseekers::PillLinkComponent, type: :component do
+RSpec.describe Shared::PillLinkComponent, type: :component do
   let(:link_path) { '#some-element' }
   let(:link_text) { 'Go to this section' }
 

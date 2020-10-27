@@ -1,13 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Jobseekers::BannerLinkComponent, type: :component do
+RSpec.describe Shared::BannerLinkComponent, type: :component do
   let(:icon_class) { 'icon-class' }
+  let(:link_id) { 'test-id' }
   let(:link_path) { '/link-to-nowhere' }
   let(:link_text) { 'Click this link!' }
 
   before do
     render_inline(described_class.new(
                     icon_class: icon_class,
+                    link_id: link_id,
                     link_method: link_method,
                     link_path: link_path,
                     link_text: link_text,
@@ -19,7 +21,7 @@ RSpec.describe Jobseekers::BannerLinkComponent, type: :component do
 
     it 'renders the banner link' do
       expect(rendered_component).to eql(
-        '<a class="banner-link banner-link--icon-class" data-method="get" href="/link-to-nowhere">'\
+        '<a class="banner-link banner-link--icon-class" id="test-id" data-method="get" href="/link-to-nowhere">'\
         '<div class="banner-link__text">Click this link!</div></a>',
       )
     end
@@ -30,7 +32,7 @@ RSpec.describe Jobseekers::BannerLinkComponent, type: :component do
 
     it 'renders the banner link' do
       expect(rendered_component).to eql(
-        '<a class="banner-link banner-link--icon-class" rel="nofollow" data-method="post" href="/link-to-nowhere">'\
+        '<a class="banner-link banner-link--icon-class" id="test-id" rel="nofollow" data-method="post" href="/link-to-nowhere">'\
         '<div class="banner-link__text">Click this link!</div></a>',
       )
     end
