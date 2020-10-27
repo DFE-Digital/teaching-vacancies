@@ -7,7 +7,7 @@
         myComponent.js
         myComponent.test.js
         myComponent.scss
-    /modules (these can be pages)
+    /application (these can be pages)
       /search
         search.scss
         init.js

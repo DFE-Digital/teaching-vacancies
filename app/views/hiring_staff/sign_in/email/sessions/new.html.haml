@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t('sign_in.title')
 
 .govuk-grid-row
-  = render(NotificationComponent.new(content: { title: t('hiring_staff.temp_login.heading'), body: t('hiring_staff.temp_login.please_use_email') }, style: 'danger'))
+  = render(Shared::NotificationComponent.new(content: { title: t('hiring_staff.temp_login.heading'), body: t('hiring_staff.temp_login.please_use_email') }, style: 'danger'))
   .govuk-grid-column-two-thirds
     %h1.govuk-heading-l= t('sign_in.title')
     %p= t('pages.home.signin.description')

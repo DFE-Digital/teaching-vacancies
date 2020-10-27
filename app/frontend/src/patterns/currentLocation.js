@@ -4,7 +4,7 @@ import '../lib/polyfill/after.polyfill';
 import '../lib/polyfill/remove.polyfill';
 import loader from '../components/loader';
 import { getPostcodeFromCoordinates } from '../lib/api';
-import { enableRadiusSelect, disableRadiusSelect } from '../modules/search/radius';
+import { enableRadiusSelect, disableRadiusSelect } from '../application/search/radius';
 import Rollbar from '../lib/logging';
 
 const containerEl = document.getElementsByClassName('js-location-finder')[0];

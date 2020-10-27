@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe NotificationComponent, type: :component do
+RSpec.describe Shared::NotificationComponent, type: :component do
   let(:content) { 'This is content' }
   let(:style) { 'notice' }
   let(:links) { nil }

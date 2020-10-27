@@ -1,4 +1,4 @@
-class NotificationComponent < ViewComponent::Base
+class Shared::NotificationComponent < ViewComponent::Base
   def initialize(content:, style:, links: nil, dismiss: true, background: false, alert: 'warning')
     @content = content
     @style = style

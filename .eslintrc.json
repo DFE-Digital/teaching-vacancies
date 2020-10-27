@@ -14,7 +14,8 @@
         "test": "readonly",
         "expect": "readonly",
         "history": true,
-        "GOVUK": "readonly"
+        "GOVUK": "readonly",
+        "dataLayer": "readonly"
     },
     "parserOptions": {
         "ecmaVersion": 2018,

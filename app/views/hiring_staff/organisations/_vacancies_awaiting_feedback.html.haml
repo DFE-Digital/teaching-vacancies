@@ -13,7 +13,7 @@
         %th.govuk-table__header{ class: "govuk-!-width-one-quarter" }= t("jobs.job_filled")
         %th.govuk-table__header{ class: "govuk-!-width-one-quarter" }= t("jobs.listed_elsewhere")
         %th.govuk-table__header= t("jobs.actions")
-    %tbody.govuk-table__body
+    %tbody.govuk-table__body.expired__vacancy-form
       - vacancies.each do |vacancy|
         = render "hiring_staff/organisations/vacancy_awaiting_feedback", vacancy: vacancy, organisation: organisation
 - else
