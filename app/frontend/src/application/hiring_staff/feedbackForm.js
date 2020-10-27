@@ -1,4 +1,3 @@
-/* eslint-disable */
 // document.addEventListener('DOMContentLoaded', () => {
 //   $('.submit_feedback').on('submit', (event) => {
 //     let valid = true;
@@ -30,38 +29,43 @@
 const FORM_ELEMENT_ERROR_CLASS = 'govuk-input--error';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const expired = document.getElementsByClassName('submit_feedback');
-  Array.from(expired).map(form => {
+  Array.from(document.getElementsByClassName('vacancy-feedback__form')).forEach((form) => {
     form.addEventListener('submit', (event) => {
-      const form = event.target
-      const id = event.target.id
-      Array.from(document.querySelectorAll(`select[form="${id}"]`)).map(select => {
+      Array.from(document.querySelectorAll(`select[form="${event.target.id}"]`)).forEach((select) => {
         if (select.value === '') {
           if (!formElementHasError(select)) {
-            formElementAddError(select)
+            formElementAddError(select, event.target.dataset.optionNotSelectedMessage);
           }
+          event.preventDefault();
         } else {
-          formElementRemoveError(select)
+          formElementRemoveError(select);
         }
-      })
-  
-      event.preventDefault();
-
-      console.log(form, form.querySelectorAll('input[type="submit"]'))
-
-      //form.querySelectorAll('input[type="submit"]')[0].enabled = true;
+      });
     });
-  })
+  });
+
+  Array.from(document.getElementsByTagName('select')).forEach((select) => {
+    select.addEventListener('change', () => {
+      Array.from(select.closest('tr').getElementsByTagName('input')).forEach((input) => { input.disabled = false; });
+    });
+  });
 });
 
-const formElementHasError = (formEl) => {
-  return formEl.classList.contains(FORM_ELEMENT_ERROR_CLASS)
-}
+const formElementHasError = (formEl) => formEl.classList.contains(FORM_ELEMENT_ERROR_CLASS);
 
-const formElementAddError = (formEl) => {
-  return formEl.classList.add(FORM_ELEMENT_ERROR_CLASS)
-}
+const formElementAddError = (formEl, errorMessage) => {
+  formEl.parentNode.classList.add('govuk-form-group--error');
+  formEl.parentNode.style.paddingLeft = '15px';
+  formEl.parentNode.insertAdjacentHTML('afterbegin', `
+<span class="govuk-error-message">
+<span class="govuk-visually-hidden">Error:</span>
+${errorMessage}
+</span>`);
+  return formEl.classList.add(FORM_ELEMENT_ERROR_CLASS);
+};
 
 const formElementRemoveError = (formEl) => {
-  return formEl.classList.remove(FORM_ELEMENT_ERROR_CLASS)
-}
+  Array.from(formEl.parentNode.getElementsByClassName('govuk-error-message')).map((error) => error.remove());
+  formEl.parentNode.classList.remove('govuk-form-group--error');
+  return formEl.classList.remove(FORM_ELEMENT_ERROR_CLASS);
+};

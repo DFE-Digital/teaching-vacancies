@@ -1,4 +1,4 @@
-import 'src/patterns/currentLocation';
+import '../../patterns/currentLocation';
 import { onChange as locationChange, getCoords } from './location';
 import { disableRadiusSelect } from './radius';
 import { renderAutocomplete } from '../../patterns/autocomplete';
