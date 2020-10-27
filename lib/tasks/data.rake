@@ -45,4 +45,15 @@ namespace :data do
       UpdateDfeSignInUsersJob.perform_later
     end
   end
+
+  desc 'Remove Algolia indices'
+  namespace :indices do
+    task remove: :environment do
+      Rails.logger.debug("Removing indices in #{Rails.env}")
+      replicas = Vacancy.index.get_settings['replicas']
+      Vacancy.index.set_settings({ replicas: [] })
+      Algolia.client.delete_index(Vacancy::INDEX_NAME)
+      replicas.each { |replica| Algolia.client.delete_index(replica) }
+    end
+  end
 end
