@@ -70,7 +70,7 @@ private
   end
 
   def build_search_replica
-    @search_replica = ['Vacancy', @sort_by].reject(&:blank?).join('_') if @sort_by.present?
+    @search_replica = [Vacancy::INDEX_NAME, @sort_by].reject(&:blank?).join('_') if @sort_by.present?
   end
 
   def build_stats(page, pages, results_per_page, total_results)

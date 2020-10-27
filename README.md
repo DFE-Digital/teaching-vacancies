@@ -1,6 +1,5 @@
 # Teacher Vacancy Service (TVS)
 
-* [Algolia Indexing](#algolia-indexing)
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk) (External link)
 * [API Keys](#api-keys)
 * [Dependencies](#dependencies)
@@ -10,6 +9,7 @@
 * [Logging](/documentation/logging.md)
 * [Misc](#misc)
 * [Running the tests](#running-the-tests)
+* [Search](/documentation/search.md)
 * [Secrets](#secrets)
 * [Setup](#setup) (Start here!)
 * [Troubleshooting](#troubleshooting)
@@ -28,93 +28,6 @@ We currently use Keybase to manage our secrets. You will need to create an accou
 ![Keybase Git](/documentation/images/keybase.png)
 
 For details on specific API keys, see [API Keys](#api-keys).
-
----
-
-## Algolia indexing
-
-We use [Algolia's](https://algolia.com) search-as-a-service offering to provide an advanced search experience for our jobseekers.
-
-To log in to the Algolia dashboard, you will need access to the teachingjobs@digital.education.gov.uk shared user, as the team size is limited by our payment tier.
-
-
-### Environment Variables
-
-```bash
-ALGOLIA_APP_ID=<Get from API Keys on Algolia Dashboard>
-ALGOLIA_SEARCH_API_KEY=<Get from API Keys on Algolia Dashboard>
-ALGOLIA_WRITE_API_KEY=<Get from API Keys on Algolia Dashboard>
-```
-
-Use keys for one of the existing development sandboxes, or make new ones, if you are working locally.
-
-### Quickstart
-
-```ruby
-  # To manually load an index with live records for the first time:
-  Vacancy.reindex!
-  # This now only loads records that are scoped `.live`
-
-  # To update a live index with newly published records using minimal operations:
-  Vacancy.update_index!
-
-  # To remove records that expired yesterday:
-  Vacancy.remove_vacancies_that_expired_yesterday!
-
-  # To remove all expired vacancies.
-  Vacancy.index.delete_objects(Vacancy.expired.map(&:id))
-  # You should generally avoid doing this as it will create a large number of unnecessary operations
-  # once these are being filtered out of the regular indexing operations.
-```
-
-Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
-
-### Timed jobs
-
-There are two timed jobs that run in sidekiq cron:
-
-#### `UpdateAlgoliaIndex`
-
-This runs every five minutes and add vacancies with matured `publish_on` times to the index.
-
-#### `RemoveVacanciesThatExpiredYesterday`
-
-This runs at 03:00 every day and does exactly what the name says it does. Daily removal is not a problem because expired vacancies that have not yet been removed will be filtered out by the search client and do not show to jobseekers.
-
-### Development
-
-When developing with [Algolia](https://algolia.com) you will find that *non-production environments will not start if
-you try to use the Algolia production app*. There are multiple Algolia `Development` apps available and you are free to
-make more if you need them. Details and api keys for the existing ones are available on the Algolia dashboard. You can
-also make as many more free-tier apps as you like for testing, dev, etc.
-
-If you do make new free-tier Algolia apps please make sure you include your name and/or ticket/PR numbers in the name so
-we can keep track of these and clear them out occasionally.
-
-Let your colleagues know if you take over an existing development app to be sure you don't accidentally step on anyone's
-toes.
-
-![Algolia ](/documentation/images/algolia.png)
-
-#### Note on Free-Tier Algolia Apps
-
-Community Apps, which are free, do not have team functionality. This means that you will not be able to access the dashboard
-for apps that other people have created and they will not be able to access the dashboard for yours. If you need to
-share an app dashboard between multiple users create it using the `teachingjobs` account.
-
-This **only applies** to the `dev` (1RWSKBURHA - 'TVS DEV PAAS') and `staging` (CFWW19M6GM - 'TVS STAGING PAAS') shared
-apps and any community apps you want to create for your own use/development work. It also does not affect your ability to
-use apps for which you have the API keys. It **only** stops you from viewing the dashboard for **community apps** you
-did not create.
-
-### Indexing live records
-
-We originally started by indexing all records. It became apparent that this had unnecessary cost implications, so the
-codebase was refactored to index only live (or `listed`) records. The [Algolia](https://algoliac.om) Rails plugin is
-now set so it automatically updates existing live records if they change.
-
-NOTE: The default `#reindex!` method, added by the Algolia gem, has been overridden so it only indexes Vacancies records
-that fall under the scope `#live`. This is to ensure that expired and unpublished records do not get accidentally added.
 
 ---
 
@@ -288,7 +201,18 @@ You need [AWS credentials](#aws-credentials) to read and write from SSM.
 
 We recommend using something like [`direnv`](/documentation/direnv.md) to load environment variables scoped into the folder.
 
-Add your the details of your personal Algolia app (which you created earlier by following [this documentation](#development)) in the relevant space in your `.env`.
+You need to add the following environment variable in your `.env` file:
+
+```bash
+ALGOLIA_INDEX_PREFIX=<Your GitHub username>
+```
+
+And override the following environment variables:
+
+```bash
+DOMAIN=localhost:3000
+DFE_SIGN_IN_REDIRECT_URL=https://localhost:3000/auth/dfe/callback
+```
 
 Set up the HTTPS certificates following the [HTTPS README](https://github.com/DFE-Digital/teacher-vacancy-service/blob/master/config/localhost/https/README.md). You will find them in the folder 'localhost-certificates' in the [secrets](#secrets).
 

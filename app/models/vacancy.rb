@@ -1,6 +1,8 @@
 require 'auditor'
 
 class Vacancy < ApplicationRecord
+  INDEX_NAME = [ENV['ALGOLIA_INDEX_PREFIX'], DOMAIN, name].compact.join('-').freeze
+
   JOB_ROLE_OPTIONS = {
     teacher: 0,
     leadership: 1,
@@ -89,7 +91,7 @@ class Vacancy < ApplicationRecord
     index.delete_objects(expired_records.map(&:id)) if expired_records.present?
   end
 
-  algoliasearch auto_index: true, auto_remove: true, if: :listed? do
+  algoliasearch index_name: INDEX_NAME, auto_index: true, auto_remove: true, if: :listed? do
     attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
     attribute :expires_at do
@@ -167,15 +169,15 @@ class Vacancy < ApplicationRecord
 
     attributesForFaceting %i[job_roles working_patterns education_phases listing_status]
 
-    add_replica 'Vacancy_publish_on_desc', inherit: true do
+    add_replica "#{INDEX_NAME}_publish_on_desc", inherit: true do
       ranking ['desc(publication_date_timestamp)']
     end
 
-    add_replica 'Vacancy_expiry_time_desc', inherit: true do
+    add_replica "#{INDEX_NAME}_expiry_time_desc", inherit: true do
       ranking ['desc(expires_at_timestamp)']
     end
 
-    add_replica 'Vacancy_expiry_time_asc', inherit: true do
+    add_replica "#{INDEX_NAME}_expiry_time_asc", inherit: true do
       ranking ['asc(expires_at_timestamp)']
     end
   end
