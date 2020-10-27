@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :detect_device_format
   before_action :set_root_headers
 
-  helper_method :cookies_preference_set?, :referred_from_host?
+  helper_method :cookies_preference_set?, :referred_from_jobs_path?
 
   include AuthenticationConcerns
   include Ip
@@ -61,8 +61,9 @@ class ApplicationController < ActionController::Base
     cookies['consented-to-cookies'].present?
   end
 
-  def referred_from_host?
-    request.host == URI(request.referrer || '').host
+  def referred_from_jobs_path?
+    request_uri = URI(request.referrer || '')
+    request.host == request_uri.host && request_uri.path == jobs_path
   end
 
 private
