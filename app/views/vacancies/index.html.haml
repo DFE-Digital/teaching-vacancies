@@ -23,7 +23,8 @@
 
       - elsif @vacancies_search.any?
         .divider-bottom
-          %p.govuk-heading-m
+          .govuk-heading-m= t('jobs.no_jobs.heading')
+          %p.govuk-body
             = t('jobs.no_jobs.intro')
             %ul.govuk-list.govuk-list--bullet
               - t('jobs.no_jobs.suggestions').each do |list_item|

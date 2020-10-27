@@ -481,10 +481,13 @@ en:
         one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
         other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
     no_jobs:
-      intro: 'Try another search'
+      heading: Try another search
+      intro: 'You may get more results if you:'
       suggestions:
-        - 'with different keywords'
-        - 'and/or a wider radius'
+        - add more keywords, or try different ones
+        - change the radius of your search
+        - look at a wider geographical location, West Yorkshire instead of Leeds for example
+        - remove some filters if you have used them
     none_listed:
       - 'This may be because this isn’t a busy period in the teacher recruitment cycle.'
       - 'Schools have listed %{count} jobs but they have since expired.'
