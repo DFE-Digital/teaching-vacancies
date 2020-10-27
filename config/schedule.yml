@@ -60,7 +60,7 @@ update_algolia_index:
 
 update_dsi_users:
   cron: '0 0 * * *'
-  class: 'UpdateDfeSignInUsersJob'
+  class: 'UpdateDsiUsersInDbJob'
   queue: update_dsi_users_in_db
 
 weekly_alerts:
