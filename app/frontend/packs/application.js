@@ -17,8 +17,6 @@ import 'shared/notification_component/notification_component';
 
 import 'src/components/searchCheckbox';
 
-import 'src/application/search/init';
-import 'src/application/hiring_staff/init';
 import 'src/application/init';
 
 import { initAll } from 'govuk-frontend';

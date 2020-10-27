@@ -65,7 +65,7 @@ ${errorMessage}
 };
 
 const formElementRemoveError = (formEl) => {
-  Array.from(formEl.parentNode.getElementsByClassName('govuk-error-message')).map((error) => error.remove());
+  Array.from(formEl.parentNode.getElementsByClassName('govuk-error-message')).forEach((error) => error.remove());
   formEl.parentNode.classList.remove('govuk-form-group--error');
   return formEl.classList.remove(FORM_ELEMENT_ERROR_CLASS);
 };
