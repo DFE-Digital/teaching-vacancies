@@ -669,17 +669,18 @@ en:
       time_created: Date drafted
       time_updated: Date last updated
     confirmation_page:
-      submitted: 'The job listing has been completed'
-      page_title: 'The job listing for %{organisation} has been completed'
-      view_posted_job: 'View your job listing'
-      dashboard_link: 'You can also view, amend or delete it on %{link}'
-      next_step: 'What happens next'
-      date_posted: 'Your job listing will be posted on %{date}.'
+      dashboard_link: You can also view, amend or delete it on %{link}
+      date_posted: Your job listing will be posted on %{date}.
+      date_posted_now: Your job listing has been posted.
       date_expires: >-
         The listing will appear on the service until %{application_deadline},
         after which it will no longer be visible to jobseekers.
-      feedback_link: 'What did you think of this service?'
-      feedback_time: '(takes 30 seconds)'
+      feedback_link: What did you think of this service?
+      feedback_time: (takes 30 seconds)
+      next_step: What happens next
+      page_title: The job listing for %{organisation} has been completed
+      submitted: The job listing has been completed
+      view_posted_job: View your job listing
     aria_labels:
       content: Content
       change_job_location: Change job location
