@@ -477,9 +477,15 @@ en:
       location_html:
         one: <span class='govuk-!-font-weight-bold'>%{count}</span> job found near <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
         other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs found near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
+      location_polygon_html:
+        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job found in <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
+        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs found in <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
       keyword_location_html:
         one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
         other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
+      keyword_location_polygon_html:
+        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> in <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
+        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> in <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
     no_jobs:
       heading: Try another search
       intro: 'You may get more results if you:'
