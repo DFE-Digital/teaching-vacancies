@@ -1,4 +1,4 @@
-class Jobseekers::PillLinkComponent < ViewComponent::Base
+class Shared::PillLinkComponent < ViewComponent::Base
   attr_accessor :link_path, :link_text
 
   def initialize(link_path:, link_text:)

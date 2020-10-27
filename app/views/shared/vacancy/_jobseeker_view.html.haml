@@ -38,24 +38,24 @@
       .govuk-grid-row
         -# Up to four half columns in one row so that they automatically wrap depending on how many are present
         .govuk-grid-column-one-half
-          = render(Jobseekers::PillLinkComponent.new(link_path: '#job-details', link_text: 'Job details'))
+          = render(Shared::PillLinkComponent.new(link_path: '#job-details', link_text: 'Job details'))
         - if @vacancy.documents.any?
           .govuk-grid-column-one-half
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#supporting-documents', link_text: 'Supporting documents'))
+            = render(Shared::PillLinkComponent.new(link_path: '#supporting-documents', link_text: 'Supporting documents'))
         .govuk-grid-column-one-half
           - if @vacancy.at_one_school?
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.school_overview')))
+            = render(Shared::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.school_overview')))
           - elsif @vacancy.at_multiple_schools?
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.schools_overview')))
+            = render(Shared::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.schools_overview')))
           - elsif @vacancy.central_office?
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.trust_overview')))
+            = render(Shared::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.trust_overview')))
         .govuk-grid-column-one-half
           - if @vacancy.at_one_school?
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-location', link_text: t('schools.school_location.one')))
+            = render(Shared::PillLinkComponent.new(link_path: '#school-location', link_text: t('schools.school_location.one')))
           - elsif @vacancy.at_multiple_schools?
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.school_location.many')))
+            = render(Shared::PillLinkComponent.new(link_path: '#school-overview', link_text: t('schools.school_location.many')))
           - elsif @vacancy.central_office?
-            = render(Jobseekers::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.school_group_location')))
+            = render(Shared::PillLinkComponent.new(link_path: '#school-overview', link_text: t('school_groups.school_group_location')))
 
     = render(Jobseekers::VacancyDetailsComponent.new(vacancy: @vacancy))
     = render(Jobseekers::OrganisationOverviews::SchoolGroupComponent.new(vacancy: @vacancy))
