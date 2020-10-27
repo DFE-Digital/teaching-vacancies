@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :detect_device_format
   before_action :set_root_headers
 
-  helper_method :cookies_preference_set?, :referred_from_jobs_path?
+  helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
 
   include AuthenticationConcerns
   include Ip
@@ -64,6 +64,10 @@ class ApplicationController < ActionController::Base
   def referred_from_jobs_path?
     request_uri = URI(request.referrer || '')
     request.host == request_uri.host && request_uri.path == jobs_path
+  end
+
+  def utm_parameters
+    params.permit(:utm_source, :utm_medium, :utm_campaign, :utm_term, :utm_content)
   end
 
 private
