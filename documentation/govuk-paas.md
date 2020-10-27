@@ -162,7 +162,7 @@ When a PR is approved and merged into `master` branch an automatic deploy is tri
 
 From [Redis maintenance times](https://docs.cloud.service.gov.uk/deploying_services/redis/#redis-maintenance-times)
 
-> Every Redis service has a maintenance window of Sunday 11pm to Monday 1:30am UTC every week. 
+> Every Redis service has a maintenance window of Sunday 11pm to Monday 1:30am UTC every week.
 
 From [PostgreSQL maintenance times](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#postgresql-maintenance-times):
 
@@ -208,7 +208,6 @@ cf7 conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
 - Create file `terraform/workspace-variables/<env>_app_env.yml`
 - Create SSM parameters of type `SecureString`:
   - `/tvs/<env>/app/BIG_QUERY_API_JSON_KEY`
-  - `/tvs/<env>/app/CLOUD_STORAGE_API_JSON_KEY`
   - `/tvs/<env>/app/GOOGLE_API_JSON_KEY`
   - `/tvs/<env>/app/secrets`
   - `/tvs/<env>/infra/secrets`

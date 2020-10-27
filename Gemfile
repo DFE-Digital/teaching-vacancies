@@ -23,7 +23,6 @@ gem 'friendly_id'
 gem 'geocoder'
 gem 'google-api-client'
 gem 'google-cloud-bigquery'
-gem 'google-cloud-storage'
 gem 'google_drive', require: false
 gem 'gov_uk_date_fields'
 gem 'govuk_design_system_formbuilder'

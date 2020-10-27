@@ -391,7 +391,6 @@ There are several different API keys in use in different environments. There are
 - `GOOGLE_MAPS_API_KEY` is used for Google Maps
 - `GOOGLE_API_JSON_KEY` is used for analytics, indexing and drive
 - `BIG_QUERY_API_JSON_KEY` is used for writing tables into BigQuery
-- `CLOUD_STORAGE_API_JSON_KEY` is not used (as far as I can tell)
 
 __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. They will need to be normalized in to `JSON` strings to be used in ENV variables.__
 
