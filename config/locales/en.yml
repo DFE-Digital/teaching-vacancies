@@ -209,6 +209,7 @@ en:
             organisation until DfE Sign In is working as normal. Please %{try_again} later.
         please_select: >-
           You are associated with more than one organisation. Please select the one you wish to sign in with.
+      not_authorised: You are not authorised to log in
 
   job_alert_feedbacks:
     edit:

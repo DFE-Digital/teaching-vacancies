@@ -196,10 +196,13 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
         let(:dsi_data) do
           { 'school_urns' => [], 'trust_uids' => [], 'la_codes' => [local_authority.local_authority_code] }
         end
+        let(:la_user_allowed?) { true }
 
         context 'with LocalAuthorityAccessFeature enabled' do
           before do
             allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
+            allow(ALLOWED_LOCAL_AUTHORITIES)
+              .to receive(:include?).with(local_authority.local_authority_code).and_return(la_user_allowed?)
             allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
           end
 
@@ -221,6 +224,17 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
               expect(page).not_to have_content('Choose your organisation')
               expect(page).to have_content("Jobs in #{local_authority.name}")
               expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
+            end
+          end
+
+          context 'when user oid is not in the allowed list' do
+            let(:la_user_allowed?) { false }
+
+            scenario 'cannot sign in' do
+              freeze_time do
+                visit auth_email_choose_organisation_path(login_key: login_key.id)
+                expect(page).to have_content 'You are not authorised to log in'
+              end
             end
           end
         end

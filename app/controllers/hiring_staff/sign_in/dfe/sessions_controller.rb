@@ -98,7 +98,7 @@ private
   end
 
   def check_authorisation(authorisation_permissions)
-    if authorisation_permissions.authorised? && organisation_id_present?
+    if authorisation_permissions.authorised? && organisation_id_present? && allowed_user?
       update_session(authorisation_permissions)
       update_user_last_activity_at
       redirect_to organisation_path
@@ -113,5 +113,10 @@ private
 
   def organisation_id_present?
     school_urn.present? || trust_uid.present? || local_authority_code.present?
+  end
+
+  def allowed_user?
+    school_urn.present? || trust_uid.present? ||
+      (local_authority_code.present? && ALLOWED_LOCAL_AUTHORITIES.include?(local_authority_code))
   end
 end
