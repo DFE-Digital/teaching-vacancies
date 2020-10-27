@@ -3,7 +3,7 @@ namespace :data do
   namespace :schools do
     task import: :environment do
       Rails.logger.debug("Running school import task in #{Rails.env}")
-      UpdateSchoolsDataFromSourceJob.perform_later
+      ImportSchoolDataJob.perform_later
     end
   end
 
