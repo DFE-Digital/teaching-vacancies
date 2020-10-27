@@ -5,7 +5,6 @@ import 'styles/application.scss';
 
 import Rails from 'rails-ujs';
 
-import 'src/addTitleToGoogleMapsIframe';
 import 'src/addVacancyStateToDataLayer';
 import 'src/deleteDocument';
 import 'src/details';
