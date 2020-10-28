@@ -42,7 +42,7 @@ namespace :data do
   namespace :users do
     task update: :environment do
       Rails.logger.debug("Running DfE Sign In users update task in #{Rails.env}")
-      UpdateDfeSignInUsersJob.perform_later
+      UpdateDsiUsersInDbJob.perform_later
     end
   end
 

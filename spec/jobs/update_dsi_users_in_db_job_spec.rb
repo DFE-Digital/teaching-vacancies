@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'update_dsi_users_in_db_job'
 
-RSpec.describe UpdateDfeSignInUsersJob, type: :job do
+RSpec.describe UpdateDsiUsersInDbJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later }

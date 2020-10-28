@@ -16,6 +16,7 @@
   - [audit_vacancies, 1]
   - [audit_vacancy_publish_feedback, 1]
   - [clear_emergency_login_keys, 1]
+  - [email_feedback_prompt, 1]
   - [export_tables, 1]
   - [export_users, 1]
   - [import_school_data, 1]
