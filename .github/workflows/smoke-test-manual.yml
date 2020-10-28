@@ -1,10 +1,10 @@
 name: Smoke Test Manual
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment'     
+        description: 'Environment'
         required: true
         default: 'staging'
 
@@ -24,7 +24,7 @@ jobs:
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.7.1
+          ruby-version: 2.7
 
       - name: Set up ruby gem cache
         uses: actions/cache@v2
