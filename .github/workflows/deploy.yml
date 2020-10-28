@@ -6,7 +6,7 @@ on:
       - master
     paths-ignore:
     - 'bigquery/**'
-    - 'documentation/**'    
+    - 'documentation/**'
     - 'terraform/common/**'
     - 'terraform/monitoring/**'
 
@@ -44,10 +44,10 @@ jobs:
         TAG=${GITHUB_SHA}
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
-    - name: Set up Ruby 2.7
+    - name: Set up Ruby 2.7.2
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: 2.7.2
 
     - name: Validate secrets
       env:

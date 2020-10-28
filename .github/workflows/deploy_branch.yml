@@ -7,7 +7,7 @@ on:
       - staging
     paths-ignore:
     - 'bigquery/**'
-    - 'documentation/**'    
+    - 'documentation/**'
     - 'terraform/common/**'
     - 'terraform/monitoring/**'
 
@@ -52,10 +52,10 @@ jobs:
         echo ::set-output name=BRANCH::${BRANCH}
         echo ::set-output name=TAG::${TAG}
 
-    - name: Set up Ruby 2.7
+    - name: Set up Ruby 2.7.2
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: 2.7.2
 
     - name: Validate secrets
       env:
