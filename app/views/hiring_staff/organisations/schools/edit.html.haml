@@ -20,7 +20,7 @@
 
       = f.govuk_text_area :description,
         label: { text: t('helpers.fieldset.organisation_form.description', organisation_type: organisation_type_basic(@organisation)), size: 's' },
-        hint_text: t('helpers.hint.organisation_form.description', organisation_type: organisation_type_basic(@organisation)),
+        hint: { text: t('helpers.hint.organisation_form.description', organisation_type: organisation_type_basic(@organisation)) },
         rows: 10
 
       = f.govuk_submit t('buttons.save_changes')

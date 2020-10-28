@@ -8,7 +8,7 @@
 
 = f.govuk_email_field :email,
   label: { text: t('subscriptions.labels.email_html'), size: 's' },
-  hint_text: t('subscriptions.hints.email'),
+  hint: { text: t('subscriptions.hints.email') },
   required: true
 
 = f.govuk_collection_radio_buttons :frequency,

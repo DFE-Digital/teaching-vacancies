@@ -18,13 +18,13 @@
 
       = f.govuk_text_area :job_summary,
         label: { text: t('helpers.fieldset.job_summary_form.job_summary_html'), size: 's' },
-        hint_text: t('helpers.hint.job_summary_form.job_summary'),
+        hint: { text: t('helpers.hint.job_summary_form.job_summary') },
         rows: 10,
         required: true
 
       = f.govuk_text_area :about_school,
         label: { text: t('helpers.fieldset.job_summary_form.about_organisation_html', organisation: vacancy_about_school_label_organisation(@vacancy)), size: 's' },
-        hint_text: vacancy_about_school_hint_text(@vacancy),
+        hint: { text: vacancy_about_school_hint_text(@vacancy) },
         value: vacancy_about_school_value(@vacancy),
         rows: 10,
         required: true

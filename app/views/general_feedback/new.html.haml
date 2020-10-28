@@ -14,7 +14,7 @@
             = f.govuk_radio_button :visit_purpose, visit_purpose.last, label: { text: visit_purpose.first }, link_errors: idx == 0 do
               = f.govuk_text_area :visit_purpose_comment,
                 label: { text: t('general_feedback.visit_purpose_legend_html'), hidden: true },
-                hint_text: t('general_feedback.visit_purpose_hint_text'),
+                hint: { text: t('general_feedback.visit_purpose_hint_text') },
                 rows: 5,
                 max_chars: 1200
           - else

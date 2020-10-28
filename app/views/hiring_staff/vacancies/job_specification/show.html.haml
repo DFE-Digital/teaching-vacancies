@@ -23,7 +23,7 @@
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
         = f.govuk_text_field :job_title,
           label: { text: t('helpers.fieldset.job_specification_form.job_title_html'), size: 's' },
-          hint_text: t('helpers.hint.job_specification_form.job_title'),
+          hint: { text: t('helpers.hint.job_specification_form.job_title') },
           class: 'govuk-input string required govuk-js-character-count',
           required: true
         %span#job_specification_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
@@ -34,7 +34,7 @@
         :last,
         :first,
         legend: { text: t('helpers.fieldset.job_specification_form.job_roles') },
-        hint_text: t('helpers.hint.job_specification_form.job_roles')
+        hint: { text: t('helpers.hint.job_specification_form.job_roles') }
 
       = f.govuk_collection_radio_buttons :suitable_for_nqt,
         %w[yes no],
@@ -47,8 +47,9 @@
         %label{ for: 'job-specification-form-subject-search' }
           %span.govuk-visually-hidden
             Subject filter
+        -# This heinous translation is temporary while we wait for a GOVUKDesignSystemFormBuilder issue to be resolved
         %span.govuk-hint#job-specification-form-subjects-hint
-          =t('helpers.hint.job_specification_form.subjects')
+          =t('helpers.hint.job_specification_form.subjects_temporary')
 
         %div{ class: 'govuk-!-margin-bottom-6' }
           = render 'shared/checkbox_group', classes: 'checkbox-label__bold', f: f, search: true, scroll: true, attribute_name: :subjects, options: subject_options, value_method: :first, text_method: :first, hint_method: :last, small: true
@@ -58,7 +59,7 @@
         :last,
         :first,
         legend: { text: t('helpers.fieldset.job_specification_form.working_pattern_html') },
-        hint_text: t('helpers.hint.job_specification_form.working_patterns')
+        hint: { text: t('helpers.hint.job_specification_form.working_patterns') }
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 

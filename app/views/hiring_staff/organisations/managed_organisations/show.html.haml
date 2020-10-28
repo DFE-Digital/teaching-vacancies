@@ -11,7 +11,7 @@
 
       = f.govuk_check_boxes_fieldset :managed_organisations,
         legend: { text: t('hiring_staff.managed_organisations.labels.select_organisations_html') },
-        hint_text: t('hiring_staff.managed_organisations.hints.select_organisations'),
+        hint: { text: t('hiring_staff.managed_organisations.hints.select_organisations') },
         classes: 'checkbox-label__bold govuk-!-margin-top-5' do
 
         = f.govuk_check_box :managed_organisations,
