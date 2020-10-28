@@ -19,7 +19,7 @@ It's worth a quick reminder that Containers are created from Images. [Docker's o
 
 For both stages, we:
 
-- Use the [official Docker Ruby image](https://hub.docker.com/_/ruby), based off [Alpine Linux `3.11`, with Ruby `2.7.1` included](https://github.com/docker-library/ruby/blob/a564feaaee4c8647c299ab11d41498468bb9af7b/2.7/alpine3.11/Dockerfile)
+- Use the [official Docker Ruby image](https://hub.docker.com/_/ruby), based off [Alpine Linux `3.11`, with Ruby `2.7.2` included](https://github.com/docker-library/ruby/blob/a564feaaee4c8647c299ab11d41498468bb9af7b/2.7/alpine3.11/Dockerfile)
 - use the [`apk` tool](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management) to update and install packages
 - set the timezone to `Europe/London` for consistency in logs
 - set the working directory to `/teacher-vacancy`
@@ -27,7 +27,7 @@ For both stages, we:
 Steps from the `builder` stage worth highlighting:
 
 ```
-FROM ruby:2.7.1-alpine AS builder
+FROM ruby:2.7.2-alpine AS builder
 
 COPY Gemfile* ./
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache --without development test
@@ -49,7 +49,7 @@ RUN RAILS_ENV=staging bundle exec rake webpacker:compile
 Steps from the `production` stage worth highlighting:
 
 ```
-FROM ruby:2.7.1-alpine AS production
+FROM ruby:2.7.2-alpine AS production
 COPY --from=builder /teacher-vacancy /teacher-vacancy
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
@@ -151,7 +151,7 @@ The GitHub Action workflow [`deploy.yml`](../.github/workflows/deploy.yml):
 ### Locally
 
 - Go to the tags view of the [dfedigital/teaching-vacancies](https://hub.docker.com/r/dfedigital/teaching-vacancies/tags) repository
-- Copy a tag 
+- Copy a tag
 
 ```
 dfedigital/teaching-vacancies:review-pr-2100-fa6128324de4bbf0d8f238011e672f5c06b9c975-20201008150346
@@ -165,7 +165,7 @@ docker run -it --rm dfedigital/teaching-vacancies:review-pr-2100-fa6128324de4bbf
 
 This passes the options:
 
-- `-it` - a combination of `-i` and `-t` which is 
+- `-it` - a combination of `-i` and `-t` which is
     `--interactive` ("Keep STDIN open even if not attached")
     `--tty` ("Allocate a pseudo-TTY")
 - `--rm` - tells the Docker engine to remove the container (but not the image) when it exits
@@ -196,7 +196,7 @@ At this point you'll be in the `/teacher-vacancy` directory
 - `builder-staging`
 - `builder-master`
 
-And for feature branches, these may undergo several pushes to the branch, so it's worth storing the builder image, to speed up subsequent builds, e.g. 
+And for feature branches, these may undergo several pushes to the branch, so it's worth storing the builder image, to speed up subsequent builds, e.g.
 
 - `builder-TEVA-1296-alert-filters`
 
@@ -206,11 +206,11 @@ And for feature branches, these may undergo several pushes to the branch, so it'
 - `staging`
 - `master`
 
-And for feature branches: 
+And for feature branches:
 
 - `TEVA-1296-alert-filters`
 
-The image tied to these tags changes frequently, with each build, for caching. 
+The image tied to these tags changes frequently, with each build, for caching.
 
 Do NOT use these tags to generate containers - instead, choose a unique tag listed below
 

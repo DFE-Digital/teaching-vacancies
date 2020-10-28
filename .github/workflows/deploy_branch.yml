@@ -7,7 +7,7 @@ on:
       - staging
     paths-ignore:
     - 'bigquery/**'
-    - 'documentation/**'    
+    - 'documentation/**'
     - 'terraform/common/**'
     - 'terraform/monitoring/**'
 

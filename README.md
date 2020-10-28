@@ -120,7 +120,7 @@ If you are on a new device, remember to [generate a new SSH key](https://docs.gi
 ```bash
 $ ruby --version
 
-ruby 2.7.1
+ruby 2.7.2
 ```
 
 The source of truth for the Ruby version is the [Gemfile](/Gemfile#L3).

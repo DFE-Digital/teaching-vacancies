@@ -16,10 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Ruby
+      - name: Set up Ruby 2.7
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.7.1
+          ruby-version: 2.7
 
       - name: Set up ruby gem cache
         uses: actions/cache@v2

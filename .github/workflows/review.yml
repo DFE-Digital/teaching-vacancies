@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize]
     paths-ignore:
     - 'bigquery/**'
-    - 'documentation/**'    
+    - 'documentation/**'
     - 'terraform/common/**'
     - 'terraform/monitoring/**'
 
