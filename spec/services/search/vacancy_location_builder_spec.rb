@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'a search using polygons' do
+RSpec.shared_examples 'a search using polygons' do |options|
   it 'sets the correct attributes' do
-    expect(subject.location_category).to eql(polygonable_location)
+    expect(subject.location_category).to eql(options&.dig(:location)&.presence || polygonable_location)
     expect(subject.location_polygon).to eql(location_polygon)
     expect(subject.location_filter).to eql({})
   end
@@ -57,6 +57,16 @@ RSpec.describe Search::VacancyLocationBuilder do
           expect(subject.missing_polygon).to be true
         end
       end
+    end
+
+    context 'when a mapped location is specified' do
+      let(:location) { 'Map this location' }
+
+      before do
+        allow(MAPPED_LOCATIONS).to receive(:[]).with(location.downcase).and_return(polygonable_location)
+      end
+
+      it_behaves_like 'a search using polygons', location: 'Map this location'
     end
 
     context 'when a non-polygonable location is specified' do
