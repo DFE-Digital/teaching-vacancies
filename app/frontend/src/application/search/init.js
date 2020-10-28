@@ -3,6 +3,7 @@ import { onChange as locationChange, getCoords } from './location';
 import { disableRadiusSelect } from './radius';
 import { renderAutocomplete } from '../../patterns/autocomplete';
 import { getLocationSuggestions } from '../../lib/api';
+import { hideSortSubmit, sortChange } from './sort';
 
 const SEARCH_THRESHOLD = 3;
 
@@ -32,6 +33,14 @@ window.addEventListener('DOMContentLoaded', () => {
       threshold: SEARCH_THRESHOLD,
       getOptions: getLocationSuggestions,
       key: 'location',
+    });
+  }
+
+  if (document.getElementById('jobs_sort_select')) {
+    hideSortSubmit();
+
+    document.getElementById('jobs_sort_select').addEventListener('input', () => {
+      sortChange();
     });
   }
 });
