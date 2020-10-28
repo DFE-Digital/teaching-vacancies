@@ -77,7 +77,6 @@ variable hostname_domain_map {
 locals {
   app_env_api_keys = merge(
     yamldecode(data.aws_ssm_parameter.app_env_api_key_big_query.value),
-    yamldecode(data.aws_ssm_parameter.app_env_api_key_cloud_storage.value),
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
   )
   app_env_secrets = yamldecode(data.aws_ssm_parameter.app_env_secrets.value)

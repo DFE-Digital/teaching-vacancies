@@ -1,7 +1,6 @@
 ---
 AUTHENTICATION_FALLBACK: false
 BIG_QUERY_DATASET: production_dataset
-CLOUD_STORAGE_BUCKET: tvs_production
 DFE_SIGN_IN_ISSUER: https://oidc.signin.education.gov.uk
 DFE_SIGN_IN_REDIRECT_URL: https://teaching-vacancies.service.gov.uk/auth/dfe/callback
 DFE_SIGN_IN_URL: https://api.signin.education.gov.uk
@@ -11,7 +10,6 @@ FEATURE_COOKIES_BANNER: true
 FEATURE_LOCAL_AUTHORITY_ACCESS: false
 FEATURE_READ_ONLY: false
 GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
-GOOGLE_CLOUD_PLATFORM_PROJECT_ID: teacher-vacancy-service
 OPENSSL_CONF: /etc/ssl/
 RACK_ENV: production
 RAILS_ENV: production

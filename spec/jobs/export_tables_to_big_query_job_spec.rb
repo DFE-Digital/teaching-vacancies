@@ -19,9 +19,9 @@ RSpec.describe ExportTablesToBigQueryJob, type: :job do
     end
 
     it 'calls the export tables to big query class' do
-      google_cloud_storage = double(:google_cloud_storage)
-      expect(ExportTablesToBigQuery).to receive(:new) { google_cloud_storage }
-      expect(google_cloud_storage).to receive(:run!)
+      export_tables_to_bigquery = double(:export_tables_to_bigquery)
+      expect(ExportTablesToBigQuery).to receive(:new) { export_tables_to_bigquery }
+      expect(export_tables_to_bigquery).to receive(:run!)
 
       perform_enqueued_jobs { job }
     end
