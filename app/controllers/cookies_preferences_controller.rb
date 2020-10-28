@@ -28,8 +28,8 @@ private
   end
 
   def set_previous_url_in_session
-    previous_path = URI(request.referrer || '').path
-    session[:previous_url] = previous_path unless previous_path == cookies_preferences_path
+    previous_uri = request.referrer.present? ? URI(request.referrer) : nil
+    session[:previous_url] = previous_uri&.request_uri unless previous_uri&.path == cookies_preferences_path
     session[:previous_url] = root_path if session[:previous_url].nil?
   end
 end
