@@ -125,8 +125,6 @@ ruby 2.7.2
 
 The source of truth for the Ruby version is the [Gemfile](/Gemfile#L3).
 
-You can use a tool like [asdf](https://asdf-vm.com/#/) to manage your versions of multiple languages.
-
 #### NodeJS
 
 Minimum version required:
