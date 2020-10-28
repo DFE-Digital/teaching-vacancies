@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_27_093836) do
+ActiveRecord::Schema.define(version: 2020_10_27_163927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -107,11 +107,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_093836) do
     t.index ["subscription_id"], name: "index_job_alert_feedbacks_on_subscription_id"
   end
 
-  create_table "leaderships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title", null: false
-    t.index ["title"], name: "index_leaderships_on_title", unique: true
-  end
-
   create_table "location_polygons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "location_type"
@@ -174,11 +169,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_093836) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.index ["name"], name: "index_subjects_on_name", unique: true
-  end
-
   create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email"
     t.integer "frequency"
@@ -224,8 +214,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_093836) do
     t.text "benefits"
     t.date "starts_on"
     t.date "ends_on"
-    t.uuid "subject_id"
-    t.uuid "leadership_id"
     t.text "education"
     t.text "qualifications"
     t.text "experience"
@@ -241,8 +229,6 @@ ActiveRecord::Schema.define(version: 2020_10_27_093836) do
     t.integer "total_pageviews"
     t.datetime "weekly_pageviews_updated_at"
     t.datetime "total_pageviews_updated_at"
-    t.uuid "first_supporting_subject_id"
-    t.uuid "second_supporting_subject_id"
     t.integer "total_get_more_info_clicks"
     t.datetime "total_get_more_info_clicks_updated_at"
     t.integer "working_patterns", array: true
@@ -269,13 +255,9 @@ ActiveRecord::Schema.define(version: 2020_10_27_093836) do
     t.uuid "publisher_organisation_id"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
     t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
-    t.index ["first_supporting_subject_id"], name: "index_vacancies_on_first_supporting_subject_id"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
-    t.index ["leadership_id"], name: "index_vacancies_on_leadership_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"
-    t.index ["second_supporting_subject_id"], name: "index_vacancies_on_second_supporting_subject_id"
-    t.index ["subject_id"], name: "index_vacancies_on_subject_id"
   end
 
   create_table "vacancy_publish_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
