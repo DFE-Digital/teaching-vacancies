@@ -44,10 +44,10 @@ jobs:
         TAG=${GITHUB_SHA}
         echo "TAG=${TAG}" >> $GITHUB_ENV
 
-    - name: Set up Ruby 2.7.2
+    - name: Set up Ruby 2.7
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: 2.7.2
+        ruby-version: 2.7
 
     - name: Validate secrets
       env:
