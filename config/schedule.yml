@@ -1,9 +1,19 @@
-daily_alerts:
+queue_daily_alerts:
   cron: '0 15 * * *'
   class: 'SendDailyAlertEmailJob'
   queue: queue_daily_alerts
 
-export_dsi_users:
+queue_weekly_alerts:
+  cron: '0 18 * * 5'
+  class: 'SendWeeklyAlertEmailJob'
+  queue: queue_weekly_alerts
+
+email_feedback_prompt:
+  cron: '0 09 * * *'
+  class: 'SendExpiredVacancyFeedbackEmailJob'
+  queue: email_feedback_prompt
+
+export_users:
   cron: '0 01 * * *'
   class: 'ExportDsiUsersToBigQueryJob'
   queue: export_users
@@ -58,12 +68,8 @@ update_algolia_index:
   class: 'UpdateAlgoliaIndex'
   queue: update_algolia_index
 
-update_dsi_users:
+update_dsi_users_in_db:
   cron: '0 0 * * *'
   class: 'UpdateDsiUsersInDbJob'
   queue: update_dsi_users_in_db
 
-weekly_alerts:
-  cron: '0 18 * * 5'
-  class: 'SendWeeklyAlertEmailJob'
-  queue: queue_weekly_alerts
