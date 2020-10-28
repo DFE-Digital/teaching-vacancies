@@ -633,6 +633,7 @@ en:
     share_on_facebook: Share to Facebook
     share_on_twitter: Share to Twitter
     share_this_job: Share this job
+    similar_jobs: Similar jobs
     published_jobs: Published jobs
     published_jobs_with_count:
       zero: 'No published jobs'

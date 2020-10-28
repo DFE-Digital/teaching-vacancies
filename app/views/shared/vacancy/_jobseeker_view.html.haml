@@ -61,6 +61,14 @@
     = render(Jobseekers::OrganisationOverviews::SchoolComponent.new(vacancy: @vacancy))
     = render(Jobseekers::OrganisationOverviews::SchoolsComponent.new(vacancy: @vacancy))
 
+    - if @similar_jobs.present?
+      %section#similar-jobs{ class: "govuk-!-margin-bottom-5" }
+        %h3.govuk-heading-m= t('jobs.similar_jobs')
+        .govuk-grid-row
+          - @similar_jobs.each do |similar_job|
+            .govuk-grid-column-one-half
+              = render(Jobseekers::SimilarJobComponent.new(vacancy: similar_job))
+
     %section
       %p#similar-jobs-alert-page-end-gtm
         %svg{ xmlns: "http://www.w3.org/2000/svg", width: "20", height: "21", viewBox: "0 0 21 22", fill: "none" }
