@@ -1,14 +1,9 @@
-require 'get_subject_name'
-
 class CopyVacancy
-  include GetSubjectName
-
   def initialize(vacancy)
     @vacancy = vacancy
     setup_new_vacancy
     setup_organisation_vacancies
     reset_candidate_specification if @vacancy.any_candidate_specification?
-    copy_legacy_subjects
   end
 
   def call
@@ -34,20 +29,6 @@ private
         google_drive_id: document_copy.copied.id
       })
     end
-  end
-
-  def copy_legacy_subjects
-    @new_vacancy.subjects ||= []
-    unless @new_vacancy.subjects.any?
-      @new_vacancy.subjects += [
-        get_subject_name(@vacancy.subject),
-        get_subject_name(@vacancy.first_supporting_subject),
-        get_subject_name(@vacancy.second_supporting_subject),
-      ].uniq.reject(&:blank?)
-    end
-    @new_vacancy.subject = nil
-    @new_vacancy.first_supporting_subject = nil
-    @new_vacancy.second_supporting_subject = nil
   end
 
   def reset_candidate_specification
