@@ -1,8 +1,4 @@
-require 'get_subject_name'
-
 class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancies::ApplicationController
-  include GetSubjectName
-
   before_action :set_up_url
   before_action :set_up_previous_step_path, only: %i[show]
   before_action only: %i[create update] do
@@ -32,7 +28,6 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
 
   def update
     if @form.valid?
-      remove_subject_fields unless @vacancy.subjects.nil?
       update_vacancy(form_params, @vacancy)
       update_google_index(@vacancy) if @vacancy.listed?
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
@@ -60,12 +55,6 @@ private
     if params[:job_specification_form][:suitable_for_nqt] == 'yes'
       params[:job_specification_form][:job_roles] |= [:nqt_suitable]
     end
-  end
-
-  def remove_subject_fields
-    @vacancy.subject = nil
-    @vacancy.first_supporting_subject = nil
-    @vacancy.second_supporting_subject = nil
   end
 
   def save_vacancy_as_draft

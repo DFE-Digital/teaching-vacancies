@@ -8,11 +8,6 @@ RSpec.describe VacanciesHelper, type: :helper do
       allow(vacancy).to receive(:supporting_documents).and_return(nil)
       expect(helper.new_attributes(vacancy)[:supporting_documents]).to eql(I18n.t('jobs.supporting_documents'))
     end
-
-    it 'includes job_details for legacy listings with missing subjects' do
-      allow(helper).to receive(:missing_subjects?).with(vacancy).and_return(true)
-      expect(helper.new_attributes(vacancy)[:subjects]).to eql(I18n.t('jobs.subjects'))
-    end
   end
 
   describe '#review_heading' do

@@ -219,11 +219,6 @@ class Vacancy < ApplicationRecord
   belongs_to :publisher_user, class_name: 'User', optional: true
   belongs_to :publisher_organisation, class_name: 'Organisation', optional: true
 
-  belongs_to :subject, optional: true
-  belongs_to :first_supporting_subject, class_name: 'Subject', optional: true
-  belongs_to :second_supporting_subject, class_name: 'Subject', optional: true
-  belongs_to :leadership, optional: true
-
   has_one :publish_feedback, class_name: 'VacancyPublishFeedback'
 
   has_many :documents
@@ -303,8 +298,6 @@ class Vacancy < ApplicationRecord
       include: {
         organisation: { only: %i[region phase name postcode address town county local_authority] },
         subject: { only: %i[name] },
-        first_supporting_subject: { only: %i[name] },
-        second_supporting_subject: { only: %i[name] }
       },
     )
   end

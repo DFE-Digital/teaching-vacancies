@@ -16,7 +16,6 @@ module VacanciesHelper
 
   def new_attributes(vacancy)
     attributes = {}
-    attributes[:subjects] = I18n.t('jobs.subjects') if missing_subjects?(vacancy)
     attributes[:supporting_documents] = I18n.t('jobs.supporting_documents') unless vacancy.supporting_documents
     attributes[:contact_number] = I18n.t('jobs.contact_number') unless vacancy.contact_number
     attributes
@@ -64,13 +63,6 @@ module VacanciesHelper
       end
 
     organisation_for_title ? I18n.t('jobs.create_a_job_title', organisation: organisation_for_title) : I18n.t('jobs.create_a_job_title_no_org')
-  end
-
-  def missing_subjects?(vacancy)
-    legacy_subjects = [vacancy.subject,
-                       vacancy.first_supporting_subject,
-                       vacancy.second_supporting_subject].reject(&:blank?)
-    legacy_subjects.any? && legacy_subjects.count != vacancy.subjects&.count
   end
 
   def hidden_state_field_value(vacancy, copy = false)
