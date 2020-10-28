@@ -12,7 +12,7 @@
       #conditional_email.govuk-radios__conditional.govuk-radios__conditional--hidden
         = f.input :email, as: :email,
             label: t('general_feedback.user_interested_email_heading'),
-            hint: t('general_feedback.user_interested_email_text'),
+            hint: { text: t('general_feedback.user_interested_email_text') },
             wrapper_html: { id: 'email' },
             required: true
 

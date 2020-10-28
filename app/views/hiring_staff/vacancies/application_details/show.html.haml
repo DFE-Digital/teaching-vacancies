@@ -18,28 +18,28 @@
 
       = f.govuk_email_field :contact_email,
         label: { text: t('helpers.fieldset.application_details_form.contact_email_html'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.contact_email'),
+        hint: { text: t('helpers.hint.application_details_form.contact_email') },
         required: true,
         width: 'two-thirds'
 
       = f.govuk_phone_field :contact_number,
         label: { text: t('helpers.fieldset.application_details_form.contact_number'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.contact_number'),
+        hint: { text: t('helpers.hint.application_details_form.contact_number') },
         width: 'one-third'
 
       = f.govuk_text_area :school_visits,
         label: { text: t("helpers.fieldset.application_details_form.#{school_or_trust_visits(@vacancy.parent_organisation)}"), size: 's' },
-        hint_text: vacancy_school_visits_hint(@vacancy),
+        hint: { text: vacancy_school_visits_hint(@vacancy) },
         rows: 10
 
       = f.govuk_text_area :how_to_apply,
         label: { text: t('helpers.fieldset.application_details_form.how_to_apply'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.how_to_apply'),
+        hint: { text: t('helpers.hint.application_details_form.how_to_apply') },
         rows: 10
 
       = f.govuk_url_field :application_link,
         label: { text: t('helpers.fieldset.application_details_form.application_link'), size: 's' },
-        hint_text: t('helpers.hint.application_details_form.application_link')
+        hint: { text: t('helpers.hint.application_details_form.application_link') }
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 

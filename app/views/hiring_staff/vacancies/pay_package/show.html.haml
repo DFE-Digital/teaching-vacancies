@@ -18,12 +18,12 @@
 
       = f.govuk_text_field :salary,
         label: { text: t('helpers.fieldset.pay_package_form.salary_html'), size: 's' },
-        hint_text: t('helpers.hint.pay_package_form.salary'),
+        hint: { text: t('helpers.hint.pay_package_form.salary') },
         required: true
 
       = f.govuk_text_area :benefits,
         label: { text: t('jobs.benefits'), size: 's' },
-        hint_text: t('helpers.hint.pay_package_form.benefits')
+        hint: { text: t('helpers.hint.pay_package_form.benefits') }
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
