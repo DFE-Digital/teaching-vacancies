@@ -163,7 +163,13 @@ bundle exec sidekiq -C config/sidekiq.yml
 
 #### Test and development dependency
 
- * [PhantomJS](https://phantomjs.org)
+
+#### ChromeDriver
+
+```bash
+brew tap homebrew/cask
+brew cask install chromedriver
+```
 
 #### PostgreSQL Setup
 
@@ -205,13 +211,24 @@ You need to add the following environment variable in your `.env` file:
 
 ```bash
 ALGOLIA_INDEX_PREFIX=<Your GitHub username>
+DATABASE_URL=postgres://localhost:5432
 ```
 
-And override the following environment variables:
+Override the following environment variables:
 
 ```bash
-DOMAIN=localhost:3000
 DFE_SIGN_IN_REDIRECT_URL=https://localhost:3000/auth/dfe/callback
+DOMAIN=localhost:3000
+SKYLIGHT_ENABLED=false
+```
+
+And remove the following environment variables:
+
+```bash
+RACK_ENV=
+RAILS_ENV=
+ROLLBAR_ENV=
+SKYLIGHT_ENV=
 ```
 
 Set up the HTTPS certificates following the [HTTPS README](https://github.com/DFE-Digital/teacher-vacancy-service/blob/master/config/localhost/https/README.md). You will find them in the folder 'localhost-certificates' in the [secrets](#secrets).
