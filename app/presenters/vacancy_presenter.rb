@@ -6,14 +6,14 @@ class VacancyPresenter < BasePresenter
   delegate :working_patterns, to: :model, prefix: true
   delegate :job_roles, to: :model, prefix: true
 
-  def share_url(source: nil, medium: nil, campaign: nil, content: nil)
+  def share_url(utm_source: nil, utm_medium: nil, utm_campaign: nil, utm_content: nil)
     params = { protocol: 'https' }
-    if source.present?
+    if utm_source.present?
       params.merge!(
-        utm_source: source,
-        utm_medium: medium,
-        utm_campaign: campaign,
-        utm_content: content,
+        utm_source: utm_source,
+        utm_medium: utm_medium,
+        utm_campaign: utm_campaign,
+        utm_content: utm_content,
       )
     end
     Rails.application.routes.url_helpers.job_url(model, params)
