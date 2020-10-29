@@ -9,8 +9,8 @@ export const onChange = (value) => {
 };
 
 export const getCoords = () => {
-  if (document.querySelector('#jobs-search-form-location-field').dataset.coordinates) {
-    return document.querySelector('#jobs-search-form-location-field').dataset.coordinates.split(' ').join(',');
+  if (document.querySelector('#location-field').dataset.coordinates) {
+    return document.querySelector('#location-field').dataset.coordinates.split(' ').join(',');
   }
   return false;
 };

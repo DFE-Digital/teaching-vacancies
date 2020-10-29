@@ -1,10 +1,10 @@
-= form_for @jobs_search_form, as: 'jobs_search_form', url: jobs_path, method: :get, html: { data: { 'auto-submit': true }, class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
+= form_for @jobs_search_form, as: '', url: jobs_path, method: :get, html: { data: { 'auto-submit': true }, class: 'filters-form', role: 'search', aria: { label: 'Search criteria' } } do |f|
   %aside.filter-vacancies{ class: "govuk-!-margin-bottom-3" }
     %h2.govuk-heading-m= t('jobs.filters.title')
 
     = render 'shared/search/keyword', f: f, filters: true
     = render 'shared/search/location', f: f
-    = render 'shared/search/current_location', loaderElement: 'jobs-search-form-location-field'
+    = render 'shared/search/current_location', loaderElement: 'location-field'
     = render 'shared/search/radius', f: f, filters: true
 
     = f.hidden_field :jobs_sort, value: @vacancies_search&.sort_by

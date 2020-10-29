@@ -140,7 +140,7 @@ RSpec.describe ApplicationController, type: :controller do
         let(:checkboxes) { %w[first_box second_box] }
 
         it 'removes nothing from the array' do
-          subject.strip_empty_checkboxes(:test_form, [:test_field])
+          subject.strip_empty_checkboxes(%i[test_field], :test_form)
           expect(controller.params[:test_form][:test_field]).to eql(checkboxes)
         end
       end
@@ -150,7 +150,7 @@ RSpec.describe ApplicationController, type: :controller do
         let(:stripped_checkboxes) { %w[first_box second_box] }
 
         it 'removes empty checkbox from the array' do
-          subject.strip_empty_checkboxes(:test_form, [:test_field])
+          subject.strip_empty_checkboxes(%i[test_field], :test_form)
           expect(controller.params[:test_form][:test_field]).to eql(stripped_checkboxes)
         end
       end
@@ -166,7 +166,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'removes empty checkbox from the array without error' do
-        subject.strip_empty_checkboxes(:test_form, %i[array_field string_field])
+        subject.strip_empty_checkboxes(%i[array_field string_field], :test_form)
         expect(controller.params[:test_form][:array_field]).to eql(%w[first_box])
         expect(controller.params[:test_form][:string_field]).to eql('')
       end

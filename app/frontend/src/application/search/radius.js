@@ -1,6 +1,6 @@
 export const enableRadiusSelect = () => {
-  if (document.querySelector('#jobs-search-form-radius-field')) {
-    document.querySelector('#jobs-search-form-radius-field').removeAttribute('disabled');
+  if (document.querySelector('#radius-field')) {
+    document.querySelector('#radius-field').removeAttribute('disabled');
   }
 
   if (document.querySelector('.location-radius-select')) {
@@ -13,8 +13,8 @@ export const enableRadiusSelect = () => {
 };
 
 export const disableRadiusSelect = () => {
-  if (document.querySelector('#jobs-search-form-radius-field')) {
-    document.querySelector('#jobs-search-form-radius-field').disabled = true;
+  if (document.querySelector('#radius-field')) {
+    document.querySelector('#radius-field').disabled = true;
   }
 
   if (document.querySelector('.location-radius-select')) {

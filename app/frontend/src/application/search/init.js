@@ -8,20 +8,20 @@ import { hideSortSubmit, sortChange } from './sort';
 const SEARCH_THRESHOLD = 3;
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('jobs-search-form-location-field')) {
+  if (document.getElementById('location-field')) {
     if (!getCoords()) {
       disableRadiusSelect();
     }
 
     renderAutocomplete({
       container: document.getElementsByClassName('location-text')[0],
-      input: document.getElementById('jobs-search-form-location-field'),
+      input: document.getElementById('location-field'),
       threshold: SEARCH_THRESHOLD,
       getOptions: getLocationSuggestions,
       key: 'location',
     });
 
-    document.getElementById('jobs-search-form-location-field').addEventListener('input', (e) => {
+    document.getElementById('location-field').addEventListener('input', (e) => {
       locationChange(e.target.value);
     });
   }
@@ -36,10 +36,10 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (document.getElementById('jobs_sort_select')) {
+  if (document.getElementById('jobs-sort-field')) {
     hideSortSubmit();
 
-    document.getElementById('jobs_sort_select').addEventListener('input', () => {
+    document.getElementById('jobs-sort-field').addEventListener('input', () => {
       sortChange();
     });
   }
