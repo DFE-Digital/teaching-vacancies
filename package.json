@@ -38,7 +38,7 @@
     "sass:check": "yarn run sass:lint",
     "js:test": "jest",
     "js:test:coverage": "jest --coverage",
-    "js:lint": "eslint ./app/frontend/src",
+    "js:lint": "eslint ./app/frontend/src ./app/components/shared",
     "sass:lint": "yarn stylelint app/frontend/**/*.scss -q"
   },
   "jest": {

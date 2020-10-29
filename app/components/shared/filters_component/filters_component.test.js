@@ -137,7 +137,7 @@ describe('filterGroup', () => {
 
     test('removes checked attribute for all filter checkboxes', () => {
       removeAllFiltersHandler(onRemove);
-      Array.from(document.getElementsByClassName(CHECKBOX_CLASS_SELECTOR)).map((checkbox) => expect(checkbox.checked).toBe(false));
+      Array.from(document.getElementsByClassName(CHECKBOX_CLASS_SELECTOR)).forEach((checkbox) => expect(checkbox.checked).toBe(false));
     });
 
     test('calls the supplied callback', () => {
