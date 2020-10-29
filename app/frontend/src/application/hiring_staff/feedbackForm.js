@@ -29,26 +29,28 @@
 const FORM_ELEMENT_ERROR_CLASS = 'govuk-input--error';
 
 document.addEventListener('DOMContentLoaded', () => {
-  Array.from(document.getElementsByClassName('vacancy-feedback__form')).forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      Array.from(document.querySelectorAll(`select[form="${event.target.id}"]`)).forEach((select) => {
-        if (select.value === '') {
-          if (!formElementHasError(select)) {
-            formElementAddError(select, event.target.dataset.optionNotSelectedMessage);
+  if (document.querySelector('.expired__vacancy-form')) {
+    Array.from(document.getElementsByClassName('vacancy-feedback__form')).forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        Array.from(document.querySelectorAll(`select[form="${event.target.id}"]`)).forEach((select) => {
+          if (select.value === '') {
+            if (!formElementHasError(select)) {
+              formElementAddError(select, event.target.dataset.optionNotSelectedMessage);
+            }
+            event.preventDefault();
+          } else {
+            formElementRemoveError(select);
           }
-          event.preventDefault();
-        } else {
-          formElementRemoveError(select);
-        }
+        });
       });
     });
-  });
 
-  Array.from(document.getElementsByTagName('select')).forEach((select) => {
-    select.addEventListener('change', () => {
-      Array.from(select.closest('tr').getElementsByTagName('input')).forEach((input) => { input.disabled = false; });
+    Array.from(document.getElementsByTagName('select')).forEach((select) => {
+      select.addEventListener('change', () => {
+        Array.from(select.closest('tr').getElementsByTagName('input')).forEach((input) => { input.disabled = false; });
+      });
     });
-  });
+  }
 });
 
 const formElementHasError = (formEl) => formEl.classList.contains(FORM_ELEMENT_ERROR_CLASS);
