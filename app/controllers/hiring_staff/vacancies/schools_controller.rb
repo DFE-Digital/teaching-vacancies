@@ -50,7 +50,7 @@ private
   end
 
   def form_params
-    strip_empty_checkboxes(:schools_form, [:organisation_ids])
+    strip_empty_checkboxes(%i[organisation_ids], :schools_form)
     params.require(:schools_form)
           .permit(:state, :organisation_id, organisation_ids: [])
           .merge(completed_step: current_step, job_location: job_location)

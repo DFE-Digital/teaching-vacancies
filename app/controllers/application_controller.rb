@@ -49,15 +49,10 @@ class ApplicationController < ActionController::Base
     session.to_h['session_id']
   end
 
-  def strip_empty_checkboxes(form_key, fields)
-    if params[form_key].present?
-      fields.each do |field|
-        params[form_key][field] = params[form_key][field]&.reject(&:blank?) unless params[form_key][field].is_a?(String)
-      end
-    else
-      fields.each do |field|
-        params[field] = params[field]&.reject(&:blank?) unless params[field].is_a?(String)
-      end
+  def strip_empty_checkboxes(fields, form_key = nil)
+    params_to_strip = params[form_key].present? ? params[form_key] : params
+    fields.each do |field|
+      params_to_strip[field] = params_to_strip[field]&.reject(&:blank?) unless params_to_strip[field].is_a?(String)
     end
   end
 

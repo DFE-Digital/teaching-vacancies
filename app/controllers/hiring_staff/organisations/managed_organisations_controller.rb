@@ -25,7 +25,7 @@ class HiringStaff::Organisations::ManagedOrganisationsController < HiringStaff::
 private
 
   def managed_organisations_params
-    strip_empty_checkboxes(:managed_organisations_form, %i[managed_organisations managed_school_ids])
+    strip_empty_checkboxes(%i[managed_organisations managed_school_ids], :managed_organisations_form)
     params.require(:managed_organisations_form).permit(managed_organisations: [], managed_school_ids: [])
   end
 

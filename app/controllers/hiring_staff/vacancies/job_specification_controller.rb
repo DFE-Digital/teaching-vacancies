@@ -43,7 +43,7 @@ private
   end
 
   def form_params
-    strip_empty_checkboxes(:job_specification_form, %i[working_patterns job_roles subjects])
+    strip_empty_checkboxes(%i[working_patterns job_roles subjects], :job_specification_form)
     append_suitable_for_nqts_to_job_roles
     params.require(:job_specification_form)
           .permit(:state, :job_title, :suitable_for_nqt,
