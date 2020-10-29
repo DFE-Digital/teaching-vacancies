@@ -1,12 +1,12 @@
 export const hideSortSubmit = () => {
-  if (document.getElementById('submit_job_sort')) {
-    document.getElementById('submit_job_sort').style.display = 'none';
+  if (document.querySelector('.jobs-sort-submit')) {
+    document.querySelector('.jobs-sort-submit').style.display = 'none';
   }
 };
 
 export const sortChange = () => {
-  if (document.getElementById('submit_job_sort')) {
-    document.getElementById('submit_job_sort').click();
+  if (document.querySelector('.jobs-sort-submit')) {
+    document.querySelector('.jobs-sort-submit').click();
   }
 };
 
