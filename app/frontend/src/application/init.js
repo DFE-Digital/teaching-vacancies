@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // lint disabled as would require changes to library script
   new ClipboardJS('.copy-to-clipboard'); // eslint-disable-line
 
-  document.getElementsByClassName('copy-to-clipboard').forEach((el) => {
+  Array.from(document.getElementsByClassName('copy-to-clipboard')).forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
     });

@@ -12,8 +12,8 @@ $govuk-image-url-function: frontend-image-url;
 @import '~govuk-frontend/govuk/all';
 @import '~@ministryofjustice/frontend/moj/all';
 
-@import '../src/patterns/autocomplete';
-@import '../src/components/loader';
+@import '../src/components/autocomplete/autocomplete';
+@import '../src/components/loader/loader';
 
 @import 'shared/banner_link_component/banner_link_component';
 @import 'shared/filters_component/filters_component';
@@ -26,6 +26,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'base/controllers';
 @import 'base/mixins';
 @import 'base/utilities';
+
 @import 'components/awaiting_feedback_vacancies';
 @import 'components/banners';
 @import 'components/accordion_group';
