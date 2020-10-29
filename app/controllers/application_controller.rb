@@ -54,6 +54,10 @@ class ApplicationController < ActionController::Base
       fields.each do |field|
         params[form_key][field] = params[form_key][field]&.reject(&:blank?) unless params[form_key][field].is_a?(String)
       end
+    else
+      fields.each do |field|
+        params[field] = params[field]&.reject(&:blank?) unless params[field].is_a?(String)
+      end
     end
   end
 

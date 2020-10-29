@@ -40,12 +40,12 @@ class VacanciesController < ApplicationController
 private
 
   def algolia_search_params
-    strip_empty_checkboxes(:jobs_search_form, %i[job_roles phases working_patterns])
-    params['job_roles'] = [params['job_roles']] if params['job_roles'].is_a?(String)
-    (params[:jobs_search_form] || params)
-      .permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page,
-              job_roles: [], phases: [], working_patterns: [])
-      .merge(params.permit(:page, :jobs_sort))
+    strip_empty_checkboxes(nil, %i[job_roles phases working_patterns])
+    %w[job_roles phases working_patterns].each do |facet|
+      params[facet] = params[facet].split(' ') if params[facet].is_a?(String)
+    end
+    params.permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page,
+                  job_roles: [], phases: [], working_patterns: [])
   end
 
   def old_vacancy_path?(vacancy)
