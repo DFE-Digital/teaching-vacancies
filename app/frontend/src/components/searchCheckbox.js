@@ -14,7 +14,7 @@ export const init = (container) => {
   });
 };
 
-export const filterCheckboxes = (checkboxes, input) => Array.from(checkboxes).map((checkbox) => checkboxDisplay(checkbox, input));
+export const filterCheckboxes = (checkboxes, input) => Array.from(checkboxes).forEach((checkbox) => checkboxDisplay(checkbox, input));
 
 export const substringExistsInString = (original, input) => original.toUpperCase().indexOf(input.toUpperCase()) > -1;
 
@@ -39,6 +39,6 @@ export const checkboxDisplay = (checkbox, input) => {
 window.addEventListener('DOMContentLoaded', () => {
   const groups = document.getElementsByClassName('tv-checkbox__group');
   if (groups.length) {
-    Array.from(groups).filter((group) => group.getElementsByClassName('search-input').length).map((group) => init(group));
+    Array.from(groups).filter((group) => group.getElementsByClassName('search-input').length).forEach((group) => init(group));
   }
 });

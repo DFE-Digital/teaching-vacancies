@@ -45,7 +45,7 @@ describe('stringMatchesPostcode', () => {
   ];
 
   test('matches a correct postcode', () => {
-    validPostcodes.map((postcode) => expect(stringMatchesPostcode(postcode)).toBe(true));
+    validPostcodes.forEach((postcode) => expect(stringMatchesPostcode(postcode)).toBe(true));
   });
 
   const invalidPostcodes = [
@@ -58,7 +58,7 @@ describe('stringMatchesPostcode', () => {
   ];
 
   test('matches a correct postcode', () => {
-    invalidPostcodes.map((postcode) => expect(stringMatchesPostcode(postcode)).toBe(false));
+    invalidPostcodes.forEach((postcode) => expect(stringMatchesPostcode(postcode)).toBe(false));
   });
 });
 

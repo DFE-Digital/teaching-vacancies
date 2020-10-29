@@ -20,9 +20,9 @@ window.addEventListener(
 export const init = (groupContainerSelector, removeButtonSelector, clearButtonSelector, closeButtonSelector, mobileFiltersButtonSelector, accordionButtonsSelector) => {
   if (!isFormAutoSubmitEnabled(groupContainerSelector)) { return; }
 
-  Array.from(document.getElementsByClassName(accordionButtonsSelector)).map((accordionButton) => filterGroup.addUpdateOpenOrCloseEvent(accordionButton, closeButtonSelector));
+  Array.from(document.getElementsByClassName(accordionButtonsSelector)).forEach((accordionButton) => filterGroup.addUpdateOpenOrCloseEvent(accordionButton, closeButtonSelector));
 
-  Array.from(document.getElementsByClassName(removeButtonSelector)).map((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
+  Array.from(document.getElementsByClassName(removeButtonSelector)).forEach((removeButton) => filterGroup.addRemoveFilterEvent(removeButton, () => getSubmitButton(removeButton).click()));
 
   const clearButton = document.getElementById(clearButtonSelector);
   if (clearButton) {
@@ -118,10 +118,10 @@ export const openOrCloseAllSectionsHandler = (e) => {
 
 export const openOrCloseAllSections = (targetElement) => {
   if (targetElement.innerText === CLOSE_ALL_TEXT) {
-    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).map((section) => section.classList.remove(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
+    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).forEach((section) => section.classList.remove(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
     targetElement.innerText = OPEN_ALL_TEXT;
   } else if (targetElement.innerText === OPEN_ALL_TEXT) {
-    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).map((section) => section.classList.add(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
+    Array.from(document.getElementsByClassName(ACCORDION_SECTION_CLASS_SELECTOR)).forEach((section) => section.classList.add(ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR));
     targetElement.innerText = CLOSE_ALL_TEXT;
   }
 };
@@ -148,12 +148,12 @@ export const addRemoveAllFiltersEvent = (el, onClear) => {
 };
 
 export const removeAllFiltersHandler = (onClear) => {
-  filterGroup.getFilterGroups().map((groupEl) => filterGroup.getFilterCheckboxesInGroup(groupEl).map((checkbox) => filterGroup.unCheckCheckbox(checkbox)));
+  filterGroup.getFilterGroups().map((groupEl) => filterGroup.getFilterCheckboxesInGroup(groupEl).forEach((checkbox) => filterGroup.unCheckCheckbox(checkbox)));
   onClear();
 };
 
 export const addFilterChangeEvent = (groups) => {
-  Array.from(groups).map((group) => group.addEventListener('click', (e) => {
+  Array.from(groups).forEach((group) => group.addEventListener('click', (e) => {
     filterGroup.filterChangeHandler(e.target);
   }));
 };
