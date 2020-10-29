@@ -10,13 +10,13 @@ module NotifyViewHelper
   end
 
   def unsubscribe_link(subscription)
-    url = subscription.unsubscribe_url(**utm_params(subscription))
+    url = unsubscribe_url(subscription)
     text = t('.unsubscribe_link_text')
     notify_link(url, text)
   end
 
   def edit_link(subscription)
-    url = subscription.edit_url(**utm_params(subscription))
+    url = edit_url(subscription)
     text = t('.edit_link_text')
     notify_link(url, text)
   end
@@ -41,5 +41,33 @@ private
 
   def utm_params(subscription)
     { source: subscription.alert_run_today.id, medium: 'email', campaign: "#{subscription.frequency}_alert" }
+  end
+
+  def edit_url(subscription)
+    utm_params = utm_params(subscription)
+    params = { protocol: 'https' }
+    if utm_params.present?
+      params.merge!(
+        utm_source: utm_params[:source],
+        utm_medium: utm_params[:medium],
+        utm_campaign: utm_params[:campaign],
+        utm_content: utm_params[:content],
+      )
+    end
+    Rails.application.routes.url_helpers.edit_subscription_url(subscription.token, params)
+  end
+
+  def unsubscribe_url(subscription)
+    utm_params = utm_params(subscription)
+    params = { protocol: 'https' }
+    if utm_params.present?
+      params.merge!(
+        utm_source: utm_params[:source],
+        utm_medium: utm_params[:medium],
+        utm_campaign: utm_params[:campaign],
+        utm_content: utm_params[:content],
+      )
+    end
+    Rails.application.routes.url_helpers.unsubscribe_subscription_url(subscription.token, params)
   end
 end

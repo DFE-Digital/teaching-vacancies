@@ -14,6 +14,8 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     allow_any_instance_of(Subscription).to receive(:token) { token }
     subscription
   end
+
+  let(:campaign_params) { { utm_source: subscription.alert_run_today.id, utm_medium: 'email', utm_campaign: "daily_alert" } }
   let(:body) { mail.body }
 
   before { subscription.create_alert_run }
@@ -29,7 +31,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       expect(body).to include('Keyword: English')
       expect(body).to include(I18n.t('subscription_mailer.confirmation.next_steps', frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
       expect(body).to include(I18n.t('subscription_mailer.confirmation.unsubscribe_link_text'))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, protocol: 'https'))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub('&', '&amp;'))
     end
   end
 
@@ -44,7 +46,7 @@ RSpec.describe SubscriptionMailer, type: :mailer do
       expect(body).to include('Keyword: English')
       expect(body).to include(I18n.t('subscription_mailer.update.next_steps', frequency: I18n.t("subscription_mailer.confirmation.frequency.#{subscription.frequency}")))
       expect(body).to include(I18n.t('subscription_mailer.update.unsubscribe_link_text'))
-      expect(body).to include(unsubscribe_subscription_url(subscription.token, protocol: 'https'))
+      expect(body).to include(unsubscribe_subscription_url(subscription.token, **campaign_params).gsub('&', '&amp;'))
     end
   end
 end
