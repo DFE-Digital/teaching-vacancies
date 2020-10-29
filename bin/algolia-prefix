@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cat << EOF
+---
+ALGOLIA_INDEX_PREFIX: $(whoami)
+EOF
