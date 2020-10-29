@@ -68,6 +68,14 @@ RSpec.describe Search::VacancyFiltersBuilder do
       end
     end
 
+    context 'when a filter contains enum values that no longer exist' do
+      let(:working_patterns) { ['full_time', nil] }
+
+      it 'only filters the valid working pattern' do
+        expect(subject.filter_query).to include('(working_patterns:full_time)')
+      end
+    end
+
     context 'when subscription was created before algolia' do
       let(:newly_qualified_teacher) { 'true' }
 

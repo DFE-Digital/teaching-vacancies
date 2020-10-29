@@ -35,9 +35,12 @@ private
 
   def build_filters
     @dates_filter = build_date_filters
-    @job_roles_filter = @job_roles&.map { |job_role| build_filter_string('job_roles', job_role) }&.join(' OR ')
-    @phases_filter = @phases&.map { |phase| build_filter_string('education_phases', phase) }&.join(' OR ')
-    @working_patterns_filter = @working_patterns&.map { |pattern| build_filter_string('working_patterns', pattern) }
+    @job_roles_filter = @job_roles&.reject(&:blank?)
+                                  &.map { |job_role| build_filter_string('job_roles', job_role) }&.join(' OR ')
+    @phases_filter = @phases&.reject(&:blank?)
+                            &.map { |phase| build_filter_string('education_phases', phase) }&.join(' OR ')
+    @working_patterns_filter = @working_patterns&.reject(&:blank?)
+                                                &.map { |pattern| build_filter_string('working_patterns', pattern) }
                                                 &.join(' OR ')
     @suitable_for_nqt_filter = build_filter_string('job_roles', 'nqt_suitable') if @suitable_for_nqt == 'true'
   end
