@@ -1,6 +1,7 @@
 import '../../patterns/currentLocation';
 import { onChange as locationChange, getCoords } from './location';
 import { disableRadiusSelect } from './radius';
+import './map';
 import { renderAutocomplete } from '../../patterns/autocomplete';
 import { getLocationSuggestions } from '../../lib/api';
 import { hideSortSubmit, sortChange } from './sort';
