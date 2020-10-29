@@ -91,7 +91,7 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
 
           click_on 'Return to your search results'
 
-          expect(page.find_field('jobs_search_form[keyword]').value).to eq('teacher')
+          expect(page.find_field('keyword').value).to eq('teacher')
         end
       end
     end
@@ -130,12 +130,11 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         visit jobs_path
 
         within '.filters-form' do
-          fill_in 'jobs_search_form[keyword]', with: 'English'
-          fill_in 'jobs_search_form[location]', with: 'London'
-          check I18n.t('jobs.job_role_options.teacher'), name: 'jobs_search_form[job_roles][]', visible: false
-          check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'jobs_search_form[job_roles][]', visible: false
-          check I18n.t('jobs.working_pattern_options.full_time'),
-                name: 'jobs_search_form[working_patterns][]', visible: false
+          fill_in 'keyword', with: 'English'
+          fill_in 'location', with: 'London'
+          check I18n.t('jobs.job_role_options.teacher'), name: 'job_roles[]', visible: false
+          check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'job_roles[]', visible: false
+          check I18n.t('jobs.working_pattern_options.full_time'), name: 'working_patterns[]', visible: false
           click_on I18n.t('buttons.search')
         end
 
@@ -177,13 +176,12 @@ RSpec.describe 'A job seeker can subscribe to a job alert' do
         visit jobs_path
 
         within '.filters-form' do
-          fill_in 'jobs_search_form[keyword]', with: 'English'
-          fill_in 'jobs_search_form[location]', with: 'SW1A 1AA'
-          select '40 miles', from: 'jobs_search_form[radius]'
-          check I18n.t('jobs.job_role_options.teacher'), name: 'jobs_search_form[job_roles][]', visible: false
-          check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'jobs_search_form[job_roles][]', visible: false
-          check I18n.t('jobs.working_pattern_options.full_time'),
-                name: 'jobs_search_form[working_patterns][]', visible: false
+          fill_in 'keyword', with: 'English'
+          fill_in 'location', with: 'SW1A 1AA'
+          select '40 miles', from: 'radius'
+          check I18n.t('jobs.job_role_options.teacher'), name: 'job_roles[]', visible: false
+          check I18n.t('jobs.job_role_options.nqt_suitable'), name: 'job_roles[]', visible: false
+          check I18n.t('jobs.working_pattern_options.full_time'), name: 'working_patterns[]', visible: false
           click_on I18n.t('buttons.search')
         end
 
