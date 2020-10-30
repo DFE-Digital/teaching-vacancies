@@ -9,10 +9,9 @@ class Search::VacancyFiltersBuilder
     @from_date = filters_hash[:from_date]
     @to_date = filters_hash[:to_date]
 
-    @job_roles = filters_hash[:job_roles]
-    # Legacy filters included phases, so legacy URLs may contain empty arrays here
-    @phases = filters_hash[:phases]&.reject(&:blank?)
-    @working_patterns = filters_hash[:working_patterns]
+    @job_roles = normalize_array_params(filters_hash[:job_roles])
+    @phases = normalize_array_params(filters_hash[:phases])
+    @working_patterns = normalize_array_params(filters_hash[:working_patterns])
 
     @suitable_for_nqt = filters_hash[:newly_qualified_teacher]
   end
@@ -35,12 +34,9 @@ private
 
   def build_filters
     @dates_filter = build_date_filters
-    @job_roles_filter = @job_roles&.reject(&:blank?)
-                                  &.map { |job_role| build_filter_string('job_roles', job_role) }&.join(' OR ')
-    @phases_filter = @phases&.reject(&:blank?)
-                            &.map { |phase| build_filter_string('education_phases', phase) }&.join(' OR ')
-    @working_patterns_filter = @working_patterns&.reject(&:blank?)
-                                                &.map { |pattern| build_filter_string('working_patterns', pattern) }
+    @job_roles_filter = @job_roles&.map { |job_role| build_filter_string('job_roles', job_role) }&.join(' OR ')
+    @phases_filter = @phases&.map { |phase| build_filter_string('education_phases', phase) }&.join(' OR ')
+    @working_patterns_filter = @working_patterns&.map { |pattern| build_filter_string('working_patterns', pattern) }
                                                 &.join(' OR ')
     @suitable_for_nqt_filter = build_filter_string('job_roles', 'nqt_suitable') if @suitable_for_nqt == 'true'
   end
@@ -63,5 +59,9 @@ private
 
   def expired_now_filter
     Time.zone.now.to_time.to_i
+  end
+
+  def normalize_array_params(params)
+    params&.reject(&:blank?)&.map { |value| value.gsub('["', '').gsub('"]', '') }
   end
 end
