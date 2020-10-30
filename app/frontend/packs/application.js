@@ -7,17 +7,10 @@ import Rails from 'rails-ujs';
 
 import 'src/application/init';
 
-import 'src/addVacancyStateToDataLayer';
 import 'src/deleteDocument';
-import 'src/details';
-import 'src/map';
-import 'src/shareUrl';
-import 'src/uploadDocuments';
 
 import 'shared/filters_component/filters_component';
 import 'shared/notification_component/notification_component';
-
-import 'src/components/searchCheckbox';
 
 import { initAll } from 'govuk-frontend';
 

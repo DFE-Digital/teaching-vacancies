@@ -1,4 +1,4 @@
-import { init, substringExistsInString } from './searchCheckbox';
+import { init, substringExistsInString } from './checkboxFilter';
 
 describe('searchCheckbox', () => {
   beforeEach(() => {

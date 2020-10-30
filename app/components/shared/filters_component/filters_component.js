@@ -1,7 +1,7 @@
 import '../../../frontend/src/lib/polyfill/closest.polyfill';
 import '../../../frontend/src/lib/polyfill/from.polyfill';
 import 'classlist-polyfill';
-import { togglePanel as toggleFilterPanel } from '../../../frontend/src/components/panel';
+import { togglePanel as toggleFilterPanel } from '../../../frontend/src/components/panel/panel';
 
 export const ACCORDION_SECTION_CLASS_SELECTOR = 'govuk-accordion__section';
 export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__section--expanded';
