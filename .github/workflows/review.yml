@@ -58,10 +58,9 @@ jobs:
       run: |
         BRANCH=${{ github.head_ref }}
         TAG=review-${PR_NAME}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
-        echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
+        $(echo "BRANCH=${BRANCH}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
         echo "TAG=${TAG}" >> $GITHUB_ENV
-        echo ::set-output name=BRANCH::${BRANCH}
-        echo ::set-output name=TAG::${TAG}
+
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
