@@ -33,7 +33,7 @@ const injectDocumentsTable = (documentsInput) => {
 
     documentsContainerElement.classList.remove('js-documents--empty');
 
-    filesList.forEach((file) => {
+    Array.from(filesList).forEach((file) => {
       const rowHTML = `
 <tr class='govuk-table__row'>
 <td class='govuk-table__cell' scope='row'>${file.name}</td>
