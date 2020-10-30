@@ -5,9 +5,9 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@ministryofjustice/frontend": "^0.0.19-alpha",
+    "@ministryofjustice/frontend": "^0.0.21",
     "@rails/webpacker": "5.2.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.0",
     "classlist-polyfill": "^1.2.0",
     "clipboard": "^2.0.4",
     "es6-promise": "^4.2.8",
