@@ -3,28 +3,18 @@ module NotifyViewHelper
     "[#{text}](#{url})"
   end
 
-  def home_page_link
-    url = root_url(protocol: 'https')
-    text = t('app.title')
-    notify_link(url, text)
+  def edit_link(subscription)
+    url = edit_subscription_url(
+      subscription.token,
+      protocol: 'https',
+      params: utm_params(subscription),
+    )
+    notify_link(url, t('.edit_link_text'))
   end
 
-  def unsubscribe_link(token)
-    url = unsubscribe_subscription_url(token, protocol: 'https')
-    text = t('.unsubscribe_link_text')
-    notify_link(url, text)
-  end
-
-  def edit_link(token)
-    url = edit_subscription_url(token, protocol: 'https')
-    text = t('.edit_link_text')
-    notify_link(url, text)
-  end
-
-  def show_link(vacancy, subscription)
-    url = vacancy.share_url(source: 'subscription', medium: 'email', campaign: "#{subscription.frequency}_alert")
-    text = vacancy.job_title
-    notify_link(url, text)
+  def home_page_link(subscription)
+    url = root_url(protocol: 'https', params: utm_params(subscription))
+    notify_link(url, t('app.title'))
   end
 
   def job_alert_feedback_url(relevant, subscription, vacancies)
@@ -35,5 +25,26 @@ module NotifyViewHelper
                                       vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: JSON.parse(subscription.search_criteria) } },
     )
+  end
+
+  def show_link(vacancy, subscription)
+    url = vacancy.share_url(**utm_params(subscription))
+    text = vacancy.job_title
+    notify_link(url, text)
+  end
+
+  def unsubscribe_link(subscription)
+    url = unsubscribe_subscription_url(
+      subscription.token,
+      protocol: 'https',
+      params: utm_params(subscription),
+    )
+    notify_link(url, t('.unsubscribe_link_text'))
+  end
+
+private
+
+  def utm_params(subscription)
+    { utm_source: subscription.alert_run_today.id, utm_medium: 'email', utm_campaign: "#{subscription.frequency}_alert" }
   end
 end
