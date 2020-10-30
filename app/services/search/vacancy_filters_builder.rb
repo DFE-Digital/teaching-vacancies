@@ -62,6 +62,6 @@ private
   end
 
   def normalize_array_params(params)
-    params&.reject(&:blank?)&.map { |value| value.gsub('["', '').gsub('"]', '') }
+    params&.reject(&:blank?)&.map { |value| value.to_s.gsub('["', '').gsub('"]', '') }
   end
 end
