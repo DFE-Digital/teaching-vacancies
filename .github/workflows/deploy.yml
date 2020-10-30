@@ -122,7 +122,7 @@ jobs:
         intervalSeconds: 15
 
     - name: Deploy to production
-      if: github.ref == 'refs/heads/master'
+      if: ${{ steps.wait_for_smoke_test.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
