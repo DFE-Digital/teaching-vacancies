@@ -4,7 +4,7 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.cities')} list" } }
       - @cities_facets.each do |city, count|
         %li
-          = link_to city, location_category_path(city), class: 'govuk-link'
+          = link_to city, jobs_path(location: city), class: 'govuk-link'
           = "(#{count})"
 
   .govuk-grid-column-one-half
@@ -12,7 +12,7 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.counties')} list" } }
       - @counties_facets.each do |county, count|
         %li
-          = link_to county, location_category_path(county), class: 'govuk-link'
+          = link_to county, jobs_path(location: county), class: 'govuk-link'
           = "(#{count})"
 
 .govuk-grid-row
@@ -21,7 +21,7 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.subjects')} list" } }
       - @subjects_facets.each do |subject, count|
         %li
-          = link_to subject, subject_path(subject), class: 'govuk-link'
+          = link_to subject, jobs_path(keyword: subject), class: 'govuk-link'
           = "(#{count})"
 
   .govuk-grid-column-one-half
@@ -29,5 +29,5 @@
     %ul.govuk-list.two-column-list{ aria: { label: "#{t('.job_roles')} list" } }
       - @job_roles_facets.each do |job_role, count|
         %li
-          = link_to I18n.t("jobs.job_role_options.#{job_role.to_s}"), job_role_path(job_role), class: 'govuk-link'
+          = link_to I18n.t("jobs.job_role_options.#{job_role.to_s}"), jobs_path(job_roles: job_role), class: 'govuk-link'
           = "(#{count})"

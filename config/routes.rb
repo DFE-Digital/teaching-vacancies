@@ -156,12 +156,6 @@ Rails.application.routes.draw do
   match '/404', to: 'errors#not_found', via: :all
   match '/422', to: 'errors#unprocessable_entity', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
-  match 'teaching-jobs-in-:location_category', to: 'vacancies#index', as: :location_category, via: :get,
-                                               constraints: ->(request) { LocationCategory.include?(request.params[:location_category]) }
-  match 'teaching-jobs-for-:job_roles', to: 'vacancies#index', as: :job_role, via: :get,
-                                        constraints: ->(request) { Vacancy::JOB_ROLE_OPTIONS.keys.include?(request.params[:job_roles].to_sym) }
-  match 'teaching-jobs-for-:keyword', to: 'vacancies#index', as: :subject, via: :get,
-                                      constraints: ->(request) { SUBJECT_OPTIONS.map(&:first).include?(request.params[:keyword]) }
   match '*path', to: 'errors#not_found', via: :all
 
   # External URL
