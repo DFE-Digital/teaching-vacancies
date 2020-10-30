@@ -15,6 +15,12 @@ variable app_stopped {
   default = false
 }
 
+variable docker_username {
+}
+
+variable docker_password {
+}
+
 variable papertrail_service_binding_enable {
 }
 

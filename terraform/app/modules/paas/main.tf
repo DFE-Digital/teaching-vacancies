@@ -40,6 +40,10 @@ resource cloudfoundry_app web_app {
       route = routes.value["id"]
     }
   }
+  docker_credentials = {
+    username = var.docker_username
+    password = var.docker_password
+  }
   space    = data.cloudfoundry_space.space.id
   stopped  = var.app_stopped
   strategy = var.web_app_deployment_strategy
@@ -88,6 +92,10 @@ resource cloudfoundry_app worker_app {
     content {
       service_instance = service_binding.value
     }
+  }
+  docker_credentials = {
+    username = var.docker_username
+    password = var.docker_password
   }
   environment = local.app_environment
 }

@@ -74,6 +74,8 @@ module paas {
   app_env_values                    = local.paas_app_env_values
   app_start_timeout                 = var.paas_app_start_timeout
   app_stopped                       = var.paas_app_stopped
+  docker_username                   = local.infra_secrets.docker_username
+  docker_password                   = local.infra_secrets.docker_password
   papertrail_url                    = local.infra_secrets.papertrail_url
   papertrail_service_binding_enable = var.paas_papertrail_service_binding_enable
   parameter_store_environment       = var.parameter_store_environment
