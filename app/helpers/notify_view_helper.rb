@@ -12,10 +12,9 @@ module NotifyViewHelper
     notify_link(url, t('.edit_link_text'))
   end
 
-  def home_page_link
-    url = root_url(protocol: 'https')
-    text = t('app.title')
-    notify_link(url, text)
+  def home_page_link(subscription)
+    url = root_url(protocol: 'https', params: utm_params(subscription))
+    notify_link(url, t('app.title'))
   end
 
   def job_alert_feedback_url(relevant, subscription, vacancies)
