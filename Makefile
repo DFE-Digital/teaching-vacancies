@@ -21,7 +21,6 @@ review:
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="workspace_key_prefix=review:")
 
-
 .PHONY: staging
 staging:
 		$(eval env=staging)
@@ -32,6 +31,11 @@ production:
 		$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 		$(eval env=production)
 		$(eval var_file=production)
+
+.PHONY: check-docker-tag
+check-docker-tag:
+		$(if $(tag), , $(error Missing environment variable "tag"))
+		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
 
 .PHONY: build-local-image
 build-local-image:
@@ -59,19 +63,23 @@ deploy-local-image: build-local-image deploy
 .PHONY: init-terraform
 init-terraform:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
-		$(if $(tag), , $(error Missing environment variable "tag"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		$(eval export TF_VAR_paas_app_docker_image=$(repository):$(tag))
 		terraform init -input=false $(backend_config) terraform/app
 		terraform workspace select $(env) terraform/app || terraform workspace new $(env) terraform/app
 
 .PHONY: deploy
-deploy: init-terraform
+deploy: init-terraform check-docker-tag
 		terraform apply -input=false -var-file terraform/workspace-variables/$(var_file).tfvars -auto-approve terraform/app
 
 .PHONY: deploy-plan
-deploy-plan: init-terraform
+deploy-plan: init-terraform check-docker-tag
 		terraform plan -var-file terraform/workspace-variables/$(var_file).tfvars terraform/app
+
+.PHONY: review-destroy
+review-destroy: init-terraform
+		$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
+		terraform plan -var-file terraform/workspace-variables/review.tfvars -destroy -out=destroy-$(env).plan terraform/app
+		terraform apply "destroy-$(env).plan"
 
 .PHONY: print-env
 print-env:
