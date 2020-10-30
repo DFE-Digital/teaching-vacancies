@@ -15,10 +15,8 @@ RSpec.describe SubscriptionMailer, type: :mailer do
     subscription
   end
 
-  let(:campaign_params) { { utm_source: subscription.alert_run_today.id, utm_medium: 'email', utm_campaign: 'daily_alert' } }
+  let(:campaign_params) { { utm_source: nil, utm_medium: 'email', utm_campaign: 'daily_alert' } }
   let(:body) { mail.body }
-
-  before { subscription.create_alert_run }
 
   describe '#confirmation' do
     let(:mail) { described_class.confirmation(subscription.id) }

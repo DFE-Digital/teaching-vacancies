@@ -45,6 +45,6 @@ module NotifyViewHelper
 private
 
   def utm_params(subscription)
-    { utm_source: subscription.alert_run_today.id, utm_medium: 'email', utm_campaign: "#{subscription.frequency}_alert" }
+    { utm_source: subscription.alert_run_today&.id, utm_medium: 'email', utm_campaign: "#{subscription.frequency}_alert" }
   end
 end
