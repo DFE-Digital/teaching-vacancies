@@ -1,0 +1,5 @@
+---
+DFE_SIGN_IN_REDIRECT_URL: http://localhost:3000/auth/dfe/callback
+DATABASE_URL: postgres://localhost:5432
+DOMAIN: localhost:3000
+SKYLIGHT_ENABLED: false

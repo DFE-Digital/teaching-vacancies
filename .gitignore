@@ -58,6 +58,7 @@ tokens
 dotenv*
 !dotenv*.gpg
 **/**/cf-vars*.yml
+terraform/workspace-variables/my_app_env.yml
 
 # Certificates
 *.pem

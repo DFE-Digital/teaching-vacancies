@@ -8,6 +8,13 @@ monitoring-apply: ## Apply monitoring changes
 		TF_WORKSPACE=monitoring terraform init -upgrade=true -input=false terraform/monitoring \
 		&& bin/run-in-env -e monitoring -o tf_subshell -- terraform apply -input=false -auto-approve terraform/monitoring
 
+.PHONY: local
+local:
+		$(eval env=dev)
+		$(eval local_override=-y terraform/workspace-variables/local_app_env.yml -y terraform/workspace-variables/my_app_env.yml)
+		$(eval local_filter=| sed -e '/RAILS_ENV=/d' -e '/RACK_ENV=/d' -e '/ROLLBAR_ENV=/d')
+		@bin/algolia-prefix > terraform/workspace-variables/my_app_env.yml
+
 .PHONY: dev
 dev:
 		$(eval env=dev)
@@ -84,7 +91,8 @@ review-destroy: init-terraform
 .PHONY: print-env
 print-env:
 		$(if $(env), , $(error Usage: make <env> print-env))
-		@bin/run-in-env -t /tvs/dev/app -y terraform/workspace-variables/$(env)_app_env.yml -o env_stdout
+		@bin/run-in-env -t /tvs/dev/app -y terraform/workspace-variables/$(env)_app_env.yml \
+			$(local_override) -o env_stdout $(local_filter)
 
 terraform-common-init:
 		terraform init terraform/common
