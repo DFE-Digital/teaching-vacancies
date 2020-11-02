@@ -23,6 +23,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.21.2",
     "jest": "^25.4.0",
+    "mini-css-extract-plugin": "^1.2.1",
     "stylelint": "^13.5.0",
     "stylelint-config-sass-guidelines": "^7.0.0",
     "stylelint-config-standard": "^20.0.0",
@@ -51,7 +52,10 @@
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/app/frontend/src/lib/polyfill/*"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(scss|less)$": "<rootDir>/app/frontend/src/__mocks__/styleMock.js"
+    }
   },
   "resolutions": {
     "serialize-javascript": "^3.1.0",
