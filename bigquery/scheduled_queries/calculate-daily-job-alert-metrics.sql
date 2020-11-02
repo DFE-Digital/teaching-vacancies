@@ -10,20 +10,6 @@ WITH
       date
     FROM
       `teacher-vacancy-service.production_dataset.CALCULATED_job_alert_metrics`)),
-  job_alert AS ( #preprocess this table a bit before the main query
-  SELECT
-    id,
-    email,
-    expires_on,
-    CAST(created_at AS DATE) AS created_on,
-    CAST(updated_at AS DATE) AS updated_on,
-    recaptcha_score,
-  IF
-    (recaptcha_score IS NULL,
-      NULL,
-      recaptcha_score>0.5) AS human #the job alert was likely to be created by a human if the Recaptcha score was over 50%
-  FROM
-    `teacher-vacancy-service.production_dataset.feb20_subscription` ),
   job_alert_emails_sent AS (
   SELECT
     run_on AS date,
@@ -42,34 +28,34 @@ WITH
     date,
     (
     SELECT
-      COUNTIF(created_on=date)
+      COUNTIF(created_date=date)
     FROM
-      job_alert
+      `teacher-vacancy-service.production_dataset.job_alert`
     WHERE
       human IS NOT FALSE) AS job_alerts_created,
     (
     SELECT
-      COUNTIF(updated_on=date)
+      COUNTIF(updated_date=date)
     FROM
-      job_alert
+      `teacher-vacancy-service.production_dataset.job_alert`
     WHERE
       human IS NOT FALSE) AS job_alerts_updated,
     (
     SELECT
-      COUNTIF(created_on<=date)
+      COUNTIF(created_date<=date)
     FROM
-      job_alert
+      `teacher-vacancy-service.production_dataset.job_alert`
     WHERE
       human IS NOT FALSE ) AS job_alerts_live,
     (
     SELECT
       COUNT(DISTINCT
       IF
-        (created_on<=date,
-          email,
+        (created_date<=date,
+          email_address_id,
           NULL))
     FROM
-      job_alert
+      `teacher-vacancy-service.production_dataset.job_alert` AS job_alert
     WHERE
       human IS NOT FALSE ) AS emails_subscribed_to_job_alerts,
     #the number of unique emails that were subscribed to job alerts on this date

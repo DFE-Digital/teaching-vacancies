@@ -2,8 +2,9 @@ SELECT
   id,
   CAST(created_at AS date) AS created_date,
   CAST(updated_at AS date) AS updated_date,
-  expires_on AS expires_date,
   recaptcha_score,
+  FIRST_VALUE(id) OVER (PARTITION BY email ORDER BY created_at) AS email_address_id,
+  #the ID of the first job alert with this email address - allows us to string job alerts with the same email address together without including the PII in this view
 IF
   (recaptcha_score IS NOT NULL
     OR recaptcha_score > 0.5,
