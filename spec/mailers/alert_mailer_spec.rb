@@ -28,7 +28,7 @@ RSpec.describe AlertMailer, type: :mailer do
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: true,
                                       vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: JSON.parse(subscription.search_criteria) } },
+                                      search_criteria: subscription.search_criteria } },
     ).gsub('&', '&amp;')
   end
   let(:irrelevant_job_alert_feedback_url) do
@@ -37,7 +37,7 @@ RSpec.describe AlertMailer, type: :mailer do
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: false,
                                       vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: JSON.parse(subscription.search_criteria) } },
+                                      search_criteria: subscription.search_criteria } },
     ).gsub('&', '&amp;')
   end
 

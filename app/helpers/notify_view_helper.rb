@@ -23,7 +23,7 @@ module NotifyViewHelper
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: relevant,
                                       vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: JSON.parse(subscription.search_criteria) } },
+                                      search_criteria: subscription.search_criteria } },
     )
   end
 
