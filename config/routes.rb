@@ -152,6 +152,7 @@ Rails.application.routes.draw do
                                      controller: "hiring_staff/organisations/managed_organisations"
   end
 
+  post "/errors/csp_violation", to: "errors#csp_violation"
   match "/401", to: "errors#unauthorised", via: :all
   match "/404", to: "errors#not_found", via: :all
   match "/422", to: "errors#unprocessable_entity", via: :all
