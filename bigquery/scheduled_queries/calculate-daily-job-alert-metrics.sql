@@ -9,13 +9,42 @@ WITH
     SELECT
       date
     FROM
-      `teacher-vacancy-service.production_dataset.CALCULATED_job_alert_metrics`)),
+      `teacher-vacancy-service.production_dataset.CALCULATED_job_alert_metrics`)
+    OR date >= CURRENT_DATE - 7),
+  #recalculate the last 7 days' worth of data each night so that we pick up job alert email CTRs for up to a week after sending the email, but then fix this data
   job_alert_emails_sent AS (
   SELECT
-    run_on AS date,
-    COUNT(*) AS number_of_alert_emails_sent
+    alertrun.run_on AS date,
+    COUNT(DISTINCT alertrun.id) AS number_of_alert_emails_sent,
+    COUNT(DISTINCT
+    IF
+      ("vacancy" IN UNNEST(users_from_job_alert_emails.job_alert_destinations),
+        users_from_job_alert_emails.alertrun_id,
+        NULL)) AS number_of_alert_emails_clicked_on,
+    COUNT(DISTINCT
+    IF
+      ("unsubscribe" IN UNNEST(users_from_job_alert_emails.job_alert_destinations),
+        users_from_job_alert_emails.alertrun_id,
+        NULL)) AS number_of_alert_emails_unsubscribed_from,
+    COUNT(DISTINCT
+    IF
+      ("edit" IN UNNEST(users_from_job_alert_emails.job_alert_destinations),
+        users_from_job_alert_emails.alertrun_id,
+        NULL)) AS number_of_alert_emails_edited
   FROM
     `teacher-vacancy-service.production_dataset.feb20_alertrun` AS alertrun
+  LEFT JOIN (
+    SELECT
+      utm_source AS alertrun_id,
+      job_alert_destinations
+    FROM
+      `teacher-vacancy-service.production_dataset.CALCULATED_daily_users_from_cloudfront_logs`
+    WHERE
+      from_job_alert
+      AND utm_source IS NOT NULL
+      AND utm_source != "subscription") AS users_from_job_alert_emails
+  ON
+    alertrun.id = users_from_job_alert_emails.alertrun_id
   LEFT JOIN
     `teacher-vacancy-service.production_dataset.job_alert` AS job_alert
   ON
@@ -23,7 +52,9 @@ WITH
   WHERE
     human
   GROUP BY
-    date ) (
+    date
+  ORDER BY
+    date DESC) (
   SELECT
     date,
     (
@@ -59,7 +90,16 @@ WITH
     WHERE
       human IS NOT FALSE ) AS emails_subscribed_to_job_alerts,
     #the number of unique emails that were subscribed to job alerts on this date
-    job_alert_emails_sent.number_of_alert_emails_sent
+    job_alert_emails_sent.number_of_alert_emails_sent,
+    job_alert_emails_sent.number_of_alert_emails_clicked_on,
+    job_alert_emails_sent.number_of_alert_emails_unsubscribed_from,
+    job_alert_emails_sent.number_of_alert_emails_edited,
+    SAFE_DIVIDE(job_alert_emails_sent.number_of_alert_emails_clicked_on,
+      job_alert_emails_sent.number_of_alert_emails_sent) AS job_alert_email_vacancy_ctr,
+    SAFE_DIVIDE(job_alert_emails_sent.number_of_alert_emails_unsubscribed_from,
+      job_alert_emails_sent.number_of_alert_emails_sent) AS job_alert_email_unsubscribe_ctr,
+    SAFE_DIVIDE(job_alert_emails_sent.number_of_alert_emails_edited,
+      job_alert_emails_sent.number_of_alert_emails_sent) AS job_alert_email_edit_ctr
   FROM
     dates
   LEFT JOIN
@@ -70,6 +110,8 @@ UNION ALL (
   SELECT
     *
   FROM
-    `teacher-vacancy-service.production_dataset.CALCULATED_job_alert_metrics`)
+    `teacher-vacancy-service.production_dataset.CALCULATED_job_alert_metrics`
+  WHERE
+    date < CURRENT_DATE - 7)
 ORDER BY
   date DESC
