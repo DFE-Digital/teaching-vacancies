@@ -2,7 +2,6 @@ SELECT
   id,
   CAST(created_at AS date) AS created_date,
   CAST(updated_at AS date) AS updated_date,
-  expires_on AS expires_date,
   recaptcha_score,
 IF
   (recaptcha_score IS NOT NULL
