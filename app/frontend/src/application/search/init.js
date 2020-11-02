@@ -1,4 +1,4 @@
-import '../../components/currentLocation/currentLocation';
+import '../../components/locationFinder/locationFinder';
 import { onChange as locationChange, getCoords } from './location';
 import { disableRadiusSelect } from './radius';
 import './map';

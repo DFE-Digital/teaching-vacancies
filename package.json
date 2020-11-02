@@ -54,7 +54,7 @@
       "<rootDir>/app/frontend/src/lib/polyfill/*"
     ],
     "moduleNameMapper": {
-      "\\.(scss|less)$": "<rootDir>/app/frontend/src/__mocks__/styleMock.js"
+      "\\.scss$": "<rootDir>/app/frontend/src/__mocks__/style.js"
     }
   },
   "resolutions": {

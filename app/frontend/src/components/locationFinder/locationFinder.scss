@@ -1,9 +1,8 @@
-.js-location-finder {
+.location-finder {
 
   position: relative;
 
   .govuk-c-loader {
-    @extend .govuk-input;
     background: #fff;
     left: 0;
     position: absolute;
@@ -19,7 +18,7 @@
 }
 
 form .govuk-form-group.js-geolocation-supported {
-  .js-location-finder__link {
+  .location-finder__link {
     display: block;
   }
 }

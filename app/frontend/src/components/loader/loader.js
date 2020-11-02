@@ -1,4 +1,5 @@
 import '../../lib/polyfill/remove.polyfill';
+import './loader.scss';
 
 export const add = (targetEl, placeholder) => {
   targetEl.insertAdjacentHTML('afterend', loaderSvg);

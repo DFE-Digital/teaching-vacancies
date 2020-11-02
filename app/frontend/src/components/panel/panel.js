@@ -1,5 +1,6 @@
 import 'classlist-polyfill';
 import { storageAvailable } from '../../lib/utils';
+import './panel.scss';
 
 const LOCALSTORAGE_COMPONENT_KEY = 'panel';
 const ERROR_LOGGING_MESSAGE = '[Module: dashboard panel]: local storage not available';

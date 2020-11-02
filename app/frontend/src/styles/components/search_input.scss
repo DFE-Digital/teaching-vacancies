@@ -1,25 +1,25 @@
 .search-input {
-  background: white;
-  position: relative;
-  margin-left: govuk-spacing(2);
+  background: govuk-color('white');
   margin-bottom: govuk-spacing(2);
+  margin-left: govuk-spacing(2);
+  position: relative;
 
   input {
-    width: 100%;
-    padding: govuk-spacing(4) govuk-spacing(9) govuk-spacing(4) govuk-spacing(7);
     display: block;
+    padding: govuk-spacing(4) govuk-spacing(9) govuk-spacing(4) govuk-spacing(7);
+    width: 100%;
   }
 
   button {
     @include govuk-font(19);
     background: transparent;
-    border: none;
+    border: 0;
     cursor: pointer;
     display: inline-block;
-    position: absolute;
-    top: 0;
     left: 0;
     padding: 12px;
+    position: absolute;
+    top: 0;
     z-index: 2;
   }
 }
