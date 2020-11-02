@@ -26,7 +26,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def store_vacancy_attributes(attributes)
     session[:vacancy_attributes] ||= {}
-    session[:vacancy_attributes].merge!(attributes.compact)
+    session[:vacancy_attributes].merge!(attributes)
   end
 
   def update_vacancy(attributes, vacancy = nil)
