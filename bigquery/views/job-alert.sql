@@ -6,7 +6,7 @@ SELECT
   FIRST_VALUE(id) OVER (PARTITION BY email ORDER BY created_at) AS email_address_id,
   #the ID of the first job alert with this email address - allows us to string job alerts with the same email address together without including the PII in this view
 IF
-  (recaptcha_score IS NOT NULL
+  (recaptcha_score IS NULL
     OR recaptcha_score > 0.5,
     TRUE,
     FALSE) AS human,
