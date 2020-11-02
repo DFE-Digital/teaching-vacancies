@@ -7,6 +7,7 @@ WITH
     DATE_TRUNC(date, MONTH) AS month,
     DATETIME(date,
       time) AS datetime,
+    #field names from server log table - c denotes 'client'; cs denotes 'client to server'; sc denotes 'server to client'
     c_ip,
     cs_uri_stem,
     cs_referer,
@@ -24,7 +25,8 @@ WITH
       WHEN utm_campaign LIKE "%alert%" THEN "Job alert"
       WHEN LOWER(utm_medium) LIKE "%email%" THEN "Email"
       WHEN referrer LIKE "%facebook%" OR referrer LIKE "%twitter%" OR referrer LIKE "%t.co%" OR referrer LIKE "%linkedin%" OR referrer LIKE "%youtube%" THEN "Social"
-      WHEN (referrer NOT LIKE "%teaching-jobs.service.gov.uk%"
+      WHEN (referrer IS NOT NULL
+      AND referrer NOT LIKE "%teaching-jobs.service.gov.uk%"
       AND referrer NOT LIKE "%teaching-vacancies.service.gov.uk%"
       AND referrer NOT LIKE "%google%"
       AND referrer NOT LIKE "%bing%"
