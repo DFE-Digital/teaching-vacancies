@@ -13,7 +13,7 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
       protocol: 'https',
       params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
                                       vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: JSON.parse(subscription.search_criteria) } },
+                                      search_criteria: subscription.search_criteria } },
     )
   end
 
@@ -25,7 +25,7 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
     context 'when the user selects Yes' do
       it 'creates a JobAlertFeedback with the correct attributes' do
         expect(feedback.relevant_to_user).to eq true
-        expect(feedback.search_criteria).to eq JSON.parse(subscription.search_criteria)
+        expect(feedback.search_criteria).to eq subscription.search_criteria
         expect(feedback.vacancy_ids).to include vacancies.first.id
         expect(feedback.vacancy_ids).to include vacancies.second.id
         expect(feedback.subscription_id).to eq subscription.id
@@ -46,7 +46,7 @@ RSpec.describe 'A job seeker can give feedback on a job alert' do
 
       it 'creates a JobAlertFeedback with the correct attributes' do
         expect(feedback.relevant_to_user).to eq false
-        expect(feedback.search_criteria).to eq JSON.parse(subscription.search_criteria)
+        expect(feedback.search_criteria).to eq subscription.search_criteria
         expect(feedback.vacancy_ids).to include vacancies.first.id
         expect(feedback.vacancy_ids).to include vacancies.second.id
         expect(feedback.subscription_id).to eq subscription.id
