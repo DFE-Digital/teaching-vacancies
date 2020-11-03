@@ -38,7 +38,7 @@ module HiringStaff::JobCreationHelper
   end
 
   def set_active_step_class(step_number)
-    return 'app-step-nav__step--active' if current_step == step_number
+    return "app-step-nav__step--active" if current_step == step_number
   end
 
   def set_visited_step_class(step_number, vacancy)
@@ -46,9 +46,9 @@ module HiringStaff::JobCreationHelper
     if vacancy.present?
       completed_step = vacancy.completed_step.presence || 0
     elsif session[:vacancy_attributes].present?
-      completed_step = session[:vacancy_attributes]['completed_step'].presence || 0
+      completed_step = session[:vacancy_attributes]["completed_step"].presence || 0
     end
-    return 'app-step-nav__step--visited' if
+    return "app-step-nav__step--visited" if
       step_number != current_step && step_number <= completed_step
   end
 end

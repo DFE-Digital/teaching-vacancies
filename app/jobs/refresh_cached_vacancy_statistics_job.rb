@@ -3,6 +3,6 @@ class RefreshCachedVacancyStatisticsJob < ApplicationJob
 
   def perform
     Rails.application.load_tasks
-    Rake::Task['vacancies:statistics:refresh_cache'].invoke
+    Rake::Task["vacancies:statistics:refresh_cache"].invoke
   end
 end

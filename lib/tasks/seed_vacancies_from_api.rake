@@ -1,7 +1,7 @@
-require 'teaching_vacancies_api'
+require "teaching_vacancies_api"
 
 namespace :data do
-  desc 'Seed from the Teaching Vacancies API'
+  desc "Seed from the Teaching Vacancies API"
   namespace :seed_from_api do
     task vacancies: :environment do
       next if Rails.env.production?

@@ -1,6 +1,6 @@
-require 'rails_helper'
-RSpec.describe 'rake vacancies:statistics:refresh_cache', type: :task do
-  it 'Queues jobs to update cached information on active and not expired vacancies' do
+require "rails_helper"
+RSpec.describe "rake vacancies:statistics:refresh_cache", type: :task do
+  it "Queues jobs to update cached information on active and not expired vacancies" do
     active_vacancies = create_list(:vacancy, 10, :published)
     draft_vacancies = create_list(:vacancy, 5, :draft)
     expired_vacancies = build_list(:vacancy, 5, :expired).each { |v| v.save(validate: false) }

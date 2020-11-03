@@ -1,4 +1,4 @@
-require 'google/apis/drive_v3'
+require "google/apis/drive_v3"
 
 class DocumentCopy
   class MissingDocumentId < StandardError; end
@@ -22,14 +22,14 @@ class DocumentCopy
   def copy_hiring_staff_document
     self.copied = drive_service.copy_file(
       document_id,
-      fields: 'id, web_view_link, web_content_link, mime_type',
+      fields: "id, web_view_link, web_content_link, mime_type",
     )
   end
 
   def set_public_permission_on_document
     drive_service.create_permission(
       copied.id,
-      Google::Apis::DriveV3::Permission.new(type: 'anyone', role: 'reader'),
+      Google::Apis::DriveV3::Permission.new(type: "anyone", role: "reader"),
     )
   end
 end

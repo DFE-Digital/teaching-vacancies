@@ -8,7 +8,7 @@ class HiringStaff::SignIn::Dfe::SessionsController < HiringStaff::SignIn::BaseSe
 
   def new
     # This is defined by the class name of our Omniauth strategy
-    redirect_to '/auth/dfe'
+    redirect_to "/auth/dfe"
   end
 
   def create
@@ -27,7 +27,7 @@ private
     Rails.logger.warn(not_authorised_details)
     audit_failed_authorisation
     @identifier = identifier
-    render 'user-not-authorised'
+    render "user-not-authorised"
   end
 
   def not_authorised_details
@@ -56,39 +56,39 @@ private
   end
 
   def auth_hash
-    request.env['omniauth.auth']
+    request.env["omniauth.auth"]
   end
 
   def user_id
-    auth_hash['uid']
+    auth_hash["uid"]
   end
 
   def identifier
-    auth_hash['info']['email']
+    auth_hash["info"]["email"]
   end
 
   def school_urn
-    auth_hash.dig('extra', 'raw_info', 'organisation', 'urn') || ''
+    auth_hash.dig("extra", "raw_info", "organisation", "urn") || ""
   end
 
   def trust_uid
-    auth_hash.dig('extra', 'raw_info', 'organisation', 'uid') || ''
+    auth_hash.dig("extra", "raw_info", "organisation", "uid") || ""
   end
 
   def local_authority_code
     # All organisations have an establishmentNumber, but we only want this for identifying LAs by.
     # Assume that if and only if the organisation has no URN or UID, it is a Local Authority.
     if LocalAuthorityAccessFeature.enabled? && school_urn.blank? && trust_uid.blank?
-      auth_hash.dig('extra', 'raw_info', 'organisation', 'establishmentNumber') || ''
+      auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber") || ""
     end
   end
 
   def organisation_id
-    auth_hash.dig('extra', 'raw_info', 'organisation', 'id')
+    auth_hash.dig("extra", "raw_info", "organisation", "id")
   end
 
   def id_token
-    auth_hash.dig('credentials', 'id_token')
+    auth_hash.dig("credentials", "id_token")
   end
 
   def perform_dfe_sign_in_authorisation

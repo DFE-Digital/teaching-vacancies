@@ -1,5 +1,5 @@
-require 'dfe_sign_in_api'
-require 'google/cloud/bigquery'
+require "dfe_sign_in_api"
+require "google/cloud/bigquery"
 
 class BaseDsiBigQueryExporter
   include DFESignIn
@@ -7,7 +7,7 @@ class BaseDsiBigQueryExporter
   attr_reader :dataset
 
   def initialize(bigquery: Google::Cloud::Bigquery.new)
-    @dataset = bigquery.dataset ENV.fetch('BIG_QUERY_DATASET')
+    @dataset = bigquery.dataset ENV.fetch("BIG_QUERY_DATASET")
   end
 
 private

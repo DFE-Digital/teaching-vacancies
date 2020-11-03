@@ -1,40 +1,40 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Job seekers can apply for a vacancy' do
+RSpec.describe "Job seekers can apply for a vacancy" do
   let(:school) { create(:school) }
 
-  scenario 'the application link is without protocol' do
-    vacancy = create(:vacancy, :published, application_link: 'www.google.com')
+  scenario "the application link is without protocol" do
+    vacancy = create(:vacancy, :published, application_link: "www.google.com")
     vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(vacancy)
 
-    expect(page).to have_link(I18n.t('jobs.apply', href: 'http://www.google.com'))
+    expect(page).to have_link(I18n.t("jobs.apply", href: "http://www.google.com"))
   end
 
-  scenario 'an activity is logged successfuly' do
-    vacancy = create(:vacancy, :published, application_link: 'www.google.com')
+  scenario "an activity is logged successfuly" do
+    vacancy = create(:vacancy, :published, application_link: "www.google.com")
     vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(vacancy)
 
-    click_on I18n.t('jobs.apply')
+    click_on I18n.t("jobs.apply")
 
     activity = vacancy.activities.last
-    expect(activity.key).to eq('vacancy.get_more_information')
+    expect(activity.key).to eq("vacancy.get_more_information")
     expect(activity.session_id).to eq(nil)
   end
 
-  scenario 'it increments the get_more_info_counter' do
+  scenario "it increments the get_more_info_counter" do
     vacancy = create(:vacancy, :published)
     vacancy.organisation_vacancies.create(organisation: school)
 
     visit job_path(vacancy)
 
-    expect { click_on I18n.t('jobs.apply') }.to change { vacancy.get_more_info_counter.to_i }.by(1)
+    expect { click_on I18n.t("jobs.apply") }.to change { vacancy.get_more_info_counter.to_i }.by(1)
   end
 
-  scenario 'it triggers a job to write an express_interest_event to the audit table' do
+  scenario "it triggers a job to write an express_interest_event to the audit table" do
     vacancy = create(:vacancy, :published)
     vacancy.organisation_vacancies.create(organisation: school)
 
@@ -53,7 +53,7 @@ RSpec.describe 'Job seekers can apply for a vacancy' do
       expect(AuditExpressInterestEventJob).to receive(:perform_later)
         .with(express_interest_event)
 
-      click_on I18n.t('jobs.apply')
+      click_on I18n.t("jobs.apply")
     end
   end
 end

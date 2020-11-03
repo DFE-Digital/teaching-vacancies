@@ -1,4 +1,4 @@
-require 'performance_platform_sender'
+require "performance_platform_sender"
 
 class PerformancePlatformTransactionsQueueJob < ApplicationJob
   queue_as :performance_platform

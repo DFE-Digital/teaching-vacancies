@@ -1,9 +1,9 @@
-require 'performance_platform'
+require "performance_platform"
 
 namespace :performance_platform do
-  desc 'Performance Platform transaction submission'
+  desc "Performance Platform transaction submission"
   task submit: :environment do
-    Rake::Task['performance_platform:submit_transactions'].invoke
+    Rake::Task["performance_platform:submit_transactions"].invoke
   end
 
   task submit_transactions: :environment do
@@ -12,7 +12,7 @@ namespace :performance_platform do
   end
 
   task submit_data_up_to_today: :environment do
-    start_date = Date.parse('20/04/2018')
+    start_date = Date.parse("20/04/2018")
     current_date = Date.current
     number_of_days = current_date.mjd - start_date.mjd
 

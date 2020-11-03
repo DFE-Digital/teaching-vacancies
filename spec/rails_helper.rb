@@ -1,19 +1,19 @@
-require 'simplecov'
+require "simplecov"
 SimpleCov.start
 
-require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
-abort('The Rails environment is running in production mode!') if Rails.env.production?
-require 'rspec/rails'
+require "spec_helper"
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../config/environment", __dir__)
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'algolia/webmock'
-require 'factory_bot_rails'
-require 'geocoder'
-require 'rack_session_access/capybara'
-require 'sidekiq/testing'
-require 'view_component/test_helpers'
-require 'webmock/rspec'
+require "algolia/webmock"
+require "factory_bot_rails"
+require "geocoder"
+require "rack_session_access/capybara"
+require "sidekiq/testing"
+require "view_component/test_helpers"
+require "webmock/rspec"
 
 Sidekiq::Testing.fake!
 
@@ -22,15 +22,15 @@ Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556].fr
 Geocoder.configure(lookup: :test)
 Geocoder::Lookup::Test.set_default_stub([{ coordinates: Geocoder::DEFAULT_STUB_COORDINATES }])
 
-Capybara.server = :puma, { Silent: true, Threads: '0:1' }
+Capybara.server = :puma, { Silent: true, Threads: "0:1" }
 WebMock.disable_net_connect! allow: %w[localhost 127.0.0.1]
 
-Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
-Dir[Rails.root.join('lib/**/*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+Dir[Rails.root.join("lib/**/*.rb")].sort.each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
-user_agents ||= YAML.load_file(Browser.root.join('test/ua.yml')).freeze
+user_agents ||= YAML.load_file(Browser.root.join("test/ua.yml")).freeze
 USER_AGENTS = user_agents
 
 RSpec.configure do |config|

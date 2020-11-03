@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :component do
   let(:geolocation_trait) { nil }
@@ -11,138 +11,138 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolComponent, type: :compon
     render_inline(described_class.new(vacancy: vacancy_presenter))
   end
 
-  describe '#render?' do
-    context 'when vacancy is at a trust head office' do
+  describe "#render?" do
+    context "when vacancy is at a trust head office" do
       let(:organisation) { create(:trust) }
       let(:vacancy) { create(:vacancy, :at_central_office) }
 
-      it 'does not render the component' do
+      it "does not render the component" do
         expect(rendered_component).to be_blank
       end
     end
 
-    context 'when vacancy is at a single school in a trust' do
+    context "when vacancy is at a single school in a trust" do
       let(:vacancy) { create(:vacancy, :at_one_school) }
 
-      it 'renders the component' do
+      it "renders the component" do
         expect(rendered_component).not_to be_blank
       end
     end
   end
 
-  context 'rendering the school type' do
-    it 'renders the school type' do
+  context "rendering the school type" do
+    it "renders the school type" do
       expect(rendered_component).to include(organisation_type(organisation: vacancy.parent_organisation,
                                                               with_age_range: false))
     end
 
-    it 'does not render the age range as part of the school type' do
+    it "does not render the age range as part of the school type" do
       expect(rendered_component).not_to include(organisation_type(organisation: vacancy.parent_organisation,
                                                                   with_age_range: true))
     end
   end
 
-  it 'renders the education phase' do
+  it "renders the education phase" do
     expect(rendered_component).to include(school_phase(vacancy.parent_organisation))
   end
 
-  context 'when the number of pupils is present' do
-    it 'renders the school size as the number of pupils' do
+  context "when the number of pupils is present" do
+    it "renders the school size as the number of pupils" do
       expect(rendered_component).to include(school_size(vacancy.parent_organisation))
     end
   end
 
-  context 'when the number of pupils is not present' do
-    context 'when the school capacity is present' do
-      let(:organisation) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => 1000 }) }
+  context "when the number of pupils is not present" do
+    context "when the school capacity is present" do
+      let(:organisation) { create(:school, gias_data: { "NumberOfPupils" => nil, "SchoolCapacity" => 1000 }) }
 
-      it 'renders the school capacity as the school size' do
+      it "renders the school capacity as the school size" do
         expect(rendered_component).to include(school_size(vacancy.parent_organisation))
       end
     end
 
-    context 'when the school capacity is not present' do
-      let(:organisation) { create(:school, gias_data: { 'NumberOfPupils' => nil, 'SchoolCapacity' => nil }) }
+    context "when the school capacity is not present" do
+      let(:organisation) { create(:school, gias_data: { "NumberOfPupils" => nil, "SchoolCapacity" => nil }) }
 
-      it 'renders the school no information translation' do
+      it "renders the school no information translation" do
         expect(rendered_component).to include(school_size(vacancy.parent_organisation))
       end
     end
   end
 
-  it 'renders the osted report' do
+  it "renders the osted report" do
     expect(rendered_component).to include(ofsted_report(vacancy.parent_organisation))
   end
 
-  context 'when GIAS-obtained website has been overwritten' do
-    let(:organisation) { create(:school, website: 'https://this-is-a-test-url.tvs') }
+  context "when GIAS-obtained website has been overwritten" do
+    let(:organisation) { create(:school, website: "https://this-is-a-test-url.tvs") }
 
-    it 'renders a link to the school website' do
+    it "renders a link to the school website" do
       expect(rendered_component).to include(vacancy.parent_organisation.website)
     end
   end
 
-  it 'renders a link to the school website' do
+  it "renders a link to the school website" do
     expect(rendered_component).to include(vacancy.parent_organisation.url)
   end
 
-  it 'renders the contact email' do
+  it "renders the contact email" do
     expect(rendered_component).to include(vacancy.contact_email)
   end
 
-  it 'renders the contact number' do
+  it "renders the contact number" do
     expect(rendered_component).to include(vacancy.contact_number)
   end
 
-  it 'renders about school or organisation description' do
+  it "renders about school or organisation description" do
     expect(rendered_component).to include(vacancy_or_organisation_description(vacancy))
   end
 
-  it 'renders school visits' do
+  it "renders school visits" do
     expect(rendered_component).to include(vacancy.school_visits)
   end
 
-  it 'renders the head office location' do
+  it "renders the head office location" do
     expect(rendered_component).to include(full_address(vacancy.parent_organisation))
   end
 
-  context 'when the school has a geolocation' do
-    it 'renders the location heading for a singular school' do
-      expect(rendered_component).to include('School location')
+  context "when the school has a geolocation" do
+    it "renders the location heading for a singular school" do
+      expect(rendered_component).to include("School location")
     end
 
-    it 'shows the map element for Google Maps API to populate' do
-      expect(rendered_component).to include('map')
+    it "shows the map element for Google Maps API to populate" do
+      expect(rendered_component).to include("map")
     end
   end
 
-  context 'when school has no geolocation' do
+  context "when school has no geolocation" do
     let(:geolocation_trait) { :no_geolocation }
 
-    it 'does not render the location heading for a singular school' do
-      expect(rendered_component).not_to include('School locations')
+    it "does not render the location heading for a singular school" do
+      expect(rendered_component).not_to include("School locations")
     end
 
-    it 'does not show the map' do
-      expect(rendered_component).not_to include('map')
+    it "does not show the map" do
+      expect(rendered_component).not_to include("map")
     end
   end
 
-  describe '#organisation_map_data' do
+  describe "#organisation_map_data" do
     let(:data) do
       JSON.parse(described_class.new(vacancy: vacancy_presenter).organisation_map_data)
     end
 
-    it 'contains the school name' do
-      expect(data['name']).to eq organisation.name
+    it "contains the school name" do
+      expect(data["name"]).to eq organisation.name
     end
 
-    it 'contains the school latitude' do
-      expect(data['lat']).to eq organisation.geolocation.x
+    it "contains the school latitude" do
+      expect(data["lat"]).to eq organisation.geolocation.x
     end
 
-    it 'contains the school longitude' do
-      expect(data['lng']).to eq organisation.geolocation.y
+    it "contains the school longitude" do
+      expect(data["lng"]).to eq organisation.geolocation.y
     end
   end
 end

@@ -1,5 +1,5 @@
-require 'rails_helper'
-RSpec.describe 'School deleting vacancies' do
+require "rails_helper"
+RSpec.describe "School deleting vacancies" do
   let(:school) { create(:school) }
   let(:vacancy) { create(:vacancy) }
   let(:session_id) { SecureRandom.uuid }
@@ -10,42 +10,42 @@ RSpec.describe 'School deleting vacancies' do
     stub_document_deletion_of_vacancy
   end
 
-  scenario 'A school can delete a vacancy from a list' do
+  scenario "A school can delete a vacancy from a list" do
     vacancy2 = create(:vacancy)
     vacancy2.organisation_vacancies.create(organisation: school)
 
     delete_vacancy(school, vacancy.id)
 
-    within('table.vacancies') do
+    within("table.vacancies") do
       expect(page).not_to have_content(vacancy.job_title)
     end
     expect(page).to have_content(vacancy2.job_title)
     expect(page).to have_content(
-      strip_tags(I18n.t('messages.jobs.delete_html', job_title: vacancy.job_title)),
+      strip_tags(I18n.t("messages.jobs.delete_html", job_title: vacancy.job_title)),
     )
   end
 
-  scenario 'Deleting a vacancy triggers deletion of its supporting documents' do
+  scenario "Deleting a vacancy triggers deletion of its supporting documents" do
     expect(vacancy).to receive(:delete_documents)
 
     delete_vacancy(school, vacancy.id)
   end
 
-  scenario 'The last vacancy is deleted' do
+  scenario "The last vacancy is deleted" do
     delete_vacancy(school, vacancy.id)
 
-    expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
+    expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
   end
 
-  scenario 'Audits the vacancy deletion' do
+  scenario "Audits the vacancy deletion" do
     delete_vacancy(school, vacancy.id)
 
     activity = vacancy.activities.last
     expect(activity.session_id).to eq(session_id)
-    expect(activity.key).to eq('vacancy.delete')
+    expect(activity.key).to eq("vacancy.delete")
   end
 
-  scenario 'Notifies the Google index service' do
+  scenario "Notifies the Google index service" do
     expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
       .to receive(:remove_google_index).with(vacancy)
 
@@ -58,7 +58,7 @@ private
     visit organisation_path(school)
 
     within("tr#organisation_vacancy_presenter_#{vacancy_id}") do
-      click_on 'Delete'
+      click_on "Delete"
     end
   end
 

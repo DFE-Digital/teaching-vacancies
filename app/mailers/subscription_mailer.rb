@@ -6,7 +6,7 @@ class SubscriptionMailer < ApplicationMailer
     view_mail(
       NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE,
       to: @subscription.email,
-      subject: I18n.t('subscription_mailer.confirmation.subject'),
+      subject: I18n.t("subscription_mailer.confirmation.subject"),
     )
   end
 
@@ -17,7 +17,7 @@ class SubscriptionMailer < ApplicationMailer
     view_mail(
       NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE,
       to: @subscription.email,
-      subject: I18n.t('subscription_mailer.update.subject'),
+      subject: I18n.t("subscription_mailer.update.subject"),
     )
   end
 end

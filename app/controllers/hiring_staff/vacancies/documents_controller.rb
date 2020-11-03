@@ -1,4 +1,4 @@
-require 'google/apis/drive_v3'
+require "google/apis/drive_v3"
 
 class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::ApplicationController
   CONTENT_TYPES_ALLOWED = %w[ application/pdf
@@ -64,7 +64,7 @@ private
 
   def redirect_unless_supporting_documents
     if params[:change] && !@vacancy.supporting_documents
-      @vacancy.supporting_documents = 'yes'
+      @vacancy.supporting_documents = "yes"
       @vacancy.save
     end
 
@@ -106,29 +106,29 @@ private
   def add_file_type_error(filename)
     @documents_form.errors.add(
       :documents,
-      t('jobs.file_type_error_message', filename: filename),
+      t("jobs.file_type_error_message", filename: filename),
     )
   end
 
   def add_file_size_error(filename)
     @documents_form.errors.add(
       :documents,
-      t('jobs.file_size_error_message',
+      t("jobs.file_size_error_message",
         filename: filename,
         size_limit: helpers.number_to_human_size(FILE_SIZE_LIMIT)),
     )
   end
 
   def add_google_error(filename)
-    @documents_form.errors.add(:documents, t('jobs.file_google_error_message', filename: filename))
+    @documents_form.errors.add(:documents, t("jobs.file_google_error_message", filename: filename))
   end
 
   def add_virus_error(filename)
-    @documents_form.errors.add(:documents, t('jobs.file_virus_error_message', filename: filename))
+    @documents_form.errors.add(:documents, t("jobs.file_virus_error_message", filename: filename))
   end
 
   def errors_on_file?(filename)
-    @documents_form.errors.messages.values.join(' ').include?(filename)
+    @documents_form.errors.messages.values.join(" ").include?(filename)
   end
 
   def document_attributes(params, upload)

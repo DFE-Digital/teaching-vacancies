@@ -11,12 +11,12 @@ class Shared::BreadcrumbComponent < ViewComponent::Base
   end
 
   def collapse_on_mobile_class
-    collapse_on_mobile ? 'govuk-breadcrumbs--collapse-on-mobile' : ''
+    collapse_on_mobile ? "govuk-breadcrumbs--collapse-on-mobile" : ""
   end
 
   def crumb_link(crumb, crumb_idx)
     if crumb_idx < crumbs.count - 1
-      link_to crumb[:link_text], crumb[:link_path], class: 'govuk-breadcrumbs__link'
+      link_to crumb[:link_text], crumb[:link_path], class: "govuk-breadcrumbs__link"
     else
       content_tag(:span, crumb[:link_text])
     end

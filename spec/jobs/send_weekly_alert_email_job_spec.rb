@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SendWeeklyAlertEmailJob, type: :job do
   include ActiveJob::TestHelper
@@ -7,7 +7,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
 
   let(:search_criteria) do
     {
-      subject: 'English',
+      subject: "English",
       working_patterns: %w[full_time],
       phases: %w[primary secondary]
     }.to_json
@@ -18,70 +18,70 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
 
   let(:mail) { double(:mail) }
 
-  it 'queues the job' do
+  it "queues the job" do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
   end
 
-  it 'is in the queue_daily_alerts queue' do
-    expect(job.queue_name).to eq('queue_weekly_alerts')
+  it "is in the queue_daily_alerts queue" do
+    expect(job.queue_name).to eq("queue_weekly_alerts")
   end
 
-  context 'with vacancies' do
+  context "with vacancies" do
     before do
       allow_any_instance_of(described_class).to receive(:vacancies_for_subscription) { vacancies }
-      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('production'))
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("production"))
     end
 
-    it 'sends an email' do
+    it "sends an email" do
       expect(AlertMailer).to receive(:alert).with(subscription.id, vacancies.pluck(:id)) { mail }
       expect(mail).to receive(:deliver_later).with(queue: :email_alerts) { ActionMailer::DeliveryJob.new }
       perform_enqueued_jobs { job }
     end
 
-    context 'when a run exists' do
+    context "when a run exists" do
       let!(:run) { subscription.alert_runs.create(run_on: Time.zone.today) }
 
-      it 'does not send another email' do
+      it "does not send another email" do
         expect(AlertMailer).to_not receive(:alert)
         perform_enqueued_jobs { job }
       end
     end
 
-    context 'with no vacancies' do
+    context "with no vacancies" do
       before do
         allow_any_instance_of(described_class).to receive(:vacancies_for_subscription) { [] }
       end
 
-      it 'does not send an email' do
+      it "does not send an email" do
         expect(AlertMailer).to_not receive(:alert)
         perform_enqueued_jobs { job }
       end
 
-      it 'does not create a run' do
+      it "does not create a run" do
         perform_enqueued_jobs { job }
         expect(subscription.alert_runs.count).to eq(0)
       end
     end
   end
 
-  describe '#subscriptions' do
+  describe "#subscriptions" do
     let(:job) { described_class.new }
 
-    it 'gets weekly subscriptions' do
+    it "gets weekly subscriptions" do
       expect(Subscription).to receive(:weekly) { Subscription.where(frequency: :weekly) }
       job.subscriptions
     end
   end
 
-  describe '#vacancies_for_subscription' do
+  describe "#vacancies_for_subscription" do
     let(:job) { described_class.new }
 
-    it 'gets vacancies in the last week' do
+    it "gets vacancies in the last week" do
       expect(subscription).to receive(:vacancies_for_range).with(1.week.ago.to_date, Time.zone.today) { Vacancy.none }
       job.vacancies_for_subscription(subscription)
     end
 
-    it 'limits the number of vacancies' do
+    it "limits the number of vacancies" do
       relation = Vacancy.none
 
       allow(subscription).to receive(:vacancies_for_range) { relation }

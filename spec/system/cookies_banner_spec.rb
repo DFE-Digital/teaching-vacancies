@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Cookies banner' do
+RSpec.describe "Cookies banner" do
   let(:cookies_preference_set) { false }
 
   before do
@@ -9,36 +9,36 @@ RSpec.describe 'Cookies banner' do
     visit root_path
   end
 
-  context 'when CookiesBannerFeature is enabled' do
+  context "when CookiesBannerFeature is enabled" do
     let(:cookies_banner_enabled) { true }
 
-    scenario 'displays cookies banner' do
-      within '.cookies-banner' do
-        expect(page).to have_content(I18n.t('cookies.banner.heading'))
+    scenario "displays cookies banner" do
+      within ".cookies-banner" do
+        expect(page).to have_content(I18n.t("cookies.banner.heading"))
       end
     end
 
-    context 'when visiting cookies_preferences page' do
-      scenario 'does not display cookies banner' do
+    context "when visiting cookies_preferences page" do
+      scenario "does not display cookies banner" do
         visit cookies_preferences_path
-        expect(page).to_not have_content(I18n.t('cookies.banner.heading'))
+        expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
       end
     end
 
-    context 'when cookies_preference_set? is true' do
+    context "when cookies_preference_set? is true" do
       let(:cookies_preference_set) { true }
 
-      scenario 'does not display cookies banner' do
-        expect(page).to_not have_content(I18n.t('cookies.banner.heading'))
+      scenario "does not display cookies banner" do
+        expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
       end
     end
   end
 
-  context 'when CookiesBannerFeature is disabled' do
+  context "when CookiesBannerFeature is disabled" do
     let(:cookies_banner_enabled) { false }
 
-    scenario 'does not display cookies banner' do
-      expect(page).to_not have_content(I18n.t('cookies.banner.heading'))
+    scenario "does not display cookies banner" do
+      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
     end
   end
 end

@@ -1,19 +1,19 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe VacanciesController, type: :controller do
-  describe 'sets headers' do
-    it 'robots are asked to index but not to follow' do
+  describe "sets headers" do
+    it "robots are asked to index but not to follow" do
       get :index
-      expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+      expect(response.headers["X-Robots-Tag"]).to eq("noarchive")
     end
   end
 
-  describe '#index' do
+  describe "#index" do
     subject { get :index, params: params }
 
-    context 'when parameters include syntax' do
-      context 'search params' do
-        let(:expected_safe_values) { { keyword: 'Text' } }
+    context "when parameters include syntax" do
+      context "search params" do
+        let(:expected_safe_values) { { keyword: "Text" } }
         let(:params) do
           {
             keyword: "<body onload=alert('test1')>Text</body>",
@@ -21,90 +21,90 @@ RSpec.describe VacanciesController, type: :controller do
           }
         end
 
-        it 'passes only safe values to Search::VacancySearchBuilder' do
+        it "passes only safe values to Search::VacancySearchBuilder" do
           expect(Search::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
           subject
         end
       end
 
-      context 'sort params' do
-        let(:expected_safe_values) { { jobs_sort: 'Text' } }
+      context "sort params" do
+        let(:expected_safe_values) { { jobs_sort: "Text" } }
         let(:params) { { jobs_sort: "<body onload=alert('test1')>Text</script>" } }
 
-        it 'passes sanitised params to Search::VacancySearchBuilder' do
+        it "passes sanitised params to Search::VacancySearchBuilder" do
           expect(Search::VacancySearchBuilder).to receive(:new).with(expected_safe_values).and_call_original
           subject
         end
       end
 
-      context 'search auditor' do
-        let(:params) { { keyword: 'Teacher' } }
+      context "search auditor" do
+        let(:params) { { keyword: "Teacher" } }
 
-        it 'should call the search auditor' do
-          expect(AuditSearchEventJob).to receive(:perform_later).with(hash_including(keyword: 'Teacher'))
+        it "should call the search auditor" do
+          expect(AuditSearchEventJob).to receive(:perform_later).with(hash_including(keyword: "Teacher"))
           subject
         end
 
-        it 'should not call the search auditor if its a smoke test' do
+        it "should not call the search auditor if its a smoke test" do
           cookies[:smoke_test] = 1
           expect(AuditSearchEventJob).to_not receive(:perform_later)
 
           subject
         end
 
-        it 'should not call the search auditor if no search parameters are given' do
+        it "should not call the search auditor if no search parameters are given" do
           expect(AuditSearchEventJob).to_not receive(:perform_later)
           get :index
         end
       end
     end
 
-    context 'jobs_sort option' do
+    context "jobs_sort option" do
       let(:params) do
         {
-          keyword: 'Business Studies',
-          location: 'Torquay',
+          keyword: "Business Studies",
+          location: "Torquay",
           jobs_sort: sort
         }
       end
 
-      context 'when parameters include the sort by newest listing option' do
-        let(:sort) { 'publish_on_desc' }
+      context "when parameters include the sort by newest listing option" do
+        let(:sort) { "publish_on_desc" }
 
-        it 'sets the search replica on Search::VacancySearchBuilder' do
+        it "sets the search replica on Search::VacancySearchBuilder" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Vacancy::INDEX_NAME}_#{sort}")
         end
       end
 
-      context 'when parameters include the sort by most time to apply option' do
-        let(:sort) { 'expiry_time_desc' }
+      context "when parameters include the sort by most time to apply option" do
+        let(:sort) { "expiry_time_desc" }
 
-        it 'sets the search replica on Search::VacancySearchBuilder' do
+        it "sets the search replica on Search::VacancySearchBuilder" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Vacancy::INDEX_NAME}_#{sort}")
         end
       end
 
-      context 'when parameters include the sort by least time to apply option' do
-        let(:sort) { 'expiry_time_asc' }
+      context "when parameters include the sort by least time to apply option" do
+        let(:sort) { "expiry_time_asc" }
 
-        it 'sets the search replica on Search::VacancySearchBuilder' do
+        it "sets the search replica on Search::VacancySearchBuilder" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Vacancy::INDEX_NAME}_#{sort}")
         end
       end
 
-      context 'when parameters do not include a keyword' do
+      context "when parameters do not include a keyword" do
         let(:params) do
           {
-            keyword: '',
-            location: 'Torquay',
-            jobs_sort: ''
+            keyword: "",
+            location: "Torquay",
+            jobs_sort: ""
           }
         end
 
-        it 'sets the search replica on Search::VacancySearchBuilder to the default sort strategy: newest listing' do
+        it "sets the search replica on Search::VacancySearchBuilder to the default sort strategy: newest listing" do
           subject
           expect(controller.instance_variable_get(:@vacancies_search).search_replica).to eql("#{Vacancy::INDEX_NAME}_publish_on_desc")
         end
@@ -112,37 +112,37 @@ RSpec.describe VacanciesController, type: :controller do
     end
   end
 
-  describe '#show' do
+  describe "#show" do
     subject { get :show, params: params }
 
-    context 'when vacancy is trashed' do
+    context "when vacancy is trashed" do
       let(:vacancy) { create(:vacancy, :trashed) }
       let(:params) { { id: vacancy.id } }
 
-      it 'renders errors/trashed_vacancy_found' do
-        expect(subject).to render_template('errors/trashed_vacancy_found')
+      it "renders errors/trashed_vacancy_found" do
+        expect(subject).to render_template("errors/trashed_vacancy_found")
       end
 
-      it 'returns not found' do
+      it "returns not found" do
         subject
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context 'when vacancy does not exist' do
-      let(:params) { { id: 'missing-id' } }
+    context "when vacancy does not exist" do
+      let(:params) { { id: "missing-id" } }
 
-      it 'renders errors/not_found' do
-        expect(subject).to render_template('errors/not_found')
+      it "renders errors/not_found" do
+        expect(subject).to render_template("errors/not_found")
       end
 
-      it 'returns not found' do
+      it "returns not found" do
         subject
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context 'when using cookies' do
+    context "when using cookies" do
       let(:school) { create(:school) }
       let(:vacancy) { create(:vacancy) }
       let(:params) { { id: vacancy.slug } }
@@ -152,15 +152,15 @@ RSpec.describe VacanciesController, type: :controller do
         vacancy.organisation_vacancies.create(organisation: school)
       end
 
-      it 'should call the track method if cookies not set' do
+      it "should call the track method if cookies not set" do
         expect(VacancyPageView).to receive(:new).with(vacancy).and_return(vacancy_page_view)
         expect(vacancy_page_view).to receive(:track)
         subject
       end
 
-      it 'should not call the track method if smoke_test cookies set' do
+      it "should not call the track method if smoke_test cookies set" do
         expect(VacancyPageView).not_to receive(:new).with(vacancy)
-        cookies[:smoke_test] = '1'
+        cookies[:smoke_test] = "1"
         subject
       end
     end

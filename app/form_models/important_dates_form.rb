@@ -11,9 +11,9 @@ class ImportantDatesForm < VacancyForm
 
   def initialize(params)
     @params = params
-    @expiry_time_hh = params.delete(:expiry_time_hh) || params[:expiry_time]&.strftime('%-l')
-    @expiry_time_mm = params.delete(:expiry_time_mm) || params[:expiry_time]&.strftime('%-M')
-    @expiry_time_meridiem = params.delete(:expiry_time_meridiem) || params[:expiry_time]&.strftime('%P')
+    @expiry_time_hh = params.delete(:expiry_time_hh) || params[:expiry_time]&.strftime("%-l")
+    @expiry_time_mm = params.delete(:expiry_time_mm) || params[:expiry_time]&.strftime("%-M")
+    @expiry_time_meridiem = params.delete(:expiry_time_meridiem) || params[:expiry_time]&.strftime("%P")
 
     super(params)
   end

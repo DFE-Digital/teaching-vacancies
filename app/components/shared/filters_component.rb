@@ -13,7 +13,7 @@ class Shared::FiltersComponent < ViewComponent::Base
   end
 
   def applied_text
-    filters[:total_count].positive? ? "(#{filters[:total_count]} applied)" : ''
+    filters[:total_count].positive? ? "(#{filters[:total_count]} applied)" : ""
   end
 
   def display_remove_buttons

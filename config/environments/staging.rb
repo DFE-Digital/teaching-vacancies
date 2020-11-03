@@ -25,7 +25,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress JavaScripts and CSS.
   # config.assets.js_compressor = :uglifier
@@ -82,7 +82,7 @@ Rails.application.configure do
   # Use Lograge for cleaner logging
   config.lograge.enabled = true
   config.lograge.formatter = ColourLogFormatter.new
-  config.lograge.ignore_actions = ['ApplicationController#check']
+  config.lograge.ignore_actions = ["ApplicationController#check"]
   config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
 
   # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do

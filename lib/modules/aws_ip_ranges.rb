@@ -1,6 +1,6 @@
 module AWSIpRanges
   # Used based on this AWS instruction: https://forums.aws.amazon.com/ann.jspa?annID=2051
-  PATH = 'https://ip-ranges.amazonaws.com/ip-ranges.json'.freeze
+  PATH = "https://ip-ranges.amazonaws.com/ip-ranges.json".freeze
   COMPATIBLE_REGIONS = %w[GLOBAL eu-west-2].freeze
 
   def self.cloudfront_ips
@@ -29,12 +29,12 @@ module AWSIpRanges
   def self.parse_json_for_ips(response)
     aws_ip_ranges = JSON.parse(response)
 
-    cloudfront_ip_blocks = aws_ip_ranges['prefixes'].select do |record|
-      COMPATIBLE_REGIONS.include?(record['region']) && record['service'] == 'CLOUDFRONT'
+    cloudfront_ip_blocks = aws_ip_ranges["prefixes"].select do |record|
+      COMPATIBLE_REGIONS.include?(record["region"]) && record["service"] == "CLOUDFRONT"
     end
-    cloudfront_ip_blocks.map { |cloudfront_ip| cloudfront_ip['ip_prefix'] }
+    cloudfront_ip_blocks.map { |cloudfront_ip| cloudfront_ip["ip_prefix"] }
   rescue JSON::ParserError
-    Rails.logger.warn('Unable parse AWS Ip Range response to setup Rack Proxies')
+    Rails.logger.warn("Unable parse AWS Ip Range response to setup Rack Proxies")
     []
   end
 end

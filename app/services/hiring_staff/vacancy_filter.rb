@@ -11,8 +11,8 @@ class HiringStaff::VacancyFilter
     @managed_school_ids = params[:managed_school_ids]&.reject(&:blank?)
     @managed_organisations = params[:managed_organisations]
 
-    if managed_organisations&.include?('all') || (managed_organisations.blank? && managed_school_ids&.none?)
-      @managed_organisations = 'all'
+    if managed_organisations&.include?("all") || (managed_organisations.blank? && managed_school_ids&.none?)
+      @managed_organisations = "all"
       @managed_school_ids = []
     end
 

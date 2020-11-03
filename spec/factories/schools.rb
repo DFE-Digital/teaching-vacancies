@@ -1,18 +1,18 @@
 FactoryBot.define do
-  OFSTED_RATINGS = ['Outstanding', 'Good', 'Requires Improvement', 'Inadequate'].freeze
-  RELIGIOUS_CHARACTERS = ['Church of England', 'Roman Catholic', 'None', 'Does not apply'].freeze
+  OFSTED_RATINGS = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
+  RELIGIOUS_CHARACTERS = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
 
   factory :school do
-    address { Faker::Address.street_name.gsub("'", '') }
+    address { Faker::Address.street_name.gsub("'", "") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
-    easting { '1' }
+    easting { "1" }
     gias_data do
       {
         "CloseDate": nil,
         "HeadFirstName": Faker::Name.first_name,
-        "HeadLastName": Faker::Name.last_name.gsub("'", ''),
-        "HeadPreferredJobTitle": Faker::Name.prefix.gsub('.', ''),
+        "HeadLastName": Faker::Name.last_name.gsub("'", ""),
+        "HeadPreferredJobTitle": Faker::Name.prefix.gsub(".", ""),
         "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
         "NumberOfPupils": Faker::Number.number(digits: 3),
         "OfstedRating (name)": OFSTED_RATINGS.sample,
@@ -20,19 +20,19 @@ FactoryBot.define do
         "ReligiousCharacter (name)": RELIGIOUS_CHARACTERS.sample,
         "SchoolCapacity": Faker::Number.number(digits: 4),
         "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-        "Trusts (name)": Faker::Company.name.gsub("'", '') + ' Trust'
+        "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust"
       }
     end
     minimum_age { 11 }
     maximum_age { 18 }
-    name { Faker::Educator.secondary_school.strip.gsub("'", '') }
-    northing { '1' }
+    name { Faker::Educator.secondary_school.strip.gsub("'", "") }
+    northing { "1" }
     phase { :secondary }
     readable_phases { %w[secondary] }
-    region { 'South-East England' }
-    school_type { 'LA maintained school' }
+    region { "South-East England" }
+    school_type { "LA maintained school" }
     postcode { Faker::Address.postcode }
-    town { Faker::Address.city.gsub("'", '') }
+    town { Faker::Address.city.gsub("'", "") }
     urn { Faker::Number.number(digits: 6) }
     url { Faker::Internet.url }
 
@@ -52,11 +52,11 @@ FactoryBot.define do
     end
 
     trait :in_london do
-      association :region, name: 'London'
+      association :region, name: "London"
     end
 
     trait :outside_london do
-      association :region, name: 'East of England'
+      association :region, name: "East of England"
     end
 
     trait :catholic do
@@ -64,16 +64,16 @@ FactoryBot.define do
         {
           "CloseDate": nil,
           "HeadFirstName": Faker::Name.first_name,
-          "HeadLastName": Faker::Name.last_name.gsub("'", ''),
-          "HeadPreferredJobTitle": Faker::Name.prefix.gsub('.', ''),
+          "HeadLastName": Faker::Name.last_name.gsub("'", ""),
+          "HeadPreferredJobTitle": Faker::Name.prefix.gsub(".", ""),
           "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
           "NumberOfPupils": Faker::Number.number(digits: 3),
           "OfstedRating (name)": OFSTED_RATINGS.sample,
           "OpenDate": Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
-          "ReligiousCharacter (name)": 'Roman Catholic',
+          "ReligiousCharacter (name)": "Roman Catholic",
           "SchoolCapacity": Faker::Number.number(digits: 4),
           "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-          "Trusts (name)": Faker::Company.name.gsub("'", '') + ' Trust'
+          "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust"
         }
       end
     end
@@ -85,6 +85,6 @@ FactoryBot.define do
   end
 
   factory :academy, parent: :school do
-    school_type { 'Academy' }
+    school_type { "Academy" }
   end
 end

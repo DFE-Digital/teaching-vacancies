@@ -1,11 +1,11 @@
-require 'google/cloud/bigquery'
+require "google/cloud/bigquery"
 
 class ExportTablesToBigQuery
   include Google::Cloud
 
-  BIGQUERY_DATASET = ENV['BIG_QUERY_DATASET']
+  BIGQUERY_DATASET = ENV["BIG_QUERY_DATASET"]
   # This is to allow us to load new tables to the production dataset without disturbing the existing ones.
-  BIGQUERY_TABLE_PREFIX = 'feb20'.freeze
+  BIGQUERY_TABLE_PREFIX = "feb20".freeze
 
   # Attributes with postgres schema types that do not exist in BigQuery.
   CONVERT_THESE_TYPES = { point: :float, text: :string, uuid: :string, json: :string }.freeze
@@ -30,18 +30,18 @@ class ExportTablesToBigQuery
 
   # This is to deal with a gem that automatically maps an interger column to a look up table of strings.
   ENUM_ATTRIBUTES = {
-    'category' => :string,
-    'frequency' => :string,
-    'hired_status' => :string,
-    'job_roles' => :string,
-    'job_location' => :string,
-    'listed_elsewhere' => :string,
-    'phase' => :string,
-    'search_criteria' => :string,
-    'status' => :string,
-    'user_participation_response' => :string,
-    'visit_purpose' => :string,
-    'working_patterns' => :string,
+    "category" => :string,
+    "frequency" => :string,
+    "hired_status" => :string,
+    "job_roles" => :string,
+    "job_location" => :string,
+    "listed_elsewhere" => :string,
+    "phase" => :string,
+    "search_criteria" => :string,
+    "status" => :string,
+    "user_participation_response" => :string,
+    "visit_purpose" => :string,
+    "working_patterns" => :string,
   }.freeze
 
   EXCLUDE_TABLES = %w[
@@ -70,16 +70,16 @@ class ExportTablesToBigQuery
   end
 
   def run!
-    Rails.logger.info({ bigquery_export: 'started' }.to_json)
+    Rails.logger.info({ bigquery_export: "started" }.to_json)
     tables.each do |table|
       bigquery_load(table.constantize)
     rescue StandardError => e
       # If any table causes an uncaught error, no data from any later table is sent.
       # Catch errors and skip the failing tables
       # TODO: alert the team (devs + PA) to any failing tables.
-      Rails.logger.error({ bigquery_export: 'error', status: 'handled', table: table, message: e })
+      Rails.logger.error({ bigquery_export: "error", status: "handled", table: table, message: e })
     end
-    Rails.logger.info({ bigquery_export: 'finished' }.to_json)
+    Rails.logger.info({ bigquery_export: "finished" }.to_json)
   end
 
 private
@@ -93,16 +93,16 @@ private
       data = record.send(c.name)
       # Another bloody enum gem edge case. Only in vacancies and causes that whole table to fail despite the column
       # being nullable.
-      data = '' if c.name == 'hired_status' && data.nil?
+      data = "" if c.name == "hired_status" && data.nil?
       data = data.to_s if data.is_a?(Array)
       data = data.to_s(:db) if !data.nil? && (c.type == :datetime || c.type == :date)
       data = data.to_s if c.type == :json
       @bigquery_data[c.name] = data
     end
 
-    if table.column_names.include?('geolocation')
-      @bigquery_data['geolocation_x'] = record.geolocation&.x
-      @bigquery_data['geolocation_y'] = record.geolocation&.y
+    if table.column_names.include?("geolocation")
+      @bigquery_data["geolocation_x"] = record.geolocation&.x
+      @bigquery_data["geolocation_y"] = record.geolocation&.y
     end
 
     json_record = record.data if record.respond_to?(:data)
@@ -120,7 +120,7 @@ private
 
   def bigquery_load(db_table)
     started_at = Time.now.to_s(:db)
-    table_name = [BIGQUERY_TABLE_PREFIX, db_table.to_s.downcase].join('_')
+    table_name = [BIGQUERY_TABLE_PREFIX, db_table.to_s.downcase].join("_")
     dataset.table(table_name)&.delete
     bq_table = dataset.table(table_name) || dataset.create_table(table_name) do |schema|
       bigquery_schema(db_table).each do |column_name, column_type|
@@ -128,7 +128,7 @@ private
       end
     end
 
-    db_table = db_table.where('created_at > ?', 1.month.ago) if db_table == AuditData
+    db_table = db_table.where("created_at > ?", 1.month.ago) if db_table == AuditData
 
     record_count = total = db_table.count
     error_count = 0
@@ -182,9 +182,9 @@ private
       @bigquery_schema[c.name] = ENUM_ATTRIBUTES[c.name] || CONVERT_THESE_TYPES[c.type] || c.type
     }.compact
 
-    if table.column_names.include?('geolocation')
-      @bigquery_schema['geolocation_x'] = :float
-      @bigquery_schema['geolocation_y'] = :float
+    if table.column_names.include?("geolocation")
+      @bigquery_schema["geolocation_x"] = :float
+      @bigquery_schema["geolocation_y"] = :float
     end
 
     return @bigquery_schema unless table == Organisation
@@ -207,12 +207,12 @@ private
 
   def monitoring(data)
     Rails.logger.info(data.to_json)
-    table = dataset.table('monitoring') || dataset.create_table('monitoring') do |schema|
-      schema.integer 'error_count'
-      schema.timestamp 'finished_at'
-      schema.integer 'records_processed'
-      schema.timestamp 'started_at'
-      schema.string 'table'
+    table = dataset.table("monitoring") || dataset.create_table("monitoring") do |schema|
+      schema.integer "error_count"
+      schema.timestamp "finished_at"
+      schema.integer "records_processed"
+      schema.timestamp "started_at"
+      schema.string "table"
     end
 
     table.insert(data)

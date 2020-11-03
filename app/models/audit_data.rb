@@ -1,5 +1,5 @@
 class AuditData < ApplicationRecord
-  self.table_name = 'audit_data'
+  self.table_name = "audit_data"
 
   enum category: {
     vacancies: 0,

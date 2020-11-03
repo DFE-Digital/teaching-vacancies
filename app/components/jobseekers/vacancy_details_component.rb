@@ -6,11 +6,11 @@ class Jobseekers::VacancyDetailsComponent < ViewComponent::Base
   end
 
   def rows
-    [{ present: vacancy.job_roles&.any?, th: I18n.t('jobs.job_roles'), td: vacancy.show_job_roles },
+    [{ present: vacancy.job_roles&.any?, th: I18n.t("jobs.job_roles"), td: vacancy.show_job_roles },
      { present: vacancy.subjects&.any?,
-       th: I18n.t('jobs.subject', count: vacancy.subjects&.count),
+       th: I18n.t("jobs.subject", count: vacancy.subjects&.count),
        td: vacancy.show_subjects },
-     { present: true, th: I18n.t('jobs.working_patterns'), td: vacancy.working_patterns },
-     { present: true, th: I18n.t('jobs.salary'), td: vacancy.salary }]
+     { present: true, th: I18n.t("jobs.working_patterns"), td: vacancy.working_patterns },
+     { present: true, th: I18n.t("jobs.salary"), td: vacancy.salary }]
   end
 end

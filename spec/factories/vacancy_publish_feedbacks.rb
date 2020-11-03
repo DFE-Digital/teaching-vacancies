@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :vacancy_publish_feedback do
     rating { 1 }
-    comment { 'Some feedback text' }
+    comment { "Some feedback text" }
     vacancy
     user
     user_participation_response { :not_interested }

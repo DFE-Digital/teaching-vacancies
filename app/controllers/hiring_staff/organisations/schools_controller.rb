@@ -37,6 +37,6 @@ private
 
   def redirect_to_organisation_or_organisation_schools_path
     redirect_to @redirect_path,
-                success: I18n.t('messages.organisation.description_updated_html', organisation: @organisation.name)
+                success: I18n.t("messages.organisation.description_updated_html", organisation: @organisation.name)
   end
 end

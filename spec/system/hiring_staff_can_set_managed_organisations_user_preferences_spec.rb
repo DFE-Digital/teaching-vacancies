@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Hiring staff can set managed organisations user preferences' do
-  let(:school_1) { create(:school, name: 'Happy Rainbows School') }
-  let(:school_2) { create(:school, name: 'Dreary Grey School') }
+RSpec.describe "Hiring staff can set managed organisations user preferences" do
+  let(:school_1) { create(:school, name: "Happy Rainbows School") }
+  let(:school_2) { create(:school, name: "Dreary Grey School") }
   let(:user_preference) { UserPreference.last }
 
   before do
@@ -29,58 +29,58 @@ RSpec.describe 'Hiring staff can set managed organisations user preferences' do
     OmniAuth.config.test_mode = false
   end
 
-  context 'when current_organisation is a trust' do
+  context "when current_organisation is a trust" do
     let(:school_group) { create(:trust) }
 
-    scenario 'it shows the trust head office option' do
+    scenario "it shows the trust head office option" do
       visit organisation_managed_organisations_path
       expect(page.current_path).to eql(organisation_managed_organisations_path)
-      expect(page).to have_content(I18n.t('hiring_staff.managed_organisations.options.school_group'))
+      expect(page).to have_content(I18n.t("hiring_staff.managed_organisations.options.school_group"))
     end
 
     scenario "it allows school group users to select which organisation's jobs they want to manage" do
       visit organisation_managed_organisations_path
 
       expect(page).to have_content(
-        I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name),
+        I18n.t("hiring_staff.managed_organisations.panel.title", organisation: school_group.name),
       )
 
-      check I18n.t('hiring_staff.managed_organisations.options.school_group'),
-            name: 'managed_organisations_form[managed_school_ids][]', visible: false
-      check school_1.name, name: 'managed_organisations_form[managed_school_ids][]', visible: false
+      check I18n.t("hiring_staff.managed_organisations.options.school_group"),
+            name: "managed_organisations_form[managed_school_ids][]", visible: false
+      check school_1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
 
-      click_on I18n.t('buttons.continue')
+      click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eql(organisation_path)
       expect(user_preference.managed_school_ids).to eql([school_group.id, school_1.id])
     end
 
-    scenario 'it allows school group users to select to manage all jobs' do
+    scenario "it allows school group users to select to manage all jobs" do
       visit organisation_managed_organisations_path
 
       expect(page).to have_content(
-        I18n.t('hiring_staff.managed_organisations.panel.title', organisation: school_group.name),
+        I18n.t("hiring_staff.managed_organisations.panel.title", organisation: school_group.name),
       )
 
-      check I18n.t('hiring_staff.managed_organisations.options.all'),
-            name: 'managed_organisations_form[managed_organisations][]', visible: false
-      check school_1.name, name: 'managed_organisations_form[managed_school_ids][]', visible: false
+      check I18n.t("hiring_staff.managed_organisations.options.all"),
+            name: "managed_organisations_form[managed_organisations][]", visible: false
+      check school_1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
 
-      click_on I18n.t('buttons.continue')
+      click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eql(organisation_path)
-      expect(user_preference.managed_organisations).to eql('all')
+      expect(user_preference.managed_organisations).to eql("all")
       expect(user_preference.managed_school_ids).to eql([])
     end
   end
 
-  context 'when current_organisation is a local_authority' do
+  context "when current_organisation is a local_authority" do
     let(:school_group) { create(:local_authority) }
 
-    scenario 'it does not show the trust head office option' do
+    scenario "it does not show the trust head office option" do
       visit organisation_managed_organisations_path
       expect(page.current_path).to eql(organisation_managed_organisations_path)
-      expect(page).not_to have_content(I18n.t('hiring_staff.managed_organisations.options.school_group'))
+      expect(page).not_to have_content(I18n.t("hiring_staff.managed_organisations.options.school_group"))
     end
   end
 end

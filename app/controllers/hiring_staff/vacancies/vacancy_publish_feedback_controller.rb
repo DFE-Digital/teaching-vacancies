@@ -4,7 +4,7 @@ class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Va
   def new
     if @vacancy.publish_feedback.present?
       return redirect_to organisation_path,
-                         notice: I18n.t('errors.vacancy_publish_feedback.already_submitted')
+                         notice: I18n.t("errors.vacancy_publish_feedback.already_submitted")
     end
 
     @feedback = VacancyPublishFeedback.new
@@ -15,12 +15,12 @@ class HiringStaff::Vacancies::VacancyPublishFeedbackController < HiringStaff::Va
       vacancy_publish_feedback_params.merge(vacancy: @vacancy, user: current_user),
     )
 
-    return render 'new' unless @feedback.save
+    return render "new" unless @feedback.save
 
-    Auditor::Audit.new(@vacancy, 'vacancy.publish_feedback.create', current_session_id).log
+    Auditor::Audit.new(@vacancy, "vacancy.publish_feedback.create", current_session_id).log
 
     redirect_to organisation_path,
-                success: I18n.t('messages.jobs.feedback.submitted_html', job_title: @vacancy.job_title)
+                success: I18n.t("messages.jobs.feedback.submitted_html", job_title: @vacancy.job_title)
   end
 
 private

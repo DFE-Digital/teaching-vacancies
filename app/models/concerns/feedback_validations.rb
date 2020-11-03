@@ -10,6 +10,6 @@ module FeedbackValidations
   end
 
   def user_is_interested?
-    user_participation_response == 'interested'
+    user_participation_response == "interested"
   end
 end

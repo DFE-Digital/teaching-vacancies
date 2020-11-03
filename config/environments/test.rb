@@ -3,7 +3,7 @@ Rails.application.configure do
   # config/application.rb.
 
   # Configure the domains permitted to access coordinates API
-  config.allowed_cors_origin = proc { 'https://allowed.test.website' }
+  config.allowed_cors_origin = proc { "https://allowed.test.website" }
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
@@ -19,7 +19,7 @@ Rails.application.configure do
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.hour.seconds.to_i}",
+    "Cache-Control" => "public, max-age=#{1.hour.seconds.to_i}",
   }
 
   # Show full error reports and disable caching.
@@ -38,7 +38,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_options = {
-    from: 'mail@example.com'
+    from: "mail@example.com"
   }
 
   # Print deprecation notices to the stderr.
@@ -52,7 +52,7 @@ end
 
 # Avoid OmniAuth output in tests:
 # I, [2018-04-03T15:01:45.960289 #297]  INFO -- omniauth: (azureactivedirectory) Request phase initiated.
-OmniAuth.config.logger = Logger.new('/dev/null')
+OmniAuth.config.logger = Logger.new("/dev/null")
 OmniAuth.config.on_failure = proc { |env|
   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
 }

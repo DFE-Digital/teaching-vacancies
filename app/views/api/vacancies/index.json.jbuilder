@@ -1,21 +1,21 @@
 json.info do
   json.title "GOV UK - #{t('app.title')}"
-  json.description t('app.description')
-  json.termsOfService terms_and_conditions_url(protocol: 'https', anchor: 'api')
+  json.description t("app.description")
+  json.termsOfService terms_and_conditions_url(protocol: "https", anchor: "api")
   json.contact do
     json.name "#{t('app.title')} API Support"
-    json.email t('help.email')
+    json.email t("help.email")
   end
   json.license do
-    json.name 'Open Government License'
-    json.url 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
+    json.name "Open Government License"
+    json.url "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
   end
-  json.version '0.1.0'
+  json.version "0.1.0"
 end
-json.openapi '3.0.0'
+json.openapi "3.0.0"
 
 json.data @vacancies.decorated_collection do |vacancy|
-  json.partial! 'show.json.jbuilder', vacancy: vacancy
+  json.partial! "show.json.jbuilder", vacancy: vacancy
 end
 
 json.links do

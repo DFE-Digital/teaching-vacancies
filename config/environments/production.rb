@@ -25,7 +25,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # `config.assets.precompile` and `config.assets.version` have moved to
   # config/initializers/assets.rb
@@ -85,7 +85,7 @@ Rails.application.configure do
   # Use Lograge for cleaner logging
   config.lograge.enabled = true
   config.lograge.formatter = ColourLogFormatter.new
-  config.lograge.ignore_actions = ['ApplicationController#check']
+  config.lograge.ignore_actions = ["ApplicationController#check"]
   config.lograge.logger = ActiveSupport::Logger.new(STDOUT)
 
   # Include params in logs: https://github.com/roidrage/lograge#what-it-doesnt-do
@@ -104,5 +104,5 @@ Rails.application.configure do
   config.action_dispatch.trusted_proxies = AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) }
 
   # Ensure browsers don't cache
-  config.action_dispatch.default_headers.merge!('Cache-Control' => 'no-cache, no-store')
+  config.action_dispatch.default_headers.merge!("Cache-Control" => "no-cache, no-store")
 end

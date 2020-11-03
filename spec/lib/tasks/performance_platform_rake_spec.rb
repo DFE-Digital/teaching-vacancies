@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'rake performance_platform:submit_transactions', type: :task do
-  it 'Submits job publication transactions for the previous day' do
+RSpec.describe "rake performance_platform:submit_transactions", type: :task do
+  it "Submits job publication transactions for the previous day" do
     today = Date.current.beginning_of_day.in_time_zone
     expect(Date).to receive_message_chain(:current, :beginning_of_day).and_return(today)
 

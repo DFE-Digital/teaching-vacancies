@@ -9,8 +9,8 @@ class JobAlertFeedbacksController < ApplicationController
       job_alert_feedback_params.merge(subscription: subscription),
     )
     if @feedback.save
-      Auditor::Audit.new(@feedback, 'job_alert_feedback.create', current_session_id).log
-      redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: I18n.t('job_alert_feedbacks.submitted.relevance')
+      Auditor::Audit.new(@feedback, "job_alert_feedback.create", current_session_id).log
+      redirect_to edit_subscription_job_alert_feedback_path(id: @feedback.id), success: I18n.t("job_alert_feedbacks.submitted.relevance")
     end
   end
 
@@ -22,14 +22,14 @@ class JobAlertFeedbacksController < ApplicationController
     @feedback = JobAlertFeedback.find(feedback_id)
     @feedback_form = JobAlertFeedbackForm.new(form_params)
 
-    recaptcha_is_valid = verify_recaptcha(model: @feedback, action: 'job_alert_feedback')
-    @feedback.recaptcha_score = recaptcha_reply['score'] if recaptcha_is_valid && recaptcha_reply
+    recaptcha_is_valid = verify_recaptcha(model: @feedback, action: "job_alert_feedback")
+    @feedback.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
     @feedback.save
 
     if @feedback_form.valid?
       @feedback.update(form_params)
-      Auditor::Audit.new(@feedback, 'job_alert_feedback.update', current_session_id).log
-      redirect_to root_path, success: I18n.t('job_alert_feedbacks.submitted.comment')
+      Auditor::Audit.new(@feedback, "job_alert_feedback.update", current_session_id).log
+      redirect_to root_path, success: I18n.t("job_alert_feedbacks.submitted.comment")
     else
       render :edit
     end

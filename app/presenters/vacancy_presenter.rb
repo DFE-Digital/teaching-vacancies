@@ -7,7 +7,7 @@ class VacancyPresenter < BasePresenter
   delegate :job_roles, to: :model, prefix: true
 
   def share_url(utm_source: nil, utm_medium: nil, utm_campaign: nil, utm_content: nil)
-    params = { protocol: 'https' }
+    params = { protocol: "https" }
     if utm_source.present?
       params.merge!(
         utm_source: utm_source,
@@ -70,7 +70,7 @@ class VacancyPresenter < BasePresenter
 
     patterns = model_working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(', ')
+    }.join(", ")
 
     I18n.t("jobs.working_patterns_info_#{model_working_patterns.count > 1 ? 'many' : 'one'}", patterns: patterns)
         .capitalize
@@ -79,7 +79,7 @@ class VacancyPresenter < BasePresenter
   def working_patterns_for_job_schema
     return unless working_patterns?
 
-    model_working_patterns.compact.map(&:upcase).join(', ')
+    model_working_patterns.compact.map(&:upcase).join(", ")
   end
 
   def to_row
@@ -103,10 +103,10 @@ class VacancyPresenter < BasePresenter
   def show_job_roles
     return unless model.job_roles
 
-    model.job_roles.map { |job_role| I18n.t("jobs.job_role_options.#{job_role}") }.join(', ')
+    model.job_roles.map { |job_role| I18n.t("jobs.job_role_options.#{job_role}") }.join(", ")
   end
 
   def show_subjects
-    model.subjects&.join(', ')
+    model.subjects&.join(", ")
   end
 end

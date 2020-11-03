@@ -1,8 +1,8 @@
-require 'google/apis/indexing_v3'
+require "google/apis/indexing_v3"
 
 class Indexing
-  ACTIONS = { update: 'URL_UPDATED',
-              remove: 'URL_DELETED' }.freeze
+  ACTIONS = { update: "URL_UPDATED",
+              remove: "URL_DELETED" }.freeze
 
   API = Google::Apis::IndexingV3
 

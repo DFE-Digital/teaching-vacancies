@@ -16,13 +16,13 @@ class OrganisationVacancyPresenter < BasePresenter
 
   def days_to_apply
     if model.expires_on == Time.zone.today
-      return I18n.t('jobs.days_to_apply.today')
+      return I18n.t("jobs.days_to_apply.today")
     elsif model.expires_on == Time.zone.tomorrow
-      return I18n.t('jobs.days_to_apply.tomorrow')
+      return I18n.t("jobs.days_to_apply.tomorrow")
     end
 
     days_remaining = (model.expires_on - Time.zone.today).to_i
-    I18n.t('jobs.days_to_apply.remaining', days_remaining: days_remaining)
+    I18n.t("jobs.days_to_apply.remaining", days_remaining: days_remaining)
   end
 
   def expires_on
@@ -30,7 +30,7 @@ class OrganisationVacancyPresenter < BasePresenter
   end
 
   def application_deadline
-    expiry_time_formatted = model.expiry_time.nil? ? '' : I18n.t('jobs.time_at') + format_time(model.expiry_time)
+    expiry_time_formatted = model.expiry_time.nil? ? "" : I18n.t("jobs.time_at") + format_time(model.expiry_time)
     format_date(model.expires_on) + expiry_time_formatted
   end
 

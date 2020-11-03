@@ -1,4 +1,4 @@
-require 'google/apis/drive_v3'
+require "google/apis/drive_v3"
 
 class DocumentDelete
   FILE_NOT_FOUND_STATUS_CODE = 404

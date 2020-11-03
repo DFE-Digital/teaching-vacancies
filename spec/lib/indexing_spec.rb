@@ -1,18 +1,18 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Indexing do
-  let(:url) { 'https://google.com' }
+  let(:url) { "https://google.com" }
   let(:mock_request) { double(:mock_request) }
   let(:google_service) { double(:google_service) }
   let(:service) { Indexing.new(url) }
 
-  context 'Successful requests' do
+  context "Successful requests" do
     before(:each) do
-      stub_const('GOOGLE_API_JSON_KEY', '{ "key": "value" }')
+      stub_const("GOOGLE_API_JSON_KEY", '{ "key": "value" }')
     end
 
-    context 'Requesting a url index update' do
-      it 'notifies the indexing API' do
+    context "Requesting a url index update" do
+      it "notifies the indexing API" do
         expect(Google::Apis::IndexingV3::IndexingService)
           .to receive(:new).and_return(google_service)
         expect(Google::Apis::IndexingV3::UrlNotification)
@@ -25,8 +25,8 @@ RSpec.describe Indexing do
       end
     end
 
-    context 'Requesting a url index removal' do
-      it 'notifies the indexing API' do
+    context "Requesting a url index removal" do
+      it "notifies the indexing API" do
         expect(Google::Apis::IndexingV3::IndexingService)
           .to receive(:new).and_return(google_service)
         expect(Google::Apis::IndexingV3::UrlNotification)
@@ -40,9 +40,9 @@ RSpec.describe Indexing do
     end
   end
 
-  context 'When no GOOGLE_API key is set' do
-    it 'logs an error and aborts execution' do
-      stub_const('GOOGLE_API_JSON_KEY', '')
+  context "When no GOOGLE_API key is set" do
+    it "logs an error and aborts execution" do
+      stub_const("GOOGLE_API_JSON_KEY", "")
       expect(Indexing::API::IndexingService).not_to receive(:new)
       Indexing.new(url)
     end

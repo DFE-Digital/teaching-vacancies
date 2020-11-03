@@ -5,11 +5,11 @@ class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::App
       update_vacancy(vacancy)
 
       redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback),
-                  success: I18n.t('messages.jobs.feedback.submitted_html', job_title: vacancy.job_title)
+                  success: I18n.t("messages.jobs.feedback.submitted_html", job_title: vacancy.job_title)
     else
       redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback), danger: {
-        title: I18n.t('messages.jobs.feedback.error_title'),
-        body: I18n.t('messages.jobs.feedback.error_body')
+        title: I18n.t("messages.jobs.feedback.error_title"),
+        body: I18n.t("messages.jobs.feedback.error_body")
       }
     end
   end

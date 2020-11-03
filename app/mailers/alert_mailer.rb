@@ -12,7 +12,7 @@ class AlertMailer < ApplicationMailer
     view_mail(
       template,
       to: @subscription.email,
-      subject: I18n.t('alert_mailer.alert.subject'),
+      subject: I18n.t("alert_mailer.alert.subject"),
     )
   end
 end

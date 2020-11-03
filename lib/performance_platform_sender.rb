@@ -1,9 +1,9 @@
-require 'performance_platform'
+require "performance_platform"
 
 module PerformancePlatformSender
   class Base
     def self.by_type(type)
-      const_get('PerformancePlatformSender::' + type.to_s.capitalize).new
+      const_get("PerformancePlatformSender::" + type.to_s.capitalize).new
     end
 
     def call(date:)
@@ -34,7 +34,7 @@ module PerformancePlatformSender
   private
 
     def log_source
-      'performance_platform:submit_transactions'
+      "performance_platform:submit_transactions"
     end
 
     def send_data

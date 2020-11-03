@@ -1,4 +1,4 @@
-require 'job_posting'
+require "job_posting"
 
 class SaveJobPostingToVacancyJob < ApplicationJob
   queue_as :seed_vacancies_from_api

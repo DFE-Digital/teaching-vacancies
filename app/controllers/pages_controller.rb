@@ -11,13 +11,13 @@ class PagesController < ApplicationController
   end
 
   def invalid_page
-    redirect_to '/404'
+    redirect_to "/404"
   end
 
   def set_headers
-    return super if root_path? || page_path.include?('user-not-authorised') || page_path.include?('home')
+    return super if root_path? || page_path.include?("user-not-authorised") || page_path.include?("home")
 
-    response.set_header('X-Robots-Tag', 'index, nofollow')
+    response.set_header("X-Robots-Tag", "index, nofollow")
   end
 
   def root_path?

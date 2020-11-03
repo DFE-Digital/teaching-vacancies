@@ -33,6 +33,6 @@ class Search::VacancyAlertBuilder < Search::VacancySearchBuilder
 private
 
   def build_subscription_keyword(subscription_hash)
-    [subscription_hash[:subject], subscription_hash[:job_title]].reject(&:blank?).join(' ')
+    [subscription_hash[:subject], subscription_hash[:job_title]].reject(&:blank?).join(" ")
   end
 end

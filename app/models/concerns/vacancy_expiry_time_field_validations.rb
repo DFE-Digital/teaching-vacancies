@@ -10,17 +10,17 @@ module VacancyExpiryTimeFieldValidations
 private
 
   def expiry_time_must_not_be_blank
-    errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.blank')) if
+    errors.add(:expiry_time, I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank")) if
       expiry_time_hh.blank? || expiry_time_mm.blank?
   end
 
   def expiry_time_must_be_in_correct_range
-    errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format')) unless
+    errors.add(:expiry_time, I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format")) unless
       in_range?(expiry_time_hh, 1, 12) && in_range?(expiry_time_mm, 0, 59)
   end
 
   def expiry_time_meridiem_must_not_be_blank
-    errors.add(:expiry_time, I18n.t('activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm')) if
+    errors.add(:expiry_time, I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm")) if
       expiry_time_meridiem.blank?
   end
 

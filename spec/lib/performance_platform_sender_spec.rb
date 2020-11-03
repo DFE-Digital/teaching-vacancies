@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PerformancePlatformSender::Base do
   let(:type) { :transactions }
@@ -9,16 +9,16 @@ RSpec.describe PerformancePlatformSender::Base do
 
   subject { described_class.by_type(type) }
 
-  it 'will return the correct class for type' do
+  it "will return the correct class for type" do
     expect(subject).to be_a(PerformancePlatformSender::Transactions)
   end
 
-  context 'transactions' do
+  context "transactions" do
     subject { described_class.by_type(type).call(date: date_to_upload) }
 
-    it 'will submit transaction data' do
+    it "will submit transaction data" do
       freeze_time do
-        stub_const('PP_TRANSACTIONS_BY_CHANNEL_TOKEN', 'not-nil')
+        stub_const("PP_TRANSACTIONS_BY_CHANNEL_TOKEN", "not-nil")
 
         two_days_ago = Date.current.beginning_of_day.in_time_zone - 2.days
         today = Date.current.beginning_of_day.in_time_zone
@@ -33,7 +33,7 @@ RSpec.describe PerformancePlatformSender::Base do
 
         transaction_by_channel = instance_double(PerformancePlatform::TransactionsByChannel)
         expect(PerformancePlatform::TransactionsByChannel)
-          .to receive(:new).with('not-nil').and_return(transaction_by_channel)
+          .to receive(:new).with("not-nil").and_return(transaction_by_channel)
         expect(transaction_by_channel).to receive(:submit).with(jobs_published_yesterday.count, parsed_date)
 
         subject
@@ -42,8 +42,8 @@ RSpec.describe PerformancePlatformSender::Base do
       end
     end
 
-    it 'will be idempotent' do
-      TransactionAuditor::Logger.new('performance_platform:submit_transactions', parsed_date).log_success
+    it "will be idempotent" do
+      TransactionAuditor::Logger.new("performance_platform:submit_transactions", parsed_date).log_success
 
       expect(PerformancePlatform::TransactionsByChannel).to_not receive(:new)
       expect(Vacancy).to_not receive(:published_on_count)
@@ -51,9 +51,9 @@ RSpec.describe PerformancePlatformSender::Base do
       subject
     end
 
-    it 'will log a failure' do
+    it "will log a failure" do
       allow_any_instance_of(PerformancePlatform::TransactionsByChannel)
-        .to receive(:submit).and_raise(RuntimeError.new('Error'))
+        .to receive(:submit).and_raise(RuntimeError.new("Error"))
 
       expect { subject }.to raise_error(RuntimeError)
 

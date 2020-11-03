@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Search::VacancyAlertBuilder do
   subject { described_class.new(subscription_hash) }
 
   let!(:expired_now) { Time.zone.now }
 
-  let(:keyword) { 'maths teacher' }
-  let(:location) { 'SW1A 1AA' }
+  let(:keyword) { "maths teacher" }
+  let(:location) { "SW1A 1AA" }
   let(:default_radius) { 10 }
   let(:date_today) { Time.zone.today.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
@@ -38,9 +38,9 @@ RSpec.describe Search::VacancyAlertBuilder do
     travel_back
   end
 
-  context 'subscription created before algolia' do
-    let(:search_subject) { 'maths' }
-    let(:job_title) { 'teacher' }
+  context "subscription created before algolia" do
+    let(:search_subject) { "maths" }
+    let(:job_title) { "teacher" }
     let(:search_query) { "#{search_subject} #{job_title}" }
     let(:subscription_hash) do
       {
@@ -48,57 +48,57 @@ RSpec.describe Search::VacancyAlertBuilder do
         subject: search_subject,
         job_title: job_title,
         working_patterns: %w[full_time part_time],
-        newly_qualified_teacher: 'true',
+        newly_qualified_teacher: "true",
         phases: %w[secondary primary],
         from_date: date_today,
         to_date: date_today
       }
     end
 
-    context '#initialize' do
-      context '#keyword' do
-        it 'adds subject and job_title to the keyword' do
+    context "#initialize" do
+      context "#keyword" do
+        it "adds subject and job_title to the keyword" do
           expect(subject.keyword).to eql(search_query)
         end
       end
 
-      context '#build_subscription_filters' do
-        it 'adds date filter' do
+      context "#build_subscription_filters" do
+        it "adds date filter" do
           expect(subject.search_filters).to include(
             "(publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})",
           )
         end
 
-        it 'adds working patterns filter' do
+        it "adds working patterns filter" do
           expect(subject.search_filters).to include(
-            '(working_patterns:full_time OR working_patterns:part_time)',
+            "(working_patterns:full_time OR working_patterns:part_time)",
           )
         end
 
-        it 'adds NQT filter' do
+        it "adds NQT filter" do
           expect(subject.search_filters).to include(
-            '(job_roles:nqt_suitable)',
+            "(job_roles:nqt_suitable)",
           )
         end
 
-        it 'adds school phase filter' do
+        it "adds school phase filter" do
           expect(subject.search_filters).to include(
-            '(education_phases:secondary OR education_phases:primary)',
+            "(education_phases:secondary OR education_phases:primary)",
           )
         end
       end
     end
 
-    context '#call' do
-      let(:vacancies) { double('vacancies') }
+    context "#call" do
+      let(:vacancies) { double("vacancies") }
       let(:search_filter) do
-        '(listing_status:published AND '\
+        "(listing_status:published AND "\
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_time.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
         " #{date_today.to_i}) AND "\
-        '(education_phases:secondary OR education_phases:primary) AND '\
-        '(working_patterns:full_time OR working_patterns:part_time) AND '\
-        '(job_roles:nqt_suitable)'
+        "(education_phases:secondary OR education_phases:primary) AND "\
+        "(working_patterns:full_time OR working_patterns:part_time) AND "\
+        "(job_roles:nqt_suitable)"
       end
 
       before do
@@ -106,15 +106,15 @@ RSpec.describe Search::VacancyAlertBuilder do
         mock_algolia_search_for_job_alert(vacancies, search_query, expected_algolia_search_args)
       end
 
-      it 'carries out alert search with correct criteria' do
+      it "carries out alert search with correct criteria" do
         subject.call
         expect(subject.vacancies).to eql(vacancies)
       end
     end
   end
 
-  context 'subscription created after algolia' do
-    let(:vacancies) { double('vacancies') }
+  context "subscription created after algolia" do
+    let(:vacancies) { double("vacancies") }
     let(:subscription_hash) do
       {
         location: location,
@@ -124,9 +124,9 @@ RSpec.describe Search::VacancyAlertBuilder do
       }
     end
 
-    context '#call' do
+    context "#call" do
       let(:search_filter) do
-        '(listing_status:published AND '\
+        "(listing_status:published AND "\
         "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
         "#{expired_now.to_time.to_i}) AND (publication_date_timestamp >= "\
         "#{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
@@ -137,7 +137,7 @@ RSpec.describe Search::VacancyAlertBuilder do
         mock_algolia_search_for_job_alert(vacancies, keyword, expected_algolia_search_args)
       end
 
-      it 'carries out alert search with correct criteria' do
+      it "carries out alert search with correct criteria" do
         subject.call
         expect(subject.vacancies).to eql(vacancies)
       end
