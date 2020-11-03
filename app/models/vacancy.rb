@@ -126,7 +126,7 @@ class Vacancy < ApplicationRecord
       { names: organisations.map(&:name),
         counties: organisations.map(&:county).uniq,
         detailed_school_types: organisations.map { |org|
-                                org.detailed_school_type if org.is_a?(School)
+                                 org.detailed_school_type if org.is_a?(School)
                                } .reject(&:blank?).uniq,
         group_type: organisations.map { |org| org.group_type if org.is_a?(SchoolGroup) }.reject(&:blank?).uniq,
         local_authorities_within: organisations.map(&:local_authority_within).reject(&:blank?).uniq,

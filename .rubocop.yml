@@ -15,9 +15,6 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-Layout/IndentationWidth:
-  Enabled: false
-
 Metrics/AbcSize:
   Max: 25
   Exclude:

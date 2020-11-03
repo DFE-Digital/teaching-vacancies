@@ -42,9 +42,9 @@ private
   def initialize_sort_by(jobs_sort_param)
     # A blank `sort_by` results in a search on the main index, Vacancy.
     @sort_by = if jobs_sort_param.blank? || !valid_sort?(jobs_sort_param)
-      @keyword.blank? ? "publish_on_desc" : ""
+                 @keyword.blank? ? "publish_on_desc" : ""
                else
-      jobs_sort_param
+                 jobs_sort_param
                end
   end
 

@@ -35,10 +35,10 @@ private
       row_key = value.first
       transformation = value.last
       organisation[attribute_name] = if attribute_name == :url
-        # Addressable::URI ensures we store a valid URL.
-        Addressable::URI.heuristic_parse(row[row_key]).to_s
+                                       # Addressable::URI ensures we store a valid URL.
+                                       Addressable::URI.heuristic_parse(row[row_key]).to_s
                                      else
-        row[row_key].send(transformation)
+                                       row[row_key].send(transformation)
                                      end
     end
   end

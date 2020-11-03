@@ -11,9 +11,9 @@ class Search::VacancyLocationBuilder
     @location_filter = {}
 
     @location_category = if @location.present? && LocationCategory.include?(@location)
-      @location
+                           @location
                          else
-      location_category
+                           location_category
                          end
 
     if location_category_search?

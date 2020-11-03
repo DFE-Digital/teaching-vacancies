@@ -105,11 +105,11 @@ private
 
   def update_vacancy_state
     state = if params[:edit_draft] == "true" || @vacancy&.state == "edit"
-      "edit"
+              "edit"
             elsif @vacancy&.state == "copy"
-      "copy"
+              "copy"
             else
-      "review"
+              "review"
             end
     @vacancy.update(state: state)
   end

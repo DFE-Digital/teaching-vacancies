@@ -4,16 +4,16 @@ FactoryBot.define do
     dsi_data do
       {
         school_urns: proc {
-          set = Set.new
-          (0..4).to_a.sample.times do
-            number = Faker::Number.number(digits: 6)
-            set.add(number.to_s)
-          end
-          set
+                       set = Set.new
+                       (0..4).to_a.sample.times do
+                         number = Faker::Number.number(digits: 6)
+                         set.add(number.to_s)
+                       end
+                       set
                      }.call,
         trust_uids: proc {
-        number = Faker::Number.number(digits: [4, 5].sample)
-        [[number.to_s, nil].sample]
+                      number = Faker::Number.number(digits: [4, 5].sample)
+                      [[number.to_s, nil].sample]
                     }.call,
       }
     end

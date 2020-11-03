@@ -14,9 +14,9 @@ class SubscriptionForm
 
   def initialize(params = {})
     search_criteria = if params[:search_criteria].present?
-      JSON.parse(params[:search_criteria]).symbolize_keys
+                        JSON.parse(params[:search_criteria]).symbolize_keys
                       else
-      {}
+                        {}
                       end
 
     @email = params[:email]
