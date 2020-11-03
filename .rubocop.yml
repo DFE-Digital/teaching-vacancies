@@ -34,22 +34,10 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'lib/tasks/data.rake'
 
-Metrics/ClassLength:
-  Enabled: false
-
 Metrics/MethodLength:
   Max: 50
 
 Rake/Desc:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/MixinUsage:
   Enabled: false
 
 Style/TrailingCommaInHashLiteral:
