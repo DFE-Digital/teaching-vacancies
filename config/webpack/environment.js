@@ -1,15 +1,6 @@
-const { environment } = require('@rails/webpacker')
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { environment } = require('@rails/webpacker');
 
-environment.plugins.prepend(
-  'Provide',
-  new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-    jquery: 'jquery'
-  })
-)
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 environment.plugins.append(
   'MiniCssExtractPlugin', // arbitrary name

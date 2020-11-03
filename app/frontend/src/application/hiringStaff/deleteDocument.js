@@ -125,14 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-$('#js-gem-c-modal-dialogue__confirm-action')
-  .on('ajax:beforeSend', function () {
-    $('#js-gem-c-modal-dialogue__error').hide();
-    $(this).addClass('govuk-button--disabled');
-  })
-  .on('ajax:success', function (event) {
-    const xhr = event.detail[2];
-    const $documentRow = document.querySelector(`.js-document-row[data-document-id="${this.dataset.documentId}"]`);
+const deleteAction = document.getElementById(('js-gem-c-modal-dialogue__confirm-action'));
+
+if (deleteAction) {
+  deleteAction.addEventListener('ajax:beforeSend', () => {
+    document.getElementById('js-gem-c-modal-dialogue__error').style.display = 'none';
+    deleteAction.classList.add('govuk-button--disabled');
+  });
+
+  deleteAction.addEventListener('ajax:success', (e) => {
+    const xhr = e.detail[2];
+    const $documentRow = document.querySelector(`.js-document-row[data-document-id="${deleteAction.dataset.documentId}"]`);
     $documentRow.parentNode.removeChild($documentRow);
 
     if (document.querySelectorAll('.js-document-row').length === 0) {
@@ -143,10 +146,13 @@ $('#js-gem-c-modal-dialogue__confirm-action')
     $errorContainer.insertAdjacentHTML('beforeend', xhr.responseText);
 
     document.querySelector('[data-module="file-remove-confirmation-dialogue"]').close();
-  })
-  .on('ajax:error', () => {
-    $('#js-gem-c-modal-dialogue__error').show();
-  })
-  .on('ajax:complete', function () {
-    $(this).removeClass('govuk-button--disabled');
   });
+
+  deleteAction.addEventListener('ajax:error', (e) => {
+    document.getElementById('js-gem-c-modal-dialogue__error').style.display = 'block';
+  });
+
+  deleteAction.addEventListener('ajax:complete', (e) => {
+    deleteAction.classList.remove('govuk-button--disabled');
+  });
+}
