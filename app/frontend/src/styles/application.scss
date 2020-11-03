@@ -21,12 +21,18 @@ $govuk-image-url-function: frontend-image-url;
 @import 'jobseekers/similar_job_component/similar_job_component';
 
 @import 'global/variables';
-@import 'base/controllers';
 @import 'base/mixins';
 @import 'base/utilities';
 
+@import 'banners';
+@import 'form';
+@import 'ie';
+@import 'modal';
+@import 'navigation';
+@import 'pagination';
+@import 'steps';
+
 @import 'components/awaiting_feedback_vacancies';
-@import 'components/banners';
 @import 'components/accordion_group';
 @import 'components/check_your_answers';
 @import 'components/cookies-banner';
@@ -38,30 +44,35 @@ $govuk-image-url-function: frontend-image-url;
 @import 'components/interruption-card';
 @import 'components/jobs-banner';
 @import 'components/key_dates_sidebar';
-@import 'components/links';
 @import 'components/location-search';
-@import 'components/modal_dialogue';
 @import 'components/moj_scrollable_pane';
-@import 'components/navigation';
 @import 'components/og-preview';
-@import 'components/pagination';
 @import 'components/school';
 @import 'components/schools-in-your-trust';
 @import 'components/search_panel';
 @import 'components/search_input';
-@import 'components/select';
 @import 'components/share-url';
 @import 'components/signin';
 @import 'components/sortable_links';
 @import 'components/statistics';
-@import 'components/step-by-step-navigation';
 @import 'components/success_summary';
 @import 'components/updates';
 @import 'components/vacancies';
 @import 'components/vacancies-count';
 @import 'components/vacancies-show';
 @import 'components/vacancy';
-@import 'ie';
+
+body {
+  .govuk-width-container {
+    @include govuk-media-query($from: desktop) {
+      max-width: 1020px;
+    }
+  }
+
+  .govuk-header__container {
+    border-bottom: 10px solid govuk-colour('orange');
+  }
+}
 
 input[type='search'] {
   box-sizing: border-box;
@@ -71,64 +82,7 @@ p {
   @include govuk-font(19);
 }
 
-.visually-hidden {
-  height: 1px;
-  left: -9999em;
-  overflow: hidden;
-  position: absolute;
-  top: auto;
-  width: 1px;
-}
-
-.hide-bullet-points {
-  list-style: none;
-}
-
-.hide-bullet-points li {
-  margin: 5px 0;
-}
-
-.add-colon-positioned-next-to-element {
-  position: relative;
-
-  &::after {
-    bottom: 10px;
-    content: ':';
-    font-size: 21px;
-    font-weight: bold;
-    position: absolute;
-    right: -13px;
-  }
-}
-
-.navigation_heading {
-  color: govuk-colour('white');
+strong,
+b {
   font-weight: bold;
-  margin-top: 20px;
-
-  @include govuk-media-query($from: desktop) {
-    display: none;
-  }
-}
-
-.govuk-header__container {
-  border-bottom: 10px solid govuk-colour('orange');
-}
-
-body {
-  .govuk-width-container {
-    @include govuk-media-query($from: desktop) {
-      max-width: 1020px;
-    }
-  }
-}
-
-.grouped-text-block {
-  border: govuk-spacing(1) solid $govuk-border-colour;
-  margin-bottom: govuk-spacing(5);
-  padding: govuk-spacing(3) govuk-spacing(3) 0;
-
-  ul li {
-    margin-bottom: 0;
-  }
 }

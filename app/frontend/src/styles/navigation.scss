@@ -71,3 +71,13 @@ nav ul .mobile-header-underline-text {
     margin-top: 2px;
   }
 }
+
+.navigation_heading {
+  color: govuk-colour('white');
+  font-weight: bold;
+  margin-top: 20px;
+
+  @include govuk-media-query($from: desktop) {
+    display: none;
+  }
+}

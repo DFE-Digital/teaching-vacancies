@@ -1,6 +1,5 @@
 import 'es6-promise/auto';
 import view from './autocomplete.view';
-import './autocomplete.scss';
 
 export const renderAutocomplete = (widgetParams) => {
   view.create(widgetParams.container, widgetParams.input, widgetParams.key);
