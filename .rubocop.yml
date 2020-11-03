@@ -6,14 +6,5 @@ inherit_mode:
   merge:
     - Exclude
 
-AllCops:
-  TargetRubyVersion: 2.7.2
-  Exclude:
-    - 'db/**/*'
-    - 'bin/**/*'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
-    - 'vendor/**/*'
-
 Rake/Desc:
   Enabled: false
