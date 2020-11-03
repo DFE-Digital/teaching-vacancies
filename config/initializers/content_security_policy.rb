@@ -11,7 +11,9 @@ Rails.application.config.content_security_policy do |policy|
   policy.object_src  :none
   policy.script_src  :self, "https://cdnjs.cloudflare.com", "https://cdn.rollbar.com",
                      "https://www.googletagmanager.com", "https://maps.googleapis.com"
-  policy.style_src   :self, "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"
+  # Google Maps embed will not work without 'unsafe-inline' styles
+  #   see: https://issuetracker.google.com/issues/132600807
+  policy.style_src   :self, "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com", :unsafe_inline
   # Allow using webpack-dev-server in development
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
@@ -22,8 +24,8 @@ end
 # Enable automatic nonce generation for <script> tags
 Rails.application.config.content_security_policy_nonce_generator = ->(_) { SecureRandom.base64(16) }
 
-# Set the nonce only to specific directives
-# Rails.application.config.content_security_policy_nonce_directives = %w(script-src)
+# Set the nonce only to `script-src` directive (because of Google Maps issue detailed above)
+Rails.application.config.content_security_policy_nonce_directives = %w[script-src]
 
 # Report CSP violations to a specified URI
 # For further information see the following documentation:
