@@ -1,3 +1,3 @@
 import './feedbackForm';
-import './uploadDocuments';
+import './uploadDocuments/uploadDocuments';
 import '../../components/checkboxFilter/checkboxFilter';

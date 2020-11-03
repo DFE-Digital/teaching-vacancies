@@ -1,6 +1,6 @@
-import currentLocation, {
+import locationFinder, {
   startLoading, stopLoading, onSuccess, onFailure, showErrorMessage, ERROR_MESSAGE, DEFAULT_PLACEHOLDER, LOADING_PLACEHOLDER, postcodeFromPosition,
-} from './currentLocation';
+} from './locationFinder';
 import radius from '../../application/search/radius';
 import loader from '../loader/loader';
 
@@ -14,11 +14,11 @@ describe('current location', () => {
   beforeEach(() => {
     jest.resetAllMocks();
 
-    currentLocation.showErrorMessage = jest.fn();
-    showErrorMessageMock = jest.spyOn(currentLocation, 'showErrorMessage');
+    locationFinder.showErrorMessage = jest.fn();
+    showErrorMessageMock = jest.spyOn(locationFinder, 'showErrorMessage');
 
-    currentLocation.stopLoading = jest.fn();
-    stopLoadingMock = jest.spyOn(currentLocation, 'stopLoading');
+    locationFinder.stopLoading = jest.fn();
+    stopLoadingMock = jest.spyOn(locationFinder, 'stopLoading');
 
     enableRadiusMock = jest.spyOn(radius, 'enableRadiusSelect');
     disableRadiusMock = jest.spyOn(radius, 'disableRadiusSelect');
@@ -88,11 +88,11 @@ describe('current location', () => {
   describe('postcodeFromPosition', () => {
     beforeEach(() => {
       jest.resetAllMocks();
-      currentLocation.onSuccess = jest.fn();
-      onSuccessMock = jest.spyOn(currentLocation, 'onSuccess');
+      locationFinder.onSuccess = jest.fn();
+      onSuccessMock = jest.spyOn(locationFinder, 'onSuccess');
 
-      currentLocation.onFailure = jest.fn();
-      onFailureMock = jest.spyOn(currentLocation, 'onFailure');
+      locationFinder.onFailure = jest.fn();
+      onFailureMock = jest.spyOn(locationFinder, 'onFailure');
     });
 
     test('calls onSuccess handler when API returns postcode', () => {

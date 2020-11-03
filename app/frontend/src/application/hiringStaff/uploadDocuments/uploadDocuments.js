@@ -1,4 +1,5 @@
 import 'classlist-polyfill';
+import './uploadDocuments.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
   const inputFileUpload = document.getElementsByClassName('govuk-file-upload')[0];
