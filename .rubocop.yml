@@ -31,8 +31,5 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'lib/tasks/data.rake'
 
-Metrics/MethodLength:
-  Max: 50
-
 Rake/Desc:
   Enabled: false
