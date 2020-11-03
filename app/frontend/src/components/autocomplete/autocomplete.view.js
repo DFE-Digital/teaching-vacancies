@@ -1,4 +1,5 @@
 import '../../lib/polyfill/after.polyfill';
+import './autocomplete.scss';
 
 import { onChange as locationChange } from '../../application/search/location';
 

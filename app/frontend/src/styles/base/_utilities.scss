@@ -39,9 +39,34 @@
   white-space: nowrap;
 }
 
-strong,
-b {
-  font-weight: bold;
+.visually-hidden {
+  height: 1px;
+  left: -9999em;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
+}
+
+.hide-bullet-points {
+  list-style: none;
+
+  li {
+    margin: 5px 0;
+  }
+}
+
+.add-colon-positioned-next-to-element {
+  position: relative;
+
+  &::after {
+    bottom: 10px;
+    content: ':';
+    font-size: 21px;
+    font-weight: bold;
+    position: absolute;
+    right: -13px;
+  }
 }
 
 .text-red {
@@ -80,5 +105,33 @@ b {
 .govuk-form-group--error {
   select {
     border: 4px solid #d4351c;
+  }
+}
+
+.reversed-link {
+  &:link {
+    color: govuk-colour('white');
+  }
+
+  &:visited {
+    color: govuk-colour('white');
+  }
+}
+
+.govuk-link * {
+  color: $govuk-link-colour;
+
+  &:hover {
+    color: $govuk-link-hover-colour;
+  }
+}
+
+.grouped-text-block {
+  border: govuk-spacing(1) solid $govuk-border-colour;
+  margin-bottom: govuk-spacing(5);
+  padding: govuk-spacing(3) govuk-spacing(3) 0;
+
+  ul li {
+    margin-bottom: 0;
   }
 }
