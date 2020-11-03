@@ -1,7 +1,7 @@
 namespace :vacancies do
-  desc "Refreshes the cached pageviews for listed non expired job vacancies"
   namespace :statistics do
     namespace :backfill do
+      desc "Refreshes the cached pageviews for listed non expired job vacancies"
       task info_clicks: :environment do
         Vacancy.where(total_get_more_info_clicks: nil).each do |vacancy|
           click_count = PublicActivity::Activity.where(
