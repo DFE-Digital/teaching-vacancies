@@ -29,8 +29,8 @@ describe('current location', () => {
     loader.remove = jest.fn();
     removeLoaderMock = jest.spyOn(loader, 'remove');
 
-    document.body.innerHTML = `<div class="location-finder" id="test-container">
-<input type="text" id="form-location-field" class="location-finder__input" />
+    document.body.innerHTML = `<div class="js-location-finder" id="test-container">
+<input type="text" id="form-location-field" class="js-location-finder__input" />
 </div>`;
 
     input = document.getElementById('form-location-field');
@@ -76,12 +76,12 @@ describe('current location', () => {
   describe('showErrorMessage', () => {
     beforeEach(() => {
       jest.resetAllMocks();
-      document.body.innerHTML = '<div class="location-finder"><a href="/" id="current-location" data-loader="form-location-field">link</a></div>';
+      document.body.innerHTML = '<div class="js-location-finder"><a href="/" id="current-location" data-loader="form-location-field">link</a></div>';
     });
 
     test('displays correct message in error displayed', () => {
       showErrorMessage(document.getElementById('current-location'));
-      expect(document.getElementById('location-finder__error').innerHTML).toBe(ERROR_MESSAGE);
+      expect(document.getElementById('js-location-finder__error').innerHTML).toBe(ERROR_MESSAGE);
     });
   });
 
