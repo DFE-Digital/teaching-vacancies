@@ -8,15 +8,9 @@ import 'src/styles/application.scss';
 
 import 'src/application/init';
 
-import 'src/deleteDocument';
-
 import 'shared/filters_component/filters_component';
 import 'shared/notification_component/notification_component';
-
 
 Rails.start();
 
 initAll();
-
-// Expose jQuery to window
-window.$ = window.jQuery = $
