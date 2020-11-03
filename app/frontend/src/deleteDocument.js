@@ -8,7 +8,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   function DeleteDocumentConfirmationDialogue() { }
 
   DeleteDocumentConfirmationDialogue.prototype.start = function ($module) {
-    this.$module = $module[0];
+    this.$module = $module;
     this.$dialogBox = this.$module.querySelector('.gem-c-modal-dialogue__box');
     this.$closeButton = this.$module.querySelector('.gem-c-modal-dialogue__close-link');
     this.$html = document.querySelector('html');
@@ -117,11 +117,11 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   Modules.DeleteDocumentConfirmationDialogue = DeleteDocumentConfirmationDialogue;
 }(window.GOVUK.Modules));
 
-$(document).ready(() => {
-  const $deleteDocumentConfirmationDialogue = $('[data-module="file-remove-confirmation-dialogue"]');
+document.addEventListener('DOMContentLoaded', () => {
+  const $deleteDocumentConfirmationDialogue = Array.from(document.querySelectorAll('[data-module="file-remove-confirmation-dialogue"]'));
 
-  $deleteDocumentConfirmationDialogue.each(function () {
-    (new window.GOVUK.Modules.DeleteDocumentConfirmationDialogue()).start($(this));
+  $deleteDocumentConfirmationDialogue.forEach((dialog) => {
+    (new window.GOVUK.Modules.DeleteDocumentConfirmationDialogue()).start(dialog);
   });
 });
 
