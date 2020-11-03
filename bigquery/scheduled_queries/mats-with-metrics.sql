@@ -54,7 +54,7 @@ FROM (
       CAST(approver.organisation_uid AS STRING)=MAT.uid ) AS number_of_approvers,
     (
     SELECT
-      COUNT(
+      COUNT(DISTINCT
       IF
         (number_of_schools_user_has_access_to > 1,
           email,
@@ -62,7 +62,7 @@ FROM (
     FROM (
       SELECT
         email,
-        COUNT(school_urn) AS number_of_schools_user_has_access_to
+        COUNT(DISTINCT school_urn) AS number_of_schools_user_has_access_to
       FROM
         `teacher-vacancy-service.production_dataset.dsi_users` AS user
       LEFT JOIN
