@@ -25,7 +25,7 @@ module VacanciesOptionsHelper
 
   def mapped_job_location_options(organisation)
     Vacancy::JOB_LOCATION_OPTIONS.map do |k, _v|
-      [I18n.t("helpers.fieldset.job_location_form.job_location_options.#{k}",
+      [I18n.t("helpers.options.job_location_form.job_location.#{k}",
               organisation_type: organisation_type_basic(organisation)),
        k]
     end

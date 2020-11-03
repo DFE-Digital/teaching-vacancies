@@ -9,34 +9,24 @@
     = form_for @copy_form, url: organisation_job_copy_path, data: { vacancy_state: 'copy' } do |f|
       = f.govuk_error_summary
 
-      %h2.govuk-heading-l
-        = t('jobs.new_job_listing_details')
+      %h2.govuk-heading-l= t('jobs.new_job_listing_details')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f, copy: true
 
       .govuk-character-count{ "data-module": "govuk-character-count", "data-maxlength": 100 }
-        = f.govuk_text_field :job_title,
-          id: 'copy_form_job_title',
-          label: { text: t('helpers.fieldset.job_specification_form.job_title_html'), size: 's' },
-          hint: { text: t('helpers.hint.job_specification_form.job_title') },
+        = f.govuk_text_field :job_title, id: 'copy_form_job_title', label: { size: 's' },
           class: 'govuk-input string required govuk-js-character-count',
           required: true
         %span#copy_form_job_title-info.govuk-hint.govuk-character-count__message{ "aria-live": "polite" }
           You can enter up to 100 characters
 
-      = f.govuk_date_field :publish_on,
-        legend: { text: t('helpers.fieldset.important_dates_form.publish_on_html') },
-        hint: { text: t('helpers.hint.important_dates_form.publish_on') }
+      = f.govuk_date_field :publish_on
 
-      = f.govuk_date_field :expires_on,
-        legend: { text: t('helpers.fieldset.important_dates_form.expires_on_html') },
-        hint: { text: t('helpers.hint.important_dates_form.expires_on') }
+      = f.govuk_date_field :expires_on
 
       = render 'hiring_staff/vacancies/expiry_time_field', f: f
 
-      = f.govuk_date_field :starts_on,
-        legend: { text: t('helpers.fieldset.important_dates_form.starts_on') },
-        hint: { text: t('helpers.hint.important_dates_form.starts_on') }
+      = f.govuk_date_field :starts_on
 
       = f.govuk_submit classes: 'govuk-!-margin-bottom-5'
 

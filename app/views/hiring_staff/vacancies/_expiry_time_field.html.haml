@@ -1,7 +1,7 @@
 .govuk-form-group{ 'class': f.object.errors[:expiry_time].present? ? 'govuk-form-group--error' : '' }
   %fieldset.govuk-fieldset{ 'aria-describedby': "##{f.object_name}-expiry-time-hint", 'id': f.object.errors[:expiry_time].present? ? "##{f.object_name}-expity-time-field-error" : "##{f.object_name}-expity-time-field" }
     %legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-      %h1.govuk-fieldset__heading= t('helpers.fieldset.important_dates_form.expiry_time_html')
+      %h1.govuk-fieldset__heading= t('helpers.legend.important_dates_form.expiry_time_html')
     %span.govuk-hint{ id: "#{f.object_name}-expiry-time-hint" }
       = t('helpers.hint.important_dates_form.expiry_time')
     - f.object.errors[:expiry_time]&.each do |error|
@@ -9,18 +9,10 @@
         = error
     .govuk-date-input
       .govuk-date-input__item.add-colon-positioned-next-to-element
-        = f.govuk_number_field :expiry_time_hh,
-          label: { text: t('helpers.fieldset.important_dates_form.expiry_time_hh') },
-          width: 2,
+        = f.govuk_number_field :expiry_time_hh, width: 2,
           class: 'govuk-input govuk-date-input__input govuk-input--width-2 ' + (f.object.errors[:expiry_time].present? ? 'govuk-input--error' : '')
       .govuk-date-input__item
-        = f.govuk_number_field :expiry_time_mm,
-          label: { text: t('helpers.fieldset.important_dates_form.expiry_time_mm') },
-          width: 2,
+        = f.govuk_number_field :expiry_time_mm, width: 2,
           class: 'govuk-input govuk-date-input__input govuk-input--width-2 ' + (f.object.errors[:expiry_time].present? ? 'govuk-input--error' : '')
       .govuk-date-input__item
-        = f.govuk_collection_select :expiry_time_meridiem,
-          %w[am pm],
-          :itself,
-          :itself,
-          label: { text: t('helpers.fieldset.important_dates_form.expiry_time_meridiem') }
+        = f.govuk_collection_select :expiry_time_meridiem, %w[am pm], :itself, :itself

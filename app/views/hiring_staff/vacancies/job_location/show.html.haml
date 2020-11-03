@@ -13,16 +13,11 @@
     = form_for @form, url: @form_submission_url, html: { method: @form_submission_url_method } do |f|
       = f.govuk_error_summary
 
-      %h2.govuk-heading-l
-        = t('jobs.job_location')
+      %h2.govuk-heading-l= t('jobs.job_location')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
-      = f.govuk_collection_radio_buttons :job_location,
-        job_location_options(current_organisation),
-        :last,
-        :first,
-        legend: { text: t('helpers.fieldset.job_location_form.job_location_html') }
+      = f.govuk_collection_radio_buttons :job_location, job_location_options(current_organisation), :last, :first
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
 
