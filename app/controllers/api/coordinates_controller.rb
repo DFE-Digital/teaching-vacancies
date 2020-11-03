@@ -8,7 +8,7 @@ class Api::CoordinatesController < Api::ApplicationController
       lat: lat,
       lng: lng,
       query: location,
-      success: success?(lat, lng)
+      success: success?(lat, lng),
     }
   end
 

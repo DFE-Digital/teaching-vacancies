@@ -15,7 +15,7 @@ FactoryBot.define do
         "Group Type (code)": "06",
         "Group Locality": address,
         "Group Town": town,
-        "Group County": county
+        "Group County": county,
       }
     end
     group_type { "Multi-academy trust" }

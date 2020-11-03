@@ -6,7 +6,7 @@ RSpec.describe "DfE Sign-in", type: :request do
       it "redirects the user to the DfE sign-in new session page" do
         params = {
           'code': "a-long-secret",
-          'session_state': "123.456"
+          'session_state': "123.456",
         }
 
         get auth_dfe_callback_path, params: params

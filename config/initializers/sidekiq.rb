@@ -3,7 +3,7 @@ return if Rails.env.test?
 redis_url = "#{REDIS_URL}/0"
 
 options = {
-  concurrency: Integer(ENV.fetch("RAILS_MAX_THREADS") { 5 })
+  concurrency: Integer(ENV.fetch("RAILS_MAX_THREADS") { 5 }),
 }
 
 # Redis concurrency must be plus 5 https://github.com/mperham/sidekiq/wiki/Using-Redis#complete-control

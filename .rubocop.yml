@@ -39,6 +39,3 @@ Metrics/MethodLength:
 
 Rake/Desc:
   Enabled: false
-
-Style/TrailingCommaInHashLiteral:
-  Enabled: false

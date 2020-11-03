@@ -48,7 +48,7 @@ private
       input: location_input,
       components: "country:uk",
       type: "geocode",
-      region: "uk"
+      region: "uk",
     }
   end
 end

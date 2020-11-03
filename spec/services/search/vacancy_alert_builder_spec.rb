@@ -23,7 +23,7 @@ RSpec.describe Search::VacancyAlertBuilder do
       filters: search_filter,
       replica: search_replica,
       hitsPerPage: max_subscription_results,
-      typoTolerance: false
+      typoTolerance: false,
     }
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Search::VacancyAlertBuilder do
         newly_qualified_teacher: "true",
         phases: %w[secondary primary],
         from_date: date_today,
-        to_date: date_today
+        to_date: date_today,
       }
     end
 
@@ -120,7 +120,7 @@ RSpec.describe Search::VacancyAlertBuilder do
         location: location,
         keyword: keyword,
         from_date: date_today,
-        to_date: date_today
+        to_date: date_today,
       }
     end
 

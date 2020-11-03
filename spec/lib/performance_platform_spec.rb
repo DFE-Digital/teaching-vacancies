@@ -35,7 +35,7 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
         channel: "digital",
         count: 2,
         dataType: "transactions-by-channel",
-        period: "day"
+        period: "day",
       }.to_json
 
       expect(HTTParty).to receive(:post).with(endpoint,

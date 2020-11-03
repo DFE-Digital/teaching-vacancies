@@ -43,7 +43,7 @@ RSpec.describe ExportDsiApproversToBigQuery do
       "given_name" => Faker::Name.first_name,
       "family_name" => Faker::Name.last_name,
       "email" => Faker::Internet.email,
-      "organisation" => { "urn" => 100_000, "uid" => 999_999 }
+      "organisation" => { "urn" => 100_000, "uid" => 999_999 },
     }
   end
 
@@ -57,7 +57,7 @@ RSpec.describe ExportDsiApproversToBigQuery do
         family_name: approver["familyName"],
         given_name: approver["givenName"],
         school_urn: approver["organisation"]["urn"],
-        organisation_uid: approver["organisation"]["uid"]
+        organisation_uid: approver["organisation"]["uid"],
       },
     ]
   end

@@ -17,7 +17,7 @@ RSpec.describe VacanciesController, type: :controller do
         let(:params) do
           {
             keyword: "<body onload=alert('test1')>Text</body>",
-            location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
+            location: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
           }
         end
 
@@ -64,7 +64,7 @@ RSpec.describe VacanciesController, type: :controller do
         {
           keyword: "Business Studies",
           location: "Torquay",
-          jobs_sort: sort
+          jobs_sort: sort,
         }
       end
 
@@ -100,7 +100,7 @@ RSpec.describe VacanciesController, type: :controller do
           {
             keyword: "",
             location: "Torquay",
-            jobs_sort: ""
+            jobs_sort: "",
           }
         end
 

@@ -12,8 +12,8 @@ Rollbar.configure do |config|
     accessToken: ENV.fetch("ROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN", ""),
     captureUncaught: true,
     payload: {
-      environment: ENV["ROLLBAR_ENV"].presence || Rails.env
-    }
+      environment: ENV["ROLLBAR_ENV"].presence || Rails.env,
+    },
   }
 
   # By default, Rollbar will try to call the `current_user` controller method

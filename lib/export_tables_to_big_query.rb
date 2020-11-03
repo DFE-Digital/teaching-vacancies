@@ -137,14 +137,14 @@ private
       if result.error?
         Rails.logger.error({
           table: table_name,
-          error: result.error
+          error: result.error,
         }.to_json)
       else
         Rails.logger.info({
           table: table_name,
           inserted: result.insert_count,
           remaining: total,
-          error_count: result.error_count
+          error_count: result.error_count,
         }.to_json)
 
         if result.error_count.positive?
@@ -167,7 +167,7 @@ private
       finished_at: Time.now.to_s(:db),
       records_processed: record_count,
       started_at: started_at,
-      table: table_name
+      table: table_name,
     })
 
     inserter.stop.wait!

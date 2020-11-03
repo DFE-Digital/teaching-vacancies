@@ -72,6 +72,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
              redirect_uri: dfe_sign_in_redirect_uri,
              authorization_endpoint: "/auth",
              jwks_uri: "/certs",
-             userinfo_endpoint: "/me"
+             userinfo_endpoint: "/me",
            }
 end

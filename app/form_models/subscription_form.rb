@@ -37,7 +37,7 @@ class SubscriptionForm
     {
       email: email,
       frequency: frequency,
-      search_criteria: search_criteria_hash.to_json
+      search_criteria: search_criteria_hash.to_json,
     }
   end
 
@@ -48,7 +48,7 @@ class SubscriptionForm
       radius: radius,
       job_roles: job_roles,
       phases: phases,
-      working_patterns: working_patterns
+      working_patterns: working_patterns,
     }.compact.delete_if { |_k, v| v.blank? || v.empty? }
   end
 

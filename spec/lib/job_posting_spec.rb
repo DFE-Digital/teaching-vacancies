@@ -20,11 +20,11 @@ RSpec.describe JobPosting do
         "@type" => "School",
         "name" => "Gosforth Academy",
         "identifier" => "136352",
-        "description" => "<p>Best school ever</p>"
+        "description" => "<p>Best school ever</p>",
       },
       "validThrough" => valid_through,
       "workHours" => "37.5",
-      "aboutSchool" => "Some information about the school"
+      "aboutSchool" => "Some information about the school",
     }
   end
   let(:school_by_urn) { create(:school, urn: "136352") }

@@ -16,7 +16,7 @@ private
       working_patterns: @vacancy.working_patterns,
       phases: @vacancy.education_phases,
       job_roles: @vacancy.job_roles,
-      keyword: keyword
+      keyword: keyword,
     }.delete_if { |_k, v| v.blank? }
   end
 

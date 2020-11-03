@@ -143,7 +143,7 @@ RSpec.describe Search::VacancySearchBuilder do
         keyword: keyword,
         location: location,
         jobs_sort: sort_by,
-        page: page
+        page: page,
       }
     end
 
@@ -157,7 +157,7 @@ RSpec.describe Search::VacancySearchBuilder do
         replica: search_replica,
         hitsPerPage: default_hits_per_page,
         filters: search_filter,
-        page: page
+        page: page,
       }
     end
 

@@ -9,7 +9,7 @@ class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::App
     else
       redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback), danger: {
         title: I18n.t("messages.jobs.feedback.error_title"),
-        body: I18n.t("messages.jobs.feedback.error_body")
+        body: I18n.t("messages.jobs.feedback.error_body"),
       }
     end
   end

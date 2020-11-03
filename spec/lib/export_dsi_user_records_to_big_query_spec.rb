@@ -42,7 +42,7 @@ RSpec.describe ExportDsiUsersToBigQuery do
       "given_name" => Faker::Name.first_name,
       "family_name" => Faker::Name.last_name,
       "email" => Faker::Internet.email,
-      "organisation" => { "URN" => 100_000, "UID" => 999_999 }
+      "organisation" => { "URN" => 100_000, "UID" => 999_999 },
     }
   end
 
@@ -57,7 +57,7 @@ RSpec.describe ExportDsiUsersToBigQuery do
         family_name: user["familyName"],
         email: user["email"],
         school_urn: user["organisation"]["URN"],
-        organisation_uid: user["organisation"]["UID"]
+        organisation_uid: user["organisation"]["UID"],
       },
     ]
   end
