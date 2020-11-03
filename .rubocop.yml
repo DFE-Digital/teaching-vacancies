@@ -15,18 +15,5 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-Metrics/AbcSize:
-  Max: 25
-  Exclude:
-    - 'spec/**/*'
-    - 'lib/export_tables_to_big_query.rb'
-
-Metrics/BlockLength:
-  Max: 40
-  Exclude:
-    - 'spec/**/*'
-    - 'config/routes.rb'
-    - 'lib/tasks/data.rake'
-
 Rake/Desc:
   Enabled: false
