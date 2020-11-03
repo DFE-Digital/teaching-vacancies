@@ -10,8 +10,8 @@ class NqtJobAlertsController < ApplicationController
     subscription = Subscription.new(@nqt_job_alerts_form.job_alert_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
-    recaptcha_is_valid = verify_recaptcha(model: subscription, action: 'subscription')
-    subscription.recaptcha_score = recaptcha_reply['score'] if recaptcha_is_valid && recaptcha_reply
+    recaptcha_is_valid = verify_recaptcha(model: subscription, action: "subscription")
+    subscription.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
 
     if @nqt_job_alerts_form.valid?
       subscription.save

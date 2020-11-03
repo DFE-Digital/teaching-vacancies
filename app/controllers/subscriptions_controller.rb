@@ -4,7 +4,7 @@ class SubscriptionsController < ApplicationController
   def new
     @origin = origin_param[:origin]
     @subscription_form = SubscriptionForm.new(search_criteria_params)
-    Auditor::Audit.new(nil, 'subscription.alert.new', current_session_id).log_without_association
+    Auditor::Audit.new(nil, "subscription.alert.new", current_session_id).log_without_association
   end
 
   def create
@@ -12,8 +12,8 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.new(@subscription_form.job_alert_params)
     @subscription = SubscriptionPresenter.new(subscription)
 
-    recaptcha_is_valid = verify_recaptcha(model: subscription, action: 'subscription')
-    subscription.recaptcha_score = recaptcha_reply['score'] if recaptcha_is_valid && recaptcha_reply
+    recaptcha_is_valid = verify_recaptcha(model: subscription, action: "subscription")
+    subscription.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
 
     if @subscription_form.valid?
       subscription.save
@@ -29,7 +29,7 @@ class SubscriptionsController < ApplicationController
   def edit
     @subscription = Subscription.find_and_verify_by_token(token)
     @subscription_form = SubscriptionForm.new(@subscription)
-    Auditor::Audit.new(@subscription, 'subscription.alert.edit', current_session_id).log_without_association
+    Auditor::Audit.new(@subscription, "subscription.alert.edit", current_session_id).log_without_association
   end
 
   def update
@@ -39,7 +39,7 @@ class SubscriptionsController < ApplicationController
 
     if @subscription_form.valid?
       subscription.update(@subscription_form.job_alert_params)
-      Auditor::Audit.new(subscription, 'subscription.update', current_session_id).log
+      Auditor::Audit.new(subscription, "subscription.update", current_session_id).log
       SubscriptionMailer.update(subscription.id).deliver_later
       render :confirm_update
     else

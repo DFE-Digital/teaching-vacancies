@@ -1,31 +1,31 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Hiring staff signing in with fallback email authentication' do
+RSpec.describe "Hiring staff signing in with fallback email authentication" do
   before do
     allow(AuthenticationFallback).to receive(:enabled?) { true }
   end
 
-  scenario 'can reach email request page by nav-bar link' do
+  scenario "can reach email request page by nav-bar link" do
     visit root_path
 
-    within('.govuk-header__navigation.mobile-header-top-border') { click_on(I18n.t('nav.sign_in')) }
-    expect(page).to have_content(I18n.t('hiring_staff.temp_login.heading'))
-    expect(page).to have_content(I18n.t('hiring_staff.temp_login.please_use_email'))
+    within(".govuk-header__navigation.mobile-header-top-border") { click_on(I18n.t("nav.sign_in")) }
+    expect(page).to have_content(I18n.t("hiring_staff.temp_login.heading"))
+    expect(page).to have_content(I18n.t("hiring_staff.temp_login.please_use_email"))
   end
 
-  scenario 'can reach email request page by sign in button' do
+  scenario "can reach email request page by sign in button" do
     visit root_path
 
-    within('.signin') { click_on(I18n.t('sign_in.link')) }
-    expect(page).to have_content(I18n.t('hiring_staff.temp_login.heading'))
-    expect(page).to have_content(I18n.t('hiring_staff.temp_login.please_use_email'))
+    within(".signin") { click_on(I18n.t("sign_in.link")) }
+    expect(page).to have_content(I18n.t("hiring_staff.temp_login.heading"))
+    expect(page).to have_content(I18n.t("hiring_staff.temp_login.please_use_email"))
   end
 
-  context 'user flow' do
-    let(:school) { create(:school, name: 'Some school') }
-    let(:other_school) { create(:school, name: 'Some other school') }
+  context "user flow" do
+    let(:school) { create(:school, name: "Some school") }
+    let(:other_school) { create(:school, name: "Some other school") }
     let(:trust) { create(:trust) }
-    let(:local_authority) { create(:local_authority, local_authority_code: '100') }
+    let(:local_authority) { create(:local_authority, local_authority_code: "100") }
     let(:user) { create(:user, dsi_data: dsi_data, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
@@ -46,12 +46,12 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
         .and_return(message_delivery)
     end
 
-    context 'when a user has multiple organisations' do
+    context "when a user has multiple organisations" do
       let(:dsi_data) do
-        { 'school_urns' => [school.urn, other_school.urn], 'trust_uids' => [trust.uid, '1623'], 'la_codes' => [local_authority.local_authority_code] }
+        { "school_urns" => [school.urn, other_school.urn], "trust_uids" => [trust.uid, "1623"], "la_codes" => [local_authority.local_authority_code] }
       end
 
-      context 'with LocalAuthorityAccessFeature enabled' do
+      context "with LocalAuthorityAccessFeature enabled" do
         before do
           allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
           allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
@@ -63,7 +63,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
           )
         end
 
-        scenario 'can sign in, choose an org, change org, sign out' do
+        scenario "can sign in, choose an org, change org, sign out" do
           freeze_time do
             visit root_path
             click_sign_in
@@ -71,15 +71,15 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
 
-            fill_in 'user[email]', with: user.email
-            click_on 'commit'
-            expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+            fill_in "user[email]", with: user.email
+            click_on "commit"
+            expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
-            expect(page).to have_content('Choose your organisation')
-            expect(page).not_to have_content(I18n.t('hiring_staff.temp_login.denial.title'))
+            expect(page).to have_content("Choose your organisation")
+            expect(page).not_to have_content(I18n.t("hiring_staff.temp_login.denial.title"))
             expect(page).to have_content(other_school.name)
             expect(page).to have_content(trust.name)
             expect(page).to have_content(local_authority.name)
@@ -93,53 +93,53 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
               .to receive(:generate_login_key)
               .with(user: user)
               .and_return(other_login_key)
-            click_on I18n.t('sign_in.organisation.change')
+            click_on I18n.t("sign_in.organisation.change")
             click_on(trust.name)
             expect(page).to have_content("Jobs at #{trust.name}")
             expect { other_login_key.reload }.to raise_error ActiveRecord::RecordNotFound
 
             # Can sign out
-            click_on(I18n.t('nav.sign_out'))
+            click_on(I18n.t("nav.sign_out"))
 
-            within('.govuk-header__navigation') { expect(page).to have_content(I18n.t('nav.sign_in')) }
-            expect(page).to have_content(I18n.t('messages.access.signed_out'))
+            within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.sign_in")) }
+            expect(page).to have_content(I18n.t("messages.access.signed_out"))
 
             # Login link no longer works
             visit auth_email_choose_organisation_path(login_key: login_key.id)
-            expect(page).to have_content('used')
-            expect(page).not_to have_content('Choose your organisation')
+            expect(page).to have_content("used")
+            expect(page).not_to have_content("Choose your organisation")
           end
         end
 
-        scenario 'cannot sign in if key has expired' do
+        scenario "cannot sign in if key has expired" do
           visit new_identifications_path
-          fill_in 'user[email]', with: user.email
+          fill_in "user[email]", with: user.email
           expect(message_delivery).to receive(:deliver_later)
-          click_on 'commit'
+          click_on "commit"
           travel 5.hours do
             visit auth_email_choose_organisation_path(login_key: login_key.id)
-            expect(page).to have_content('expired')
-            expect(page).not_to have_content('Choose your organisation')
+            expect(page).to have_content("expired")
+            expect(page).not_to have_content("Choose your organisation")
           end
         end
       end
 
-      context 'with LocalAuthorityAccessFeature disabled' do
-        scenario 'the LA does not appear in the list of schools' do
+      context "with LocalAuthorityAccessFeature disabled" do
+        scenario "the LA does not appear in the list of schools" do
           visit auth_email_choose_organisation_path(login_key: login_key.id)
-          expect(page).to have_content('Choose your organisation')
+          expect(page).to have_content("Choose your organisation")
           expect(page).not_to have_content(local_authority.name)
         end
       end
     end
 
-    context 'when a user has only one organisation' do
-      context 'organisation is a School' do
+    context "when a user has only one organisation" do
+      context "organisation is a School" do
         let(:dsi_data) do
-          { 'school_urns' => [school.urn], 'trust_uids' => [], 'la_codes' => [] }
+          { "school_urns" => [school.urn], "trust_uids" => [], "la_codes" => [] }
         end
 
-        scenario 'can sign in and bypass choice of org' do
+        scenario "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
             click_sign_in
@@ -147,30 +147,30 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
 
-            fill_in 'user[email]', with: user.email
-            click_on 'commit'
-            expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+            fill_in "user[email]", with: user.email
+            click_on "commit"
+            expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
-            expect(page).not_to have_content('Choose your organisation')
+            expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content("Jobs at #{school.name}")
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end
       end
 
-      context 'when the organisation is a Trust' do
+      context "when the organisation is a Trust" do
         let(:dsi_data) do
-          { 'school_urns' => [], 'trust_uids' => [trust.uid], 'la_codes' => [] }
+          { "school_urns" => [], "trust_uids" => [trust.uid], "la_codes" => [] }
         end
 
         before do
           allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
         end
 
-        scenario 'can sign in and bypass choice of org' do
+        scenario "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
             click_sign_in
@@ -178,27 +178,27 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
             # Expect to send an email
             expect(message_delivery).to receive(:deliver_later)
 
-            fill_in 'user[email]', with: user.email
-            click_on 'commit'
-            expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+            fill_in "user[email]", with: user.email
+            click_on "commit"
+            expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
             visit auth_email_choose_organisation_path(login_key: login_key.id)
 
-            expect(page).not_to have_content('Choose your organisation')
+            expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content("Jobs at #{trust.name}")
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
         end
       end
 
-      context 'when the organisation is a Local Authority' do
+      context "when the organisation is a Local Authority" do
         let(:dsi_data) do
-          { 'school_urns' => [], 'trust_uids' => [], 'la_codes' => [local_authority.local_authority_code] }
+          { "school_urns" => [], "trust_uids" => [], "la_codes" => [local_authority.local_authority_code] }
         end
         let(:la_user_allowed?) { true }
 
-        context 'with LocalAuthorityAccessFeature enabled' do
+        context "with LocalAuthorityAccessFeature enabled" do
           before do
             allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
             allow(ALLOWED_LOCAL_AUTHORITIES)
@@ -206,7 +206,7 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
             allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
           end
 
-          scenario 'can sign in and bypass choice of org' do
+          scenario "can sign in and bypass choice of org" do
             freeze_time do
               visit root_path
               click_sign_in
@@ -214,36 +214,36 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
               # Expect to send an email
               expect(message_delivery).to receive(:deliver_later)
 
-              fill_in 'user[email]', with: user.email
-              click_on 'commit'
-              expect(page).to have_content(I18n.t('hiring_staff.temp_login.check_your_email.sent'))
+              fill_in "user[email]", with: user.email
+              click_on "commit"
+              expect(page).to have_content(I18n.t("hiring_staff.temp_login.check_your_email.sent"))
 
               # Expect that the link in the email goes to the landing page
               visit auth_email_choose_organisation_path(login_key: login_key.id)
 
-              expect(page).not_to have_content('Choose your organisation')
+              expect(page).not_to have_content("Choose your organisation")
               expect(page).to have_content("Jobs in #{local_authority.name}")
               expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
             end
           end
 
-          context 'when user oid is not in the allowed list' do
+          context "when user oid is not in the allowed list" do
             let(:la_user_allowed?) { false }
 
-            scenario 'cannot sign in' do
+            scenario "cannot sign in" do
               freeze_time do
                 visit auth_email_choose_organisation_path(login_key: login_key.id)
-                expect(page).to have_content 'You are not authorised to log in'
+                expect(page).to have_content "You are not authorised to log in"
               end
             end
           end
         end
 
-        context 'with LocalAuthorityAccessFeature disabled' do
-          scenario 'cannot sign in' do
+        context "with LocalAuthorityAccessFeature disabled" do
+          scenario "cannot sign in" do
             freeze_time do
               visit auth_email_choose_organisation_path(login_key: login_key.id)
-              expect(page).to have_content 'The login link you used is not associated with any organisations.'
+              expect(page).to have_content "The login link you used is not associated with any organisations."
             end
           end
         end
@@ -254,6 +254,6 @@ RSpec.describe 'Hiring staff signing in with fallback email authentication' do
 private
 
   def click_sign_in
-    within('.signin') { click_on(I18n.t('sign_in.link')) }
+    within(".signin") { click_on(I18n.t("sign_in.link")) }
   end
 end

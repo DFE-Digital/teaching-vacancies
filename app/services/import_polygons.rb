@@ -8,12 +8,12 @@ class ImportPolygons
   def call
     response = HTTParty.get(LOCATION_POLYGON_SETTINGS[location_type][:api])
 
-    response.fetch('features', []).each do |region_response|
-      region_name = region_response.dig('attributes', LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
+    response.fetch("features", []).each do |region_response|
+      region_name = region_response.dig("attributes", LOCATION_POLYGON_SETTINGS[location_type][:name_key]).downcase
 
       next unless location_categories_include?(region_name)
 
-      geometry_rings = region_response.dig('geometry', 'rings')
+      geometry_rings = region_response.dig("geometry", "rings")
 
       # The first ring is the outer boundary and tends to contain far more points than subsequent rings.
       # All subsequent rings within this outer ring are bodies of water (essentially exclusion rings) and

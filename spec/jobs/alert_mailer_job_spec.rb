@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AlertMailerJob, type: :job do
   include ActiveJob::TestHelper
@@ -11,8 +11,8 @@ RSpec.describe AlertMailerJob, type: :job do
 
   before { vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) } }
 
-  it 'creates a run' do
-    job_id = 'ABC1234'
+  it "creates a run" do
+    job_id = "ABC1234"
     allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
     job
     expect(subscription.alert_runs.count).to eq(1)
@@ -20,14 +20,14 @@ RSpec.describe AlertMailerJob, type: :job do
     expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
   end
 
-  it 'only creates one run' do
-    job_id = 'ABC1234'
+  it "only creates one run" do
+    job_id = "ABC1234"
     allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
     4.times { job }
     expect(subscription.alert_runs.count).to eq(1)
   end
 
-  it 'creates the run before enqueing' do
+  it "creates the run before enqueing" do
     # This is important as we have encountered a race condition where sometimes
     # the run does not exist when the job has started running
     allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
@@ -38,8 +38,8 @@ RSpec.describe AlertMailerJob, type: :job do
     job
   end
 
-  it 'adds the job ID after enqueuing' do
-    job_id = 'ABC1234'
+  it "adds the job ID after enqueuing" do
+    job_id = "ABC1234"
     allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
 
     allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
@@ -49,30 +49,30 @@ RSpec.describe AlertMailerJob, type: :job do
     job
   end
 
-  context 'if the job has not expired' do
+  context "if the job has not expired" do
     let!(:alert_run) { create(:alert_run, subscription: subscription) }
 
-    it 'delivers the mail' do
+    it "delivers the mail" do
       expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
 
-    it 'updates the alert run' do
-      expect { perform_enqueued_jobs { job } }.to change { subscription.alert_run_today.status }.to('sent')
+    it "updates the alert run" do
+      expect { perform_enqueued_jobs { job } }.to change { subscription.alert_run_today.status }.to("sent")
     end
   end
 
-  context 'if the job has expired' do
+  context "if the job has expired" do
     let!(:alert_run) { create(:alert_run, subscription: subscription, created_at: Time.zone.now - 5.hours) }
 
-    it 'does not deliver the mail' do
+    it "does not deliver the mail" do
       expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)
     end
   end
 
-  context 'if the job has already been run' do
+  context "if the job has already been run" do
     let!(:alert_run) { create(:alert_run, subscription: subscription, status: :sent) }
 
-    it 'does not deliver the mail' do
+    it "does not deliver the mail" do
       expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)
     end
   end

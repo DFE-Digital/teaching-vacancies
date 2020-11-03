@@ -11,7 +11,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
       new_vacancy = CopyVacancy.new(@vacancy).call
       update_vacancy(@copy_form.params_to_save, new_vacancy)
       update_google_index(new_vacancy) if new_vacancy.listed?
-      Auditor::Audit.new(new_vacancy, 'vacancy.copy', current_session_id).log
+      Auditor::Audit.new(new_vacancy, "vacancy.copy", current_session_id).log
       redirect_to organisation_job_review_path(new_vacancy.id)
     else
       add_errors_to_form(@date_errors, @copy_form)

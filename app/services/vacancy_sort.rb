@@ -12,7 +12,7 @@ class VacancySort
                           total_get_more_info_clicks].freeze
   VALID_SORT_ORDERS = %w[desc asc].freeze
 
-  def initialize(default_column: 'expires_on', default_order: 'asc')
+  def initialize(default_column: "expires_on", default_order: "asc")
     @column = default_column
     @order = default_order
   end
@@ -24,6 +24,6 @@ class VacancySort
   end
 
   def reverse_order
-    @order == 'asc' ? 'desc' : 'asc'
+    @order == "asc" ? "desc" : "asc"
   end
 end

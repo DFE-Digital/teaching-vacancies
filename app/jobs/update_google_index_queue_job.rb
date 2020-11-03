@@ -1,4 +1,4 @@
-require 'indexing'
+require "indexing"
 class UpdateGoogleIndexQueueJob < ApplicationJob
   queue_as :google_indexing
 

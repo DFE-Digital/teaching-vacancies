@@ -18,13 +18,13 @@ class ApplicationController < ActionController::Base
   include Ip
 
   def check
-    render json: { status: 'OK' }, status: :ok
+    render json: { status: "OK" }, status: :ok
   end
 
   def not_found
     respond_to do |format|
-      format.html { render 'errors/not_found', status: :not_found }
-      format.json { render json: { error: 'Resource not found' }, status: :not_found }
+      format.html { render "errors/not_found", status: :not_found }
+      format.json { render json: { error: "Resource not found" }, status: :not_found }
       format.all { render status: :not_found, body: nil }
     end
   end
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   def check_staging_auth
     return unless authenticate?
 
-    authenticate_or_request_with_http_basic('Global') do |name, password|
+    authenticate_or_request_with_http_basic("Global") do |name, password|
       name == http_user && password == http_pass
     end
   end
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_session_id
-    session.to_h['session_id']
+    session.to_h["session_id"]
   end
 
   def strip_empty_checkboxes(fields, form_key = nil)
@@ -57,11 +57,11 @@ class ApplicationController < ActionController::Base
   end
 
   def cookies_preference_set?
-    cookies['consented-to-cookies'].present?
+    cookies["consented-to-cookies"].present?
   end
 
   def referred_from_jobs_path?
-    request_uri = URI(request.referrer || '')
+    request_uri = URI(request.referrer || "")
     request.host == request_uri.host && request_uri.path == jobs_path
   end
 
@@ -106,14 +106,14 @@ private
   end
 
   def request_is_not_paas_healthcheck?
-    request.headers.env['HTTP_USER_AGENT'] != 'diego-healthcheck'
+    request.headers.env["HTTP_USER_AGENT"] != "diego-healthcheck"
   end
 
   def set_root_headers
-    response.set_header('X-Robots-Tag', 'index, nofollow') if request.path == root_path
+    response.set_header("X-Robots-Tag", "index, nofollow") if request.path == root_path
   end
 
   def set_headers
-    response.set_header('X-Robots-Tag', 'noindex, nofollow')
+    response.set_header("X-Robots-Tag", "noindex, nofollow")
   end
 end

@@ -3,6 +3,6 @@ class SubmitPerformancePlatformJob < ApplicationJob
 
   def perform
     Rails.application.load_tasks
-    Rake::Task['performance_platform:submit_transactions'].invoke
+    Rake::Task["performance_platform:submit_transactions"].invoke
   end
 end

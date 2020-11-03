@@ -19,24 +19,24 @@ class HiringStaff::VacanciesComponent < ViewComponent::Base
   end
 
   def selected_class(vacancy_type)
-    'govuk-tabs__list-item--selected' if @selected_type == vacancy_type
+    "govuk-tabs__list-item--selected" if @selected_type == vacancy_type
   end
 
   def grid_column_class
-    @organisation.is_a?(SchoolGroup) ? 'govuk-grid-column-two-thirds' : 'govuk-grid-column-full'
+    @organisation.is_a?(SchoolGroup) ? "govuk-grid-column-two-thirds" : "govuk-grid-column-full"
   end
 
   def filters_applied_text
-    I18n.t('jobs.dashboard_filters.heading', count: @filters[:managed_school_ids]&.count)
+    I18n.t("jobs.dashboard_filters.heading", count: @filters[:managed_school_ids]&.count)
   end
 
   def vacancy_type_tab_link(vacancy_type)
     if vacancy_type == :awaiting_feedback
-      link_to jobs_with_type_organisation_path(vacancy_type), class: 'govuk-tabs__tab' do
+      link_to jobs_with_type_organisation_path(vacancy_type), class: "govuk-tabs__tab" do
         awaiting_feedback_tab(@organisation.vacancies.awaiting_feedback.count)
       end
     else
-      link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: 'govuk-tabs__tab'
+      link_to t("jobs.#{vacancy_type}_jobs"), jobs_with_type_organisation_path(vacancy_type), class: "govuk-tabs__tab"
     end
   end
 
@@ -64,9 +64,9 @@ private
       OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
     end
     count = Vacancy.in_organisation_ids(@organisation.id).send(selected_scope).count
-    unless @organisation.group_type == 'local_authority'
+    unless @organisation.group_type == "local_authority"
       @organisation_options.unshift(
-        OpenStruct.new({ id: @organisation.id, name: 'Trust head office', label: "Trust head office (#{count})" }),
+        OpenStruct.new({ id: @organisation.id, name: "Trust head office", label: "Trust head office (#{count})" }),
       )
     end
   end

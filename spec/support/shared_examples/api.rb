@@ -1,31 +1,31 @@
-RSpec.shared_examples 'X-Robots-Tag' do
-  describe 'X-Robots-Tag' do
-    it 'robots are asked to index but not to follow' do
-      expect(response.headers['X-Robots-Tag']).to eq('noarchive')
+RSpec.shared_examples "X-Robots-Tag" do
+  describe "X-Robots-Tag" do
+    it "robots are asked to index but not to follow" do
+      expect(response.headers["X-Robots-Tag"]).to eq("noarchive")
     end
   end
 end
 
-RSpec.shared_examples 'charset is UTF-8' do
-  it 'charset is set to UTF-8' do
-    expect(response.charset.to_s.downcase).to eq('utf-8')
+RSpec.shared_examples "charset is UTF-8" do
+  it "charset is set to UTF-8" do
+    expect(response.charset.to_s.downcase).to eq("utf-8")
   end
 end
 
-RSpec.shared_examples 'Content-Type JSON' do
-  describe 'Content-Type' do
-    it_behaves_like 'charset is UTF-8'
+RSpec.shared_examples "Content-Type JSON" do
+  describe "Content-Type" do
+    it_behaves_like "charset is UTF-8"
 
-    it 'type is set to application/json' do
-      expect(response.content_type).to include('application/json')
+    it "type is set to application/json" do
+      expect(response.content_type).to include("application/json")
     end
   end
 end
 
-RSpec.shared_examples 'Content-Type CSV' do
-  describe 'Content-Type' do
-    it 'type is set to text/csv' do
-      expect(response.content_type).to include('text/csv')
+RSpec.shared_examples "Content-Type CSV" do
+  describe "Content-Type" do
+    it "type is set to text/csv" do
+      expect(response.content_type).to include("text/csv")
     end
   end
 end

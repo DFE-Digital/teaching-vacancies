@@ -1,7 +1,7 @@
 class Api::ApplicationController < ApplicationController
   def set_headers
-    response.set_header('X-Robots-Tag', 'noarchive')
-    response.charset = 'utf-8'
+    response.set_header("X-Robots-Tag", "noarchive")
+    response.charset = "utf-8"
   end
 
   def verify_json_request

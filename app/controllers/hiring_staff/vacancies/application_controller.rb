@@ -1,5 +1,5 @@
-require 'auditor'
-require 'indexing'
+require "auditor"
+require "indexing"
 
 class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseController
   include HiringStaff::JobCreationHelper
@@ -11,7 +11,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def session_vacancy_id
-    session[:vacancy_attributes].present? ? session[:vacancy_attributes]['id'] : false
+    session[:vacancy_attributes].present? ? session[:vacancy_attributes]["id"] : false
   end
 
   def set_vacancy
@@ -31,21 +31,21 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def update_vacancy(attributes, vacancy = nil)
     vacancy ||= current_organisation.all_vacancies.find(session_vacancy_id)
-    vacancy.assign_attributes(attributes.except('organisation_id', 'organisation_ids'))
+    vacancy.assign_attributes(attributes.except("organisation_id", "organisation_ids"))
     vacancy.refresh_slug
-    Auditor::Audit.new(vacancy, 'vacancy.update', current_session_id).log do
+    Auditor::Audit.new(vacancy, "vacancy.update", current_session_id).log do
       vacancy.save(validate: false)
     end
     vacancy
   end
 
   def readable_job_location(job_location, school_name: nil, schools_count: nil)
-    if job_location == 'at_one_school'
+    if job_location == "at_one_school"
       school_name
-    elsif job_location == 'at_multiple_schools'
-      I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools_with_count', count: schools_count)
-    elsif job_location == 'central_office'
-      I18n.t('hiring_staff.organisations.readable_job_location.central_office')
+    elsif job_location == "at_multiple_schools"
+      I18n.t("hiring_staff.organisations.readable_job_location.at_multiple_schools_with_count", count: schools_count)
+    elsif job_location == "central_office"
+      I18n.t("hiring_staff.organisations.readable_job_location.central_office")
     end
   end
 
@@ -57,25 +57,25 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def save_vacancy_as_draft_if_save_and_return_later(attributes, vacancy)
-    if params[:commit] == I18n.t('buttons.save_and_return_later')
+    if params[:commit] == I18n.t("buttons.save_and_return_later")
       vacancy = update_vacancy(attributes, vacancy)
       redirect_to_draft(vacancy.job_title)
     end
   end
 
   def redirect_to_draft(job_title)
-    redirect_to jobs_with_type_organisation_path('draft'),
-                success: I18n.t('messages.jobs.draft_saved_html', job_title: job_title)
+    redirect_to jobs_with_type_organisation_path("draft"),
+                success: I18n.t("messages.jobs.draft_saved_html", job_title: job_title)
   end
 
   def redirect_to_next_step_if_continue(vacancy_id, job_title = nil)
-    if params[:commit] == I18n.t('buttons.continue')
+    if params[:commit] == I18n.t("buttons.continue")
       redirect_to_next_step(vacancy_id)
-    elsif params[:commit] == I18n.t('buttons.update_job')
+    elsif params[:commit] == I18n.t("buttons.update_job")
       updated_job_path = @vacancy.published? ? edit_organisation_job_path(vacancy_id) : organisation_job_review_path(vacancy_id)
       redirect_to updated_job_path, success: {
-        title: I18n.t('messages.jobs.listing_updated', job_title: job_title),
-        body: I18n.t('messages.jobs.manage_jobs_html', link: helpers.back_to_manage_jobs_link(@vacancy))
+        title: I18n.t("messages.jobs.listing_updated", job_title: job_title),
+        body: I18n.t("messages.jobs.manage_jobs_html", link: helpers.back_to_manage_jobs_link(@vacancy))
       }
     end
   end
@@ -91,7 +91,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def review_path_with_errors(vacancy)
-    organisation_job_review_path(job_id: vacancy.id, anchor: 'errors', source: 'publish')
+    organisation_job_review_path(job_id: vacancy.id, anchor: "errors", source: "publish")
   end
 
   def redirect_unless_vacancy
@@ -107,20 +107,20 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def source_update?
-    params[:source]&.eql?('update')
+    params[:source]&.eql?("update")
   end
 
   def update_google_index(job)
     return unless Rails.env.production?
 
-    url = job_url(job, protocol: 'https')
+    url = job_url(job, protocol: "https")
     UpdateGoogleIndexQueueJob.perform_later(url)
   end
 
   def remove_google_index(job)
     return unless Rails.env.production?
 
-    url = job_url(job, protocol: 'https')
+    url = job_url(job, protocol: "https")
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
 
@@ -154,7 +154,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def set_up_url
-    @form_submission_url_method = @vacancy&.persisted? ? 'patch' : 'post'
+    @form_submission_url_method = @vacancy&.persisted? ? "patch" : "post"
     @form_submission_url = form_submission_path(@vacancy&.id)
   end
 end

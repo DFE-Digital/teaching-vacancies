@@ -1,66 +1,66 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later }
-  let(:mail) { double('Mail::Message', deliver_later: true) }
+  let(:mail) { double("Mail::Message", deliver_later: true) }
 
   before do
     allow(FeedbackPromptMailer).to receive(:prompt_for_feedback) { mail }
   end
 
-  context 'when adding job to the queue' do
-    it 'queues the job' do
+  context "when adding job to the queue" do
+    it "queues the job" do
       expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
     end
 
-    it 'is in the email_feedback_prompt queue' do
-      expect(job.queue_name).to eq('email_feedback_prompt')
+    it "is in the email_feedback_prompt queue" do
+      expect(job.queue_name).to eq("email_feedback_prompt")
     end
   end
 
-  context 'for one hiring staff' do
+  context "for one hiring staff" do
     let(:user) { create(:user, email: email_of_hiring_staff) }
-    let(:email_of_hiring_staff) { 'email@example.com' }
+    let(:email_of_hiring_staff) { "email@example.com" }
 
-    context 'with one expired vacancy needing feedback' do
+    context "with one expired vacancy needing feedback" do
       let!(:expired_vacancy) { create(:vacancy, :expired, publisher_user: user, expires_on: Time.zone.today) }
 
-      it 'sends an email' do
+      it "sends an email" do
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(email_of_hiring_staff, [expired_vacancy])
         expect(mail).to receive(:deliver_later)
         send_expired_vacancy_feedback_emails
       end
 
-      context 'but the hiring staff has no email address' do
+      context "but the hiring staff has no email address" do
         let(:email_of_hiring_staff) { nil }
 
-        it 'does not send an email' do
+        it "does not send an email" do
           expect(FeedbackPromptMailer).to_not receive(:prompt_for_feedback)
           send_expired_vacancy_feedback_emails
         end
       end
     end
 
-    context 'with one expired vacancy with feedback already completed' do
+    context "with one expired vacancy with feedback already completed" do
       let!(:expired_vacancies) do
         create(:vacancy, :expired, :with_feedback, expires_on: Time.zone.today, publisher_user: user)
       end
 
-      it 'does not send an email' do
+      it "does not send an email" do
         expect(FeedbackPromptMailer).to_not receive(:prompt_for_feedback)
         send_expired_vacancy_feedback_emails
       end
     end
 
-    context 'with two expired vacancies needing feedback' do
+    context "with two expired vacancies needing feedback" do
       let!(:expired_vacancies) do
         [create(:vacancy, :expired, expires_on: Time.zone.today, publisher_user: user),
          create(:vacancy, :expired, expires_on: Time.zone.today, publisher_user: user)]
       end
 
-      it 'sends an email with both vacancies' do
+      it "sends an email with both vacancies" do
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
           email_of_hiring_staff,
           a_collection_containing_exactly(*expired_vacancies),
@@ -69,12 +69,12 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
       end
     end
 
-    context 'running the job before hiring staff have had 2 weeks opportunity to fill in feedback' do
+    context "running the job before hiring staff have had 2 weeks opportunity to fill in feedback" do
       let!(:expired_vacancy) do
         create(:vacancy, :expired, expires_on: Time.zone.today, publisher_user: user)
       end
 
-      it 'sends no emails' do
+      it "sends no emails" do
         expect(FeedbackPromptMailer).to_not receive(:prompt_for_feedback)
 
         send_expired_vacancy_feedback_emails 1.week
@@ -82,11 +82,11 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
     end
   end
 
-  context 'for two hiring staff' do
-    let(:first_hiring_staff) { create(:user, email: 'first_hiring_staff@email.com') }
-    let(:second_hiring_staff) { create(:user, email: 'second_hiring_staff@email.com') }
+  context "for two hiring staff" do
+    let(:first_hiring_staff) { create(:user, email: "first_hiring_staff@email.com") }
+    let(:second_hiring_staff) { create(:user, email: "second_hiring_staff@email.com") }
 
-    context 'with one expired vacancy each' do
+    context "with one expired vacancy each" do
       let(:first_expired_vacancy) do
         create(:vacancy, :expired, expires_on: Time.zone.today, publisher_user: first_hiring_staff)
       end
@@ -95,7 +95,7 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
         create(:vacancy, :expired, expires_on: Time.zone.today, publisher_user: second_hiring_staff)
       end
 
-      it 'sends one email for each hiring staff' do
+      it "sends one email for each hiring staff" do
         expect(FeedbackPromptMailer).to receive(:prompt_for_feedback).with(
           first_hiring_staff.email,
           [first_expired_vacancy],
@@ -109,11 +109,11 @@ RSpec.describe SendExpiredVacancyFeedbackEmailJob, type: :job do
     end
   end
 
-  context 'without a publisher hiring staff' do
-    context 'with one expired vacancy needing feedback' do
+  context "without a publisher hiring staff" do
+    context "with one expired vacancy needing feedback" do
       let!(:expired_vacancy) { create(:vacancy, :expired, expires_on: Time.zone.today, publisher_user: nil) }
 
-      it 'does not send an email' do
+      it "does not send an email" do
         expect(FeedbackPromptMailer).to_not receive(:prompt_for_feedback)
         send_expired_vacancy_feedback_emails
       end

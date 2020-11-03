@@ -52,8 +52,5 @@ Style/FrozenStringLiteralComment:
 Style/MixinUsage:
   Enabled: false
 
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-
 Style/TrailingCommaInHashLiteral:
   Enabled: false

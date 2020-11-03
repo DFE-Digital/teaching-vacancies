@@ -16,7 +16,7 @@ class HiringStaff::Vacancies::JobSpecificationController < HiringStaff::Vacancie
   def create
     store_vacancy_attributes(@form.vacancy.attributes)
 
-    if params[:commit] == I18n.t('buttons.save_and_return_later')
+    if params[:commit] == I18n.t("buttons.save_and_return_later")
       save_vacancy_as_draft
     elsif @form.valid?
       session_vacancy_id ? update_vacancy(form_params) : save_vacancy_without_validation
@@ -52,7 +52,7 @@ private
   end
 
   def append_suitable_for_nqts_to_job_roles
-    if params[:job_specification_form][:suitable_for_nqt] == 'yes'
+    if params[:job_specification_form][:suitable_for_nqt] == "yes"
       params[:job_specification_form][:job_roles] |= [:nqt_suitable]
     end
   end
@@ -62,7 +62,7 @@ private
       save_vacancy_without_validation
       redirect_to_draft(@form.vacancy.job_title)
     else
-      redirect_to jobs_with_type_organisation_path('draft')
+      redirect_to jobs_with_type_organisation_path("draft")
     end
   end
 
@@ -71,8 +71,8 @@ private
     set_organisation_vacancies
     @form.vacancy.send :set_slug
     @form.vacancy.status = :draft
-    @form.vacancy.assign_attributes(session[:vacancy_attributes].except('organisation_id', 'organisation_ids'))
-    Auditor::Audit.new(@form.vacancy, 'vacancy.create', current_session_id).log do
+    @form.vacancy.assign_attributes(session[:vacancy_attributes].except("organisation_id", "organisation_ids"))
+    Auditor::Audit.new(@form.vacancy, "vacancy.create", current_session_id).log do
       @form.vacancy.save(validate: false)
     end
     store_vacancy_attributes(@form.vacancy.attributes)
@@ -83,8 +83,8 @@ private
     if current_organisation.is_a?(School)
       @form.vacancy.organisation_vacancies.build(organisation: current_organisation)
     elsif current_organisation.is_a?(SchoolGroup)
-      organisation_ids = [session[:vacancy_attributes]['organisation_ids'],
-                          [session[:vacancy_attributes]['organisation_id']]].compact.reduce([], :concat)
+      organisation_ids = [session[:vacancy_attributes]["organisation_ids"],
+                          [session[:vacancy_attributes]["organisation_id"]]].compact.reduce([], :concat)
       organisation_ids.each do |organisation_id|
         @form.vacancy.organisation_vacancies.build(organisation_id: organisation_id)
       end
@@ -93,8 +93,8 @@ private
 
   def set_job_location_fields
     if current_organisation.is_a?(School)
-      @form.vacancy.job_location = 'at_one_school'
-      @form.vacancy.readable_job_location = readable_job_location('at_one_school', school_name: current_organisation.name)
+      @form.vacancy.job_location = "at_one_school"
+      @form.vacancy.readable_job_location = readable_job_location("at_one_school", school_name: current_organisation.name)
     end
   end
 
@@ -103,12 +103,12 @@ private
   end
 
   def set_up_previous_step_path
-    job_location = @vacancy&.job_location.presence || session[:vacancy_attributes]&.[]('job_location')
+    job_location = @vacancy&.job_location.presence || session[:vacancy_attributes]&.[]("job_location")
     if current_organisation.is_a?(School)
       @previous_step_path = organisation_path
     elsif %w[at_one_school at_multiple_schools].include?(job_location)
       @previous_step_path = @vacancy.present? ? organisation_job_schools_path(@vacancy.id) : schools_organisation_job_path
-    elsif job_location == 'central_office'
+    elsif job_location == "central_office"
       @previous_step_path = @vacancy.present? ? organisation_job_job_location_path(@vacancy.id) : job_location_organisation_job_path
     end
   end

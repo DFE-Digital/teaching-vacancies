@@ -1,4 +1,4 @@
-require 'geocoding'
+require "geocoding"
 
 class Search::VacancySearchBuilder
   attr_reader :hits_per_page, :keyword, :location_search,
@@ -18,8 +18,8 @@ class Search::VacancySearchBuilder
   def call
     @vacancies = search
     @stats = build_stats(
-      @vacancies.raw_answer['page'], @vacancies.raw_answer['nbPages'],
-      @vacancies.raw_answer['hitsPerPage'], @vacancies.raw_answer['nbHits']
+      @vacancies.raw_answer["page"], @vacancies.raw_answer["nbPages"],
+      @vacancies.raw_answer["hitsPerPage"], @vacancies.raw_answer["nbHits"]
     )
     @point_coordinates = @location_search.location_filter[:point_coordinates]
     self
@@ -42,7 +42,7 @@ private
   def initialize_sort_by(jobs_sort_param)
     # A blank `sort_by` results in a search on the main index, Vacancy.
     @sort_by = if jobs_sort_param.blank? || !valid_sort?(jobs_sort_param)
-      @keyword.blank? ? 'publish_on_desc' : ''
+      @keyword.blank? ? "publish_on_desc" : ""
                else
       jobs_sort_param
                end
@@ -60,8 +60,8 @@ private
     )
     @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
     if @location_search.missing_polygon
-      @params_hash[:keyword] = [@keyword, @location_search.location].reject(&:blank?).join(' ')
-      @keyword = [@keyword, @location_search.location].reject(&:blank?).join(' ')
+      @params_hash[:keyword] = [@keyword, @location_search.location].reject(&:blank?).join(" ")
+      @keyword = [@keyword, @location_search.location].reject(&:blank?).join(" ")
     end
   end
 
@@ -70,7 +70,7 @@ private
   end
 
   def build_search_replica
-    @search_replica = [Vacancy::INDEX_NAME, @sort_by].reject(&:blank?).join('_') if @sort_by.present?
+    @search_replica = [Vacancy::INDEX_NAME, @sort_by].reject(&:blank?).join("_") if @sort_by.present?
   end
 
   def build_stats(page, pages, results_per_page, total_results)

@@ -5,7 +5,7 @@ class VacanciesPresenter < BasePresenter
   attr_accessor :decorated_collection
   attr_reader :coordinates
 
-  def initialize(vacancies, coordinates: '')
+  def initialize(vacancies, coordinates: "")
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
     @coordinates = coordinates
     super(vacancies)
@@ -45,7 +45,7 @@ private
     {
       format: :json,
       api_version: 1,
-      protocol: 'https'
+      protocol: "https"
     }
   end
 end

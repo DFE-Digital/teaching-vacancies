@@ -1,4 +1,4 @@
-require 'breasal'
+require "breasal"
 
 class School < Organisation
   include Auditor::Model
@@ -42,9 +42,9 @@ class School < Organisation
 
   def religious_character
     return if !respond_to?(:gias_data) || gias_data.nil?
-    return if ['None', 'Does not apply'].include?(gias_data['ReligiousCharacter (name)'])
+    return if ["None", "Does not apply"].include?(gias_data["ReligiousCharacter (name)"])
 
-    gias_data['ReligiousCharacter (name)']
+    gias_data["ReligiousCharacter (name)"]
   end
 
 private

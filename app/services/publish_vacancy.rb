@@ -13,7 +13,7 @@ class PublishVacancy
     vacancy.publisher_organisation = current_organisation
     vacancy.publisher_user = current_user
     vacancy.status = :published
-    vacancy.state = 'edit_published'
+    vacancy.state = "edit_published"
     vacancy.save
   end
 end

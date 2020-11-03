@@ -1,7 +1,7 @@
-require 'auditor'
+require "auditor"
 
 class Vacancy < ApplicationRecord
-  INDEX_NAME = [ENV['ALGOLIA_INDEX_PREFIX'], DOMAIN, name].compact.join('-').freeze
+  INDEX_NAME = [ENV["ALGOLIA_INDEX_PREFIX"], DOMAIN, name].compact.join("-").freeze
 
   JOB_ROLE_OPTIONS = {
     teacher: 0,
@@ -20,10 +20,10 @@ class Vacancy < ApplicationRecord
   }.freeze
 
   JOB_SORTING_OPTIONS = [
-    [I18n.t('jobs.sort_by.most_relevant'), ''],
-    [I18n.t('jobs.sort_by.publish_on.descending'), 'publish_on_desc'],
-    [I18n.t('jobs.sort_by.expiry_time.descending'), 'expiry_time_desc'],
-    [I18n.t('jobs.sort_by.expiry_time.ascending'), 'expiry_time_asc'],
+    [I18n.t("jobs.sort_by.most_relevant"), ""],
+    [I18n.t("jobs.sort_by.publish_on.descending"), "publish_on_desc"],
+    [I18n.t("jobs.sort_by.expiry_time.descending"), "expiry_time_desc"],
+    [I18n.t("jobs.sort_by.expiry_time.ascending"), "expiry_time_asc"],
   ].freeze
 
   JOB_LOCATION_OPTIONS = {
@@ -87,7 +87,7 @@ class Vacancy < ApplicationRecord
   # I'm excluding expires_on from the where clause as expiry_time seems to be exactly tracking it-as expected.
   # TODO: remove expires_on completely from the attributes and only use expiry_time. Ticket to follow.
   def self.remove_vacancies_that_expired_yesterday!
-    expired_records = where('expiry_time BETWEEN ? AND ?', Time.zone.yesterday.midnight, Time.zone.today.midnight)
+    expired_records = where("expiry_time BETWEEN ? AND ?", Time.zone.yesterday.midnight, Time.zone.today.midnight)
     index.delete_objects(expired_records.map(&:id)) if expired_records.present?
   end
 
@@ -97,7 +97,7 @@ class Vacancy < ApplicationRecord
     attribute :expires_at do
       expires_at = format_date(expires_on)
       unless expiry_time.nil?
-        expires_at + ' at ' + expiry_time.strftime('%-l:%M %P')
+        expires_at + " at " + expiry_time.strftime("%-l:%M %P")
       end
     end
 
@@ -170,15 +170,15 @@ class Vacancy < ApplicationRecord
     attributesForFaceting %i[job_roles working_patterns education_phases listing_status]
 
     add_replica "#{INDEX_NAME}_publish_on_desc", inherit: true do
-      ranking ['desc(publication_date_timestamp)']
+      ranking ["desc(publication_date_timestamp)"]
     end
 
     add_replica "#{INDEX_NAME}_expiry_time_desc", inherit: true do
-      ranking ['desc(expires_at_timestamp)']
+      ranking ["desc(expires_at_timestamp)"]
     end
 
     add_replica "#{INDEX_NAME}_expiry_time_asc", inherit: true do
-      ranking ['asc(expires_at_timestamp)']
+      ranking ["asc(expires_at_timestamp)"]
     end
   end
 
@@ -216,10 +216,10 @@ class Vacancy < ApplicationRecord
     hired_dont_know: 6
   }
 
-  belongs_to :publisher_user, class_name: 'User', optional: true
-  belongs_to :publisher_organisation, class_name: 'Organisation', optional: true
+  belongs_to :publisher_user, class_name: "User", optional: true
+  belongs_to :publisher_organisation, class_name: "Organisation", optional: true
 
-  has_one :publish_feedback, class_name: 'VacancyPublishFeedback'
+  has_one :publish_feedback, class_name: "VacancyPublishFeedback"
 
   has_many :documents
 
@@ -234,26 +234,26 @@ class Vacancy < ApplicationRecord
 
   scope :active, (-> { where(status: %i[published draft]) })
   scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
-  scope :applicable_by_time, (-> { where('expiry_time IS NOT NULL AND expiry_time >= ?', Time.zone.now) })
-  scope :applicable_by_date, (-> { where('expiry_time IS NULL AND expires_on >= ?', Time.zone.today) })
+  scope :applicable_by_time, (-> { where("expiry_time IS NOT NULL AND expiry_time >= ?", Time.zone.now) })
+  scope :applicable_by_date, (-> { where("expiry_time IS NULL AND expires_on >= ?", Time.zone.today) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
   scope :expired, (-> { expired_by_time.or(expired_by_date) })
-  scope :expired_by_time, (-> { published.where('expiry_time IS NOT NULL AND expiry_time < ?', Time.zone.now) })
-  scope :expired_by_date, (-> { published.where('expiry_time IS NULL AND expires_on < ?', Time.zone.today) })
-  scope :listed, (-> { published.where('publish_on <= ?', Time.zone.today) })
+  scope :expired_by_time, (-> { published.where("expiry_time IS NOT NULL AND expiry_time < ?", Time.zone.now) })
+  scope :expired_by_date, (-> { published.where("expiry_time IS NULL AND expires_on < ?", Time.zone.today) })
+  scope :listed, (-> { published.where("publish_on <= ?", Time.zone.today) })
   scope :live, (-> { live_by_date.or(live_by_time) })
   scope :live_by_time, (lambda {
-    published.where('expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?',
+    published.where("expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?",
                     Time.zone.today, Time.zone.now)
   })
   scope :live_by_date, (lambda {
-    published.where('expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?',
+    published.where("expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?",
                     Time.zone.today, Time.zone.today)
   })
-  scope :pending, (-> { published.where('publish_on > ?', Time.zone.today) })
+  scope :pending, (-> { published.where("publish_on > ?", Time.zone.today) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :unindexed, (-> { live.where(initially_indexed: false) })
-  scope :in_central_office, (-> { where(job_location: 'central_office') })
+  scope :in_central_office, (-> { where(job_location: "central_office") })
   scope :in_organisation_ids, lambda { |ids|
     joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct
   }
@@ -313,7 +313,7 @@ class Vacancy < ApplicationRecord
     begin
       value = Addressable::URI.heuristic_parse(value).to_s
     rescue Addressable::URI::InvalidURIError
-      Rails.logger.debug('Validation error: Invalid application link format')
+      Rails.logger.debug("Validation error: Invalid application link format")
     end
     super(value)
   end
@@ -324,7 +324,7 @@ class Vacancy < ApplicationRecord
   end
 
   def attributes
-    super().merge('working_patterns' => working_patterns, 'job_roles' => job_roles)
+    super().merge("working_patterns" => working_patterns, "job_roles" => job_roles)
   end
 
   def skip_update_callbacks(value = true)

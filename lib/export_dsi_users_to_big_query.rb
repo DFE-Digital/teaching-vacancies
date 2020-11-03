@@ -1,7 +1,7 @@
-require 'base_dsi_exporter'
+require "base_dsi_exporter"
 
 class ExportDsiUsersToBigQuery < BaseDsiBigQueryExporter
-  TABLE_NAME = 'dsi_users'.freeze
+  TABLE_NAME = "dsi_users".freeze
 
   def run!
     delete_table(TABLE_NAME)
@@ -16,30 +16,30 @@ private
   def present_for_big_query(batch)
     batch.map do |user|
       {
-        user_id: user['userId'],
-        role: user['roleName'],
-        approval_datetime: user['approvedAt'],
-        update_datetime: user['updatedAt'],
-        given_name: user['givenName'],
-        family_name: user['familyName'],
-        email: user['email'],
-        school_urn: user.dig('organisation', 'URN'),
-        organisation_uid: user.dig('organisation', 'UID')
+        user_id: user["userId"],
+        role: user["roleName"],
+        approval_datetime: user["approvedAt"],
+        update_datetime: user["updatedAt"],
+        given_name: user["givenName"],
+        family_name: user["familyName"],
+        email: user["email"],
+        school_urn: user.dig("organisation", "URN"),
+        organisation_uid: user.dig("organisation", "UID")
       }
     end
   end
 
   def insert_table_data(batch)
     dataset.insert TABLE_NAME, present_for_big_query(batch), autocreate: true do |schema|
-      schema.string 'user_id', mode: :nullable
-      schema.string 'role', mode: :nullable
-      schema.timestamp 'approval_datetime', mode: :nullable
-      schema.timestamp 'update_datetime', mode: :nullable
-      schema.string 'given_name', mode: :nullable
-      schema.string 'family_name', mode: :nullable
-      schema.string 'email', mode: :nullable
-      schema.integer 'school_urn', mode: :nullable
-      schema.integer 'organisation_uid', mode: :nullable
+      schema.string "user_id", mode: :nullable
+      schema.string "role", mode: :nullable
+      schema.timestamp "approval_datetime", mode: :nullable
+      schema.timestamp "update_datetime", mode: :nullable
+      schema.string "given_name", mode: :nullable
+      schema.string "family_name", mode: :nullable
+      schema.string "email", mode: :nullable
+      schema.integer "school_urn", mode: :nullable
+      schema.integer "organisation_uid", mode: :nullable
     end
   end
 

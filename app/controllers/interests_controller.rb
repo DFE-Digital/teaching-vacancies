@@ -8,7 +8,7 @@ private
 
   def audit_click
     VacancyGetMoreInfoClick.new(vacancy).track
-    Auditor::Audit.new(vacancy, 'vacancy.get_more_information', current_session_id).log
+    Auditor::Audit.new(vacancy, "vacancy.get_more_information", current_session_id).log
     AuditExpressInterestEventJob.perform_later(
       datestamp: Time.zone.now.iso8601.to_s,
       vacancy_id: vacancy.id,
@@ -22,7 +22,7 @@ private
   end
 
   def vacancy_id
-    return params.require(:vacancy_id) if params.key?('vacancy_id')
+    return params.require(:vacancy_id) if params.key?("vacancy_id")
 
     params.require(:job_id)
   end

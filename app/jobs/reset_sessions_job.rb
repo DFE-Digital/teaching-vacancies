@@ -3,6 +3,6 @@ class ResetSessionsJob < ApplicationJob
 
   def perform
     Rails.application.load_tasks
-    Rake::Task['db:sessions:trim'].invoke
+    Rake::Task["db:sessions:trim"].invoke
   end
 end

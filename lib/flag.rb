@@ -5,7 +5,7 @@ class Flag
   end
 
   def enabled?
-    self.class.const_get(key) == 'true'
+    self.class.const_get(key) == "true"
   end
 
 private

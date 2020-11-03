@@ -41,9 +41,9 @@ private
   end
 
   def delete_publish_on_params
-    params.require(:important_dates_form).delete('publish_on(3i)')
-    params.require(:important_dates_form).delete('publish_on(2i)')
-    params.require(:important_dates_form).delete('publish_on(1i)')
+    params.require(:important_dates_form).delete("publish_on(3i)")
+    params.require(:important_dates_form).delete("publish_on(2i)")
+    params.require(:important_dates_form).delete("publish_on(1i)")
   end
 
   def next_step

@@ -5,7 +5,7 @@ FactoryBot.define do
     search_criteria do
       { keyword: Faker::Lorem.word,
         location: Faker::Address.postcode,
-        radius: '10',
+        radius: "10",
         working_patterns: %w[full_time part_time],
         job_roles: %w[nqt_suitable],
         phases: %w[primary] }.to_json

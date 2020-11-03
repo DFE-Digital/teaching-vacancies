@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PagesController, type: :controller do
   HighVoltage.page_ids.each do |page|
@@ -10,11 +10,11 @@ RSpec.describe PagesController, type: :controller do
       it { should respond_with(:success) }
       it { should render_template(page) }
 
-      it 'should not have a noindex header, unless it is the unauthorised user page or the home page' do
+      it "should not have a noindex header, unless it is the unauthorised user page or the home page" do
         if %w[user-not-authorised home].include?(page)
-          expect(response.headers['X-Robots-Tag']).to include('noindex')
+          expect(response.headers["X-Robots-Tag"]).to include("noindex")
         else
-          expect(response.headers['X-Robots-Tag']).to_not include('noindex')
+          expect(response.headers["X-Robots-Tag"]).to_not include("noindex")
         end
       end
     end

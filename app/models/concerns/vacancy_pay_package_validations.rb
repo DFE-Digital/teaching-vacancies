@@ -11,7 +11,7 @@ module VacancyPayPackageValidations
   def salary_has_no_tags?
     unless salary == sanitize(salary, tags: [])
       errors.add(
-        :salary, I18n.t('activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters')
+        :salary, I18n.t("activemodel.errors.models.pay_package_form.attributes.salary.invalid_characters")
       )
     end
   end

@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Hiring staff can only see their school' do
-  context 'when the session is connected to a school' do
-    scenario 'school page can be viewed' do
+RSpec.describe "Hiring staff can only see their school" do
+  context "when the session is connected to a school" do
+    scenario "school page can be viewed" do
       school = create(:school)
       stub_hiring_staff_auth(urn: school.urn)
 
@@ -12,14 +12,14 @@ RSpec.describe 'Hiring staff can only see their school' do
     end
   end
 
-  context 'when the session is NOT connected to a known school' do
-    scenario 'returns a 404' do
+  context "when the session is NOT connected to a known school" do
+    scenario "returns a 404" do
       create(:school)
-      stub_hiring_staff_auth(urn: 'foo')
+      stub_hiring_staff_auth(urn: "foo")
 
       visit organisation_path
 
-      expect(page).to have_content('Page not found')
+      expect(page).to have_content("Page not found")
     end
   end
 end

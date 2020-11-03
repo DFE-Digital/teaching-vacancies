@@ -99,20 +99,20 @@ private
   end
 
   def redirect_unauthorised_users
-    redirect_to new_auth_email_path, notice: I18n.t('hiring_staff.temp_login.not_authorised') unless user_authorised?
+    redirect_to new_auth_email_path, notice: I18n.t("hiring_staff.temp_login.not_authorised") unless user_authorised?
   end
 
   def user_authorised?
     user = begin
-             User.find_by(oid: session.to_h['session_id'])
+             User.find_by(oid: session.to_h["session_id"])
            rescue StandardError
              nil
            end
 
     allowed_user? &&
-      (user&.dsi_data&.dig('la_codes')&.include?(get_la_code) ||
-       user&.dsi_data&.dig('trust_uids')&.include?(get_uid) ||
-       user&.dsi_data&.dig('school_urns')&.include?(get_urn))
+      (user&.dsi_data&.dig("la_codes")&.include?(get_la_code) ||
+       user&.dsi_data&.dig("trust_uids")&.include?(get_uid) ||
+       user&.dsi_data&.dig("school_urns")&.include?(get_urn))
   end
 
   def allowed_user?

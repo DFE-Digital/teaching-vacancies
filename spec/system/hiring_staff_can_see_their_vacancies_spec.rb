@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Hiring staff can see their vacancies' do
-  scenario 'school with geolocation' do
-    school = create(:school, northing: '1', easting: '2')
+RSpec.describe "Hiring staff can see their vacancies" do
+  scenario "school with geolocation" do
+    school = create(:school, northing: "1", easting: "2")
 
     stub_hiring_staff_auth(urn: school.urn)
-    vacancy = create(:vacancy, status: 'published')
+    vacancy = create(:vacancy, status: "published")
     vacancy.organisation_vacancies.create(organisation: school)
 
     visit organisation_path
@@ -16,18 +16,18 @@ RSpec.describe 'Hiring staff can see their vacancies' do
     expect(page).to have_content(vacancy.job_summary)
   end
 
-  context 'with no jobs' do
-    scenario 'hiring staff see a message informing them they have no jobs' do
+  context "with no jobs" do
+    scenario "hiring staff see a message informing them they have no jobs" do
       school = create(:school)
 
       stub_hiring_staff_auth(urn: school.urn)
       visit organisation_path
 
-      expect(page).to have_content(I18n.t('schools.no_jobs.heading'))
+      expect(page).to have_content(I18n.t("schools.no_jobs.heading"))
     end
   end
 
-  context 'viewing the lists of jobs on the school page' do
+  context "viewing the lists of jobs on the school page" do
     let(:school) { create(:school) }
 
     let!(:published_vacancy) { create(:vacancy, :published) }
@@ -47,97 +47,97 @@ RSpec.describe 'Hiring staff can see their vacancies' do
       stub_hiring_staff_auth(urn: school.urn)
     end
 
-    scenario 'jobs are split into sections' do
+    scenario "jobs are split into sections" do
       vacancies = create_list(:vacancy, 5, :published)
       vacancies.each { |vacancy| vacancy.organisation_vacancies.create(organisation: school) }
 
       visit organisation_path
 
-      expect(page).to have_content(I18n.t('jobs.published_jobs'))
-      expect(page).to have_content(I18n.t('jobs.draft_jobs'))
-      expect(page).to have_content(I18n.t('jobs.pending_jobs'))
-      expect(page).to have_content(I18n.t('jobs.expired_jobs'))
+      expect(page).to have_content(I18n.t("jobs.published_jobs"))
+      expect(page).to have_content(I18n.t("jobs.draft_jobs"))
+      expect(page).to have_content(I18n.t("jobs.pending_jobs"))
+      expect(page).to have_content(I18n.t("jobs.expired_jobs"))
     end
 
-    scenario 'with published vacancies' do
+    scenario "with published vacancies" do
       visit organisation_path
 
-      within('.tab-list') do
-        click_on(I18n.t('jobs.published_jobs'))
+      within(".tab-list") do
+        click_on(I18n.t("jobs.published_jobs"))
       end
 
-      within('table.vacancies') do
-        expect(page).to have_content(I18n.t('jobs.job_title'))
-        expect(page).to have_content(I18n.t('jobs.publish_on'))
+      within("table.vacancies") do
+        expect(page).to have_content(I18n.t("jobs.job_title"))
+        expect(page).to have_content(I18n.t("jobs.publish_on"))
         expect(page).to have_content(published_vacancy.job_title)
-        expect(page).to have_css('tbody tr', count: 1)
+        expect(page).to have_css("tbody tr", count: 1)
       end
     end
 
-    scenario 'with draft vacancies' do
+    scenario "with draft vacancies" do
       visit organisation_path
 
-      within('.tab-list') do
-        click_on(I18n.t('jobs.draft_jobs'))
+      within(".tab-list") do
+        click_on(I18n.t("jobs.draft_jobs"))
       end
 
-      within('table.vacancies') do
-        expect(page).to have_content(I18n.t('jobs.draft.time_created'))
+      within("table.vacancies") do
+        expect(page).to have_content(I18n.t("jobs.draft.time_created"))
         expect(page).to have_content(format_date(draft_vacancy.created_at))
         expect(page).to have_content(format_date(draft_vacancy.updated_at))
         expect(page).to have_content(draft_vacancy.job_title)
-        expect(page).to have_css('tbody tr', count: 1)
+        expect(page).to have_css("tbody tr", count: 1)
       end
     end
 
-    scenario 'with pending vacancies' do
+    scenario "with pending vacancies" do
       visit organisation_path
 
-      within('.tab-list') do
-        click_on(I18n.t('jobs.pending_jobs'))
+      within(".tab-list") do
+        click_on(I18n.t("jobs.pending_jobs"))
       end
 
-      within('table.vacancies') do
-        expect(page).to have_content(I18n.t('jobs.date_to_be_posted'))
+      within("table.vacancies") do
+        expect(page).to have_content(I18n.t("jobs.date_to_be_posted"))
         expect(page).to have_content(pending_vacancy.job_title)
         expect(page).to have_content(format_date(pending_vacancy.publish_on))
         expect(page).to have_content(format_date(pending_vacancy.expires_on))
-        expect(page).to have_css('tbody tr', count: 1)
+        expect(page).to have_css("tbody tr", count: 1)
       end
     end
 
-    scenario 'with expired vacancies' do
+    scenario "with expired vacancies" do
       visit organisation_path
 
-      within('.tab-list') do
-        click_on(I18n.t('jobs.expired_jobs'))
+      within(".tab-list") do
+        click_on(I18n.t("jobs.expired_jobs"))
       end
 
-      within('table.vacancies') do
-        expect(page).to have_content(I18n.t('jobs.expired_on'))
+      within("table.vacancies") do
+        expect(page).to have_content(I18n.t("jobs.expired_on"))
         expect(page).to have_content(expired_vacancy.job_title)
         expect(page).to have_content(format_date(expired_vacancy.expires_on))
         expect(page).to have_content(format_date(expired_vacancy.publish_on))
-        expect(page).to have_css('tbody tr', count: 1)
+        expect(page).to have_css("tbody tr", count: 1)
       end
     end
 
-    context 'when a draft vacancy has been updated' do
+    context "when a draft vacancy has been updated" do
       let!(:draft_vacancy) do
         create(:vacancy, :draft, created_at: 3.days.ago, updated_at: 1.day.ago)
       end
 
       before { draft_vacancy.organisation_vacancies.create(organisation: school) }
 
-      scenario 'shows the last updated at' do
+      scenario "shows the last updated at" do
         draft_vacancy
         visit organisation_path
 
-        within('.tab-list') do
-          click_on(I18n.t('jobs.draft_jobs'))
+        within(".tab-list") do
+          click_on(I18n.t("jobs.draft_jobs"))
         end
 
-        within('table.vacancies') do
+        within("table.vacancies") do
           expect(page).to have_content(format_date(draft_vacancy.created_at))
           expect(page).to have_content(format_date(draft_vacancy.updated_at))
         end

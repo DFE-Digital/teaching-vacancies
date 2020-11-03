@@ -16,10 +16,10 @@ class LocationSuggestion
   end
 
   def suggest_locations
-    predictions = get_suggestions_from_google['predictions'].take(NUMBER_OF_SUGGESTIONS)
-    suggestions = predictions.map { |prediction| prediction['description'] }
+    predictions = get_suggestions_from_google["predictions"].take(NUMBER_OF_SUGGESTIONS)
+    suggestions = predictions.map { |prediction| prediction["description"] }
     matched_terms = predictions.map do |prediction|
-                      prediction['terms'].select { |term| term['offset'].zero? }.map { |hit| hit['value'] }
+                      prediction["terms"].select { |term| term["offset"].zero? }.map { |hit| hit["value"] }
     end
     [suggestions, matched_terms]
   end
@@ -32,11 +32,11 @@ private
 
   def get_suggestions_from_google
     response = HTTParty.get(request_url)
-    raise HTTParty::ResponseError, 'Something went wrong' unless response.success?
+    raise HTTParty::ResponseError, "Something went wrong" unless response.success?
 
     parsed_response = JSON.parse(response.body)
-    raise GooglePlacesAutocompleteError, parsed_response['error_message'] if
-      parsed_response.keys.include?('error_message')
+    raise GooglePlacesAutocompleteError, parsed_response["error_message"] if
+      parsed_response.keys.include?("error_message")
 
     parsed_response
   end
@@ -44,11 +44,11 @@ private
   def build_google_query
     {
       key: GOOGLE_PLACES_AUTOCOMPLETE_KEY,
-      language: 'en',
+      language: "en",
       input: location_input,
-      components: 'country:uk',
-      type: 'geocode',
-      region: 'uk'
+      components: "country:uk",
+      type: "geocode",
+      region: "uk"
     }
   end
 end

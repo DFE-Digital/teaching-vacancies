@@ -2,9 +2,9 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.env.test?, logger: (-> { Rails.logger }) do
   allow do
     # Allow all domains access to jobs API
-    origins '*'
+    origins "*"
 
-    resource '/api/v1/jobs/*',
+    resource "/api/v1/jobs/*",
              headers: :any,
              methods: :get
   end
@@ -13,7 +13,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors, debug: Rails.en
     # Only allow our domains access to coordinates API with HTTP GET
     origins Rails.application.config.allowed_cors_origin.call
 
-    resource '/api/v1/coordinates/*',
+    resource "/api/v1/coordinates/*",
              headers: :any,
              methods: :get
   end

@@ -4,12 +4,12 @@ FactoryBot.define do
       create_list :document, 3, vacancy: vacancy
     end
 
-    job_location { 'at_one_school' }
+    job_location { "at_one_school" }
     about_school { Faker::Lorem.paragraph(sentence_count: 4) }
     application_link { Faker::Internet.url }
     benefits { Faker::Lorem.paragraph(sentence_count: 4) }
     contact_email { Faker::Internet.email }
-    contact_number { '01234 123456' }
+    contact_number { "01234 123456" }
     education { Faker::Lorem.paragraph(sentence_count: 4) }
     experience { Faker::Lorem.paragraph(sentence_count: 4) }
     expires_on { Faker::Time.forward(days: 14) }
@@ -25,27 +25,27 @@ FactoryBot.define do
     reference { SecureRandom.uuid }
     salary { Faker::Lorem.sentence[1...30].strip }
     school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
-    state { 'create' }
+    state { "create" }
     starts_on { Time.zone.today + 1.year }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
-    supporting_documents { 'yes' }
-    suitable_for_nqt { 'no' }
+    supporting_documents { "yes" }
+    suitable_for_nqt { "no" }
     working_patterns { %w[full_time] }
 
     trait :at_central_office do
-      job_location { 'central_office' }
-      readable_job_location { I18n.t('hiring_staff.organisations.readable_job_location.central_office') }
+      job_location { "central_office" }
+      readable_job_location { I18n.t("hiring_staff.organisations.readable_job_location.central_office") }
     end
 
     trait :at_one_school do
-      job_location { 'at_one_school' }
-      readable_job_location { Faker::Educator.secondary_school.strip.gsub("'", '') }
+      job_location { "at_one_school" }
+      readable_job_location { Faker::Educator.secondary_school.strip.gsub("'", "") }
     end
 
     trait :at_multiple_schools do
-      job_location { 'at_multiple_schools' }
-      readable_job_location { 'More than one school (3)' }
+      job_location { "at_multiple_schools" }
+      readable_job_location { "More than one school (3)" }
     end
 
     trait :fail_minimum_validation do
@@ -138,12 +138,12 @@ FactoryBot.define do
     end
 
     trait :suitable_for_nqt do
-      suitable_for_nqt { 'yes' }
+      suitable_for_nqt { "yes" }
       job_roles { %w[nqt_suitable] }
     end
 
     trait :not_suitable_for_nqt do
-      suitable_for_nqt { 'no' }
+      suitable_for_nqt { "no" }
       job_roles { %w[] }
     end
   end

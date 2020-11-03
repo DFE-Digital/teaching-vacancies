@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Hiring staff session' do
+RSpec.describe "Hiring staff session" do
   let(:school) { create(:school) }
-  let(:session_id) { 'session_id' }
+  let(:session_id) { "session_id" }
   let(:current_user) { User.find_by(oid: session_id) }
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
@@ -13,24 +13,24 @@ RSpec.describe 'Hiring staff session' do
     travel_back
   end
 
-  it 'expires after TIMEOUT_PERIOD and redirects to login page' do
+  it "expires after TIMEOUT_PERIOD and redirects to login page" do
     visit new_organisation_job_path
 
     travel(HiringStaff::BaseController::TIMEOUT_PERIOD + 1.minute) do
-      click_on I18n.t('buttons.continue')
+      click_on I18n.t("buttons.continue")
 
       sign_out_via_dsi
 
-      expect(page).to have_content('signed out')
-      expect(page).to have_content('inactive')
+      expect(page).to have_content("signed out")
+      expect(page).to have_content("inactive")
     end
   end
 
-  it 'doesn\'t expire before TIMEOUT_PERIOD' do
+  it "doesn't expire before TIMEOUT_PERIOD" do
     visit new_organisation_job_path
 
     travel(HiringStaff::BaseController::TIMEOUT_PERIOD - 1.minute) do
-      click_on I18n.t('buttons.continue')
+      click_on I18n.t("buttons.continue")
 
       expect(page.current_path).to eq job_specification_organisation_job_path
     end

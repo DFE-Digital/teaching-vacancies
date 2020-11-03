@@ -1,4 +1,4 @@
-require 'google/apis/drive_v3'
+require "google/apis/drive_v3"
 
 class DocumentUpload
   FILE_VIRUS_STATUS_CODE = 403 # 403 Permission denied when acknowledge_abuse: false
@@ -27,8 +27,8 @@ class DocumentUpload
 
   def upload_hiring_staff_document
     self.uploaded = drive_service.create_file(
-      { alt: 'media', name: name },
-      fields: 'id, web_view_link, web_content_link, mime_type',
+      { alt: "media", name: name },
+      fields: "id, web_view_link, web_content_link, mime_type",
       upload_source: upload_path,
     )
   end
@@ -36,7 +36,7 @@ class DocumentUpload
   def set_public_permission_on_document
     drive_service.create_permission(
       uploaded.id,
-      Google::Apis::DriveV3::Permission.new(type: 'anyone', role: 'reader'),
+      Google::Apis::DriveV3::Permission.new(type: "anyone", role: "reader"),
     )
   end
 
@@ -51,7 +51,7 @@ class DocumentUpload
     if e.status_code == FILE_VIRUS_STATUS_CODE
       self.safe_download = false
       drive_service.delete_file(uploaded.id)
-      Rollbar.log(:info, 'Google drive detected the upload of a malicious file. This file has been deleted.')
+      Rollbar.log(:info, "Google drive detected the upload of a malicious file. This file has been deleted.")
     else
       self.google_error = true
     end

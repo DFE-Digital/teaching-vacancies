@@ -1,7 +1,7 @@
-require 'csv'
-require 'geocoding'
-require 'httparty'
-require 'open-uri'
+require "csv"
+require "geocoding"
+require "httparty"
+require "open-uri"
 
 class ImportOrganisationData
 # NB: To me it doesn't seem too unreasonable to have the transformation logic here, but in the interest of not
@@ -22,11 +22,11 @@ private
   def save_csv_file(url, location)
     request = HTTParty.get(url)
     if request.code == 200
-      File.write(location, request.body, mode: 'wb')
+      File.write(location, request.body, mode: "wb")
     elsif request.code == 404
-      raise HTTParty::ResponseError, 'CSV file not found.'
+      raise HTTParty::ResponseError, "CSV file not found."
     else
-      raise HTTParty::ResponseError, 'Unexpected problem downloading CSV file.'
+      raise HTTParty::ResponseError, "Unexpected problem downloading CSV file."
     end
   end
 

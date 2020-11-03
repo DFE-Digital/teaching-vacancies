@@ -19,7 +19,7 @@ class VacanciesController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       raise unless Vacancy.trashed.friendly.exists?(id)
 
-      return render '/errors/trashed_vacancy_found', status: :not_found
+      return render "/errors/trashed_vacancy_found", status: :not_found
     end
 
     return redirect_to(job_path(vacancy), status: :moved_permanently) if old_vacancy_path?(vacancy)
@@ -42,7 +42,7 @@ private
   def algolia_search_params
     strip_empty_checkboxes(%i[job_roles phases working_patterns])
     %w[job_roles phases working_patterns].each do |facet|
-      params[facet] = params[facet].split(' ') if params[facet].is_a?(String)
+      params[facet] = params[facet].split(" ") if params[facet].is_a?(String)
     end
     params.permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page,
                   job_roles: [], phases: [], working_patterns: [])
@@ -63,7 +63,7 @@ private
   end
 
   def set_headers
-    response.set_header('X-Robots-Tag', 'noarchive')
+    response.set_header("X-Robots-Tag", "noarchive")
   end
 
   def valid_search?
@@ -75,6 +75,6 @@ private
   end
 
   def audit_row
-    @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer['nbHits'])
+    @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer["nbHits"])
   end
 end

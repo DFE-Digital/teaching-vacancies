@@ -1,4 +1,4 @@
-require 'organisation_import/import_trust_data'
+require "organisation_import/import_trust_data"
 
 class ImportTrustDataJob < ApplicationJob
   queue_as :import_trust_data

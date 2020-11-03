@@ -1,18 +1,18 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe FeedbackPromptMailer, type: :mailer do
   include DatesHelper
 
   let(:body) { mail.body.raw_source }
 
-  describe 'prompt_for_feedback' do
-    let(:email_address) { 'dummy@dum.com' }
+  describe "prompt_for_feedback" do
+    let(:email_address) { "dummy@dum.com" }
     let(:mail) { described_class.prompt_for_feedback(email_address, vacancies) }
     let(:vacancies) { create_list(:vacancy, 2, :published) }
 
-    context 'with two vacancies' do
-      it 'shows both vacancies' do
-        expect(mail.subject).to eq('Teaching Vacancies needs your feedback on expired job listings')
+    context "with two vacancies" do
+      it "shows both vacancies" do
+        expect(mail.subject).to eq("Teaching Vacancies needs your feedback on expired job listings")
         expect(mail.to).to eq([email_address])
 
         expect(body).to match(/Dear vacancy publisher/)

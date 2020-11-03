@@ -7,7 +7,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def show
     unless @vacancy.published?
       return redirect_to organisation_job_review_path(@vacancy.id),
-                         notice: I18n.t('messages.jobs.view.only_published')
+                         notice: I18n.t("messages.jobs.view.only_published")
     end
     @vacancy = VacancyPresenter.new(@vacancy)
   end
@@ -24,7 +24,7 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
   def edit
     return redirect_to organisation_job_review_path(@vacancy.id) unless @vacancy.published?
 
-    @vacancy.update(state: 'edit_published')
+    @vacancy.update(state: "edit_published")
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
@@ -41,15 +41,15 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
     session[:current_step] = :review
     @vacancy = VacancyPresenter.new(@vacancy)
-    @vacancy.valid? if params[:source]&.eql?('publish')
+    @vacancy.valid? if params[:source]&.eql?("publish")
   end
 
   def destroy
     @vacancy.delete_documents
     @vacancy.trash!
     remove_google_index(@vacancy)
-    Auditor::Audit.new(@vacancy, 'vacancy.delete', current_session_id).log
-    redirect_to organisation_path, success: I18n.t('messages.jobs.delete_html', job_title: @vacancy.job_title)
+    Auditor::Audit.new(@vacancy, "vacancy.delete", current_session_id).log
+    redirect_to organisation_path, success: I18n.t("messages.jobs.delete_html", job_title: @vacancy.job_title)
   end
 
   def preview
@@ -70,14 +70,14 @@ private
   def redirect_if_published
     if @vacancy.published?
       redirect_to organisation_job_path(@vacancy.id),
-                  notice: I18n.t('messages.jobs.already_published')
+                  notice: I18n.t("messages.jobs.already_published")
     end
   end
 
   def redirect_unless_permitted
-    if @vacancy.state == 'copy' && !@vacancy.valid?
+    if @vacancy.state == "copy" && !@vacancy.valid?
       redirect_to organisation_job_review_path(@vacancy.id)
-    elsif @vacancy.state == 'edit_published' && !@vacancy.valid?
+    elsif @vacancy.state == "edit_published" && !@vacancy.valid?
       redirect_to edit_organisation_job_path(@vacancy.id)
     elsif !@vacancy.valid?
       redirect_to_incomplete_step
@@ -96,7 +96,7 @@ private
 
   def clear_cache_and_step
     flash.clear
-    session[:current_step] = ''
+    session[:current_step] = ""
   end
 
   def set_completed_step
@@ -104,12 +104,12 @@ private
   end
 
   def update_vacancy_state
-    state = if params[:edit_draft] == 'true' || @vacancy&.state == 'edit'
-      'edit'
-            elsif @vacancy&.state == 'copy'
-      'copy'
+    state = if params[:edit_draft] == "true" || @vacancy&.state == "edit"
+      "edit"
+            elsif @vacancy&.state == "copy"
+      "copy"
             else
-      'review'
+      "review"
             end
     @vacancy.update(state: state)
   end

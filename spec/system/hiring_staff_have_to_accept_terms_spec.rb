@@ -1,92 +1,92 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Hiring staff accepts terms and conditions' do
+RSpec.describe "Hiring staff accepts terms and conditions" do
   let(:school) { create(:school) }
-  let(:session_id) { 'a-valid-oid' }
+  let(:session_id) { "a-valid-oid" }
   let(:current_user) { User.find_by(oid: session_id) }
   before do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
-  context 'the user has not accepted the terms and conditions' do
+  context "the user has not accepted the terms and conditions" do
     before { current_user.update(accepted_terms_at: nil) }
 
-    scenario 'they will see the terms and conditions' do
+    scenario "they will see the terms and conditions" do
       visit organisation_path
 
-      expect(page).to have_content(I18n.t('terms_and_conditions.please_accept'))
+      expect(page).to have_content(I18n.t("terms_and_conditions.please_accept"))
     end
 
-    scenario 'they can accept the terms and conditions' do
+    scenario "they can accept the terms and conditions" do
       visit terms_and_conditions_path
 
       expect(current_user).not_to be_accepted_terms_and_conditions
 
-      check I18n.t('terms_and_conditions.label')
-      click_on I18n.t('buttons.accept_and_continue')
+      check I18n.t("terms_and_conditions.label")
+      click_on I18n.t("buttons.accept_and_continue")
 
       current_user.reload
-      expect(page).to have_content(I18n.t('schools.jobs.index', organisation: school.name))
+      expect(page).to have_content(I18n.t("schools.jobs.index", organisation: school.name))
       expect(current_user).to be_accepted_terms_and_conditions
     end
 
-    scenario 'an audit entry is logged when they accept' do
+    scenario "an audit entry is logged when they accept" do
       visit terms_and_conditions_path
 
       expect(current_user).not_to be_accepted_terms_and_conditions
 
-      check I18n.t('terms_and_conditions.label')
-      click_on I18n.t('buttons.accept_and_continue')
+      check I18n.t("terms_and_conditions.label")
+      click_on I18n.t("buttons.accept_and_continue")
 
       activity = current_user.activities.last
-      expect(activity.key).to eq('user.terms_and_conditions.accept')
+      expect(activity.key).to eq("user.terms_and_conditions.accept")
       expect(activity.session_id).to eq(session_id)
     end
 
-    scenario 'an error is shown if they don’t accept' do
+    scenario "an error is shown if they don’t accept" do
       visit terms_and_conditions_path
 
       expect(current_user).not_to be_accepted_terms_and_conditions
 
-      click_on I18n.t('buttons.accept_and_continue')
+      click_on I18n.t("buttons.accept_and_continue")
 
       current_user.reload
 
-      expect(page).to have_content('There is a problem')
+      expect(page).to have_content("There is a problem")
       expect(current_user).not_to be_accepted_terms_and_conditions
     end
 
-    context 'signing out' do
-      scenario 'with authentication fallback' do
+    context "signing out" do
+      scenario "with authentication fallback" do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(true)
 
         visit terms_and_conditions_path
-        click_on(I18n.t('nav.sign_out'))
+        click_on(I18n.t("nav.sign_out"))
 
-        expect(page).to have_content(I18n.t('messages.access.signed_out'))
+        expect(page).to have_content(I18n.t("messages.access.signed_out"))
       end
 
-      scenario 'without authentication fallback' do
+      scenario "without authentication fallback" do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
 
         visit terms_and_conditions_path
 
-        click_on(I18n.t('nav.sign_out'))
+        click_on(I18n.t("nav.sign_out"))
 
         sign_out_via_dsi
 
-        expect(page).to have_content(I18n.t('messages.access.signed_out'))
+        expect(page).to have_content(I18n.t("messages.access.signed_out"))
       end
     end
   end
 
-  context 'the user has accepted the terms and conditions' do
-    scenario 'they will not see the terms and conditions' do
+  context "the user has accepted the terms and conditions" do
+    scenario "they will not see the terms and conditions" do
       current_user.update(accepted_terms_at: Time.zone.now)
 
       visit organisation_path
 
-      expect(page).not_to have_content(I18n.t('terms_and_conditions.please_accept'))
+      expect(page).not_to have_content(I18n.t("terms_and_conditions.please_accept"))
     end
   end
 end

@@ -1,4 +1,4 @@
-require 'colorized_string'
+require "colorized_string"
 
 class ColourLogFormatter < Lograge::Formatters::KeyValue
   FIELDS_COLOURS = {

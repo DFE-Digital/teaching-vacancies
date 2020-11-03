@@ -1,14 +1,14 @@
-require 'google/apis/analytics_v3'
+require "google/apis/analytics_v3"
 
 class Analytics
   API = Google::Apis::AnalyticsV3
-  METRICS = 'ga:pageviews'.freeze
-  ONEWEEKAGO = '7daysAgo'.freeze
-  TODAY = 'today'.freeze
+  METRICS = "ga:pageviews".freeze
+  ONEWEEKAGO = "7daysAgo".freeze
+  TODAY = "today".freeze
 
   attr_reader :service, :path, :start_date, :end_date
 
-  def initialize(path, start_date = '30daysAgo', end_date = 'today')
+  def initialize(path, start_date = "30daysAgo", end_date = "today")
     return if api_key_empty?
 
     @service = API::AnalyticsService.new

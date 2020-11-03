@@ -61,10 +61,10 @@ class HiringStaff::BaseController < ApplicationController
   end
 
   def timeout_period_as_string
-    distance_of_time_in_words(TIMEOUT_PERIOD).gsub('about ', '')
+    distance_of_time_in_words(TIMEOUT_PERIOD).gsub("about ", "")
   end
 
   def verify_school_group
-    redirect_to organisation_path, danger: 'You are not allowed' unless current_organisation.is_a?(SchoolGroup)
+    redirect_to organisation_path, danger: "You are not allowed" unless current_organisation.is_a?(SchoolGroup)
   end
 end

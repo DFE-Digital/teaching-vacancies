@@ -12,7 +12,7 @@ class HiringStaff::Vacancies::SchoolsController < HiringStaff::Vacancies::Applic
 
   def show
     attributes = @vacancy.present? ? @vacancy.attributes : session[:vacancy_attributes]
-    return redirect_to next_step if job_location == 'central_office'
+    return redirect_to next_step if job_location == "central_office"
 
     @form = SchoolsForm.new(attributes.symbolize_keys)
   end
@@ -21,8 +21,8 @@ class HiringStaff::Vacancies::SchoolsController < HiringStaff::Vacancies::Applic
     @form.vacancy.readable_job_location = readable_job_location(job_location, school_name: school&.name,
                                                                               schools_count: @form.organisation_ids&.count)
     store_vacancy_attributes(@form.vacancy.attributes)
-    session[:vacancy_attributes]['organisation_id'] = @form.organisation_id
-    session[:vacancy_attributes]['organisation_ids'] = @form.organisation_ids
+    session[:vacancy_attributes]["organisation_id"] = @form.organisation_id
+    session[:vacancy_attributes]["organisation_ids"] = @form.organisation_ids
     if @form.valid?
       redirect_to_next_step_if_continue(@vacancy&.persisted? ? @vacancy.id : session_vacancy_id)
     else
@@ -68,7 +68,7 @@ private
   end
 
   def set_multiple_schools
-    @multiple_schools = job_location == 'at_multiple_schools'
+    @multiple_schools = job_location == "at_multiple_schools"
   end
 
   def set_up_previous_step_path
@@ -80,6 +80,6 @@ private
   end
 
   def job_location
-    @vacancy&.job_location.presence || session[:vacancy_attributes]['job_location']
+    @vacancy&.job_location.presence || session[:vacancy_attributes]["job_location"]
   end
 end

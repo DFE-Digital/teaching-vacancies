@@ -23,6 +23,6 @@ private
   end
 
   def audit_toc_acceptance
-    Auditor::Audit.new(current_user, 'user.terms_and_conditions.accept', current_session_id).log
+    Auditor::Audit.new(current_user, "user.terms_and_conditions.accept", current_session_id).log
   end
 end

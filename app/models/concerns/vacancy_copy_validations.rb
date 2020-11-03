@@ -15,7 +15,7 @@ module VacancyCopyValidations
   def job_title_has_no_tags?
     unless job_title == sanitize(job_title, tags: [])
       errors.add(
-        :job_title, I18n.t('activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters')
+        :job_title, I18n.t("activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters")
       )
     end
   end

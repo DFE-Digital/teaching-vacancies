@@ -27,9 +27,9 @@ class NqtJobAlertsForm
 
   def location_reference
     if location.present? && location_category
-      I18n.t('subscriptions.location_category_text', location: location_category)
+      I18n.t("subscriptions.location_category_text", location: location_category)
     else
-      I18n.t('subscriptions.location_radius_text', location: location, radius: 10)
+      I18n.t("subscriptions.location_radius_text", location: location, radius: 10)
     end
   end
 
@@ -49,7 +49,7 @@ private
   end
 
   def unique_job_alert
-    errors.add(:base, I18n.t('subscriptions.errors.duplicate_alert')) if
+    errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert")) if
       SubscriptionFinder.new(job_alert_params).exists?
   end
 end

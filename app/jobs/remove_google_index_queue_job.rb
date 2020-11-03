@@ -1,4 +1,4 @@
-require 'indexing'
+require "indexing"
 class RemoveGoogleIndexQueueJob < ApplicationJob
   queue_as :google_indexing
 

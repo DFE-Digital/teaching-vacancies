@@ -63,14 +63,14 @@ private
   end
 
   def criteria_selected
-    errors.add(:base, I18n.t('subscriptions.errors.no_criteria_selected')) if
+    errors.add(:base, I18n.t("subscriptions.errors.no_criteria_selected")) if
       keyword.blank? && location.blank? && job_roles.blank? && phases.blank? && working_patterns.blank?
   end
 
   def unique_job_alert
     return if frequency.blank?
 
-    errors.add(:base, I18n.t('subscriptions.errors.duplicate_alert')) if
+    errors.add(:base, I18n.t("subscriptions.errors.duplicate_alert")) if
       SubscriptionFinder.new(job_alert_params).exists?
   end
 end
