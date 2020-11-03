@@ -12,6 +12,10 @@ span.notification {
   padding: 0 govuk-spacing(1);
 }
 
+.js-dismissable {
+  transition: opacity 0.6s;
+}
+
 .govuk-notification {
   @include govuk-font($size: 19);
   @include govuk-text-colour;
