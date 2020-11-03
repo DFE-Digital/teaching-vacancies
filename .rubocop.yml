@@ -15,9 +15,6 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
 
-Layout/TrailingEmptyLines:
-  Enabled: false
-
 Layout/IndentationWidth:
   Enabled: false
 

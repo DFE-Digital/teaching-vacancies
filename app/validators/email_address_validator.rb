@@ -18,4 +18,3 @@ private
     I18n.t("activerecord.errors.models.general_feedback.attributes.email.invalid")
   end
 end
-
