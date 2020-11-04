@@ -14,6 +14,7 @@ Rails.application.config.content_security_policy do |policy|
   # Google Maps embed will not work without 'unsafe-inline' styles
   #   see: https://issuetracker.google.com/issues/132600807
   policy.style_src   :self, "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com", :unsafe_inline
+  policy.connect_src :self, "https://www.google-analytics.com"
   # Allow using webpack-dev-server in development
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
