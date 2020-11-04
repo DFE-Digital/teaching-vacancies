@@ -1,5 +1,4 @@
 class CookiesPreferencesController < ApplicationController
-  before_action :redirect_unless_cookies_feature_enabled
   before_action :set_previous_url_in_session
 
   def new
@@ -21,10 +20,6 @@ private
 
   def cookies_preferences_params
     (params[:cookies_preferences_form] || params).permit(:cookies_consent)
-  end
-
-  def redirect_unless_cookies_feature_enabled
-    redirect_to page_path("cookies") unless CookiesBannerFeature.enabled?
   end
 
   def set_previous_url_in_session

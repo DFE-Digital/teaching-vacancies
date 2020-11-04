@@ -4,7 +4,7 @@
 %html.govuk-template.app-html-class{ lang: "en" }
   /<![endif]
   %head
-    = render partial: 'shared/google_tag_manager_head' if !CookiesBannerFeature.enabled? || cookies['consented-to-cookies'] == 'yes'
+    = render partial: 'shared/google_tag_manager_head' if cookies['consented-to-cookies'] == 'yes'
     = render partial: 'shared/open_graph'
     = render partial: 'shared/meta'
     %meta{ charset: "utf-8" }/
@@ -29,11 +29,11 @@
     %meta{ content: asset_pack_path('media/images/govuk-opengraph-image.png'), property: "og:image" }/
     = csrf_meta_tags
   %body{ class: body_class, data: { vacancy_state: @vacancy.present? ? @vacancy.state : 'create' } }
-    = render partial: 'shared/google_tag_manager_body' if !CookiesBannerFeature.enabled? || cookies['consented-to-cookies'] == 'yes'
+    = render partial: 'shared/google_tag_manager_body' if cookies['consented-to-cookies'] == 'yes'
     :javascript
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     = render 'shared/skip_links'
-    = render 'layouts/cookies_banner' unless !CookiesBannerFeature.enabled? || controller_name == 'cookies_preferences' || cookies_preference_set?
+    = render 'layouts/cookies_banner' unless controller_name == 'cookies_preferences' || cookies_preference_set?
     %header.govuk-header{ "data-module": "govuk-header", role: "banner" }
       .govuk-header__container.govuk-width-container
         .govuk-header__logo
@@ -95,7 +95,7 @@
                   %li.govuk-footer-list-item
                     = link_to t('footer.provide_feedback'), new_feedback_path, class: 'govuk-footer__link'
                   %li.govuk-footer-list-item
-                    =link_to 'Cookies', CookiesBannerFeature.enabled? ? cookies_preferences_path : page_path('cookies'), class: 'govuk-footer__link'
+                    =link_to 'Cookies', cookies_preferences_path, class: 'govuk-footer__link'
                   %li.govuk-footer-list-item
                     =link_to 'Privacy policy', page_path('privacy-policy'), class: 'govuk-footer__link'
                   %li.govuk-footer-list-item
