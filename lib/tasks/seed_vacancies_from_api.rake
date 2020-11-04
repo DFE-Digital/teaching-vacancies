@@ -1,8 +1,8 @@
 require "teaching_vacancies_api"
 
 namespace :data do
-  desc "Seed from the Teaching Vacancies API"
   namespace :seed_from_api do
+    desc "Seed from the Teaching Vacancies API"
     task vacancies: :environment do
       next if Rails.env.production?
       next unless ImportVacanciesFeature.enabled?

@@ -206,7 +206,7 @@ module VacancyHelpers
         '@type': "School",
         'name': vacancy.parent_organisation.name,
         'identifier': vacancy.parent_organisation.urn,
-        'description': vacancy.about_school
+        'description': vacancy.about_school,
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
     }

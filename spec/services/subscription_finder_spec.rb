@@ -38,7 +38,7 @@ RSpec.describe SubscriptionFinder do
         harmful_params = {
           email: "<script>foo@email.com</script>",
           search_criteria: "<body onload=alert('test1')>Text</body>",
-          frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>"
+          frequency: "<img src='http://url.to.file.which/not.exist' onerror=alert(document.cookie);>",
         }
         empty_active_record_relation = Subscription.none
 

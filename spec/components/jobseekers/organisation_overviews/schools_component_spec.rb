@@ -139,7 +139,7 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
 
   describe "#organisation_map_data" do
     let(:organisation_map_data) do
-       JSON.parse(described_class.new(vacancy: vacancy_presenter).organisation_map_data)
+      JSON.parse(described_class.new(vacancy: vacancy_presenter).organisation_map_data)
     end
 
     let(:school_1_data) do

@@ -45,7 +45,7 @@ private
     {
       format: :json,
       api_version: 1,
-      protocol: "https"
+      protocol: "https",
     }
   end
 end

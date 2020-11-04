@@ -137,7 +137,7 @@ private
       size: Integer(params.size),
       content_type: params.content_type,
       download_url: upload.uploaded.web_content_link,
-      google_drive_id: upload.uploaded.id
+      google_drive_id: upload.uploaded.id,
     }
   end
 

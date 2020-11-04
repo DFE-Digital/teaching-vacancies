@@ -35,7 +35,7 @@ module DFESignIn
       payload = {
         iss: "schooljobs",
         exp: (Time.now.getlocal + 60).to_i,
-        aud: "signin.education.gov.uk"
+        aud: "signin.education.gov.uk",
       }
 
       JWT.encode(payload, DFE_SIGN_IN_PASSWORD, "HS256")

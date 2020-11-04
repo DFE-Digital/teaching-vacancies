@@ -36,7 +36,7 @@ class VacancyAlgoliaSearchForm
       phases: @phases,
       working_patterns: @working_patterns,
       jobs_sort: @jobs_sort,
-      page: @page
+      page: @page,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 

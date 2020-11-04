@@ -10,7 +10,7 @@ RSpec.describe Search::VacancyFiltersBuilder do
       job_roles: job_roles,
       phases: phases,
       working_patterns: working_patterns,
-      newly_qualified_teacher: newly_qualified_teacher
+      newly_qualified_teacher: newly_qualified_teacher,
     }
   end
 

@@ -64,7 +64,7 @@ RSpec.describe SubscriptionPresenter do
           newly_qualified_teacher: "true",
           location: "EC2 9AN",
           working_patterns: %w[part_time],
-          subject: "maths"
+          subject: "maths",
         }
       end
 
@@ -89,7 +89,7 @@ RSpec.describe SubscriptionPresenter do
           newly_qualified_teacher: "true",
           something_else: "testing",
           location: "EC2 9AN",
-          subject: "maths"
+          subject: "maths",
         }
       end
 

@@ -24,7 +24,7 @@ private
         family_name: user["familyName"],
         email: user["email"],
         school_urn: user.dig("organisation", "URN"),
-        organisation_uid: user.dig("organisation", "UID")
+        organisation_uid: user.dig("organisation", "UID"),
       }
     end
   end

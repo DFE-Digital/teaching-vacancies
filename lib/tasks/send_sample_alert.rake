@@ -1,4 +1,5 @@
 namespace :job_alerts do
+  desc "Send sample email alert"
   task :send_sample, [:email] => :environment do |_t, args|
     subscription = FactoryBot.create(:subscription, email: args[:email])
     subscription.save

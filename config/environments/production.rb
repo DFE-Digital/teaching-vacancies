@@ -94,7 +94,7 @@ Rails.application.configure do
     {
       ip: event.payload[:remote_ip],
       session_id: event.payload[:session_id],
-      params: event.payload[:params].except(*exceptions)
+      params: event.payload[:params].except(*exceptions),
     }
   end
 

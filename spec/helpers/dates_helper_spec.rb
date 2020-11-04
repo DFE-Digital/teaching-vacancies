@@ -27,7 +27,7 @@ RSpec.describe DatesHelper, type: :helper do
         year: 2012,
         hour: 12,
         min: 12,
-        meridiem: ""
+        meridiem: "",
       }
       expect(helper.compose_expiry_time(time_attr)).to eq nil
     end
@@ -40,7 +40,7 @@ RSpec.describe DatesHelper, type: :helper do
         year: 2017,
         hour: 12,
         min: 12,
-        meridiem: "pm"
+        meridiem: "pm",
       }
       expect(helper.compose_expiry_time(time_attr)).to eq(expected_date_time)
     end

@@ -22,7 +22,7 @@ class HiringStaff::VacancyFilter
   def to_h
     {
       managed_organisations: managed_organisations,
-      managed_school_ids: managed_school_ids
+      managed_school_ids: managed_school_ids,
     }
   end
 end

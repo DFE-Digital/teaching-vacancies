@@ -9,7 +9,7 @@ RSpec.describe SendWeeklyAlertEmailJob, type: :job do
     {
       subject: "English",
       working_patterns: %w[full_time],
-      phases: %w[primary secondary]
+      phases: %w[primary secondary],
     }.to_json
   end
 

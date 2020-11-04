@@ -47,7 +47,7 @@ RSpec.describe "Job seekers can apply for a vacancy" do
         datestamp: timestamp.to_s,
         vacancy_id: vacancy.id,
         school_urn: vacancy.parent_organisation.urn,
-        application_link: vacancy.application_link
+        application_link: vacancy.application_link,
       }
 
       expect(AuditExpressInterestEventJob).to receive(:perform_later)

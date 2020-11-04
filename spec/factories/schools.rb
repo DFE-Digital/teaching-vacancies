@@ -20,7 +20,7 @@ FactoryBot.define do
         "ReligiousCharacter (name)": RELIGIOUS_CHARACTERS.sample,
         "SchoolCapacity": Faker::Number.number(digits: 4),
         "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-        "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust"
+        "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust",
       }
     end
     minimum_age { 11 }
@@ -73,7 +73,7 @@ FactoryBot.define do
           "ReligiousCharacter (name)": "Roman Catholic",
           "SchoolCapacity": Faker::Number.number(digits: 4),
           "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-          "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust"
+          "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust",
         }
       end
     end

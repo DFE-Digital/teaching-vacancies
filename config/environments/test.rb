@@ -38,7 +38,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_options = {
-    from: "mail@example.com"
+    from: "mail@example.com",
   }
 
   # Print deprecation notices to the stderr.
@@ -56,4 +56,3 @@ OmniAuth.config.logger = Logger.new("/dev/null")
 OmniAuth.config.on_failure = proc { |env|
   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
 }
-

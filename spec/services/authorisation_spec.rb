@@ -47,7 +47,7 @@ RSpec.describe Authorisation do
         {
           iss: "schooljobs",
           exp: (stubbed_time + 60).to_i,
-          aud: "signin.education.gov.uk"
+          aud: "signin.education.gov.uk",
         },
         "test-password",
         "HS256",

@@ -13,7 +13,7 @@ class ColourLogFormatter < Lograge::Formatters::KeyValue
     db: :magenta,
     session_id: :cyan,
     ip: :cyan,
-    params: :green
+    params: :green,
   }.freeze
 
   def format(key, value)

@@ -23,7 +23,7 @@ private
         family_name: user["familyName"],
         given_name: user["givenName"],
         school_urn: user.dig("organisation", "urn"),
-        organisation_uid: user.dig("organisation", "uid")
+        organisation_uid: user.dig("organisation", "uid"),
       }
     end
   end

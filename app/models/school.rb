@@ -27,7 +27,7 @@ class School < Organisation
     middle_deemed_secondary: %w[middle],
     secondary: %w[secondary],
     sixteen_plus: %w[16-19],
-    all_through: %w[primary secondary 16-19]
+    all_through: %w[primary secondary 16-19],
   }.freeze
 
   def easting=(easting)

@@ -12,7 +12,7 @@ class Api::LocationSuggestionController < Api::ApplicationController
     render json: {
       query: location,
       suggestions: suggestions,
-      matched_terms: matched_terms
+      matched_terms: matched_terms,
     }
   end
 

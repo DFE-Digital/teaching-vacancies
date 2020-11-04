@@ -14,7 +14,7 @@ private
 
   def complex_mappings
     {
-      name: ["Group Name", :titlecase]
+      name: ["Group Name", :titlecase],
     }.freeze
   end
 

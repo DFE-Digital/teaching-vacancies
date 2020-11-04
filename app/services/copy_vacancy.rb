@@ -26,7 +26,7 @@ private
         size: document.size,
         content_type: document.content_type,
         download_url: document_copy.copied.web_content_link,
-        google_drive_id: document_copy.copied.id
+        google_drive_id: document_copy.copied.id,
       })
     end
   end

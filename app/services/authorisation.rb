@@ -52,7 +52,7 @@ private
     payload = {
       iss: "schooljobs",
       exp: (Time.now.getlocal + 60).to_i,
-      aud: "signin.education.gov.uk"
+      aud: "signin.education.gov.uk",
     }
     JWT.encode(payload, dfe_sign_in_password, "HS256")
   end

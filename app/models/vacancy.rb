@@ -7,13 +7,13 @@ class Vacancy < ApplicationRecord
     teacher: 0,
     leadership: 1,
     sen_specialist: 2,
-    nqt_suitable: 3
+    nqt_suitable: 3,
   }.freeze
 
   WORKING_PATTERN_OPTIONS = {
     full_time: 0,
     part_time: 100,
-    job_share: 101
+    job_share: 101,
     # Legacy vacancies can have these options too
     # compressed_hours: 102,
     # staggered_hours: 103
@@ -126,7 +126,7 @@ class Vacancy < ApplicationRecord
       { names: organisations.map(&:name),
         counties: organisations.map(&:county).uniq,
         detailed_school_types: organisations.map { |org|
-                                org.detailed_school_type if org.is_a?(School)
+                                 org.detailed_school_type if org.is_a?(School)
                                } .reject(&:blank?).uniq,
         group_type: organisations.map { |org| org.group_type if org.is_a?(SchoolGroup) }.reject(&:blank?).uniq,
         local_authorities_within: organisations.map(&:local_authority_within).reject(&:blank?).uniq,
@@ -204,7 +204,7 @@ class Vacancy < ApplicationRecord
     listed_free: 1,
     listed_mix: 2,
     not_listed: 3,
-    listed_dont_know: 4
+    listed_dont_know: 4,
   }
   enum hired_status: {
     hired_tvs: 0,
@@ -213,7 +213,7 @@ class Vacancy < ApplicationRecord
     hired_no_listing: 3,
     not_filled_ongoing: 4,
     not_filled_not_looking: 5,
-    hired_dont_know: 6
+    hired_dont_know: 6,
   }
 
   belongs_to :publisher_user, class_name: "User", optional: true
@@ -280,7 +280,7 @@ class Vacancy < ApplicationRecord
 
     {
       lat: organisation.geolocation.x.to_f,
-      lon: organisation.geolocation.y.to_f
+      lon: organisation.geolocation.y.to_f,
     }
   end
 

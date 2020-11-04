@@ -117,7 +117,7 @@ RSpec.describe Subscription, type: :model do
     let(:algolia_search_args) do
       {
         filters: search_filter,
-        hitsPerPage: Search::VacancyAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS
+        hitsPerPage: Search::VacancyAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS,
       }
     end
 

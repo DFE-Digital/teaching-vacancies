@@ -75,7 +75,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
       updated_job_path = @vacancy.published? ? edit_organisation_job_path(vacancy_id) : organisation_job_review_path(vacancy_id)
       redirect_to updated_job_path, success: {
         title: I18n.t("messages.jobs.listing_updated", job_title: job_title),
-        body: I18n.t("messages.jobs.manage_jobs_html", link: helpers.back_to_manage_jobs_link(@vacancy))
+        body: I18n.t("messages.jobs.manage_jobs_html", link: helpers.back_to_manage_jobs_link(@vacancy)),
       }
     end
   end

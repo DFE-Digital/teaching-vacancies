@@ -27,7 +27,7 @@ private
       job_summary: @schema["description"],
       about_school: @schema["hiringOrganization"]["description"],
       suitable_for_nqt: (@schema["occupationalCategory"].split(", ").include?(I18n.t("jobs.job_role_options.nqt_suitable")) ? "yes" : "no"),
-      organisation_vacancies_attributes: [{ organisation: school_by_urn_or_random }]
+      organisation_vacancies_attributes: [{ organisation: school_by_urn_or_random }],
     }
   end
 

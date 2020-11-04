@@ -21,7 +21,7 @@ class NqtJobAlertsForm
     {
       email: email,
       frequency: :daily,
-      search_criteria: nqt_job_alert_hash.to_json
+      search_criteria: nqt_job_alert_hash.to_json,
     }
   end
 
@@ -40,7 +40,7 @@ private
       keyword: "nqt #{keywords}",
       location: location,
       radius: 10,
-      location_category: location_category.presence
+      location_category: location_category.presence,
     }.compact
   end
 

@@ -8,7 +8,7 @@ module DocumentHelper
               document_id: document.id,
               file_name: document[:name],
               target: "modal-default",
-              toggle: "modal"
+              toggle: "modal",
             }
   end
 end

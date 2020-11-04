@@ -31,7 +31,7 @@ class ImportantDatesForm < VacancyForm
       year: expires_on&.year,
       hour: expiry_time_hh,
       min: expiry_time_mm,
-      meridiem: expiry_time_meridiem
+      meridiem: expiry_time_meridiem,
     }
     expiry_time = compose_expiry_time(expiry_time_attr)
     params_with_expiry_time[:expiry_time] = expiry_time unless expiry_time.nil?

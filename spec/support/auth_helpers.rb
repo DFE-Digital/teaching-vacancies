@@ -42,9 +42,9 @@ module AuthHelpers
             id: organisation_id,
             urn: school_urn,
             uid: trust_uid,
-            establishmentNumber: la_code
-          }
-        }
+            establishmentNumber: la_code,
+          },
+        },
       },
     )
   end

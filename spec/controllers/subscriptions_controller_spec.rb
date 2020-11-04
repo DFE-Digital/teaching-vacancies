@@ -20,8 +20,8 @@ RSpec.describe SubscriptionsController, type: :controller do
         subscription_form: {
           email: "foo@email.com",
           frequency: "daily",
-          keyword: "english"
-        }.symbolize_keys
+          keyword: "english",
+        }.symbolize_keys,
       }
     end
     let(:subject) { post :create, params: params }
@@ -49,7 +49,7 @@ RSpec.describe SubscriptionsController, type: :controller do
             email: "<script>foo@email.com</script>",
             frequency: "daily",
             search_criteria: "<body onload=alert('test1')>Text</body>",
-          }
+          },
         }
       end
 
@@ -77,7 +77,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         email: "jimi@hendrix.com",
         frequency: "weekly",
-        keyword: "english"
+        keyword: "english",
       }
     end
     let!(:subject) { put :update, params: { id: subscription.token, subscription_form: params } }

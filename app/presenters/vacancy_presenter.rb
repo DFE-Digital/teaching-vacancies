@@ -92,7 +92,7 @@ class VacancyPresenter < BasePresenter
       expires_on: expires_on,
       starts_on: starts_on,
       school_urn: organisation.urn,
-      school_county: organisation.county
+      school_county: organisation.county,
     }
   end
 

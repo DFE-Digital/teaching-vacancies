@@ -1,14 +1,14 @@
 namespace :data do
-  desc "Import school data"
   namespace :schools do
+    desc "Import school data"
     task import: :environment do
       Rails.logger.debug("Running school import task in #{Rails.env}")
       ImportSchoolDataJob.perform_later
     end
   end
 
-  desc "Import school group data"
   namespace :school_groups do
+    desc "Import school group data"
     task import: :environment do
       Rails.logger.debug("Running school group import task in #{Rails.env}")
       ImportTrustDataJob.perform_later
@@ -17,37 +17,41 @@ namespace :data do
 
   desc "Import location polygons"
   namespace :location_polygons do
+    desc "Import regions location polygons"
     task import_regions: :environment do
       Rails.logger.debug("Running region location polygon import task in #{Rails.env}")
       ImportPolygons.new(location_type: :regions).call
     end
 
+    desc "Import counties location polygons"
     task import_counties: :environment do
       Rails.logger.debug("Running counties location polygon import task in #{Rails.env}")
       ImportPolygons.new(location_type: :counties).call
     end
 
+    desc "Import boroughs location polygons"
     task import_london_boroughs: :environment do
       Rails.logger.debug("Running london boroughs location polygon import task in #{Rails.env}")
       ImportPolygons.new(location_type: :london_boroughs).call
     end
 
+    desc "Import cities location polygons"
     task import_cities: :environment do
       Rails.logger.debug("Running cities location polygon import task in #{Rails.env}")
       ImportPolygons.new(location_type: :cities).call
     end
   end
 
-  desc "Update DfE Sign In users data"
   namespace :users do
+    desc "Update DfE Sign In users data"
     task update: :environment do
       Rails.logger.debug("Running DfE Sign In users update task in #{Rails.env}")
       UpdateDsiUsersInDbJob.perform_later
     end
   end
 
-  desc "Remove Algolia indices"
   namespace :indices do
+    desc "Remove Algolia indices"
     task remove: :environment do
       Rails.logger.debug("Removing indices in #{Rails.env}")
       replicas = Vacancy.index.get_settings["replicas"]

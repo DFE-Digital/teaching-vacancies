@@ -19,7 +19,7 @@ class LocationSuggestion
     predictions = get_suggestions_from_google["predictions"].take(NUMBER_OF_SUGGESTIONS)
     suggestions = predictions.map { |prediction| prediction["description"] }
     matched_terms = predictions.map do |prediction|
-                      prediction["terms"].select { |term| term["offset"].zero? }.map { |hit| hit["value"] }
+      prediction["terms"].select { |term| term["offset"].zero? }.map { |hit| hit["value"] }
     end
     [suggestions, matched_terms]
   end
@@ -48,7 +48,7 @@ private
       input: location_input,
       components: "country:uk",
       type: "geocode",
-      region: "uk"
+      region: "uk",
     }
   end
 end

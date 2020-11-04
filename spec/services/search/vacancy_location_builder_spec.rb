@@ -78,7 +78,7 @@ RSpec.describe Search::VacancyLocationBuilder do
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: (10 * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i
+            radius: (10 * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i,
           })
         end
       end
@@ -92,7 +92,7 @@ RSpec.describe Search::VacancyLocationBuilder do
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
             point_coordinates: Geocoder::DEFAULT_STUB_COORDINATES,
-            radius: (radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i
+            radius: (radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i,
           })
         end
       end
