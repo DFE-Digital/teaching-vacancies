@@ -11,19 +11,14 @@
     = form_for @job_summary_form, url: organisation_job_job_summary_path(@vacancy.id), html: { method: "patch" } do |f|
       = f.govuk_error_summary
 
-      %h2.govuk-heading-l
-        = t('jobs.job_summary')
+      %h2.govuk-heading-l= t('jobs.job_summary')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
-      = f.govuk_text_area :job_summary,
-        label: { text: t('helpers.fieldset.job_summary_form.job_summary_html'), size: 's' },
-        hint: { text: t('helpers.hint.job_summary_form.job_summary') },
-        rows: 10,
-        required: true
+      = f.govuk_text_area :job_summary, label: { size: 's' }, rows: 10, required: true
 
       = f.govuk_text_area :about_school,
-        label: { text: t('helpers.fieldset.job_summary_form.about_organisation_html', organisation: vacancy_about_school_label_organisation(@vacancy)), size: 's' },
+        label: { text: t('helpers.label.job_summary_form.about_organisation_html', organisation: vacancy_about_school_label_organisation(@vacancy)), size: 's' },
         hint: { text: vacancy_about_school_hint_text(@vacancy) },
         value: vacancy_about_school_value(@vacancy),
         rows: 10,

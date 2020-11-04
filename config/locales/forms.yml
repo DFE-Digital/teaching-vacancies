@@ -1,0 +1,116 @@
+en:
+  helpers:
+    hint:
+      application_details_form:
+        application_link: Leave this blank unless candidates can apply directly on the school or council website
+        contact_email: This email address will be shown publicly as a point of contact
+        contact_number: This phone number will be for any questions applicants may have about the role
+        how_to_apply: Explain how to apply for the job, referring to any relevant documents
+        local_authority_visits: >-
+          Explain how a candidate can arrange visits within the local authority (give a phone number if possible)
+        school_visits: Explain how a candidate can arrange a visit to the school (give a phone number if possible)
+        trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
+      copy_vacancy_form:
+        expires_on: For example, 01 05 2020
+        expiry_time: For example, 9:30 am or 11:59 pm (midnight)
+        job_title: >-
+          For secondary school roles include subject and, if relevant,
+          level of seniority ('Subject leader for science', for example).
+        publish_on: For example, 01 01 2020
+        starts_on: For example, 01 09 2020
+      important_dates_form:
+        expires_on: For example, 01 05 2020
+        expiry_time: For example, 9:30 am or 11:59 pm (midnight)
+        publish_on: For example, 01 01 2020
+        starts_on: For example, 01 09 2020
+      job_summary_form:
+        about_organisation: >-
+          This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
+        about_schools: >-
+          Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
+          the %{organisation_type}
+        job_summary: >-
+          Give a brief summary of the job that job seekers can quickly scan.
+          This will be the first thing they see on the listing or in search engine results
+      job_specification_form:
+        job_roles: 'Select all that describe the role'
+        job_title: >-
+          For secondary school roles include subject and, if relevant,
+          level of seniority ('Subject leader for science', for example).
+        subjects_temporary: What subject(s) will the teacher focus on?
+        working_patterns: >-
+          Select all working patterns you will consider for the role.
+          Flexible working options may attract more candidates.
+      organisation_form:
+        description: Jobseekers will see this description of the %{organisation_type} in the job listing
+      pay_package_form:
+        benefits: >-
+          Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
+          for example
+        salary: >-
+          Enter the annual salary or salary range, and/or pay scale range.
+          Where relevant, state if the salary is full-time equivalent
+      supporting_documents_form:
+        supporting_documents: >-
+          These could include, for example, a job description, person specification or application pack
+
+    label:
+      application_details_form:
+        application_link: Link to online application
+        contact_email_html: Contact email (<span class='text-red'>Required</span>)
+        contact_number: Contact phone number
+        how_to_apply: How to apply
+        school_visits: School visits
+        trust_visits: Trust visits
+      copy_vacancy_form:
+        expiry_time_hh: Hour
+        expiry_time_meridiem: am or pm
+        expiry_time_mm: Minute
+        job_title_html: Job title (<span class='text-red'>Required</span>)
+      organisation_form:
+        description: Description of %{organisation_type}
+        website: '%{organisation_type} website'
+      important_dates_form:
+        expiry_time_hh: Hour
+        expiry_time_meridiem: am or pm
+        expiry_time_mm: Minute
+      job_summary_form:
+        about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
+        job_summary_html: Job summary (<span class='text-red'>Required</span>)
+      job_specification_form:
+        job_title_html: Job title (<span class='text-red'>Required</span>)
+        suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
+      pay_package_form:
+        benefits: Employee benefits
+        salary_html: Salary (<span class='text-red'>Required</span>)
+
+    legend:
+      copy_vacancy_form:
+        expires_on_html: Date application is due (<span class='text-red'>Required</span>)
+        publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
+        starts_on: Date job starts
+      important_dates_form:
+        expires_on_html: Date application is due (<span class='text-red'>Required</span>)
+        expiry_time_html: Time application is due (<span class='text-red'>Required</span>)
+        publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
+        starts_on: Date job starts
+      job_location_form:
+        job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
+      job_specification_form:
+        job_roles: Job role
+        suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
+        subjects: Subject(s)
+        working_patterns_html: Working patterns (<span class='text-red'>Required</span>)
+      schools_form:
+        organisation_ids_html: In which schools will the job be based? (<span class='text-red'>Required</span>)
+        organisation_id_html: In which school will the job be based? (<span class='text-red'>Required</span>)
+      supporting_documents_form:
+        supporting_documents_html: >-
+          Would you like to attach supporting documents? (<span class='text-red'>Required</span>)
+
+    options:
+      job_location_form:
+        job_location:
+          at_one_school: At one school in the %{organisation_type}
+          central_office: At the %{organisation_type}'s head office
+          at_multiple_schools: At more than one school in the %{organisation_type}

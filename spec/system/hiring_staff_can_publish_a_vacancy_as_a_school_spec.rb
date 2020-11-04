@@ -156,21 +156,21 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.fieldset.important_dates_form.publish_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.publish_on_html"))) do
           expect(page).to have_content(
             I18n.t("activemodel.errors.models.important_dates_form.attributes.publish_on.blank"),
           )
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.fieldset.important_dates_form.expires_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
           expect(page).to have_content(
             I18n.t("activemodel.errors.models.important_dates_form.attributes.expires_on.blank"),
           )
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.fieldset.important_dates_form.expiry_time_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expiry_time_html"))) do
           expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank"))
         end
       end
@@ -410,7 +410,7 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content("There is a problem")
         end
 
-        within_row_for(text: strip_tags(I18n.t("helpers.fieldset.application_details_form.contact_email_html"))) do
+        within_row_for(text: strip_tags(I18n.t("helpers.label.application_details_form.contact_email_html"))) do
           expect(page).to have_content(
             I18n.t("activemodel.errors.models.application_details_form.attributes.contact_email.blank"),
           )
@@ -983,7 +983,7 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.fieldset.important_dates_form.expires_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
           expect(page).to have_content(
             I18n.t("activemodel.errors.models.important_dates_form.attributes.expires_on.before_today"),
           )

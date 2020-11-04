@@ -230,7 +230,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         edit_date("expires_on", nil)
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.fieldset.important_dates_form.expires_on_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_on_html"))) do
           expect(page).to have_content(
             I18n.t("activemodel.errors.models.important_dates_form.attributes.expires_on.blank"),
           )
@@ -249,7 +249,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         click_on I18n.t("buttons.update_job")
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.fieldset.important_dates_form.expiry_time_html"))) do
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expiry_time_html"))) do
           expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format"))
         end
       end

@@ -13,8 +13,7 @@
     = form_for @form, url: @form_submission_url, html: { method: @form_submission_url_method } do |f|
       = f.govuk_error_summary
 
-      %h2.govuk-heading-l
-        = t('jobs.job_location')
+      %h2.govuk-heading-l= t('jobs.job_location')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
@@ -24,7 +23,6 @@
           :id,
           :name,
           :address,
-          legend: { text: t('helpers.fieldset.schools_form.job_location_html') },
           classes: 'checkbox-label__bold'
 
       - else
@@ -32,8 +30,7 @@
           @organisation_options,
           :id,
           :name,
-          :address,
-          legend: { text: t('helpers.fieldset.school_form.job_location_html') }
+          :address
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/continue_or_update_submit', f: f
 

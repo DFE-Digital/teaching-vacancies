@@ -11,19 +11,13 @@
     = form_for @pay_package_form, url: organisation_job_pay_package_path(@vacancy.id), html: { method: "patch" } do |f|
       = f.govuk_error_summary
 
-      %h2.govuk-heading-l
-        = t('jobs.pay_package')
+      %h2.govuk-heading-l= t('jobs.pay_package')
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/hidden_state_input', f: f
 
-      = f.govuk_text_field :salary,
-        label: { text: t('helpers.fieldset.pay_package_form.salary_html'), size: 's' },
-        hint: { text: t('helpers.hint.pay_package_form.salary') },
-        required: true
+      = f.govuk_text_field :salary, label: { size: 's' }, required: true
 
-      = f.govuk_text_area :benefits,
-        label: { text: t('jobs.benefits'), size: 's' },
-        hint: { text: t('helpers.hint.pay_package_form.benefits') }
+      = f.govuk_text_area :benefits, label: { size: 's' }
 
       = render 'hiring_staff/vacancies/vacancy_form_partials/submit', f: f
 
