@@ -6,15 +6,16 @@
 
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self
-  policy.font_src    :self, "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"
+  policy.font_src    :self, :data, "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"
   policy.img_src     :self, :https, :data
   policy.object_src  :none
   policy.script_src  :self, "https://cdnjs.cloudflare.com", "https://cdn.rollbar.com",
-                     "https://www.googletagmanager.com", "https://maps.googleapis.com"
+                     "https://www.googletagmanager.com", "https://maps.googleapis.com",
+                     "https://www.recaptcha.net"
   # Google Maps embed will not work without 'unsafe-inline' styles
   #   see: https://issuetracker.google.com/issues/132600807
   policy.style_src   :self, "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com", :unsafe_inline
-  policy.connect_src :self, "https://www.google-analytics.com"
+  policy.connect_src :self, "https://www.google-analytics.com", "https://api.postcodes.io"
   # Allow using webpack-dev-server in development
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 
@@ -31,4 +32,4 @@ Rails.application.config.content_security_policy_nonce_directives = %w[script-sr
 # Report CSP violations to a specified URI
 # For further information see the following documentation:
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
-# Rails.application.config.content_security_policy_report_only = true
+Rails.application.config.content_security_policy_report_only = true
