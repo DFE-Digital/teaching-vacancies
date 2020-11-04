@@ -1,0 +1,257 @@
+en:
+  static_pages:
+    accessibility:
+      date_reviewed: This statement was prepared on 12 September 2019. It was last updated on 12 September 2019.
+      enforcement_procedure:
+        text_html: >-
+          The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies
+          (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
+          If you’re not happy with how we respond to your complaint,
+          <a href='https://www.equalityadvisoryservice.com/' class='govuk-link'>contact the Equality Advisory and
+          Support Service (EASS)</a>.
+        title: Enforcement procedure
+      how_accessible:
+        text_html: >-
+          Teaching Vacancies is currently designated as 'partially accessible' according to the
+          <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>Web Content Accessibility
+          Guidelines version (WCAG) 2.1</a> AA standard. All significant issues with accessibility are detailed in the
+          Non-accessible content section, below.
+        title: How accessible Teaching Vacancies is
+      how_we_tested:
+        closing_text:
+          list_html:
+            - the hiring staff journey for listing a job on the service, available at
+              <a href='https://teaching-vacancies.service.gov.uk/identifications/new' target='_blank'
+              class='govuk-link'>https://teaching-vacancies.service.gov.uk/identifications/new</a>
+            - the jobseeker journey for searching for a teaching job and signing up for a job alert, available at
+              <a href='https://teaching-vacancies.service.gov.uk/' target='_blank'
+              class='govuk-link'>https://teaching-vacancies.service.gov.uk/</a>
+          text: "DAC tested:"
+        list:
+          - assistive technologies (eg Jaws 16, NVDA, VoiceOver, Dragon Voice Activation, Keyboard, System inverted
+            colours, Screen Magnification, Colour blind checks, Resizing content)
+          - browser environments (IE11, Firefox, Safari, Chrome)
+          - accessibility user groups (Blind, Deaf, Mobility, Colour blind, Dyslexia, Low Vision, Aspergers,
+            Cognitive Impaired/Panic/Anxiety)
+        opening_text:
+          - This website was last tested on 28 May 2019. The test was carried out by the Digital Accessibility Centre
+            (DAC).
+          - "DAC tested various combinations of the following for both desktop and mobile/tablet users:"
+        title: How we tested this website
+      mission:
+        closing_text: We’ve also made the text on the service as simple as possible to understand.
+        list:
+          - change colours, contrast levels and fonts
+          - zoom in up to 300% without the text spilling off the screen
+          - navigate most of the service using just a keyboard
+          - navigate most of the service using speech recognition software
+          - listen to most of the content on Teaching Vacancies using a screen reader (including the most recent
+            versions of JAWS, NVDA and VoiceOver)
+        opening_text: >-
+          Teaching Vacancies is run by the Department for Education. We want as many people as possible to be able to
+          use the service. For example, that means users should be able to:
+      non_accessible:
+        title: Non-accessible content
+        text: >-
+          A number of issues related to the accessibility of Teaching Vacancies were raised in an accessibility audit
+          conducted in May 2019. Most of these have been corrected but there are still a number of issues the Teaching
+          Vacancies team is working to resolve. When these issues have been resolved we will update this statement and
+          the compliance status of Teaching Vacancies.
+      non_compliance:
+        not_in_scope:
+          heading: "Content that’s not within the scope of the accessibility regulations"
+          issue:
+            text_html: >-
+              <strong class='strong'>Issue</strong>: The colour used to indicate when an element such as a radio
+              button has received focus does not meet the expected ratio.  This is a GDS Design System issue, however,
+              so is not within our scope to correct. Note that a subtle movement effect also helps convey the focus
+              state of a button, for example, so colour contrast is not the only tactic we use for improving
+              distinguishability.<br /><strong class='strong'>Criterion failed</strong>:  1.4.11 Distinguishable:
+              Non-text contrast
+          text: >-
+            The following accessibility issues have been identified but do not fall within the scope of the WCAG 2.1
+            guidelines for the reasons stated.
+        operable:
+          heading: "'Operable'"
+          issue:
+            text_html:
+              - "<strong class='strong'>Issue</strong>: The 'skip to content' link that allows users of assistive
+                technology to skip navigation links and go straight to the main content isn't working in Internet
+                Explorer.<br /><strong class='strong'>Criterion failed</strong>: 2.4.1 Navigable: Bypass Blocks (A)
+                <br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: Some hyperlinks on the service need more useful descriptions
+                for users of screen readers, who require context for each link.<br /><strong class='strong'>Criterion
+                failed</strong>: 2.4.9 Navigable: Link Purpose (Link Only) (AAA)<br /><strong class='strong'>Will be
+                resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: Header text on the page confirming to a user that they've signed
+                up for a job alert skips a heading level (for example, jumping from an h2 level to an h4 level), which
+                can cause confusion for users navigating pages with a screen reader.<br /><strong class='strong'>
+                Criterion failed</strong>: 2.4.10 Navigable: Section headings (AAA)<br /><strong class='strong'>
+                Will be resolved</strong>: October/November 2019"
+          principle: "Principle: User interface components and navigation must be operable."
+        perceivable:
+          heading: "'Perceivable'"
+          issue:
+            text_html:
+              - "<strong class='strong'>Issue</strong>: Some images don’t have a text alternative, so the information
+                in them isn’t available to people using a screen reader.<br /><strong class='strong'>Criterion failed
+                </strong>: 1.1.1 Text Alternatives: Non-text content (AA)<br /><strong class='strong'>Will be
+                resolved</strong>: October/November 2019"
+              - "<strong class='strong'>Issue</strong>: The colour contrast ratio between text and its background colour
+                on certain pages makes text difficult for visually impaired users to read. Increasing the text size will
+                resolve this issue.<br /><strong class='strong'>Criterion failed</strong>: 1.4.3 Distinguishable:
+                Contrast (Minimum) (AA)<br /><strong class='strong'>Will be resolved</strong>: October/November 2019"
+          principle: >-
+            Principle: Information and user interface components must be presentable to users in ways they can
+            perceive.
+        robust:
+          heading: "'Robust'"
+          issue:
+            text_html: >-
+              <strong class='strong'>Issue</strong>: Users of screen readers aren't reliably notified when a page is
+              loading or when jobs have been sorted by date. This leads to the focus remaining stationary.<br />
+              <strong class='strong'>Criterion failed</strong>:  4.1.3 Compatible: Status messages (AA)<br />
+              <strong class='strong'>Will be resolved</strong>: October/November 2019
+          principle: >-
+            Principle: Content must be robust enough that it can be interpreted by a wide variety of user agents,
+            including assistive technologies.
+        text: >-
+          The following accessibility issues have been identified and are grouped here according to which principle of
+          accessibility criteria they fall under in the WCAG 2.1 guidelines.
+        title: Non-compliance with the accessibility regulations
+
+      page_title: Accessibility
+      reporting_accessibility_problems:
+        text_html: >-
+          We’re always looking to improve the accessibility of this service. If you find any problems that aren’t
+          listed on this page or think we’re not meeting accessibility requirements, please email
+          <a href='mailto: %{help_email}' class='govuk-link'>%{help_email}</a> with 'Accessibility issues' in the
+          subject line of the email.
+        title: Reporting accessibility problems with Teaching Vacancies
+      technical_information:
+        text_html:
+          - The Department for Education is committed to making its digital services accessible, in accordance with the
+            Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+          - This website is at present partially compliant with the
+            <a href='https://www.w3.org/TR/WCAG21/' target='_blank' class='govuk-link'>WCAG 2.1</a> AA standard,
+            due to those non-compliance issues listed below that are marked with (A) or (AA).
+        title: Technical information about Teaching Vacancies' accessibility
+      title: Accessibility statement for Teaching Vacancies
+
+    not_authorised:
+      authorised:
+        heading: If you are signing in with an authorised email
+        text_html: >-
+          If you know the email you’ve signed in with is authorised then there could be a technical issue.
+          Please try using a different web browser to sign in or, if this fails, email %{mailto_url} with 'help'
+          in the subject line.
+      intro_html: >-
+        You've tried to sign in with %{email}, which is not authorised to list jobs for this school.
+        If you have an authorised account associated with another email, you must sign %{email} out of DfE Sign-in,
+        then sign into Teaching Vacancies with your authorised email. You can do this at %{signin_url}
+      no_account:
+        heading: If you need an account
+        text_html: >-
+          If you don’t have an authorised Teaching Vacancies account, you can get one if you work at a publicly
+          funded school or trust providing primary or secondary education in England and have your headteacher or
+          CEO’s approval. Just ask them to send your full name and email address to %{mailto_url}. Or email us your
+          details directly, copying in your headteacher or CEO.
+      title: The email you're signed in with isn't authorised to list jobs for this school
+
+    privacy_policy:
+      how_long:
+        text:
+          - The DfE will not keep your personal data longer than we need it for the purpose(s) of research, security
+            and/or delivery of the service, and in any case not longer than 7 years. Your data will be deleted when DfE
+            no longer needs it for these purposes, or when 7 years have passed, whichever comes first.
+          - Partial IP addresses will be deleted after 7 days unless their request caused an error, in which case they
+            remain in our logs for 30 days.
+          - If you share personal information in a job listing we will retain this while the job vacancy is live and for
+            one year after it has expired.
+        title: How long we will keep your personal data
+      how_we_use:
+        text:
+          - If you visit our service your IP address will be used to help us collect information on how you use
+            Teaching Vacancies. We do this to make sure the site is meeting the needs of its users and make
+            improvements.
+          - If you contact us, DfE will use your name and contact information for the purpose of responding to you and
+            providing support. We will not share this information with any other parties.
+          - If you sign up for a job alert your email address will be used exclusively for the purpose of sending you an
+            email when a job meeting your chosen search criteria is published to the service.
+          - To list jobs on the service, hiring staff at schools need a Teaching Vacancies account, which requires them
+            to supply their name and email address. Names and email addresses shared with us for this purpose are not
+            shared by us with other parties.
+          - Information published in job listings may be used by third party job listing sites that use our job listing
+            data via an application programming interface (API), as described in our Terms and Conditions. We are not
+            responsible for how a third party handles any personal information you choose to include in a job listing.
+          - If you indicate in the feedback form that we can contact you for user research then we may use your email
+            for that purpose. It will not be shared with third parties.
+        title: How we will use your information
+      last_updated:
+        text: >-
+          We may need to update this privacy notice so we recommend that you revisit this information from time to time. 
+          This version was last updated on 28 September 2020.
+        title: Last updated
+      page_title: Privacy Policy
+      title: 'Privacy Notice: Teaching Vacancies'
+      withdrawal_of_consent:
+        ico: Information Commissioner’s Office (ICO)
+        line_1_html: If you are unhappy with our use of your personal data, please let us know by emailing %{mailto}.
+        line_2_html: You have the right to raise any concerns with the %{ico_url}.
+        title: Right to lodge a complaint
+      what_we_collect:
+        about: 'We will collect:'
+        cookies_link: Find out more about our cookies policy
+        title: What personal information we will collect
+        list:
+          - your Internet Protocol (IP) address, and details of which version of web browser you used
+          - your name, email and (if applicable) your phone number when you contact us
+          - your email address when you sign up for a job alert
+          - your email address if you include it with feedback to us on the service or agree to be contacted for user
+            research purposes
+          - email addresses that are shared with us by schools for the purposes of creating a Teaching Vacancies account
+            and posting jobs
+          - personal information such as the name and email of a contact person at your school, if you choose to share
+            this in a job listing you post to Teaching Vacancies
+      when_we_collect:
+        about: 'We receive your personal data when you submit it:'
+        list:
+          - when contacting us for support using the service, to leave feedback or for any other matters
+          - as hiring staff in order to create a Teaching Vacancies account
+          - as a contact person for a job that has been listed on Teaching Vacancies
+          - as a jobseeker signing up to emailed job alerts
+        title: When we collect personal information
+      who_we_are:
+        about: >-
+          This work is being carried out by the Department for Education (DfE) Digital, which is a part of DfE.
+          For the purpose of data protection legislation, DfE is the data controller for the personal data processed
+          as part of the Teaching Vacancies service.
+        title: Who we are
+      why_its_lawful:
+        about:
+          - In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the
+            data protection legislation.
+          - For the purpose of the Teacher Vacancies service, your legitimate need to list, search, view and subscribe
+            to job notifications is applied. This is in addition to DfE’s legitimate need to process information to
+            provide such services, and gather data to improve that service including website performance and security.
+        title: Why our use of your personal data is lawful
+      your_rights:
+        title: Your data protection rights
+        line_1: 'You have the right:'
+        list:
+          - to ask us for access to information about you that we hold
+          - to have your personal data rectified, if it is inaccurate or incomplete
+          - to ask us to delete your personal data unless there is a legal reason to continue to store and process it
+          - to restrict our processing of your personal data (i.e. permitting its storage but no further processing)
+          - to object to direct marketing (including profiling) and processing for the purposes of scientific/historical
+            research and statistics
+          - not to be subject to decisions based purely on automated processing where it produces a legal or similarly
+            significant effect on you
+        line_2_html: >-
+          If you need to contact us regarding any of the above, or have any other questions about how your personal
+          information will be used, please %{contact_the_dfe_url}.
+        line_3_html: >-
+          The Information Commissioner's Office makes further information about your data protection rights available in
+          their %{gdpr_url}.
+        contact_the_dfe: contact the DfE
+        gdpr: Guide to the General Data Protection Regulation (GDPR)
