@@ -1,38 +1,79 @@
-# EditorConfig helps developers define and maintain consistent
-# coding styles between different editors and IDEs
-# editorconfig.org
-
 root = true
 
-[*]
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
-indent_style = space
+[*.{html,haml,slim}]
 indent_size = 2
-max_line_length = 120
+indent_style = space
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{css,scss}]
+indent_size = 2
+indent_style = space
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
 
 [*.js]
-indent_style = space
 indent_size = 2
+indent_style = space
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.json]
+indent_size = 2
+indent_style = space
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
 
 [*.rb]
-indent_style = space
 indent_size = 2
-
-[*.hbs]
-insert_final_newline = false
 indent_style = space
-indent_size = 2
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.css]
+[*.sh]
+indent_size = 2
 indent_style = space
-indent_size = 2
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.html]
+[*.{yml,yaml}]
+indent_size = 2
 indent_style = space
-indent_size = 2
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.{diff,md}]
-trim_trailing_whitespace = false
+[Makefile]
+indent_size = 2
+indent_style = tab
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[Gemfile]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[**vendor**]
+indent_size =
+indent_style =
+charset =
+end_of_line =
+insert_final_newline =
+trim_trailing_whitespace =
+max_line_length =
