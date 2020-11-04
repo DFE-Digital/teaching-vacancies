@@ -54,13 +54,8 @@ en:
       body: >-
         We use cookies to collect information about how you use Teaching Vacancies. This helps us to make our service work
         as well as possible and helps us to improve it in the future.
-      buttons:
-        accept_all: Accept all cookies
-        set_preferences: Set your preferences
       heading: Cookies on Teaching Vacancies
     form:
-      buttons:
-        save_changes: Save changes
       legend: Do you want to accept Google Analytics cookies?
       options:
         consent: Yes, opt-in to Google Analytics cookies
@@ -486,7 +481,6 @@ en:
     preview_listing:
       heading: 'Preview this job listing'
       message: 'See how this job listing will appear to jobseekers on Teaching Vacancies'
-      button: 'Preview job listing'
       page_title: 'Preview job listing for %{organisation}'
       summary:
         heading_html: 'Preview of &#8216;%{title}&#8217;'
@@ -499,9 +493,6 @@ en:
             This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
             You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
             class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}
-        buttons:
-          submit: 'Submit for publication'
-          make_changes: 'Make changes'
     submit_listing:
       heading:
         zero: 'Submit this listing for publication now (%{date})'
@@ -510,15 +501,12 @@ en:
         By publishing this job you agree to our <a href='/pages/terms-and-conditions'
         class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have
         provided are, to the best of your knowledge, correct
-      button: 'Confirm and submit job'
     publish_for: 'Publish this listing for '
     publish_for_future: 'Submit this listing for publication on '
     confirmation_summary_html: >-
       By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link'
       target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are,
       to the best of your knowledge, correct.
-    submit: 'Publish now'
-    submit_future: 'Confirm and submit job'
     apply: 'More on how to apply'
     application_link: Link to online application
     application_deadline_hour: 'Hour'
@@ -649,7 +637,6 @@ en:
     comment_hint_text: >-
       <p>Please do not include any information that could identify you personally
       (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
-    submit: 'Submit feedback'
   general_feedback:
     new:
       page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
@@ -873,30 +860,6 @@ en:
       This page is an event log used by the service team to measure and monitor the stability and performance of
       Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018
       (the date we began recording statistics).
-  buttons:
-    accept_and_continue: Accept and continue
-    apply_filters: Apply filters
-    back: Back
-    back_to_manage_jobs: Back to manage jobs
-    cancel: Cancel
-    cancel_copy: Cancel copy
-    cancel_and_return: Cancel and return
-    change: Change
-    continue: Continue
-    create_job: Create a job listing
-    delete: Delete
-    dismiss: Dismiss
-    find: Find
-    go_to_teaching_vacancies: Go to Teaching Vacancies
-    hide_filters: Hide filters
-    save_and_return_later: Save and return later
-    save_changes: Save changes
-    search: Search
-    skip_this_step: Skip this step
-    submit: Submit
-    subscribe: Subscribe
-    update_job: Update listing
-    update_alert: Update alert
 
   messages:
     jobs:

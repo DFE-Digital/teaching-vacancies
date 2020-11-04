@@ -1,4 +1,36 @@
 en:
+  buttons:
+    accept_all_cookies: Accept all cookies
+    accept_and_continue: Accept and continue
+    apply_filters: Apply filters
+    back: Back
+    back_to_manage_jobs: Back to manage jobs
+    cancel: Cancel
+    cancel_copy: Cancel copy
+    cancel_and_return: Cancel and return
+    change: Change
+    continue: Continue
+    create_job: Create a job listing
+    delete: Delete
+    dismiss: Dismiss
+    find: Find
+    go_to_teaching_vacancies: Go to Teaching Vacancies
+    hide_filters: Hide filters
+    make_changes: Make changes
+    preview_job_listing: Preview job listing
+    save_and_return_later: Save and return later
+    save_changes: Save changes
+    search: Search
+    set_preferences: Set your preferences
+    skip_this_step: Skip this step
+    submit: Submit
+    submit_feedback: Submit feedback
+    submit_job_listing: Confirm and submit job
+    submit_for_publication: Submit for publication
+    subscribe: Subscribe
+    update_job: Update listing
+    update_alert: Update alert
+
   helpers:
     hint:
       application_details_form:

@@ -16,7 +16,7 @@ RSpec.describe "Cookies consent" do
     scenario "can accept all cookies" do
       visit root_path_with_utm_parameters
 
-      click_on I18n.t("cookies.banner.buttons.accept_all")
+      click_on I18n.t("buttons.accept_all_cookies")
 
       expect(page).to have_current_path(root_path_with_utm_parameters)
       expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -28,12 +28,12 @@ RSpec.describe "Cookies consent" do
     describe "setting your preferences" do
       before do
         visit jobs_path_with_utm_parameters
-        click_on I18n.t("cookies.banner.buttons.set_preferences")
+        click_on I18n.t("buttons.set_preferences")
       end
 
       scenario "can consent to cookies" do
         find("#cookies-preferences-form-cookies-consent-yes-field").click
-        click_on I18n.t("cookies.form.buttons.save_changes")
+        click_on I18n.t("buttons.save_changes")
 
         expect(page).to have_current_path(jobs_path_with_utm_parameters)
         expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -44,7 +44,7 @@ RSpec.describe "Cookies consent" do
 
       scenario "can not consent to cookies" do
         find("#cookies-preferences-form-cookies-consent-no-field").click
-        click_on I18n.t("cookies.form.buttons.save_changes")
+        click_on I18n.t("buttons.save_changes")
 
         expect(page).to have_current_path(jobs_path_with_utm_parameters)
         expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -54,7 +54,7 @@ RSpec.describe "Cookies consent" do
       end
 
       scenario "renders error if no option selected" do
-        click_on I18n.t("cookies.form.buttons.save_changes")
+        click_on I18n.t("buttons.save_changes")
 
         expect(page).to have_current_path(cookies_preferences_path)
         expect(page).to have_content(I18n.t("cookies_preferences_errors.cookies_consent.inclusion"))
@@ -65,7 +65,7 @@ RSpec.describe "Cookies consent" do
   scenario "can accept all cookies" do
     visit root_path
 
-    click_on I18n.t("cookies.banner.buttons.accept_all")
+    click_on I18n.t("buttons.accept_all_cookies")
 
     expect(page).to have_current_path(root_path)
     expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -77,12 +77,12 @@ RSpec.describe "Cookies consent" do
   describe "setting your preferences" do
     before do
       visit jobs_path
-      click_on I18n.t("cookies.banner.buttons.set_preferences")
+      click_on I18n.t("buttons.set_preferences")
     end
 
     scenario "can consent to cookies" do
       find("#cookies-preferences-form-cookies-consent-yes-field").click
-      click_on I18n.t("cookies.form.buttons.save_changes")
+      click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(jobs_path)
       expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -93,7 +93,7 @@ RSpec.describe "Cookies consent" do
 
     scenario "can not consent to cookies" do
       find("#cookies-preferences-form-cookies-consent-no-field").click
-      click_on I18n.t("cookies.form.buttons.save_changes")
+      click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(jobs_path)
       expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -103,7 +103,7 @@ RSpec.describe "Cookies consent" do
     end
 
     scenario "renders error if no option selected" do
-      click_on I18n.t("cookies.form.buttons.save_changes")
+      click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(cookies_preferences_path)
       expect(page).to have_content(I18n.t("cookies_preferences_errors.cookies_consent.inclusion"))
@@ -115,7 +115,7 @@ RSpec.describe "Cookies consent" do
       visit cookies_preferences_path
 
       find("#cookies-preferences-form-cookies-consent-yes-field").click
-      click_on I18n.t("cookies.form.buttons.save_changes")
+      click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(root_path)
       expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
@@ -126,7 +126,7 @@ RSpec.describe "Cookies consent" do
     scenario "must re-set cookies_preferences" do
       visit root_path
 
-      click_on I18n.t("cookies.banner.buttons.accept_all")
+      click_on I18n.t("buttons.accept_all_cookies")
 
       expect(page).to have_current_path(root_path)
       expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
