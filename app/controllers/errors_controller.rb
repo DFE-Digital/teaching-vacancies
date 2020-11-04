@@ -1,6 +1,6 @@
 class ErrorsController < ApplicationController
   skip_before_action :verify_authenticity_token,
-                     only: %i[not_found unprocessable_entity internal_server_error]
+                     only: %i[not_found unprocessable_entity internal_server_error csp_violation]
 
   def unauthorised
     respond_to do |format|
@@ -30,5 +30,10 @@ class ErrorsController < ApplicationController
       format.html { render status: :internal_server_error }
       format.json { render json: { error: "Internal server error" }, status: :internal_server_error }
     end
+  end
+
+  def csp_violation
+    Rollbar.error("CSP Violation", details: request.raw_post)
+    head :no_content
   end
 end

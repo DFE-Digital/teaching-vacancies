@@ -21,4 +21,13 @@ RSpec.describe ErrorsController, type: :controller do
       expect(response).to have_http_status(:internal_server_error)
     end
   end
+
+  describe "POST #csp_violation" do
+    it "sends the error to Rollbar" do
+      expect(Rollbar).to receive(:error).with("CSP Violation", details: { foo: "bar" })
+
+      post :csp_violation, { body: { foo: "bar" } }
+      expect(response).to have_http_status(:no_content)
+    end
+  end
 end

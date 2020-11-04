@@ -30,7 +30,7 @@
     = csrf_meta_tags
   %body{ class: body_class, data: { vacancy_state: @vacancy.present? ? @vacancy.state : 'create' } }
     = render partial: 'shared/google_tag_manager_body' if cookies['consented-to-cookies'] == 'yes'
-    :javascript
+    = javascript_tag(nonce: true) do
       document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     = render 'shared/skip_links'
     = render 'layouts/cookies_banner' unless controller_name == 'cookies_preferences' || cookies_preference_set?
