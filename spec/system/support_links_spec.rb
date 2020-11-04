@@ -1,36 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "A visitor to the website can access the support links" do
-  describe "the cookie policy" do
-    before do
-      allow(CookiesBannerFeature).to receive(:enabled?).and_return(cookies_banner_feature)
-    end
-
-    context "when CookiesBannerFeature is enabled" do
-      let(:cookies_banner_feature) { true }
-
-      scenario "can access cookies policy" do
-        visit root_path
-        click_on "Cookies"
-
-        expect(page.current_path).to eql(cookies_preferences_path)
-      end
-    end
-
-    context "when CookiesBannerFeature is disabled" do
-      let(:cookies_banner_feature) { false }
-
-      scenario "can access cookies policy" do
-        visit root_path
-        click_on "Cookies"
-
-        expect(page).to have_content("Cookies")
-        expect(page).to have_content("Teaching Vacancies puts small files (known as 'cookies') onto your computer " \
-                                     "to collect information about how you use the service.")
-      end
-    end
-  end
-
   scenario "the privacy policy" do
     visit root_path
     click_on "Privacy policy"

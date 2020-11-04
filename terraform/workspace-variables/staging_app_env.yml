@@ -6,7 +6,6 @@ DFE_SIGN_IN_REDIRECT_URL: https://staging.teaching-vacancies.service.gov.uk/auth
 DFE_SIGN_IN_URL: https://test-api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: staging.teaching-vacancies.service.gov.uk
-FEATURE_COOKIES_BANNER: true
 FEATURE_LOCAL_AUTHORITY_ACCESS: true
 FEATURE_READ_ONLY: false
 GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
