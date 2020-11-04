@@ -59,8 +59,42 @@ IF
   TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
         '$.job_title'))," ") AS job_title,
   TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
-        '$.keyword'))," ") AS keyword
+        '$.keyword'))," ") AS keyword,
+  (
+  SELECT
+    COUNT(DISTINCT alertrun.id)
+  FROM
+    `teacher-vacancy-service.production_dataset.CALCULATED_daily_users_from_cloudfront_logs` AS user
+  LEFT JOIN
+    `teacher-vacancy-service.production_dataset.feb20_alertrun` AS alertrun
+  ON
+    user.utm_source=alertrun.id
+  WHERE
+    "vacancy" IN UNNEST(user.job_alert_destinations)
+    AND alertrun.subscription_id=subscription.id
+    AND alertrun.run_on >= '2020-10-28' ) AS number_of_alert_emails_clicked_on,
+  (
+  SELECT
+    COUNT(DISTINCT alertrun.id)
+  FROM
+    `teacher-vacancy-service.production_dataset.CALCULATED_daily_users_from_cloudfront_logs` AS user
+  LEFT JOIN
+    `teacher-vacancy-service.production_dataset.feb20_alertrun` AS alertrun
+  ON
+    user.utm_source=alertrun.id
+  WHERE
+    "edit" IN UNNEST(user.job_alert_destinations)
+    AND alertrun.subscription_id=subscription.id
+    AND alertrun.run_on >= '2020-10-28' ) AS number_of_edit_clicks,
+  (
+  SELECT
+    COUNT(DISTINCT alertrun.id)
+  FROM
+    `teacher-vacancy-service.production_dataset.feb20_alertrun` AS alertrun
+  WHERE
+    alertrun.subscription_id=subscription.id
+    AND alertrun.run_on >= '2020-10-28' ) AS number_of_alert_emails_sent
 FROM
-  `teacher-vacancy-service.production_dataset.feb20_subscription`
+  `teacher-vacancy-service.production_dataset.feb20_subscription` AS subscription
 ORDER BY
   created_date DESC
