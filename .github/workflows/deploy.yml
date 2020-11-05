@@ -15,7 +15,7 @@ env:
 
 jobs:
   turnstyle:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     timeout-minutes: 20
     steps:
     - uses: softprops/turnstyle@v1
@@ -28,7 +28,7 @@ jobs:
   deploy:
     name: build docker image and deploy
     needs: turnstyle
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
