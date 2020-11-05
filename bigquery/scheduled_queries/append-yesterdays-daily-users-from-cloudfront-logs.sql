@@ -19,7 +19,7 @@ WITH
     SELECT
       MAX(date)
     FROM
-      `teacher-vacancy-service.production_dataset.CALCULATED_daily_users_from_cloudfront_logs`)<DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY) #in case something breaks - don't append anything if it looks like we already appended yesterday's users
+      `teacher-vacancy-service.production_dataset.CALCULATED_daily_users_from_cloudfront_logs`) < DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY) #in case something breaks - don't append anything if it looks like we already appended yesterday's users
     )
 SELECT
   *,
@@ -60,6 +60,9 @@ FROM (
     all_logs.date,
     first_page.time,
     type,
+    number_of_unique_pageviews,
+    number_of_unique_pageviews <= 1 AS bounced,
+    created_job_alert,
     device_category,
     search_parameters,
     vacancies_viewed_slugs,
@@ -90,6 +93,8 @@ FROM (
       (LOGICAL_OR(cs_uri_stem LIKE "/organisation%"),
         "hiring staff",
         "jobseeker") AS type,
+      COUNT(DISTINCT CONCAT(cs_uri_stem,cs_uri_query)) AS number_of_unique_pageviews,
+      COUNTIF(cs_uri_stem = "/subscriptions") > 0 AS created_job_alert,
       ARRAY_AGG(DISTINCT
       IF
         (cs_uri_stem = "/jobs"
