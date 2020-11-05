@@ -25,17 +25,17 @@ $govuk-image-url-function: frontend-image-url;
 @import 'global/ie';
 @import 'global/variables';
 
-@import 'application/shared/banners';
-@import 'application/shared/checkboxGroup';
-@import 'application/shared/form';
-@import 'application/shared/modal';
-@import 'application/shared/navigation';
-@import 'application/shared/pagination';
-@import 'application/shared/school';
-@import 'application/shared/signin';
-@import 'application/shared/steps';
-@import 'application/shared/tabs';
-@import 'application/shared/timeline'; 
+@import 'application/banners';
+@import 'application/checkboxGroup';
+@import 'application/form';
+@import 'application/modal';
+@import 'application/navigation';
+@import 'application/pagination';
+@import 'application/school';
+@import 'application/signin';
+@import 'application/steps';
+@import 'application/tabs';
+@import 'application/timeline'; 
 
 @import 'application/jobSeekers/cookies-banner';
 @import 'application/jobSeekers/feedback-form';
