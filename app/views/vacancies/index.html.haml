@@ -19,7 +19,7 @@
           = t('jobs.number_of_results_one_page_html', count: @vacancies_search.stats[2])
         - else
           = t('jobs.number_of_results_html', first: @vacancies_search.stats[0], last: @vacancies_search.stats[1], count: @vacancies_search.stats[2])
-    #vacancies-hits{ 'aria-label': 'Search results' }
+    #search-results{ 'aria-label': 'Search results' }
       - if @vacancies.any?
         %ul.vacancies{ 'role': 'list' }
           - @vacancies.each do |vacancy|
