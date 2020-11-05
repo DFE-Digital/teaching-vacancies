@@ -4,7 +4,7 @@ import '../../lib/polyfill/after.polyfill';
 import '../../lib/polyfill/remove.polyfill';
 import loader from '../loader/loader';
 import { getPostcodeFromCoordinates } from '../../lib/api';
-import { enableRadiusSelect, disableRadiusSelect } from '../../application/search/radius';
+import { enableRadiusSelect, disableRadiusSelect } from '../../application/jobSeekers/radius';
 import Rollbar from '../../lib/logging';
 import './locationFinder.scss';
 

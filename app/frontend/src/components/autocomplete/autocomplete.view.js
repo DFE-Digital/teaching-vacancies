@@ -1,7 +1,7 @@
 import '../../lib/polyfill/after.polyfill';
 import './autocomplete.scss';
 
-import { onChange as locationChange } from '../../application/search/location';
+import { onChange as locationChange } from '../../application/jobSeekers/location';
 
 export const create = (container, input, key) => {
   if (!getRenderedList(container)) {
