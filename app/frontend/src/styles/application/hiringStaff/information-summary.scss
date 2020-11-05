@@ -21,3 +21,13 @@
   display: block;
   float: right;
 }
+
+.govuk-success-summary {
+  @extend .govuk-error-summary;
+  border-color: #00703c;
+}
+
+.govuk-success-summary__dismiss-link {
+  display: block;
+  float: right;
+}
