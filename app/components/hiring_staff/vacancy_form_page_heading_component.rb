@@ -24,6 +24,8 @@ private
   attr_reader :session_job_location, :session_readable_job_location, :vacancy
 
   def page_title_no_vacancy
+    return I18n.t("jobs.create_a_job_title_no_org") unless current_organisation.is_a?(School) || current_step > 1
+
     organisation_for_title =
       if session_job_location == "at_one_school"
         session_readable_job_location
