@@ -32,7 +32,7 @@ RSpec.describe HiringStaff::VacancyFormPageHeadingComponent, type: :component do
       let(:state) { "copy" }
 
       it "does not show the current step" do
-        expect(rendered_component).not_to include(I18n.t("jobs.current_step", step: 100, total: 101))
+        expect(rendered_component).not_to include("Step")
       end
     end
   end
