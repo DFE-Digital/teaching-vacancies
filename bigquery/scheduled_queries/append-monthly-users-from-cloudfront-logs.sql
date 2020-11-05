@@ -20,7 +20,26 @@ WITH
     #only append users from last month (if it's the first day of the month) or this month (for days 2-31)
     DATE_TRUNC(date, MONTH) = DATE_TRUNC(CURRENT_DATE() - 1, MONTH) ) (
   SELECT
-    *,
+    month,
+    type,
+    device_category,
+    search_parameters,
+    vacancies_viewed_slugs,
+    vacancies_with_gmi_clicks_ids,
+    utm_source,
+    utm_campaign,
+    utm_medium,
+    job_alert_destination_links,
+    job_alert_destinations,
+    viewed_a_vacancy,
+    clicked_get_more_information,
+    from_job_alert,
+    unique_searches,
+    vacancies_viewed,
+    vacancies_with_gmi_clicks,
+    referrer,
+    landing_page_stem,
+    landing_page_query,
     CASE
       WHEN utm_campaign LIKE "%alert%" THEN "Job alert"
       WHEN LOWER(utm_medium) LIKE "%email%" THEN "Email"
@@ -52,6 +71,7 @@ WITH
     "Direct"
   END
     AS medium,
+    created_job_alert,
   FROM (
     SELECT
       all_logs.month,
@@ -76,7 +96,8 @@ WITH
         NULL,
         first_page.referrer) AS referrer,
       first_page.stem AS landing_page_stem,
-      first_page.query AS landing_page_query
+      first_page.query AS landing_page_query,
+      created_job_alert
     FROM (
       SELECT
         month,
@@ -86,6 +107,7 @@ WITH
         (LOGICAL_OR(cs_uri_stem LIKE "/organisation%"),
           "hiring staff",
           "jobseeker") AS type,
+        COUNTIF(cs_uri_stem = "/subscriptions") > 0 AS created_job_alert,
         ARRAY_AGG(DISTINCT
         IF
           (cs_uri_stem = "/jobs"
@@ -154,7 +176,28 @@ WITH
     device_category != "bot")
 UNION ALL (
   SELECT
-    *
+    month,
+    type,
+    device_category,
+    search_parameters,
+    vacancies_viewed_slugs,
+    vacancies_with_gmi_clicks_ids,
+    utm_source,
+    utm_campaign,
+    utm_medium,
+    job_alert_destination_links,
+    job_alert_destinations,
+    viewed_a_vacancy,
+    clicked_get_more_information,
+    from_job_alert,
+    unique_searches,
+    vacancies_viewed,
+    vacancies_with_gmi_clicks,
+    referrer,
+    landing_page_stem,
+    landing_page_query,
+    medium,
+    created_job_alert
   FROM
     `teacher-vacancy-service.production_dataset.CALCULATED_monthly_users_from_cloudfront_logs`
   WHERE
