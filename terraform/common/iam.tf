@@ -29,6 +29,10 @@ data aws_iam_policy_document edit_terraform_state {
     resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
   }
   statement {
+    actions   = ["s3:DeleteObject"]
+    resources = ["arn:aws:s3:::${var.s3_bucket_name}/:review/*"]
+  }
+  statement {
     actions   = ["s3:ListBucket"]
     resources = ["arn:aws:s3:::${var.s3_bucket_name}"]
   }
