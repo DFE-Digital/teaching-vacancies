@@ -19,7 +19,7 @@ RSpec.describe "Cookies consent" do
       click_on I18n.t("buttons.accept_all_cookies")
 
       expect(page).to have_current_path(root_path_with_utm_parameters)
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
       visit cookies_preferences_path
       expect(find("#cookies-preferences-form-cookies-consent-yes-field")).to be_checked
@@ -36,7 +36,7 @@ RSpec.describe "Cookies consent" do
         click_on I18n.t("buttons.save_changes")
 
         expect(page).to have_current_path(jobs_path_with_utm_parameters)
-        expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+        expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
         visit cookies_preferences_path
         expect(find("#cookies-preferences-form-cookies-consent-yes-field")).to be_checked
@@ -47,7 +47,7 @@ RSpec.describe "Cookies consent" do
         click_on I18n.t("buttons.save_changes")
 
         expect(page).to have_current_path(jobs_path_with_utm_parameters)
-        expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+        expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
         visit cookies_preferences_path
         expect(find("#cookies-preferences-form-cookies-consent-no-field")).to be_checked
@@ -68,7 +68,7 @@ RSpec.describe "Cookies consent" do
     click_on I18n.t("buttons.accept_all_cookies")
 
     expect(page).to have_current_path(root_path)
-    expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+    expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
     visit cookies_preferences_path
     expect(find("#cookies-preferences-form-cookies-consent-yes-field")).to be_checked
@@ -85,7 +85,7 @@ RSpec.describe "Cookies consent" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(jobs_path)
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
       visit cookies_preferences_path
       expect(find("#cookies-preferences-form-cookies-consent-yes-field")).to be_checked
@@ -96,7 +96,7 @@ RSpec.describe "Cookies consent" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(jobs_path)
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
       visit cookies_preferences_path
       expect(find("#cookies-preferences-form-cookies-consent-no-field")).to be_checked
@@ -118,7 +118,7 @@ RSpec.describe "Cookies consent" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_current_path(root_path)
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
     end
   end
 
@@ -129,13 +129,13 @@ RSpec.describe "Cookies consent" do
       click_on I18n.t("buttons.accept_all_cookies")
 
       expect(page).to have_current_path(root_path)
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
 
       travel_to 7.months.from_now
 
       visit root_path
 
-      expect(page).to have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
     end
   end
 end

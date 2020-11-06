@@ -8,6 +8,7 @@ en:
     jobs:
       action_required:
         heading: Action required
+        label: action required
         message: You must complete the required actions below in order to publish this listing
       already_published: This job has already been published
       delete_html: >-
@@ -23,8 +24,13 @@ en:
         submitted_html: <span class="govuk-!-font-weight-bold">Feedback submitted</span> for %{job_title}
       listing_updated: Listing updated for %{job_title}
       manage_jobs_html: Back to <a href="%{link}" class="govuk-link govuk-link--no-visited-state">manage jobs</a>
+      multi_school_job_notification_html: >-
+        This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the
+        %{organisation_type}</span>. You can find out more in
+        <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
       new_attributes:
         heading: New sections
+        label: new
         message: Improve your job listing using the new sections and features below
       view:
         only_published: You can only view published jobs

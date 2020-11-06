@@ -1,4 +1,4 @@
 - attributes.each do |attribute|
   - if new_attributes(@vacancy).include?(attribute)
-    %strong.govuk-tag.notification-tag{ class: "new--#{section}" }= t('jobs.notifications.labels.new')
+    %strong.govuk-tag.notification-tag{ class: "new--#{section}" }= t('messages.jobs.new_attributes.label')
     - break

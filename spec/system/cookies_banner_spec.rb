@@ -10,14 +10,14 @@ RSpec.describe "Cookies banner" do
 
   scenario "displays cookies banner" do
     within ".cookies-banner" do
-      expect(page).to have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
     end
   end
 
   context "when visiting cookies_preferences page" do
     scenario "does not display cookies banner" do
       visit cookies_preferences_path
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe "Cookies banner" do
     let(:cookies_preference_set) { true }
 
     scenario "does not display cookies banner" do
-      expect(page).to_not have_content(I18n.t("cookies.banner.heading"))
+      expect(page).to_not have_content(I18n.t("cookies_preferences.banner.heading"))
     end
   end
 end

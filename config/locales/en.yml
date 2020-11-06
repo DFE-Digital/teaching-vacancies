@@ -1,28 +1,17 @@
 en:
-  date:
-    formats:
-      hinttext: "%d %-m %Y"
-      default: '%e %B %Y'
-  datetime:
-    formats:
-      default: '%e %B %Y %H:%M'
-  number:
-    currency:
-      format:
-        unit: "£"
-        precision: 0
-        delimiter: ','
   app:
-    title: 'Teaching Vacancies'
-    menu: 'Menu'
     description: >-
       On Teaching Vacancies, NQTs, experienced teachers and leaders can search for a job at a school or Trust in England
       and set up job alerts.
-    govuk: 'GOV.UK'
+    govuk: GOV.UK
+    menu: Menu
+    title: Teaching Vacancies
+
   breadcrumbs:
     home: Home
     jobs: Search results
-  cookies:
+
+  cookies_preferences:
     banner:
       aria:
         label: Cookies banner
@@ -35,7 +24,7 @@ en:
       options:
         consent: Yes, opt-in to Google Analytics cookies
         no_consent: No, do not use cookies to track my website usage
-    page:
+    new:
       body:
         anonymity: >-
           We don't allow Google to use or share our analytics data. We anonymise any personally identifiable data,
@@ -52,19 +41,18 @@ en:
           We do this to make sure the site is meeting the needs of our users and to help us make improvements
           based on those needs.
         usage:
-          heading: How we use cookies
           essential:
             heading: Essential cookies
             intro: 'Essential Teaching Vacancies cookies include:'
             table:
-              header:
-                expires: Expires
-                name: Name
-                purpose: Purpose
               consent:
                 expires: 6 months
                 name: consented-to-cookies
                 purpose: Saves your cookie consent settings
+              header:
+                expires: Expires
+                name: Name
+                purpose: Purpose
               teaching_vacancies:
                 expires: When you close your browser
                 name: _teachingvacancies_session
@@ -93,6 +81,7 @@ en:
                 expires: 10 minutes
                 name: _gat_UA_145652997-2
                 purpose: Used to regulate how quickly data is passed to Google Analytics
+          heading: How we use cookies
         service:
           feedback: Your feedback
           heading: Our service
@@ -103,23 +92,85 @@ en:
       heading: Cookies
       subheading: Cookies that measure website use
       title: Cookies
+    page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
+
+  date:
+    formats:
+      default: "%e %B %Y"
+      hinttext: "%d %-m %Y"
+
+  datetime:
+    formats:
+      default: "%e %B %Y %H:%M"
+
+  error_pages:
+    not_found: Page not found.
+    server_error: Sorry, there’s a technical issue at our end
+    trashed_vacancy_found: Page not found.
+    unauthorised:
+      footer: >-
+        If you still can’t access this page, or you haven’t yet been authorised, please email
+        teaching.vacancies@education.gov.uk
+      options:
+        - checking the URL is correct
+        - logging out of Teaching Vacancies and signing in again
+        - reloading or refreshing the page
+        - <a href="https://support.google.com/accounts/answer/32050" class="govuk-link">deleting your browser’s cache</a>
+      text_html: >-
+        <p>You need authorisation to be able to see this page.</p>
+        <p>If you have already been given access, you can try fixing this problem by:</p>
+      title: We were unable to authorise your request.
+    unprocessable_entity: We're unable to process your request.
+
+  feedback:
+    comment_hint_text: >-
+      <p>Please do not include any information that could identify you personally
+      (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
+    comment_label_html: How could we improve this service? (<span class='text-red'>Required</span>)
+    heading: Give feedback
+    page_title: Feedback
+    rating_legend: Overall, how did you feel about the service you received today?
+    rating1_option: Very dissatisfied
+    rating2_option: Dissatisfied
+    rating3_option: Neither satisfied or dissatisfied
+    rating4_option: Satisfied
+    rating5_option: Very satisfied
+
+  footer:
+    for_job_seekers: For job seekers
+    for_schools: For schools
+    list_a_teaching_job: List a teaching job
+    provide_feedback: Give feedback
+    request_support: Report problems via email
+    search_teaching_vacancies: Find a teaching job
+    service_support: Service support
+    updates: Updates
+
+  general_feedback:
+    new:
+      page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
+    visit_purpose_legend_html: What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)
+    user_interested_email_heading_html: What is your email address? (<span class="text-red">Required</span>)
+    user_interested_email_text: >-
+      We'll only use this to tell you about opportunities to take part in user research that helps us improve
+      Department for Education services.
+    user_participation_legend_html: >-
+      Would you like to participate in our research? (<span class='text-red'>Required</span>)
+    user_participation_options:
+      interested: 'Yes'
+      not_interested: 'No'
+    visit_purpose_hint_text: >-
+      Please tell us what you came here to do. Do not include any information that could identify you personally
+      (such as your name or the name of your school).
+    visit_purpose_options:
+      find_teaching_job: Find a job in teaching
+      list_teaching_job: List a teaching job on the service
+      other_purpose: Something else
+
+  help:
+    email: teaching.vacancies@education.gov.uk
 
   hiring_staff:
-    managed_organisations:
-      page_title: Manage your view
-      panel:
-        title: Manage your view for %{organisation}
-        body: You can now see job listings from all schools in your %{organisation_type}, or choose to see specific schools' listings
-      options:
-        all: All schools and trust head office
-        all_schools: All schools
-        school_group: Trust head office
-      labels:
-        select_organisations: Select which schools' job listings you would like to see
-        select_organisations_html: >-
-          Select which schools' job listings you would like to view (<span class='text-red'>Required</span>)
-      hints:
-        select_organisations: You can change this later from your dashboard using the filters
     identifications:
       new:
         page_description: If you already have a Teaching Vacancies account you can sign in to the service here.
@@ -135,16 +186,34 @@ en:
     organisations:
       aria_change_description: '%{organisation_type} description'
       aria_change_website: '%{organisation_type} website'
+      managed_organisations:
+        show:
+          hints:
+            select_organisations: You can change this later from your dashboard using the filters
+          labels:
+            select_organisations: Select which schools' job listings you would like to see
+            select_organisations_html: >-
+              Select which schools' job listings you would like to view (<span class='text-red'>Required</span>)
+          options:
+            all: All schools and trust head office
+            all_schools: All schools
+            school_group: Trust head office
+          page_title: Manage your view
+          panel:
+            title: Manage your view for %{organisation}
+            body: >-
+              You can now see job listings from all schools in your %{organisation_type}, or choose to see specific
+              schools' listings
       schools:
         index:
           contact_support: contact our support team
-          title: Schools in your %{organisation_type}
           description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
-          schools: Schools (%{count})
           missing_information_title: Is information missing or incorrect?
           missing_information_description_html: >-
             If a school in your %{organisation_type} is missing from this list,
             or the information isn't correct, please %{mail_to}.
+          schools: Schools (%{count})
+          title: Schools in your %{organisation_type}
         edit:
           title: Change %{organisation_type} details
       readable_job_location:
@@ -152,68 +221,101 @@ en:
         at_multiple_schools_with_count: More than one school (%{count})
         central_office: Trust head office
     temp_login:
-      heading: Temporary login
-      please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
       check_your_email:
-        page_title: Check your email
+        check_spam_html: >-
+          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
         heading: Check your email
+        page_title: Check your email
         sent: >-
           If your email address is in our database, we’ve sent you an email.
           Click on the link to confirm your address and return to this service.
           You do not need to keep this page open.
-        check_spam_html: >-
-          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
-      email:
-        subject: Sign in to Teaching Vacancies
-        heading: Sign in to Teaching Vacancies
-        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
       choose_organisation:
-        page_title: Choose your organisation
-        heading: Choose your organisation
         denial:
           title: Sign in unsuccessful
           expired_html: The login link you used has expired. Please %{try_again}.
           no_key_html: The login link you used was not recognised. Please %{try_again}.
           no_orgs_html: >-
-            The login link you used is not associated with any organisations. Unfortunately, we cannot associate your account with an
-            organisation until DfE Sign In is working as normal. Please %{try_again} later.
+            The login link you used is not associated with any organisations. Unfortunately, we cannot associate your
+            account with an organisation until DfE Sign In is working as normal. Please %{try_again} later.
+        heading: Choose your organisation
+        page_title: Choose your organisation
         please_select: >-
           You are associated with more than one organisation. Please select the one you wish to sign in with.
+      email:
+        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
+        heading: Sign in to Teaching Vacancies
+        subject: Sign in to Teaching Vacancies
+      heading: Temporary login
       not_authorised: You are not authorised to log in
+      please_use_email: DfE Sign In is experiencing problems. Please sign in using your email address.
 
   job_alert_feedbacks:
     edit:
+      heading: Further feedback
       form:
-        labels:
-          comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
         hints:
           comment: This is optional, but the information will help us to make improvements.
-      heading: Further feedback
+        labels:
+          comment: Would you like to add any further comments about the relevancy of the job alerts you have received?
       title: Job alert feedback
     submitted:
-      relevance:
-        Thank you for your feedback on your job alert
-      comment:
-        Your further feedback on job alerts has been sent to the team
+      comment: Your further feedback on job alerts has been sent to the team
+      relevance: Thank you for your feedback on your job alert
+
+  organisation:
+    view_more_or_change: View more or change
+
   nav:
-    sign_in: 'List a teaching job'
-    sign_out: 'Sign out'
-    school_page_link: 'Manage jobs'
+    find_job: Find a teaching job
+    jobseekers_index_link: View public jobs
     school_group_index_link: Schools in your %{organisation_type}
-    jobseekers_index_link: 'View public jobs'
-    find_job: 'Find a teaching job'
+    school_page_link: Manage jobs
+    sign_in: List a teaching job
+    sign_out: Sign out
+
+  nqt_job_alerts:
+    confirm:
+      heading: What happens next
+      splash:
+        heading: Your job alert has been set up
+        message: We sent a confirmation email to %{email}
+      keywords: "Keywords:"
+      location: "Location:"
+      intro: "We'll email you any teaching jobs suitable for NQTs that match your search criteria:"
+      unsubscribe: You can unsubscribe by following the link at the bottom of the email.
+    heading: Sign up for NQT job alerts
+    intro:
+      content: >-
+        Setting up an alert can help make your search for a teaching job easier. You’ll receive an email every morning
+        with any new job that’s been listed that matches your search criteria.
+      teaching_vacancies: >-
+        Teaching Vacancies is a free national job-listing service from the Department for Education. It helps schools to
+        save money on recruitment and is here to help you to take the first step in your career.
+      unsubscribe: >-
+        You can unsubscribe at any time by following the instructions in the job alert
+    page_title: Sign up for NQT job alerts
+
+  number:
+    currency:
+      format:
+        delimiter: ","
+        precision: 0
+        unit: "£"
+
   pages:
     accessibility:
       page_description:
         Find out which areas of Teaching Vacancies are not yet fully accessible and when we plan to correct each issue.
-    cookies:
-      page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
     home:
       browse_all: Browse all teaching jobs in England
       title: Find a job in teaching
       read_only:
         title: Sorry, listing a job is unavailable
-        description_html: <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p><p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
+        description_html: >-
+          <p>We’re completing planned maintenance on job listings.</p><p>You can search and view vacancies, but you
+          can’t manage them.</p><p>You’ll be able to use the full service again in less than an hour.</p>
+          <p><a href='mailto:teaching.vacancies@education.gov.uk'>Contact our support team</a> if you need help.</p>
       signin:
         title: List a teaching job
         description: Sign in to your Teaching Vacancies account to list a job at your school or Trust.
@@ -227,422 +329,25 @@ en:
         counties: Counties with teaching jobs
         job_roles: Current teaching jobs by role
         subjects: Current teaching jobs by subject
-    privacy_policy:
+    privacy-policy:
       page_description: >-
         Find out what personal information Teaching Vacancies collects,
         how it is used, how long it is kept and what your data protection rights are.
     terms-and-conditions:
       page_description:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
-  sign_in:
-    title: 'Sign in to Teaching Vacancies'
-    link: 'Sign in'
-    intro: You must have an account to sign into this service.
-    guidance: >-
-      You can get one if you work at a publicly funded school or trust providing primary or secondary education in
-      England and have been authorised by your headteacher or CEO. Just ask them to send your full name and
-      email address to %{email}. Or email us your details directly, copying in your headteacher or CEO.
-    organisation:
-      title: 'Select your organisation'
-      legend: 'You are associated with more than one organisation, please select the one you wish to sign-in with.'
-      change: 'Change organisation'
-  identification:
-    find_school_information: Find your school's official area
 
-  organisation:
-    view_more_or_change: View more or change
-    add_website_address: Add website address
-  jobs:
-    alert:
-      similar:
-        terse: Get a job alert for similar jobs
-        verbose:
-          link_text: Get a job alert
-          remainder: for when similar jobs are listed
-    current_step: "Step %{step} of %{total}"
-    dashboard_filters:
-      apply_filters: Apply filters
-      hide_filters: Hide filters
-      show_filters: Show filters
-      heading:
-        zero: Showing all jobs
-        one: 1 filter applied
-        other: '%{count} filters applied'
-    notifications:
-      content:
-        multi_school_job_notification_html: This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the %{organisation_type}</span>. You can find out more in <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
-      labels:
-        action_required: action required
-        new: new
-    heading: Welcome to Teaching Vacancies
-    intro: >-
-      Teaching Vacancies is a free job-listing service from the Department for Education.
-      You can search for a job at a school or Trust in England and set up job alerts.
-    location_description: >-
-      Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
-      with no recruitment fees for schools.
-    location_search_heading: 'Teaching jobs in %{location}'
-    number_of_results_one_page_html:
-      zero: ''
-      one: Showing <span class="govuk-!-font-weight-bold">%{count}</span> result
-      other: Showing <span class="govuk-!-font-weight-bold">%{count}</span> results
-    number_of_results_html: >-
-      Showing
-      <span class="govuk-!-font-weight-bold">%{first}</span> to
-      <span class="govuk-!-font-weight-bold">%{last}</span> of
-      <span class="govuk-!-font-weight-bold">%{count}</span> results
-    sort_by:
-      label: 'Sort by'
-      most_relevant: 'most relevant first'
-      publish_on:
-        descending: 'newest job listing'
-      expiry_time:
-        descending: 'most time to apply'
-        ascending: 'least time to apply'
-      submit: 'Sort'
-    key_info: 'Contents'
-    awaiting_feedback_intro: >-
-      Please tell us if you filled these expired jobs through Teaching Vacancies,
-      and whether you listed them elsewhere. Your feedback will help us improve the service.
-    no_awaiting_feedback: 'There are no jobs waiting for your feedback at the moment.'
-    feedback_all_submitted: >-
-      You have provided feedback on all your expired jobs. Thank you for sharing this information,
-      which will help us to improve the service. If you have general comments on the service you can share them with us
-      using <a href="/feedback/new">this feedback form.</a>
-    days_to_apply:
-      remaining: '%{days_remaining} days remaining to apply'
-      today: 'Deadline is today'
-      tomorrow: 'Deadline is tomorrow'
-    school_type: 'School type'
-    trust_type: 'Trust type'
-    publish_on: 'Date listed'
-    expires_on: 'Closing date'
-    start_on: 'Date job starts'
-    application_deadline: 'Application deadline'
-    job_filled: 'Job filled on Teaching Vacancies?'
-    listed_elsewhere: 'Listed elsewhere?'
-    page_views: 'Total views'
-    get_more_info_clicks: "Total 'get more info' clicks"
-    working_patterns: 'Working pattern'
-    working_patterns_info_one: '%{patterns} only'
-    working_patterns_info_many: 'Will consider %{patterns}'
-    starts_on: 'Expected start date'
-    expired: 'This job post has expired'
-    education: 'Essential educational requirements'
-    qualifications: 'Essential qualifications'
-    experience: 'Essential skills and experience'
-    ref_no: 'Reference number'
-    subjects: 'Subject(s)'
-    subject:
-      one: 'Subject'
-      other: 'Subjects'
-    leadership_level: 'Leadership level'
-    search_result_heading:
-      without_search_html:
-        one: There is <span class='govuk-!-font-weight-bold'>%{count}</span> job listed
-        other: There are <span class='govuk-!-font-weight-bold'>%{count}</span> jobs listed
-      keyword_html:
-        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
-        other: <span class='govuk-!-font-weight-bold'>%{count}</span> jobs match <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
-      location_html:
-        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job found near <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
-        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs found near <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
-      location_polygon_html:
-        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job found in <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
-        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs found in <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
-      keyword_location_html:
-        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
-        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
-      keyword_location_polygon_html:
-        one: <span class='govuk-!-font-weight-bold'>%{count}</span> job matches <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> in <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
-        other: <span class="govuk-!-font-weight-bold">%{count}</span> jobs match <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> in <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
-    no_jobs:
-      heading: Try another search
-      intro: 'You may get more results if you:'
-      suggestions:
-        - add more keywords, or try different ones
-        - change the radius of your search
-        - look at a wider geographical location, West Yorkshire instead of Leeds for example
-        - remove some filters if you have used them
-    none_listed:
-      - 'This may be because this isn’t a busy period in the teacher recruitment cycle.'
-      - 'Schools have listed %{count} jobs but they have since expired.'
-    job_details: 'Job details'
-    job_title: 'Job title'
-    job_roles: 'Job role'
-    suitable_for_nqt: Is this job suitable for NQTs?
-    job_role_options:
-      teacher: 'Teacher'
-      leadership: 'Leadership'
-      sen_specialist: 'SEN specialist'
-      nqt_suitable: 'Suitable for NQTs'
-    education_phase_options:
-      primary: Primary
-      middle: Middle
-      secondary: Secondary
-      16-19: 16-19
-    working_pattern_options:
-      full_time: Full-time
-      part_time: Part-time
-      job_share: Job share
-    job_summary: 'Job summary'
-    salary: 'Salary'
-    benefits: 'Employee benefits'
-    salary_range_html: "Salary range (<span class='text-red'>Required</span>)"
-    per_year: 'per year'
-    per_year_pro_rata: 'per year pro rata'
-    per_year_fte: 'per year (full-time equivalent)'
-    create_a_job_title: 'Create a job listing for %{organisation}'
-    create_a_job_title_no_org: 'Create a job listing'
-    copy_job_title: 'Copy %{job_title}'
-    new_job_listing_details: New job listing details
-    review_page_title: 'Review the job listing — Create a job listing for %{organisation}'
-    review_heading: 'Review the job listing'
-    copy_review_heading: Review the new job listing
-    edit_job_title: 'Edit %{job_title}'
-    job_location: 'Job location'
-    location: Location
-    pay_package: 'Pay package'
-    important_dates: 'Important dates and deadlines'
-    supporting_documents: 'Supporting documents'
-    upload_file: 'Upload files'
-    select_file: 'Select a file'
-    no_files_message: 'No files selected'
-    no_supporting_documents: 'No documents uploaded'
-    file_delete_error_message: 'An error occurred while removing %{filename}'
-    file_delete_success_message: '%{filename} was removed'
-    file_google_error_message: '%{filename} could not be uploaded - try again'
-    file_input_error_message: 'The selected file(s) could not be uploaded'
-    file_size_error_message: '%{filename} must be smaller than %{size_limit}'
-    file_type_error_message: '%{filename} must be a valid file type'
-    file_virus_error_message: '%{filename} contains a virus'
-    upload_documents_table:
-      headers:
-        file_name: 'File name'
-        status: 'Status'
-        file_size: 'File size'
-        action: 'Action'
-      upload_status:
-        uploading: 'Uploading...'
-        uploaded: 'Uploaded'
-      actions:
-        are_you_sure: "Are you sure you want to remove '%{filename}'?"
-        cancel: 'Cancel'
-        remove: 'Remove'
-        removing: 'Removing...'
-    application_details: 'Applying for the job'
-    no_contact_email: 'No job contact email given'
-    contact_email: 'Contact email'
-    contact_email_subject: '%{job} job enquiry'
-    contact_email_body: 'Regarding the job at %{url}'
-    contact_number: Contact phone number
-    school_visits: 'School visit instructions'
-    school_visits_heading: 'Arranging a visit to %{school}'
-    trust_visits: 'Trust visit instructions'
-    how_to_apply: 'Application instructions'
-    applying_for_the_job: Applying for the job
-    deadline_date: 'Date application is due'
-    deadline_time_html: "Time application is due (<span class='text-red'>Required</span>)"
-    time_at: ' at '
-    publication_date: 'Date job will be listed'
-    job_summary: 'Job summary'
-    about_school: 'About %{school}'
-    review: 'Review your entries for each section below, making any changes needed before you publish the listing.'
-    review_future:
-      'Review your entries for each section below, making any changes before you submit the listing for publication.'
-    not_defined: Not defined (will not be seen on published listing)
-    edit: 'Edit the job details.'
-    copy_of: 'Copy of'
-    preview_listing:
-      heading: 'Preview this job listing'
-      message: 'See how this job listing will appear to jobseekers on Teaching Vacancies'
-      page_title: 'Preview job listing for %{organisation}'
-      summary:
-        heading_html: 'Preview of &#8216;%{title}&#8217;'
-        body_html:
-          zero: >-
-            This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
-            You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
-            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date})
-          one: >-
-            This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
-            You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
-            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}
-    submit_listing:
-      heading:
-        zero: 'Submit this listing for publication now (%{date})'
-        one: 'Submit this listing for publication on %{date}'
-      message_html: >-
-        By publishing this job you agree to our <a href='/pages/terms-and-conditions'
-        class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have
-        provided are, to the best of your knowledge, correct
-    publish_for: 'Publish this listing for '
-    publish_for_future: 'Submit this listing for publication on '
-    confirmation_summary_html: >-
-      By publishing this job you agree to our <a href='/pages/terms-and-conditions' class='govuk-link'
-      target='blank'>terms and conditions</a> for schools and confirm that the details you have provided are,
-      to the best of your knowledge, correct.
-    apply: 'More on how to apply'
-    application_link: Link to online application
-    application_deadline_hour: 'Hour'
-    application_deadline_min: 'Minute'
-    application_deadline_meridiem: 'am or pm'
-    view_posted_job: 'Your job listing has been published. You can view it at:'
-    preview_posted_job: 'Your job listing is scheduled to be published on %{date}. You can view it at:'
-    actions: 'Actions'
-    status: 'Status'
-    draft: 'This job is currently a draft version.'
-    date_to_be_posted: Date to be published
-    share_url: 'This job is publicly visible at:'
-    view_public_link: 'View the public page for this job'
-    copy_public_url: 'copy the public URL to the clipboard'
-    share_on: Share on
-    share_on_facebook: Share to Facebook
-    share_on_twitter: Share to Twitter
-    share_this_job: Share this job
-    similar_jobs: Similar jobs
-    published_jobs: Published jobs
-    published_jobs_with_count:
-      zero: 'No published jobs'
-      one: '1 published job'
-      other: '%{count} published jobs'
-    pending_jobs: Scheduled jobs
-    pending_jobs_with_count:
-      zero: 'No scheduled jobs'
-      one: '1 scheduled job'
-      other: '%{count} scheduled jobs'
-    draft_jobs: Draft jobs
-    draft_jobs_with_count:
-      zero: 'No draft jobs'
-      one: '1 draft job'
-      other: '%{count} draft jobs'
-    expired_jobs: Expired jobs
-    expired_jobs_with_count:
-      zero: 'No expired jobs'
-      one: '1 expired job'
-      other: '%{count} expired jobs'
-    awaiting_feedback_jobs: Jobs awaiting feedback
-    awaiting_feedback_jobs_with_count:
-      zero: 'No jobs awaiting feedback'
-      one: '1 job awaiting feedback'
-      other: '%{count} jobs awaiting feedback'
-    expired_on: Expired on
-    no_published_jobs: You currently have no published jobs
-    no_expired_jobs: You currently have no expired jobs
-    no_draft_jobs: You currently have no draft jobs
-    no_pending_jobs: You currently have no scheduled jobs
-    edit_link: Edit
-    copy_link: Copy
-    delete_link: Delete
-    are_you_sure: Are you sure you want to delete the '%{job_title}' job?
-    draft:
-      time_created: Date drafted
-      time_updated: Date last updated
-    confirmation_page:
-      dashboard_link: You can also view, amend or delete it on %{link}
-      date_posted: Your job listing will be posted on %{date}.
-      date_posted_now: Your job listing has been posted.
-      date_expires: >-
-        The listing will appear on the service until %{application_deadline},
-        after which it will no longer be visible to jobseekers.
-      feedback_link: What did you think of this service?
-      feedback_time: (takes 30 seconds)
-      next_step: What happens next
-      page_title: The job listing for %{organisation} has been completed
-      submitted: The job listing has been completed
-      view_posted_job: View your job listing
-    aria_labels:
-      content: Content
-      change_job_location: Change job location
-      change_job_details: Change job details
-      change_pay_package: Change pay package
-      change_important_dates: Change important dates
-      change_supporting_documents: Change supporting documents
-      change_application_details: Change applying for the job
-      change_job_summary: Change job summary
-      apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
-      contact_email_link: Email link for job contact email — %{email}
-      sort_by_link: Sort jobs by %{column} in %{order}ending order
-    form_hints:
-      deadline_date: 'For example, %{date}'
-      publication_date: 'For example, %{date}'
-      contact_email: 'This email address will be shown publicly as a point of contact'
-      application_deadline_time: 'For example, 9:00 am or 5:00 pm'
-    filters:
-      title: 'Search job listings'
-      job_filters: 'Job Filters'
-      keyword: 'Keywords'
-      keyword_hint: 'Humanities, KS2, primary, NQT for example'
-      location: 'Enter a location'
-      location_hint: 'City, town or postcode'
-      use_current_location: 'use current location'
-      within_radius: 'Within a radius of'
-      number_of_miles:
-        one: '%{count} mile'
-        other: '%{count} miles'
-      add_more_filters: 'Add more filters'
-      job_roles: 'Job role'
-      phases: 'Education phase'
-      working_patterns: 'Working pattern'
-    feedback:
-      listed_elsewhere:
-        listed_paid: 'Yes, on one or more paid services'
-        listed_free: 'Yes, but only for free'
-        listed_mix: 'Yes, a mix of paid and free listings'
-        not_listed: 'No'
-        listed_dont_know: "I don't know"
-      hired_status:
-        hired_tvs: 'Yes'
-        hired_other_free: 'No, we hired through another free listing'
-        hired_paid: 'No, we hired through a paid service'
-        hired_no_listing: 'No, we hired, but not through a listing or service'
-        not_filled_ongoing: 'No, recruitment is ongoing'
-        not_filled_not_looking: "No, we're no longer recruiting for the job"
-        hired_dont_know: "I don't know"
-  feedback:
-    page_title: 'Feedback'
-    heading: 'Give feedback'
-    rating_legend: 'Overall, how did you feel about the service you received today?'
-    rating1_option: Very dissatisfied
-    rating2_option: Dissatisfied
-    rating3_option: Neither satisfied or dissatisfied
-    rating4_option: Satisfied
-    rating5_option: Very satisfied
-    comment_label_html: "How could we improve this service? (<span class='text-red'>Required</span>)"
-    comment_hint_text: >-
-      <p>Please do not include any information that could identify you personally
-      (such as your name or the name of your school).</p><p>(Limit is 1,200 characters)</p>
-  general_feedback:
-    new:
-      page_description: Tell us how we can improve Teaching Vacancies and volunteer as a user research participant.
-    visit_purpose_legend_html: "What did you come to Teaching Vacancies to do? (<span class='text-red'>Required</span>)"
-    visit_purpose_hint_text: >-
-      Please tell us what you came here to do. Do not include any information that could identify you personally
-      (such as your name or the name of your school).
-    visit_purpose_options:
-      find_teaching_job: Find a job in teaching
-      list_teaching_job: List a teaching job on the service
-      other_purpose: Something else
-    user_participation_legend_html:
-      "Would you like to participate in our research? (<span class='text-red'>Required</span>)"
-    user_participation_options:
-      interested: 'Yes'
-      not_interested: 'No'
-    user_interested_email_heading_html: 'What is your email address? (<span class="text-red">Required</span>)'
-    user_interested_email_text: >-
-      We'll only use this to tell you about opportunities to take part in user research that helps us improve
-      Department for Education services.
   schools:
     about_schools: About the schools
     address: Address
     age_range: Age range
     description: Description
-    info: 'About %{organisation}'
+    info: About %{organisation}
     jobs:
       index: Jobs at %{organisation}
       local_authority_index: Jobs in %{organisation}
     map_aria_label: Interactive map showing school location
-    no_information: 'No information available'
+    no_information: No information available
     no_jobs:
       bullets:
         required:
@@ -678,44 +383,76 @@ en:
     school_size: School size
     schools_overview: Schools overview
     schools_visits: Arranging a visit to one of the schools
-    search_heading: 'Publish a job'
-    search_label: 'School name'
-    search_subheading: 'Which school is the job job for?'
     size:
       enrolled: '%{number} %{pupils} enrolled'
       up_to: 'Up to %{capacity} %{pupils}'
       pupils: 'pupil'
     type: 'School type'
     urn: Unique identifier (URN)
-    view_ofsted_report: 'View Ofsted report'
-    website: 'School website'
+    view_ofsted_report: View Ofsted report
+    website: School website
     website_link_text: '%{organisation_name} website (opens in a new window)'
+
   school_groups:
     address: Trust address
     description: Description
     group_type: Group type
-    info: 'About %{school_group}'
-    map_aria_label: Interactive map showing trust location
-    school_group_location: 'Head office location'
-    trust_overview: Trust overview
-    trust_visits: 'Arrange a visit to %{school_group}'
-    type: 'Trust type'
-    uid: Unique identifier (UID)
+    info: About %{school_group}
     job_location_heading:
       central_office: Trust head office
       at_one_school: Single school
       at_multiple_schools: At more than one school in the %{organisation_type}
+    map_aria_label: Interactive map showing trust location
+    school_group_location: Head office location
+    school_visits_heading: Arranging a visit to %{school}
+    trust_overview: Trust overview
+    trust_visits: Arrange a visit to %{school_group}
+    type: Trust type
+    uid: Unique identifier (UID)
     website: '%{organisation_type} website'
-    school_visits_heading: 'Arranging a visit to %{school}'
+
+  shared:
+    file_remove_confirmation_dialogue:
+      are_you_sure_html: Are you sure you want to remove '<span id="js-gem-c-modal-dialogue__file-name"></span>'?
+      delete_error: An error occurred while removing the file.
+      no_keep_file: No, keep file
+      yes_remove_file: Yes, remove file
+    filter_group:
+      clear_all_filters: Clear filters
+      close_all_filter_groups: Close all
+      current_selected_filters: Selected filters
+      remove_filter_hidden: Remove this filter
+      return_to_results: Return to results
+
+  sign_in:
+    guidance: >-
+      You can get one if you work at a publicly funded school or trust providing primary or secondary education in
+      England and have been authorised by your headteacher or CEO. Just ask them to send your full name and
+      email address to %{email}. Or email us your details directly, copying in your headteacher or CEO.
+    intro: You must have an account to sign into this service.
+    link: Sign in
+    organisation:
+      title: Select your organisation
+      legend: You are associated with more than one organisation, please select the one you wish to sign-in with.
+      change: Change organisation
+    title: Sign in to Teaching Vacancies
+
+  stats:
+    intro: >-
+      This page is an event log used by the service team to measure and monitor the stability and performance of
+      Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018
+      (the date we began recording statistics).
+    title: Statistics
+
   subscriptions:
     benefits:
-      title: Subscribers
       list:
         - get an email when new jobs match their search
         - can unsubscribe at any time
         - receive no more than 1 email a day
+      title: Subscribers
     confirm:
-      back_to_search_results: 'Return to your search results'
+      back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
       frequency_label: 'You will receive alerts '
       header: Your email subscription has started
@@ -724,7 +461,7 @@ en:
       title: Subscription confirmation
       unsubscribe: You can unsubscribe by following the link at the bottom of these emails.
     confirm_update:
-      back_to_search_results: 'Return to your search results'
+      back_to_search_results: Return to your search results
       body: We sent an email confirmation to %{email}.
       frequency_label: 'You will receive alerts '
       header: Your job alert has been updated
@@ -745,23 +482,17 @@ en:
       downcase:
         daily: daily, at around 3 pm
         weekly: weekly (Friday evening at around 6 pm)
-    hints:
-      email: Enter your email address. We'll only use it to send you job alerts.
-      reference: This text will appear in the subject line of emails for this job alert subscription. Feel free to change it.
     info: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
     intro: 'We’ll email you details of any new jobs that match the following criteria:'
-    location_radius_text: Within %{radius} miles of %{location}
-    location_category_text: In %{location}
-    labels:
-      email_html: Email address (<span class="text-red">Required</span>)
-      frequency_html: When do you want to receive alerts? (<span class="text-red">Required</span>)
     link:
-      help_text: 'whenever a job matching this search is listed'
+      help_text: whenever a job matching this search is listed
       home_page: Visit %{home_page_link}
-      no_search_results_html: 'Or <a href="%{link_href}" id="job-alert-link-no-search-results-gtm" class="govuk-link">get notified</a> when a job like this gets listed'
-      text: 'Receive a job alert'
-    location_radius_text: Within %{radius} miles of %{location}
+      no_search_results_html: >-
+        Or <a href="%{link_href}" id="job-alert-link-no-search-results-gtm" class="govuk-link">get notified</a>
+        when a job like this gets listed
+      text: Receive a job alert
     location_category_text: In %{location}
+    location_radius_text: Within %{radius} miles of %{location}
     manage: Manage your subscription
     new:
       title: Create your job alert
@@ -771,108 +502,25 @@ en:
       resubscribe_html: If you unsubscribed accidentally, you can %{link}.
       resubscribe_link_text: resubscribe here
       title: Subscription deleted
-  nqt_job_alerts:
-    page_title: Sign up for NQT job alerts
-    heading: Sign up for NQT job alerts
-    intro:
-      teaching_vacancies: >-
-        Teaching Vacancies is a free national job-listing service from the Department for Education. It helps schools to
-        save money on recruitment and is here to help you to take the first step in your career.
-      content: >-
-        Setting up an alert can help make your search for a teaching job easier. You’ll receive an email every morning
-        with any new job that’s been listed that matches your search criteria.
-      unsubscribe: >-
-        You can unsubscribe at any time by following the instructions in the job alert
-    form:
-      labels:
-        keywords_html: "Keywords (<span class='text-red'>Required</span>)"
-        location_html: "Location (<span class='text-red'>Required</span>)"
-        email_html: "Email address (<span class='text-red'>Required</span>)"
-      hints:
-        keywords: >-
-          Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
-          You can use any keywords that describe your ideal role. This alert is especially for NQT suitable jobs, so you
-          don’t need to add NQT as a keyword.
-        location: >-
-          Tell us where you’re looking for a job and we’ll email you any results within a 10 mile radius.
-        email: Enter your email address. We will only use it to send you job alerts.
-      placeholders:
-        keywords: Humanities, KS3, primary teacher, for example
-        location: City, town or postcode, for example
-      errors:
-        duplicate_alert: A job alert matching this criteria already exists
-        no_filters_selected: At least one search criteria must be defined
-    confirm:
-      heading: What happens next
-      splash:
-        heading: Your job alert has been set up
-        message: We sent a confirmation email to %{email}
-      keywords: 'Keywords:'
-      location: 'Location:'
-      intro: "We'll email you any teaching jobs suitable for NQTs that match your search criteria:"
-      unsubscribe: You can unsubscribe by following the link at the bottom of the email.
+
   terms_and_conditions:
-    page_title: 'Terms and Conditions'
     intro: >-
       Before listing any role at your school on Teaching Vacancies you must first read our Terms and Conditions and
       agree to abide by them.
     intro_link: 'Of particular importance is the section %{link} which includes:'
+    label: I agree to all of the Terms and Conditions of the Teaching Vacancies service.
+    page_title: Terms and Conditions
+    please_accept: Please accept the terms and conditions
+    read_html: >-
+      Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>
     summary_list:
-      - 'Using the Service'
-      - 'Unacceptable use'
-      - 'Access to the Service'
-      - 'Listing data'
-    please_accept: 'Please accept the terms and conditions'
-    read_html: "Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>"
-    label: 'I agree to all of the Terms and Conditions of the Teaching Vacancies service.'
-  stats:
-    title: Statistics
-    intro: >-
-      This page is an event log used by the service team to measure and monitor the stability and performance of
-      Teaching Vacancies. It keeps a live count of key user interactions with the service since 20 April 2018
-      (the date we began recording statistics).
+      - Using the Service
+      - Unacceptable use
+      - Access to the Service
+      - Listing data
 
-  error_pages:
-    not_found: Page not found.
-    server_error: Sorry, there’s a technical issue at our end
-    trashed_vacancy_found: Page not found.
-    unauthorised:
-      footer: If you still can’t access this page, or you haven’t yet been authorised, please email teaching.vacancies@education.gov.uk
-      options:
-        - checking the URL is correct
-        - logging out of Teaching Vacancies and signing in again
-        - reloading or refreshing the page
-        - <a href="https://support.google.com/accounts/answer/32050" class="govuk-link">deleting your browser’s cache</a>
-      text_html: "<p>You need authorisation to be able to see this page.</p><p>If you have already been given access, you can try fixing this problem by:</p>"
-      title: We were unable to authorise your request.
-    unprocessable_entity: We're unable to process your request.
-
-  help:
-    email: teaching.vacancies@education.gov.uk
-
-  shared:
-    file_remove_confirmation_dialogue:
-      are_you_sure_html: "Are you sure you want to remove '<span id=\"js-gem-c-modal-dialogue__file-name\"></span>'?"
-      delete_error: 'An error occurred while removing the file.'
-      no_keep_file: 'No, keep file'
-      yes_remove_file: 'Yes, remove file'
-    filter_group:
-      close_all_filter_groups: 'Close all'
-      current_selected_filters: 'Selected filters'
-      clear_all_filters: 'Clear filters'
-      remove_filter_hidden: 'Remove this filter'
-      return_to_results: Return to results
   updates:
     heading: Updates
     updates_description_html: >-
        Teaching vacancies is a new service and we make frequent updates to improve it.
        You can %{link} to help us.
-  footer:
-    request_support: "Report problems via email"
-    provide_feedback: "Give feedback"
-    for_job_seekers: "For job seekers"
-    search_teaching_vacancies: "Find a teaching job"
-    for_schools: "For schools"
-    list_a_teaching_job: "List a teaching job"
-    service_support: "Service support"
-    updates: Updates

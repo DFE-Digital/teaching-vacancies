@@ -36,9 +36,9 @@ module OrganisationHelper
 
   def managed_organisations_all_label(organisation)
     if organisation.group_type == "local_authority"
-      I18n.t("hiring_staff.managed_organisations.options.all_schools")
+      I18n.t("hiring_staff.organisations.managed_organisations.show.options.all_schools")
     else
-      I18n.t("hiring_staff.managed_organisations.options.all")
+      I18n.t("hiring_staff.organisations.managed_organisations.show.options.all")
     end
   end
 
