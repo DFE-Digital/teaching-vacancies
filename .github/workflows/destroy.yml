@@ -67,6 +67,7 @@ jobs:
         terraform workspace select review-${PR_NAME} terraform/app || terraform workspace new review-${PR_NAME} terraform/app
         terraform plan -var-file terraform/workspace-variables/review.tfvars -destroy -out=tfdestroy terraform/app
         terraform apply -auto-approve "tfdestroy"
+        terraform workspace select default terraform/app && terraform workspace delete review-${PR_NAME} terraform/app
 
     - name: Send failure message to twd_tv_dev channel
       if: ${{ failure() }}
