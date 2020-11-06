@@ -16,7 +16,7 @@ env:
 
 jobs:
   turnstyle:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     timeout-minutes: 20
     steps:
     - uses: softprops/turnstyle@v1
@@ -29,7 +29,7 @@ jobs:
   deploy:
     name: build docker image and deploy
     needs: turnstyle
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       BRANCH: ${{ steps.set_env_vars.outputs.BRANCH }}
       TAG: ${{ steps.set_env_vars.outputs.TAG }}

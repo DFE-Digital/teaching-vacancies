@@ -12,7 +12,7 @@ jobs:
   smoke-test-manual-job:
     name: Smoke Test Manual Job
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     env:
       RAILS_ENV: test

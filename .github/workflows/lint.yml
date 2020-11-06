@@ -10,7 +10,7 @@ jobs:
   backend-lint:
     name: Run Rubocop check
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code
@@ -40,7 +40,7 @@ jobs:
   frontend-lint:
     name: Run ESLint check
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code
@@ -75,7 +75,7 @@ jobs:
   terraform-lint:
     name: Run Terraform check
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code

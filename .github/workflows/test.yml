@@ -14,7 +14,7 @@ jobs:
   backend-tests:
     name: Run rspec
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     env:
       RAILS_ENV: test
@@ -108,7 +108,7 @@ jobs:
   frontend-tests:
     name: Run jest
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code
