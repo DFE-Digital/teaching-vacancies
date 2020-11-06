@@ -95,6 +95,7 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.between(from: Time.zone.today - 14.days, to: Time.zone.today - 7.days) }
       expires_on { Faker::Time.backward(days: 6) }
+      expiry_time { Faker::Time.backward(days: 6) }
     end
 
     trait :future_publish do
@@ -129,12 +130,6 @@ FactoryBot.define do
     trait :with_feedback do
       listed_elsewhere { :listed_paid }
       hired_status { :hired_tvs }
-    end
-
-    trait :with_no_expiry_time do
-      status { :published }
-      expires_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 20.days) }
-      expiry_time { nil }
     end
 
     trait :suitable_for_nqt do

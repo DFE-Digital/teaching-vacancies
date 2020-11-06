@@ -233,30 +233,16 @@ class Vacancy < ApplicationRecord
                       :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   scope :active, (-> { where(status: %i[published draft]) })
-  scope :applicable, (-> { applicable_by_date.or(applicable_by_time) })
-  scope :applicable_by_time, (-> { where("expiry_time IS NOT NULL AND expiry_time >= ?", Time.zone.now) })
-  scope :applicable_by_date, (-> { where("expiry_time IS NULL AND expires_on >= ?", Time.zone.today) })
+  scope :applicable, (-> { where("expiry_time >= ?", Time.zone.now) })
+  scope :expired, (-> { where("expiry_time < ?", Time.zone.now) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
-  scope :expired, (-> { expired_by_time.or(expired_by_date) })
-  scope :expired_by_time, (-> { published.where("expiry_time IS NOT NULL AND expiry_time < ?", Time.zone.now) })
-  scope :expired_by_date, (-> { published.where("expiry_time IS NULL AND expires_on < ?", Time.zone.today) })
   scope :listed, (-> { published.where("publish_on <= ?", Time.zone.today) })
-  scope :live, (-> { live_by_date.or(live_by_time) })
-  scope :live_by_time, (lambda {
-    published.where("expiry_time IS NOT NULL AND publish_on <= ? AND expiry_time >= ?",
-                    Time.zone.today, Time.zone.now)
-  })
-  scope :live_by_date, (lambda {
-    published.where("expiry_time IS NULL AND publish_on <= ? AND expires_on >= ?",
-                    Time.zone.today, Time.zone.today)
-  })
   scope :pending, (-> { published.where("publish_on > ?", Time.zone.today) })
+  scope :live, (-> { listed.applicable })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :unindexed, (-> { live.where(initially_indexed: false) })
   scope :in_central_office, (-> { where(job_location: "central_office") })
-  scope :in_organisation_ids, lambda { |ids|
-    joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct
-  }
+  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
 
   paginates_per 10
 
