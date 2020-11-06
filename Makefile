@@ -79,7 +79,7 @@ check-docker-tag:
 init-terraform:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		terraform init -input=false $(backend_config) terraform/app
+		terraform init -input=false $(backend_config) -reconfigure terraform/app
 		terraform workspace select $(env) terraform/app || terraform workspace new $(env) terraform/app
 
 .PHONY: deploy-plan
@@ -90,12 +90,10 @@ deploy-plan: init-terraform check-docker-tag ## make passcode=MyPasscode tag=dev
 deploy: init-terraform check-docker-tag ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> deploy
 		terraform apply -input=false -var-file terraform/workspace-variables/$(var_file).tfvars -auto-approve terraform/app
 
-
 .PHONY: review-destroy
 review-destroy: init-terraform ## make CONFIRM_DESTROY=true passcode=MyPasscode pr=2086 review review-destroy
 		$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
-		terraform plan -var-file terraform/workspace-variables/review.tfvars -destroy -out=destroy-$(env).plan terraform/app
-		terraform apply "destroy-$(env).plan"
+		terraform destroy -var-file terraform/workspace-variables/review.tfvars terraform/app
 		terraform workspace select default terraform/app && terraform workspace delete $(env) terraform/app
 
 ##@ terraform/common code. Requires privileged IAM account to run
