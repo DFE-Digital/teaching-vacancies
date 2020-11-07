@@ -32,6 +32,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/navigation';
 @import 'application/pagination';
 @import 'application/school';
+@import 'application/scrollable-panel';
 @import 'application/signin';
 @import 'application/steps';
 @import 'application/tabs';
@@ -39,25 +40,25 @@ $govuk-image-url-function: frontend-image-url;
 
 @import 'application/jobSeekers/cookies-banner';
 @import 'application/jobSeekers/feedback-form';
-@import 'application/jobSeekers/location-search';
-@import 'application/jobSeekers/search-panel';
-@import 'application/jobSeekers/vacancies';
-@import 'application/jobSeekers/vacancy';
+@import 'application/jobSeekers/filter-vacancies';
 @import 'application/jobSeekers/jobs-banner';
 @import 'application/jobSeekers/key-dates-sidebar';
+@import 'application/jobSeekers/location-search';
+@import 'application/jobSeekers/search-panel';
 @import 'application/jobSeekers/sortable-links';
-@import 'application/jobSeekers/filter-vacancies';
+@import 'application/jobSeekers/vacancies';
+@import 'application/jobSeekers/vacancy';
 
 @import 'application/hiringStaff/awaiting-feedback-vacancies';
+@import 'application/hiringStaff/check-your-answers';
+@import 'application/hiringStaff/dashboard';
 @import 'application/hiringStaff/hiring-staff';
 @import 'application/hiringStaff/information-summary';
-@import 'application/hiringStaff/schools-in-your-trust';
 @import 'application/hiringStaff/interruption-card';
 @import 'application/hiringStaff/og-preview';
-@import 'application/hiringStaff/scrollable-panel';
+@import 'application/hiringStaff/schools-in-your-trust';
 @import 'application/hiringStaff/share-url';
 @import 'application/hiringStaff/statistics';
-@import 'application/hiringStaff/check-your-answers';
 
 body {
   .govuk-width-container {

@@ -1,0 +1,49 @@
+@mixin moj-scrollable-pane {
+  .moj-scrollable-pane__wrapper {
+    overflow-x: auto;
+  }
+
+  .moj-scrollable-pane__wrapper .govuk-table__header,
+  .moj-scrollable-pane__wrapper .govuk-table__cell {
+    white-space: nowrap;
+  }
+
+  @media only screen and (min-width: 1000px) {
+    .moj-scrollable-pane__wrapper .govuk-table__header,
+    .moj-scrollable-pane__wrapper .govuk-table__cell {
+      white-space: normal;
+    }
+  }
+
+  .moj-scrollable-pane > div::-webkit-scrollbar {
+    height: 10px; // Match GOVUK spacing units
+  }
+
+  .moj-scrollable-pane > div::-webkit-scrollbar-track {
+    background: govuk-colour('light-grey');
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15) inset; // Simulate scrollbar look and feel
+  }
+
+  .moj-scrollable-pane > div::-webkit-scrollbar-thumb {
+    background: govuk-colour('dark-grey');
+    border-radius: govuk-spacing(1);
+  }
+
+  .moj-filter-layout__content {
+    padding-right: 0;
+  }
+
+  .moj-scrollable-pane {
+    border-bottom: 1px solid $govuk-border-colour;
+    border-left: 1px solid $govuk-border-colour;
+    border-right: 1px solid $govuk-border-colour;
+
+    @include govuk-media-query($until: tablet) {
+      border: 0;
+    }
+
+    &::after {
+      background: none;
+    }
+  }
+}

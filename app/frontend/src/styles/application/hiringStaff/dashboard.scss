@@ -1,0 +1,31 @@
+.dashboard {
+  @include moj-scrollable-pane;
+  
+  .govuk-tabs {
+    margin-bottom: 0;
+    min-width: 842px;
+  }
+
+  .govuk-tabs__panel {
+    border: 0;
+    padding-top: 0;
+
+    .tabs__container {
+      padding-top: govuk-spacing(6);
+    }
+  }
+
+  .govuk-grid-column-three-quarters {
+    padding: 0 govuk-spacing(3) 0 govuk-spacing(6);
+  }
+
+  .govuk-grid-column-full {
+    padding: 0 govuk-spacing(3);
+  }
+}
+
+.moj-filter-sidebar {
+  &.panel--hidden {
+    display: none;
+  }
+}

@@ -197,13 +197,6 @@
   }
 }
 
-// misc (for dashboard)
-.moj-filter-sidebar {
-  &.moj-filter-sidebar__hidden {
-    display: none;
-  }
-}
-
 .moj-action-bar__filter {
   &::after {
     width: 0;

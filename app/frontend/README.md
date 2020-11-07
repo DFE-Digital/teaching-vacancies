@@ -17,17 +17,18 @@
       logging.js
       testSetup.js
     /styles
+      /application
       /base
         utilities.scss
-      /global
-        variables.scss
         mixins.scss
         frontend.scss
+      /global
+        ie.scss
+        variables.scss
       application.scss
-      ie.scss
 ```
 
 ## Notes
-- all JS should be self initialising, in app folder, using namespaced conditions in markup (id, data attributes) https://dfedigital.atlassian.net/browse/TEVA-1403
-- *all* application styles imported (not defined unless they are truly application wide) in `styles/application.scss` https://dfedigital.atlassian.net/browse/TEVA-1404
-- remove old `styles/base/controllers.scss` (relocate whats in current file) https://dfedigital.atlassian.net/browse/TEVA-1404
+- application folder contains domain specific code
+  - all JS should be self initialising, using namespaced conditions in markup (id, data attributes)
+- components folder contains reusable peices of functionality that are instantiated from application code. The JS imports any styles needed so that the component in self contained

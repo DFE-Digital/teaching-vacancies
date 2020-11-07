@@ -8,7 +8,7 @@ export const ACCORDION_SECTION_EXPANDED_CLASS_SELECTOR = 'govuk-accordion__secti
 export const CHECKBOX_CLASS_SELECTOR = 'govuk-checkboxes__input';
 export const CHECKBOX_GROUP_CLASS_SELECTOR = 'filters__group-checkboxes';
 export const CLOSED_CLASS = 'govuk-grid-column-full';
-export const OPEN_CLASS = 'govuk-grid-column-two-thirds';
+export const OPEN_CLASS = 'govuk-grid-column-three-quarters';
 export const CLOSE_ALL_TEXT = 'Close all';
 export const OPEN_ALL_TEXT = 'Open all';
 
@@ -48,7 +48,7 @@ export const init = (groupContainerSelector, removeButtonSelector, clearButtonSe
     hideText: 'Hide filters',
     showText: 'Show filters',
     container: document.getElementsByClassName('moj-filter-sidebar')[0],
-    toggleClass: 'moj-filter-sidebar__hidden',
+    toggleClass: 'dashboard--full-width',
     toggleButton: document.getElementById('toggle-filters-sidebar'),
     onToggleHandler: () => {
       content.classList.toggle(OPEN_CLASS);

@@ -4,6 +4,7 @@ import './panel.scss';
 
 const LOCALSTORAGE_COMPONENT_KEY = 'panel';
 const ERROR_LOGGING_MESSAGE = '[Module: dashboard panel]: local storage not available';
+export const HIDDEN_CLASS = 'panel--hidden';
 
 export const togglePanel = (options) => {
   if (storageAvailable('localStorage', ERROR_LOGGING_MESSAGE) && !localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY)) {
@@ -20,41 +21,41 @@ export const togglePanel = (options) => {
     toggleButtonText(options);
 
     options.toggleButton.addEventListener('click', () => {
-      options.container.classList.toggle(options.toggleClass);
+      options.container.classList.toggle(HIDDEN_CLASS);
+      options.container.parentNode.classList.toggle(options.toggleClass);
       options.onToggleHandler();
       toggleButtonText(options);
-      setState(options.container, options.toggleClass, options.componentKey);
+      setState(options.container, options.componentKey);
     });
   }
 };
 
 export const isInitialStateOpen = (componentKey) => JSON.parse(localStorage.getItem(LOCALSTORAGE_COMPONENT_KEY))[componentKey] === 'open';
 
-export const setState = (container, toggleClass, componentKey) => localStorage.setItem(
+export const setState = (container, componentKey) => localStorage.setItem(
   LOCALSTORAGE_COMPONENT_KEY,
-  JSON.stringify({ [componentKey]: isPanelClosed(container, toggleClass) ? 'closed' : 'open' }),
+  JSON.stringify({ [componentKey]: isPanelClosed(container) ? 'closed' : 'open' }),
 );
 
 export const toggleButtonText = ({
-  toggleClass,
   toggleButton,
   container,
   hideText,
   showText,
 }) => {
-  toggleButton.innerHTML = isPanelClosed(container, toggleClass) ? showText : hideText;
+  toggleButton.innerHTML = isPanelClosed(container) ? showText : hideText;
   return true;
 };
 
-export const isPanelClosed = (container, toggleClass) => container.classList.contains(toggleClass);
+export const isPanelClosed = (container) => container.classList.contains(HIDDEN_CLASS);
 
-export const openPanel = ({ container, toggleClass, onOpenedHandler }) => {
-  container.classList.remove(toggleClass);
+export const openPanel = ({ container, onOpenedHandler }) => {
+  container.classList.remove(HIDDEN_CLASS);
   onOpenedHandler();
 };
 
-export const closePanel = ({ container, toggleClass, onClosedHandler }) => {
-  container.classList.add(toggleClass);
+export const closePanel = ({ container, onClosedHandler }) => {
+  container.classList.add(HIDDEN_CLASS);
   onClosedHandler();
 };
 

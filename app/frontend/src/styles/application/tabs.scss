@@ -18,3 +18,21 @@ a.govuk-tabs__tab.tab-links-override:focus,
 a.js-enabled .govuk-tabs__tab.tab-links-override:focus {
   color: $govuk-link-active-colour;
 }
+
+.govuk-tabs {
+  .govuk-tabs__list-item a {
+    @media (max-width: 1000px) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.dashboard--full-width {
+  .govuk-tabs {
+    .govuk-tabs__list-item a {
+      @media (max-width: 800px) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
