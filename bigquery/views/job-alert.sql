@@ -2,6 +2,14 @@ SELECT
   id,
   CAST(created_at AS date) AS created_date,
   CAST(updated_at AS date) AS updated_date,
+  active,
+  CAST(unsubscribed_at AS date) AS unsubscribed_date,
+IF
+  (NOT active,
+    DATETIME_DIFF(unsubscribed_at,
+      created_at,
+      DAY),
+    NULL) AS days_active,
   recaptcha_score,
   FIRST_VALUE(id) OVER (PARTITION BY email ORDER BY created_at) AS email_address_id,
   #the ID of the first job alert with this email address - allows us to string job alerts with the same email address together without including the PII in this view
