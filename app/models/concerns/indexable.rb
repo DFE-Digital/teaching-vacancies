@@ -1,4 +1,4 @@
-module Searchable
+module Indexable
   extend ActiveSupport::Concern
 
   INDEX_NAME = [ENV["ALGOLIA_INDEX_PREFIX"], DOMAIN, Vacancy].compact.join("-").freeze

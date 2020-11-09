@@ -15,7 +15,7 @@ class Vacancy < ApplicationRecord
 
   include Redis::Objects
 
-  include Searchable
+  include Indexable
 
   JOB_ROLE_OPTIONS = {
     teacher: 0,

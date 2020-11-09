@@ -56,7 +56,7 @@ namespace :data do
       Rails.logger.debug("Removing indices in #{Rails.env}")
       replicas = Vacancy.index.get_settings["replicas"]
       Vacancy.index.set_settings({ replicas: [] })
-      Algolia.client.delete_index(Searchable::INDEX_NAME)
+      Algolia.client.delete_index(Indexable::INDEX_NAME)
       replicas.each { |replica| Algolia.client.delete_index(replica) }
     end
   end
