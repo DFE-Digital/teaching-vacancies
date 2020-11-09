@@ -6,7 +6,7 @@ DFE_SIGN_IN_REDIRECT_URL: https://teaching-vacancies.service.gov.uk/auth/dfe/cal
 DFE_SIGN_IN_URL: https://api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: false
 DOMAIN: teaching-vacancies.service.gov.uk
-FEATURE_LOCAL_AUTHORITY_ACCESS: false
+FEATURE_LOCAL_AUTHORITY_ACCESS: true
 FEATURE_READ_ONLY: false
 GOOGLE_ANALYTICS_PROFILE_ID: ga:171744074
 OPENSSL_CONF: /etc/ssl/
