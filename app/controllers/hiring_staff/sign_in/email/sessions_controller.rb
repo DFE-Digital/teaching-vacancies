@@ -116,6 +116,7 @@ private
   end
 
   def allowed_user?
-    get_urn.present? || get_uid.present? || (get_la_code.present? && ALLOWED_LOCAL_AUTHORITIES.include?(get_la_code))
+    get_urn.present? || get_uid.present? || (get_la_code.present? &&
+      (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(get_la_code)))
   end
 end

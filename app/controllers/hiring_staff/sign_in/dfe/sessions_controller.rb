@@ -116,7 +116,7 @@ private
   end
 
   def allowed_user?
-    school_urn.present? || trust_uid.present? ||
-      (local_authority_code.present? && ALLOWED_LOCAL_AUTHORITIES.include?(local_authority_code))
+    school_urn.present? || trust_uid.present? || (local_authority_code.present? &&
+      (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(local_authority_code)))
   end
 end
