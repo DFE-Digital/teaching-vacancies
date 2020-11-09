@@ -40,31 +40,6 @@ module VacanciesHelper
     I18n.t("jobs.review_heading")
   end
 
-  def page_title(vacancy)
-    return I18n.t("jobs.copy_job_title", job_title: vacancy.job_title) if vacancy.state == "copy"
-    return I18n.t("jobs.create_a_job_title", organisation: organisation_from_job_location(vacancy)) if
-      %w[create review].include?(vacancy.state)
-
-    I18n.t("jobs.edit_job_title", job_title: vacancy.job_title)
-  end
-
-  def organisation_from_job_location(vacancy)
-    vacancy.job_location == "at_multiple_schools" ? "multiple schools" : vacancy.parent_organisation_name
-  end
-
-  def page_title_no_vacancy
-    organisation_for_title =
-      if session[:vacancy_attributes] && session[:vacancy_attributes]["job_location"] == "at_one_school"
-        session[:vacancy_attributes]["readable_job_location"]
-      elsif session[:vacancy_attributes] && session[:vacancy_attributes]["job_location"] == "at_multiple_schools"
-        "multiple schools"
-      else
-        current_organisation.name
-      end
-
-    organisation_for_title ? I18n.t("jobs.create_a_job_title", organisation: organisation_for_title) : I18n.t("jobs.create_a_job_title_no_org")
-  end
-
   def hidden_state_field_value(vacancy, copy = false)
     return "copy" if copy
     return "edit_published" if vacancy&.published?

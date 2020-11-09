@@ -3,8 +3,7 @@
 - else
   - content_for :page_title_prefix, "#{@form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_location')} — #{t('jobs.create_a_job_title_no_org')}"
 
-= render 'hiring_staff/vacancies/vacancy_form_partials/heading'
-
+= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy, session[:vacancy_attributes])
 - if @vacancy.present? && @vacancy&.state != 'create'
   = render 'hiring_staff/vacancies/vacancy_form_partials/cancel_and_return_link'
 

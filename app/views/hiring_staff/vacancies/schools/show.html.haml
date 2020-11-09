@@ -3,8 +3,7 @@
 - else
   - content_for :page_title_prefix, "#{@form.errors.present? ? 'Error: ' : ''}#{t('jobs.job_location')} — #{t('jobs.create_a_job_title_no_org')}"
 
-= render 'hiring_staff/vacancies/vacancy_form_partials/heading'
-
+= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy, session[:vacancy_attributes])
 - if @vacancy.blank? || @vacancy&.state == 'create'
   = link_to t('buttons.back'), @previous_step_path, class: 'govuk-back-link'
 
