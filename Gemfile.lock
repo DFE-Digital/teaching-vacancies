@@ -178,7 +178,7 @@ GEM
       signet (~> 0.14)
     gov_uk_date_fields (4.1.0)
       rails (>= 5.0.7.2)
-    govuk_design_system_formbuilder (2.1.2)
+    govuk_design_system_formbuilder (2.1.4)
       actionview (>= 5.2)
       activemodel (>= 5.2)
       activesupport (>= 5.2)
