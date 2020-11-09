@@ -8,7 +8,7 @@ end
 
 RSpec.shared_examples "a search in the default search replica" do
   it "uses the default search replica" do
-    expect(subject.search_replica).to eql("#{Vacancy::INDEX_NAME}_publish_on_desc")
+    expect(subject.search_replica).to eql("#{Searchable::INDEX_NAME}_publish_on_desc")
   end
 end
 
@@ -112,14 +112,14 @@ RSpec.describe Search::VacancySearchBuilder do
         let(:jobs_sort) { "expiry_time_desc" }
 
         it "uses the specified search replica" do
-          expect(subject.search_replica).to eql("#{Vacancy::INDEX_NAME}_expiry_time_desc")
+          expect(subject.search_replica).to eql("#{Searchable::INDEX_NAME}_expiry_time_desc")
         end
 
         context "and a keyword is specified," do
           let(:keyword) { "maths teacher" }
 
           it "uses the specified search replica" do
-            expect(subject.search_replica).to eql("#{Vacancy::INDEX_NAME}_expiry_time_desc")
+            expect(subject.search_replica).to eql("#{Searchable::INDEX_NAME}_expiry_time_desc")
           end
         end
       end

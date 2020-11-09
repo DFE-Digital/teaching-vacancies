@@ -1,0 +1,137 @@
+module Searchable
+  extend ActiveSupport::Concern
+
+  INDEX_NAME = [ENV["ALGOLIA_INDEX_PREFIX"], DOMAIN, Vacancy].compact.join("-").freeze
+
+  included do
+    include AlgoliaSearch
+
+    scope :unindexed, (-> { live.where(initially_indexed: false) })
+
+    algoliasearch index_name: INDEX_NAME, auto_index: true, auto_remove: true, if: :listed? do
+      attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
+
+      attribute :expires_at do
+        "#{format_date(expires_on)} at #{expiry_time&.strftime('%-l:%M %P')}"
+      end
+
+      attribute :expires_at_timestamp do
+        expiry_time&.to_i
+      end
+
+      attribute :job_roles_for_display do
+        VacancyPresenter.new(self).show_job_roles
+      end
+
+      attribute :job_summary do
+        job_summary&.truncate(256)
+      end
+
+      attribute :last_updated_at do
+        updated_at.to_i
+      end
+
+      attribute :listing_status do
+        status
+      end
+
+      attribute :organisations do
+        { names: organisations.map(&:name),
+          counties: organisations.map(&:county).uniq,
+          detailed_school_types: organisations.select { |org| org.is_a?(School) }.map(&:detailed_school_type).uniq,
+          group_type: organisations.select { |org| org.is_a?(SchoolGroup) }.map(&:group_type).reject(&:blank?).uniq,
+          local_authorities_within: organisations.map(&:local_authority_within).reject(&:blank?).uniq,
+          religious_characters: organisations.select { |org| org.is_a?(School) }.map(&:religious_character).reject(&:blank?).uniq,
+          regions: organisations.select { |org| org.is_a?(School) }.map(&:region).uniq,
+          school_types: organisations.select { |org| org.is_a?(School) }.map { |org| org.school_type&.singularize }.uniq,
+          towns: organisations.map(&:town).reject(&:blank?).uniq }
+      end
+
+      attribute :permalink do
+        slug
+      end
+
+      attribute :publication_date do
+        publish_on&.to_s
+      end
+
+      attribute :publication_date_timestamp do
+        publish_on&.to_time&.to_i
+      end
+
+      attribute :start_date do
+        starts_on&.to_s
+      end
+
+      attribute :start_date_timestamp do
+        starts_on&.to_time&.to_i
+      end
+
+      attribute :subjects_for_display do
+        VacancyPresenter.new(self).show_subjects
+      end
+
+      attribute :working_patterns_for_display do
+        VacancyPresenter.new(self).working_patterns
+      end
+
+      attributesForFaceting %i[job_roles working_patterns education_phases listing_status]
+
+      add_replica "#{INDEX_NAME}_publish_on_desc", inherit: true do
+        ranking ["desc(publication_date_timestamp)"]
+      end
+
+      add_replica "#{INDEX_NAME}_expiry_time_desc", inherit: true do
+        ranking ["desc(expires_at_timestamp)"]
+      end
+
+      add_replica "#{INDEX_NAME}_expiry_time_asc", inherit: true do
+        ranking ["asc(expires_at_timestamp)"]
+      end
+    end
+  end
+
+  class_methods do
+    # NOTE: the `if: :listed?` filter in the `algoliasearch` definition *only* excludes records from being *added* to
+    # the index. It DOES NOT prevent the ruby client from checking that the record exists in the Algolia index in the
+    # first place. Even if the record should not be in the index (unpublished or expired records), the client still
+    # consumes an Algolia operation to try and look it up if it appears in canonical list of records returned by the
+    # model.
+    #
+    # To illustrate: if you run the unmodified `Vacancy.reindex!` on a recent (2020-06-18) production dataset you will
+    # consume more than 30,000 operations on the Algolia app. This occurs because it looks up each of the 30,000+
+    # expired/unpublished records before it applies the `:listed?` filter. It only indexes about 470 records. I am not
+    # 100% certain, but it seems this is done so it can remove records that should not be in the index according to the
+    # filter.
+    #
+    # If, however, you run `Vacancy.live.reindex!`, which scopes the list to only the "published" records, it only
+    # consumes slightly more operation than there are indexable records.
+    def reindex!
+      live.includes(organisation_vacancies: :organisation).algolia_reindex!
+    end
+
+    def reindex
+      live.includes(organisation_vacancies: :organisation).algolia_reindex
+    end
+
+    # This is the main method you should use most of the time when bulk-adding new records to the algolia index. It will
+    # not use any additional operations checking records that have been indexed once. NOTE: if a record has been indexed
+    # already and it is updated with new or additional information, the `auto_index: true` will do the work of keeping the
+    # changes in sync with the algolia index. This method is solely for preventing us paying for unnecessary usage when
+    # adding records that have become `live` since the last time it was run.
+    def update_index!
+      unindexed.algolia_reindex!
+      unindexed.update_all(initially_indexed: true)
+    end
+
+    def remove_vacancies_that_expired_yesterday!
+      expired_records = where("expiry_time BETWEEN ? AND ?", Time.zone.yesterday.midnight, Time.zone.today.midnight)
+      index.delete_objects(expired_records.map(&:id)) if expired_records&.any?
+    end
+  end
+
+  def _geoloc
+    organisations.select { |organisation| organisation.geolocation.present? }
+                 .map { |organisation| { lat: organisation.geolocation.x.to_f, lng: organisation.geolocation.y.to_f } }
+  end
+end
