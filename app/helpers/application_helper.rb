@@ -29,4 +29,8 @@ module ApplicationHelper
     "teacher,maths,primary,history,english,science,geography,\
     teaching,assistant,headteacher,class,French,job,vacancy,school,nqt"
   end
+
+  def recaptcha(action)
+    recaptcha_v3(action: action, nonce: request.content_security_policy_nonce)
+  end
 end

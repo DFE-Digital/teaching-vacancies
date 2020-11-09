@@ -13,6 +13,6 @@
         max_chars: 1200,
         rows: 11
 
-      = recaptcha_v3(action: 'job_alert_feedback')
+      = recaptcha('job_alert_feedback')
 
       = f.govuk_submit t('buttons.submit'), classes: 'govuk-!-padding-left-8 govuk-!-padding-right-8'

@@ -35,4 +35,18 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe "#recaptcha" do
+    let(:request) { double("Request", content_security_policy_nonce: "n0nc3") }
+    let(:captcha) { double("CAPTCHA") }
+
+    before do
+      allow(controller).to receive(:request).and_return(request)
+      allow(helper).to receive(:recaptcha_v3).with(action: "hello_world", nonce: "n0nc3").and_return(captcha)
+    end
+
+    it "delegates to recaptcha_v3 with the CSP nonce" do
+      expect(helper.recaptcha("hello_world")).to eq(captcha)
+    end
+  end
 end
