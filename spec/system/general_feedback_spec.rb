@@ -17,7 +17,7 @@ RSpec.describe "Giving general feedback for the service" do
       fill_in "general_feedback[comment]", with: "Keep going!"
       choose_no_to_participation
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Enter the reason for your visit")
     end
@@ -26,7 +26,7 @@ RSpec.describe "Giving general feedback for the service" do
       choose "Find a job in teaching"
       fill_in "general_feedback[comment]", with: "Keep going!"
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Please indicate if you'd like to participate in user research")
     end
@@ -36,7 +36,7 @@ RSpec.describe "Giving general feedback for the service" do
       fill_in "general_feedback[comment]", with: "Keep going!"
       choose_no_to_participation
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Your feedback has been successfully submitted")
     end
@@ -46,7 +46,7 @@ RSpec.describe "Giving general feedback for the service" do
       fill_in "general_feedback[comment]", with: "Keep going!"
       choose_yes_to_participation
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Enter your email address")
     end
@@ -58,7 +58,7 @@ RSpec.describe "Giving general feedback for the service" do
       choose_yes_to_participation
       fill_in "email", with: "test@test.com"
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Your feedback has been successfully submitted")
     end

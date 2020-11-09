@@ -1,0 +1,52 @@
+en:
+  messages:
+    access:
+      signed_out: You have signed out
+      signed_out_for_inactivity: You have been signed out because you have been inactive for %{duration}
+    feedback:
+      submitted: Your feedback has been successfully submitted
+    jobs:
+      action_required:
+        heading: Action required
+        label: action required
+        message: You must complete the required actions below in order to publish this listing
+      already_published: This job has already been published
+      delete_html: >-
+        %{job_title} has been <span class="govuk-!-font-weight-bold delete-listing-success-gtm">deleted</span>
+      draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
+      feedback:
+        awaiting:
+          one: You have %{count} job awaiting feedback
+          other: You have %{count} jobs awaiting feedback
+        error_title: There was a problem submitting your feedback
+        error_body: Please make sure you have submitted an answer for both questions
+        inline_error: Please select an option
+        submitted_html: <span class="govuk-!-font-weight-bold">Feedback submitted</span> for %{job_title}
+      listing_updated: Listing updated for %{job_title}
+      manage_jobs_html: Back to <a href="%{link}" class="govuk-link govuk-link--no-visited-state">manage jobs</a>
+      multi_school_job_notification_html: >-
+        This teaching role is at <span class="govuk-!-font-weight-bold">more than one school in the
+        %{organisation_type}</span>. You can find out more in
+        <a class='govuk-link govuk-link--no-visited-state' href='#school-overview'>schools overview</a>.
+      new_attributes:
+        heading: New sections
+        label: new
+        message: Improve your job listing using the new sections and features below
+      view:
+        only_published: You can only view published jobs
+    organisation:
+      description_updated_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
+    subscriptions:
+      created: Email subscription created successfully.
+
+  errors:
+    jobs:
+      unable_to_publish_title: We were unable to publish this job
+      unable_to_publish_body: Make sure that you have filled all mandatory fields
+    sign_in:
+      unauthorised: You are not authorised to act on behalf of this school
+      failure: An unexpected error occured. We have been notified.
+    vacancy_publish_feedback:
+      already_submitted: Feedback for this job has already been submitted
+    subscriptions:
+      already_exists: You're already subscribed to an alert for these search criteria

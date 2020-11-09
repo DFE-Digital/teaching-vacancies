@@ -16,13 +16,13 @@ RSpec.describe "Hiring staff can preview a vacancy" do
     end
 
     scenario "review page shows preview, submit and save calls to action" do
-      expect(page).to have_content(I18n.t("jobs.preview_listing.button"))
-      expect(page).to have_content(I18n.t("jobs.submit_listing.button"))
+      expect(page).to have_content(I18n.t("buttons.preview_job_listing"))
+      expect(page).to have_content(I18n.t("buttons.submit_job_listing"))
       expect(page).to have_content(I18n.t("buttons.back_to_manage_jobs"))
     end
 
     scenario "users can preview the listing" do
-      click_on I18n.t("jobs.preview_listing.button")
+      click_on I18n.t("buttons.preview_job_listing")
       expect(page).to have_current_path(organisation_job_preview_path(vacancy.id))
       within(".govuk-info-summary__title") do
         expect(page).to have_content(vacancy.job_title)
@@ -30,7 +30,7 @@ RSpec.describe "Hiring staff can preview a vacancy" do
     end
 
     scenario "users can submit the listing" do
-      click_on I18n.t("jobs.submit_listing.button")
+      click_on I18n.t("buttons.submit_job_listing")
       expect(page).to have_current_path(organisation_job_summary_path(vacancy.id))
       expect(page).to have_content(I18n.t("jobs.confirmation_page.submitted"))
     end
@@ -49,12 +49,12 @@ RSpec.describe "Hiring staff can preview a vacancy" do
     end
 
     scenario "users can make changes to the listing" do
-      click_on I18n.t("jobs.preview_listing.summary.buttons.make_changes")
+      click_on I18n.t("buttons.make_changes")
       expect(page).to have_current_path(organisation_job_review_path(vacancy.id))
     end
 
     scenario "users can submit the listing" do
-      click_on I18n.t("jobs.preview_listing.summary.buttons.submit")
+      click_on I18n.t("buttons.submit_for_publication")
       expect(page).to have_current_path(organisation_job_summary_path(vacancy.id))
     end
   end

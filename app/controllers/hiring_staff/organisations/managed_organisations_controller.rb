@@ -40,7 +40,7 @@ private
     unless current_organisation.group_type == "local_authority"
       @organisation_options.unshift(
         OpenStruct.new({ id: current_organisation.id,
-                         name: I18n.t("hiring_staff.managed_organisations.options.school_group"),
+                         name: I18n.t("hiring_staff.organisations.managed_organisations.show.options.school_group"),
                          address: full_address(current_organisation) }),
       )
     end

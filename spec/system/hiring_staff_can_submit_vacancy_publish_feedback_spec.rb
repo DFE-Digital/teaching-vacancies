@@ -44,7 +44,7 @@ RSpec.describe "Vacancy publish feedback" do
       visit new_organisation_job_feedback_path(published_job.id)
       fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Please indicate if you'd like to participate in user research")
     end
@@ -53,7 +53,7 @@ RSpec.describe "Vacancy publish feedback" do
       visit new_organisation_job_feedback_path(published_job.id)
       choose_yes_to_participation
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("Enter your email address")
     end
@@ -64,7 +64,7 @@ RSpec.describe "Vacancy publish feedback" do
       fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
       choose_no_to_participation
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
       expect(page).to have_content(
         strip_tags(I18n.t("messages.jobs.feedback.submitted_html", job_title: published_job.job_title)),
       )
@@ -77,7 +77,7 @@ RSpec.describe "Vacancy publish feedback" do
       choose_yes_to_participation
       fill_in "vacancy_publish_feedback[email]", with: "user@email.com"
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
 
       feedback = VacancyPublishFeedback.last
 
@@ -93,7 +93,7 @@ RSpec.describe "Vacancy publish feedback" do
       fill_in "vacancy_publish_feedback[comment]", with: "Perfect!"
       choose_no_to_participation
 
-      click_on I18n.t("feedback.submit")
+      click_on I18n.t("buttons.submit_feedback")
       expect(page).to have_content(
         strip_tags(I18n.t("messages.jobs.feedback.submitted_html", job_title: published_job.job_title)),
       )

@@ -1,4 +1,36 @@
 en:
+  buttons:
+    accept_all_cookies: Accept all cookies
+    accept_and_continue: Accept and continue
+    apply_filters: Apply filters
+    back: Back
+    back_to_manage_jobs: Back to manage jobs
+    cancel: Cancel
+    cancel_copy: Cancel copy
+    cancel_and_return: Cancel and return
+    change: Change
+    continue: Continue
+    create_job: Create a job listing
+    delete: Delete
+    dismiss: Dismiss
+    find: Find
+    go_to_teaching_vacancies: Go to Teaching Vacancies
+    hide_filters: Hide filters
+    make_changes: Make changes
+    preview_job_listing: Preview job listing
+    save_and_return_later: Save and return later
+    save_changes: Save changes
+    search: Search
+    set_preferences: Set your preferences
+    skip_this_step: Skip this step
+    submit: Submit
+    submit_feedback: Submit feedback
+    submit_job_listing: Confirm and submit job
+    submit_for_publication: Submit for publication
+    subscribe: Subscribe
+    update_job: Update listing
+    update_alert: Update alert
+
   helpers:
     hint:
       application_details_form:
@@ -41,6 +73,14 @@ en:
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
+      nqt_job_alerts_form:
+        email: Enter your email address. We will only use it to send you job alerts.
+        keywords: >-
+          Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
+          You can use any keywords that describe your ideal role. This alert is especially for NQT suitable jobs, so you
+          don’t need to add NQT as a keyword.
+        location: >-
+          Tell us where you’re looking for a job and we’ll email you any results within a 10 mile radius.
       organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
       pay_package_form:
@@ -50,6 +90,8 @@ en:
         salary: >-
           Enter the annual salary or salary range, and/or pay scale range.
           Where relevant, state if the salary is full-time equivalent
+      subscription_form:
+        email: Enter your email address. We'll only use it to send you job alerts.
       supporting_documents_form:
         supporting_documents: >-
           These could include, for example, a job description, person specification or application pack
@@ -80,9 +122,15 @@ en:
       job_specification_form:
         job_title_html: Job title (<span class='text-red'>Required</span>)
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
+      nqt_job_alerts_form:
+        email_html: Email address (<span class='text-red'>Required</span>)
+        keywords_html: Keywords (<span class='text-red'>Required</span>)
+        location_html: Location (<span class='text-red'>Required</span>)
       pay_package_form:
         benefits: Employee benefits
         salary_html: Salary (<span class='text-red'>Required</span>)
+      subscription_form:
+        email_html: Email address (<span class='text-red'>Required</span>)
 
     legend:
       copy_vacancy_form:
@@ -104,6 +152,8 @@ en:
       schools_form:
         organisation_ids_html: In which schools will the job be based? (<span class='text-red'>Required</span>)
         organisation_id_html: In which school will the job be based? (<span class='text-red'>Required</span>)
+      subscription_form:
+        frequency_html: When do you want to receive alerts? (<span class='text-red'>Required</span>)
       supporting_documents_form:
         supporting_documents_html: >-
           Would you like to attach supporting documents? (<span class='text-red'>Required</span>)
@@ -114,3 +164,8 @@ en:
           at_one_school: At one school in the %{organisation_type}
           central_office: At the %{organisation_type}'s head office
           at_multiple_schools: At more than one school in the %{organisation_type}
+
+    placeholder:
+      nqt_job_alerts_form:
+        keywords: Humanities, KS3, primary teacher, for example
+        location: City, town or postcode, for example

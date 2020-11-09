@@ -878,7 +878,7 @@ RSpec.describe "Creating a vacancy" do
         vacancy = create(:vacancy, :draft)
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
-        click_on I18n.t("jobs.submit_listing.button")
+        click_on I18n.t("buttons.submit_job_listing")
 
         expect(page).to have_content(I18n.t("jobs.confirmation_page.view_posted_job"))
       end
@@ -891,7 +891,7 @@ RSpec.describe "Creating a vacancy" do
         vacancy.organisation_vacancies.create(organisation: school)
 
         visit organisation_job_review_path(vacancy.id)
-        click_on I18n.t("jobs.submit_listing.button")
+        click_on I18n.t("buttons.submit_job_listing")
 
         expect(vacancy.reload.publisher_user_id).to eq(current_user.id)
       end
@@ -902,7 +902,7 @@ RSpec.describe "Creating a vacancy" do
 
         visit organisation_job_review_path(vacancy.id)
 
-        click_on I18n.t("jobs.submit_listing.button")
+        click_on I18n.t("buttons.submit_job_listing")
         save_page
 
         click_on I18n.t("jobs.confirmation_page.view_posted_job")
@@ -917,7 +917,7 @@ RSpec.describe "Creating a vacancy" do
 
           visit organisation_job_review_path(vacancy.id)
 
-          click_on I18n.t("jobs.submit_listing.button")
+          click_on I18n.t("buttons.submit_job_listing")
           save_page
 
           click_on I18n.t("jobs.confirmation_page.view_posted_job")
@@ -933,7 +933,7 @@ RSpec.describe "Creating a vacancy" do
 
           visit organisation_job_review_path(vacancy.id)
 
-          click_on I18n.t("jobs.submit_listing.button")
+          click_on I18n.t("buttons.submit_job_listing")
           save_page
 
           click_on I18n.t("jobs.confirmation_page.view_posted_job")
@@ -949,7 +949,7 @@ RSpec.describe "Creating a vacancy" do
 
           visit organisation_job_review_path(vacancy.id)
 
-          click_on I18n.t("jobs.submit_listing.button")
+          click_on I18n.t("buttons.submit_job_listing")
           save_page
 
           click_on I18n.t("jobs.confirmation_page.view_posted_job")
@@ -996,7 +996,7 @@ RSpec.describe "Creating a vacancy" do
         fill_in "important_dates_form[expires_on(1i)]", with: expiry_date.year
         click_on I18n.t("buttons.continue")
 
-        click_on I18n.t("jobs.submit_listing.button")
+        click_on I18n.t("buttons.submit_job_listing")
         expect(page).to have_content(I18n.t("jobs.confirmation_page.submitted"))
       end
 
@@ -1017,7 +1017,7 @@ RSpec.describe "Creating a vacancy" do
         vacancy = create(:vacancy, :draft, expiry_time: Time.zone.now + 5.days)
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
-        click_on I18n.t("jobs.submit_listing.button")
+        click_on I18n.t("buttons.submit_job_listing")
 
         expect(page).to have_content(
           "The listing will appear on the service until " \
@@ -1069,7 +1069,7 @@ RSpec.describe "Creating a vacancy" do
             .to receive(:update_google_index).with(vacancy)
 
           visit organisation_job_review_path(vacancy.id)
-          click_on I18n.t("jobs.submit_listing.button")
+          click_on I18n.t("buttons.submit_job_listing")
         end
       end
 
@@ -1081,7 +1081,7 @@ RSpec.describe "Creating a vacancy" do
           expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)
 
           visit organisation_job_review_path(vacancy.id)
-          click_on I18n.t("jobs.submit_listing.button")
+          click_on I18n.t("buttons.submit_job_listing")
         end
       end
     end

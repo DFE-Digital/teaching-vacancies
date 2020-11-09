@@ -1,0 +1,355 @@
+en:
+  jobs:
+    heading: Welcome to Teaching Vacancies
+    intro: >-
+      Teaching Vacancies is a free job-listing service from the Department for Education.
+      You can search for a job at a school or Trust in England and set up job alerts.
+
+    location_description: >-
+      Find teaching jobs in %{location} on Teaching Vacancies, the free national job site for teachers,
+      with no recruitment fees for schools.
+    location_search_heading: Teaching jobs in %{location}
+
+    filters:
+      title: Search job listings
+      job_filters: Job Filters
+      keyword: Keywords
+      keyword_hint: Humanities, KS2, primary, NQT for example
+      location: Enter a location
+      location_hint: City, town or postcode
+      use_current_location: use current location
+      within_radius: Within a radius of
+      number_of_miles:
+        one: '%{count} mile'
+        other: '%{count} miles'
+      add_more_filters: Add more filters
+      job_roles: Job role
+      phases: Education phase
+      working_patterns: Working pattern
+
+    job_role_options:
+      teacher: Teacher
+      leadership: Leadership
+      sen_specialist: SEN specialist
+      nqt_suitable: Suitable for NQTs
+    education_phase_options:
+      primary: Primary
+      middle: Middle
+      secondary: Secondary
+      16-19: 16-19
+    working_pattern_options:
+      full_time: Full-time
+      part_time: Part-time
+      job_share: Job share
+
+    number_of_results_html: >-
+      Showing
+      <span class="govuk-!-font-weight-bold">%{first}</span> to
+      <span class="govuk-!-font-weight-bold">%{last}</span> of
+      <span class="govuk-!-font-weight-bold">%{count}</span> results
+    number_of_results_one_page_html:
+      zero: ''
+      one: Showing <span class="govuk-!-font-weight-bold">%{count}</span> result
+      other: Showing <span class="govuk-!-font-weight-bold">%{count}</span> results
+
+    no_jobs:
+      heading: Try another search
+      intro: 'You may get more results if you:'
+      suggestions:
+        - add more keywords, or try different ones
+        - change the radius of your search
+        - look at a wider geographical location, West Yorkshire instead of Leeds for example
+        - remove some filters if you have used them
+    none_listed:
+      - This may be because this isn’t a busy period in the teacher recruitment cycle.
+      - Schools have listed %{count} jobs but they have since expired.
+
+    search_result_heading:
+      without_search_html:
+        one: There is <span class='govuk-!-font-weight-bold'>%{count}</span> job listed
+        other: There are <span class='govuk-!-font-weight-bold'>%{count}</span> jobs listed
+      keyword_html:
+        one: >-
+          <span class='govuk-!-font-weight-bold'>%{count}</span> job matches
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
+        other: >-
+          <span class='govuk-!-font-weight-bold'>%{count}</span> jobs match
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span>
+      location_html:
+        one: >-
+          <span class='govuk-!-font-weight-bold'>%{count}</span> job found near
+          <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
+        other: >-
+          <span class="govuk-!-font-weight-bold">%{count}</span> jobs found near
+          <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
+      location_polygon_html:
+        one: >-
+          <span class='govuk-!-font-weight-bold'>%{count}</span> job found in
+          <span class='govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe'>%{location}</span>
+        other: >-
+          <span class="govuk-!-font-weight-bold">%{count}</span> jobs found in
+          <span class="govuk-!-font-weight-bold text-capitalize text-wrap-apostrophe">%{location}</span>
+      keyword_location_html:
+        one: >-
+          <span class='govuk-!-font-weight-bold'>%{count}</span> job matches
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> near
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
+        other: >-
+          <span class="govuk-!-font-weight-bold">%{count}</span> jobs match
+          <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> near
+          <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
+      keyword_location_polygon_html:
+        one: >-
+          <span class='govuk-!-font-weight-bold'>%{count}</span> job matches
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe'>%{keyword}</span> in
+          <span class='govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize'>%{location}</span>
+        other: >-
+          <span class="govuk-!-font-weight-bold">%{count}</span> jobs match
+          <span class="govuk-!-font-weight-bold text-wrap-apostrophe">%{keyword}</span> in
+          <span class="govuk-!-font-weight-bold text-wrap-apostrophe text-capitalize">%{location}</span>
+
+    sort_by:
+      label: Sort by
+      most_relevant: most relevant first
+      publish_on:
+        descending: newest job listing
+      expiry_time:
+        descending: most time to apply
+        ascending: least time to apply
+      submit: Sort
+
+    alert:
+      similar:
+        terse: Get a job alert for similar jobs
+        verbose:
+          link_text: Get a job alert
+          remainder: for when similar jobs are listed
+
+    contents: Contents
+    similar_jobs: Similar jobs
+    school_type: School type
+    trust_type: Trust type
+    expired: This job post has expired
+
+    create_a_job_title: Create a job listing for %{organisation}
+    create_a_job_title_no_org: Create a job listing
+    copy_job_title: Copy %{job_title}
+    new_job_listing_details: New job listing details
+    review_page_title: Review the job listing — Create a job listing for %{organisation}
+    review_heading: Review the job listing
+    copy_review_heading: Review the new job listing
+    edit_job_title: Edit %{job_title}
+    current_step: Step %{step} of %{total}
+
+    job_location: Job location
+    location: Location
+
+    job_details: Job details
+    job_title: Job title
+    job_roles: Job role
+    suitable_for_nqt: Is this job suitable for NQTs?
+    subjects: Subject(s)
+    subject:
+      one: Subject
+      other: Subjects
+    working_patterns: Working pattern
+    working_patterns_info_one: '%{patterns} only'
+    working_patterns_info_many: Will consider %{patterns}
+
+    salary: Salary
+    benefits: Employee benefits
+    pay_package: Pay package
+
+    important_dates: Important dates and deadlines
+    application_deadline: Application deadline
+    days_to_apply:
+      remaining: '%{days_remaining} days remaining to apply'
+      today: Deadline is today
+      tomorrow: Deadline is tomorrow
+    publication_date: Date job will be listed
+    start_on: Date job starts
+    starts_on: Expected start date
+    publish_on: Date listed
+    expires_on: Closing date
+    time_at: ' at '
+
+    education: Essential educational requirements
+    qualifications: Essential qualifications
+    experience: Essential skills and experience
+
+    supporting_documents: Supporting documents
+    upload_file: Upload files
+    select_file: Select a file
+    no_files_message: No files selected
+    no_supporting_documents: No documents uploaded
+    file_delete_error_message: An error occurred while removing %{filename}
+    file_delete_success_message: '%{filename} was removed'
+    file_google_error_message: '%{filename} could not be uploaded - try again'
+    file_input_error_message: The selected file(s) could not be uploaded
+    file_size_error_message: '%{filename} must be smaller than %{size_limit}'
+    file_type_error_message: '%{filename} must be a valid file type'
+    file_virus_error_message: '%{filename} contains a virus'
+    upload_documents_table:
+      headers:
+        file_name: File name
+        status: Status
+        file_size: File size
+        action: Action
+      upload_status:
+        uploading: Uploading...
+        uploaded: Uploaded
+      actions:
+        are_you_sure: Are you sure you want to remove '%{filename}'?
+        cancel: Cancel
+        remove: Remove
+        removing: Removing...
+
+    application_details: Applying for the job
+    contact_email: Contact email
+    contact_email_subject: '%{job} job enquiry'
+    contact_email_body: Regarding the job at %{url}
+    contact_number: Contact phone number
+    school_visits_heading: Arranging a visit to %{school}
+    how_to_apply: Application instructions
+    applying_for_the_job: Applying for the job
+    apply: More on how to apply
+    application_link: Link to online application
+
+    job_summary: Job summary
+    about_school: About %{school}
+
+    review: Review your entries for each section below, making any changes needed before you publish the listing.
+    review_future:
+      Review your entries for each section below, making any changes before you submit the listing for publication.
+    not_defined: Not defined (will not be seen on published listing)
+    edit: Edit the job details.
+
+    view_public_link: 'View the public page for this job'
+    copy_public_url: 'copy the public URL to the clipboard'
+    share_on: Share on
+    share_on_facebook: Share to Facebook
+    share_on_twitter: Share to Twitter
+    share_this_job: Share this job
+
+    preview_listing:
+      heading: Preview this job listing
+      message: See how this job listing will appear to jobseekers on Teaching Vacancies
+      page_title: Preview job listing for %{organisation}
+      summary:
+        heading_html: Preview of &#8216;%{title}&#8217;
+        body_html:
+          zero: >-
+            This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
+            You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
+            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication now (%{date})
+          one: >-
+            This is how your job listing will appear to jobseekers visiting Teaching Vacancies.
+            You can make changes or, if you are happy with it and agree to our <a href='/pages/terms-and-conditions'
+            class='govuk-link' target='blank'>terms and conditions</a>, you can submit it for publication on %{date}
+
+    submit_listing:
+      heading:
+        zero: Submit this listing for publication now (%{date})
+        one: Submit this listing for publication on %{date}
+      message_html: >-
+        By publishing this job you agree to our <a href='/pages/terms-and-conditions'
+        class='govuk-link' target='blank'>terms and conditions</a>  for schools and confirm that the details you have
+        provided are, to the best of your knowledge, correct
+
+    confirmation_page:
+      dashboard_link: You can also view, amend or delete it on %{link}
+      date_posted: Your job listing will be posted on %{date}.
+      date_posted_now: Your job listing has been posted.
+      date_expires: >-
+        The listing will appear on the service until %{application_deadline},
+        after which it will no longer be visible to jobseekers.
+      feedback_link: What did you think of this service?
+      feedback_time: (takes 30 seconds)
+      next_step: What happens next
+      page_title: The job listing for %{organisation} has been completed
+      submitted: The job listing has been completed
+      view_posted_job: View your job listing
+
+    dashboard_filters:
+      heading:
+        zero: Showing all jobs
+        one: 1 filter applied
+        other: '%{count} filters applied'
+
+    actions: Actions
+    date_to_be_posted: Date to be published
+    edit_link: Edit
+    copy_link: Copy
+    delete_link: Delete
+    are_you_sure: Are you sure you want to delete the '%{job_title}' job?
+    draft:
+      time_created: Date drafted
+      time_updated: Date last updated
+    expired_on: Expired on
+    page_views: Total views
+
+    published_jobs: Published jobs
+    published_jobs_with_count:
+      zero: No published jobs
+      one: 1 published job
+      other: '%{count} published jobs'
+    pending_jobs: Scheduled jobs
+    pending_jobs_with_count:
+      zero: No scheduled jobs
+      one: 1 scheduled job
+      other: '%{count} scheduled jobs'
+    draft_jobs: Draft jobs
+    draft_jobs_with_count:
+      zero: No draft jobs
+      one: 1 draft job
+      other: '%{count} draft jobs'
+    expired_jobs: Expired jobs
+    expired_jobs_with_count:
+      zero: No expired jobs
+      one: 1 expired job
+      other: '%{count} expired jobs'
+    awaiting_feedback_jobs: Jobs awaiting feedback
+    awaiting_feedback_jobs_with_count:
+      zero: No jobs awaiting feedback
+      one: 1 job awaiting feedback
+      other: '%{count} jobs awaiting feedback'
+    no_published_jobs: You currently have no published jobs
+    no_expired_jobs: You currently have no expired jobs
+    no_draft_jobs: You currently have no draft jobs
+    no_pending_jobs: You currently have no scheduled jobs
+
+    awaiting_feedback_intro: >-
+      Please tell us if you filled these expired jobs through Teaching Vacancies,
+      and whether you listed them elsewhere. Your feedback will help us improve the service.
+    no_awaiting_feedback: There are no jobs waiting for your feedback at the moment.
+    job_filled: Job filled on Teaching Vacancies?
+    listed_elsewhere: Listed elsewhere?
+
+    feedback:
+      listed_elsewhere:
+        listed_paid: Yes, on one or more paid services
+        listed_free: Yes, but only for free
+        listed_mix: Yes, a mix of paid and free listings
+        not_listed: 'No'
+        listed_dont_know: I don't know
+      hired_status:
+        hired_tvs: 'Yes'
+        hired_other_free: No, we hired through another free listing
+        hired_paid: No, we hired through a paid service
+        hired_no_listing: No, we hired, but not through a listing or service
+        not_filled_ongoing: No, recruitment is ongoing
+        not_filled_not_looking: No, we're no longer recruiting for the job
+        hired_dont_know: I don't know
+
+    aria_labels:
+      content: Content
+      change_job_location: Change job location
+      change_job_details: Change job details
+      change_pay_package: Change pay package
+      change_important_dates: Change important dates
+      change_supporting_documents: Change supporting documents
+      change_application_details: Change applying for the job
+      change_job_summary: Change job summary
+      apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
+      contact_email_link: Email link for job contact email — %{email}
+      sort_by_link: Sort jobs by %{column} in %{order}ending order

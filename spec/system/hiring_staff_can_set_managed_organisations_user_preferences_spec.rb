@@ -35,17 +35,17 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
     scenario "it shows the trust head office option" do
       visit organisation_managed_organisations_path
       expect(page.current_path).to eql(organisation_managed_organisations_path)
-      expect(page).to have_content(I18n.t("hiring_staff.managed_organisations.options.school_group"))
+      expect(page).to have_content(I18n.t("hiring_staff.organisations.managed_organisations.show.options.school_group"))
     end
 
     scenario "it allows school group users to select which organisation's jobs they want to manage" do
       visit organisation_managed_organisations_path
 
       expect(page).to have_content(
-        I18n.t("hiring_staff.managed_organisations.panel.title", organisation: school_group.name),
+        I18n.t("hiring_staff.organisations.managed_organisations.show.panel.title", organisation: school_group.name),
       )
 
-      check I18n.t("hiring_staff.managed_organisations.options.school_group"),
+      check I18n.t("hiring_staff.organisations.managed_organisations.show.options.school_group"),
             name: "managed_organisations_form[managed_school_ids][]", visible: false
       check school_1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
 
@@ -59,10 +59,10 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
       visit organisation_managed_organisations_path
 
       expect(page).to have_content(
-        I18n.t("hiring_staff.managed_organisations.panel.title", organisation: school_group.name),
+        I18n.t("hiring_staff.organisations.managed_organisations.show.panel.title", organisation: school_group.name),
       )
 
-      check I18n.t("hiring_staff.managed_organisations.options.all"),
+      check I18n.t("hiring_staff.organisations.managed_organisations.show.options.all"),
             name: "managed_organisations_form[managed_organisations][]", visible: false
       check school_1.name, name: "managed_organisations_form[managed_school_ids][]", visible: false
 
@@ -80,7 +80,9 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
     scenario "it does not show the trust head office option" do
       visit organisation_managed_organisations_path
       expect(page.current_path).to eql(organisation_managed_organisations_path)
-      expect(page).not_to have_content(I18n.t("hiring_staff.managed_organisations.options.school_group"))
+      expect(page).not_to have_content(
+        I18n.t("hiring_staff.organisations.managed_organisations.show.options.school_group"),
+      )
     end
   end
 end

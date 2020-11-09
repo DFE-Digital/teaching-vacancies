@@ -11,24 +11,18 @@
       = f.govuk_error_summary
 
       = f.govuk_text_field :keywords,
-        label: { text: t('nqt_job_alerts.form.labels.keywords_html'), size: 's' },
-        hint: { text: t('nqt_job_alerts.form.hints.keywords') },
-        placeholder: t('nqt_job_alerts.form.placeholders.keywords'),
+        label: { size: 's' },
+        placeholder: t('helpers.placeholder.nqt_job_alerts_form.keywords'),
         width: 'two-thirds',
         required: true
 
       = f.govuk_text_field :location,
-        label: { text: t('nqt_job_alerts.form.labels.location_html'), size: 's' },
-        hint: { text: t('nqt_job_alerts.form.hints.location') },
-        placeholder: t('nqt_job_alerts.form.placeholders.location'),
+        label: { size: 's' },
+        placeholder: t('helpers.placeholder.nqt_job_alerts_form.location'),
         width: 'two-thirds',
         required: true
 
-      = f.govuk_email_field :email,
-        label: { text: t('nqt_job_alerts.form.labels.email_html'), size: 's' },
-        hint: { text: t('nqt_job_alerts.form.hints.email') },
-        width: 'two-thirds',
-        required: true
+      = f.govuk_email_field :email, label: { size: 's' }, width: 'two-thirds', required: true
 
       = recaptcha_v3(action: 'subscription')
 

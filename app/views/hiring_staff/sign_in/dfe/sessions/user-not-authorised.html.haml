@@ -1,10 +1,13 @@
-- content_for :page_title_prefix do
-  =t('static_pages.not_authorised.title')
+- content_for :page_title_prefix, t('static_pages.not_authorised.title')
 
 .govuk-grid-row
-
   .govuk-grid-column-two-thirds
-    %h1.govuk-heading-xl=t('static_pages.not_authorised.title')
+    %h1.govuk-heading-xl= t('static_pages.not_authorised.title')
 
-    -t('static_pages.not_authorised.with_email.text', email: @identifier, signin_url: "<a href='https://profile.signin.education.gov.uk/' class='govuk-link' aria-label='Go to DfE Sign-in'>https://profile.signin.education.gov.uk/</a>", blog_url: "<a href='https://dfedigital.blog.gov.uk/2018/09/21/how-were-rolling-out-our-search-and-listing-service-to-more-schools-to-support-their-teacher-recruitment-needs/' class='govuk-link'>blog on the service's phased roll-out</a>", mailto_url: "<a href='mailto:teaching.vacancies@education.gov.uk' class='govuk-link' aria-label='Email teaching.vacancies@education.gov.uk'>teaching.vacancies@education.gov.uk</a>").each do |p|
-      %p=p.html_safe
+    %p.govuk-body= t('static_pages.not_authorised.intro_html', email: @identifier, signin_url: link_to('DfE Sign-in', 'https://profile.signin.education.gov.uk/', class: 'govuk-link'))
+
+    %h2.govuk-heading-m= t('static_pages.not_authorised.authorised.heading')
+    %p.govuk-body= t('static_pages.not_authorised.authorised.text_html', mailto_url: mail_to('teaching.vacancies@education.gov.uk', 'teaching.vacancies@education.gov.uk', class: 'govuk-link'))
+
+    %h2.govuk-heading-m= t('static_pages.not_authorised.no_account.heading')
+    %p.govuk-body= t('static_pages.not_authorised.no_account.text_html', mailto_url: mail_to('teaching.vacancies@education.gov.uk', 'teaching.vacancies@education.gov.uk', class: 'govuk-link'))

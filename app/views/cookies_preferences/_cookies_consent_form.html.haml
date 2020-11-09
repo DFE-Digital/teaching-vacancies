@@ -2,9 +2,9 @@
   = f.govuk_error_summary
 
   = f.govuk_collection_radio_buttons :cookies_consent,
-    [['yes', t('cookies.form.options.consent')], ['no', t('cookies.form.options.no_consent')]],
+    [['yes', t('cookies_preferences.form.options.consent')], ['no', t('cookies_preferences.form.options.no_consent')]],
     :first,
     :last,
-    legend: { text: t('cookies.form.legend') }
+    legend: { text: t('cookies_preferences.form.legend') }
 
-  = f.govuk_submit t('cookies.form.buttons.save_changes')
+  = f.govuk_submit t('buttons.save_changes')
