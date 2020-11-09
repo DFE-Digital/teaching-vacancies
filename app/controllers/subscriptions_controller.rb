@@ -51,7 +51,7 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.find_and_verify_by_token(token)
     @subscription = SubscriptionPresenter.new(subscription)
     Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.delete", current_session_id).log
-    subscription.delete
+    subscription.unsubscribe
   end
 
 private

@@ -5,45 +5,28 @@ RSpec.describe Subscription, type: :model do
   it { should have_many(:job_alert_feedbacks) }
   it { should respond_to(:recaptcha_score) }
 
-  context "validations" do
-    context "email" do
-      it "ensures an email is set" do
-        subscription = Subscription.new
-
-        expect(subscription.valid?).to eq(false)
-        expect(subscription.errors.messages[:email]).to eq(["Enter your email address"])
-      end
-
-      it "ensures a valid email address is used" do
-        subscription = Subscription.new email: "inv@al@.id.email.com"
-
-        expect(subscription.valid?).to eq(false)
-        expect(subscription.errors.messages[:email]).to eq(
-          ["Enter an email address in the correct format, like name@example.com"],
-        )
-      end
-    end
-
-    context "unique index" do
-      it "validates uniqueness of email, frequency and search_criteria" do
-        create(:subscription, email: "jane@doe.com", frequency: :daily, search_criteria: { keyword: "martial arts" })
-        subscription = build(:subscription, email: "jane@doe.com", frequency: :daily, search_criteria: { keyword: "martial arts" })
-
-        expect(subscription.valid?).to eq(false)
-        expect(subscription.errors.messages[:search_criteria]).to eq(["has already been taken"])
-      end
-    end
-  end
-
-  context "scopes" do
+  describe "scopes" do
     before(:each) do
       create_list(:subscription, 3, frequency: :daily)
-      create_list(:subscription, 5, frequency: :daily)
+      create_list(:subscription, 5, frequency: :weekly)
+      create(:subscription, frequency: :daily, active: false)
     end
 
-    context "daily" do
+    describe "#daily" do
       it "retrieves all subscriptions with frequency set to :daily" do
-        expect(Subscription.daily.count).to eq(8)
+        expect(Subscription.daily.count).to eql(4)
+      end
+    end
+
+    describe "#weekly" do
+      it "retrieves all subscriptions with frequency set to :daily" do
+        expect(Subscription.weekly.count).to eql(5)
+      end
+    end
+
+    describe "active" do
+      it "retrieves all subscriptions with active set to true" do
+        expect(Subscription.active.count).to eql(8)
       end
     end
   end

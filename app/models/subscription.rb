@@ -11,9 +11,7 @@ class Subscription < ApplicationRecord
   has_many :alert_runs
   has_many :job_alert_feedbacks
 
-  validates :email, email_address: { presence: true }
-  validates :frequency, presence: true
-  validates :search_criteria, uniqueness: { scope: %i[email frequency] }
+  scope :active, (-> { where(active: true) })
 
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
@@ -42,6 +40,10 @@ class Subscription < ApplicationRecord
   def token
     token_values = { id: id }
     self.class.encryptor.encrypt_and_sign(token_values)
+  end
+
+  def unsubscribe
+    update(email: nil, active: false, unsubscribed_at: Time.zone.now)
   end
 
   def vacancies_for_range(date_from, date_to)
