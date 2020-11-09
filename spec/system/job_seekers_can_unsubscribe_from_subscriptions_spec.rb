@@ -15,8 +15,12 @@ RSpec.describe "A job seeker can unsubscribe from subscriptions" do
       expect(page).to have_content(I18n.t("subscriptions.unsubscribe.header"))
     end
 
-    it "deletes the subscription" do
-      expect { subscription.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    it "removes the email from the subscription" do
+      expect(subscription.reload.email).to be_blank
+    end
+
+    it "updates the subscription status" do
+      expect(subscription.reload.active).to eql(false)
     end
 
     it "audits the unsubscription" do
@@ -39,8 +43,12 @@ RSpec.describe "A job seeker can unsubscribe from subscriptions" do
         expect(page).to have_content(I18n.t("subscriptions.unsubscribe.header"))
       end
 
-      it "deletes the subscription" do
-        expect { subscription.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      it "removes the email from the subscription" do
+        expect(subscription.reload.email).to be_blank
+      end
+
+      it "updates the subscription status" do
+        expect(subscription.reload.active).to eql(false)
       end
 
       it "audits the unsubscription" do

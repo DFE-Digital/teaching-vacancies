@@ -2,7 +2,7 @@ class SendWeeklyAlertEmailJob < AlertEmail::Base
   queue_as :queue_weekly_alerts
 
   def subscriptions
-    Subscription.weekly
+    Subscription.active.weekly
   end
 
   def from_date
