@@ -16,8 +16,8 @@ const getSchool = () => {
 
 // For search result map
 const getPolygonCoordinates = () => {
-  if (document.getElementById('map').dataset.polygon) {
-    return JSON.parse(document.getElementById('map').dataset.polygon);
+  if (document.getElementById('map').dataset.polygonCoordinates) {
+    return JSON.parse(document.getElementById('map').dataset.polygonCoordinates);
   }
   return false;
 };
@@ -168,8 +168,17 @@ window.initMap = () => {
       google.maps.event.addListener(map, 'click', (event) => {
         infoWindow.close();
       });
-    }
-    ;
+    };
+
+    document.getElementById('searchFromMap').addEventListener('click', () => {
+      let url = new URL(window.location);
+      visiblePolygon.getPath().i.forEach((i) => {
+        url.searchParams.append('user_input_polygon[]', i.lat().toFixed(3))
+        url.searchParams.append('user_input_polygon[]', i.lng().toFixed(3))
+      });
+      url.searchParams = url.searchParams.toString();
+      window.location = url;
+    });
   }
   /* eslint-enable */
 };

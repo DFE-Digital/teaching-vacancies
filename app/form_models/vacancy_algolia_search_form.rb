@@ -5,7 +5,7 @@ class VacancyAlgoliaSearchForm
               :location, :location_category, :radius,
               :job_roles, :phases, :working_patterns,
               :jobs_sort, :page,
-              :job_role_options, :phase_options, :working_pattern_options,
+              :job_role_options, :phase_options, :user_input_polygon, :working_pattern_options,
               :total_filters
 
   def initialize(params = {})
@@ -17,6 +17,7 @@ class VacancyAlgoliaSearchForm
 
     @job_roles = params[:job_roles]
     @phases = params[:phases]
+    @user_input_polygon = params[:user_input_polygon]
     @working_patterns = params[:working_patterns]
 
     @jobs_sort = params[:jobs_sort]
@@ -28,15 +29,16 @@ class VacancyAlgoliaSearchForm
 
   def to_hash
     {
-      keyword: @keyword,
-      location: @location,
-      location_category: @location_category,
-      radius: @radius,
-      job_roles: @job_roles,
-      phases: @phases,
-      working_patterns: @working_patterns,
-      jobs_sort: @jobs_sort,
-      page: @page,
+        keyword: @keyword,
+        location: @location,
+        location_category: @location_category,
+        radius: @radius,
+        job_roles: @job_roles,
+        phases: @phases,
+        user_input_polygon: @user_input_polygon,
+        working_patterns: @working_patterns,
+        jobs_sort: @jobs_sort,
+        page: @page,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 

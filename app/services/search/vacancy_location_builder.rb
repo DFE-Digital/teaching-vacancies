@@ -3,9 +3,9 @@ class Search::VacancyLocationBuilder
   MILES_TO_METRES = 1.60934 * 1000
 
   attr_reader :location, :location_category, :location_filter,
-              :location_polygon, :location_polygon_boundary, :missing_polygon
+              :location_polygon, :missing_polygon, :user_input_polygon
 
-  def initialize(location, radius, location_category)
+  def initialize(location, radius, location_category, user_input_polygon)
     @location = location || location_category
     @radius = (radius || DEFAULT_RADIUS).to_i
     @location_filter = {}
@@ -16,6 +16,13 @@ class Search::VacancyLocationBuilder
                            location_category
                          end
 
+    @user_input_polygon = user_input_polygon.present? ? [user_input_polygon.map(&:to_f)] : nil
+
+    if user_input_polygon_search?
+      @location = nil
+      @location_category = nil
+    end
+
     if location_category_search?
       initialize_location_polygon
     elsif @location.present?
@@ -25,10 +32,18 @@ class Search::VacancyLocationBuilder
 
   def location_category_search?
     (@location_category && LocationCategory.include?(@location_category)) ||
-      (@location && LocationCategory.include?(@location))
+        (@location && LocationCategory.include?(@location))
   end
 
-private
+  def user_input_polygon_search?
+    @user_input_polygon.present?
+  end
+
+  def polygon_coordinates
+    user_input_polygon_search? ? @user_input_polygon : @location_polygon_boundary
+  end
+
+  private
 
   def initialize_location_polygon
     @location_polygon = LocationPolygon.with_name(@location_category)

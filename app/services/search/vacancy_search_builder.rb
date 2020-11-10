@@ -56,7 +56,7 @@ private
 
   def build_location_search
     @location_search = Search::VacancyLocationBuilder.new(
-      @params_hash[:location], @params_hash[:radius], @params_hash[:location_category]
+        @params_hash[:location], @params_hash[:radius], @params_hash[:location_category], @params_hash[:user_input_polygon]
     )
     @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
     if @location_search.missing_polygon
@@ -83,14 +83,14 @@ private
 
   def search
     Vacancy.includes(organisation_vacancies: :organisation).search(
-      @keyword,
-      aroundLatLng: @location_search.location_filter[:point_coordinates],
-      aroundRadius: @location_search.location_filter[:radius],
-      insidePolygon: @location_search.location_polygon_boundary,
-      filters: @search_filters,
-      replica: @search_replica,
-      hitsPerPage: @hits_per_page,
-      page: @page,
+        @keyword,
+        aroundLatLng: @location_search.location_filter[:point_coordinates],
+        aroundRadius: @location_search.location_filter[:radius],
+        insidePolygon: @location_search.polygon_coordinates,
+        filters: @search_filters,
+        replica: @search_replica,
+        hitsPerPage: @hits_per_page,
+        page: @page,
     )
   end
 

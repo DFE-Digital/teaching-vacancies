@@ -1,8 +1,8 @@
 class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers::OrganisationOverviews::BaseComponent
-  attr_reader :polygon, :vacancies
+  attr_reader :polygon_coordinates, :vacancies
 
-  def initialize(polygon:, vacancies:)
-    @polygon = polygon
+  def initialize(polygon_coordinates:, vacancies:)
+    @polygon_coordinates = polygon_coordinates
     @vacancies = vacancies
   end
 
@@ -20,6 +20,6 @@ class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers:
   end
 
   def render?
-    @polygon.present?
+    polygon_coordinates.present?
   end
 end
