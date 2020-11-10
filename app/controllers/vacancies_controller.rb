@@ -5,10 +5,7 @@ class VacanciesController < ApplicationController
     @jobs_search_form = VacancyAlgoliaSearchForm.new(algolia_search_params)
     @vacancies_search = Search::VacancySearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies_search.call
-    @vacancies = VacanciesPresenter.new(
-      @vacancies_search.vacancies,
-      coordinates: @vacancies_search.point_coordinates,
-    )
+    @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
   end
