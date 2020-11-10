@@ -1,4 +1,4 @@
 data cloudfoundry_space monitoring {
-  name     = var.space
-  org_name = var.org
+  name     = local.monitoring_space_name
+  org_name = local.monitoring_org_name
 }
