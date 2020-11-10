@@ -125,6 +125,7 @@ window.initMap = () => {
       strokeWeight: 2,
       fillColor: "#1d70b8",
       fillOpacity: 0.35,
+      editable: true
     });
 
     polygonCoordinates.forEach((latLng) => {

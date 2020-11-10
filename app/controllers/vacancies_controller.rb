@@ -77,7 +77,13 @@ private
   end
 
   def polygon
-    @vacancies_search.location_search.location_polygon_boundary.first
-        .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }.to_json
+    max_number_of_points = 20
+    polygon = @vacancies_search.location_search.location_polygon_boundary.first
+        .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }
+    number_of_points = polygon.length
+    if number_of_points > max_number_of_points
+      polygon = polygon.values_at *(0..(number_of_points-1)).step(number_of_points/max_number_of_points)
+    end
+    polygon.to_json
   end
 end
