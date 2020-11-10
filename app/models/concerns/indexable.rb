@@ -38,12 +38,12 @@ module Indexable
       attribute :organisations do
         { names: organisations.map(&:name),
           counties: organisations.map(&:county).uniq,
-          detailed_school_types: organisations.select { |org| org.is_a?(School) }.map(&:detailed_school_type).uniq,
-          group_type: organisations.select { |org| org.is_a?(SchoolGroup) }.map(&:group_type).reject(&:blank?).uniq,
+          detailed_school_types: organisations.schools.map(&:detailed_school_type).uniq,
+          group_type: organisations.school_groups.map(&:group_type).reject(&:blank?).uniq,
           local_authorities_within: organisations.map(&:local_authority_within).reject(&:blank?).uniq,
-          religious_characters: organisations.select { |org| org.is_a?(School) }.map(&:religious_character).reject(&:blank?).uniq,
-          regions: organisations.select { |org| org.is_a?(School) }.map(&:region).uniq,
-          school_types: organisations.select { |org| org.is_a?(School) }.map { |org| org.school_type&.singularize }.uniq,
+          religious_characters: organisations.schools.map(&:religious_character).reject(&:blank?).uniq,
+          regions: organisations.schools.map(&:region).uniq,
+          school_types: organisations.schools.map { |org| org.school_type&.singularize }.uniq,
           towns: organisations.map(&:town).reject(&:blank?).uniq }
       end
 

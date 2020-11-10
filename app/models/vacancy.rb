@@ -7,15 +7,13 @@ class Vacancy < ApplicationRecord
   include ApplicationHelper
   include Auditor::Model
   include DatesHelper
+  include Indexable
+  include Redis::Objects
   include VacancyJobSpecificationValidations
   include VacancyPayPackageValidations
   include VacancyImportantDateValidations
   include VacancyApplicationDetailValidations
   include VacancyJobSummaryValidations
-
-  include Redis::Objects
-
-  include Indexable
 
   JOB_ROLE_OPTIONS = {
     teacher: 0,
@@ -108,6 +106,10 @@ class Vacancy < ApplicationRecord
     organisation_vacancies.first&.organisation
   end
 
+  def parent_organisation
+    organisations.many? ? organisations.first.school_groups.first : organisation
+  end
+
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end
@@ -164,10 +166,6 @@ class Vacancy < ApplicationRecord
 
   def delete_documents
     documents.each { |document| DocumentDelete.new(document).delete }
-  end
-
-  def parent_organisation
-    organisations.many? ? organisations.first.school_groups.first : organisation
   end
 
   def education_phases
