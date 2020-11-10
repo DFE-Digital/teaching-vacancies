@@ -56,7 +56,7 @@ en:
       before_today: Date application is due must be in the future
       before_publish_on: Date application is due must be after date job will be listed
       invalid: Use the correct format for date application is due
-    expiry_time:
+    expires_at:
       blank: Enter the time application is due
       wrong_format: Use the correct format for time application is due
       must_be_am_pm: Select am or pm
@@ -144,7 +144,7 @@ en:
             <<: *important_dates_errors
   activerecord:
     attributes:
-      vacancy/expiry_time: Application deadline (time)
+      vacancy/expires_at: Application deadline (time)
       vacancy/working_patterns:
         full_time: Full-time
         part_time: Part-time

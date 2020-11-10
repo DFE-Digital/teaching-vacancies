@@ -42,7 +42,7 @@ RSpec.describe Vacancy, type: :model do
     describe "#remove_vacancies_that_expired_yesterday!" do
       it "selects all records that expired yesterday" do
         expect(described_class).to receive(:where)
-          .with("expiry_time BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
+          .with("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
         described_class.remove_vacancies_that_expired_yesterday!
       end
 
@@ -169,13 +169,13 @@ RSpec.describe Vacancy, type: :model do
         build(:vacancy, :published)
       end
 
-      it "does not break if #expiry_time is nil" do
-        subject.expiry_time = nil
+      it "does not break if #expires_at is nil" do
+        subject.expires_at = nil
         expect { subject.listed? }.not_to raise_error
       end
 
-      it "checks #expiry_time is in the future" do
-        allow(subject).to receive(:expiry_time).and_return(datetime)
+      it "checks #expires_at is in the future" do
+        allow(subject).to receive(:expires_at).and_return(datetime)
         expect(datetime).to receive(:future?)
         subject.listed?
       end
@@ -232,8 +232,8 @@ RSpec.describe Vacancy, type: :model do
   end
 
   context "scopes" do
-    let(:expired_earlier_today) { build(:vacancy, expires_on: Date.current, expiry_time: 5.hour.ago) }
-    let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expiry_time: 1.hour.from_now) }
+    let(:expired_earlier_today) { build(:vacancy, expires_on: Date.current, expires_at: 5.hour.ago) }
+    let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expires_at: 1.hour.from_now) }
 
     describe "#applicable" do
       it "finds current vacancies" do
@@ -287,7 +287,7 @@ RSpec.describe Vacancy, type: :model do
     describe "#expired" do
       it "retrieves vacancies that have a past expires_on date" do
         create_list(:vacancy, 5, :published)
-        expired = build(:vacancy, expiry_time: Time.current - 1.hour)
+        expired = build(:vacancy, expires_at: Time.current - 1.hour)
         expired.send :set_slug
         expired.save(validate: false)
 

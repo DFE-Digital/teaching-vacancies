@@ -53,7 +53,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.current
+        draft_vacancy.expires_at = Time.current
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -76,7 +76,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.current
+        draft_vacancy.expires_at = Time.current
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -102,7 +102,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.current
+        draft_vacancy.expires_at = Time.current
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -128,7 +128,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.current
+        draft_vacancy.expires_at = Time.current
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -156,7 +156,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.current
+        draft_vacancy.expires_at = Time.current
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)
@@ -193,7 +193,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         draft_vacancy.starts_on = 1.year.from_now
         draft_vacancy.expires_on = draft_vacancy.starts_on - 1.day
-        draft_vacancy.expiry_time = Time.current
+        draft_vacancy.expires_at = Time.current
         draft_vacancy.publish_on = 1.day.from_now
 
         fill_in_important_dates_fields(draft_vacancy)

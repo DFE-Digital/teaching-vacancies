@@ -78,7 +78,7 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       context "when parameters include the sort by most time to apply option" do
-        let(:sort) { "expiry_time_desc" }
+        let(:sort) { "expires_at_desc" }
 
         it "sets the search replica on Search::VacancySearchBuilder" do
           subject
@@ -87,7 +87,7 @@ RSpec.describe VacanciesController, type: :controller do
       end
 
       context "when parameters include the sort by least time to apply option" do
-        let(:sort) { "expiry_time_asc" }
+        let(:sort) { "expires_at_asc" }
 
         it "sets the search replica on Search::VacancySearchBuilder" do
           subject

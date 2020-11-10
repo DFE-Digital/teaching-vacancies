@@ -30,8 +30,8 @@ class OrganisationVacancyPresenter < BasePresenter
   end
 
   def application_deadline
-    expiry_time_formatted = model.expiry_time.nil? ? "" : I18n.t("jobs.time_at") + format_time(model.expiry_time)
-    format_date(model.expires_on) + expiry_time_formatted
+    expires_at_formatted = model.expires_at.nil? ? "" : I18n.t("jobs.time_at") + format_time(model.expires_at)
+    format_date(model.expires_on) + expires_at_formatted
   end
 
   def preview_path

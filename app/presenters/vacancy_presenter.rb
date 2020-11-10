@@ -52,9 +52,9 @@ class VacancyPresenter < BasePresenter
   end
 
   def expired?
-    return model.expires_on < Date.current if model.expiry_time.nil?
+    return model.expires_on < Date.current if model.expires_at.nil?
 
-    model.expiry_time < Time.current
+    model.expires_at < Time.current
   end
 
   def publish_today?

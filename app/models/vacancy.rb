@@ -34,8 +34,8 @@ class Vacancy < ApplicationRecord
   JOB_SORTING_OPTIONS = [
     [I18n.t("jobs.sort_by.most_relevant"), ""],
     [I18n.t("jobs.sort_by.publish_on.descending"), "publish_on_desc"],
-    [I18n.t("jobs.sort_by.expiry_time.descending"), "expiry_time_desc"],
-    [I18n.t("jobs.sort_by.expiry_time.ascending"), "expiry_time_asc"],
+    [I18n.t("jobs.sort_by.expires_at.descending"), "expires_at_desc"],
+    [I18n.t("jobs.sort_by.expires_at.ascending"), "expires_at_asc"],
   ].freeze
 
   JOB_LOCATION_OPTIONS = {
@@ -84,8 +84,8 @@ class Vacancy < ApplicationRecord
                       :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   scope :active, (-> { where(status: %i[published draft]) })
-  scope :applicable, (-> { where("expiry_time >= ?", Time.current) })
-  scope :expired, (-> { where("expiry_time < ?", Time.current) })
+  scope :applicable, (-> { where("expires_at >= ?", Time.current) })
+  scope :expired, (-> { where("expires_at < ?", Time.current) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
@@ -124,7 +124,7 @@ class Vacancy < ApplicationRecord
   end
 
   def listed?
-    published? && expiry_time&.future? && (publish_on&.today? || publish_on&.past?)
+    published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
 
   def trash!

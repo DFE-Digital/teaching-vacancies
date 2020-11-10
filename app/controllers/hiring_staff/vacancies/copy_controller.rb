@@ -23,7 +23,7 @@ private
 
   def copy_form_params
     params.require(:copy_vacancy_form).permit(:state, :job_title, :publish_on, :expires_on, :starts_on,
-                                              :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
+                                              :expires_at_hh, :expires_at_mm, :expires_at_meridiem)
   end
 
   def set_up_copy_form

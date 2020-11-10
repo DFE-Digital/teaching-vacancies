@@ -73,7 +73,7 @@ RSpec.describe "Copying a vacancy" do
     new_vacancy.job_title = "A new job title"
     new_vacancy.starts_on = 35.days.from_now
     new_vacancy.publish_on = 0.days.from_now
-    new_vacancy.expiry_time = new_vacancy.expires_on = 30.days.from_now
+    new_vacancy.expires_at = new_vacancy.expires_on = 30.days.from_now
 
     visit organisation_path
 
@@ -104,7 +104,7 @@ RSpec.describe "Copying a vacancy" do
     expect(page).not_to have_content(original_vacancy.publish_on)
     expect(page).not_to have_content(original_vacancy.expires_on)
 
-    new_application_deadline = "#{format_date(new_vacancy.expires_on)} at #{format_time(new_vacancy.expiry_time)}"
+    new_application_deadline = "#{format_date(new_vacancy.expires_on)} at #{format_time(new_vacancy.expires_at)}"
     expect(page).to have_content(new_application_deadline)
   end
 
@@ -121,7 +121,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy.job_title = "A new job title"
       new_vacancy.starts_on = 35.days.from_now
       new_vacancy.publish_on = 0.days.from_now
-      new_vacancy.expiry_time = new_vacancy.expires_on = 30.days.from_now
+      new_vacancy.expires_at = new_vacancy.expires_on = 30.days.from_now
 
       within("table.vacancies") do
         click_on I18n.t("jobs.copy_link")
@@ -228,7 +228,7 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = "A new job title"
       new_vacancy.publish_on = 0.days.from_now
-      new_vacancy.expiry_time = new_vacancy.expires_on
+      new_vacancy.expires_at = new_vacancy.expires_on
 
       visit organisation_path
 

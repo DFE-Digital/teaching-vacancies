@@ -109,17 +109,17 @@ RSpec.describe Search::VacancySearchBuilder do
       end
 
       context "when a valid non-default sort strategy is specified," do
-        let(:jobs_sort) { "expiry_time_desc" }
+        let(:jobs_sort) { "expires_at_desc" }
 
         it "uses the specified search replica" do
-          expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_expiry_time_desc")
+          expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_expires_at_desc")
         end
 
         context "and a keyword is specified," do
           let(:keyword) { "maths teacher" }
 
           it "uses the specified search replica" do
-            expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_expiry_time_desc")
+            expect(subject.search_replica).to eql("#{Indexable::INDEX_NAME}_expires_at_desc")
           end
         end
       end

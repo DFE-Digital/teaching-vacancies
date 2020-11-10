@@ -21,7 +21,7 @@ module DatesHelper
     "Unknown format: #{format} should be one of #{date_formats}"
   end
 
-  def compose_expiry_time(args)
+  def compose_expires_at(args)
     return nil if [args[:hour],
                    args[:min],
                    args[:meridiem]].any? { |attr| attr.to_s.empty? }
@@ -29,10 +29,10 @@ module DatesHelper
     return nil unless in_range?(args[:hour], 1, 12)
     return nil unless in_range?(args[:min], 0, 59)
 
-    expiry_time_string = "#{args[:day]}-#{args[:month]}-#{args[:year]}" \
+    expires_at_string = "#{args[:day]}-#{args[:month]}-#{args[:year]}" \
                          " #{args[:hour]}:#{args[:min]} #{args[:meridiem]}"
 
-    Time.zone.parse(expiry_time_string)
+    Time.zone.parse(expires_at_string)
   end
 
   def format_datetime_with_seconds(str)

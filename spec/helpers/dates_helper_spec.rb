@@ -19,7 +19,7 @@ RSpec.describe DatesHelper, type: :helper do
     end
   end
 
-  describe "#compose_expiry_time" do
+  describe "#compose_expires_at" do
     it "returns nil if any of the fields are blank" do
       time_attr = {
         day: 10,
@@ -29,7 +29,7 @@ RSpec.describe DatesHelper, type: :helper do
         min: 12,
         meridiem: "",
       }
-      expect(helper.compose_expiry_time(time_attr)).to eq nil
+      expect(helper.compose_expires_at(time_attr)).to eq nil
     end
 
     it "creates a date time from of the attributes" do
@@ -42,7 +42,7 @@ RSpec.describe DatesHelper, type: :helper do
         min: 12,
         meridiem: "pm",
       }
-      expect(helper.compose_expiry_time(time_attr)).to eq(expected_date_time)
+      expect(helper.compose_expires_at(time_attr)).to eq(expected_date_time)
     end
   end
 

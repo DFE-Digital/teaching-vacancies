@@ -18,8 +18,8 @@
       %h4.govuk-heading-s= t('jobs.application_deadline')
     %dd.app-check-your-answers__answer
       = format_date @vacancy.expires_on
-      = t('jobs.time_at') unless @vacancy.expiry_time.nil?
-      = format_time @vacancy.expiry_time
+      = t('jobs.time_at') unless @vacancy.expires_at.nil?
+      = format_time @vacancy.expires_at
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#starts_on

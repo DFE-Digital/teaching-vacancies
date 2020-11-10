@@ -4,7 +4,7 @@ module VacancyCopyValidations
   include DatesHelper
 
   include VacancyImportantDateValidations
-  include VacancyExpiryTimeFieldValidations
+  include VacancyExpiresAtFieldValidations
 
   included do
     validates :job_title, presence: true

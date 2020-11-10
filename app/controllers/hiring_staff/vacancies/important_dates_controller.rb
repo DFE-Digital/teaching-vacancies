@@ -36,7 +36,7 @@ private
   def important_dates_params
     params.require(:important_dates_form)
           .permit(:state, :starts_on, :publish_on, :expires_on,
-                  :expiry_time, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem)
+                  :expires_at, :expires_at_hh, :expires_at_mm, :expires_at_meridiem)
           .merge(completed_step: current_step)
   end
 

@@ -48,8 +48,8 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
         [
           [I18n.t("jobs.sort_by.most_relevant"), ""],
           [I18n.t("jobs.sort_by.publish_on.descending"), "publish_on_desc"],
-          [I18n.t("jobs.sort_by.expiry_time.descending"), "expiry_time_desc"],
-          [I18n.t("jobs.sort_by.expiry_time.ascending"), "expiry_time_asc"],
+          [I18n.t("jobs.sort_by.expires_at.descending"), "expires_at_desc"],
+          [I18n.t("jobs.sort_by.expires_at.ascending"), "expires_at_asc"],
         ],
       )
     end

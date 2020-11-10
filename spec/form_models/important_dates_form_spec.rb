@@ -15,8 +15,8 @@ RSpec.describe ImportantDatesForm, type: :model do
       )
     }
     it {
-      should validate_presence_of(:expiry_time).with_message(
-        I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank"),
+      should validate_presence_of(:expires_at).with_message(
+        I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank"),
       )
     }
 
@@ -84,124 +84,124 @@ RSpec.describe ImportantDatesForm, type: :model do
       end
     end
 
-    describe "#expiry_time" do
+    describe "#expires_at" do
       before(:each) do
-        subject.expiry_time_hh = "11"
-        subject.expiry_time_mm = "11"
-        subject.expiry_time_meridiem = "am"
+        subject.expires_at_hh = "11"
+        subject.expires_at_mm = "11"
+        subject.expires_at_meridiem = "am"
       end
 
       it "displays error if all fields are blank" do
-        subject.expiry_time_hh = nil
-        subject.expiry_time_mm = nil
-        subject.expiry_time_meridiem = nil
+        subject.expires_at_hh = nil
+        subject.expires_at_mm = nil
+        subject.expires_at_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to include(
-          I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank"),
+        expect(subject.errors.messages[:expires_at]).to include(
+          I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank"),
         )
       end
 
-      validate_expiry_time_hours = [
-        { value: nil, errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank") },
+      validate_expires_at_hours = [
+        { value: nil, errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank") },
         { value: "not a number",
-          errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format") },
-        { value: "14", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format") },
-        { value: "0", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format") },
+          errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format") },
+        { value: "14", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format") },
+        { value: "0", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format") },
       ]
 
-      validate_expiry_time_hours.each do |h|
+      validate_expires_at_hours.each do |h|
         it "displays '#{h[:errors][0]}' error when hours field is #{h[:value]}" do
-          subject.expiry_time_hh = h[:value]
+          subject.expires_at_hh = h[:value]
           subject.valid?
-          expect(subject.errors.messages[:expiry_time]).to include(h[:errors])
+          expect(subject.errors.messages[:expires_at]).to include(h[:errors])
         end
       end
 
-      validate_expiry_time_minutes = [
-        { value: nil, errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank") },
+      validate_expires_at_minutes = [
+        { value: nil, errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank") },
         { value: "not a number",
-          errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format") },
-        { value: "-6", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format") },
-        { value: "66", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format") },
+          errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format") },
+        { value: "-6", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format") },
+        { value: "66", errors: I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format") },
       ]
 
-      validate_expiry_time_minutes.each do |m|
+      validate_expires_at_minutes.each do |m|
         it "displays '#{m[:errors][0]}' error when minutes field is #{m[:value]}" do
-          subject.expiry_time_mm = m[:value]
+          subject.expires_at_mm = m[:value]
           subject.valid?
-          expect(subject.errors.messages[:expiry_time]).to include(m[:errors])
+          expect(subject.errors.messages[:expires_at]).to include(m[:errors])
         end
       end
 
       it "displays error if am/pm field is blank" do
-        subject.expiry_time_meridiem = ""
+        subject.expires_at_meridiem = ""
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to eq(
-          [I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.must_be_am_pm")],
+        expect(subject.errors.messages[:expires_at]).to eq(
+          [I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.must_be_am_pm")],
         )
       end
 
       it "displays wrong format error if minutes and meridiem are invalid" do
-        subject.expiry_time_mm = "66"
-        subject.expiry_time_meridiem = nil
+        subject.expires_at_mm = "66"
+        subject.expires_at_meridiem = nil
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to include(
-          I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format"),
+        expect(subject.errors.messages[:expires_at]).to include(
+          I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format"),
         )
       end
 
       it "does not display error if all fields are correct" do
-        subject.expiry_time_hh = "01"
-        subject.expiry_time_mm = "01"
-        subject.expiry_time_meridiem = "am"
+        subject.expires_at_hh = "01"
+        subject.expires_at_mm = "01"
+        subject.expires_at_meridiem = "am"
         subject.valid?
-        expect(subject.errors.messages[:expiry_time]).to be_empty
+        expect(subject.errors.messages[:expires_at]).to be_empty
       end
 
       it "can display 24 hours format in 12 hours format AM" do
-        important_dates = ImportantDatesForm.new(expiry_time: Time.parse("6:34").getlocal)
-        expect(important_dates.expiry_time_hh).to eq("6")
-        expect(important_dates.expiry_time_mm).to eq("34")
-        expect(important_dates.expiry_time_meridiem).to eq("am")
-        expect(subject.errors.messages[:expiry_time]).to be_empty
+        important_dates = ImportantDatesForm.new(expires_at: Time.parse("6:34").getlocal)
+        expect(important_dates.expires_at_hh).to eq("6")
+        expect(important_dates.expires_at_mm).to eq("34")
+        expect(important_dates.expires_at_meridiem).to eq("am")
+        expect(subject.errors.messages[:expires_at]).to be_empty
       end
 
       it "can display 24 hours format in 12 hours format PM" do
-        important_dates = ImportantDatesForm.new(expiry_time: Time.parse("18:00").getlocal)
-        expect(important_dates.expiry_time_hh).to eq("6")
-        expect(important_dates.expiry_time_mm).to eq("0")
-        expect(important_dates.expiry_time_meridiem).to eq("pm")
-        expect(subject.errors.messages[:expiry_time]).to be_empty
+        important_dates = ImportantDatesForm.new(expires_at: Time.parse("18:00").getlocal)
+        expect(important_dates.expires_at_hh).to eq("6")
+        expect(important_dates.expires_at_mm).to eq("0")
+        expect(important_dates.expires_at_meridiem).to eq("pm")
+        expect(subject.errors.messages[:expires_at]).to be_empty
       end
     end
   end
 
   context "when expiry time components are given" do
     it "cannot save expiry time if fields are incomplete" do
-      important_dates = ImportantDatesForm.new(expiry_time_hh: "9")
+      important_dates = ImportantDatesForm.new(expires_at_hh: "9")
 
-      expect(important_dates.params_to_save).not_to include(expiry_time_hh: "9")
+      expect(important_dates.params_to_save).not_to include(expires_at_hh: "9")
     end
 
     it "can save expiry time if time fields are complete" do
-      important_dates = ImportantDatesForm.new(expires_on: Date.current + 1.week,
-                                               expiry_time_hh: "9",
-                                               expiry_time_mm: "15",
-                                               expiry_time_meridiem: "am")
+      important_dates = ImportantDatesForm.new(expires_on: 1.week.from_now,
+                                               expires_at_hh: "9",
+                                               expires_at_mm: "15",
+                                               expires_at_meridiem: "am")
       params = important_dates.params_to_save
       expect(params.count).to eq(2)
-      expect(params[:expiry_time].hour).to eq(9)
-      expect(params[:expiry_time].min).to eq(15)
+      expect(params[:expires_at].hour).to eq(9)
+      expect(params[:expires_at].min).to eq(15)
     end
   end
 
   context "when all attributes are valid" do
     it "can correctly be converted to a vacancy" do
       important_dates = ImportantDatesForm.new(state: "create",
-                                               expires_on: Date.current + 1.week,
+                                               expires_on: 1.week.from_now,
                                                publish_on: Date.current,
-                                               starts_on: Date.current + 1.month,
-                                               expiry_time_hh: "9", expiry_time_mm: "1", expiry_time_meridiem: "am")
+                                               starts_on: 1.month.from_now,
+                                               expires_at_hh: "9", expires_at_mm: "1", expires_at_meridiem: "am")
 
       expect(important_dates.valid?).to be true
       expect(important_dates.vacancy.expires_on).to eq(Date.current + 1.week)
