@@ -22,9 +22,9 @@ const getPolygonCoordinates = () => {
   return false;
 };
 
-const getOrganisations = () => {
-  if (document.getElementById('map').dataset.organisationsMapData) {
-    return JSON.parse(document.getElementById('map').dataset.organisationsMapData);
+const getVacancies = () => {
+  if (document.getElementById('map').dataset.vacanciesMapData) {
+    return JSON.parse(document.getElementById('map').dataset.vacanciesMapData);
   }
   return false;
 };
@@ -136,26 +136,25 @@ window.initMap = () => {
 
     visiblePolygon.setMap(map);
 
-    const organisations = getOrganisations();
+    const vacancies = getVacancies();
 
-    if (organisations != false) {
+    if (vacancies != false) {
       // Add markers for each search result (with a school)
 
       // Use one infoWindow for all markers.
       // This means that only one infoWindow can be open at a time.
       const infoWindow = new google.maps.InfoWindow();
 
-      organisations.forEach((organisation) => {
-        const contentString = `<p>${organisation.name_link}</p>
-                            <p>${organisation.address}</p>
-                            <p>${organisation.location}</p>`;
+      vacancies.forEach((vacancy) => {
+        const contentString = `<p>${vacancy.name_link}</p>
+                            <p>${vacancy.location}</p>`;
 
-        const latLng = {lat: organisation.lat, lng: organisation.lng};
+        const latLng = {lat: vacancy.lat, lng: vacancy.lng};
 
         const marker = new google.maps.Marker({
           position: latLng,
           map,
-          title: organisation.name,
+          title: vacancy.name,
         });
 
         marker.addListener('click', () => {

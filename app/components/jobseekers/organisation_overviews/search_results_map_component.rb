@@ -6,18 +6,17 @@ class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers:
     @vacancies = vacancies
   end
 
-  def organisations_map_data
-    organisations = []
+  def vacancies_map_data
+    data = []
     vacancies.map do |vacancy|
       organisation = vacancy.parent_organisation
-      organisations.push({name: organisation.name,
-                          name_link: link_to(organisation.name, (organisation.website || organisation.url)),
-                          address: full_address(organisation),
-                          location: location(organisation, job_location: vacancy.job_location),
-                          lat: organisation.geolocation&.x,
-                          lng: organisation.geolocation&.y})
+      data.push({name: vacancy.job_title,
+                 name_link: link_to(vacancy.job_title, vacancy_path(vacancy)),
+                 location: location(organisation, job_location: vacancy.job_location),
+                 lat: organisation.geolocation&.x,
+                 lng: organisation.geolocation&.y})
     end
-    organisations.to_json
+    data.to_json
   end
 
   def render?
