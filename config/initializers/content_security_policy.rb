@@ -6,16 +6,43 @@
 
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self
-  policy.font_src    :self, :data, "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"
-  policy.img_src     :self, :https, :data
+
+  policy.font_src    :self,
+                     :data,
+                     "https://cdnjs.cloudflare.com",
+                     "https://fonts.gstatic.com"
+
+  policy.frame_src   :self,
+                     "https://www.google.com", # for reCAPTCHA
+                     "https://www.googletagmanager.com"
+
+  policy.img_src     :self,
+                     :https,
+                     :data
+
   policy.object_src  :none
-  policy.script_src  :self, "https://cdnjs.cloudflare.com", "https://cdn.rollbar.com",
-                     "https://www.googletagmanager.com", "https://maps.googleapis.com",
+
+  policy.script_src  :self,
+                     :unsafe_inline, # Backwards compatibility; ignored by modern browsers as we set a nonce for scripts
+                     "https://cdn.rollbar.com",
+                     "https://cdnjs.cloudflare.com",
+                     "https://maps.googleapis.com",
+                     "https://www.google-analytics.com",
+                     "https://www.googletagmanager.com",
                      "https://www.recaptcha.net"
+
   # Google Maps embed will not work without 'unsafe-inline' styles
   #   see: https://issuetracker.google.com/issues/132600807
-  policy.style_src   :self, "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com", :unsafe_inline
-  policy.connect_src :self, "https://www.google-analytics.com", "https://api.postcodes.io"
+  policy.style_src   :self,
+                     :unsafe_inline,
+                     "https://cdnjs.cloudflare.com",
+                     "https://fonts.googleapis.com"
+
+  policy.connect_src :self,
+                     "https://api.postcodes.io",
+                     "https://api.rollbar.com",
+                     "https://www.google-analytics.com"
+
   # Allow using webpack-dev-server in development
   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
 

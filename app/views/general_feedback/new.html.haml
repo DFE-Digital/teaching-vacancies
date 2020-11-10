@@ -22,6 +22,6 @@
 
       = render '/feedback/form', f: f
 
-      = recaptcha_v3(action: 'feedback')
+      = recaptcha('feedback')
 
       = f.govuk_submit t('buttons.submit_feedback')
