@@ -35,7 +35,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/signin';
 @import 'application/steps';
 @import 'application/tabs';
-@import 'application/timeline'; 
+@import 'application/timeline';
 
 @import 'application/jobSeekers/cookies-banner';
 @import 'application/jobSeekers/feedback-form';
@@ -91,4 +91,9 @@ p {
 strong,
 b {
   font-weight: bold;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
 }

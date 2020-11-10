@@ -6,6 +6,7 @@ class VacanciesController < ApplicationController
     @vacancies_search = Search::VacancySearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies_search.call
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
+    @polygon = polygon if @vacancies_search.location_search.location_polygon_boundary.present?
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
   end
@@ -73,5 +74,10 @@ private
 
   def audit_row
     @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer["nbHits"])
+  end
+
+  def polygon
+    @vacancies_search.location_search.location_polygon_boundary.first
+        .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }.to_json
   end
 end
