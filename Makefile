@@ -100,7 +100,8 @@ review-destroy: init-terraform ## make CONFIRM_DESTROY=true passcode=MyPasscode 
 
 .PHONY: terraform-common-init
 terraform-common-init:
-		terraform init terraform/common
+		terraform init -reconfigure terraform/common
+		terraform workspace select default terraform/common
 
 .PHONY: terraform-common-plan
 terraform-common-plan: terraform-common-init ## make terraform-common-plan
