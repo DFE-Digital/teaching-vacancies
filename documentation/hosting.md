@@ -262,3 +262,37 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
   terraform init
   terraform apply -var-file terraform/workspace-variables/<env>.tfvars
   ```
+
+## Remove a review app environment
+
+In usual circumstances, the review apps lifecycle will be handled via GitHub Actions
+- creation via the [`review.yml`](.github/workflows/review.yml) workflow on PR open or update
+- destruction via the [`destroy.yml`](.github/workflows/destroy.yml) workflow on PR close
+
+We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
+```
+make pr=2068 CONFIRM_DESTROY=true passcode=MyPasscode review review-destroy
+```
+
+If that still does not work, it's possible to remove the individual resources via the CF command line
+
+Log in to Gov.UK PaaS
+Switch to the review space:
+```
+cf target -s teaching-vacancies-review
+```
+
+List, then delete, apps and routes
+```
+cf apps
+cf delete -r teaching-vacancies-review-pr-2068
+cf delete -r teaching-vacancies-worker-review-pr-2068
+```
+
+List, then delete, services
+```
+cf services
+cf delete-service teaching-vacancies-postgres-review-pr-2068
+cf delete-service teaching-vacancies-redis-review-pr-2068
+cf delete-service teaching-vacancies-papertrail-review-pr-2068
+```
