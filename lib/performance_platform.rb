@@ -12,7 +12,7 @@ module PerformancePlatform
                    "Content-Type" => "application/json" }
     end
 
-    def submit(data, timestamp = Time.zone.now.iso8601, period = "day")
+    def submit(data, timestamp = Time.current.iso8601, period = "day")
       HTTParty.post("#{PP_DOMAIN}#{transaction_endpoint}",
                     body: data_map(timestamp, period, data),
                     headers: headers)

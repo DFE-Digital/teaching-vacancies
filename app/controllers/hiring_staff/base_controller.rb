@@ -38,14 +38,14 @@ class HiringStaff::BaseController < ApplicationController
   def check_user_last_activity_at
     return redirect_to logout_endpoint if current_user&.last_activity_at.blank?
 
-    if Time.zone.now > (current_user.last_activity_at + TIMEOUT_PERIOD)
+    if Time.current > (current_user.last_activity_at + TIMEOUT_PERIOD)
       session[:signing_out_for_inactivity] = true
       redirect_to logout_endpoint
     end
   end
 
   def update_user_last_activity_at
-    current_user&.update(last_activity_at: Time.zone.now)
+    current_user&.update(last_activity_at: Time.current)
   end
 
   def logout_endpoint

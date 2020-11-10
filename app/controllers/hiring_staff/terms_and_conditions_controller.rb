@@ -8,7 +8,7 @@ class HiringStaff::TermsAndConditionsController < HiringStaff::BaseController
   def update
     @terms_and_conditions_form = TermsAndConditionsForm.new(terms_params)
     if @terms_and_conditions_form.valid?
-      current_user.update(accepted_terms_at: Time.zone.now)
+      current_user.update(accepted_terms_at: Time.current)
       audit_toc_acceptance
       redirect_to organisation_path
     else

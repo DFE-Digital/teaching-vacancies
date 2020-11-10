@@ -13,7 +13,7 @@ class Counter
     return if redis_counter.to_i.zero?
 
     model.send("#{self.class.persisted_column}=", increment_persisted_counter)
-    model.send("#{persisted_at_column}=", Time.zone.now)
+    model.send("#{persisted_at_column}=", Time.current)
     reset_counter if model.save
   end
 

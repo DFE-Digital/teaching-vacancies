@@ -35,7 +35,7 @@ private
   end
 
   def datestring
-    Time.zone.now.strftime("%Y%m%d")
+    Time.current.strftime("%Y%m%d")
   end
 
   def import_data(url, location, method)

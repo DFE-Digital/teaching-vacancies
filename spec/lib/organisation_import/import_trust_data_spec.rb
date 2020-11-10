@@ -127,7 +127,7 @@ RSpec.describe ImportTrustData do
   end
 
   describe "#run!" do
-    let(:todays_date) { Time.zone.now.strftime("%Y%m%d") }
+    let(:todays_date) { Time.current.strftime("%Y%m%d") }
     let(:groups_csv) { File.read(groups_file_path) }
     let(:groups_file_path) { Rails.root.join("spec/fixtures/example_groups_data.csv") }
     let(:links_csv) { File.read(links_file_path) }

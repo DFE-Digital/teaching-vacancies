@@ -10,7 +10,7 @@ private
     VacancyGetMoreInfoClick.new(vacancy).track
     Auditor::Audit.new(vacancy, "vacancy.get_more_information", current_session_id).log
     AuditExpressInterestEventJob.perform_later(
-      datestamp: Time.zone.now.iso8601.to_s,
+      datestamp: Time.current.iso8601.to_s,
       vacancy_id: vacancy.id,
       school_urn: vacancy.parent_organisation.urn,
       application_link: vacancy.application_link,

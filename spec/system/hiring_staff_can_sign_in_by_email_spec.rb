@@ -30,7 +30,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
     let(:login_key) do
       user.emergency_login_keys.create(
-        not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+        not_valid_after: Time.current + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
       )
     end
 
@@ -59,7 +59,7 @@ RSpec.describe "Hiring staff signing in with fallback email authentication" do
 
         let(:other_login_key) do
           user.emergency_login_keys.create(
-            not_valid_after: Time.zone.now + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
+            not_valid_after: Time.current + HiringStaff::SignIn::Email::SessionsController::EMERGENCY_LOGIN_KEY_DURATION,
           )
         end
 

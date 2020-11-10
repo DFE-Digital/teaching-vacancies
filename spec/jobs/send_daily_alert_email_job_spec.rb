@@ -39,7 +39,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
     end
 
     context "when a run exists" do
-      let!(:run) { subscription.alert_runs.create(run_on: Time.zone.today) }
+      let!(:run) { subscription.alert_runs.create(run_on: Date.current) }
 
       it "does not send another email" do
         expect(AlertMailer).to_not receive(:alert)
@@ -79,7 +79,7 @@ RSpec.describe SendDailyAlertEmailJob, type: :job do
     let(:job) { described_class.new }
 
     it "gets vacancies in the last day" do
-      expect(subscription).to receive(:vacancies_for_range).with(Time.zone.yesterday, Time.zone.today) { Vacancy.none }
+      expect(subscription).to receive(:vacancies_for_range).with(Time.zone.yesterday, Date.current) { Vacancy.none }
       job.vacancies_for_subscription(subscription)
     end
 

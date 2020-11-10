@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe Search::VacancyAlertBuilder do
   subject { described_class.new(subscription_hash) }
 
-  let!(:expired_now) { Time.zone.now }
+  let!(:expired_now) { Time.current }
 
   let(:keyword) { "maths teacher" }
   let(:location) { "SW1A 1AA" }
   let(:default_radius) { 10 }
-  let(:date_today) { Time.zone.today.to_time }
+  let(:date_today) { Date.current.to_time }
   let(:location_point_coordinates) { Geocoder::DEFAULT_STUB_COORDINATES }
   let(:location_radius) { (default_radius * Search::VacancyLocationBuilder::MILES_TO_METRES).to_i }
   let(:location_polygon_boundary) { nil }

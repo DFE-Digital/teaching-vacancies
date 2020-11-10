@@ -40,7 +40,7 @@ RSpec.describe ImportantDatesForm, type: :model do
       end
 
       it "must be after publish_on" do
-        important_dates = ImportantDatesForm.new(expires_on: Time.zone.today,
+        important_dates = ImportantDatesForm.new(expires_on: Date.current,
                                                  publish_on: Time.zone.tomorrow)
         expect(important_dates.valid?).to be false
 
@@ -66,7 +66,7 @@ RSpec.describe ImportantDatesForm, type: :model do
       end
 
       it "must be after publish_on" do
-        important_dates = ImportantDatesForm.new(starts_on: Time.zone.today,
+        important_dates = ImportantDatesForm.new(starts_on: Date.current,
                                                  publish_on: Time.zone.tomorrow)
         expect(important_dates.valid?).to be false
 
@@ -75,7 +75,7 @@ RSpec.describe ImportantDatesForm, type: :model do
       end
 
       it "must be after expires_on" do
-        important_dates = ImportantDatesForm.new(starts_on: Time.zone.today,
+        important_dates = ImportantDatesForm.new(starts_on: Date.current,
                                                  expires_on: Time.zone.tomorrow)
         expect(important_dates.valid?).to be false
 
@@ -184,7 +184,7 @@ RSpec.describe ImportantDatesForm, type: :model do
     end
 
     it "can save expiry time if time fields are complete" do
-      important_dates = ImportantDatesForm.new(expires_on: Time.zone.today + 1.week,
+      important_dates = ImportantDatesForm.new(expires_on: Date.current + 1.week,
                                                expiry_time_hh: "9",
                                                expiry_time_mm: "15",
                                                expiry_time_meridiem: "am")
@@ -198,15 +198,15 @@ RSpec.describe ImportantDatesForm, type: :model do
   context "when all attributes are valid" do
     it "can correctly be converted to a vacancy" do
       important_dates = ImportantDatesForm.new(state: "create",
-                                               expires_on: Time.zone.today + 1.week,
-                                               publish_on: Time.zone.today,
-                                               starts_on: Time.zone.today + 1.month,
+                                               expires_on: Date.current + 1.week,
+                                               publish_on: Date.current,
+                                               starts_on: Date.current + 1.month,
                                                expiry_time_hh: "9", expiry_time_mm: "1", expiry_time_meridiem: "am")
 
       expect(important_dates.valid?).to be true
-      expect(important_dates.vacancy.expires_on).to eq(Time.zone.today + 1.week)
-      expect(important_dates.vacancy.publish_on).to eq(Time.zone.today)
-      expect(important_dates.vacancy.starts_on).to eq(Time.zone.today + 1.month)
+      expect(important_dates.vacancy.expires_on).to eq(Date.current + 1.week)
+      expect(important_dates.vacancy.publish_on).to eq(Date.current)
+      expect(important_dates.vacancy.starts_on).to eq(Date.current + 1.month)
     end
   end
 end

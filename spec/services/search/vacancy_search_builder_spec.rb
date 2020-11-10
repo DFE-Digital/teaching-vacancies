@@ -127,12 +127,12 @@ RSpec.describe Search::VacancySearchBuilder do
   end
 
   describe "#call" do
-    let!(:expired_now) { Time.zone.now }
+    let!(:expired_now) { Time.current }
     let(:sort_by) { "" }
     let(:search_replica) { nil }
     let(:default_hits_per_page) { 10 }
     let(:search_filter) do
-      "(publication_date_timestamp <= #{Time.zone.today.to_time.to_i} AND "\
+      "(publication_date_timestamp <= #{Date.current.to_time.to_i} AND "\
        "expires_at_timestamp > #{expired_now.to_time.to_i})"
     end
     let(:page) { 1 }

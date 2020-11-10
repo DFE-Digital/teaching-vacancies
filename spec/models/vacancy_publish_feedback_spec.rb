@@ -48,7 +48,7 @@ RSpec.describe VacancyPublishFeedback, type: :model do
       feedback_the_other_day = create_list(:vacancy_publish_feedback, 4, created_at: 2.days.ago)
       feedback_some_other_day = create_list(:vacancy_publish_feedback, 6, created_at: 1.month.ago)
 
-      expect(VacancyPublishFeedback.published_on(Time.zone.today).all).to match_array(feedback_today)
+      expect(VacancyPublishFeedback.published_on(Date.current).all).to match_array(feedback_today)
       expect(VacancyPublishFeedback.published_on(1.day.ago)).to match_array(feedback_yesterday)
       expect(VacancyPublishFeedback.published_on(2.days.ago)).to match_array(feedback_the_other_day)
       expect(VacancyPublishFeedback.published_on(1.month.ago)).to match_array(feedback_some_other_day)

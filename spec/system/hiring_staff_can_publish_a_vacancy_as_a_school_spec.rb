@@ -28,7 +28,7 @@ RSpec.describe "Creating a vacancy" do
                                  job_roles: %i[teacher sen_specialist],
                                  suitable_for_nqt: suitable_for_nqt,
                                  working_patterns: %w[full_time part_time],
-                                 publish_on: Time.zone.today))
+                                 publish_on: Date.current))
     end
 
     scenario "redirects to step 1, job specification" do
@@ -989,7 +989,7 @@ RSpec.describe "Creating a vacancy" do
           )
         end
 
-        expiry_date = Time.zone.today + 1.week
+        expiry_date = Date.current + 1.week
 
         fill_in "important_dates_form[expires_on(3i)]", with: expiry_date.day
         fill_in "important_dates_form[expires_on(2i)]", with: expiry_date.month
@@ -1014,7 +1014,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, expiry_time: Time.zone.now + 5.days)
+        vacancy = create(:vacancy, :draft, expiry_time: Time.current + 5.days)
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
@@ -1062,7 +1062,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, publish_on: Time.zone.today)
+          vacancy = create(:vacancy, :draft, publish_on: Date.current)
           vacancy.organisation_vacancies.create(organisation: school)
 
           expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
@@ -1075,7 +1075,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "updates the published vacancy audit table" do
         scenario "when the vacancy is published" do
-          vacancy = create(:vacancy, :draft, publish_on: Time.zone.today)
+          vacancy = create(:vacancy, :draft, publish_on: Date.current)
           vacancy.organisation_vacancies.create(organisation: school)
 
           expect(AuditPublishedVacancyJob).to receive(:perform_later).with(vacancy.id)

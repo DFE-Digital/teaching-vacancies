@@ -51,7 +51,7 @@ private
   def generate_jwt_token
     payload = {
       iss: "schooljobs",
-      exp: (Time.now.getlocal + 60).to_i,
+      exp: (Time.current.getlocal + 60).to_i,
       aud: "signin.education.gov.uk",
     }
     JWT.encode(payload, dfe_sign_in_password, "HS256")

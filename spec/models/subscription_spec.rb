@@ -84,9 +84,9 @@ RSpec.describe Subscription, type: :model do
   end
 
   context "vacancies_for_range" do
-    let!(:expired_now) { Time.zone.now }
+    let!(:expired_now) { Time.current }
     let(:date_yesterday) { Time.zone.yesterday.to_time }
-    let(:date_today) { Time.zone.today.to_time }
+    let(:date_today) { Date.current.to_time }
     let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }.to_json) }
     let(:vacancies) { double("vacancies") }
     let(:search_filter) do
@@ -125,7 +125,7 @@ RSpec.describe Subscription, type: :model do
 
     context "when an alert has run today" do
       before do
-        subscription.alert_runs.find_or_create_by(run_on: Time.zone.today)
+        subscription.alert_runs.find_or_create_by(run_on: Date.current)
       end
 
       it { expect(subject).to eq(true) }
@@ -151,11 +151,11 @@ RSpec.describe Subscription, type: :model do
       subscription.create_alert_run
 
       expect(subscription.alert_runs.count).to eq(1)
-      expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
+      expect(subscription.alert_runs.first.run_on).to eq(Date.current)
     end
 
     context "if a run exists for today" do
-      let!(:alert_run) { subscription.alert_runs.create(run_on: Time.zone.today) }
+      let!(:alert_run) { subscription.alert_runs.create(run_on: Date.current) }
 
       it "does not create another run" do
         subscription.create_alert_run

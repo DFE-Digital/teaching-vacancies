@@ -16,12 +16,12 @@ module VacancyImportantDateValidations
 
   def publish_on_must_not_be_before_today
     errors.add(:publish_on, I18n.t("activerecord.errors.models.vacancy.attributes.publish_on.before_today")) if
-      publish_on && publish_on < Time.zone.today && publish_on_changed?
+      publish_on && publish_on < Date.current && publish_on_changed?
   end
 
   def expires_on_must_not_be_before_today
     errors.add(:expires_on, I18n.t("activerecord.errors.models.vacancy.attributes.expires_on.before_today")) if
-      expires_on && expires_on < Time.zone.today && expires_on_changed?
+      expires_on && expires_on < Date.current && expires_on_changed?
   end
 
   def expires_on_must_not_be_before_publish_on
@@ -31,7 +31,7 @@ module VacancyImportantDateValidations
 
   def starts_on_must_not_be_before_today
     errors.add(:starts_on, I18n.t("activerecord.errors.models.vacancy.attributes.starts_on.before_today")) if
-      starts_on && starts_on < Time.zone.today && starts_on_changed?
+      starts_on && starts_on < Date.current && starts_on_changed?
   end
 
   def starts_on_must_not_be_before_publish_on

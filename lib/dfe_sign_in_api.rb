@@ -34,7 +34,7 @@ module DFESignIn
     def generate_jwt_token
       payload = {
         iss: "schooljobs",
-        exp: (Time.now.getlocal + 60).to_i,
+        exp: (Time.current.getlocal + 60).to_i,
         aud: "signin.education.gov.uk",
       }
 

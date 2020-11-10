@@ -4,7 +4,7 @@ RSpec.describe AuditExpressInterestEventJob, type: :job do
   include ActiveJob::TestHelper
 
   subject(:job) { described_class.perform_later(data) }
-  let(:data) { [Time.zone.now.to_s, "a-vacancy-id", "01010101", "http://link"] }
+  let(:data) { [Time.current.to_s, "a-vacancy-id", "01010101", "http://link"] }
 
   it "queues the job" do
     expect { job }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)

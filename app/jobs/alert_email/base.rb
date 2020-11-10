@@ -13,7 +13,7 @@ class AlertEmail::Base < ApplicationJob
   end
 
   def vacancies_for_subscription(subscription)
-    subscription.vacancies_for_range(from_date, Time.zone.today)
+    subscription.vacancies_for_range(from_date, Date.current)
                 .limit(Search::VacancyAlertBuilder::MAXIMUM_SUBSCRIPTION_RESULTS)
   end
 end

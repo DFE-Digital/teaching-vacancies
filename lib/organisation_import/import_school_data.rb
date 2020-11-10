@@ -51,7 +51,7 @@ private
   end
 
   def datestring
-    Time.zone.now.strftime("%Y%m%d")
+    Time.current.strftime("%Y%m%d")
   end
 
   def set_readable_phases(school)

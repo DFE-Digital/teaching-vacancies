@@ -24,7 +24,7 @@ module AuthHelpers
       page.set_rack_session(urn: "", uid: "", la_code: la_code)
     end
     page.set_rack_session(session_id: session_id)
-    create(:user, oid: session_id, email: email, last_activity_at: Time.zone.now)
+    create(:user, oid: session_id, email: email, last_activity_at: Time.current)
   end
 
   def stub_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",

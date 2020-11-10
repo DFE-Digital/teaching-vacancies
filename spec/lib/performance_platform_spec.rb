@@ -21,8 +21,8 @@ RSpec.describe PerformancePlatform::TransactionsByChannel do
     end
 
     it "posts publication data to the Performance Platform" do
-      now = Time.zone.now
-      expect(Time).to receive_message_chain(:zone, :now).and_return(now)
+      now = Time.current
+      expect(Time).to receive(:current).and_return(now)
 
       endpoint = "https://www.performance.service.gov.uk/data/teaching-jobs-job-listings/transactions-by-channel"
 

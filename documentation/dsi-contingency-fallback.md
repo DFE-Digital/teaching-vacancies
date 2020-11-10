@@ -59,5 +59,5 @@ class Session < ActiveRecord::Base
 end
 
 # Example query: how many sessions were created today?
-Session.where('created_at > ?', Time.zone.today).size # => 13519
+Session.where('created_at > ?', Date.current).size # => 13519
 ```

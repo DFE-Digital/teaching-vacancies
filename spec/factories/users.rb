@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    accepted_terms_at { Time.zone.today - 5.months }
+    accepted_terms_at { Date.current - 5.months }
     dsi_data do
       {
         school_urns: proc {
