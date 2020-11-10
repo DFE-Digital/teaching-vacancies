@@ -17,15 +17,11 @@
     %link{ href: asset_pack_path('media/images/govuk-apple-touch-icon-167x167.png'), rel: "apple-touch-icon", sizes: "167x167" }/
     %link{ href: asset_pack_path('media/images/govuk-apple-touch-icon-152x152.png'), rel: "apple-touch-icon", sizes: "152x152" }/
     %link{ href: asset_pack_path('media/images/govuk-apple-touch-icon.png'), rel: "apple-touch-icon" }/
-    %link{ href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet" }/
     - if content_for? :head_links
       = yield(:head_links)
-    /[if !IE 8]
     = stylesheet_pack_tag 'application', media: 'all'
-    /[if lte IE 8]
-    -# = stylesheet_link_tag '/govuk-frontend/all-ie8', media: 'all'
     /[if lt IE 9]
-    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
+      = javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js", crossorigin: "anonymous", integrity: "sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g="
     %meta{ content: asset_pack_path('media/images/govuk-opengraph-image.png'), property: "og:image" }/
     = csrf_meta_tags
   %body{ class: body_class, data: { vacancy_state: @vacancy.present? ? @vacancy.state : 'create' } }

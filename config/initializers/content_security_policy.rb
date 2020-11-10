@@ -7,13 +7,20 @@
 Rails.application.config.content_security_policy do |policy|
   policy.default_src :self
 
+  development_env_additional_connect_src = %w[http://localhost:3035 ws://localhost:3035] if Rails.env.development?
+
+  policy.connect_src :self,
+                     "https://api.postcodes.io",
+                     "https://api.rollbar.com",
+                     "https://www.google-analytics.com",
+                     *development_env_additional_connect_src # Allow using webpack-dev-server in development
+
   policy.font_src    :self,
                      :data,
-                     "https://cdnjs.cloudflare.com",
-                     "https://fonts.gstatic.com"
+                     "https://fonts.gstatic.com" # through Google Maps
 
   policy.frame_src   :self,
-                     "https://www.google.com", # for reCAPTCHA
+                     "https://www.google.com", # through reCAPTCHA
                      "https://www.googletagmanager.com"
 
   policy.img_src     :self,
@@ -25,7 +32,6 @@ Rails.application.config.content_security_policy do |policy|
   policy.script_src  :self,
                      :unsafe_inline, # Backwards compatibility; ignored by modern browsers as we set a nonce for scripts
                      "https://cdn.rollbar.com",
-                     "https://cdnjs.cloudflare.com",
                      "https://maps.googleapis.com",
                      "https://www.google-analytics.com",
                      "https://www.googletagmanager.com",
@@ -35,16 +41,7 @@ Rails.application.config.content_security_policy do |policy|
   #   see: https://issuetracker.google.com/issues/132600807
   policy.style_src   :self,
                      :unsafe_inline,
-                     "https://cdnjs.cloudflare.com",
-                     "https://fonts.googleapis.com"
-
-  policy.connect_src :self,
-                     "https://api.postcodes.io",
-                     "https://api.rollbar.com",
-                     "https://www.google-analytics.com"
-
-  # Allow using webpack-dev-server in development
-  policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
+                     "https://fonts.googleapis.com" # through Google Maps
 
   # Specify URI for violation reports
   policy.report_uri "/errors/csp_violation"
