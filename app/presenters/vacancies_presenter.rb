@@ -3,11 +3,9 @@ class VacanciesPresenter < BasePresenter
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::NumberHelper
   attr_accessor :decorated_collection
-  attr_reader :coordinates
 
-  def initialize(vacancies, coordinates: "")
+  def initialize(vacancies)
     self.decorated_collection = vacancies.map { |v| VacancyPresenter.new(v) }
-    @coordinates = coordinates
     super(vacancies)
   end
 
