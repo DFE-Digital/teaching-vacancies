@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  # before_action :check_staging_auth, except: :check
   before_action :set_headers
   before_action :detect_device_format
   before_action :set_root_headers
@@ -27,18 +26,6 @@ class ApplicationController < ActionController::Base
       format.json { render json: { error: "Resource not found" }, status: :not_found }
       format.all { render status: :not_found, body: nil }
     end
-  end
-
-  def check_staging_auth
-    return unless authenticate?
-
-    authenticate_or_request_with_http_basic("Global") do |name, password|
-      name == http_user && password == http_pass
-    end
-  end
-
-  def authenticate?
-    Rails.env.staging?
   end
 
   def detect_device_format
@@ -70,24 +57,6 @@ class ApplicationController < ActionController::Base
   end
 
 private
-
-  def http_user
-    if Figaro.env.http_user?
-      Figaro.env.http_user
-    else
-      Rails.logger.warn('Basic auth failed: ENV["HTTP_USER"] expected but not found.')
-      nil
-    end
-  end
-
-  def http_pass
-    if Figaro.env.http_pass?
-      Figaro.env.http_pass
-    else
-      Rails.logger.warn('Basic auth failed: ENV["HTTP_PASS"] expected but not found.')
-      nil
-    end
-  end
 
   def append_info_to_payload(payload)
     super
