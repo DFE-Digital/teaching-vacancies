@@ -32,7 +32,7 @@ RSpec.shared_examples Counter do
       freeze_time do
         counter.persist!
 
-        expect(model.send("#{described_class.persisted_column}_updated_at")).to eq(Time.zone.now)
+        expect(model.send("#{described_class.persisted_column}_updated_at")).to eq(Time.current)
       end
     end
 

@@ -43,7 +43,7 @@ class Subscription < ApplicationRecord
   end
 
   def unsubscribe
-    update(email: nil, active: false, unsubscribed_at: Time.zone.now)
+    update(email: nil, active: false, unsubscribed_at: Time.current)
   end
 
   def vacancies_for_range(date_from, date_to)
@@ -53,7 +53,7 @@ class Subscription < ApplicationRecord
   end
 
   def alert_run_today
-    alert_runs.find_by(run_on: Time.zone.today)
+    alert_runs.find_by(run_on: Date.current)
   end
 
   def alert_run_today?
@@ -61,6 +61,6 @@ class Subscription < ApplicationRecord
   end
 
   def create_alert_run
-    alert_runs.find_or_create_by(run_on: Time.zone.today)
+    alert_runs.find_or_create_by(run_on: Date.current)
   end
 end

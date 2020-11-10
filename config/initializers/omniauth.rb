@@ -6,7 +6,7 @@ module OmniAuth
         Rollbar.log(:info, "A sign-in callback was started",
                     stored_state: session["omniauth.state"],
                     accept_header: request.has_header?("Accept") ? request.get_header("Accept") : request.get_header("HTTP_ACCEPT"),
-                    time: Time.zone.now.strftime("%Y-%m-%d %H:%M:%S:%L"))
+                    time: Time.current.strftime("%Y-%m-%d %H:%M:%S:%L"))
         error = request.params["error_reason"] || request.params["error"]
         if error && request.path == "/auth/dfe/callback"
           Rollbar.log(:error, "A sign-in callback raised an error",

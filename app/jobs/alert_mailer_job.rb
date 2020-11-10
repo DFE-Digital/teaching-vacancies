@@ -24,7 +24,7 @@ private
   end
 
   def job_expired?
-    (alert_run.created_at + EXPIRES_IN) < Time.zone.now
+    (alert_run.created_at + EXPIRES_IN) < Time.current
   end
 
   def subscription

@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.describe VacancyPresenter do
   describe "#expired?" do
     it "returns true when the vacancy has expired by now" do
-      vacancy = VacancyPresenter.new(build(:vacancy, expiry_time: Time.zone.now - 1.hour))
+      vacancy = VacancyPresenter.new(build(:vacancy, expiry_time: Time.current - 1.hour))
 
       expect(vacancy).to be_expired
     end
 
     it "returns false when the vacancy expires later today" do
-      vacancy = VacancyPresenter.new(build(:vacancy, expiry_time: Time.zone.now + 1.hour))
+      vacancy = VacancyPresenter.new(build(:vacancy, expiry_time: Time.current + 1.hour))
 
       expect(vacancy).not_to be_expired
     end
@@ -17,7 +17,7 @@ RSpec.describe VacancyPresenter do
 
   describe "#publish_today?" do
     it "verifies that the publish_on is set to today" do
-      vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Time.zone.today))
+      vacancy = VacancyPresenter.new(build(:vacancy, publish_on: Date.current))
 
       expect(vacancy.publish_today?).to eq(true)
     end

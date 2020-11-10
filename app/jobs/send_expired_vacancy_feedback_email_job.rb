@@ -13,7 +13,7 @@ class SendExpiredVacancyFeedbackEmailJob < ApplicationJob
 private
 
   def expired_vacancies
-    Vacancy.where(expires_on: Time.zone.now - 2.weeks, hired_status: nil)
+    Vacancy.where(expires_on: Time.current - 2.weeks, hired_status: nil)
            .where.not(publisher_user: nil)
   end
 end

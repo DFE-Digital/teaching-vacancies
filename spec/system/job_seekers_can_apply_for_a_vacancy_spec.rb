@@ -41,7 +41,7 @@ RSpec.describe "Job seekers can apply for a vacancy" do
     visit job_path(vacancy)
 
     freeze_time do
-      timestamp = Time.zone.now.iso8601
+      timestamp = Time.current.iso8601
 
       express_interest_event = {
         datestamp: timestamp.to_s,

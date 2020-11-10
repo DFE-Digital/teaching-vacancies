@@ -52,11 +52,11 @@ private
   end
 
   def published_today_filter
-    Time.zone.today.to_time.to_i
+    Date.current.to_time.to_i
   end
 
   def expired_now_filter
-    Time.zone.now.to_time.to_i
+    Time.current.to_time.to_i
   end
 
   def normalize_array_params(params)

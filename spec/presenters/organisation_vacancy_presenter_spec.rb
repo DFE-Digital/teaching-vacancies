@@ -25,7 +25,7 @@ RSpec.describe OrganisationVacancyPresenter do
 
   describe "application_deadline" do
     let(:vacancy) { create(:vacancy, expires_on: deadline_date, expiry_time: deadline_time) }
-    let(:deadline_date) { Time.zone.today + 5.days }
+    let(:deadline_date) { Date.current + 5.days }
 
     context "when expiry time is not present" do
       let(:deadline_time) { nil }
@@ -37,7 +37,7 @@ RSpec.describe OrganisationVacancyPresenter do
     end
 
     context "when expiry time present" do
-      let(:deadline_time) { Time.zone.now + 5.days }
+      let(:deadline_time) { Time.current + 5.days }
       let(:expected_deadline) { format_date(deadline_date) + " at " + format_time(deadline_time) }
 
       it "displays the application deadline date" do
@@ -50,7 +50,7 @@ RSpec.describe OrganisationVacancyPresenter do
     let(:vacancy) { create(:vacancy, expires_on: time_to_apply) }
 
     context "when the deadline is today" do
-      let(:time_to_apply) { (Time.zone.today + 12.hours) }
+      let(:time_to_apply) { (Date.current + 12.hours) }
 
       it "displays that the deadline is today" do
         expect(presenter.days_to_apply).to eq("Deadline is today")
@@ -67,7 +67,7 @@ RSpec.describe OrganisationVacancyPresenter do
       end
 
       context "and more than 24 hours away" do
-        let(:time_to_apply) { (Time.zone.now + 24.hours + 1.second) }
+        let(:time_to_apply) { (Time.current + 24.hours + 1.second) }
 
         it "displays that the deadline is tomorrow" do
           expect(presenter.days_to_apply).to eq("Deadline is tomorrow")
@@ -76,7 +76,7 @@ RSpec.describe OrganisationVacancyPresenter do
     end
 
     context "with more than 2 days to apply" do
-      let(:time_to_apply) { (Time.zone.now + 3.days) }
+      let(:time_to_apply) { (Time.current + 3.days) }
 
       it "displays a countdown in days" do
         expect(presenter.days_to_apply).to eq("3 days remaining to apply")

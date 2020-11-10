@@ -23,7 +23,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       VacancyPresenter.new(
         create(:vacancy, :complete, job_location: "at_one_school",
                                     job_roles: %i[teacher sen_specialist], working_patterns: %w[full_time part_time],
-                                    publish_on: Time.zone.today, expires_on: Time.zone.tomorrow),
+                                    publish_on: Date.current, expires_on: Time.zone.tomorrow),
       )
     end
 
@@ -258,7 +258,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.important_dates"))
 
-        expiry_date = Time.zone.today + 1.week
+        expiry_date = Date.current + 1.week
         edit_date("expires_on", expiry_date)
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
@@ -271,7 +271,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.important_dates"))
 
-        expiry_date = Time.zone.today + 1.week
+        expiry_date = Date.current + 1.week
         edit_date("expires_on", expiry_date)
 
         activity = vacancy.activities.last
@@ -289,7 +289,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.important_dates"))
 
-        expiry_date = Time.zone.today + 1.week
+        expiry_date = Date.current + 1.week
         edit_date("expires_on", expiry_date)
       end
 
@@ -317,7 +317,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         context "when the publication date is in the future" do
           scenario "renders the publication date as text and allows editing" do
-            vacancy = create(:vacancy, :published, publish_on: Time.zone.now + 3.days)
+            vacancy = create(:vacancy, :published, publish_on: Time.current + 3.days)
             vacancy.organisation_vacancies.create(organisation: school)
             vacancy = VacancyPresenter.new(vacancy)
             visit edit_organisation_job_path(vacancy.id)
@@ -325,7 +325,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
             expect(page).to have_css("#important_dates_form_publish_on_3i")
 
-            publish_on = Time.zone.today + 1.week
+            publish_on = Date.current + 1.week
             edit_date("publish_on", publish_on)
 
             expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))

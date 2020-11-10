@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     subject { user.accepted_terms_and_conditions? }
 
     context "has accepted terms and conditions" do
-      let(:user) { create(:user, accepted_terms_at: Time.zone.now) }
+      let(:user) { create(:user, accepted_terms_at: Time.current) }
 
       it { is_expected.to be true }
     end

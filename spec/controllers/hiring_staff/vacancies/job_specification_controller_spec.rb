@@ -15,7 +15,7 @@ RSpec.describe HiringStaff::Vacancies::JobSpecificationController, type: :contro
     allow(session).to receive(:[]).with(:vacancy_attributes).and_return(nil)
     allow(session).to receive(:id).and_return(nil)
     allow(controller).to receive_message_chain(:current_user, :accepted_terms_and_conditions?).and_return(true)
-    allow(controller).to receive_message_chain(:current_user, :last_activity_at).and_return(Time.zone.now)
+    allow(controller).to receive_message_chain(:current_user, :last_activity_at).and_return(Time.current)
     allow(controller).to receive_message_chain(:current_user, :update)
 
     allow(vacancy).to receive(:id).and_return(vacancy_id)

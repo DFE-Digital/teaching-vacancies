@@ -20,8 +20,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Vacancy",
-        publish_on: Time.zone.today,
-        expires_on: Time.zone.today + 1.week,
+        publish_on: Date.current,
+        expires_on: Date.current + 1.week,
         publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -43,8 +43,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job one",
-        publish_on: Time.zone.today,
-        expires_on: Time.zone.today,
+        publish_on: Date.current,
+        expires_on: Date.current,
         publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -53,8 +53,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job two",
-        publish_on: Time.zone.today,
-        expires_on: Time.zone.today,
+        publish_on: Date.current,
+        expires_on: Date.current,
         publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -63,8 +63,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job three",
-        publish_on: Time.zone.today,
-        expires_on: Time.zone.today + 2.weeks,
+        publish_on: Date.current,
+        expires_on: Date.current + 2.weeks,
         publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -91,8 +91,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job one",
-        publish_on: Time.zone.today,
-        expires_on: Time.zone.today,
+        publish_on: Date.current,
+        expires_on: Date.current,
         publisher_user_id: current_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)
@@ -101,8 +101,8 @@ RSpec.describe "Creating a vacancy" do
         :vacancy,
         :published,
         job_title: "Job two",
-        publish_on: Time.zone.today,
-        expires_on: Time.zone.today,
+        publish_on: Date.current,
+        expires_on: Date.current,
         publisher_user_id: another_user.id,
       )
       vacancy.organisation_vacancies.create(organisation: school)

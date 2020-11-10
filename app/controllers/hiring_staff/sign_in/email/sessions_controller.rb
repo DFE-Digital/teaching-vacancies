@@ -91,7 +91,7 @@ private
   end
 
   def generate_login_key(user:)
-    user.emergency_login_keys.create(not_valid_after: Time.zone.now + EMERGENCY_LOGIN_KEY_DURATION)
+    user.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
 
   def redirect_for_dsi_authentication

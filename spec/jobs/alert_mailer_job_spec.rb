@@ -17,7 +17,7 @@ RSpec.describe AlertMailerJob, type: :job do
     job
     expect(subscription.alert_runs.count).to eq(1)
     expect(subscription.alert_runs.first.job_id).to eq(job_id)
-    expect(subscription.alert_runs.first.run_on).to eq(Time.zone.today)
+    expect(subscription.alert_runs.first.run_on).to eq(Date.current)
   end
 
   it "only creates one run" do
@@ -62,7 +62,7 @@ RSpec.describe AlertMailerJob, type: :job do
   end
 
   context "if the job has expired" do
-    let!(:alert_run) { create(:alert_run, subscription: subscription, created_at: Time.zone.now - 5.hours) }
+    let!(:alert_run) { create(:alert_run, subscription: subscription, created_at: Time.current - 5.hours) }
 
     it "does not deliver the mail" do
       expect { perform_enqueued_jobs { job } }.to change { ActionMailer::Base.deliveries.count }.by(0)

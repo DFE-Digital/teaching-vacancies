@@ -29,7 +29,7 @@ RSpec.describe JobPosting do
   end
   let(:school_by_urn) { create(:school, urn: "136352") }
   let(:job_posting) { JobPosting.new(data) }
-  let(:date_posted) { Time.zone.now.iso8601 }
+  let(:date_posted) { Time.current.iso8601 }
   let(:valid_through) { 1.week.from_now.iso8601 }
 
   describe "#to_vacancy" do
@@ -55,7 +55,7 @@ RSpec.describe JobPosting do
 
       it "sets the publish_on field to today" do
         vacancy = to_vacancy
-        expect(vacancy.publish_on).to eql(Time.zone.today)
+        expect(vacancy.publish_on).to eql(Date.current)
       end
     end
 

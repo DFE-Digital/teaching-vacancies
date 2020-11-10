@@ -3,7 +3,7 @@ module SignInAuditConcerns
   extend ActiveSupport::Concern
 
   def sign_in_event(status:)
-    data = [Time.zone.now.iso8601.to_s,
+    data = [Time.current.iso8601.to_s,
             user_dsi_id,
             selected_school_urn,
             identifier,

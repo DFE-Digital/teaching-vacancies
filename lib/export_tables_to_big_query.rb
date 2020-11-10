@@ -57,7 +57,7 @@ class ExportTablesToBigQuery
 
   def initialize(bigquery: Bigquery.new)
     @dataset = bigquery.dataset(BIGQUERY_DATASET)
-    @runtime = Time.now.to_s(:db).parameterize
+    @runtime = Time.current.to_s(:db).parameterize
     # This ensures that new tables are automatically added to the BigQuery dataset.
     #
     # `#singularize` must come *after* `#camelize` in `#map` for the AuditData inflection rule to work correctly. The
@@ -119,7 +119,7 @@ private
   end
 
   def bigquery_load(db_table)
-    started_at = Time.now.to_s(:db)
+    started_at = Time.current.to_s(:db)
     table_name = [BIGQUERY_TABLE_PREFIX, db_table.to_s.downcase].join("_")
     dataset.table(table_name)&.delete
     bq_table = dataset.table(table_name) || dataset.create_table(table_name) do |schema|
@@ -164,7 +164,7 @@ private
 
     monitoring({
       error_count: error_count,
-      finished_at: Time.now.to_s(:db),
+      finished_at: Time.current.to_s(:db),
       records_processed: record_count,
       started_at: started_at,
       table: table_name,

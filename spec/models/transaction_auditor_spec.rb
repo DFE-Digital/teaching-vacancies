@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe TransactionAuditor, type: :model do
-  let(:date) { Time.zone.today }
+  let(:date) { Date.current }
   context "validations" do
     it "validates uniqueness of task and date" do
       TransactionAuditor.create(task: "unique task", date: date)
@@ -14,7 +14,7 @@ RSpec.describe TransactionAuditor, type: :model do
 end
 
 RSpec.describe TransactionAuditor::Logger, type: :model do
-  let(:date) { Time.zone.today }
+  let(:date) { Date.current }
   describe "#performed?" do
     context "checks if a task has already been performed successfuly" do
       it "returns true if the task has already been executed" do

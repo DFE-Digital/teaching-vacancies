@@ -84,11 +84,11 @@ class Vacancy < ApplicationRecord
                       :expires_on, error_clash_behaviour: :omit_gov_uk_date_field_error
 
   scope :active, (-> { where(status: %i[published draft]) })
-  scope :applicable, (-> { where("expiry_time >= ?", Time.zone.now) })
-  scope :expired, (-> { where("expiry_time < ?", Time.zone.now) })
+  scope :applicable, (-> { where("expiry_time >= ?", Time.current) })
+  scope :expired, (-> { where("expiry_time < ?", Time.current) })
   scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
-  scope :listed, (-> { published.where("publish_on <= ?", Time.zone.today) })
-  scope :pending, (-> { published.where("publish_on > ?", Time.zone.today) })
+  scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
+  scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :live, (-> { listed.applicable })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
   scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
@@ -185,6 +185,6 @@ private
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at
     return unless listed_elsewhere_changed? && hired_status_changed?
 
-    self.stats_updated_at = Time.zone.now
+    self.stats_updated_at = Time.current
   end
 end

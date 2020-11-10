@@ -15,13 +15,13 @@ class OrganisationVacancyPresenter < BasePresenter
   end
 
   def days_to_apply
-    if model.expires_on == Time.zone.today
+    if model.expires_on == Date.current
       return I18n.t("jobs.days_to_apply.today")
     elsif model.expires_on == Time.zone.tomorrow
       return I18n.t("jobs.days_to_apply.tomorrow")
     end
 
-    days_remaining = (model.expires_on - Time.zone.today).to_i
+    days_remaining = (model.expires_on - Date.current).to_i
     I18n.t("jobs.days_to_apply.remaining", days_remaining: days_remaining)
   end
 

@@ -82,7 +82,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
 
   context "the user has accepted the terms and conditions" do
     scenario "they will not see the terms and conditions" do
-      current_user.update(accepted_terms_at: Time.zone.now)
+      current_user.update(accepted_terms_at: Time.current)
 
       visit organisation_path
 

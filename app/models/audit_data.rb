@@ -11,6 +11,6 @@ class AuditData < ApplicationRecord
   }
 
   def to_row
-    data.values.unshift(Time.zone.now.to_s)
+    data.values.unshift(Time.current.to_s)
   end
 end

@@ -41,7 +41,7 @@ private
 
   def publish_on_or_today
     publish_on = Time.zone.parse(@schema["datePosted"])
-    publish_on.past? ? Time.zone.now : publish_on
+    publish_on.past? ? Time.current : publish_on
   end
 
   def expires_on_or_future

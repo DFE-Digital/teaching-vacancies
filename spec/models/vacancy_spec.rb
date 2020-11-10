@@ -42,7 +42,7 @@ RSpec.describe Vacancy, type: :model do
     describe "#remove_vacancies_that_expired_yesterday!" do
       it "selects all records that expired yesterday" do
         expect(described_class).to receive(:where)
-          .with("expiry_time BETWEEN ? AND ?", Time.zone.yesterday.midnight, Time.zone.today.midnight)
+          .with("expiry_time BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
         described_class.remove_vacancies_that_expired_yesterday!
       end
 
@@ -232,8 +232,8 @@ RSpec.describe Vacancy, type: :model do
   end
 
   context "scopes" do
-    let(:expired_earlier_today) { build(:vacancy, expires_on: Time.zone.today, expiry_time: 5.hour.ago) }
-    let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Time.zone.today, expiry_time: 1.hour.from_now) }
+    let(:expired_earlier_today) { build(:vacancy, expires_on: Date.current, expiry_time: 5.hour.ago) }
+    let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expiry_time: 1.hour.from_now) }
 
     describe "#applicable" do
       it "finds current vacancies" do
@@ -287,7 +287,7 @@ RSpec.describe Vacancy, type: :model do
     describe "#expired" do
       it "retrieves vacancies that have a past expires_on date" do
         create_list(:vacancy, 5, :published)
-        expired = build(:vacancy, expiry_time: Time.zone.now - 1.hour)
+        expired = build(:vacancy, expiry_time: Time.current - 1.hour)
         expired.send :set_slug
         expired.save(validate: false)
 
@@ -312,7 +312,7 @@ RSpec.describe Vacancy, type: :model do
         published_some_other_day = build_list(:vacancy, 6, :published_slugged, publish_on: 1.month.ago)
         published_some_other_day.each { |v| v.save(validate: false) }
 
-        expect(Vacancy.published_on_count(Time.zone.today)).to eq(published_today.count)
+        expect(Vacancy.published_on_count(Date.current)).to eq(published_today.count)
         expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
         expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
         expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)

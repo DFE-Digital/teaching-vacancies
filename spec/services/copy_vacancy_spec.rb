@@ -68,10 +68,10 @@ RSpec.describe CopyVacancy do
                slug: "maths-teacher",
                weekly_pageviews: 4,
                total_pageviews: 4,
-               weekly_pageviews_updated_at: Time.zone.today - 5.days,
-               total_pageviews_updated_at: Time.zone.today - 5.days,
+               weekly_pageviews_updated_at: Date.current - 5.days,
+               total_pageviews_updated_at: Date.current - 5.days,
                total_get_more_info_clicks: 6,
-               total_get_more_info_clicks_updated_at: Time.zone.today - 5.days)
+               total_get_more_info_clicks_updated_at: Date.current - 5.days)
       end
       let(:result) { described_class.new(vacancy).call }
 
@@ -84,8 +84,8 @@ RSpec.describe CopyVacancy do
       end
 
       it "should not copy the weekly page views update time of a vacancy" do
-        travel_to(Time.zone.today - 5.days) do
-          expect(Vacancy.find(result.id).weekly_pageviews_updated_at).to eq(Time.zone.now)
+        travel_to(Date.current - 5.days) do
+          expect(Vacancy.find(result.id).weekly_pageviews_updated_at).to eq(Time.current)
         end
       end
 
@@ -94,8 +94,8 @@ RSpec.describe CopyVacancy do
       end
 
       it "should not copy the weekly page views update time of a vacancy" do
-        travel_to(Time.zone.today - 5.days) do
-          expect(Vacancy.find(result.id).total_pageviews_updated_at).to eq(Time.zone.now)
+        travel_to(Date.current - 5.days) do
+          expect(Vacancy.find(result.id).total_pageviews_updated_at).to eq(Time.current)
         end
       end
 
@@ -104,8 +104,8 @@ RSpec.describe CopyVacancy do
       end
 
       it "should not copy the weekly page views update time of a vacancy" do
-        travel_to(Time.zone.today - 5.days) do
-          expect(Vacancy.find(result.id).total_get_more_info_clicks_updated_at).to eq(Time.zone.now)
+        travel_to(Date.current - 5.days) do
+          expect(Vacancy.find(result.id).total_get_more_info_clicks_updated_at).to eq(Time.current)
         end
       end
     end

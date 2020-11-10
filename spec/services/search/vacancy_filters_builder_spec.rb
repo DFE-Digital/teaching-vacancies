@@ -14,14 +14,14 @@ RSpec.describe Search::VacancyFiltersBuilder do
     }
   end
 
-  let(:from_date) { Time.zone.today }
-  let(:to_date) { Time.zone.today }
+  let(:from_date) { Date.current }
+  let(:to_date) { Date.current }
   let(:job_roles) { %w[teacher sen_specialist] }
   let(:phases) { %w[secondary primary] }
   let(:working_patterns) { %w[full_time part_time] }
   let(:newly_qualified_teacher) { nil }
-  let(:published_today_filter) { Time.zone.today.to_time.to_i }
-  let(:expired_now_filter) { Time.zone.now.to_time.to_i }
+  let(:published_today_filter) { Date.current.to_time.to_i }
+  let(:expired_now_filter) { Time.current.to_time.to_i }
 
   describe "#build_date_filters" do
     context "when no dates are supplied" do
@@ -85,7 +85,7 @@ RSpec.describe Search::VacancyFiltersBuilder do
     end
 
     context "when filters are present" do
-      let(:expired_now) { Time.zone.now }
+      let(:expired_now) { Time.current }
 
       before do
         travel_to(expired_now)

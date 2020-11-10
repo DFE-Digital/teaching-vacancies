@@ -20,13 +20,13 @@ FactoryBot.define do
     job_roles { [:teacher] }
     job_title { Faker::Lorem.sentence[1...30].strip }
     listed_elsewhere { nil }
-    publish_on { Time.zone.today }
+    publish_on { Date.current }
     qualifications { Faker::Lorem.paragraph(sentence_count: 4) }
     reference { SecureRandom.uuid }
     salary { Faker::Lorem.sentence[1...30].strip }
     school_visits { Faker::Lorem.paragraph(sentence_count: 4) }
     state { "create" }
-    starts_on { Time.zone.today + 1.year }
+    starts_on { Date.current + 1.year }
     status { :published }
     subjects { SUBJECT_OPTIONS.sample(2).map(&:first).sort! }
     supporting_documents { "yes" }
@@ -66,9 +66,9 @@ FactoryBot.define do
     end
 
     trait :complete do
-      starts_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 30.days) }
-      expires_on { Faker::Time.between(from: Time.zone.today + 2.days, to: Time.zone.today + 9.days) }
-      publish_on { Faker::Time.between(from: Time.zone.today, to: Time.zone.today + 1.day) }
+      starts_on { Faker::Time.between(from: Date.current + 10.days, to: Date.current + 30.days) }
+      expires_on { Faker::Time.between(from: Date.current + 2.days, to: Date.current + 9.days) }
+      publish_on { Faker::Time.between(from: Date.current, to: Date.current + 1.day) }
     end
 
     trait :draft do
@@ -81,7 +81,7 @@ FactoryBot.define do
 
     trait :published do
       status { :published }
-      expires_on { Faker::Time.between(from: Time.zone.today + 10.days, to: Time.zone.today + 20.days) }
+      expires_on { Faker::Time.between(from: Date.current + 10.days, to: Date.current + 20.days) }
     end
 
     trait :published_slugged do
@@ -93,22 +93,22 @@ FactoryBot.define do
       to_create { |instance| instance.save(validate: false) }
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
-      publish_on { Faker::Time.between(from: Time.zone.today - 14.days, to: Time.zone.today - 7.days) }
+      publish_on { Faker::Time.between(from: Date.current - 14.days, to: Date.current - 7.days) }
       expires_on { Faker::Time.backward(days: 6) }
       expiry_time { Faker::Time.backward(days: 6) }
     end
 
     trait :future_publish do
-      publish_on { Time.zone.today + 2.days }
-      expires_on { Time.zone.today + 2.months }
+      publish_on { Date.current + 2.days }
+      expires_on { Date.current + 2.months }
     end
 
     trait :past_publish do
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Time.zone.yesterday }
-      expires_on { Time.zone.today + 2.months }
-      starts_on { Time.zone.today + 3.months }
+      expires_on { Date.current + 2.months }
+      starts_on { Date.current + 3.months }
     end
 
     trait :job_schema do
