@@ -2,9 +2,7 @@ class Search::VacancyFiltersBuilder
   def initialize(filters_hash)
     # Although we are no longer indexing expired and pending vacancies, we need to maintain this filter for now as
     # expired vacancies only get removed from the index once a day.
-    @live_filter = "listing_status:published AND "\
-                   "publication_date_timestamp <= #{published_today_filter} AND "\
-                   "expires_at_timestamp > #{expired_now_filter}"
+    @live_filter = "publication_date_timestamp <= #{published_today_filter} AND expires_at_timestamp > #{expired_now_filter}"
 
     @from_date = filters_hash[:from_date]
     @to_date = filters_hash[:to_date]

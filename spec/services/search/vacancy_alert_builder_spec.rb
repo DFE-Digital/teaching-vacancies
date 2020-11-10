@@ -92,8 +92,7 @@ RSpec.describe Search::VacancyAlertBuilder do
     context "#call" do
       let(:vacancies) { double("vacancies") }
       let(:search_filter) do
-        "(listing_status:published AND "\
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_time.to_i})"\
+        "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > #{expired_now.to_time.to_i})"\
         " AND (publication_date_timestamp >= #{date_today.to_i} AND publication_date_timestamp <="\
         " #{date_today.to_i}) AND "\
         "(education_phases:secondary OR education_phases:primary) AND "\
@@ -126,8 +125,7 @@ RSpec.describe Search::VacancyAlertBuilder do
 
     context "#call" do
       let(:search_filter) do
-        "(listing_status:published AND "\
-        "publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
+        "(publication_date_timestamp <= #{date_today.to_i} AND expires_at_timestamp > "\
         "#{expired_now.to_time.to_i}) AND (publication_date_timestamp >= "\
         "#{date_today.to_i} AND publication_date_timestamp <= #{date_today.to_i})"
       end

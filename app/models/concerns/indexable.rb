@@ -31,10 +31,6 @@ module Indexable
         updated_at.to_i
       end
 
-      attribute :listing_status do
-        status
-      end
-
       attribute :organisations do
         { names: organisations.map(&:name),
           counties: organisations.map(&:county).uniq,
@@ -75,7 +71,7 @@ module Indexable
         VacancyPresenter.new(self).working_patterns
       end
 
-      attributesForFaceting %i[job_roles working_patterns education_phases listing_status]
+      attributesForFaceting %i[job_roles working_patterns education_phases]
 
       add_replica "#{INDEX_NAME}_publish_on_desc", inherit: true do
         ranking ["desc(publication_date_timestamp)"]

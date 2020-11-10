@@ -132,8 +132,7 @@ RSpec.describe Search::VacancySearchBuilder do
     let(:search_replica) { nil }
     let(:default_hits_per_page) { 10 }
     let(:search_filter) do
-      "(listing_status:published AND "\
-       "publication_date_timestamp <= #{Time.zone.today.to_time.to_i} AND "\
+      "(publication_date_timestamp <= #{Time.zone.today.to_time.to_i} AND "\
        "expires_at_timestamp > #{expired_now.to_time.to_i})"
     end
     let(:page) { 1 }

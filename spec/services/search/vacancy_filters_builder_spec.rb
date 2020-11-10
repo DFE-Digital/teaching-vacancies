@@ -98,8 +98,7 @@ RSpec.describe Search::VacancyFiltersBuilder do
 
       it "builds the correct query" do
         expect(subject.filter_query).to eql(
-          "(listing_status:published AND"\
-          " publication_date_timestamp <= #{published_today_filter} AND"\
+          "(publication_date_timestamp <= #{published_today_filter} AND"\
           " expires_at_timestamp > #{expired_now_filter}) AND "\
           "(publication_date_timestamp >= #{from_date.to_time.to_i} AND" \
           " publication_date_timestamp <= #{to_date.to_time.to_i}) AND " \
