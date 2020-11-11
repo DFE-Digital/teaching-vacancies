@@ -3,9 +3,9 @@ class Search::VacancyLocationBuilder
   MILES_TO_METRES = 1.60934 * 1000
 
   attr_reader :location, :location_category, :location_filter,
-              :location_polygon, :missing_polygon, :user_input_polygon
+              :location_polygon, :missing_polygon, :user_input_polygon, :user_input_point_coordinates
 
-  def initialize(location, radius, location_category, user_input_polygon)
+  def initialize(location, radius, location_category, user_input_polygon, user_input_point_coordinates)
     @location = location || location_category
     @radius = (radius || DEFAULT_RADIUS).to_i
     @location_filter = {}
@@ -17,16 +17,17 @@ class Search::VacancyLocationBuilder
                          end
 
     @user_input_polygon = user_input_polygon.present? ? [user_input_polygon.map(&:to_f)] : nil
+    @user_input_point_coordinates = user_input_point_coordinates
 
-    if user_input_polygon_search?
+    if user_input_polygon_search? || @user_input_point_coordinates.present?
       @location = nil
       @location_category = nil
     end
 
     if location_category_search?
       initialize_location_polygon
-    elsif @location.present?
-      @location_filter = build_location_filter(@location, @radius)
+    elsif @location.present? || @user_input_point_coordinates.present?
+      @location_filter = build_location_filter(@radius)
     end
   end
 
@@ -35,15 +36,15 @@ class Search::VacancyLocationBuilder
         (@location && LocationCategory.include?(@location))
   end
 
-  def user_input_polygon_search?
-    @user_input_polygon.present?
-  end
-
   def polygon_coordinates
     user_input_polygon_search? ? @user_input_polygon : @location_polygon_boundary
   end
 
   private
+
+  def user_input_polygon_search?
+    @user_input_polygon.present?
+  end
 
   def initialize_location_polygon
     @location_polygon = LocationPolygon.with_name(@location_category)
@@ -63,8 +64,16 @@ class Search::VacancyLocationBuilder
     end
   end
 
-  def build_location_filter(location, radius)
-    { point_coordinates: Geocoding.new(location).coordinates, radius: convert_radius_in_miles_to_metres(radius) }
+  def build_location_filter(radius)
+    { point_coordinates: point_coordinates, radius: convert_radius_in_miles_to_metres(radius) }
+  end
+
+  def point_coordinates
+    if @user_input_point_coordinates.present?
+      @user_input_point_coordinates.map(&:to_f)
+    else
+      Geocoding.new(location).coordinates
+    end
   end
 
   def convert_radius_in_miles_to_metres(radius)

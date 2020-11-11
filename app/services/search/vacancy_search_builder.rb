@@ -37,6 +37,10 @@ class Search::VacancySearchBuilder
     filters.any?
   end
 
+  def radius
+    location_search.location_filter[:radius]
+  end
+
 private
 
   def initialize_sort_by(jobs_sort_param)
@@ -56,7 +60,7 @@ private
 
   def build_location_search
     @location_search = Search::VacancyLocationBuilder.new(
-        @params_hash[:location], @params_hash[:radius], @params_hash[:location_category], @params_hash[:user_input_polygon]
+        @params_hash[:location], @params_hash[:radius], @params_hash[:location_category], @params_hash[:user_input_polygon], @params_hash[:user_input_point_coordinates]
     )
     @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
     if @location_search.missing_polygon

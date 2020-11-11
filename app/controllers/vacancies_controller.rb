@@ -6,7 +6,6 @@ class VacanciesController < ApplicationController
     @vacancies_search = Search::VacancySearchBuilder.new(@jobs_search_form.to_hash)
     @vacancies_search.call
     @vacancies = VacanciesPresenter.new(@vacancies_search.vacancies)
-    @polygon_coordinates = polygon_coordinates
     AuditSearchEventJob.perform_later(audit_row) if valid_search?
     expires_in 5.minutes, public: true
   end
@@ -43,7 +42,8 @@ private
       params[facet] = params[facet].split(" ") if params[facet].is_a?(String)
     end
     params.permit(:keyword, :location, :location_category, :radius, :jobs_sort, :page,
-                  job_roles: [], phases: [], working_patterns: [], user_input_polygon: [])
+                  job_roles: [], phases: [], working_patterns: [],
+                  user_input_polygon: [], user_input_point_coordinates: [])
   end
 
   def old_vacancy_path?(vacancy)
@@ -74,18 +74,5 @@ private
 
   def audit_row
     @jobs_search_form.to_hash.merge(total_count: @vacancies_search.vacancies.raw_answer["nbHits"])
-  end
-
-  def polygon_coordinates
-    if @vacancies_search.location_search.polygon_coordinates.present?
-      max_number_of_points = 20
-      polygon = @vacancies_search.location_search.polygon_coordinates.first
-                    .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }
-      number_of_points = polygon.length
-      if number_of_points > max_number_of_points
-        polygon = polygon.values_at *(0..(number_of_points - 1)).step(number_of_points / max_number_of_points)
-      end
-      polygon.to_json
-    end
   end
 end

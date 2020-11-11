@@ -18,7 +18,8 @@ Rails.application.config.content_security_policy do |policy|
 
   policy.img_src     :self,
                      :https,
-                     :data
+                     :data,
+                     "http://maps.google.com"
 
   policy.object_src  :none
 

@@ -18,6 +18,7 @@ class VacancyAlgoliaSearchForm
     @job_roles = params[:job_roles]
     @phases = params[:phases]
     @user_input_polygon = params[:user_input_polygon]
+    @user_input_point_coordinates = params[:user_input_point_coordinates]
     @working_patterns = params[:working_patterns]
 
     @jobs_sort = params[:jobs_sort]
@@ -36,6 +37,7 @@ class VacancyAlgoliaSearchForm
         job_roles: @job_roles,
         phases: @phases,
         user_input_polygon: @user_input_polygon,
+        user_input_point_coordinates: @user_input_point_coordinates,
         working_patterns: @working_patterns,
         jobs_sort: @jobs_sort,
         page: @page,
