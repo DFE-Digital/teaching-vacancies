@@ -28,7 +28,7 @@ class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers:
     return unless @vacancies_search.location_search.polygon_coordinates.present?
 
     polygon = @vacancies_search.location_search.polygon_coordinates.first
-                  .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }
+                  .each_slice(2).to_a.map { |element| { lat: element.first, lng: element.second } }
     polygon.to_json
   end
 

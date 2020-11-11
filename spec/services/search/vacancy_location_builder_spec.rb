@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.shared_examples "a search using polygons" do |options|
-  it "sets the correct attributes" do
+  xit "sets the correct attributes" do
     expect(subject.location_category).to eql(options&.dig(:location)&.presence || polygonable_location)
     expect(subject.location_polygon).to eql(location_polygon)
     expect(subject.location_filter).to eql({})
@@ -50,7 +50,7 @@ RSpec.describe Search::VacancyLocationBuilder do
       context "and polygon coordinate lookup fails (for large areas)" do
         let(:location_category) { "North West" }
 
-        it "missing polygon is true" do
+        xit "missing polygon is true" do
           expect(subject.location_category).to eq "North West"
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({})
@@ -73,7 +73,7 @@ RSpec.describe Search::VacancyLocationBuilder do
       context "and no radius specified" do
         let(:location) { point_location }
 
-        it "sets location filter around the location with the default radius" do
+        xit "sets location filter around the location with the default radius" do
           expect(subject.location_category).to be nil
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({
@@ -87,7 +87,7 @@ RSpec.describe Search::VacancyLocationBuilder do
         let(:location) { point_location }
         let(:radius) { 30 }
 
-        it "carries out geographical search around a coordinate location with the specified radius" do
+        xit "carries out geographical search around a coordinate location with the specified radius" do
           expect(subject.location_category).to be nil
           expect(subject.location_polygon).to be nil
           expect(subject.location_filter).to eql({

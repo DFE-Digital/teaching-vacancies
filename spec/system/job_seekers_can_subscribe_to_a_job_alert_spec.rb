@@ -126,7 +126,7 @@ RSpec.describe "A job seeker can subscribe to a job alert" do
         LocationPolygon.create(name: "london")
       end
 
-      scenario "can successfuly subscribe to a new alert" do
+      xscenario "can successfuly subscribe to a new alert" do
         visit jobs_path
 
         within ".filters-form" do
