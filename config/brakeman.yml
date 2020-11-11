@@ -1,0 +1,6 @@
+---
+quiet: true
+run_all_checks: true
+exit_on_warn: true
+skip_checks:
+  - CheckRender # Causes excessive false positives with view_component

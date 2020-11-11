@@ -1,7 +1,7 @@
 class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::ApplicationController
   def update
     if valid?
-      vacancy = Vacancy.find(vacancy_id)
+      vacancy = Vacancy.find(params[:job_id])
       update_vacancy(vacancy)
 
       redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback),

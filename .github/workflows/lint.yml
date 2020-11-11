@@ -8,7 +8,7 @@ on:
 
 jobs:
   backend-lint:
-    name: Run Rubocop check
+    name: Run backend linting checks
 
     runs-on: ubuntu-20.04
 
@@ -37,8 +37,11 @@ jobs:
       - name: Run Rubocop
         run: bundle exec rubocop
 
+      - name: Run Brakeman
+        run: bundle exec brakeman
+
   frontend-lint:
-    name: Run ESLint check
+    name: Run frontend linting checks
 
     runs-on: ubuntu-20.04
 

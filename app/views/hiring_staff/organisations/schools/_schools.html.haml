@@ -40,9 +40,9 @@
             %strong.strong= t('schools.website')
           %td.govuk-table__cell
             - if school.website.present?
-              = link_to school.website, school.website, class: 'govuk-link wordwrap', target: '_blank'
+              = link_to school.website, school.website, class: 'govuk-link wordwrap', target: '_blank', rel: 'noopener'
             - elsif school.url.present?
-              = link_to school.url, school.url, class: 'govuk-link wordwrap', target: '_blank'
+              = link_to school.url, school.url, class: 'govuk-link wordwrap', target: '_blank', rel: 'noopener'
             - else
               = t('jobs.not_defined')
           %td.govuk-table__cell.change-answer

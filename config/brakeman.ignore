@@ -1,0 +1,203 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "246cbbeec9223d4617a6405a7f8c5cc2fc5306c4725bd2b66f9aba82dc89c60e",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `EmergencyLoginKey#find`",
+      "file": "app/controllers/hiring_staff/sign_in/email/sessions_controller.rb",
+      "line": 80,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "EmergencyLoginKey.find(params.dig(:login_key))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HiringStaff::SignIn::Email::SessionsController",
+        "method": "get_key"
+      },
+      "user_input": "params.dig(:login_key)",
+      "confidence": "Weak",
+      "note": "Intended behaviour: No user is available at this point, so cannot scope."
+    },
+    {
+      "warning_type": "Reverse Tabnabbing",
+      "warning_code": 111,
+      "fingerprint": "282f4ee9e852d17d2604396f14d1bf447aac29f4f4dcf84d5ad7ea3a62a05b55",
+      "check_name": "ReverseTabnabbing",
+      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
+      "file": "app/views/hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details.html.haml",
+      "line": 38,
+      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
+      "code": "link_to(VacancyPresenter.new((current_organisation.all_vacancies.find(params[:job_id]) or (current_organisation.all_vacancies.find(params[:id]) or current_organisation.all_vacancies.find(session_vacancy_id)))).application_link, VacancyPresenter.new((current_organisation.all_vacancies.find(params[:job_id]) or (current_organisation.all_vacancies.find(params[:id]) or current_organisation.all_vacancies.find(session_vacancy_id)))).application_link, :class => \"govuk-link\", :\"aria-label\" => t(\"jobs.aria_labels.application_link_url\"), :target => \"_blank\", :rel => \"noopener\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "HiringStaff::VacanciesController",
+          "method": "edit",
+          "line": 29,
+          "file": "app/controllers/hiring_staff/vacancies_controller.rb",
+          "rendered": {
+            "name": "hiring_staff/vacancies/edit",
+            "file": "app/views/hiring_staff/vacancies/edit.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "hiring_staff/vacancies/edit",
+          "line": 15,
+          "file": "app/views/hiring_staff/vacancies/edit.html.haml",
+          "rendered": {
+            "name": "hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details",
+            "file": "app/views/hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details"
+      },
+      "user_input": "\"noopener\"",
+      "confidence": "Weak",
+      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
+    },
+    {
+      "warning_type": "Reverse Tabnabbing",
+      "warning_code": 111,
+      "fingerprint": "35ed02d0fef8801df614cbdb6a00838ace2f51f5620e1a26e030f7e4bd7222da",
+      "check_name": "ReverseTabnabbing",
+      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
+      "file": "app/views/hiring_staff/organisations/schools/_school_group.html.haml",
+      "line": 32,
+      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
+      "code": "link_to(current_organisation.url, current_organisation.url, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "hiring_staff/organisations/schools/index",
+          "line": 11,
+          "file": "app/views/hiring_staff/organisations/schools/index.html.haml",
+          "rendered": {
+            "name": "hiring_staff/organisations/schools/_school_group",
+            "file": "app/views/hiring_staff/organisations/schools/_school_group.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "hiring_staff/organisations/schools/_school_group"
+      },
+      "user_input": "\"noopener\"",
+      "confidence": "Weak",
+      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
+    },
+    {
+      "warning_type": "Reverse Tabnabbing",
+      "warning_code": 111,
+      "fingerprint": "374b532f12148a0bde52290577151803940265dd0b79653f4e6bcccd9bcc619b",
+      "check_name": "ReverseTabnabbing",
+      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
+      "file": "app/views/hiring_staff/organisations/schools/_schools.html.haml",
+      "line": 45,
+      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
+      "code": "link_to(school.url, school.url, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "hiring_staff/organisations/schools/index",
+          "line": 17,
+          "file": "app/views/hiring_staff/organisations/schools/index.html.haml",
+          "rendered": {
+            "name": "hiring_staff/organisations/schools/_schools",
+            "file": "app/views/hiring_staff/organisations/schools/_schools.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "hiring_staff/organisations/schools/_schools"
+      },
+      "user_input": "\"noopener\"",
+      "confidence": "Weak",
+      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
+    },
+    {
+      "warning_type": "Authentication",
+      "warning_code": 101,
+      "fingerprint": "3fd6c02eaf08f8589806b4e13e635949f395519d1c3c68884f627224aa99a4d8",
+      "check_name": "Secrets",
+      "message": "Hardcoded value for `DFE_SIGN_IN_PASSWORD` in source code",
+      "file": "config/initializers/authorisation_service.rb",
+      "line": 3,
+      "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Medium",
+      "note": "Intended behaviour: Only applicable in test enviroment"
+    },
+    {
+      "warning_type": "Reverse Tabnabbing",
+      "warning_code": 111,
+      "fingerprint": "565c91f708829aa26eb6b59ac228e28d69c88e0b2d2020794f6ba15cf75f8233",
+      "check_name": "ReverseTabnabbing",
+      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
+      "file": "app/views/hiring_staff/organisations/schools/_school_group.html.haml",
+      "line": 30,
+      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
+      "code": "link_to(current_organisation.website, current_organisation.website, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "hiring_staff/organisations/schools/index",
+          "line": 11,
+          "file": "app/views/hiring_staff/organisations/schools/index.html.haml",
+          "rendered": {
+            "name": "hiring_staff/organisations/schools/_school_group",
+            "file": "app/views/hiring_staff/organisations/schools/_school_group.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "hiring_staff/organisations/schools/_school_group"
+      },
+      "user_input": "\"noopener\"",
+      "confidence": "Weak",
+      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
+    },
+    {
+      "warning_type": "Reverse Tabnabbing",
+      "warning_code": 111,
+      "fingerprint": "63ca338870314df51deb97fe03618a00e7449e687ba5d6c7aee0d9462e79eb28",
+      "check_name": "ReverseTabnabbing",
+      "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
+      "file": "app/views/hiring_staff/organisations/schools/_schools.html.haml",
+      "line": 43,
+      "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
+      "code": "link_to(school.website, school.website, :class => \"govuk-link wordwrap\", :target => \"_blank\", :rel => \"noopener\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "hiring_staff/organisations/schools/index",
+          "line": 17,
+          "file": "app/views/hiring_staff/organisations/schools/index.html.haml",
+          "rendered": {
+            "name": "hiring_staff/organisations/schools/_schools",
+            "file": "app/views/hiring_staff/organisations/schools/_schools.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "hiring_staff/organisations/schools/_schools"
+      },
+      "user_input": "\"noopener\"",
+      "confidence": "Weak",
+      "note": "Intended behaviour: Noreferrer is undesirable (would stop schools from seeing our traffic in analytics), noopener is good enough to stop tabnabbing."
+    }
+  ],
+  "updated": "2020-11-11 11:24:27 +0000",
+  "brakeman_version": "4.10.0"
+}
