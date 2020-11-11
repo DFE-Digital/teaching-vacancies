@@ -132,6 +132,8 @@ WITH
     COUNTIF(type="jobseeker"
       AND clicked_get_more_information) AS number_of_jobseekers_clicking_gmi,
     COUNTIF(type="jobseeker"
+      AND created_job_alert) AS number_of_jobseekers_creating_job_alert,
+    COUNTIF(type="jobseeker"
       AND from_job_alert
       AND "vacancy" IN UNNEST(job_alert_destinations)) AS number_of_jobseekers_referred_from_job_alert_to_vacancy,
     COUNTIF(type="jobseeker"
@@ -167,7 +169,26 @@ WITH
   GROUP BY
     date
   HAVING
-    number_of_users > 0)
+    number_of_users > 0),
+  job_alert_metrics AS (
+  SELECT
+    date,
+    COUNTIF(dates.date=job_alert.created_date) AS number_of_job_alerts_created,
+    COUNTIF(dates.date=job_alert.unsubscribed_date) AS number_of_job_alerts_unsubscribed_from,
+  FROM
+    dates
+  JOIN
+    `teacher-vacancy-service.production_dataset.job_alert` AS job_alert
+  ON
+    dates.date=job_alert.created_date
+    OR dates.date=job_alert.unsubscribed_date
+    # don't calculate metrics for dates that are in the future - they'll just show up as null in the final table
+  WHERE
+    date < CURRENT_DATE()
+  GROUP BY
+    date
+  HAVING
+    number_of_job_alerts_created > 0)
 SELECT
   dates.date,
   school_metrics.schools_signed_up,
@@ -203,6 +224,7 @@ SELECT
   cloudfront_user_metrics.number_of_desktop_users,
   cloudfront_user_metrics.number_of_jobseekers_viewing_a_vacancy,
   cloudfront_user_metrics.number_of_jobseekers_clicking_gmi,
+  cloudfront_user_metrics.number_of_jobseekers_creating_job_alert,
   cloudfront_user_metrics.number_of_jobseekers_referred_from_job_alert_to_vacancy,
   cloudfront_user_metrics.number_of_jobseekers_referred_from_job_alert_to_edit_alert,
   cloudfront_user_metrics.number_of_jobseekers_referred_from_job_alert_to_unsubscribe_from_alert,
@@ -213,6 +235,10 @@ SELECT
     cloudfront_user_metrics.number_of_jobseekers) AS conversion_rate_jobseeker_viewing_a_vacancy,
   SAFE_DIVIDE(cloudfront_user_metrics.number_of_jobseekers_clicking_gmi,
     cloudfront_user_metrics.number_of_jobseekers) AS conversion_rate_jobseeker_clicking_gmi,
+  SAFE_DIVIDE(cloudfront_user_metrics.number_of_jobseekers_creating_job_alert,
+    cloudfront_user_metrics.number_of_jobseekers) AS conversion_rate_jobseeker_creating_job_alert,
+  job_alert_metrics.number_of_job_alerts_created AS number_of_job_alerts_created,
+  job_alert_metrics.number_of_job_alerts_unsubscribed_from AS number_of_job_alerts_unsubscribed_from
 FROM
   dates
 LEFT JOIN
@@ -221,6 +247,10 @@ USING
   (date)
 LEFT JOIN
   cloudfront_user_metrics
+USING
+  (date)
+LEFT JOIN
+  job_alert_metrics
 USING
   (date)
 LEFT JOIN

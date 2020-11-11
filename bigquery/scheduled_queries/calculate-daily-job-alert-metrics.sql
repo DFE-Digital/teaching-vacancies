@@ -73,11 +73,21 @@ WITH
       human IS NOT FALSE) AS job_alerts_updated,
     (
     SELECT
-      COUNTIF(created_date<=date)
+      COUNTIF(created_date<=date
+        AND ((unsubscribed_date IS NULL
+            AND active)
+          OR unsubscribed_date>date))
     FROM
       `teacher-vacancy-service.production_dataset.job_alert`
     WHERE
       human IS NOT FALSE ) AS job_alerts_live,
+    (
+    SELECT
+      COUNTIF(unsubscribed_date=date)
+    FROM
+      `teacher-vacancy-service.production_dataset.job_alert`
+    WHERE
+      human IS NOT FALSE ) AS job_alerts_unsubscribed,
     (
     SELECT
       COUNT(DISTINCT
@@ -108,7 +118,19 @@ WITH
     (date))
 UNION ALL (
   SELECT
-    *
+    date,
+    job_alerts_created,
+    job_alerts_updated,
+    job_alerts_live,
+    job_alerts_unsubscribed,
+    emails_subscribed_to_job_alerts,
+    number_of_alert_emails_sent,
+    number_of_alert_emails_clicked_on,
+    number_of_alert_emails_unsubscribed_from,
+    number_of_alert_emails_edited,
+    job_alert_email_vacancy_ctr,
+    job_alert_email_unsubscribe_ctr,
+    job_alert_email_edit_ctr
   FROM
     `teacher-vacancy-service.production_dataset.CALCULATED_job_alert_metrics`
   WHERE
