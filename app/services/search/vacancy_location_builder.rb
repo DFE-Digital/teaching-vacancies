@@ -33,14 +33,14 @@ class Search::VacancyLocationBuilder
 
   def location_category_search?
     (@location_category && LocationCategory.include?(@location_category)) ||
-        (@location && LocationCategory.include?(@location))
+      (@location && LocationCategory.include?(@location))
   end
 
   def polygon_coordinates
     user_input_polygon_search? ? @user_input_polygon : @location_polygon_boundary
   end
 
-  private
+private
 
   def user_input_polygon_search?
     @user_input_polygon.present?

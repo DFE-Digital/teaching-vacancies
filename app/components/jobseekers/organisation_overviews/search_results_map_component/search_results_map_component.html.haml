@@ -1,6 +1,10 @@
 %div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: 'Interactive map showing search polygon' }, data: { polygon_coordinates: polygon_coordinates, radius: radius, point_coordinates: point_coordinates, vacancies_map_data: vacancies_map_data } }
 %script{ defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
-- if polygon_coordinates.present?
+- if show_search_from_map_button?
   %button{ id: 'searchFromMap', class: 'govuk-button' }
     Search from map polygon
+
+%button{ id: 'editPolygon', class: 'govuk-button' }
+  Click here to edit the polygon
+

@@ -13,14 +13,14 @@ class Search::VacancyAlertBuilder < Search::VacancySearchBuilder
 
   def call
     @vacancies = Vacancy.search(
-        @keyword,
-        aroundLatLng: @location_search.location_filter[:point_coordinates],
-        aroundRadius: @location_search.location_filter[:radius],
-        insidePolygon: @location_search.polygon_coordinates,
-        filters: @search_filters,
-        replica: @search_replica,
-        hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
-        typoTolerance: false,
+      @keyword,
+      aroundLatLng: @location_search.location_filter[:point_coordinates],
+      aroundRadius: @location_search.location_filter[:radius],
+      insidePolygon: @location_search.polygon_coordinates,
+      filters: @search_filters,
+      replica: @search_replica,
+      hitsPerPage: MAXIMUM_SUBSCRIPTION_RESULTS,
+      typoTolerance: false,
     )
     Rails.logger.info(
       "#{vacancies.count} vacancies found for job alert with criteria: #{@params_hash}, "\

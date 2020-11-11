@@ -78,7 +78,7 @@ const addVacanciesToMapAsMarkers = (map, infoWindow) => {
   }
 };
 
-const addDraggableRadiusCenter = (center, map, infoWindow) => {
+const addDraggableRadiusCenter = (center, map, infoWindow, circle) => {
   const contentString = `<p>Your search location</p>
                            <p>(Try dragging me!)</p>`;
 
@@ -95,10 +95,11 @@ const addDraggableRadiusCenter = (center, map, infoWindow) => {
   marker.addListener('click', () => {
     infoWindow.setContent(contentString);
     infoWindow.open(map, marker);
-    map.setCenter(latLng);
   });
 
   marker.addListener('dragend', () => {
+    circle.setCenter(marker.position);
+
     const url = new URL(window.location);
 
     url.searchParams.delete('user_input_point_coordinates[]');
@@ -226,8 +227,6 @@ window.initMap = () => {
       mapTypeControlOptions: mapTypeControlOptions, // Removes terrain options section ('map' or 'satellite')
     });
 
-    addDraggableRadiusCenter(center, map, infoWindow);
-
     addVacanciesToMapAsMarkers(map, infoWindow);
 
     const circle = new google.maps.Circle({
@@ -240,6 +239,8 @@ window.initMap = () => {
       fillColor: tvsBlue,
       fillOpacity: 0.35
     });
+
+    addDraggableRadiusCenter(center, map, infoWindow, circle);
 
   } else if (polygonCoordinates !== false) {
     // A map for the polygon searched in

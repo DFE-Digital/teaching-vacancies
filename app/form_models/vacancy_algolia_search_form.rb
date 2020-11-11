@@ -30,17 +30,17 @@ class VacancyAlgoliaSearchForm
 
   def to_hash
     {
-        keyword: @keyword,
-        location: @location,
-        location_category: @location_category,
-        radius: @radius,
-        job_roles: @job_roles,
-        phases: @phases,
-        user_input_polygon: @user_input_polygon,
-        user_input_point_coordinates: @user_input_point_coordinates,
-        working_patterns: @working_patterns,
-        jobs_sort: @jobs_sort,
-        page: @page,
+      keyword: @keyword,
+      location: @location,
+      location_category: @location_category,
+      radius: @radius,
+      job_roles: @job_roles,
+      phases: @phases,
+      user_input_polygon: @user_input_polygon,
+      user_input_point_coordinates: @user_input_point_coordinates,
+      working_patterns: @working_patterns,
+      jobs_sort: @jobs_sort,
+      page: @page,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
