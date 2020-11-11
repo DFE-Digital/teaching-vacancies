@@ -44,7 +44,10 @@ Rails.application.config.content_security_policy do |policy|
                      "https://fonts.googleapis.com" # through Google Maps
 
   # Specify URI for violation reports
-  policy.report_uri "/errors/csp_violation"
+  # TODO: Temporarily commented out until bug in `rollbar` gem is fixed which is causing two violations per pageview
+  #       and making us go over our Rollbar quota
+  #       https://github.com/rollbar/rollbar-gem/pull/1010
+  # policy.report_uri "/errors/csp_violation"
 end
 
 # Enable automatic nonce generation for <script> tags
