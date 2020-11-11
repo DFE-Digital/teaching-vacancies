@@ -114,15 +114,6 @@ class Vacancy < ApplicationRecord
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end
 
-  def coordinates
-    return if organisation&.geolocation.nil?
-
-    {
-      lat: organisation.geolocation.x.to_f,
-      lon: organisation.geolocation.y.to_f,
-    }
-  end
-
   def listed?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
