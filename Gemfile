@@ -65,6 +65,7 @@ group :development do
 end
 
 group :development, :test do
+  gem "brakeman"
   gem "bullet"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"

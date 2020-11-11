@@ -6,10 +6,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   before_action :set_vacancy
 
-  def vacancy_id
-    params.permit![:job_id]
-  end
-
   def session_vacancy_id
     session[:vacancy_attributes].present? ? session[:vacancy_attributes]["id"] : false
   end
@@ -100,10 +96,6 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
 
   def redirect_unless_vacancy_session_id
     redirect_to job_specification_organisation_job_path(school_id: current_school.id) unless session_vacancy_id
-  end
-
-  def retrieve_job_from_db
-    current_organisation.all_vacancies.published.find(vacancy_id).attributes
   end
 
   def source_update?
