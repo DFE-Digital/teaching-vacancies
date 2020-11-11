@@ -14,7 +14,7 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
       Auditor::Audit.new(new_vacancy, "vacancy.copy", current_session_id).log
       redirect_to organisation_job_review_path(new_vacancy.id)
     else
-      add_errors_to_form(@date_errors, @copy_form)
+      replace_errors_in_form(@date_errors, @copy_form)
       render :new
     end
   end

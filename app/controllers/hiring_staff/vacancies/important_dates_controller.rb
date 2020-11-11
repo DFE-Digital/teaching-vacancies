@@ -18,7 +18,7 @@ class HiringStaff::Vacancies::ImportantDatesController < HiringStaff::Vacancies:
       update_google_index(@vacancy) if @vacancy.listed?
       redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
     else
-      add_errors_to_form(@date_errors, @important_dates_form)
+      replace_errors_in_form(@date_errors, @important_dates_form)
       render :show
     end
   end

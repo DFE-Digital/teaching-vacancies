@@ -21,13 +21,6 @@ RSpec.describe "non-existent pages" do
     expect(JSON.parse(response.body)).to eq("error" => "Resource not found")
   end
 
-  it "returns a 404 for xml" do
-    get "/foo.xml"
-    expect(response).to have_http_status(404)
-    expect(response.header["Content-Type"]).to include "application/xml"
-    expect(response.body).to be_empty
-  end
-
   it "returns a 404 for unknown formats" do
     get "/foo.unknown"
     expect(response).to have_http_status(404)
