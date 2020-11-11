@@ -1,4 +1,4 @@
-class AlertMailerJob < ActionMailer::DeliveryJob
+class AlertMailerJob < ActionMailer::MailDeliveryJob
   EXPIRES_IN = 4.hours
 
   before_enqueue do
@@ -32,7 +32,7 @@ private
   end
 
   def subscription_id
-    arguments[3]
+    arguments.last[:args].first
   end
 
   def alert_run
