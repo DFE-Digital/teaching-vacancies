@@ -113,7 +113,7 @@ en:
       most_relevant: most relevant first
       publish_on:
         descending: newest job listing
-      expiry_time:
+      expires_at:
         descending: most time to apply
         ascending: least time to apply
       submit: Sort

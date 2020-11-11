@@ -54,9 +54,9 @@ module VacancyHelpers
     fill_in "important_dates_form[expires_on(2i)]", with: vacancy.expires_on.strftime("%m")
     fill_in "important_dates_form[expires_on(1i)]", with: vacancy.expires_on.year
 
-    fill_in "important_dates_form[expiry_time_hh]", with: vacancy.expiry_time.strftime("%-l")
-    fill_in "important_dates_form[expiry_time_mm]", with: vacancy.expiry_time.strftime("%-M")
-    select vacancy.expiry_time.strftime("%P"), from: "important_dates_form[expiry_time_meridiem]"
+    fill_in "important_dates_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
+    fill_in "important_dates_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
+    select vacancy.expires_at.strftime("%P"), from: "important_dates_form[expires_at_meridiem]"
 
     fill_in "important_dates_form[starts_on(3i)]", with: vacancy.starts_on.day
     fill_in "important_dates_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m")
@@ -98,9 +98,9 @@ module VacancyHelpers
     fill_in "copy_vacancy_form[expires_on(2i)]", with: vacancy.expires_on&.strftime("%m")
     fill_in "copy_vacancy_form[expires_on(1i)]", with: vacancy.expires_on&.year
 
-    fill_in "copy_vacancy_form[expiry_time_hh]", with: vacancy.expiry_time.strftime("%-l")
-    fill_in "copy_vacancy_form[expiry_time_mm]", with: vacancy.expiry_time.strftime("%-M")
-    select vacancy.expiry_time.strftime("%P"), from: "copy_vacancy_form[expiry_time_meridiem]"
+    fill_in "copy_vacancy_form[expires_at_hh]", with: vacancy.expires_at.strftime("%-l")
+    fill_in "copy_vacancy_form[expires_at_mm]", with: vacancy.expires_at.strftime("%-M")
+    select vacancy.expires_at.strftime("%P"), from: "copy_vacancy_form[expires_at_meridiem]"
 
     fill_in "copy_vacancy_form[publish_on(3i)]", with: vacancy.publish_on&.day
     fill_in "copy_vacancy_form[publish_on(2i)]", with: vacancy.publish_on&.strftime("%m")
@@ -230,8 +230,8 @@ private
     expect(page.find(".vacancy")).to have_content(vacancy.salary)
     expect(page.find(".vacancy")).to have_content(vacancy.working_patterns)
     expect(page.find(".vacancy")).to have_content(vacancy.expires_on)
-    unless vacancy.expiry_time.nil?
-      expect(page.find(".vacancy")).to have_content(vacancy.expiry_time.strftime("%-l:%M %P"))
+    unless vacancy.expires_at.nil?
+      expect(page.find(".vacancy")).to have_content(vacancy.expires_at.strftime("%-l:%M %P"))
     end
   end
 end

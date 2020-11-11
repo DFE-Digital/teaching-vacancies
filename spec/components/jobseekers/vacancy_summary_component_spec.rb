@@ -40,9 +40,9 @@ RSpec.describe Jobseekers::VacancySummaryComponent, type: :component do
         expect(rendered_component).to include(vacancy_presenter.working_patterns)
       end
 
-      context "when expiry time is nil" do
+      context "when expires_at is nil" do
         let(:vacancy) do
-          create(:vacancy, :at_one_school, expiry_time: nil, organisation_vacancies_attributes: [
+          create(:vacancy, :at_one_school, expires_at: nil, organisation_vacancies_attributes: [
             { organisation: organisation },
           ])
         end

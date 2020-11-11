@@ -13,7 +13,7 @@
       %dd.double
         = @vacancy.working_patterns
     %dt= t('jobs.expires_on')
-    - if @vacancy.expiry_time.nil?
+    - if @vacancy.expires_at.nil?
       %dd.double
         = format_date(@vacancy.expires_on)
     - else

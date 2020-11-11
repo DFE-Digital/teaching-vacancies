@@ -5,7 +5,7 @@ class AlertMailer < ApplicationMailer
   def alert(subscription_id, vacancy_ids)
     subscription = Subscription.find(subscription_id)
     @subscription = SubscriptionPresenter.new(subscription)
-    vacancies = Vacancy.where(id: vacancy_ids).order(:expires_on).order(:expiry_time)
+    vacancies = Vacancy.where(id: vacancy_ids).order(:expires_at)
     @vacancies = VacanciesPresenter.new(vacancies)
     template = @subscription.daily? ? NOTIFY_SUBSCRIPTION_DAILY_TEMPLATE : NOTIFY_SUBSCRIPTION_WEEKLY_TEMPLATE
 

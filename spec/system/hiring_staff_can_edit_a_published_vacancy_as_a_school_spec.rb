@@ -245,12 +245,12 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.important_dates"))
 
-        fill_in "important_dates_form[expiry_time_hh]", with: "88"
+        fill_in "important_dates_form[expires_at_hh]", with: "88"
         click_on I18n.t("buttons.update_job")
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expiry_time_html"))) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.wrong_format"))
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_at_html"))) do
+          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.wrong_format"))
         end
       end
 

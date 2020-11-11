@@ -14,8 +14,8 @@ describe('Sort select', () => {
         <select class="govuk-select govuk-select govuk-input--width-10" id="jobs-sort-field" name="jobs_sort">
           <option value="">most relevant first</option>
           <option value="publish_on_desc">newest job listing</option>
-          <option value="expiry_time_desc">most time to apply</option>
-          <option selected="selected" value="expiry_time_asc">least time to apply</option>
+          <option value="expires_at_desc">most time to apply</option>
+          <option selected="selected" value="expires_at_asc">least time to apply</option>
         </select>
       </div>
       <input type="submit" name="commit" value="Sort" class="jobs-sort-submit">

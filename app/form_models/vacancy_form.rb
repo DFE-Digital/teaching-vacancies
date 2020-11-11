@@ -12,7 +12,7 @@ class VacancyForm
     @vacancy = Vacancy.new(
       params.except(
         :organisation_id, :organisation_ids, :documents_attributes,
-        :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
+        :expires_at_hh, :expires_at_mm, :expires_at_meridiem
       ),
     )
   end

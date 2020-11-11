@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_09_100515) do
+ActiveRecord::Schema.define(version: 2020_11_10_164647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_100515) do
     t.integer "hired_status"
     t.datetime "stats_updated_at"
     t.uuid "publisher_user_id"
-    t.datetime "expiry_time"
+    t.datetime "expires_at"
     t.string "supporting_documents"
     t.string "salary"
     t.integer "completed_step"
@@ -255,8 +255,8 @@ ActiveRecord::Schema.define(version: 2020_11_09_100515) do
     t.integer "job_roles", array: true
     t.string "contact_number"
     t.uuid "publisher_organisation_id"
+    t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["expires_on"], name: "index_vacancies_on_expires_on"
-    t.index ["expiry_time"], name: "index_vacancies_on_expiry_time"
     t.index ["initially_indexed"], name: "index_vacancies_on_initially_indexed"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["publisher_user_id"], name: "index_vacancies_on_publisher_user_id"

@@ -12,11 +12,11 @@ module Indexable
       attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
       attribute :expires_at do
-        "#{format_date(expires_on)} at #{expiry_time&.strftime('%-l:%M %P')}"
+        "#{format_date(expires_on)} at #{expires_at&.strftime('%-l:%M %P')}"
       end
 
       attribute :expires_at_timestamp do
-        expiry_time&.to_i
+        expires_at&.to_i
       end
 
       attribute :job_roles_for_display do
@@ -77,11 +77,11 @@ module Indexable
         ranking ["desc(publication_date_timestamp)"]
       end
 
-      add_replica "#{INDEX_NAME}_expiry_time_desc", inherit: true do
+      add_replica "#{INDEX_NAME}_expires_at_desc", inherit: true do
         ranking ["desc(expires_at_timestamp)"]
       end
 
-      add_replica "#{INDEX_NAME}_expiry_time_asc", inherit: true do
+      add_replica "#{INDEX_NAME}_expires_at_asc", inherit: true do
         ranking ["asc(expires_at_timestamp)"]
       end
     end
@@ -121,7 +121,7 @@ module Indexable
     end
 
     def remove_vacancies_that_expired_yesterday!
-      expired_records = where("expiry_time BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
+      expired_records = where("expires_at BETWEEN ? AND ?", Time.zone.yesterday.midnight, Date.current.midnight)
       index.delete_objects(expired_records.map(&:id)) if expired_records&.any?
     end
   end

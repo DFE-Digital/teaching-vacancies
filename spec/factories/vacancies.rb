@@ -13,7 +13,7 @@ FactoryBot.define do
     education { Faker::Lorem.paragraph(sentence_count: 4) }
     experience { Faker::Lorem.paragraph(sentence_count: 4) }
     expires_on { Faker::Time.forward(days: 14) }
-    expiry_time { expires_on&.change(sec: 0) }
+    expires_at { expires_on&.change(sec: 0) }
     hired_status { nil }
     how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
     job_summary { Faker::Lorem.paragraph(sentence_count: 4) }
@@ -95,7 +95,7 @@ FactoryBot.define do
       sequence(:slug) { |n| "slug-#{n}" }
       publish_on { Faker::Time.between(from: Date.current - 14.days, to: Date.current - 7.days) }
       expires_on { Faker::Time.backward(days: 6) }
-      expiry_time { Faker::Time.backward(days: 6) }
+      expires_at { Faker::Time.backward(days: 6) }
     end
 
     trait :future_publish do

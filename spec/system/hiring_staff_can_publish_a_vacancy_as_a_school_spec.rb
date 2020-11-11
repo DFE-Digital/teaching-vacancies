@@ -170,8 +170,8 @@ RSpec.describe "Creating a vacancy" do
         end
 
         within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expiry_time_html"))) do
-          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expiry_time.blank"))
+                       text: strip_tags(I18n.t("helpers.legend.important_dates_form.expires_at_html"))) do
+          expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.blank"))
         end
       end
 
@@ -1014,14 +1014,14 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, expiry_time: Time.current + 5.days)
+        vacancy = create(:vacancy, :draft, expires_at: 5.days.from_now)
         vacancy.organisation_vacancies.create(organisation: school)
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
         expect(page).to have_content(
           "The listing will appear on the service until " \
-          "#{format_date(vacancy.expires_on)} at #{format_time(vacancy.expiry_time)}, " \
+          "#{format_date(vacancy.expires_on)} at #{format_time(vacancy.expires_at)}, " \
           "after which it will no longer be visible to jobseekers.",
         )
       end

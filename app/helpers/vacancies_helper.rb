@@ -51,9 +51,9 @@ module VacanciesHelper
   def back_to_manage_jobs_link(vacancy)
     state = if vacancy.listed?
               "published"
-            elsif vacancy.published? && vacancy.expiry_time.future?
+            elsif vacancy.published? && vacancy.expires_at.future?
               "pending"
-            elsif vacancy.published? && vacancy.expiry_time.past?
+            elsif vacancy.published? && vacancy.expires_at.past?
               "expired"
             else
               "draft"
@@ -62,7 +62,7 @@ module VacanciesHelper
   end
 
   def expiry_date_and_time(vacancy)
-    format_date(vacancy.expires_on) + " at " + vacancy.expiry_time.strftime("%-l:%M %P")
+    format_date(vacancy.expires_on) + " at " + vacancy.expires_at.strftime("%-l:%M %P")
   end
 
   def vacancy_or_organisation_description(vacancy)

@@ -1,19 +1,19 @@
 class ImportantDatesForm < VacancyForm
   delegate :published?, :status, :publish_on_changed?, :expires_on_changed?, :starts_on_changed?,
-           :publish_on, :expires_on, :expiry_time, to: :vacancy
+           :publish_on, :expires_on, :expires_at, to: :vacancy
 
-  attr_accessor :params, :expiry_time_hh, :expiry_time_mm, :expiry_time_meridiem
+  attr_accessor :params, :expires_at_hh, :expires_at_mm, :expires_at_meridiem
 
   include DatesHelper
 
   include VacancyImportantDateValidations
-  include VacancyExpiryTimeFieldValidations
+  include VacancyExpiresAtFieldValidations
 
   def initialize(params)
     @params = params
-    @expiry_time_hh = params.delete(:expiry_time_hh) || params[:expiry_time]&.strftime("%-l")
-    @expiry_time_mm = params.delete(:expiry_time_mm) || params[:expiry_time]&.strftime("%-M")
-    @expiry_time_meridiem = params.delete(:expiry_time_meridiem) || params[:expiry_time]&.strftime("%P")
+    @expires_at_hh = params.delete(:expires_at_hh) || params[:expires_at]&.strftime("%-l")
+    @expires_at_mm = params.delete(:expires_at_mm) || params[:expires_at]&.strftime("%-M")
+    @expires_at_meridiem = params.delete(:expires_at_meridiem) || params[:expires_at]&.strftime("%P")
 
     super(params)
   end
@@ -23,19 +23,19 @@ class ImportantDatesForm < VacancyForm
   end
 
   def params_to_save
-    params_with_expiry_time = @params
+    params_with_expires_at = @params
 
-    expiry_time_attr = {
+    expires_at_attr = {
       day: expires_on&.day,
       month: expires_on&.month,
       year: expires_on&.year,
-      hour: expiry_time_hh,
-      min: expiry_time_mm,
-      meridiem: expiry_time_meridiem,
+      hour: expires_at_hh,
+      min: expires_at_mm,
+      meridiem: expires_at_meridiem,
     }
-    expiry_time = compose_expiry_time(expiry_time_attr)
-    params_with_expiry_time[:expiry_time] = expiry_time unless expiry_time.nil?
+    expires_at = compose_expires_at(expires_at_attr)
+    params_with_expires_at[:expires_at] = expires_at unless expires_at.nil?
 
-    params_with_expiry_time
+    params_with_expires_at
   end
 end

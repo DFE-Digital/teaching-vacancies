@@ -24,7 +24,7 @@ RSpec.describe OrganisationVacancyPresenter do
   end
 
   describe "application_deadline" do
-    let(:vacancy) { create(:vacancy, expires_on: deadline_date, expiry_time: deadline_time) }
+    let(:vacancy) { create(:vacancy, expires_on: deadline_date, expires_at: deadline_time) }
     let(:deadline_date) { Date.current + 5.days }
 
     context "when expiry time is not present" do

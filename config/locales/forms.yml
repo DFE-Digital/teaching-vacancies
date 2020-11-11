@@ -44,7 +44,7 @@ en:
         trust_visits: Explain how a candidate can arrange a visit to the trust (give a phone number if possible)
       copy_vacancy_form:
         expires_on: For example, 01 05 2020
-        expiry_time: For example, 9:30 am or 11:59 pm (midnight)
+        expires_at: For example, 9:30 am or 11:59 pm (midnight)
         job_title: >-
           For secondary school roles include subject and, if relevant,
           level of seniority ('Subject leader for science', for example).
@@ -52,7 +52,7 @@ en:
         starts_on: For example, 01 09 2020
       important_dates_form:
         expires_on: For example, 01 05 2020
-        expiry_time: For example, 9:30 am or 11:59 pm (midnight)
+        expires_at: For example, 9:30 am or 11:59 pm (midnight)
         publish_on: For example, 01 01 2020
         starts_on: For example, 01 09 2020
       job_summary_form:
@@ -105,17 +105,17 @@ en:
         school_visits: School visits
         trust_visits: Trust visits
       copy_vacancy_form:
-        expiry_time_hh: Hour
-        expiry_time_meridiem: am or pm
-        expiry_time_mm: Minute
+        expires_at_hh: Hour
+        expires_at_meridiem: am or pm
+        expires_at_mm: Minute
         job_title_html: Job title (<span class='text-red'>Required</span>)
       organisation_form:
         description: Description of %{organisation_type}
         website: '%{organisation_type} website'
       important_dates_form:
-        expiry_time_hh: Hour
-        expiry_time_meridiem: am or pm
-        expiry_time_mm: Minute
+        expires_at_hh: Hour
+        expires_at_meridiem: am or pm
+        expires_at_mm: Minute
       job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)
@@ -139,7 +139,7 @@ en:
         starts_on: Date job starts
       important_dates_form:
         expires_on_html: Date application is due (<span class='text-red'>Required</span>)
-        expiry_time_html: Time application is due (<span class='text-red'>Required</span>)
+        expires_at_html: Time application is due (<span class='text-red'>Required</span>)
         publish_on_html: Date job will be listed (<span class='text-red'>Required</span>)
         starts_on: Date job starts
       job_location_form:
