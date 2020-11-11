@@ -49,6 +49,17 @@ IF
             '$.working_patterns')) AS working_patterns_string
       ORDER BY
         pattern ASC))," or ") AS working_patterns,
+  ARRAY_TO_STRING( (
+    SELECT
+      ARRAY(
+      SELECT
+        JSON_EXTRACT_SCALAR(job_roles_string,
+          '$') AS pattern
+      FROM
+        UNNEST(JSON_EXTRACT_ARRAY(search_criteria,
+            '$.job_roles')) AS job_roles_string
+      ORDER BY
+        pattern ASC))," or ") AS job_roles,
   JSON_EXTRACT_SCALAR(search_criteria,
     '$.newly_qualified_teacher') AS newly_qualified_teacher,
   ARRAY_TO_STRING( (
@@ -64,8 +75,6 @@ IF
         phase ASC ))," or ") AS education_phases,
   TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
         '$.subject'))," ") AS subject,
-  TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
-        '$.job_title'))," ") AS job_title,
   TRIM(LOWER(JSON_EXTRACT_SCALAR(search_criteria,
         '$.keyword'))," ") AS keyword,
   (
