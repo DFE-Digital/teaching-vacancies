@@ -1,10 +1,11 @@
-%div{ id: 'map', role: 'presentation', aria: { hidden: 'true', label: 'Interactive map showing search polygon' }, data: { polygon_coordinates: polygon_coordinates, radius: radius, point_coordinates: point_coordinates, vacancies_map_data: vacancies_map_data } }
+%div{ aria: { hidden: 'true', label: 'Interactive map showing search polygon' }, data: { polygon_coordinates: polygon_coordinates, radius: radius, point_coordinates: point_coordinates, vacancies_map_data: vacancies_map_data, polygon_is_editable: polygon_editable? }, id: 'map', role: 'presentation' }
 %script{ defer: true, src: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap"}
 
-- if show_search_from_map_button?
-  %button{ id: 'searchFromMap', class: 'govuk-button' }
+- if show_polygon_buttons?
+  %button{ id: 'searchFromMap', class: 'govuk-button', style: "display: #{@vacancies_search.user_input_polygon_search? ? 'inline' : 'none'}", aria: { hidden: 'true', label: 'Interactive map showing search polygon' } }
     Search from map polygon
+  - unless @vacancies_search.user_input_polygon_search?
+    %button{ id: 'editPolygon', class: 'govuk-button', aria: { hidden: 'true', label: 'Interactive map showing search polygon' } }
+      Edit map polygon
 
-%button{ id: 'editPolygon', class: 'govuk-button' }
-  Click here to edit the polygon
 

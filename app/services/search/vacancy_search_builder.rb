@@ -41,6 +41,10 @@ class Search::VacancySearchBuilder
     location_search.location_filter[:radius]
   end
 
+  def user_input_polygon_search?
+    @location_search.user_input_polygon.present?
+  end
+
 private
 
   def initialize_sort_by(jobs_sort_param)

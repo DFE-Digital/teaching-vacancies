@@ -4,7 +4,7 @@ class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers:
   def initialize(vacancies:, vacancies_search:)
     @vacancies = vacancies
     @vacancies_search = vacancies_search
-    @polygon_coordinates = @vacancies_search.location_search.polygon_coordinates
+    @polygon_coordinates = polygon_coordinates
   end
 
   def vacancies_map_data
@@ -15,26 +15,21 @@ class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers:
                   name_link: link_to(vacancy.job_title, vacancy_path(vacancy)),
                   location: location(organisation, job_location: vacancy.job_location),
                   lat: organisation.geolocation&.x,
-                  lng: organisation.geolocation&.y})
+                  lng: organisation.geolocation&.y })
     end
     data.to_json
   end
 
   def render?
-    @polygon_coordinates.present? || (radius.present? && @vacancies_search.point_coordinates.present?)
+    polygon_coordinates.present? || (radius.present? && @vacancies_search.point_coordinates.present?)
   end
 
   def polygon_coordinates
-    if @polygon_coordinates.present?
-      max_number_of_points = 20
-      polygon = @polygon_coordinates.first
-                    .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }
-      number_of_points = polygon.length
-      if number_of_points > max_number_of_points
-        polygon = polygon.values_at(*(0..(number_of_points - 1)).step(number_of_points / max_number_of_points))
-      end
-      polygon.to_json
-    end
+    return unless @vacancies_search.location_search.polygon_coordinates.present?
+
+    polygon = @vacancies_search.location_search.polygon_coordinates.first
+                  .each_slice(2).to_a.map { |element| {lat: element.first, lng: element.second} }
+    polygon.to_json
   end
 
   def radius
@@ -47,7 +42,11 @@ class Jobseekers::OrganisationOverviews::SearchResultsMapComponent < Jobseekers:
     { lat: @vacancies_search.point_coordinates.first, lng: @vacancies_search.point_coordinates.second }.to_json
   end
 
-  def show_search_from_map_button?
+  def show_polygon_buttons?
     polygon_coordinates.present?
+  end
+
+  def polygon_editable?
+    @vacancies_search.user_input_polygon_search?.to_s
   end
 end

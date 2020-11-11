@@ -1,3 +1,7 @@
+// Linting: Allow 'google' to be used without defining it.
+// This function is a callback for the Google Maps API, which will define 'google'.
+/* eslint-disable */
+
 // For multi-school maps
 const getSchools = () => {
   if (document.getElementById('map').dataset.schools) {
@@ -78,6 +82,8 @@ const addVacanciesToMapAsMarkers = (map, infoWindow) => {
   }
 };
 
+const latLngSigFigs = 4;
+
 const addDraggableRadiusCenter = (center, map, infoWindow, circle) => {
   const contentString = `<p>Your search location</p>
                            <p>(Try dragging me!)</p>`;
@@ -106,8 +112,8 @@ const addDraggableRadiusCenter = (center, map, infoWindow, circle) => {
 
     const position = marker.getPosition();
 
-    url.searchParams.append('user_input_point_coordinates[]', position.lat().toFixed(3));
-    url.searchParams.append('user_input_point_coordinates[]', position.lng().toFixed(3));
+    url.searchParams.append('user_input_point_coordinates[]', position.lat().toFixed(latLngSigFigs));
+    url.searchParams.append('user_input_point_coordinates[]', position.lng().toFixed(latLngSigFigs));
 
     url.searchParams = url.searchParams.toString();
 
@@ -115,10 +121,14 @@ const addDraggableRadiusCenter = (center, map, infoWindow, circle) => {
   });
 };
 
+const polygonIsEditable = () => {
+  if (document.getElementById('map').dataset.polygonIsEditable) {
+    return JSON.parse(document.getElementById('map').dataset.polygonIsEditable);
+  }
+  return false;
+};
+
 window.initMap = () => {
-  // Linting: Allow 'google' to be used without defining it.
-  // This function is a callback for the Google Maps API, which will define 'google'.
-  /* eslint-disable */
   const schools = getSchools();
   const school = getSchool();
   const polygonCoordinates = getPolygonCoordinates();
@@ -261,7 +271,7 @@ window.initMap = () => {
       strokeWeight: 2,
       fillColor: tvsBlue,
       fillOpacity: 0.35,
-      editable: true
+      editable: polygonIsEditable()
     });
 
     polygonCoordinates.forEach((latLng) => {
@@ -274,19 +284,42 @@ window.initMap = () => {
 
     addVacanciesToMapAsMarkers(map, infoWindow);
 
-    document.getElementById('searchFromMap').addEventListener('click', () => {
+    const editPolygonButton = document.getElementById('editPolygon');
+    const searchFromMapButton = document.getElementById('searchFromMap')
+
+    if (editPolygonButton !== null) {
+      editPolygonButton.addEventListener('click', () => {
+        const maxNumberOfPoints = 15;
+        numberOfPoints = polygonCoordinates.length
+        if (numberOfPoints > maxNumberOfPoints) {
+          let shorterPolygonCoordinates = new Array;
+          const everyNthElement = Math.floor((numberOfPoints / maxNumberOfPoints));
+          for (i = 0; i < numberOfPoints; i += everyNthElement) {
+            shorterPolygonCoordinates.push(polygonCoordinates[i])
+          }
+          visiblePolygon.setPath(shorterPolygonCoordinates)
+        }
+        // setEditable for many points is compute-intensive, so do it after reducing number of points
+        visiblePolygon.setEditable(true);
+        editPolygonButton.style.display = 'none';
+        searchFromMapButton.style.display = 'inline';
+      });
+    };
+
+    searchFromMapButton.addEventListener('click', () => {
       let url = new URL(window.location);
 
       url.searchParams.delete('user_input_polygon[]');
 
       visiblePolygon.getPath().i.forEach((i) => {
-        url.searchParams.append('user_input_polygon[]', i.lat().toFixed(3))
-        url.searchParams.append('user_input_polygon[]', i.lng().toFixed(3))
+        url.searchParams.append('user_input_polygon[]', i.lat().toFixed(latLngSigFigs))
+        url.searchParams.append('user_input_polygon[]', i.lng().toFixed(latLngSigFigs))
       });
       url.searchParams = url.searchParams.toString();
       window.location = url;
     });
   }
-  /* eslint-enable */
 };
+
+/* eslint-enable */
 
