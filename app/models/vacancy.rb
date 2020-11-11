@@ -4,9 +4,7 @@ class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
 
-  include ApplicationHelper
   include Auditor::Model
-  include DatesHelper
   include Indexable
   include Redis::Objects
   include VacancyJobSpecificationValidations
