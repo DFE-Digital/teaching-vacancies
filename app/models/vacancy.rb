@@ -152,14 +152,6 @@ class Vacancy < ApplicationRecord
     super().merge("working_patterns" => working_patterns, "job_roles" => job_roles)
   end
 
-  def skip_update_callbacks(value = true)
-    @skip_update_callbacks = value
-  end
-
-  def skip_update_callbacks?
-    @skip_update_callbacks.present?
-  end
-
   def any_candidate_specification?
     experience.present? || qualifications.present? || education.present?
   end
