@@ -123,32 +123,21 @@ bundle exec rails db:seed
 
 ### Importing data
 
-#### Location polygons
-
-Run these rake tasks to populate your database with LocationPolygons (which are used in some cases to search by location).
-
-```ruby
-bundle exec rails data:location_polygons:import_cities
-bundle exec rails data:location_polygons:import_counties
-bundle exec rails data:location_polygons:import_london_boroughs
-bundle exec rails data:location_polygons:import_regions
-```
-
 #### GIAS data (schools, trusts and local authorities)
 
 Populate your environment with real school data. This is taken from
 [GIAS](https://get-information-schools.service.gov.uk/). It might take a while, so make a cup of tea while you wait.
 
-To import school data run:
-
 ```bash
-bundle exec rails data:schools:import
+bundle exec rails data:gias:import_schools
 ```
 
-To import school group data run:
+#### ONS Location polygons
+
+Run these rake tasks to populate your database with location polygons (which are used in some cases to search by location).
 
 ```bash
-bundle exec rails data:school_groups:import
+bundle exec rails data:ons:import_location_polygons
 ```
 
 ### Run the server
