@@ -1,1 +1,1 @@
-json.partial! "show.json.jbuilder", vacancy: @vacancy
+json.partial! "show", vacancy: @vacancy

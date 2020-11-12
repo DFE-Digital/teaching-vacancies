@@ -8,6 +8,6 @@ module ValidatorConcerns
 private
 
   def error_message(record, attribute, message)
-    record.errors[attribute] << message
+    record.errors.add(attribute, message)
   end
 end

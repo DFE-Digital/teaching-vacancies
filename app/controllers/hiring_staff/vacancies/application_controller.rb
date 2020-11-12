@@ -135,9 +135,10 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
     date_errors
   end
 
-  def add_errors_to_form(errors, form_object)
+  def replace_errors_in_form(errors, form_object)
     errors.each do |field, error|
-      form_object.errors.messages[field].unshift(error)
+      form_object.errors.delete(field)
+      form_object.errors.add(field, error)
     end
   end
 
