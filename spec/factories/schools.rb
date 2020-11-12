@@ -3,7 +3,7 @@ FactoryBot.define do
   RELIGIOUS_CHARACTERS = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
 
   factory :school do
-    address { Faker::Address.street_name.gsub("'", "") }
+    address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     easting { "1" }
@@ -11,8 +11,8 @@ FactoryBot.define do
       {
         "CloseDate": nil,
         "HeadFirstName": Faker::Name.first_name,
-        "HeadLastName": Faker::Name.last_name.gsub("'", ""),
-        "HeadPreferredJobTitle": Faker::Name.prefix.gsub(".", ""),
+        "HeadLastName": Faker::Name.last_name.delete("'"),
+        "HeadPreferredJobTitle": Faker::Name.prefix.delete("."),
         "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
         "NumberOfPupils": Faker::Number.number(digits: 3),
         "OfstedRating (name)": OFSTED_RATINGS.sample,
@@ -20,19 +20,19 @@ FactoryBot.define do
         "ReligiousCharacter (name)": RELIGIOUS_CHARACTERS.sample,
         "SchoolCapacity": Faker::Number.number(digits: 4),
         "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-        "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust",
+        "Trusts (name)": Faker::Company.name.delete("'") + " Trust",
       }
     end
     minimum_age { 11 }
     maximum_age { 18 }
-    name { Faker::Educator.secondary_school.strip.gsub("'", "") }
+    name { Faker::Educator.secondary_school.strip.delete("'") }
     northing { "1" }
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { "South-East England" }
     school_type { "LA maintained school" }
     postcode { Faker::Address.postcode }
-    town { Faker::Address.city.gsub("'", "") }
+    town { Faker::Address.city.delete("'") }
     urn { Faker::Number.number(digits: 6) }
     url { Faker::Internet.url }
 
@@ -64,8 +64,8 @@ FactoryBot.define do
         {
           "CloseDate": nil,
           "HeadFirstName": Faker::Name.first_name,
-          "HeadLastName": Faker::Name.last_name.gsub("'", ""),
-          "HeadPreferredJobTitle": Faker::Name.prefix.gsub(".", ""),
+          "HeadLastName": Faker::Name.last_name.delete("'"),
+          "HeadPreferredJobTitle": Faker::Name.prefix.delete("."),
           "DateOfLastInspectionVisit": Faker::Date.between(from: 999.days.ago, to: 5.days.ago),
           "NumberOfPupils": Faker::Number.number(digits: 3),
           "OfstedRating (name)": OFSTED_RATINGS.sample,
@@ -73,7 +73,7 @@ FactoryBot.define do
           "ReligiousCharacter (name)": "Roman Catholic",
           "SchoolCapacity": Faker::Number.number(digits: 4),
           "TelephoneNum": Faker::Number.number(digits: 11).to_s,
-          "Trusts (name)": Faker::Company.name.gsub("'", "") + " Trust",
+          "Trusts (name)": Faker::Company.name.delete("'") + " Trust",
         }
       end
     end

@@ -143,11 +143,11 @@ RSpec.describe Jobseekers::OrganisationOverviews::SchoolsComponent, type: :compo
     end
 
     let(:school_1_data) do
-      organisation_map_data.select { |s| s["name"] == school_1.name }.first
+      organisation_map_data.find { |s| s["name"] == school_1.name }
     end
 
     let(:school_2_data) do
-      organisation_map_data.select { |s| s["name"] == school_2.name }.first
+      organisation_map_data.find { |s| s["name"] == school_2.name }
     end
 
     context "when the user has provided a website" do

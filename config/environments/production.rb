@@ -44,7 +44,7 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security,
   # and use secure cookies.
   config.force_ssl = true
-  config.ssl_options = { redirect: { exclude: ->(request) { request.path =~ /check/ } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path.include?("check") } } }
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

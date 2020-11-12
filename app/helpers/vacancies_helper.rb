@@ -106,7 +106,7 @@ module VacanciesHelper
   end
 
   def vacancy_school_visits_hint(vacancy)
-    organisation = organisation_type_basic(vacancy.parent_organisation).gsub(" ", "_")
+    organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
     I18n.t("helpers.hint.application_details_form.#{organisation}_visits")
   end
 end

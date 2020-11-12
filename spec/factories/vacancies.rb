@@ -40,7 +40,7 @@ FactoryBot.define do
 
     trait :at_one_school do
       job_location { "at_one_school" }
-      readable_job_location { Faker::Educator.secondary_school.strip.gsub("'", "") }
+      readable_job_location { Faker::Educator.secondary_school.strip.delete("'") }
     end
 
     trait :at_multiple_schools do

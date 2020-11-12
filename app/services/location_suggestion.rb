@@ -36,7 +36,7 @@ private
 
     parsed_response = JSON.parse(response.body)
     raise GooglePlacesAutocompleteError, parsed_response["error_message"] if
-      parsed_response.keys.include?("error_message")
+      parsed_response.key?("error_message")
 
     parsed_response
   end

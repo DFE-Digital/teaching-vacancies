@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :school_group do
-    name { Faker::Company.name.gsub("'", "") }
+    name { Faker::Company.name.delete("'") }
   end
 
   factory :trust, parent: :school_group do
-    address { Faker::Address.street_name.gsub("'", "") }
+    address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     gias_data do
       {
@@ -19,9 +19,9 @@ FactoryBot.define do
       }
     end
     group_type { "Multi-academy trust" }
-    name { Faker::Company.name.gsub("'", "") + " Trust" }
+    name { Faker::Company.name.delete("'") + " Trust" }
     postcode { Faker::Address.postcode }
-    town { Faker::Address.city.gsub("'", "") }
+    town { Faker::Address.city.delete("'") }
     uid { Faker::Number.number(digits: 5).to_s }
     website { Faker::Internet.url }
   end

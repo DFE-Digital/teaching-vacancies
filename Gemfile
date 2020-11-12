@@ -76,6 +76,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "rspec-sonarqube-formatter", require: false
   gem "rubocop-govuk"
+  gem "rubocop-performance"
 end
 
 group :test do
