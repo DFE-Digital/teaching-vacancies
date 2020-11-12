@@ -177,7 +177,7 @@ module VacancyHelpers
   end
 
   def vacancy_json_ld(vacancy)
-    json = {
+    {
       '@context': "http://schema.org",
       '@type': "JobPosting",
       'title': vacancy.job_title,
@@ -210,8 +210,6 @@ module VacancyHelpers
       },
       'validThrough': vacancy.expires_on.end_of_day.to_time.iso8601,
     }
-
-    json
   end
 
   def verify_vacancy_list_page_details(vacancy)

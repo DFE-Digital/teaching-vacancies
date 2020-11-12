@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   post "sign-up-for-NQT-job-alerts", to: "nqt_job_alerts#create", as: "new_nqt_job_alert"
 
   namespace :api do
-    scope "v:api_version", api_version: /[1]/ do
+    scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
       get "/coordinates(/:location)", to: "coordinates#show"
       get "/location_suggestion(/:location)", to: "location_suggestion#show"
