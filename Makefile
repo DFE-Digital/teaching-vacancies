@@ -117,6 +117,7 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 terraform-monitoring-init:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+		rm -rf .terraform
 		terraform init -upgrade=true -input=false -reconfigure terraform/monitoring
 
 .PHONY: terraform-monitoring-plan
