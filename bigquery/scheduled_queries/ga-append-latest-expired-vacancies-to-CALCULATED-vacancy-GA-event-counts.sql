@@ -3,7 +3,7 @@ SELECT
   #unique vacancy ID from the Teaching Vacancies database
   vacancy.slug,
   #human readable dash-separated string that is probably also a unique vacancy ID (but can't trust this)
-  CAST(vacancy.expiry_time AS TIMESTAMP) AS expiry_time,
+  CAST(vacancy.expires_at AS TIMESTAMP) AS expiry_time,
   SUM( #series of SUMIF statements that turn various Google Analytics event configurations into counts of the total number of events that occurred on this vacancy's page
   IF
     (events.event_Action="vacancy_visited",
@@ -79,8 +79,8 @@ LEFT JOIN (
 ON
   vacancy.slug=events.slug #matches the vacancy slug from our database with the vacancy slug from the part of the page URL recorded in Google Analytics - this is the critical part of this query
 WHERE
-  vacancy.expiry_time < CURRENT_DATETIME #only obtain vacancies which have expired
-  AND vacancy.expiry_time > CAST((
+  vacancy.expires_at < CURRENT_DATETIME #only obtain vacancies which have expired
+  AND vacancy.expires_at > CAST((
     SELECT
       MAX(expiry_time)
     FROM
@@ -90,6 +90,6 @@ WHERE
 GROUP BY
   vacancy.id,
   vacancy.slug,
-  vacancy.expiry_time
+  vacancy.expires_at
 ORDER BY
-  vacancy.expiry_time DESC
+  vacancy.expires_at DESC
