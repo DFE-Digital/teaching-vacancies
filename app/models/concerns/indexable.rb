@@ -12,7 +12,7 @@ module Indexable
       attributes :education_phases, :job_roles, :job_title, :parent_organisation_name, :salary, :subjects, :working_patterns, :_geoloc
 
       attribute :expires_at do
-        "#{format_date(expires_on)} at #{expires_at&.strftime('%-l:%M %P')}"
+        "#{expires_at&.to_date} at #{expires_at&.strftime('%-l:%M %P')}"
       end
 
       attribute :expires_at_timestamp do
