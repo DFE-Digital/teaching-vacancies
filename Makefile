@@ -113,15 +113,19 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 
 ##@ terraform/monitoring. Deploys grafana, prometheus monitoring on Gov.UK PaaS
 
-.PHONY: monitoring-plan
-monitoring-plan: ## Plan changes in terraform/monitoring
-		TF_WORKSPACE=monitoring terraform init -upgrade=true -input=false terraform/monitoring \
-		&& bin/run-in-env -e monitoring -o tf_subshell -- terraform plan -input=false terraform/monitoring
+.PHONY: terraform-monitoring-init
+terraform-monitoring-init:
+		$(if $(passcode), , $(error Missing environment variable "passcode"))
+		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+		terraform init -upgrade=true -input=false -reconfigure terraform/monitoring
 
-.PHONY: monitoring-apply
-monitoring-apply: ## Apply changes in terraform/monitoring
-		TF_WORKSPACE=monitoring terraform init -upgrade=true -input=false terraform/monitoring \
-		&& bin/run-in-env -e monitoring -o tf_subshell -- terraform apply -input=false -auto-approve terraform/monitoring
+.PHONY: terraform-monitoring-plan
+terraform-monitoring-plan: terraform-monitoring-init ## make terraform-monitoring-plan passcode=MyPasscode
+		terraform plan -input=false terraform/monitoring
+
+.PHONY: terraform-monitoring-apply
+terraform-monitoring-apply: terraform-monitoring-init ## make terraform-monitoring-apply passcode=MyPasscode
+		terraform apply -input=false -auto-approve terraform/monitoring
 
 ##@ Help
 

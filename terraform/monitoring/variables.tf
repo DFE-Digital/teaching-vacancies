@@ -1,23 +1,13 @@
-variable org {
-  default = "dfe-teacher-services"
-}
-variable space {
-  default = "teaching-vacancies-monitoring"
-}
-variable paas_exporter_username {}
-variable paas_exporter_password {}
-variable name {
-  default = "teaching-vacancies"
-}
-variable paas_username {}
-variable paas_password {
-  default = ""
-}
-variable sso_passcode {
-  default = ""
-}
-variable grafana_admin_password {}
+variable paas_sso_passcode { default = null }
+variable paas_user { default = null }
+variable paas_password { default = null }
 
 locals {
-  paas_api_url = "https://api.london.cloud.service.gov.uk"
+  monitoring_instance_name = "teaching-vacancies"
+  paas_api_url             = "https://api.london.cloud.service.gov.uk"
+  monitoring_org_name      = "dfe-teacher-services"
+  space_name               = "teaching-vacancies-monitoring"
+  monitoring_space_name    = "teaching-vacancies-monitoring"
+  aws_region               = "eu-west-2"
+  secrets                  = yamldecode(data.aws_ssm_parameter.monitoring_secrets.value)
 }
