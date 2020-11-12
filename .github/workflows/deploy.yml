@@ -138,6 +138,8 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
+        echo Deleting .terraform directory...
+        rm -rf .terraform
         terraform init -upgrade=true -reconfigure -input=false terraform/monitoring
         terraform apply -input=false -auto-approve terraform/monitoring
 
