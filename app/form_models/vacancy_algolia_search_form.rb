@@ -51,6 +51,6 @@ private
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @phases&.count, @working_patterns&.count].reject(&:nil?).inject(0, :+)
+    @total_filters = [@job_roles&.count, @phases&.count, @working_patterns&.count].reject(&:nil?).sum
   end
 end

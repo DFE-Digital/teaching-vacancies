@@ -419,6 +419,9 @@ GEM
       rubocop-rails (= 2.8.1)
       rubocop-rake (= 0.5.1)
       rubocop-rspec (= 1.42.0)
+    rubocop-performance (1.8.1)
+      rubocop (>= 0.87.0)
+      rubocop-ast (>= 0.4.0)
     rubocop-rails (2.8.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
@@ -581,6 +584,7 @@ DEPENDENCIES
   rspec-rails
   rspec-sonarqube-formatter
   rubocop-govuk
+  rubocop-performance
   sanitize
   selenium-webdriver
   shoulda-matchers

@@ -14,7 +14,7 @@ module ApplicationHelper
 
   def meta_description
     view = params[:id].presence || params[:action].presence
-    controller_i18n_path = controller_path.gsub("/", ".")
+    controller_i18n_path = controller_path.tr("/", ".")
 
     if content_for :page_description
       content_for(:page_description).strip
