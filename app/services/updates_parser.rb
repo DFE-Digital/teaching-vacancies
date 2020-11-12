@@ -22,7 +22,7 @@ private
   end
 
   def process_update_path(update_path)
-    path = update_path.split("/").last.split(".html").first[1..-1]
+    path = update_path.split("/").last.split(".html").first[1..]
     name = update_path.split("/").last.split(".html").first.split("_")[1..-4].join(" ").humanize
     date_array = update_path.split("/").last.split(".html").first.split("_").last(3).map(&:to_i)
     [path, name, date_array]
