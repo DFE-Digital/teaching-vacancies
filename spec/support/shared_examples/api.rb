@@ -21,11 +21,3 @@ RSpec.shared_examples "Content-Type JSON" do
     end
   end
 end
-
-RSpec.shared_examples "Content-Type CSV" do
-  describe "Content-Type" do
-    it "type is set to text/csv" do
-      expect(response.content_type).to include("text/csv")
-    end
-  end
-end

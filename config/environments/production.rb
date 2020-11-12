@@ -60,15 +60,6 @@ Rails.application.configure do
   # raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  # Disable ActionMailer logging for GDPR.
-  # With this enabled, Rails sends user email addresses (personal information)
-  # via logging to third party services who store and archive them for searching
-  # and debugging purposes. Our email provider GOV.UK Notify provides us a way of
-  # confirming what emails have been sent.
-  #
-  # TODO: Rails 6 looks to include this as a feature: https://github.com/rails/rails/commit/2488901da8a4d896003254869a378f0c1b4ed3f2
-  config.action_mailer.logger = nil
-
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
