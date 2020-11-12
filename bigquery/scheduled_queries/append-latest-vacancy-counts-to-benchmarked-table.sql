@@ -34,7 +34,7 @@ FROM (
           "trashed",
           "draft")
         AND publish_on <= CURRENT_DATE()
-        AND expiry_time > CURRENT_DATETIME())
+        AND expires_at > CURRENT_DATETIME())
     WHERE
       "Teaching Vacancies" NOT IN ( #only take the Teaching Vacancies vacancy count from our database if we haven't been able to web scrape it (to avoid relying on the write job to this large table)
       SELECT
