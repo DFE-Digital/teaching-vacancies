@@ -1,0 +1,50 @@
+name: Deploy App to Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      docker_image:
+        description: Docker image (repository:tag)
+        required: true
+      environment:
+        description: Environment
+        required: true
+
+jobs:
+  deploy-app:
+    name: Deploy app to environment
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout Code
+
+    - name: Pin Terraform version
+      uses: hashicorp/setup-terraform@v1.2.1
+      with:
+        terraform_version: 0.13.4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+
+    - name: Validate secrets
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: eu-west-2
+      run: |
+        gem install aws-sdk-ssm --no-document
+        bin/run-in-env -t /tvs/${{ github.event.inputs.environment }} -o quiet \
+          && echo Data in /tvs/${{ github.event.inputs.environment }} looks valid
+
+    - name: Deploy to environment
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
+        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
+      run: |
+        export TF_VAR_paas_app_docker_image=${{ github.event.inputs.docker_image }}
+        cd terraform/app
+        terraform init -reconfigure -input=false
+        terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
+        terraform apply -var-file ../workspace-variables/${{ github.event.inputs.environment }}.tfvars -auto-approve -input=false
