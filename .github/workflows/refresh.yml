@@ -31,7 +31,7 @@ jobs:
           TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
         run: |
           cd terraform/app
-          terraform init -input=false
+          terraform init -reconfigure -input=false
           terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
           DOCKER_IMAGE=$(terraform output docker_image)
           echo "DOCKER_IMAGE=${DOCKER_IMAGE}" >> $GITHUB_ENV

@@ -107,9 +107,10 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        terraform init -input=false terraform/app
-        terraform workspace select ${BRANCH} terraform/app || terraform workspace new ${BRANCH} terraform/app
-        terraform apply -var-file terraform/workspace-variables/${BRANCH}.tfvars -auto-approve -input=false terraform/app
+        cd terraform/app
+        terraform init -reconfigure -input=false
+        terraform workspace select ${BRANCH} || terraform workspace new ${BRANCH}
+        terraform apply -var-file ../workspace-variables/${BRANCH}.tfvars -auto-approve -input=false
 
     - name: Send success message to twd_tv_dev channel
       if: ${{ success() }}

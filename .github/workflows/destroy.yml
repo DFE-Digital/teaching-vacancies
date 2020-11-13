@@ -62,11 +62,12 @@ jobs:
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
         export TF_VAR_environment=review-${PR_NAME}
-        terraform init -input=false -backend-config="workspace_key_prefix=review:" terraform/app
-        terraform workspace select review-${PR_NAME} terraform/app || terraform workspace new review-${PR_NAME} terraform/app
-        terraform plan -var-file terraform/workspace-variables/review.tfvars -destroy -out=tfdestroy terraform/app
+        cd terraform/app
+        terraform init -reconfigure -input=false -backend-config="workspace_key_prefix=review:"
+        terraform workspace select review-${PR_NAME} terraform/app || terraform workspace new review-${PR_NAME}
+        terraform plan -var-file ../workspace-variables/review.tfvars -destroy -out=tfdestroy
         terraform apply -auto-approve "tfdestroy"
-        terraform workspace select default terraform/app && terraform workspace delete review-${PR_NAME} terraform/app
+        terraform workspace select default && terraform workspace delete review-${PR_NAME}
 
     - name: Send failure message to twd_tv_dev channel
       if: ${{ failure() }}

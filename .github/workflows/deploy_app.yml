@@ -45,6 +45,6 @@ jobs:
       run: |
         export TF_VAR_paas_app_docker_image=${{ github.event.inputs.docker_image }}
         cd terraform/app
-        terraform init -input=false
+        terraform init -reconfigure -input=false
         terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
-        terraform apply -var-file terraform/workspace-variables/${{ github.event.inputs.environment }}.tfvars -auto-approve -input=false
+        terraform apply -var-file ../workspace-variables/${{ github.event.inputs.environment }}.tfvars -auto-approve -input=false

@@ -79,37 +79,43 @@ check-docker-tag:
 init-terraform:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		terraform init -input=false $(backend_config) -reconfigure terraform/app
-		terraform workspace select $(env) terraform/app || terraform workspace new $(env) terraform/app
+		cd terraform/app
+		terraform init -reconfigure -input=false $(backend_config)
+		terraform workspace select $(env) || terraform workspace new $(env)
 
 .PHONY: deploy-plan
 deploy-plan: init-terraform check-docker-tag ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> deploy-plan
-		terraform plan -var-file terraform/workspace-variables/$(var_file).tfvars terraform/app
+		cd terraform/app
+		terraform plan -var-file terraform/workspace-variables/$(var_file).tfvars
 
 .PHONY: deploy
 deploy: init-terraform check-docker-tag ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> deploy
-		terraform apply -input=false -var-file terraform/workspace-variables/$(var_file).tfvars -auto-approve terraform/app
+		cd terraform/app
+		terraform apply -input=false -var-file terraform/workspace-variables/$(var_file).tfvars -auto-approve
 
 .PHONY: review-destroy
 review-destroy: init-terraform ## make CONFIRM_DESTROY=true passcode=MyPasscode pr=2086 review review-destroy
 		$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
-		terraform destroy -var-file terraform/workspace-variables/review.tfvars terraform/app
-		terraform workspace select default terraform/app && terraform workspace delete $(env) terraform/app
+		cd terraform/app
+		terraform destroy -var-file terraform/workspace-variables/review.tfvars
+		terraform workspace select default && terraform workspace delete $(env)
 
 ##@ terraform/common code. Requires privileged IAM account to run
 
 .PHONY: terraform-common-init
 terraform-common-init:
-		terraform init -reconfigure terraform/common
-		terraform workspace select default terraform/common
+		cd terraform/common
+		terraform init -reconfigure -input=false
 
 .PHONY: terraform-common-plan
 terraform-common-plan: terraform-common-init ## make terraform-common-plan
-		terraform plan terraform/common
+		cd terraform/common
+		terraform plan
 
 .PHONY: terraform-common-apply
 terraform-common-apply: terraform-common-init ## make terraform-common-apply
-		terraform apply terraform/common
+		cd terraform/common
+		terraform apply
 
 ##@ terraform/monitoring. Deploys grafana, prometheus monitoring on Gov.UK PaaS
 
@@ -117,16 +123,18 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 terraform-monitoring-init:
 		$(if $(passcode), , $(error Missing environment variable "passcode"))
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		rm -rf .terraform
-		terraform init -upgrade=true -input=false -reconfigure terraform/monitoring
+		cd terraform/monitoring
+		terraform init -upgrade=true -reconfigure -input=false
 
 .PHONY: terraform-monitoring-plan
 terraform-monitoring-plan: terraform-monitoring-init ## make terraform-monitoring-plan passcode=MyPasscode
-		terraform plan -input=false terraform/monitoring
+		cd terraform/monitoring
+		terraform plan -input=false
 
 .PHONY: terraform-monitoring-apply
 terraform-monitoring-apply: terraform-monitoring-init ## make terraform-monitoring-apply passcode=MyPasscode
-		terraform apply -input=false -auto-approve terraform/monitoring
+		cd terraform/monitoring
+		terraform apply -input=false -auto-approve
 
 ##@ Help
 

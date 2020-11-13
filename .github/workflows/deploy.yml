@@ -98,9 +98,10 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        terraform init -input=false terraform/app
-        terraform workspace select staging terraform/app || terraform workspace new staging terraform/app
-        terraform apply -var-file terraform/workspace-variables/staging.tfvars -auto-approve -input=false terraform/app
+        cd terraform/app
+        terraform init -reconfigure -input=false
+        terraform workspace select staging || terraform workspace new staging
+        terraform apply -var-file ../workspace-variables/staging.tfvars -auto-approve -input=false
 
     - name: Trigger Smoke Test
       uses: benc-uk/workflow-dispatch@v1.1
@@ -128,8 +129,10 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        terraform workspace select production terraform/app || terraform workspace new production terraform/app
-        terraform apply -var-file terraform/workspace-variables/production.tfvars -auto-approve -input=false terraform/app
+        cd terraform/app
+        terraform init -reconfigure -input=false
+        terraform workspace select production || terraform workspace new production
+        terraform apply -var-file ../workspace-variables/production.tfvars -auto-approve -input=false
 
     - name: Deploy monitoring
       env:
@@ -139,10 +142,9 @@ jobs:
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
         export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        echo Deleting .terraform directory...
-        rm -rf .terraform
-        terraform init -upgrade=true -reconfigure -input=false terraform/monitoring
-        terraform apply -input=false -auto-approve terraform/monitoring
+        cd terraform/monitoring
+        terraform init -upgrade=true -reconfigure -input=false
+        terraform apply -input=false -auto-approve
 
     - name: Send success message to twd_tv_dev channel
       if: ${{ success() }}
