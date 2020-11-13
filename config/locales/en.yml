@@ -129,12 +129,6 @@ en:
     comment_label_html: How could we improve this service? (<span class='text-red'>Required</span>)
     heading: Give feedback
     page_title: Feedback
-    rating_legend: Overall, how did you feel about the service you received today?
-    rating1_option: Very dissatisfied
-    rating2_option: Dissatisfied
-    rating3_option: Neither satisfied or dissatisfied
-    rating4_option: Satisfied
-    rating5_option: Very satisfied
 
   footer:
     for_job_seekers: For job seekers
