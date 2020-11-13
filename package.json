@@ -4,6 +4,11 @@
   "engine": {
     "node": ">=8.0.0"
   },
+  "browserslist": [
+    "last 2 major versions",
+    "IE 11",
+    "not dead"
+  ],
   "dependencies": {
     "@ministryofjustice/frontend": "^0.0.21",
     "@rails/webpacker": "5.2.1",
