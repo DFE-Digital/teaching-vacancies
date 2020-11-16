@@ -3,12 +3,15 @@ name: Deploy App to Environment
 on:
   workflow_dispatch:
     inputs:
-      docker_image:
-        description: Docker image (repository:tag)
-        required: true
       environment:
         description: Environment
         required: true
+      tag:
+        description: Docker tag
+        required: true
+
+env:
+ DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
 
 jobs:
   deploy-app:
@@ -43,7 +46,7 @@ jobs:
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
-        export TF_VAR_paas_app_docker_image=${{ github.event.inputs.docker_image }}
+        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${{ github.event.inputs.tag }}
         cd terraform/app
         terraform init -reconfigure -input=false
         terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}

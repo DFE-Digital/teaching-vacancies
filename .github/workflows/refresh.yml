@@ -22,8 +22,10 @@ jobs:
         uses: hashicorp/setup-terraform@v1.2.1
         with:
           terraform_version: 0.13.4
+          terraform_wrapper: false
 
-      - name: Determine current Docker image tag
+      - name: Get current Docker tag from Terraform output
+        id: get_docker_tag
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -32,16 +34,15 @@ jobs:
         run: |
           cd terraform/app
           terraform init -reconfigure -input=false
-          terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
-          DOCKER_IMAGE=$(terraform output docker_image)
-          echo "DOCKER_IMAGE=${DOCKER_IMAGE}" >> $GITHUB_ENV
+          terraform workspace select ${{ github.event.inputs.environment }}
+          echo ::set-output name=tag::$(terraform output docker_tag)
 
       - name: Trigger Deploy App Workflow
         uses: benc-uk/workflow-dispatch@v1.1
         with:
           workflow: Deploy App to Environment # Workflow name
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: {"environment": "${{ github.event.inputs.environment }}", "docker_image": "${{ env.DOCKER_IMAGE }}"}
+          inputs: '{"environment": "${{ github.event.inputs.environment }}", "tag": "${{ steps.get_docker_tag.outputs.tag }}"}'
 
       - name: Wait for Deploy App Workflow
         id: wait_for_deploy_app
@@ -61,5 +62,5 @@ jobs:
           SLACK_USERNAME: CI Deployment
           SLACK_ICON_EMOJI: ':tada:'
           SLACK_TITLE: ${{ github.event.inputs.environment }} env vars refresh successful
-          SLACK_MESSAGE: '${{ github.event.inputs.environment }} env vars refresh successful - Docker image ${{ env.DOCKER_IMAGE }} :rocket:'
+          SLACK_MESSAGE: '${{ github.event.inputs.environment }} env vars refresh successful - Docker tag ${{ steps.get_docker_tag.outputs.tag }} :rocket:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
