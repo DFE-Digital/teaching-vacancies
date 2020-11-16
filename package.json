@@ -1,5 +1,5 @@
 {
-  "name": "teacher-vacancy-service",
+  "name": "teaching-vacancies",
   "private": true,
   "engine": {
     "node": ">=8.0.0"

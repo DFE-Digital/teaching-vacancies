@@ -14,7 +14,7 @@ A team member with approver rights in [DfE Sign-in test enviroment](https://test
 
 ## GitHub
 
-Digital Tooling will add the new developer to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams) and to the [Teacher Vacancy Service team](https://github.com/orgs/DFE-Digital/teams/teacher-vacancy-service)
+Digital Tooling will add the new developer to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams) and to the [Teacher Vacancy Service team](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies)
 
 ## GOV.UK PaaS
 

@@ -218,7 +218,7 @@ Do NOT use these tags to generate containers - instead, choose a unique tag list
 
 For images built off the `master` branch, we use the [SHA of the GitHub commit](https://docs.github.com/en/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions), e.g.
 
-[Docker image tagged `a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18`](https://hub.docker.com/layers/dfedigital/teaching-vacancies/a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18/images/sha256-7ae9ec3802192d41dc9846db734303efecc372d90d11317864f2cc0478908bf5?context=explore) comes from [GitHub commit `a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18`](https://github.com/DFE-Digital/teacher-vacancy-service/commit/a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18)
+[Docker image tagged `a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18`](https://hub.docker.com/layers/dfedigital/teaching-vacancies/a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18/images/sha256-7ae9ec3802192d41dc9846db734303efecc372d90d11317864f2cc0478908bf5?context=explore) comes from [GitHub commit `a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18`](https://github.com/DFE-Digital/teaching-vacancies/commit/a18165a5a6d8ae5b753ac7c3cac65f0cbc34dd18)
 
 
 ### Multi-stage builds

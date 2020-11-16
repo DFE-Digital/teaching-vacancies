@@ -1,4 +1,4 @@
-# Teacher Vacancy Service (TVS)
+# Teaching Vacancies
 
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk) (External link)
 * [API Keys](/documentation/api-keys.md)
@@ -19,7 +19,7 @@ The first thing to do is to install the required development tools. If you are o
 Then, clone the project with SSH:
 
 ```bash
-git clone git@github.com:DFE-Digital/teacher-vacancy-service.git
+git clone git@github.com:DFE-Digital/teaching-vacancies.git
 ```
 
 If you are on a new device, remember to [generate a new SSH key](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
