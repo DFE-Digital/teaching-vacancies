@@ -1,8 +1,5 @@
 !!!
-/[if lt IE 9] <html class="lte-ie8" lang="en">
-/[if gt IE 8]><!
 %html.govuk-template.app-html-class{ lang: "en" }
-  /<![endif]
   %head
     = render partial: 'shared/google_tag_manager_head' if cookies['consented-to-cookies'] == 'yes'
     = render partial: 'shared/open_graph'
@@ -20,8 +17,6 @@
     - if content_for? :head_links
       = yield(:head_links)
     = stylesheet_pack_tag 'application', media: 'all'
-    /[if lt IE 9]
-      = javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js", crossorigin: "anonymous", integrity: "sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g="
     %meta{ content: asset_pack_path('media/images/govuk-opengraph-image.png'), property: "og:image" }/
     = csrf_meta_tags
   %body{ class: body_class, data: { vacancy_state: @vacancy.present? ? @vacancy.state : 'create' } }
