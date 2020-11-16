@@ -19,4 +19,4 @@ trap cleanup EXIT
 
 docker-compose up -d
 
-docker attach teacher-vacancy-service_web_1
+docker attach teaching-vacancies_web_1

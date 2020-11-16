@@ -10,15 +10,15 @@ It replaces the DSI sign in method with one whereby the user is prompted to ente
 
 ## How to use
 
-Here are the steps to follow to use our contingency fallback sign-in method. 
+Here are the steps to follow to use our contingency fallback sign-in method.
 
 First, decide whether to switch on the fallback authentication. This call should be made by the Product Owner/Manager if they are available.
-   - An alternative to this fallback sign in method could be replacing DSI with a notice to users telling them that they can't access the service. To do this, we would reinstate the environment variable and code which was deleted in commit [`🔥 Remove FEATURE_SIGN_IN_ALERT flag`](https://github.com/DFE-Digital/teacher-vacancy-service/commit/bc12fb9808c955f86cd87e62648a76786516e2c3).
+   - An alternative to this fallback sign in method could be replacing DSI with a notice to users telling them that they can't access the service. To do this, we would reinstate the environment variable and code which was deleted in commit [`🔥 Remove FEATURE_SIGN_IN_ALERT flag`](https://github.com/DFE-Digital/teaching-vacancies/commit/bc12fb9808c955f86cd87e62648a76786516e2c3).
 
 ### Switching it on
 
 Switch on the fallback authentication by setting the environment variable `AUTHENTICATION_FALLBACK` to `true`.
-   
+
 ### Switching it off
 
 Switch off the fallback authentication by setting the environment variable `AUTHENTICATION_FALLBACK` to `false`.

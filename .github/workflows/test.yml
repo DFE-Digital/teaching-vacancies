@@ -88,7 +88,7 @@ jobs:
            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
            -Dsonar.organization=dfe-digital
            -Dsonar.host.url=https://sonarcloud.io/
-           -Dsonar.projectKey=DFE-Digital_teacher-vacancy-service
+           -Dsonar.projectKey=DFE-Digital_teaching-vacancies
            -Dsonar.testExecutionReportPaths=${{ github.workspace }}/out/test-report.xml
            -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
 

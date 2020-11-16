@@ -6,7 +6,7 @@ To log in to the Algolia dashboard, you will need access to the teachingjobs@dig
 
 ## Environment Variables
 
-If you managed to [fetch the dev variables and output to a shell environment file](https://github.com/DFE-Digital/teacher-vacancy-service#environment-variables)
+If you managed to [fetch the dev variables and output to a shell environment file](https://github.com/DFE-Digital/teaching-vacancies#environment-variables)
 
 ```
 make -s local print-env > .env

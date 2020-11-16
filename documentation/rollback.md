@@ -8,7 +8,7 @@ The simplest approach to rollback the code to a working version is to revert a p
 - Figure out the commit ID of the last working version
 - Checkout the working version locally
     ```
-    $ cd teacher-vacancy-service
+    $ cd teaching-vacancies
     $ git pull
     $ git checkout <commit_id>
     ```
