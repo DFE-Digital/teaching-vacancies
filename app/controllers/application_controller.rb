@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :set_headers
-  before_action :detect_device_format
   before_action :set_root_headers
 
   helper_method :cookies_preference_set?, :referred_from_jobs_path?, :utm_parameters
@@ -26,10 +25,6 @@ class ApplicationController < ActionController::Base
       format.json { render json: { error: "Resource not found" }, status: :not_found }
       format.all { render status: :not_found, body: nil }
     end
-  end
-
-  def detect_device_format
-    request.variant = :phone if browser.device.mobile?
   end
 
   def current_session_id
