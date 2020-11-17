@@ -20,7 +20,8 @@ private
         email: user["email"],
         family_name: user["familyName"],
         given_name: user["givenName"],
-        organisation_uid: user.dig("organisation", "UID"),
+        la_code: la_code(user),
+        trust_uid: user.dig("organisation", "UID"),
         role: user["roleName"],
         school_urn: user.dig("organisation", "URN"),
         update_datetime: user["updatedAt"],
@@ -35,9 +36,10 @@ private
       schema.string "email", mode: :nullable
       schema.string "family_name", mode: :nullable
       schema.string "given_name", mode: :nullable
-      schema.integer "organisation_uid", mode: :nullable
+      schema.integer "la_code", mode: :nullable
       schema.string "role", mode: :nullable
       schema.integer "school_urn", mode: :nullable
+      schema.integer "trust_uid", mode: :nullable
       schema.timestamp "update_datetime", mode: :nullable
       schema.string "user_id", mode: :nullable
     end

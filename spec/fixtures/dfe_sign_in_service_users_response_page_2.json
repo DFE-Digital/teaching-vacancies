@@ -6,7 +6,7 @@
     "organisation": {
       "id": "13F20E54-79EA-4146-8E39-18197576F024",
       "name": "Organisation 2",
-      "Category": "002",
+      "Category": "001",
       "Type": null,
       "URN": null,
       "UID": "222222",
@@ -38,7 +38,7 @@
     "organisation": {
       "id": "23F20E54-79EA-4146-8E39-18197576F025",
       "name": "Organisation 3",
-      "Category": "002",
+      "Category": "001",
       "Type": null,
       "URN": "333333",
       "UID": null,
@@ -70,7 +70,7 @@
     "organisation": {
       "id": "13F20E54-79EA-4146-8E39-18197576F024",
       "name": "Organisation 2",
-      "Category": "002",
+      "Category": "010",
       "Type": null,
       "URN": null,
       "UID": "444444",
@@ -102,7 +102,7 @@
     "organisation": {
       "id": "23F20E54-79EA-4146-8E39-18197576F025",
       "name": "Organisation 3",
-      "Category": "002",
+      "Category": "001",
       "Type": null,
       "URN": "555555",
       "UID": null,
@@ -131,7 +131,7 @@
   {
     "approvedAt": "2020-09-16T11:15:21.555Z",
     "updatedAt": "2020-09-16T11:15:21.555Z",
-    "organisation": 
+    "organisation":
      {"id": "ABC-123",
       "name": "Local-authority-shire",
       "Category": "002",
