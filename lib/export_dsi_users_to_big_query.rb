@@ -16,30 +16,30 @@ private
   def present_for_big_query(batch)
     batch.map do |user|
       {
-        user_id: user["userId"],
-        role: user["roleName"],
         approval_datetime: user["approvedAt"],
-        update_datetime: user["updatedAt"],
-        given_name: user["givenName"],
-        family_name: user["familyName"],
         email: user["email"],
-        school_urn: user.dig("organisation", "URN"),
+        family_name: user["familyName"],
+        given_name: user["givenName"],
         organisation_uid: user.dig("organisation", "UID"),
+        role: user["roleName"],
+        school_urn: user.dig("organisation", "URN"),
+        update_datetime: user["updatedAt"],
+        user_id: user["userId"],
       }
     end
   end
 
   def insert_table_data(batch)
     dataset.insert TABLE_NAME, present_for_big_query(batch), autocreate: true do |schema|
-      schema.string "user_id", mode: :nullable
-      schema.string "role", mode: :nullable
       schema.timestamp "approval_datetime", mode: :nullable
-      schema.timestamp "update_datetime", mode: :nullable
-      schema.string "given_name", mode: :nullable
-      schema.string "family_name", mode: :nullable
       schema.string "email", mode: :nullable
-      schema.integer "school_urn", mode: :nullable
+      schema.string "family_name", mode: :nullable
+      schema.string "given_name", mode: :nullable
       schema.integer "organisation_uid", mode: :nullable
+      schema.string "role", mode: :nullable
+      schema.integer "school_urn", mode: :nullable
+      schema.timestamp "update_datetime", mode: :nullable
+      schema.string "user_id", mode: :nullable
     end
   end
 
