@@ -18,8 +18,11 @@ module AuthHelpers
   end
 
   def stub_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
-                               school_urn: "110627", trust_uid: nil, la_code: "123",
+                               school_urn: "110627", trust_uid: nil, la_code: nil,
                                email: "an-email@example.com")
+    category = "001" if school_urn.present?
+    category = "010" if trust_uid.present?
+    category = "002" if la_code.present?
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       provider: "dfe",
       uid: "161d1f6a-44f1-4a1a-940d-d1088c439da7",
@@ -32,6 +35,7 @@ module AuthHelpers
             id: organisation_id,
             urn: school_urn,
             uid: trust_uid,
+            category: { id: category },
             establishmentNumber: la_code,
           },
         },

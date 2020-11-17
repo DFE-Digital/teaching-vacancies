@@ -68,18 +68,37 @@ private
   end
 
   def school_urn
+    return "" unless user_category == :school
+
     auth_hash.dig("extra", "raw_info", "organisation", "urn") || ""
   end
 
   def trust_uid
+    return "" unless user_category == :multi_academy_trust
+
     auth_hash.dig("extra", "raw_info", "organisation", "uid") || ""
   end
 
   def local_authority_code
+    return unless LocalAuthorityAccessFeature.enabled?
+    return "" unless user_category == :local_authority
+
     # All organisations have an establishmentNumber, but we only want this for identifying LAs by.
-    # Assume that if and only if the organisation has no URN or UID, it is a Local Authority.
-    if LocalAuthorityAccessFeature.enabled? && school_urn.blank? && trust_uid.blank?
-      auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber") || ""
+    auth_hash.dig("extra", "raw_info", "organisation", "establishmentNumber") || ""
+  end
+
+  def user_category
+    # In organisation['category'], DSI provides an 'id' and a 'name' attribute.
+    # The mapping is documented in this table:
+    # https://github.com/david-mears-dfe/login.dfe.public-api/blob/patch-1/README.md#organisation-categories
+    # I am using the id as I imagine that is more stable than the name.
+    case auth_hash.dig("extra", "raw_info", "organisation", "category", "id")
+    when "001"
+      :school
+    when "002"
+      :local_authority
+    when "010"
+      :multi_academy_trust
     end
   end
 
