@@ -57,7 +57,6 @@ RSpec.describe Api::VacanciesController, type: :controller do
     end
 
     it "retrieves all available vacancies" do
-      skip_vacancy_publish_on_validation
       published_vacancy = create(:vacancy)
       published_vacancy.organisation_vacancies.create(organisation: school)
       expired_vacancy = create(:vacancy, :expired)

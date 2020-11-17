@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ApplicationDetailsForm, type: :model do
+RSpec.describe ApplyingForTheJobForm, type: :model do
   let(:subject) { described_class.new(params) }
 
   describe "#validations" do
@@ -15,7 +15,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         it "raises correct error message" do
           subject.valid?
           expect(subject.errors.messages[:application_link].first).to eql(
-            I18n.t("application_details_errors.application_link.url"),
+            I18n.t("applying_for_the_job_errors.application_link.url"),
           )
         end
       end
@@ -32,7 +32,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         it "raises correct error message" do
           subject.valid?
           expect(subject.errors.messages[:contact_email].first).to eql(
-            I18n.t("application_details_errors.contact_email.blank"),
+            I18n.t("applying_for_the_job_errors.contact_email.blank"),
           )
         end
       end
@@ -47,7 +47,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         it "raises correct error message" do
           subject.valid?
           expect(subject.errors.messages[:contact_email].first).to eql(
-            I18n.t("application_details_errors.contact_email.invalid"),
+            I18n.t("applying_for_the_job_errors.contact_email.invalid"),
           )
         end
       end
@@ -64,7 +64,7 @@ RSpec.describe ApplicationDetailsForm, type: :model do
         it "raises correct error message" do
           subject.valid?
           expect(subject.errors.messages[:contact_number].first).to eql(
-            I18n.t("application_details_errors.contact_number.invalid"),
+            I18n.t("applying_for_the_job_errors.contact_number.invalid"),
           )
         end
       end
@@ -73,12 +73,12 @@ RSpec.describe ApplicationDetailsForm, type: :model do
 
   context "when all attributes are valid" do
     it "can correctly be converted to a vacancy" do
-      application_details = ApplicationDetailsForm.new(state: "create",
-                                                       application_link: "http://an.application.link",
-                                                       contact_email: "some@email.com",
-                                                       contact_number: "01234 123456",
-                                                       how_to_apply: "How you can apply for the job",
-                                                       school_visits: "How you can visit the school")
+      application_details = ApplyingForTheJobForm.new(state: "create",
+                                                      application_link: "http://an.application.link",
+                                                      contact_email: "some@email.com",
+                                                      contact_number: "01234 123456",
+                                                      how_to_apply: "How you can apply for the job",
+                                                      school_visits: "How you can visit the school")
 
       expect(application_details.valid?).to be true
       expect(application_details.vacancy.application_link).to eql("http://an.application.link")

@@ -21,7 +21,7 @@ RSpec.describe CopyVacancyForm, type: :model do
         it "validates minimum length" do
           expect(copy_form.valid?).to be false
           expect(copy_form.errors.messages[:job_title][0])
-            .to eq(I18n.t("activemodel.errors.models.job_specification_form.attributes.job_title.too_short", count: 4))
+            .to eq(I18n.t("job_details_errors.job_title.too_short", count: 4))
         end
       end
 
@@ -31,7 +31,7 @@ RSpec.describe CopyVacancyForm, type: :model do
         it "validates max length" do
           expect(copy_form.valid?).to be false
           expect(copy_form.errors.messages[:job_title][0])
-            .to eq(I18n.t("activemodel.errors.models.job_specification_form.attributes.job_title.too_long", count: 100))
+            .to eq(I18n.t("job_details_errors.job_title.too_long", count: 100))
         end
       end
 
@@ -41,7 +41,7 @@ RSpec.describe CopyVacancyForm, type: :model do
         it "validates presence of HTML tags" do
           expect(copy_form.valid?).to be false
           expect(copy_form.errors.messages[:job_title]).to include(
-            I18n.t("activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters"),
+            I18n.t("job_details_errors.job_title.invalid_characters"),
           )
         end
       end
@@ -52,7 +52,7 @@ RSpec.describe CopyVacancyForm, type: :model do
 
           it "does not validate presence of HTML tags" do
             expect(copy_form.errors.messages[:job_title]).to_not include(
-              I18n.t("activemodel.errors.models.job_specification_form.attributes.job_title.invalid_characters"),
+              I18n.t("job_details_errors.job_title.invalid_characters"),
             )
           end
         end

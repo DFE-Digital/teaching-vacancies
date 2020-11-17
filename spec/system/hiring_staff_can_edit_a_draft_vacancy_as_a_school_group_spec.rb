@@ -26,7 +26,7 @@ RSpec.describe "Editing a draft vacancy" do
 
       change_job_location(vacancy, "at_one_school")
 
-      expect(page.current_path).to eql(organisation_job_schools_path(vacancy.id))
+      expect(page.current_path).to eql(organisation_job_build_path(vacancy.id, :schools))
       fill_in_school_form_field(school_1)
       click_on I18n.t("buttons.update_job")
 
@@ -37,7 +37,7 @@ RSpec.describe "Editing a draft vacancy" do
 
       change_job_location(vacancy, "at_one_school")
 
-      expect(page.current_path).to eql(organisation_job_schools_path(vacancy.id))
+      expect(page.current_path).to eql(organisation_job_build_path(vacancy.id, :schools))
       fill_in_school_form_field(school_2)
       click_on I18n.t("buttons.update_job")
 
@@ -48,7 +48,7 @@ RSpec.describe "Editing a draft vacancy" do
 
       change_job_location(vacancy, "at_multiple_schools")
 
-      expect(page.current_path).to eql(organisation_job_schools_path(vacancy.id))
+      expect(page.current_path).to eql(organisation_job_build_path(vacancy.id, :schools))
       check school_1.name, name: "schools_form[organisation_ids][]", visible: false
       check school_2.name, name: "schools_form[organisation_ids][]", visible: false
       click_on I18n.t("buttons.update_job")

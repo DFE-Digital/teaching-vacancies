@@ -12,30 +12,30 @@ module VacancyHelpers
   end
 
   def fill_in_school_form_field(school)
-    find("label[for=\"schools-form-organisation-id-#{school.id}-field\"]").click
+    find("label[for=\"schools-form-organisation-ids-#{school.id}-field\"]").click
   end
 
-  def fill_in_job_specification_form_fields(vacancy)
-    fill_in "job_specification_form[job_title]", with: vacancy.job_title
+  def fill_in_job_details_form_fields(vacancy)
+    fill_in "job_details_form[job_title]", with: vacancy.job_title
 
     working_patterns = vacancy.try(:model_working_patterns).presence || vacancy.working_patterns
     working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name("working_patterns.#{working_pattern}"),
-            name: "job_specification_form[working_patterns][]",
+            name: "job_details_form[working_patterns][]",
             visible: false
     end
 
     vacancy.job_roles&.each do |job_role|
       check I18n.t("jobs.job_role_options.#{job_role}"),
-            name: "job_specification_form[job_roles][]",
+            name: "job_details_form[job_roles][]",
             visible: false
     end
 
-    find("label[for='job-specification-form-suitable-for-nqt-#{vacancy.suitable_for_nqt}-field']").click
+    find("label[for='job-details-form-suitable-for-nqt-#{vacancy.suitable_for_nqt}-field']").click
 
     vacancy.subjects&.each do |subject|
       check subject,
-            name: "job_specification_form[subjects][]",
+            name: "job_details_form[subjects][]",
             visible: false
     end
   end
@@ -78,12 +78,12 @@ module VacancyHelpers
     Capybara::RackTest::Form.new(page.driver, form.native).submit(form)
   end
 
-  def fill_in_application_details_form_fields(vacancy)
-    fill_in "application_details_form[contact_email]", with: vacancy.contact_email
-    fill_in "application_details_form[contact_number]", with: vacancy.contact_number
-    fill_in "application_details_form[school_visits]", with: vacancy.school_visits
-    fill_in "application_details_form[how_to_apply]", with: vacancy.how_to_apply
-    fill_in "application_details_form[application_link]", with: vacancy.application_link
+  def fill_in_applying_for_the_job_form_fields(vacancy)
+    fill_in "applying_for_the_job_form[contact_email]", with: vacancy.contact_email
+    fill_in "applying_for_the_job_form[contact_number]", with: vacancy.contact_number
+    fill_in "applying_for_the_job_form[school_visits]", with: vacancy.school_visits
+    fill_in "applying_for_the_job_form[how_to_apply]", with: vacancy.how_to_apply
+    fill_in "applying_for_the_job_form[application_link]", with: vacancy.application_link
   end
 
   def fill_in_job_summary_form_fields(vacancy)
@@ -170,10 +170,6 @@ module VacancyHelpers
 
   def expect_schema_property_to_match_value(key, value)
     expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
-  end
-
-  def skip_vacancy_publish_on_validation
-    allow_any_instance_of(Vacancy).to receive(:publish_on_must_not_be_before_today).and_return(true)
   end
 
   def vacancy_json_ld(vacancy)
