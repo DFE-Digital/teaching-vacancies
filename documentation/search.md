@@ -4,6 +4,12 @@ We use [Algolia's](https://algolia.com) search-as-a-service offering to provide 
 
 To log in to the Algolia dashboard, you will need access to the teachingjobs@digital.education.gov.uk shared user, as the team size is limited by our payment tier.
 
+We have three applications in Algolia, this is the setup:
+
+- Local development, review apps, Dev(GOV.UK PaaS) -> Dev Algolia App
+- Staging(GOV.UK PaaS) -> Staging Algolia App
+- Production(GOV.UK PaaS) -> Production Algolia App
+
 ## Environment Variables
 
 If you managed to [fetch the dev variables and output to a shell environment file](https://github.com/DFE-Digital/teaching-vacancies#environment-variables)
@@ -66,3 +72,9 @@ now set so it automatically updates existing live records if they change.
 
 NOTE: The default `#reindex!` method, added by the Algolia gem, has been overridden so it only indexes Vacancies records
 that fall under the scope `#live`. This is to ensure that expired and unpublished records do not get accidentally added.
+
+## Algolia index settings
+
+Algolia can be configured with the Web UI. When settings change, a developer needs to be notified so that a new export can be extracted into the file:
+
+[config/algolia_settings.json](/config/algolia_settings.json)
