@@ -50,8 +50,9 @@ private
         @organisation.all_vacancies
       end
     @vacancies = @vacancies.send(selected_scope)
-    @vacancies = @vacancies.order(@sort.column => @sort.order)
-    @vacancies = @vacancies.map { |v| OrganisationVacancyPresenter.new(v) }
+                           .order(@sort.column => @sort.order)
+                           .reject { |vacancy| vacancy.job_title.blank? }
+                           .map { |v| OrganisationVacancyPresenter.new(v) }
   end
 
   def selected_scope
