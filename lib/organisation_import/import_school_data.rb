@@ -23,6 +23,9 @@ class ImportSchoolData < ImportOrganisationData
 
 private
 
+  # These are the attributes that require additional transformation before being added to the model. The first value of
+  # the array is the row key name, the second is the method used for the transformation. URL is the exception, as it
+  # requires an external function call - this is handled in the set_complex_properties method.
   def complex_mappings
     {
       address3: ["Address3", :presence],
