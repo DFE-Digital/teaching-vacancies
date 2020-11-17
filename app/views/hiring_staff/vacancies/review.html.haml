@@ -1,36 +1,36 @@
 - content_for :page_title_prefix, review_page_title_prefix(@vacancy)
-= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy, session[:vacancy_attributes])
+= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy)
 .vacancy.govuk-grid-row
   .govuk-grid-column-two-thirds
-    = render 'hiring_staff/vacancies/edit_heading'
-    = render 'hiring_staff/vacancies/error_messages', errors: @vacancy.errors
+    = render "hiring_staff/vacancies/edit_heading"
+    = render "hiring_staff/vacancies/error_messages", errors: @vacancy.errors
 
     %p.govuk-body-l
       - if @vacancy.publish_on.today?
-        = t('jobs.review')
+        = t("jobs.review")
       - else
-        = t('jobs.review_future')
+        = t("jobs.review_future")
 
     %ol.app-task-list
       - if current_organisation.is_a?(SchoolGroup)
-        %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_location'
-      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_specification'
-      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package'
-      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_important_dates'
-      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents'
-      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_application_details'
-      %li= render 'hiring_staff/vacancies/edit_vacancy_sections/edit_job_summary'
+        %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_job_location"
+      %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_job_details"
+      %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_pay_package"
+      %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_important_dates"
+      %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_supporting_documents"
+      %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_applying_for_the_job"
+      %li= render "hiring_staff/vacancies/edit_vacancy_sections/edit_job_summary"
 
-    %h3.govuk-heading-m= t('jobs.preview_listing.heading')
-    %p= t('jobs.preview_listing.message')
-    = link_to t('buttons.preview_job_listing'), organisation_job_preview_path(@vacancy.id), class: 'govuk-button preview-listing-gtm', id: 'vacancy-review-preview'
+    %h3.govuk-heading-m= t("jobs.preview_listing.heading")
+    %p= t("jobs.preview_listing.message")
+    = link_to t("buttons.preview_job_listing"), organisation_job_preview_path(@vacancy.id), class: "govuk-button preview-listing-gtm", id: "vacancy-review-preview"
 
-    %h3.govuk-heading-m= t('jobs.submit_listing.heading', count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
-    %p= t('jobs.submit_listing.message_html')
-    = link_to t('buttons.submit_job_listing'), organisation_job_publish_path(@vacancy.id), method: :post, class: 'govuk-button govuk-button--secondary submit-listing-without-preview-gtm', id: 'vacancy-review-submit'
+    %h3.govuk-heading-m= t("jobs.submit_listing.heading", count: @vacancy.publish_on.today? ? 0 : 1, date: @vacancy.publish_on.to_s.strip)
+    %p= t("jobs.submit_listing.message_html")
+    = link_to t("buttons.submit_job_listing"), organisation_job_publish_path(@vacancy.id), method: :post, class: "govuk-button govuk-button--secondary submit-listing-without-preview-gtm", id: "vacancy-review-submit"
 
     %br
-    = link_to t('buttons.back_to_manage_jobs'), jobs_with_type_organisation_path('draft', from_review: @vacancy.id), class: 'govuk-link govuk-link--no-visited-state'
+    = link_to t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path("draft", from_review: @vacancy.id), class: "govuk-link govuk-link--no-visited-state"
 
   .govuk-grid-column-one-third
     = render(HiringStaff::SidebarComponent.new(vacancy: @vacancy))

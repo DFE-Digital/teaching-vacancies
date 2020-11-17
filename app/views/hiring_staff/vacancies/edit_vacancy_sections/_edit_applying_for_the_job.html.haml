@@ -1,10 +1,10 @@
-= render 'hiring_staff/vacancies/new_attributes_tag', attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: 'application_details'
-= render 'hiring_staff/vacancies/error_tag', attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: 'application_details'
+= render 'hiring_staff/vacancies/new_attributes_tag', attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: 'applying_for_the_job'
+= render 'hiring_staff/vacancies/error_tag', attributes: %i[contact_email contact_number school_visits how_to_apply application_link], section: 'applying_for_the_job'
 
-%h2.govuk-heading-m.app-task-list__section#application_details_heading
-  %span.app-task-list__section-number= edit_vacancy_section_number(:application_details, current_organisation)
-  = t('jobs.application_details')
-  = link_to t('buttons.change'), organisation_job_application_details_path(@vacancy.id), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_application_details')
+%h2.govuk-heading-m.app-task-list__section#applying_for_the_job_heading
+  %span.app-task-list__section-number= edit_vacancy_section_number(:applying_for_the_job, current_organisation)
+  = t('jobs.applying_for_the_job')
+  = link_to t('buttons.change'), organisation_job_build_path(@vacancy.id, :applying_for_the_job), class: 'govuk-link change-button', 'aria-label': t('jobs.aria_labels.change_applying_for_the_job')
 
 %dl.app-check-your-answers.app-check-your-answers--short
 
@@ -12,7 +12,7 @@
     %dt.app-check-your-answers__question.first-question#contact_email
       %h4.govuk-heading-s= t('jobs.contact_email')
     %dd.app-check-your-answers__answer.first-question
-      =mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
+      = mail_to 'Job contact email', @vacancy.contact_email, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.contact_email_link', email: @vacancy.contact_email)
 
   .app-check-your-answers__contents
     %dt.app-check-your-answers__question#contact_number
@@ -35,6 +35,6 @@
       %h4.govuk-heading-s= t('jobs.application_link')
     %dd.app-check-your-answers__answer
       - if @vacancy.application_link.present?
-        = link_to @vacancy.application_link, @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank', rel: 'noopener'
+        = link_to @vacancy.application_link, @vacancy.application_link, class: 'govuk-link', 'aria-label': t('jobs.aria_labels.application_link_url'), 'target': '_blank', rel: 'noopener noreferrer'
       - else
         = t('jobs.not_defined')

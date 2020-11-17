@@ -1,9 +1,10 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @documents_form, t('jobs.supporting_documents'))
-= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy, session[:vacancy_attributes])
-- if @vacancy.present? && @vacancy&.state != 'create'
+= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy)
+
+- unless @vacancy.state == 'create'
   = render 'hiring_staff/vacancies/vacancy_form_partials/cancel_and_return_link'
 - else
-  = link_to t('buttons.back'), organisation_job_supporting_documents_path(@vacancy.id), class: 'govuk-back-link'
+  = link_to t('buttons.back'), organisation_job_build_path(@vacancy.id, :supporting_documents), class: 'govuk-back-link'
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

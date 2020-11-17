@@ -12,36 +12,30 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
-  def new
-    reset_session_vacancy!
-    if current_organisation.is_a?(SchoolGroup)
-      redirect_to job_location_organisation_job_path
-    elsif current_organisation.is_a?(School)
-      redirect_to job_specification_organisation_job_path
-    end
+  def create
+    vacancy = Vacancy.create(organisation_vacancies_attributes: [{ organisation: current_organisation }])
+    redirect_to organisation_job_build_path(vacancy.id, :job_location)
   end
 
   def edit
     return redirect_to organisation_job_review_path(@vacancy.id) unless @vacancy.published?
 
     @vacancy.update(state: "edit_published")
+    validate_all_steps
     @vacancy = VacancyPresenter.new(@vacancy)
   end
 
   def review
-    reset_session_vacancy!
-    store_vacancy_attributes(@vacancy.attributes)
-
-    if @vacancy.valid? || %w[copy edit_published].include?(@vacancy.state)
+    if all_steps_valid? || %w[copy edit_published].include?(@vacancy.state)
       update_vacancy_state
       set_completed_step
+      validate_all_steps
     else
       redirect_to_incomplete_step
     end
 
     session[:current_step] = :review
     @vacancy = VacancyPresenter.new(@vacancy)
-    @vacancy.valid? if params[:source]&.eql?("publish")
   end
 
   def destroy
@@ -62,9 +56,8 @@ class HiringStaff::VacanciesController < HiringStaff::Vacancies::ApplicationCont
 
 private
 
-  def step_valid?(step_form)
-    validation = step_form.new(@vacancy.attributes)
-    validation&.valid?.tap { |valid| clear_cache_and_step unless valid }
+  def devise_job_alert_search_criteria
+    @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(@vacancy).criteria
   end
 
   def redirect_if_published
@@ -74,39 +67,33 @@ private
     end
   end
 
+  def redirect_to_incomplete_step
+    return redirect_to organisation_job_build_path(@vacancy.id, :job_details) unless step_valid?(JobDetailsForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :pay_package) unless step_valid?(PayPackageForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :important_dates) unless step_valid?(ImportantDatesForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :supporting_documents) unless step_valid?(SupportingDocumentsForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job) unless step_valid?(ApplyingForTheJobForm)
+    return redirect_to organisation_job_build_path(@vacancy.id, :job_summary) unless step_valid?(JobSummaryForm)
+  end
+
   def redirect_unless_permitted
-    if @vacancy.state == "copy" && !@vacancy.valid?
+    if @vacancy.state == "copy" && !all_steps_valid?
       redirect_to organisation_job_review_path(@vacancy.id)
-    elsif @vacancy.state == "edit_published" && !@vacancy.valid?
+    elsif @vacancy.state == "edit_published" && !all_steps_valid?
       redirect_to edit_organisation_job_path(@vacancy.id)
-    elsif !@vacancy.valid?
+    elsif !all_steps_valid?
       redirect_to_incomplete_step
     end
   end
 
-  def redirect_to_incomplete_step
-    return redirect_to organisation_job_job_specification_path(@vacancy.id) unless step_valid?(JobSpecificationForm)
-    return redirect_to organisation_job_pay_package_path(@vacancy.id) unless step_valid?(PayPackageForm)
-    return redirect_to organisation_job_important_dates_path(@vacancy.id) unless step_valid?(ImportantDatesForm)
-    return redirect_to organisation_job_supporting_documents_path(@vacancy.id) unless
-      step_valid?(SupportingDocumentsForm)
-    return redirect_to organisation_job_application_details_path(@vacancy.id) unless step_valid?(ApplicationDetailsForm)
-    return redirect_to organisation_job_job_summary_path(@vacancy.id) unless step_valid?(JobSummaryForm)
-  end
-
-  def clear_cache_and_step
-    flash.clear
-    session[:current_step] = ""
-  end
-
   def set_completed_step
-    @vacancy.update(completed_step: current_step)
+    @vacancy.update(completed_step: current_step_number)
   end
 
   def update_vacancy_state
-    state = if params[:edit_draft] == "true" || @vacancy&.state == "edit"
+    state = if params[:edit_draft] == "true" || @vacancy.state == "edit"
               "edit"
-            elsif @vacancy&.state == "copy"
+            elsif @vacancy.state == "copy"
               "copy"
             else
               "review"
@@ -114,7 +101,12 @@ private
     @vacancy.update(state: state)
   end
 
-  def devise_job_alert_search_criteria
-    @devised_job_alert_search_criteria = Search::CriteriaDeviser.new(@vacancy).criteria
+  def validate_all_steps
+    step_valid?(JobDetailsForm)
+    step_valid?(PayPackageForm)
+    step_valid?(ImportantDatesForm)
+    step_valid?(SupportingDocumentsForm)
+    step_valid?(ApplyingForTheJobForm)
+    step_valid?(JobSummaryForm)
   end
 end

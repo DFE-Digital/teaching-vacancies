@@ -204,7 +204,7 @@ en:
         remove: Remove
         removing: Removing...
 
-    application_details: Applying for the job
+    applying_for_the_job: Applying for the job
     contact_email: Contact email
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: Regarding the job at %{url}
@@ -348,7 +348,7 @@ en:
       change_pay_package: Change pay package
       change_important_dates: Change important dates
       change_supporting_documents: Change supporting documents
-      change_application_details: Change applying for the job
+      change_applying_for_the_job: Change applying for the job
       change_job_summary: Change job summary
       apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
       contact_email_link: Email link for job contact email — %{email}

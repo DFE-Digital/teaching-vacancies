@@ -13,13 +13,8 @@ class HiringStaff::Vacancies::DocumentsController < HiringStaff::Vacancies::Appl
                               application/vnd.openxmlformats-officedocument.presentationml.presentation ].freeze
   FILE_SIZE_LIMIT = 10.megabytes
 
-  before_action :redirect_unless_vacancy
-  before_action :redirect_unless_supporting_documents
-  before_action only: %i[create] do
-    save_vacancy_as_draft_if_save_and_return_later({}, @vacancy)
-    redirect_to_next_step_if_continue(@vacancy.id, @vacancy.job_title)
-  end
-
+  before_action :set_vacancy
+  before_action :redirect_to_next_step, only: %i[create]
   before_action :set_documents_form, only: %i[show create]
   before_action :set_documents, only: %i[show create destroy]
 
@@ -62,17 +57,14 @@ private
     params.require(:documents_form).permit(:state, documents: [])
   end
 
-  def redirect_unless_supporting_documents
-    if params[:change] && !@vacancy.supporting_documents
-      @vacancy.supporting_documents = "yes"
-      @vacancy.save
+  def redirect_to_next_step
+    if params[:commit] == I18n.t("buttons.save_and_return_later")
+      redirect_saved_draft_with_message
+    elsif params[:commit] == I18n.t("buttons.update_job")
+      redirect_updated_job_with_message
+    elsif params[:commit] == I18n.t("buttons.continue")
+      redirect_to organisation_job_build_path(@vacancy.id, :applying_for_the_job)
     end
-
-    redirect_to organisation_job_supporting_documents_path(@vacancy.id) unless @vacancy.supporting_documents
-  end
-
-  def next_step
-    organisation_job_application_details_path(@vacancy.id)
   end
 
   def process_documents

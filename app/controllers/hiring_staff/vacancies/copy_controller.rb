@@ -1,4 +1,5 @@
 class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::ApplicationController
+  before_action :set_vacancy
   before_action :set_up_copy_form, only: %i[create]
 
   def new
@@ -9,7 +10,9 @@ class HiringStaff::Vacancies::CopyController < HiringStaff::Vacancies::Applicati
   def create
     if @copy_form.complete_and_valid?
       new_vacancy = CopyVacancy.new(@vacancy).call
-      update_vacancy(@copy_form.params_to_save, new_vacancy)
+      new_vacancy.assign_attributes(@copy_form.params_to_save)
+      new_vacancy.refresh_slug
+      new_vacancy.save
       update_google_index(new_vacancy) if new_vacancy.listed?
       Auditor::Audit.new(new_vacancy, "vacancy.copy", current_session_id).log
       redirect_to organisation_job_review_path(new_vacancy.id)

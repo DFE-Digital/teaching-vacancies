@@ -8,7 +8,7 @@
       - else
         = t('schools.jobs.index', organisation: @organisation.name)
     - if @organisation.is_a?(School) && @organisation.all_vacancies.active.any?
-      = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 inline-block float-right"
+      = link_to t("buttons.create_job"), organisation_jobs_path, method: :post, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 inline-block float-right"
   - if @multiple_organisations && @organisation.is_a?(School)
     .govuk-grid-column-full
       - if AuthenticationFallback.enabled?

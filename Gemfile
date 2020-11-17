@@ -48,6 +48,7 @@ gem "skylight"
 gem "validate_url"
 gem "view_component"
 gem "webpacker"
+gem "wicked"
 gem "xml-sitemap"
 
 group :development do

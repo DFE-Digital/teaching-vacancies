@@ -1,2 +1,1 @@
-class DocumentsForm < VacancyForm
-end
+class DocumentsForm < VacancyForm; end

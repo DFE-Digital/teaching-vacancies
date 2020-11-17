@@ -1,10 +1,11 @@
 class HiringStaff::Vacancies::PublishController < HiringStaff::Vacancies::ApplicationController
+  before_action :set_vacancy
+
   def create
     if @vacancy.published?
       redirect_to organisation_job_path(@vacancy.id), notice: I18n.t("messages.jobs.already_published")
-    elsif PublishVacancy.new(@vacancy, current_user, current_organisation).call
+    elsif all_steps_valid? && PublishVacancy.new(@vacancy, current_user, current_organisation).call
       audit_publish_vacancy
-      reset_session_vacancy!
       redirect_to organisation_job_summary_path(@vacancy.id)
     else
       redirect_to review_path_with_errors(@vacancy), danger: {

@@ -42,8 +42,8 @@ module VacanciesHelper
 
   def hidden_state_field_value(vacancy, copy = false)
     return "copy" if copy
-    return "edit_published" if vacancy&.published?
-    return vacancy&.state if %w[copy review edit].include?(vacancy&.state)
+    return "edit_published" if vacancy.published?
+    return vacancy.state if %w[copy review edit].include?(vacancy.state)
 
     "create"
   end
@@ -92,7 +92,7 @@ module VacanciesHelper
   def vacancy_job_location(vacancy)
     organisation = vacancy.parent_organisation
     return "#{I18n.t('hiring_staff.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if
-      vacancy&.job_location == "at_multiple_schools"
+      vacancy.job_location == "at_multiple_schools"
 
     address_join([organisation.name, organisation.town, organisation.county])
   end
@@ -107,6 +107,6 @@ module VacanciesHelper
 
   def vacancy_school_visits_hint(vacancy)
     organisation = organisation_type_basic(vacancy.parent_organisation).tr(" ", "_")
-    I18n.t("helpers.hint.application_details_form.#{organisation}_visits")
+    I18n.t("helpers.hint.applying_for_the_job_form.#{organisation}_visits")
   end
 end

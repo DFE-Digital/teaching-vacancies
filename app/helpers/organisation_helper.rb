@@ -16,7 +16,7 @@ module OrganisationHelper
       pay_package: 3,
       important_dates: 4,
       supporting_documents: 5,
-      application_details: 6,
+      applying_for_the_job: 6,
       job_summary: 7,
     }
     section_number = organisation.is_a?(SchoolGroup) ? sections[section] : sections[section] - 1
