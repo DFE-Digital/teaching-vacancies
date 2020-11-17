@@ -8,7 +8,7 @@ class HiringStaff::VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def heading
-    vacancy.present? ? page_title : page_title_no_vacancy
+    page_title
   end
 
   def show_current_step?
@@ -18,21 +18,6 @@ class HiringStaff::VacancyFormPageHeadingComponent < ViewComponent::Base
 private
 
   attr_reader :vacancy
-
-  def page_title_no_vacancy
-    return I18n.t("jobs.create_a_job_title_no_org") unless current_organisation.is_a?(School) || current_step_number > 1
-
-    organisation_for_title =
-      if vacancy.job_location == "at_one_school"
-        vacancy.readable_job_location
-      elsif vacancy.job_location == "at_multiple_schools"
-        "multiple schools"
-      else
-        current_organisation.name
-      end
-
-    organisation_for_title ? I18n.t("jobs.create_a_job_title", organisation: organisation_for_title) : I18n.t("jobs.create_a_job_title_no_org")
-  end
 
   def page_title
     return I18n.t("jobs.copy_job_title", job_title: vacancy.job_title) if vacancy.state == "copy"

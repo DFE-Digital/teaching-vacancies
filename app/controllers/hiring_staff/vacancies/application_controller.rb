@@ -9,9 +9,9 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def step_valid?(step_form)
-    validation = step_form.new(@vacancy.attributes)
-    validation&.valid?.tap do |valid|
-      validation.errors.each do |field, error|
+    form = step_form.new(@vacancy.attributes)
+    form.complete_and_valid?.tap do |valid|
+      form.errors.each do |field, error|
         @vacancy.errors.add(field, error)
       end
       session[:current_step] = "" unless valid
@@ -79,11 +79,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   end
 
   def set_vacancy
-    if params[:job_id]
-      @vacancy = current_organisation.all_vacancies.find(params[:job_id])
-    elsif params[:id]
-      @vacancy = current_organisation.all_vacancies.find(params[:id])
-    end
+    @vacancy = current_organisation.all_vacancies.find(params[:job_id].presence || params[:id].presence)
   end
 
   def update_google_index(job)

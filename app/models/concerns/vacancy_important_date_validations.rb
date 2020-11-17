@@ -2,8 +2,8 @@ module VacancyImportantDateValidations
   extend ActiveSupport::Concern
 
   included do
-    validates :publish_on, presence: true, unless: proc { |v| v.status == "published" }
-    validate :publish_on_must_not_be_before_today, unless: proc { |v| v.status == "published" }
+    validates :publish_on, presence: true, unless: :published?
+    validate :publish_on_must_not_be_before_today, unless: :published?
 
     validates :expires_on, presence: true
     validate :expires_on_must_not_be_before_today

@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.job_details"))
 = render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy)
 
-- unless @vacancy.state == "create"
+- if @vacancy.state != "create"
   = render "hiring_staff/vacancies/vacancy_form_partials/cancel_and_return_link"
 
 .govuk-grid-row

@@ -1,4 +1,4 @@
-module CreateAJobConcerns
+module HiringStaff::Wizardable
   STEPS = {
     job_location: 1,
     schools: 1,
@@ -98,10 +98,6 @@ module CreateAJobConcerns
 
   def supporting_documents_params(params)
     params.require(:supporting_documents_form).permit(:state, :supporting_documents).merge(completed_step: STEPS[step])
-  end
-
-  def documents_params(params)
-    params.require(:documents_form).permit(:state, documents: []).merge(completed_step: STEPS[step])
   end
 
   def applying_for_the_job_params(params)

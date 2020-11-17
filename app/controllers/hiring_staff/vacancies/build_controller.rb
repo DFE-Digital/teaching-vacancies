@@ -1,6 +1,6 @@
 class HiringStaff::Vacancies::BuildController < HiringStaff::Vacancies::ApplicationController
   include Wicked::Wizard
-  include CreateAJobConcerns
+  include HiringStaff::Wizardable
   include OrganisationHelper
 
   steps :job_location, :schools, :job_details, :pay_package, :important_dates,
@@ -41,25 +41,13 @@ class HiringStaff::Vacancies::BuildController < HiringStaff::Vacancies::Applicat
 
   def update
     if params[:commit] == I18n.t("buttons.save_and_return_later")
-      update_vacancy
-      @vacancy.save(validate: false)
-      redirect_saved_draft_with_message
+      save_listing_and_return_later
     elsif @form.complete_and_valid?
       update_vacancy
       if params[:commit] == I18n.t("buttons.update_job")
-        @vacancy.save
-        if step == :job_location && !@vacancy.central_office?
-          redirect_to wizard_path(:schools)
-        else
-          redirect_updated_job_with_message
-        end
+        update_listing
       elsif params[:commit] == I18n.t("buttons.continue") && session[:current_step] == :review
-        @vacancy.save
-        if step == :supporting_documents && @vacancy.supporting_documents == "yes"
-          redirect_to wizard_path(:documents)
-        else
-          redirect_updated_job_with_message
-        end
+        update_incomplete_listing
       else
         render_wizard @vacancy
       end
@@ -81,13 +69,17 @@ private
   end
 
   def delete_publish_on_params
-    params.require(:important_dates_form).delete("publish_on(3i)")
-    params.require(:important_dates_form).delete("publish_on(2i)")
-    params.require(:important_dates_form).delete("publish_on(1i)")
+    params.require(:important_dates_form).extract!("publish_on(3i)", "publish_on(2i)", "publish_on(1i)")
   end
 
   def finish_wizard_path
     edit_organisation_job_path(@vacancy.id)
+  end
+
+  def save_listing_and_return_later
+    update_vacancy
+    @vacancy.save(validate: false)
+    redirect_saved_draft_with_message
   end
 
   def set_school_options
@@ -113,6 +105,24 @@ private
   def strip_checkbox_params
     if VACANCY_STRIP_CHECKBOXES.key?(step)
       strip_empty_checkboxes(VACANCY_STRIP_CHECKBOXES[step], "#{step}_form".to_sym)
+    end
+  end
+
+  def update_incomplete_listing
+    @vacancy.save
+    if step == :supporting_documents && @vacancy.supporting_documents == "yes"
+      redirect_to wizard_path(:documents)
+    else
+      redirect_updated_job_with_message
+    end
+  end
+
+  def update_listing
+    @vacancy.save
+    if step == :job_location && !@vacancy.central_office?
+      redirect_to wizard_path(:schools)
+    else
+      redirect_updated_job_with_message
     end
   end
 
