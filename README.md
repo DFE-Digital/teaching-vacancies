@@ -1,9 +1,11 @@
 # Teaching Vacancies
 
-* [API Documentation](https://docs.teaching-vacancies.service.gov.uk) (External link)
+* [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
 * [API Keys](/documentation/api-keys.md)
-* [Hosting on GOV.UK PaaS](/documentation/govuk-paas.md)
+* [Authentication](/documentation/authentication.md)
+* [Hosting](/documentation/hosting.md)
 * [Logging](/documentation/logging.md)
+* [Onboarding](/documentation/onboarding.md)
 * [Misc](#misc)
 * [Search](/documentation/search.md)
 * [Troubleshooting](#troubleshooting)
@@ -220,7 +222,7 @@ yarn run sass:lint
 
 * I see Page Not Found when I log in and try to create a job listing.
 
-Try [importing the school data](#importing-school-data) if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
+Try [importing the school data](#gias-data-schools-trusts-and-local-authorities) if you have not already. When your sign in account was created, it was assigned to a school via a URN, and you may not have a school in your database with the same URN.
 
 ---
 
@@ -228,7 +230,7 @@ Try [importing the school data](#importing-school-data) if you have not already.
 
 ### Getting production-like data for local development
 
-You can use conduit to create a dump of production data. See [this section](/documentation/govuk-paas.md#backuprestore-govuk-paas-postgres-service-database) of the GovUK PaaS docs. Then you can load this into your local database:
+You can use conduit to create a dump of production data. See [this section](/documentation/hosting.md#backuprestore-govuk-paas-postgres-service-database) of the GovUK PaaS docs. Then you can load this into your local database:
 
 ```bash
 psql tvs_development < backup.sql

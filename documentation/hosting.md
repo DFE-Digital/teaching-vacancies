@@ -1,125 +1,136 @@
-# GOV.UK PaaS
+# Hosting
 
-## Get GOV.UK PaaS account
-You will need to get an account in `dfe-teacher-services` organization. An organisation manager will grant you access to the relevant spaces. This should be requested in the Slack channel #digital-tools-support.
+Teaching Vacancies is hosted on GOV.UK PaaS. When onboarded you will get access to `dfe-teacher-services` organization and the relevant spaces.
 
-## Install Cloud Foundry CLI v7 on Mac
-We use version 7 because it enables processes that we use for Sidekiq and rolling deployments.
+These are the running applications:
 
-```bash
-brew install cloudfoundry/tap/cf7-cli
-```
+- https://dev.teaching-vacancies.service.gov.uk (Dev)
+- https://staging.teaching-vacancies.service.gov.uk (Staging)
+- https://teaching-vacancies.service.gov.uk (Production)
 
-## Set environment variables
+Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged.
 
-See "Environment variables" in the README to fetch the required variables for each environment.
-
-We recommend something like [`direnv`](/documentation/direnv.md) to load environment variables scoped into the folder
+## Install Cloud Foundry CLI on Mac
 
 ```bash
-cp .env.example .env
+brew install cloudfoundry/tap/cf-cli@7
 ```
-
-Make sure you have the following environment variables set:
-
-```
-CF_API_ENDPOINT=https://api.london.cloud.service.gov.uk
-CF_ORG=dfe-teacher-services
-CF_SPACE=teaching-vacancies-dev
-CF_USERNAME=xxx
-CF_PASSWORD=xxx
-```
-
-Change `$CF_SPACE` to the environment(space) you want to deal with.
 
 ## Login
+
+```bash
+CF_API_ENDPOINT=https://api.london.cloud.service.gov.uk
+CF_ORG=dfe-teacher-services
+```
+
+`$CF_SPACE` is the environment(space) you want to deal with, these are the available ones:
+
+* teaching-vacancies-dev
+* teaching-vacancies-staging
+* teaching-vacancies-production
+* teaching-vacancies-monitoring
+* teaching-vacancies-review
+
 For convenience and for security reasons we recommend to use SSO to login:
 
 ```bash
-cf7 login --sso -a $CF_API_ENDPOINT -o $CF_ORG -s $CF_SPACE
+cf login --sso -a $CF_API_ENDPOINT -o $CF_ORG -s $CF_SPACE
 ```
 
-If you need to login with a service account:
+If you need to login with a service account to access production environment:
 
 ```bash
-cf7 login -a $CF_API_ENDPOINT -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+cf login -a $CF_API_ENDPOINT -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
 ```
 
 ## Check space users
+
 ```bash
-cf7 space-users $CF_ORG $CF_SPACE
+cf space-users $CF_ORG $CF_SPACE
 ```
 
 ## Check organization users
+
 ```bash
-cf7 org-users $CF_ORG -a
+cf org-users $CF_ORG -a
 ```
 
 ## Set/unset SpaceDeveloper role
+
 ```bash
-cf7 set-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
-cf7 unset-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
+cf set-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
+cf unset-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
 ```
 
 ## Check running apps
+
 ```bash
-cf7 apps
+cf apps
 ```
 
-There should be 2 apps:
+There should be 2 apps (more in the case of review apps space):
+
 - webapp: it has a route to serve requests from users
 - worker: it subscribe to redis to run asynchronous jobs
 
 ## Check running services
+
 ```bash
-cf7 services
+cf services
 ```
 
 ## Check app health and status
+
 ```bash
-cf7 app <app_name>
+cf app <app_name>
 ```
 
 ## Check environment variables
+
 ```bash
-cf7 env <app_name>
+cf env <app_name>
 ```
 
 ## Set environment variable
 
-Environment variables are stored in AWS SSM Parameter store and in the repository. Terraform sets them automatically when it deploys the applications to paas.
+Environment variables are stored in AWS SSM Parameter store and in the repository. Terraform sets them automatically when it deploys the applications to GOV.UK PaaS.
 
 Should you wish to override an individual variable directly:
 
 ```bash
-cf7 set-env <app_name> ENV_VAR_NAME env_var_value
-cf7 restart <app_name> --strategy rolling
+cf set-env <app_name> ENV_VAR_NAME env_var_value
+cf restart <app_name> --strategy rolling
 ```
 
 Remember to restart the app, using `--strategy rolling` if you wish to avoid downtime.
 In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
+
 ```bash
-cf7 restart <app_name> --strategy rolling
+cf restart <app_name> --strategy rolling
 ```
 
 ## SSH into app
+
 ```bash
-cf7 ssh <app_name>
+cf ssh <app_name>
 ```
 
 ## Access Rails console
+
 ```bash
-cf7 ssh <app_name>
+cf ssh <app_name>
 cd /teacher-vacancy
 /usr/local/bin/bundle exec rails console
 ```
 
 ## Run task
+
 ```bash
-cf7 run-task <app_name> -c "rails task:name"
+cf run-task <app_name> -c "rails task:name"
 ```
 
 ## Deploy to dev or staging via commandline
+
 This builds and deploys a Docker image from local code.
 
 ```bash
@@ -143,6 +154,7 @@ make staging deploy-local-image # Deploy to staging
 ```
 
 ## Deploy to dev or staging via a commit to GitHub
+
 This builds and deploys a Docker image from code in `dev` or `staging` branches.
 
 Push to the `dev` or `staging` branch.
@@ -154,6 +166,7 @@ The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
 ## CI/CD with GitHub Actions
+
 Tests run every time is pushed on a branch.
 
 When a PR is approved and merged into `master` branch an automatic deploy is triggered to `production` environment.
@@ -188,19 +201,23 @@ cf update-service teaching-vacancies-postgres-production -p medium-ha-11 -c '{"a
 ```
 
 ## Backup/Restore GOV.UK PaaS Postgres service database
+
 Install Conduit plugin
+
 ```bash
-cf7 install-plugin conduit
+cf install-plugin conduit
 ```
 
 ### Backup
+
 ```bash
-cf7 conduit $CF_POSTGRES_SERVICE_ORIGIN -- pg_dump -x --no-owner -c -f backup.sql
+cf conduit $CF_POSTGRES_SERVICE_ORIGIN -- pg_dump -x --no-owner -c -f backup.sql
 ```
 
 ### Restore
+
 ```bash
-cf7 conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
+cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
 ```
 
 ## Set up a new environment

@@ -6,7 +6,7 @@ Any developer of the current team can sign in the [Teaching vacancies AWS consol
 
 ## DfE Sign-in
 
-A team member with approver rights in [DfE Sign-in test enviroment](https://test-interactions.signin.education.gov.uk) invites the new developer to the following organisations:
+A team member with approver rights in [DfE Sign-in test environment](https://test-interactions.signin.education.gov.uk) invites the new developer to the following organisations:
 
 * Bexleyheath Academy (school)
 * WEYDON MULTI ACADEMY TRUST (trust)
@@ -14,7 +14,7 @@ A team member with approver rights in [DfE Sign-in test enviroment](https://test
 
 ## GitHub
 
-Digital Tooling will add the new developer to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams) and to the [Teacher Vacancy Service team](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies)
+Digital Tooling will add the new developer to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams) and to the [Teaching Vacancies team](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies)
 
 ## GOV.UK PaaS
 
