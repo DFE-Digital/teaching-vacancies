@@ -7,7 +7,7 @@ class VacancyPresenter < BasePresenter
   delegate :job_roles, to: :model, prefix: true
 
   def share_url(utm_source: nil, utm_medium: nil, utm_campaign: nil, utm_content: nil)
-    params = { protocol: "https" }
+    params = {}
     if utm_source.present?
       params.merge!(
         utm_source: utm_source,

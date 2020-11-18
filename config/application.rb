@@ -52,6 +52,5 @@ module TeacherVacancyService
     config.action_mailer.notify_settings = {
       api_key: ENV["NOTIFY_KEY"],
     }
-    config.action_mailer.default_url_options = { protocol: "https" }
   end
 end

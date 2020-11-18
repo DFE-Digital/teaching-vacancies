@@ -15,27 +15,24 @@ private
 
   def add_vacancies(map)
     Vacancy.listed.applicable.find_each do |vacancy|
-      map.add job_path(vacancy, protocol: "https"), updated: vacancy.updated_at,
-                                                    expires: vacancy.expires_on,
-                                                    period: "hourly", priority: 0.7
+      map.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_on, period: "hourly", priority: 0.7
     end
   end
 
   def add_new_identifications(map)
-    map.add new_identifications_path(protocol: "https"), period: "weekly",
-                                                         priority: 0.8
+    map.add new_identifications_path, period: "weekly", priority: 0.8
   end
 
   def add_location_categories(map)
     ALL_LOCATION_CATEGORIES.each do |location_category|
-      map.add jobs_path(location: location_category, protocol: "https"), period: "hourly"
+      map.add jobs_path(location: location_category), period: "hourly"
     end
   end
 
   def add_pages(map)
-    map.add page_path("privacy-policy", protocol: "https"), period: "weekly"
-    map.add page_path("terms-and-conditions", protocol: "https"), period: "weekly"
-    map.add page_path("cookies", protocol: "https"), period: "weekly"
-    map.add page_path("accessibility", protocol: "https"), period: "weekly"
+    map.add page_path("privacy-policy"), period: "weekly"
+    map.add page_path("terms-and-conditions"), period: "weekly"
+    map.add page_path("cookies"), period: "weekly"
+    map.add page_path("accessibility"), period: "weekly"
   end
 end

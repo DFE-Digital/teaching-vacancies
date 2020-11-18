@@ -22,7 +22,7 @@ RSpec.describe VacanciesPresenter do
       let(:prev_page) { 4 }
 
       it "returns the full url of the next page" do
-        expect(vacancies_presenter.previous_api_url).to eq("https://localhost:3000/api/v1/jobs.json?page=4")
+        expect(vacancies_presenter.previous_api_url).to eq("http://localhost:3000/api/v1/jobs.json?page=4")
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe VacanciesPresenter do
       let(:next_page) { 2 }
 
       it "returns the full url of the next page" do
-        expect(vacancies_presenter.next_api_url).to eq("https://localhost:3000/api/v1/jobs.json?page=2")
+        expect(vacancies_presenter.next_api_url).to eq("http://localhost:3000/api/v1/jobs.json?page=2")
       end
     end
 

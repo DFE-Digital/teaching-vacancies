@@ -4,23 +4,18 @@ module NotifyViewHelper
   end
 
   def edit_link(subscription)
-    url = edit_subscription_url(
-      subscription.token,
-      protocol: "https",
-      params: utm_params(subscription),
-    )
+    url = edit_subscription_url(subscription.token, params: utm_params(subscription))
     notify_link(url, t(".edit_link_text"))
   end
 
   def home_page_link(subscription)
-    url = root_url(protocol: "https", params: utm_params(subscription))
+    url = root_url(params: utm_params(subscription))
     notify_link(url, t("app.title"))
   end
 
   def job_alert_feedback_url(relevant, subscription, vacancies)
     new_subscription_job_alert_feedback_url(
       subscription.token,
-      protocol: "https",
       params: { job_alert_feedback: { relevant_to_user: relevant,
                                       vacancy_ids: vacancies.pluck(:id),
                                       search_criteria: subscription.search_criteria } },
@@ -34,11 +29,7 @@ module NotifyViewHelper
   end
 
   def unsubscribe_link(subscription)
-    url = unsubscribe_subscription_url(
-      subscription.token,
-      protocol: "https",
-      params: utm_params(subscription),
-    )
+    url = unsubscribe_subscription_url(subscription.token, params: utm_params(subscription))
     notify_link(url, t(".unsubscribe_link_text"))
   end
 

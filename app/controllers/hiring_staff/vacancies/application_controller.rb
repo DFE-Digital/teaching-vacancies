@@ -63,7 +63,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def remove_google_index(job)
     return unless Rails.env.production?
 
-    url = job_url(job, protocol: "https")
+    url = job_url(job)
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
 
@@ -85,7 +85,7 @@ class HiringStaff::Vacancies::ApplicationController < HiringStaff::BaseControlle
   def update_google_index(job)
     return unless Rails.env.production?
 
-    url = job_url(job, protocol: "https")
+    url = job_url(job)
     UpdateGoogleIndexQueueJob.perform_later(url)
   end
 end
