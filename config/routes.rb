@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :jobseekers if JobseekerAccountsFeature.enabled?
+
   root "pages#home"
 
   get "check" => "application#check"
