@@ -93,7 +93,7 @@ jobs:
            -Dsonar.ruby.coverage.reportPaths=${{ github.workspace }}/coverage/.resultset.json
 
   frontend-tests:
-    name: Run jest
+    name: Run frontend JS unit tests
 
     runs-on: ubuntu-20.04
 
@@ -125,4 +125,4 @@ jobs:
         run: yarn install
 
       - name: run frontend tests and linting
-        run: npm test
+        run: yarn run js:test
