@@ -63,6 +63,7 @@ private
       address: "Street",
       detailed_school_type: "TypeOfEstablishment (name)",
       easting: "Easting",
+      establishment_status: "EstablishmentStatus (name)",
       local_authority_within: "LA (name)",
       maximum_age: "StatutoryHighAge",
       minimum_age: "StatutoryLowAge",

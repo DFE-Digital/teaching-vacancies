@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_11_115249) do
+ActiveRecord::Schema.define(version: 2020_11_18_083645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2020_11_11_115249) do
     t.string "local_authority_code"
     t.string "group_type"
     t.string "local_authority_within"
+    t.string "establishment_status"
     t.index ["uid"], name: "index_organisations_on_uid"
     t.index ["urn"], name: "index_organisations_on_urn"
   end
