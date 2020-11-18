@@ -93,6 +93,8 @@ make -s local print-env > .env
 
 To run the command above you need [AWS credentials](#aws-credentials).
 
+[Git secrets](/documentation/secrets-detection.md) offers an easy way to defend against accidentally publishing these secrets.
+
 ### Install dependencies
 
 Install Ruby dependency libraries:
