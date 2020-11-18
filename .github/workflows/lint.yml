@@ -28,7 +28,7 @@ jobs:
         run: bundle exec brakeman
 
   frontend-lint:
-    name: Run frontend linting checks
+    name: Run frontend JS and SASS linting checks
 
     runs-on: ubuntu-20.04
 
@@ -60,7 +60,7 @@ jobs:
         run: yarn install
 
       - name: Run SASS lint
-        run: yarn run sass:lint
+        run: yarn run sass:lint && yarn run js:lint
 
   terraform-lint:
     name: Run Terraform check
