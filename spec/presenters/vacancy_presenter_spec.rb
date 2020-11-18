@@ -102,7 +102,7 @@ RSpec.describe VacancyPresenter do
 
     context "when campaign parameters are passed" do
       it "builds the campaign URL" do
-        expected_campaign_url = URI("https://localhost:3000/jobs/pe-teacher?utm_medium=interpretative_dance&utm_source=alert_run_id")
+        expected_campaign_url = URI("http://localhost:3000/jobs/pe-teacher?utm_medium=interpretative_dance&utm_source=alert_run_id")
         expect(presenter.share_url(utm_source: "alert_run_id", utm_medium: "interpretative_dance")).to match(expected_campaign_url.to_s)
       end
     end

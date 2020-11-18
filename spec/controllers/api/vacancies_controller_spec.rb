@@ -46,7 +46,7 @@ RSpec.describe Api::VacanciesController, type: :controller do
       expect(info_object[:title]).to eq("GOV UK - #{I18n.t('app.title')}")
       expect(info_object[:description]).to eq(I18n.t("app.description"))
       expect(info_object[:termsOfService])
-        .to eq(terms_and_conditions_url(protocol: "https", anchor: "api"))
+        .to eq(terms_and_conditions_url(anchor: "api"))
       expect(info_object[:contact][:email]).to eq(I18n.t("help.email"))
     end
 
@@ -89,11 +89,11 @@ RSpec.describe Api::VacanciesController, type: :controller do
 
       it "includes the correct pagination links" do
         expect(links_object).to include(
-          self: "https://localhost:3000/api/v1/jobs.json?page=2",
-          first: "https://localhost:3000/api/v1/jobs.json?page=1",
-          last: "https://localhost:3000/api/v1/jobs.json?page=4",
-          next: "https://localhost:3000/api/v1/jobs.json?page=3",
-          prev: "https://localhost:3000/api/v1/jobs.json?page=1",
+          self: "http://localhost:3000/api/v1/jobs.json?page=2",
+          first: "http://localhost:3000/api/v1/jobs.json?page=1",
+          last: "http://localhost:3000/api/v1/jobs.json?page=4",
+          next: "http://localhost:3000/api/v1/jobs.json?page=3",
+          prev: "http://localhost:3000/api/v1/jobs.json?page=1",
         )
       end
 
