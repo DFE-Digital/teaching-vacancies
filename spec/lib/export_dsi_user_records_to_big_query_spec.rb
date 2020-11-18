@@ -42,22 +42,28 @@ RSpec.describe ExportDsiUsersToBigQuery do
       "given_name" => Faker::Name.first_name,
       "family_name" => Faker::Name.last_name,
       "email" => Faker::Internet.email,
-      "organisation" => { "URN" => 100_000, "UID" => 999_999 },
+      "organisation" => {
+        "URN" => 100_000,
+        "UID" => 999_999,
+        "Category" => "002",
+        "EstablishmentNumber" => "800",
+      },
     }
   end
 
   let(:expected_table_data) do
     [
       {
-        user_id: user["userId"],
-        role: user["roleName"],
         approval_datetime: user["approvedAt"],
-        update_datetime: user["updatedAt"],
-        given_name: user["givenName"],
-        family_name: user["familyName"],
         email: user["email"],
+        family_name: user["familyName"],
+        given_name: user["givenName"],
+        la_code: user["organisation"]["EstablishmentNumber"],
+        role: user["roleName"],
         school_urn: user["organisation"]["URN"],
-        organisation_uid: user["organisation"]["UID"],
+        trust_uid: user["organisation"]["UID"],
+        update_datetime: user["updatedAt"],
+        user_id: user["userId"],
       },
     ]
   end

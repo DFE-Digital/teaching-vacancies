@@ -43,21 +43,27 @@ RSpec.describe ExportDsiApproversToBigQuery do
       "given_name" => Faker::Name.first_name,
       "family_name" => Faker::Name.last_name,
       "email" => Faker::Internet.email,
-      "organisation" => { "urn" => 100_000, "uid" => 999_999 },
+      "organisation" => {
+        "urn" => 100_000,
+        "uid" => 999_999,
+        "category" => { id: "002" },
+        "establishmentNumber" => "800",
+      },
     }
   end
 
   let(:expected_table_data) do
     [
       {
-        user_id: approver["userId"],
-        role_id: approver["roleId"],
-        role_name: approver["roleName"],
         email: approver["email"],
         family_name: approver["familyName"],
         given_name: approver["givenName"],
+        la_code: approver["organisation"]["establishmentNumber"],
+        role_id: approver["roleId"],
+        role_name: approver["roleName"],
         school_urn: approver["organisation"]["urn"],
-        organisation_uid: approver["organisation"]["uid"],
+        trust_uid: approver["organisation"]["uid"],
+        user_id: approver["userId"],
       },
     ]
   end

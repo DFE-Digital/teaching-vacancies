@@ -12,6 +12,8 @@ class ImportTrustData < ImportOrganisationData
 
 private
 
+  # These are the attributes that require additional transformation before being added to the model. The first value of
+  # the array is the row key name, the second is the method used for the transformation.
   def complex_mappings
     {
       name: ["Group Name", :titlecase],
