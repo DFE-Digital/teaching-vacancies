@@ -6,20 +6,30 @@ CREATE OR REPLACE FUNCTION
   `teacher-vacancy-service.production_dataset.convert_client_user_agent_to_device_category`(client_user_agent STRING)
   RETURNS STRING AS (
     CASE
-      WHEN LOWER(client_user_agent) LIKE "%bot%" OR LOWER(client_user_agent) LIKE "%http%" OR LOWER(client_user_agent) LIKE "%python%" OR LOWER(client_user_agent) LIKE "%scan%" OR LOWER(client_user_agent) LIKE "%check%" OR LOWER(client_user_agent) LIKE "%spider%" OR LOWER(client_user_agent) LIKE "%curl%" OR LOWER(client_user_agent) LIKE "%trend%" OR LOWER(client_user_agent) LIKE "%fetch%" THEN "bot"
+      WHEN LOWER(client_user_agent) LIKE "%bot%"
+        OR LOWER(client_user_agent) LIKE "%http%"
+        OR LOWER(client_user_agent) LIKE "%python%"
+        OR LOWER(client_user_agent) LIKE "%scan%"
+        OR LOWER(client_user_agent) LIKE "%check%"
+        OR LOWER(client_user_agent) LIKE "%spider%"
+        OR LOWER(client_user_agent) LIKE "%curl%"
+        OR LOWER(client_user_agent) LIKE "%trend%"
+        OR LOWER(client_user_agent) LIKE "%fetch%" THEN "bot"
       WHEN LOWER(client_user_agent) LIKE "%mobile%"
-    OR LOWER(client_user_agent) LIKE "%android%"
-    OR LOWER(client_user_agent) LIKE "%whatsapp%"
-    OR LOWER(client_user_agent) LIKE "%iphone%"
-    OR LOWER(client_user_agent) LIKE "%ios%"
-    OR LOWER(client_user_agent) LIKE "%samsung%" THEN "mobile"
-      WHEN LOWER(client_user_agent) LIKE "%win%" OR LOWER(client_user_agent) LIKE "%mac%" OR LOWER(client_user_agent) LIKE "%x11%" THEN "desktop"
+        OR LOWER(client_user_agent) LIKE "%android%"
+        OR LOWER(client_user_agent) LIKE "%whatsapp%"
+        OR LOWER(client_user_agent) LIKE "%iphone%"
+        OR LOWER(client_user_agent) LIKE "%ios%"
+        OR LOWER(client_user_agent) LIKE "%samsung%" THEN "mobile"
+      WHEN LOWER(client_user_agent) LIKE "%win%"
+        OR LOWER(client_user_agent) LIKE "%mac%"
+        OR LOWER(client_user_agent) LIKE "%x11%" THEN "desktop"
     ELSE
     "unknown"
   END
     );
 
-#take various fields from a Cloudfront server log and use them to categorise that traffic into a medium
+# Take various fields from a Cloudfront server log and use them to categorise that traffic into a medium
 CREATE OR REPLACE FUNCTION
   `teacher-vacancy-service.production_dataset.categorise_traffic_by_medium`(utm_campaign STRING,
     utm_medium STRING,
