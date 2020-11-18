@@ -11,7 +11,7 @@
     = render 'school_group'
 
     %h2.govuk-heading-l{ class: 'govuk-!-margin-bottom-0' }
-      = t('.schools', count: current_organisation.schools.count)
+      = t('.schools', count: current_organisation.schools.not_closed.count)
 
     .schools
       = render 'schools'

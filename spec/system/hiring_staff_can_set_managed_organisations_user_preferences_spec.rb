@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "Hiring staff can set managed organisations user preferences" do
   let(:school_1) { create(:school, name: "Happy Rainbows School") }
   let(:school_2) { create(:school, name: "Dreary Grey School") }
+  let(:school_3) { create(:school, :closed, name: "Closed School") }
   let(:user_preference) { UserPreference.last }
 
   before do
@@ -11,6 +12,7 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
 
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
 
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
@@ -36,6 +38,12 @@ RSpec.describe "Hiring staff can set managed organisations user preferences" do
       visit organisation_managed_organisations_path
       expect(page.current_path).to eql(organisation_managed_organisations_path)
       expect(page).to have_content(I18n.t("hiring_staff.organisations.managed_organisations.show.options.school_group"))
+    end
+
+    scenario "it does not show closed school option" do
+      visit organisation_managed_organisations_path
+      expect(page.current_path).to eql(organisation_managed_organisations_path)
+      expect(page).not_to have_content(school_3.name)
     end
 
     scenario "it allows school group users to select which organisation's jobs they want to manage" do
