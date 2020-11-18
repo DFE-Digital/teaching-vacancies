@@ -102,10 +102,4 @@ Rails.application.routes.draw do
   match "/422", to: "errors#unprocessable_entity", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
   match "*path", to: "errors#not_found", via: :all
-
-  # External URL
-
-  direct :roll_out_blog do
-    "https://dfedigital.blog.gov.uk/2018/09/21/how-were-rolling-out-our-search-and-listing-service-to-more-schools-to-support-their-teacher-recruitment-needs/"
-  end
 end
