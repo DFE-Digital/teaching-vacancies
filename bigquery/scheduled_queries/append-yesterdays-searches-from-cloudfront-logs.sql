@@ -7,27 +7,7 @@ SELECT
     1) AS deepest_results_page_viewed,
   results_pages_viewed,
   number_of_results_pages_viewed,
-  ARRAY_TO_STRING([
-  IF
-    (keyword IS NULL,
-      NULL,
-      "keyword"),
-  IF
-    (location IS NULL,
-      NULL,
-      "location"),
-  IF
-    (job_roles IS NULL,
-      NULL,
-      "job_roles"),
-  IF
-    (phases IS NULL,
-      NULL,
-      "phases"),
-  IF
-    (working_patterns IS NULL,
-      NULL,
-      "working_patterns") ]," and ") AS criteria_used,
+  criteria_used,
   keyword,
   #if the location includes a number, assume it contains a postcode and so is PII, so redact it and replace it with the string "postcode"
 IF
@@ -61,14 +41,22 @@ FROM (
       UNNEST(results_pages_viewed)) AS results_pages_viewed,
     #remove duplicates
     number_of_results_pages_viewed,
+    `teacher-vacancy-service.production_dataset.make_search_parameters_human_readable`(search_parameters) AS criteria_used,
     #extract the value of each of these parameters from the query in the logs - unfortunately in SQL there is no easy more abstract way to pull out key-value pairs
-    TRIM(LOWER(REGEXP_EXTRACT(search_parameters,"[?&]keyword=([^&]+)"))) AS keyword,
-    REGEXP_EXTRACT(search_parameters,"[?&]location=([^&]+)") AS location,
-    REGEXP_EXTRACT(search_parameters,"[?&]radius=([^&]+)") AS radius,
-    REGEXP_EXTRACT(search_parameters,"[?&]job_roles=([^&]+)") AS job_roles,
-    REGEXP_EXTRACT(search_parameters,"[?&]phases=([^&]+)") AS phases,
-    REGEXP_EXTRACT(search_parameters,"[?&]working_patterns=([^&]+)") AS working_patterns,
-    REGEXP_EXTRACT(search_parameters,"[?&]jobs_sort=([^&]+)") AS jobs_sort,
+    TRIM(LOWER(`teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+          "keyword"))) AS keyword,
+    `teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+      "location") AS location,
+    `teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+      "radius") AS radius,
+    `teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+      "job_roles") AS job_roles,
+    `teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+      "phases") AS phases,
+    `teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+      "working_patterns") AS working_patterns,
+    `teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(search_parameters,
+      "jobs_sort") AS jobs_sort,
     (
       #this subquery matches this search to vacancy views in the log, and pulls the slugs together into an array (the slug is a vacancy UID in our db)
     SELECT
@@ -79,7 +67,7 @@ FROM (
       cs_referer LIKE "%/jobs?%" #only look at log items referred from a search results page
       AND cs_uri_stem LIKE "/jobs/%" #only look at vacancy views
       AND sc_content_type LIKE "%text/html%" #only look at HTML
-      AND search.search_parameters=REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(SPLIT(cs_referer,"?")[ORDINAL(2)],"jobs_search_form",""),"%255D",""),"%255B",""),"+"," "),"%252C",","),"(&page=[0-9+])","") #match the vacancy views to a search in the parent query that has the same search parameters (minus the page parameter)
+      AND `teacher-vacancy-service.production_dataset.make_search_parameters_human_readable`(search.search_parameters)=`teacher-vacancy-service.production_dataset.make_search_parameters_human_readable`(`teacher-vacancy-service.production_dataset.decode_url_escape_characters`(SPLIT(cs_referer,"?")[ORDINAL(2)])) #match the vacancy views to a search in the parent query that has the same search parameters
       AND c_ip=search.c_ip #also require this match to made on IP address
       AND date=search.date #and on date - search parameters (minus page), IP address and date between them provide our UID for the search
     GROUP BY
@@ -90,27 +78,18 @@ FROM (
     SELECT
       c_ip,
       #classify each log item as being from mobile, desktop, bot or unknown - this correctly classified over 99.99% of the test week-long dataset (barring intentional fraudulent use of c_user_agent)
-      CASE
-        WHEN LOWER(c_user_agent) LIKE "%bot%" OR LOWER(c_user_agent) LIKE "%http%" OR LOWER(c_user_agent) LIKE "%python%" OR LOWER(c_user_agent) LIKE "%scan%" OR LOWER(c_user_agent) LIKE "%check%" OR LOWER(c_user_agent) LIKE "%spider%" OR LOWER(c_user_agent) LIKE "%curl%" OR LOWER(c_user_agent) LIKE "%trend%" OR LOWER(c_user_agent) LIKE "%fetch%" THEN "bot"
-        WHEN LOWER(c_user_agent) LIKE "%mobile%"
-      OR LOWER(c_user_agent) LIKE "%android%"
-      OR LOWER(c_user_agent) LIKE "%whatsapp%"
-      OR LOWER(c_user_agent) LIKE "%iphone%"
-      OR LOWER(c_user_agent) LIKE "%ios%"
-      OR LOWER(c_user_agent) LIKE "%samsung%" THEN "mobile"
-        WHEN LOWER(c_user_agent) LIKE "%win%" OR LOWER(c_user_agent) LIKE "%mac%" OR LOWER(c_user_agent) LIKE "%x11%" THEN "desktop"
-      ELSE
-      "unknown"
-    END
-      AS device_category,
+      `teacher-vacancy-service.production_dataset.convert_client_user_agent_to_device_category`(c_user_agent) AS device_category,
       date,
       MIN(time) AS time,
       #take the earliest time as the time of this search (relevant for multi-results page searches)
-      REGEXP_REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(cs_uri_query,"jobs_search_form",""),"%255D",""),"%255B",""),"+"," "),"%252C",","),"(&page=[0-9+])","") AS search_parameters,
+      `teacher-vacancy-service.production_dataset.remove_parameter`(`teacher-vacancy-service.production_dataset.decode_url_escape_characters`(cs_uri_query),
+        "page") AS search_parameters,
       #handle strange characters and discard the page parameter so that we can group by search parameters without it
-      MAX(REGEXP_EXTRACT(cs_uri_query,"[?&]page=([^&]+)")) AS deepest_results_page_viewed,
+      MAX(`teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(cs_uri_query,
+          "page")) AS deepest_results_page_viewed,
       #record the highest page number of a results page viewed - note this is not the same as the search depth, because users can jump straight in at a deeper page, skip to the end of the results etc.
-      ARRAY_AGG(IFNULL(REGEXP_EXTRACT(cs_uri_query,"[?&]page=([^&]+)"),
+      ARRAY_AGG(IFNULL(`teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(cs_uri_query,
+            "page"),
           "1")) AS results_pages_viewed,
       #extract the page number of each results page viewed, and put them all in an array
       COUNT(DISTINCT cs_uri_query) AS number_of_results_pages_viewed #count the total number of results pages viewed for these search parameters and IP on this date
