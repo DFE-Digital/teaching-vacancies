@@ -148,7 +148,7 @@ export const addRemoveAllFiltersEvent = (el, onClear) => {
 };
 
 export const removeAllFiltersHandler = (onClear) => {
-  filterGroup.getFilterGroups().map((groupEl) => filterGroup.getFilterCheckboxesInGroup(groupEl).forEach((checkbox) => filterGroup.unCheckCheckbox(checkbox)));
+  filterGroup.getFilterGroups().forEach((groupEl) => filterGroup.getFilterCheckboxesInGroup(groupEl).forEach((checkbox) => filterGroup.unCheckCheckbox(checkbox)));
   onClear();
 };
 
