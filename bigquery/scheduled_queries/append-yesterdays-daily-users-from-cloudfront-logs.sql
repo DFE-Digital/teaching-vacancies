@@ -27,7 +27,8 @@ SELECT
     utm_medium,
     referrer,
     landing_page_stem) AS medium,
-  utm_campaign LIKE "%alert%" AS from_job_alert
+  IFNULL(utm_campaign LIKE "%alert%",
+    FALSE) AS from_job_alert
 FROM (
   SELECT
     all_logs.date,
