@@ -4,35 +4,27 @@
 
 Dev
 ```
-make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 dev deploy-plan
+make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 dev terraform-app-plan
 ```
 
 Staging
 ```
-make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 staging deploy-plan
+make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 staging terraform-app-plan
 ```
 
 Production
 ```
-make CONFIRM_PRODUCTION=true passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 production deploy-plan
+make CONFIRM_PRODUCTION=true passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 production terraform-app-plan
 ```
 
 Review app
 ```
-make pr=2086 passcode=MyPasscode tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review deploy-plan
+make pr=2086 passcode=MyPasscode tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review terraform-app-plan
 ```
 
 ## `terraform plan` with Terraform CLI commands
 
-The equivalent of the Makefile `dev deploy-plan` is:
-```
-terraform init terraform/app
-terraform workspace select dev
-terraform plan -var="paas_sso_passcode=MyPasscode" -var="paas_app_docker_image=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714" -var-file terraform/workspace-variables/dev.tfvars terraform/app
-```
-
-If we need to pass options to the Terraform CLI, we can work directly in the `terraform/app` directory itself:
-
+The equivalent of the Makefile `dev terraform-app-plan` is:
 ```
 cd terraform/app
 terraform init
