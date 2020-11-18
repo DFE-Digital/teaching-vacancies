@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_18_083645) do
+ActiveRecord::Schema.define(version: 2020_11_18_111330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -104,6 +104,8 @@ ActiveRecord::Schema.define(version: 2020_11_18_083645) do
     t.uuid "vacancy_ids", array: true
     t.uuid "subscription_id", null: false
     t.float "recaptcha_score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["subscription_id"], name: "index_job_alert_feedbacks_on_subscription_id"
   end
 
