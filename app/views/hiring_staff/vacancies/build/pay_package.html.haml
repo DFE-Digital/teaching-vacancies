@@ -1,0 +1,25 @@
+- content_for :page_title_prefix, page_title_prefix(@vacancy, @form, t("jobs.pay_package"))
+= render HiringStaff::VacancyFormPageHeadingComponent.new(@vacancy)
+
+- if @vacancy.state != "create"
+  = render "hiring_staff/vacancies/vacancy_form_partials/cancel_and_return_link"
+- else
+  = link_to t("buttons.back"), previous_wizard_path, class: "govuk-back-link"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: wizard_path, method: :put do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l= t("jobs.pay_package")
+
+      = render "hiring_staff/vacancies/vacancy_form_partials/hidden_state_input", f: f
+
+      = f.govuk_text_field :salary, label: { size: "s" }, required: true
+
+      = f.govuk_text_area :benefits, label: { size: "s" }
+
+      = render "hiring_staff/vacancies/vacancy_form_partials/submit", f: f
+
+  .govuk-grid-column-one-third
+    = render(HiringStaff::SidebarComponent.new(vacancy: @vacancy))

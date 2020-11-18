@@ -12,8 +12,9 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
   context "editing an incomplete draft vacancy" do
     before do
-      visit new_organisation_job_path
-      fill_in_job_specification_form_fields(vacancy)
+      visit organisation_path
+      click_on I18n.t("buttons.create_job")
+      fill_in_job_details_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
     end
 
@@ -113,7 +114,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.application_details"))
+          expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
         end
       end
 
@@ -141,7 +142,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.application_details"))
+          expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
         end
       end
 
@@ -170,7 +171,7 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         draft_vacancy.contact_email = "test@email.com"
         draft_vacancy.application_link = "https://example.com"
 
-        fill_in_application_details_form_fields(draft_vacancy)
+        fill_in_applying_for_the_job_form_fields(draft_vacancy)
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 7))
@@ -214,9 +215,9 @@ RSpec.describe "Hiring staff can edit a draft vacancy" do
         published_vacancy = create(:vacancy, :published)
         published_vacancy.organisation_vacancies.create(organisation: school)
         visit edit_organisation_job_path(published_vacancy.id)
-        click_header_link(I18n.t("jobs.application_details"))
+        click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "application_details_form[application_link]", with: "https://example.com"
+        fill_in "applying_for_the_job_form[application_link]", with: "https://example.com"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(

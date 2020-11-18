@@ -43,6 +43,11 @@ refresh_cached_vacancy_statistics:
   class: 'RefreshCachedVacancyStatisticsJob'
   queue: refresh_cached_vacancy_statistics
 
+remove_stale_vacancies:
+  cron: '0 00 * * *'
+  class: 'RemoveStaleVacanciesJob'
+  queue: remove_stale_vacancies
+
 remove_vacancies_that_expired_yesterday:
   cron: '0 03 * * *'
   class: 'RemoveVacanciesThatExpiredYesterday'

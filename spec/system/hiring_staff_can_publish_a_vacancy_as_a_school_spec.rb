@@ -31,17 +31,19 @@ RSpec.describe "Creating a vacancy" do
                                  publish_on: Date.current))
     end
 
-    scenario "redirects to step 1, job specification" do
-      visit new_organisation_job_path
+    scenario "redirects to step 1, job details" do
+      visit organisation_path
+      click_on I18n.t("buttons.create_job")
 
-      expect(page.current_path).to eq(job_specification_organisation_job_path)
+      expect(page.current_path).to eq(organisation_job_build_path(Vacancy.last.id, :job_details))
       expect(page).to have_content(I18n.t("jobs.create_a_job_title_no_org"))
       expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
     end
 
-    describe "#job_specification" do
+    describe "#job_details" do
       scenario "is invalid unless all mandatory fields are submitted" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
         click_on I18n.t("buttons.continue")
 
@@ -59,9 +61,10 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "redirects to step 2, pay package, when submitted successfully" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 7))
@@ -74,9 +77,10 @@ RSpec.describe "Creating a vacancy" do
         let(:suitable_for_nqt) { "yes" }
 
         scenario "Suitable for NQTs is appended to the job roles" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           expect(Vacancy.last.job_roles).to include("nqt_suitable")
@@ -84,32 +88,22 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "vacancy state is create" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         expect(Vacancy.last.state).to eql("create")
-      end
-
-      scenario "tracks the vacancy creation" do
-        visit new_organisation_job_path
-
-        fill_in_job_specification_form_fields(vacancy)
-        click_on I18n.t("buttons.continue")
-
-        activity = Vacancy.last.activities.last
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.key).to eq("vacancy.create")
-        expect(activity.parameters.symbolize_keys).to include(job_title: [nil, vacancy.job_title])
       end
     end
 
     describe "#pay_package" do
       scenario "is invalid unless all mandatory fields are submitted" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.continue")
@@ -124,9 +118,10 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "redirects to step 3, important dates, when submitted successfuly" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -141,9 +136,10 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#important_dates" do
       scenario "is invalid unless all mandatory fields are submitted" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -176,9 +172,10 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "redirects to step 4, supporting documents, when submitted successfuly" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -196,9 +193,10 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#supporting_documents" do
       scenario "is invalid unless all mandatory fields are submitted" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -214,9 +212,10 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "redirects to step 4, application details, when choosing no" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -230,14 +229,15 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
         within("h2.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("jobs.application_details"))
+          expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
         end
       end
 
       scenario "redirects to step 3, upload_documents, when choosing yes" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -388,11 +388,12 @@ RSpec.describe "Creating a vacancy" do
       end
     end
 
-    describe "#application_details" do
+    describe "#applying_for_the_job" do
       scenario "is invalid unless all mandatory fields are submitted" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -410,17 +411,16 @@ RSpec.describe "Creating a vacancy" do
           expect(page).to have_content("There is a problem")
         end
 
-        within_row_for(text: strip_tags(I18n.t("helpers.label.application_details_form.contact_email_html"))) do
-          expect(page).to have_content(
-            I18n.t("activemodel.errors.models.application_details_form.attributes.contact_email.blank"),
-          )
+        within_row_for(text: strip_tags(I18n.t("helpers.label.applying_for_the_job_form.contact_email_html"))) do
+          expect(page).to have_content(I18n.t("applying_for_the_job_errors.contact_email.blank"))
         end
       end
 
       scenario "redirects to the job summary page when submitted successfully" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -432,7 +432,7 @@ RSpec.describe "Creating a vacancy" do
         select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
-        fill_in_application_details_form_fields(vacancy)
+        fill_in_applying_for_the_job_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 6, total: 7))
@@ -444,9 +444,10 @@ RSpec.describe "Creating a vacancy" do
 
     describe "#job_summary" do
       scenario "is invalid unless all mandatory fields are submitted" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -458,7 +459,7 @@ RSpec.describe "Creating a vacancy" do
         select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
-        fill_in_application_details_form_fields(vacancy)
+        fill_in_applying_for_the_job_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         click_on I18n.t("buttons.continue")
@@ -477,9 +478,10 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "redirects to the vacancy review page when submitted successfully" do
-        visit new_organisation_job_path
+        visit organisation_path
+        click_on I18n.t("buttons.create_job")
 
-        fill_in_job_specification_form_fields(vacancy)
+        fill_in_job_details_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_pay_package_form_fields(vacancy)
@@ -491,7 +493,7 @@ RSpec.describe "Creating a vacancy" do
         select_no_for_supporting_documents
         click_on I18n.t("buttons.continue")
 
-        fill_in_application_details_form_fields(vacancy)
+        fill_in_applying_for_the_job_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         fill_in_job_summary_form_fields(vacancy)
@@ -508,9 +510,10 @@ RSpec.describe "Creating a vacancy" do
     describe "#review" do
       context "redirects the user back to the last incomplete step" do
         scenario "redirects to step 2, pay package, when that step has not been completed" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
@@ -523,9 +526,10 @@ RSpec.describe "Creating a vacancy" do
         end
 
         scenario "redirects to step 5, application details, when that step has not been completed" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_pay_package_form_fields(vacancy)
@@ -542,14 +546,15 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
           within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.application_details"))
+            expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
           end
         end
 
         scenario "redirects to step 6, job summary, when that step has not been completed" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_pay_package_form_fields(vacancy)
@@ -561,7 +566,7 @@ RSpec.describe "Creating a vacancy" do
           select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
-          fill_in_application_details_form_fields(vacancy)
+          fill_in_applying_for_the_job_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           v = Vacancy.find_by(job_title: vacancy.job_title)
@@ -574,9 +579,10 @@ RSpec.describe "Creating a vacancy" do
         end
 
         scenario "vacancy state is review when all steps completed" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_pay_package_form_fields(vacancy)
@@ -588,7 +594,7 @@ RSpec.describe "Creating a vacancy" do
           select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
-          fill_in_application_details_form_fields(vacancy)
+          fill_in_applying_for_the_job_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_job_summary_form_fields(vacancy)
@@ -602,9 +608,10 @@ RSpec.describe "Creating a vacancy" do
         end
 
         scenario "vacancy state is review" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_pay_package_form_fields(vacancy)
@@ -616,7 +623,7 @@ RSpec.describe "Creating a vacancy" do
           select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
-          fill_in_application_details_form_fields(vacancy)
+          fill_in_applying_for_the_job_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_job_summary_form_fields(vacancy)
@@ -628,10 +635,10 @@ RSpec.describe "Creating a vacancy" do
             expect(page).to have_content(I18n.t("jobs.review_heading"))
           end
 
-          click_header_link(I18n.t("jobs.application_details"))
+          click_header_link(I18n.t("jobs.applying_for_the_job"))
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
           within("h2.govuk-heading-l") do
-            expect(page).to have_content(I18n.t("jobs.application_details"))
+            expect(page).to have_content(I18n.t("jobs.applying_for_the_job"))
           end
           expect(Vacancy.last.state).to eql("review")
 
@@ -713,7 +720,7 @@ RSpec.describe "Creating a vacancy" do
         end
       end
 
-      context "edit job_specification_details" do
+      context "edit job_details_details" do
         scenario "updates the vacancy details" do
           vacancy = create(:vacancy, :draft, :complete)
           vacancy.organisation_vacancies.create(organisation: school)
@@ -722,30 +729,11 @@ RSpec.describe "Creating a vacancy" do
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
 
-          fill_in "job_specification_form[job_title]", with: "An edited job title"
+          fill_in "job_details_form[job_title]", with: "An edited job title"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
           expect(page).to have_content("An edited job title")
-        end
-
-        scenario "tracks any changes to  the vacancy details" do
-          vacancy = create(:vacancy, :draft, :complete)
-          vacancy.organisation_vacancies.create(organisation: school)
-          current_title = vacancy.job_title
-          current_slug = vacancy.slug
-          visit organisation_job_review_path(vacancy.id)
-          click_header_link(I18n.t("jobs.job_details"))
-
-          expect(page).to have_content(I18n.t("jobs.current_step", step: 1, total: 7))
-
-          fill_in "job_specification_form[job_title]", with: "High school teacher"
-          click_on I18n.t("buttons.update_job")
-
-          activity = vacancy.activities.last
-          expect(activity.session_id).to eq(session_id)
-          expect(activity.parameters.symbolize_keys).to include(job_title: [current_title, "High school teacher"])
-          expect(activity.parameters.symbolize_keys).to include(slug: [current_slug, "high-school-teacher"])
         end
 
         scenario "fails validation until values are set correctly" do
@@ -754,12 +742,12 @@ RSpec.describe "Creating a vacancy" do
           visit organisation_job_review_path(vacancy.id)
           click_header_link(I18n.t("jobs.job_details"))
 
-          fill_in "job_specification_form[job_title]", with: ""
+          fill_in "job_details_form[job_title]", with: ""
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content("Enter a job title")
 
-          fill_in "job_specification_form[job_title]", with: "A new job title"
+          fill_in "job_details_form[job_title]", with: "A new job title"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -769,9 +757,10 @@ RSpec.describe "Creating a vacancy" do
 
       context "editing the supporting_documents" do
         scenario "updates the vacancy details" do
-          visit new_organisation_job_path
+          visit organisation_path
+          click_on I18n.t("buttons.create_job")
 
-          fill_in_job_specification_form_fields(vacancy)
+          fill_in_job_details_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_pay_package_form_fields(vacancy)
@@ -783,7 +772,7 @@ RSpec.describe "Creating a vacancy" do
           select_no_for_supporting_documents
           click_on I18n.t("buttons.continue")
 
-          fill_in_application_details_form_fields(vacancy)
+          fill_in_applying_for_the_job_form_fields(vacancy)
           click_on I18n.t("buttons.continue")
 
           fill_in_job_summary_form_fields(vacancy)
@@ -802,21 +791,21 @@ RSpec.describe "Creating a vacancy" do
         end
       end
 
-      context "editing the application_details" do
+      context "editing applying_for_the_job" do
         scenario "fails validation until values are set correctly" do
           vacancy = create(:vacancy, :draft, :complete)
           vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
-          click_header_link(I18n.t("jobs.application_details"))
+          click_header_link(I18n.t("jobs.applying_for_the_job"))
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
 
-          fill_in "application_details_form[contact_email]", with: "not a valid email"
+          fill_in "applying_for_the_job_form[contact_email]", with: "not a valid email"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content("Enter an email address in the correct format, like name@example.com")
 
-          fill_in "application_details_form[contact_email]", with: "a@valid.email"
+          fill_in "applying_for_the_job_form[contact_email]", with: "a@valid.email"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -827,16 +816,16 @@ RSpec.describe "Creating a vacancy" do
           vacancy = create(:vacancy, :draft, :complete)
           vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
-          click_header_link(I18n.t("jobs.application_details"))
+          click_header_link(I18n.t("jobs.applying_for_the_job"))
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
 
-          fill_in "application_details_form[application_link]", with: "www invalid.domain.com"
+          fill_in "applying_for_the_job_form[application_link]", with: "www invalid.domain.com"
           click_on I18n.t("buttons.update_job")
 
-          expect(page).to have_content(I18n.t("application_details_errors.application_link.url"))
+          expect(page).to have_content(I18n.t("applying_for_the_job_errors.application_link.url"))
 
-          fill_in "application_details_form[application_link]", with: "www.valid-domain.com"
+          fill_in "applying_for_the_job_form[application_link]", with: "www.valid-domain.com"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
@@ -847,30 +836,15 @@ RSpec.describe "Creating a vacancy" do
           vacancy = create(:vacancy, :draft, :complete)
           vacancy.organisation_vacancies.create(organisation: school)
           visit organisation_job_review_path(vacancy.id)
-          click_header_link(I18n.t("jobs.application_details"))
+          click_header_link(I18n.t("jobs.applying_for_the_job"))
 
           expect(page).to have_content(I18n.t("jobs.current_step", step: 5, total: 7))
 
-          fill_in "application_details_form[contact_email]", with: "an@email.com"
+          fill_in "applying_for_the_job_form[contact_email]", with: "an@email.com"
           click_on I18n.t("buttons.update_job")
 
           expect(page).to have_content(I18n.t("jobs.review_heading"))
           expect(page).to have_content("an@email.com")
-        end
-
-        scenario "tracks any changes" do
-          vacancy = create(:vacancy, :draft, :complete)
-          vacancy.organisation_vacancies.create(organisation: school)
-          contact_email = vacancy.contact_email
-          visit organisation_job_review_path(vacancy.id)
-          click_header_link(I18n.t("jobs.application_details"))
-
-          fill_in "application_details_form[contact_email]", with: "an@email.com"
-          click_on I18n.t("buttons.update_job")
-
-          activity = vacancy.activities.last
-          expect(activity.session_id).to eq(session_id)
-          expect(activity.parameters.symbolize_keys).to include(contact_email: [contact_email, "an@email.com"])
         end
       end
 

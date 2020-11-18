@@ -7,7 +7,7 @@ RSpec.describe HiringStaff::SidebarComponent, type: :component do
   let(:school_group_user?) { true }
 
   before do
-    allow_any_instance_of(HiringStaff::JobCreationHelper).to receive(:current_step).and_return(current_step)
+    allow_any_instance_of(HiringStaff::JobCreationHelper).to receive(:current_step_number).and_return(current_step)
     allow_any_instance_of(AuthenticationConcerns).to receive(:school_group_user?).and_return(school_group_user?)
   end
 
@@ -34,7 +34,7 @@ RSpec.describe HiringStaff::SidebarComponent, type: :component do
   end
 
   it "renders the application details step" do
-    expect(rendered_component).to include(I18n.t("jobs.application_details"))
+    expect(rendered_component).to include(I18n.t("jobs.applying_for_the_job"))
   end
 
   it "renders the job summary step" do

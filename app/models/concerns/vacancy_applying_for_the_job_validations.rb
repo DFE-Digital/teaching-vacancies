@@ -1,4 +1,4 @@
-module VacancyApplicationDetailValidations
+module VacancyApplyingForTheJobValidations
   extend ActiveSupport::Concern
 
   included do

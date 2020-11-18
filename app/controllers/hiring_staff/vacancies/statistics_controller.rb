@@ -1,4 +1,6 @@
 class HiringStaff::Vacancies::StatisticsController < HiringStaff::Vacancies::ApplicationController
+  before_action :set_vacancy
+
   def update
     if valid?
       vacancy = Vacancy.find(params[:job_id])

@@ -141,8 +141,6 @@ RSpec.describe "Submitting effectiveness feedback on expired vacancies", js: tru
       invalid_vacancy = create(:vacancy, :expired, starts_on: invalid_starts_on_date)
       invalid_vacancy.organisation_vacancies.create(organisation: school)
 
-      expect(invalid_vacancy.valid?).to eq(false)
-
       visit jobs_with_type_organisation_path(type: :awaiting_feedback)
       submit_feedback_for(invalid_vacancy)
 

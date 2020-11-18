@@ -7,11 +7,6 @@ class Vacancy < ApplicationRecord
   include Auditor::Model
   include Indexable
   include Redis::Objects
-  include VacancyJobSpecificationValidations
-  include VacancyPayPackageValidations
-  include VacancyImportantDateValidations
-  include VacancyApplicationDetailValidations
-  include VacancyJobSummaryValidations
 
   JOB_ROLE_OPTIONS = {
     teacher: 0,
@@ -70,7 +65,7 @@ class Vacancy < ApplicationRecord
 
   has_one :publish_feedback, class_name: "VacancyPublishFeedback"
 
-  has_many :documents
+  has_many :documents, dependent: :destroy
 
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies

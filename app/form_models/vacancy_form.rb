@@ -1,20 +1,19 @@
 class VacancyForm
   include ActiveModel::Model
 
-  attr_accessor :vacancy
+  attr_accessor :params, :vacancy
 
   delegate(*Vacancy.attribute_names.map { |attr| [attr, "#{attr}=", "#{attr}?"] }.flatten, to: :vacancy)
-  delegate :save, to: :vacancy
 
   validates :state, inclusion: { in: %w[copy create edit edit_published review] }
 
   def initialize(params = {})
-    @vacancy = Vacancy.new(
-      params.except(
-        :organisation_id, :organisation_ids, :documents_attributes,
-        :expires_at_hh, :expires_at_mm, :expires_at_meridiem
-      ),
-    )
+    @params = params
+    @vacancy = Vacancy.new(params.except(:documents_attributes, :expires_at_hh, :expires_at_mm, :expires_at_meridiem))
+  end
+
+  def params_to_save
+    params
   end
 
   # This method is only necessary for forms with specific error messages for date inputs.

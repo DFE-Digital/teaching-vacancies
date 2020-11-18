@@ -12,7 +12,7 @@
       .filters-information.moj-action-bar
         %button.govuk-button.govuk-button--secondary{ class: "govuk-!-margin-bottom-0 moj-action-bar__filter", id: "toggle-filters-sidebar" }= t('buttons.hide_filters')
         %span.govuk-body{ class: "govuk-!-margin-left-3 filters-applied-text" }= filters_applied_text
-      = link_to t("buttons.create_job"), new_organisation_job_path, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 float-right"
+      = link_to t("buttons.create_job"), organisation_jobs_path, method: :post, class: "govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-0 float-right"
   .moj-scrollable-pane.moj-scrollable-pane-shadow
     .moj-scrollable-pane__wrapper
       .govuk-tabs.desktop-container-width

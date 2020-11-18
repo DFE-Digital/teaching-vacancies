@@ -19,7 +19,7 @@ class ImportantDatesForm < VacancyForm
   end
 
   def disable_editing_publish_on?
-    published? && vacancy.reload.publish_on.past?
+    published? && (vacancy.reload.publish_on.past? || vacancy.reload.publish_on.today?)
   end
 
   def params_to_save

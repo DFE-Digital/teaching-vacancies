@@ -24,12 +24,10 @@ en:
       inclusion: Select the location where the job will be based
       blank: Select the location where the job will be based
   schools_errors: &schools_errors
-    organisation_id:
-      blank: Select the school where the job will be based
     organisation_ids:
       blank: Select the schools where the job will be based
       invalid: Select more than one school
-  job_specification_errors: &job_specification_errors
+  job_details_errors: &job_details_errors
     job_title:
       blank: Enter a job title
       too_short: Job title must be at least %{count} characters
@@ -68,7 +66,7 @@ en:
   supporting_documents_errors: &supporting_documents_errors
     supporting_documents:
       inclusion: "Please indicate if you'd like to attach supporting documents"
-  application_details_errors: &application_details_errors
+  applying_for_the_job_errors: &applying_for_the_job_errors
     application_link:
       url: Enter a link in the correct format, like http://www.school.ac.uk
     contact_email:
@@ -120,9 +118,9 @@ en:
         schools_form:
           attributes:
             <<: *schools_errors
-        job_specification_form:
+        job_details_form:
           attributes:
-            <<: *job_specification_errors
+            <<: *job_details_errors
         pay_package_form:
           attributes:
             <<: *pay_package_errors
@@ -132,15 +130,15 @@ en:
         supporting_documents_form:
           attributes:
             <<: *supporting_documents_errors
-        application_details_form:
+        applying_for_the_job_form:
           attributes:
-            <<: *application_details_errors
+            <<: *applying_for_the_job_errors
         job_summary_form:
           attributes:
             <<: *job_summary_errors
         copy_vacancy_form:
           attributes:
-            <<: *job_specification_errors
+            <<: *job_details_errors
             <<: *important_dates_errors
   activerecord:
     attributes:
@@ -154,11 +152,11 @@ en:
           attributes:
             <<: *schools_errors
             <<: *job_location_errors
-            <<: *job_specification_errors
+            <<: *job_details_errors
             <<: *pay_package_errors
             <<: *important_dates_errors
             <<: *supporting_documents_errors
-            <<: *application_details_errors
+            <<: *applying_for_the_job_errors
             <<: *job_summary_errors
         vacancy_publish_feedback:
           attributes:

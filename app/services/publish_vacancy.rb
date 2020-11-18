@@ -8,8 +8,6 @@ class PublishVacancy
   end
 
   def call
-    return false unless vacancy.valid?
-
     vacancy.publisher_organisation = current_organisation
     vacancy.publisher_user = current_user
     vacancy.status = :published

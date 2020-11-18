@@ -14,7 +14,8 @@ RSpec.describe "Hiring staff session" do
   end
 
   it "expires after TIMEOUT_PERIOD and redirects to login page" do
-    visit new_organisation_job_path
+    visit organisation_path
+    click_on I18n.t("buttons.create_job")
 
     travel(HiringStaff::BaseController::TIMEOUT_PERIOD + 1.minute) do
       click_on I18n.t("buttons.continue")
@@ -27,12 +28,13 @@ RSpec.describe "Hiring staff session" do
   end
 
   it "doesn't expire before TIMEOUT_PERIOD" do
-    visit new_organisation_job_path
+    visit organisation_path
+    click_on I18n.t("buttons.create_job")
 
     travel(HiringStaff::BaseController::TIMEOUT_PERIOD - 1.minute) do
       click_on I18n.t("buttons.continue")
 
-      expect(page.current_path).to eq job_specification_organisation_job_path
+      expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_details)
     end
   end
 end

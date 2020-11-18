@@ -33,7 +33,7 @@ en:
 
   helpers:
     hint:
-      application_details_form:
+      applying_for_the_job_form:
         application_link: Leave this blank unless candidates can apply directly on the school or council website
         contact_email: This email address will be shown publicly as a point of contact
         contact_number: This phone number will be for any questions applicants may have about the role
@@ -64,12 +64,12 @@ en:
         job_summary: >-
           Give a brief summary of the job that job seekers can quickly scan.
           This will be the first thing they see on the listing or in search engine results
-      job_specification_form:
+      job_details_form:
         job_roles: 'Select all that describe the role'
         job_title: >-
           For secondary school roles include subject and, if relevant,
           level of seniority ('Subject leader for science', for example).
-        subjects_temporary: What subject(s) will the teacher focus on?
+        subjects: What subject(s) will the teacher focus on?
         working_patterns: >-
           Select all working patterns you will consider for the role.
           Flexible working options may attract more candidates.
@@ -97,7 +97,7 @@ en:
           These could include, for example, a job description, person specification or application pack
 
     label:
-      application_details_form:
+      applying_for_the_job_form:
         application_link: Link to online application
         contact_email_html: Contact email (<span class='text-red'>Required</span>)
         contact_number: Contact phone number
@@ -119,7 +119,7 @@ en:
       job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)
-      job_specification_form:
+      job_details_form:
         job_title_html: Job title (<span class='text-red'>Required</span>)
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
       nqt_job_alerts_form:
@@ -144,7 +144,7 @@ en:
         starts_on: Date job starts
       job_location_form:
         job_location_html: Where will the job be based? (<span class='text-red'>Required</span>)
-      job_specification_form:
+      job_details_form:
         job_roles: Job role
         suitable_for_nqt_html: Is this job suitable for NQTs? (<span class='text-red'>Required</span>)
         subjects: Subject(s)

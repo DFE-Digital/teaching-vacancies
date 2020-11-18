@@ -26,7 +26,7 @@
       "fingerprint": "282f4ee9e852d17d2604396f14d1bf447aac29f4f4dcf84d5ad7ea3a62a05b55",
       "check_name": "ReverseTabnabbing",
       "message": "When opening a link in a new tab without setting `rel: \"noopener noreferrer\"`, the new tab can control the parent tab's location. For example, an attacker could redirect to a phishing page.",
-      "file": "app/views/hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details.html.haml",
+      "file": "app/views/hiring_staff/vacancies/edit_vacancy_sections/_edit_applying_for_the_job.html.haml",
       "line": 38,
       "link": "https://brakemanscanner.org/docs/warning_types/reverse_tabnabbing/",
       "code": "link_to(VacancyPresenter.new((current_organisation.all_vacancies.find(params[:job_id]) or (current_organisation.all_vacancies.find(params[:id]) or current_organisation.all_vacancies.find(session_vacancy_id)))).application_link, VacancyPresenter.new((current_organisation.all_vacancies.find(params[:job_id]) or (current_organisation.all_vacancies.find(params[:id]) or current_organisation.all_vacancies.find(session_vacancy_id)))).application_link, :class => \"govuk-link\", :\"aria-label\" => t(\"jobs.aria_labels.application_link_url\"), :target => \"_blank\", :rel => \"noopener\")",
@@ -48,14 +48,14 @@
           "line": 15,
           "file": "app/views/hiring_staff/vacancies/edit.html.haml",
           "rendered": {
-            "name": "hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details",
-            "file": "app/views/hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details.html.haml"
+            "name": "hiring_staff/vacancies/edit_vacancy_sections/_edit_applying_for_the_job",
+            "file": "app/views/hiring_staff/vacancies/edit_vacancy_sections/_edit_applying_for_the_job.html.haml"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "hiring_staff/vacancies/edit_vacancy_sections/_edit_application_details"
+        "template": "hiring_staff/vacancies/edit_vacancy_sections/_edit_applying_for_the_job"
       },
       "user_input": "\"noopener\"",
       "confidence": "Weak",

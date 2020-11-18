@@ -40,7 +40,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         expect(page).to have_content(I18n.t("messages.jobs.action_required.heading"))
         expect(page).to have_content(I18n.t("messages.jobs.action_required.message"))
         expect(page).to have_content(I18n.t("job_summary_errors.about_school.blank", organisation: "school"))
-        expect(page).to have_content(I18n.t("job_specification_errors.suitable_for_nqt.inclusion"))
+        expect(page).to have_content(I18n.t("job_details_errors.suitable_for_nqt.inclusion"))
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
     end
 
-    describe "#job_specification" do
+    describe "#job_details" do
       scenario "can not be edited when validation fails" do
         visit edit_organisation_job_path(vacancy.id)
 
@@ -93,7 +93,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         end
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_specification_form[job_title]", with: ""
+        fill_in "job_details_form[job_title]", with: ""
         click_on I18n.t("buttons.update_job")
 
         expect(page).to have_content("Enter a job title")
@@ -103,7 +103,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_specification_form[job_title]", with: "Assistant Head Teacher"
+        fill_in "job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: "Assistant Head Teacher"))
@@ -116,7 +116,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_specification_form[job_title]", with: "Assistant Head Teacher"
+        fill_in "job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: "Assistant Head Teacher"))
@@ -126,21 +126,6 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         expect(page.current_path).to eq("/jobs/assistant-head-teacher")
       end
 
-      scenario "tracks the vacancy update" do
-        job_title = vacancy.job_title
-
-        visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_details"))
-
-        fill_in "job_specification_form[job_title]", with: "Assistant Head Teacher"
-        click_on I18n.t("buttons.update_job")
-
-        activity = vacancy.activities.last
-        expect(activity.key).to eq("vacancy.update")
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(job_title: [job_title, "Assistant Head Teacher"])
-      end
-
       scenario "notifies the Google index service" do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
@@ -148,7 +133,7 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         visit edit_organisation_job_path(vacancy.id)
         click_header_link(I18n.t("jobs.job_details"))
 
-        fill_in "job_specification_form[job_title]", with: "Assistant Head Teacher"
+        fill_in "job_details_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.update_job")
       end
     end
@@ -180,23 +165,6 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
         expect(page).to have_content("Pay scale 1 to Pay scale 2")
-      end
-
-      scenario "tracks the vacancy update" do
-        salary = vacancy.salary
-
-        visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.pay_package"))
-
-        fill_in "pay_package_form[salary]", with: "Pay scale 1 to Pay scale 2"
-        click_on I18n.t("buttons.update_job")
-
-        activity = vacancy.activities.last
-        expect(activity.key).to eq("vacancy.update")
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(
-          salary: [salary, "Pay scale 1 to Pay scale 2"],
-        )
       end
 
       scenario "adds a job to update the Google index in the queue" do
@@ -265,21 +233,6 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
         # due to a leading newline in the body ("\n1 July 2020").
         expect(page).to have_content(expiry_date.to_s.strip)
-      end
-
-      scenario "tracks the vacancy update" do
-        visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.important_dates"))
-
-        expiry_date = Date.current + 1.week
-        edit_date("expires_on", expiry_date)
-
-        activity = vacancy.activities.last
-        expect(activity.key).to eq("vacancy.update")
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(
-          expires_on: [vacancy.expires_on.to_s, expiry_date.to_s],
-        )
       end
 
       scenario "adds a job to update the Google index in the queue" do
@@ -361,30 +314,30 @@ RSpec.describe "Hiring staff can edit a vacancy" do
       end
     end
 
-    describe "#application_details" do
+    describe "#applying_for_the_job" do
       scenario "can not be edited when validation fails" do
         visit edit_organisation_job_path(vacancy.id)
 
         within("h1.govuk-heading-m") do
           expect(page).to have_content(I18n.t("jobs.edit_job_title", job_title: vacancy.job_title))
         end
-        click_header_link(I18n.t("jobs.application_details"))
+        click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "application_details_form[application_link]", with: "some link"
+        fill_in "applying_for_the_job_form[application_link]", with: "some link"
         click_on I18n.t("buttons.update_job")
 
         within_row_for(text: I18n.t("jobs.application_link")) do
-          expect(page).to have_content(I18n.t("application_details_errors.application_link.url"))
+          expect(page).to have_content(I18n.t("applying_for_the_job_errors.application_link.url"))
         end
       end
 
       scenario "can be successfully edited" do
         visit edit_organisation_job_path(vacancy.id)
 
-        click_header_link(I18n.t("jobs.application_details"))
+        click_header_link(I18n.t("jobs.applying_for_the_job"))
         vacancy.application_link = "https://tvs.com"
 
-        fill_in "application_details_form[application_link]", with: vacancy.application_link
+        fill_in "applying_for_the_job_form[application_link]", with: vacancy.application_link
         click_on I18n.t("buttons.update_job")
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
@@ -392,30 +345,14 @@ RSpec.describe "Hiring staff can edit a vacancy" do
         verify_all_vacancy_details(vacancy)
       end
 
-      scenario "tracks the vacancy update" do
-        application_link = vacancy.application_link
-
-        visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.application_details"))
-
-        fill_in "application_details_form[application_link]", with: "https://schooljobs.com"
-        click_on I18n.t("buttons.update_job")
-
-        activity = vacancy.activities.last
-        expect(activity.key).to eq("vacancy.update")
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(application_link: [application_link,
-                                                                                 "https://schooljobs.com"])
-      end
-
       scenario "adds a job to update the Google index in the queue" do
         expect_any_instance_of(HiringStaff::Vacancies::ApplicationController)
           .to receive(:update_google_index).with(vacancy)
 
         visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.application_details"))
+        click_header_link(I18n.t("jobs.applying_for_the_job"))
 
-        fill_in "application_details_form[application_link]", with: "https://schooljobs.com"
+        fill_in "applying_for_the_job_form[application_link]", with: "https://schooljobs.com"
         click_on I18n.t("buttons.update_job")
       end
     end
@@ -446,23 +383,6 @@ RSpec.describe "Hiring staff can edit a vacancy" do
 
         expect(page.body).to include(I18n.t("messages.jobs.listing_updated", job_title: vacancy.job_title))
         expect(page).to have_content("A summary about the job.")
-      end
-
-      scenario "tracks the vacancy update" do
-        job_summary = vacancy.job_summary
-
-        visit edit_organisation_job_path(vacancy.id)
-        click_header_link(I18n.t("jobs.job_summary"))
-
-        fill_in "job_summary_form[job_summary]", with: "A summary about the job."
-        click_on I18n.t("buttons.update_job")
-
-        activity = vacancy.activities.last
-        expect(activity.key).to eq("vacancy.update")
-        expect(activity.session_id).to eq(session_id)
-        expect(activity.parameters.symbolize_keys).to include(
-          job_summary: [strip_tags(job_summary), "A summary about the job."],
-        )
       end
 
       scenario "adds a job to update the Google index in the queue" do
