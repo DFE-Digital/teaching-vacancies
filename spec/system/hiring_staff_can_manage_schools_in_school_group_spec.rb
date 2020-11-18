@@ -7,8 +7,10 @@ RSpec.shared_examples "a successful edit" do
     expect(page).to have_content(I18n.t("hiring_staff.organisations.schools.index.title",
                                         organisation_type: organisation_type_basic(school_group)))
     expect(page).to have_content(school_group.name)
-    expect(page)
-      .to have_content(I18n.t("hiring_staff.organisations.schools.index.schools", count: school_group.schools.count))
+    expect(page).to have_content(
+      I18n.t("hiring_staff.organisations.schools.index.schools", count: school_group.schools.not_closed.count),
+    )
+    expect(page).not_to have_content("Closed school")
 
     visit edit_organisation_school_path(school_group, school_group: true)
 
@@ -40,6 +42,7 @@ RSpec.describe "Schools in your school group" do
   let(:school_1) { create(:school) }
   let(:school_2) { create(:school) }
   let(:school_3) { create(:school) }
+  let(:school_4) { create(:school, :closed, name: "Closed school") }
 
   before do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
@@ -48,6 +51,7 @@ RSpec.describe "Schools in your school group" do
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_3.id, school_group_id: school_group.id)
+    SchoolGroupMembership.find_or_create_by(school_id: school_4.id, school_group_id: school_group.id)
 
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true

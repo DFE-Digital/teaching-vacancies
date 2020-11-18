@@ -34,7 +34,7 @@ private
   end
 
   def set_organisation_options
-    @organisation_options = current_organisation.schools.order(:name).map do |school|
+    @organisation_options = current_organisation.schools.not_closed.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
     unless current_organisation.group_type == "local_authority"

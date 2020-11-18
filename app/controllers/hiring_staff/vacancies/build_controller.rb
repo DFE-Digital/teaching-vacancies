@@ -85,7 +85,7 @@ private
   def set_school_options
     return unless step == :schools && current_organisation.is_a?(SchoolGroup)
 
-    @school_options = current_organisation.schools.order(:name).map do |school|
+    @school_options = current_organisation.schools.not_closed.order(:name).map do |school|
       OpenStruct.new({ id: school.id, name: school.name, address: full_address(school) })
     end
   end

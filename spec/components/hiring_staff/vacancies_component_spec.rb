@@ -23,43 +23,61 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
   end
 
   context "when organisation has active vacancies" do
-    let(:organisation) { create(:school, name: "A school with jobs") }
-    let(:vacancy) { create(:vacancy, :published) }
+    context "when organisation is a school" do
+      let(:organisation) { create(:school, name: "A school with jobs") }
+      let(:vacancy) { create(:vacancy, :published) }
 
-    before { vacancy.organisation_vacancies.create(organisation: organisation) }
+      before { vacancy.organisation_vacancies.create(organisation: organisation) }
 
-    let!(:inline_component) { render_inline(subject) }
+      let!(:inline_component) { render_inline(subject) }
 
-    it "renders the vacancies component" do
-      expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
-    end
+      it "renders the vacancies component" do
+        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+      end
 
-    it "renders the number of jobs in the heading" do
-      expect(
-        inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html,
-      ).to include("1 published job")
-    end
+      it "renders the number of jobs in the heading" do
+        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+      end
 
-    it "renders the vacancy job title in the table" do
-      expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
-    end
+      it "renders the vacancy job title in the table" do
+        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+      end
 
-    context "when the organisation is a school" do
       it "does not render the vacancy readable job location in the table" do
         expect(inline_component.css(".govuk-table.vacancies > tbody > tr > td#vacancy_location").to_html).to be_blank
       end
 
       it "does not render the filters sidebar" do
-        expect(
-          inline_component.css('.new_managed_organisations_form input[type="submit"]'),
-        ).to be_blank
+        expect(inline_component.css('.new_managed_organisations_form input[type="submit"]')).to be_blank
       end
     end
 
-    context "when the organisation is a trust" do
+    context "when organisation is a trust" do
       let(:organisation) { create(:trust) }
+      let(:open_school) { create(:school, name: "Open school") }
+      let(:closed_school) { create(:school, :closed, name: "Closed school") }
       let!(:vacancy) { create(:vacancy, :published, :at_central_office) }
       let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
+
+      before do
+        organisation.school_group_memberships.create(school: open_school)
+        organisation.school_group_memberships.create(school: closed_school)
+        vacancy.organisation_vacancies.create(organisation: organisation)
+      end
+
+      let!(:inline_component) { render_inline(subject) }
+
+      it "renders the vacancies component" do
+        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+      end
+
+      it "renders the number of jobs in the heading" do
+        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+      end
+
+      it "renders the vacancy job title in the table" do
+        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+      end
 
       it "renders the vacancy readable job location in the table" do
         expect(
@@ -76,12 +94,42 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
       it "renders the trust head office as a filter option" do
         expect(inline_component.css(".new_managed_organisations_form").to_html).to include("Trust head office")
       end
+
+      it "renders the open school as a filter option" do
+        expect(inline_component.css(".new_managed_organisations_form").to_html).to include("Open school")
+      end
+
+      it "does not render the closed school as a filter option" do
+        expect(inline_component.css(".new_managed_organisations_form").to_html).not_to include("Closed school")
+      end
     end
 
     context "when the organisation is a local authority" do
       let(:organisation) { create(:local_authority) }
+      let(:open_school) { create(:school, name: "Open school") }
+      let(:closed_school) { create(:school, :closed, name: "Closed school") }
       let!(:vacancy) { create(:vacancy, :published, :at_one_school) }
       let(:filters) { { managed_school_ids: [], managed_organisations: "all" } }
+
+      before do
+        organisation.school_group_memberships.create(school: open_school)
+        organisation.school_group_memberships.create(school: closed_school)
+        vacancy.organisation_vacancies.create(organisation: open_school)
+      end
+
+      let!(:inline_component) { render_inline(subject) }
+
+      it "renders the vacancies component" do
+        expect(inline_component.css(".govuk-tabs").to_html).not_to be_blank
+      end
+
+      it "renders the number of jobs in the heading" do
+        expect(inline_component.css("section.govuk-tabs__panel > h2.govuk-heading-m").to_html).to include("1 published job")
+      end
+
+      it "renders the vacancy job title in the table" do
+        expect(inline_component.css(".govuk-table.vacancies").to_html).to include(vacancy.job_title)
+      end
 
       it "renders the vacancy readable job location in the table" do
         expect(
@@ -97,6 +145,14 @@ RSpec.describe HiringStaff::VacanciesComponent, type: :component do
 
       it "does not render the trust head office as a filter option" do
         expect(inline_component.css(".new_managed_organisations_form").to_html).not_to include("Trust head office")
+      end
+
+      it "renders the open school as a filter option" do
+        expect(inline_component.css(".new_managed_organisations_form").to_html).to include("Open school")
+      end
+
+      it "does not render the closed school as a filter option" do
+        expect(inline_component.css(".new_managed_organisations_form").to_html).not_to include("Closed school")
       end
     end
   end

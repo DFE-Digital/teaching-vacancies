@@ -60,7 +60,7 @@ private
   end
 
   def set_organisation_options
-    @organisation_options = @organisation.schools.order(:name).map do |school|
+    @organisation_options = @organisation.schools.not_closed.order(:name).map do |school|
       count = Vacancy.in_organisation_ids(school.id).send(selected_scope).count
       OpenStruct.new({ id: school.id, name: school.name, label: "#{school.name} (#{count})" })
     end
