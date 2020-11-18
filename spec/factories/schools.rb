@@ -6,6 +6,7 @@ FactoryBot.define do
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
+    establishment_status { "Open" }
     easting { "1" }
     gias_data do
       {
@@ -35,6 +36,10 @@ FactoryBot.define do
     town { Faker::Address.city.delete("'") }
     urn { Faker::Number.number(digits: 6) }
     url { Faker::Internet.url }
+
+    trait :closed do
+      establishment_status { "Closed" }
+    end
 
     trait :nursery do
       phase { :nursery }

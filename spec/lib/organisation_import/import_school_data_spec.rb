@@ -121,6 +121,7 @@ RSpec.describe ImportSchoolData do
       expect(example_school.address3).to be_nil
       expect(example_school.county).to be_nil
       expect(example_school.detailed_school_type).to eql("Voluntary aided school")
+      expect(example_school.establishment_status).to eql("Open")
       expect(example_school.locality).to eql("Duke's Place")
       expect(example_school.local_authority_within).to eql("City of London")
       expect(example_school.name).to eql("Sir John Cass's Foundation Primary School")
