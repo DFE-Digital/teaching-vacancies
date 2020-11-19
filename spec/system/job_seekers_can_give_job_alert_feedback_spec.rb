@@ -80,6 +80,18 @@ RSpec.describe "A job seeker can give feedback on a job alert" do
         expect(activity.key).to eq("job_alert_feedback.update")
       end
     end
+
+    context "when recaptcha score is invalid" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(true)
+        allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return({ "score" => 0.1 })
+      end
+
+      scenario "redirects to invalid_recaptcha path" do
+        click_on "Submit"
+        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Job alert feedback"))
+      end
+    end
   end
 
   context "with the incorrect token" do

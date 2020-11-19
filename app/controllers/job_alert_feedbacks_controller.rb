@@ -26,7 +26,9 @@ class JobAlertFeedbacksController < ApplicationController
     @feedback.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
     @feedback.save
 
-    if @feedback_form.valid?
+    if recaptcha_is_valid && recaptcha_reply && invalid_recaptcha_score?
+      redirect_to invalid_recaptcha_path(form_name: @feedback.class.name.underscore.humanize)
+    elsif @feedback_form.valid?
       @feedback.update(form_params)
       Auditor::Audit.new(@feedback, "job_alert_feedback.update", current_session_id).log
       redirect_to root_path, success: I18n.t("job_alert_feedbacks.submitted.comment")
