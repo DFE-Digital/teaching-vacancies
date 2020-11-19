@@ -30,9 +30,6 @@ jobs:
     name: build docker image and deploy
     needs: turnstyle
     runs-on: ubuntu-20.04
-    outputs:
-      BRANCH: ${{ steps.set_env_vars.outputs.BRANCH }}
-      TAG: ${{ steps.set_env_vars.outputs.TAG }}
     steps:
     - uses: actions/checkout@v2
       name: Checkout Code
@@ -45,12 +42,10 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
-        BRANCH=$(echo ${GITHUB_REF} | cut -d/ -f3)
-        TAG=${BRANCH}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
+        BRANCH=${{ github.head_ref }}
+        TAG=${BRANCH}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
         echo "BRANCH=${BRANCH}" >> $GITHUB_ENV
         echo "TAG=${TAG}" >> $GITHUB_ENV
-        echo ::set-output name=BRANCH::${BRANCH}
-        echo ::set-output name=TAG::${TAG}
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -104,7 +99,7 @@ jobs:
       with:
         workflow: Deploy App to Environment # Workflow name
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{"environment": "${ env.BRANCH }", "tag": "${ env.TAG }"}'
+        inputs: '{"environment": "${{ env.BRANCH }}", "tag": "${{ env.TAG }}"}'
 
     - name: Wait for Deploy App Workflow
       id: wait_for_deploy_app
@@ -124,7 +119,7 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':tada:'
         SLACK_TITLE: Deployment success
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ steps.set_env_vars.outputs.TAG }} to ${{ steps.set_env_vars.outputs.BRANCH }} - successful :rocket:'
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to ${{ env.BRANCH }} - successful :rocket:'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Send failure message to twd_tv_dev channel
@@ -135,5 +130,5 @@ jobs:
         SLACK_USERNAME: CI Deployment
         SLACK_ICON_EMOJI: ':cry:'
         SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment of Docker tag ${{ steps.set_env_vars.outputs.TAG }} to ${{ steps.set_env_vars.outputs.BRANCH }} - failure'
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to ${{ env.BRANCH }} - failure'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
