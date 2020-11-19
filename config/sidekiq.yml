@@ -23,6 +23,7 @@
   - [import_trust_data, 1]
   - [refresh_cached_vacancy_statistics, 1]
   - [refresh_vacancy_facets, 1]
+  - [remove_invalid_subscriptions, 1]
   - [remove_stale_vacancies, 1]
   - [remove_vacancies_that_expired_yesterday, 1]
   - [reset_sessions, 1]
@@ -57,6 +58,8 @@ export_users:
 refresh_cached_vacancy_statistics:
   :concurrency: 1
 refresh_vacancy_facets:
+  :concurrency: 1
+remove_invalid_subscriptions:
   :concurrency: 1
 remove_stale_vacancies:
   :concurrency: 1

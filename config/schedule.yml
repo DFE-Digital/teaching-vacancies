@@ -43,6 +43,11 @@ refresh_cached_vacancy_statistics:
   class: 'RefreshCachedVacancyStatisticsJob'
   queue: refresh_cached_vacancy_statistics
 
+remove_invalid_subscriptions:
+  cron: '0 05 * * *'
+  class: 'RemoveInvalidSubscriptionsJob'
+  queue: remove_invalid_subscriptions
+
 remove_stale_vacancies:
   cron: '0 00 * * *'
   class: 'RemoveStaleVacanciesJob'
