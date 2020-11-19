@@ -1,4 +1,4 @@
-  #scheduled query that appends new rows to CALCULATED_daily_MAT_time_metrics table
+  #scheduled query that appends new rows to CALCULATED_daily_MAT_time_metrics table 
 WITH
   dates AS ( #the range of dates we're calculating for
   SELECT
@@ -64,7 +64,7 @@ WITH
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.dsi_users` AS user
     ON
-      CAST(user.organisation_uid AS STRING) = trust.uid
+      CAST(user.trust_uid AS STRING) = trust.uid
     LEFT JOIN
       `teacher-vacancy-service.production_dataset.vacancies_published` AS vacancy
     ON
