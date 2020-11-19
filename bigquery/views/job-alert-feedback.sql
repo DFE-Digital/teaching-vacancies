@@ -2,6 +2,7 @@ SELECT
   id,
   relevant_to_user,
   comment,
+  created_at,
   ARRAY_TO_STRING(ARRAY(
     SELECT
       CONCAT("https://teaching-vacancies.service.gov.uk/jobs/",vacancy.slug) AS vacancy_url
@@ -66,3 +67,5 @@ FROM
 WHERE
   recaptcha_score IS NULL
   OR recaptcha_score > 0.5
+ORDER BY
+  created_at DESC
