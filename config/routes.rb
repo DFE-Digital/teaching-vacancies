@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   end
 
   post "/errors/csp_violation", to: "errors#csp_violation"
+  get "/invalid-recaptcha", to: "errors#invalid_recaptcha", as: "invalid_recaptcha"
   match "/401", to: "errors#unauthorised", via: :all
   match "/404", to: "errors#not_found", via: :all
   match "/422", to: "errors#unprocessable_entity", via: :all

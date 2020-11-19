@@ -30,4 +30,17 @@ RSpec.describe ErrorsController, type: :controller do
       expect(response).to have_http_status(:no_content)
     end
   end
+
+  describe "GET #invalid_recaptcha" do
+    it "sends the error to Rollbar" do
+      expect(Rollbar).to receive(:error).with("Invalid recaptcha", details: "this form")
+
+      get :invalid_recaptcha, params: { form_name: "this form" }
+    end
+
+    it "returns unauthorised" do
+      get :invalid_recaptcha
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
