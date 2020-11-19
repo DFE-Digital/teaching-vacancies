@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "A job seeker can subscribe to an NQT job alert" do
+RSpec.describe "NQT job alerts" do
   describe "A job seeker" do
     scenario "can successfully subscribe to a job alert" do
       visit nqt_job_alerts_path
@@ -20,6 +20,19 @@ RSpec.describe "A job seeker can subscribe to an NQT job alert" do
       click_on I18n.t("buttons.go_to_teaching_vacancies")
 
       expect(page).to have_current_path(jobs_path(keyword: "nqt Maths", location: "London"))
+    end
+  end
+
+  context "when recaptcha score is invalid" do
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(true)
+      allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return({ "score" => 0.1 })
+    end
+
+    scenario "redirects to invalid_recaptcha path" do
+      visit nqt_job_alerts_path
+      click_on I18n.t("buttons.subscribe")
+      expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Nqt job alerts form"))
     end
   end
 end
