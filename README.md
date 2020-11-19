@@ -3,6 +3,7 @@
 * [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
 * [API Keys](/documentation/api-keys.md)
 * [Authentication](/documentation/authentication.md)
+* [Continuous delivery](/documentation/continuous-delivery.md)
 * [Hosting](/documentation/hosting.md)
 * [Logging](/documentation/logging.md)
 * [Onboarding](/documentation/onboarding.md)
