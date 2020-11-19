@@ -4,7 +4,7 @@ WITH
   SELECT
     date
   FROM
-    UNNEST(GENERATE_DATE_ARRAY('2020-10-19', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY), INTERVAL 1 DAY)) AS date #all dates between 19/10/20 and yesterday
+    UNNEST(GENERATE_DATE_ARRAY('2020-11-19', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY), INTERVAL 1 DAY)) AS date #all dates between 19/10/20 and yesterday
   WHERE
     #only calculate these metrics for dates we don't already have within this range
     date NOT IN (
