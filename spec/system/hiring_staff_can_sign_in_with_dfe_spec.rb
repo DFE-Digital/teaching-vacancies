@@ -126,6 +126,49 @@ RSpec.describe "Hiring staff signing-in with DfE Sign In" do
     end
   end
 
+  context "with DSI data including a school group (trust or local authority) that the school belongs to" do
+    let(:dsi_data) { { "trust_uids" => %w[14323], "school_urns" => %w[246757 953341 122792], "la_codes" => %w[323] } }
+    let!(:user) { create(:user, email: dsi_email_address, dsi_data: dsi_data) }
+    let(:school) { create(:school, urn: "246757") }
+
+    before do
+      allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
+
+      SchoolGroupMembership.create(school_group: school_group, school: school)
+
+      stub_authentication_step(school_urn: "246757", email: dsi_email_address)
+      stub_authorisation_step
+      stub_sign_in_with_multiple_organisations
+
+      visit root_path
+      sign_in_user
+    end
+
+    context "with trust" do
+      let(:school_group) { create(:trust, uid: "14323") }
+
+      it "associates the user with the trust instead of the school" do
+        expect(current_path).to eql(organisation_managed_organisations_path)
+      end
+
+      it "shows the trust name" do
+        expect(page).to have_content(school_group.name)
+      end
+    end
+
+    context "with local_authority" do
+      let(:school_group) { create(:local_authority, local_authority_code: "323") }
+
+      it "associates the user with the local_authority instead of the school" do
+        expect(current_path).to eql(organisation_managed_organisations_path)
+      end
+
+      it "shows the local_authority name" do
+        expect(page).to have_content(school_group.name)
+      end
+    end
+  end
+
   context "with valid credentials that match a Trust" do
     let(:organisation) { create(:trust) }
     let(:user_preference) { instance_double(UserPreference) }

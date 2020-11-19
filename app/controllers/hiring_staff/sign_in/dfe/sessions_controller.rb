@@ -51,6 +51,7 @@ private
       multiple_organisations: authorisation_permissions.many_organisations?,
       id_token: id_token,
     )
+    use_school_group_if_available
     Rails.logger.info(updated_session_details)
     audit_successful_authorisation
   end
@@ -137,5 +138,19 @@ private
   def allowed_user?
     school_urn.present? || trust_uid.present? || (local_authority_code.present? &&
       (Rails.env.staging? || Rails.env.development? || ALLOWED_LOCAL_AUTHORITIES.include?(local_authority_code)))
+  end
+
+  def use_school_group_if_available
+    user = User.find_by(email: identifier)
+    user_trusts = user&.dsi_data&.fetch("trust_uids", [])
+    user_local_authorities = user&.dsi_data&.fetch("la_codes", [])
+    return unless user_trusts&.any? || user_local_authorities&.any?
+
+    school = School.find_by(urn: school_urn)
+    school_group = school.school_groups.first
+    return unless school_group
+
+    session.update(urn: "", uid: school_group.uid) if user_trusts.include?(school_group.uid)
+    session.update(urn: "", la_code: school_group.local_authority_code) if user_local_authorities.include?(school_group.local_authority_code)
   end
 end
