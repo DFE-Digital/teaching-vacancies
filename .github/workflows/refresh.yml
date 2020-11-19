@@ -53,14 +53,13 @@ jobs:
           ref: ${{ github.ref }}
           timeoutSeconds: 300
           intervalSeconds: 15
-
-      - name: Send success message to twd_tv_dev channel
-        if: ${{ steps.wait_for_deploy_app.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'          
+    
+      - name: Send job status message to twd_tv_dev channel
+        if: ${{ always() && github.ref == 'refs/heads/master' }}
         uses: rtCamp/action-slack-notify@v2.1.1
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
-          SLACK_ICON_EMOJI: ':tada:'
-          SLACK_TITLE: ${{ github.event.inputs.environment }} env vars refresh successful
-          SLACK_MESSAGE: 'Refresh of Docker tag ${{ steps.get_docker_tag.outputs.tag }} to ${{ github.event.inputs.environment }} - successful :rocket:'
+          SLACK_TITLE: ${{ github.event.inputs.environment }} env vars refresh ${{ job.status }}
+          SLACK_MESSAGE: 'Deployment of Docker tag ${{ steps.get_docker_tag.outputs.tag }} to ${{ github.event.inputs.environment }} - ${{ job.status }}'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
