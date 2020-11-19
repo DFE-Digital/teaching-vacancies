@@ -40,6 +40,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/tabs';
 @import 'application/timeline';
 
+@import 'application/jobSeekers/account';
 @import 'application/jobSeekers/cookies-banner';
 @import 'application/jobSeekers/feedback-form';
 @import 'application/jobSeekers/location-search';
@@ -73,6 +74,9 @@ body {
     border-bottom: 10px solid govuk-colour('orange');
   }
 
+  &.jobseekers_saved_jobs_index,
+  &.jobseekers_subscriptions_index,
+  &.jobseekers_accounts_show,
   &.vacancies_index,
   &.vacancies_show,
   &.vacancies_preview,

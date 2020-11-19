@@ -12,13 +12,13 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe "#body_class" do
     before do
-      expect(controller).to receive(:controller_name) { "foo" }
+      expect(controller).to receive(:controller_path) { "foo/baz" }
       expect(controller).to receive(:action_name) { "bar" }
       allow(controller).to receive(:authenticated?) { false }
     end
 
     it "returns the controller and action name" do
-      expect(helper.body_class).to match(/foo_bar/)
+      expect(helper.body_class).to match(/foo_baz_bar/)
     end
 
     it "does not return the authenticated class" do

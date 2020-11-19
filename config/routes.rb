@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :jobseekers if JobseekerAccountsFeature.enabled?
+  constraints(-> { JobseekerAccountsFeature.enabled? }) do
+    devise_for :jobseekers, controllers: { sessions: "jobseekers/sessions" }
+
+    namespace :jobseekers do
+      resources :saved_jobs, only: %i[index]
+      resources :subscriptions, only: %i[index]
+      resource :account, only: %i[show]
+    end
+  end
 
   root "pages#home"
 
