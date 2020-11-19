@@ -40,8 +40,7 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
-        TAG=${GITHUB_SHA}
-        echo "TAG=${TAG}" >> $GITHUB_ENV
+        echo "TAG=${{ github.sha }}" >> $GITHUB_ENV
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -90,20 +89,25 @@ jobs:
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
         target: production
 
-    - name: Deploy to staging
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
-      run: |
-        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        cd terraform/app
-        terraform init -reconfigure -input=false
-        terraform workspace select staging || terraform workspace new staging
-        terraform apply -var-file ../workspace-variables/staging.tfvars -auto-approve -input=false
+    - name: Trigger Deploy App Workflow for staging
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: Deploy App to Environment # Workflow name
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{"environment": "staging", "tag": "${{ env.TAG }}"}'
+
+    - name: Wait for Deploy App Workflow for staging
+      id: wait_for_deploy_app_staging
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Deploy app to environment # Job name within workflow
+        ref: ${{ github.ref }}
+        timeoutSeconds: 300
+        intervalSeconds: 15
 
     - name: Trigger Smoke Test
+      if: ${{ steps.wait_for_deploy_app_staging.outputs.conclusion == 'success' }}
       uses: benc-uk/workflow-dispatch@v1.1
       with:
         workflow: Smoke Test Manual # Workflow name
@@ -120,50 +124,43 @@ jobs:
         timeoutSeconds: 300
         intervalSeconds: 15
 
-    - name: Deploy to production
+    - name: Trigger Deploy App Workflow
       if: ${{ steps.wait_for_smoke_test.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
-      run: |
-        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        cd terraform/app
-        terraform init -reconfigure -input=false
-        terraform workspace select production || terraform workspace new production
-        terraform apply -var-file ../workspace-variables/production.tfvars -auto-approve -input=false
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        workflow: Deploy App to Environment # Workflow name
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{"environment": "production", "tag": "${{ env.TAG }}"}'
+
+    - name: Wait for Deploy App Workflow
+      id: wait_for_deploy_app_production
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        checkName: Deploy app to environment # Job name within workflow
+        ref: ${{ github.ref }}
+        timeoutSeconds: 300
+        intervalSeconds: 15
 
     - name: Deploy monitoring
+      if: ${{ steps.wait_for_deploy_app_production.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
-        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
+        export TF_VAR_paas_app_docker_image=${{ env.DOCKERHUB_REPOSITORY }}:${{ env.TAG }}
         cd terraform/monitoring
         terraform init -upgrade=true -reconfigure -input=false
         terraform apply -input=false -auto-approve
 
-    - name: Send success message to twd_tv_dev channel
-      if: ${{ success() }}
+    - name: Send job status message to twd_tv_dev channel
+      if: ${{ always() && github.ref == 'refs/heads/master' }}
       uses: rtCamp/action-slack-notify@v2.1.1
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
-        SLACK_ICON_EMOJI: ':tada:'
-        SLACK_TITLE: Deployment success
-        SLACK_MESSAGE: 'Deployment to production on GOV.UK PaaS successful :rocket:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-    - name: Send failure message to twd_tv_dev channel
-      if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@v2.1.1
-      env:
-        SLACK_CHANNEL: twd_tv_dev
-        SLACK_USERNAME: CI Deployment
-        SLACK_ICON_EMOJI: ':cry:'
-        SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Deployment to production failed'
+        SLACK_TITLE: Deployment ${{ job.status }}
+        SLACK_MESSAGE: 'Deployment of Docker tag ${{ env.TAG }} to production - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

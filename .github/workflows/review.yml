@@ -12,7 +12,6 @@ on:
 
 env:
   DOCKERHUB_REPOSITORY: dfedigital/teaching-vacancies
-  PR_NAME: ${{ format('pr-{0}', github.event.number) }}
 
 jobs:
   turnstyle:
@@ -55,11 +54,9 @@ jobs:
     - name: Set environment variables
       id: set_env_vars
       run: |
-        BRANCH=${{ github.head_ref }}
-        TAG=review-${PR_NAME}-${GITHUB_SHA}-$(date '+%Y%m%d%H%M%S')
-        $(echo "BRANCH=${BRANCH}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
+        $(echo "BRANCH=${{ github.head_ref }}" | sed -e 's/\//_/g' >> $GITHUB_ENV)
+        TAG=review-pr-${{ github.event.number }}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
         echo "TAG=${TAG}" >> $GITHUB_ENV
-
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -95,47 +92,38 @@ jobs:
           ${{ env.DOCKERHUB_REPOSITORY }}:${{ env.BRANCH }}
         target: production
 
-    - name: Terraform deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
-        TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
-      run: |
-        export TF_VAR_paas_app_docker_image=${DOCKERHUB_REPOSITORY}:${TAG}
-        export TF_VAR_environment=review-${PR_NAME}
-        cd terraform/app
-        terraform init -reconfigure -input=false -backend-config="workspace_key_prefix=review:"
-        terraform workspace select review-${PR_NAME} || terraform workspace new review-${PR_NAME}
-        terraform apply -var-file ../workspace-variables/review.tfvars -auto-approve -input=false
+    - name: Trigger Deploy App Workflow for review
+      uses: benc-uk/workflow-dispatch@v1.1
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        ref: ${{ github.event.pull_request.head.ref || github.ref }}
+        workflow: Deploy App to Environment # Workflow name
+        inputs: '{"environment": "review-pr-${{ github.event.number }}", "tag": "${{ env.TAG }}"}'
+
+    - name: Wait for Deploy App Workflow
+      id: wait_for_deploy_app
+      uses: fountainhead/action-wait-for-check@v1.0.0
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        ref: ${{ github.event.pull_request.head.sha || github.ref }}
+        checkName: Deploy app to environment # Job name within workflow
+        timeoutSeconds: 300
+        intervalSeconds: 15
 
     - name: Post PR comment
-      if: ${{ success() }}
+      if: ${{ steps.wait_for_deploy_app.outputs.conclusion == 'success' }}
       run: |
         curl --header "Accept: application/vnd.github.v3+json" \
              --header "Authorization: Bearer ${{ github.token }}" \
              --request POST \
-             --data '{"body": "Review app deployed to https://teaching-vacancies-review-${{ format('pr-{0}', github.event.number) }}.london.cloudapps.digital"}' \
+             --data '{"body": "Review app deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital"}' \
              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
 
-    - name: Send success message to twd_tv_dev channel
-      if: ${{ success() }}
+    - name: Send job status message to twd_tv_dev channel
       uses: rtCamp/action-slack-notify@v2.1.1
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
-        SLACK_ICON_EMOJI: ':tada:'
-        SLACK_TITLE: Deployment success
-        SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://teaching-vacancies-review-${{ env.PR_NAME }}.london.cloudapps.digital :rocket:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-    - name: Send failure message to twd_tv_dev channel
-      if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@v2.1.1
-      env:
-        SLACK_CHANNEL: twd_tv_dev
-        SLACK_USERNAME: CI Deployment
-        SLACK_ICON_EMOJI: ':cry:'
-        SLACK_TITLE: Deployment failure
-        SLACK_MESSAGE: 'Review app deployment failed for PR ${{ github.event.number }}'
+        SLACK_TITLE: Deployment ${{ job.status }}
+        SLACK_MESSAGE: 'Review app for PR ${{ github.event.number }} deployed to https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital - ${{ job.status }}'
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
