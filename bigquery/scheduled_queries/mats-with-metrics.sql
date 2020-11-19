@@ -44,14 +44,14 @@ FROM (
     FROM
       `teacher-vacancy-service.production_dataset.dsi_users` AS user
     WHERE
-      CAST(user.organisation_uid AS STRING)=MAT.uid ) AS number_of_users,
+      CAST(user.trust_uid AS STRING)=MAT.uid ) AS number_of_users,
     (
     SELECT
       COUNT(user_id)
     FROM
       `teacher-vacancy-service.production_dataset.dsi_approvers` AS approver
     WHERE
-      CAST(approver.organisation_uid AS STRING)=MAT.uid ) AS number_of_approvers,
+      CAST(approver.trust_uid AS STRING)=MAT.uid ) AS number_of_approvers,
     (
     SELECT
       COUNT(DISTINCT
