@@ -56,7 +56,7 @@ jobs:
 
       - name: Send success message to twd_tv_dev channel
         if: ${{ steps.wait_for_deploy_app.outputs.conclusion == 'success' }} && github.ref == 'refs/heads/master'          
-        uses: rtCamp/action-slack-notify@v2.1.0
+        uses: rtCamp/action-slack-notify@v2.1.1
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment
