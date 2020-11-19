@@ -67,7 +67,7 @@ WITH
         FROM
           `teacher-vacancy-service.production_dataset.CALCULATED_timestamped_dsi_users` AS users
         WHERE
-          users.organisation_uid=trust.uid
+          users.trust_uid=trust.uid
           AND users.from_date <= dates.date
           AND (users.to_date IS NULL
             OR users.to_date > dates.date)) >= 1 ) AS signed_up,
