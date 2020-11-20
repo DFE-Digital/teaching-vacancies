@@ -15,7 +15,9 @@ class SubscriptionsController < ApplicationController
     recaptcha_is_valid = verify_recaptcha(model: subscription, action: "subscription")
     subscription.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
 
-    if @subscription_form.valid?
+    if recaptcha_is_valid && recaptcha_reply && invalid_recaptcha_score?
+      redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
+    elsif @subscription_form.valid?
       subscription.save
       Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.create", current_session_id).log
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)

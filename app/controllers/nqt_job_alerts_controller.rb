@@ -13,7 +13,9 @@ class NqtJobAlertsController < ApplicationController
     recaptcha_is_valid = verify_recaptcha(model: subscription, action: "subscription")
     subscription.recaptcha_score = recaptcha_reply["score"] if recaptcha_is_valid && recaptcha_reply
 
-    if @nqt_job_alerts_form.valid?
+    if recaptcha_is_valid && recaptcha_reply && invalid_recaptcha_score?
+      redirect_to invalid_recaptcha_path(form_name: @nqt_job_alerts_form.class.name.underscore.humanize)
+    elsif @nqt_job_alerts_form.valid?
       subscription.save
       AuditSubscriptionCreationJob.perform_later(@subscription.to_row)
       SubscriptionMailer.confirmation(subscription.id).deliver_later

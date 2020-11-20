@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
+
   before_action :redirect_to_domain
 
   add_flash_types :success, :danger
@@ -79,5 +81,9 @@ private
 
   def set_headers
     response.set_header("X-Robots-Tag", "noindex, nofollow")
+  end
+
+  def invalid_recaptcha_score?
+    recaptcha_reply["score"] < SUSPICIOUS_RECAPTCHA_THRESHOLD
   end
 end

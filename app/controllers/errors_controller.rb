@@ -36,4 +36,13 @@ class ErrorsController < ApplicationController
     Rollbar.error("CSP Violation", details: request.raw_post)
     head :no_content
   end
+
+  def invalid_recaptcha
+    @form = params[:form_name]
+    Rollbar.error("Invalid recaptcha", details: @form)
+
+    respond_to do |format|
+      format.html { render status: :unauthorized }
+    end
+  end
 end
