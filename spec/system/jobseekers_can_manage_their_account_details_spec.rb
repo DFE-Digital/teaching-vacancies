@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their account details" do
-  let(:jobseeker) { create(:jobseeker, email: "job.seeker@example.com") }
+  let(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
 
   before do
     allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(true)
@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can manage their account details" do
     it "shows their account details" do
       within("dl") do
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.email"))
-        expect(page).to have_content("job.seeker@example.com")
+        expect(page).to have_content("jobseeker@example.com")
       end
     end
   end
