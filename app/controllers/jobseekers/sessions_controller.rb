@@ -1,8 +1,10 @@
 class Jobseekers::SessionsController < Devise::SessionsController
-  def create
-    super do
-      # Devise adds a :notice flash on login, we want it to be a :success flash
-      flash[:success] = flash.discard(:notice)
-    end
+  after_action :replace_devise_notice_flash_with_success!, only: %i[create destroy]
+
+private
+
+  def replace_devise_notice_flash_with_success!
+    # We want to display Devise notices for sessions (but not alerts) as success messages instead
+    flash[:success] = flash.discard(:notice)
   end
 end
