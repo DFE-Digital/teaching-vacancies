@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "A job seeker can give feedback on a job alert" do
+RSpec.describe "A jobseeker can give feedback on a job alert" do
   let(:search_criteria) { { keyword: "Math", location: "London" } }
   let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria.to_json) }
   let(:relevant_to_user) { true }

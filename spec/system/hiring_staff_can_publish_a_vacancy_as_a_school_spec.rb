@@ -870,7 +870,7 @@ RSpec.describe "Creating a vacancy" do
         expect(vacancy.reload.publisher_user_id).to eq(current_user.id)
       end
 
-      scenario "view the published listing as a job seeker" do
+      scenario "view the published listing as a jobseeker" do
         vacancy = create(:vacancy, :draft)
         vacancy.organisation_vacancies.create(organisation: school)
 

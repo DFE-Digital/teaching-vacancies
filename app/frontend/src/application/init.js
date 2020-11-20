@@ -1,5 +1,5 @@
 import ClipboardJS from 'clipboard';
-import './jobSeekers/init';
+import './jobseekers/init';
 import './hiringStaff/init';
 
 document.addEventListener('DOMContentLoaded', () => {

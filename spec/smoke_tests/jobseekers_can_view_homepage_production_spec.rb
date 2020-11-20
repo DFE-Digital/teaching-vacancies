@@ -2,7 +2,7 @@ require "capybara/rspec"
 require "i18n_helper"
 
 RSpec.describe "Page availability", js: true, smoke_test: true do
-  context "Job seeker visits vacancy page" do
+  context "Jobseeker visits vacancy page" do
     it "should ensure users can search and view a job vacancy page" do
       page = Capybara::Session.new(:selenium_chrome_headless)
 

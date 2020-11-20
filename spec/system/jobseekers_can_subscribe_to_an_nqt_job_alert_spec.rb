@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "NQT job alerts" do
-  describe "A job seeker" do
+  describe "A jobseeker" do
     scenario "can successfully subscribe to a job alert" do
       visit nqt_job_alerts_path
 
