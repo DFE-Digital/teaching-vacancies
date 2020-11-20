@@ -216,3 +216,7 @@ User.create(oid: "7AEC8E8D-6036-4E6E-92A4-800E381A12E0",
             dsi_data: { "school_urns" => %w[137138 144523], "trust_uids" => %w[16644], "la_codes" => %w[852] },
             family_name: "Carter",
             given_name: "Valentine")
+
+Jobseeker.create(email: "jobseeker@example.com",
+                 password: "password",
+                 confirmed_at: Time.zone.now)
