@@ -32,7 +32,7 @@ jobs:
           node-version: '12.x'
 
       - name: Run smoke test
-        run: bundle exec rspec spec/smoke_tests/job_seekers_can_view_homepage_${{ github.event.inputs.environment }}_spec.rb --tag smoke_test
+        run: bundle exec rspec spec/smoke_tests/jobseekers_can_view_homepage_${{ github.event.inputs.environment }}_spec.rb --tag smoke_test
 
       - name: Slack notification
         if: ${{ failure() }}
