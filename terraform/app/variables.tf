@@ -43,7 +43,9 @@ variable paas_password {
   default = ""
 }
 
-variable paas_app_docker_image {}
+variable paas_app_docker_image {
+  default = "dfedigital/teaching-vacancies:placeholder"
+}
 
 variable paas_app_start_timeout {
   default = 300
