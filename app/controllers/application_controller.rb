@@ -53,6 +53,12 @@ class ApplicationController < ActionController::Base
     params.permit(:utm_source, :utm_medium, :utm_campaign, :utm_term, :utm_content)
   end
 
+protected
+
+  def after_sign_in_path_for(_resource)
+    jobseekers_saved_jobs_path
+  end
+
 private
 
   def append_info_to_payload(payload)

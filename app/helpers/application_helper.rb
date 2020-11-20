@@ -8,7 +8,7 @@ module ApplicationHelper
 
   def body_class
     auth_class = authenticated? ? "hiring-staff" : ""
-    action_class = controller_name + "_" + action_name
+    action_class = controller_path.tr("/", "_") + "_" + action_name
     "govuk-template__body app-body-class #{auth_class} #{action_class}"
   end
 

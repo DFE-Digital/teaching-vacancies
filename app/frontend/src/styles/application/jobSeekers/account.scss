@@ -1,0 +1,32 @@
+.account-header {
+  background-color: govuk-colour('light-grey');
+  left: 50%;
+  margin-bottom: govuk-spacing(6);
+  margin-left: -50vw;
+  padding-top: govuk-spacing(1);
+  position: relative;
+  width: 100vw;
+
+  .moj-primary-navigation__container {
+    margin: 0;
+  }
+}
+
+.account-header__user-identifier {
+  @include govuk-font(24);
+  margin: govuk-spacing(3) 0;
+}
+
+.account-sidebar {
+  border-top: 5px solid $govuk-link-colour;
+  margin-top: govuk-spacing(3);
+
+  @include govuk-media-query ($from: desktop) {
+    margin-top: 0;
+  }
+}
+
+.account-sidebar__heading {
+  @extend %govuk-heading-m;
+  margin: govuk-spacing(3) 0;
+}
