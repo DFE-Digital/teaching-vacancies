@@ -3,8 +3,7 @@ SELECT
   time,
   device_category,
   #our URLs often don't include a page parameter, in which case we display page 1 of results - this line sets deepest_results_page_viewed to 1 if no parameter was specified in the URL
-  IFNULL(CAST(deepest_results_page_viewed AS INT64),
-    1) AS deepest_results_page_viewed,
+  deepest_results_page_viewed,
   results_pages_viewed,
   number_of_results_pages_viewed,
   criteria_used,
@@ -85,8 +84,8 @@ FROM (
       `teacher-vacancy-service.production_dataset.remove_parameter`(`teacher-vacancy-service.production_dataset.decode_url_escape_characters`(cs_uri_query),
         "page") AS search_parameters,
       #handle strange characters and discard the page parameter so that we can group by search parameters without it
-      MAX(`teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(cs_uri_query,
-          "page")) AS deepest_results_page_viewed,
+      MAX(SAFE_CAST(`teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(cs_uri_query,
+            "page") AS INT64)) AS deepest_results_page_viewed,
       #record the highest page number of a results page viewed - note this is not the same as the search depth, because users can jump straight in at a deeper page, skip to the end of the results etc.
       ARRAY_AGG(IFNULL(`teacher-vacancy-service.production_dataset.extract_parameter_from_url_query`(cs_uri_query,
             "page"),
