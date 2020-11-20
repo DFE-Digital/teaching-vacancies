@@ -59,6 +59,10 @@ protected
     jobseekers_saved_jobs_path
   end
 
+  def after_sign_out_path_for(_resource)
+    new_jobseeker_session_path
+  end
+
 private
 
   def append_info_to_payload(payload)

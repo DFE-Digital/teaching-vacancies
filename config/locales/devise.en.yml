@@ -11,7 +11,7 @@ en:
       locked: Your account is locked.
       last_attempt: You have one more attempt before your account is locked.
       not_found_in_database: Invalid %{authentication_keys} or password.
-      timeout: Your session expired. Please sign in again to continue.
+      timeout: You have been signed out because you have been inactive for 60 minutes.
       unauthenticated: You need to sign in or sign up before continuing.
       unconfirmed: You have to confirm your email address before continuing.
     mailer:
@@ -42,7 +42,7 @@ en:
       updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again
     sessions:
       signed_in: Welcome to your Teaching Vacancies account.
-      signed_out: Signed out successfully.
+      signed_out: You have been successfully signed out.
       already_signed_out: Signed out successfully.
     unlocks:
       send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
