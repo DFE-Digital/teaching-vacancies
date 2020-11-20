@@ -2,11 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .govuk-panel.govuk-panel--confirmation
-
-      %h1.govuk-panel__title= t('.header')
-      .govuk-panel__body
-        %p= t('.confirmation')
+    = render GovukComponent::Panel.new(title: t('.header'), body: t('.confirmation'))
 
   .govuk-grid-column-two-thirds
     %p.govuk-body=t('.resubscribe_html', link: link_to(t('.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link', id: 'job-alert-link-from-cancel-unsubscribe-gtm'))
