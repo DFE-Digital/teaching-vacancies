@@ -147,7 +147,7 @@ private
     return unless user_trusts&.any? || user_local_authorities&.any?
 
     school = School.find_by(urn: school_urn)
-    school_group = school.school_groups.first
+    school_group = school&.school_groups&.first
     return unless school_group
 
     session.update(urn: "", uid: school_group.uid) if user_trusts.include?(school_group.uid)
