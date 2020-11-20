@@ -134,7 +134,7 @@ Populate your environment with real school data. This is taken from
 [GIAS](https://get-information-schools.service.gov.uk/). It might take a while, so make a cup of tea while you wait.
 
 ```bash
-bundle exec rails data:gias:import_schools
+bundle exec rails gias:import_schools
 ```
 
 #### ONS Location polygons
@@ -142,7 +142,7 @@ bundle exec rails data:gias:import_schools
 Run these rake tasks to populate your database with location polygons (which are used in some cases to search by location).
 
 ```bash
-bundle exec rails data:ons:import_location_polygons
+bundle exec rails ons:import_location_polygons
 ```
 
 ### Run the server

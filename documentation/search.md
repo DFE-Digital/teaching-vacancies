@@ -33,24 +33,25 @@ The index prefix is used so that a single Algolia app called `Dev` can be shared
 
 ## Quickstart
 
-```ruby
-  # To manually load an index with live records for the first time:
-  Vacancy.reindex!
-  # This now only loads records that are scoped `.live`
+To load an index with live records for the first time:
 
-  # To update a live index with newly published records using minimal operations:
-  Vacancy.update_index!
-
-  # To remove records that expired yesterday:
-  Vacancy.remove_vacancies_that_expired_yesterday!
-
-  # To remove all expired vacancies.
-  Vacancy.index.delete_objects(Vacancy.expired.map(&:id))
-  # You should generally avoid doing this as it will create a large number of unnecessary operations
-  # once these are being filtered out of the regular indexing operations.
+```bash
+bundle exec rails algolia:reindex
 ```
 
-Existing records will be updated so long as they continue to meet the [:listed?](app/models/vacancy.rb#280) conditions.
+To update a live index with newly published records using minimal operations:
+
+```bash
+bundle exec rails algolia:update_index
+```
+
+To remove the indices in Algolia:
+
+```bash
+bundle exec rails algolia:remove_indices
+```
+
+Existing records will be updated so long as they continue to meet the `listed` conditions.
 
 ## Timed jobs
 
