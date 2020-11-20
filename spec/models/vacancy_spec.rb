@@ -150,18 +150,6 @@ RSpec.describe Vacancy, type: :model do
     end
   end
 
-  context "actions" do
-    describe "#trash!" do
-      it "sets a vacancy to trashed and does not retrieve it in the applicable scope" do
-        vacancies = create_list(:vacancy, 4)
-        vacancies.last.trashed!
-        expect(Vacancy.active.count).to eq(3)
-        vacancies.first.trashed!
-        expect(Vacancy.active.count).to eq(2)
-      end
-    end
-  end
-
   context "scopes" do
     let(:expired_earlier_today) { build(:vacancy, expires_on: Date.current, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, status: :published, expires_on: Date.current, expires_at: 1.hour.from_now) }
