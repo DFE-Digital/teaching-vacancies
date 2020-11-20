@@ -8,8 +8,8 @@ class Subscription < ApplicationRecord
 
   enum frequency: FREQUENCY_OPTIONS
 
-  has_many :alert_runs
-  has_many :job_alert_feedbacks
+  has_many :alert_runs, dependent: :destroy
+  has_many :job_alert_feedbacks, dependent: :destroy
 
   scope :active, (-> { where(active: true) })
 
