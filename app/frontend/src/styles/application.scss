@@ -40,17 +40,17 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/tabs';
 @import 'application/timeline';
 
-@import 'application/jobSeekers/account';
-@import 'application/jobSeekers/cookies-banner';
-@import 'application/jobSeekers/feedback-form';
-@import 'application/jobSeekers/location-search';
-@import 'application/jobSeekers/search-panel';
-@import 'application/jobSeekers/vacancies';
-@import 'application/jobSeekers/vacancy';
-@import 'application/jobSeekers/jobs-banner';
-@import 'application/jobSeekers/key-dates-sidebar';
-@import 'application/jobSeekers/sortable-links';
-@import 'application/jobSeekers/filter-vacancies';
+@import 'application/jobseekers/account';
+@import 'application/jobseekers/cookies-banner';
+@import 'application/jobseekers/feedback-form';
+@import 'application/jobseekers/location-search';
+@import 'application/jobseekers/search-panel';
+@import 'application/jobseekers/vacancies';
+@import 'application/jobseekers/vacancy';
+@import 'application/jobseekers/jobs-banner';
+@import 'application/jobseekers/key-dates-sidebar';
+@import 'application/jobseekers/sortable-links';
+@import 'application/jobseekers/filter-vacancies';
 
 @import 'application/hiringStaff/awaiting-feedback-vacancies';
 @import 'application/hiringStaff/hiring-staff';

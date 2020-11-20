@@ -6,7 +6,7 @@ RSpec.describe "Hiring staff can share their vacancy" do
     stub_hiring_staff_auth(urn: school.urn)
   end
 
-  scenario "A school can visit their page as the job seeker would" do
+  scenario "A school can visit their page as the jobseeker would" do
     vacancy = create(:vacancy)
     vacancy.organisation_vacancies.create(organisation: school)
 

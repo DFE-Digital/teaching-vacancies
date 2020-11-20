@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Job seekers can apply for a vacancy" do
+RSpec.describe "Jobseekers can apply for a vacancy" do
   let(:school) { create(:school) }
 
   scenario "the application link is without protocol" do
