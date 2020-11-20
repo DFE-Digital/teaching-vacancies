@@ -46,12 +46,6 @@ jobs:
       with:
         terraform_version: 0.13.4
 
-    - name: Set environment variables
-      id: set_env_vars
-      run: |
-        TAG=review-pr-${{ github.event.number }}-${{ github.sha }}-$(date '+%Y%m%d%H%M%S')
-        echo "TAG=${TAG}" >> $GITHUB_ENV
-
     - name: Terraform destroy (on PR closed)
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -59,13 +53,11 @@ jobs:
         TF_VAR_paas_user: ${{ secrets.CF_USERNAME }}
         TF_VAR_paas_password: ${{ secrets.CF_PASSWORD }}
       run: |
-        export TF_VAR_paas_app_docker_image=${{ env.DOCKERHUB_REPOSITORY }}:${ env.TAG }}
         export TF_VAR_environment=review-pr-${{ github.event.number }}
         cd terraform/app
         terraform init -reconfigure -input=false -backend-config="workspace_key_prefix=review:"
         terraform workspace select review-pr-${{ github.event.number }} || terraform workspace new review-pr-${{ github.event.number }}
-        terraform plan -var-file ../workspace-variables/review.tfvars -destroy -out=tfdestroy
-        terraform apply -auto-approve "tfdestroy"
+        terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
         terraform workspace select default && terraform workspace delete review-pr-${{ github.event.number }}
 
     - name: Send failure message to twd_tv_dev channel

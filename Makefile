@@ -97,10 +97,10 @@ terraform-app-plan: terraform-app-init check-docker-tag ## make passcode=MyPassc
 terraform-app-apply: terraform-app-init check-docker-tag ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
 		cd terraform/app && terraform apply -input=false -var-file ../workspace-variables/$(var_file).tfvars -auto-approve
 
-.PHONY: review-destroy
-review-destroy: terraform-app-init ## make CONFIRM_DESTROY=true passcode=MyPasscode pr=2086 review review-destroy
+.PHONY: terraform-app-destroy-review
+terraform-app-destroy-review: terraform-app-init ## make CONFIRM_DESTROY=true passcode=MyPasscode pr_id=2086 review terraform-app-destroy-review
 		$(if $(CONFIRM_DESTROY), , $(error Can only run with CONFIRM_DESTROY))
-		cd terraform/app && terraform destroy -var-file ../workspace-variables/review.tfvars
+		cd terraform/app && terraform destroy -var-file ../workspace-variables/review.tfvars -auto-approve
 		cd terraform/app && terraform workspace select default && terraform workspace delete $(env)
 
 ##@ terraform/common code. Requires privileged IAM account to run
