@@ -1,7 +1,3 @@
-variable project_name {
-  description = "This name will be used to identify all AWS resources. The workspace name will be suffixed. Alphanumeric characters only due to RDS."
-}
-
 variable region {
   default = "eu-west-2"
 }
@@ -140,6 +136,7 @@ locals {
   is_production        = var.environment == "production"
   route53_a_records    = local.is_production ? var.route53_zones : []
   route53_cname_record = local.is_production ? "www" : var.environment
+  service_name         = "teaching-vacancies"
   hostname_domain_map = {
     for zone in var.route53_zones :
     "${local.route53_cname_record}.${zone}" => {

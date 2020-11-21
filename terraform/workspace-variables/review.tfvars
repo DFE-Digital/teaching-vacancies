@@ -1,6 +1,5 @@
 # Platform
 region                      = "eu-west-2"
-project_name                = "teaching-vacancies"
 parameter_store_environment = "dev"
 app_environment             = "review"
 #environment                 = "review"  # For review, pass in TF_VAR_environment=review-pr-[PR number]

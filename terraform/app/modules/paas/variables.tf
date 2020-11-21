@@ -34,12 +34,11 @@ variable parameter_store_environment {
 variable postgres_service_plan {
 }
 
-variable project_name {
-}
-
 variable redis_service_plan {
 }
 
+variable service_name {
+}
 variable space_name {
 }
 
@@ -102,10 +101,10 @@ locals {
     local.app_cloudfoundry_service_instances,
     local.app_user_provided_service_bindings
   )
-  papertrail_service_name  = "${var.project_name}-papertrail-${var.environment}"
-  postgres_service_name    = "${var.project_name}-postgres-${var.environment}"
-  redis_service_name       = "${var.project_name}-redis-${var.environment}"
-  web_app_name             = "${var.project_name}-${var.environment}"
+  papertrail_service_name  = "${var.service_name}-papertrail-${var.environment}"
+  postgres_service_name    = "${var.service_name}-postgres-${var.environment}"
+  redis_service_name       = "${var.service_name}-redis-${var.environment}"
+  web_app_name             = "${var.service_name}-${var.environment}"
   worker_app_start_command = "bundle exec sidekiq -C config/sidekiq.yml"
-  worker_app_name          = "${var.project_name}-worker-${var.environment}"
+  worker_app_name          = "${var.service_name}-worker-${var.environment}"
 }

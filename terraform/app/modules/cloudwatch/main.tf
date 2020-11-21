@@ -2,7 +2,7 @@ data aws_caller_identity current {
 }
 
 resource aws_sns_topic cloudwatch_alerts {
-  name = "${var.project_name}-${var.environment}-cloudwatch-alerts"
+  name = "${var.service_name}-${var.environment}-cloudwatch-alerts"
 }
 
 resource aws_sns_topic_policy sns_cloudwatch_alerts {
@@ -15,28 +15,28 @@ data template_file sns_cloudwatch_alerts_policy {
   template = file("${path.module}/../../policies/sns-policy.json")
 
   vars = {
-    policy_id      = "${var.project_name}-${var.environment}-cloudwatch-alerts-policy"
+    policy_id      = "${var.service_name}-${var.environment}-cloudwatch-alerts-policy"
     sns_arn        = aws_sns_topic.cloudwatch_alerts.arn
     aws_account_id = data.aws_caller_identity.current.account_id
   }
 }
 
 resource aws_kms_key cloudwatch_lambda {
-  description             = "${var.project_name} ${var.environment} cloudwatch lambda kms key"
+  description             = "${var.service_name} ${var.environment} cloudwatch lambda kms key"
   deletion_window_in_days = 10
 }
 
 resource aws_kms_alias lambda {
-  name          = "alias/${var.project_name}-${var.environment}-cloudwatch-lambda"
+  name          = "alias/${var.service_name}-${var.environment}-cloudwatch-lambda"
   target_key_id = aws_kms_key.cloudwatch_lambda.key_id
 }
 
 resource aws_cloudwatch_log_group cloudwatch_lambda_log_group {
-  name = "/aws/lambda/${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
+  name = "/aws/lambda/${var.service_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
 }
 
 resource aws_iam_role slack_lambda_role {
-  name = "${var.project_name}-${var.environment}-slack-lambda-role"
+  name = "${var.service_name}-${var.environment}-slack-lambda-role"
   assume_role_policy = file(
     "${path.module}/../../policies/cloudwatch-slack-lambda-role.json",
   )
@@ -54,14 +54,14 @@ data template_file slack_lambda_policy {
 }
 
 resource aws_iam_role_policy slack_lambda_policy {
-  name   = "${var.project_name}-${var.environment}-slack-lambda-policy"
+  name   = "${var.service_name}-${var.environment}-slack-lambda-policy"
   role   = aws_iam_role.slack_lambda_role.id
   policy = data.template_file.slack_lambda_policy.rendered
 }
 
 resource aws_lambda_function cloudwatch_to_slack {
   filename      = "${path.module}/../../lambda/lambda_cloudwatch_to_slack_opsgenie_payload.zip"
-  function_name = "${var.project_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
+  function_name = "${var.service_name}-${var.environment}-cloudwatch_to_slack_opsgenie"
   role          = aws_iam_role.slack_lambda_role.arn
   handler       = "lambda_function.lambda_handler"
   source_code_hash = filebase64sha256(
@@ -93,4 +93,3 @@ resource aws_lambda_permission with_sns {
   principal     = "sns.amazonaws.com"
   source_arn    = aws_sns_topic.cloudwatch_alerts.arn
 }
-

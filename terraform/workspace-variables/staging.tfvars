@@ -1,6 +1,5 @@
 # Platform
 region                      = "eu-west-2"
-project_name                = "teaching-vacancies"
 environment                 = "staging"
 app_environment             = "staging"
 parameter_store_environment = "staging"

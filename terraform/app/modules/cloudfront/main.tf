@@ -1,7 +1,7 @@
 resource aws_cloudfront_distribution default {
   origin {
     domain_name = var.cloudfront_origin_domain_name
-    origin_id   = "${var.project_name}-${var.environment}-default-origin"
+    origin_id   = "${var.service_name}-${var.environment}-default-origin"
 
     custom_origin_config {
       origin_protocol_policy = "https-only"
@@ -13,7 +13,7 @@ resource aws_cloudfront_distribution default {
 
   origin {
     domain_name = var.offline_bucket_domain_name
-    origin_id   = "${var.project_name}-${var.environment}-offline"
+    origin_id   = "${var.service_name}-${var.environment}-offline"
   }
 
   custom_error_response {
@@ -46,7 +46,7 @@ resource aws_cloudfront_distribution default {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.project_name}-${var.environment}-default-origin"
+    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
 
     forwarded_values {
       query_string = true
@@ -66,7 +66,7 @@ resource aws_cloudfront_distribution default {
   ordered_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.project_name}-${var.environment}-offline"
+    target_origin_id = "${var.service_name}-${var.environment}-offline"
 
     path_pattern = "${var.offline_bucket_origin_path}/*"
 
@@ -88,7 +88,7 @@ resource aws_cloudfront_distribution default {
   ordered_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.project_name}-${var.environment}-default-origin"
+    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
 
     path_pattern = "/assets/*"
 
@@ -111,7 +111,7 @@ resource aws_cloudfront_distribution default {
   ordered_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${var.project_name}-${var.environment}-default-origin"
+    target_origin_id = "${var.service_name}-${var.environment}-default-origin"
 
     path_pattern = "/api/*"
 
@@ -154,7 +154,7 @@ resource aws_cloudfront_distribution default {
   }
 
   tags = {
-    Name        = "${var.project_name}-${var.environment}"
+    Name        = "${var.service_name}-${var.environment}"
     Environment = var.environment
   }
 }

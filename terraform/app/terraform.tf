@@ -41,7 +41,7 @@ module cloudfront {
   source                          = "./modules/cloudfront"
   for_each                        = var.distribution_list
   environment                     = var.environment
-  project_name                    = var.project_name
+  service_name                    = local.service_name
   cloudfront_origin_domain_name   = each.value.cloudfront_origin_domain_name
   offline_bucket_domain_name      = each.value.offline_bucket_domain_name
   offline_bucket_origin_path      = each.value.offline_bucket_origin_path
@@ -60,7 +60,7 @@ module cloudwatch {
   source            = "./modules/cloudwatch"
   for_each          = var.channel_list
   environment       = var.environment
-  project_name      = var.project_name
+  service_name      = local.service_name
   slack_hook_url    = local.infra_secrets.cloudwatch_slack_hook_url
   slack_channel     = each.value.cloudwatch_slack_channel
   ops_genie_api_key = local.infra_secrets.cloudwatch_ops_genie_api_key
@@ -79,7 +79,7 @@ module paas {
   papertrail_url                    = local.infra_secrets.papertrail_url
   papertrail_service_binding_enable = var.paas_papertrail_service_binding_enable
   parameter_store_environment       = var.parameter_store_environment
-  project_name                      = var.project_name
+  service_name                      = local.service_name
   postgres_service_plan             = var.paas_postgres_service_plan
   redis_service_plan                = var.paas_redis_service_plan
   space_name                        = var.paas_space_name
@@ -99,6 +99,6 @@ module statuscake {
   source = "./modules/statuscake"
 
   environment       = var.environment
-  project_name      = var.project_name
+  service_name      = local.service_name
   statuscake_alerts = var.statuscake_alerts
 }

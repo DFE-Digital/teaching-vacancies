@@ -1,6 +1,6 @@
 # Platform
 region                      = "eu-west-2"
-project_name                = "teaching-vacancies"
+service_name                = "teaching-vacancies"
 parameter_store_environment = "staging"
 
 # CloudFront
