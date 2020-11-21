@@ -6,13 +6,11 @@
   @return url('~assets/images/' + $filename);
 }
 
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 
 $govuk-font-url-function: frontend-font-url;
 $govuk-image-url-function: frontend-image-url;
+ 
 
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~govuk-frontend/govuk/all';
 @import '~@ministryofjustice/frontend/moj/all';
 
@@ -31,6 +29,7 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/banners';
 @import 'application/checkboxGroup';
 @import 'application/form';
+@import 'application/icons';
 @import 'application/modal';
 @import 'application/navigation';
 @import 'application/pagination';
@@ -40,17 +39,16 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/tabs';
 @import 'application/timeline';
 
-@import 'application/jobseekers/account';
-@import 'application/jobseekers/cookies-banner';
-@import 'application/jobseekers/feedback-form';
-@import 'application/jobseekers/location-search';
-@import 'application/jobseekers/search-panel';
-@import 'application/jobseekers/vacancies';
-@import 'application/jobseekers/vacancy';
-@import 'application/jobseekers/jobs-banner';
-@import 'application/jobseekers/key-dates-sidebar';
-@import 'application/jobseekers/sortable-links';
-@import 'application/jobseekers/filter-vacancies';
+@import 'application/jobSeekers/cookies-banner';
+@import 'application/jobSeekers/feedback-form';
+@import 'application/jobSeekers/location-search';
+@import 'application/jobSeekers/search-panel';
+@import 'application/jobSeekers/vacancies';
+@import 'application/jobSeekers/vacancy';
+@import 'application/jobSeekers/jobs-banner';
+@import 'application/jobSeekers/key-dates-sidebar';
+@import 'application/jobSeekers/sortable-links';
+@import 'application/jobSeekers/filter-vacancies';
 
 @import 'application/hiringStaff/awaiting-feedback-vacancies';
 @import 'application/hiringStaff/hiring-staff';
@@ -74,9 +72,6 @@ body {
     border-bottom: 10px solid govuk-colour('orange');
   }
 
-  &.jobseekers_saved_jobs_index,
-  &.jobseekers_subscriptions_index,
-  &.jobseekers_accounts_show,
   &.vacancies_index,
   &.vacancies_show,
   &.vacancies_preview,

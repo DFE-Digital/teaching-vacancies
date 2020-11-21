@@ -1,0 +1,48 @@
+.icon {
+  background-repeat: no-repeat;
+}
+
+.icon--right {
+  background-position: right;
+  padding-right: 30px;
+}
+
+.icon--left {
+  background-position: left;
+  padding-left: 30px;
+}
+
+.icon--alert-white {
+  background-image: url('../../images/svg/icon-alert-white.svg');
+}
+
+.icon--alert-blue {
+  background-image: url('../../images/svg/icon-alert-blue.svg');
+}
+
+.icon--document {
+  background-image: url('../../images/svg/icon-document.svg');
+}
+
+.icon--info {
+  background-image: url('../../images/svg/icon-info.svg');
+}
+
+.icon--warning {
+  background-image: url('../../images/svg/icon-warning.svg');
+}
+
+.icon--start {
+  background-image: url('../../images/svg/icon-start.svg');
+}
+
+.icon--cross {
+  &::before {
+    color: #1d70b8;
+    content: 'x';
+    font-weight: bold;
+  }
+}
+
+
+
