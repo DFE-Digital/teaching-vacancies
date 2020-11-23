@@ -4,5 +4,5 @@ data cloudfoundry_space monitoring {
 }
 
 data aws_ssm_parameter monitoring_secrets {
-  name = "/tvs/production/infra/monitoring"
+  name = "/${local.service_name}/production/infra/monitoring"
 }

@@ -43,8 +43,8 @@ jobs:
         AWS_REGION: eu-west-2
       run: |
         gem install aws-sdk-ssm --no-document
-        bin/run-in-env -t /tvs/dev -o quiet \
-          && echo Data in /tvs/dev looks valid
+        bin/run-in-env -t /teaching-vacancies/dev -o quiet \
+          && echo Data in /teaching-vacancies/dev looks valid
 
     - name: Terraform pin version
       uses: hashicorp/setup-terraform@v1.2.1

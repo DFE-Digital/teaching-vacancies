@@ -5,7 +5,7 @@
 
 resource aws_iam_user deploy {
   name = "deploy"
-  path = "/tvs/"
+  path = "/${local.service_name}/"
 }
 
 resource aws_iam_access_key deploy {
@@ -14,7 +14,7 @@ resource aws_iam_access_key deploy {
 
 resource aws_iam_user bigquery {
   name = "bigquery"
-  path = "/tvs/"
+  path = "/${local.service_name}/"
 }
 
 resource aws_iam_access_key bigquery {

@@ -1,7 +1,7 @@
 variable environment {
 }
 
-variable project_name {
+variable service_name {
 }
 
 variable statuscake_alerts {

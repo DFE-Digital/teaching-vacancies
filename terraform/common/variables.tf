@@ -7,4 +7,5 @@ locals {
   aws_canonical_user_id_awslogsdelivery = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
   primary_zone_name                     = "teaching-vacancies.service.gov.uk"
   secondary_zone_name                   = "teaching-jobs.service.gov.uk"
+  service_name                          = "teaching-vacancies"
 }
