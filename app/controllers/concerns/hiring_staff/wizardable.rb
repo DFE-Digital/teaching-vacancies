@@ -48,14 +48,15 @@ module HiringStaff::Wizardable
     )
     attributes_to_merge = {
       completed_step: STEPS[step],
-      readable_job_location: readable_job_location,
+      readable_job_location: job_location == "central_office" ? readable_job_location : nil,
       organisation_ids: job_location == "central_office" ? current_organisation.id : nil,
     }
+    session[:job_location] = job_location
     params.require(:job_location_form).permit(:state, :job_location).merge(attributes_to_merge.compact)
   end
 
   def schools_params(params)
-    job_location = @vacancy.job_location
+    job_location = session[:job_location].presence || @vacancy.job_location
     school_name = if params[:schools_form][:organisation_ids].is_a?(String)
                     School.find(params[:schools_form][:organisation_ids]).name
                   end

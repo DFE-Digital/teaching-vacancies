@@ -15,7 +15,7 @@
 
       = render "hiring_staff/vacancies/vacancy_form_partials/hidden_state_input", f: f
 
-      - if @vacancy.job_location == "at_multiple_schools"
+      - if @multiple_schools
         = f.govuk_collection_check_boxes :organisation_ids,
           @school_options,
           :id,
