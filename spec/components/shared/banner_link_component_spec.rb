@@ -21,7 +21,7 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eql(
-        '<a class="banner-link banner-link--icon-class" id="test-id" data-method="get" href="/link-to-nowhere">'\
+        '<a class="banner-link icon icon--left icon--icon-class-blue" id="test-id" data-method="get" href="/link-to-nowhere">'\
         '<div class="banner-link__text">Click this link!</div></a>',
       )
     end
@@ -32,7 +32,7 @@ RSpec.describe Shared::BannerLinkComponent, type: :component do
 
     it "renders the banner link" do
       expect(rendered_component).to eql(
-        '<a class="banner-link banner-link--icon-class" id="test-id" rel="nofollow" data-method="post" href="/link-to-nowhere">'\
+        '<a class="banner-link icon icon--left icon--icon-class-blue" id="test-id" rel="nofollow" data-method="post" href="/link-to-nowhere">'\
         '<div class="banner-link__text">Click this link!</div></a>',
       )
     end
