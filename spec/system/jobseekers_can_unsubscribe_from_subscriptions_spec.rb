@@ -28,12 +28,19 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
       expect(activity.key).to eq("subscription.daily_alert.delete")
     end
 
-    it "allows me to resubscribe" do
-      click_on I18n.t("subscriptions.unsubscribe.resubscribe_link_text")
+    it "allows me to provide a feeback" do
+      click_on I18n.t("buttons.submit_feedback")
 
-      expect(page.find_field("subscription-form-keyword-field").value).to eql("English")
-      expect(page.find_field("subscription-form-location-field").value).to eql("SW1A1AA")
-      expect(page.find_field("subscription-form-radius-field").value).to eql("20")
+      expect(page).to have_content("There is a problem")
+
+      choose "unsubscribe-feedback-form-reason-job-found-field"
+      click_on I18n.t("buttons.submit_feedback")
+
+      expect(page).to have_content(I18n.t("subscriptions.feedback_received.header"))
+
+      click_on I18n.t("subscriptions.feedback_received.new_search_link")
+
+      expect(current_path).to eq jobs_path
     end
 
     context "with deprecated search criteria" do
@@ -56,12 +63,19 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
         expect(activity.key).to eq("subscription.daily_alert.delete")
       end
 
-      it "allows me to resubscribe" do
-        click_on I18n.t("subscriptions.unsubscribe.resubscribe_link_text")
+      it "allows me to provide a feeback" do
+        click_on I18n.t("buttons.submit_feedback")
 
-        expect(page.find_field("subscription-form-keyword-field").value).to eql("English")
-        expect(page.find_field("subscription-form-location-field").value).to eql("SW1A1AA")
-        expect(page.find_field("subscription-form-radius-field").value).to eql("20")
+        expect(page).to have_content("There is a problem")
+
+        choose "unsubscribe-feedback-form-reason-job-found-field"
+        click_on I18n.t("buttons.submit_feedback")
+
+        expect(page).to have_content(I18n.t("subscriptions.feedback_received.header"))
+
+        click_on I18n.t("subscriptions.feedback_received.new_search_link")
+
+        expect(current_path).to eq jobs_path
       end
     end
   end

@@ -4,5 +4,20 @@
   .govuk-grid-column-two-thirds
     = render GovukComponent::Panel.new(title: t('.header'), body: t('.confirmation'))
 
-  .govuk-grid-column-two-thirds
-    %p.govuk-body=t('.resubscribe_html', link: link_to(t('.resubscribe_link_text'), new_subscription_path(search_criteria: @subscription.search_criteria_to_h), class: 'govuk-link', id: 'job-alert-link-from-cancel-unsubscribe-gtm'))
+    = form_for @unsubscribe_feedback_form, url: unsubscribe_feedback_subscription_path(@subscription) do |f|
+      = f.govuk_error_summary
+
+      %h2.govuk-heading-l
+        = t('.heading')
+
+      = f.govuk_radio_buttons_fieldset(:reason) do
+        - UnsubscribeFeedback.reasons.keys.each do |reason|
+          - if reason == "other_reason"
+            = f.govuk_radio_button :reason, reason do
+              = f.govuk_text_field :other_reason, label: { size: 's' }
+          - else
+            = f.govuk_radio_button :reason, reason
+
+      = f.govuk_text_area :additional_info, label: { size: 's' }, max_chars: 1200
+
+      = f.govuk_submit t('buttons.submit_feedback')

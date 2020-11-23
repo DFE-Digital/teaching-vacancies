@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :subscriptions, only: %i[new create edit update] do
     get :unsubscribe, on: :member
+    post :unsubscribe_feedback, on: :member
     resources :job_alert_feedbacks, only: %i[new update edit]
   end
 

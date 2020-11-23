@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_133910) do
+ActiveRecord::Schema.define(version: 2020_11_20_172522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -217,6 +217,16 @@ ActiveRecord::Schema.define(version: 2020_11_20_133910) do
     t.index ["task", "date"], name: "index_transaction_auditors_on_task_and_date", unique: true
   end
 
+  create_table "unsubscribe_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "reason"
+    t.string "other_reason"
+    t.text "additional_info"
+    t.uuid "subscription_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subscription_id"], name: "index_unsubscribe_feedbacks_on_subscription_id"
+  end
+
   create_table "user_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "managed_organisations"
     t.uuid "user_id"
@@ -306,6 +316,7 @@ ActiveRecord::Schema.define(version: 2020_11_20_133910) do
   add_foreign_key "documents", "vacancies"
   add_foreign_key "emergency_login_keys", "users"
   add_foreign_key "job_alert_feedbacks", "subscriptions"
+  add_foreign_key "unsubscribe_feedbacks", "subscriptions"
   add_foreign_key "user_preferences", "users"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "users", column: "publisher_user_id"

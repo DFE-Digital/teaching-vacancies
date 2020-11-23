@@ -54,6 +54,18 @@ class SubscriptionsController < ApplicationController
     @subscription = SubscriptionPresenter.new(subscription)
     Auditor::Audit.new(subscription, "subscription.#{subscription.frequency}_alert.delete", current_session_id).log
     subscription.unsubscribe
+    @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new
+  end
+
+  def unsubscribe_feedback
+    @subscription = Subscription.find(token)
+    @unsubscribe_feedback_form = UnsubscribeFeedbackForm.new(unsubscribe_feedback_params)
+
+    if @unsubscribe_feedback_form.valid? && @subscription.unsubscribe_feedbacks.create(unsubscribe_feedback_params)
+      render :feedback_received
+    else
+      render :unsubscribe
+    end
   end
 
 private
@@ -68,6 +80,10 @@ private
 
   def subscription_params
     ParameterSanitiser.call(params.require(:subscription_form).permit(:email, :frequency, :keyword, :location, :radius, job_roles: [], phases: [], working_patterns: []))
+  end
+
+  def unsubscribe_feedback_params
+    ParameterSanitiser.call(params.require(:unsubscribe_feedback_form).permit(:reason, :other_reason, :additional_info))
   end
 
   def token

@@ -18,6 +18,11 @@ en:
       invalid: Enter an email address in the correct format, like name@example.com
     frequency:
       blank: Select when you want to receive job alert emails
+  unsubscribe_feedback_errors: &unsubscribe_feedback_errors
+    reason:
+      inclusion: Tell us why you want to unsubscribe
+    other_reason:
+      blank: Tell us why you want to unsubscribe
   # Hiring staff journey
   job_location_errors: &job_location_errors
     job_location:
@@ -111,6 +116,9 @@ en:
         subscription_form:
           attributes:
             <<: *subscription_errors
+        unsubscribe_feedback_form:
+          attributes:
+            <<: *unsubscribe_feedback_errors
         # Hiring staff journey
         job_location_form:
           attributes:

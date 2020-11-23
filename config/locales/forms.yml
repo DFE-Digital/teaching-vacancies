@@ -95,6 +95,8 @@ en:
       supporting_documents_form:
         supporting_documents: >-
           These could include, for example, a job description, person specification or application pack
+      unsubscribe_feedback_form:
+        additional_info: Any more information you can share will help us to improve the service
 
     label:
       applying_for_the_job_form:
@@ -131,6 +133,14 @@ en:
         salary_html: Salary (<span class='text-red'>Required</span>)
       subscription_form:
         email_html: Email address (<span class='text-red'>Required</span>)
+      unsubscribe_feedback_form:
+        additional_info: Is there anything else you'd like to tell us?
+        other_reason_html: Briefly, tell us more about that reason
+        reason_options:
+          not_relevant: The alerts I am receiving are not relevant to me
+          job_found: I have found a teaching job
+          circumstances_change: My circumstances have changed
+          other_reason: Another reason
 
     legend:
       copy_vacancy_form:
@@ -157,6 +167,8 @@ en:
       supporting_documents_form:
         supporting_documents_html: >-
           Would you like to attach supporting documents? (<span class='text-red'>Required</span>)
+      unsubscribe_feedback_form:
+        reason_html: Why do you want to unsubscribe from this alert? (<span class='text-red'>Required</span>)
 
     options:
       job_location_form:

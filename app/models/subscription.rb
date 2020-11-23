@@ -10,6 +10,7 @@ class Subscription < ApplicationRecord
 
   has_many :alert_runs, dependent: :destroy
   has_many :job_alert_feedbacks, dependent: :destroy
+  has_many :unsubscribe_feedbacks, dependent: :destroy
 
   scope :active, (-> { where(active: true) })
 

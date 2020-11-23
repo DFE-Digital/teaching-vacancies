@@ -37,6 +37,7 @@ class ExportTablesToBigQuery
     "job_location" => :string,
     "listed_elsewhere" => :string,
     "phase" => :string,
+    "reason" => :string,
     "search_criteria" => :string,
     "status" => :string,
     "user_participation_response" => :string,
