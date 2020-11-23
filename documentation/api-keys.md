@@ -7,7 +7,7 @@ In order to manage API keys:
 1. Go to the API Keys tab on the sidebar
 1. Filter by API Key
 1. Create new API key
-1. Update ALGOLIA_WRITE_API_KEY in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update ALGOLIA_WRITE_API_KEY in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 1. Rolling restart the application
 1. Delete the old API key
 
@@ -29,7 +29,7 @@ The secret_key_base is used as the input secret to the application's key generat
 In order to generate a new secret key:
 1. Run the `rails secret` task from the repo, it will generate a new secret key
 1. You need to generate a different key per environment
-1. Update `SECRET_KEY_BASE` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update `SECRET_KEY_BASE` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### ROLLBAR_ACCESS_TOKEN
 Used to report server-side errors to Rollbar.
@@ -38,14 +38,14 @@ Used to report server-side errors to Rollbar.
 1. Select `Yes, disable this token` and click `Save`
 1. Click `Create a new access token`
 1. Select `post_server_item` and click `Save`
-1. Update `ROLLBAR_ACCESS_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update `ROLLBAR_ACCESS_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### ROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN
 Used to report client-side errors to Rollbar.
 1. Access https://rollbar.com/
 1. Navigate to: Setting > Project access tokens > Create a new access token
 1. Select `post_client_item` and click Save
-1. Update `ROLLBAR_ACCESSROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update `ROLLBAR_ACCESSROLLBAR_CLIENT_ERRORS_ACCESS_TOKEN_TOKEN` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### DFE_SIGN_IN_PASSWORD and DFE_SIGN_IN_SECRET
 * DFE_SIGN_IN_PASSWORD is used to encrypt JWT tokens to authorise a user with DFE sign-in.
@@ -56,7 +56,7 @@ In order to update the password you need to have access to the DSI Manage consol
 __Once you are inside:__
 1. Follow the `Service configuration` link
 1. Regenerate the `Client secret` (`DFE_SIGN_IN_SECRET` env variable) and `API secret` (`DFE_SIGN_IN_PASSWORD` env variable)
-1. Update `DFE_SIGN_IN_SECRET` and `DFE_SIGN_IN_PASSWORD` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update `DFE_SIGN_IN_SECRET` and `DFE_SIGN_IN_PASSWORD` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### Google API Keys
 There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive.
@@ -82,7 +82,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
 1. Select the API and access level for the key
 1. Create one key per API and enviroment and use the minimum necessary permission(s) for that key
 1. Click 'Save'
-1. Copy your new key from the table and update it in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Copy your new key from the table and update it in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 1. Do a rolling restart on the updated environment for the application
 1. Check that everything works as expected
 1. Delete the old API key from the Credentials table in the Google Cloud console
@@ -103,7 +103,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
     jq -c . teacher-vacancy-service-<some UID>.json | pbcopy
     ```
 1. Copy the full body of the new key as a json string (not necessary if you used `...| pbcopy` in the `jq` example, above)
-1. Paste the full string of the new key in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/BIG_QUERY_API_JSON_KEY` or `/tvs/<env>/app/GOOGLE_API_JSON_KEY` files
+1. Paste the full string of the new key in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/BIG_QUERY_API_JSON_KEY` or `/teaching-vacancies/<env>/app/GOOGLE_API_JSON_KEY` files
 1. Do a rolling restart on the updated environment for the application
 1. Check that everything works as expected
 1. Delete the old key from the 'Keys' section in the Service Account window
@@ -128,7 +128,7 @@ To create a new key:
 1. Connect to https://developer.ordnancesurvey.co.uk/
 1. Navigate to My Keys > Add a new key
 1. Enter key name, select `OS Names API` and click `Save Key`
-1. Update `ORDNANCE_SURVEY_API_KEY` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update `ORDNANCE_SURVEY_API_KEY` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### SKYLIGHT_AUTHENTICATION
 Used by the app to report performance data to [Skylight](https://www.skylight.io/).
@@ -141,4 +141,4 @@ Used to integrate with the GovUK Notify API.
 1. Click `Revoke` on the old key
 1. Click Create an API key
 1. Add a specific name, select the type of key and click `Continue`
-1. Update `NOTIFY_KEY` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/tvs/<env>/app/secrets` files
+1. Update `NOTIFY_KEY` in in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
