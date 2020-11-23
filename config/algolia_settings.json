@@ -96,7 +96,14 @@
     ],
     "exactOnSingleWordQuery": "attribute",
     "ranking": [
-      "desc(publication_date_timestamp)"
+      "typo",
+      "geo",
+      "words",
+      "filters",
+      "proximity",
+      "attribute",
+      "exact",
+      "custom"
     ],
     "customRanking": [
       "desc(job_title)",
