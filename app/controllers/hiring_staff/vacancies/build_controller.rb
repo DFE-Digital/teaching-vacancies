@@ -18,7 +18,9 @@ class HiringStaff::Vacancies::BuildController < HiringStaff::Vacancies::Applicat
     when :job_location
       skip_step if current_organisation.is_a?(School)
     when :schools
-      skip_step if current_organisation.is_a?(School) || @vacancy.central_office?
+      job_location = session[:job_location].presence || @vacancy.job_location
+      @multiple_schools = job_location == "at_multiple_schools"
+      skip_step if current_organisation.is_a?(School) || job_location == "central_office"
     when :job_details
       @job_details_back_path = @vacancy.central_office? ? wizard_path(:job_location) : wizard_path(:schools)
     when :supporting_documents
@@ -118,8 +120,9 @@ private
   end
 
   def update_listing
+    job_location = session[:job_location].presence || @vacancy.job_location
     @vacancy.save
-    if step == :job_location && !@vacancy.central_office?
+    if step == :job_location && job_location != "central_office"
       redirect_to wizard_path(:schools)
     else
       redirect_updated_job_with_message

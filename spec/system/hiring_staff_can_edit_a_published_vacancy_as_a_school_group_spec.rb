@@ -67,5 +67,38 @@ RSpec.describe "Editing a published vacancy" do
         I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
       )
     end
+
+    context "when job_location is central_office and is updated to at_one_school" do
+      scenario "job_location is not updated until the school is selected" do
+        visit edit_organisation_job_path(vacancy.id)
+
+        expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
+        expect(page).to have_content(full_address(school_group))
+        expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
+          I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
+        )
+
+        change_job_location(vacancy, "at_one_school")
+
+        click_on I18n.t("buttons.cancel_and_return")
+
+        expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
+        expect(page).to have_content(I18n.t("school_groups.job_location_heading.central_office"))
+        expect(page).to have_content(full_address(school_group))
+        expect(Vacancy.find(vacancy.id).readable_job_location).to eql(
+          I18n.t("hiring_staff.organisations.readable_job_location.central_office"),
+        )
+
+        change_job_location(vacancy, "at_one_school")
+        expect(page.current_path).to eql(organisation_job_build_path(vacancy.id, :schools))
+        fill_in_school_form_field(school_2)
+        click_on I18n.t("buttons.update_job")
+
+        expect(page.current_path).to eql(edit_organisation_job_path(vacancy.id))
+        expect(page).to have_content(I18n.t("school_groups.job_location_heading.at_one_school"))
+        expect(page).to have_content(full_address(school_2))
+        expect(Vacancy.find(vacancy.id).readable_job_location).to eql(school_2.name)
+      end
+    end
   end
 end
