@@ -96,14 +96,7 @@
     ],
     "exactOnSingleWordQuery": "attribute",
     "ranking": [
-      "typo",
-      "geo",
-      "words",
-      "filters",
-      "proximity",
-      "attribute",
-      "exact",
-      "custom"
+      "desc(publication_date_timestamp)"
     ],
     "customRanking": [
       "desc(job_title)",
@@ -136,7 +129,6 @@
       "type": "synonym",
       "synonyms": [
         "headteacher",
-        "head",
         "principal",
         "head teacher"
       ],
