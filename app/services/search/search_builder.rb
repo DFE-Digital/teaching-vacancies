@@ -11,8 +11,11 @@ class Search::SearchBuilder
     @hits_per_page = @params_hash[:per_page] || DEFAULT_HITS_PER_PAGE
     @page = @params_hash[:page]
 
-    initialize_search
-    @point_coordinates = @location_search.location_filter[:point_coordinates]
+    build_location_search
+    build_search_filters
+    build_search_replica
+    call_algolia_search
+
     build_suggestions if @point_coordinates.present? && @vacancies.empty?
   end
 
@@ -30,15 +33,9 @@ class Search::SearchBuilder
 
 private
 
-  def initialize_search
-    build_location_search
-    build_search_filters
-    build_search_replica
-    call_algolia_search
-  end
-
   def build_location_search
     @location_search = Search::LocationBuilder.new(@params_hash[:location], @params_hash[:radius], @params_hash[:location_category])
+    @point_coordinates = @location_search.location_filter[:point_coordinates]
     @params_hash[:location_category] = @location_search.location_category if @location_search.location_category_search?
     @keyword = [@keyword, @location_search.location].reject(&:blank?).join(" ") if @location_search.missing_polygon
   end
@@ -56,7 +53,7 @@ private
   end
 
   def call_algolia_search
-    search = Search::AlgoliaSearch.new(search_params)
+    search = Search::AlgoliaSearchRequest.new(search_params)
     @vacancies = search.vacancies
     @stats = search.stats
   end

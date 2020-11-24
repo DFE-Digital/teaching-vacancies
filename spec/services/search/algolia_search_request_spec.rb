@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Search::AlgoliaSearch do
+RSpec.describe Search::AlgoliaSearchRequest do
   let(:subject) { described_class.new(search_params) }
 
   describe "#build_stats" do

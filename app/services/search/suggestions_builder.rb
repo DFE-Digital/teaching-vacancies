@@ -10,19 +10,21 @@ class Search::SuggestionsBuilder
   end
 
   def get_radius_suggestions
-    radius_idx = RADIUS_OPTIONS.find_index(radius)
-    wider_radii = (1..5).map { |idx| RADIUS_OPTIONS[radius_idx + idx] } unless radius_idx.nil?
+    radius_index = RADIUS_OPTIONS.find_index(radius)
+    return if radius_index.nil?
+
+    wider_radii = (1..5).map { |index| RADIUS_OPTIONS[radius_index + index] }
     wider_radii_counts = wider_radii&.map { |wider_radius|
       unless wider_radius.nil?
         [
           wider_radius,
-          Search::AlgoliaSearch.new(
+          Search::AlgoliaSearchRequest.new(
             search_params.merge(radius: Search::LocationBuilder.convert_radius_in_miles_to_metres(wider_radius)),
           ).stats.last,
         ]
       end
     }&.reject(&:nil?)
 
-    @radius_suggestions = wider_radii_counts&.uniq(&:last)&.reject { |arr| arr.last.zero? }
+    @radius_suggestions = wider_radii_counts&.uniq(&:last)&.reject { |array| array.last.zero? }
   end
 end

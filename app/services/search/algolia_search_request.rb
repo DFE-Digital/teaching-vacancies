@@ -1,4 +1,4 @@
-class Search::AlgoliaSearch
+class Search::AlgoliaSearchRequest
   attr_reader :vacancies, :stats
 
   def initialize(search_params)

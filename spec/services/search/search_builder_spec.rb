@@ -82,7 +82,7 @@ RSpec.describe Search::SearchBuilder do
       end
 
       it "calls algolia search with the correct parameters" do
-        expect(Search::AlgoliaSearch).to receive(:new).with(search_params).and_call_original
+        expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
         subject
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe Search::SearchBuilder do
       before { allow(Search::SuggestionsBuilder).to receive_message_chain(:new, :radius_suggestions) }
 
       it "calls algolia search with the correct parameters" do
-        expect(Search::AlgoliaSearch).to receive(:new).with(search_params).and_call_original
+        expect(Search::AlgoliaSearchRequest).to receive(:new).with(search_params).and_call_original
         subject
       end
     end

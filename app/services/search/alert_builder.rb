@@ -7,7 +7,10 @@ class Search::AlertBuilder < Search::SearchBuilder
     @params_hash = subscription_hash
     @keyword = @params_hash[:keyword] || build_subscription_keyword(@params_hash)
 
-    initialize_search
+    build_location_search
+    build_search_filters
+    build_search_replica
+    call_algolia_search
   end
 
 private

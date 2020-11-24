@@ -2,7 +2,7 @@ class Search::ReplicaBuilder
   attr_reader :search_replica
 
   def initialize(job_sort, keyword)
-    # A blank `sort_by` results in a search on the main index, Vacancy.
+    # A blank `sort_by` results in a search on the base index, Indexable::INDEX_NAME
     sort_by = if job_sort.blank? || !valid_sort?(job_sort)
                 keyword.blank? ? "publish_on_desc" : ""
               else
