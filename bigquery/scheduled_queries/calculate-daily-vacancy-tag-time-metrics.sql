@@ -53,19 +53,19 @@ WITH
           WHEN "has_documents" THEN number_of_documents>0
           WHEN "suitable_for_nqts" THEN REGEXP_CONTAINS(job_roles,"(nqt)")
           WHEN "mat_level" THEN (schoolgroup_level
-          AND schoolgroup_type="Multi-academy trust")
+          AND publisher_schoolgroup_type="Multi-academy trust")
           WHEN "la_level" THEN (schoolgroup_level AND schoolgroup_type="local_authority")
           WHEN "multi_school" THEN number_of_organisations > 1
-          WHEN "published_by_mat" THEN schoolgroup_type="Multi-academy trust"
-          WHEN "published_by_la" THEN schoolgroup_type="local_authority"
+          WHEN "published_by_mat" THEN publisher_schoolgroup_type="Multi-academy trust"
+          WHEN "published_by_la" THEN publisher_schoolgroup_type="local_authority"
           WHEN "la_maintained_school" THEN school_type="Local authority maintained schools"
           WHEN "faith_school" THEN faith_school
           WHEN "federation" THEN federation_flag="Supported by a federation"
           WHEN "free_school" THEN school_type="Free Schools"
           WHEN "mat" THEN schoolgroup_type="Multi-academy trust"
           WHEN "mat_21+" THEN (schoolgroup_type="Multi-academy trust"
-          AND schoolgroup_size > 20)
-          WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust" AND schoolgroup_size <= 20)
+          AND trust_size > 20)
+          WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust" AND trust_size <= 20)
           WHEN "academy" THEN school_type="Academies"
           WHEN "flexible_working" THEN REGEXP_CONTAINS(working_patterns,"(part_time|job_share)")
           WHEN "primary" THEN education_phase IN ("primary",
@@ -86,19 +86,19 @@ WITH
           WHEN "has_documents" THEN number_of_documents>0
           WHEN "suitable_for_nqts" THEN REGEXP_CONTAINS(job_roles,"(nqt)")
           WHEN "mat_level" THEN (schoolgroup_level
-          AND schoolgroup_type="Multi-academy trust")
+          AND publisher_schoolgroup_type="Multi-academy trust")
           WHEN "la_level" THEN (schoolgroup_level AND schoolgroup_type="local_authority")
           WHEN "multi_school" THEN number_of_organisations > 1
-          WHEN "published_by_mat" THEN schoolgroup_type="Multi-academy trust"
-          WHEN "published_by_la" THEN schoolgroup_type="local_authority"
+          WHEN "published_by_mat" THEN publisher_schoolgroup_type="Multi-academy trust"
+          WHEN "published_by_la" THEN publisher_schoolgroup_type="local_authority"
           WHEN "la_maintained_school" THEN school_type="Local authority maintained schools"
           WHEN "faith_school" THEN faith_school
           WHEN "federation" THEN federation_flag="Supported by a federation"
           WHEN "free_school" THEN school_type="Free Schools"
           WHEN "mat" THEN schoolgroup_type="Multi-academy trust"
           WHEN "mat_21+" THEN (schoolgroup_type="Multi-academy trust"
-          AND schoolgroup_size > 20)
-          WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust" AND schoolgroup_size <= 20)
+          AND trust_size > 20)
+          WHEN "mat_0-20" THEN (schoolgroup_type="Multi-academy trust" AND trust_size <= 20)
           WHEN "academy" THEN school_type="Academies"
           WHEN "flexible_working" THEN REGEXP_CONTAINS(working_patterns,"(part_time|job_share)")
           WHEN "primary" THEN education_phase IN ("primary",
