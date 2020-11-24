@@ -43,7 +43,6 @@ private
   end
 
   def algolia_facet_count(query)
-    search = Search::VacancySearchBuilder.new(query)
-    search.call.stats.last
+    Search::SearchBuilder.new(query).stats.last
   end
 end
