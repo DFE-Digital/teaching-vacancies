@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_20_133910) do
+ActiveRecord::Schema.define(version: 2020_11_24_120747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 2020_11_20_133910) do
     t.string "name", null: false
     t.string "location_type"
     t.float "boundary", array: true
-    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
