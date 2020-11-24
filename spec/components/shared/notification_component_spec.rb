@@ -63,14 +63,14 @@ RSpec.describe Shared::NotificationComponent, type: :component do
       context "when alert is true" do
         let(:alert) { true }
 
-        it "applies the alert class" do
-          expect(inline_component.css(".alert")).to_not be_blank
+        it "applies the icon class" do
+          expect(inline_component.css(".icon")).to_not be_blank
         end
       end
 
       context "when alert is false" do
-        it "does not apply the alert class" do
-          expect(inline_component.css(".alert")).to be_blank
+        it "does not apply the icon class" do
+          expect(inline_component.css(".icon")).to be_blank
         end
       end
     end
@@ -83,8 +83,8 @@ RSpec.describe Shared::NotificationComponent, type: :component do
         expect(inline_component.css(".govuk-notification--success")).to_not be_blank
       end
 
-      it "does not apply the alert class" do
-        expect(inline_component.css(".alert")).to be_blank
+      it "does not apply the icon class" do
+        expect(inline_component.css(".icon")).to be_blank
       end
     end
 
@@ -100,8 +100,8 @@ RSpec.describe Shared::NotificationComponent, type: :component do
         expect(inline_component.css(".govuk-notification--danger")).to_not be_blank
       end
 
-      it "does not apply the alert class" do
-        expect(inline_component.css(".alert")).to be_blank
+      it "does not apply the icon class" do
+        expect(inline_component.css(".icon")).to be_blank
       end
     end
   end

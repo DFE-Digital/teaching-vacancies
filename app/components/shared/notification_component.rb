@@ -11,7 +11,7 @@ class Shared::NotificationComponent < ViewComponent::Base
   def notification_classes
     applied_class = "govuk-notification--#{@style}"
     applied_class += " govuk-notification__background" if @background
-    applied_class += " alert #{@alert}" if @alert
+    applied_class += " icon icon--left icon--#{@alert}" if @alert
     applied_class
   end
 

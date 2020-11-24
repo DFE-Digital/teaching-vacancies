@@ -1,0 +1,48 @@
+.icon {
+  background-repeat: no-repeat;
+}
+
+.icon--right {
+  background-position: right;
+  padding-right: 30px;
+}
+
+.icon--left {
+  padding-left: 30px;
+}
+
+.icon--alert-white {
+  background-image: url('../../images/svg/icon-alert-white.svg');
+}
+
+.icon--alert-blue {
+  background-image: url('../../images/svg/icon-alert-blue.svg');
+}
+
+.icon--document {
+  background-image: url('../../images/svg/icon-document.svg');
+}
+
+.icon--info {
+  background-image: url('../../images/svg/icon-info.svg');
+}
+
+.icon--warning {
+  background-image: url('../../images/svg/icon-warning.svg');
+}
+
+.icon--start {
+  background-image: url('../../images/svg/icon-start.svg');
+}
+
+.icon--check {
+  background-image: url('../../images/svg/icon-check.svg');
+}
+
+.icon--cross {
+  &::before {
+    color: $govuk-link-colour;
+    content: 'x';
+    font-weight: bold;
+  }
+}
