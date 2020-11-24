@@ -27,7 +27,7 @@ private
   end
 
   def job_role_facet
-    Vacancy::JOB_ROLE_OPTIONS.keys.each_with_object({}) { |job_role, facets| facets[job_role] = algolia_facet_count(job_roles: [job_role]) }
+    Vacancy.job_roles.keys.each_with_object({}) { |job_role, facets| facets[job_role] = algolia_facet_count(job_roles: [job_role]) }
   end
 
   def subject_facet

@@ -8,8 +8,8 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
       it "returns an array including the multi-school option" do
         expect(helper.job_location_options(organisation)).to eq(
           [
-            ["At one school in the local authority", :at_one_school],
-            ["At more than one school in the local authority", :at_multiple_schools],
+            ["At one school in the local authority", "at_one_school"],
+            ["At more than one school in the local authority", "at_multiple_schools"],
           ],
         )
       end
@@ -21,9 +21,9 @@ RSpec.describe VacanciesOptionsHelper, type: :helper do
       it "returns an array including the multi-school option" do
         expect(helper.job_location_options(organisation)).to eq(
           [
-            ["At one school in the trust", :at_one_school],
-            ["At more than one school in the trust", :at_multiple_schools],
-            ["At the trust's head office", :central_office],
+            ["At one school in the trust", "at_one_school"],
+            ["At more than one school in the trust", "at_multiple_schools"],
+            ["At the trust's head office", "central_office"],
           ],
         )
       end

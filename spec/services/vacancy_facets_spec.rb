@@ -26,7 +26,7 @@ RSpec.describe VacancyFacets do
   end
 
   describe "#refresh" do
-    let(:job_role_count) { Vacancy::JOB_ROLE_OPTIONS.count }
+    let(:job_role_count) { Vacancy.job_roles.count }
     let(:subject_count) { SUBJECT_OPTIONS.count }
     let(:city_count) { CITIES.count }
     let(:county_count) { COUNTIES.count }
