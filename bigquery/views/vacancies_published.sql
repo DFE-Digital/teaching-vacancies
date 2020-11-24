@@ -65,26 +65,49 @@ IF
   STRING_AGG(DISTINCT employer_organisation.detailed_school_type, " and ") AS detailed_school_type,
   STRING_AGG(DISTINCT employer_organisation.school_type, " and ") AS school_type,
   STRING_AGG(DISTINCT employer_organisation.data_religiouscharacter_name, " and ") AS religious_character,
-  LOGICAL_OR(employer_organisation.data_religiouscharacter_name NOT IN (NULL,
-      "None",
+  LOGICAL_OR(employer_organisation.data_religiouscharacter_name IS NOT NULL
+    AND employer_organisation.data_religiouscharacter_name NOT IN ("None",
       "Does not apply")) AS faith_school,
   STRING_AGG(DISTINCT employer_organisation.data_religiousethos_name, " and ") AS religious_ethos,
   STRING_AGG(DISTINCT employer_organisation.data_federationflag_name, " and ") AS federation_flag,
-  publisher_organisation.group_type AS schoolgroup_type,
+  COALESCE(publisher_organisation.group_type,
+    STRING_AGG((
+      SELECT
+        DISTINCT schoolgroup.group_type
+      FROM
+        `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
+      LEFT JOIN
+        `teacher-vacancy-service.production_dataset.feb20_organisation` AS schoolgroup
+      ON
+        schoolgroupmembership.school_group_id=schoolgroup.id
+      WHERE
+        schoolgroupmembership.school_id=employer_organisation.id), " and ")) AS schoolgroup_type,
+  publisher_organisation.group_type AS publisher_schoolgroup_type,
 IF
-  (publisher_organisation.group_type="Multi-academy trust",
-    (
+  (publisher_organisation.group_type = "Multi-academy trust",
+    MAX((
     SELECT
       COUNT(DISTINCT schoolgroupmembership.school_id)
     FROM
-      `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroup
-    LEFT JOIN
       `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
-    USING
-      (school_group_id)
     WHERE
-      schoolgroup.school_id=publisher_organisation_id),
-    NULL) AS schoolgroup_size,
+      schoolgroupmembership.school_group_id=publisher_organisation.id)),
+    MAX((
+      SELECT
+        COUNT(DISTINCT schoolgroupmembership.school_id)
+      FROM
+        `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership_parent
+      LEFT JOIN
+        `teacher-vacancy-service.production_dataset.feb20_schoolgroupmembership` AS schoolgroupmembership
+      USING
+        (school_group_id)
+      LEFT JOIN
+        `teacher-vacancy-service.production_dataset.feb20_organisation` AS schoolgroup
+      ON
+        schoolgroupmembership_parent.school_group_id=schoolgroup.id
+      WHERE
+        schoolgroupmembership_parent.school_id=employer_organisation.id
+        AND schoolgroup.group_type = "Multi-academy trust"))) AS trust_size,
   #the number of organisations linked to this vacancy - if > 1 then this is a multi-school vacancy
   COUNT(DISTINCT organisation_id) AS number_of_organisations,
   #whether the vacancy was published at schoolgroup level e.g. a MAT (not the same as being published *by* a schoolgroup)
