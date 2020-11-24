@@ -11,8 +11,8 @@ private
 
   def convert_to_users(dsi_users)
     dsi_users.each do |dsi_user|
-      User.transaction do
-        user = User.find_or_initialize_by(oid: dsi_user["userId"])
+      Publisher.transaction do
+        user = Publisher.find_or_initialize_by(oid: dsi_user["userId"])
         user.email = dsi_user["email"]
         user.given_name = dsi_user["givenName"]
         user.family_name = dsi_user["familyName"]

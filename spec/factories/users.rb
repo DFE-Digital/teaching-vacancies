@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user do
+  factory :publisher do
     accepted_terms_at { Date.current - 5.months }
     dsi_data do
       {

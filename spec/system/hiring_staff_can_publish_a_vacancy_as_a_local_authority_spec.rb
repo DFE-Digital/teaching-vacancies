@@ -10,7 +10,7 @@ RSpec.describe "Creating a vacancy" do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(true)
     SchoolGroupMembership.find_or_create_by(school_id: school_1.id, school_group_id: school_group.id)
     SchoolGroupMembership.find_or_create_by(school_id: school_2.id, school_group_id: school_group.id)
-    allow(UserPreference).to receive(:find_by).and_return(instance_double(UserPreference))
+    allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
     stub_hiring_staff_auth(la_code: school_group.local_authority_code, session_id: session_id)
   end
 

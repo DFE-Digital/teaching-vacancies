@@ -4,7 +4,7 @@ class HiringStaff::IdentificationsController < HiringStaff::BaseController
   skip_before_action :check_terms_and_conditions, only: %i[new create]
   skip_before_action :verify_authenticity_token, only: %i[create]
 
-  before_action :redirect_signed_in_users, only: %i[new create]
+  before_action :redirect_signed_in_publishers, only: %i[new create]
   before_action :redirect_for_fallback_authentication, only: %i[new create]
 
   def new; end

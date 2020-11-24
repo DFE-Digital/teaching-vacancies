@@ -141,7 +141,7 @@ private
   end
 
   def use_school_group_if_available
-    user = User.find_by(email: identifier)
+    user = Publisher.find_by(email: identifier)
     user_trusts = user&.dsi_data&.fetch("trust_uids", [])
     user_local_authorities = user&.dsi_data&.fetch("la_codes", [])
     return unless user_trusts&.any? || user_local_authorities&.any?

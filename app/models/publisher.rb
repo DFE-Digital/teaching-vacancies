@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class Publisher < ApplicationRecord
   include Auditor::Model
 
   has_many :emergency_login_keys

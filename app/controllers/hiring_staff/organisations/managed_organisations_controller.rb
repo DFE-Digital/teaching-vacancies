@@ -30,7 +30,7 @@ private
   end
 
   def vacancy_filter
-    @vacancy_filter ||= HiringStaff::VacancyFilter.new(current_user, current_school_group)
+    @vacancy_filter ||= HiringStaff::VacancyFilter.new(current_publisher, current_school_group)
   end
 
   def set_organisation_options

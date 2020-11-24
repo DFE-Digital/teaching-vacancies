@@ -2,7 +2,7 @@ en:
   cookies_preferences_errors: &cookies_preferences_errors
     cookies_consent:
       inclusion: Please select an option
-  hiring_staff_user_preference_errors:
+  hiring_staff_publisher_preference_errors:
     managed_organisations:
       blank: Select which schools' job listings you would like to view
   job_alert_feedback: &job_alert_feedback_errors

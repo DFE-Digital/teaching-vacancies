@@ -14,7 +14,7 @@ module AuthHelpers
       page.set_rack_session(urn: "", uid: "", la_code: la_code)
     end
     page.set_rack_session(session_id: session_id)
-    create(:user, oid: session_id, email: email, last_activity_at: Time.current)
+    create(:publisher, oid: session_id, email: email, last_activity_at: Time.current)
   end
 
   def stub_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
@@ -112,6 +112,6 @@ module AuthHelpers
   end
 
   def stub_accepted_terms_and_conditions
-    create(:user, oid: "161d1f6a-44f1-4a1a-940d-d1088c439da7", accepted_terms_at: 1.day.ago)
+    create(:publisher, oid: "161d1f6a-44f1-4a1a-940d-d1088c439da7", accepted_terms_at: 1.day.ago)
   end
 end

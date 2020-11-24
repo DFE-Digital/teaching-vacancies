@@ -5,7 +5,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
     @multiple_organisations = session_has_multiple_organisations?
     @organisation = current_organisation
     @sort = VacancySort.new.update(column: sort_column, order: sort_order)
-    @filters = HiringStaff::VacancyFilter.new(current_user, current_school_group).to_h
+    @filters = HiringStaff::VacancyFilter.new(current_publisher, current_school_group).to_h
     @managed_organisations_form = ManagedOrganisationsForm.new(@filters)
     @selected_type = params[:type]
     @awaiting_feedback_count = @organisation.vacancies.awaiting_feedback.count
@@ -19,7 +19,7 @@ class HiringStaff::OrganisationsController < HiringStaff::BaseController
 private
 
   def redirect_to_user_preferences
-    if current_organisation.is_a?(SchoolGroup) && current_user_preferences.nil?
+    if current_organisation.is_a?(SchoolGroup) && current_publisher_preferences.nil?
       redirect_to organisation_managed_organisations_path
     end
   end

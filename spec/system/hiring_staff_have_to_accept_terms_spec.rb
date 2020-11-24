@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.describe "Hiring staff accepts terms and conditions" do
   let(:school) { create(:school) }
   let(:session_id) { "a-valid-oid" }
-  let(:current_user) { User.find_by(oid: session_id) }
+  let(:current_publisher) { Publisher.find_by(oid: session_id) }
   before do
     stub_hiring_staff_auth(urn: school.urn, session_id: session_id)
   end
 
   context "the user has not accepted the terms and conditions" do
-    before { current_user.update(accepted_terms_at: nil) }
+    before { current_publisher.update(accepted_terms_at: nil) }
 
     scenario "they will see the terms and conditions" do
       visit organisation_path
@@ -20,25 +20,25 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
     scenario "they can accept the terms and conditions" do
       visit terms_and_conditions_path
 
-      expect(current_user).not_to be_accepted_terms_and_conditions
+      expect(current_publisher).not_to be_accepted_terms_and_conditions
 
       check I18n.t("terms_and_conditions.label")
       click_on I18n.t("buttons.accept_and_continue")
 
-      current_user.reload
+      current_publisher.reload
       expect(page).to have_content(I18n.t("schools.jobs.index", organisation: school.name))
-      expect(current_user).to be_accepted_terms_and_conditions
+      expect(current_publisher).to be_accepted_terms_and_conditions
     end
 
     scenario "an audit entry is logged when they accept" do
       visit terms_and_conditions_path
 
-      expect(current_user).not_to be_accepted_terms_and_conditions
+      expect(current_publisher).not_to be_accepted_terms_and_conditions
 
       check I18n.t("terms_and_conditions.label")
       click_on I18n.t("buttons.accept_and_continue")
 
-      activity = current_user.activities.last
+      activity = current_publisher.activities.last
       expect(activity.key).to eq("user.terms_and_conditions.accept")
       expect(activity.session_id).to eq(session_id)
     end
@@ -46,14 +46,14 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
     scenario "an error is shown if they don’t accept" do
       visit terms_and_conditions_path
 
-      expect(current_user).not_to be_accepted_terms_and_conditions
+      expect(current_publisher).not_to be_accepted_terms_and_conditions
 
       click_on I18n.t("buttons.accept_and_continue")
 
-      current_user.reload
+      current_publisher.reload
 
       expect(page).to have_content("There is a problem")
-      expect(current_user).not_to be_accepted_terms_and_conditions
+      expect(current_publisher).not_to be_accepted_terms_and_conditions
     end
 
     context "signing out" do
@@ -82,7 +82,7 @@ RSpec.describe "Hiring staff accepts terms and conditions" do
 
   context "the user has accepted the terms and conditions" do
     scenario "they will not see the terms and conditions" do
-      current_user.update(accepted_terms_at: Time.current)
+      current_publisher.update(accepted_terms_at: Time.current)
 
       visit organisation_path
 

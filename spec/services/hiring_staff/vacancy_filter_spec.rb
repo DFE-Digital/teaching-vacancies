@@ -1,23 +1,23 @@
 require "rails_helper"
 
 RSpec.describe HiringStaff::VacancyFilter do
-  let(:user) { create :user }
+  let(:publisher) { create :publisher }
   let(:organisation) { create :trust }
   let(:managed_organisations) { "school_group" }
   let(:managed_school_ids) { %w[1234 5678] }
-  let!(:user_preference) do
-    create :user_preference, user: user, school_group: organisation,
-                             managed_organisations: managed_organisations, managed_school_ids: managed_school_ids
+  let!(:publisher_preference) do
+    create :publisher_preference, publisher: publisher, school_group: organisation,
+                                  managed_organisations: managed_organisations, managed_school_ids: managed_school_ids
   end
 
-  subject { described_class.new(user, organisation) }
+  subject { described_class.new(publisher, organisation) }
 
   describe ".initialize" do
-    it "sets the managed_organisations from user_preference" do
+    it "sets the managed_organisations from publisher_preference" do
       expect(subject.managed_organisations).to eq managed_organisations
     end
 
-    it "sets the managed_school_ids from user_preference" do
+    it "sets the managed_school_ids from publisher_preference" do
       expect(subject.managed_school_ids).to eq managed_school_ids
     end
   end
@@ -29,12 +29,12 @@ RSpec.describe HiringStaff::VacancyFilter do
       let(:new_organisations) { nil }
       let(:new_school_ids) { %w[4321 8765] }
 
-      it "updates user_preference managed_organisations" do
-        expect(user_preference.reload.managed_organisations).to eq new_organisations
+      it "updates publisher_preference managed_organisations" do
+        expect(publisher_preference.reload.managed_organisations).to eq new_organisations
       end
 
-      it "updates user_preference managed_school_ids" do
-        expect(user_preference.reload.managed_school_ids).to eq new_school_ids
+      it "updates publisher_preference managed_school_ids" do
+        expect(publisher_preference.reload.managed_school_ids).to eq new_school_ids
       end
     end
 
@@ -42,12 +42,12 @@ RSpec.describe HiringStaff::VacancyFilter do
       let(:new_organisations) { %w[all] }
       let(:new_school_ids) { %w[4321 8765] }
 
-      it "updates user_preference managed_organisations to all" do
-        expect(user_preference.reload.managed_organisations).to eq "all"
+      it "updates publisher_preference managed_organisations to all" do
+        expect(publisher_preference.reload.managed_organisations).to eq "all"
       end
 
-      it "updates user_preference managed_school_ids to empty array" do
-        expect(user_preference.reload.managed_school_ids).to eq []
+      it "updates publisher_preference managed_school_ids to empty array" do
+        expect(publisher_preference.reload.managed_school_ids).to eq []
       end
     end
   end
