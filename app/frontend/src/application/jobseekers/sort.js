@@ -1,14 +1,27 @@
+export const SUBMIT_SELECTOR = '.jobs-sort-submit';
+export const FIELD_ID = 'jobs-sort-field';
+
 export const hideSortSubmit = () => {
-  if (document.querySelector('.jobs-sort-submit')) {
-    document.querySelector('.jobs-sort-submit').style.display = 'none';
+  if (document.querySelector(SUBMIT_SELECTOR)) {
+    document.querySelector(SUBMIT_SELECTOR).style.display = 'none';
   }
 };
 
 export const sortChange = () => {
-  if (document.querySelector('.jobs-sort-submit')) {
-    document.querySelector('.jobs-sort-submit').click();
+  if (document.querySelector(SUBMIT_SELECTOR)) {
+    document.querySelector(SUBMIT_SELECTOR).click();
   }
 };
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById(FIELD_ID)) {
+    hideSortSubmit();
+
+    document.getElementById(FIELD_ID).addEventListener('input', () => {
+      sortChange();
+    });
+  }
+});
 
 const sortSelect = {
   hideSortSubmit,

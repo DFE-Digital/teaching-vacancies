@@ -1,47 +1,21 @@
 import '../../components/locationFinder/locationFinder';
-import { onChange as locationChange, getCoords } from './location';
-import { disableRadiusSelect } from './radius';
-import './map';
 import { renderAutocomplete } from '../../components/autocomplete/autocomplete';
 import { getLocationSuggestions } from '../../lib/api';
-import { hideSortSubmit, sortChange } from './sort';
 
-const SEARCH_THRESHOLD = 3;
+import './sort';
+import './location';
+import './map';
+
+const AUTOCOMPLETE_THRESHOLD = 3;
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('location-field')) {
-    if (!getCoords()) {
-      disableRadiusSelect();
-    }
-
+  Array.from(document.querySelectorAll('.js-location-finder__input')).forEach((fieldEl) => {
     renderAutocomplete({
-      container: document.getElementsByClassName('location-text')[0],
-      input: document.getElementById('location-field'),
-      threshold: SEARCH_THRESHOLD,
+      container: fieldEl.parentNode,
+      input: fieldEl,
+      threshold: AUTOCOMPLETE_THRESHOLD,
       getOptions: getLocationSuggestions,
       key: 'location',
     });
-
-    document.getElementById('location-field').addEventListener('input', (e) => {
-      locationChange(e.target.value);
-    });
-  }
-
-  if (document.getElementById('subscription-form-location-field')) {
-    renderAutocomplete({
-      container: document.getElementsByClassName('location-text')[0],
-      input: document.getElementById('subscription-form-location-field'),
-      threshold: SEARCH_THRESHOLD,
-      getOptions: getLocationSuggestions,
-      key: 'location',
-    });
-  }
-
-  if (document.getElementById('jobs-sort-field')) {
-    hideSortSubmit();
-
-    document.getElementById('jobs-sort-field').addEventListener('input', () => {
-      sortChange();
-    });
-  }
+  });
 });
