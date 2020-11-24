@@ -28,6 +28,14 @@ span.notification {
   &:focus {
     outline: $govuk-focus-width solid $govuk-focus-colour;
   }
+
+  &.icon--left .govuk-notification__body {
+    padding-left: govuk-spacing(3);
+  }
+
+  &.icon--right .govuk-notification__body {
+    padding-right: govuk-spacing(3);
+  }
 }
 
 .govuk-notification__title {

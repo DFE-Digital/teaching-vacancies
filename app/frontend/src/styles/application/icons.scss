@@ -8,7 +8,6 @@
 }
 
 .icon--left {
-  background-position: left;
   padding-left: 30px;
 }
 
@@ -36,13 +35,14 @@
   background-image: url('../../images/svg/icon-start.svg');
 }
 
+.icon--check {
+  background-image: url('../../images/svg/icon-check.svg');
+}
+
 .icon--cross {
   &::before {
-    color: #1d70b8;
+    color: $govuk-link-colour;
     content: 'x';
     font-weight: bold;
   }
 }
-
-
-
