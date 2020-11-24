@@ -204,11 +204,16 @@ RSpec.describe Vacancy, type: :model do
     end
 
     describe "#expired" do
-      it "retrieves vacancies that have a past expires_on date" do
+      it "retrieves published vacancies that have a past expires_on date" do
         create_list(:vacancy, 5, :published)
         expired = build(:vacancy, expires_at: Time.current - 1.hour)
         expired.send :set_slug
         expired.save(validate: false)
+
+        trashed_expired = build(:vacancy, expires_at: Time.current - 1.hour)
+        trashed_expired.send :set_slug
+        trashed_expired.save(validate: false)
+        trashed_expired.trashed!
 
         expect(Vacancy.expired.count).to eq(1)
       end
