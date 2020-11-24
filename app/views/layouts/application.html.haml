@@ -66,10 +66,15 @@
               %div.govuk-grid-column-one-third
                 %h2.govuk-heading-m
                   = t('footer.for_job_seekers')
-                %ul.govuk-footer__inline-list
-                  %li.govuk-footer__inline-list-item
+                %ul.govuk-footer__inline-list.hide-bullet-points
+                  %li.govuk-footer-list-item
                     =link_to t('footer.search_teaching_vacancies'), root_url, class: 'govuk-footer__link'
-
+                  - if JobseekerAccountsFeature.enabled? && !authenticated?
+                    %li.govuk-footer-list-item
+                      - if jobseeker_signed_in?
+                        =link_to t('footer.your_account'), jobseekers_account_path, class: 'govuk-footer__link'
+                      - else
+                        =link_to t('footer.sign_in'), new_jobseeker_session_path, class: 'govuk-footer__link'
               %div.govuk-grid-column-one-third
                 %h2.govuk-heading-m
                   = t('footer.for_schools')
