@@ -39,6 +39,11 @@
   background-image: url('../../images/svg/icon-check.svg');
 }
 
+.icon--search {
+  background-image: url('../../images/svg/icon-search.svg');
+  background-position: 10px;
+}
+
 .icon--cross {
   &::before {
     color: $govuk-link-colour;
