@@ -1,5 +1,7 @@
 import { enableRadiusSelect, disableRadiusSelect } from './radius';
 
+const INPUT_ELEMENT = document.getElementById('location-field');
+
 export const onChange = (value) => {
   if (/\d/.test(value)) {
     enableRadiusSelect();
@@ -9,8 +11,20 @@ export const onChange = (value) => {
 };
 
 export const getCoords = () => {
-  if (document.querySelector('#location-field').dataset.coordinates) {
-    return document.querySelector('#location-field').dataset.coordinates.split(' ').join(',');
+  if (INPUT_ELEMENT.dataset.coordinates) {
+    return INPUT_ELEMENT.dataset.coordinates.split(' ').join(',');
   }
   return false;
 };
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (INPUT_ELEMENT) {
+    if (!getCoords()) {
+      disableRadiusSelect();
+    }
+
+    INPUT_ELEMENT.addEventListener('input', (e) => {
+      onChange(e.target.value);
+    });
+  }
+});
