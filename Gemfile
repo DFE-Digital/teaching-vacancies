@@ -19,6 +19,7 @@ gem "geocoder"
 gem "google-api-client"
 gem "google-cloud-bigquery"
 gem "google_drive", require: false
+gem "govuk-components"
 gem "gov_uk_date_fields"
 gem "govuk_design_system_formbuilder"
 gem "haml-rails"
