@@ -56,13 +56,32 @@ brew tap homebrew/cask
 brew cask install chromedriver
 ```
 
-### AWS credentials
+### AWS credentials, MFA, and role profiles
 
-When onboarded, you will be provided with an AWS admin user. You can use it to access the AWS console at:
+When onboarded, you will be provided with an AWS user. You can use it to access the AWS console at:
 https://teaching-vacancies.signin.aws.amazon.com/console.
 
-For programmatic access, including application deployment using terraform, create an API key for yourself in the AWS IAM section.
-Then use the [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) to configure the access key locally.
+For programmatic access, including application deployment using Terraform, create access keys for yourself under [My Security Credentials](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials) - note these credentials for later use when configuring the AWS CLI.
+
+In the same section, choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device. 
+
+Then install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+
+```bash
+brew install awscli
+```
+
+[Configure the CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) by running
+
+```bash
+aws configure
+```
+
+You'll be prompted to enter:
+- AWS Access Key ID 
+- AWS Secret Access Key
+- Default region name (choose `eu-west-2`)
+- Default output format (choose `json`)
 
 To check that everything has been done correctly you should be able to do:
 
@@ -78,14 +97,45 @@ aws_access_key_id=<AWS_ACCESS_KEY_ID>
 aws_secret_access_key=<AWS_SECRET_ACCESS_KEY>
 ```
 
+Edit `~/.aws/config`
+
+```
+[default]
+region = eu-west-2
+output = json
+
+[profile readonly]
+role_arn = arn:aws:iam::530003481352:role/readonly
+source_profile = default
+mfa_serial = arn:aws:iam::530003481352:mfa/YOURUSERNAME
+
+[profile secreteditor]
+role_arn = arn:aws:iam::530003481352:role/secreteditor
+source_profile = default
+mfa_serial = arn:aws:iam::530003481352:mfa/YOURUSERNAME
+```
+
+When using the AWS CLI, you may pass in the profile like so
+
+```bash
+aws --profile readonly s3 ls
+```
+
+Or set with an environment variable
+
+```bash
+export AWS_PROFILE=readonly
+aws s3 ls
+```
 ### Environment Variables
 
 Some environment variables are stored in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), some are stored in the repository.
 
 Secrets (eg: API keys) are stored in AWS Systems Manager Parameter Store in `/teaching-vacancies/<env>/app/*` and `/teaching-vacancies/<env>/infra/*` files.
 
-Non secrets (eg: public URLs or feature flags) are stored in the repository in `terraform/workspace-variables/<env>_app_env.yml` files.
+Non-secrets (eg: public URLs or feature flags) are stored in the repository in `terraform/workspace-variables/<env>_app_env.yml` files.
 
+Set the `AWS_PROFILE` environment variable to `readonly`.
 Run the following command to fetch all the required environment variables for development and output to a shell environment file:
 
 ```
@@ -151,7 +201,7 @@ bundle exec rails ons:import_location_polygons
 bundle exec rails server
 ```
 
-Look at that, you’re up and running! Visit http://localhost:3000 and you’re ready to go.
+Look at that, you’re up and running! Visit [http://localhost:3000](http://localhost:3000) and you’re ready to go.
 
 ### Run the worker
 
