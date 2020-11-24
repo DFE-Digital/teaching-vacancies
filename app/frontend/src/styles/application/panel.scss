@@ -13,4 +13,8 @@
       width: 70px;
     }
   }
+
+  .govuk-panel__body {
+    @include govuk-font(19);
+  }
 }
