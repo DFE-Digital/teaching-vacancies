@@ -79,9 +79,12 @@
 }
 
 .text-wrap-apostrophe {
-  &::after,
   &::before {
-    content: '\0027';
+    content: '\2018';
+  }
+  
+  &::after {
+    content: '\2019';
   }
 }
 
