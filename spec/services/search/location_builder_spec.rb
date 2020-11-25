@@ -3,8 +3,9 @@ require "rails_helper"
 RSpec.shared_examples "a search using polygons" do |options|
   it "sets the correct attributes" do
     expect(subject.location_category).to eql(options&.dig(:location)&.presence || polygonable_location)
-    expect(subject.location_polygon).to eql(location_polygon)
     expect(subject.location_filter).to eql({})
+    expect(subject.location_polygon).to eql(location_polygon)
+    expect(subject.location_polygon.usage_count).to eql(1)
   end
 end
 

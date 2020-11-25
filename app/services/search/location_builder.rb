@@ -38,7 +38,10 @@ private
 
   def initialize_location_polygon
     @location_polygon = LocationPolygon.with_name(@location_category)
-    @location_polygon_boundary = [@location_polygon.boundary] if @location_polygon.present?
+    if @location_polygon.present?
+      @location_polygon_boundary = [@location_polygon.boundary]
+      @location_polygon.increment!(:usage_count)
+    end
     if location_polygon.nil? && (DOWNCASE_REGIONS + DOWNCASE_COUNTIES).include?(@location_category.downcase)
       # If a location category that we expect to have a polygon actually does not,
       # append the location category to the text search as a fallback.
