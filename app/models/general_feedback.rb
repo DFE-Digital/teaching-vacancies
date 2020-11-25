@@ -1,7 +1,7 @@
 class GeneralFeedback < ApplicationRecord
   include FeedbackValidations
 
-  enum visit_purpose: { other_purpose: 0, find_teaching_job: 1, list_teaching_job: 2 }
+  enum visit_purpose: { find_teaching_job: 1, list_teaching_job: 2, other_purpose: 0 }
   enum user_participation_response: { interested: 0, not_interested: 1 }
 
   validates :visit_purpose, presence: true

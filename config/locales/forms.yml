@@ -112,13 +112,18 @@ en:
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
         job_title_html: Job title (<span class='text-red'>Required</span>)
-      organisation_form:
-        description: Description of %{organisation_type}
-        website: '%{organisation_type} website'
+      general_feedback:
+        visit_purpose_options:
+          find_teaching_job: Find a job in teaching
+          list_teaching_job: List a teaching job on the service
+          other_purpose: Something else
       important_dates_form:
         expires_at_hh: Hour
         expires_at_meridiem: am or pm
         expires_at_mm: Minute
+      organisation_form:
+        description: Description of %{organisation_type}
+        website: '%{organisation_type} website'
       job_summary_form:
         about_organisation_html: About %{organisation} (<span class='text-red'>Required</span>)
         job_summary_html: Job summary (<span class='text-red'>Required</span>)
