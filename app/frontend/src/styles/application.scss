@@ -12,6 +12,7 @@ $govuk-image-url-function: frontend-image-url;
 @import '~govuk-frontend/govuk/all';
 @import '~@ministryofjustice/frontend/moj/all';
 
+@import 'shared/navbar_component/navbar_component';
 @import 'shared/notification_component/notification_component';
 @import 'shared/banner_link_component/banner_link_component';
 @import 'shared/filters_component/filters_component';
@@ -29,7 +30,6 @@ $govuk-image-url-function: frontend-image-url;
 @import 'application/form';
 @import 'application/icons';
 @import 'application/modal';
-@import 'application/navigation';
 @import 'application/pagination';
 @import 'application/panel';
 @import 'application/school';

@@ -1,0 +1,23 @@
+nav ul .mobile-header-underline-text {
+  @include govuk-media-query($until: desktop) {
+    font-weight: normal;
+    text-decoration: underline;
+  }
+}
+
+.mobile-header-top-border {
+  @include govuk-media-query($until: desktop) {
+    border-top: 3px solid govuk-colour('white');
+    margin-top: 2px;
+  }
+}
+
+.navigation_heading {
+  color: govuk-colour('white');
+  font-weight: bold;
+  margin-top: 20px;
+
+  @include govuk-media-query($from: desktop) {
+    display: none;
+  }
+}

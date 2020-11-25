@@ -8,8 +8,10 @@ RSpec.describe "Jobseekers can sign in to their account" do
   end
 
   scenario "signing in takes them to saved jobs page with banner" do
-    # TODO: Implement me properly when signing in is implemented
-    visit new_jobseeker_session_path
+    visit root_path
+    within("nav") do
+      click_link I18n.t("buttons.sign_in")
+    end
 
     fill_in "Email", with: "jobseeker@example.com"
     fill_in "Password", with: "correct_horse_battery_staple"

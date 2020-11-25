@@ -54,6 +54,7 @@ RSpec.configure do |config|
 
   config.before do
     allow(LocalAuthorityAccessFeature).to receive(:enabled?).and_return(false)
+    allow(JobseekerAccountsFeature).to receive(:enabled?).and_return(false)
     Algolia::WebMock.mock!
     allow(Redis).to receive(:new).and_return(MockRedis.new)
   end
