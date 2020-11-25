@@ -1,6 +1,6 @@
 # Hosting
 
-Teaching Vacancies is hosted on GOV.UK PaaS. When onboarded you will get access to `dfe-teacher-services` organization and the relevant spaces.
+Teaching Vacancies is hosted on GOV.UK PaaS. When onboarded you will be added to the [`dfe-teacher-services` organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations) and the relevant spaces. Note that this is different to GitHub.com where you will be added to the [`DFE-Digital` organization](https://github.com/DFE-Digital)
 
 These are the running applications:
 
@@ -9,6 +9,13 @@ These are the running applications:
 - https://teaching-vacancies.service.gov.uk (Production)
 
 Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged.
+
+The Dev environment has integration with DSI. It is "user-deployable", in that developers can deploy via:
+- pushing code to the `dev` branch
+- Makefile commands outlined below
+
+The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
+On merging a Pull Request, the same code is deployed first to Staging, and after a successful smoke test, to Production.
 
 ## Install Cloud Foundry CLI on Mac
 
@@ -129,9 +136,9 @@ cd /teacher-vacancy
 cf run-task <app_name> -c "rails task:name"
 ```
 
-## Deploy to dev or staging via commandline
+## Deploy to dev via commandline
 
-This builds and deploys a Docker image from local code.
+This builds and deploys a Docker image from local code, then updates the `dev` environment to use that image
 
 ```bash
 passcode=<passcode> make <environment> deploy-local-image
@@ -140,36 +147,54 @@ performs these steps:
 
 - Builds and tags a Docker image from local code
 - Pushes the image to Docker Hub
-- Runs terraform to deploy the docker image
+- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
 
 You need:
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
-- `SpaceDeveloper` role in the paas space you want to deploy to
+- `SpaceDeveloper` role in the PaaS space you want to deploy to
 - Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
 - Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
 
+## Update dev with an existing Docker image
+
+This allows you to update the `dev` environment to use a previously-built Docker image
+
 ```bash
-make dev deploy-local-image # Deploy to dev
-make staging deploy-local-image # Deploy to staging
+passcode=<passcode> tag=47fd1475376bbfa16a773693133569b794408995 make <environment> terraform-app-apply
 ```
+performs these steps:
 
-## Deploy to dev or staging via a commit to GitHub
+- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
 
-This builds and deploys a Docker image from code in `dev` or `staging` branches.
+You need:
+- `SpaceDeveloper` role in the PaaS space you want to deploy to
+- Log in to Docker Hub (with `docker login`) and GOV.UK PaaS in your terminal
+- Obtain SSO passcode from https://login.london.cloud.service.gov.uk/passcode
 
-Push to the `dev` or `staging` branch.
+## Deploy to dev via a commit to GitHub
+
+This builds and deploys a Docker image from code in the `dev` branch.
+
+Push to the `dev` branch.
 The GitHub actions workflow [deploy_branch.yml](/.github/workflows/deploy_branch.yml) performs these steps:
 
 - Builds and tags a Docker image from code in the GitHub branch
 - Pushes the image to Docker Hub
-- Deploys the Docker image to PaaS
+- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `dev` environment
 - Sends a Slack notification to the `#twd_tv_dev` channel
 
 ## CI/CD with GitHub Actions
 
 Tests run every time is pushed on a branch.
 
-When a PR is approved and merged into `master` branch an automatic deploy is triggered to `production` environment.
+When a PR is approved and merged into `master` branch, the GitHub actions workflow [deploy.yml](/.github/workflows/deploy) performs these steps:
+
+- Builds and tags a Docker image from code in the GitHub branch
+- Pushes the image to Docker Hub
+- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `staging` environment
+- Runs a smoke test against the `staging` environment
+- Uses Terraform to apply any changes (including providing the tag of the Docker image) to the `production` environment
+- Sends a Slack notification to the `#twd_tv_dev` channel
 
 ## Maintenance windows for GOV.UK PaaS Postgres and Redis services
 
@@ -224,15 +249,16 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
 - Create file `terraform/workspace-variables/<env>.tfvars`
 - Create file `terraform/workspace-variables/<env>_app_env.yml`
 - Create SSM parameters of type `SecureString`:
-  - `/tvs/<env>/app/BIG_QUERY_API_JSON_KEY`
-  - `/tvs/<env>/app/GOOGLE_API_JSON_KEY`
-  - `/tvs/<env>/app/secrets`
-  - `/tvs/<env>/infra/secrets`
+  - `/teaching-vacancies/<env>/app/BIG_QUERY_API_JSON_KEY`
+  - `/teaching-vacancies/<env>/app/GOOGLE_API_JSON_KEY`
+  - `/teaching-vacancies/<env>/app/secrets`
+  - `/teaching-vacancies/<env>/infra/secrets`
 - Run:
   ```shell
+  cd terraform/app
   export TF_VAR_paas_sso_passcode=<passcode obtained from https://login.london.cloud.service.gov.uk/passcode>
   export TF_WORKSPACE=<env>
   export TF_VAR_paas_app_docker_image=dfedigital/teaching-vacancies:<tag>
-  terraform init terraform/app
-  terraform apply -var-file terraform/workspace-variables/<env>.tfvars terraform/app
+  terraform init
+  terraform apply -var-file terraform/workspace-variables/<env>.tfvars
   ```
